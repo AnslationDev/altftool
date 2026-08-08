@@ -1,4 +1,12 @@
 const seo = {
+  title: "Carry-On Only Packing Planner: Capsule and 3-1-1",
+  metaDescription:
+    "The fewest tops and bottoms that cover your days, a 3-1-1 liquids audit at 100 ml a container and 1 litre a bag, and a cabin weight and volume check.",
+  steps: [
+    "Set 'Trip length (days)', 'Laundry every N days (0 = none)', 'Extra pairs of shoes packed' and a 'Cabin bag allowance' — Indian short-haul low cost at 55 x 35 x 25 cm and 7 kg, European low cost at 55 x 40 x 20 cm and 10 kg, full-service at 56 x 36 x 23 cm and 8 kg, or US domestic with no stated weight limit.",
+    "Tick 'Wear the jacket, shoes and one outfit on the plane', then choose from 'Liquids you plan to carry' — Shampoo 100 ml, Toothpaste 75 ml, Roll-on deodorant 50 ml and the rest, each showing its solid swap.",
+    "Read Packed weight against the allowance, the Capsule wardrobe as tops x bottoms = outfits, Packed volume in litres of usable space and the liquids total out of 1000 ml, then press 'Copy plan'.",
+  ],
   intro:
     "This planner works out whether a trip fits in one cabin bag by solving the three constraints separately. The wardrobe is a combinatorics problem — t tops and b bottoms make t x b outfits, so the tool searches every split to find the fewest garments that still cover your days, which for a week is four tops and two bottoms giving eight outfits. Liquids are audited against the 3-1-1 rule (every container 100 ml or less, all inside one 1 litre transparent bag). Weight and packed volume are then checked against the cabin allowance you select.",
   useCases: [

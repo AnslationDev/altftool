@@ -1,4 +1,12 @@
 const seo = {
+  title: "RD Maturity Calculator with Quarterly Compounding",
+  metaDescription:
+    "Every instalment compounds quarterly for its own months on deposit. Returns maturity value, total interest, effective annual yield and a yearly table.",
+  steps: [
+    "Enter the Monthly instalment (INR) — Rs 100 minimum, prefilled at 5000 — then Tenure - years and Tenure - extra months, which takes 0 to 11; totals under 6 or over 120 months are rejected.",
+    "Type the bank's Interest rate (% p.a.), accepted between 0.1 and 15, and set the Senior citizen (+0.5%) dropdown to Yes to add the premium. Everything recalculates as you type — there is no calculate button.",
+    "Read the maturity value headline, then the Total deposited, Interest earned, Effective annual yield and Average interest per year rows, plus a Balance at each milestone table with After, Deposited, Interest and Value columns. Copy result puts that summary on the clipboard.",
+  ],
   "intro": "Simple RD Maturity Calculator works out what a bank RD pays back at the end of its term, applying the quarterly compounding that banks actually use: every monthly instalment earns interest only for the months it stays on deposit. Enter the instalment, tenure in years and months, and the quoted rate, and you get the maturity value, total interest, an effective annual yield, and the balance at each yearly milestone. It is useful for salaried savers, parents building a short-term fund, and senior citizens comparing the extra 0.5% most banks offer.",
   "useCases": [
     "Check what Rs 5,000 a month for 5 years at 6.7% will hand back at maturity.",

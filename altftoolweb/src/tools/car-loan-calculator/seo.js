@@ -1,4 +1,7 @@
 const seo = {
+  title: "Car Loan Calculator: Monthly Payment & Total Interest",
+  metaDescription:
+    "Enter price, down payment, rate and term: get the monthly instalment plus amount financed, total interest and total cost. 0% offers handled.",
   intro:
     "The Car Loan Calculator works out the monthly payment on a vehicle loan using the standard amortisation formula — payment = P x r x (1+r)^n / ((1+r)^n - 1), where P is the price minus your down payment, r is the annual rate divided by 12, and n is the term in months. Enter price, down payment, annual interest rate and term in years and you get the monthly instalment plus the amount financed, total interest and total cost including the deposit. It is for buyers comparing offers and anyone checking a dealer's payment quote against the arithmetic.",
   useCases: [

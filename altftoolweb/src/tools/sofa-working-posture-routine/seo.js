@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sofa Working Posture: Cushion Sizes and Stint Plan",
+  metaDescription:
+    "Scores your couch setup on seven checks, then gives back and seat cushion thickness in cm from your height and a 15-45 minute stint limit.",
+  steps: [
+    "Enter Your height (cm), Session length (minutes), Seat depth, front edge to backrest (cm) and Seat height when you sit on it (cm).",
+    "Under Which of these are true right now? tick the seven checks — screen top near eye level, separate keyboard and mouse, hips pushed right back, firm cushion supporting your low back, feet flat, forearms resting on something firm, standing up every 30 minutes.",
+    "Read Cushion behind your back and Firm cushion under you in cm, the Session split as stints × minutes, and run the reset routine — Stand up and walk, Chin tucks, Chest opener, Hip flexor stretch, Thoracic extension, Wrist flexor and extensor stretch.",
+  ],
   intro:
     "This tool scores a couch workstation against seven set-up criteria and converts the result into a maximum unbroken stint, a session split and a timed reset routine. It also solves the two problems that make a sofa a sofa: the seat is deeper than your thighs and often lower than your knees, so it calculates the thickness of the back cushion and the seat cushion you need using buttock-to-popliteal length and popliteal height from standard adult anthropometric tables. Written for people who work from a couch by circumstance rather than choice.",
   useCases: [

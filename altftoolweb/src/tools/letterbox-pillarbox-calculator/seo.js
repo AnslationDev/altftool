@@ -1,4 +1,12 @@
 const seo = {
+  title: "Letterbox and Pillarbox Bar Size Calculator (px)",
+  metaDescription:
+    "Fit one aspect ratio inside another and get exact bar size in px and percent — 2.39:1 in a 1920x1080 frame is about 138 px top and bottom.",
+  steps: [
+    "Set 'Frame width (px)' and 'Frame height (px)', or tap a target frame preset such as '1920 x 1080 (HD 16:9)' or '1080 x 1920 (vertical 9:16)'.",
+    "Enter 'Source aspect — width part' and 'Source aspect — height part', or tap a preset like '2.39:1 (anamorphic scope)' or '4:3 (SD / classic)'.",
+    "Read 'Each bar' in px, the 'Rounded to even pixels (encoder safe)' picture size and 'Frame area filled by picture', then press 'Copy result'.",
+  ],
   intro:
     "This calculator fits a picture of one aspect ratio inside a frame of another without cropping, then reports the black bar size in pixels and percent. When the source is wider than the frame the picture height becomes frame width divided by the source ratio and the leftover splits into two horizontal letterbox bars; when it is narrower the picture width becomes frame height times the source ratio and the bars are vertical pillarbox. Editors, motion designers and social media teams use it to place graphics and titles clear of the bars.",
   useCases: [

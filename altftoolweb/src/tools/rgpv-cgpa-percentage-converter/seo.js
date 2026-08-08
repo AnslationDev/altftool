@@ -1,4 +1,12 @@
 const seo = {
+  title: "RGPV CGPA to Percentage: (CGPA - 0.75) x 10 Rule",
+  metaDescription:
+    "Applies the RGPV rule percentage = (CGPA - 0.75) x 10, reverses it to find the CGPA a cut-off needs, and builds a CGPA from credit-weighted SGPAs.",
+  steps: [
+    "Pick 'CGPA to percentage' or 'Percentage to CGPA', then type the figure into 'CGPA or SGPA (out of 10)' or 'Percentage of marks'.",
+    "To start from semester results, fill Semester 1 SGPA and its Credits and add a row per semester so the cumulative CGPA is weighted by credits.",
+    "Read the Equivalent percentage with 'Equivalent marks out of 1000', the division and the nearest letter grade, then press Copy result.",
+  ],
   intro:
     "This converter turns an RGPV grade point average into the percentage of marks that application forms ask for, using the university's linear equivalence: percentage = (CGPA - 0.75) x 10. It works in both directions, so you can also recover the CGPA a required percentage implies, and it aggregates semester SGPAs into a credit weighted CGPA first if you only have semester results. Students at Rajiv Gandhi Proudyogiki Vishwavidyalaya use it when a recruiter, a scholarship portal or a postgraduate application will not accept a grade point figure.",
   useCases: [

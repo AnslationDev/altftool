@@ -1,4 +1,12 @@
 const seo = {
+  title: "Triangle Budget Calculator for Low Poly Game Assets",
+  metaDescription:
+    "Turn measured tris/sec throughput and a target fps into a per-frame triangle budget, split across asset classes with LOD chains and buffer memory.",
+  steps: [
+    "Enter Geometry throughput (million tris/sec) or tap a tier chip such as Modern mobile & standalone VR, then set Target frame rate (fps), Share of the frame geometry may use (%) and the Vertex duplication factor (seams & hard edges).",
+    "Under Asset classes, give every class its share of the budget and how many are visible at once.",
+    "On-screen triangle budget shows the per-frame count with Frame time and Geometry slice of the frame in ms, and the \"Per-asset budgets and LOD chain\" table lists class total, per instance and LOD1 / 2 / 3; Copy budget copies the plan.",
+  ],
   intro:
     "The Low Poly Budget Planner converts a measured geometry throughput and a frame-rate target into the number of triangles you can draw in one frame, using triangles = throughput x geometry share of the frame / target fps. It then splits that budget across asset classes with largest-remainder apportionment, derives a per-instance count, builds a halving LOD chain and estimates vertex and index buffer memory from a 24-byte vertex layout. It is aimed at 3D artists and technical artists agreeing a poly-count spec before modelling starts.",
   useCases: [

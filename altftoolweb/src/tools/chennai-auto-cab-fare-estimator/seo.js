@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chennai Auto and Cab Fare Estimator (₹25 + ₹12/km)",
+  metaDescription:
+    "Applies the notified auto meter — ₹25 for 1.8 km, ₹12/km after, ₹3 per 5 min waiting, 50% from 11 pm to 5 am — or prices an app cab with surge.",
+  steps: [
+    "Choose a Vehicle — Auto rickshaw (meter), Auto on an app (Ola / Uber / Rapido), or a hatchback, sedan or SUV cab — then type the Trip distance (km) or tap a Common runs chip such as Central to Airport · 20 km.",
+    "Set the Pickup time (24-hour) so the 11 pm to 5 am night window is applied automatically, then Ride time (minutes), Waiting time (minutes), Surge multiplier where 1.0 means no surge (disabled for a street auto) and Tolls and parking (₹).",
+    "Estimated fare gives the payable amount and a fair range for that distance, itemised as Distance fare, Ride-time charge, Waiting charge, Night surcharge, Surge, Minimum-fare top-up, Tolls and parking, Effective cost per km and Usually rounded up to, above a Chennai rate cards used table. Copy result copies it.",
+  ],
   intro:
     "This estimator turns a Chennai trip into a rupee figure by applying the notified auto rickshaw meter — ₹25 for the first 1.8 km and ₹12 for every kilometre after it — plus the ₹3-per-five-minutes waiting charge and the 50% night surcharge that applies between 11 pm and 5 am. Switch the vehicle to an app auto, hatchback, sedan or SUV and it prices the same trip the way ride-hailing apps do, on base fare plus distance plus ride minutes with a surge multiplier. It is built for passengers who want to know whether a quote is fair before they get in.",
   useCases: [

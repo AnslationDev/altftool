@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gravity Orbit Simulator: Circular, Elliptical, Escape",
+  metaDescription:
+    "Set star mass, radius and tangential speed, then watch a = -GM*r/r^3 integrate live against the circular sqrt(GM/r) and escape sqrt(2GM/r) speeds.",
+  steps: [
+    "Drag \"Central Star Mass\" between 1000 and 15000, \"Initial Radius\" between 60 and 240 and \"Initial Speed\" between 1 and 15, or click an Orbit Preset: Circular Orbit, Elliptical Orbit, Escape Velocity or Spiral Crash.",
+    "The canvas relaunches on every change and integrates the inverse-square pull step by step, drawing the trail and a velocity-vector arrow; \"Pause Orbit\" freezes it and Reset relaunches from the current sliders.",
+    "The telemetry heading reads \"Stable Circular Orbit\", \"Elliptical Orbit\", \"Hyperbolic Escape\" or \"Collision (Crashed)\", beside the v_esc figure and the live Current Speed and Distance readouts.",
+  ],
   intro:
     "The Gravity Orbit Simulator integrates Newton's inverse-square law, a = −GM·r/r³, step by step to draw the path a small body takes around a fixed central star, and classifies the result as circular, elliptical, escape or decaying crash. You set the star's mass, the starting radius and the initial tangential speed, and the panel shows live distance and speed against the escape velocity √(2GM/r) for that radius. It is a teaching tool for anyone trying to see why a satellite that is too slow spirals in and one that is too fast never comes back.",
   useCases: [

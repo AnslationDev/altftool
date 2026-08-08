@@ -1,4 +1,7 @@
 const seo = {
+  title: "Kaal Sarp Dosha Checker: Sidereal Planet Positions",
+  metaDescription:
+    "Tests whether all seven grahas fall in the 180° Rahu-Ketu arc, names the type from Rahu's sign, and lists each planet's sidereal longitude and rashi.",
   intro:
     "The Kaal Sarp Dosha Checker computes sidereal positions for the Sun, Moon, Mars, Mercury, Venus, Jupiter and Saturn on a given birth date and reports whether all seven fall inside the 180-degree arc running from Rahu forward to Ketu — the condition Vedic astrology calls Kaal Sarp Dosha. When the condition is met it names the type from Rahu's sign, one of the twelve from Anant through Sheshnag. It is for anyone who has been told they have this yoga and wants to see the planetary longitudes the claim rests on rather than take it on trust.",
   useCases: [

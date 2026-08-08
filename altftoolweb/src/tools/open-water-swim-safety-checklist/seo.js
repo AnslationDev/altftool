@@ -1,4 +1,12 @@
 const seo = {
+  title: "Open Water Swim Safety Checklist: 15 Pre-Swim Checks",
+  metaDescription:
+    "Scores 15 pre-swim checks with safety-critical items weighted double, and reads your water temperature against the 16-31 °C range and the 1-10-1 rule.",
+  steps: [
+    "Enter Water temperature (°C) and Planned time in the water (minutes), then tick Wearing a wetsuit or Cold acclimatised this season if either applies.",
+    "Work down Pre-swim checks, ticking items such as Bright tow float attached, Swimming with a buddy, or at a lifeguarded venue and A turnaround rule agreed, plus anything under Also worth having.",
+    "Read Readiness score, Water temperature band, In competition temperature range and Unacclimatised skins guideline, then press Copy summary to send the plan to your shore contact.",
+  ],
   intro:
     "This checklist scores your open water pre-swim preparation across fifteen checks — buddy, tow float, conditions, exit plan and turnaround rule — weighting safety-critical items double so a missing one blocks a pass. It reads your water temperature against the World Aquatics open water limits (racing between 16 °C and 31 °C, wetsuits compulsory below 18 °C and not allowed above 20 °C) and against the 1-10-1 cold water immersion principle. It is informational preparation support, not a substitute for a lifeguard or a venue risk assessment.",
   useCases: [

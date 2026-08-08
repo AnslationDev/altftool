@@ -1,4 +1,12 @@
 const seo = {
+  title: "Poison Centre Call Checklist and First Aid Script",
+  metaDescription:
+    "Gather the age, weight, product label and timing a poison centre asks for, get route-specific first aid, and build a script to read down the phone.",
+  steps: [
+    "Under \"1. Red flags — check these first\", tick anything that applies — Unresponsive or cannot be woken, Fitting or having a seizure, Taken deliberately — and set \"How was the person exposed?\" to Swallowed, In the eye, On the skin, Breathed in, Injected or Bite or sting.",
+    "In \"3. What they will ask\", fill the starred required fields — age, weight in kg, the product name exactly as printed on the label, active ingredients, the largest amount that could have been taken, symptoms right now — and set \"When did it happen?\" or press \"Use the current time\".",
+    "The panel reports Information gathered as a percentage plus your region's emergency number, poison information line, time since exposure and what is Still missing, then prints route-specific first aid, a Do not list and Your call script; press \"Copy result\" to take the script to the phone.",
+  ],
   intro:
     "The Poisoning Information Checklist collects, in one place, the details every poison information centre asks for: who was exposed including age and weight, the exact product name and active ingredients, the largest possible amount, the route, the time it happened, current symptoms, and anything already given. It flags the red-flag signs that mean you should call an ambulance instead of a poison line, gives the first aid specific to the route of exposure, and builds a script you can read down the phone. It is an information aid, not treatment.",
   useCases: [

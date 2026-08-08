@@ -1,4 +1,12 @@
 const seo = {
+  title: "Transcript Request Letter to the Controller of Exams",
+  metaDescription:
+    "Draft a university transcript application with enrolment number, study period, sets required and delivery mode, including sealed sets sent direct to WES.",
+  steps: [
+    "Fill in Full name (as on records), Enrolment / registration number, Programme, the study period start and end years, Year of passing, and Transcript sets required (1-20).",
+    "Set Addressed to (The Controller of Examinations, The Registrar or The In-charge, Transcript Cell), pick a Purpose, then choose a Delivery mode - 'Send directly to an evaluation agency (WES / IQAS / ECE etc.)' adds a box for the agency reference.",
+    "Read the drafted letter under Your application letter with its subject line and 'Tip for this purpose', then press Copy letter, or Reset to return to the example values.",
+  ],
   intro:
     "This tool drafts a university transcript request letter — the written application to the Controller of Examinations or Registrar that gets your consolidated, attested academic record issued. It captures every detail transcript cells ask for: enrolment number, programme, period of study, year of passing, number of sets, delivery mode (in person, post, email or direct-to-agency for WES-style credential evaluation) and the enclosure checklist. It is built for graduates applying abroad, filing an ECA, or completing employment verification.",
   useCases: [

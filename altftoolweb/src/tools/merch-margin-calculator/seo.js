@@ -1,4 +1,12 @@
 const seo = {
+  title: "Merch Margin Calculator: Profit per Unit After Fees",
+  metaDescription:
+    "Profit per merch unit after blank, print, packaging and shipping costs plus marketplace, payment and fixed fees — with margin and break-even price.",
+  steps: [
+    "Enter the Sale price with the per-unit Blank cost, Print cost, Packaging and Shipping.",
+    "Set Marketplace %, Payment % and Returns %, which are charged against the sale price, plus the Fixed fee added on top.",
+    "The four tiles read Profit, Margin, Break-even and Fees; Copy puts the price, profit with margin and break-even price on the clipboard, and Reset restores the worked example.",
+  ],
   intro:
     "Merch profit per unit is the order value minus the unit cost and minus every fee, where the fee percentage is charged on the price plus any shipping you collect: profit = (price + shipping) x (1 - platform rate - processing rate) - fixed fees - blank - print - packaging - postage. This calculator also reports margin against revenue, markup against cost, the effect of a return rate, the break-even selling price and the price that would hit a target margin. Aimed at creators and small brands pricing print-on-demand or short-run merch.",
   useCases: [

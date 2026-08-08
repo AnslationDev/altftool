@@ -1,4 +1,12 @@
 const seo = {
+  title: "Decision Matrix Builder: Weight Criteria, Rank Options",
+  metaDescription:
+    "Score options 0-10 against criteria whose weights auto-normalise to 100%, and rank them by SUM(weight x score) / SUM(weights) x 10.",
+  steps: [
+    "Add each choice under Options, then define what matters under Criteria, where the weights auto-normalize to 100%.",
+    "Rate every option against every criterion from 1 to 10 in the Scoring Matrix grid.",
+    "Read Rankings sorted by weighted score with the per-criterion Score Breakdown, then use Copy Results or Download CSV to save decision-matrix.csv.",
+  ],
   intro:
     "The Decision Matrix Builder scores each option you are choosing between against criteria you weight by importance, using the weighted-sum formula Σ(weight × score) ÷ Σ(weights) × 10 to produce a single ranked number out of 100. Criteria weights auto-normalise to 100%, so raising one importance level pushes the others down proportionally instead of letting the totals drift, and every option is scored 0–10 on each criterion. It is for anyone stuck between shortlisted choices who wants the trade-off written down rather than argued from memory.",
   useCases: [

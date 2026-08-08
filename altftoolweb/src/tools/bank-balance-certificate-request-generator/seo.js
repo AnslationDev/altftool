@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Balance Certificate Request Letter for Visa Files",
+  metaDescription:
+    "Size visa funds as days of stay × the Article 21(5) per-day amount, work out the earliest date to ask your branch, and draft the request letter.",
+  steps: [
+    "Enter Trip start date, Trip end date, Visa appointment / submission date and the Reference amount per day.",
+    "Set Accommodation situation, the exchange rate in ₹, Current balance (₹) and Certificate accepted if issued within (days).",
+    "Funds to show gives the rupee figure and any Shortfall, Ask the bank on or after gives the date, and Copy letter takes the branch letter.",
+  ],
   intro:
     "This generator does the two calculations a visa file needs before you walk into the branch: how much money the application should show, and whether the certificate will still be current on appointment day. Funds are sized as days of stay multiplied by the per-day reference amount that Schengen states publish under Article 21(5) of the Visa Code, plus a safety buffer, converted to rupees. It then drafts the request to the branch manager, listing the letterhead, stamp and signatory details that make a certificate acceptable rather than rejected.",
   useCases: [

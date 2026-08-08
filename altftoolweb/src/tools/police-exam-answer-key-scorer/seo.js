@@ -1,4 +1,12 @@
 const seo = {
+  title: "Police Exam Score Calculator with Negative Marking",
+  metaDescription:
+    "Score a constable paper from your correct and wrong counts: UP 2 marks with -0.5, Delhi 1 with -0.25, Bihar no-negative, or your own scheme.",
+  steps: [
+    "Pick your paper from the Exam list — \"UP Police Constable — 150 Q × 2 marks, −0.5\", \"Delhi Police Constable (SSC) — 100 Q × 1 mark, −0.25\", \"Bihar Police Constable — 100 Q × 1 mark, no negative\" — or Custom to type your own scheme.",
+    "Enter \"Correct answers (per the key)\" and \"Wrong answers (per the key)\"; editing Total questions, Marks per correct answer or Marks deducted per wrong answer switches the Exam list to Custom on its own.",
+    "Estimated score recalculates as you type, showing marks out of the paper total with Marks earned, Marks deducted, Attempted / unattempted, Accuracy on attempted and the Break-even accuracy for guessing; \"Copy result\" puts that summary on the clipboard.",
+  ],
   intro:
     "This scorer computes a state police written exam result from your counts of correct and wrong answers using the universal formula: score = correct × marks-per-question − wrong × negative-marking. Presets carry real schemes — UP Police Constable's 150 questions at 2 marks with 0.5 deducted per wrong answer, Delhi Police (SSC) at 1 mark with −0.25, and Bihar's no-negative 100-mark paper — and a custom mode accepts any scheme from your notification. Candidates checking a released answer key get the exact total, the deduction, and their accuracy.",
   useCases: [

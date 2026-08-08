@@ -1,4 +1,12 @@
 const seo = {
+  title: "Facebook & Instagram Data Download: Size and Risk Plan",
+  metaDescription:
+    "Size a Meta 'Download your information' request first: pick categories, HTML or JSON and media quality, then see archive size and download time.",
+  steps: [
+    "Tick the categories under 1. Choose what to include, or use Select all / Deselect all.",
+    "Under 2. Set the export options give Account age (years), Your download speed (Mbps), Media quality and File format — HTML or JSON.",
+    "Estimated archive size appears with the download time, Largest single category and Sensitivity of this selection out of 100, then Copy plan.",
+  ],
   intro:
     "This planner sizes a Meta \"Download your information\" request before you submit it, using Meta's real export controls: category selection, HTML or JSON format, Low/Medium/High media quality and account age as the size driver. It estimates the archive size, the download time at your line speed, and how sensitive the selection is, so you know whether you are about to pull down 200 MB of activity logs or 60 GB of photos. Useful when migrating away from Facebook or Instagram, auditing ad profiling, or preparing evidence before deleting an account.",
   useCases: [

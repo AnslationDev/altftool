@@ -1,4 +1,12 @@
 const seo = {
+  title: "XML to Excel: Real .xlsx with Typed Number Cells",
+  metaDescription:
+    "Convert repeating XML elements to .xlsx, .xls or .ods in your browser. Numbers and TRUE/FALSE stay typed; values with leading zeros stay text.",
+  steps: [
+    "Paste your document into the XML input box or press Upload .xml to load a file up to 8 MB; the repeating element becomes one worksheet row per record.",
+    "Choose an Output format - Excel workbook (.xlsx), Excel 97-2003 (.xls) or OpenDocument sheet (.ods) - set a Worksheet name (max 31 characters), and leave Header row, Attributes as columns and 'Type numbers & booleans' ticked as needed.",
+    "Check the preview table, then press Download spreadsheet — the file takes your uploaded XML's name, or the repeating element's name, with the chosen extension — or Copy for paste to take the rows as tab-separated values.",
+  ],
   intro:
     "This XML to Excel converter reads an XML document, finds the element that repeats, and writes one worksheet row per record as a real .xlsx file — not a renamed CSV. Numbers and TRUE/FALSE values are written as typed cells so they sort and sum correctly, while identifiers with leading zeros and references longer than 15 digits are kept as text, which is where most XML-to-spreadsheet conversions quietly corrupt data. It follows the Office Open XML (ECMA-376) worksheet limits of 1,048,576 rows, 16,384 columns and 31-character sheet names.",
   useCases: [

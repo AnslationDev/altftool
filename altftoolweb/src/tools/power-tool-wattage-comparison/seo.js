@@ -1,4 +1,12 @@
 const seo = {
+  title: "Power Tool Wattage: Will Your Generator Start It?",
+  metaDescription:
+    "Tick the tools running at once and get running watts, the worst start-up surge at 5x for induction motors, and generator derating for altitude and heat.",
+  steps: [
+    "Under 'Tools running at once' tick each tool and set its quantity; the label shows its watts and whether the motor is induction or universal.",
+    "Under 'Your supply' pick a petrol or diesel generator or a battery inverter, the Mains voltage (V), the Continuous rating (W) and Surge or peak rating (W).",
+    "Read Peak demand at start-up against the derated supply, with Running current, Current during the worst start and Smallest supply that copes.",
+  ],
   intro:
     "Compares the running and starting power of common corded tools and applies the two-test sizing rule that decides whether a generator or inverter can run them: total running watts must fit the continuous rating, and the total with the biggest machine starting must fit the surge rating. Starting surge is set by motor type — around 5× running for an induction motor, whose locked rotor current is 5 to 6 times full load, and about 2× for a brushed universal motor. Generator output is derated 3% per 300 m of altitude and 1% per 5.6 °C above 25 °C.",
   useCases: [

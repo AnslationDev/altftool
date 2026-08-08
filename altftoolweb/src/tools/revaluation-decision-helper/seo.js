@@ -1,4 +1,12 @@
 const seo = {
+  title: "Revaluation Calculator: Is the Re-Check Fee Worth It?",
+  metaDescription:
+    "Prices both sides of a revaluation: expected marks from P(rise)×gain − P(fall)×loss, cost per expected mark, break-even chance and days left to apply.",
+  steps: [
+    "Under \"Where you stand\", enter \"Marks awarded\", \"Maximum marks for the subject\", \"Marks you actually need\" and \"Subjects you would apply for\".",
+    "Under \"The bet\", set \"Fee per subject (INR)\", the chance and size of a rise, the chance and size of a reduction, and the \"Last date to apply\".",
+    "Read \"Expected marks after revaluation\" with its recommendation badge, plus Cost per expected mark, Break-even chance of a rise and Days left to apply, then press \"Copy result\".",
+  ],
   intro:
     "This helper prices a revaluation application as what it actually is — a bet with a fixed fee and a two-sided outcome. It computes the expected change in marks as P(rise) × gain − P(fall) × loss, the cost of each mark you can expect to gain, and the break-even probability at which the application stops being worth the money, then checks the answer against the deadline. The downside is priced deliberately, because boards including CBSE treat the marks awarded after re-evaluation as final whether they are higher or lower than the original.",
   useCases: [

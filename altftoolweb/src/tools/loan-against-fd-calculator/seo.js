@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Against FD vs Breaking It: Which Costs Less?",
+  metaDescription:
+    "Compare closing an FD early — repriced to the card rate less a 0.5-1% penalty — against a 90% loan-to-value overdraft at the FD rate plus spread.",
+  steps: [
+    "Enter Fixed deposit amount (INR), Cash you need today (INR), Contracted FD rate (% a year), Original tenure (months) and Months already completed.",
+    "Set Card rate for the period run (% a year), Premature-withdrawal penalty (% a year), Loan spread over the FD rate (% a year), Loan-to-value allowed (%) up to 95, and Months the overdraft stays drawn (optional) — leave it blank to keep the overdraft drawn until maturity.",
+    "Better option names the winner and the rupee gap at the original maturity date, with side-by-side Break the deposit and Borrow against it panels covering Rate after penalty, Maximum you can borrow and Net at original maturity; Copy result copies the comparison.",
+  ],
   intro:
     "A loan against a fixed deposit is a secured overdraft priced at the deposit's own rate plus a spread, and this calculator sets it against the alternative of closing the deposit early. Breaking an FD reprices the interest to the card rate for the period the money actually stayed, minus a premature-withdrawal penalty of usually 0.5% to 1%, applied from the date of deposit. Both routes are valued at the original maturity date, with quarterly compounding on the deposit and simple interest on the overdraft, so the two figures are directly comparable.",
   useCases: [

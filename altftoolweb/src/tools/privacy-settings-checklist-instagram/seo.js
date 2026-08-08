@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram Privacy Checklist: 30 Settings, Scored",
+  metaDescription:
+    "Walk 30 Instagram privacy controls ranked by the exposure each one removes, tick what you have already set, and score it for your risk profile.",
+  steps: [
+    "Choose Who are you locking this down for? — Private personal account, Public creator or business, Teen or young account, Job hunting or professional reputation, Leaving an unsafe situation, or Balanced (no re-weighting) — and set a Target score (%).",
+    "Tick the settings you have already applied across the five groups (Who can find you, What people can see, Who can reach you, Data and advertising, Account security), or use Mark all applied and Clear all.",
+    "Protection score shows a percentage, held at 69% while any setting badged Critical is still open, alongside Remaining exposure by area bars and a Shortest route to your target list naming each setting and the menu path it lives at; Copy result copies the whole audit.",
+  ],
   "intro": "This checklist walks all 30 privacy controls that decide who can find, see, message and profile you on Instagram, and scores what is still open. It covers account privacy, contact syncing, tags and mentions, story audience, message controls, Hidden Words, the Meta Accounts Centre ad settings and login security, weighting each control by how much exposure it actually removes. Choose the risk profile that matches your situation — a public creator, a teen account or someone leaving an unsafe relationship all need different settings tightened first.",
   "useCases": [
     "Lock down a personal account before a job search, when a recruiter will search your name and read whatever is public.",

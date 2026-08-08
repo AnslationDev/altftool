@@ -1,4 +1,12 @@
 const seo = {
+  title: "Will Your Logo Read at 16px? Favicon Legibility Check",
+  metaDescription:
+    "Scales your thinnest stroke and cap height to 16, 32, 48 and 180px, grades each, and downscales the real file in-browser to measure detail loss.",
+  steps: [
+    "Enter Artwork width (px), Artwork height (px), Thinnest stroke or gap (px) and Smallest cap height (px, 0 if no text).",
+    "Optionally open the logo — PNG, JPEG, WebP or SVG — to rasterise real downscaled previews in your browser; the file is never uploaded.",
+    "Read Smallest size that still reads plus the Stroke, Text, Detail kept and Verdict columns for 16, 32, 48 and 180px, then press Copy result.",
+  ],
   intro:
     "The Logo Favicon Legibility Checker converts your artwork's thinnest stroke and shortest letterform into the number of device pixels they occupy once the mark is contained inside a 16, 32, 48 or 180 pixel square, and grades each size against the point where a line stops being drawable and a letter stops being distinguishable. Load the actual file and it also rasterises real downscaled previews and measures how much edge detail survived compared with a 256 pixel reference render. Everything happens in the browser, so the logo is never uploaded.",
   useCases: [

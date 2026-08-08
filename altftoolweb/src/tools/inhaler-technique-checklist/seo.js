@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inhaler Technique Checklist: pMDI, Spacer, DPI Steps",
+  metaDescription:
+    "Tick the correct steps for a pMDI, spacer, dry powder, soft mist or breath-actuated inhaler; critical steps and inhalation speed are flagged.",
+  steps: [
+    "Pick your device under Which inhaler do you use? - metered-dose inhaler, pMDI with a spacer, dry powder, soft mist or breath-actuated.",
+    "Work down the step-by-step list and tick only the steps you actually perform; Tick everything and Clear all reset the ticks.",
+    "Read the Technique score with critical steps completed, the inhalation speed for that device, and the Steps to fix list, then Copy result.",
+  ],
   intro:
     "The Inhaler Technique Checklist walks through the correct sequence for each inhaler family — metered-dose, spacer, dry powder, soft mist and breath-actuated — and scores which steps you actually perform. Steps are marked critical when getting them wrong stops the drug reaching the lungs, following the technique instructions in GINA and BTS/SIGN asthma guidance. The most consequential difference it enforces is inhalation speed: slow and steady over 4-5 seconds for pressurised and soft-mist devices, quick and forceful for dry powder inhalers.",
   useCases: [

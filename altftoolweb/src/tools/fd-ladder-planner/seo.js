@@ -1,4 +1,12 @@
 const seo = {
+  title: "FD Ladder Planner: Rung Maturities and Blended Yield",
+  metaDescription:
+    "Split a lump sum across 2–10 staggered FDs. Quarterly compounding gives each rung's amount, rate, maturity value and date, plus the blended yield.",
+  steps: [
+    "Enter \"Lump sum to invest (INR)\", \"Number of rungs (2-10)\", \"Shortest tenure (months)\" and \"Gap between rungs (months)\".",
+    "Set \"Rate on shortest rung (% p.a.)\" and \"Rate change per rung (%)\", then choose \"How to split the money\" — equal, more in short tenures, or more in long tenures.",
+    "Read The ladder table for each rung's Amount, Rate and Maturity with its date, plus Average effective yield and Weighted average tenure, then press \"Copy result\".",
+  ],
   "intro": "Fixed Deposit Ladder Planner splits one lump sum across several FDs of staggered tenures so a deposit matures at regular intervals instead of everything being locked until a single date. It compounds each rung quarterly the way cumulative bank FDs do, applies a rising rate to longer rungs, and reports every rung's amount, rate, maturity value and maturity date alongside the blended yield and weighted average tenure. It is aimed at savers parking a bonus, retirement payout or emergency fund who want both liquidity and long-tenure rates.",
   "useCases": [
     "Spread a Rs 5 lakh bonus across 1 to 5-year FDs so one deposit matures every year.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brisk Walk Intensity Checker: Cadence & HR Zones",
+  metaDescription:
+    "Scores a walk on cadence against 100 and 130 steps/min, heart-rate zones from 208 − 0.7 × age, the talk test and Borg RPE, then takes the median.",
+  steps: [
+    "Enter Age (years), then whichever readings you have: Cadence (steps/min, 0 to skip), Heart rate while walking (bpm, 0 to skip), Resting heart rate (bpm, optional) and Borg RPE 6–20 (0 to skip).",
+    "Pick a Talk test answer — I could sing a line of a song, I can hold a conversation but not sing, I can only manage a few words before a breath, or Not sure / skip. Supplying a resting heart rate switches the Zone method to Heart-rate reserve (Karvonen); leave it out and zones are Percent of maximum heart rate.",
+    "Overall intensity reports Light, Moderate or Vigorous from the median of your readings, with Readings used out of 4, Estimated max heart rate, the Moderate and Vigorous heart-rate zones and the Cadence still needed / Heart rate still needed gaps, plus a Reading by reading card for each signal. Copy result copies the summary.",
+  ],
   intro:
     "Brisk Walk Intensity Checker scores a walk against the four field measures of exercise intensity used in physical-activity research: cadence, heart rate, the talk test and Borg perceived exertion. Cadence is judged against the 100 and 130 steps-per-minute thresholds, heart rate against Karvonen or percent-of-maximum zones built on the Tanaka formula HRmax = 208 − 0.7 × age, and the verdict is the median of whichever readings you supply. It is for walkers who want to know if their daily walk really counts toward the 150-minutes-a-week guideline.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tamil New Year Wishes in Tamil, Tanglish or English",
+  metaDescription:
+    "Puthandu greetings for Chithirai 1 (usually 14 April) and 1 January, in Tamil script, Tanglish or English, with SMS segment and 700-char status counts.",
+  steps: [
+    "Choose the Occasion — 'Puthandu - Tamil New Year (Chithirai 1)' or '1 January new year' — a Tone, and a Language / script of Tamil script (தமிழ்), Tanglish or English.",
+    "Add the Recipient name, 'Sign off as' and 'Tamil year name' fields, set 'How many messages' between 1 and 8, then press Shuffle for a different draw of wordings.",
+    "Each message card prints its character count, its SMS segments at 70 characters per Unicode segment, and whether it fits a 700-character WhatsApp status; press Copy on one, or Copy all.",
+  ],
   intro:
     "This generator writes Tamil new year greetings for Puthandu — the first day of Chithirai, which falls on 14 April in most years — and for the 1 January new year, in Tamil script, Tanglish transliteration or English. Each message combines the correct greeting form, a line about what the day actually involves such as the kanni viewing or the six-taste maanga pachadi, and a closing that matches the tone you choose. Character and SMS segment counts are shown for every message, because Tamil text is sent as Unicode and fits only 70 characters per SMS.",
   useCases: [

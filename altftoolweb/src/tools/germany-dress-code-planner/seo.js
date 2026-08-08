@@ -1,4 +1,12 @@
 const seo = {
+  title: "Germany Dress Code & Packing Planner by Month",
+  metaDescription:
+    "Germany is casual except in three places: textile-free saunas, cathedral cover-up and the Section 86a symbol ban. Pick a month for a counted packing list.",
+  steps: [
+    "Choose your Month of travel, Trip length (days) and Laundry every (days), and tick \"I will be asked to cover my hair\" if that applies to you.",
+    "Under \"Where are you going?\" tick the venues on your itinerary — Sauna, therme and spa; FKK lakes, beaches and city parks; Cathedrals and churches (Kölner Dom, Frauenkirche); and the rest.",
+    "Clothing to pack reports the item count and kilograms against DWD normals for average daytime high, night low and rainfall, alongside \"Rules your itinerary triggers\" and a Packing list table; Copy plan copies it.",
+  ],
   intro:
     "This planner turns Germany's few hard clothing rules and Deutscher Wetterdienst climate normals into a counted packing list. Germany is casual nearly everywhere and strict in three places: saunas are textile-free, so swimwear is not worn in the cabin; cathedrals such as the Kölner Dom ask for covered shoulders and knees with hats off; and Section 86a of the Strafgesetzbuch makes wearing the symbols of unconstitutional organisations a criminal offence. Everything else is a weather problem, which the monthly figures here size for you.",
   useCases: [

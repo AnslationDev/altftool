@@ -1,4 +1,12 @@
 const seo = {
+  title: "Recipe Scaler: Servings or Pan Size, in Real Fractions",
+  metaDescription:
+    "Scales ingredients by servings or pan area, an 8-inch to 9-inch round is 1.27x, into 1 1/2 style fractions, and flags salt, spice, leavening and eggs.",
+  steps: [
+    "Build the ingredient list with Add row, or open Paste list, drop the recipe into Paste ingredients — one per line and press Parse & add; it reads 1/2, half-symbol fractions and 1 1/2 alongside cups, tbsp, tsp, g and ml.",
+    "Pick By servings and set Original servings and Target servings, using the Half it, x1.5, Double and Triple chips, or pick By pan size and set the Original pan and Target pan, which scales on area rather than diameter.",
+    "Scale factor shows the multiplier, the Scaled recipe list rewrites every amount as a cook-friendly fraction, and Watch-outs for this scale flags salt, spices, leavening and eggs; Copy recipe copies the list and Download saves scaled-recipe.txt.",
+  ],
   intro:
     "Recipe Scaler multiplies every ingredient in a recipe by one factor, worked out either from servings (target ÷ original) or from baking pan area, and rewrites the results as kitchen-friendly fractions instead of decimals. Pan mode uses real area maths — π × (diameter ÷ 2)² for round tins, side² for square — so moving an 8-inch round to a 9-inch round comes out at 1.27x, not 1.13x. It also flags the ingredients that should not be scaled linearly: leavening, salt, spices and eggs each get their own advisory instead of a blind multiplication.",
   useCases: [

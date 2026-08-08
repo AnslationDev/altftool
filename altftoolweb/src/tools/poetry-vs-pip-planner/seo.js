@@ -1,4 +1,12 @@
 const seo = {
+  title: "Poetry vs pip vs uv vs conda: Ranked for Your Project",
+  metaDescription:
+    "Score uv, Poetry, pip + pip-tools and conda against your project's lockfile, publishing, binary and CI-speed needs. Every point maps to a stated reason.",
+  steps: [
+    "Pick what you are building under 'What are you building?' - Application / service (deployed, not published), Library published to PyPI, or Data science / ML notebooks and pipelines.",
+    "Tick the constraints that apply under 'What matters for this project?': a lockfile for reproducible installs, publishing to PyPI, install speed for large CI, non-Python binaries such as CUDA or GDAL, a monorepo, staying close to requirements.txt, or letting the tool install Python versions.",
+    "Read the Recommended manager panel, where uv, Poetry, pip + pip-tools and conda are ranked with points, a share percentage and the reasons behind each, then press Copy summary or Reset.",
+  ],
   intro:
     "This planner scores uv, Poetry, pip + pip-tools and conda against your project's actual needs and returns a ranked recommendation with the reason behind every point. It uses an additive scoring model built from each tool's documented capabilities — lockfile format, PyPI publishing, binary package support, interpreter management and workspace handling — so the ranking is fully explainable, not a black box. It is for Python developers choosing (or defending) a packaging workflow for an application, a PyPI library or a data science stack.",
   useCases: [

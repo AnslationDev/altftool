@@ -1,4 +1,7 @@
 const seo = {
+  title: "Deep Breathing Guide: 4-7-8, Box and Sleep Timers",
+  metaDescription:
+    "A paced breathing timer for 4-7-8, Box (4-4-4-4), Deep Sleep and Morning Energy, with an animated circle and Beginner, Moderate or Pro phase lengths.",
   intro:
     "The Deep Breathing Guide paces a breathing session with an animated circle and a per-phase countdown, running four timed patterns: 4-7-8 (inhale 4, hold 7, exhale 8), Box breathing (4-4-4-4), Deep Sleep (4-2-4) and Morning Energy (2-2). A three-second preparation countdown and a chime start each session, and an experience setting scales every phase length — Beginner at 0.75×, Moderate at 1×, Pro at 1.25× — so the same pattern can be eased into or extended. It is a pacing timer for relaxation and focus practice, not a medical device.",
   useCases: [

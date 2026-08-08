@@ -1,4 +1,12 @@
 const seo = {
+  title: "Future Partner Prediction Quiz (Just for Fun)",
+  metaDescription:
+    "Your name, zodiac sign and two questions produce a partner profile: occupation, sign, how you meet and three scores. Same answers, same result.",
+  steps: [
+    "Enter \"Your Name\", \"Your Zodiac Sign\", \"Your Gender\" and \"Preferred Partner Gender\", then press \"Proceed to Lifestyle Questions\".",
+    "Answer the two quiz questions — your idea of a perfect date, and the trait you value most in a partner — picking one of four options each.",
+    "The \"Future Spouse Profile\" card names an occupation, a partner zodiac sign and \"How You Will Meet\", with Overall Harmony Index, Communication Resonance and Lifestyle Synchronicity bars; Download saves future-partner-report.txt.",
+  ],
   intro:
     "Future Partner Prediction turns your name, zodiac sign and two quick preference questions into a written profile of a hypothetical future partner — their occupation, personality, zodiac sign, how the two of you meet, and three compatibility percentages. The result is deterministic rather than random: a hash of your name and star sign is combined with the answers you picked, so the same inputs always produce the same partner profile. It is a novelty fortune-telling format, and the whole prediction can be copied or downloaded as a text report.",
   useCases: [

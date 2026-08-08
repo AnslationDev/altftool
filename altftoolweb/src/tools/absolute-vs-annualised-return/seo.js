@@ -1,4 +1,12 @@
 const seo = {
+  title: "Absolute vs Annualised Return Converter (CAGR)",
+  metaDescription:
+    "Turn a whole-period gain into a compounded yearly rate and back, via 1 + absolute = (1 + annualised)^years, for a period in years, months or days.",
+  steps: [
+    "Pick a Direction — \"Absolute → annualised\" or \"Annualised → absolute\" — and type the figure into the field that appears, either \"Absolute (total) return over the whole period (%)\" or \"Annualised return (% per year)\".",
+    "Enter the Holding period and set \"Period unit\" to Years, Months or Days; optionally fill \"Optional: amount invested (INR) to see the result in money\".",
+    "The headline gives the converted rate, and the list adds the growth multiple, the simple average per year, how many percentage points that shortcut overstates by, years to double, and a table of the same rate over other horizons; \"Copy result\" copies the summary.",
+  ],
   intro:
     "This converter moves between absolute return — the total percentage gain across a whole holding period — and annualised return, the compounded yearly rate that produces it, using the identity 1 + absolute = (1 + annualised)^years. Enter either figure with a period in years, months or days and get the other, plus the growth multiple and the naive total-divided-by-years average for comparison. It exists because fund factsheets quote absolute returns under one year and annualised returns above it, which makes side-by-side comparison misleading.",
   useCases: [

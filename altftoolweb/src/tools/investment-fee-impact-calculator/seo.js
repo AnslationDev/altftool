@@ -1,4 +1,12 @@
 const seo = {
+  title: "Investment Fee Impact: What 1.5% Costs Over 20 Years",
+  metaDescription:
+    "Compound your money at the gross return and at return minus fee, side by side: a 1.5% charge removes about 24% of a 20-year corpus.",
+  steps: [
+    "Enter Investment Amount in ₹, Expected Return (% p.a.), Investment Period (Years) and Annual Expense Ratio (%) — the total annual drag, fund expense ratio plus any advisory or platform fee.",
+    "Press Calculate; the same principal is compounded twice, once at the return and once at return minus the fee, so the lost growth on lost growth is counted rather than a flat charge subtracted.",
+    "Value After Fees appears as the headline with Fees Cost You beneath it, and the Without Fees, With Fees, Fees Consumed and Fees Impact % tiles give the gap in rupees and as a share of the fee-free corpus.",
+  ],
   intro:
     "The Investment Fee Impact Calculator shows how much of your final corpus an annual fee consumes, by compounding your investment twice — once at the gross return and once at the return minus the fee — and reporting the gap. Enter a lump sum, an expected annual return, a holding period and a total annual fee such as an expense ratio, and it returns the value with fees, the value without, the rupee amount lost and that loss as a percentage. It is for anyone comparing funds, advisory plans or PMS charges before committing money for a decade or more.",
   useCases: [

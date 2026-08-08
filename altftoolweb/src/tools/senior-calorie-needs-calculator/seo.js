@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Calorie Calculator: Mifflin-St Jeor Over 50",
+  metaDescription:
+    "Daily calories for adults 50+ from Mifflin-St Jeor, an activity factor of 1.2-1.9, a 1,200/1,500 kcal floor and the 1.0-1.2 g/kg senior protein target.",
+  steps: [
+    "Set Sex, 'Age (years)', 'Weight (kg)' and 'Height (cm)' — the Mifflin-St Jeor equation takes 5 kcal of resting metabolism off for every year of age.",
+    "Choose an Activity level from Sedentary (1.2) to Extremely active (1.9) and a Goal, and tick 'Living with illness or recovering from surgery' to lift the protein band to 1.2-1.5 g/kg.",
+    "Read the Daily calorie target beside 'Resting energy (BMR)' and Maintenance calories, plus the Protein target in g/day, the Fluid guide in mL and the kcal lost per decade, then press Copy result.",
+  ],
   intro:
     "The Senior Calorie Needs Calculator estimates daily energy requirements for adults aged 50 and over using the Mifflin-St Jeor equation, which subtracts 5 kcal of resting metabolism for every year of age and is the prediction equation recommended by the Academy of Nutrition and Dietetics. Resting energy is multiplied by an activity factor from 1.2 to 1.9, adjusted for a weight goal, and held above a safe intake floor. It also reports the higher protein target of 1.0 to 1.2 g per kg of body weight that PROT-AGE and ESPEN recommend for older adults.",
   useCases: [

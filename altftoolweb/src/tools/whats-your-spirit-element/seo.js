@@ -1,4 +1,12 @@
 const seo = {
+  title: "What's Your Spirit Element? A 10-Question Quiz",
+  metaDescription:
+    "Ten questions scored across Fire, Water, Earth, Air, Aether and Lightning. Your top element comes with traits, a season and the full six-way spread.",
+  steps: [
+    "Press \"Start the Quiz\" to open the first of ten questions, covering how you react to a thunderstorm, how you recharge and how you handle change.",
+    "Pick one option per screen — each answer adds weighted points to more than one of Fire, Water, Earth, Air, Aether and Lightning.",
+    "The highest total is revealed under \"Your spirit element is\", with a summary, elemental traits and a season, alongside all six scores; \"Retake the Quiz\" starts over.",
+  ],
   intro:
     "What's Your Spirit Element? is a 10-question quiz that scores your answers across six elemental dimensions — Fire, Water, Earth, Air, Aether and Lightning — and names the one with the highest total as your spirit element. Questions ask how you react to a thunderstorm, how you recharge and how you handle change, with each option adding weighted points to more than one element. Your result gives a written profile, five traits, an associated season and a matching quote, and it also shows the other five elements so you can see the full set.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fever Temperature Converter: C, F, K by Measuring Site",
+  metaDescription:
+    "Convert a reading between Celsius, Fahrenheit and Kelvin, then check it against that site's fever threshold: 38.0 rectal, 37.8 oral, 37.2 armpit.",
+  steps: [
+    "Enter the Temperature reading and pick the Scale: Celsius (°C), Fahrenheit (°F) or Kelvin (K).",
+    "Choose Where it was measured — Oral (under the tongue), Rectal, Ear (tympanic), Forehead (temporal artery) or Armpit (axillary).",
+    "Read all three scales with the fever threshold for that site, your distance from it, the core-equivalent reading and a band from Hypothermia range to Hyperpyrexia.",
+  ],
   intro:
     "The Fever Temperature Converter changes a thermometer reading between Celsius, Fahrenheit and Kelvin with the exact formulas °F = °C × 9/5 + 32 and K = °C + 273.15, then compares it against the fever threshold for the site it was taken from. Because those thresholds differ — 38.0 °C (100.4 °F) rectal or ear, 37.8 °C (100.0 °F) oral, 37.2 °C (99.0 °F) armpit — the same number can mean fever at one site and not another. It is written for parents and carers translating between a thermometer, a leaflet and a doctor who uses the other scale.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Diwali Sale Poster Maker: Offer Maths, PNG and SVG",
+  metaDescription:
+    "Build a Diwali sale or greeting poster: enter list price, discount and cap to get the real price and effective rate. Export square, story or A4 PNG.",
+  steps: [
+    "Choose 'Sale / offer poster' or 'Greeting poster', then fill 'Shop or brand name' and 'Headline (leave blank for an automatic one)'.",
+    "For a sale, enter 'List price / MRP (INR)', 'Discount (%)' and the optional maximum saving cap; the panel prints Customer saves, Price after discount and Effective discount.",
+    "Pick a palette and a canvas — 'Square post 1080', 'Story 1080 x 1920' or 'A4 portrait (print, 300 dpi)' — then hit 'Download PNG' for diwali-poster-a4.png or 'Download SVG'.",
+  ],
   intro:
     "The Diwali Poster Generator produces a festival sale or greeting poster and works out the offer numbers behind it. Enter a list price, a discount rate and an optional \"up to ₹X\" cap, and it returns the price after discount, the rupee saving and the effective discount once the cap bites — so the headline on the poster matches the bill at the counter. Five warm palettes are checked against the WCAG contrast minimums (4.5:1 for body text, 3:1 for large text) and export sizes cover a 1080 px square, a 1080 × 1920 story and A4 at 300 dpi.",
   useCases: [

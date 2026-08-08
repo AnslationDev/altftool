@@ -1,4 +1,12 @@
 const seo = {
+  title: "Secret Message Encoder: 8 Ciphers Plus AES-256-GCM",
+  metaDescription:
+    "Encode text as Caesar, ROT13, Atbash, Vigenere, Base64, URL, Morse or binary - or genuinely encrypt it with AES-256-GCM, all in your browser.",
+  steps: [
+    "Type into the Message box, which starts on \"Meet me at the old bridge at nine.\", and pick an Algorithm: Caesar shift, ROT13, Atbash, Vigenere (keyword), Base64 (RFC 4648), URL percent-encoding (RFC 3986), Morse code (ITU-R M.1677-1) or Binary (8 bits per byte).",
+    "Set Direction to Encode or Decode; Caesar adds a \"Shift (k)\" field defaulting to 3 and Vigenere a \"Keyword (letters only)\" field defaulting to LEMON. For real confidentiality, type a \"Passphrase (8 characters or more)\" and press \"Encrypt the message above\".",
+    "The read-only Result box fills as you type, with Algorithm, input and output characters/bytes and FNV-1a fingerprints listed underneath; AES output appears separately as AES payload, and \"Copy output\" copies whichever is present.",
+  ],
   intro:
     "The Secret Message Encoder converts text between eight reversible schemes — Caesar shift (C = P + k mod 26), ROT13, Atbash, Vigenere, Base64 per RFC 4648, percent-encoding per RFC 3986, International Morse per ITU-R M.1677-1, and 8-bit binary — and adds genuine AES-256-GCM encryption with a PBKDF2-HMAC-SHA256 key at 600,000 iterations, the OWASP-recommended figure. Everything runs in the browser with nothing uploaded. It is aimed at puzzle makers, teachers demonstrating classical cryptography, and developers who need a quick encode or decode.",
   useCases: [

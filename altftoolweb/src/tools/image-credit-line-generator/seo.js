@@ -1,4 +1,12 @@
 const seo = {
+  title: "Image Credit Line Generator: 9 Styles + IPTC Fields",
+  metaDescription:
+    "Write a photo credit in wire, magazine, caption, museum or academic style, then fill Creator, Credit Line, Source and Copyright Notice separately.",
+  steps: [
+    "Pick a Credit style — Wire service, Caption prefix, Parenthetical, Magazine, Labelled, Courtesy, Social post, Museum / archive or Academic figure — then fill Photographer / creator, Agency or publication to credit, Collection or rights owner, Source and Year.",
+    "Set Usage terms such as Editorial use only, and read 'Check before you publish' for warnings like a missing photographer or a Credit Line and Source holding the same text.",
+    "Press Copy result to take the credit line together with its four IPTC fields — Creator (By-line), Credit Line, Source and Copyright Notice — or copy a single row from 'The same credit in every style'.",
+  ],
   intro:
     "This generator turns a photographer, agency, collection and year into a credit line in the house style you need — wire (Jane Doe/Agency), magazine, caption prefix, parenthetical, social, museum or academic figure — and shows the same credit rendered in every style side by side. It also fills the four IPTC Photo Metadata fields that should travel inside the file: Creator, Credit Line, Source and Copyright Notice, each with a different value, because filling all four with the same string is the commonest metadata error in a picture desk.",
   useCases: [

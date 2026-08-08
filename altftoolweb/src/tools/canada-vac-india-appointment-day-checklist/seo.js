@@ -1,4 +1,12 @@
 const seo = {
+  title: "Canada VAC India Appointment Day: Fee, Time, Checklist",
+  metaDescription:
+    "Get your leave-home time, the CAD 85 biometric fee with the CAD 170 family cap, your 30-day BIL deadline and what to leave outside the centre.",
+  steps: [
+    "Set Appointment slot (24-hour), Travel time door to centre (minutes) and Traffic and parking buffer (minutes), then choose Application type — Visitor visa (TRV) or Super Visa, Study permit, Work permit or Permanent residence.",
+    "Enter Applicant age (years) and People giving biometrics, pick the Fee group (Applying on my own, Family applying together (CAD 170 cap), or Group of 3+ performing artists (CAD 255 cap)), and add the BIL issue date (optional) to date the 30-day deadline.",
+    "Read the Leave home by time and the Biometric collection fee, tick items in the checklist sections to move Checklist progress, then press Copy checklist to copy the whole plan as text.",
+  ],
   intro:
     "This planner converts a Canada visa application centre slot in India into a departure time, a biometric fee figure and a checklist you can tick off. It applies the published IRCC rules — CAD 85 per person for biometric collection with a CAD 170 family cap, a Biometric Instruction Letter that must be used within 30 days, and the under-14 and over-79 age exemptions — plus the standard VAC restrictions on bags and electronics. Aimed at visitor, study permit, work permit and permanent residence applicants attending their first biometric appointment.",
   useCases: [

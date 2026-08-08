@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Logo Prompt Builder + Stroke and Favicon Limits",
+  metaDescription:
+    "Compose a Midjourney or DALL-E logo prompt from mark type, shape language and palette — with minimum stroke %, element budget, clear space and print px.",
+  steps: [
+    "Type a 'Brand name' and choose 'Mark type', 'Shape language', 'Palette strategy', 'Style era' and 'Construction grid'.",
+    "Enter 'Smallest reproduction size (px)', 'Smallest print height (mm)' and 'Print resolution (dpi)' — these drive the reproduction limits.",
+    "Press 'Copy prompt' for the prompt and negative prompt, and check 'Minimum stroke weight', 'Element budget', 'Clear space' and 'Print raster height'.",
+  ],
   intro:
     "This generator composes an image-model prompt for a logo from your chosen mark type, shape language, palette strategy and style era, and computes the reproduction limits the mark must survive — minimum stroke weight, element budget, clear space and the print raster size. The limits follow from raster physics (a feature narrower than one device pixel vanishes) and the standard brand-guide convention of clear space equal to half the mark height. It is built for founders and designers who want a usable symbol, not just a pretty picture.",
   useCases: [

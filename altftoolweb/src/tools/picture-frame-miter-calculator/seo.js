@@ -1,4 +1,12 @@
 const seo = {
+  title: "Picture Frame Miter Calculator: Angle, Long & Short Point",
+  metaDescription:
+    "Miter setting is 180 divided by sides: 45 for a square, 30 hexagon, 22.5 octagon. Long and short point per rail, plus moulding after kerf and waste.",
+  steps: [
+    "Choose the Frame shape and Units, then enter Artwork width and Artwork height for a rectangle, or Number of sides (3 to 24, with hexagon and octagon presets) and Opening side length for a polygon, plus the Moulding face width.",
+    "Set Clearance added to the artwork, Blade kerf per cut, Waste allowance (%) and Stock stick length, then give Rabbet depth and the Glass + mat + art + backing thickness so the depth check can run.",
+    "Miter saw setting gives the angle for that side count, the cutting list lists Qty, Long point and Short point for every rail, and the rows below report Moulding to buy, Sticks needed, Rabbet opening and Glass / backing size; Copy result copies the whole cutting list.",
+  ],
   intro:
     "A picture frame miter calculator gives the saw angle and the exact cut lengths for a closed frame of any number of sides. The angle comes from the fact that a frame turns through 360° in total, so each corner turns 360/n and each end is cut 180/n away from square — 45° for a square, 30° for a hexagon, 22.5° for an octagon. Lengths follow from the geometry of a regular polygon: the outside of each rail is longer than the inside by 2 × moulding width × tan(180/n), which for a rectangle is the familiar rule of opening plus twice the moulding.",
   useCases: [

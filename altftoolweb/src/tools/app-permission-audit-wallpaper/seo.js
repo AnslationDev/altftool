@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wallpaper App Permission Audit and Ad SDK Risk Score",
+  metaDescription:
+    "A wallpaper app needs only SET_WALLPAPER and internet. Scores 18 permissions by sensitivity and flags what to revoke: overlay, install, accessibility.",
+  steps: [
+    "Type the app into App name (for the report), then choose Checklist or Paste list — Paste list takes one permission per line, copied from the Play Store listing (About this app > App permissions > See more) or Settings > Apps > Permissions.",
+    "In Checklist mode tick what the app holds from the 18 rows — Set wallpaper, Internet access, Display over other apps, Install other apps, Accessibility service and the rest — or start from the Typical wallpaper app, Everything granted or Clear all buttons.",
+    "The Privacy score reads out of 100 with a verdict, over rows for Permissions granted, Revoke now, Worth reviewing, Justified by a core feature, Restricted / special access granted and Exposure points, then a Revoke these first list and the Every item, with its manifest name table. Copy result copies the report.",
+  ],
   intro:
     "The Wallpaper App Permission Audit scores a wallpaper or live-wallpaper app against the smallest honest permission set on your phone: SET_WALLPAPER, an internet connection for the catalogue, and the system photo picker. Everything else is scored as exposure, because the usual reason for it is the bundled advertising SDK rather than any wallpaper feature. Eighteen permissions are weighted by sensitivity, with overlay, install-other-apps and accessibility access at the top — the three that turn a free wallpaper pack into an adware delivery route.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Rent Receipt Generator for HRA: Print-Ready PDFs",
+  steps: [
+    "Fill \"Tenant name (who pays the rent)\", \"Landlord name\", \"Full rented address\" and \"Monthly rent (₹)\"; \"Landlord PAN (optional)\" is checked against the ABCDE1234F pattern.",
+    "Set the \"From month\" and \"To month\" range, choose a \"Payment mode\" — Cash, UPI, Bank transfer or Cheque — and pick \"Monthly receipts\" or \"Quarterly receipts\".",
+    "Check the preview, where each receipt carries its serial number and the amount in words, then press \"Print / Save as PDF\"; ranges beyond 60 months are trimmed with a warning.",
+  ],
   intro:
     "Rent Receipt Generator turns one set of rent details — tenant, landlord, PAN, address, monthly rent and a from/to month range — into a series of formal, print-ready rent receipts, one per month or one per quarter. Each receipt carries a serial number, the amount in figures and in Indian-system words (Thousand, Lakh, Crore), the payment mode, the rented address, the period covered, and a landlord signature block. It is built for salaried employees assembling HRA proof for a payroll declaration, and everything is generated in the browser.",
   useCases: [

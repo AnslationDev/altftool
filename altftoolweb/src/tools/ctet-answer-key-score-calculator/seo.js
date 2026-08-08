@@ -1,4 +1,12 @@
 const seo = {
+  title: "CTET Score Calculator: 150 Marks, No Negative Marking",
+  metaDescription:
+    "Count correct answers per section for Paper I or Paper II and see your total against the 90-mark (60%) line, or 55% with relaxation.",
+  steps: [
+    "Choose the Paper — Paper I — classes I to V, or Paper II — classes VI to VIII, which adds a Subject block of Mathematics and Science teacher or Social Studies / Social Science teacher.",
+    "Set the Qualifying standard to General — 60% or Reserved category with relaxation — 55%, then enter Correct and Wrong counts for each row under Answers per section (from the response sheet).",
+    "Read your total out of 150 with Percentage, Correct / wrong / unattempted, Accuracy on attempted, Qualifying marks and Marks forgone by leaving blanks, then press Copy result.",
+  ],
   intro:
     "This calculator scores a CTET attempt from the answer key: 150 questions of 1 mark each, no negative marking, so your score is simply the number of correct answers. It covers Paper I (classes I–V, five 30-question sections) and Paper II (classes VI–VIII, with the 60-question Mathematics & Science or Social Studies block) and checks the result against the CBSE qualifying line — 90 marks (60%), or 55% where the reserved-category relaxation applies. Candidates get a section-wise breakdown with accuracy, plus how far they sit from the cut-off.",
   useCases: [

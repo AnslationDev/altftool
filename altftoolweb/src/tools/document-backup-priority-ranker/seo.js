@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Backup Priority Ranker: What to Scan First",
+  metaDescription:
+    "Rank household papers by replaceability, urgency and dependency on a 0-100 score, then fit the Tier 1 items into the minutes you have today.",
+  steps: [
+    "Set Minutes you can spend today, or tap the 15, 30, 45 or 90 min chip.",
+    "Under What your household holds, tick each document you actually hold and tick Already backed up wherever a copy already exists elsewhere.",
+    "Read Do these now, in this order with each document's score out of 100 and its tier, from Tier 1 do today to Tier 4 when convenient, plus the papers whose original must stay safe.",
+  ],
   intro:
     "The Document Backup Priority Ranker orders household paperwork by how hard each document is to replace, how quickly you would need it under pressure, and how many other reissues depend on it — then fits the top of that list into the time you actually have today. Replaceability is weighted heaviest, because an e-PAN reprint takes minutes online while a duplicate degree certificate needs an affidavit, a police report and a university fee. Useful for anyone who knows they should scan the family file but has never worked out where to start.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelancer Expense Deductions vs Section 44ADA (India)",
+  metaDescription:
+    "Total 13 expense heads, apply the Rs 10,000 cash bar under 40A(3) and the 30% TDS cut under 40(a)(ia), then compare profit against 44ADA's flat 50%.",
+  steps: [
+    "Enter Gross professional receipts (INR) and Receipts taken in cash (%), and tick whether yours is a specified profession under Section 44AA(1).",
+    "For each of the 13 revenue heads, enter what you spent, how much was paid in cash above Rs 10,000 in a day, and tick where TDS was not deducted.",
+    "Add capital assets by block for Section 32 depreciation, then read the taxable profit on actual expenses beside the Section 44ADA figure.",
+  ],
   intro:
     "Section 37(1) of the Income-tax Act allows a freelancer to deduct any expenditure laid out wholly and exclusively for the profession, provided it is neither capital nor personal. This checklist walks through the heads that qualify — rent, utilities, software, subcontractors, travel, marketing, bank charges, insurance and interest — applies the Section 40A(3) bar on cash payments above ₹10,000 and the 30% disallowance under Section 40(a)(ia) where TDS was missed, then compares the result against declaring 50% of receipts under Section 44ADA.",
   useCases: [

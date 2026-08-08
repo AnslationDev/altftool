@@ -1,4 +1,12 @@
 const seo = {
+  title: "Anniversary Wishes in English, Hindi and Hinglish",
+  metaDescription:
+    "Anniversary message from years married, relationship, tone and language — English, Hindi or Hinglish, with the gift symbol and jubilee name.",
+  steps: [
+    "Fill 'Names on the card' and 'Years married' — entering 25 returns silver as the traditional gift and the Silver Jubilee name.",
+    "Set 'Who is the message for', 'Language' (English, Hindi or Hinglish), 'Tone', 'How many variants', and tick 'Mention the traditional gift'.",
+    "The result panel lists the traditional and modern gift symbols and the drafted messages; press 'Shuffle wording' for new phrasing or 'Copy all' to take them.",
+  ],
   intro:
     "The Anniversary Wishes Generator writes a complete anniversary message from four inputs — the number of years, who the couple is to you, the language and the tone — and folds in the traditional gift symbol and the jubilee name for that exact year. It uses the classic Emily Post traditional list (paper at year 1, silver at 25, gold at 50) alongside the modern list published by the American National Retail Jeweler Association in 1937. Messages are available in English, Hindi and Hinglish, each written separately rather than translated.",
   useCases: [

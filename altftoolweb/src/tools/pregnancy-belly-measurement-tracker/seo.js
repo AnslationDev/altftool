@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fundal Height Tracker: McDonald's Rule by Week",
+  metaDescription:
+    "Log fundal height and belly circumference by week, compare each entry with McDonald's rule, and see cm-per-week growth and a Johnson's formula estimate.",
+  steps: [
+    "Under Add a measurement, enter the Gestational week (16 to 44) and the Fundal height (cm); Belly circumference at the navel is optional. Press Add to log.",
+    "For a Johnson's formula estimate, fill in Your current weight (kg, optional) and tick 'Head engaged (below the spines)' so the adjustments apply.",
+    "Compare Latest fundal height with Expected fundal height and Difference from expected, check the cm-per-week growth rows and Your log table, then press Copy result.",
+  ],
   intro:
     "This tracker logs fundal height and belly circumference by gestational week and scores each entry against McDonald's rule, under which fundal height in centimetres approximately equals the number of weeks pregnant between 24 and 36 weeks. It shows the difference from expected, the growth rate in centimetres per week, and a Johnson's formula estimate of fetal weight — (fundal height − 12) × 155 grams, adjusted when the head has engaged or maternal weight exceeds 91 kg. It records and compares measurements; it does not diagnose anything.",
   useCases: [

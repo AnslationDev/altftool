@@ -1,4 +1,7 @@
 const seo = {
+  title: "Candy Match 3: Free 8x8 Puzzle with Cascade Combos",
+  metaDescription:
+    "Swap adjacent candies on an 8x8 board: 10 points a candy, +15 past three, times the cascade step. Three levels, classic or timed, best score saved.",
   intro:
     "Candy Match 3 is an 8×8 tile-swapping puzzle where you swap two adjacent candies to line up three or more of the same kind, clearing them so the ones above fall in and often trigger a chain. Scoring is 10 points per cleared candy plus a 15-point bonus for every candy beyond the third, all multiplied by the cascade step — so a five-candy match on the third chain is worth 240 points rather than 80. There are three levels with rising targets and a classic move-limited mode alongside a timed mode, and your best score is kept in your browser.",
   useCases: [

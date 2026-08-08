@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fahrenheit to Celsius: Heat Index, Wind Chill, Packing",
+  metaDescription:
+    "Convert forecast highs and lows both ways, add the NWS heat index and wind chill where they actually apply, and get a packing hint for the band.",
+  steps: [
+    "Enter Forecast daytime high and Forecast overnight low, set Forecast is in to Fahrenheit or Celsius, and give Relative humidity (%), Wind speed and Wind unit (mph or km/h).",
+    "The conversion runs as you type using °C = (°F − 32) × 5/9, adding the NWS heat index from an index of 80°F and the wind chill index at or below 50°F with wind above 3 mph, and printing the reason when either does not apply.",
+    "Read the converted Daytime high, then the rows for Day-to-night swing, High in kelvin, Afternoon heat index and Night wind chill, plus the Pack for the day hint; Copy result copies the lot.",
+  ],
   intro:
     "This converter turns a forecast high and low between Fahrenheit and Celsius using °C = (°F − 32) × 5/9, then adds the two feels-like figures meteorologists actually publish: the US National Weather Service heat index (the Rothfusz regression, applied at or above an index of 80°F) and the 2001 NWS wind chill index (valid at or below 50°F with wind above 3 mph). Each result comes with a packing hint for the temperature band it falls in, so a 95°F forecast reads as 35°C, feels like about 48°C at 65% humidity, and calls for linen and a midday break.",
   useCases: [

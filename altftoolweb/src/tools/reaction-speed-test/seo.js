@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reaction Speed Test: Your Click Time in Milliseconds",
+  metaDescription:
+    "Click when the screen turns green after a random 2-5 s wait. Graded Elite under 150 ms to over 350 ms, with best and average over your last 10 attempts.",
+  steps: [
+    "Click the panel while it reads 'Click to Start'; it turns amber, shows 'Get Ready...' and holds for a random 2000 to 5000 ms.",
+    "Click the instant the panel turns green and reads 'CLICK NOW!' — clicking during the amber phase returns 'Too Soon!' and is discarded.",
+    "Your time appears in ms with its band from Elite (under 150 ms) to Keep Practicing (over 350 ms); Best, Average and Attempts cover your last 10 goes.",
+  ],
   intro:
     "Reaction Speed Test measures how many milliseconds pass between the screen turning green and your click, then grades the result on a five-band scale from Elite (under 150 ms) to Keep Practicing (over 350 ms). Each round waits a random 2 to 5 seconds before the green signal, so you cannot anticipate it, and clicking early is caught and scored as Too Soon rather than counted. It keeps your last 10 attempts with a running best and average, which is the number worth watching — a single trial says very little about your true reflex speed.",
   useCases: [

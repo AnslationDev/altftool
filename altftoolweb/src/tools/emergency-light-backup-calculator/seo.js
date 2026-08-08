@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emergency Light Backup Time Calculator with Peukert",
+  metaDescription:
+    "Runtime from battery V, Ah, depth of discharge and state of health against LED load and driver loss, derated by Peukert, plus recharge time.",
+  steps: [
+    "Under Battery, pick the Chemistry and enter Nominal voltage (V), Rated capacity (Ah) and State of health (%).",
+    "Under Load, set Number of LED heads, Watts per head, Driver efficiency (%) and Control circuit standby (W), then your target hours.",
+    "Read Backup time against that target, with usable Wh at the applied depth of discharge, the runtime after Peukert derating and the recharge time.",
+  ],
   intro:
     "This calculator gives the run time of an emergency light as usable energy divided by drawn power: usable Wh = voltage x amp-hours x depth of discharge x state of health, and drawn watts = LED load / driver efficiency + standby load. It also applies the Peukert equation t = H x (C / (I x H))^n, which is why a 12 V 7.2 Ah lead-acid battery running a 9 W lamp lasts closer to three and a half hours than the four the arithmetic alone suggests. Intended for anyone specifying an emergency light, an inverter-backed LED circuit or a battery upgrade.",
   useCases: [

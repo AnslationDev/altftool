@@ -1,4 +1,7 @@
 const seo = {
+  title: "BAC Calculator: Widmark Formula and 0.08% Check",
+  metaDescription:
+    "Estimate BAC with the Widmark formula: 14 g per standard drink, 0.68/0.55 body factor, minus 0.015% per hour. Educational estimate, not a driving test.",
   intro:
     "The Blood Alcohol Content Calculator estimates BAC with the Widmark formula, treating each standard drink as 14 grams of pure alcohol, dividing by body weight times a distribution factor of 0.68 for men or 0.55 for women, and subtracting 0.015 percentage points per hour for elimination. It reports the result as a percentage and flags whether it sits above or below the 0.08% threshold used in most of the United States. It is an educational estimate for understanding how drinks, weight and time interact — never a fitness-to-drive test.",
   useCases: [

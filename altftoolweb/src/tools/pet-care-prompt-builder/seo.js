@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pet Care Prompt Builder: Life Stage & Session Length",
+  metaDescription:
+    "Turns your dog or cat's species, age and daily minutes into an AI prompt already stating the life stage, session length and toilet-break interval.",
+  steps: [
+    "Set Species, Age and Age unit, then add the optional Pet name, Breed or type and Weight in kg.",
+    "Choose 'What the plan is for' and 'Your experience', set Training minutes per day (5 to 240 in steps of 5), and describe 'The behaviour you most want to change' if there is one.",
+    "Check the Life stage, Session plan and Toilet-break interval rows against the Prompt length in words, then press Copy prompt to take the text from 'Your prompt'.",
+  ],
   intro:
     "Pet Care Prompt Builder converts your dog's or cat's species, age, weight and daily time budget into a ready-to-paste AI prompt that already states the correct life stage, session length and toilet-break interval. Life stages follow the published AAHA canine and AAFP/AAHA feline life-stage frameworks, and the puppy break interval uses the standard age-in-months plus one hour guideline. It suits owners who keep getting generic advice because the assistant does not know whether it is talking about a ten-week puppy or a nine-year-old cat.",
   useCases: [

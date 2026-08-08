@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sponsored Post Disclosure Generator: FTC, ASA, ASCI",
+  metaDescription:
+    "Build a #Ad or #Sponsored line that names the brand and the relationship, checked against FTC, ASA and ASCI rules and each platform's cut-off.",
+  steps: [
+    "Choose Where is it going?, Which market's rules apply? and Your relationship with the brand, then type the Brand name.",
+    "Pick Label wording from the approved options, or choose Type my own… for a custom label.",
+    "The Disclosure line appears with Characters, Visible before truncation and Guidance followed, plus Where to put it; Copy result takes it.",
+  ],
   intro:
     "This generator writes a sponsored-content disclosure that names the label, the brand and the nature of the relationship, then checks it against the placement rules for the platform you are posting on. It follows the FTC Endorsement Guides (16 CFR Part 255) and the FTC's influencer disclosure guidance for the US, the CAP Code as enforced by the ASA in the UK, and the ASCI influencer guidelines in India. It also flags the vague tags regulators reject — sp, spon, collab, thanks — and warns when the line is too long to survive the caption cut-off.",
   useCases: [

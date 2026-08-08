@@ -1,4 +1,12 @@
 const seo = {
+  title: "Google Meet Background Maker: Blur Past the Mask Limit",
+  metaDescription:
+    "Makes a 16:9 Meet background at 1920x1080 and blurs it past the 256x144 segmentation mask, so the cut-out edge round your shoulders stops shimmering.",
+  steps: [
+    "Choose an Export size — 1920 x 1080 (Meet recommended), 1280 x 720 (Meet minimum) or 2560 x 1440 (high-DPI displays) — then a Colour theme and a Pattern such as Soft gradient or Diagonal stripes.",
+    "Leave Blur radius empty to take the mask-resolution target, or press Use 15 px target blur at the 1920-wide preset; add a Caption, set it to Bottom right or Bottom left, and use Show silhouette band to see where the cut-out edge lands.",
+    "Edge-keying index scores the design out of 100 with its band, and the rows report Blur applied, Mask-resolution blur target, the segmentation cell size against the 256x144 mask and Silhouette-band contrast; Download PNG saves google-meet-background-1920x1080.png, then checks it against Meet's minimum size, 16:9 ratio and 16 MB upload limit.",
+  ],
   intro:
     "Google Meet Background Maker generates a 16:9 background at Meet's specs — 1920x1080 recommended, 1280x720 minimum, JPG or PNG under 16 MB — and blurs it to the radius where browser selfie segmentation can no longer resolve the detail. Because that segmentation mask runs at roughly 256x144, one mask cell is about 7.5 export pixels on a 1920-wide image, and Nyquist says a feature has to be smeared across two cells to stop aliasing on the cut-out edge. The result is a background that keys cleanly instead of shimmering around your shoulders.",
   useCases: [

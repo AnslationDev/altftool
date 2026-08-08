@@ -1,4 +1,12 @@
 const seo = {
+  title: "Post Office RD Calculator: Maturity and Default Fee",
+  metaDescription:
+    "Maturity value for the 5-year National Savings RD with quarterly compounding, the ₹1 per ₹100 default fee, advance rebate and premature closure.",
+  steps: [
+    "Enter the Monthly deposit (INR) — minimum ₹100, in multiples of ₹10 — and the Notified rate (% per year), then pick an Account term of Five years (60 instalments) or Ten years extended (120 instalments).",
+    "Add \"Instalments missed and paid late\", choose \"Instalments paid in advance\" (None, six or twelve months) and set \"Close the account after (months, 0 = hold to maturity)\".",
+    "Maturity value shows at the top with Total deposited, Interest earned, Effective annual yield (quarterly compounding), Default fee on missed instalments, Advance deposit rebate and a year-by-year balance table; Copy result copies the figures.",
+  ],
   intro:
     "This calculator projects a National Savings Recurring Deposit — the five-year post office RD — by valuing every monthly instalment for the months it actually stays invested and compounding quarterly at the notified small savings rate. It also applies the scheme's own rules: the ₹1 per ₹100 default fee on each missed instalment, the rebate for depositing six or twelve instalments in advance, and premature closure after three years at the Post Office Savings Account rate. Use it before committing to a sixty-month standing instruction.",
   useCases: [

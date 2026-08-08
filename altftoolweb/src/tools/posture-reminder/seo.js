@@ -1,4 +1,12 @@
 const seo = {
+  title: "Posture Reminder: Desk Timer + 25 Movement Breaks",
+  metaDescription:
+    "Set a 5–180 minute interval or a 45/15 sit-stand cycle; each nudge loads a named stretch with reps, and completions log an adherence percentage.",
+  steps: [
+    "Choose \"Movement breaks\" or \"Sit-stand cycle\", then set the interval — 30, 45 or 60 min presets, or a custom value anywhere from 5 to 180 minutes.",
+    "Press \"Start reminders\" (or \"Start the cycle\") and keep working; the tab title carries the countdown until the break is due.",
+    "When the break arrives, follow the named exercise with its reps and hold time, then press \"Done\" — or \"Swap\" for a different one, or \"Skip\" — to log it against the day's adherence.",
+  ],
   intro:
     "The Posture & Movement Reminder runs a desk timer that interrupts you on a set interval and hands you a specific movement break — one of 25 guided exercises covering neck, upper back, wrists, hips, legs and breathing — instead of a generic 'stand up' nudge. It also runs a sit-stand cycle with adjustable sitting and standing blocks, defaulting to 45 minutes sitting followed by 15 minutes standing. It is for anyone at a desk all day who keeps meaning to move and needs the prompt, the exercise, and a record of whether they actually did it.",
   useCases: [

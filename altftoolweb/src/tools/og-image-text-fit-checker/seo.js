@@ -1,4 +1,12 @@
 const seo = {
+  title: "OG Image Text Fit Checker: Wrap, Crop and Legibility",
+  metaDescription:
+    "Wrap a share-card headline with real Helvetica advance widths: widest line, block height, the largest size that still fits, and the centre-crop safe area.",
+  steps: [
+    "Type the Headline and any \"Sub-headline or kicker\", then hit a preset chip — Open Graph / Facebook, X summary_large_image, LinkedIn share, Slack unfurl or WhatsApp / iMessage bubble — to set Card width, Card height and Feed render width at once.",
+    "Tune \"Headline size (px)\", Headline weight (Regular / medium or Bold / semibold), Horizontal and Vertical padding, \"Line height (multiplier)\" and \"Maximum lines allowed\" until the wrap and the crop-safe overlay on the preview look right.",
+    "Read \"Headline in the feed\" in rendered pixels against the 12 px legibility floor and 16 px comfortable mark, check the \"Line by line\" table of Line, Text and Width, then press Copy report.",
+  ],
   intro:
     "OG Image Text Fit Checker predicts where a share-card headline will wrap and how tall it renders once a feed shrinks the card, using published Helvetica advance widths (units per 1000 em) rather than a rough characters-per-line guess. It reports the widest line, the total text block height, the largest headline size that still fits your line limit, and whether the copy stays inside the region that survives every common centre-crop. Aimed at anyone writing or templating Open Graph cards who wants to catch a three-line overflow before it ships.",
   useCases: [

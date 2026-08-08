@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET Negative Marking Calculator: +4 / -1 Scoring",
+  metaDescription:
+    "Enter attempts, mock accuracy and guesses to split marks earned at +4 from marks lost at -1 across the 180-question, 720-mark paper. Break-even is 20%.",
+  steps: [
+    "Enter Questions in the paper, Answered from knowledge, Accuracy on those answers (%) from your mocks, and Extra questions guessed.",
+    "Set 'Options left standing on a guess' to 4 for a blind guess or 3 and 2 after elimination, and add any Grace marks for dropped questions.",
+    "Read the Expected NEET score out of 720 with 'Marks gained (+4 each)' and 'Marks lost (-1 each)' split out, then press Copy result.",
+  ],
   intro:
     "This NEET negative marking calculator converts an attempt strategy into an expected NEET UG score using the official +4 for a correct answer and -1 for an incorrect answer scheme over a 180-question, 720-mark paper. Enter how many questions you answer from knowledge, your mock-test accuracy and how many you guess, and it separates marks gained from marks surrendered to negative marking. It also shows the break-even accuracy of 20% below which answering costs you marks, so you can decide question by question whether to attempt or leave blank.",
   useCases: [

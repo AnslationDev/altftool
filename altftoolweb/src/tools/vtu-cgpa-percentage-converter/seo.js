@@ -1,4 +1,12 @@
 const seo = {
+  title: "VTU CGPA to Percentage: 2018 vs 2022 Scheme Formula",
+  metaDescription:
+    "(CGPA - 0.75) x 10 for 2015/2017/2018 CBCS, CGPA x 10 for 2021/2022. Pick your scheme and get the percentage, class awarded and SGPA from credits.",
+  steps: [
+    "Enter Your CGPA (0 to 10) and choose the Scheme on your grade card: '2015 / 2017 / 2018 CBCS scheme - (CGPA - 0.75) x 10', '2021 / 2022 scheme - CGPA x 10', or 'UGC equivalence - CGPA x 9.5'.",
+    "There is no Convert button - the Percentage headline recalculates as you type, above the Formula applied, Class awarded and 'Marks lost to the 0.75 deduction' rows.",
+    "If you still need the CGPA itself, press Add a subject under 'SGPA from this semester's subjects' and set credits plus a grade point from the O to F dropdown, or Add a semester under 'CGPA from all semesters', then press Copy result.",
+  ],
   intro:
     "VTU converts a 10-point CGPA to a percentage with a linear rule that depends on your scheme: grade cards under the 2015, 2017 and 2018 CBCS schemes use (CGPA − 0.75) × 10, while 2021 and 2022 scheme cards use a plain CGPA × 10. This converter applies whichever rule matches your card, builds SGPA from subject credits and grade points, aggregates semesters into CGPA, and shows the class awarded. Because the 0.75 deduction costs a flat 7.5 percentage points, picking the wrong rule can push you either side of a 60% or 70% placement cutoff.",
   useCases: [

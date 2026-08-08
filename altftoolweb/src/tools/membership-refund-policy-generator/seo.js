@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gym Membership Refund Policy Generator + Pro-Rata",
+  metaDescription:
+    "Price a cancellation from unused days over term days, with frozen days excluded and GST returned only on the refunded slice, then draft the policy.",
+  steps: [
+    "Under 'Price one cancellation', enter Plan fee excluding GST (INR), Joining fee excluding GST (INR), Membership starts, Membership ends, Cancellation effective from, Days already frozen, GST on membership (%) and a Reason for leaving.",
+    "In 'Policy rules', set Lock-in (days, 0 for none), Notice period (days), Cancellation charge (% of refund) and 'Cap on that charge (INR, 0 = none)', alongside the gym or club name and the freeze and transfer rules.",
+    "Read 'Refund due to the member' with its Pro-rata plan refund, Cancellation charge deducted, GST returned, Club retains and 'End date after freezes' rows, then press Copy policy to take the drafted wording.",
+  ],
   intro:
     "The Membership Refund Policy Generator drafts the cancellation, freeze and transfer terms for a gym, studio or club, and prices a real cancellation using the pro-rata rule: plan fee multiplied by unused days divided by total days in the term. Days spent on a freeze are treated as suspended rather than consumed, so they never reduce the refund, and GST is returned only on the refunded slice in line with CBIC Circular No. 178/10/2022-GST. It is aimed at owners and front-desk teams who need one written answer that applies to every member.",
   useCases: [

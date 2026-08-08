@@ -1,4 +1,12 @@
 const seo = {
+  title: "Recipe Remix Prompt Builder for Leftover Ingredients",
+  metaDescription:
+    "Turns a dish, the ingredients you have and a diet constraint into one AI prompt demanding substitutions, exact quantities, timings and storage notes.",
+  steps: [
+    "Fill in Original dish, Remix goal / diet constraint, Available ingredients and Servings; the form loads with a paneer butter masala example you can overwrite.",
+    "The Recipe prompt panel rebuilds as you type, restating the dish, constraint and servings and instructing the assistant to keep the soul of the original and explain every substitution.",
+    "Press Copy output to take the prompt into the AI assistant you already use, or Reset to restore the sample dish and ingredient list.",
+  ],
   intro:
     "Recipe Remix Prompt Builder sorts a free-text list of leftovers into six dish roles — protein, starch, vegetable, fat, acid and aromatic — and writes a recipe prompt that states what is missing, what must be used up and which allergens are present. Allergen detection covers the 14 allergens declarable under Regulation (EU) No 1169/2011, Annex II, a list that already contains all nine recognised by the US FASTER Act. It is for anyone who wants one committed recipe from what is already in the fridge rather than a page of vague suggestions.",
   useCases: [

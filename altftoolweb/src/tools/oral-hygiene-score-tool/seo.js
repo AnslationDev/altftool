@@ -1,4 +1,12 @@
 const seo = {
+  title: "Oral Hygiene Score Tool: 9 Habits Scored Out of 100",
+  metaDescription:
+    "Score brushing, fluoride, flossing, sugar exposures, tobacco, brush age and check-ups out of 100, with fixes ranked by the points each one costs you.",
+  steps: [
+    "Answer the habit fields \"Times you brush per day\", \"Minutes per brushing session\" and \"Days per week you floss or use interdental brushes\", and tick \"My toothpaste contains fluoride (1000–1500 ppm)\".",
+    "Fill in \"Separate sugary snacks or drinks per day\", \"Age of your brush or brush head (months)\", \"Months since your last dental visit\", tobacco and bleeding gums — the score recalculates as you type.",
+    "Read the score out of 100 with its band, from Excellent down to High risk, work through the ranked \"Fix these first\" list, then press \"Copy result\".",
+  ],
   intro:
     "The Oral Hygiene Score Tool converts nine everyday habits into a single number out of 100, weighted towards the behaviours dental guidance links most strongly to tooth decay and gum disease. It scores brushing frequency and duration, fluoride toothpaste use, interdental cleaning, brush age, how often you eat or drink sugar, tobacco use, check-up recency and bleeding gums, then ranks the habits by how many points each one is costing you. It is an informational self-check, not the clinical OHI-S plaque index a dentist scores in the chair.",
   useCases: [

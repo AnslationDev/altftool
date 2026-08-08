@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Expiry Tracker: Passport, Visa, Licence Dates",
+  metaDescription:
+    "One local register for passport, visa, licence and certificate renewals: searchable, saved in this browser only, with JSON export and import.",
+  steps: [
+    "Type the document into the Document box and put its date together with whatever note it needs into Expiry date and reminder, which is one free-text field rather than a fixed date picker and lead time.",
+    "Press Add record to save it; the entry joins Saved records, which carries a live count, and the Search records box filters on the text in both fields.",
+    "Export JSON downloads the whole list as document-expiry-tracker.json, Import JSON reads a file back after warning that it will replace every record currently saved here, and Delete on a row removes that one record after a confirmation.",
+  ],
   intro:
     "The Document Expiry Tracker is a private register for renewal dates: you add one record per document — passport, visa, driving licence, insurance policy, professional certificate — with its expiry date and the reminder you want against it, and the list is saved in your own browser rather than an account. Records stay searchable across every field, and the whole set exports to a JSON file you can back up or import into another browser. It suits anyone whose renewals are scattered across email, wallet and filing cabinet with no single list.",
   useCases: [

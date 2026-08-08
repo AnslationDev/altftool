@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calories Burned Washing Dishes: MET Calculator",
+  metaDescription:
+    "Works out calories per wash from MET x 3.5 x kg / 200 — 1.8 METs at the sink, 3.3 scrubbing — then projects it to a day, week and year.",
+  steps: [
+    "Enter your Body weight, switch the Weight unit between Kilograms (kg) and Pounds (lb), then set Minutes per wash, Washes per day and Days per week you wash up.",
+    "Pick one of the four MET options under How you wash up, from Hand washing at the sink, standing at 1.8 METs to Heavy scrubbing at 3.3 METs, and the kcal/min = MET x 3.5 x kg / 200 figure recalculates as you type.",
+    "Read Calories per wash at the top, then the Burn rate, Per day, Per week, Per year and Net above resting rows, and press Copy result to take the summary.",
+  ],
   intro:
     "This calculator works out how many calories washing up costs, using the metabolic-equivalent formula kcal/min = MET x 3.5 x kg / 200 with the published MET values for dishwashing: 1.8 METs standing at the sink, 2.5 METs when you are also clearing the table, and 3.3 METs for general moderate kitchen work such as scrubbing pots. It then projects a single wash out to a day, a week and a full year so a small repeated task is visible at the scale it actually happens. Both the gross figure and the net figure above resting metabolism are shown.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cricket Calorie Burn Calculator by Overs and Role",
+  metaDescription:
+    "Split a match into bowling overs, batting, fielding role and waiting time for gross and net calories, average METs and metres run between wickets.",
+  steps: [
+    "Enter Body weight (kg), Fielding minutes, Batting minutes, Overs bowled, Minutes per over, Waiting minutes and Runs physically run.",
+    "Pick a Fielding role and a Bowling type from the two dropdowns so each block of the day is costed at its own MET value rather than one flat figure.",
+    "Read the Cricket burn estimate — Total time, Gross calories, Net calories, Average intensity in MET, Calories/hour, Balls bowled and Running distance in metres, plus a per-segment breakdown — then press Copy output.",
+  ],
   intro:
     "The Cricket Calorie Burn Calculator costs a match role by role instead of applying one number to the whole game. The Compendium of Physical Activities gives cricket a single 4.8 MET value (code 15200) covering batting, bowling and fielding together, which flattens the difference between a fast bowler's twenty overs and an afternoon at deep midwicket. This tool keeps 4.8 as the whole-game anchor but splits the day into bowling, batting, fielding and time padded up, converting each with the ACSM equation kcal/min = METs x 3.5 x kg / 200.",
   useCases: [

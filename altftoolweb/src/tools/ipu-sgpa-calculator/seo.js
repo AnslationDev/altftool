@@ -1,4 +1,12 @@
 const seo = {
+  title: "IPU SGPA Calculator: GGSIPU 10-Point Scale + CGPA",
+  metaDescription:
+    "Credit-weighted SGPA on the GGSIPU 10-point scale (O=10, F=0), rolled into your CGPA, plus what one grade step on each paper is worth.",
+  steps: [
+    "In Papers this semester, set each paper's Credits and pick its Grade from the list running O — 10 pt down to F — 0 pt; Add paper adds another row and the bin icon removes one.",
+    "Fill CGPA before this semester, Credits completed before this semester, Target CGPA at graduation and Credits still to be attempted, so the new semester is folded into the running CGPA by credits rather than averaged.",
+    "Semester SGPA shows the figure with its grade band and credit points, the per-paper table gives an SGPA per step column for each paper, and the last line states the average SGPA the remaining credits must carry; Copy result copies the summary and Reset restores the sample papers.",
+  ],
   intro:
     "SGPA at GGSIPU is the credit-weighted mean of your grade points for one semester: Σ(credits × grade point) ÷ Σ(credits), on the 10-point scale where O carries 10 points and F carries 0. This calculator applies that formula, rolls the semester into your running CGPA using semester credits as the weight, and shows exactly how much each paper is worth — one extra grade point on a paper moves the SGPA by that paper's credits divided by the semester's total credits, which is why a 4-credit theory paper matters far more than a 1-credit workshop.",
   useCases: [

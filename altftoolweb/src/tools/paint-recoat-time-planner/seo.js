@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paint Recoat Time Calculator: Temp and Humidity",
+  metaDescription:
+    "Tin drying times assume 30 C and 60% RH. Enter real temperature and humidity to get touch-dry, recoat and hard-dry times per coat.",
+  steps: [
+    "Choose the Paint type — Interior acrylic emulsion, Synthetic / oil-based enamel, 2K PU wood finish and six more — then enter Air temperature (C), Relative humidity (%) and Number of coats.",
+    "Set First coat starts on and At (24-hour); the plan recalculates as you type and reports the Temperature effect, Humidity effect and Combined slowdown against the times printed on the tin.",
+    "Read the Coat schedule table for each coat's Start, Touch dry and Next coat can go on times, then press Copy plan to copy the whole schedule.",
+  ],
   intro:
     "This planner adjusts the drying times printed on a paint tin — which are measured at about 30 C and 60% relative humidity — for the temperature and humidity you are actually painting in, then lays each coat out on the clock. It applies the two effects that matter: drying time roughly doubles for every 10 C drop, and for waterborne paints it scales with the inverse of the vapour-pressure deficit, so 80% humidity roughly doubles the wait again. Painters, site supervisors and homeowners use it to decide whether the second coat can go on today.",
   useCases: [

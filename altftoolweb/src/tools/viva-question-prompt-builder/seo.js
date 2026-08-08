@@ -1,4 +1,12 @@
 const seo = {
+  title: "Viva Question Prompt Builder for Your Thesis Defence",
+  metaDescription:
+    "Turn your abstract and methods into a mock-examiner prompt: 4 to 40 questions split across the seven areas a viva panel predictably probes.",
+  steps: [
+    "Enter your Thesis title, paste the Abstract (100–6,000 characters) and add an optional Methods summary.",
+    "Pick the Examination level, set Total questions between 4 and 40, and tick the question areas from Opening & summary through Implications & future work.",
+    "The Generated prompt panel shows the per-area split plus the prompt word and token count; Copy prompt puts the whole mock-examiner prompt on the clipboard.",
+  ],
   intro:
     "The Viva Question Prompt Builder turns your thesis abstract and methods summary into a mock-examiner prompt that generates the questions a viva panel is actually likely to ask. It distributes 4 to 40 questions across the seven areas oral examinations predictably cover — opening summary, originality, literature, methodology, findings, limitations and implications — the recurring clusters identified in doctoral-viva research by Trafford and Leshem. It is built for PhD, MPhil, master's and final-year students preparing for a thesis defence.",
   useCases: [

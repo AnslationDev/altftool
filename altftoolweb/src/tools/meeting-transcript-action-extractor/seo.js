@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meeting Transcript to Action Items, Owners, Dates",
+  metaDescription:
+    "Paste a transcript and get action items, decisions and key points split out, with @mentions as owners and date phrases as deadlines — in-browser.",
+  steps: [
+    "Paste your transcript into Paste Meeting Transcript, one utterance per line, or press Load Sample to load the built-in sprint-planning example.",
+    "Press Extract Actions; each line is tested against action cues (action item, todo, follow up, responsible, [x]) first, then decision cues (decision, agreed, decided, concluded, going with), then key-point cues, so it lands in exactly one bucket.",
+    "Stat cards count Action Items, Decisions, Key Points and Owners, each item card carries its @owner and deadline badges, and Copy Summary or Download Report saves the result as meeting-summary.txt.",
+  ],
   intro:
     "The Meeting Transcript Action Extractor scans a pasted meeting transcript line by line and sorts it into action items, decisions and key points using cue-phrase patterns such as \"action item\", \"todo\", \"follow up\", \"decision\", \"agreed\", \"decided\" and \"key point\". It also pulls out @mentions as owners and phrases like \"deadline:\", \"due by\" or \"by Friday\" as due dates, so a raw call log becomes a structured follow-up list. Meeting notetakers, scrum leads and anyone who records calls get a copyable summary and a downloadable .txt report in one pass.",
   useCases: [

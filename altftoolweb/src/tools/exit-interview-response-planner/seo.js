@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exit Interview Answers: Ranked Reasons, 3 Candour Levels",
+  metaDescription:
+    "Rates each reason 0-5 and weights it 1-3 by what the employer could change, then writes guarded, balanced or candid answers with a disclosure-risk score.",
+  steps: [
+    "Under Why you are leaving, drag each slider from 0 (not a factor) to 5 (decisive) across Pay and benefits, Career growth and promotion, Relationship with the manager, Workload and hours and the rest.",
+    "In How you want to play it pick a Candour level — Guarded, Balanced or Candid — fill Company name, Your role and The genuinely good part, and tick I intend to name specific people or I would consider working here again where they apply.",
+    "Your leading reason reports its share of the weighted total with a disclosure risk out of 100 and a Before you go in caution list, Questions to prepare selects which questions get answered, and Your answers holds one written reply each; Copy script copies the lot.",
+  ],
   intro:
     "This planner ranks your actual reasons for leaving and then writes an answer to each standard exit interview question at the level of candour you choose. Ranking is not a raw score: each reason is rated 0 to 5 and multiplied by an actionability weight of 1 to 3 — how far the employer could realistically change that thing — so feedback the company can act on rises to the top. A separate disclosure-risk rubric flags the choices that tend to follow people afterwards, such as naming individuals or speaking candidly while hoping to be rehired.",
   useCases: [

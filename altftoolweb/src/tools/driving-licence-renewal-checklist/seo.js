@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving Licence Renewal Checklist for Indian RTOs",
+  metaDescription:
+    "Works out your new expiry date under s.14(2), the 30-day grace period, the late fee, whether Form 1A is needed, and the documents to carry.",
+  steps: [
+    "Enter Date of birth, Licence valid until and Applying on, pick a Licence type, and tick 'My address has changed since the licence was issued' if that applies.",
+    "The result panel returns your age on the application date, when the 30-day grace period ends, the date the renewal takes effect from, the New expiry date and how that validity was worked out, plus the base renewal fee, late fee and whether a Form 1A medical certificate is Required.",
+    "Work down Documents to carry, ticking items until the 'X of Y ready' badge is complete, then press Copy result to take the checklist and fee total to the RTO.",
+  ],
   intro:
     "This checklist works out exactly what an Indian RTO will ask for when you renew a driving licence: the forms, the medical certificate, the fee including any late charge, and the new expiry date under section 14(2) of the Motor Vehicles Act, 1988 as amended in 2019. It also applies the 30-day grace period in section 15(3) and flags the case in section 15(4) where a licence out of force for more than five years can attract a fresh driving test. Built for private and transport licence holders renewing through the Parivahan Sarathi portal.",
   useCases: [

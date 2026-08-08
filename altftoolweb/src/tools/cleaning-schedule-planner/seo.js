@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cleaning Schedule Planner: Board, Week Grid, Minutes",
+  metaDescription:
+    "Tag chores with room, frequency, priority, owner and minutes. See them as a board, a Mon-Sun grid or a checklist, and print a report by room and person.",
   intro:
     "The Cleaning Schedule Planner turns a pile of household chores into a schedule by tagging each task with a room, a frequency from daily to quarterly, a priority, the person responsible, the weekdays it falls on and how many minutes it takes. The same task list can be viewed three ways — a board grouped by room, a Monday-to-Sunday week grid, or a flat checklist — and it totals the remaining minutes so you can see the real size of the week before you start. A printable report breaks the workload down by room, by person and by frequency.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leave Register Format: Factories Act Section 79",
+  metaDescription:
+    "Build a leave with wages register: 1 day per 20 worked, the 240-day test, the 30-day carry-forward cap and a running balance per spell.",
+  steps: [
+    "Fill in Worker and attendance: Establishment name, Worker name, Calendar year, Worker category, 'Days actually worked in the year', 'Leave brought forward (days)', 'Refused leave carried over (days)' and 'Average daily wage (INR)'.",
+    "Tick 'Worker joined part-way through the year' to swap the 240-day qualifying test for the section 79(2) two-thirds test, then press 'Add spell' for each period of leave and enter Leave from, Leave to, Days debited and a Remark.",
+    "Read the 'Leave balance at close' headline with Leave earned this year, Carried to next year and Balance lapsing, check the Register preview table (S. No., From, To, Days, Balance after, Remark), then press 'Copy register' for the CSV.",
+  ],
   intro:
     "A leave register is the record an employer keeps of how much annual leave with wages each worker has earned, taken and still holds, and this generator builds it using the rules in Chapter VIII of the Factories Act 1948. Leave is earned at one day for every 20 days worked by an adult and one day for every 15 days worked by a young person, the 240-day qualifying test is applied, and the 30-day carry-forward cap in section 79(5) is enforced. HR staff and small employers get a running-balance register they can copy into a spreadsheet or file.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screenshot Compare: Slider Wipe and Pixel Diff",
+  metaDescription:
+    "Compare two screenshots side by side, behind a draggable wipe, or as a pixel diff flagging every pixel whose R+G+B difference tops 30 — all in the page.",
+  steps: [
+    "Upload Image 1 (Original) and Image 2 (New) by dropping them on the two panels or clicking to browse; PNG, JPG, WEBP and BMP are accepted.",
+    "Choose Slider, Side by Side or Diff Overlay, then press Compute Diff; inside Diff Overlay you can switch between Dim Overlay, Diff Only and Diff Slider.",
+    "Read the Difference, Changed Pixels, Total Pixels and Dimensions tiles under the overlay, and press Swap to flip the two captures or Reset to clear them.",
+  ],
   intro:
     "This tool puts two screenshots side by side, behind a draggable wipe slider, or under a pixel-difference overlay that flags every pixel whose red, green and blue differences add up to more than 30. It is built for design and QA review: you see the two states in the same frame, at the same scale, and get the changed-pixel count and change percentage alongside each file's name, dimensions and size. Three view modes cover the three questions people actually ask — what moved, what it looked like before, and how much of the frame is affected.",
   useCases: [

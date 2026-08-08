@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Receipt Generator for HRA — Up to 24 Months",
+  metaDescription:
+    "Print up to 24 monthly rent receipts with amount in words, landlord PAN when annual rent tops ₹1,00,000, and the ₹1 stamp flag for cash above ₹5,000.",
+  steps: [
+    "Fill Tenant name, Landlord name, 'Landlord PAN', 'Place of signing', 'Rented property address', 'Monthly rent (₹)' and 'Starting month'.",
+    "Set 'Number of months' anywhere from 1 to 24 and a Payment mode of Bank transfer, UPI, Cheque or Cash — Cash above ₹5,000 raises the 'Affix ₹1 stamp' flag.",
+    "Check 'Landlord PAN required?' against the ₹1,00,000 annual threshold, then press Print to send each receipt to its own page, or Copy result for the text version.",
+  ],
   "intro": "Rent Receipt Generator for HRA turns one set of details — tenant, landlord, PAN, property address and monthly rent — into a printable receipt for every month you choose, up to twenty-four. Each receipt carries the amount in figures and in words, the rent period, the payment mode and a landlord signature line, and the tool flags the two things that get HRA claims rejected: a missing landlord PAN when annual rent crosses ₹1,00,000, and a missing revenue stamp on cash payments above ₹5,000. Built for salaried employees submitting proofs to payroll.",
   "useCases": [
     "Produce twelve months of receipts in one go for your employer's investment proof deadline.",

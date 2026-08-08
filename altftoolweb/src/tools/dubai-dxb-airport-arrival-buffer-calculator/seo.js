@@ -1,4 +1,12 @@
 const seo = {
+  title: "DXB Arrival Time Calculator: When to Leave for Dubai",
+  metaDescription:
+    "Work back from your DXB departure through gate close, passport control, security and bag drop, plus the drive and traffic, to one leave-home time.",
+  steps: [
+    "Enter the Scheduled departure time printed on your ticket, then pick the Flight profile, Baggage option and the Starting from area preset.",
+    "Set Driving time with no traffic (minutes), Road conditions, Terminal queues, the parking or drop-off walk and your personal buffer.",
+    "Read Leave home by, with the terminal arrival, check-in and boarding-gate close times, which deadline is Driven by, and the minute-by-minute timeline.",
+  ],
   intro:
     "This calculator turns a Dubai DXB departure time into the single time you need to leave home, working backwards through the boarding-gate close, passport control, security, bag drop and the drive itself. It applies the larger of three deadlines - the three-hour arrival that Dubai Airports advises, the airline check-in cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Concourse A departures need extra time because the train ride and pier walk come after passport control.",
   useCases: [

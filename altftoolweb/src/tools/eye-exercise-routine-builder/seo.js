@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eye Exercise Routine Builder with Timed Running Order",
+  metaDescription:
+    "Build a routine from ten drills — warm compress, blink, near-far focus, pencil push-ups, Brock string, palming — with start times and daily total.",
+  steps: [
+    "Under Choose your drills tick any of the ten exercises — each tile shows its own prescribed length, such as the 5-minute warm compress — then set Rounds per day (1 to 10), Rest between drills (seconds) and Screen hours per day.",
+    "Whatever order you tick them in, the drills are resequenced into lubrication, then focusing work, then movement, then relaxation, so the routine ends with the eyes at rest.",
+    "Total routine time per day heads the result, with One round, Exercises selected, Rest between drills, Total per day, Total per week, Areas covered and the Separate 20-20-20 breaks your screen hours call for, above a Running order table of Starts, Drill and Length. Copy result copies the routine.",
+  ],
   intro:
     "The Eye Exercise Routine Builder assembles a timed daily routine from ten drills — warm compress, lid hygiene, complete blink drill, near-far focus change, pencil push-ups, Brock string, figure-of-eight, eye rolls, the 20-20-20 distance break and palming — and returns a running order with the start time and length of each step. It sequences them deliberately: lubrication first, focusing work in the middle, relaxation last. The output includes total time per day and per week, plus the separate count of 20-20-20 breaks your screen hours call for.",
   useCases: [

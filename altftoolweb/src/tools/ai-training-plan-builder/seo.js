@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Training Plan Builder for Teams, by Role and Level",
+  metaDescription:
+    "Build a week-by-week AI upskilling plan by role and skill level — 1-4 hour modules packed into a 1-10 h/week budget, each with a stated outcome.",
+  steps: [
+    "Choose a Role — General staff, 'Managers & team leads', 'Developers & engineers', 'Marketing & content', 'Operations & support' or 'Data & analysts' — and a 'Current skill level' of Beginner, Intermediate or Advanced.",
+    "Set 'Time budget (hours per week, 1–10)'; the catalogue is filtered by role, foundations are dropped for advanced learners, and whole 1–4 hour modules are packed into numbered weeks as you type.",
+    "Read the Plan length in weeks above the Week / Module / Hours / Outcome table, then press 'Copy plan' to take it as text or Reset to return to General staff, Beginner and 2 hours per week.",
+  ],
   intro:
     "The AI Training Plan Builder generates a week-by-week internal AI upskilling plan from a curated module catalogue, filtered by role (general staff, managers, developers, marketing, operations, analysts) and starting skill level, then packed into a weekly time budget of 1–10 hours. Modules are sequenced the way vendor academies order AI curricula — foundations, then applied practice, then governance — in 1–4 hour blocks that survive alongside a day job. It is built for L&D owners and team leads who need a defensible plan, not a link dump.",
   useCases: [

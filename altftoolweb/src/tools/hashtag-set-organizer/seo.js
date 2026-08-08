@@ -1,4 +1,7 @@
 const seo = {
+  title: "Hashtag Set Organizer: Dedupe and Check Tag Limits",
+  metaDescription:
+    "Dedupes a pasted tag list and checks it against Instagram's 30 tags and 2,200 characters, X's 280, LinkedIn's 3,000 and YouTube's 15-tag cutoff.",
   intro:
     "The Hashtag Set Organizer turns a pasted pile of hashtags into one deduplicated, platform-legal block and tells you whether it fits the caption field you are posting into. It applies the published caps directly — 30 hashtags and 2,200 caption characters on Instagram, 280 characters on X, 3,000 on LinkedIn, and the rule that YouTube ignores every hashtag on a video once more than 15 are used. It is built for social media managers and creators who keep reusing the same tag lists across platforms and need to know what will actually publish.",
   useCases: [

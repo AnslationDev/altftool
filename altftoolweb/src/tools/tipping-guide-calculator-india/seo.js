@@ -1,4 +1,12 @@
 const seo = {
+  title: "India Tipping Calculator: 10% Pre-GST + Cash Rates",
+  metaDescription:
+    "About 10% of the pre-GST subtotal in a restaurant, fixed rupee amounts per bag, night, ride or guiding day, plus the CCPA service-charge rule.",
+  steps: [
+    "Set How generous (Modest, Customary or Generous), Adjust every fixed rate by (%) if you are outside a metro, People sharing the cost and Trip length in days.",
+    "Under Bills you will settle enter the Sit-down restaurant bill subtotal before GST, choose the GST band on the restaurant, add any Service charge printed on the bill (%), then fill the per-unit counts — Hotel bellhop, Housekeeping, Auto-rickshaw, Licensed tour guide, Food delivery rider and the rest.",
+    "Tips for the whole trip gives the total with Per person and Per day, the bill table shows Payable without a service charge next to the billed figure if the charge stays, and A day's cash, as notes breaks the day down into rupee denominations; Copy plan copies it.",
+  ],
   intro:
     "This calculator applies India's two tipping conventions to an actual itinerary: roughly 10% of the food-and-drink subtotal before GST in a sit-down restaurant, and fixed rupee amounts per bag, per night, per ride, per delivery or per guiding day everywhere else. It also separates a tip from a service charge, which the Central Consumer Protection Authority's guidelines of 4 July 2022 say a hotel or restaurant cannot add to your bill automatically or by default. You get a trip total, a per-person share, a daily figure and a note-by-note cash plan.",
   useCases: [

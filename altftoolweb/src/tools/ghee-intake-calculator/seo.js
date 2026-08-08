@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ghee Intake Calculator: Daily Teaspoons You Can Eat",
+  metaDescription:
+    "How much ghee fits your day in teaspoons: applies the ICMR-NIN 20-30% fat range and WHO's under-10% saturated ceiling, and names which limit binds.",
+  steps: [
+    "Enter your Daily calorie target (kcal), then Fat already eaten today (g) and Of which saturated (g) for everything else on the plate.",
+    "Set Total fat share of energy (20% to 35% of energy) and the Saturated fat ceiling — Under 10% of energy (WHO 2023) or Under 6% of energy (AHA, for lowering LDL).",
+    "\"Ghee left for today\" shows the allowance in tsp, with grams, tablespoons, calories added, both budgets and which limit is binding listed underneath; Copy result copies the breakdown.",
+  ],
   intro:
     "The Ghee Intake Calculator works out how much ghee fits inside two ceilings at the same time — total fat as a share of daily energy, and saturated fat as a share of daily energy — and reports whichever runs out first. It uses the USDA composition for anhydrous butter oil (876 kcal, 99.5 g fat and 61.9 g saturated fat per 100 g), the ICMR-NIN adult range of 20-30% of energy from fat, and the WHO 2023 guideline of under 10% of energy from saturated fat. The answer comes back in teaspoons, because that is how ghee actually gets served.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Title A/B Tester: Truncation Preview + Score",
+  metaDescription:
+    "Rank up to 12 title variants on YouTube's 100-character limit, where each clips at 40, 55 and 70 characters, keyword position and caps, scored out of 100.",
+  steps: [
+    "Type the Focus keyword, then put the drafts into 'Title variants, one per line (up to 12)', one title on each line.",
+    "Every variant is scored out of 100: 30 points for fitting the mobile feed, 25 for the keyword inside the first 40 characters, and 15 each for a concrete number, no shouting, and length.",
+    "Read the ranking with 'Best variant score', Average score and 'Spread between best and worst', plus each title clipped at Suggested / sidebar 40, Mobile home feed 55 and Desktop search results 70, then press Copy ranking.",
+  ],
   intro:
     "This tester compares video title variants on the mechanical properties that decide whether a title is readable where it appears: total length against YouTube's 100-character limit, the point at which it clips in the sidebar, mobile feed and desktop search, whether the focus keyword survives inside the first 40 characters, and whether the title shouts. Each variant is scored out of 100 against a published five-part rubric, with every point traceable to a criterion. It measures structure, not click-through rate — that only a real test can tell you.",
   useCases: [

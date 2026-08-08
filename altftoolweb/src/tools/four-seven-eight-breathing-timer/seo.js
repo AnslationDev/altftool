@@ -1,4 +1,12 @@
 const seo = {
+  title: "4-7-8 Breathing Timer: Inhale 4, Hold 7, Exhale 8",
+  metaDescription:
+    "A 19-count breath paced by an expanding circle, about 3.2 breaths a minute, with optional phase tones and the four-breath session Weil describes.",
+  steps: [
+    "Choose Breaths in this session — 4 is marked (recommended) — and a Pace of one count from Quick (0.75 s) to Slow (1.5 s).",
+    "Tick Play a tone at each phase change to practise with your eyes closed, then press Start and follow the circle as it expands, holds and contracts.",
+    "Watch Time left in session, Length of one breath, Whole session, Breathing rate and the Phase split, then press Copy plan.",
+  ],
   intro:
     "The 4-7-8 Breathing Timer paces one of the simplest slow-breathing patterns there is: inhale quietly through the nose for 4 counts, hold for 7, then exhale through the mouth for 8. That makes one breath 19 counts long, so at the standard one-second pace you are breathing at roughly 3.2 breaths a minute — well inside the range researchers call slow or paced breathing. The pacer expands, holds and contracts in time with each phase, counts the seconds left, and can play a short tone at every phase change so you can practise with your eyes closed.",
   useCases: [

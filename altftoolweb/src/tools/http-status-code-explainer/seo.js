@@ -1,4 +1,10 @@
 const seo = {
+  title: "HTTP Status Code Explainer: 404, 429, 502 and More",
+  steps: [
+    "Type a number into the Enter HTTP Status Code (e.g., 404) box, or click a quick code such as 200, 301, 403 or 503.",
+    "Press Explain, or pick a card from the grid of common codes — 204, 307, 409, 418, 429 and 502 among them.",
+    "The panel names the code and its short title, such as 404 — Not Found, with a 4xx Client Error class badge and a plain-language explanation.",
+  ],
   intro:
     "This explainer looks up any HTTP response status code and tells you what it means, which of the five RFC 9110 classes it belongs to — 1xx informational, 2xx success, 3xx redirection, 4xx client error, 5xx server error — and, for the common failures, what usually fixes it. Type a number such as 404 or click one of the quick codes like 200, 301, 403 or 503, and the panel explains the code in plain language. It is aimed at developers, QA testers and site owners staring at a status line in a browser devtools panel, a server log or an API response.",
   useCases: [

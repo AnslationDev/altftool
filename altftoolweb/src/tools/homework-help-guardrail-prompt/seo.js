@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Homework Helper Prompt That Won’t Write the Answer",
+  metaDescription:
+    "Builds a tutoring prompt that bans the submittable artefact per assignment type: essay prose, final answers, working code, at three strictness levels.",
+  steps: [
+    "Enter the Subject and an optional Student level, then pick an Assignment type — Essay / written work, Maths / problem sets, Programming, Science / lab report or Foreign language — and the note underneath states the hard ban that type carries.",
+    "Choose Guardrail strictness between Strict — questions only, Standard — analogous examples allowed and Light — may verify finished work, and tick the box that reminds the student about their school's AI-disclosure rules at the end of a session.",
+    "Active guardrail rules counts how many rules are in force, the rows confirm the Assignment type, Scaffolding level and Disclosure reminder, and Generated prompt holds the finished text; Copy prompt puts it on the clipboard to paste into the AI assistant.",
+  ],
   intro:
     "The Homework Help Guardrail Prompt builds an AI coach prompt that helps a student learn without producing anything they could submit. It encodes the help/harm line used in academic-integrity policy: explaining concepts and checking reasoning is allowed, while the submittable artefact — final prose, final numeric answers, or working code — is banned per assignment type, with rules that explicitly resist \"just give me the answer\" pressure. Parents and teachers choose from three strictness levels, from questions-only to verify-but-never-fix.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emulsion vs Distemper: Whole-Life Cost & Break-Even",
+  metaDescription:
+    "Prices every repaint inside your horizon, discounts each one back to today, and names the year emulsion draws level with cheaper distemper.",
+  steps: [
+    "Enter Paintable area (sq ft), How long you will own it (years), Discount rate (% a year) and One-time prep (putty, cracks).",
+    "Fill the Emulsion and Distemper panels separately with Price per litre, Spreading rate (sq ft/L/coat), Coats, Repaint every (years) and Labour per sq ft.",
+    "Read Lifetime saving with emulsion, the cost per repaint and Paint jobs in the horizon for each system, their present value and equivalent annual cost, and 'Emulsion draws level from' Year N, then press Copy result.",
+  ],
   intro:
     "This comparison prices acrylic emulsion against oil-bound distemper over the whole time you will own the walls, not just on the day of purchase. It costs one repaint as (area x coats / spreading rate) x price per litre plus labour, repeats it every time the repaint cycle comes round inside your horizon, and discounts each future job back to today's money so a cheap paint applied four times can be compared with an expensive one applied twice. Homeowners, landlords and contractors use it to settle the false economy argument with numbers.",
   useCases: [

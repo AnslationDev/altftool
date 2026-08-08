@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cognitive Performance Tracker: Daily 0-100 Score",
+  metaDescription:
+    "Log sleep, water, mood, energy, exercise and meditation; get a 0-100 daily score, a 7-day trend and up to 365 days of history. Not a medical test.",
   intro:
     "The Cognitive Performance Tracker logs a daily check-in across eight habit inputs — sleep, water, mood, energy, study hours, work hours, exercise and meditation — and turns six of them into a single 0-100 daily score, then charts how that score moves over weeks. It is a self-tracking log for students, shift workers and anyone trying to see which habits line up with their sharper days; it is informational and not a clinical or diagnostic assessment. Check-ins, goals and badges are kept in your browser's local storage, up to 365 days.",
   useCases: [

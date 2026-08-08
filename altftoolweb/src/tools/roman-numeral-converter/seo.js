@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roman Numeral Converter with Strict 1–3999 Validation",
+  metaDescription:
+    "Converts both ways and rejects IIII, VX or DD with the exact rule broken — only IV, IX, XL, XC, CD, CM subtract — plus a place-value breakdown.",
+  steps: [
+    "Type a value into Number (1 – 3999), or type a numeral such as MMXXIV into the Roman numeral field.",
+    "Both fields convert live in either direction; an invalid numeral names the rule it breaks instead of showing a bare error.",
+    "Read the Place-value breakdown splitting the number into thousands, hundreds, tens and units, and press Copy on either field.",
+  ],
   intro:
     "The Roman Numeral Converter turns any whole number from 1 to 3999 into a Roman numeral and back, using strict standard notation — only the six subtractive pairs IV, IX, XL, XC, CD and CM are accepted, I/X/C/M may repeat at most three times, and V, L and D never repeat. Both fields convert live in either direction, and a place-value breakdown splits the number into thousands, hundreds, tens and units so you can see how the symbols were assembled. When a numeral is rejected it explains exactly which rule broke, rather than just showing an error.",
   useCases: [

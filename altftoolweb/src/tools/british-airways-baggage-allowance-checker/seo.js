@@ -1,4 +1,12 @@
 const seo = {
+  title: "British Airways Baggage Allowance Checker by Piece",
+  metaDescription:
+    "Counts bags the way BA does: 56x45x25 cm cabin bag, 40x30x15 cm handbag, 90x75x43 cm checked pieces at 23 kg or 32 kg, extra-bag and heavy-bag fees apart.",
+  steps: [
+    "Pick your Cabin, fare or route from the fare list, then tick I am carrying one under Cabin bag and Personal item and give each one a Weight (kg) plus Length, Width and Height in cm.",
+    "Press Add bag for each hold piece — up to 8 — and enter its weight and three dimensions; under Excess baggage pricing choose the Currency and enter the Fee per extra bag and Fee per overweight bag your own booking quotes, since BA prices those by route and purchase date.",
+    "The result headline shows Excess checked weight in kg with either \"Everything is within the published allowance\" or the number of things to fix, a breakdown of Fare / route, Cabin bag, Personal item and Free checked allowance, and a Bag-by-bag table marking every piece Fits or Too big. Copy result copies it.",
+  ],
   intro:
     "This checker tests your bags against British Airways' piece-based allowance, which counts bags rather than pooling kilograms. It separates the two things that get charged differently — an extra piece beyond what your fare includes, and a heavy bag over its 23 kg or 32 kg ceiling — and applies the 90 × 75 × 43 cm size rule that BA measures with wheels and handles included. Hand baggage is checked too: one 56 × 45 × 25 cm cabin bag plus one 40 × 30 × 15 cm handbag or laptop bag, each up to 23 kg, on every fare including hand-baggage-only tickets.",
   useCases: [

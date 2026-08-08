@@ -1,4 +1,12 @@
 const seo = {
+  title: "Night Shift Eye Break Timer: 20-20-20 on the Clock",
+  metaDescription:
+    "Lays every 20-minute eye break across an overnight shift as wall-clock times, lengthens the ones in the 03:00-05:00 circadian low, adds a wind-down.",
+  steps: [
+    "Set Shift starts and Shift ends — 22:00 to 06:00 rolls past midnight correctly — then Break interval (minutes), Break length (seconds) and Screen wind-down before the end (minutes).",
+    "Toggle the button between Sleeping after this shift and Staying up after this shift so the light advice matches what you do when you get home.",
+    "Eye breaks this shift gives the count, the rows show Breaks in the circadian low (lengthened threefold) and Screen wind-down starts, and the Break times table lists every Clock time with its Length and a Circadian low or Wind-down note; Copy schedule copies it.",
+  ],
   intro:
     "This planner lays 20-20-20 eye breaks across an overnight shift on the actual wall clock, handling the roll past midnight, and treats the early hours differently from the rest of the night. Breaks that land between 03:00 and 05:00 — the window around the circadian nadir, when core body temperature, alertness and error rates are all at their worst — are automatically lengthened. It also sets a screen wind-down before the end of the shift, because light in the final hours before you try to sleep is what pushes your body clock furthest out of step.",
   useCases: [

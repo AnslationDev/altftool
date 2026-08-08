@@ -1,4 +1,12 @@
 const seo = {
+  title: "Egypt Visa Checklist: Arrival, e-Visa or Sinai Permit",
+  metaDescription:
+    "Price Egypt's USD 25 visa on arrival, USD 25 or 60 e-visa and free 15-day Sinai permission for your party, and test six months of passport validity.",
+  steps: [
+    "Choose an Entry route — \"Visa on arrival (USD 25, 30 days)\", \"e-Visa, single entry (USD 25, 30 days)\", \"e-Visa, multiple entry (USD 60, six months)\" or \"Free Sinai permission (15 days, South Sinai only)\" — and a Purpose of the visit.",
+    "Enter Days you will stay, Arrival date, Passport expiry date, Travellers in the party and How many are children, then tick anything under \"Anything else that applies?\" such as \"Travelling beyond South Sinai\" or the yellow fever, polio and currency boxes.",
+    "Read the \"Visa cost for the party\" and the count of required documents in hand, work through the Required and \"Worth carrying\" checklists, then use Copy checklist to take it with you or Reset to start over.",
+  ],
   intro:
     "Egypt offers four practical ways in and they cover different things: a USD 25 visa on arrival bought in cash at the airport bank kiosk, a USD 25 single-entry or USD 60 multiple-entry e-visa applied for online, and a free 15-day permission for visitors who stay inside the South Sinai resort area of Sharm El Sheikh, Dahab, Nuweiba, Taba and St Catherine. This checklist prices each route for your party, tests six months of passport validity from your arrival date, and warns when the free Sinai permission will not cover the trip you have planned.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Online Stopwatch With Laps, Splits and Shortcuts",
+  metaDescription:
+    "Times to a hundredth of a second on the browser's monotonic clock. Space starts, L laps, R resets; every lap shows split, total and delta vs the last.",
+  steps: [
+    "Press Start (or the Space key) to begin — the display counts in hundredths of a second and the status line under it reads Running, Paused or Ready.",
+    "Press Lap (or L) at each split: the Lap times table records Lap, Lap time, Total and Δ prev, and the tiles above show Laps recorded, Fastest lap and Average lap. Reset (or R) clears the clock and the lap list.",
+    "Copy puts the lap report on the clipboard, and Download saves the same report as stopwatch-laps.txt.",
+  ],
   intro:
     "This online stopwatch times to hundredths of a second using the browser's monotonic performance clock, so the elapsed figure is measured from a high-resolution timestamp rather than counted up by a ticking interval that can drift. Space starts and pauses, L records a lap and R resets, and every lap is listed with its own split, the running total and the gap against the previous lap, plus fastest, slowest and average once you have two. The elapsed time also appears in the browser tab title, so it stays readable while you work in another window.",
   useCases: [

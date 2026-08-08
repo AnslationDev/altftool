@@ -1,4 +1,12 @@
 const seo = {
+  title: "CAT Exam Day Checklist: Slot Clock and Section Locks",
+  metaDescription:
+    "Turn your CAT slot into a clock: reporting, gate close and the minute VARC, DILR and QA each lock, plus seconds per question and a net score at +3 / -1.",
+  steps: [
+    "Pick your Slot — or choose \"other\" and type the Test start time from your admit card — then set \"Reporting opens\" and \"Gate closes\" in minutes before start, plus \"Journey to the centre\" and \"Getting ready\".",
+    "Set \"Questions per section\" for VARC, DILR and QA, and tick anything under \"Anything special?\" — Compensatory time has been granted, I am using an approved scribe, or The centre is in another city.",
+    "Read the \"Leave home by\" time, the \"Sectional windows and pace\" table (Section, Window, Questions, Per question) and the \"Attempt strategy at +3 and −1\" score model; Copy plan copies the whole day and Reset restores the defaults.",
+  ],
   intro:
     "This planner converts a CAT slot into a wall clock: reporting time, gate closing, and the exact minute each of the three sections locks. CAT runs 120 minutes with a hard 40-minute limit on VARC, DILR and QA in that fixed order — the screen moves on by itself and there is no going back, so knowing that DILR ends at 9:50 AM changes how you spend 9:45. Candidates granted compensatory time get 53 minutes 20 seconds a section, 160 minutes in all. It also works out seconds per question and projects a net score under the published +3 and -1 marking.",
   useCases: [

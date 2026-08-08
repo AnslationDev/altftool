@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS on Rent Calculator: Section 194-I at 2% or 10%",
+  metaDescription:
+    "Section 194-I TDS at 10% on land and buildings or 2% on plant and machinery, tested against the Rs 50,000 monthly threshold, with net rent per month.",
+  steps: [
+    "Choose What is let out, either Plant, machinery or equipment at 2% or Land, building, furniture or fittings at 10%, then enter Monthly rent, excluding GST (INR).",
+    "Set Months of rent in this financial year, pick FY 2025-26 onwards (Rs 50,000 per month) or FY 2024-25 or earlier (Rs 2,40,000 per year), and untick Landlord has furnished a valid PAN when section 206AA applies.",
+    "Read TDS on each month's rent with the Rate applied, Threshold in force, TDS for the period and Net rent per month rows, then press Copy result for the payment voucher.",
+  ],
   intro:
     "This calculator applies section 194-I of the Income-tax Act to a rent payment: 2% where plant, machinery or equipment is hired and 10% where land, a building, furniture or fittings are let. It tests the rent against the Rs 50,000 for a month or part of a month threshold introduced by the Finance Act 2025, and against the earlier Rs 2,40,000 annual limit for financial years up to 2024-25. Meant for companies, firms and audited proprietors who pay office, warehouse, factory or equipment rent and need the per-month deduction and net payout.",
   useCases: [

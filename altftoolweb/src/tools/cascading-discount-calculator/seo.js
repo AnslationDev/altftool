@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cascading Discount Calculator: True Effective % Off",
+  metaDescription:
+    "Stack successive offers, a flat coupon and tax for the real effective discount: 50% then 20% is 60% off, not 70%, and the gap is shown.",
+  steps: [
+    "Enter the List price / MRP per unit and Quantity, then fill Offer 1 (%) and Offer 2 (%).",
+    "Use Add another offer for up to 8 stacked stages, set the Flat coupon off (after % offers), and pick a rate from the 0, 5, 12, 18 and 28% GST chips.",
+    "Read the single Effective discount with the net price, the percentage points by which simply adding the offers overstates it, and the Stage by stage table of the price left after each offer.",
+  ],
   intro:
     "A cascading discount is a chain of offers applied one after another, each on the price the previous one left behind, so the effective discount is 1 minus the product of the remaining fractions — never the sum of the percentages. This calculator takes a list price, any number of stacked percentage offers, a flat coupon and a tax rate, and returns the single equivalent discount, the net price and exactly how much the naive addition overstates your saving. It is built for shoppers comparing offers and for sellers pricing a promotion stack.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fintech Font Pairing: Tabular Money Column Widths",
+  metaDescription:
+    "Pick display, body and figure faces, then get the exact px and ch width a money column needs — Indian lakh or international grouping — plus the CSS.",
+  steps: [
+    "Choose a Font pair, then set Grouping to International (1,234,567), Indian lakh/crore (12,34,567) or No separators.",
+    "Enter Integer digits, Decimals and Font px for the largest amount you will show, and tick Show currency symbol if the column carries one.",
+    "Read Column width in px, Width ch and Prop jitter saved, then press Copy CSS for the tabular-nums slashed-zero rule with its min-width.",
+  ],
   intro:
     "Fintech Font Pairing combines display, body and figure faces for payments, lending and trading interfaces, then calculates the width a money column needs when set with tabular figures. The width comes from the digit count, the number of grouping separators — Indian lakh/crore grouping produces a different count from international thousands grouping — the decimal point and the currency symbol, all measured in ems and converted to pixels. It also shows how far a right-aligned column can drift if you leave figures proportional instead of tabular.",
   useCases: [

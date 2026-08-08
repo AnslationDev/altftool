@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mandi Bhav Today: AGMARKNET Modal, Min and Max Rates",
+  metaDescription:
+    "Daily mandi rates from the AGMARKNET feed on data.gov.in: modal, minimum and maximum per commodity, with the market, district and arrival date.",
+  steps: [
+    "Pick a State from the list or leave it on All States, and type a crop into Crop / Vegetable — the Popular Crops pills fill in Wheat, Rice, Potato, Onion, Tomato, Cotton, Sugarcane or Maize in one tap.",
+    "Press Search Prices to send those filters into the data.gov.in AGMARKNET query, which returns up to 100 records; City / Market / District narrows what came back, and Refresh Data re-runs the fetch.",
+    "Each card names the commodity and variety, shows Modal Price as the headline rupee figure with Min Price and Max Price under it, tags the market and district it came from, and prints the Arrival date that reading belongs to.",
+  ],
   intro:
     "Mandi Bhav pulls daily crop and vegetable rates from the Government of India's open data portal, data.gov.in, which publishes the AGMARKNET daily mandi price feed reported by market officials across the country. For each record it shows the modal price alongside the minimum and maximum for that commodity in that market, the market and district it came from, and the arrival date the reading belongs to. It is for farmers, traders and buyers who want to compare what a crop is fetching in different mandis before deciding where or when to sell.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Behind Image: Photo Blended Over Your Headline",
+  metaDescription:
+    "Sandwich uppercase text between two copies of your photo, blended in multiply mode. Colour, 10-100% opacity and 48-240 px size, composed in the browser.",
+  steps: [
+    "Press 'Upload image' and pick any image file — it is loaded as a local object URL and composed in the page.",
+    "Type your headline into 'Text' (drawn uppercase), then set 'Text color', 'Opacity' from 10 to 100 and the 'Text size' slider from 48 to 240 px.",
+    "The 16:10 preview redraws live with a second copy of the photo blended over the type in multiply mode; press 'Print / Save' to keep it as a PDF.",
+  ],
   intro:
     "This is a poster composer that sandwiches a headline between two copies of your photo: the image is drawn once as the background, your uppercase text sits on top of it, and a second copy of the same image is blended back over the text in multiply mode so the picture reads through the letters. You control the wording, the text colour, its opacity from 10 to 100 percent and its size from 48 to 240 pixels, and the 16:10 canvas updates live. It suits anyone who wants the editorial magazine-cover look without opening a layer-based editor.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram Post Size Generator: 1080px Batch Export",
+  metaDescription:
+    "Fit one image to 1080×1080, 1080×1350, 1080×566 and 1080×1920, see how much each ratio crops away, then export them all in your browser.",
+  steps: [
+    "Choose Your artwork with the file picker (it accepts any image/*), set How should it fit? to 'Fill the frame (crop the overflow)' or 'Fit the whole image (add bars)', and pick JPEG (photos) or PNG (flat colour, text) as the Export format.",
+    "Drag the 'Crop anchor — horizontal' and 'Crop anchor — vertical' sliders across 0–100% and tick the canvases you need: Feed square 1080 × 1080, Feed portrait 1080 × 1350, Feed landscape 1080 × 566, Story or Reel 1080 × 1920 or Profile picture 320 × 320.",
+    "Press Export all to save every ticked size — files land as instagram-portrait-1080x1350.jpg and the like — or use the Download button on a single row; Copy result takes the crop-loss plan as text.",
+  ],
   intro:
     "Instagram Post Size Generator fits one piece of artwork to every Instagram canvas — 1080 × 1080 square, 1080 × 1350 portrait, 1080 × 566 landscape and the 1080 × 1920 story frame — and exports them in a batch. Before you export it shows the number that actually matters: how much of the original image each ratio crops away at your chosen anchor point, and whether the source has enough pixels or is being enlarged. Fitting uses the standard cover and contain scaling rules, and everything runs in the browser so the image is never uploaded.",
   useCases: [

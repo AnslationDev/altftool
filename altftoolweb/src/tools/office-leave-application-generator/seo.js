@@ -1,4 +1,12 @@
 const seo = {
+  title: "Office Leave Application Generator with Notice Check",
+  metaDescription:
+    "Drafts a casual, earned, sick or emergency leave letter or email, checks the notice you have given for that type, and states the balance left after it.",
+  steps: [
+    "Choose a Leave type — Casual leave (CL), Earned / privilege leave (EL/PL), Sick leave (SL), Emergency / urgent personal leave and the rest — and set Sending as to Printed letter or Email, then fill in your name, designation, manager and company.",
+    "Enter First day of leave, Last day of leave and Date you are applying, name Who will cover your work, optionally add Current balance of this leave type, and tick Deduct working days only or Mention attached document.",
+    "Days deducted from balance heads the result with a notice verdict for that leave type, over rows for Calendar days in the period, Working days (Mon-Fri), Notice given, Balance after this leave, Subject line and Word count; the finished draft sits under Your application and Copy application copies it. A separate Earned leave accrual (Factories Act 1948, s.79) box turns Days worked last calendar year into an entitlement.",
+  ],
   intro:
     "Office Leave Application Generator drafts a workplace leave request — casual, earned, sick, emergency, bereavement, comp-off, unpaid, maternity or paternity — as a letter or an email, then checks the notice you have given against what that leave type normally expects and works out the balance you will be left with. It also calculates earned leave accrual under section 79 of the Factories Act 1948, which grants one day of leave per 20 days worked (one per 15 for workers under 18) once 240 days of work in the preceding calendar year are complete.",
   useCases: [

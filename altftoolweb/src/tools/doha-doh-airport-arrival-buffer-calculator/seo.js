@@ -1,4 +1,12 @@
 const seo = {
+  title: "When to Leave for Doha DOH Airport: Buffer Calculator",
+  metaDescription:
+    "Works back from your Doha departure through gate close, check-in cut-off and the 3-hour advice, minus the drive after traffic — one leave-home time.",
+  steps: [
+    "Enter your Scheduled departure time and pick the Flight profile, Baggage (checked bag to drop or cabin bag only) and Starting from area.",
+    "Set Driving time with no traffic (minutes), Road conditions, Terminal queues, Parking or drop-off plus walk, and your Personal buffer.",
+    "Read the Leave home by clock time and the step-by-step timeline from door to gate, then press Copy plan.",
+  ],
   intro:
     "This calculator turns a Doha DOH departure time into the single time you need to leave home, working backwards through the boarding-gate close, passport control, security, bag drop and the drive itself. It applies the larger of three deadlines - the three-hour arrival Qatar Airways advises at Hamad International, the airline check-in cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Gates at the far end of Concourses D and E add real walking minutes after passport control.",
   useCases: [

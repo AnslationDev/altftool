@@ -1,4 +1,12 @@
 const seo = {
+  title: "MAP Calculator: Mean Arterial Pressure Formula",
+  metaDescription:
+    "Enter systolic and diastolic in mmHg for MAP = DBP + 1/3 × (SBP − DBP), shown with your numbers substituted and banded Low under 60 to Very High 120+.",
+  steps: [
+    "Type your reading into \"Systolic (mmHg)\" and \"Diastolic (mmHg)\" — the top and bottom numbers of a blood pressure reading.",
+    "Press \"Calculate MAP\", which stays disabled until both fields have a value, to apply MAP = DBP + 1/3 × (SBP − DBP).",
+    "Read the MAP to one decimal on the 40–140 mmHg gauge with its band — Low, Normal, Pre-Hypertension, High or Very High — and the formula with your own numbers filled in.",
+  ],
   intro:
     "This calculator works out Mean Arterial Pressure — the average pressure in your arteries across one cardiac cycle — using the standard clinical estimate MAP = DBP + 1/3 x (SBP − DBP). Enter a systolic and diastolic reading in mmHg and it returns MAP to one decimal place, shows the substituted formula, and places the result on a gauge banded Low (under 60), Normal, Pre-Hypertension (100–109), High (110–119) and Very High (120 or above). It is an informational calculator, not a diagnosis — blood pressure decisions belong with a clinician.",
   useCases: [

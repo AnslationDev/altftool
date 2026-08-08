@@ -1,4 +1,12 @@
 const seo = {
+  title: "IndiGo Excess Baggage: Counter vs Prepaid Slab Cost",
+  metaDescription:
+    "Price extra kilos both ways: per-kg at check-in, rounded up, versus prepaid 3, 5, 10, 15, 20 or 30 kg blocks. Both rates are editable.",
+  steps: [
+    "Set 'Free checked allowance on your ticket', 'Passengers on the booking', 'Total checked baggage weight (kg)' and 'Heaviest single bag (kg)'.",
+    "Type the figures from your booking page into 'Counter rate (INR per kg)' and 'Prepaid rate (INR per kg)', and tick the pooled-allowance box if you travel together.",
+    "Compare 'Pay at the counter' against 'Prepay total', check 'Unused prepaid weight' and the 3, 5, 10, 15, 20 and 30 kg slab ladder, then press 'Copy result'.",
+  ],
   intro:
     "This estimator works out what extra kilograms cost on an IndiGo booking by pricing the same overweight two ways: per kilogram at the check-in counter, and as a prepaid excess baggage slab bought before travel. It applies the two rounding rules that decide the answer — the counter rounds a part kilogram up to the next whole kilogram, and prepaid excess is only sold in fixed blocks per passenger, so a 7 kg overweight forces you to buy a 10 kg block. Both rates are editable, so you can drop in the figures shown on your own booking page.",
   useCases: [

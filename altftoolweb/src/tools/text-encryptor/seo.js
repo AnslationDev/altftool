@@ -1,4 +1,12 @@
 const seo = {
+  title: "AES-256-GCM Text Encryptor with PBKDF2 & SHA Hashes",
+  metaDescription:
+    "Encrypt text with AES-256-GCM in the browser, keyed by PBKDF2-HMAC-SHA256 at 600,000 rounds with a fresh salt and IV. SHA-1 to SHA-512 too.",
+  steps: [
+    "Paste into Text to encrypt and set a Password — the entropy estimate under the field flags a weak one.",
+    "Press Encrypt: PBKDF2-HMAC-SHA256 runs 600,000 rounds over a fresh 16-byte salt, then AES-256-GCM seals it with a 12-byte IV.",
+    "Copy result takes the ALTFT1 payload; the card lists Cipher, Key derivation, Salt, IV and Ciphertext size, and Decrypt reverses it.",
+  ],
   intro:
     "This tool encrypts text with AES-256-GCM using a key derived from your password by PBKDF2-HMAC-SHA256 at 600,000 iterations — the count the OWASP Password Storage Cheat Sheet recommends — and it also produces SHA-1, SHA-256, SHA-384 and SHA-512 digests. A fresh 128-bit salt and 96-bit IV are generated for every message, and everything runs in the browser through the Web Crypto API, so no password, key or message ever leaves the page. It is for anyone who needs to put a short secret into an email, a ticket or a chat without trusting the channel.",
   useCases: [

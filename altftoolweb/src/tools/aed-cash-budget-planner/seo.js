@@ -1,4 +1,12 @@
 const seo = {
+  title: "AED Cash Budget Planner: Dubai Cash vs Card in Rupees",
+  metaDescription:
+    "Split a UAE trip budget into dirham notes and card spend, priced in rupees with the changer markup, GST, TCS and the USD 3,000 RBI cash limit.",
+  steps: [
+    "Under The trip, set Trip length (days), Travellers, On-ground spend per person per day (AED), the Share of daily spend that will be cash and the Emergency buffer.",
+    "In Rates and fees enter the Mid-market rate (₹ per 1 AED), the Money changer's markup on notes (%) and the Card foreign-currency markup (%), then choose the card you will use.",
+    "Read Carry in dirhams with its all-in rupee cost, the Ask for these notes denomination split, and Limits this plan touches for the RBI cash limit, LRS and TCS; Copy plan saves it.",
+  ],
   intro:
     "This planner divides a UAE trip budget into the dirhams worth carrying as notes and the spend better left on a card, and prices both sides in rupees. The cash side adds the money changer's markup and the GST that Rule 32(2)(b) of the CGST Rules levies on a currency purchase; the card side adds the issuer's foreign-currency markup plus 18% GST on that fee. Because the dirham is pegged to the US dollar at 3.6725, the rate you enter moves only with the rupee–dollar rate, which makes forward planning unusually reliable for this destination.",
   useCases: [

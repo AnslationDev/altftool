@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wildfire Smoke Mask Selector: OSHA Protection Factors",
+  metaDescription:
+    "From PM2.5 or AQI, shows the exposure behind an N95, PAPR or full facepiece using OSHA factors, and how long you can stay out. Cloth gets no credit.",
+  steps: [
+    "Pick I have a PM2.5 reading or I only have the AQI, then enter the figure in Outdoor PM2.5 (µg/m³) or US EPA AQI.",
+    "Choose the Mask you plan to wear — No mask, Cloth face covering, NIOSH N95, fit-checked, no valve, Loose-fitting PAPR with hood, Full-facepiece respirator with P100 filters and more — plus Minutes outdoors, How hard you will be working, Indoor air for the rest of the day, and an Exposure target to stay under.",
+    "Read PM2.5 inhaled this trip, Particulate avoided, Your 24-hour average and Outdoor time before the target is passed, plus the Lightest mask that meets the target, then press Copy result.",
+  ],
   intro:
     "The Wildfire Smoke Mask Selector matches a mask class to a smoke level using the assigned protection factors published in OSHA 29 CFR 1910.134 — 10 for N95 and other filtering facepiece respirators, 25 for a loose-fitting PAPR, 50 for a full-facepiece respirator, and none at all for cloth or surgical masks. From the PM2.5 concentration or the AQI, it shows the exposure you would still be breathing behind each mask, the micrograms inhaled during your trip, and how long you can be outside before your 24-hour average passes a chosen guideline.",
   useCases: [

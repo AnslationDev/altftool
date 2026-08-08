@@ -1,4 +1,12 @@
 const seo = {
+  title: "CSS Specificity Referee: Why Your Selector Loses",
+  metaDescription:
+    "Compare two selectors: both (a,b,c) triples per Selectors Level 4, which of the six cascade criteria decided it, and the smallest edit that flips it.",
+  steps: [
+    "On the \"Two selectors\" tab, type the rule that is \"Winning now\" and the one you \"Want to win\", giving each its \"Cascade layer (blank = unlayered)\".",
+    "Tick \"Declared !important\" or \"It is a style attribute\" where they apply, then set \"Layer order, as declared\" and Source order under Cascade context.",
+    "The verdict names the winning selector, prints both (a,b,c) triples with a token table, chips the criterion that \"Decided by\" the fight, and lists \"What flips the result\"; \"Copy verdict\" copies it.",
+  ],
   intro:
     "This page referees a CSS fight: give it the selector that is currently winning and the one you want to win, and it returns each selector's (a, b, c) specificity per Selectors Level 4 §15, the cascade criterion that actually decided the contest per CSS Cascade Level 5 §6.1, and the smallest edit that reverses the result. It is for anyone staring at a style that will not apply — because specificity is only the fifth of six sorting criteria, and importance, style attributes and @layer are all settled before the browser ever counts your classes.",
   useCases: [

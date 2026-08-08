@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Wedding Hashtag Generator: Name Blends & Puns",
+  metaDescription:
+    "Blend both first names into shaadi hashtags across four formats, each shown with its character count and checked against Instagram's 30-character limit.",
+  steps: [
+    "Type the First partner's name and Second partner's name, plus an optional Shared surname and Wedding year.",
+    "Narrow the list with the category tabs: All, Name blends, Classic formats, Hindi & shaadi puns and Playful.",
+    "Each tag shows its character count after the #, flagged in red once it passes Instagram's 30-character limit; tap one tag to copy it or use Copy all shown.",
+  ],
   intro:
     "The Indian Wedding Hashtag Generator builds a shortlist of wedding hashtags by blending both partners' first names into portmanteaus and slotting them into four families of format: name blends, classic English formats, Hindi and shaadi puns, and playful lines. Every suggestion is measured against Instagram's 30-character limit for a single hashtag, and anything longer is flagged so it never gets truncated on a sign or a post. The generator is deterministic — the same names always return the same list, so you can come back to a favourite.",
   useCases: [

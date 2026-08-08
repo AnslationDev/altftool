@@ -1,4 +1,12 @@
 const seo = {
+  title: "Typing Tutor: 20 Lessons With WPM and Accuracy",
+  metaDescription:
+    "Twenty touch-typing lessons from home row to code snippets, scored on WPM and accuracy, with a finger-coloured keyboard and best scores kept per lesson.",
+  steps: [
+    "On the Lessons tab, filter with the All, Beginner, Intermediate and Advanced chips and open one of the 20 lessons — \"Home Row — Left Hand\" through \"Technical Text\" and \"Speed Builder\".",
+    "Type the shown text in the Typing area: matched characters switch to the primary colour and mistakes turn red, the on-screen keyboard tints the key by the finger that owns it, and the WPM, Accuracy and Errors tiles update as you go.",
+    "Finish the text and \"Lesson Complete!\" reports your WPM, accuracy and errors and saves your best for that lesson, with Practice Again or Back to Lessons; the Progress tab charts Lessons Done, Sessions, Avg WPM and Avg Accuracy.",
+  ],
   intro:
     "Typing Tutor is a 20-lesson touch-typing course that runs from home-row drills through numbers, symbols and full paragraphs, scoring each attempt with the standard WPM formula — correct characters divided by five, per minute — alongside accuracy and error count. An on-screen keyboard colour-codes which of the eight fingers owns each key in the current lesson, so you learn placement rather than hunting. Progress, best WPM and best accuracy per lesson are stored in your browser and charted so you can see speed and accuracy trend across sessions.",
   useCases: [

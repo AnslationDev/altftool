@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monsoon Hydration Planner for Humid Indian Weather",
+  metaDescription:
+    "Runs simplified ISO 7933 sweat maths plus the NWS heat index for humid Indian days, and sizes the litres of safe water a household must treat.",
+  steps: [
+    "Enter Body weight (kg), Height (cm), Air temperature (°C) and Relative humidity (%) for the conditions you will actually be in.",
+    "Set Hours in that environment, People in the household, and an Activity level — Resting / seated indoors, Light — desk work, slow walking, commuting, Moderate — brisk walking, housework, field visits, or Heavy — manual labour, construction, sport.",
+    "Read Estimated sweat rate, Sweating efficiency in this air, Drink during exposure, Drink across the rest of the day, Sodium lost in sweat and Safe drinking water to treat today, then press Copy result.",
+  ],
   intro:
     "The Monsoon Hydration Planner estimates monsoon-season fluid loss in India by modelling how badly sweat evaporates when the air is already close to saturation. It runs the simplified ISO 7933 heat-strain chain — required evaporation, the environment's maximum evaporative capacity, sweating efficiency, then required sweat rate — and reports the US National Weather Service heat index alongside it. Because contaminated water is the other monsoon risk, it also sizes the volume of safe drinking water a household needs to boil or treat that day.",
   useCases: [

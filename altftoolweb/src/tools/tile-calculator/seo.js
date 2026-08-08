@@ -1,4 +1,10 @@
 const seo = {
+  title: "Tile Calculator: Tiles, Boxes, Grout and Adhesive",
+  steps: [
+    "Under \"The area\", enter Length, \"Width or wall height\", Room units of Metres or Feet, and any \"Area to deduct\" for doorways, a shower tray or kitchen units.",
+    "Under \"The tile\", set Tile width, Tile height, \"Grout joint (mm)\", \"Tile thickness (mm)\" and \"Wastage allowance (%)\"; under Ordering, set Tiles per box, Price per box and the Notched trowel.",
+    "\"Boxes to order\" leads the result, with tiles with and without wastage, spare tiles, real wastage once boxed, \"Covering module per tile\", and Grout needed and Adhesive needed.",
+  ],
   intro:
     "A tile calculator converts a room or wall measurement into the number of tiles, the number of sealed boxes, and the grout and adhesive to buy with them. It counts the grout joint as part of each tile's covering module — (tile width + joint) × (tile height + joint) — which is why it gives a slightly lower tile count than a calculator that divides by the bare tile size. Grout uses the manufacturers' formula ((A + B) ÷ (A × B)) × joint × thickness × 1.6 kg per m², and adhesive the standard 1.5 kg per m² for every millimetre of bed depth.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Overtime Register Format Generator (Form IV, 2x Rate)",
+  metaDescription:
+    "Build a Form IV overtime register under rule 25(2): double-rate wages per s.59(1), the 10-hour day and 50-hour quarter checks, copied out as CSV.",
+  steps: [
+    "Fill the 'Establishment and wage basis' panel: Establishment name, Worker name, Designation, Wage period, Monthly wage (INR), 'Paid days in the wage period' and 'Normal hours in a working day'.",
+    "Leave 'Overtime multiplier' at the statutory 2, press 'Add day' for each date worked, and fill Date worked, 'Date overtime wages paid', Normal hours and Overtime hours.",
+    "Read 'Total overtime wages payable' with the ordinary and overtime rate per hour, any warning about the 10-hour day or the 50-hour quarterly ceiling under s.64(4)(v), then press 'Copy register' for the nine Form IV columns as CSV.",
+  ],
   intro:
     "An overtime register records every extra hour a worker puts in and the wages paid for it, and this generator builds that register in the Form IV layout prescribed by rule 25(2) of the Minimum Wages (Central) Rules 1950. It prices each entry at twice the ordinary hourly rate, the rate section 59(1) of the Factories Act 1948 fixes for overtime, and flags days over the 10-hour cap or quarters over the 50-hour overtime ceiling. HR teams, factory supervisors and small employers can produce an inspection-ready register without setting up a spreadsheet.",
   useCases: [

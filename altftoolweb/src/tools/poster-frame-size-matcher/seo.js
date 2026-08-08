@@ -1,4 +1,12 @@
 const seo = {
+  title: "Poster Frame Size Matcher: Crop, Mount Border, DPI",
+  metaDescription:
+    "Ranks A5-A0, 4x6 to 24x36 inch and 10x15 to 70x100 cm frames by how far each is off your ratio, with printed size, mount border and crop percentage.",
+  steps: [
+    "Enter Artwork width and Artwork height and set Measured in to Pixels, Millimetres, Centimetres or Inches; with Pixels chosen, Print resolution (DPI) converts them into a physical size.",
+    "Set Minimum mount border (mm) for the border you want left on every edge, and switch between Fit whole artwork and Fill and crop to see the preview both ways.",
+    "Best matching stock frame names the closest opening, with Printed size inside the frame, Mount border left over, Crop needed to fill the frame, Resolution at printed size and Pixels needed for 300 DPI beneath it, and the table Every stock size, closest shape first ranks the rest.",
+  ],
   intro:
     "Poster Frame Size Matcher compares the aspect ratio of your artwork against off-the-shelf frame openings and reports which stock size fits with the least cropping. It covers the ISO 216 A-series (A5 to A0, all 1 : √2), common imperial openings from 4×6 to 24×36 inches, and metric sizes from 10×15 cm to 70×100 cm, showing the printed size, the leftover mount border and the percentage of image you would lose to fill each frame. Useful before you order a print, because the cheapest framing is always a ready-made frame your image already fits.",
   useCases: [

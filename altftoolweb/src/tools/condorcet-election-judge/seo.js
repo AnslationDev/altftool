@@ -1,4 +1,12 @@
 const seo = {
+  title: "Condorcet Winner Calculator from Ranked Ballots",
+  metaDescription:
+    "Paste ballots as A > B > C, one per line. Every pair is compared head-to-head, and a Condorcet winner is named only if it wins all n-1 matchups.",
+  steps: [
+    "Type one ballot per line in the Ranked ballots box with candidates separated by >, for example A > B > C, or load the Five ballots preset.",
+    "The verdict recomputes as you type: either a named Condorcet winner or 'No Condorcet winner (tie or cycle)', with a caption counting the candidates and ballots found.",
+    "Read the pairwise table columns - Candidate A, Candidate B, A preferred, B preferred and Pair winner - then use Copy, or Download to save it as condorcet-election-judge.txt.",
+  ],
   intro:
     "The Condorcet Election Judge takes ranked ballots written one per line as \"A > B > C\" and runs every head-to-head matchup, declaring a Condorcet winner only if one option beats all the others one-on-one — that is, wins all n-1 pairwise contests. Committees, product teams and clubs get a full comparison table showing how many ballots preferred each side of every pair, plus an explicit \"no Condorcet winner\" verdict when the group's preferences form a cycle. It counts what you enter; it does not run the election or handle ballot secrecy.",
   useCases: [

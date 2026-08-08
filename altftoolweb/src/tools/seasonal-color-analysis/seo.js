@@ -1,4 +1,12 @@
 const seo = {
+  title: "Seasonal Color Analysis from a Selfie, in Your Browser",
+  metaDescription:
+    "Samples skin, hair and cheek RGB in-browser: red over blue by 25 sets warm or cool, an 80-point luminance gap sets contrast. Four seasons, four colours.",
+  steps: [
+    "Upload a clear front-facing photo — drag and drop your image, or click to browse — ideally in natural light with no filter.",
+    "Face detection runs in your browser and samples the average RGB of your skin, hair and cheeks; the image never leaves your device.",
+    "Get Warm Autumn, Clear Spring, Deep Winter or Cool Summer with Your Color Palette of four named hex swatches and the Detected Colors behind them.",
+  ],
   intro:
     "Seasonal color analysis places you in a colour season by measuring two things from a selfie: whether your skin reads warm or cool, and how much luminance contrast there is between your hair and your face. The tool detects your face in the browser, samples the average RGB of your skin, hair and cheeks, and returns one of four seasons — Warm Autumn, Clear Spring, Deep Winter or Cool Summer — with a four-colour palette. It is for anyone deciding which shirt, lipstick or hair colour will actually flatter them instead of guessing in a fitting room.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hoodie Print Size and Placement Above the Pocket",
+  metaDescription:
+    "Get the real front and back print area on Adult S-3XL hoodies once the kangaroo pocket seam and press platen cap it, plus offsets and export pixel size.",
+  steps: [
+    "Choose Hoodie size (Adult S to Adult 3XL), Panel — \"Front (above the pocket)\" or \"Back (full)\" — and Press platen, from no platen limit up to 16 x 20 in.",
+    "Enter \"Pocket top seam above the hem (in)\", \"Top of print below the hood seam (in)\", the other clearances, plus Artwork width ratio, Artwork height ratio and Export resolution (DPI).",
+    "\"Artwork fits\" gives the print size in inches, with \"Top edge below the hood seam\", \"Gap left above the pocket seam\" and the pixel size to export at that DPI.",
+  ],
   intro:
     "On a pullover hoodie the front print area is body length minus the drop below the hood seam minus everything from the hem up to the kangaroo pocket seam, because a flat platen cannot print across that stitch line. This guide calculates the front and back areas for every size, caps them at your press platen, fits your artwork ratio inside, and lists the offsets for left chest, centre chest, back, yoke, sleeve and hood prints. It is for print-on-demand sellers and merch designers who have had a design bounced for overlapping the pocket.",
   useCases: [

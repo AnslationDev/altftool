@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS on Salary Calculator: Section 192 Monthly Cut",
+  metaDescription:
+    "Estimate monthly TDS under Section 192 from gross salary, regime, exemptions and deductions — slab tax, 87A rebate, surcharge and 4% cess included.",
+  steps: [
+    "Choose New regime or Old regime, then enter Annual gross salary (₹); the old regime also unlocks HRA exemption, Section 80C (max ₹1,50,000), Section 80D, Section 80CCD(1B) NPS (max ₹50,000) and Home loan interest u/s 24(b).",
+    "Fill TDS already deducted (₹) and Months left in the year so only the remaining balance is spread, and add Employer NPS u/s 80CCD(2) and Other income reported (₹) if they apply.",
+    "Monthly TDS to be deducted shows on the results panel, with Taxable income, Tax on slab rates, Surcharge, Annual tax (total TDS for the year) and Effective rate on gross salary below it; Copy result copies the whole computation.",
+  ],
   "intro": "TDS on Salary Calculator estimates the tax your employer should withhold every month under Section 192. Enter your annual gross salary, the regime you declared, and any exemptions or deductions you have submitted proof for — the tool computes salary income after the standard deduction, applies the slab rates, Section 87A rebate, surcharge and 4% cess, then divides the balance across the months still left in the financial year. Useful for salaried employees checking a payslip and for payroll staff sanity-checking a withholding sheet.",
   "useCases": [
     "Check whether the TDS on your payslip matches what your declared investments should produce.",

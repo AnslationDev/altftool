@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lucky Color Picker: Mood, Zodiac or Random Hex",
+  metaDescription:
+    "Draw a lucky color from a 12-shade palette by mood, zodiac sign or at random — each pick names the shade, its hex code and its meaning.",
+  steps: [
+    "Choose Random, 'By Mood' or 'By Zodiac'; in mood mode select Happy, Calm, Energetic, Romantic, Creative or Adventurous, and in zodiac mode select one of the 12 signs from Aries to Pisces.",
+    "Press 'Pick My Lucky Color' — Random draws uniformly from the 12-shade palette, while mood and zodiac use a fixed mapping, so Leo always returns Sunset Orange and calm always returns Ocean Blue.",
+    "The swatch shows the hex code over the colour with its name and meaning, such as Ocean Blue for 'Peace & Trust'; press 'Copy Hex' for the code, and the Color History strip keeps your last 10 picks clickable.",
+  ],
   intro:
     "Lucky Color Picker draws a colour for you from a curated 12-shade palette, either at random, from your current mood, or from a fixed colour assigned to each of the 12 zodiac signs. Every result comes with its name, its hex code and the association behind it — Ocean Blue for peace and trust, Sunshine Yellow for optimism and clarity — and the last 10 picks stay on screen so you can compare. It is a light entertainment and inspiration tool, not a prediction: the mood and zodiac modes use a fixed mapping, and random mode is genuinely random.",
   useCases: [

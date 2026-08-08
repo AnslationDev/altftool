@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shot List Planner: Setups, Takes and Days You Need",
+  metaDescription:
+    "Costs each shot as setup + rig + rehearsal + takes × (length + reset) against a 10-hour day less the meal break and 15% contingency.",
+  steps: [
+    "Under Day settings, set Shooting day (hours), Meal break (minutes) and Contingency (%).",
+    "Add each shot with its Scene, Framing, Camera move, Setup complexity, Planned takes, Shot length (seconds) and Status, then press Add shot for the next.",
+    "Read Shooting days needed alongside Productive time per day, Shots remaining, Screen time in the cut and Shooting ratio, then press Copy sheet.",
+  ],
   intro:
     "The Shot List Planner estimates how long a shoot will actually take by costing every shot as setup + rig + rehearsal + takes × (shot length + reset), the same setup-driven arithmetic an assistant director uses when boarding a schedule. Setup is 15 minutes for a simple pickup, 30 for a standard relight, 60 for a complex lit setup and 90 for a stunt or VFX shot, and the day is a 10-hour call minus a 1-hour meal break and a 15% contingency. It is for directors, DPs, producers and video creators who need a defensible day count before booking crew.",
   useCases: [

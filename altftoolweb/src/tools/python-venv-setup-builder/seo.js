@@ -1,4 +1,12 @@
 const seo = {
+  title: "Python venv Commands for Your OS, Shell and Version",
+  metaDescription:
+    "Exact create, activate and install commands: bin vs Scripts, activate.fish, activate.bat or Activate.ps1, and --upgrade-deps only on Python 3.9+.",
+  steps: [
+    "Choose 'Operating system' (macOS, Linux or Windows) and 'Shell' — bash, zsh, fish, csh / tcsh, PowerShell, cmd.exe or Git Bash (Windows).",
+    "Pick 'Python version' and 'Package manager' (pip + requirements.txt, pip-tools or uv), then name the 'Environment directory' and 'Requirements file'.",
+    "The Activation command, Scripts directory and Activation script path appear above the numbered commands; 'Copy result' takes the whole setup script.",
+  ],
   intro:
     "This builder emits the exact shell commands to create, activate and populate a Python virtual environment for one specific combination of operating system, shell, interpreter version and package manager. It follows the actual venv layout rules: the scripts directory is bin on POSIX and Scripts on Windows, while the activation filename is chosen by the shell — activate, activate.fish, activate.csh, activate.bat or Activate.ps1. It also flags version-dependent behaviour such as --upgrade-deps, which only exists from Python 3.9 onwards.",
   useCases: [

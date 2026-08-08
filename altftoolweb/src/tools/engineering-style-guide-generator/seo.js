@@ -1,4 +1,12 @@
 const seo = {
+  title: "Engineering Style Guide + .editorconfig Generator",
+  metaDescription:
+    "Turn team conventions into a Markdown style guide plus a matching .editorconfig, seeded from Prettier, PEP 8, gofmt, Google Java Style or RuboCop.",
+  steps: [
+    "Type a Team or repository name and pick a Language from TypeScript, JavaScript, Python, Go, Java, Ruby or C# to seed the defaults from that ecosystem's published guide.",
+    "Override Indent style, Indent width (1-8), Line length (60-200, 0 = no limit), String quotes, Semicolons, Max function length (lines) and Branch prefix, then tick the boxes under Sections to include such as Commit messages (Conventional Commits).",
+    "Check the Language baseline, Indentation and Line length rows, then press Copy Markdown for the style guide and Copy .editorconfig for the machine-readable editor rules.",
+  ],
   intro:
     "This generator turns a handful of choices — language, indentation, line length, quotes and review rules — into a complete engineering style guide in Markdown plus a matching .editorconfig file. Defaults are seeded from each ecosystem's dominant published standard: Prettier for JavaScript and TypeScript, PEP 8 for Python, gofmt for Go, the Google Java Style Guide, RuboCop defaults for Ruby and Microsoft's .NET naming guidelines for C#. It is built for tech leads and new teams who want a documented standard without writing it from scratch.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Standard Deviation Calculator: Sample or Population",
+  metaDescription:
+    "Paste numbers split by commas, spaces or line breaks and get the standard deviation, variance, mean and count - dividing by n or by n-1.",
   intro:
     "The Standard Deviation Calculator takes a list of numbers and returns the standard deviation, variance, mean and count, dividing the sum of squared deviations by n for a population or by n−1 (Bessel's correction) for a sample. Paste values separated by commas, spaces or line breaks — negatives and decimals are picked up automatically — and switch between the two modes to see how much the divisor changes the answer. It is aimed at students checking homework and at anyone summarising the spread of a small dataset without opening a spreadsheet.",
   useCases: [

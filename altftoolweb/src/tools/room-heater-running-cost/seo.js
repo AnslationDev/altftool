@@ -1,4 +1,12 @@
 const seo = {
+  title: "Room Heater Running Cost: Watts, Hours and Tariff",
+  metaDescription:
+    "Season and daily heater cost from wattage, hours and ₹/unit, using each type's duty cycle — plus how a reverse-cycle AC compares per unit of heat.",
+  steps: [
+    "Pick a \"Heater type\" — Fan heater / blower, Oil-filled radiator (OFR), Halogen / quartz rod heater, Carbon / infrared panel, or Air conditioner in heat mode.",
+    "Enter \"Rated wattage (W)\", \"Hours switched on per day\", \"Days used per month\", \"Months of heating season\" and your \"Electricity tariff (₹ per unit)\".",
+    "Read \"Cost for the season\" with its per-day and per-month figures, then the \"Same warmth, different appliance\" table comparing Units/day, Per day and Season.",
+  ],
   intro:
     "This calculator works out what a room heater adds to the winter electricity bill from its rated wattage, the hours it runs and how much of that time the thermostat actually keeps the element energised. It also makes the comparison most heater guides get wrong: a fan blower, an oil-filled radiator, a halogen rod and a carbon panel are all exactly 100% efficient, so per unit of heat they cost identically — only a reverse-cycle air conditioner, which moves heat instead of creating it at a coefficient of performance near 3, breaks that tie.",
   useCases: [

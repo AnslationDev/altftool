@@ -1,4 +1,12 @@
 const seo = {
+  title: "Algebra Equation Practice with Step-by-Step Answers",
+  metaDescription:
+    "Drill five levels from x + a = b to ax² + bx + c = 0, with hints, full working and answers accepted within 0.05. Practice, 60-second timed or survival.",
+  steps: [
+    "Pick a Difficulty from Beginner (x + a = b) to Challenge (ax² + bx + c = 0), a Game Mode of Practice, Timed 60 seconds or Survival 3 lives, and 5 to 30 questions.",
+    "Press Start Practice, type the value into the x = ? box and press Submit — Hint and Skip sit beside it.",
+    "You get Correct! or Wrong! with the answer (anything within 0.05 counts), then open Show Explanation for the numbered working and press Next Equation.",
+  ],
   intro:
     "This equation practice tool generates randomised algebra problems across five levels — x + a = b, ax + b = c, ax + b = cx + d, ax² + b = c and the full quadratic ax² + bx + c = 0 — and marks your answer instantly against a worked step-by-step solution. Answers are accepted within a tolerance of 0.05, so a rounded decimal still counts as correct, and each problem carries a hint and the exact fractional or ± form. It is for students drilling linear and quadratic equations, and for anyone who needs repetition rather than a single answer.",
   useCases: [

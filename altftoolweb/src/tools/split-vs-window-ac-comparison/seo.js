@@ -1,4 +1,12 @@
 const seo = {
+  title: "Split vs Window AC: Breakeven Year From ISEER",
+  metaDescription:
+    "Compare split and window AC on price, install and ISEER-based electricity, then see the total cost and the year the split overtakes the window.",
+  steps: [
+    "Set the shared usage under \"How you will use it\": Capacity (ton), Hours per day, Cooling days per year, Electricity tariff (per kWh), Tariff rise per year (%) and Years you will keep it.",
+    "Fill the Split AC and Window AC cards with each unit's Purchase price, installation cost, ISEER from the BEE label and Servicing per year — the defaults are ISEER 5.0 for the split against 3.1 for the window.",
+    "Read the \"Cheaper over N years\" verdict, the year the split overtakes the window and the \"Cumulative cost, year by year\" table; Copy result puts the whole comparison on the clipboard and Reset restores the defaults.",
+  ],
   intro:
     "This tool compares a split and a window air conditioner on total cost of ownership, not just sticker price. Electricity is derived from the ISEER on each unit's BEE star label — average input power equals rated cooling in watts divided by ISEER, so a 1.5 ton unit rated 3,516.85 W per ton draws about 1,055 W at ISEER 5.0 but about 1,649 W at ISEER 3.2. Add purchase price, installation, yearly servicing and an optional tariff escalation, and it reports which type is cheaper over your ownership horizon and the year the split overtakes the window.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indonesia Rupiah Cash Budget: Notes, ATM Fees, GST",
+  metaDescription:
+    "Size the rupiah float for Bali or Java, price the changer markup and GST, count per-withdrawal ATM fees, and test the USD 3,000 RBI note limit.",
+  steps: [
+    "Under The trip, set Trip length (days), Travellers, on-ground spend per person per day, cash-only one-off costs and the cash share.",
+    "Under Rates and fees, enter the rupiah rate, changer markup, card markup, Typical ATM withdrawal size and the fee per foreign ATM withdrawal.",
+    "Read Carry in rupiah with its all-in rupee cost, the Ask for these notes denomination breakdown, and the RBI and LRS limits the plan touches.",
+  ],
   intro:
     "This planner sizes the rupiah float for an Indonesia trip and prices it against the card alternative. The cash side applies the money changer's markup and the GST that Rule 32(2)(b) of the CGST Rules charges on buying foreign exchange; the ATM comparison counts the number of withdrawals, because Indonesian machines cap each transaction by the denomination they are loaded with and charge a fee each time. It also tests the plan against the RBI limit of USD 3,000 in currency notes per visit and the ₹10,00,000 LRS threshold at which TCS starts.",
   useCases: [

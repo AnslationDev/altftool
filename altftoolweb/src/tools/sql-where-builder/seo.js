@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL WHERE Clause Builder for Five Database Dialects",
+  metaDescription:
+    "Build a WHERE clause with correct quoting for MySQL, PostgreSQL, SQL Server, SQLite and Oracle, plus a parameterised version and IS NULL for null checks.",
+  steps: [
+    "Pick the SQL dialect — MySQL / MariaDB, PostgreSQL, SQL Server, SQLite or Oracle — and enter the Table name.",
+    "For each Condition set Column, Operator, Value type and Value, join the next one with AND or OR, and press Add condition to keep going.",
+    "The WHERE clause renders with that dialect's identifier quoting and escaping, alongside the Full query and a \"Parameterised (safe from injection)\" version with its ordered Parameters list.",
+  ],
   intro:
     "SQL WHERE Builder assembles a WHERE clause from a list of column-operator-value conditions and renders it with the quoting rules of your database engine — backticks for MySQL, double quotes for PostgreSQL, SQLite and Oracle, square brackets for SQL Server. String literals follow the SQL standard, where an embedded apostrophe is escaped by doubling it, with MySQL's extra backslash escaping applied only for MySQL. It is aimed at developers, analysts and support engineers who write ad-hoc queries and want the syntax right the first time.",
   useCases: [

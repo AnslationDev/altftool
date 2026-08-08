@@ -1,4 +1,12 @@
 const seo = {
+  title: "GATE Exam Countdown with Halving Revision Cycles",
+  metaDescription:
+    "Splits the days left into revision cycles of 4/7, 2/7 and 1/7, weighted across your GATE branch syllabus, and names the subject for today.",
+  steps: [
+    "Set Today's date, GATE exam date and Rotation start date, then pick your GATE paper — CS — Computer Science & IT, ME — Mechanical Engineering, CE — Civil Engineering, EE — Electrical Engineering or EC — Electronics & Communication.",
+    "Choose Revision cycles (1-5) and Mock-test only days at the end, then raise or lower each row under Subject weights, which start equal across the branch's syllabus sections.",
+    "Read Today's rotation slot, Cycle lengths, Rotation days and Mock-only days at the end, check the Days per subject, cycle by cycle table and the Rotation calendar, then press Copy result.",
+  ],
   intro:
     "This countdown converts the days left before GATE into a dated subject rotation for your branch, using the halving rule that governs revision: each pass over the syllabus gets half the days of the pass before it, so three cycles split the calendar 4/7, 2/7 and 1/7. Days inside a cycle are shared between the official syllabus sections in proportion to the weight you give each one, and the schedule tells you which subject you are supposed to be on today. Subject lists are the section headings from the GATE syllabus for CS, ME, CE, EE and EC.",
   useCases: [

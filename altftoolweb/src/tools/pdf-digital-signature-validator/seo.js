@@ -1,4 +1,12 @@
 const seo = {
+  title: "PDF Digital Signature Validator: ByteRange Check",
+  metaDescription:
+    "Check a PDF's ByteRange covers the signed revision, spot bytes appended after signing, and hash the signed range with SHA-256. Structure only, not PKI.",
+  steps: [
+    "Press 'Choose a PDF' and pick a local .pdf of at most 20 MB; the file stays in the tab, is never uploaded, and no pages are rendered.",
+    "Press 'Inspect structure' to walk up to 12 signature dictionaries, checking each /ByteRange starts at offset zero, holds ordered non-overlapping pairs and leaves one gap on the /Contents string.",
+    "Read the Candidates, Range-consistent, Issues and 'Prior revisions' tiles with the SHA-256 signed-range digest, then press 'Export privacy-safe report' for pdf-signature-structure-report.json.",
+  ],
   intro:
     "PDF Digital Signature Validator inspects the signature dictionaries inside a local PDF and checks that each /ByteRange actually covers the file the way a signature requires — starting at offset zero, in ordered non-overlapping pairs, leaving exactly one gap that lines up with the /Contents hex string. It then computes a SHA-256 digest of precisely the bytes ByteRange selects, so you can fingerprint the signed revision. It is a structural check only: it never claims the CMS signature, signer identity, certificate chain or timestamp is trustworthy.",
   useCases: [

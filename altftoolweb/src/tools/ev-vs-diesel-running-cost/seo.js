@@ -1,4 +1,12 @@
 const seo = {
+  title: "EV vs Diesel Running Cost Calculator (India)",
+  metaDescription:
+    "Per-km cost of an EV against a BS6 diesel, counting AdBlue dosing, each car's service rate and the distance at which the EV's price premium pays back.",
+  steps: [
+    "Under The electric car, fill in Usable battery (kWh), Real-world range (km), Home tariff (INR per kWh), Public charger tariff, Charging done at home (%) and Charging efficiency (%).",
+    "Under The diesel car, set Mileage (km per litre), Diesel price (INR per litre), AdBlue dosing (% of fuel volume) and both maintenance rates, then enter Kilometres per year and How much more the EV costs to buy (INR).",
+    "Read the Running cost gap per km, the AdBlue used per year and Total rows for each car, and the Break-even distance, which reads Never on these inputs when the diesel wins.",
+  ],
   intro:
     "Diesel is the hardest engine for an electric car to beat on running cost, so a fair comparison has to count everything the diesel actually consumes. This calculator sets the EV's grid energy — battery capacity divided by real range, grossed up by charging efficiency and priced at a blend of home and public tariffs — against diesel at price divided by mileage, plus AdBlue dosed at a few percent of fuel volume on any BS6 car, plus each side's own maintenance rate, then reports the distance at which the EV's higher purchase price is repaid.",
   useCases: [

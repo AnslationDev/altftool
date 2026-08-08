@@ -1,4 +1,7 @@
 const seo = {
+  title: "Quadratic Equation Solver with Discriminant & Vertex",
+  metaDescription:
+    "Enter a, b and c to get roots from x = (-b ± √(b² - 4ac)) / 2a — real to three decimals or a complex pair — plus discriminant and vertex.",
   intro:
     "This Quadratic Equation Solver takes the coefficients a, b and c of ax² + bx + c = 0 and returns the roots from the quadratic formula x = (-b ± √(b² - 4ac)) / 2a, along with the discriminant, the nature of the roots, and the vertex at (-b/2a, f(-b/2a)). Students and anyone checking algebra homework get real roots to three decimals when the discriminant is positive, a double root when it is exactly zero, and a ± bi complex pair when it is negative. Enter a = 0 and it tells you the equation is not quadratic rather than dividing by zero.",
   useCases: [

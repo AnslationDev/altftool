@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stair Running Calorie Calculator (ACSM MET Rule)",
+  metaDescription:
+    "Flights, riser height and body weight give calories from the ACSM equation at 15.0 METs running up and 3.5 walking down, with an m x g x h cross-check.",
+  steps: [
+    "Enter Body weight (kg), Flights climbed, Steps per flight and Step (riser) height in cm, which defaults to a 17 cm residential riser.",
+    "Set 'How hard you go up' from 'Walking up, slow pace' at 4.0 METs to 'Running up' at 15.0, and 'Coming back down' to walk, lift or one-way climb only.",
+    "Read 'Calories burned this stair session' with Vertical rise, Energy going up and Energy coming down, plus the W = m x g x h vertical-work cross-check.",
+  ],
   intro:
     "The Stair Running Calorie Calculator estimates the energy cost of a stair session from the number of flights, the riser height and your body weight, counting the climb and the way back down separately. Calories come from the ACSM metabolic equation kcal/min = MET x 3.5 x body mass in kg / 200, with 2011 Compendium of Physical Activities values of 15.0 METs for running up stairs, 8.8 for a fast walk up, 4.0 for a slow walk up and 3.5 for walking back down. It also shows the pure vertical work, m x g x h, as an independent physics cross-check.",
   useCases: [

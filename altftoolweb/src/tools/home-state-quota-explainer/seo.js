@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home State Quota Explainer: NIT, IIT, NEET UG Counselling",
+  metaDescription:
+    "See your quota: NITs split 50:50 on your Class 12 state, IITs have no state quota, and NEET UG splits 15% All India against 85% State Quota.",
+  steps: [
+    "Pick the Counselling system: JoSAA / CSAB — NITs, JoSAA — IITs, NEET UG — MBBS/BDS (government colleges), or a state engineering CET.",
+    "Choose Your state on the basis that system uses — the Class 12 state for NITs, domicile for NEET UG — and then the Institute's state.",
+    "Read the quota you compete under with the home and open pool shares as percentages, plus the table comparing all four systems and what decides each.",
+  ],
   intro:
     "This explainer tells you which admission quota you compete under — Home State, Other State, State Quota or All India — once you pick the counselling system, your state and the institute's state. It encodes the published rules: NIT seats split 50:50 Home State vs Other State on the state where you passed Class 12 (JoSAA business rules), IITs run a single All India list with no state quota, and NEET UG government seats split 15% All India Quota vs 85% State Quota on domicile. It is for JEE and NEET aspirants planning their choice filling.",
   useCases: [

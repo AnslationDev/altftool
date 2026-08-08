@@ -1,4 +1,12 @@
 const seo = {
+  title: "DJ Transition Length: Bars to Seconds and Pitch %",
+  metaDescription:
+    "A 16-bar blend is 64 beats: 31.0s at 124 BPM, 29.5s at 130. See the seconds at both tempos and whether the pitch move fits a ±8% fader.",
+  steps: [
+    "Enter Outgoing track BPM and Incoming track BPM, then set Blend length (bars) — or tap the 4, 8, 16, 32 and 64 bars chips — and Beats per bar.",
+    "Choose a Pitch fader range: ±6% (CDJ fine), ±8% (turntable / CDJ default), ±10% (Technics SL-1200 nominal), ±16% (CDJ wide) or ±50% / WIDE.",
+    "Read Blend length, beatmatched to the outgoing track, then the rows for Riding the pitch from one tempo to the other, Pitch move to beatmatch and Fits a ±8% fader; Copy result copies the summary.",
+  ],
   intro:
     "The DJ Transition Length Calculator converts a blend measured in bars into real seconds at both tracks' tempos, and works out the pitch move needed to beatmatch them. One beat lasts 60 / BPM seconds, so a 16-bar blend in 4/4 is 64 beats — 31.0 seconds at 124 BPM but only 29.5 at 130. When you ride the tempo across rather than locking it, the elapsed time is the logarithmic mean of the two tempos, which the tool calculates exactly rather than averaging. For DJs planning set timings, radio edits and recorded mixes where the clock actually matters.",
   useCases: [

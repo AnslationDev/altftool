@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Academic Integrity Checklist: 10-Item Self-Audit",
+  metaDescription:
+    "Ten questions on permission, disclosure, authorship and AI-citation checks. Critical fails flag high risk; get a fix list and a compliance score.",
+  steps: [
+    "Answer all ten checklist items Yes, No or N/A — they run through permission, disclosure, authorship, verification and data handling, four of them tagged critical.",
+    "The Compliance score recomputes live and the Status row reads 'Aligned with typical policies', 'Proceed with caution' or 'High risk — do not submit yet'.",
+    "Work through 'Items to fix before submitting', where each failure is labelled Critical, Important or Advisory, then press 'Copy result' to take the list away.",
+  ],
   intro:
     "The AI Academic Integrity Checklist is a ten-item self-audit that checks whether your AI use on an assignment matches the requirements common across institutional policies: permission, disclosure, authorship of the submitted work, verification of AI output, and data handling. Items are tiered by severity — any failed critical item (like undisclosed AI use where disclosure is required) flags the submission as high risk, while important and advisory gaps produce a caution. Students get a concrete pass/fix list instead of a vague worry.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Headline Writer: 6 Scored 220-Char Options",
+  metaDescription:
+    "Six headline patterns from your role, value and proof — each scored on LinkedIn's 220-character limit and what survives the first 70 characters.",
+  steps: [
+    "Fill in 'Role you want to be found for', 'The value you deliver', 'Proof — a number, an employer, a shipped thing' and 'Search keywords (comma separated)'.",
+    "Choose a Separator of Pipe |, Middot · or En dash –, and add the optional 'What you are seeking' and 'Availability' lines; all six headline patterns rescore as you type.",
+    "Compare the six cards — each shows its characters out of 220, its score, the Search preview clipped at 70 characters and a warning if it is over the limit — then press Copy result.",
+  ],
   intro:
     "The LinkedIn Headline Writer builds six headline variants from four inputs — the role you want to be found for, the value you deliver, one piece of proof and your search keywords — and scores each one. Scoring covers the things that actually decide whether a headline works: staying inside LinkedIn's 220-character limit, carrying a number, and keeping the role inside the roughly 70 characters that survive truncation in search results and comment threads. Useful for job seekers, freelancers and anyone whose current headline is just their job title.",
   useCases: [

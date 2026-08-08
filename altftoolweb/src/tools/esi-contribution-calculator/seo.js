@@ -1,4 +1,12 @@
 const seo = {
+  title: "ESI Calculator: 0.75% Employee, 3.25% Employer Share",
+  metaDescription:
+    "Monthly ESI on gross wages: 0.75% employee and 3.25% employer, rounded up to the rupee, with the Rs 21,000 ceiling and Rule 52 daily-wage exemption.",
+  steps: [
+    "Enter 'Monthly gross wages (INR)' and 'Days wages were paid for'; the wage figure is tested against the Rs 21,000 coverage ceiling.",
+    "Tick 'Person with disability (Rs 25,000 ceiling)' or 'Crossed the ceiling mid contribution period' when either applies to the employee.",
+    "Read 'Employee share (0.75% of wages)', 'Employer share (3.25% of wages)' and the 6-month contribution period total, then press 'Copy result'.",
+  ],
   intro:
     "This calculator works out the monthly Employees' State Insurance liability on a wage figure: 0.75% from the employee and 3.25% from the employer under Rule 51 of the ESI (Central) Rules, 1950. It checks the Rs 21,000 monthly gross-wage coverage ceiling (Rs 25,000 for a person with disability), applies the Rule 52 exemption for workers averaging Rs 176 a day or less, and rounds each share up to the next rupee the way ESIC does. It is aimed at payroll staff, small-business owners and employees reconciling an ESI deduction on a payslip.",
   useCases: [

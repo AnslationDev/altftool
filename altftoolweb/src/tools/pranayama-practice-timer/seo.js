@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pranayama Timer: Ratio Pacing for 8 Breath Patterns",
+  metaDescription:
+    "Set the ratio and how long one count lasts — box breathing, nadi shodhana, 4-7-8, 1:4:2 — and get a live pacer, breaths per minute and rounds per session.",
+  steps: [
+    "Pick a Breathing pattern — each option carries its ratio, from Sama Vritti (equal breathing) and Nadi Shodhana / Anulom Vilom to the 4-7-8 relaxing breath and Classic yogic ratio 1:4:2 — then set Seconds per count (0.5 to 20) and Session length (minutes).",
+    "Press Start to run the pacer: it names the current phase, counts the seconds left in it, fills a progress bar and tracks elapsed time against the session; Pause holds it and Restart returns the session to zero.",
+    "One breath takes shows the cycle length in seconds with rows for Ratio, Inhale, Retention (both holds), Exhale, Breathing rate in breaths/min, Full rounds in the session and Time those rounds take, plus a Phase timeline for one breath table of Phase, Seconds and Starts at. Copy plan copies it.",
+  ],
   intro:
     "This timer paces pranayama by ratio rather than by fixed seconds: every pattern is stored as puraka : antara kumbhaka : rechaka : bahya kumbhaka (inhale : hold in : exhale : hold out), and you set how many seconds one count lasts. That is how these practices are traditionally taught — the ratio stays constant while the count lengthens as capacity grows. It covers sama vritti, extended exhale, box breathing, nadi shodhana, ujjayi, bhramari, 4-7-8 and the classic 1:4:2 ratio, and shows breaths per minute and how many full rounds fit your session.",
   useCases: [

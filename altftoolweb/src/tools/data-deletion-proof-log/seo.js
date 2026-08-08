@@ -1,4 +1,12 @@
 const seo = {
+  title: "Data Deletion Proof Log: 7-Column Erasure Evidence",
+  metaDescription:
+    "Paste one pipe-separated line per system — Request ID, System, Scope, Action, Completed at, Evidence, Reviewer — and see which rows miss a column.",
+  steps: [
+    "In Records (one per line), type one line per system with seven fields separated by | in this order: Request ID | System | Record scope | Action | Completed at | Evidence reference | Reviewer.",
+    "Leave Require complete rows switched on (Flag missing columns) so any line with a blank cell or the wrong number of cells is counted under Needs review instead of passing silently.",
+    "Check the Structured inventory table and the Complete rows, Needs review and Columns figures, then Copy or Download the log as data-deletion-proof-log.txt — the first 100 records are what gets exported.",
+  ],
   intro:
     "The Data Deletion Proof Log turns loose notes about an erasure request into a seven-column evidence table — Request ID, System, Record scope, Action, Completed at, Evidence reference and Reviewer — with one line per system touched. Type each line pipe-separated and it builds the inventory, counts complete rows, and flags any row with a blank or missing column. It is for the privacy or ops person who has to show not just that a deletion request was honoured, but in which systems, when, by whom, and with what artefact backing each claim.",
   useCases: [

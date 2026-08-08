@@ -1,4 +1,12 @@
 const seo = {
+  title: "OKR Generator: 3-5 Numeric Key Results per Quarter",
+  metaDescription:
+    "Build one objective with three to five key results, targets set from a baseline by committed +10%, stretch +25% or moonshot +50%, and graded 0.0-1.0.",
+  steps: [
+    "Type the theme into 'What is this quarter about?', choose a Domain such as Product and activation or Engineering and reliability, and fill Period and Objective owner.",
+    "Set Ambition level to Committed (+10%), Stretch (+25%) or Moonshot (+50%) and 'Number of key results' to 3, 4 or 5 — every target is rederived from its baseline.",
+    "Type today's figure into 'Where it stands today' on each KR to get 'Score right now' out of 1.0, read Suggested initiatives and Quality checks, then press Copy OKR.",
+  ],
   intro:
     "The OKR Generator builds one qualitative objective and three to five numeric key results for a chosen domain and quarter, deriving each target from a baseline and an ambition uplift (committed +10%, stretch +25%, moonshot +50%). It follows the discipline Andy Grove created at Intel and John Doerr set out in Measure What Matters: objectives are qualitative and time-bound, key results carry a start number and a target number, and progress is graded on a 0.0–1.0 scale. Useful for founders, team leads and anyone writing their first quarterly OKR set.",
   useCases: [

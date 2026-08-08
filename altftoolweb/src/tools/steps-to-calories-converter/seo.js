@@ -1,4 +1,12 @@
 const seo = {
+  title: "Steps to Calories: ACSM MET Equation Calculator",
+  metaDescription:
+    "Convert steps to calories with the ACSM equation and 2011 Compendium METs. Step length comes from your height; shows gross and net kcal plus distance.",
+  steps: [
+    "Enter Steps walked and pick a Walking pace — from \"Slow stroll — 2.0 mph\" through \"Fast walk — 4.5 mph\" and \"Jogging — 5.0 mph\", each carrying its own Compendium MET code.",
+    "Give your Body weight with a Weight unit of Kilograms (kg) or Pounds (lb), your Height (cm), and a Step-length basis of Female (0.413 × height) or Male (0.415 × height).",
+    "Read \"Calories burnt\" in kcal plus Net calories (above resting), Distance covered, Time on feet, Estimated step length, MET value used and Calories per 1,000 steps; Copy result copies the summary and Reset restores the defaults.",
+  ],
   intro:
     "This converter turns a step count into calories by first estimating your step length from your height (0.415 × height for men, 0.413 for women), converting steps into distance and time at your chosen pace, then applying the ACSM metabolic equation kcal/min = MET × 3.5 × body mass in kg ÷ 200. MET values come from the 2011 Compendium of Physical Activities, so a moderate 3 mph walk uses 3.5 METs and a brisk 3.5 mph walk uses 4.3. It is for walkers and step-goal chasers who want a figure grounded in a published equation rather than a flat guess.",
   useCases: [

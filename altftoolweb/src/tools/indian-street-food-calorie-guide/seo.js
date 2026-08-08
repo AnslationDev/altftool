@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Street Food Calories: Pani Puri to Vada Pav",
+  metaDescription:
+    "Build the plate you ordered and get kcal, protein, carbs and fat for typical vendor portions — six pani puri is about 210 kcal, give or take 20%.",
+  steps: [
+    "Set Daily calorie target (kcal) and Body weight (kg), then use Pick a section to move between Chaat, Fried snacks, Pav and bread, Rolls and wraps, Momos and noodles, Full plates, South Indian and Drinks.",
+    "Tap the − and + buttons beside each item to build the plate; each serving is a typical vendor portion — six puris, one plate, one glass — rather than an arbitrary 100 g.",
+    "Plate total gives the kcal figure with an Estimate range covering roughly ±20%, then Protein, Carbohydrate and Fat with their share of energy, Share of your daily target and Brisk walking to match; Copy summary copies the itemised plate.",
+  ],
   intro:
     "The Indian Street Food Calorie Guide estimates the calories, protein, carbohydrate and fat in a plate of pani puri, vada pav, chaat, rolls, momos and other vendor food, using typical street portions rather than packet weights. Energy is reconciled against the Atwater factors of 4 kcal per gram of protein and carbohydrate and 9 kcal per gram of fat, and every total is shown with a plus or minus 20% band because street cooking has no fixed recipe. Useful for anyone tracking intake who eats out but cannot find these dishes in a Western calorie app.",
   useCases: [

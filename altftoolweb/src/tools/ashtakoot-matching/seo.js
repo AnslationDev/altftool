@@ -1,4 +1,7 @@
 const seo = {
+  title: "Ashtakoot Matching: All 8 Kootas Scored Out of 36",
+  metaDescription:
+    "Guna Milan scored koota by koota — Varna 1 through Nadi 8 out of 36 — with each partner's nakshatra, pada and Moon rashi computed from birth details.",
   intro:
     "Ashtakoot Matching scores two birth details against the eight koota of Vedic Guna Milan — Varna 1, Vashya 2, Tara 3, Yoni 4, Graha Maitri 5, Gana 6, Bhakoot 7 and Nadi 8 — for a total out of 36 gunas. It derives each person's Moon nakshatra, pada and rashi from a computed sidereal Moon longitude rather than asking you to look them up, dividing the zodiac into 27 nakshatras of 13°20' each and four padas of 3°20'. The conventional reading it applies is that 18 or more out of 36 is considered a match, with 24+ labelled Very Good and 30+ Excellent.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Habit Cost Calculator: 1, 5, 10 and 50-Year Totals",
+  metaDescription:
+    "Normalises any habit to a monthly cost, projects 1, 5, 10 and 50-year totals compounded at your chosen rate, and converts daily time into hours.",
   intro:
     "This calculator converts everyday habits — coffee, food delivery, cigarettes, subscriptions, commuting — into what they cost you in rupees and hours over 1, 5, 10 and 50 years. It normalises whatever frequency you enter to a monthly figure (daily spend × 30, weekly × 4, yearly ÷ 12), then compounds the annual outlay at a rate you set with a slider, defaulting to 12% a year, to show what the same money might have grown to instead. Alongside the money it converts your daily time spent into hours, days and a share of a 16-hour waking day.",
   useCases: [

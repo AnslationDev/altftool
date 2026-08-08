@@ -1,4 +1,7 @@
 const seo = {
+  title: "Batch Timestamp Converter: 2,000 Rows, IANA Zones",
+  metaDescription:
+    "Paste up to 2,000 mixed epochs and dates. Digit width picks seconds, ms, µs or ns, converts to any IANA zone, and flags rows it cannot parse.",
   intro:
     "The Batch Timestamp Conversion Tool takes a pasted list of mixed Unix epochs and written dates and converts every row at once, deciding whether a number is seconds, milliseconds, microseconds or nanoseconds from its digit count. It is aimed at anyone reading raw logs, database dumps or API responses who needs the whole column in a readable timezone rather than one value at a time. Every row is converted through the IANA timezone database, and rows that cannot be parsed are listed separately instead of silently becoming a wrong date.",
   useCases: [

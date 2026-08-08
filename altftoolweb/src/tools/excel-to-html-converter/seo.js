@@ -1,4 +1,12 @@
 const seo = {
+  title: "Excel to HTML Table Converter (XLSX, XLS, CSV)",
+  metaDescription:
+    "Parses .xlsx, .xls and .csv in your browser with SheetJS and converts any sheet to a styled standalone HTML page, saved as filename-SheetName.html.",
+  steps: [
+    "Drop a workbook on the Drag & drop your file here panel or press Browse Files; it accepts .xlsx, .xls and .csv and parses the workbook inside the page.",
+    "Pick the worksheet you want from the Available Sheets list, then switch between Visual Preview and HTML Source to check the rendered table against the markup.",
+    "Press Copy to take the markup, or Save HTML to download a full HTML5 document with embedded CSS named after the file and sheet, for example budget-Q3.html.",
+  ],
   intro:
     "The Excel to HTML Converter turns a worksheet from an .xlsx, .xls or .csv file into a complete standalone HTML document — a single marked-up table wrapped in an HTML5 page with its own embedded stylesheet. It parses the workbook with the SheetJS engine in your browser, lists every sheet name so you can pick the tab you want, and shows both a live rendered preview and the raw HTML source. The generated markup already carries collapsed borders, zebra striping on even rows and a sticky header, so it looks presentable the moment you open it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Potluck Dish Assigner: Course Gaps and Diet Tags",
+  metaDescription:
+    "Enter guests, courses and dish offers as pipe-separated lines and get a per-dish dietary review plus the courses still with no offer against them.",
+  steps: [
+    "In 'People and dietary needs' put one guest per line as Person | dietary tags, such as Chirag | vegan; write none where there is no restriction.",
+    "List the courses in 'Needed courses' — starter, main, side, dessert — and add each offer under Dish offers as Person | dish | course | dietary tags.",
+    "The table returns Person, Dish, Course, Tags and Dietary review, and the verdict reads 'All entered courses covered' or names the missing courses.",
+  ],
   intro:
     "The Potluck Dish Assigner takes your guest list with each person's dietary tags, the courses you need covered, and who has offered what, then returns a table showing every dish against the dietary needs it is not labelled for, plus a verdict naming any course still missing. It is for whoever ended up organising the shared meal and is trying to work out whether four people all bringing dessert leaves anyone with nothing they can eat. The check is tag-based: a dish only counts as covering 'vegan' or 'nut-free' if you have labelled it that way.",
   useCases: [

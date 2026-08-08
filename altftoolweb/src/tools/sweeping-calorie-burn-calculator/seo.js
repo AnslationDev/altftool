@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sweeping Calorie Burn Calculator (3.3 & 4.0 METs)",
+  metaDescription:
+    "Calories from sweeping indoors at 3.3 METs, outdoors at 4.0 and dusting at 2.3, using kcal/min = MET × 3.5 × kg / 200 from the Compendium.",
+  steps: [
+    "Enter Body weight in kg or lb, then the minutes spent on Sweeping outside, Sweeping indoors and Dusting and tidying up.",
+    "Change the minutes on each block — outdoor sweeping is charged at 4.0 MET against 3.3 indoors and 2.3 for dusting.",
+    "Read Total calories burned with Net of resting metabolism and Average intensity in MET, plus the Breakdown by task table, then Copy result.",
+  ],
   intro:
     "The Sweeping Calorie Burn Calculator estimates the energy cost of a cleaning session by splitting it into sweeping outdoors, sweeping indoors and dusting, then applying the MET equation kcal/min = MET x 3.5 x kg / 200 to each block. The MET values come from the Home Activities section of the Compendium of Physical Activities: 4.0 for sweeping a garage, driveway or path, 3.3 for sweeping floors or carpet indoors and 2.3 for light dusting and tidying. It is for anyone who wants housework counted properly rather than lumped under one vague figure.",
   useCases: [

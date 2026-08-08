@@ -1,4 +1,12 @@
 const seo = {
+  title: "Influencer Disclosure Label Generator: ASCI, FTC, ASA",
+  metaDescription:
+    "Get the exact ad label for ASCI, FTC, ASA or EU rules by platform and deal type, with placement, on-screen duration and a truncation check.",
+  steps: [
+    "Pick Rules to follow — India (ASCI / CCPA), United States (FTC), United Kingdom (ASA / CMA) or European Union — then the Platform and Content format.",
+    "Set How you are connected (paid, ambassador, gifted, affiliate, press trip or your own brand), the Brand name, the Video length (seconds) and any text before the label.",
+    "Read the label with its ready-made caption, hashtag form, plain-language sentence, on-screen duration and whether it stays visible before truncation, then Copy result.",
+  ],
   intro:
     "This generator turns a brand deal into the exact disclosure wording a regulator expects: the permitted label, where in the post it has to sit, and how long it must stay on screen in a video. It encodes ASCI's Guidelines for Influencer Advertising in Digital Media for India, the FTC Endorsement Guides (16 CFR Part 255) for the United States, and the CAP Code as enforced by the ASA and CMA for the United Kingdom. Useful for creators, agencies and brand teams who need the label right before the post goes live rather than after a complaint.",
   useCases: [

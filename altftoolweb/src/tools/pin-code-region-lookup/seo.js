@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian PIN Code Lookup: District, State and Circle",
+  metaDescription:
+    "Enter a six-digit PIN and get every post office under it with branch type, district, state, postal circle and delivery status, plus source and timestamp.",
+  steps: [
+    "Type the PIN into the Lookup field, which opens on 400001. It must be six digits with a non-zero first digit — anything else comes back as \"Enter a valid six-digit Indian PIN\".",
+    "Press Get current result. The request runs on demand against a third-party PIN API and the button reads \"Checking source…\" while it waits.",
+    "Current result reports how many post offices that PIN covers and lists each one with its name, branch type, district, state, postal circle and delivery status, under an Updated timestamp and a Source line stating the provider is not India Post.",
+  ],
   intro:
     "PIN Code Region Lookup takes a six-digit Indian postal PIN and returns every post office mapped to it, with its branch type, district, state, postal circle and delivery status. The input is validated against the real format first — six digits with a non-zero leading digit, since India's nine postal zones use 1 through 9 — so a typo is caught before any lookup runs. It is useful whenever an address needs its district and state confirmed from the PIN alone, and it flags that the data comes from a third-party PIN API rather than India Post itself.",
   useCases: [

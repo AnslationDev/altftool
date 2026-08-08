@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brisk Walking Heart Rate Zones by Age and Resting HR",
+  metaDescription:
+    "ACSM zones from Tanaka, 220-age or Gulati max HR, by %max or Karvonen reserve, each with its steps-per-minute cadence target.",
+  steps: [
+    "Enter your Age (years) and Resting heart rate (bpm), then pick a Maximum heart rate formula: Tanaka (208 - 0.7 x age), Fox (220 - age) or Gulati.",
+    "Choose % of maximum HR or % of heart rate reserve, and set Minutes per walk.",
+    "Read the Brisk-walk target zone in bpm with each ACSM zone's steps-per-minute cadence, then press Copy result.",
+  ],
   intro:
     "This calculator turns your age and resting pulse into the beats-per-minute bands that separate a stroll from a genuinely brisk walk, using the ACSM intensity classification and either percentage of maximum heart rate or the Karvonen heart rate reserve method. Maximum heart rate is estimated with the Tanaka formula (208 minus 0.7 times age), with the classic 220-minus-age and the women-specific Gulati equation offered for comparison. Each zone also carries a steps-per-minute cadence target, so you can hit the right effort without a chest strap.",
   useCases: [

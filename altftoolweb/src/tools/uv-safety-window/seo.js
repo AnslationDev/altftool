@@ -1,4 +1,12 @@
 const seo = {
+  title: "UV Safety Window: Low-UV Hours in the 3-Day Forecast",
+  metaDescription:
+    "Lists the hours in the next three days where the forecast UV index is 2 or below, with the clear-sky value beside it, from the Open-Meteo API.",
+  steps: [
+    "Enter Latitude and Longitude, or press Use device location to fill both from the browser.",
+    "Press Get current result to query the Open-Meteo forecast API for hourly uv_index and uv_index_clear_sky over a 3-day window.",
+    "Current result lists up to 48 forecast hours at UV index 2 or below, each row giving the local hour, the forecast UV and the clear-sky UV, with the fetch timestamp and source below.",
+  ],
   intro:
     "UV Safety Window pulls the hourly UV index forecast for a set of coordinates from the Open-Meteo forecast API and lists only the hours where the UV index is 2 or below — the WHO 'Low' exposure band — across the next three days. Each row shows the local hour, the forecast UV index and the clear-sky UV index for the same hour, so you can see how much of the low reading depends on expected cloud cover. It is for people planning outdoor time around sun exposure who would rather read the actual hourly forecast than guess from the time of day.",
   useCases: [

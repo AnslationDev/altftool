@@ -1,4 +1,12 @@
 const seo = {
+  title: "OBS Pre-Live Checklist + Bitrate and Upload Headroom",
+  metaDescription:
+    "Build a pre-live OBS checklist for scenes, audio, alerts and privacy, with the platform's bitrate range, 2-second keyframes and 1.5x upload headroom.",
+  steps: [
+    "Choose the Platform and Output resolution, then enter your Measured upload speed (Mbps) and Audio bitrate (kbps).",
+    "Tick what applies under What is in this stream? - gameplay capture, a second monitor, a capture card, guests, music, alerts, chat overlay or local recording.",
+    "Read Total ingest bitrate against the platform's range, the upload needed at a 1.5x margin and the 2-second keyframe interval, then work the checklist sections.",
+  ],
   intro:
     "This builder produces a pre-live checklist for an OBS-style setup — scenes, audio, sources, encoder, alerts and privacy — and sizes the stream at the same time. It applies each platform's published H.264 live-encoding range for your resolution and frame rate, adds the audio bitrate, and checks your measured upload against a 1.5x headroom margin so a stream does not start dropping frames ten minutes in. Sections adapt to what you actually run: guests, gameplay capture, music, alerts, chat overlay and local recording each add their own items.",
   useCases: [

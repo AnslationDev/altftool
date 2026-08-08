@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eye Exam Due Date: How Often to Get Eyes Checked",
+  metaDescription:
+    "Two years for low-risk adults 18-64, yearly for children and from 65, yearly with diabetes or glaucoma risk. Get your due date and days overdue.",
+  steps: [
+    "Enter \"Age (years)\", \"Screen hours per day\", your \"Last eye examination\" date and the \"Check against this date\" field.",
+    "Tick any Risk factors — \"Diabetes (type 1 or type 2)\", \"Family history of glaucoma\", \"High myopia (-6.00 D or beyond)\" — plus \"I wear contact lenses\" or \"I have new or changing vision symptoms\".",
+    "\"Next eye examination due\" prints the date, turning red when overdue, and the \"Why this interval\" list names the rule that set it; \"Copy result\" copies the schedule.",
+  ],
   intro:
     "The Eye Checkup Reminder Planner works out when your next eye examination is due by applying the published age-based intervals: annually for children from school age, at least every two years for low-risk adults aged 18 to 64, and annually from 65. It then shortens the interval to 12 months where a risk factor such as diabetes, a family history of glaucoma, high myopia or contact lens wear applies, and dates the result against your last appointment. The output is a due date, a days-overdue figure and the reasoning behind the interval chosen.",
   useCases: [

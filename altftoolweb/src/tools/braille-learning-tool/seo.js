@@ -1,4 +1,7 @@
 const seo = {
+  title: "Braille Learning Tool: 49 Characters, 4 Practice Modes",
+  metaDescription:
+    "Learn the six-dot cell for A–Z, 0–9 and 13 punctuation marks across Learn, Quiz, Practice and Reference. Mastery at 80% over five or more tries.",
   intro:
     "This Braille learning tool teaches the six-dot cell — a 3 × 2 grid where each character is a pattern of raised dots — across 49 characters: the 26 letters A–Z, the digits 0–9 and 13 punctuation marks. Four modes cover it: Learn shows every cell with a plain-English dot description, Quiz shows a pattern and asks for the character, Practice reverses that, and Reference is a full sortable chart. Per-character accuracy is tracked in your browser, and a character is marked mastered once you are at least 80% correct on it over five or more attempts.",
   useCases: [
