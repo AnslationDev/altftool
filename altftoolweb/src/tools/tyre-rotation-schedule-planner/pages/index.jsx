@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, RotateCw } from "lucide-react";
 
 import {
@@ -76,6 +76,25 @@ export default function ToolHome() {
   const [staggered, setStaggered] = useState(DEFAULTS.staggered);
   const [includeSpare, setIncludeSpare] = useState(DEFAULTS.includeSpare);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  const spareDisabled = tyreType === "directional" || staggered;
+
+  const updateTyreType = (value) => {
+    setTyreType(value);
+    if (value === "directional") setIncludeSpare(false);
+  };
+
+  const updateStaggered = (value) => {
+    setStaggered(value);
+    if (value) setIncludeSpare(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -95,9 +114,11 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+  const notPossible = Boolean(result.notPossible);
+  const blocked = hasError || notPossible;
 
   const summary = useMemo(() => {
-    if (hasError) return "";
+    if (blocked) return "";
     return [
       "Tyre Rotation Schedule",
       `Pattern: ${result.pattern.name}`,
@@ -111,14 +132,15 @@ export default function ToolHome() {
       `Planned rotations: ${result.rotationsPlanned}`,
       `Estimated labour cost: ${money(result.totalCost)}`,
     ].join("\n");
-  }, [hasError, result]);
+  }, [blocked, result]);
 
   const copyResult = async () => {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -139,7 +161,6 @@ export default function ToolHome() {
   };
 
   const pattern = hasError ? null : result.pattern;
-  const spareDisabled = tyreType === "directional" || staggered;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -273,7 +294,7 @@ export default function ToolHome() {
               id="tyre-type"
               className={`mt-2 ${INPUT_CLASS}`}
               value={tyreType}
-              onChange={(event) => setTyreType(event.target.value)}
+              onChange={(event) => updateTyreType(event.target.value)}
             >
               {TYRE_TYPES.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -294,7 +315,7 @@ export default function ToolHome() {
               type="checkbox"
               className="h-5 w-5 accent-[var(--primary)]"
               checked={staggered}
-              onChange={(event) => setStaggered(event.target.checked)}
+              onChange={(event) => updateStaggered(event.target.checked)}
             />
             Staggered fitment (different front/rear size)
           </label>
@@ -324,18 +345,24 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Next rotation due at
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {hasError ? DASH : km(result.next.odometerKm)}
+              {blocked ? DASH : km(result.next.odometerKm)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {hasError
-                ? DASH
+              {blocked
+                ? notPossible
+                  ? "No safe rotation exists for this combination"
+                  : DASH
                 : `around ${showDate(result.next.date)} · ${result.limitedBy === "time" ? "time-limited" : "distance-limited"}`}
             </p>
           </div>
@@ -345,7 +372,7 @@ export default function ToolHome() {
               onClick={copyResult}
               aria-label="Copy tyre rotation schedule"
               className={GHOST_BTN}
-              disabled={hasError}
+              disabled={blocked}
             >
               {copied ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -364,12 +391,12 @@ export default function ToolHome() {
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Rotation pattern", hasError ? DASH : pattern.name],
-            ["Effective interval", hasError ? DASH : km(result.effectiveIntervalKm)],
-            ["Interval in time", hasError ? DASH : `${result.intervalMonths} months (${result.intervalDays} days)`],
-            ["Rotations planned", hasError ? DASH : String(result.rotationsPlanned)],
-            ["Distance covered by plan", hasError ? DASH : km(result.horizonKm)],
-            ["Plan spans", hasError ? DASH : `${result.horizonMonths} months`],
-            ["Estimated labour cost", hasError ? DASH : money(result.totalCost)],
+            ["Effective interval", blocked ? DASH : km(result.effectiveIntervalKm)],
+            ["Interval in time", blocked ? DASH : `${result.intervalMonths} months (${result.intervalDays} days)`],
+            ["Rotations planned", blocked ? DASH : String(result.rotationsPlanned)],
+            ["Distance covered by plan", blocked ? DASH : km(result.horizonKm)],
+            ["Plan spans", blocked ? DASH : `${result.horizonMonths} months`],
+            ["Estimated labour cost", blocked ? DASH : money(result.totalCost)],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -403,10 +430,13 @@ export default function ToolHome() {
               No safe rotation exists for this combination. Replace tyres in axle pairs instead.
             </p>
           )}
+          {pattern.note ? (
+            <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">{pattern.note}</p>
+          ) : null}
         </section>
       )}
 
-      {!hasError && (
+      {!blocked && (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">Schedule</h2>
           <div className="mt-3 overflow-x-auto">

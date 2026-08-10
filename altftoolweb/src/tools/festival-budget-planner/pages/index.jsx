@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Gift, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { RELATIONS, planFestivalBudget } from "../lib";
@@ -65,6 +65,13 @@ export default function ToolHome() {
   const [existing, setExisting] = useState(DEFAULTS.existing);
   const [returnPct, setReturnPct] = useState(DEFAULTS.returnPct);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -117,6 +124,7 @@ export default function ToolHome() {
     setExisting(DEFAULTS.existing);
     setReturnPct(DEFAULTS.returnPct);
     setCopied(false);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
   };
 
   const summary = useMemo(() => {
@@ -146,7 +154,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -366,7 +375,12 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

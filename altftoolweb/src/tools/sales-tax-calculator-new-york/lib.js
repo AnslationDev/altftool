@@ -5,7 +5,7 @@
  * -----------------
  * 1. State rate is 4% of the receipt — Tax Law article 28, § 1105.
  * 2. Counties and some cities impose their own rate under Tax Law article 29, typically
- *    3% to 4.875%. New York City's local rate is 4.5%.
+ *    3% to 4.75%. New York City's local rate is 4.5%.
  * 3. An extra 0.375% Metropolitan Commuter Transportation District (MCTD) surcharge applies
  *    in the five boroughs plus Dutchess, Nassau, Orange, Putnam, Rockland, Suffolk and
  *    Westchester counties. NYC therefore totals 4% + 4.5% + 0.375% = 8.875%.
@@ -32,8 +32,8 @@ export const NY_MCTD_RATE = 0.00375;
 export const NY_CLOTHING_EXEMPTION_THRESHOLD = 110;
 
 /**
- * Sanity bound on the local component. The highest local rate in New York is 4.875%
- * (Oneida County); anything above 6% is certainly the combined rate typed by mistake.
+ * Sanity bound on the local component. The highest local rate in New York is 4.75%
+ * (Erie and Oneida Counties); anything above 6% is certainly the combined rate typed by mistake.
  */
 export const NY_LOCAL_RATE_MAX_PERCENT = 6;
 
@@ -52,7 +52,7 @@ export const NY_LOCATION_PRESETS = [
   },
   { name: "Yonkers", localPercent: 4.5, inMctd: true, localExemptsClothing: false, combinedPercent: 8.875 },
   { name: "Nassau County", localPercent: 4.25, inMctd: true, localExemptsClothing: false, combinedPercent: 8.625 },
-  { name: "Suffolk County", localPercent: 4.25, inMctd: true, localExemptsClothing: false, combinedPercent: 8.625 },
+  { name: "Suffolk County", localPercent: 4.375, inMctd: true, localExemptsClothing: false, combinedPercent: 8.75 },
   { name: "Westchester County (outside cities)", localPercent: 4, inMctd: true, localExemptsClothing: false, combinedPercent: 8.375 },
   { name: "Rockland County", localPercent: 4, inMctd: true, localExemptsClothing: false, combinedPercent: 8.375 },
   { name: "Putnam County", localPercent: 4, inMctd: true, localExemptsClothing: false, combinedPercent: 8.375 },
@@ -77,6 +77,34 @@ function roundRate(value) {
 
 function isBadNumber(value) {
   return typeof value !== "number" || !Number.isFinite(value);
+}
+
+/**
+ * Split a whole-cent total across raw (unrounded) component amounts so the
+ * components always sum exactly to that total (largest-remainder method).
+ * Rounding stateTax/localTax/mctdTax independently before summing them can
+ * drift a cent away from rounding the combined rate once; this keeps the
+ * displayed breakdown consistent with totalTax in every case.
+ */
+function allocateTaxCents(rawAmounts, totalCents) {
+  const cents = rawAmounts.map((value) => Math.floor(value * 100 + 1e-9));
+  const fractions = rawAmounts.map((value, index) => ({
+    index,
+    fraction: value * 100 - cents[index],
+  }));
+  let diff = totalCents - cents.reduce((sum, value) => sum + value, 0);
+
+  const byLargestFraction = [...fractions].sort((a, b) => b.fraction - a.fraction);
+  for (let i = 0; diff > 0 && i < byLargestFraction.length; i += 1) {
+    cents[byLargestFraction[i].index] += 1;
+    diff -= 1;
+  }
+  const bySmallestFraction = [...fractions].sort((a, b) => a.fraction - b.fraction);
+  for (let i = 0; diff < 0 && i < bySmallestFraction.length; i += 1) {
+    cents[bySmallestFraction[i].index] -= 1;
+    diff += 1;
+  }
+  return cents;
 }
 
 /**
@@ -150,12 +178,21 @@ export function computeNewYorkSalesTax(input = {}) {
   const generalBase = priceIncludesTax ? enteredGeneral / (1 + fullRate) : enteredGeneral;
   const clothingBase = priceIncludesTax ? enteredClothing / (1 + clothingRate) : enteredClothing;
 
-  const stateTax = roundCents(generalBase * NY_STATE_RATE + (clothingQualifies ? 0 : clothingBase * NY_STATE_RATE));
-  const mctdTax = roundCents(generalBase * mctdRate + (clothingQualifies ? 0 : clothingBase * mctdRate));
-  const localTax = roundCents(
-    generalBase * localRate + clothingBase * (clothingQualifies && localExemptsClothing ? 0 : localRate),
+  const stateTaxRaw = generalBase * NY_STATE_RATE + (clothingQualifies ? 0 : clothingBase * NY_STATE_RATE);
+  const mctdTaxRaw = generalBase * mctdRate + (clothingQualifies ? 0 : clothingBase * mctdRate);
+  const localTaxRaw =
+    generalBase * localRate + clothingBase * (clothingQualifies && localExemptsClothing ? 0 : localRate);
+
+  // Round the combined total once, then allocate whole cents back to the three
+  // components so the displayed breakdown always sums exactly to totalTax.
+  const totalTax = roundCents(stateTaxRaw + localTaxRaw + mctdTaxRaw);
+  const [stateCents, localCents, mctdCents] = allocateTaxCents(
+    [stateTaxRaw, localTaxRaw, mctdTaxRaw],
+    Math.round(totalTax * 100),
   );
-  const totalTax = roundCents(stateTax + localTax + mctdTax);
+  const stateTax = stateCents / 100;
+  const localTax = localCents / 100;
+  const mctdTax = mctdCents / 100;
 
   const preTaxTotal = roundCents(generalBase + clothingBase + exemptShipping);
   const grandTotal = roundCents(preTaxTotal + totalTax);

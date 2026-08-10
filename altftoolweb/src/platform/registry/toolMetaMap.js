@@ -4100,7 +4100,7 @@ export const toolMetaMap = {
   },
   "business-name-generator": {
     "name": "Business Name Generator",
-    "description": "Generate professional, creative business names with domain availability checks and logo style suggestions for your brand.",
+    "description": "Generate professional, creative business names for your brand, startup, or venture, with industry-aware word banks and four naming styles.",
     "category": [
       "Marketing & Social",
       "Business"

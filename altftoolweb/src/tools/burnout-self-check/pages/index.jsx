@@ -100,7 +100,7 @@ export default function ToolHome() {
     setLog((prev) => [
       ...prev,
       {
-        id: `${date}-${prev.length + 1}`,
+        id: `${date}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         date,
         exhaustion: result.scores.exhaustion.mean,
         cynicism: result.scores.cynicism.mean,
@@ -174,7 +174,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -238,6 +242,11 @@ export default function ToolHome() {
         </dl>
 
         {ok ? <p className="mt-4 text-sm leading-6">{result.profileSummary}</p> : null}
+        {ok ? (
+          <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+            {result.concerningCount} of 3 dimensions are in the concerning range.
+          </p>
+        ) : null}
       </section>
 
       {ok ? (

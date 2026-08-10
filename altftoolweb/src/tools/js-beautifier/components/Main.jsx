@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   FileCode,
   Play,
@@ -16,27 +16,46 @@ import { safeCopyText } from "@/shared/utils/clipboard";
 
 function formatJS(code, indentSize = 2, padOperators = true) {
   if (!code || !code.trim()) return "";
-  
+
   const indentString = " ".repeat(indentSize);
-  
+
+  // Protect comments from later passes (operator padding, brace layout) by
+  // pulling them out to placeholders up front, then restoring them once
+  // those passes are done so their delimiters and content are never touched.
+  const savedComments = [];
+  let clean = code.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, (m) => {
+    savedComments.push(m);
+    return ` C${savedComments.length - 1} `;
+  });
+
   // Collapsing spacing around braces, semicolons, commas
-  let clean = code
+  clean = clean
     .replace(/\s*([\{\};,])\s*/g, "$1") // Clear spacing around braces, semicolons, commas
-    .replace(/;\s*}/g, "}") // Fix trailing semicolon
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m + "\n") // Clean multi-line comments
-    .replace(/\/\/.*$/gm, (m) => m + "\n"); // Clean single-line comments
+    .replace(/;\s*}/g, "}"); // Fix trailing semicolon
 
   if (padOperators) {
-    // Add spaces around common operators (arithmetic, assignment, comparison)
-    clean = clean.replace(/\s*([=+\-\*\/<>!]=?)\s*/g, " $1 ");
+    // Add spaces around common operators. Multi-character tokens (===, !==,
+    // =>, ==, !=, <=, >=, ++, --, +=, -=, *=, /=, &&, ||) are matched whole
+    // before the single-character fallback so they are padded as a single
+    // unit instead of being split into two adjacent operators.
+    clean = clean.replace(
+      /\s*(===|!==|=>|==|!=|<=|>=|\+\+|--|\+=|-=|\*=|\/=|&&|\|\||[=+\-*/<>!])\s*/g,
+      " $1 "
+    );
   }
 
-  // Bracket/semicolon layout adjustments
+  // Bracket/semicolon layout adjustments. A newline is inserted both before
+  // and after '}' so a statement immediately preceding a closing brace is
+  // split onto its own line instead of being fused to the brace.
   clean = clean
     .replace(/\s*{\s*/g, " {\n")
     .replace(/;\s*/g, ";\n")
     .replace(/,\s*/g, ", ")
-    .replace(/\}\s*/g, "}\n\n");
+    .replace(/\s*\}\s*/g, "\n}\n\n");
+
+  // Restore comments now that padding/layout passes are complete, each on
+  // its own line.
+  clean = clean.replace(/\s*C(\d+)\s*/g, (_, idx) => `\n${savedComments[Number(idx)]}\n`);
 
   const lines = clean.split("\n");
   const formattedLines = [];
@@ -46,8 +65,10 @@ function formatJS(code, indentSize = 2, padOperators = true) {
     let line = lines[i].trim();
     if (!line) continue;
 
-    // Adjust indentation level for closing brackets
-    if (line.includes("}")) {
+    // Adjust indentation level for closing brackets. Only treat the line as
+    // a closer when it actually starts with '}' — checking `includes` would
+    // wrongly decrement for lines that merely mention '}' elsewhere.
+    if (line.startsWith("}")) {
       indentLevel = Math.max(0, indentLevel - 1);
     }
 
@@ -72,6 +93,13 @@ export default function MainComponent() {
   const [copied, setCopied] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const loadSample = () => {
     const sample = `/* Messy JS Sample */
@@ -106,7 +134,8 @@ console.log(calculateSum(50,60));`;
     const ok = await safeCopyText(output);
     if (ok) {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -146,12 +175,20 @@ console.log(calculateSum(50,60));`;
 
       {/* Notifications */}
       {success && (
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm"
+        >
           {success}
         </div>
       )}
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm"
+        >
           {error}
         </div>
       )}
@@ -176,6 +213,7 @@ console.log(calculateSum(50,60));`;
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste your unformatted or minified JavaScript here..."
+            aria-label="Input JavaScript code"
             className="w-full h-56 bg-(--page) border border-(--border) text-(--foreground) text-xs sm:text-sm rounded-lg p-4 outline-none focus:border-teal-500 font-mono resize-y shadow-inner"
           />
         </div>
@@ -199,6 +237,7 @@ console.log(calculateSum(50,60));`;
                     <button
                       key={size}
                       onClick={() => setIndentSize(size)}
+                      aria-pressed={indentSize === size}
                       className={`flex-1 py-1.5 text-xs font-semibold border rounded cursor-pointer transition-all ${
                         indentSize === size
                           ? "border-teal-500 bg-teal-500/10 text-teal-600 dark:text-teal-400"
@@ -218,6 +257,7 @@ console.log(calculateSum(50,60));`;
                 </label>
                 <button
                   onClick={() => setPadOperators(!padOperators)}
+                  aria-pressed={padOperators}
                   className={`w-full py-1.5 text-xs font-semibold border rounded cursor-pointer transition-all ${
                     padOperators
                       ? "border-teal-500 bg-teal-500/10 text-teal-600 dark:text-teal-400"
@@ -278,6 +318,7 @@ console.log(calculateSum(50,60));`;
             <textarea
               readOnly
               value={output}
+              aria-label="Beautified JavaScript output"
               className="w-full h-72 bg-slate-900 border border-slate-800 text-slate-300 text-xs sm:text-sm rounded-lg p-4 outline-none font-mono resize-y"
             />
           </div>

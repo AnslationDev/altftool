@@ -103,8 +103,9 @@ export function computePowerToWeight({
   elevationGainM = 500,
   targetWattsPerKg = 0,
 } = {}) {
-  const values = [ftpWatts, massKg, gradientPercent, elevationGainM, targetWattsPerKg];
-  if (!values.every(isNum)) return { error: "Enter a number in every field." };
+  // Core inputs: W/kg and the category band need only these two, so an
+  // invalid climb or target field below must not blank them out.
+  if (!isNum(ftpWatts) || !isNum(massKg)) return { error: "Enter a number for FTP and body mass." };
   if (ftpWatts <= 0) return { error: "FTP must be greater than zero watts." };
   if (ftpWatts > MAX_FTP_WATTS) {
     return { error: `An FTP above ${MAX_FTP_WATTS} W is beyond the range this tool covers.` };
@@ -112,33 +113,48 @@ export function computePowerToWeight({
   if (massKg < MIN_MASS_KG || massKg > MAX_MASS_KG) {
     return { error: `Body mass must be between ${MIN_MASS_KG} and ${MAX_MASS_KG} kg.` };
   }
-  if (gradientPercent < MIN_GRADIENT_PERCENT || gradientPercent > MAX_GRADIENT_PERCENT) {
-    return {
-      error: `Gradient must be between ${MIN_GRADIENT_PERCENT}% and ${MAX_GRADIENT_PERCENT}%.`,
-    };
-  }
-  if (elevationGainM < 0 || elevationGainM > MAX_ELEVATION_M) {
-    return { error: `Elevation gain must be between 0 and ${MAX_ELEVATION_M} m.` };
-  }
-  if (targetWattsPerKg < 0 || targetWattsPerKg > 8) {
-    return { error: "Target W/kg must be between 0 and 8." };
-  }
 
   const wattsPerKg = ftpWatts / massKg;
   const band = bandFor(wattsPerKg, sex);
-  const coefficient = vamCoefficient(gradientPercent);
-  const vam = wattsPerKg * 100 * coefficient;
-
-  // Climb length along the road, from rise and gradient.
-  const climbDistanceKm =
-    gradientPercent > 0 ? elevationGainM / (gradientPercent / 100) / 1000 : 0;
-  const climbHours = vam > 0 ? elevationGainM / vam : 0;
-  const climbSpeedKph = climbHours > 0 ? climbDistanceKm / climbHours : 0;
-
   const table = BANDS[sex] ?? BANDS.male;
   const nextBand = [...table].reverse().find((entry) => entry.min > wattsPerKg) ?? null;
 
-  const hasTarget = targetWattsPerKg > 0;
+  // Climb group (gradient + elevation): validated independently of the
+  // target group, so a bad target never blanks the climb numbers and vice versa.
+  let climbError = null;
+  if (!isNum(gradientPercent) || !isNum(elevationGainM)) {
+    climbError = "Enter a number for gradient and elevation gain.";
+  } else if (gradientPercent < MIN_GRADIENT_PERCENT || gradientPercent > MAX_GRADIENT_PERCENT) {
+    climbError = `Gradient must be between ${MIN_GRADIENT_PERCENT}% and ${MAX_GRADIENT_PERCENT}%.`;
+  } else if (elevationGainM < 0 || elevationGainM > MAX_ELEVATION_M) {
+    climbError = `Elevation gain must be between 0 and ${MAX_ELEVATION_M} m.`;
+  }
+
+  let coefficient = null;
+  let vam = null;
+  let climbDistanceKm = null;
+  let climbHours = null;
+  let climbSpeedKph = null;
+  if (!climbError) {
+    coefficient = vamCoefficient(gradientPercent);
+    vam = wattsPerKg * 100 * coefficient;
+    // Climb length along the road (the hypotenuse of rise and gradient), not
+    // just the horizontal run.
+    climbDistanceKm =
+      gradientPercent > 0 ? elevationGainM / Math.sin(Math.atan(gradientPercent / 100)) / 1000 : 0;
+    climbHours = vam > 0 ? elevationGainM / vam : 0;
+    climbSpeedKph = climbHours > 0 ? climbDistanceKm / climbHours : 0;
+  }
+
+  // Target group: validated independently of the climb group.
+  let targetError = null;
+  if (!isNum(targetWattsPerKg)) {
+    targetError = "Enter a number for the target W/kg.";
+  } else if (targetWattsPerKg < 0 || targetWattsPerKg > 8) {
+    targetError = "Target W/kg must be between 0 and 8.";
+  }
+
+  const hasTarget = !targetError && targetWattsPerKg > 0;
   const wattsForTarget = hasTarget ? targetWattsPerKg * massKg : null;
   const massForTarget = hasTarget ? ftpWatts / targetWattsPerKg : null;
 
@@ -147,11 +163,13 @@ export function computePowerToWeight({
     band,
     nextBand,
     wattsToNextBand: nextBand ? nextBand.min * massKg - ftpWatts : null,
+    climbError,
     coefficient,
     vam,
     climbDistanceKm,
     climbHours,
     climbSpeedKph,
+    targetError,
     wattsForTarget,
     extraWattsNeeded: hasTarget ? wattsForTarget - ftpWatts : null,
     massForTarget,

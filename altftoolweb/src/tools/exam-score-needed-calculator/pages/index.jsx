@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Copy, RotateCcw, Target } from "lucide-react";
 
 const INPUT_CLASS =
@@ -32,6 +32,13 @@ export default function ToolHome() {
   const [target, setTarget] = useState(DEFAULTS.target);
   const [maxScore, setMaxScore] = useState(DEFAULTS.maxScore);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(() => {
     if (current === "" || weight === "" || target === "" || maxScore === "")
@@ -117,14 +124,15 @@ export default function ToolHome() {
       `Final exam weight: ${num2.format(result.weightPercent)}%`,
       `Target overall grade: ${num2.format(result.targetGrade)}%`,
       headline,
-      `Carried forward from coursework: ${num2.format(result.carried)} points`,
+      `Carried forward from coursework: ${num2.format(result.carried)} percentage points`,
       `Best possible overall: ${num2.format(result.bestPossible)}%`,
       `Worst possible overall: ${num2.format(result.worstPossible)}%`,
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -133,7 +141,7 @@ export default function ToolHome() {
   const headlineValue = result.error
     ? "--"
     : result.alreadySecured
-      ? "0%"
+      ? `${num2.format(0)}%`
       : result.impossible
         ? "Not reachable"
         : `${num2.format(result.clampedNeeded)}%`;
@@ -247,6 +255,8 @@ export default function ToolHome() {
 
         <section
           aria-label="Score needed result"
+          aria-live="polite"
+          aria-atomic="true"
           className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -294,11 +304,11 @@ export default function ToolHome() {
                   <dt className="text-[var(--muted-foreground)]">
                     Coursework carried into the final
                   </dt>
-                  <dd className="font-semibold">{num2.format(result.carried)} points</dd>
+                  <dd className="font-semibold">{num2.format(result.carried)} percentage points</dd>
                 </div>
                 <div className="flex items-center justify-between gap-3 py-2">
                   <dt className="text-[var(--muted-foreground)]">Final exam contributes up to</dt>
-                  <dd className="font-semibold">{num2.format(result.weightPercent)} points</dd>
+                  <dd className="font-semibold">{num2.format(result.weightPercent)} percentage points</dd>
                 </div>
                 <div className="flex items-center justify-between gap-3 py-2">
                   <dt className="text-[var(--muted-foreground)]">Best possible overall</dt>

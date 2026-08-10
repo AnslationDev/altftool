@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much does the Claude API cost per million tokens?",
-      "On Anthropic's first-party API, Opus-tier models (Claude Opus 5, Opus 4.8) list at $5 per million input tokens and $25 per million output tokens, Sonnet-tier models at $3/$15, and Claude Haiku 4.5 at $1/$5. Prices change with model releases and differ on Amazon Bedrock and Vertex AI, so confirm against Anthropic's pricing page before budgeting.",
+      "On Anthropic's first-party API, Opus-tier models (Claude Opus 5, Opus 4.8) list at $5 per million input tokens and $25 per million output tokens, Sonnet-tier models at $3/$15, and Claude Haiku 4.5 at $1/$5. Claude Sonnet 5 is currently on an introductory $2/$10 rate through 2026-08-31, reverting to $3/$15 after (this figure must stay in sync with the claude-sonnet-5 preset in lib.js). Prices change with model releases and differ on Amazon Bedrock and Vertex AI, so confirm against Anthropic's pricing page before budgeting.",
     ],
     [
       "How does Claude prompt caching affect cost?",

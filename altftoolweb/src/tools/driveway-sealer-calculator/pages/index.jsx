@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PaintRoller, RotateCcw } from "lucide-react";
 
-import { CONDITIONS, MATERIALS, calculateSealer } from "../lib";
+import { CONDITIONS, GALLONS_PER_DRUM, MATERIALS, SQFT_PER_SQM, calculateSealer } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 const ONE = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
@@ -97,8 +97,26 @@ export default function ToolHome() {
   );
 
   const failed = Boolean(result.error);
-  const extraUnitLabel =
-    mode === "dimensions" ? (unit === "m" ? "m²" : "ft²") : areaUnit === "sqm" ? "m²" : "ft²";
+  // The unit the "extra apron or pad" field is currently interpreted in —
+  // depends on dimensions-mode's `unit` or area-mode's `areaUnit`.
+  const usingMetricForExtra = mode === "dimensions" ? unit === "m" : areaUnit === "sqm";
+  const extraUnitLabel = usingMetricForExtra ? "m²" : "ft²";
+  const prevExtraUnitMetricRef = useRef(usingMetricForExtra);
+
+  // Switching between "Length × width" and "Total area" mode (or their unit
+  // dropdowns) can silently flip the unit the extra-area field is read in.
+  // Convert the stored value so the same physical area survives the switch,
+  // instead of being silently reinterpreted in the new unit.
+  useEffect(() => {
+    if (prevExtraUnitMetricRef.current === usingMetricForExtra) return;
+    setExtraArea((current) => {
+      const numeric = Number(String(current).replace(/,/g, "").trim());
+      if (!Number.isFinite(numeric)) return current;
+      const converted = usingMetricForExtra ? numeric / SQFT_PER_SQM : numeric * SQFT_PER_SQM;
+      return String(Math.round(converted * 100) / 100);
+    });
+    prevExtraUnitMetricRef.current = usingMetricForExtra;
+  }, [usingMetricForExtra]);
 
   const summary = useMemo(() => {
     if (failed) return "";
@@ -112,6 +130,9 @@ export default function ToolHome() {
       `Coats: ${result.coats}`,
       `Sealer needed: ${NUM.format(result.totalGallons)} gallons (${ONE.format(result.litres)} L)`,
       `Buy: ${result.pails} × 5-gallon pails — ${NUM.format(result.leftoverGallons)} gallons spare`,
+      result.totalGallons >= GALLONS_PER_DRUM
+        ? `Bulk option: ${result.drums} × 55-gallon drum${result.drums > 1 ? "s" : ""} instead of ${result.pails} pails`
+        : "",
       `Estimated cost: ${MONEY.format(result.totalCost)}`,
       result.crackTubes > 0
         ? `Crack filler: ${NUM.format(result.crackGallons)} gallons (${result.crackJugs} jug(s)) or ${result.crackTubes} caulk tube(s)`
@@ -177,6 +198,9 @@ export default function ToolHome() {
           `${NUM.format(result.totalGallons)} gal (${ONE.format(result.litres)} L)`,
         ],
         ["Left over in the last pail", `${NUM.format(result.leftoverGallons)} gal`],
+        ...(result.totalGallons >= GALLONS_PER_DRUM
+          ? [["Bulk option", `${result.drums} × 55-gal drum${result.drums > 1 ? "s" : ""} instead of ${result.pails} pails`]]
+          : []),
         [
           "Crack filler",
           result.crackTubes > 0
@@ -424,7 +448,12 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

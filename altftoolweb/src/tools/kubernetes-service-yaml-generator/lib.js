@@ -33,6 +33,10 @@ export const PROTOCOLS = ["TCP", "UDP", "SCTP"];
 const LABEL_NAME_REGEX = /^[A-Za-z0-9]([-A-Za-z0-9_.]*[A-Za-z0-9])?$/;
 const LABEL_VALUE_MAX = 63;
 
+/** RFC 1123 DNS subdomain: what the optional "prefix/" part of a label key must satisfy. */
+const DNS_SUBDOMAIN_REGEX = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
+const DNS_SUBDOMAIN_MAX = 253;
+
 /** Validate a DNS-1035 name; returns null when OK. */
 export function validateServiceName(name) {
   if (typeof name !== "string" || name.trim() === "") return "Service name is required.";
@@ -66,6 +70,14 @@ export function parseSelector(text) {
     const namePart = parts[parts.length - 1];
     if (namePart.length > LABEL_VALUE_MAX || !LABEL_NAME_REGEX.test(namePart)) {
       return { error: `Selector key "${key}" is invalid (alphanumeric with '-', '_', '.', max 63 chars).` };
+    }
+    if (parts.length === 2) {
+      const prefixPart = parts[0];
+      if (prefixPart.length > DNS_SUBDOMAIN_MAX || !DNS_SUBDOMAIN_REGEX.test(prefixPart)) {
+        return {
+          error: `Selector key "${key}" has an invalid DNS prefix (lowercase RFC 1123 subdomain, max ${DNS_SUBDOMAIN_MAX} chars).`,
+        };
+      }
     }
     if (value !== "" && (value.length > LABEL_VALUE_MAX || !LABEL_NAME_REGEX.test(value))) {
       return { error: `Selector value "${value}" is invalid (alphanumeric with '-', '_', '.', max 63 chars).` };
@@ -113,6 +125,7 @@ export function buildServiceYaml({ name, namespace = "", type, selectorText, por
   const warnings = [];
   const cleanPorts = [];
   const seenNames = new Set();
+  const seenPortProtocol = new Set();
 
   for (let i = 0; i < ports.length; i += 1) {
     const p = ports[i];
@@ -163,6 +176,12 @@ export function buildServiceYaml({ name, namespace = "", type, selectorText, por
       seenNames.add(portName);
     }
 
+    const portProtocolKey = `${port}/${protocol}`;
+    if (seenPortProtocol.has(portProtocolKey)) {
+      return { error: `Port #${i + 1}: another port already uses port ${port}/${protocol} — the second definition would be non-functional.` };
+    }
+    seenPortProtocol.add(portProtocolKey);
+
     cleanPorts.push({ name: portName, port, targetPort, nodePort, protocol });
   }
 
@@ -187,7 +206,7 @@ export function buildServiceYaml({ name, namespace = "", type, selectorText, por
   if (headless) lines.push("  clusterIP: None");
   lines.push("  selector:");
   for (const [key, value] of Object.entries(parsed.selector)) {
-    lines.push(`    ${key}: ${JSON.stringify(value)}`);
+    lines.push(`    ${JSON.stringify(key)}: ${JSON.stringify(value)}`);
   }
   lines.push("  ports:");
   for (const p of cleanPorts) {

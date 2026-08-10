@@ -133,7 +133,10 @@ export function planFestivalBudget({
   const giftRows = [];
   const flags = [];
   for (const group of giftGroups) {
-    const recipients = toNumber(group?.recipients);
+    // Rounded once, up front, so the same whole-number "people" count is used
+    // for both the cost multiplication and the displayed row — otherwise the
+    // table can show People x Each that doesn't actually multiply out to Total.
+    const recipients = Math.round(toNumber(group?.recipients));
     const perRecipient = toNumber(group?.perRecipient);
     const relation = RELATIONS.find((entry) => entry.id === group?.relation) ?? RELATIONS[0];
 
@@ -149,7 +152,7 @@ export function planFestivalBudget({
     giftRows.push({
       id: group?.id,
       name: group?.name?.trim() || "Gift group",
-      recipients: Math.round(recipients),
+      recipients,
       perRecipient: round0(perRecipient),
       relation: relation.id,
       relationLabel: relation.label,

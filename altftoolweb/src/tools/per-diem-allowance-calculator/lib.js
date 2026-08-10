@@ -130,10 +130,20 @@ export function computePerDiem({
   const mealsGross = round2(fullDayAmount + partDayAmount);
 
   const shares = { ...MEAL_SHARES, ...mealShares };
+  const rawMealsProvided = {
+    breakfast: Number(mealsProvided.breakfast) || 0,
+    lunch: Number(mealsProvided.lunch) || 0,
+    dinner: Number(mealsProvided.dinner) || 0,
+  };
+  for (const key of ["breakfast", "lunch", "dinner"]) {
+    if (rawMealsProvided[key] < 0) {
+      return { error: `Meals provided (${key}) cannot be negative.` };
+    }
+  }
   const counts = {
-    breakfast: Math.max(0, Math.floor(Number(mealsProvided.breakfast) || 0)),
-    lunch: Math.max(0, Math.floor(Number(mealsProvided.lunch) || 0)),
-    dinner: Math.max(0, Math.floor(Number(mealsProvided.dinner) || 0)),
+    breakfast: Math.floor(rawMealsProvided.breakfast),
+    lunch: Math.floor(rawMealsProvided.lunch),
+    dinner: Math.floor(rawMealsProvided.dinner),
   };
   for (const key of ["breakfast", "lunch", "dinner"]) {
     const share = shares[key];

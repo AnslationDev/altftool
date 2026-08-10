@@ -129,8 +129,11 @@ export function sizePersonalAccidentCover({
   const requiredCover = Math.max(0, rawGap);
 
   const underwritingCap = annualIncome * incomeMultiple;
-  const cappedCover = Math.min(requiredCover, underwritingCap);
-  const recommendedCover = roundUpToLakh(cappedCover);
+  // Round up to the next lakh first, then clamp to the insurer's underwriting
+  // cap — rounding up a figure that was already at or near the cap must never
+  // push the displayed recommendedCover back above what insurers will issue.
+  const recommendedCover = Math.min(roundUpToLakh(requiredCover), underwritingCap);
+  const cappedByUnderwriting = requiredCover > recommendedCover;
   const shortfallAboveCap = Math.max(0, requiredCover - underwritingCap);
 
   const ttdWeekly = Math.min(
@@ -141,6 +144,8 @@ export function sizePersonalAccidentCover({
   const basePremium = (recommendedCover / 1000) * ratePerMille;
   const gst = (basePremium * GST_RATE_PERCENT) / 100;
 
+  const roundedDependants = Math.round(dependants);
+
   return {
     incomeNeed,
     grossNeed,
@@ -148,11 +153,11 @@ export function sizePersonalAccidentCover({
     requiredCover,
     underwritingCap,
     recommendedCover,
-    cappedByUnderwriting: requiredCover > underwritingCap,
+    cappedByUnderwriting,
     shortfallAboveCap,
     alreadyCovered: requiredCover === 0,
-    dependants: Math.round(dependants),
-    perDependantSupport: dependants > 0 ? recommendedCover / Math.round(dependants) : 0,
+    dependants: roundedDependants,
+    perDependantSupport: roundedDependants > 0 ? recommendedCover / roundedDependants : 0,
     accidentalDeathBenefit: recommendedCover,
     ptdBenefit: (recommendedCover * ptdPercent) / 100,
     ppdOneLimbBenefit: (recommendedCover * PPD_ONE_LIMB_PERCENT) / 100,

@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Burnout Self-Check scores the three dimensions ICD-11 uses to define burnout — energy depletion, mental distance or negativism about the job, and reduced professional efficacy — from twelve statements rated 0 (never) to 6 (every working day). Instead of one overall number it returns a profile: engaged, overextended, disengaged, ineffective, or the full burnout pattern where all three dimensions line up. Saved checks build a trend log so you can see whether a workload change actually moved anything.",
+    "The Burnout Self-Check scores the three dimensions ICD-11 uses to define burnout — energy depletion, mental distance or negativism about the job, and reduced professional efficacy — from twelve statements rated 0 (never) to 6 (every working day). Instead of one overall number it returns a profile: engaged, overextended, disengaged, ineffective, the full burnout pattern where all three dimensions line up, or a mixed pattern when the three dimensions don't line up cleanly. Saved checks build a trend log so you can see whether a workload change actually moved anything.",
   useCases: [
     "Separate 'I am tired' from 'I no longer care', which need completely different responses.",
     "Check before and after a project crunch whether exhaustion recovered or turned into cynicism.",

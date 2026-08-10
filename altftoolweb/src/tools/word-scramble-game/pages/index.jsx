@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Lightbulb, RotateCcw, Shuffle, SkipForward, Trophy } from "lucide-react";
 
 import {
@@ -50,6 +50,13 @@ export default function ToolHome() {
   const [results, setResults] = useState([]);
   const [feedback, setFeedback] = useState("");
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const game = useMemo(
     () => buildRounds({ difficulty, count: Number(roundCount), seed: Number(seed) }),
@@ -159,7 +166,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
@@ -288,6 +296,7 @@ export default function ToolHome() {
               {current.scrambled.split("").map((letter, position) => (
                 <span
                   key={`${letter}-${position}`}
+                  aria-hidden="true"
                   className="inline-flex h-12 w-11 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] text-xl font-bold text-[var(--foreground)]"
                 >
                   {letter}

@@ -77,8 +77,13 @@ export const CONSTRAINTS = [
 /** About four characters per token for ordinary English prose. */
 export const AVERAGE_CHARS_PER_TOKEN = 4;
 
-function toInt(value) {
+function toNumber(value) {
   const number = Number(String(value).replace(/,/g, "").trim());
+  return Number.isFinite(number) ? number : NaN;
+}
+
+function toInt(value) {
+  const number = toNumber(value);
   return Number.isFinite(number) ? Math.round(number) : NaN;
 }
 
@@ -94,11 +99,13 @@ export function assessComplexity({ currentComplexity, targetComplexity } = {}) {
   if (currentRaw === "" || targetRaw === "") {
     return { error: "Fill both complexity fields, or leave both empty to skip the complexity target." };
   }
-  const current = toInt(currentRaw);
-  const target = toInt(targetRaw);
-  if (Number.isNaN(current) || Number.isNaN(target)) {
+  const currentValue = toNumber(currentRaw);
+  const targetValue = toNumber(targetRaw);
+  if (Number.isNaN(currentValue) || Number.isNaN(targetValue)) {
     return { error: "Complexity values must be whole numbers." };
   }
+  const current = toInt(currentRaw);
+  const target = toInt(targetRaw);
   if (
     current < LIMITS.complexity.min ||
     current > LIMITS.complexity.max ||
@@ -107,7 +114,9 @@ export function assessComplexity({ currentComplexity, targetComplexity } = {}) {
   ) {
     return { error: `Complexity values must be between ${LIMITS.complexity.min} and ${LIMITS.complexity.max}.` };
   }
-  if (target >= current) {
+  // Compare the parsed-but-unrounded values so two decimals that round to the same
+  // integer (e.g. 9.4 and 9.3) are not wrongly rejected as "nothing to refactor".
+  if (targetValue >= currentValue) {
     return { error: "The target complexity must be lower than the current complexity — otherwise there is nothing to refactor." };
   }
   return {

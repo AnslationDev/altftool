@@ -297,7 +297,7 @@ export default function ToolHome() {
           {[
             ["Functions", hasError ? DASH : String(result.eventCount)],
             ["Outfits in total", hasError ? DASH : String(result.totalOutfits)],
-            ["Of which casual downtime sets", hasError ? DASH : String(result.casualOutfits)],
+            ["Of which casual sets", hasError ? DASH : String(result.casualOutfits)],
             ["Pairs of shoes", hasError ? DASH : String(result.shoePairs)],
             ["Outfits weigh", hasError ? DASH : `${NUM.format(result.outfitKg)} kg`],
             ["Everything else weighs", hasError ? DASH : `${NUM.format(result.extrasKg)} kg`],
@@ -320,9 +320,10 @@ export default function ToolHome() {
 
         {!hasError && !result.withinAllowance && (
           <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
-            Over the allowance by {NUM.format(Math.abs(result.spareKg))} kg. Wearing the heaviest
-            outfit on the journey saves {NUM.format(result.heaviestOutfitKg)} kg, and dropping one pair
-            of shoes usually saves another half kilo.
+            Over the allowance by {NUM.format(Math.abs(result.spareKg))} kg.{" "}
+            {form.wearHeaviestOnTravel
+              ? "That's already with the heaviest outfit worn on the journey — dropping one pair of shoes usually saves another half kilo."
+              : `Wearing the heaviest outfit on the journey saves ${NUM.format(result.heaviestOutfitKg)} kg, and dropping one pair of shoes usually saves another half kilo.`}
           </p>
         )}
       </section>

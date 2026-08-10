@@ -33,7 +33,7 @@ export const HINT_PENALTY = 25;
 export const MAX_SCRAMBLE_ATTEMPTS = 12;
 
 export const DIFFICULTIES = [
-  { id: "easy", label: "Easy — 4 to 5 letters", timeLimitSeconds: 45 },
+  { id: "easy", label: "Easy — 5 letters", timeLimitSeconds: 45 },
   { id: "medium", label: "Medium — 6 to 7 letters", timeLimitSeconds: 60 },
   { id: "hard", label: "Hard — 8 letters or more", timeLimitSeconds: 90 },
 ];
@@ -166,13 +166,14 @@ export function buildRounds({ difficulty, count, seed }) {
   const bank = WORD_BANK[difficulty];
   if (!bank) return { error: "Choose easy, medium or hard." };
   if (!isNum(count) || count < 1) return { error: "Play at least one round." };
-  if (count > bank.length) {
+  const roundsRequested = Math.floor(count);
+  if (roundsRequested > bank.length) {
     return { error: `There are only ${bank.length} words at this level — pick ${bank.length} rounds or fewer.` };
   }
   if (!isNum(seed)) return { error: "The puzzle seed must be a number." };
 
   const order = shuffle(bank, seed);
-  const chosen = order.items.slice(0, Math.floor(count));
+  const chosen = order.items.slice(0, roundsRequested);
   const rounds = chosen.map((entry, index) => {
     const scrambled = scrambleWord(entry.word, seed + index * 104729);
     return {

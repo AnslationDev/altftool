@@ -74,14 +74,14 @@ export function byteLength(text) {
   return bytes;
 }
 
-/** Split any human title into ASCII-safe words. */
+/** Split any human title into words, preserving non-Latin scripts (CJK, Cyrillic, Arabic, etc.). */
 function words(text) {
   return String(text ?? "")
     .normalize("NFD")
     .replace(COMBINING_MARK_RE, "")
     .replace(/&/g, " and ")
     .replace(/['’]/g, "")
-    .split(/[^A-Za-z0-9]+/)
+    .split(/[^\p{L}\p{N}]+/u)
     .filter(Boolean);
 }
 
@@ -114,7 +114,13 @@ export function parseOutline(text) {
     const isLesson = /^\s*(?:[-*•]|\d+[.)])\s+/.test(rawLine) || /^\s+\S/.test(rawLine);
     const cleaned = rawLine.replace(/^\s*(?:[-*•]|\d+[.)])\s+/, "").replace(/^\s*module\s*:\s*/i, "").trim();
     if (!cleaned) continue;
-    if (isLesson && modules.length > 0) {
+    if (isLesson && modules.length === 0) {
+      // A lesson line appeared before any module header — assume an implicit leading module
+      // instead of silently treating the first lesson's text as a module title.
+      modules.push({ title: "", lessons: [] });
+      modules.implicitModule = true;
+    }
+    if (isLesson) {
       modules[modules.length - 1].lessons.push(cleaned);
     } else {
       modules.push({ title: cleaned, lessons: [] });
@@ -137,7 +143,8 @@ function clampBytes(name, budget) {
 
 /** Strip forbidden characters and tidy up separator runs. */
 function sanitize(name, joiner) {
-  let out = name.replace(ILLEGAL_CHAR_RE, "").replace(/\s+/g, joiner || "-");
+  const sep = typeof joiner === "string" ? joiner : "-";
+  let out = name.replace(ILLEGAL_CHAR_RE, "").replace(/\s+/g, sep);
   if (joiner) {
     const escaped = joiner.replace(/[.*+?^${}()|[\]\\-]/g, "\\$&");
     out = out.replace(new RegExp(`${escaped}{2,}`, "g"), joiner);
@@ -202,10 +209,12 @@ export function buildFileNames({
   const ext = slugifySegment(String(extension ?? "").replace(/^\.+/, ""), "kebab").toLowerCase();
   const suffix = ext ? `.${ext}` : "";
   const courseSlug = slugifySegment(courseCode, caseStyle);
+  const implicitModule = Boolean(modules.implicitModule);
 
   const files = [];
   const seen = new Map();
   const duplicates = [];
+  let duplicateFileCount = 0;
   let globalIndex = firstLesson;
   let longestBytes = 0;
   let warningCount = 0;
@@ -230,6 +239,12 @@ export function buildFileNames({
       base = sanitize(base, joiner);
       const warnings = [];
 
+      if (implicitModule && moduleIndex === 0 && lessonIndex === 0) {
+        warnings.push(
+          "Outline started with a lesson before any module header — an implicit module was assumed.",
+        );
+      }
+
       if (!base) {
         base = `untitled${joiner || "-"}${padNumber(globalIndex, padding)}`;
         warnings.push("Pattern produced an empty name — a fallback name was used.");
@@ -246,10 +261,22 @@ export function buildFileNames({
         base = `${base}${joiner || "-"}${padNumber(globalIndex, padding)}`;
       }
 
-      const name = `${base}${suffix}`;
+      let name = `${base}${suffix}`;
+      if (byteLength(name) > MAX_FILENAME_BYTES) {
+        // The base clamp above only accounts for a "normal" extension; an oversized
+        // extension can still push the assembled name over budget (or a reserved-name
+        // suffix can push a maxed-out base back over). Re-validate the final assembled
+        // name and clamp it directly so the byte-limit guarantee always holds.
+        name = clampBytes(name, MAX_FILENAME_BYTES);
+        if (!warnings.some((warning) => warning.includes(`${MAX_FILENAME_BYTES}-byte file-name limit`))) {
+          warnings.push(`Name exceeded the ${MAX_FILENAME_BYTES}-byte file-name limit and was trimmed.`);
+        }
+      }
+
       const key = name.toLowerCase();
       if (seen.has(key)) {
         warnings.push(`Duplicate of the name already used for lesson ${seen.get(key)}.`);
+        duplicateFileCount += 1;
         if (!duplicates.includes(name)) duplicates.push(name);
       } else {
         seen.set(key, globalIndex);
@@ -279,6 +306,7 @@ export function buildFileNames({
     totalFiles: files.length,
     moduleCount: modules.length,
     duplicates,
+    duplicateFileCount,
     longestBytes,
     warningCount,
   };

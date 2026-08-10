@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Word Scramble Game gives you a jumbled word and a countdown, and you type the word it came from. Puzzles are drawn from a bank of common English words at three lengths — 4-5, 6-7 and 8-plus letters — and every scramble is a true Fisher-Yates shuffle driven by a seeded generator, so the same seed always rebuilds the same game and you can share a puzzle by sharing its number. Scoring is 10 points per letter, plus a time bonus worth up to half of that, minus 25 points per hint.",
+    "Word Scramble Game gives you a jumbled word and a countdown, and you type the word it came from. Puzzles are drawn from a bank of common English words at three lengths — 5, 6-7 and 8-plus letters — and every scramble is a true Fisher-Yates shuffle driven by a seeded generator, so the same seed always rebuilds the same game and you can share a puzzle by sharing its number. Scoring is 10 points per letter, plus a time bonus worth up to half of that, minus 25 points per hint.",
   useCases: [
     "A five-minute vocabulary warm-up before study or a spelling test.",
     "Sharing the same seed with a friend so you both get an identical set of puzzles and can compare scores fairly.",
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How long do I get for each word?",
-      "45 seconds on easy (4-5 letters), 60 seconds on medium (6-7 letters) and 90 seconds on hard (8 or more letters). Running out of time ends the round with zero points but does not end the game.",
+      "45 seconds on easy (5 letters), 60 seconds on medium (6-7 letters) and 90 seconds on hard (8 or more letters). Running out of time ends the round with zero points but does not end the game.",
     ],
     [
       "What does the seed do?",

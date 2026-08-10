@@ -29,7 +29,7 @@ export const MODES = {
   interval: {
     key: "interval",
     label: "Fixed interval",
-    note: "Evenly spaced bells. Predictable, which suits formal sitting practice.",
+    note: "Evenly spaced pause bells; the closing bell (if enabled) may fall short of the next full interval. Predictable, which suits formal sitting practice.",
   },
   random: {
     key: "random",

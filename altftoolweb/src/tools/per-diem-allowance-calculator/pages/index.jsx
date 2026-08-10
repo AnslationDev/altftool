@@ -403,6 +403,8 @@ export default function ToolHome() {
 
         {ok && (
           <p
+            aria-live="polite"
+            aria-atomic="true"
             className={`mt-4 rounded-md px-3 py-2 text-sm font-medium ${
               result.balance < 0
                 ? "bg-[var(--warning-soft)] text-[var(--warning)]"
