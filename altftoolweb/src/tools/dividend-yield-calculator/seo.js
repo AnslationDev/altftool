@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dividend Yield Calculator with Tax and Target Income",
+  metaDescription:
+    "Annual dividend over share price gives the yield, then after-tax income per payout, the capital a target income needs, and growth compounded to 60 years.",
+  steps: [
+    "In the Dividend Inputs card enter Share Price, Annual Dividend / Share, Shares Owned and Target Annual Income.",
+    "Set Tax Rate, Dividend Growth, Share Price Growth, Projection Years (1-60) and Payout Frequency — Annual, Half Yearly, Quarterly or Monthly.",
+    "Read Dividend Yield, Net Annual Income, Capital For Target and Payback Estimate, then press Export CSV to download dividend-yield-plan.csv.",
+  ],
   intro:
     "The Dividend Yield Calculator divides the annual dividend per share by the current share price to give the yield percentage, then uses your share count, tax rate and payout frequency to project gross income, after-tax income and the per-payout cheque. It also compounds dividend growth and price growth year by year for up to 60 years, and works backwards from a target annual income to the number of shares and the capital you would need. It is an informational modelling tool for income investors, not investment advice.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Statistics: Word Count and Readability Scores",
+  metaDescription:
+    "Paste text for words, sentences, paragraphs and syllables plus Flesch Reading Ease, Flesch-Kincaid, Gunning Fog, SMOG, Coleman-Liau and ARI, in-browser.",
+  steps: [
+    "Paste or type into Your text, or press Load sample text to see it working on a ready-made passage.",
+    "Counts and scores recalculate on every keystroke as you edit; press Clear to empty the box and start over.",
+    "Read Flesch Reading Ease out of 100 with its band, the Words, Sentences, Syllables and Complex words tiles, and the five Grade level formulas, then press Copy report.",
+  ],
   "intro": "Text Statistics Analyzer breaks any passage down into words, unique words, characters, sentences, paragraphs and syllables, then runs six standard readability formulas over it — Flesch Reading Ease, Flesch-Kincaid Grade, Gunning Fog, SMOG, Coleman-Liau and the Automated Readability Index. It is built for writers, editors, teachers and content marketers who need to know not just how long a piece is, but how hard it is to read. Everything runs in your browser, so drafts and student work never leave your device.",
   "useCases": [
     "Check that a landing page or help article lands near Flesch 60-70 before publishing.",

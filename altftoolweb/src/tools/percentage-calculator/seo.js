@@ -1,4 +1,12 @@
 const seo = {
+  title: "Percentage Calculator: Percent Of, Ratio and Change",
+  metaDescription:
+    "Three modes: what is X% of Y, X is what % of Y, and change from old to new. Each answer prints the formula behind it, with 10/25/50% alongside.",
+  steps: [
+    "Choose a mode: \"What is X% of Y?\", \"X is what % of Y?\" or \"Percentage change\".",
+    "Type the two numbers — Percentage and Value, Part value and Whole value, or Old value and New value — and the answer updates as you type.",
+    "Read the result with the formula it used, such as (new value - old value) / old value x 100, then press Copy report, or Download to save percentage-calculation-report.txt.",
+  ],
   intro:
     "This percentage calculator answers the three questions that cover almost every percentage problem: what is X% of Y (X ÷ 100 × Y), X is what percent of Y (part ÷ whole × 100), and the percentage change from one value to another ((new − old) ÷ old × 100). Pick a mode, type two numbers, and the result updates as you type, with the formula shown underneath so you can check the working. Handy for shoppers checking a discount, students converting marks, and anyone comparing this month's figure with last month's.",
   useCases: [

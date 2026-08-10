@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Sleep Planner: Shift Bedtime 30 Minutes a Night",
+  metaDescription:
+    "Builds an exam-day alarm, bedtime and revision blocks, shifting your body clock no faster than 30 minutes earlier a night.",
+  steps: [
+    "Enter the exam start time, days until the exam, travel to the exam hall in minutes and the bedtime you actually keep now.",
+    "Set the sleep target in hours, focus hours per study day and focus block length, or tick the 13-18 teenage 8-10 hour range.",
+    "Read the exam-day alarm, target lights-out, wind-down time and the nights needed to shift your bedtime, then press Copy plan.",
+  ],
   intro:
     "This planner builds a revision timetable and a bedtime around a fixed exam start time, then works out how many nights it takes to move your body clock there at the safe rate of about 30 minutes earlier per night. It sets the exam-day alarm at whichever is earlier — the time your commute and getting ready demand, or two hours before the paper so sleep inertia has cleared. Sleep targets follow the AASM and Sleep Research Society consensus of 7 or more hours for adults and 8 to 10 hours for 13 to 18 year olds.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tyre DOT Date Decoder: Week, Year and Exact Age",
+  metaDescription:
+    "3624 means week 36 of 2024. Enter the DOT code for the manufacture date, age in years and days, plus the 6-year and 10-year milestone dates.",
+  steps: [
+    "Type the sidewall code into DOT code (full number or just the last digits), or tap an example chip such as 3624 or DOT U2LL LMLR 5107.",
+    "Set Work out the age as of to the date you want the age measured against; it defaults to today.",
+    "Age of this tyre reads years and months over Built in week 36 of 2024 style text, with rows for Age in days, Annual inspection due from (6 yrs) and Replace by (10 yrs); Copy result saves them.",
+  ],
   intro:
     "The DOT Tire Identification Number moulded into a tyre's sidewall ends in a date code, and this decoder turns that code into a manufacture date and an exact age. Four digits mean week then two-digit year for anything built from 2000 onwards — 3624 is week 36 of 2024 — while a three-digit code marks a tyre made before 2000. From that date the tool derives the age in years and days, the point at which annual professional inspection is advised, and the ten-year mark most tyre manufacturers name as the limit.",
   useCases: [

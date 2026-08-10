@@ -1,4 +1,12 @@
 const seo = {
+  title: "Credit Score Impact Simulator: 300-900, Before/After",
+  metaDescription:
+    "Model a card payoff, extra loan applications or a missed EMI on the 300-900 bureau scale, weighted by the five factors bureaus disclose.",
+  steps: [
+    "Fill in Your credit profile today: total credit card limit and current outstanding balance, missed payments in the last 24 months, worst delinquency on record, age of your oldest credit account, hard enquiries in the last 12 months, and your card and loan counts.",
+    "Under What you are planning to change, set the balance after the change — or tap Take utilisation to 0%, 10%, 30% or 50% — plus new loan or card applications and payments you expect to miss.",
+    "Read the Estimated score movement in points, the Today and After the change cards on the 300-900 scale with their bands, and the Where the points come from table scoring each of the five factors out of 100.",
+  ],
   intro:
     "This Credit Score Impact Simulator estimates how a specific change — paying a credit card down, applying for two more loans, or missing an EMI — could move your score on the 300–900 scale used by Indian bureaus. It weights the five factors bureaus publicly disclose: payment history at roughly 35%, credit utilisation 30%, length of credit history 15%, credit mix 10% and new credit or hard enquiries 10%. The result is an educational estimate for planning, not a reproduction of any bureau's proprietary model.",
   useCases: [

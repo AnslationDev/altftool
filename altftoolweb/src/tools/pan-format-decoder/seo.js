@@ -1,4 +1,12 @@
 const seo = {
+  title: "PAN Card 4th Letter Decoder & Format Validator",
+  metaDescription:
+    "Check a PAN against the AAAAA9999A pattern offline and decode its 4th character: P individual, C company, H HUF, F firm, T trust.",
+  steps: [
+    "Type the ten-character PAN into the PAN field, which shows the AAAAA9999A pattern, and optionally the holder's surname in Surname or entity name (optional).",
+    "Stay on Single PAN for one number, or press Bulk list and paste one PAN per line to screen a whole vendor file at once.",
+    "Read the Holder type headline plus the Status code (position 4), Name initial (position 5) and Safe to share redaction rows, then press Copy result.",
+  ],
   intro:
     "A PAN is ten characters in the pattern AAAAA9999A, and its fourth character encodes the status of the holder — P for an individual, C for a company, H for a Hindu Undivided Family, F for a firm, T for a trust. This tool checks that structure offline, decodes the status code, and optionally tests the fifth character against a surname, which is where most PAN-name mismatches come from. It suits accounts teams validating vendor masters and developers who want a client-side check before calling a verification API.",
   useCases: [

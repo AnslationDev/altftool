@@ -1,4 +1,7 @@
 const seo = {
+  title: "Business Name Generator With Industry Word Banks",
+  metaDescription:
+    "Generate up to 30 names per run from 25 prefixes, 20 suffixes and 15 modifiers, in Modern, Classic, Prefixed or Descriptive shapes. Heart to shortlist.",
   intro:
     "This generator builds business name candidates by combining a curated word bank — 25 brandable prefixes, 20 company suffixes such as Labs, Studio, Ventures and Collective, and 15 modifiers like AI, Prime and Forge — into one of four naming patterns. Choosing an industry mixes in a matching vocabulary set (tech, health, finance or creative), so a tech run can pull Nexus, Byte, Vector or Matrix instead of only generic words. You pick the style and how many names to see, then shortlist the ones worth checking.",
   useCases: [

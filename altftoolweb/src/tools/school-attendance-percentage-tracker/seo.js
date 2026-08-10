@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Attendance Percentage Tracker (75% CBSE Rule)",
+  metaDescription:
+    "Days present ÷ working days × 100 against the 75% board requirement, turned into a leave allowance in days and a projection for the whole session.",
+  steps: [
+    "Pick your School stage, then enter Working days held so far, Days marked present and Working days left this session.",
+    "Add Leave you already plan to take (days), and change Attendance required by the board (%) if your board does not use 75%.",
+    "Read Attendance so far against the requirement line, plus Leave still affordable, Days you must still attend and Best possible finish, then press Copy result.",
+  ],
   intro:
     "This tracker converts a school attendance register into the number that decides board exam eligibility: days present ÷ working days × 100, measured across the whole academic session rather than a single month. It applies the 75% attendance condition in the CBSE Examination Bye-Laws, which most other boards mirror, and turns it into a leave allowance in days so a parent or student can see how much absence the year can still carry. It also projects where attendance finishes once the leave already planned is taken.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tamil Palamozhi: 30 Proverbs With Meanings in English",
+  metaDescription:
+    "30 Tamil proverbs with ISO 15919 transliteration, a literal translation, the figurative meaning, a Tamil gloss and the closest English proverb.",
+  steps: [
+    "Narrow the set in \"Filter the collection\" with the Theme menu, or type into \"Search proverb, transliteration or meaning\" — it accepts Tamil script, romanised text or the English sense.",
+    "In the \"Meaning quiz\" pick one of the four meanings offered for the proverb shown: the true answer turns green, a wrong pick turns red, the Tamil gloss and English equivalent appear, and \"Next proverb\" moves on.",
+    "Under \"Browse proverbs\" each entry lists Literally, Meaning, its Tamil gloss and theme, while \"Palamozhi of the day\" shows Literal translation, Figurative meaning, பொருள், English equivalent and Theme — Copy puts that on the clipboard.",
+  ],
   intro:
     "Tamil Palamozhi Explorer is a browsable collection of 30 Tamil proverbs, each shown with an ISO 15919 transliteration, a strictly literal translation, the figurative meaning it actually carries, a short Tamil gloss and the closest English proverb where one exists. A palamozhi is a complete traditional saying quoted without change, which is why the literal and figurative readings are listed separately — in most proverbs they are deliberately far apart. A seeded four-option quiz tests recall from the same set.",
   useCases: [

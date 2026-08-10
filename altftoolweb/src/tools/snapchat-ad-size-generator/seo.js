@@ -1,4 +1,12 @@
 const seo = {
+  title: "Snapchat Ad Sizes: 1080x1920 Export with Safe Zone",
+  metaDescription:
+    "Resize artwork to 1080x1920, 360x600, 160x160 or a 1080x2340 geofilter, with the 150px safe zone drawn on and the 300 KB PNG ceiling checked.",
+  steps: [
+    "Under \"1. Choose the creative\", press one of the chips: \"Single image ad\", \"Story / organic snap\", \"Story ad brand tile\", \"Collection ad product tile\" or \"On-demand geofilter\".",
+    "In \"2. Add your artwork\" pick an \"Image file (PNG, JPEG, WebP)\" or type Source width and height, then set Fit mode to \"Fill — crop the overflow\", \"Fit — add background bars\" or \"Stretch — distort to fit\", plus Bar background, Export format and Encoder quality.",
+    "\"Creative size\" reports the target pixels and ratio with the 150 px safe zone drawn on the crop preview; press Export to save the canvas render as yourfile-1080x1920.png, or use \"Copy spec\" and Reset.",
+  ],
   intro:
     "This generator exports Snapchat creative at the exact sizes the platform expects — 1080x1920 for single image ads and story snaps, 360x600 for a Story Ad brand tile, 160x160 for collection product tiles and 1080x2340 for an on-demand geofilter. It draws Snapchat's recommended 150 pixel top and bottom clear zone over the preview and checks the finished file against the format's weight limit, including the 300 KB PNG ceiling on geofilters. The resize runs on canvas in your browser, so nothing is uploaded.",
   useCases: [

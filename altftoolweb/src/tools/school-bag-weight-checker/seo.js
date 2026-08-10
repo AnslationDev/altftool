@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Bag Weight Checker: 10% Rule and Class Limits",
+  metaDescription:
+    "Checks a loaded bag against the 10% of body weight rule and the class-wise 1.6–5.0 kg limits in India's School Bag Policy 2020, and what to remove.",
+  steps: [
+    "Enter the child's weight in kg, the loaded bag weight in kg, and pick the class group from Pre-primary to Class XI-XII.",
+    "Compare the bag as a share of body weight against the 10% ceiling and the School Bag Policy 2020 band for that class.",
+    "Read the binding limit, then the What to take out table counting textbooks, notebooks or the 750 ml water bottle to remove.",
+  ],
   intro:
     "The School Bag Weight Checker compares a loaded school bag against two published rules at once: the 10% of body weight ceiling stated in India's School Bag Policy 2020 and echoed by occupational therapy guidance, and the policy's class-wise kilogram limits, which run from 1.6-2.2 kg for Class I-II up to 3.5-5.0 kg for Class XI-XII. It reports the stricter of the two as the binding limit and, when the bag is over, converts the excess into how many textbooks, notebooks or water bottles would need to come out.",
   useCases: [

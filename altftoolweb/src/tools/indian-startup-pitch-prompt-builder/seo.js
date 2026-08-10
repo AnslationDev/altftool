@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Startup Pitch Prompt Builder with Runway Maths",
+  metaDescription:
+    "Turns stage, sector, cash and burn into an AI prompt carrying your runway, implied pre- and post-money and a second-by-second slide budget.",
+  steps: [
+    "Set Startup name, What you do, in one sentence, Stage, Sector, Audience and Pitch length (minutes), then choose What to write — Full pitch deck, Monthly investor update, Demo day script or Cold intro email to a VC.",
+    "Enter Cash in bank (INR), Net monthly burn (INR), Raise amount (INR) and Equity offered (%) so the runway and valuation arithmetic has your real figures.",
+    "Current runway appears with Implied post-money, Implied pre-money and Runway after the round, a Slide-by-slide time budget in seconds, and the Generated prompt; Copy prompt takes it.",
+  ],
   intro:
     "The Indian Startup Pitch Prompt Builder turns your stage, sector and round details into an AI prompt that already contains your runway, implied pre- and post-money valuation and a second-by-second slide budget. Runway is cash divided by net monthly burn; post-money is round size divided by the equity fraction sold, and pre-money is post-money minus the round. It is for founders raising from Indian angels, accelerators and early-stage funds who want a deck draft that cannot quietly invent traction numbers.",
   useCases: [

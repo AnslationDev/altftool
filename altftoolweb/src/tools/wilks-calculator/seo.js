@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wilks Score Calculator with DOTS and IPF GL Points",
+  metaDescription:
+    "Scores a powerlifting total against bodyweight with the 1994 Wilks coefficient, plus DOTS and IPF GL, and the total needed at any other bodyweight.",
+  steps: [
+    "Set units to kilograms or pounds, pick the men or women coefficient set, and enter your bodyweight.",
+    "Enter squat, bench press and deadlift, or switch Enter lifts as to One total and type the total straight in.",
+    "Read the Wilks score with its coefficient, the DOTS and IPF GL points, and the total needed at your compare bodyweight.",
+  ],
   intro:
     "The Wilks Calculator turns a powerlifting total into a bodyweight-adjusted score so lifters in different weight classes can be compared. It uses Robert Wilks' 1994 formula — coefficient = 500 / (a + bx + cx² + dx³ + ex⁴ + fx⁵) with x as bodyweight in kilograms — and shows DOTS and IPF GL Points alongside it, because most federations moved to those after 2019. Enter squat, bench and deadlift, or a total straight in, and it also tells you what total you would need at a different bodyweight for the same score.",
   useCases: [

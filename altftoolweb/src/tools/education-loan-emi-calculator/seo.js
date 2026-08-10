@@ -1,4 +1,12 @@
 const seo = {
+  title: "Education Loan EMI Calculator with Moratorium Interest",
+  metaDescription:
+    "Model the moratorium and the EMI phase: simple interest through the course plus grace, capitalised into the principal, or serviced monthly instead.",
+  steps: [
+    "Enter Loan amount (INR), Interest rate (% per year), Course duration (years), Grace period after course (months) and Repayment tenure (years).",
+    "Set During the moratorium to either \"Pay nothing — interest is capitalised\" or \"Pay simple interest every month\", adding a Rate concession for servicing (% points) if your bank offers one.",
+    "Read the EMI after the moratorium headline, the interest capitalised into the principal, and the two-phase Repayment timeline, then press Copy result.",
+  ],
   intro:
     "This Education Loan EMI Calculator models the two phases of a student loan: the moratorium, where banks charge simple interest through the course plus a grace period of usually six months to a year, and the repayment phase, where EMIs run on a reducing balance. It shows how much interest is capitalised into your principal if you pay nothing while studying, and how the EMI changes if you service that interest monthly instead. Useful for students and co-applicants comparing offers before signing a sanction letter.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in Japan: IDP Rules, Alcohol, Speed Limits",
+  metaDescription:
+    "Japan accepts only 1949 Geneva IDPs. Check the document your licence needs, the 0.15 mg/L breath threshold, and 100-120 km/h expressway limits.",
+  steps: [
+    "Choose \"Where your licence was issued\" — a country issuing a 1949 Geneva Convention IDP, or Switzerland, Germany, France, Belgium, Monaco, Slovenia or Taiwan, which need a JAF translation instead — then enter your age and \"Length of stay (days)\".",
+    "Read the threshold panel and its rows for \"Document you must carry\", whether it is accepted for a visitor, how long it stays valid, which side of the road, minimum driving age and emergency numbers.",
+    "Test a night out in the Widmark section with Number of drinks, Size of each drink (ml), Strength (% ABV), Body weight (kg) and Hours since the first drink against the 0.15 mg per litre breath threshold, check \"Who is liable for drink-driving in Japan\" and the Speed limits table, then press Copy result.",
+  ],
   intro:
     "This explainer covers what a visitor needs before driving in Japan: you drive on the left in a right-hand-drive car, signs are in km/h, and the country recognises only the 1949 Geneva Convention International Driving Permit — a 1968 Vienna permit is not valid here. It applies the Road Traffic Act drink-driving threshold of 0.15 mg of alcohol per litre of breath, about 0.03 g per 100 ml of blood, and shows the separate criminal liability the law places on passengers and on whoever supplied the car or the drink.",
   useCases: [

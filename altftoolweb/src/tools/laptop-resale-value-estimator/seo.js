@@ -1,4 +1,12 @@
 const seo = {
+  title: "Laptop Resale Value Estimator: Price a Used Laptop",
+  metaDescription:
+    "Estimate a used laptop's worth from age, condition, battery health, paperwork and warranty. Shows an asking range and the lower trade-in figure.",
+  steps: [
+    "Enter \"Original purchase price (INR)\" and \"Age (months, 0-240)\", then choose a Condition grade from \"Like new — no marks, all accessories\" down to \"Faulty — sold for spares or repair\".",
+    "Add \"Battery health (%)\", \"Transferable warranty left (months)\" and any \"Known repair cost to deduct (INR)\", and tick \"Original charger included\", \"Original invoice and box available\" and \"Still receives operating-system and security updates\" where they apply.",
+    "Read \"Estimated private-sale value\" with its ask-between range and the \"Trade-in / buy-back offer to expect\" row, scan the \"What each factor did to the price\" table, then press \"Copy result\" or Reset.",
+  ],
   intro:
     "A laptop resale value estimator projects what a used machine is worth today by applying declining-balance depreciation to its original price, then adjusting for condition, battery health, accessories, paperwork and remaining warranty. The model uses the pattern consumer electronics actually follow: a steep first year of roughly 35-40% loss, then about 20-25% a year after that. It reports a private-sale point estimate, a realistic asking range and the lower figure a trade-in programme is likely to offer.",
   useCases: [

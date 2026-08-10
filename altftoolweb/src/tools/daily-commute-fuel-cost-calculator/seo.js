@@ -1,4 +1,12 @@
 const seo = {
+  title: "Daily Commute Fuel Cost Calculator (Toll + Parking)",
+  metaDescription:
+    "Turn one-way km, km/l and pump price into monthly and yearly commute cost — toll and parking per day, 4.33 weeks a month, all-in cost per km.",
+  steps: [
+    "Enter \"One-way distance (km)\", \"Commute days per week\", \"Vehicle mileage (km per litre)\" and \"Fuel price (per litre)\", plus \"Toll per commute day\" and \"Parking per commute day\".",
+    "Leave \"I drive back the same way (round trip)\" ticked to count the return leg; commute days per week are converted at 52/12 = 4.33 weeks a month, so a five-day week becomes 21.67 days.",
+    "\"Commute cost per month\" heads the result, with Fuel burnt per month, Toll + parking per month, All-in cost per km and Total cost per year beneath, and \"What if mileage improved?\" prices a different km/l. \"Copy result\" copies the summary.",
+  ],
   intro:
     "This calculator converts a daily office commute into monthly and yearly running cost using the basic fuel identity: litres = distance ÷ mileage in km/l, and fuel cost = litres × pump price. It adds toll and parking paid per commute day, and converts weekly commute days to monthly using the calendar average of 4.33 weeks per month rather than a rounded four. The result is the all-in cost per km, per day, per month and per year for anyone deciding between driving, carpooling, public transport or a change of vehicle.",
   useCases: [

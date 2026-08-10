@@ -1,4 +1,12 @@
 const seo = {
+  title: "Traffic Challan Tracker: Pending, Overdue, Payoff Plan",
+  metaDescription:
+    "Log e-challans privately in your browser: each offence shows its Motor Vehicles Act section and central penalty, with overdue flags and months to clear.",
+  steps: [
+    "Set Check against date, the Payment window (days) your state uses, and a Monthly budget (INR).",
+    "Press Add challan for each fine, pick the Offence — the option shows its Motor Vehicles Act section — and enter Amount on the challan (INR) and Issued on.",
+    "Read the Pending total, how many sit past the payment window, and Months to clear at your budget above the Payment queue table, then press Copy result.",
+  ],
   intro:
     "This tracker keeps a private ledger of traffic fines: pick the offence, enter the amount printed on the challan and the date it was issued, and it returns what is still pending, what has slipped past your state's payment window, and how many months a fixed monthly budget needs to clear the balance. The offence list carries the central penalty and the section from the Motor Vehicles (Amendment) Act, 2019, so you can see when a challan is larger than the statutory figure. Everything is stored in your browser only.",
   useCases: [

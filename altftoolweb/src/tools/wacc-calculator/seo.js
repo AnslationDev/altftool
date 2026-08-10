@@ -1,4 +1,12 @@
 const seo = {
+  title: "WACC Calculator: Equity and After-Tax Debt Weights",
+  metaDescription:
+    "Work out WACC from the market values of equity and debt with (E/V)Re + (D/V)Rd(1-t), and see both weights, after-tax debt cost and each contribution.",
+  steps: [
+    "Under Inputs, enter Market value of equity, Market value of debt, Cost of equity (%), Pre-tax cost of debt (%) and Marginal tax rate (%), or tap the 80/20 structure example to load 800,000 / 200,000 / 12 / 7 / 25.",
+    "The Result panel evaluates (E/V) x Re + (D/V) x Rd x (1 - t) as you type and prints the headline figure to three decimals — 10.650% WACC on those defaults.",
+    "Read the Equity weight, Debt weight, After-tax debt cost, Equity contribution and Debt contribution cards, then use Copy or Download to save wacc-calculator.txt.",
+  ],
   intro:
     "The WACC Calculator computes a company's weighted average cost of capital with the standard formula WACC = (E/V) × Re + (D/V) × Rd × (1 − t), weighting the cost of equity and the after-tax cost of debt by their market values. It is for anyone building a DCF, setting a hurdle rate, or checking whether a project clears the cost of the money funding it. Along with the headline percentage it breaks out the equity and debt weights, the after-tax debt cost, and how many percentage points each side contributes.",
   useCases: [

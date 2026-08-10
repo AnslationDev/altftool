@@ -1,4 +1,7 @@
 const seo = {
+  title: "Density Calculator: g/cm3, kg/m3 and Sinks or Floats",
+  metaDescription:
+    "Divide mass in grams by volume in cm3 or mL for density to three decimals, the kg/m3 equivalent, and whether the sample sinks or floats.",
   intro:
     "The Density Calculator divides mass by volume (ρ = m / V) to return density in g/cm³, converts the same figure to kg/m³, and tells you whether the material sinks or floats in water. Enter mass in grams and volume in cubic centimetres (millilitres) and you get the density to three decimal places plus the SI equivalent. It is built for students working physics and chemistry problems, makers checking a material sample, and anyone who has a weight and a displaced-water volume and needs the number in between.",
   useCases: [

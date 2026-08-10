@@ -1,4 +1,12 @@
 const seo = {
+  title: "Narration Time Estimator: Booth Hours, Not Read Time",
+  metaDescription:
+    "Turn word count into real booth time: a clean read at your wpm plus punch-and-roll retakes, vocal rest per hour and setup for each session.",
+  steps: [
+    "Under Script, enter Word count, Read pace (words per minute), Errors per 100 words — or tap a preset from Familiar copy, own script through to Cold read, no prep — and Seconds lost per retake.",
+    "Under Session shape, set Vocal rest (minutes per hour), Setup and warm-up per session (minutes), Maximum session length (minutes) and Sessions per day, capped at 4.",
+    "Total booth time appears with the session and day count, broken out as Clean read time, Retakes (count x seconds), Time actually voicing, Vocal rest, Setup across all sessions and Booth minutes per finished minute; press Copy result.",
+  ],
   intro:
     "A narration session estimator works out how long a script really occupies the booth, not just how long a clean read takes. It adds three things the raw read time hides: punch-and-roll retakes, costed as errors per hundred words multiplied by the seconds each correction takes; vocal rest, allowed as minutes per hour of voicing; and setup, which happens once per session rather than once per script. For voice artists quoting studio time, producers booking rooms and authors budgeting a self-narrated project.",
   useCases: [

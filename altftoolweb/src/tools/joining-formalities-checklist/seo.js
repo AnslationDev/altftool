@@ -1,4 +1,12 @@
 const seo = {
+  title: "Joining Formalities Checklist: Medical to Day One",
+  metaDescription:
+    "Track medical, police verification, attestation, employer exit and day-one items. Anything slower than your days to joining is flagged to start today.",
+  steps: [
+    "Enter your joining / reporting date so the checklist can count the days you have left.",
+    "Tick items across the five phases — Medical examination, Police / character verification, Attestation & paperwork, Current employer exit and Day-one kit — and untick \"Applies to me\" on conditional rows such as the bond or NOC that do not apply.",
+    "Read the Completion percentage, formalities done and per-phase counts, plus each red \"Start today\" alert naming an item whose typical lead time exceeds your remaining days, then press Copy status.",
+  ],
   intro:
     "This checklist tracks the formalities between an appointment letter and the first day on a government job — pre-joining medical examination, police/character verification via the attestation form, bond and paperwork, current-employer exit and the day-one document kit. Each item carries a typical lead time, so anything that takes longer than the days remaining to your joining date is flagged to start immediately. Police verification and notice periods, the two slowest items, get the visibility they deserve.",
   useCases: [

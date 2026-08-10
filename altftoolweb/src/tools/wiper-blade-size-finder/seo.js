@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wiper Blade Size Finder: mm to Inch Stocked Sizes",
+  metaDescription:
+    "Convert a measured blade into the nearest stocked size in mm and inches, and identify hook, push button, pinch tab or side pin wiper arms.",
+  steps: [
+    "Lift the arm and measure the rubber squeegee tip to tip, then type that into \"Measured blade length\" and set \"Measured in\" to Millimetres or Inches.",
+    "Choose the \"Arm fitting type\" — Hook / J-hook, Push button (16 mm or 19 mm), Pinch tab / top lock, Side pin / bayonet or Claw / side lock, each with a note describing the visible feature that identifies it — and enter \"Driver side blade (mm)\" and \"Passenger side blade (mm)\" to compare the pair.",
+    "\"Buy this size\" gives the millimetre size and the inch size it is sold as, with rows for Nearest metric size, Nearest imperial size, whether it is an Exact standard size or between sizes, and the driver/passenger difference; \"Copy result\" copies them.",
+  ],
   intro:
     "The Wiper Blade Size Finder converts a blade you have physically measured, tip to tip along the rubber, into the nearest length actually stocked — giving both the metric and the imperial size, since the two ladders do not coincide (22 inches is 558.8 mm, which falls between the 550 mm and 575 mm sizes). It also lists the arm attachment types and the visual feature that identifies each one. Use it when replacing blades yourself rather than relying on a lookup that may not cover your exact variant or facelift.",
   useCases: [

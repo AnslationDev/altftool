@@ -1,4 +1,12 @@
 const seo = {
+  title: "Frame Rate Converter: 23.976 to 120 fps in Browser",
+  metaDescription:
+    "Convert a video to 23.976, 24, 25, 29.97, 30, 48, 50, 59.94, 60 or 120 fps with FFmpeg.wasm - H.264 MP4 at CRF 18, nothing uploaded.",
+  steps: [
+    "Press Select Video or drop a file on the upload area; the page reports its Frame Rate, Duration and Resolution.",
+    "Choose a Target Frame Rate from the ten options between 23.976 and 120 fps, then press Convert to N fps.",
+    "Download converted_<fps>fps.mp4, re-encoded with libx264 at CRF 18 in yuv420p.",
+  ],
   intro:
     "Frame Rate Converter re-encodes a video to a different frame rate in the browser using FFmpeg compiled to WebAssembly, applying the `fps` filter and writing an H.264 MP4 at CRF 18. Ten standard targets are offered — 23.976, 24, 25, 29.97, 30, 48, 50, 59.94, 60 and 120 fps — and the source rate is measured first by timing ten decoded frames, so you can see what you are converting from. It suits editors and creators who need a clip to match a timeline's rate without opening an NLE or uploading footage anywhere.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "CPR Metronome: 100-120 bpm with 30:2 Cycle Timing",
+  metaDescription:
+    "Paces compressions at the AHA/ERC 100-120 per minute, times 30:2 and 15:2 cycles, shows compression fraction and the 2-minute swap. Training aid only.",
+  steps: [
+    "Drag the \"Compression rate\" slider or tap the 100 /min, 110 /min or 120 /min preset, then choose who you are practising on — Adult, Child or Infant, one or two rescuers.",
+    "Enter \"Pause for two breaths (seconds)\" and \"Swap rescuer every (minutes)\", tick Audible click, then press Start.",
+    "Follow the beat circle's compression count, read the Chest compression fraction row against the 60% target, and press Copy result to save the pacing settings.",
+  ],
   intro:
     "The CPR Compression Rate Metronome paces chest compressions at the 100 to 120 per minute specified in the American Heart Association 2020 and European Resuscitation Council 2021 guidelines, with an audible click, a visual beat and a running compression count. It also times the full cycle — 30:2 for adults, 15:2 for two-rescuer paediatric CPR — shows the resulting chest compression fraction against the 60% target, and counts down to the two-minute rescuer swap. It is a practice aid for training, not an emergency tool.",
   useCases: [

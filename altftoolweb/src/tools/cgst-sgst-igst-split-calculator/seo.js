@@ -1,4 +1,12 @@
 const seo = {
+  title: "CGST SGST IGST Split Calculator with GSTIN State Code",
+  metaDescription:
+    "Same state code both sides splits tax into CGST plus SGST or UTGST; different codes mean IGST. SEZ and export supplies stay inter-state under s.7(5).",
+  steps: [
+    "Pick the Supplier state (location of supplier) and the Place of supply state — or paste a GSTIN under 'Read the state code from a GSTIN', choose whether it is the supplier or the place of supply, and press 'Apply' to take its first two digits — then enter the Taxable value (INR), GST rate (%) and any compensation cess.",
+    "Tick 'Supply to or by an SEZ developer or unit', 'Export out of India' or the letter of undertaking box where they apply: section 7(5) makes those supplies inter-state whatever the two state codes say.",
+    "Read the invoice lines — CGST and SGST/UTGST at half the rate when the codes match, or the full rate as IGST when they differ — with any cess, total tax and invoice total, then press 'Copy result'.",
+  ],
   intro:
     "This calculator applies the test in sections 7 and 8 of the IGST Act, 2017: when the location of the supplier and the place of supply fall in the same state code the supply is intra-state and tax splits equally into CGST and SGST or UTGST; when the codes differ it is inter-state and the whole amount is IGST. Section 7(5) overrides the codes for SEZ and export supplies, which are always inter-state and zero-rated under section 16. Enter the two state codes, the taxable value and the rate to get the invoice lines.",
   useCases: [

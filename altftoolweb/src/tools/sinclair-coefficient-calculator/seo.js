@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sinclair Calculator: IWF Weightlifting Total Ranking",
+  metaDescription:
+    "Enter bodyweight, snatch and clean & jerk for the IWF Sinclair total, using the published 2021-2024 Paris or 2017-2020 Tokyo constants.",
+  steps: [
+    "Choose the Coefficient set, Men or Women, and the Olympic cycle: 2021-2024 Paris or 2017-2020 Tokyo.",
+    "Set Units to Kilograms or Pounds, then enter Bodyweight, Snatch and Clean & jerk.",
+    "Read the Sinclair total with the coefficient and kilo total behind it, then press Copy result.",
+  ],
   intro:
     "The Sinclair coefficient converts an Olympic weightlifting total into the total the same athlete would theoretically produce at the heaviest world-record bodyweight, so every category can be ranked on one list. The IWF formula is 10^(A × (log₁₀(bodyweight ÷ b))²), applied only below the reference bodyweight b — at or above b the coefficient is exactly 1.00. This calculator carries the published A and b constants for the 2021–2024 and 2017–2020 Olympic cycles and multiplies them by your snatch plus clean & jerk.",
   useCases: [

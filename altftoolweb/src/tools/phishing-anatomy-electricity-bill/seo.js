@@ -1,4 +1,12 @@
 const seo = {
+  title: "Electricity Disconnection SMS Scam: Paste and Score",
+  metaDescription:
+    "Why the power-cut-tonight SMS has no consumer number, and where the AnyDesk and UPI-PIN steps lead. Paste a message to score it on 13 markers locally.",
+  steps: [
+    "Paste the SMS, email or WhatsApp message into the scanner; defanged forms like bad[.]top and hxxp:// are read as written.",
+    "Read the Risk score with Points from the wording and Points from the links.",
+    "Check Markers matched and Strongest link problem, then press Copy result.",
+  ],
   intro:
     "This explainer dissects the electricity disconnection scam — the evening SMS saying your power will be cut at a named hour because \"last month's bill was not updated\" — and shows why the missing consumer number is the giveaway. It follows the funnel to its real endgame: a call to a personal mobile, a screen-sharing app installed to \"update the bill\", and a small test payment that asks for your UPI PIN. A scanner scores anything you paste against 13 weighted markers and inspects each link's registrable domain.",
   useCases: [

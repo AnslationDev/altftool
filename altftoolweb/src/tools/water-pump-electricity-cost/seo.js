@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Pump Electricity Cost per Month and 1000 Litres",
+  metaDescription:
+    "Costs a 1 HP pump at its real 1.04 kW draw, not 746 W. Runtime comes from tank litres and flow rate; shows cost per month and per 1000 litres.",
+  steps: [
+    "Enter the pump in the Pump rating (HP) and Motor efficiency (%) fields — they open at 1 and 72, with a hint that small single-phase motors run 70-78% and a rewound one can drop below 60%.",
+    "Describe the job in Flow rate (litres per minute), Total head (metres), Tank capacity (litres), Tank fills per day, Days used per month and Electricity tariff (₹ per unit); every figure recomputes as you type, with no calculate button.",
+    "Read Cost per month at the top, then the breakdown rows — Power drawn from the meter in W and amps at 230 V, Time to fill the tank once, Cost per 1000 litres pumped and Wire-to-water efficiency — plus the Same job, different pump rating table. Copy result puts the summary on the clipboard; Reset restores the defaults.",
+  ],
   intro:
     "This calculator works out what a domestic water pump costs to run by separating two things people usually confuse: the horsepower on the nameplate is shaft output, while the meter records motor input, which is higher by the motor's efficiency. A 1 HP pump at 72% motor efficiency draws about 1.04 kW, not 0.75 kW. Runtime is derived from the physical job — tank litres divided by flow rate — and the pump equation (density × 9.81 × flow × head) checks how much of that electricity actually becomes lifted water.",
   useCases: [

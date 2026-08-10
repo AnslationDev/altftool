@@ -1,4 +1,12 @@
 const seo = {
+  title: "Diabetic Foot Check: 12-Point Daily Inspection List",
+  metaDescription:
+    "A twelve-point daily foot check that separates same-day red flags from appointment findings, and gives the NICE NG19 review interval by risk band.",
+  steps: [
+    "Set Date of this check, or press Use today, then work down the Daily inspection list and mark each of the twelve items Fine or Problem — tapping a selected answer again clears it.",
+    "Tick anything under Your standing risk factors — Loss of protective sensation (neuropathy), Poor circulation / non-critical limb ischaemia, Previous foot ulcer, On dialysis or other renal replacement therapy and the rest — and describe what you saw in the four Foot map notes boxes for each foot's top and sole.",
+    "Check completed shows the percentage of areas inspected; a Contact your diabetes or podiatry team today alert lists any same-day findings, and the rows give Risk category today, Recommended review frequency, Next professional review due and Next daily self-check. Copy result copies the summary; Reset clears the checklist.",
+  ],
   intro:
     "The Diabetic Foot Check Reminder turns the daily foot inspection people with diabetes are advised to do into a scored twelve-point checklist, separating findings that need attention the same day from those that can wait for an appointment. It also applies the NICE NG19 foot risk stratification — low, moderate or high risk — to your recorded risk factors and returns the matching professional review interval and next due date. Free-text zone notes let you record exactly where on each foot you saw something.",
   useCases: [

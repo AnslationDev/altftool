@@ -1,4 +1,12 @@
 const seo = {
+  title: "EPF Maturity Calculator with EPS Split and Year Table",
+  metaDescription:
+    "Projects your PF corpus month by month with 8.33% of wages up to Rs 15,000 diverted to EPS, yearly salary hikes and an age-by-age balance table.",
+  steps: [
+    "Enter your Current age, Retirement age, Monthly basic + DA, Your contribution rate (12% is statutory, higher for VPF), Expected annual salary hike (%), EPF interest rate (%) and any Existing EPF balance.",
+    "Tick the statutory wage ceiling box if your employer restricts PF to Rs 15,000; 8.33% of wages up to that ceiling is diverted to the Employees' Pension Scheme and interest accrues on the monthly running balance, credited at year end.",
+    "Read the EPF corpus at retirement with your contributions, employer EPF contributions, interest earned and amount diverted to EPS, scan the Year-by-year growth table of age, contributions, interest and closing balance, then press 'Copy result'.",
+  ],
   "intro": "EPF Maturity Calculator projects the Employees' Provident Fund corpus you will have at retirement from your current basic plus DA, contribution rate, expected annual hikes and the interest rate EPFO declares. It adds your share and the employer's share month by month, diverts 8.33% of wages up to Rs 15,000 to the Employees' Pension Scheme, and compounds interest on the monthly running balance the way EPFO credits it at year end. A year-by-year table shows contributions, interest and closing balance at every age.",
   "useCases": [
     "See what your PF alone will be worth at 58 before deciding how much extra to invest elsewhere.",

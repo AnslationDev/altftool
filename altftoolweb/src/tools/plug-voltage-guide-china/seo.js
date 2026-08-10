@@ -1,4 +1,12 @@
 const seo = {
+  title: "China Plug and Voltage Guide: 220V, Type A, C, I",
+  metaDescription:
+    "Check whether your plug fits China's type A, C and I sockets at 220 V 50 Hz, whether you need a converter, and how Hong Kong differs.",
+  steps: [
+    "Pick your plug under 'Plug on your device', then fill in Label minimum voltage (V), Label maximum voltage (V), Label frequency and Rated power (W) — or tap a preset such as 'Laptop charger' or 'UK 230 V kettle'.",
+    "The 'Verdict for mainland China' panel says whether a travel adapter is needed, which of the type A, C and I sockets your plug enters, and whether a voltage converter is required against the 220 V, 50 Hz supply.",
+    "Read the current drawn at 220 V, the delivered power for a resistive appliance and whether it fits the 10 A wall socket or needs the 16 A outlet, then press 'Copy result' to copy the verdict and action notes.",
+  ],
   intro:
     "This guide decides whether your device needs a plug adapter, a voltage converter, or nothing at all in mainland China. China supplies 220 V at 50 Hz and the IEC lists three plug types in use — type A (two flat pins), type C (Europlug) and the earthed GB 2099 type I — with the everyday wall outlet being a combination faceplate that takes both A and I. Enter your plug and the voltage range on the label to get the verdict, the current drawn, and a reminder that Hong Kong and Macau run British type G sockets instead.",
   useCases: [

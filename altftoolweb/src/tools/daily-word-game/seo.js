@@ -1,4 +1,12 @@
 const seo = {
+  title: "Daily Word Game: Five-Letter Puzzle in Six Guesses",
+  metaDescription:
+    "One five-letter answer a day, six guesses, green and amber letter scoring. Practice rounds never touch your streak, and hard mode enforces clues.",
+  steps: [
+    "Pick Daily or Practice at the top of the board — Daily shows \"Puzzle #N\" and one shared answer, Practice deals unlimited rounds — and tick \"Hard mode\" before your first guess, since it can only be switched between rounds.",
+    "Type a five-letter word on the on-screen keyboard or your own keyboard and press Enter; tiles turn green for a right letter in the right spot and amber for a right letter elsewhere, across six rows.",
+    "When the round ends the card names the answer — press \"Share result\" to copy the emoji grid, or \"Play again\" in practice — while the Daily stats panel updates Played, Win %, Streak, Max streak and Guess distribution.",
+  ],
   intro:
     "Daily Word Game is a five-letter word puzzle with six attempts: each guess is scored letter by letter, green for the right letter in the right spot and amber for a letter that is in the word but somewhere else. One answer is set per calendar day from a 608-word list, and a practice mode lets you keep playing without touching your streak. There is an optional hard mode that forces every revealed clue into your next guess, plus a copyable emoji grid so you can share the result without spoiling the answer.",
   useCases: [

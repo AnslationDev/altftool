@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reward Points Value Calculator: Rupees per Point, GST",
+  metaDescription:
+    "Value a point as rupees received ÷ points surrendered, apply the spend block and cap, subtract the fee plus 18% GST, and rank cards by net return.",
+  steps: [
+    "Enter \"Spend routed through the card each month (₹)\", then \"Points surrendered in a redemption\" and \"Rupee value received for them\" — the page reports what that redemption makes one point worth.",
+    "For each card set Card name, a Spend block of Per ₹100, ₹150 or ₹200 spent, \"Points per block\", \"Value of 1 point (₹)\", \"Annual fee (₹)\", \"Monthly points cap (0 = none)\", \"Welcome benefit value (₹)\" and \"Milestone benefits a year (₹)\"; \"Add another card\" adds a rival to compare.",
+    "The winner appears as \"Best card\" with net value a year, backed by Points earned a year, \"Annual fee with GST\", Effective reward rate, Net return after the fee and \"Spend needed to cover the fee\", plus a \"Card by card\" table flagging points lost to the cap. \"Copy result\" copies it.",
+  ],
   intro:
     "A reward point has no fixed worth — it is worth the rupees your own redemption route pays, which this calculator derives as rupees received divided by points surrendered. From that it works out points earned in whole spend blocks, applies any monthly cap, values the year's earnings, and subtracts the annual fee grossed up by the 18% GST charged on card fees. The result is an effective reward rate and a net rupee figure you can rank two or more cards on, plus the monthly spend at which each card repays its own fee.",
   useCases: [

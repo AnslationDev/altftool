@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tamil Nadu Professional Tax Calculator (Half-Yearly)",
+  metaDescription:
+    "Greater Chennai Corporation slabs: nil up to Rs 21,000 half-yearly, rising to Rs 1,250, Rs 2,500 a year. Enter a monthly salary or half-yearly income.",
+  steps: [
+    "Type the figure into \"Income (INR)\" and set \"The figure above is\" to Monthly salary or Half-yearly income; a monthly salary is multiplied by the six months in a Tamil Nadu half-year.",
+    "The half-yearly figure is matched to the Greater Chennai Corporation schedule — nil up to Rs 21,000, then Rs 135, Rs 315, Rs 690, Rs 1,025, and Rs 1,250 above Rs 75,000 — and the matching row is highlighted in the \"Half-yearly slab table\".",
+    "\"Professional tax per half-year\" shows the amount with the Applicable slab, the full-year total against the Rs 2,500 Tamil Nadu maximum, and the 1 April to 30 September and 1 October to 31 March instalments with their pay-by dates. \"Copy result\" copies it.",
+  ],
   intro:
     "This calculator converts a Tamil Nadu salary into the half-yearly professional tax the local body charges, using the Greater Chennai Corporation slab schedule made under the Tamil Nadu Municipal Laws (Second Amendment) Act 1998. Tamil Nadu is unusual in assessing professional tax on six months of income rather than on monthly salary, so the tool multiplies a monthly figure by six before applying the bands. It suits payroll staff and employees reconciling a twice-a-year deduction on a Chennai or Coimbatore payslip.",
   useCases: [

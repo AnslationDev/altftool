@@ -1,4 +1,12 @@
 const seo = {
+  title: "Print Bleed Calculator: Trim, Safe Area, Slug in mm",
+  metaDescription:
+    "Enter a trim size and get artboard, bleed, trim, safe area and slug in mm, inches, points and pixels at your DPI. 3 mm ISO and 1/8 in US presets.",
+  steps: [
+    "Pick from \"Start from a standard size\" — A4 (210 × 297 mm), DL flyer (99 × 210 mm), US Letter (8.5 × 11 in), Business card EU (85 × 55 mm) — or set \"Units for width and height\" and type Trim width and Trim height yourself.",
+    "Choose a \"Bleed standard\" of 3 mm (ISO standard) or 1/8 in / 3.175 mm (US standard), then set \"Safe margin inside trim (mm)\", \"Slug outside bleed (mm)\" and \"Output resolution (DPI)\".",
+    "\"Document size to set up\" gives the artboard in mm and pixels, and the table below lists Slug, Document / artboard, Trim and Safe area in mm, inches, points and pixels, with trim and safe guide offsets from the artboard edge. \"Copy setup\" copies the figures.",
+  ],
   intro:
     "The Print Bleed Calculator turns a finished trim size into every box a press-ready document needs: artboard, bleed, trim, safe area and slug, given in millimetres, inches, PostScript points and pixels at your chosen resolution. It applies the rules directly — document size = trim + 2 × bleed, safe area = trim − 2 × safe margin, and pixels = inches × DPI, with 1 inch fixed at exactly 25.4 mm. Presets cover the ISO 3 mm and US 1/8 inch bleed standards and the common A-series, DL, Letter and business-card trim sizes.",
   useCases: [

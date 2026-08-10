@@ -1,4 +1,12 @@
 const seo = {
+  title: "Alt Text Policy Generator with WCAG 2.2 Rule Per Type",
+  metaDescription:
+    "Write a team alt text policy: a rule, sentence pattern and example per image type, each tied to a WCAG criterion, plus the monthly authoring hours.",
+  steps: [
+    "Fill 'Organisation or team' and 'Who owns the policy', then choose a Conformance target (WCAG 2.2 Level A, AA or AAA) and a Review cadence (Every sprint, Monthly, Quarterly or Annually).",
+    "Tick the image kinds under 'Kinds of image to cover' — informative photographs, decorative images, icons and linked images, charts, infographics, images that contain text, CAPTCHA and more — and the surfaces under 'Where the policy applies', then set 'House character limit', 'Images published a month' and 'Seconds it takes you to write one'.",
+    "Read 'Rules in the policy' with its coverage percentage, plus 'Success criteria referenced', 'Estimated authoring effort' in hours a month and 'Image types left uncovered'. 'Copy result' copies the whole document shown under 'The policy as markdown'.",
+  ],
   intro:
     "This generator produces a written alt text policy: one rule for each kind of image a team publishes, the WCAG success criterion behind it, a sentence pattern, a worked example and the mistake to avoid. The rules implement SC 1.1.1 Non-text Content at Level A and, at Level AA, SC 1.4.5 Images of Text — the level that EN 301 549 in Europe and Section 508 in the United States both point at. Aimed at content, design and engineering teams who keep arguing about alt text case by case instead of writing the rule down once.",
   useCases: [

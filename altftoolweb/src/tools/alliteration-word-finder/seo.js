@@ -1,4 +1,12 @@
 const seo = {
+  title: "Alliteration Finder: Match by Sound, Not by Letter",
+  metaDescription:
+    "Type a word to get adjectives, nouns, verbs and adverbs sharing its onset — ph as /f/, kn as /n/, soft c as /s/ — plus ready-made sample lines.",
+  steps: [
+    "Type into \"Word to match\" (or press one of the example chips) and tick which of Adjectives, Nouns, Verbs and Adverbs to include under \"Word types to search\".",
+    "Leave the finder on first-sound matching, or tick \"Strict cluster match\" to demand the identical onset cluster — street with stream, not with sea.",
+    "Read \"Matching words found\" with its Onset sound, Onset cluster and Match mode rows, browse the word chips grouped by part of speech and the Sample lines panel (New lines redraws them), then press Copy list.",
+  ],
   intro:
     "This finder groups words by the sound a word starts with rather than the letter it is spelled with, which is what alliteration actually repeats. It reads the onset using English spelling rules — ph as /f/, kn and gn as /n/, wr as /r/, soft c as /s/, soft g as /j/, qu as /kw/ — so phone matches fire, knight matches night, and city never matches cold. Poets, copywriters, teachers and anyone naming a brand or a headline can pull matching adjectives, nouns, verbs and adverbs, then see sample lines built from them.",
   useCases: [

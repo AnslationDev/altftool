@@ -1,4 +1,12 @@
 const seo = {
+  title: "Plastic Reduction Tracker: Grams, CO2e and Rupees",
+  metaDescription:
+    "Count the single-use items you refuse each week and see grams of plastic, CO2e at 6 kg per kg of virgin plastic, and rupees saved over a year.",
+  steps: [
+    "Under \"Items you avoid in a typical week\", count the 500 ml PET water bottles, carry bags, straws, cutlery and takeaway containers you refuse, and set Weeks you have kept this up.",
+    "Hit Clear all counts to start from an empty log; every field shows its own gram weight and the rupees it saves, so you can weight a real week honestly.",
+    "Read Plastic avoided so far in kg, CO2e avoided per year, Money saved per year and the ranked \"Where the weight comes from\" table; Copy result exports it.",
+  ],
   intro:
     "The Plastic Reduction Tracker converts the single-use items you refuse each week into grams of plastic, kilograms of CO2e and money saved, then projects the habit across a full year. It uses average item masses — a 500 ml PET bottle is about 9.9 g, a carry bag about 5.5 g — and a cradle-to-grave factor of roughly 6 kg CO2e per kg of virgin plastic covering both production and end-of-life. It is built for anyone running a personal, family or office plastic-free challenge who wants a number instead of a vague feeling.",
   useCases: [

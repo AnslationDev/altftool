@@ -1,4 +1,12 @@
 const seo = {
+  title: "UI Spacing Checker: Tailwind Classes on the 4px Grid",
+  metaDescription:
+    "Paste JSX, HTML or CSS and every p, m and gap class converts at 4px a step, with each value listed by pixel size, line and on or off scale.",
+  steps: [
+    "Paste your JSX, HTML or CSS into the 'Code snippet' box — the sample it loads with mixes p-5, mt-3 and an inline marginTop of 18px.",
+    "Tailwind p, m, gap, space-x/y and directional classes such as pt and px are multiplied by 4 to get pixels, and Npx values inside margin, padding and gap declarations are read as written.",
+    "The Values, Off scale and Unique sizes counters update live, and the Spacing inventory lists every value with its pixel size, line number and whether it is on the 4px scale or off it.",
+  ],
   intro:
     "The UI Spacing Consistency Checker scans a pasted JSX, HTML or CSS snippet, converts every Tailwind spacing utility to pixels using Tailwind's default step of 1 unit = 4px, and flags any value that is not a multiple of 4. It reads padding, margin and gap classes — p, m, gap, space-x/y and every directional variant such as pt, pb, px, ml — plus any hardcoded N px value in a style block. You get a full inventory with each value's pixel size, a count of off-scale values, and how many distinct sizes the snippet uses.",
   useCases: [

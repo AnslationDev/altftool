@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Phone Setup Checklist with Readiness Scoring",
+  metaDescription:
+    "A phone checklist for one trip: tasks filter by roaming pack, eSIM, local SIM or Wi-Fi only, and readiness weights critical 3, recommended 2, optional 1.",
+  steps: [
+    "Enter Days until departure and pick \"How you will get mobile data\": Home carrier roaming pack, Travel eSIM, Local SIM bought on arrival, or Wi-Fi only.",
+    "Tick \"Leaving the country\", \"Flying\" and \"Driving there\" to filter the task list, then tick off each task as you finish it.",
+    "Watch the Phone readiness percentage — critical tasks count 3, recommended 2, optional 1 — and press Copy result to take the outstanding items with you.",
+  ],
   intro:
     "This tool builds the phone setup checklist for one specific trip and scores how ready you are, weighting each task by priority rather than counting ticks: readiness % = weight of ticked items ÷ weight of all items, where critical counts 3, recommended 2 and optional 1. It filters the catalogue by your connectivity plan (roaming pack, travel eSIM, local SIM or Wi-Fi only) and by whether you are flying, driving or staying domestic, and flags each task as due now once the days left to departure fall to its lead time.",
   useCases: [

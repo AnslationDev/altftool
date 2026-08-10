@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dockerfile AI Prompt Builder: Multi-Stage and Non-Root",
+  metaDescription:
+    "Pick a runtime preset - Node, Python, Go, Java, Ruby, Rust, PHP, .NET - add port and commands, and get a prompt demanding pinned tags and a non-root USER.",
+  steps: [
+    "Choose a Runtime preset such as Node.js, add an optional Framework, and describe what the app does in one line.",
+    "Set the Service port and the install, build and start commands (blank uses the preset), then tick hard requirements like \"Multi-stage build (small final image)\" and \"Run as non-root user\".",
+    "Check the prompt word count and press Copy prompt to take the generated Dockerfile prompt to your AI assistant.",
+  ],
   intro:
     "The Dockerfile Prompt Builder turns a plain description of your runtime, dependencies, port and start command into a precise AI prompt for generating a production-ready Dockerfile. It encodes Docker's published best practices — pinned base-image tags, dependency-first layer caching, multi-stage builds and a non-root user — so the assistant you paste it into cannot skip the hardening steps. It is built for developers who want a correct container build on the first generation instead of after five rounds of correction.",
   useCases: [

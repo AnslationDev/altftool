@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thailand Dress Code Planner: Temples, Beaches, Packing",
+  metaDescription:
+    "Applies real entry rules — ankle-length trousers at the Grand Palace, covered shoulders and knees in any wat — and sizes a packing list by wash cycle.",
+  steps: [
+    "Pick the month of travel, the trip length in days, and how often you will do laundry.",
+    "Tick where you are going, from the Grand Palace and Wat Phra Kaew to everyday wats, beaches, rooftop bars and night markets.",
+    "Read the counted packing list with its estimated kg, the rules your itinerary triggers, and what each place actually enforces.",
+  ],
   intro:
     "This planner turns Thailand's site-by-site dress rules and Bangkok's monthly climate normals into a counted packing list. It applies the published entry conditions — ankle-length trousers and covered shoulders at the Grand Palace, shoulders and knees covered plus shoes off in any wat, swimwear confined to the sand — then sizes quantities with a laundry-cycle model rather than one outfit per day. Pick a month and the places on your itinerary to see exactly which garments you need and roughly what they weigh.",
   useCases: [

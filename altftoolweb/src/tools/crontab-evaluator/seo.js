@@ -1,4 +1,7 @@
 const seo = {
+  title: "Crontab Evaluator: See the Next Cron Run Times",
+  metaDescription:
+    "Type a five-field cron expression and read the exact next run times. Handles ranges, steps, MON and JAN aliases, @daily macros and the OR day rule.",
   intro:
     "A crontab evaluator parses a five-field cron expression — minute, hour, day-of-month, month, day-of-week — and lists the exact wall-clock times it will fire next. It implements the crontab(5) rules used by Vixie cron and cronie, including ranges, steps, name aliases such as MON and JAN, the @daily family of macros, and the rule that a day matches if either day field matches when both are restricted. It is for anyone shipping a scheduled job who wants to confirm the schedule before it runs in production.",
   useCases: [

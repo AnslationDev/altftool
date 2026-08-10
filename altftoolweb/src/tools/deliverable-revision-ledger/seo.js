@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deliverable Revision Ledger: Rounds and Approvals",
+  metaDescription:
+    "Paste one pipe-separated line per round for an eight-column log: version, date sent, feedback source, change, included/extra, approval, evidence.",
+  steps: [
+    "Type one record per line into \"Records, one per line\", separating eight fields with the pipe character: Deliverable | Version | Sent at | Feedback source | Requested change | Included / extra | Approval | Evidence ref.",
+    "Leave \"Flag rows with missing columns\" ticked so any line short of all eight filled fields is counted, or press the \"Example records\" chip to load two worked rows.",
+    "Read the \"N structured record(s)\" headline with its incomplete-row caption and the Complete, Needs review and Columns tiles above the eight-column table, then Copy the ledger or Download it as deliverable-revision-ledger.txt.",
+  ],
   intro:
     "The Deliverable Revision Ledger turns a pipe-separated list of client feedback into an eight-column revision log covering deliverable, version, date sent, feedback source, requested change, whether the round is included or extra, approval status and an evidence reference. Each line becomes a row, and any line missing a column is counted as needing review so gaps in your record are visible before a dispute, not after. It is built for freelancers and studios working to a fixed number of included revision rounds.",
   useCases: [

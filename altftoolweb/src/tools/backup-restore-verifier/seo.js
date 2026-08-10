@@ -1,4 +1,12 @@
 const seo = {
+  title: "Backup Restore Verifier: CRC32-Test a ZIP In-Browser",
+  metaDescription:
+    "Decompresses every entry of a ZIP with CRC32 checking on and marks each Readable, Directory, or Encrypted or unreadable. Nothing is uploaded.",
+  steps: [
+    "Pick your .zip backup with the Local file(s) chooser — only the first selected file is processed, and its name is echoed under the field.",
+    "Press Run local workbench: JSZip loads the archive with CRC32 checking on and decompresses every entry to a byte array inside the tab.",
+    "Verified result reports how many readable file(s) came back, over a table naming each entry with its uncompressed size and a Readable, Directory or Encrypted or unreadable status.",
+  ],
   intro:
     "The Backup Restore Verifier opens a ZIP backup in your browser and actually decompresses every entry with CRC32 checking on, so each file is reported as Readable, Directory, or Encrypted or unreadable along with its true uncompressed byte size. It is for anyone who keeps ZIP backups of photos, documents, exports or archives and has never confirmed that the archive still restores. The result is a per-entry table plus a count of how many files came back readable — a restore test rather than a file listing.",
   useCases: [

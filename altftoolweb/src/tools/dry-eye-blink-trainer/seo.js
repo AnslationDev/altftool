@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dry Eye Blink Trainer: Count, Compare, Paced Drill",
+  metaDescription:
+    "Turn a blink count into blinks per minute against the 15-20/min resting range, then run a metronome drill with a 2-second squeeze every 20 minutes.",
+  steps: [
+    "Enter 'Blinks you counted' and the 'Counting window (seconds)' you counted over, plus 'Screen hours per day'.",
+    "Set 'Run the drill every (minutes)', 'Complete blinks per drill', 'Metronome pace (blinks/min)' and 'Paced session length (minutes)', then press Start under 'Paced blink metronome' and follow the alternating 'Close and squeeze' and 'Open and relax' prompts.",
+    "Read 'Your blink rate' per minute with its band underneath, then 'Share of the resting rate', 'Average gap between blinks', 'Blinks missed per screen day', 'Time the drill costs per day' and 'Shortfall replaced by the drill'. 'Copy result' copies the summary.",
+  ],
   intro:
     "The Dry Eye Blink Trainer converts a blink count into blinks per minute and compares it with the 15 to 20 blinks a minute normally seen at rest. Blink rate falls to roughly a third of that during concentrated screen work — Tsubota and Nakamori reported the effect in the New England Journal of Medicine in 1993 — and the resulting long gaps between blinks let the tear film evaporate. The tool sizes that shortfall in blinks per hour and builds a paced complete-blink drill, timed to the 20-20-20 interval, to make it up.",
   useCases: [

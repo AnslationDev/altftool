@@ -1,4 +1,7 @@
 const seo = {
+  title: "Exam Day Meal Planner: Eating Timeline by Report Time",
+  metaDescription:
+    "Works backward from your admit-card reporting time: main meal 3 hours out, carb snack 60-90 minutes, last big drink 45 minutes, wake and leave times.",
   intro:
     "This planner builds an exam-day eating timeline backward from the reporting time on your admit card, using standard performance-nutrition leads: the last full meal ends 3 hours before reporting (a mixed meal takes roughly 3-4 hours of gastric emptying), a small carbohydrate snack sits 60-90 minutes out, and large drinks stop 45 minutes before so the washroom stop happens at home. It is for candidates who want steady energy through a 2-3 hour paper without the post-meal slump or a mid-exam washroom crisis.",
   useCases: [

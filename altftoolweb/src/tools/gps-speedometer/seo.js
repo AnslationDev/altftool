@@ -1,4 +1,12 @@
 const seo = {
+  title: "GPS Speedometer: Doppler Speed and Accuracy Log",
+  metaDescription:
+    "Reads your device's satellite fix through the Geolocation API and logs speed in km/h, latitude, longitude and accuracy in metres. Nothing leaves the tab.",
+  steps: [
+    "Open the page over HTTPS on a device with a GPS receiver and press \"Start with permission\", then allow the browser's location prompt.",
+    "Move outdoors so the receiver reports a velocity; every fix appends a row under \"Live local readings\" with high accuracy on and cached positions disabled.",
+    "Read each row's timestamp, latitude, longitude, speed in km/h and accuracy in metres — \"Unavailable\" means the device sent no velocity — then press \"Stop sensor\".",
+  ],
   intro:
     "The GPS Speedometer reads your device's own satellite fix through the browser Geolocation API and logs a timestamped row of speed, latitude, longitude and position accuracy for every update your phone reports. Speed comes straight from the GPS receiver's Doppler-derived value in metres per second and is converted to km/h by multiplying by 3.6 — it is not estimated from distance between points. It is for anyone who wants a speed readout and a private trip trace without installing a tracking app that uploads the route.",
   useCases: [

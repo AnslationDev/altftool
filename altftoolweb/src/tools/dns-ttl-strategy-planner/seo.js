@@ -1,4 +1,12 @@
 const seo = {
+  title: "DNS TTL Planner: Lower, Cut Over, Restore Timeline",
+  metaDescription:
+    "Turns your current TTL into a cutover schedule: lower it one doubled TTL period ahead, see when the change is visible, and restore the steady TTL.",
+  steps: [
+    "Enter Current TTL on the record (seconds) — it opens at 86400 — plus the Temporary migration TTL (seconds), defaulted to 300, and the TTL to restore afterwards (seconds).",
+    "The headline Lower the TTL this long before cutover appears immediately, computed as one old-TTL period doubled for safety, with rows for Lead time before cutover, Visible after cutover and Total low-TTL window.",
+    "Work down the timestamped step list and the rollback note beneath it, then check the Steady-state TTLs by record type table (A / AAAA, CNAME, MX, TXT, NS, CAA with a suggested value, typical range and reason). Copy plan copies the schedule; Reset restores 86400 / 300 / 3600.",
+  ],
   intro:
     "This planner turns the DNS caching rule of RFC 1035 — resolvers keep an answer for the TTL attached when they fetched it — into a concrete migration schedule: when to lower the TTL before a cutover, when the change becomes fully visible afterwards, and when to restore the steady-state TTL. It also recommends steady-state TTLs per record type (A/AAAA, CNAME, MX, TXT, NS, CAA). It is for engineers planning a server move, provider switch or load-balancer swap who want the timing computed rather than guessed.",
   useCases: [

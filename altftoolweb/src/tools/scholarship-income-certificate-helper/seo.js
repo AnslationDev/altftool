@@ -1,4 +1,12 @@
 const seo = {
+  title: "Income Certificate Calculator for Scholarships, India",
+  metaDescription:
+    "Totals each earner's monthly income × 12 plus other annual income, then checks it against eight scheme ceilings from Rs 1 lakh to Rs 8 lakh.",
+  steps: [
+    "Add each earning family member and their monthly income in INR, using Add member for more than the default rows.",
+    "Enter other annual income from agriculture, rent, pension or interest as a yearly figure in INR.",
+    "Read the annual family income and the Where this income stands table marking each of the eight scheme ceilings within or above.",
+  ],
   intro:
     "This helper computes the annual family income figure that an income certificate certifies — every earning member's monthly income multiplied by 12, plus other annual income from agriculture, rent, pension or interest. It then compares that figure against published scholarship income ceilings such as Rs 2.5 lakh for the Post-Matric SC scholarship, Rs 3.5 lakh for NMMSS, Rs 4.5 lakh for the Central Sector Scheme and Rs 8 lakh for AICTE Pragati and EWS, and lists the documents revenue offices commonly ask for.",
   useCases: [

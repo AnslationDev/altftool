@@ -1,4 +1,12 @@
 const seo = {
+  title: "CBSE Class 10 Syllabus Tracker: Chapter Revision Pace",
+  metaDescription:
+    "Mark every Class 10 chapter Not started, Read once, Revised or Revised + sample papers done, then get the chapters-per-week pace to finish in time.",
+  steps: [
+    "Tick the boxes under Subjects you are tracking — Science, Mathematics, Social Science, English (Language and Literature), Hindi (Course B) and Computer Applications (Code 165) — and type a number into Days left before the board exam.",
+    "Press Show chapters on a subject and set each chapter's dropdown to Not started, Read once, Revised or Revised + sample papers done; Mark all mastered and Clear this subject change the whole list at once.",
+    "Syllabus completed shows the percentage and the mastered-of-total count, over rows for Chapters not started yet, Board theory marks in play, Chapters a week to finish in time and Days available per remaining chapter. Copy result copies the progress; Reset clears every status.",
+  ],
   intro:
     "This tracker lists every chapter of the rationalised CBSE Class 10 syllabus and scores your revision status across the subjects you pick. Each chapter is marked not started, read once, revised, or revised with sample papers done, and only the last state counts as fully complete — so the percentage measures readiness for an 80-mark board paper rather than time spent reading. It also divides the chapters still open by the days left and tells you the chapters-per-week pace that finishes the syllabus on time.",
   useCases: [

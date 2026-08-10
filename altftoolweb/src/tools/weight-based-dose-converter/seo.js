@@ -1,4 +1,12 @@
 const seo = {
+  title: "mg/kg Dose Calculator: Weight to mg and mL Volume",
+  metaDescription:
+    "Turn a mg/kg/day prescription into the per-dose milligrams and the syringe volume for one body weight in kg or lb, with your own maximum-dose caps.",
+  steps: [
+    "Enter \"Body weight\" with the Weight unit set to Kilograms or Pounds, the \"Prescribed amount per kilogram\" with a Strength unit of mcg, mg or g per kg, set \"That figure is\" to per day split into divided doses or per single dose, and give \"Doses per day\".",
+    "For a liquid, type \"Liquid strength (mg)\" and \"dissolved in (mL)\" or tap a preset such as 250 mg in 5 mL, and add \"Maximum single dose (mg, optional)\" and \"Maximum daily dose (mg, optional)\" if the packaging states them.",
+    "\"Each dose\" shows the milligrams and the interval between doses, with rows for Body weight used, Total per day, Volume per dose rounded to the nearest 0.1 mL, and Share of the daily maximum; anything above a cap you entered is flagged in red, and \"Copy result\" copies the figures.",
+  ],
   intro:
     "The Weight-Based Dose Converter turns a prescription written per kilogram — for example 30 mg/kg/day in three divided doses — into the actual milligrams for one body weight, then into a millilitre volume when the medicine is a liquid. It works from the plain arithmetic dose = strength per kg × weight in kg, converts pounds using the exact 0.45359237 kg factor, and divides by the number of doses per day. It is a calculation aid for carers and students, not a drug reference: it holds no dose limits of its own.",
   useCases: [

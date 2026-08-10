@@ -1,4 +1,12 @@
 const seo = {
+  title: "Extract Video Frames as JPEG, PNG or WebP Thumbnails",
+  metaDescription:
+    "Pull up to 120 stills from a video in your browser — evenly spaced, every N seconds or one exact timecode — and download them as JPEG, PNG or WebP.",
+  steps: [
+    "Choose a clip with the \"Video file\" picker (any format your browser can play; the file is decoded locally and never uploaded), then set \"Frame selection\" to Evenly spaced, Fixed interval or Single frame.",
+    "Fill the matching field — \"How many thumbnails\" up to 120, \"Seconds between frames\", or \"Timecode (HH:MM:SS)\" — choose a \"Thumbnail width\" from 320 to 1920 px and an Image format of JPEG, PNG or WebP, then press \"Extract thumbnails\".",
+    "Each still is named like clip-001-00-00-20-000.jpg and has its own download link; \"Download all as ZIP\" saves the batch as clip-thumbnails.zip, and \"Copy timestamps\" copies the frame times.",
+  ],
   intro:
     "The Video Thumbnail Extractor pulls still frames out of a video file and saves them as JPEG, PNG or WebP images, without uploading anything. For evenly spaced thumbnails it cuts the clip into n+1 equal segments and takes a frame at each internal boundary — t = duration × (i+1)/(n+1) — which deliberately avoids the first frame, so common black or fade-in openings are skipped. It is for editors building contact sheets, marketers picking a cover image, and anyone who needs a still from a clip they already have.",
   useCases: [

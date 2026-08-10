@@ -1,4 +1,7 @@
 const seo = {
+  title: "Friendship Challenge: 10 Questions, 6 Themes to Play",
+  metaDescription:
+    "Pick Memories, Personality, Experiences, Preferences, Fun or Deep Talks, answer 10 questions, then compare answer lists with your friend.",
   intro:
     "Friendship Challenge is a ten-question quiz about a friend, drawn from a bank of 90 questions across six themes — Memories, Personality, Experiences, Preferences, Fun and Deep Talks. You type your answer to each one, then get a completion score with a badge and the full list of your answers laid out to read back against what your friend actually says. There is no hidden answer key: the point is the comparison at the end, which makes it work as a two-player game where you both take the same set and swap results.",
   useCases: [

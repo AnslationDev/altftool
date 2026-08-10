@@ -1,4 +1,12 @@
 const seo = {
+  title: "Table Tennis Calorie Calculator (MET-Based Estimate)",
+  metaDescription:
+    "Calories from kcal/min = MET × 3.5 × kg / 200, using the Compendium's 4.0 METs for table tennis and 1.3 for standing between games.",
+  steps: [
+    "Enter Body weight in kg or lb, then pick How hard were you playing? — Casual / social rallying (4.0 MET), Club practice with multiball drills (5.0 MET) or Competitive match play (6.0 MET).",
+    "Set Games played, Average minutes per game and Total break time between games (minutes); break time is priced at 1.3 METs, not the playing rate.",
+    "Read Total calories burned with the playing-minutes split and the MET basis line underneath, then press Copy result.",
+  ],
   intro:
     "The Table Tennis Calorie Calculator estimates the energy cost of a table tennis session from your body weight, the number of games, minutes per game and time spent waiting between them. It applies the MET equation kcal/min = MET x 3.5 x kg / 200, anchored on the Compendium of Physical Activities value of 4.0 METs for table tennis, with higher settings for drill work and competitive match play. It is useful for office players, club members and coaches who want the burn split between real play and standing around.",
   useCases: [

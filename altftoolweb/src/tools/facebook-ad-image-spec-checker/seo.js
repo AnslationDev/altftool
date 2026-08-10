@@ -1,4 +1,12 @@
 const seo = {
+  title: "Facebook Ad Image Spec Checker: Size, Ratio, 30MB",
+  metaDescription:
+    "Check width, height, aspect ratio, file MB and text share against Meta's feed, Stories and right-column placements before the upload.",
+  steps: [
+    "Choose the Placement — Feed square, Feed landscape, Stories / Reels or Right column — and the Width px and Height px fields load that placement's target size.",
+    "Overwrite Width px, Height px, File MB and Text area % with your creative's real numbers; the check reruns on every keystroke, with no Calculate button.",
+    "Read the Verdict — Ready to upload, Needs review or Fix before upload — beside Your ratio and Ratio drift against Meta's 3% tolerance, then press Copy.",
+  ],
   intro:
     "This checker tests a Facebook ad image against the placement rules published in Meta's Ads Guide: file type, the 30 MB size ceiling, the 1.91:1 to 1:1 feed ratio range with its 3% tolerance, the 600 x 600 px feed minimum, the 4:5 vertical and 9:16 story ratios, and the 1080 px resolution Meta recommends. It also flags heavy text overlay, which stopped being a rejection reason in 2020 but still affects delivery. Media buyers and designers use it to catch a rejection before the creative reaches Ads Manager.",
   useCases: [

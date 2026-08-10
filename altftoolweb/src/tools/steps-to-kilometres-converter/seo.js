@@ -1,4 +1,12 @@
 const seo = {
+  title: "Steps to Kilometres Converter: How Far Is 10,000 Steps",
+  metaDescription:
+    "Convert steps to km and miles using step length from your height, a measured walk or a known figure. Shows steps per km, walking time and MET calories.",
+  steps: [
+    "Enter your total in the Steps field, or tap a preset button for 2,000, 5,000, 7,500 or 10,000 steps.",
+    "Set \"Step length from\" to My height (estimate) — Women 0.413 x height or Men 0.415 x height — or to a distance you measured, or a step length you already know.",
+    "Read \"Distance covered\" in km with the miles, metres, stride length and \"Steps in 1 km\" rows below it, then press Copy result.",
+  ],
   intro:
     "The Steps to Kilometres Converter multiplies a step count by your step length to give distance in kilometres, metres and miles. Step length can come from the conventional height proportions used by pedometer makers — 0.415 times height for men and 0.413 for women — from a distance you measure and count yourself, which is the most accurate method, or from a figure you already know. It also reports how many steps make up a kilometre and a mile for you, and estimates walking time and energy from published MET values.",
   useCases: [

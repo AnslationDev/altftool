@@ -1,4 +1,12 @@
 const seo = {
+  title: "Name Tracing Worksheet Generator Sized in Millimetres",
+  metaDescription:
+    "Type a name up to 24 characters, set a 4-40 mm x-height, and print four-line rows on A4, A5 or US Letter with a solid model then dotted copies to trace.",
+  steps: [
+    "Type the Child's name — letters, spaces, hyphens and apostrophes, up to 24 characters — and set 'Letter x-height (mm)' anywhere from 4 to 40.",
+    "Choose Letter case (Title Case, UPPERCASE or lowercase), Tracing style (Dotted outline, Solid outline, Grey letters, or First solid, rest dotted), Page size (A4 210 x 297 mm, A5 148 x 210 mm or US Letter) and Margin (mm), and tick 'Print the four-line guides behind the letters'.",
+    "Check 'Tracings on the sheet' with its rows x per row split, x-height, Four-line band height and Row pitch, then press Print at 100% scale with fit-to-page off so the letters measure the x-height shown.",
+  ],
   intro:
     "The Name Tracing Worksheet Generator turns a child's name into a printable practice sheet with four-line guides, a solid model to copy and dotted repetitions to trace. Letters are sized by x-height in millimetres rather than by point size, using the standard 0.52 em x-height ratio, so a 12 mm setting produces letters that really measure 12 mm from baseline to waist line on paper. It works out how many repetitions fit across the writing width and how many rows fit down the page, so nothing runs off the sheet.",
   useCases: [

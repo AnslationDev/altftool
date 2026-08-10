@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Villain Name Generator with Threat Levels",
+  metaDescription:
+    "One click returns a whole antagonist: name, epithet, origin, signature ability, colour-coded threat tier and catchphrase, from 20 hand-written villains.",
+  steps: [
+    "Open the tool on the empty card reading \"Click generate to create your villain\" — nothing to type, the pool is 20 hand-written villains.",
+    "Press Generate Villain to draw one at random; the skull takes its threat tier colour across City, Global, Continental, Extinction and Universal.",
+    "Read the Origin, Special Ability, Threat Level badge and quoted catchphrase, then press Copy Villain to put all six fields on your clipboard.",
+  ],
   intro:
     "Random Villain Name Generator returns a complete antagonist rather than just a name: one of 20 hand-written villains with an epithet, an origin story in a line, a signature ability, a colour-coded threat level and a catchphrase. Threat runs across five tiers — City, Global, Continental, Extinction and Universal — with only one villain rated Universal, so that tier appears about 5% of the time. Writers, game masters and roleplayers get a usable antagonist in one click and can copy the whole profile as text.",
   useCases: [

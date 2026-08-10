@@ -1,4 +1,12 @@
 const seo = {
+  title: "Third Party Insurance Premium by cc or kW, with GST",
+  metaDescription:
+    "Notified motor third party rates from 1 June 2022 by engine cc or EV motor kW, plus the Rs 375 owner-driver cover and 18% GST for the amount payable.",
+  steps: [
+    "Choose Vehicle class (Private car or Two-wheeler) and Propulsion (Petrol / diesel / CNG or Battery electric); the rating field is Engine capacity (cc) and switches to Motor power (kW) for an electric vehicle.",
+    "Set Policy term to Annual (renewal) or the long-term option for a new vehicle — 3 years for a car, 5 for a two-wheeler — and tick Add owner-driver personal accident cover at Rs 375 a year.",
+    "Total payable including GST shows the rate band and the per-year figure, with rows for Notified third party premium, Owner-driver personal accident cover, Taxable premium, GST at 18%, per-month equivalent and the 15% electric vehicle concession; press Copy result.",
+  ],
   intro:
     "This estimator returns the statutory motor third party premium for a private car or two-wheeler in India, using the rate table notified with effect from 1 June 2022 and banded by engine cubic capacity, or by motor kW for electric vehicles. It adds the compulsory Rs 15 lakh owner-driver personal accident cover at Rs 375 a year and 18% GST to give the amount actually payable. Because the third party rate is notified rather than priced by insurers, the same vehicle attracts the same figure at every company.",
   useCases: [

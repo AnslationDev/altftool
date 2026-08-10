@@ -1,4 +1,12 @@
 const seo = {
+  title: "Which Animal Are You? 10 Questions, 10 Animals",
+  metaDescription:
+    "A 10-question quiz scoring you across Wolf, Fox, Owl, Cat, Dolphin, Tiger, Elephant, Octopus, Raven and Panda, with strengths, facts and matches.",
+  steps: [
+    "Answer the opening question, How do you spend your weekend?, by tapping one of its four options — Outdoors in nature, Cozy at home, Socializing with friends or Learning something new.",
+    "Each tap scores several of the ten animals at once and advances the Question n/10 counter and progress bar; after the tenth answer a Finding Your Animal... screen totals the scores and picks the highest.",
+    "Your Spirit Animal shows the winning animal's emoji and name, a summary, four Strengths and three Weaknesses, three Fun Facts, three Compatible: tags and a quote. Retake Quiz clears every answer and returns to question one.",
+  ],
   intro:
     "Which Animal Are You? is a 10-question spirit animal quiz that scores your answers across ten animals — Wolf, Fox, Owl, Cat, Dolphin, Tiger, Elephant, Octopus, Raven and Panda — and names the highest scorer as your match. Questions cover how you spend a weekend, how you handle conflict and what you do under pressure, with each option feeding points to several animals at once. Every result carries four strengths, three weaknesses, three facts about the real animal and three other animals it pairs well with.",
   useCases: [

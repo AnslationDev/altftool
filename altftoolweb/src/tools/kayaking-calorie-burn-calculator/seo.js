@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kayaking Calorie Calculator: MET Bands by Paddle Speed",
+  metaDescription:
+    "Calories from distance, time and water type using the ACSM equation and Compendium METs: 2.8, 5.8 or 12.5 on flat water by the speed you actually held.",
+  steps: [
+    "Enter 'Body weight (kg)' and choose a Water type: 'Flat water — intensity from your pace', 'Sea or open-water touring', Whitewater, or 'Racing or competition paddling'.",
+    "Enter 'Distance paddled (km)' and 'Time on the water (minutes)'; on flat water the resulting boat speed selects the 2.8, 5.8 or 12.5 MET band, and every figure recalculates as you type.",
+    "Read 'Calories burned paddling' with your distance and km/h underneath, then 'Intensity used' in METs, 'Why that intensity', 'Energy per km paddled', 'Energy per hour on the water' and 'Net energy (above resting)'. 'Distance to hit a calorie target' works backwards from a kcal goal, and 'Copy result' copies the summary.",
+  ],
   intro:
     "The Kayaking Calorie Burn Calculator converts a paddle — distance, time on the water and water type — into an energy estimate using the ACSM equation kcal/min = MET x 3.5 x body mass in kg / 200. On flat water the boat speed you actually achieved selects the published 2011 Compendium of Physical Activities band: 2.8 METs below 4 mph, 5.8 METs at 4.0-5.9 mph and 12.5 METs above 6 mph. Sea touring and whitewater use their own Compendium rows (5.0 METs each) because speed is a poor proxy for effort in those conditions.",
   useCases: [

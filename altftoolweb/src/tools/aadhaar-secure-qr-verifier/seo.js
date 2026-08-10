@@ -1,4 +1,10 @@
 const seo = {
+  title: "Aadhaar QR Code Decoder: Legacy XML vs Secure QR",
+  steps: [
+    "Pick the photo of the Aadhaar letter or PVC-card QR with the \"Local file(s)\" picker; if you select more than one, the page states that only the first file is processed.",
+    "Press \"Run local workbench\" (it reads \"Inspecting…\" while it works). The image is drawn to a canvas and read by the jsQR decoder in your browser, with nothing uploaded.",
+    "The \"Verified result\" panel lists Payload bytes, Payload type as Legacy XML or Binary / text, Signature status reported as unverified, and a 240-character Preview of the decoded payload.",
+  ],
   metaDescription:
     "Decode an Aadhaar QR image locally, identify legacy or Secure QR payloads, and preview the data without claiming signature verification.",
   intro:

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Debt Calculator: 14 Nights and a Repayment Plan",
+  metaDescription:
+    "Log 7, 10 or 14 nights on a slider, let surplus nights offset the shortfall, and see hours owed, your weekday-weekend gap and nights to clear it.",
+  steps: [
+    "Set Your sleep need with the hours-per-night slider, or tap an age guideline — Teen (14–17), Adult (18–64) or 65 and over.",
+    "In Your sleep log pick the Most recent morning date and Nights to include (7, 10 or 14), then drag each night's slider in 15-minute steps.",
+    "Read Net sleep debt with its severity band, Average night, Total shortfall and Surplus banked, pick a repayment rate from +0.5h to +2h, then Copy report.",
+  ],
   intro:
     "The Sleep Debt Calculator adds up how many hours you fell short of your nightly need across the last 7, 10 or 14 nights, letting nights you overslept offset the shortfall, and floors the result at zero. You set your need from an age band — 7 to 9 hours for adults aged 18 to 64 — log each night on a slider, and get your total debt, a severity band, your weekday-versus-weekend gap, and how many nights of extra sleep would clear it. It is for people who suspect they are running behind but have never put a number on it.",
   useCases: [

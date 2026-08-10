@@ -1,4 +1,12 @@
 const seo = {
+  title: "Developer Onboarding Runbook Generator (ONBOARDING.md)",
+  metaDescription:
+    "Generate a day-one setup runbook: access requests first, then brew/apt/winget installs with a verify command each, repo clones and a first task.",
+  steps: [
+    "Enter Team name and Role, then choose a Primary stack (Node.js / TypeScript, Python, Java / Kotlin (JVM), Go, .NET or Ruby / Rails) and a Machine — macOS (Homebrew), Ubuntu / Debian (apt) or Windows 11 (winget + WSL2).",
+    "Tick what to raise under 'Access to request' — SSO account, chat workspace, source control, CI, cloud console read-only in production, secrets manager, issue tracker, error tracking — then list 'Repositories to clone (one per line)' and, optionally, a 'First task (optional)' and an onboarding buddy.",
+    "Read 'Estimated setup time' and whether it fits inside one 8-hour working day, with the counts and minutes for Tool installs, Access requests and Repositories. 'Copy runbook' takes the whole ONBOARDING.md markdown shown below it.",
+  ],
   intro:
     "A developer onboarding runbook is the ordered checklist a new engineer follows on their first day: access requests first because they queue, then the toolchain, then a clone that actually builds and runs. This generator writes that document for a chosen stack and operating system, using the real package-manager commands (Homebrew, apt or winget) and a verification command for each tool. Setup time is estimated at 15 minutes per access request and 20 minutes per repository so you can see whether day one is realistic.",
   useCases: [

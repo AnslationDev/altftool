@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sri Lanka ETA Checklist: Passport, 30 Days and Fees",
+  metaDescription:
+    "Tests your passport against the six-months-from-arrival rule, compares your stay with the 30-day tourist admission and totals the ETA fee.",
+  steps: [
+    "Choose 'How you are entering' and the Purpose of the trip, then enter your Arrival date, Passport expiry date, Days you plan to stay, and how many Travellers aged 12 and over and Children under 12 are going.",
+    "Tick anything else that applies — arriving from or transiting a yellow fever country, or carrying over $15,000 in currency — so those items join the list, and override the fee per adult only if your route's published rate does not apply.",
+    "Read the 'Paperwork ready' percentage, the 6-month passport-valid-to date, permitted stay of 30 days against your plan and the total visa cost, tick off each required document, then press 'Copy checklist'.",
+  ],
   intro:
     "This checklist works out which Sri Lanka entry route applies to you, tests your passport against the six-month validity rule counted from the date of arrival, compares your planned stay with the 30-day tourist admission, and totals the ETA fee for your party. Sri Lanka issues an Electronic Travel Authorisation before travel that is converted into a visa at the airport, so the passport, onward ticket and funds checks still happen at the counter after approval. Use it to build the folder before you book, not after.",
   useCases: [

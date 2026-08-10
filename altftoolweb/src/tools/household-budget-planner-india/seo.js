@@ -1,4 +1,12 @@
 const seo = {
+  title: "Household Budget Planner India: 50/30/20 and FOIR",
+  metaDescription:
+    "Enter take-home pay, rent, EMIs, groceries and SIPs in rupees. Get needs/wants/savings shares, your housing ratio and the FOIR lenders check.",
+  steps: [
+    "Enter Net take-home pay (INR) and Other monthly income (INR), or press Fill a 50/30/20 starting plan to seed every expense line from that income.",
+    "Work down the Needs, Wants and Savings and investing sections line by line, ticking This is a home loan EMI (counts toward FOIR) under the rent field if it applies.",
+    "Read Left unallocated each month, then the Ratio health check table scoring Needs share of income, Housing cost (rent or home EMI) and All EMIs (FOIR) as On track, Watch or Off track; Copy result saves the summary.",
+  ],
   intro:
     "This planner turns a month of Indian household cash flow into three numbers — needs, wants and savings — and grades each against the 50/30/20 rule. Enter take-home pay plus every outgoing from rent and EMIs to groceries, school fees and SIPs, and it returns each line as a percentage of income along with your housing ratio and your FOIR, the fixed-obligation-to-income ratio lenders use when they sanction a loan. It is built for salaried families who want to see, in rupees, exactly where a month disappears.",
   useCases: [

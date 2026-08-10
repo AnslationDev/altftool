@@ -1,4 +1,12 @@
 const seo = {
+  title: "Service Mesh Comparison: Istio, Linkerd, Consul, Cilium",
+  metaDescription:
+    "Weight feature breadth, operational simplicity, resource efficiency and VM support 0-5, then see Istio, Linkerd, Consul and Cilium ranked out of 100.",
+  steps: [
+    "Drag the four sliders under \"Your priorities (0 = ignore, 5 = critical)\": Feature breadth, Operational simplicity, Resource efficiency, and VMs & multi-cluster.",
+    "Each slider move re-runs the weighted sum, so the ranking reorders live — drop a weight to 0 to take that criterion out of the score entirely.",
+    "Read \"Best match for your weights\" and all four meshes scored out of 100, plus the Fact sheet of data plane, mTLS and governance; Copy result saves the ranking.",
+  ],
   intro:
     "This tool ranks the four major service meshes — Istio, Linkerd, Consul Connect and Cilium Service Mesh — with a transparent weighted-sum model over four criteria: feature breadth, operational simplicity, data-plane resource efficiency, and VM/multi-cluster support. Each mesh carries documented facts (Envoy sidecars vs Rust micro-proxy vs eBPF, mTLS approach, governance) and 1-5 ratings derived from the projects' own documentation, so platform teams can see exactly why one mesh outscores another for their priorities.",
   useCases: [

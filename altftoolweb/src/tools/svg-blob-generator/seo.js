@@ -1,4 +1,12 @@
 const seo = {
+  title: "SVG Blob Generator: Seeded Organic Shapes, One Path",
+  metaDescription:
+    "Set 3 to 12 points and 0-100% fluidity to build one closed quadratic-Bezier path in a 400x400 viewBox. The same seed always redraws the identical blob.",
+  steps: [
+    "Drag Complexity (Points) between 3 and 12 and Fluidity (Randomness) between 0 and 100% to shape the outline around the 130-unit base radius.",
+    "Under Fill Scheme choose Linear Gradient or Solid Color, set the Stop 1 and Stop 2 colours, and press Mutate Shape until the seeded silhouette fits.",
+    "Read the Generated SVG Code — a 400x400 viewBox holding a single path — then press Copy, or Download to save organic-blob-seed-<seed>.svg.",
+  ],
   intro:
     "This generator builds organic blob shapes by scattering points around a circle and joining them with quadratic Bézier curves through their midpoints, producing a single closed SVG path you can copy or download. You control the number of points from 3 to 12, how far each point is pushed off the base radius (0–100% fluidity), and whether the shape is filled with a solid colour or a two-stop linear gradient. Every shape comes from a numeric seed, so the same seed and settings always redraw the identical blob.",
   useCases: [

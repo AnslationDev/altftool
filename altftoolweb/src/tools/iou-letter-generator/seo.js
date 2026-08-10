@@ -1,4 +1,12 @@
 const seo = {
+  title: "IOU Letter Generator: Acknowledgement of Debt, India",
+  metaDescription:
+    "Writes a signed acknowledgement of debt with the amount in words, simple interest to the due date and the fresh three-year limitation date.",
+  steps: [
+    "Enter the amount lent in INR, how the money was paid over, the interest rate, and the dates the money was lent and falls due.",
+    "Fill in the borrower's and lender's names and addresses, the date this IOU is signed, the place of signing and any witnesses.",
+    "Read the total repayable, the principal in words and the fresh limitation expiry, then press Copy document to take the drafted acknowledgement.",
+  ],
   intro:
     "The IOU Letter Generator writes an acknowledgement of debt — a signed statement by a borrower that a stated sum is owed on a stated date. It computes simple interest to the due date on a 365-day year, spells the amount out in the Indian numbering system, and dates the fresh three-year limitation period that section 18 of the Limitation Act, 1963 starts when the acknowledgement is signed in time. It also flags a cash loan of ₹20,000 or more, which sections 269SS and 269T of the Income-tax Act, 1961 prohibit.",
   useCases: [

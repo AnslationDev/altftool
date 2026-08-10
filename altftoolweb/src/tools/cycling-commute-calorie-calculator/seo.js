@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cycling Commute Calorie Calculator: Fuel and CO2 Saved",
+  metaDescription:
+    "Calories from the ACSM equation with speed-banded METs, plus the litres, money and tailpipe CO2 the drive would have cost at 2.31 kg per litre of petrol.",
+  steps: [
+    "Under \"The ride\", enter Body weight, One-way distance, \"Average speed (km/h)\", Trips per day and \"Commuting days per week\".",
+    "Under \"The car you are not driving\", set \"Car fuel economy (km per litre)\", \"Fuel price per litre\" and Fuel type.",
+    "Read \"Calories per week\" with the MET intensity band and per-trip figures, then the car panel's litres, cost and tailpipe CO2; press Copy result.",
+  ],
   intro:
     "The Cycling Commute Calorie Calculator works out the energy cost of riding to work and the fuel, money and CO2 the same journey by car would have used. Calories come from the ACSM equation kcal/min = MET x 3.5 x kg / 200, with the MET taken from the speed-banded bicycling codes in the Compendium of Physical Activities — 4.0 below 16 km/h, 6.8 at 16-19 km/h, 8.0 at 19-22 km/h and 10.0 at 22-26 km/h. Fuel savings use the standard combustion figures of 2.31 kg CO2 per litre of petrol and 2.68 kg per litre of diesel.",
   useCases: [

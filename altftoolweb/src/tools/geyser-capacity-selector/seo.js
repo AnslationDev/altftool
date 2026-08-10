@@ -1,4 +1,12 @@
 const seo = {
+  title: "Geyser Capacity Selector: Litres for Bath or Shower",
+  metaDescription:
+    "Size a water heater from the mixing balance — a 20 L bucket at 40 °C from a 60 °C tank draws 10 L — plus reheat minutes and kWh per heat.",
+  steps: [
+    "Choose the Bucket bath or Shower chip, then set Bucket size (litres) and Buckets per person — or Shower time per person (minutes) and Shower flow (litres per minute) — plus \"People bathing back to back\".",
+    "Enter Comfortable bathing temperature (°C), Mains water temperature (°C), Thermostat setting (°C) and Element rating (W), and optionally an electricity tariff per unit.",
+    "Read the Recommended tank size in litres with the Hot water drawn per person, Cold mixed in per person, \"Time to heat a full tank from cold\" in minutes and Energy per full heat in kWh rows, then press Copy result.",
+  ],
   intro:
     "This selector sizes a storage water heater from the mixing balance rather than a rule of thumb: hot water drawn equals bath volume multiplied by (bath temperature minus mains temperature) divided by (tank temperature minus mains temperature). A 20 litre bucket at 40 °C from a 60 °C tank with 20 °C mains therefore draws only 10 litres, which is why a 15 litre geyser suits one bucket bath and 25 litres suits two in a row. Reheat time and energy come from Q = m x c x dT with water's specific heat of 4,186 J/kg·K.",
   useCases: [

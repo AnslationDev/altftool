@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Quote Generator: 48 Quotes, Same Seed, Same Line",
+  metaDescription:
+    "48 attributed quotes from 35 public-domain authors across six themes, 8 each. Copy takes the line and the author together; a seed reproduces any pick.",
+  steps: [
+    "Pick a Theme — Any theme, Motivation, Wisdom, Perseverance, Creativity, Leadership or Learning — or type a number into 'Seed (same seed, same quote)'.",
+    "Press 'New quote' to draw from that theme's pool of 8; quotes you have already seen are excluded until 'Unseen left' hits zero and the pool restarts.",
+    "Read the quote with its author plus 'Quotes in this theme', Words and 'Characters with credit', then press Copy to take it as \"quote\" — Author.",
+  ],
   intro:
     "The Random Quote Generator shows one attributed quotation at a time from a built-in set of 48 lines by 35 authors, grouped into six themes: motivation, wisdom, perseverance, creativity, leadership and learning. Every quote is drawn from public-domain writers such as Marcus Aurelius, Confucius, Marie Curie and Rabindranath Tagore, and the author's name is copied along with the text so you never post an unattributed line. Selection is seed-driven, so entering the same seed number always returns the same quote.",
   useCases: [

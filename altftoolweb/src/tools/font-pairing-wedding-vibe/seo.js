@@ -1,4 +1,7 @@
 const seo = {
+  title: "Wedding Font Pairing: x-Height in mm and 300 dpi Sizes",
+  metaDescription:
+    "Eight script, caps and serif pairings for invitations, checked as printed x-height in millimetres against the 1.4 mm legibility mark, plus dpi artboards.",
   intro:
     "Wedding Font Pairing matches a calligraphic script for names with a caps face for accent lines and a text serif or sans for the details, then checks the result in millimetres rather than points. It converts each point size to a physical x-height (1 pt = 1/72 inch = 0.3528 mm), compares it against the 1.4 mm x-height the European Commission's labelling readability guideline treats as comfortably legible, estimates characters per line inside your margins and gives the artboard size in pixels at 300, 350 or 600 dpi.",
   useCases: [

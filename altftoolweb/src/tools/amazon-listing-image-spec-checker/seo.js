@@ -1,4 +1,12 @@
 const seo = {
+  title: "Amazon Image Checker: 1000 px Zoom, White Background",
+  metaDescription:
+    "Test width, height, format and frame fill against Amazon's 500 px minimum, 1000 px zoom line, pure white main image and 85% fill rules.",
+  steps: [
+    "Enter Width (px), Height (px) and File size (MB), then choose the File format: JPG, PNG, TIF, GIF, WebP or HEIC.",
+    "Pick the Image slot and Colour mode, set Product fills this share of the frame (%), and tick the pure white background box.",
+    "Read the Verdict with longest side, megapixels and whether zoom is enabled, then press Copy report.",
+  ],
   intro:
     "This checker tests a product photo against Amazon's published image requirements before you upload it to Seller Central. It applies the real thresholds: at least 500 px on the longest side to be accepted, 1000 px to switch on the detail-page zoom, 1600 px as Amazon's recommendation, a 10000 px ceiling, a pure white RGB 255,255,255 background on the main image, and a product that fills at least 85% of the frame. Additional images are checked against the looser rules that apply to lifestyle and infographic slots.",
   useCases: [

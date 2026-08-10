@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bill Split Calculator India: GST, Service Charge, Tip",
+  metaDescription:
+    "Applies 5% or 18% GST on food plus service charge, keeps alcohol on state VAT and the tip untaxed, then splits equally or by what each person ordered.",
+  steps: [
+    "Enter food and soft drinks pre-tax, alcohol pre-tax with its state tax percentage, and any service charge on the food bill.",
+    "Choose 5% standalone or 18% hotel GST, set the tip percentage, then split Equally or By what each ordered.",
+    "Read the grand total with CGST and SGST shown separately, the per-head amount, and the Who pays what table.",
+  ],
   intro:
     "An Indian restaurant bill is built in a fixed order: food subtotal, then any service charge, then GST on the two together, then a tip that carries no tax. This calculator follows that order, applies 5% GST for a standalone restaurant or 18% where the restaurant sits inside a hotel with a declared room tariff above Rs 7,500 a day, keeps alcohol separate because it falls outside GST and attracts state excise or VAT instead, and then splits the total either equally or in proportion to what each person ordered.",
   useCases: [

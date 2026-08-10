@@ -1,4 +1,12 @@
 const seo = {
+  title: "Confidence Interval Calculator from Estimate and SE",
+  metaDescription:
+    "Enter an estimate and its standard error, pick 90, 95 or 99%, and read the bounds with the exact z (1.959964 at 95%) and margin of error.",
+  steps: [
+    "Type your figure into \"Sample estimate\" and its already-computed \"Standard error\" in the Inputs panel, or press the \"Mean 50 ± SE 2.5\" example chip to load a worked case.",
+    "Choose 90%, 95% or 99% from Confidence level, and tick \"Append percentage units\" when the estimate is a proportion so both bounds carry a % suffix.",
+    "Read the lower-to-upper interval with its \"95% normal confidence interval\" caption and the Estimate, Standard error, Critical value (1.959964 at 95%) and Margin of error tiles, then Copy the summary or Download it as confidence-interval-calculator.txt.",
+  ],
   intro:
     "This confidence interval calculator takes a sample estimate and its already-computed standard error and returns the normal-approximation interval estimate ± z × SE, using the exact critical values 1.644854 for 90%, 1.959964 for 95% and 2.575829 for 99%. Students, analysts and anyone reading a survey result get the lower and upper bounds plus the margin of error broken out as its own line. It assumes you already have a valid standard error, so it is a critical-value step rather than a full analysis of raw data.",
   useCases: [

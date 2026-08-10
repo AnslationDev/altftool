@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hospital Bag Checklist: 10 Nappies, 6 Pads a Day",
+  metaDescription:
+    "Six answers - delivery type, nights, feeding, weather, partner, weeks - give a labour, ward and going-home list with consumables scaled to your stay.",
+  steps: [
+    "Choose Expected delivery type, Expected nights in hospital, Feeding plan, Weather where you will deliver and Weeks pregnant now.",
+    "Tick A birth partner is staying, then check the Pack the bag by row against week 36.",
+    "Tick items off in the Labour bag, For the baby and Going home sections, then press Copy list.",
+  ],
   intro:
     "This builder turns six answers — delivery type, expected nights in hospital, feeding plan, weather, whether a partner is staying and how many weeks pregnant you are — into a hospital bag list with worked-out quantities rather than vague suggestions. Consumables scale with the length of stay: nappies at about ten a day, maternity pads at about six a day plus an opening pack. It follows the common antenatal advice to have the bag ready by 36 weeks, and separates the labour bag from the ward and going-home bags.",
   useCases: [

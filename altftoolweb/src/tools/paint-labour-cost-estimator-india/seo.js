@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paint Labour Cost Estimator India: Rate Per Sqft",
+  metaDescription:
+    "Carpet area to painter labour bill by finish grade, city tier, putty and ceiling height. Shows painted area, rate per sqft and painter-days. Labour only.",
+  steps: [
+    "Enter the carpet area in sqft and the wall area factor (default 3.2 x carpet area at a 10 ft ceiling), then the floor-to-ceiling height in feet and how many painters are on site.",
+    "Pick a finish grade from \"Distemper / whitewash\" up to \"Texture / designer finish\" and a city tier from Metro to Tier 3, then tick \"Paint the ceiling too\" or \"Full-wall putty (2 coats)\" as they apply.",
+    "Read the total painter labour cost with the wall and ceiling area painted, the finish and putty rates per sqft, the scaffolding / height surcharge, and painter-days against duration with your crew.",
+  ],
   intro:
     "This estimator converts a home's carpet area into the painter's labour bill by multiplying painted surface area by a per-sqft labour rate that varies with finish grade and city tier. It uses the standard contractor rule that paintable wall area is roughly 3 to 3.5 times carpet area at a 10 ft ceiling, adds the ceiling as a separate surface, and prices full-wall putty as its own labour line. It is built for homeowners comparing painting quotes and for contractors sanity-checking a rate before they send one.",
   useCases: [

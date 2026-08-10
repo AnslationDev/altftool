@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Balance Transfer Calculator With Break-Even",
+  metaDescription:
+    "Price your outstanding balance at the new rate, subtract processing fee and legal charges, and see the break-even month and lower EMI vs earlier closure.",
+  steps: [
+    "Enter Outstanding loan balance (INR), Current interest rate (% per year), Remaining tenure (months) and the New lender's rate (% per year).",
+    "Add Processing fee (% of balance) and Legal, valuation & stamping charges (INR), then set After the transfer I want to — Keep tenure, lower EMI or Keep EMI, finish sooner.",
+    "Read Net saving after all costs with the new EMI and tenure, the Break-even on the fee row in months, and the side-by-side Keep the tenure and Keep the EMI cards.",
+  ],
   intro:
     "The Balance Transfer Savings Calculator tells you whether moving your home, car or personal loan to a cheaper lender is actually worth it. It rebuilds your current EMI from the outstanding balance and remaining tenure, prices the same balance at the new rate, then subtracts the processing fee and legal or valuation charges to give a net figure. It also splits the two ways to take the benefit — a lower EMI over the same tenure, or the same EMI with an earlier closure — and shows the month the fee is recovered.",
   useCases: [

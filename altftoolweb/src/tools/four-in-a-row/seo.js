@@ -1,4 +1,12 @@
 const seo = {
+  title: "Four in a Row: 7x6 Disc Drop Game vs a Minimax AI",
+  metaDescription:
+    "Drop discs on a 7-column, 6-row board and line up four. The AI searches 2, 4 or 6 plies on Easy, Medium and Hard, or play 2 Players locally.",
+  steps: [
+    "On the Ready to play? card choose a Mode, vs AI or 2 Players, and for vs AI an Easy, Medium or Hard difficulty — a 2, 4 or 6-ply minimax search.",
+    "Press Start game, then click a column or aim with the Left and Right arrow keys and drop a disc with Enter or Space into the 7x6 board.",
+    "The completed four is highlighted and the round panel shows Rounds — You, AI and Draws, with Play again and Change mode; the header stats track Best streak.",
+  ],
   intro:
     "Four in a Row is a browser version of the classic 7-column by 6-row disc-drop game, where discs fall to the lowest empty cell and the first player to line up four horizontally, vertically or diagonally wins. The computer opponent runs a minimax search with alpha-beta pruning at a depth you choose — 2 plies on Easy, 4 on Medium and 6 on Hard — and prefers the centre column when scores tie. There is also a pass-and-play mode for two people on the same screen, with a win/loss tally and a best-streak counter.",
   useCases: [

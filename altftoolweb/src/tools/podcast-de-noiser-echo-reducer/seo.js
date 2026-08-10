@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast De-noiser: 70 Hz High-Pass + FFT Denoise",
+  metaDescription:
+    "Clean a spoken-word track in the browser: 70 Hz high-pass, 14 kHz low-pass and afftdn at -22, -28 or -35 dB, out as WAV. It cuts noise, not reverb.",
+  steps: [
+    "Pick your recording in the Source file field, which accepts audio/* files.",
+    "Set Strength to light, medium or strong — afftdn noise floors of -22, -28 and -35 dB — and press Process locally.",
+    "The cleaned altftool-podcast-de-noiser-echo-reducer.wav is written out and downloaded from the page.",
+  ],
   intro:
     "The Podcast De-noiser & Echo Reducer cleans a spoken-word recording in your browser by running an FFmpeg chain of a 70 Hz high-pass, a 14 kHz low-pass and the afftdn FFT noise reducer at one of three noise-floor settings (-22, -28 or -35 dB). Load an audio file, pick light, medium or strong, and a cleaned WAV is written back out without the file ever leaving the machine. It is for podcasters and interviewers who recorded in an untreated room and need hum, rumble and tape-style hiss pulled down before editing.",
   useCases: [

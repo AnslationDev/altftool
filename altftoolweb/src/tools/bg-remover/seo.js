@@ -1,4 +1,7 @@
 const seo = {
+  title: "Background Remover: Get a Transparent PNG Cutout",
+  metaDescription:
+    "Cut a subject out in your browser and save a transparent PNG. Drop it on five backdrops, add a contact shadow, or batch a set of images into one ZIP.",
   intro:
     "The Background Remover runs a neural segmentation model inside your browser to separate the subject from its background and return a transparent PNG, with no upload and no account. Beyond the cutout it can drop the subject onto a preset backdrop or a flat colour, add a configurable contact shadow, and process a folder of images in one pass into a downloadable ZIP. It suits anyone preparing product shots, profile photos or design assets who needs a clean alpha channel rather than a rough lasso selection.",
   useCases: [

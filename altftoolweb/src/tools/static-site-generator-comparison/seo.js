@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compare 7 Static Site Generators by Your Own Weights",
+  metaDescription:
+    "Weight build speed, client JS, rendering and scale to rank Next.js, Astro, Hugo, Eleventy, Gatsby, SvelteKit and Jekyll, then project CI minutes.",
+  steps: [
+    "Under 'Start from a project type' choose Documentation site, Marketing site, Personal blog, Content site with logged-in areas or Large catalogue / ecommerce, or move the seven 0-5 sliders (Build speed, Little client JavaScript, Dynamic rendering, Ecosystem and maintenance, Content authoring, Component reuse, Large-site scale) yourself.",
+    "Narrow the field with 'Component framework you already use' and the 'I need server rendering' checkbox, which rules out generators that cannot do SSR or incremental regeneration.",
+    "Read 'Best fit for these weights' with its score out of 100 and the full ranking, then enter Milliseconds per page, Pages generated and Builds per day to get Total build wall clock and CI minutes per month; 'Copy result' copies the ranking and projection.",
+  ],
   intro:
     "This comparison scores seven static site generators — Next.js, Astro, Hugo, Eleventy, Gatsby, SvelteKit and Jekyll — against weights you set across build speed, shipped JavaScript, rendering modes, ecosystem, authoring, component reuse and large-site scale. The ranking is a weighted mean of 1-5 capability ratings, so moving a slider immediately shows which generator the trade-off actually favours. A separate projection turns your own measured milliseconds per page into build wall clock and monthly CI minutes.",
   useCases: [

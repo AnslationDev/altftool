@@ -1,4 +1,12 @@
 const seo = {
+  title: "EMI Moratorium Calculator: Real Cost of Pausing EMIs",
+  metaDescription:
+    "See what a loan moratorium really costs: interest compounds on your balance, then the loan is repriced as a longer tenure or a higher EMI.",
+  steps: [
+    "Enter the outstanding loan balance in INR, the interest rate per year, the remaining tenure in months and the moratorium length.",
+    "Choose how the lender recovers the deferred amount: keep the EMI and extend the tenure, or keep the instalment count and raise the EMI.",
+    "Read the extra cost of pausing, the interest accrued while paused and the new EMI after restart, then press Copy result.",
+  ],
   intro:
     "The EMI Moratorium Impact Calculator shows the true price of pressing pause on your loan. It compounds interest on your outstanding balance for every month of the break, capitalises it, and then recalculates the loan two ways — keeping the same EMI so the tenure stretches, or keeping the same number of instalments so the EMI rises. Borrowers considering a lender-offered moratorium, a step-down period after a job loss, or a construction-linked holiday can see the added months and added rupees before signing.",
   useCases: [

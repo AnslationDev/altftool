@@ -1,4 +1,12 @@
 const seo = {
+  title: "Korea C-3 Visa Cover Letter Builder with Date Checks",
+  metaDescription:
+    "Drafts a C-3 short-term visit letter and checks the 90-day sojourn from your entry day, single-entry validity and the US$40/70/90 consular fee.",
+  steps: [
+    "Fill the Applicant panel — Full name (as in passport), Nationality, Passport number and Passport expiry date — then the trip fields: Arrival in Korea, Departure from Korea, Itinerary (one line per leg) and Accommodation.",
+    "Choose the Visa type and Purpose of visit, add the Expected visa issue date and People applying together; the builder counts the sojourn with the entry day as day one, sets the date a single-entry visa lapses and totals the US$40 / US$70 / US$90 fee per applicant.",
+    "Check 'Sojourn on these dates', 'Visa must be used by', 'Consular fee total' and 'Passport must stay valid to' plus any warnings, then press 'Copy letter' to take the text from 'Your cover letter' alongside the Document checklist.",
+  ],
   intro:
     "The South Korea Visa Cover Letter Builder writes the covering letter for a C-3 short-term visit visa application and checks the dates behind it. A short-term visit visa permits a sojourn of up to 90 days counted with the day of entry as day one, a single-entry visa lapses three months after issue whether or not it was used, and the standard consular fee is US$40 single entry, US$70 double and US$90 multiple. The tool applies all three to your dates and party size, and flags a passport short of the six-month rule.",
   useCases: [

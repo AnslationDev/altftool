@@ -1,4 +1,12 @@
 const seo = {
+  title: "TLS Certificate Expiry Tracker With .ics Reminders",
+  metaDescription:
+    "Track notAfter dates in your browser: days remaining, renewal deadline at your lead time, worst-first sorting and a certificate-renewals.ics download.",
+  steps: [
+    "Fill in 'Hostname or certificate name', the 'Expiry date (notAfter)' from your CA dashboard or the browser padlock, an 'Owner (person or team)' and a 'Renewal lead time (days before expiry)' of 0 to 398, then press 'Add certificate'.",
+    "The list sorts worst-first — expired, then inside 7 days, then open renewal windows — and lives in your browser's localStorage; 'Clear list' empties it.",
+    "Read 'Certificates needing action' out of the total tracked, then press 'Copy report' for the text summary or 'Reminders (.ics)' to download certificate-renewals.ics with an all-day reminder on each renewal date.",
+  ],
   intro:
     "This tracker computes the days remaining and the renewal deadline for every TLS certificate you list, flags anything expired or inside its renewal window, and exports RFC 5545 iCalendar reminders. It applies the CA/Browser Forum rule capping public certificates at 398 days of validity and defaults to the 30-day renewal lead time Let's Encrypt recommends. It is built for sysadmins and DevOps teams who track a handful of certificates and want a local list — everything stays in the browser, nothing is uploaded.",
   useCases: [

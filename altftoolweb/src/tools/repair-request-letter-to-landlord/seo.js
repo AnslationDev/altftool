@@ -1,4 +1,12 @@
 const seo = {
+  title: "Repair Request Letter to Landlord (Model Tenancy Act)",
+  metaDescription:
+    "Log faults, split them landlord vs tenant under the Model Tenancy Act Second Schedule, and draft a dated letter with a deadline and the 50% rent cap.",
+  steps: [
+    "Fill \"Monthly rent (INR)\", \"Days for the landlord to act\", \"Date of this letter\" and the optional \"Access window\", then add each fault under \"Repair log\" with What is wrong, Responsibility, Severity and \"First reported on\".",
+    "Tap an \"Add a common fault\" chip — \"Seepage or damp on walls or ceiling\", \"Leaking or burst water pipe\", \"Broken switch or socket\" — and it arrives pre-tagged landlord or tenant against the Model Tenancy Act Second Schedule; anything set to \"Urgent — premises unsafe or unusable\" gets a two-day window.",
+    "The summary reports Repairs the landlord must do, Oldest unresolved complaint in days, the Priority and Overall deadlines, and Maximum rent set-off in a month at 50% of rent; the drafted letter appears under \"Request letter\" and \"Copy letter\" copies it.",
+  ],
   intro:
     "This tool turns a list of pending faults into a dated repair request letter, sorting each fault into the landlord's column or the tenant's column using the Second Schedule of the Model Tenancy Act, 2021. It records how long each item has been outstanding, sets a deadline for the landlord to act, and states the rent-deduction ceiling of fifty per cent of a month's rent that Section 15 of the Act allows when a landlord neglects repairs he is liable for. Tenants get a paper trail; landlords get a clear scope of work.",
   useCases: [

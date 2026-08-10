@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compost Bin Size Calculator: Litres and Cube Size",
+  metaDescription:
+    "Turns daily kitchen waste in kg into bin litres at 0.5 kg per litre, adds browns for a 25-30:1 C:N ratio, your turning cycle and 25% headspace.",
+  steps: [
+    "Enter Kitchen waste per day (kg) and pick the dry browns you mix in — Dry leaves at 2:1, Shredded cardboard at 1.5:1, or Cocopeat at 1:1 by volume.",
+    "Choose How often you turn it, from a tumbler turned daily at 45 days to a static cold heap at 150 days, or type a Cycle length override (days) between 14 and 365.",
+    "Read Total bin volume needed in litres, the Per chamber figure with its cube side in cm, and Compost harvested each cycle; Copy result saves the sizing.",
+  ],
   intro:
     "A compost bin is sized by the volume of material sitting in it at any moment, not by the weight of scraps you throw in each day — and this calculator converts one into the other. It takes your daily wet kitchen waste at a bulk density of about 0.5 kg per litre, adds the dry browns needed to reach the 25–30:1 carbon-to-nitrogen ratio aerobic composting requires, holds that charge for the retention period your turning regime implies, and averages the fresh and shrunken volumes before adding 25% headspace for turning.",
   useCases: [

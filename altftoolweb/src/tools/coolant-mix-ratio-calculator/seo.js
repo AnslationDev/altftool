@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coolant Mix Ratio Calculator: Litres, Freeze & Boil",
+  metaDescription:
+    "Exact coolant and distilled water litres for your system capacity and target glycol %, with the freeze point and the boil point under cap pressure.",
+  steps: [
+    "Enter 'Cooling system capacity (litres)' and your 'Target glycol concentration (% by volume)'.",
+    "Pick the Coolant chemistry — ethylene glycol or propylene glycol — and 'What is in the bottle': 'Concentrate (undiluted, mix with water)' or 'Ready-to-use 50:50 premix'. Then set 'Radiator cap rating (bar)' and 'Concentration already in the system (%)'.",
+    "Read 'Coolant to pour in' in litres, with the distilled water litres and the resulting ratio underneath, then 'Freeze point of the mix', 'Boil point with no cap pressure', 'Extra headroom from the cap' and 'Boil point with the cap on'. 'Copy result' copies the figures.",
+  ],
   intro:
     "The Coolant Mix Ratio Calculator converts a cooling-system capacity and a target glycol percentage into exact litres of coolant and distilled water, then reads the resulting freeze point and boil point off the published glycol/water property curves. It also adds the boiling headroom your radiator cap contributes, calculated from the water saturation temperature at the raised pressure. Use it when refilling after a flush, when moving a car to a colder region, or when checking whether an existing mix is strong enough.",
   useCases: [

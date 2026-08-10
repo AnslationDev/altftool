@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET Study Prompt Builder: NCERT-Locked AI Prompts",
+  metaDescription:
+    "Turn an NTA NEET unit and study goal into an AI prompt carrying +4/-1 marking, sized against the real 200 minutes for 180 questions.",
+  steps: [
+    "Choose a Subject and a Chapter / unit from the NTA NEET lists, then a Study mode such as \"MCQ drill (NEET pattern)\" or \"NCERT line-by-line check\".",
+    "Set Difficulty, Number of items, Time limit (minutes) and Output language, and list any weak areas to target.",
+    "Check the marks the drill is worth, your pace per item against the real 200 min / 180 Q pace and the 20% guessing break-even, then press Copy prompt.",
+  ],
   intro:
     "The NEET Study Prompt Builder turns a syllabus unit and a study goal into a ready-to-paste AI prompt that is locked to the NTA NEET (UG) syllabus, NCERT sourcing and the paper's +4/-1 marking. It is for droppers and Class 11-12 aspirants who get vague, off-syllabus answers when they ask a chatbot to 'make questions on Human Physiology'. Alongside the prompt it sizes the drill using the real paper's pace of 200 minutes for 180 questions and shows the 20% accuracy break-even below which guessing costs marks.",
   useCases: [

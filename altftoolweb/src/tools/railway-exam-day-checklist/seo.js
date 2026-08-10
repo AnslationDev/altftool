@@ -1,4 +1,12 @@
 const seo = {
+  title: "RRB Exam Day Checklist: E-Call Letter, ID, Gate Time",
+  metaDescription:
+    "What to carry to an RRB CBT: printed e-call letter and the photo ID from your application, plus a leave-home time and one-third negative-marking maths.",
+  steps: [
+    "Enter the Gate-closing time on the e-call letter (24-hour), CBT start time, Travel time to the centre and Buffer before gate closing.",
+    "Work through Documents, travel and desk items, ticking every row tagged entry-critical.",
+    "Read Leave home by, then set Questions attempted and Accuracy to see Projected marks out of 100.",
+  ],
   intro:
     "This checklist covers what an RRB candidate must carry and plan for a railway computer-based test: the printed e-call letter, the original photo ID whose number was entered in the application, matching photographs, and the travel plan an out-of-town centre demands. The timeline works backwards from the gate-closing time printed on the e-call letter, and the attempt calculator uses the RRB NTPC CBT-1 pattern — 100 questions, 100 marks, 90 minutes, with one-third of a question's marks deducted per wrong answer.",
   useCases: [

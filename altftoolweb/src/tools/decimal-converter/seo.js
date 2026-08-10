@@ -1,4 +1,7 @@
 const seo = {
+  title: "Decimal Converter: Fractions, Percents, Mixed Numbers",
+  metaDescription:
+    "Converts across eight modes with the working shown: fractions reduce by GCD, and repeating decimals print as 0.(3) or 0.(142857), not 0.333.",
   intro:
     "The Decimal Converter moves a number between fractions, decimals, percentages, mixed numbers and improper fractions across eight conversion modes, and shows the working line by line rather than just the answer. Fractions are reduced to lowest terms with the Euclidean greatest-common-divisor algorithm, decimals are matched to the closest fraction with a denominator up to 10,000, and repeating decimals are detected by tracking long-division remainders so 1/3 is written as 0.(3) instead of a truncated 0.333.",
   useCases: [

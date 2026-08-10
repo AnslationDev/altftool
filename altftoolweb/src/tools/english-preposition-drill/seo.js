@@ -1,4 +1,12 @@
 const seo = {
+  title: "English Preposition Drill: in, on, at with the Rule",
+  metaDescription:
+    "Graded questions on prepositions of time, place, movement and fixed pairs. Every answer states the rule behind it, and blanks are scored apart from wrong.",
+  steps: [
+    "Under \"What to practise\" tick the banks you want — Time, Place, Movement or Fixed pairs — and set Questions to at least 5.",
+    "Pick a preposition for each gapped sentence, or press \"New set of questions\" to draw a fresh set.",
+    "Read the score percentage with Correct, Incorrect and Left blank counted separately alongside the rule for each item, then press Copy result.",
+  ],
   intro:
     "A preposition drill tests the small words that fix a noun in time, place or direction — in, on, at, by, since, into, across — where English follows rules rather than logic. This drill draws graded sentences from four banks (time, place, movement and fixed pairs) and states the governing rule after each answer, so getting one wrong teaches the pattern instead of just marking a cross. Questions are drawn reproducibly, so the same set can be handed out twice, and the score reports right, wrong and unanswered separately.",
   useCases: [

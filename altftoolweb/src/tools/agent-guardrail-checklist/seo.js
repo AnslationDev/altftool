@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Agent Guardrail Checklist: 21 Weighted Ship Gates",
+  metaDescription:
+    "Score an agent across 21 OWASP-aligned items — permissions, spend caps, confirmation gates, injection defences. Any missing critical blocks the verdict.",
+  steps: [
+    "Work down the five category cards — Permissions and least privilege, Spend and runaway protection, Confirmation gates, Prompt injection and data handling, Monitoring and recovery — ticking the guardrails your agent already has; seven are pre-ticked as a mid-flight example.",
+    "Each item carries its weight on the badge (Critical 3 pts, Important 2 pts, Recommended 1 pt), and every unticked critical is listed in the red \"critical guardrails missing\" panel above the categories.",
+    "Read the Guardrail score percentage with its verdict line plus the Weighted score, Items done and Critical gaps rows, then press Copy report for a plain-text scorecard, or Reset to return to the example state.",
+  ],
   intro:
     "This checklist scores an AI agent's guardrails across 21 weighted items — permissions and least privilege, spend caps, human confirmation gates, prompt-injection defences, and monitoring — before it ships. The item set follows the OWASP Top 10 for LLM Applications (Excessive Agency and Prompt Injection) plus standard operational controls, and any missing critical item blocks the ship verdict regardless of the overall percentage. It is for engineers and teams putting a tool-using agent in front of real systems.",
   useCases: [

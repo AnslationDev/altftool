@@ -1,4 +1,12 @@
 const seo = {
+  title: "FD Premature Withdrawal Calculator: Break or Borrow?",
+  metaDescription:
+    "What a bank pays when you close an FD early — repriced at the card rate for the period it ran, less the penalty — versus a loan held to the maturity date.",
+  steps: [
+    "Enter \"Deposit amount (INR)\", \"Contracted rate (% per year)\", \"Original tenure (months)\" and \"Months completed so far\".",
+    "Add the \"Bank's card rate for the completed period (%)\" and the \"Premature closure penalty (percentage points)\", plus \"Cash you need now (INR)\" and the loan rate.",
+    "Read \"You receive on breaking\" with the rate actually applied, then compare the \"Break the deposit\" and \"Borrow against it\" columns at the original maturity date.",
+  ],
   intro:
     "This calculator shows what a bank actually pays when you close a fixed deposit before its maturity date: interest is recomputed at the card rate for the period the deposit really ran, then reduced by the bank's premature closure penalty, which is typically 0.50 to 1.00 percentage points. It also runs the alternative — borrowing against the deposit and letting it mature — and compares the two on what you hold at the original maturity date. Useful when you need cash mid-term and want to know which route costs less.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fraction Calculator with Step-by-Step LCM Working",
+  metaDescription:
+    "Add, subtract, multiply or divide fractions and see the LCM, equivalent fractions and GCD reduction. Simplifies, takes mixed numbers, converts decimals.",
+  steps: [
+    "On the Calculate tab, type the Numerator and Denominator of the first fraction and the second fraction, ticking Mixed numbers (add a whole-number part) if you need a Whole box too.",
+    "Choose the operation from the +, −, × and ÷ buttons, or load a quick example such as 5/6 − 3/8 or 7/8 ÷ 3/4.",
+    "Read the answer as a simplified fraction, a mixed number and a decimal, with the numbered Step-by-step working underneath, then press Copy result.",
+  ],
   intro:
     "The Fraction Calculator adds, subtracts, multiplies and divides two fractions and shows every step of the working — the LCM of the denominators, the equivalent fractions, the numerator arithmetic and the final division by the GCD. It also simplifies any fraction on its own and converts a decimal to a fraction by writing it over a power of ten and reducing. Mixed numbers are accepted and converted to improper fractions first, and all arithmetic runs on BigInt so large numerators and denominators stay exact.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Number Plate Decoder: State, RTO, Series",
+  metaDescription:
+    "Type a plate like MH 12 AB 1234 to split it into state, RTO office, letter series and serial. Reads BH-series and CD/CC/UN plates too, offline.",
+  steps: [
+    "Type the plate into Registration number, which shows the MH 12 AB 1234 format, or tap one of the example plate buttons underneath.",
+    "The decoder matches what you typed against the standard state format, the Bharat BH-series pattern and diplomatic CD, CC and UN plates, with no online lookup.",
+    "Read Decoded number with its plate kind, then the State or union territory, RTO office code, Letter series and Serial rows, and press Copy result.",
+  ],
   intro:
     "This decoder splits an Indian registration number into the four blocks it is built from — the two-letter state or union territory code, the RTO office code, the letter series and the four-digit serial — and explains what each one means. It also reads Bharat BH-series numbers, which carry a year of first registration instead of a state, and diplomatic CD, CC and UN plates. Nothing is queried online: it explains the format of the number you type, which is why it works offline and reveals nothing about any owner.",
   useCases: [

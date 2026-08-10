@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC CGL Countdown: Tier-I and Tier-II Revision Plan",
+  metaDescription:
+    "Live clock to CGL Tier-I or Tier-II, the full mocks that fit at your weekly cadence, and the 50/80/95% revision taper mapped onto calendar dates.",
+  steps: [
+    "Pick CGL Tier-I or CGL Tier-II, edit the exam date to the one notified on ssc.gov.in, and set full mocks per week.",
+    "Watch the live days, hours, minutes and seconds run down, and read the full mocks that fit at that weekly cadence.",
+    "Follow the Revision milestones as dates: syllabus to 50%, mocks and PYQs to 80%, focused revision to 95%, then the exam-week taper.",
+  ],
   intro:
     "This countdown shows the live days, hours, minutes and seconds to SSC CGL Tier-I or Tier-II and converts the gap into a plan: how many full mock tests fit at your weekly cadence, and a standard revision taper — new material until 50% of the time is gone, mocks to 80%, revision to 95%, then an exam-week wind-down — mapped to exact calendar dates. Tier-I customarily runs in September and Tier-II in the December-January window; the date stays editable so you can enter the exact schedule notified on ssc.gov.in.",
   useCases: [

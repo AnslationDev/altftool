@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cell Explorer: Clickable Animal and Plant Cell Diagram",
+  metaDescription:
+    "Click any organelle on the animal or plant cell diagram for its function and one fact: nucleus, mitochondria, Golgi, lysosomes, chloroplast, vacuole.",
   intro:
     "Cell Explorer is a clickable diagram of an animal cell and a plant cell: tap an organelle and it gives you what that structure does plus one concrete fact about it. The animal view covers the nucleus, mitochondria, endoplasmic reticulum, Golgi apparatus, lysosomes and the cell membrane; the plant view swaps in the chloroplast, the central vacuole and a rigid cellulose cell wall. It is built for students learning cytology and for anyone who wants the animal-versus-plant difference shown rather than listed.",
   useCases: [

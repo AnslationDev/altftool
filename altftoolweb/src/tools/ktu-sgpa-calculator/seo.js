@@ -1,4 +1,7 @@
 const seo = {
+  title: "KTU SGPA Calculator: S=10, A=8.5 Half-Point Scale",
+  metaDescription:
+    "Credit-weighted KTU SGPA and CGPA on the S 10, A+ 9, A 8.5, B+ 8 scale, with credits earned kept separate from credits registered.",
   intro:
     "KTU computes SGPA as the credit-weighted mean of your grade points for one semester — Σ(credits × grade point) ÷ Σ(credits) — on a scale that steps in halves: S is 10, A+ is 9, A is 8.5, B+ is 8, B is 7.5, C+ is 7, C is 6.5, D is 6 and P is 5.5. This calculator applies that scale, rolls each semester into a credit-weighted CGPA, and keeps credits registered separate from credits earned so a failed course is visible rather than buried in the average. It also shows how your credits are spread across the grades.",
   useCases: [

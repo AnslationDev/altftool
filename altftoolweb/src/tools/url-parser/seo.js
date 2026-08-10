@@ -1,4 +1,12 @@
 const seo = {
+  title: "URL Parser: Split Protocol, Host, Path, Query & Hash",
+  metaDescription:
+    "Paste a URL and read protocol, host, hostname, port, path and hash line by line, with every query parameter listed as a decoded key = value pair.",
+  steps: [
+    "Paste a URL into the Input box, or press Load sample to load https://user:pw@example.com:8080/path/page?x=1&y=2#top.",
+    "The Result pane updates as you type, printing Protocol, Host, Hostname, Port, Path and Hash — with (default) for an omitted port and (none) for a missing hash.",
+    "Read the Query block, where each parameter is indented as key = value already percent-decoded, then press Copy; a string the parser refuses returns Invalid URL.",
+  ],
   intro:
     "URL Parser splits any URL into its component parts using the browser's built-in WHATWG URL constructor — the same parser the address bar uses — and prints protocol, host, hostname, port, path and hash on separate lines, followed by every query parameter as a decoded key = value pair. Because it uses the real parser rather than a regular expression, it applies the same normalisation and percent-decoding a browser would. Anything the constructor rejects comes back as 'Invalid URL', which is itself a useful answer.",
   useCases: [

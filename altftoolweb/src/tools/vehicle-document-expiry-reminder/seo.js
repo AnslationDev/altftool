@@ -1,4 +1,7 @@
 const seo = {
+  title: "Vehicle Document Expiry Reminder: PUC, RC, Insurance",
+  metaDescription:
+    "Track insurance, PUC, RC, fitness, permit and licence expiry in one browser-only list, with days left, a renewal start date and the rule behind each.",
   intro:
     "This tracker turns a pile of vehicle paperwork into one dated queue: enter the expiry printed on each document and it returns the days remaining, the date you should start the renewal, and the statutory rule and penalty attached to that document. It covers insurance, the PUC certificate, the registration certificate, fitness, permit, driving licence and road tax, using the validity periods set by the Motor Vehicles Act, 1988 and the Central Motor Vehicles Rules, 1989. The list is stored only in your own browser.",
   useCases: [

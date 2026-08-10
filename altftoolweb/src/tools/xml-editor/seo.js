@@ -1,4 +1,7 @@
 const seo = {
+  title: "XML Formatter and Minifier with Line-Number Errors",
+  metaDescription:
+    "Pretty-print or minify XML in your browser. A mismatched tag is named with its line number, and comments, CDATA and the declaration survive.",
   intro:
     "This XML editor parses a document against the XML 1.0 well-formedness rules — every open tag closed by a matching close tag, exactly one root element, no text outside that root — and then either pretty-prints it with the indent you choose or strips it back to a single line. Comments, CDATA sections, the XML declaration, processing instructions and DOCTYPE internal subsets all survive the round trip. It is for developers reading an API response, a feed or a config file that arrived as one unreadable line.",
   useCases: [

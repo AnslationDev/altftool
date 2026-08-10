@@ -1,4 +1,12 @@
 const seo = {
+  title: "Language Exchange Planner: Equal Tandem Time Blocks",
+  metaDescription:
+    "Halves the talking time so both partners get identical minutes, then prints an agenda with clock times and three topic cards at your level.",
+  steps: [
+    "Enter \"First language spoken\" and \"Second language spoken\", a \"Session length (minutes)\" between 20 and 240, and a \"Start time (24-hour)\" if you want clock times.",
+    "Set the Warm-up, \"Feedback per language\", Break and Wrap-up minutes; whatever is left over is halved so Conversation block 1 and Conversation block 2 run exactly the same length.",
+    "Read \"Time actually spent talking\" and the Session agenda table of When, Block, Language and Minutes, draw three Topic cards at Beginner, Intermediate or Advanced level with New topics, then press Copy result.",
+  ],
   intro:
     "A language exchange, or tandem, is a session where two people who each want the other's language split the time evenly rather than one teaching the other. This planner does the arithmetic: it subtracts the warm-up, feedback, break and wrap-up from the total, halves what is left, and gives both conversation blocks exactly the same number of minutes, with clock times if you enter a start time. It also draws three topic cards with three prompts each, graded from concrete beginner topics to abstract advanced ones.",
   useCases: [

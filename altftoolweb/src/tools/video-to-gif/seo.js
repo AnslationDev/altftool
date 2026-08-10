@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video to GIF Converter: MP4, WebM, OGG in Browser",
+  metaDescription:
+    "Trim an MP4, WebM or OGG clip and encode a GIF in your browser: 5-30 fps, 100-1920 px wide, 32-256 colours. Reports the size in KB before download.",
+  steps: [
+    "Press Choose Video File and pick an MP4, WebM or OGG clip; 20MB or less is recommended.",
+    "Drag the Start Marker and End Marker sliders, set Target Width, Frame Rate (FPS) and Color Depth, then press Generate GIF.",
+    "Check the reported File Size in KB, then press Download Animated GIF to save converted-<timestamp>.gif.",
+  ],
   intro:
     "The Video to GIF Converter turns a trimmed section of an MP4, WebM or Ogg clip into an animated GIF by seeking the video frame by frame, drawing each frame to a canvas, and encoding it with a per-frame quantised palette of 256, 128, 64 or 32 colours. You control the in and out points, frame rate from 5 to 30 fps, output width from 100 to 1920 pixels, playback speed from 0.5x to 2x, and whether the result loops. Everything runs in your browser and the finished GIF's size in kilobytes is shown before you download it.",
   useCases: [

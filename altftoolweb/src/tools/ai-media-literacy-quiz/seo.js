@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Media Literacy Quiz: 12 Synthetic-Media Cases",
+  metaDescription:
+    "Twelve scenario questions on C2PA credentials, detector limits and verification, each explained. 70% passes, and the score names your weakest topic.",
+  steps: [
+    "Choose \"Questions in this round\" — 5, 8 or 12 — and set the \"Question set\" number; the same set number always returns the same questions in the same order, so a class can take an identical round.",
+    "Answer each \"Question N of N\" by selecting one of its options, then press \"Check answers\"; Shuffle draws a fresh set and Reset clears your answers, both behind a confirmation.",
+    "\"Your score\" shows the percentage with Answered, Correct, Wrong, the 70% pass mark, Pass or Below pass mark and your Weakest topic, and every question reveals its explanation; \"Copy score\" copies the summary.",
+  ],
   intro:
     "The AI Media Literacy Quiz scores how well you can judge whether an image, video, voice clip or claim was produced or distorted by AI, using scenario questions drawn from how verification actually works — C2PA content credentials, reverse image search, out-of-band confirmation and primary-source checking. Every answer is explained, so a wrong choice teaches the underlying rule rather than just deducting a point. It is built for teachers, journalists, moderators and anyone briefing a team on synthetic media.",
   useCases: [

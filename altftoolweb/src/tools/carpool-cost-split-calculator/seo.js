@@ -1,4 +1,12 @@
 const seo = {
+  title: "Carpool Cost Split Calculator: Fuel, Tolls, Per Rider",
+  metaDescription:
+    "Splits running cost by person-kilometres and tolls and parking equally, then shows each rider's per-trip and monthly share.",
+  steps: [
+    "Under \"The trip\", enter One-way route distance (km), Trips per month, Fuel price (INR per litre), Fuel efficiency (km per litre), Wear allowance (INR per km) and the tolls and parking per trip.",
+    "In \"Who rides, and how far\" press Add rider for each person, set \"Kilometres in the car, one way\", mark one of them \"This is the driver\", and untick \"The driver also pays a share\" if the driver rides free.",
+    "Read \"Cost of one trip\" with the Running cost per km, Total person-kilometres per trip and \"Driver saves versus driving alone\" rows, then the Rider / Km each way / Per trip / Per month / Share table under \"What each person owes\", and press Copy result.",
+  ],
   intro:
     "This carpool cost split calculator divides a shared commute into the two kinds of cost that behave differently: running cost, which is fuel price divided by fuel efficiency plus a per-kilometre wear allowance, and fixed cost per trip such as tolls and parking. Running cost is shared by person-kilometres so a rider who joins halfway pays for half the distance, while tolls and parking are split equally. It reports each person's share per trip and per month, and how much the car owner saves against driving alone.",
   useCases: [

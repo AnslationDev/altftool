@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subject Verb Agreement Drill: 48 Hard-Case Questions",
+  metaDescription:
+    "Practise only the cases that trip people up: intervening phrases, or and nor subjects, each and none, quantities and nouns that only look plural.",
+  steps: [
+    "Under 'What to practise', tick the categories you want: words between subject and verb, subjects joined by and/or/nor, indefinite pronouns, quantities and collective nouns, and nouns that only look plural.",
+    "Set Questions between 5 and 48, press 'New set of questions', then pick one of the two competing verb forms offered for each blanked sentence.",
+    "Every answer prints the full corrected sentence and names the governing rule, while the Score panel tracks correct, incorrect and blank against the pool size — 'Copy result' copies the score and the rules you missed.",
+  ],
   intro:
     "Subject-verb agreement means the verb matches the number of its subject — and the errors almost never happen in simple sentences. They happen when something sits between the subject and the verb, when two subjects are joined by or or nor, when a quantity or fraction is the subject, or when a noun such as news, mathematics or scissors misreports its own number. This drill isolates each of those cases, offers the two competing verb forms, and states the governing rule with the corrected sentence after every answer.",
   useCases: [

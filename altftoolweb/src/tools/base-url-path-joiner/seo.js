@@ -1,4 +1,12 @@
 const seo = {
+  title: "Base URL Path Joiner: Safe Join vs RFC 3986 Result",
+  metaDescription:
+    "Join a base URL with path segments and see both answers: the safe concatenation and what new URL()/fetch resolves, with the RFC 3986 rule named.",
+  steps: [
+    "Enter your base URL in the Base URL field and add each path segment with Add segment.",
+    "Set Duplicate query keys, then tick Force a trailing slash or Percent-encode each segment.",
+    "Read the Joined URL beside What new URL() / fetch resolves, then press Copy result.",
+  ],
   intro:
     "This joiner takes a base URL and a list of path segments and produces two answers: the safe concatenation, which always preserves the base path, and the RFC 3986 section 5 reference resolution that fetch and the WHATWG URL parser actually perform. Where the two disagree it names the rule responsible — a path-absolute reference replacing the base path, a missing trailing slash dropping the last base segment, or the base query string being discarded. Dot segments are removed with the algorithm in section 5.2.4.",
   useCases: [

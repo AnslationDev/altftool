@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Debt Calculator and Nightly Payback Planner",
+  metaDescription:
+    "Add up seven nights of shortfall against your target, then spread the payback over several nights — extra sleep capped at 2 hours, wake-up time fixed.",
+  steps: [
+    "Under \"Your week\" enter hours slept for each of the seven nights, from \"Monday night (hours slept)\" through \"Sunday night (hours slept)\".",
+    "In \"Recovery settings\" set \"Nightly sleep target (hours)\", a \"Fixed wake-up time\", \"Extra sleep per recovery night (hours)\" between 0.25 and 2, and \"Recovery nights available\" from 1 to 30.",
+    "\"Total sleep debt\" sums every night's shortfall against the target, and \"Night-by-night payback\" lists each recovery night's Asleep by time, Sleep and Debt left, alongside \"Debt cleared by this plan\" and \"Debt still outstanding\". \"Copy result\" copies the plan.",
+  ],
   intro:
     "Sleep debt is the running total of the hours you slept less than you needed, and this planner works it out from a week of nightly figures then splits the payback into small nightly instalments. It sums max(0, target hours - hours slept) for every night, caps the extra sleep added to any single night at two hours, and prints the earlier bedtime that produces it while your wake-up time stays fixed. It is built for shift workers, students and parents who want a realistic catch-up schedule rather than a Sunday lie-in.",
   useCases: [

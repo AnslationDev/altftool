@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blood Glucose Converter: mg/dL to mmol/L (18.0182)",
+  metaDescription:
+    "Convert a blood sugar reading with the 18.0182 factor and see the ADA fasting, 2-hour or random band it lands in. 126 mg/dL = 7.0 mmol/L.",
+  steps: [
+    "Type the number into Reading and set Unit of that reading to mg/dL or mmol/L; the Switch to mmol/L button flips the input unit.",
+    "Choose When was the sample taken? — Fasting (no food for 8 hours), 2 hours after food or an OGTT, or Random / any time of day.",
+    "Converted reading shows the same value in the other unit, with a Reference band row naming the matching ADA band; Copy result copies both numbers and the band.",
+  ],
   intro:
     "The Blood Glucose Unit Converter changes a blood sugar reading between mg/dL and mmol/L using the standard glucose factor of 18.0182, derived from glucose's molar mass of 180.156 g/mol. It also places the converted value against published American Diabetes Association reference bands for a fasting sample, a two-hour post-meal or OGTT sample, and a random sample. It is useful for anyone reading results across countries: mg/dL is standard in the US and India, mmol/L in the UK, Europe, Canada and Australia.",
   useCases: [

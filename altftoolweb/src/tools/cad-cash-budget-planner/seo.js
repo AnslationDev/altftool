@@ -1,4 +1,12 @@
 const seo = {
+  title: "How Much Cash to Carry to Canada: CAD Float Planner",
+  metaDescription:
+    "Size the Canadian-dollar cash float against card spend, priced with the changer markup, GST, the RBI USD 3,000 note limit and the Rs 10 lakh LRS TCS line.",
+  steps: [
+    "Enter Trip length (days), Travellers and On-ground spend per person per day (CAD).",
+    "Set Share of daily spend that will be cash (%), Money changer's markup on notes (%) and Card foreign-currency markup (%).",
+    "Read Carry in dollars with the all-in rupee cost and the RBI cash limit per visit row, then press Copy plan.",
+  ],
   intro:
     "This planner works out the small cash float a Canada trip actually needs and prices it against putting the same money on a card. The cash side applies the money changer's markup and the GST that Rule 32(2)(b) of the CGST Rules charges on a currency purchase; the card side applies the issuer's foreign-currency markup plus 18% GST on that fee. It also checks the plan against the RBI limit of USD 3,000 in currency notes per visit and the ₹10,00,000 Liberalised Remittance Scheme threshold at which 20% TCS begins.",
   useCases: [

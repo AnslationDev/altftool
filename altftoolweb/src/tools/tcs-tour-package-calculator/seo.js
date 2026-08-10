@@ -1,4 +1,12 @@
 const seo = {
+  title: "TCS on Overseas Tour Package: 5% and 20% Slabs",
+  metaDescription:
+    "Split a tour package across the section 206C(1G) slabs, 5% to Rs 10 lakh and 20% above, using your spend so far this year, and see the invoice total.",
+  steps: [
+    "Enter Package value (INR) and Tour packages already bought this financial year (INR), then set Date of payment, which decides which slab structure applies.",
+    "Tick Buyer has furnished PAN or Aadhaar — leaving it clear applies section 206CC at twice the rate or 5%, whichever is higher — and tick Buyer is an exempt entity for a government body, foreign mission or local authority.",
+    "TCS the operator collects appears with the reason, above rows for Slab structure in force, Yearly threshold, Package taxed at 5%, Package taxed at 20%, Effective rate on this package, 5% slab still unused this year and Total to pay the tour operator.",
+  ],
   intro:
     "Section 206C(1G) of the Income-tax Act makes an Indian seller of an overseas tour programme package collect tax at source from the buyer, and this calculator works out exactly how much. From 1 April 2025 the rate is 5% on the first Rs 10,00,000 of the buyer's tour package spend in a financial year and 20% on anything above that, up from the Rs 7,00,000 threshold that applied from 1 October 2023. It splits a package across the two slabs, shows the effective rate, and totals what the operator will invoice.",
   useCases: [

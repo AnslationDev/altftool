@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thailand Etiquette Guide: Ranked Rules and Legal Lines",
+  metaDescription:
+    "Builds a Thailand etiquette briefing ranked by severity for the places on your itinerary, with lèse-majesté and the vape ban shown whatever you tick.",
+  steps: [
+    "Tick where you will be: temples, restaurants, beaches, transport, markets, a Thai home, business meetings or nightlife.",
+    "Pick what kind of trip it is and how many rules to show, anywhere between 3 and 60.",
+    "Read Fix these first, tick each rule you already know to move the etiquette readiness percentage, and check the legal red lines.",
+  ],
   intro:
     "This guide turns Thai etiquette into a ranked briefing for the places on your itinerary, separating the rules that are merely good manners from the ones that carry a legal penalty. Tick the temples, restaurants, beaches, markets, transport, homes, offices and bars you will use, and it returns the rules that apply, weighted by severity and by the kind of trip you are taking. Two ideas explain most of it: respect flows upward to monks, elders and the monarchy, and nobody should be made to lose face in public.",
   useCases: [

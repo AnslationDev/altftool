@@ -1,4 +1,12 @@
 const seo = {
+  title: "Agent Observability Checklist for OpenTelemetry gen_ai",
+  metaDescription:
+    "Score what your LLM agent traces against the gen_ai.* conventions - spans, metrics, logs, evals, redaction - then size a sampling and storage plan.",
+  steps: [
+    "Under '1. What does this agent do?' tick the traits that apply, such as Handles personal data, Calls tools or external APIs, Retrieves from a knowledge base, Regulated domain or High traffic; each one escalates which signals become required.",
+    "Under '2. Tick what you already emit' check off the signals in each pillar (Traces, Metrics, Logs & versions, Evaluation, Privacy & safety), for example 'One root span per agent run' and 'Token usage split by input and output'.",
+    "Read the Observability readiness percentage with 'Required signals missing' and the weakest pillar, fill in '3. Sampling and storage budget' (Agent runs per day, Traces you want to keep per day, Retention, Average trace size) for a head rate and stored volume, then press 'Copy plan'.",
+  ],
   intro:
     "An agent observability checklist turns a vague 'add logging' ticket into a named list of spans, metrics, logs, evaluations and redaction rules, then scores how many of them your agent already emits. Signal names follow the OpenTelemetry semantic conventions for generative AI systems — the gen_ai.* namespace used by most tracing backends — so the plan maps onto whatever collector you already run. It is aimed at engineers taking an LLM agent from a working demo to something on call rotation can actually debug.",
   useCases: [

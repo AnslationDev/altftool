@@ -1,4 +1,7 @@
 const seo = {
+  title: "Online Timer and Stopwatch: Countdown to 23:59:59",
+  metaDescription:
+    "Set a countdown up to 23:59:59 with an alert at zero, or run a lap stopwatch to hundredths. Both read timestamps, so a background tab stays accurate.",
   intro:
     "The Online Timer is two instruments in one page: a countdown you can set to any duration up to 23 hours, 59 minutes and 59 seconds that plays an alert sound when it reaches zero, and a stopwatch that counts up in hundredths of a second with lap splits. Both work from wall-clock timestamps rather than counting interval ticks, so the elapsed time stays honest even if the tab throttles in the background. It is for anyone who needs a reliable countdown or a split-timing stopwatch without installing anything.",
   useCases: [

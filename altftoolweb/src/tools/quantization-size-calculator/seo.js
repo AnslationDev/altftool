@@ -1,4 +1,12 @@
 const seo = {
+  title: "LLM Quantization Size Calculator (GGUF Q4_K, Q8_0)",
+  metaDescription:
+    "Estimate a model's weight-file size from parameters × bits-per-weight ÷ 8 across FP32 to Q2_K, in GB and GiB, with the saving against FP16.",
+  steps: [
+    "Type a figure into Model parameters (billions), or press one of the preset buttons: 1B, 3B, 7B, 13B, 32B, 70B or 405B.",
+    "The table recalculates as you type, listing Format, Bits/weight, Size (GB), Size (GiB) and vs FP16 for FP32, FP16, Q8_0, INT8, Q6_K, Q5_K, Q4_K, Q3_K and Q2_K.",
+    "Read the 4-bit (Q4_K) estimate headline in GB and GiB, then press Copy result to take the whole size table as text.",
+  ],
   intro:
     "The Quantization Size Calculator estimates a language model's weight-file size with the formula size = parameters × bits-per-weight ÷ 8, across FP32, FP16, Q8_0, Q6_K, Q5_K, Q4_K, Q3_K and Q2_K. Bits-per-weight figures come from the exact llama.cpp GGUF block layouts — for example Q8_0 stores 34 bytes per 32 weights, which is 8.5 bits per weight. It is built for people running local models with Ollama, llama.cpp or LM Studio who need to know whether a given quant will fit their RAM or VRAM before downloading it.",
   useCases: [

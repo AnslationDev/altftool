@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chhath Puja Wishes: Kharna, Sandhya & Usha Arghya",
+  metaDescription:
+    "Day-wise Chhath greetings for Nahay Khay, Kharna, Sandhya Arghya and Usha Arghya in Bhojpuri, Maithili, Hindi or English, with SMS part counts.",
+  steps: [
+    "Under Which day? pick Nahay Khay, Kharna, Sandhya Arghya or Usha Arghya, then choose the Language.",
+    "Set Who is it for?, How many messages (1-4), and optionally Their name and Sign off as.",
+    "Check the Characters / SMS parts row for the greeting, then press Copy all.",
+  ],
   intro:
     "The Chhath Puja Wishes Generator writes a greeting for the specific day of the festival you are on — Nahay Khay, Kharna, Sandhya Arghya or Usha Arghya — in Bhojpuri, Maithili, Hindi or English. Chhath runs four days, from Kartika shukla chaturthi to saptami, and is addressed to Surya and Chhathi Maiya; the vrat between Kharna and the morning arghya is nirjala and lasts about 36 hours. Each message shows its character count and SMS part count, because Devanagari text is sent as UCS-2 at 70 characters per part.",
   useCases: [

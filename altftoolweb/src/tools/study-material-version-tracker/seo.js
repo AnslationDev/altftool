@@ -1,4 +1,12 @@
 const seo = {
+  title: "Textbook Edition Tracker: Current, Behind or Unknown",
+  metaDescription:
+    "Log the edition you study from against the latest one, and see what is Behind, by how many editions, and which revisions are over 5 years old.",
+  steps: [
+    "For each book fill 'Book / module 1' (placeholder: e.g. Indian Polity — Laxmikanth), 'Edition you use', 'Year of that edition (optional)' and 'Latest edition (blank if unknown)'.",
+    "Use 'Add material' to append a row and Remove to delete one, and set the 'Reference year' field that ages each edition; the list saves to your browser's local storage as you type, so it is still there next visit.",
+    "Read 'Materials needing action' as a count out of the total, then the Material / Using / Latest / Status table, which badges each row Current, 'Behind by N' or 'Check latest', plus 'Most out-of-date material' and 'Editions older than 5 years'. 'Copy summary' copies it; Reset clears the saved list and restores the sample rows.",
+  ],
   intro:
     "This tracker records which edition of each textbook, guide or module you actually study from and compares it with the latest edition you have seen, marking every item Current, Behind or Unknown. Behind means a higher edition number exists; anything revised more than five years ago is additionally flagged for a re-check because syllabi, law and data-heavy chapters drift. It is built for exam aspirants and students juggling many books who keep discovering mid-preparation that a chapter was rewritten in a newer edition.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Caffeine Cutoff Calculator: Last Coffee Before Bed",
+  metaDescription:
+    "Enter bedtime, dose in mg and your caffeine half-life for the latest coffee time, never closer than the 6-hour evidence-backed gap.",
+  steps: [
+    "Set Planned bedtime and Caffeine in the drink (mg), or tap a serving such as Brewed coffee (240 ml) at 95 mg.",
+    "Tune Your caffeine half-life (hours) between 1.5 and 12, plus the Residual you accept at bedtime (mg).",
+    "Read the Latest caffeine time, check the How the dose falls away table, then press Copy result.",
+  ],
   intro:
     "This calculator finds the latest time you can have a caffeinated drink by applying first-order decay — remaining = dose × 0.5^(hours ÷ half-life) — and working backwards from your bedtime to the residual dose you are willing to sleep on. It uses a default 5-hour half-life for healthy adults, lets you set your own, and cross-checks the answer against trial evidence showing 400 mg still disrupts sleep 6 hours before bed. Built for anyone who sleeps badly and is not sure whether the afternoon coffee is the reason.",
   useCases: [

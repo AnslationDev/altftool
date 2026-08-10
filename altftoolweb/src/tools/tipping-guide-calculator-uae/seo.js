@@ -1,4 +1,12 @@
 const seo = {
+  title: "UAE Tipping Calculator: Dubai Bills, Taxis, Valets",
+  metaDescription:
+    "How much to tip in the UAE: 10% in a restaurant worked out before the service charge, AED 5-10 for porters and valets, taxis rounded up to AED 5.",
+  steps: [
+    "Pick the Service (restaurant table service, Taxi, Valet parking, housekeeping) and enter the bill as printed in AED.",
+    "Set Taxes and service already on the bill (%) and tick the service-charge box, so the rate applies before them.",
+    "Customary tip gives the AED figure and the usual range; press Copy result for the breakdown.",
+  ],
   "intro": "This calculator applies customary UAE tipping ranges — around 10% in a restaurant, AED 5-10 for a porter or valet, rounding a taxi meter up to the next five dirhams — and works the percentage out on the menu price before the service charge, municipality fee and 5% VAT that UAE bills stack on top. It matters here more than in most countries because the 10% service charge printed on Dubai and Abu Dhabi bills normally goes to the venue rather than to the person who served you, so a separate cash tip is still expected.",
   "useCases": [
     "Work out what to leave on a AED 244 Dubai restaurant bill that already shows service, municipality fee and VAT.",

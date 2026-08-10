@@ -1,4 +1,12 @@
 const seo = {
+  title: "Keto Macro Calculator: Carbs First, Fat Last",
+  metaDescription:
+    "Sets net carbs first, protein per kg (or lean mass), and lets fat take the rest. Mifflin-St Jeor BMR, your goal, plus a per-meal gram split.",
+  steps: [
+    "Fill in Weight (kg), Age, Height, Activity level and Goal, then set the Net carb budget (g per day) — anything under 50 g counts as a standard ketogenic diet.",
+    "Set Protein (g per kg of body weight), 1.6 g/kg by default, and add a Body fat % to switch the protein reference from scale weight to lean mass.",
+    "Read the Daily calorie target with Fat, Protein and Net carbs in grams, kcal and % of energy plus a Per meal figure; Copy result copies the whole breakdown.",
+  ],
   intro:
     "The Keto Macro Calculator sets a daily fat, protein and net carb target by fixing carbohydrate first, then protein, then letting fat take every remaining calorie — the order that keeps a ketogenic diet ketogenic. Calories come from the Mifflin-St Jeor equation for resting metabolic rate, multiplied by a standard activity factor and adjusted for your goal, with 4 kcal per gram of protein and carbohydrate and 9 kcal per gram of fat. Enter a body fat percentage and protein is set from lean mass instead of total weight.",
   useCases: [

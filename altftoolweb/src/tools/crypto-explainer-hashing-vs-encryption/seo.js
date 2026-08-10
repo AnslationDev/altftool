@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hashing vs Encryption: SHA-256, XOR and Base64 Compared",
+  metaDescription:
+    "One input, three operations: a real SHA-256 digest, a keyed XOR cipher and Base64, with the avalanche effect measured in bits flipped out of 256.",
+  steps: [
+    "Type into 'Text to transform' and give the cipher a key in 'Key for the demonstration cipher' — nothing is sent anywhere, so do not paste a password you actually use.",
+    "The three panels update live: 'Hashing — SHA-256', 'Encryption — reversible with the key' (a repeating-key XOR shown with the text it decrypts back to) and 'Encoding — Base64' with what anyone can decode.",
+    "Read 'Digest bits changed by editing one character' with the bits flipped out of 256 and the hex digits that differ out of 64, then use the Copy button under the digest, the ciphertext or the Base64 output.",
+  ],
   intro:
     "This explainer pushes one piece of text through three operations at once — a real SHA-256 hash implemented to FIPS 180-4, a reversible cipher, and RFC 4648 Base64 — so the difference is demonstrated rather than described. Hashing is one-way and keyless: SHA-256 emits exactly 256 bits whatever the input size, so there is nothing left to reverse. It also measures the avalanche effect live, changing a single character and counting how many of the 256 digest bits flip, which for a sound hash lands close to half.",
   useCases: [

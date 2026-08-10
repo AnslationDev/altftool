@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tyre Rotation Planner: Dates, Interval and Pattern",
+  metaDescription:
+    "Plan rotation dates from your odometer and monthly km with the six-month cap, and get the right pattern: forward cross, rearward cross, X or same-side.",
+  steps: [
+    "Enter \"Current odometer (km)\", \"Rotation interval (km)\", \"Average running (km per month)\" and \"Last rotation / start date\", plus \"Rotations to plan\" and \"Labour cost per rotation (INR)\".",
+    "Set Drivetrain to \"Front wheel drive (FWD)\", \"Rear wheel drive (RWD)\" or \"All wheel drive / 4x4 (AWD)\" and Tyre tread to \"Standard (non-directional)\" or \"Directional tread\", then tick \"Staggered fitment\" or \"Include a full-size matching spare\" if they apply.",
+    "\"Next rotation due at\" gives the odometer reading and approximate date and says whether it is distance- or time-limited; below it the named pattern lists each move, such as Left front to Left rear, and the Schedule table dates every rotation.",
+  ],
   intro:
     "A tyre rotation schedule planner works out when each of your four tyres should change corner, and which corner it should move to, based on your drivetrain and your monthly running. It applies the two rules tyre makers publish together: a distance interval of roughly 8,000-10,000 km and a time cap of about six months, whichever comes first. The pattern it recommends follows the standard forward cross, rearward cross and X-pattern rules, with separate handling for directional tread and staggered fitments.",
   useCases: [

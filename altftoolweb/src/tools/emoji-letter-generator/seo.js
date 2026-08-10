@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emoji Letter Generator: 4 Unicode Letter Styles A-Z",
+  metaDescription:
+    "Turns typed letters into regional indicator, negative squared, positive squared or bubble symbols, space-separated so pairs never combine into a flag.",
+  steps: [
+    "Type or paste into the Input Text box (placeholder: Type or paste your text here...) — a live character count sits underneath, and digits, punctuation and spaces pass through unchanged.",
+    "Choose a style button: Regional Indicators, Negative Squared, Positive Squared or Bubble Letters — or tick Random to re-roll the style for every individual letter.",
+    "The output panel, headed with the active style's name, renders the converted text with a space between characters so regional indicators never merge into a country flag. Copy puts it on the clipboard, Reset clears the box, and the Letter Reference grid shows all 26 symbols for that style.",
+  ],
   intro:
     "The Emoji Letter Generator maps each A-Z letter you type to its Unicode letter-symbol equivalent in one of four styles: regional indicator flags (U+1F1E6 onward), negative squared letters, positive squared letters and negative circled bubble letters. Type or paste text and the converted version appears immediately, space-separated and ready to copy into a bio, a post or a chat. Digits, punctuation and spaces pass through untouched, and there is a shuffle mode that picks a different style for every letter.",
   useCases: [

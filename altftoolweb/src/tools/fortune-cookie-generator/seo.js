@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fortune Cookie Generator: 36 Fortunes, 7 Themes",
+  metaDescription:
+    "Crack a random fortune from 36 hand-written messages across seven themes, each with a lucky number, colour, emoji and day you can copy or share.",
+  steps: [
+    "Press Open a Fortune Cookie — there is nothing to fill in first, because each draw picks one of the seven themes (General, Love, Career, Money, Adventure, Funny, Weird) at random and then a message inside it.",
+    "The card flips after a 400 ms animation and shows the fortune inside a dashed border with its Lucky Number, Lucky Color, Lucky Emoji and Lucky Day.",
+    "Press Copy to put the fortune and its lucky details on the clipboard as formatted text, Share to hand the same line to your device's share sheet, or Open a Fortune Cookie again for another draw.",
+  ],
   intro:
     "The Fortune Cookie Generator draws a random fortune from a hand-written set of 36 messages spread across seven themes — General, Love, Career, Money, Adventure, Funny and Weird — and returns it on a flip card with a lucky number, lucky colour, emoji and lucky day. Each pull picks a theme at random first, then a message inside it, so you can keep cracking cookies without steering the result. It is built for anyone who wants a quick, shareable fortune to copy into a chat or read aloud at the end of a meal.",
   useCases: [
