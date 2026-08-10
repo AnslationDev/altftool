@@ -3,7 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, Copy, RotateCcw, Tags } from "lucide-react";
 
-import { buildTagSet, LONG_TAG_CHARS, MAX_TAG_CHARS, parseGroups } from "../lib";
+import {
+  buildTagSet,
+  LONG_TAG_CHARS,
+  MAX_GROUPS,
+  MAX_TAG_CHARS,
+  MAX_TAGS_PER_GROUP,
+  parseGroups,
+} from "../lib";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -30,7 +37,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
-  const groups = useMemo(() => parseGroups(groupText), [groupText]);
+  const { groups, droppedGroups, groupsTruncated } = useMemo(() => parseGroups(groupText), [groupText]);
 
   const result = useMemo(
     () => buildTagSet({ groups, selected, maxChars: Number(budget) }),
@@ -129,6 +136,20 @@ export default function ToolHome() {
           </fieldset>
         )}
 
+        {(droppedGroups > 0 || groupsTruncated > 0) && (
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
+          >
+            {droppedGroups > 0 &&
+              `${droppedGroups} group${droppedGroups === 1 ? "" : "s"} past the ${MAX_GROUPS}-group limit ${
+                droppedGroups === 1 ? "was" : "were"
+              } dropped. `}
+            {groupsTruncated > 0 &&
+              `${groupsTruncated} group${groupsTruncated === 1 ? "" : "s"} had tags cut down to the ${MAX_TAGS_PER_GROUP}-tag-per-group limit.`}
+          </p>
+        )}
+
         <div className="mt-4 sm:max-w-xs">
           <label className={LABEL_CLASS} htmlFor="tags-budget">
             Character budget
@@ -211,7 +232,10 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.warnings.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+        >
           <h2 className="text-base font-semibold">Notes</h2>
           <ul className="mt-3 space-y-2 text-sm">
             {result.warnings.map((warning) => (
@@ -225,7 +249,10 @@ export default function ToolHome() {
       )}
 
       {!hasError && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+        >
           <h2 className="text-base font-semibold">Tags in this set</h2>
           <ul className="mt-3 flex flex-wrap gap-2">
             {result.included.map((entry) => (

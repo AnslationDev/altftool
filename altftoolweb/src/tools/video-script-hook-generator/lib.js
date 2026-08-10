@@ -268,7 +268,6 @@ export function generateHooks(input) {
       text,
       words,
       seconds,
-      characters: text.length,
       fits: seconds !== null && seconds <= budget,
     };
   });
@@ -276,7 +275,6 @@ export function generateHooks(input) {
   hooks.sort((a, b) => a.seconds - b.seconds || a.name.localeCompare(b.name));
 
   const fitCount = hooks.filter((hook) => hook.fits).length;
-  const fastest = hooks[0];
 
   return {
     fields,
@@ -285,7 +283,6 @@ export function generateHooks(input) {
     hooks,
     total: hooks.length,
     fitCount,
-    fastest,
   };
 }
 
@@ -329,13 +326,15 @@ export function reviewHook(text, options) {
   if (weak.length > 0) score -= 2;
   if (seconds !== null && seconds > format.budgetSeconds) score -= 1;
   if (vague.length > 0) score -= 1;
+  if (!/[a-z]/i.test(clean)) score -= 1;
+  if (words > 0 && words < 3) score -= 1;
+  if (/\?/.test(clean) === false && /^(what|why|how|who|when)\b/i.test(clean)) score -= 1;
   if (score < 0) score = 0;
 
   return {
     text: clean,
     words,
     seconds,
-    characters: clean.length,
     budgetSeconds: format.budgetSeconds,
     fits: seconds !== null && seconds <= format.budgetSeconds,
     issues,

@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, HardHat, RotateCcw, TriangleAlert } from "lucide-react";
 
 import {
   DUTY_RATINGS,
+  FT_PER_M,
   RAIL_EXTENSION_ABOVE_LANDING_FT,
   REACH_ABOVE_STANDING_FT,
   TOP_RUNGS_UNUSABLE,
@@ -49,6 +50,15 @@ export default function ToolHome() {
   const [climberKg, setClimberKg] = useState(DEFAULTS.climberKg);
   const [gearKg, setGearKg] = useState(DEFAULTS.gearKg);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -77,7 +87,7 @@ export default function ToolHome() {
       `Set-up angle: ${NUM1.format(result.angleDeg)} degrees`,
       `Working length used: ${NUM2.format(result.workingLength)} ${unit}`,
       `Minimum ladder length needed: ${NUM2.format(result.requiredLadderLength)} ${unit}`,
-      `Rail above the support point: ${NUM2.format(result.railExtension)} ${unit}`,
+      `Rail above the support point: ${NUM2.format(result.railAboveSupport)} ${unit}`,
       `Highest safe standing level: ${NUM2.format(result.standingHeight)} ${unit}`,
       `Practical reach height: ${NUM2.format(result.reachHeight)} ${unit}`,
       `Load on ladder: ${NUM0.format(result.totalLoadKg)} kg of a ${NUM0.format(result.ratingKg)} kg rating`,
@@ -90,7 +100,10 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -107,11 +120,21 @@ export default function ToolHome() {
     setCopied(false);
   };
 
+  const convertLength = (raw, fromUnit, toUnit) => {
+    const value = toNumber(raw);
+    if (!Number.isFinite(value)) return null;
+    if (fromUnit === toUnit) return value;
+    const converted = fromUnit === "m" ? value * FT_PER_M : value / FT_PER_M;
+    return Number(converted.toFixed(2));
+  };
+
   const switchUnit = (next) => {
     if (next === unit) return;
+    const convertedSupport = convertLength(supportHeight, unit, next);
+    const convertedLadder = convertLength(ladderLength, unit, next);
     setUnit(next);
-    setSupportHeight(next === "m" ? "6" : "20");
-    setLadderLength(next === "m" ? "7.3" : "24");
+    setSupportHeight(convertedSupport === null ? (next === "m" ? "6" : "20") : String(convertedSupport));
+    setLadderLength(convertedLadder === null ? (next === "m" ? "7.3" : "24") : String(convertedLadder));
   };
 
   return (
@@ -175,7 +198,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="ladder-length">
-              Ladder working length ({unit})
+              Ladder length (fully extended) ({unit})
             </label>
             <input
               id="ladder-length"
@@ -266,7 +289,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

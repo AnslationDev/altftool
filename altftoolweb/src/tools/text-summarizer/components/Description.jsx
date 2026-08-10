@@ -13,16 +13,16 @@ const features = [
     description: "Supports text summarization in multiple languages to cater to a global audience."
   },
   {
-    title: "Custom Summary Length",
-    description: "Adjust the length of summaries according to your preference, from short to detailed."
+    title: "Three Summary Lengths",
+    description: "Choose Short, Medium or Long to get one, two or three key sentences."
   },
   {
     title: "Instant & Private",
     description: "Runs entirely in your browser using sentence splitting and positional selection — nothing is uploaded, and nothing in the summary is invented."
   },
   {
-    title: "Copy & Share",
-    description: "Easily copy your summaries or share them directly with colleagues or friends."
+    title: "Copy & Download",
+    description: "Copy your summary to the clipboard or download it as a text file."
   },
   {
     title: "Privacy Focused",

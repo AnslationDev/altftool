@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "What are the E-series values?",
-      "They are the standard preferred component values defined in IEC 60063, spaced logarithmically so each decade is divided into equal ratio steps: 6 values in E6, 12 in E12, 24 in E24, 48 in E48 and 96 in E96. The nth value in a series is 10^(n/series) scaled to the decade, which is why E12 runs 1.0, 1.2, 1.5, 1.8, 2.2 and so on.",
+      "They are the standard preferred component values defined in IEC 60063, spaced logarithmically so each decade is divided into equal ratio steps: 6 values in E6, 12 in E12, 24 in E24, 48 in E48 and 96 in E96. Each series divides a decade into equal ratio steps of 10^(n/series), but IEC 60063 then publishes standardized mantissas close to — not always the naive rounding of — that raw ratio (2 significant figures for E6/E12/E24, 3 for E48/E96), which is why E12 runs 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2 rather than a plain rounding of the unrounded powers of ten.",
     ],
     [
       "Which E-series matches which tolerance?",

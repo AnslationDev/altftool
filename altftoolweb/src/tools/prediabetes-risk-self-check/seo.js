@@ -15,7 +15,8 @@ const seo = {
   faqs: [
     [
       "What score means I am at high risk of prediabetes?",
-      "On the ADA/CDC risk test, 5 or more out of 11 is the published cut-off for high risk. On the Indian Diabetes Risk Score, below 30 is low risk, 30 to 50 is moderate and 60 or above is high risk. Neither score diagnoses anything — a high score is a reason to ask for a blood test.",
+      // IDRS band wording must stay in sync with IDRS_BANDS in lib.js: low 0-29, moderate 30-59, high 60+.
+      "On the ADA/CDC risk test, 5 or more out of 11 is the published cut-off for high risk. On the Indian Diabetes Risk Score, below 30 is low risk, 30 to 59 is moderate and 60 or above is high risk. Neither score diagnoses anything — a high score is a reason to ask for a blood test.",
     ],
     [
       "What blood sugar levels count as prediabetes?",

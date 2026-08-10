@@ -28,7 +28,7 @@ const seo = {
     ],
     [
       "What should the subject line of an internship request be?",
-      "Use the pattern 'Internship application — [role] — [your name]', optionally with the team in brackets. It tells a recruiter what the mail is and who sent it before they open it, and it stays readable in the roughly 60 characters most inboxes show on mobile.",
+      "Use the pattern 'Internship application — [role] — [your name]', optionally with the team in brackets. It tells a recruiter what the mail is and who sent it before they open it. Longer role titles or team names can push this past the roughly 60 characters most inboxes show on mobile, so keep the role and team names short if you want the whole line visible in a preview.",
     ],
     [
       "Should an internship request letter be formal or casual?",

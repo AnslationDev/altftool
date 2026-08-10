@@ -57,7 +57,7 @@ export const spec = {
       if (truncated) {
         list.push(
           "Showing the first " + rowLimit + " of " + tableRows.length +
-            " records. Copy and download only include what's shown here — split larger logs into multiple exports."
+            " records in the table above for review — your full pasted text is still included in Copy and Download."
         );
       }
       return {

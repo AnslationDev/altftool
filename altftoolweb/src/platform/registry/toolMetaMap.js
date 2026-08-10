@@ -21374,7 +21374,7 @@ export const toolMetaMap = {
   },
   "personal-data-flow-mapper": {
     "name": "Personal Data Flow Mapper",
-    "description": "Diagram how personal data flows from collection through storage and processors to deletion.",
+    "description": "Build a structured table of how personal data flows from collection through storage and processors to deletion.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -29206,10 +29206,7 @@ export const toolMetaMap = {
   "text-summarizer": {
     "name": "Text Summarizer",
     "description": "Summarize long text instantly into clear, concise key points.",
-    "category": "AI Tools",
-    "topics": [
-      "AI"
-    ],
+    "category": "Text & Writing",
     "icon": "file-text",
     "iconColor": "text-blue-700"
   },

@@ -2,7 +2,7 @@ const seo = {
   intro:
     "A video hook is the opening line that has to earn the next few seconds of attention, and this generator writes one for each of twelve named copywriting patterns — curiosity gap, contrarian, negative/mistake, numbered promise, stakes framing and more — using your topic, audience and outcome. Every line is timed at your chosen speaking pace against an opening budget of three seconds for short vertical video, six for a standard upload and ten for long form. There is also a checker for a hook you already wrote, which flags filler openings like 'hey guys, welcome back' and vague wording.",
   useCases: [
-    "Write ten hook options for the same Reel in a minute, then pick the one that fits inside three seconds of speech.",
+    "Write up to seven hook options for the same Reel in a minute, then pick the one that fits inside three seconds of speech.",
     "Test whether an existing intro is spending its opening seconds on a greeting instead of a promise.",
     "Give a script writer a set of pattern-labelled options so feedback is about the angle, not the wording.",
     "Match hook length to a faster or slower narrator by changing the words-per-minute setting.",

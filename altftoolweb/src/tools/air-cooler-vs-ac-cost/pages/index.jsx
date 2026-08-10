@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Wind } from "lucide-react";
 
 import { compareCoolerAndAc, PAD_TYPES } from "../lib";
@@ -73,6 +73,7 @@ export default function ToolHome() {
   const [hours, setHours] = useState(DEFAULTS.hours);
   const [days, setDays] = useState(DEFAULTS.days);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   const result = useMemo(
     () =>
@@ -118,11 +119,18 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const reset = () => {
     setTemp(DEFAULTS.temp);
@@ -428,7 +436,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Saved per month with the cooler
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {hasError ? DASH : money(result.monthlySaving)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -467,6 +475,8 @@ export default function ToolHome() {
         {!hasError && (
           <p
             className={`mt-4 rounded-md px-3 py-2 text-sm font-medium ${VERDICT_STYLE[result.verdict]}`}
+            aria-live="polite"
+            aria-atomic="true"
           >
             {result.verdictText} Wet bulb is {degC(result.wetBulbC)}, so the cooler bottoms out at{" "}
             {degC(result.coolerOutletC)} —{" "}
@@ -505,10 +515,13 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Water use is the amount evaporated into the fresh-air share at these conditions; in a sealed
-        room the air recirculates already humid and consumption falls, but so does the cooling.
-        Coolers need an open window to work and are not suitable for people with damp-triggered
-        allergies or asthma — check with a doctor if that applies to your household.
+        Water use is the amount evaporated into the fresh-air share you enter; drop that share toward
+        0% to see monthly water use fall as the room gets more sealed. The temperature and humidity
+        figures above assume that same fresh-air share regardless of ventilation, so they will not
+        fall to reflect a sealed room the way real-world cooling would — in practice, a closed room
+        recirculates already-humid air and the cooler's actual temperature drop is smaller than shown
+        here. Coolers need an open window to work well and are not suitable for people with
+        damp-triggered allergies or asthma — check with a doctor if that applies to your household.
       </p>
     </main>
   );

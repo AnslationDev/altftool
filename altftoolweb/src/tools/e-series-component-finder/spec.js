@@ -81,7 +81,12 @@ export const spec = {
       for (let d = decade - 1; d <= decade + 1; d += 1) for (let i = 0; i < bases.length; i += 1) candidates.push(Number((bases[i] * Math.pow(10, d)).toPrecision(12)));
       const unique = [...new Set(candidates)].sort((a, b) => Math.abs(a - target) - Math.abs(b - target)).slice(0, 6);
       const closest = unique[0];
-      return { result: closest.toLocaleString(undefined, { maximumSignificantDigits: count <= 24 ? 2 : 3 }) + " nearest E" + count + " value", caption: (((closest - target) / target) * 100).toFixed(4) + "% error", rows: [["Target", target], ["Nearest below", Math.max(...unique.filter((value) => value <= target), 0)], ["Nearest above", Math.min(...unique.filter((value) => value >= target), Number.MAX_SAFE_INTEGER)]], table: { headers: ["Candidate", "Error %"], rows: unique.map((value) => [value, (((value - target) / target) * 100).toFixed(5)]) } };
+      // Use Infinity/null (not Number.MAX_SAFE_INTEGER) as the "no candidate" sentinel: for very
+      // large targets a real candidate can exceed MAX_SAFE_INTEGER, which would otherwise make
+      // Math.min silently return the meaningless sentinel instead of the true nearest-above value.
+      const aboveCandidates = unique.filter((value) => value >= target);
+      const nearestAbove = aboveCandidates.length ? Math.min(...aboveCandidates) : null;
+      return { result: closest.toLocaleString(undefined, { maximumSignificantDigits: count <= 24 ? 2 : 3 }) + " nearest E" + count + " value", caption: (((closest - target) / target) * 100).toFixed(4) + "% error", rows: [["Target", target], ["Nearest below", Math.max(...unique.filter((value) => value <= target), 0)], ["Nearest above", nearestAbove === null ? "—" : nearestAbove]], table: { headers: ["Candidate", "Error %"], rows: unique.map((value) => [value, (((value - target) / target) * 100).toFixed(5)]) } };
     },
 };
 

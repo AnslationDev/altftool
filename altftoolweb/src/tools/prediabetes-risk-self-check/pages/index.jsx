@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity, Check, Copy, RotateCcw } from "lucide-react";
 import {
   ACTIVITY_LEVELS,
@@ -35,6 +35,9 @@ const DASH = "—";
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const update = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -77,7 +80,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -106,9 +110,9 @@ export default function ToolHome() {
           Prediabetes Risk Self-Check
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Answer seven questions and get two published risk scores at once — the ADA/CDC
-          prediabetes risk test and the Indian Diabetes Risk Score — plus the lifestyle targets
-          used in the Diabetes Prevention Program.
+          Answer eight questions (nine if you have had gestational diabetes) and get two published
+          risk scores at once — the ADA/CDC prediabetes risk test and the Indian Diabetes Risk
+          Score — plus the lifestyle targets used in the Diabetes Prevention Program.
         </p>
       </header>
 
@@ -265,7 +269,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -424,8 +428,8 @@ export default function ToolHome() {
               ))}
             </dl>
             <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
-              Ranges are the American Diabetes Association criteria for prediabetes. Values at or
-              above the top of each range meet the criteria for diabetes.
+              Ranges are the American Diabetes Association criteria for prediabetes. Values above
+              each range meet the criteria for diabetes.
             </p>
           </section>
         </>

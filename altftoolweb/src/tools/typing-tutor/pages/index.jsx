@@ -48,11 +48,13 @@ const KEYBOARD_ROWS = [
   ["1","2","3","4","5","6","7","8","9","0"],
   ["q","w","e","r","t","y","u","i","o","p","[","]","\\"],
   ["a","s","d","f","g","h","j","k","l",";","'"],
-  ["z","x","c","v","b","n","m",",",".","/"],
+  ["ShiftL","z","x","c","v","b","n","m",",",".","/","ShiftR"],
 ];
 
+const SHIFT_KEYS = new Set(["ShiftL", "ShiftR"]);
+
 const SHIFT_SYMBOL_MAP = {
-  "1":"!","2":"@","3":"#","4":"$","5":"%","6":"^","7":"&","8":"*","9":"(","0":")",
+  "1":"!","2":"@","3":"#","4":"$","5":"%","6":"^","7":"&","8":"*","9":"(","0":")","/":"?",
 };
 
 const FINGER_MAP = {
@@ -66,6 +68,7 @@ const FINGER_MAP = {
   i:"right-middle",k:"right-middle",",":"right-middle",
   o:"right-ring",l:"right-ring",".":"right-ring",
   p:"right-pinky",";":"right-pinky","/":"right-pinky","[":"right-pinky","]":"right-pinky","\\":"right-pinky","'":"right-pinky",
+  ShiftL:"left-pinky", ShiftR:"right-pinky",
 };
 
 const FINGER_COLORS = {
@@ -145,10 +148,13 @@ function KeyboardVisual({ targetKeys, lastKey }) {
         {KEYBOARD_ROWS.map((row, ri) => (
           <div key={ri} className="flex gap-1">
             {row.map((key) => {
-              const isActive = targetSet.has(key) || targetSet.has(SHIFT_SYMBOL_MAP[key]);
+              const isShiftKey = SHIFT_KEYS.has(key);
+              const displayKey = isShiftKey ? "Shift" : key;
+              const matchKey = isShiftKey ? "shift" : key;
+              const isActive = targetSet.has(matchKey) || targetSet.has(SHIFT_SYMBOL_MAP[key]);
               const finger = isActive ? FINGER_MAP[key] : null;
               const color = finger ? FINGER_COLORS[finger] : null;
-              const justPressed = lastKey === key;
+              const justPressed = lastKey === key || (isShiftKey && lastKey === "Shift");
               return (
                 <div
                   key={key}
@@ -158,10 +164,10 @@ function KeyboardVisual({ targetKeys, lastKey }) {
                     ${isActive ? "text-white shadow-sm" : "bg-[var(--surface-soft)] text-[var(--muted-foreground)] border border-[var(--border)]"}
                   `}
                   style={isActive ? { backgroundColor: color, borderColor: color } : {}}
-                  title={isActive && finger ? `${key.toUpperCase()} — ${FINGER_LABELS[finger]} finger` : key.toUpperCase()}
-                  aria-label={`Key ${key.toUpperCase()}${isActive ? ` — ${FINGER_LABELS[finger]} finger` : ""}`}
+                  title={isActive && finger ? `${displayKey.toUpperCase()} — ${FINGER_LABELS[finger]} finger` : displayKey.toUpperCase()}
+                  aria-label={`Key ${displayKey.toUpperCase()}${isActive ? ` — ${FINGER_LABELS[finger]} finger` : ""}`}
                 >
-                  {key}
+                  {displayKey}
                 </div>
               );
             })}
@@ -193,6 +199,7 @@ function LessonSelector({ lessons, progress, onSelect, difficultyFilter, setDiff
             key={d}
             type="button"
             onClick={() => setDifficultyFilter(d)}
+            aria-pressed={difficultyFilter === d}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               difficultyFilter === d
                 ? "bg-[var(--primary)] text-white shadow-sm"
@@ -210,6 +217,8 @@ function LessonSelector({ lessons, progress, onSelect, difficultyFilter, setDiff
             <button
               type="button"
               onClick={() => setExpanded(expanded === diff ? null : diff)}
+              aria-expanded={expanded === diff}
+              aria-controls={`lesson-panel-${diff}`}
               className="flex items-center justify-between w-full px-5 py-3 text-left font-bold text-[var(--foreground)] cursor-pointer hover:bg-[var(--surface-soft)] transition-colors"
             >
               <span className="inline-flex items-center gap-2">
@@ -220,7 +229,7 @@ function LessonSelector({ lessons, progress, onSelect, difficultyFilter, setDiff
               {expanded === diff ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </button>
             {expanded === diff && (
-              <div className="divide-y divide-[var(--border)]">
+              <div id={`lesson-panel-${diff}`} className="divide-y divide-[var(--border)]">
                 {ls.map((l) => {
                   const p = progress.lessons[l.id];
                   const completed = p?.completed;
@@ -320,7 +329,7 @@ function ProgressCharts({ progress }) {
                   className="w-full rounded-t-sm transition-all duration-200"
                   style={{
                     height: `${(h.wpm / maxWpm) * 100}%`,
-                    backgroundColor: h.accuracy >= 90 ? "var(--primary)" : h.accuracy >= 75 ? "#EAB308" : "#EF4444",
+                    backgroundColor: h.accuracy >= 90 ? "var(--success)" : h.accuracy >= 75 ? "var(--warning)" : "var(--danger)",
                     minHeight: "4px",
                   }}
                   title={`${h.wpm} WPM — ${h.accuracy}%`}
@@ -351,7 +360,7 @@ function ProgressCharts({ progress }) {
                   className="w-full rounded-t-sm"
                   style={{
                     height: `${h.accuracy}%`,
-                    backgroundColor: h.accuracy >= 90 ? "var(--primary)" : h.accuracy >= 75 ? "#EAB308" : "#EF4444",
+                    backgroundColor: h.accuracy >= 90 ? "var(--success)" : h.accuracy >= 75 ? "var(--warning)" : "var(--danger)",
                     minHeight: "4px",
                   }}
                   title={`${h.accuracy}%`}
@@ -371,11 +380,13 @@ function TabBar({ active, onChange }) {
     { id: "progress", label: "Progress", icon: BarChart3 },
   ];
   return (
-    <div className="flex gap-1 mb-6 bg-[var(--surface-soft)] p-1 rounded-xl w-fit mx-auto">
+    <div role="tablist" className="flex gap-1 mb-6 bg-[var(--surface-soft)] p-1 rounded-xl w-fit mx-auto">
       {tabs.map((t) => (
         <button
           key={t.id}
           type="button"
+          role="tab"
+          aria-selected={active === t.id}
           onClick={() => onChange(t.id)}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all cursor-pointer ${
             active === t.id
@@ -406,14 +417,12 @@ function HomeScreen({ lessons, progress, onStartLesson, difficultyFilter, setDif
 function LessonScreen({ lesson, progress, onComplete, onBack }) {
   const [typed, setTyped] = useState("");
   const [errors, setErrors] = useState(0);
-  const [totalKeystrokes, setTotalKeystrokes] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [lastKey, setLastKey] = useState(null);
 
   const inputRef = useRef(null);
-  const startTimeRef = useRef(null);
   const lastKeyTimeoutRef = useRef(null);
   const completeHeadingRef = useRef(null);
 
@@ -430,8 +439,8 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
   }, [correctChars, timeElapsed]);
 
   const accuracy = useMemo(
-    () => (totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 100),
-    [correctChars, totalKeystrokes],
+    () => (typed.length > 0 ? Math.round((correctChars / typed.length) * 100) : 100),
+    [correctChars, typed],
   );
 
   useEffect(() => {
@@ -454,7 +463,6 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
           if (removedChar !== expectedChar) {
             setErrors((p) => Math.max(p - 1, 0));
           }
-          setTotalKeystrokes((p) => Math.max(p - 1, 0));
         }
         return;
       }
@@ -470,10 +478,6 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
           return;
         }
 
-        if (!startTimeRef.current) {
-          startTimeRef.current = Date.now();
-        }
-
         setLastKey(e.key.toLowerCase());
         clearTimeout(lastKeyTimeoutRef.current);
         lastKeyTimeoutRef.current = setTimeout(() => setLastKey(null), 150);
@@ -485,7 +489,6 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
             setErrors((p) => p + 1);
           }
           setTyped((p) => p + e.key);
-          setTotalKeystrokes((p) => p + 1);
           setRunning(true);
         }
 
@@ -547,12 +550,10 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
   const resetLesson = useCallback(() => {
     setTyped("");
     setErrors(0);
-    setTotalKeystrokes(0);
     setTimeElapsed(0);
     setRunning(false);
     setCompleted(false);
     setLastKey(null);
-    startTimeRef.current = null;
     inputRef.current?.focus({ preventScroll: true });
   }, []);
 
@@ -584,9 +585,8 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
           tabIndex={0}
           onKeyDown={handleKeyDown}
           className="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 sm:p-6 text-base sm:text-lg leading-relaxed font-mono select-none min-h-[100px] outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] cursor-text transition-all"
-          aria-label="Typing area"
-          role="textbox"
-          aria-multiline="false"
+          aria-label="Typing practice area. Not a standard text field: type the displayed text; only character keys and Backspace are handled."
+          role="application"
         >
           {TEXT.split("").map((char, i) => {
             let cls = "text-[var(--muted-foreground)]";
@@ -617,7 +617,7 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
               style={{
                 width: `${Math.min((typed.length / TEXT.length) * 100, 100)}%`,
                 backgroundColor:
-                  accuracy >= 90 ? "var(--primary)" : accuracy >= 75 ? "#EAB308" : "#EF4444",
+                  accuracy >= 90 ? "var(--success)" : accuracy >= 75 ? "var(--warning)" : "var(--danger)",
               }}
             />
           </div>
@@ -645,7 +645,7 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
         </div>
         <div className="border border-[var(--border)] rounded-xl bg-[var(--card)] p-3 sm:p-4 text-center">
           <p className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] tracking-wider">Accuracy</p>
-          <p className={`text-2xl sm:text-3xl font-black ${accuracy >= 90 ? "text-green-500" : accuracy >= 75 ? "text-yellow-500" : "text-red-500"}`}>
+          <p className={`text-2xl sm:text-3xl font-black ${accuracy >= 90 ? "text-success" : accuracy >= 75 ? "text-warning" : "text-danger"}`}>
             {accuracy}%
           </p>
         </div>

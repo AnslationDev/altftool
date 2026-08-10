@@ -1,37 +1,37 @@
 "use client";
 
 "use-client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Description from "../components/Description"
-// import { FiMenu, FiX } from "react-icons/fi";
 
 function localSummarize(text, level) {
-  if (!text) return "";
+  if (!text || !text.trim()) return "";
   // ASCII terminal punctuation requires trailing whitespace (so decimals like
   // "3.14" are not split); CJK/full-width terminal punctuation is often not
-  // followed by a space, so its trailing whitespace is optional.
+  // followed by a space, so its trailing whitespace is optional. The
+  // lookbehind splits *after* the punctuation instead of consuming it, so
+  // each sentence keeps its own terminal mark (a question stays a question)
+  // instead of every sentence being forced onto a shared "." later.
   const sentences = text
-    .split(/[.?!]\s+|[。！？]\s*/)
+    .split(/(?<=[.?!])\s+|(?<=[。！？])\s*/)
     .map((s) => s.trim())
     .filter(Boolean);
   if (sentences.length <= 2) return text;
 
   let count = level === "short" ? 1 : level === "medium" ? 2 : 3;
 
-  // The split regex only consumes a sentence's terminal punctuation when it
-  // is followed by whitespace, so the final sentence can retain its own
-  // punctuation. Strip any leftover terminal punctuation before appending
-  // the summary's own, so the result never ends in "..", "?." or "!.".
-  const stripEnd = (s) => s.replace(/[.?!。！？]+$/, "");
+  // Every sentence above already carries its own terminal punctuation from
+  // the split; only fall back to "." when the source sentence had none.
+  const withEnd = (s) => (/[.?!。！？]$/.test(s) ? s : s + ".");
 
-  const first = stripEnd(sentences[0]);
-  const middle = stripEnd(sentences[Math.floor(sentences.length / 2)]);
-  const last = stripEnd(sentences[sentences.length - 1]);
+  const first = withEnd(sentences[0]);
+  const middle = withEnd(sentences[Math.floor(sentences.length / 2)]);
+  const last = withEnd(sentences[sentences.length - 1]);
 
-  if (count === 1) return first + ".";
-  if (count === 2) return first + ". " + last + ".";
-  return first + ". " + middle + ". " + last + ".";
+  if (count === 1) return first;
+  if (count === 2) return first + " " + last;
+  return first + " " + middle + " " + last;
 }
 
 export default function App() {
@@ -40,8 +40,8 @@ export default function App() {
   const [level, setLevel] = useState("medium");
   const [history, setHistory] = useState([]);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   const handleSummarize = () => {
     const result = localSummarize(text, level);
@@ -61,8 +61,15 @@ export default function App() {
 
     navigator.clipboard.writeText(summary);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
   };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const handleDownloadSummary = () => {
     if (!summary) return;
@@ -100,29 +107,18 @@ export default function App() {
       <Header />
       {/* MAIN */}
       <main className="max-w-7xl mx-auto px-6 pb-20">
-        {/* HERO */}
-        {/* <section className="my-6 sm:my-8 px-6 py-8 sm:p-12 rounded-xl border border-(--border) bg-(--card) shadow-2xl text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-snug sm:leading-tight">
-            Summarize text instantly —
-            <span className="text-(--primary)"> fast • clean • precise</span>
-          </h1>
-
-          <p className="mt-4 text-sm sm:text-base text-(--muted-foreground)">
-            Paste articles, notes or documents and get a summary in seconds.
-          </p>
-        </section> */}
-
         {/* SUMMARIZER */}
         <section id="summarizer" className="mt-12">
           <div className="bg-(--card) border border-(--border) rounded-xl p-4 sm:p-6 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
               {/* LEFT INPUT */}
               <div>
-                <label className="font-bold mb-2 block text-(--foreground)/80">
+                <label htmlFor="summarizer-input" className="font-bold mb-2 block text-(--foreground)/80">
                   Paste your text
                 </label>
 
                 <textarea
+                  id="summarizer-input"
                   className="
                     w-full min-h-40 sm:min-h-56
                     bg-(--background)
@@ -144,7 +140,8 @@ export default function App() {
                       <button
                         key={lvl}
                         onClick={() => setLevel(lvl)}
-                        className={`px-4 py-2 rounded-lg border text-sm 
+                        aria-pressed={level === lvl}
+                        className={`px-4 py-2 rounded-lg border text-sm
                           ${
                             level === lvl
                               ? "bg-(--primary) text-(--primary-foreground)"
@@ -203,7 +200,11 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="flex-1 bg-(--background) border border-(--border) rounded-lg p-4 text-sm leading-relaxed whitespace-pre-wrap">
+                    <div
+                      role="status"
+                      aria-live="polite"
+                      className="flex-1 bg-(--background) border border-(--border) rounded-lg p-4 text-sm leading-relaxed whitespace-pre-wrap"
+                    >
                       {summary}
                     </div>
                   </div>

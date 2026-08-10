@@ -167,7 +167,11 @@ export function compareCoolerAndAc({
   }
 
   const wetBulb = wetBulbC(outdoorTempC, relativeHumidityPercent);
-  const depression = outdoorTempC - wetBulb;
+  // Stull's approximation can overshoot the true wet-bulb temperature by a
+  // fraction of a degree near the edges of its accepted range, which would
+  // otherwise make the depression negative and report the cooler as heating
+  // the room. A cooler cannot physically warm the air, so clamp at zero.
+  const depression = Math.max(0, outdoorTempC - wetBulb);
   const coolerOutletC = outdoorTempC - pad.effectiveness * depression;
 
   // Adiabatic saturation: enthalpy stays constant while water evaporates into the air.

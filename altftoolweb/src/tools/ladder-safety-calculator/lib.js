@@ -93,7 +93,7 @@ export function computeLadderSetup({
 
   if (supportFt > MAX_LENGTH_FT || ladderFt > MAX_LENGTH_FT) {
     return {
-      error: `Heights above ${unit === "m" ? "18 m" : "60 ft"} are outside portable-ladder territory - use scaffolding or a powered lift.`,
+      error: `Heights above ${unit === "m" ? `${fromFt(MAX_LENGTH_FT).toFixed(1)} m` : `${MAX_LENGTH_FT} ft`} are outside portable-ladder territory - use scaffolding or a powered lift.`,
     };
   }
 

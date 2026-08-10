@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Frown, Plus, RotateCcw, Trash2 } from "lucide-react";
 import {
   PAIN_LEVELS,
@@ -91,6 +91,7 @@ export default function ToolHome() {
   const [note, setNote] = useState("");
   const [log, setLog] = useState([]);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   // Filled after mount so the server and client render the same initial HTML.
   useEffect(() => {
@@ -132,23 +133,33 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(copyText);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
+
   const addReading = () => {
     if (currentError || !at) return;
-    setLog((prev) => [...prev, { at, level, note: note.trim() }]);
+    setLog((prev) => [...prev, { id: crypto.randomUUID(), at, level, note: note.trim() }]);
     setNote("");
   };
 
-  const removeReading = (target) => {
-    setLog((prev) => prev.filter((entry) => !(entry.at === target.at && entry.level === target.level)));
+  const removeReading = (targetId) => {
+    setLog((prev) => prev.filter((entry) => entry.id !== targetId));
   };
 
   const reset = () => {
+    if (log.length > 0 && typeof window !== "undefined" && !window.confirm("Clear the current reading and the entire log? This cannot be undone.")) {
+      return;
+    }
     setLevel(4);
     setNote("");
     setLog([]);
@@ -217,7 +228,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -315,7 +326,7 @@ export default function ToolHome() {
           </p>
         ) : summary.count === 0 ? (
           <p className="mt-4 text-sm text-[var(--muted-foreground)]">
-            Nothing logged yet. The log lives in this browser tab and clears when you close it.
+            Nothing logged yet. The log lives only in this page's memory and is lost on refresh or when you leave the page.
           </p>
         ) : (
           <>
@@ -355,7 +366,7 @@ export default function ToolHome() {
                 </thead>
                 <tbody>
                   {summary.sorted.map((entry) => (
-                    <tr key={`${entry.at}-${entry.level}`} className="border-b border-[var(--border)] last:border-0">
+                    <tr key={entry.id} className="border-b border-[var(--border)] last:border-0">
                       <td className="py-2 pr-3 font-semibold">{entry.at.replace("T", " ")}</td>
                       <td className="py-2 pr-3">
                         <span className="inline-flex items-center gap-2">
@@ -369,7 +380,7 @@ export default function ToolHome() {
                       <td className="py-2 text-right">
                         <button
                           type="button"
-                          onClick={() => removeReading(entry)}
+                          onClick={() => removeReading(entry.id)}
                           aria-label={`Remove the reading from ${entry.at.replace("T", " ")}`}
                           className="inline-flex min-h-11 items-center justify-center rounded-md px-3 text-[var(--danger)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                         >
