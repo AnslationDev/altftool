@@ -1,4 +1,12 @@
 const seo = {
+  title: "Design Handoff Checklist Generator with Weighted Score",
+  metaDescription:
+    "Build a platform-specific design handoff checklist where blockers weigh 3x nice-to-haves, then copy it as a GitHub-flavoured markdown task list.",
+  steps: [
+    "Choose your Platform — web app, iOS app, Android app or cross-platform — and tick the 'What does this handoff include?' flags such as dark theme or localisation.",
+    "Tick items off in 'Your checklist'; the weighted Handoff readiness score counts a Blocker three times a nice-to-have and calls out blockers still open.",
+    "Click 'Copy checklist' to copy every section as a markdown task list you can paste into an issue or pull request.",
+  ],
   intro:
     "A design handoff checklist is the list of artefacts a development team needs before it can build a screen without asking the designer another question. This generator filters a library of handoff checks down to the ones that apply to your platform and feature set, then scores completion with blockers weighted three times a nice-to-have, so an unticked blocker can never read as ready. Built for product designers, design system owners and engineering leads agreeing on a definition of done.",
   useCases: [

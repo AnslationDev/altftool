@@ -1,4 +1,12 @@
 const seo = {
+  title: "AMRAP Timer with Round Counter and Pace Projection",
+  metaDescription:
+    "Run a time cap with prep countdown, tap rounds and reps as you finish them, and get the rounds+reps score, pace and projected finish.",
+  steps: [
+    "Set Time cap (minutes) — or tap a preset like 20 min AMRAP — plus Reps in one full round and the Prep countdown (seconds).",
+    "Press Start and tap the plus buttons under Rounds finished and Reps into the part round as you complete them, or type Time used so far (minutes) to score after the fact.",
+    "Read the Score in rounds+reps with total reps as the tiebreaker, your time per round and reps/min pace, and the Projected final score; Copy result exports it.",
+  ],
   intro:
     "An AMRAP fixes the clock and lets the work float: you repeat one round of movements as many times as possible before the cap expires, and your score is written as rounds plus the reps of the unfinished round. This timer runs the cap with a prep countdown, counts rounds and part-round reps as you tap them, and converts that into seconds per round, reps per minute and a projected finishing score. Total reps is also shown, because that is the figure used to separate athletes on the same round count.",
   useCases: [

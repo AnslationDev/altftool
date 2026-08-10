@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Data Export: 10-Minute Files vs 24-Hour Archive",
+  metaDescription:
+    "See whether your LinkedIn export lands in about 10 minutes or needs the 24-hour archive, how big the zip is, and which CSVs expose other people's data.",
+  steps: [
+    "Under '1. Choose the files', tick the exports you need — Connections, Ad targeting attributes, Messages and more — or press Fast files only to drop everything that forces the full archive.",
+    "Under '2. Describe the account', enter Years on LinkedIn, First-degree connections (up to 30,000) and a Rough lifetime message count to size each CSV.",
+    "Read the Expected wait and which of LinkedIn's two paths your selection takes, plus Estimated archive size, Rows describing other people and the sensitivity band, then press Copy plan.",
+  ],
   intro:
     "This guide plans a LinkedIn data export and tells you which of LinkedIn's two paths your selection will take: picking specific files, which LinkedIn quotes at about 10 minutes, or the larger archive with messages and activity, quoted at up to 24 hours. It estimates the zip size from your connection count, message volume and years on the platform, and rates each CSV for how much it exposes. Connections and Contacts are highlighted separately because they are other people's personal data, not yours.",
   useCases: [

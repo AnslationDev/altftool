@@ -1,4 +1,12 @@
 const seo = {
+  title: "Memory Palace Builder – Method of Loci Outliner",
+  metaDescription:
+    "Build palaces of ordered rooms and objects, self-test in a review mode that hides each association until you reveal it, and export the palace as JSON.",
+  steps: [
+    "Press 'New Palace', then add rooms with the 'Room' button and loci with 'Add Object', filling each 'Object Name' and the 'Association' you want to recall.",
+    "Press 'Review' to walk every object in room order — the association stays hidden until you press 'Reveal Association', with a progress bar across the palace.",
+    "Edits autosave to this browser's localStorage; the export button downloads memory-palace-YYYY-MM-DD.json and 'Import' loads it on another machine.",
+  ],
   intro:
     "The Memory Palace Builder is a three-level outliner for the method of loci: you create palaces, add ordered rooms inside them, and place objects in each room with an association and optional notes. A built-in review mode then walks every object in room order, showing the object name first and hiding the association until you press Reveal, so you can self-test recall rather than reread. Students, speakers and competitive memorisers get a structured palace that saves to the browser and exports as JSON.",
   useCases: [

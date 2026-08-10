@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shorts vs Long Form Planner: Best Weekly Time Split",
+  metaDescription:
+    "Splits your weekly production hours between Shorts and long videos by testing every whole-piece combination, then reports revenue or views per hour.",
+  steps: [
+    "Enter your 'Production hours per week' and choose 'Expected revenue' or 'Expected views' under 'Optimise for'.",
+    "Fill in each format card — 'Hours per short', 'Average views per short', 'RPM per 1,000 views' and 'Most you would publish per week' for Shorts and long form.",
+    "Read the best weekly split with value per hour and idle hours, then click 'Copy result' to save the plan.",
+  ],
   intro:
     "Shorts Vs Long Form Time Planner allocates a fixed weekly production budget between short and long content by solving a small integer knapsack exactly: it evaluates every feasible whole-piece combination inside your publishing caps and keeps the one with the highest expected return. Expected value per piece is views divided by 1,000 multiplied by RPM, and value per hour is that figure divided by the hours the piece takes to make. Built for creators who have a hard limit on time rather than on ideas.",
   useCases: [

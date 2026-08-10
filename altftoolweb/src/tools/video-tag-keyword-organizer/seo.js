@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Tag Organizer with 500-Character Limit Check",
+  metaDescription:
+    "Keep channel keywords in named groups, build a per-video tag set, strip duplicates, and see which tags overflow the 500-character field.",
+  steps: [
+    "Edit the Keyword groups textarea — one group per line as \"Group name: tag, tag, tag\" — then tick the group buttons this video needs.",
+    "Set the Character budget (it defaults to the 500-character tags-field limit) — the counter includes the commas between tags, the way the field counts them.",
+    "Review \"Tags in this set\" against \"Left out — no room\", then press Copy tags to copy the comma-separated string that fits.",
+  ],
   intro:
     "Video Tag Keyword Organizer keeps a channel's keywords in named groups — core, topic, long tail, brand — and builds a per-video tag set from the groups you tick. It removes case-insensitive duplicates, counts characters exactly the way the tags field does (every tag plus the commas between them) and shows which tags will not fit inside the 500-character limit rather than truncating them silently. Aimed at creators and channel managers who reuse the same keyword blocks across dozens of uploads.",
   useCases: [

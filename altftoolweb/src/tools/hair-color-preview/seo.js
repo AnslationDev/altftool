@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hair Color Preview: Try 16 Shades on Your Photo",
+  metaDescription:
+    "Upload a photo and preview 16 hair colours — natural, blonde and fashion shades — with a before/after slider. Runs in your browser; download as PNG.",
+  steps: [
+    "Upload a clear front-facing photo — drag and drop or click to browse; the uploader accepts any image file your browser can read (accept=image/*).",
+    "Open the Color Palette panel and click one of the 16 swatches, grouped under the Natural, Warm, Blonde, Fashion and Highlight families.",
+    "Drag the before/after slider to compare with the original, then click 'Download' to save the preview as a PNG named after the shade, e.g. copper-red.png.",
+  ],
   intro:
     "This tool recolours the hair in a photo you upload so you can see a shade on your own face before you commit to the dye. It works on the dark pixels in the upper part of the picture — anything whose BT.601 luminance falls below the threshold gets blended 70% toward the chosen shade — and offers 16 named colours grouped into Natural, Warm, Blonde, Fashion and Highlight families. A before-and-after slider lets you drag between the original and the preview, and the result downloads as a PNG.",
   useCases: [

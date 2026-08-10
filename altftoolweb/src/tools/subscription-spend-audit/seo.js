@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subscription Spend Audit: True Annual Cost of Plans",
+  metaDescription:
+    "Converts weekly (52.18x), monthly, quarterly and yearly charges to one annual total, ranks them by cost and totals what cancelling gives back.",
+  steps: [
+    "List each subscription with its \"Price charged (₹)\", \"Billed\" cycle and \"Seats / licences\", using \"Add subscription\" for more rows.",
+    "Set each line's \"Decision\" (keep, cancel or review) and enter \"Monthly take-home pay (₹)\", the expected price rise % and a projection horizon.",
+    "Read the \"True annual drain\" with share of take-home pay, the yearly saving from cancellations and the ranked-by-yearly-cost table; \"Copy result\" copies the summary.",
+  ],
   intro:
     "A subscription audit converts every recurring charge to a single annual figure so weekly, monthly, quarterly and yearly plans can finally be compared and added together. Each line is multiplied by its number of charges per year — 12 for monthly, 4 for quarterly, 2 for half-yearly, and 365.25 ÷ 7 ≈ 52.18 for weekly plans that bill every seven days — then ranked by cost so the largest drains show up first. Mark a line to cancel and the tool reports exactly what that decision returns to you each year.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Corporate Trust Palette Generator: WCAG-Checked Blues",
+  metaDescription:
+    "10-step blue brand scale, tinted neutrals and status colours with WCAG contrast checked for light and dark - output as CSS variables, Tailwind and JSON.",
   intro:
     "The Corporate Trust Palette Generator builds a blue-led brand palette in the shape a design system actually needs — a 10-step primary scale numbered 50 to 900, a brand-tinted neutral scale, and success, warning, danger and info statuses — then uses the WCAG 2.1 contrast formula to say which step is legal for text and which for UI in light mode and in dark mode. You pick a blue family (azure, navy, indigo or teal blue), a saturation from 30 to 90, and how much brand hue bleeds into the greys, and it returns hex values plus ready-made CSS custom properties, a Tailwind @theme block and JSON. It is aimed at designers and front-end engineers who need an institutional palette that survives an accessibility review.",
   useCases: [

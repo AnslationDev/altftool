@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Vendor Comparison Matrix — Weighted 0-100 Scoring",
+  metaDescription:
+    "Score up to 6 AI vendors 1-5 on cost, control, support and compliance, weight each criterion, and get a ranked 0-100 shortlist with ties flagged.",
+  steps: [
+    "Enter each Vendor name (Add vendor allows up to 6 rows) and pick a 1-5 score for Cost, Control, Support and Compliance.",
+    "Set the four criterion weights — any positive numbers work, since scores are normalised by the total weight.",
+    "Read the ranked table with each vendor's Score /100 and fit band, then click Copy result to keep the matrix for the decision record.",
+  ],
   intro:
     "This tool ranks competing AI vendors with a weighted-sum decision matrix: each vendor is scored 1–5 on cost, control, support and compliance, each criterion carries a weight you set, and the result is a normalised 0–100 score per vendor. It is built for teams choosing between AI API providers, model hosts or SaaS AI products who need a defensible, written-down basis for the shortlist rather than gut feel. The method is the standard additive weighted scoring model used in procurement RFP evaluations.",
   useCases: [

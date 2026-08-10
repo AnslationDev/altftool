@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio File Size Calculator: WAV, FLAC, MP3, AAC, Opus",
+  metaDescription:
+    "Sample rate x bit depth x channels x duration gives the exact PCM size, with the 44-byte WAV header, a 4 GB RIFF limit warning and codec comparisons.",
+  steps: [
+    "Set the duration in hours, minutes and seconds, then choose a sample rate, bit depth and channel count from the dropdowns.",
+    "Optionally adjust \"FLAC size as a share of PCM\" to match how well your material compresses.",
+    "Read the uncompressed WAV size with exact bytes and kbps data rate, plus the same duration in FLAC, MP3, AAC and Opus rows; a warning flags the 4 GB RIFF limit.",
+  ],
   intro:
     "An audio file size calculator multiplies sample rate by bit depth by channel count to get the data rate, then multiplies that by duration to give the exact size of an uncompressed PCM file. It is aimed at engineers, podcasters and archivists sizing cards, drives and uploads, and it adds the 44-byte canonical WAV header so the number matches what actually lands on disk. The same duration is then priced in FLAC, MP3, AAC and Opus using the constant-bitrate rule bytes = kbps × 1000 ÷ 8 × seconds.",
   useCases: [

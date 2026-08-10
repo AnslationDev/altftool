@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tech Spec Template Generator: Design Doc, RFC or ADR",
+  metaDescription:
+    "Generate a Markdown skeleton in a Google-style design doc, Rust/React-style RFC or Nygard ADR format, with optional risk, rollout and metrics sections.",
+  steps: [
+    "Enter the \"Project or decision name\" and pick a \"Document type\" - Google-style design doc, RFC or Architecture Decision Record.",
+    "Tick \"Extra sections\" such as background, alternatives, risks and rollout; the ADR format stays fixed at Status/Context/Decision/Consequences.",
+    "Click \"Copy Markdown\" to take the template, with guidance notes in every section, into your docs repo, wiki or pull request.",
+  ],
   intro:
     "This generator produces a ready-to-fill technical specification template in one of three established formats: a Google-style design doc with objective, goals, non-goals and proposed design; an RFC in the style used by the Rust and React projects; or an Architecture Decision Record in Michael Nygard's Status/Context/Decision/Consequences format. Engineers and tech leads pick the format, toggle sections like risks, rollout and alternatives, and get clean Markdown with guidance notes in every section.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lawn Mowing Schedule Planner – One-Third Rule",
+  metaDescription:
+    "Get a mowing interval from the one-third rule: pick grass type, season, shade and care to see blade height, days between cuts and hours per season.",
+  steps: [
+    "Choose your Grass type, Season, Feeding and watering level and Light level, working in Metric or Imperial units.",
+    "Leave Cutting height blank for the recommended setting or type your own, and add Lawn area, Mower cutting width and Mowing speed for the workload maths.",
+    "The Mow every figure gives days between cuts with the mow-at height, minutes per cut and total season hours; press Copy result to keep the schedule.",
+  ],
   intro:
     "This planner turns the turfgrass one-third rule into a mowing schedule: because a single cut should never remove more than a third of the leaf blade, grass cut at height H is mown once it reaches 1.5 × H, and the interval is that allowance divided by the daily growth rate. It combines each grass type's published cutting-height range with season, shade and how hard the lawn is fed and watered. It is aimed at homeowners and grounds staff planning a season's work rather than reacting week by week.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Regex Prompt Builder: Turn Examples into AI Prompts",
+  metaDescription:
+    "Turn must-match and must-not-match examples into a regex prompt with a verified test table, for JavaScript, PCRE2, Python re, RE2/Go or POSIX ERE.",
+  steps: [
+    "Enter example strings under 'Must match (one per line)' and 'Must NOT match (one per line, optional)' — up to 50 lines per list.",
+    "Pick the engine in the 'Regex flavour' dropdown (JavaScript, PCRE2, Python re, RE2/Go, POSIX ERE) and tick flags like 'Case-insensitive (i)'.",
+    "Click 'Copy prompt' to copy the generated prompt, which demands a verification row for every example you listed.",
+  ],
   intro:
     "The Regex Prompt Builder turns lists of must-match and must-not-match example strings into a regex-generation prompt that pins the target flavour — JavaScript, PCRE2, Python re, RE2/Go or POSIX ERE — and demands a verified test table for every example. It validates your examples first, rejecting any string that appears in both lists (no pattern can match and not match the same input), and writes each flavour's documented limitations, like RE2's lack of lookaround and backreferences, into the prompt.",
   useCases: [

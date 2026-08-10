@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blameless Postmortem Template Generator in Markdown",
+  metaDescription:
+    "Enter incident title, date, severity and duration for a Markdown postmortem: metadata, timeline, root cause, optional 5 Whys and an action-item table.",
+  steps: [
+    "Fill in the Incident title, Date of incident, Severity (SEV-1 to SEV-4) and Impact duration (minutes), with an optional Incident commander and customer impact summary.",
+    "Set 'Empty action-item rows (1–10)' and tick the Optional sections you want — 5 Whys analysis scaffold, what went well / poorly, and supporting data.",
+    "Press Copy Markdown to grab the generated template, shown with a live word count, and paste it into Confluence, Notion, Google Docs or a Git repository.",
+  ],
   intro:
     "This generator produces a complete blameless postmortem document in Markdown — incident metadata, customer impact, timeline, root cause and contributing factors, optional 5 Whys and lessons-learned sections, and an action-item table with owners and due dates. The structure follows the postmortem practice described in the Google SRE Book and the Atlassian and PagerDuty incident handbooks. Enter the incident basics once and paste the result into Confluence, Notion, Google Docs or a Git repository.",
   useCases: [

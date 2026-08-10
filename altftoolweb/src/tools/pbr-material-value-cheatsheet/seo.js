@@ -1,4 +1,12 @@
 const seo = {
+  title: "PBR Albedo, F0 & Roughness Values Cheatsheet",
+  metaDescription:
+    "Measured F0 for metals, dielectric albedo and roughness ranges in linear and 8-bit sRGB, with a validator that flags implausible base colours.",
+  steps: [
+    "Enter your texture's Base colour R, G and B (0-255 sRGB) plus Metallic (0 or 1) and Roughness (0-1) under Check a base colour.",
+    "Read the check output - linear values, relative luminance, GGX alpha, Blinn-Phong exponent and the closest reference material - with any out-of-range channels flagged.",
+    "Look up measured figures in the Reference values table via the Search materials box (gold, concrete, metal...), or press Copy values to copy the whole check.",
+  ],
   intro:
     "This cheatsheet lists the reflectance values physically based rendering expects: measured F0 for metals, diffuse albedo for dielectrics, and the roughness ranges each finish usually falls in. It converts every value between linear light and 8-bit sRGB using the IEC 61966-2-1 transfer function, derives F0 from an index of refraction with F0 = ((n − 1) / (n + 1))², and flags base colours that sit outside the plausible authoring window. It is written for 3D artists authoring metallic-roughness materials.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to Binary Converter & Binary to Text Decoder",
+  metaDescription:
+    "Convert text to space-separated 8-bit binary and decode it back live. Both panes update as you type, with Swap, character counts and error checks.",
+  steps: [
+    "Type or paste text into the Text Input pane, or press Swap and paste space-separated 8-bit binary groups instead.",
+    "The opposite pane converts live: each character becomes a zero-padded 8-bit byte like 01000001, and invalid binary raises the error that input can only contain 0, 1 and spaces.",
+    "Press Copy under either pane, or Download to save the converted output as binary-output.txt.",
+  ],
   intro:
     "This converts text to binary and binary back to text: each character is taken as its character code and written as an 8-bit binary number, padded with leading zeros and separated from the next by a space. Type in either box and the other side updates instantly, so 'A' shows as 01000001 (code 65) and a pasted stream of space-separated bytes decodes straight back to readable characters. It is aimed at students working through number bases and at developers eyeballing what a byte actually contains.",
   useCases: [

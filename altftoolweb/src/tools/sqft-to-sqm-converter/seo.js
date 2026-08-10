@@ -1,4 +1,12 @@
 const seo = {
+  title: "Square Feet to Square Metres (and Gaj) Converter",
+  metaDescription:
+    "Convert area between sq ft, sq m, gaj, ares, acres and hectares using the exact 0.3048 m foot, and restate a per-unit rate and total in every unit.",
+  steps: [
+    "Choose 'An area' or 'Length × width' under Start from, then enter the value with its unit — square feet, square metres, gaj and more.",
+    "Optionally enter a figure in 'Rate (₹, leave blank to skip pricing)' and pick which unit it is quoted per.",
+    "Read the area restated in all six units plus the total and per-unit rates under 'What it costs', then click 'Copy result'.",
+  ],
   intro:
     "This converter restates one area in square feet, square metres, square yards (gaj), ares, acres and hectares, and converts a rate quoted in any one of them into the rate and total in the others. It uses the exact definition of the foot as 0.3048 metres, which makes one square foot exactly 0.09290304 square metres and one square yard exactly 9 square feet. Useful when a listing quotes the plot in square feet, the sale deed records it in square metres and the broker quotes the rate per gaj.",
   useCases: [

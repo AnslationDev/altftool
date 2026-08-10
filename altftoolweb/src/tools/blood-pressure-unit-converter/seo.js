@@ -1,4 +1,12 @@
 const seo = {
+  title: "mmHg to kPa Blood Pressure Converter with MAP",
+  metaDescription:
+    "Convert a blood pressure reading between mmHg and kPa with the exact 0.133322 factor, plus mean arterial pressure, pulse pressure and ACC/AHA category.",
+  steps: [
+    "Type the systolic and diastolic numbers and set 'Unit of the reading' to mmHg or kPa, or tap a preset like 118 / 78.",
+    "Read the converted pair beside the ACC/AHA category badge, with mean arterial pressure and pulse pressure in the table below.",
+    "Click 'Copy result' for a plain-text summary covering both unit systems, MAP, pulse pressure and category, or 'Reset' to start over.",
+  ],
   intro:
     "The Blood Pressure Unit Converter changes a systolic and diastolic reading between millimetres of mercury and kilopascals using the exact definition 1 mmHg = 0.133322387415 kPa. Alongside the conversion it computes mean arterial pressure as diastolic plus one third of the pulse pressure, reports the pulse pressure itself, and places the reading in the 2017 ACC/AHA category table. It is aimed at students, researchers and anyone reading equipment or papers that report pressure in SI units.",
   useCases: [

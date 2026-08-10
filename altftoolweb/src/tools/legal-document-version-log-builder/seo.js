@@ -1,4 +1,12 @@
 const seo = {
+  title: "Legal Document Version Log & Revision History Builder",
+  metaDescription:
+    "Build a contract revision history on the 0.1/1.0 draft convention: dates, authors, reviewers and changes, with turnaround days measured between rounds.",
+  steps: [
+    "Name the document, set the Log prepared on date, and press Add version for each draft with its date, Drafted by, Reviewed by and What changed fields.",
+    "Pick each entry's Change type: Revision bumps the minor number (0.2 to 0.3), Circulated jumps to the next major (1.0), Execution version closes the log.",
+    "Read the Current version and days since the last movement, then press Copy log for the pipe-separated Version | Date | Author | Reviewer | Change table.",
+  ],
   intro:
     "This builder turns a list of drafts into a numbered revision history, assigning version numbers on the standard MAJOR.MINOR drafting convention — 0.1, 0.2 for internal edits, a jump to 1.0 when a version is circulated, and a final major number for the execution version. It also measures the turnaround between rounds so you can see where a negotiation stalled. Lawyers, contract managers and company secretaries use it to produce the revision table that sits at the front of a contract or pleading.",
   useCases: [

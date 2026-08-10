@@ -1,4 +1,5 @@
 const seo = {
+  title: "Return Deadline Tracker: Amazon, Flipkart & 13 Policies",
   metaDescription:
     "Counts each retailer's window from the right date - delivery for Amazon and Flipkart, purchase for Walmart and Target - 13 store and statutory policies.",
   steps: [

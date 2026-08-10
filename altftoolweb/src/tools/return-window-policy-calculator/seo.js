@@ -1,4 +1,7 @@
 const seo = {
+  title: "Return Window Calculator: Request, Pickup & Refund Dates",
+  metaDescription:
+    "Sets a per-category return window and dates three deadlines - request, pickup, refund - from delivery, dispatch or order date; 12 category presets ship.",
   intro:
     "The Return Window Policy Calculator sets a return window per product category and then converts it into three dated deadlines for a specific order: the last day to raise the return, the last day for pickup, and the last day for the refund to land. It counts from whichever event you nominate as the clock start — delivery, dispatch or order date — in calendar days or working days only, and ships with 12 category defaults such as 30 days for apparel, 10 for consumer electronics and 7 for mobile phones. It is for sellers writing a published returns policy and for buyers checking whether a specific order is still inside the window.",
   useCases: [

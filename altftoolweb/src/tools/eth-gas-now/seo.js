@@ -1,4 +1,12 @@
 const seo = {
+  title: "ETH Gas Now: Live Gwei Price from an Ethereum Node",
+  metaDescription:
+    "Reads eth_gasPrice live from the Cloudflare Ethereum Gateway, shows slow/normal/fast tiers at 0.9x/1x/1.2x and prices a 21,000-gas ETH transfer.",
+  steps: [
+    "No query is needed — the checker calls eth_gasPrice on the Cloudflare Ethereum Gateway over JSON-RPC and converts the wei response to gwei.",
+    "Press \"Get current result\" to fetch the reading on demand.",
+    "Read the current gwei price with Slow, Normal and Fast estimates at 0.9x, 1.0x and 1.2x, the \"21,000 gas transfer\" fee in ETH, and the update timestamp with the source named.",
+  ],
   intro:
     "This gas checker reads the current Ethereum gas price straight from an eth_gasPrice JSON-RPC call to the Cloudflare Ethereum Gateway, converts the wei value to gwei, and shows three tiers built from stated multipliers — slow at 0.9×, normal at 1.0× and fast at 1.2× the returned price. It also prices a plain 21,000-gas ETH transfer at each level so you can see the fee in ETH rather than in gwei. It is for anyone deciding whether to send a transaction now or wait for the network to quieten down.",
   useCases: [

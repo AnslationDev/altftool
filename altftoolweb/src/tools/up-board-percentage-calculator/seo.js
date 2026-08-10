@@ -1,4 +1,12 @@
 const seo = {
+  title: "UP Board Percentage Calculator: Class 10 & 12 Division",
+  metaDescription:
+    "Total your UPMSP marks over 600 (Class 10) or 500 (Class 12) for the exact percentage, the 33% subject pass check and First/Second/Third Division.",
+  steps: [
+    "Choose the 'Examination level', then type each subject's mark (out of 100) into the six High School fields or five Intermediate fields.",
+    "Read the Class 10 or Class 12 percentage headline with 'Total marks', 'Pass status' against the 33% per-subject minimum, and the Division.",
+    "Check the 'UP Board divisions' cutoff table below, then press 'Copy result' for the summary or Reset to restore the sample marks.",
+  ],
   intro:
     "This calculator works out a UP Board (UPMSP) percentage the way the board computes it: total marks divided by 600 for High School (six subjects of 100 marks) or by 500 for Intermediate (five subjects of 100 marks). It also applies the board's pass standard of 33% per subject and reports the division — First from 60%, Second from 45%, Third from 33%. It is built for Class 10 and Class 12 students of Uttar Pradesh checking their result before admissions, scholarship forms or job applications.",
   useCases: [

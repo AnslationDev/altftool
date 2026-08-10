@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Holidays 2025-2027: State Lists & Long Weekends",
+  metaDescription:
+    "Filter India's 2025-2027 holidays by month, state and type, see bank closures (Sundays plus 2nd/4th Saturdays) and long weekends, then export CSV.",
+  steps: [
+    "Pick a Year (2025, 2026 or 2027), Month, State and Type — National, Festival, Regional or Bank — or type a festival name into Search.",
+    "Scan the calendar view, the Long Weekend Finder for Friday and Monday holidays, and the generated 2nd/4th-Saturday and Sunday bank closures.",
+    "Click 'CSV' to download indian-holidays.csv with Date, Day, Holiday, Type, Regions and Note columns, or 'Copy' for the first 20 matches as text.",
+  ],
   intro:
     "Indian Holiday Finder is a year planner that lists India's national holidays, festival dates, state-wise observances and banking closures for 2025, 2026 and 2027, and flags the ones that create long weekends. It applies the RBI-style banking pattern — every Sunday plus the second and fourth Saturday of each month — and marks any holiday landing on a Monday or Friday as a long-weekend candidate. Filter by month, by one of 12 states or All India, and by type, then export the result as CSV.",
   useCases: [

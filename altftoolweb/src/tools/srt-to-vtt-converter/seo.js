@@ -1,4 +1,12 @@
 const seo = {
+  title: "SRT to VTT Converter with Timing Offset - No Upload",
+  metaDescription:
+    "Converts SubRip to WebVTT in your browser: adds the WEBVTT header, swaps comma timestamps for full stops, shifts cue timing in ms and downloads a .vtt.",
+  steps: [
+    "Paste SubRip text into the \"SubRip (.srt) input\" box or click \"Load .srt file\" (accepts .srt and .txt).",
+    "Set the \"Timing offset (milliseconds)\" and tick the conversion options: keep cue numbers as identifiers, convert {\\anN} alignment tags, remove <font> tags.",
+    "Click \"Download .vtt\" to save the converted file (your chosen name plus .vtt), or \"Copy VTT\" - parsing runs locally and nothing is uploaded.",
+  ],
   intro:
     "The SRT to VTT Converter rewrites a SubRip subtitle file as a W3C WebVTT file that the HTML5 <track> element will accept. It adds the mandatory WEBVTT header, changes the millisecond separator from a comma to a full stop, escapes stray ampersands and angle brackets in the cue text, drops legacy SubRip X1/Y1 coordinates, and can translate SubStation {\\anN} alignment overrides into WebVTT line and align cue settings. Conversion happens entirely in your browser, so the subtitle file is never uploaded.",
   useCases: [

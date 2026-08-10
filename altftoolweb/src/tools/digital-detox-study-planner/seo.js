@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digital Detox Study Planner: Phone-Free Block Ramp",
+  metaDescription:
+    "Build phone-free study blocks that grow daily from an easy start to your cap. See the day you hit the cap and the total phone-free hours you will bank.",
+  steps: [
+    "Set 'Plan length (days)' (3-60), 'Phone-free blocks per day' (1-6), 'Day-1 block length (minutes)', 'Daily increase (minutes)' and 'Block length cap (minutes)'.",
+    "The plan recomputes live: the 'Total phone-free study' headline shows the hours you will bank and which day the blocks reach your cap.",
+    "Read the 'Day by day' bars of block length per day, then click 'Copy plan' to copy the full day-by-day schedule as text.",
+  ],
   intro:
     "This planner builds a phone-free study schedule whose blocks escalate linearly — block length on day n = min(cap, start + (n−1) × daily increase) — so the detox grows from an easy first day to a sustained ceiling instead of demanding cold turkey. It computes the day your blocks hit the cap, the growth factor from day one to the final day, and total phone-free study hours across the plan. It is for students who repeatedly fail all-or-nothing phone bans and want a ramp they can actually hold.",
   useCases: [

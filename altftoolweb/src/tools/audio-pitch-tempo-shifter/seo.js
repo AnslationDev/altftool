@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Pitch & Tempo Shifter with ffmpeg Filter Chains",
+  metaDescription:
+    "Shift pitch in semitones and tempo in percent independently — get the resample rate and a copy-ready atempo chain split into ffmpeg's 0.5–2.0 limit.",
+  steps: [
+    "Set Pitch shift (semitones) from −24 to +24, Fine tune (cents), Tempo (% of original) from 10 to 400, and the Sample rate (Hz) of your source.",
+    "Optionally load a local file under Audio file to preview (optional) and pick a preview mode: Tempo only, pitch preserved, or Pitch and speed linked (tape effect).",
+    "Read the Resample to rate and atempo filters needed in the results, then press Copy ffmpeg command for the asetrate/aresample/atempo chain; a rubberband alternative is printed below it.",
+  ],
   intro:
     "An audio pitch and tempo shifter changes how high a recording sounds and how fast it plays as two separate controls, instead of the single tape-speed knob that moves both at once. The maths is twelve-tone equal temperament: a shift of n semitones multiplies every frequency by 2^(n/12), so +12 semitones doubles pitch and turns A4's 440 Hz into 880 Hz, while a tempo of 50% doubles the running time without touching pitch. This page gives you the exact numbers and the filter chain that performs the change.",
   useCases: [

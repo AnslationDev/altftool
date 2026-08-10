@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in Switzerland: Vignette, Limits & Via Sicura Line",
+  metaDescription:
+    "Swiss speed limits, the CHF 40 motorway vignette and 0.5/0.1 per-mille alcohol limits, plus the exact speed where Via Sicura makes speeding a crime.",
+  steps: [
+    "Pick which driver category you fall into and where your licence was issued, add your age and length of stay, and tick 'I have a valid motorway vignette' if you hold one.",
+    "Enter the 'Posted limit (km/h)' and 'Speed recorded (km/h)' to see where the Via Sicura criminal threshold falls.",
+    "Read 'Your legal blood-alcohol limit in Switzerland' in per mille and the vignette cost check, then click 'Copy result'.",
+  ],
   intro:
     "This explainer covers what a visitor needs before driving in Switzerland: you drive on the right in a left-hand-drive car, speeds are in km/h, dipped headlights stay on day and night, and every motorway and expressway requires the CHF 40 annual vignette. It also computes the Via Sicura threshold — the excess above the posted limit at which speeding stops being a fine and becomes a crime carrying at least a year's imprisonment, a two-year licence withdrawal and confiscation of the vehicle.",
   useCases: [

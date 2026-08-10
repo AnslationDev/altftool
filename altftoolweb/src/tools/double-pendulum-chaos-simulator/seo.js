@@ -1,4 +1,12 @@
 const seo = {
+  title: "Double Pendulum Simulator – RK4 Chaos You Can Watch",
+  metaDescription:
+    "Runge-Kutta double pendulum with live sliders for mass, length, gravity and damping, plus a comparison mode offset by 0.001 rad to make chaos visible.",
+  steps: [
+    "Set the Parameters sliders — Mass 1 and Mass 2 (0.5–5 kg), Length 1 and Length 2 (0.5–3 m), Gravity (0.5–30 m/s²), Damping and Speed — plus the Initial Angles θ₁ and θ₂ in radians.",
+    "Press Start, use Apply & Restart after moving the angle sliders or Randomize for a random pair, and toggle Compare to run a second pendulum offset by 0.001 rad.",
+    "Watch the trails draw while the Live Stats panel updates FPS, θ₁, θ₂, ω₁ and ω₂; in comparison mode separate Pendulum A and Pendulum B stats show the divergence.",
+  ],
   intro:
     "The Double Pendulum Chaos Simulator integrates the standard double-pendulum equations of motion with a fourth-order Runge-Kutta solver and draws the resulting swing in real time with fading motion trails. You set both masses, both rod lengths, gravity, damping and the two starting angles, then watch θ₁, θ₂, ω₁ and ω₂ update live. A comparison mode runs a second pendulum whose lower angle is offset by just 0.001 radians so you can see sensitive dependence on initial conditions with your own eyes.",
   useCases: [

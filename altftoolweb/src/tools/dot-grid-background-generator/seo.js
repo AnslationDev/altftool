@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dot Grid Background CSS Generator with Live Preview",
+  metaDescription:
+    "Set dot spacing, radius and opacity, preview the pattern live, and copy a two-line CSS radial-gradient background that needs no image file.",
+  steps: [
+    "Set the cell size in Spacing px, the dot radius in Dot px and the ink strength in Opacity (defaults 24 / 2 / 0.22).",
+    "Watch the preview swatch repeat your dot as a radial-gradient tile at the chosen background-size while you adjust the numbers.",
+    "Click Copy CSS to copy the generated background-image radial-gradient and background-size declaration; Reset restores the 24 px default grid.",
+  ],
   intro:
     "Dot Grid Background Generator builds dot, isometric, square line, graph-paper and cross-mark grids and reports exactly how much of the surface the ink covers. Coverage has a closed form for each lattice — π r² ÷ cell² for a dot grid, 1 − ((cell − width) ÷ cell)² for a two-family line grid — so you can see before you ship whether a background will interfere with body text. Output comes as CSS gradients using color-mix, or as a repeating SVG tile with fill-opacity that opens correctly in vector editors.",
   useCases: [

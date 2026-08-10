@@ -1,4 +1,12 @@
 const seo = {
+  title: "3 Hour Exam Paper Pacing – Mark-Weighted Checkpoints",
+  metaDescription:
+    "Split a 3-hour paper by marks: enter sections, start time, reading time and a review buffer to get the exact clock time each section must end.",
+  steps: [
+    "Set Exam start time, Paper duration (minutes), Reading time (minutes) and the Review buffer at the end.",
+    "List each section's name, Marks and Questions, using Add section for more rows; writing minutes are split in proportion to marks.",
+    "Read the checkpoint list — each section gets its minutes and a finish-by HH:MM clock time — and press Copy plan.",
+  ],
   intro:
     "This tool converts a three hour question paper into a set of clock-time checkpoints, allocating writing minutes to each section in proportion to the marks it carries — the classic mark-weighted \"minute per mark\" pacing method scaled to your actual paper. Students preparing for board exams, university semesters or competitive descriptive papers enter their sections, marks and start time, and get the exact time each section must end, with reading time and a final review buffer already carved out.",
   useCases: [

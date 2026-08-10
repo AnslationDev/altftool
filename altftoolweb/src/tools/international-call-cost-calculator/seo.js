@@ -1,4 +1,12 @@
 const seo = {
+  title: "International Call Cost: Roaming vs SIM vs VoIP vs Pack",
+  metaDescription:
+    "Compare one trip's calls four ways: roaming, local SIM, VoIP data at 0.5 MB per minute and a calling pack, ranked by total cost and cost per minute.",
+  steps: [
+    "Enter 'Trip length (days)', 'Talk minutes per day' and 'Separate calls per day', pick a currency, then fill the four option prices: roaming rate and connection fee, SIM cost and rate, pack price and minutes, and price per GB of data.",
+    "Choose the 'VoIP call type' — voice at 0.5 MB/min or video at 5 MB/min — and the share of VoIP minutes made on free Wi-Fi.",
+    "Read the 'Cheapest option' headline with its saving against the dearest, the 'Ranked comparison' table with per-minute costs, and click 'Copy result'.",
+  ],
   intro:
     "This calculator prices the same volume of calls home four different ways — pay-per-minute roaming, a local prepaid SIM, VoIP over mobile data and an international calling pack — and ranks them by total trip cost and effective cost per minute. VoIP is costed from real data consumption at 0.5 MB per minute for voice and 5 MB per minute for video, so it competes on the price of a gigabyte rather than a made-up rate. Enter every price in a single currency; nothing is converted behind your back.",
   useCases: [

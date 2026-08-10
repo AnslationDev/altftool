@@ -1,4 +1,7 @@
 const seo = {
+  title: "Conversion Rate Calculator with Revenue Estimate",
+  metaDescription:
+    "Divide conversions by visitors for a rate to two decimals, plus visitors needed per conversion and revenue when you add a value per conversion.",
   intro:
     "Conversion Rate Calculator divides conversions by visitors and multiplies by 100 to give the conversion rate to two decimal places, alongside the visitors-needed-per-conversion figure and, if you enter a value per conversion, the revenue those conversions produced. Enter 150 conversions from 5,000 visitors and it returns 3.00 percent and roughly one conversion every 33 visitors. It is for marketers, ecommerce owners and landing page owners who want the rate and its practical meaning in the same view.",
   useCases: [

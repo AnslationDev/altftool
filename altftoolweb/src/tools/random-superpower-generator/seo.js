@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Superpower Generator – 30 Powers & Weaknesses",
+  metaDescription:
+    "Roll one of 30 hand-written superpowers, each with a description, named weakness, category, rarity from Common to Mythic and a power level from 3 to 10.",
+  steps: [
+    "Press Generate Superpower to draw one of the 30 hand-written powers at random.",
+    "Review the card: category and rarity badges from Common to Mythic, the 10-dot Power Level meter and the named Weakness.",
+    "Press Copy Power to put the name, description, power level, rarity and weakness on your clipboard as one block.",
+  ],
   intro:
     "Random Superpower Generator draws one ability at random from a hand-written deck of 30 powers, each with a description, a named weakness, a category, a rarity tier and a power level from 3 to 10. Rarity runs Common, Uncommon, Rare, Legendary and Mythic — only two of the thirty are Mythic, so Freeze Time or micro black holes come up roughly one roll in fifteen. Writers, game masters and players get a power that already has a built-in limitation, which is the part that makes it usable in a story.",
   useCases: [

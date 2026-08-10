@@ -1,4 +1,7 @@
 const seo = {
+  title: "Rowing Machine Calorie Calculator (Concept2 Formula)",
+  metaDescription:
+    "Distance and time become watts, 500 m split and calories via Concept2's own formulas, plus a weight-adjusted figure - the monitor assumes a 175 lb rower.",
   intro:
     "This calculator takes the distance and time from an indoor rowing session and returns the average power in watts, the 500 m split and the calories burned, using Concept2's own published formulas: watts = 2.80 ÷ (seconds per metre)³ and kcal per hour = (4 × watts) + 300. It shows both the number the monitor would display and a version adjusted for your body weight, because the 300 kcal/hr term in that formula assumes a 175 lb (79.4 kg) rower. Enter an average stroke rate as well and you also get strokes taken, metres per stroke and joules per stroke.",
   useCases: [

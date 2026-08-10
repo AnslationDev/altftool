@@ -1,4 +1,12 @@
 const seo = {
+  title: "Decibel Change Calculator — dB to Ratio & Loudness",
+  metaDescription:
+    "Converts a dB change into power (10^(dB/10)), amplitude (10^(dB/20)) and perceived loudness ratios, plus distance and equivalent-source counts.",
+  steps: [
+    "Choose What you know: A change in decibels, or A ratio, and I want the decibels (with What the ratio describes).",
+    "Type the Level change (dB) — positive louder, negative quieter — or tap a Common changes chip such as +3 dB.",
+    "Read the power, amplitude and perceived-loudness ratios plus the equivalent distance and identical-source count; Copy result exports all of them.",
+  ],
   intro:
     "A decibel change calculator converts a level difference in dB into the ratios it actually represents: power ratio 10^(dB/10), amplitude or sound-pressure ratio 10^(dB/20), and perceived loudness 2^(dB/10). It also gives the two practical equivalents — the distance ratio 10^(−dB/20) from the inverse-square law, and the number of identical uncorrelated sources that would produce the same rise. It is for audio engineers, acoustics students and anyone deciding whether a +3 dB change is worth chasing.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hairstyle Preview: Try On Cuts with Face Detection",
+  metaDescription:
+    "Face detection fits buzz cuts, fades, quiffs, wolf cuts and more on your photo in 15 colours - rendered in your browser, PNG/JPG export up to 3840 px.",
+  steps: [
+    "Add a JPG, PNG, WEBP or HEIC photo up to 20MB via 'Drop image here or click to browse', Paste, or Camera - face detection then runs on the photo automatically.",
+    "Pick a cut from the Styles list, filtered by the All, Short, Medium, Long or Bald tabs; choose a Hair Color swatch and drag the Scale, Rotation, Thickness, Density and Length sliders - the preview re-renders on every change.",
+    "Compare with the 'Before / After' slider, then press 'Download PNG' or 'Download JPG' to save hairstyle-preview.png or .jpg upscaled toward 3840 px, or 'Share' it.",
+  ],
   intro:
     "This tool detects the face in a photo you upload, reads its landmarks and hairline, and draws one of 22 hairstyles onto the head so you can see the cut before you book it. Styles run from buzz cut, fade and crew cut through pompadour, quiff, undercut and curtains to long hair, wolf cut, mullet and man bun, plus a bald option, and each can be rendered in any of 15 colours. Sliders for scale, rotation, thickness, density, length, volume and shine let you fit the shape to your own head instead of accepting a fixed overlay.",
   useCases: [

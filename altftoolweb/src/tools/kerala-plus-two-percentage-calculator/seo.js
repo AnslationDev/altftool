@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kerala Plus Two Percentage Calculator (DHSE Marks)",
+  metaDescription:
+    "Convert DHSE marks to the percentage forms ask for — on the 1200-mark combined or 600-mark Plus Two total — plus A+ to E grades and GPA out of 9.",
+  steps: [
+    "Choose the combined two-year total or the Plus Two year alone with the two scope buttons, then enter each subject's 'Marks scored' and 'Maximum marks'.",
+    "Press 'Add subject' or 'Remove' until the list matches your marksheet; the 'Subjects still to be written' box projects marks needed for a target percentage.",
+    "Read the Percentage headline with overall grade, the 'Grade for each subject' table on the nine-point scale, and GPA out of 9; press 'Copy result'.",
+  ],
   intro:
     "This tool rebuilds the percentage a Kerala Plus Two (DHSE higher secondary) marksheet never prints: total marks divided by the grand total — 1200 across both years at 200 marks a subject, or 600 for the Plus Two year alone — times 100. It also assigns each subject its letter grade on Kerala's nine-point scale (A+ at 90% down to E below 20%) and the GPA out of 9. It is for Kerala students filling degree, professional-course and out-of-state application forms that demand a percentage instead of grades.",
   useCases: [

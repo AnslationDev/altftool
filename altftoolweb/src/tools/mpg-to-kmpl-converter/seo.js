@@ -1,4 +1,12 @@
 const seo = {
+  title: "MPG to km/l Converter – US & UK mpg, l/100 km, Cost",
+  metaDescription:
+    "Convert US or imperial mpg, km/l, mi/l and l/100 km with exact gallon and mile definitions, plus fuel cost per km and per 100 km at your pump price.",
+  steps: [
+    "Type the number in 'Fuel economy figure' and pick its unit in 'Unit of that figure' — US mpg, imperial mpg, km/l, miles per litre or litres per 100 km.",
+    "Set 'Fuel price per litre (for cost figures)' to price the economy at your own pump rate.",
+    "Read the km/l headline plus every equivalent — US and UK mpg, mi/l, l/100 km, cost per km and per 100 km — and press 'Copy result'.",
+  ],
   intro:
     "This converter translates fuel economy between US mpg, imperial mpg, km/l, miles per litre and litres per 100 km using exact unit definitions — 1 mile = 1.609344 km, 1 US gallon = 3.785411784 litres, 1 imperial gallon = 4.54609 litres. It handles the fact that km/l and mpg are distance-per-fuel (higher is better) while l/100 km is fuel-per-distance (lower is better), so the two families are reciprocals. Useful when a review quotes mpg, a brochure quotes km/l and a European spec sheet quotes l/100 km.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Twitch Panel Size Generator: 320px Panels & Emote Sizes",
+  metaDescription:
+    "Export Twitch panels (320px wide, 300px/2.9MB cap), sub badges, emotes, banner and 1920x1080 offline art at exact sizes - resized in your browser.",
+  steps: [
+    "Under \"1. Choose the asset\", pick the preset - panel, sub badge, emote, profile banner or offline screen - and note the full size set Twitch expects.",
+    "Upload your \"Image file (PNG, JPEG, WebP)\", set the \"Fit mode\", background and \"Export format\", and check the crop preview.",
+    "Click \"Export\" to download the file named after your image plus its pixel size; the saved size is checked against the asset's ceiling (2.9 MB panels, 25 KB badges, 1 MB emotes).",
+  ],
   intro:
     "This generator exports Twitch channel art at the sizes and file limits the platform enforces: 320 pixel wide panels capped at 300 pixels tall and 2.9 MB, 72x72 subscriber badges under 25 KB, 112x112 emotes under 1 MB, a 1200x480 profile banner and 1920x1080 offline video art. Because a panel is always rendered in a fixed 320 pixel column, the tool also works out how tall your artwork becomes at that width and warns when it would be trimmed. All resizing and encoding happens locally in your browser.",
   useCases: [

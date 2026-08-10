@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quotation Generator with GST, Discounts & Validity",
+  metaDescription:
+    "Price a client quote with per-line discounts and GST slabs, an overall discount, IGST or CGST+SGST, an advance-balance split and a validity date.",
+  steps: [
+    "Fill 'Quotation details' — number, date, 'Valid for (days)' and 'Advance required (%)' — and tick 'Inter-state supply (IGST)' if it applies.",
+    "Click 'Add line' for each item and set its Quantity, Rate (INR), Discount (%) and a GST rate of 0, 5, 12, 18 or 28%.",
+    "Click 'Copy quote' for a text summary or 'Print' for the formatted quotation with grand total, advance and balance.",
+  ],
   "intro": "Quotation Generator prices a client proposal end to end. Each line takes a quantity, rate, its own discount percentage and GST slab; an optional overall discount is then spread across the lines in proportion to value so every line keeps its correct tax rate. The tool shows the taxable value, the IGST or CGST + SGST split, the rounded grand total, the advance-versus-balance breakdown and a validity date calculated from the quote date. Built for freelancers, agencies, consultants and small suppliers.",
   "useCases": [
     "Send a design or development proposal where each deliverable has its own price and negotiated discount.",

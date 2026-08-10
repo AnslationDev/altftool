@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apache NOTICE File Generator for License Attribution",
+  metaDescription:
+    "Build an Apache-2.0 section 4(d) NOTICE file — product name, copyright year range and one attribution block per dependency — from pipe-separated lines.",
+  steps: [
+    "Enter the product name, copyright holder and first/last copyright years, plus an optional 'Developed at' organisation and URL.",
+    "List dependencies one per line as 'Name | Copyright holder | URL | required notice text' — only the name is mandatory, and lines starting with # are ignored.",
+    "Review the generated NOTICE preview with its attribution-block and total line counts, then click 'Copy NOTICE'.",
+  ],
   intro:
     "This generator assembles an Apache-style NOTICE file — product name on line one, a Copyright <years> <owner> line, then one attribution block per bundled dependency — following the format required by section 4(d) of the Apache License 2.0 and the ASF Licensing How-To. It is built for maintainers and release engineers who ship software that bundles Apache-licensed components and must carry their attribution notices forward. Paste your dependency list and get a ready-to-commit NOTICE text.",
   useCases: [

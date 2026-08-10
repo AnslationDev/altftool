@@ -1,4 +1,12 @@
 const seo = {
+  title: "Walking Pace Calculator: Min/km, Min/mile, MET Intensity",
+  metaDescription:
+    "Enter distance and time to get pace per km and mile, speed, and the MET intensity from the Compendium scale, plus projected 5K to marathon finish times.",
+  steps: [
+    "Enter 'Distance walked' in Kilometres or Miles and the 'Time taken' in Hours, Minutes and Seconds.",
+    "Optionally add 'Body weight (kg)' for the calorie estimate and 'Steps taken' for cadence and stride length.",
+    "Read 'Pace per kilometre' with min/mile, speed, MET intensity and race projections, then click 'Copy result'.",
+  ],
   intro:
     "Walking Pace Calculator divides your elapsed time by the distance covered to give pace in minutes per kilometre and minutes per mile, plus speed in km/h and mph. It then places that speed on the Compendium of Physical Activities walking scale so you can see the MET value and whether the effort counts as moderate or vigorous, and projects finish times for 5 km, 10 km, a half marathon and a marathon. Built for walkers training for an event or checking that their daily walk is actually brisk.",
   useCases: [

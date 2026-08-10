@@ -1,4 +1,7 @@
 const seo = {
+  title: "Fancy Text Generator: Bold, Script & Bubble Unicode",
+  metaDescription:
+    "Type once and get six Unicode variants — bold, italic, script, monospace, wide and bubble — as real characters that paste into bios, usernames and posts.",
   intro:
     "The Fancy Text Generator rewrites whatever you type into six styled variants at once — bold, italic, script, monospace, wide-spaced and bubble — by substituting each A–Z letter with its counterpart in Unicode's Mathematical Alphanumeric Symbols block, so the result is real text rather than an image or a font. Every variant updates as you type and each has its own copy button. It is for people writing social bios, usernames, video titles and post headings in apps that strip normal formatting.",
   useCases: [

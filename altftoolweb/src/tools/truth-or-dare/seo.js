@@ -1,4 +1,12 @@
 const seo = {
+  title: "Truth or Dare Game: 360 Prompts in 6 Packs, 3 Levels",
+  metaDescription:
+    "Deal random truths and dares from 360 built-in prompts across Friends, Family, Party, Couples, Kids and Office packs, at easy, medium or hard.",
+  steps: [
+    "Choose Truth or Dare, pick easy, medium or hard, and select one of six packs: Friends, Family, Party, Couples, Kids or Office.",
+    "Press \"Pick!\" to deal a random card from that pool; use Skip to pass (skips are counted) or the star to save a card to Favorites.",
+    "Read the dealt card on screen; the History panel keeps the last 50 cards, and \"Add Question\" files custom prompts under a mode and difficulty.",
+  ],
   intro:
     "Truth or Dare deals a random truth question or dare from a built-in set of 360 prompts, organised into six packs — Friends, Family, Party, Couples, Kids and Office — each split across easy, medium and hard difficulty. You pick the pack and difficulty, tap for a card, and can skip, favourite, add your own prompts to any pack, or shuffle the pool so the same lines stop reappearing. It is for a group that wants the game running in seconds without one person having to invent every dare on the spot.",
   useCases: [

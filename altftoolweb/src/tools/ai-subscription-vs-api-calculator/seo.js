@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Subscription vs API Cost Calculator: Break-Even Point",
+  metaDescription:
+    "Finds the messages per month where a flat AI seat beats pay-per-token API rates for your prompt sizes, plus how much of the plan's value you actually use.",
+  steps: [
+    "Enter the plan price per seat per month, seat count and working days per month, or tap a plan preset chip to fill the price.",
+    "Describe the API side: messages per seat per month, input and output tokens per message, USD rates per 1M tokens and an optional prompt cache hit rate.",
+    "Read the break-even usage per seat in messages per month and per working day, the monthly and annual difference, and the plan-value-used bar; \"Copy result\" exports it.",
+  ],
   intro:
     "A flat AI seat is a fixed monthly cost while an API bill rises linearly with tokens, so the two cross at exactly one usage level: break-even messages = plan price per seat ÷ cost per message, where cost per message = (input tokens × input rate + output tokens × output rate) ÷ 1,000,000. This calculator finds that crossover for your own prompt sizes and rates, and expresses current usage as a percentage of the plan's value so light users can see how much of a seat they are leaving on the table.",
   useCases: [

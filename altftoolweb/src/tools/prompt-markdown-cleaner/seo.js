@@ -1,4 +1,12 @@
 const seo = {
+  title: "Clean Prompt Text: Strip Markdown, Smart Quotes, Unicode",
+  metaDescription:
+    "Strip markdown, straighten curly quotes and delete zero-width characters before pasting into an AI model. Four toggleable passes, runs in your browser.",
+  steps: [
+    "Paste your text into the 'Text to clean' box.",
+    "Tick the Cleaning passes to apply: Remove invisible characters, Straighten smart punctuation, Strip markdown formatting, Tidy whitespace.",
+    "Check the 'Characters fixed' count per pass, then click 'Copy cleaned text' to copy the result.",
+  ],
   intro:
     "The Prompt Markdown Cleaner strips stray markdown syntax, straightens smart quotes and deletes invisible Unicode characters from text before you paste it into an AI model. It maps typographic punctuation (U+2018–U+201D curly quotes, em dashes, ellipses, non-breaking spaces) back to plain ASCII and removes zero-width spaces, BOMs and soft hyphens that ride along in copy-paste. It runs entirely in the browser, for anyone who moves text between Word, Google Docs, chat apps and an LLM all day.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creator Collab Brief Builder – GST, TDS & Usage Rights",
+  metaDescription:
+    "Build an influencer collab brief: deliverables with rates, dated milestones, usage rights, and a fee stack that adds 18% GST and deducts TDS correctly.",
+  steps: [
+    "Fill in Brand, Campaign name and the Go-live date, and list deliverables one per line in the \"2 x Instagram Reel | 25000\" format.",
+    "Set the usage-term and exclusivity uplifts, pick the TDS section applied by the brand, and tick \"I am GST registered (charge 18%)\" if it applies.",
+    "Read Net receivable after TDS above the full fee table, then press Copy brief to copy the deliverables, timeline, usage rights and fee breakdown as text.",
+  ],
   intro:
     "Creator Collab Brief Builder turns a brand conversation into a written brief: deliverables with quantities and rates, a dated milestone timeline working back from the go-live date, explicit usage rights, and a fee breakdown that adds 18% GST and subtracts TDS. It follows CBDT Circular 23/2017 by computing TDS on the value excluding GST when GST is shown separately, and offers the sections a brand actually deducts under — 194J at 10%, 194C at 1% or 2%, and 194R at 10% for gifted or barter deals.",
   useCases: [

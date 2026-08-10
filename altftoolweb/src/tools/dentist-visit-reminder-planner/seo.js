@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dentist Visit Planner — Risk-Based Recall Interval",
+  metaDescription:
+    "Tick any of 13 caries and gum risk factors to get a recall interval inside the 3-24 month guideline range, a due date and a downloadable .ics reminder.",
+  steps: [
+    "Enter your date of last check-up and age, then tick the risk factors that apply — each checkbox shows the weight it adds.",
+    "Your score maps to a recall interval kept inside the guideline range: 3-24 months for adults, capped at 12 months under 18.",
+    "Read the suggested interval and due date, then click Calendar file for a dental-check-up .ics with a 14-day alarm, or Copy plan.",
+  ],
   intro:
     "The six-month dental check-up is a convention, not a rule: evidence-based guidance sets the recall interval anywhere from 3 to 24 months for adults, and 3 to 12 months for patients under 18, according to the person's risk of new disease. This planner scores thirteen routine caries and periodontal risk factors, maps the score onto a band, keeps the resulting interval inside the guideline range for the age, and gives you the due date, a reminder date two weeks earlier and a downloadable calendar file.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monsoon Driving Readiness Check – Tread, PSI, Braking",
+  metaDescription:
+    "Enter tread depth and tyre pressure to get wet braking distance in metres, aquaplaning onset speed from NASA's 9√p formula, and an 18-point checklist.",
+  steps: [
+    "Measure and enter Tread depth (mm), Cold tyre pressure (psi) and the speed you actually cruise at (km/h).",
+    "Tick the weighted checklist grouped under Tyres & brakes, Visibility, Sealing & electricals and Documents & kit.",
+    "Read Stopping distance in rain with its verdict, plus aquaplaning onset speed, rain following gap and checklist points; press Copy result.",
+  ],
   intro:
     "A monsoon driving readiness checker turns two measurements — tread depth and cold tyre pressure — into the numbers that decide a wet-weather stop. Braking distance is computed as v²/(2μg) with a wet friction coefficient chosen from your tread depth, reaction distance uses a 1.5-second wet reaction time, and the aquaplaning onset speed comes from the NASA rotating-tyre formula V = 9√p knots (Horne & Dreher, TN D-2056). A weighted eighteen-point checklist covers everything a gauge cannot measure.",
   useCases: [

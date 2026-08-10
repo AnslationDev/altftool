@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC Study Prompt Builder for CGL, CHSL, MTS, CPO, JE",
+  metaDescription:
+    "Build AI study prompts carrying each SSC paper's real marking and pace, and see how many attempts your accuracy needs for a target score.",
+  steps: [
+    "Pick the Paper (CGL Tier I, CHSL Tier I, MTS, CPO, GD or JE), then a Section, Topic, Prompt mode, Difficulty and Number of items, adding your weak spots as optional notes.",
+    "Enter Target marks and Expected accuracy (%) in the Attempt plan to see Questions to attempt and the Projected net score under that paper's own marking.",
+    "Press Copy prompt to copy the Generated prompt, which carries the paper's marks per correct, deduction per wrong and seconds-per-question pace.",
+  ],
   intro:
     "The SSC Exam Prompt Builder writes AI study prompts that carry the exact marking scheme, per-question pace and skip-or-guess threshold of the SSC paper you are preparing for. Pick CGL Tier I, CHSL Tier I, MTS Session I or II, CPO Paper I, GD Constable or JE Paper I, then a section and topic, and it also solves the attempt maths: how many questions you must attempt at a given accuracy to reach a target score, using marks-per-attempt = accuracy x marks-per-correct minus (1 - accuracy) x penalty.",
   useCases: [

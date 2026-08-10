@@ -1,4 +1,7 @@
 const seo = {
+  title: "Legal Notice Reply Deadline & Service Date Tracker",
+  metaDescription:
+    "Board your sent legal notices: service date (actual or deemed, S.27 General Clauses Act), reply deadline and next step - s.138 and s.80 CPC included.",
   intro:
     "The Legal Notice Dispatch Tracker keeps a board of the notices you have sent and works out, for each one, the date it was served, the date a reply falls due, and what the next step is after that. Enter the dispatch mode and date and it computes service either from the actual delivery date in the tracking record or, where none is recorded, from an assumed transit period — the deemed-service principle in Section 27 of the General Clauses Act, 1897, under which a properly addressed and prepaid registered letter is treated as served in the ordinary course of post. Notice types carry their own periods: a cheque dishonour demand under Section 138 of the Negotiable Instruments Act gives the drawer 15 days from receipt, and Section 80 CPC requires two months before suing the government. This is an informational planning aid, not legal advice — dates that matter should be confirmed with your advocate.",
   useCases: [

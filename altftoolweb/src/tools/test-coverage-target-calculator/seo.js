@@ -1,4 +1,12 @@
 const seo = {
+  title: "Test Coverage Target Calculator - Exact Lines Needed",
+  metaDescription:
+    "Turns a coverage gate % into the whole-number lines or branches to cover - ceil(total x target/100) - plus new-code needs and a sprint ratchet plan.",
+  steps: [
+    "Pick the \"Metric\" (lines, branches, statements or functions), then enter the total and already-covered counts from your coverage report and the \"Coverage gate (%)\".",
+    "Optionally add the new lines in your next change, \"Minutes to cover one line\" and \"Ratchet steps (sprints)\".",
+    "Read the count still to cover, what your next pull request must achieve, and the per-sprint ratchet table; \"Copy result\" copies the summary.",
+  ],
   intro:
     "This calculator converts a percentage coverage threshold into the exact whole number of lines, branches, statements or functions you must cover — using ceil(total × target / 100), the same arithmetic every coverage gate applies. It is for developers and leads staring at an Istanbul, JaCoCo, coverage.py or SimpleCov report who need to know how many items stand between the current number and a green build, what the next pull request has to achieve, and how to ratchet the gate up over several sprints.",
   useCases: [

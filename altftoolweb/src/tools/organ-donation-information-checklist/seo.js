@@ -1,4 +1,12 @@
 const seo = {
+  title: "Organ Donor Registration Checklist: Opt-In vs Opt-Out",
+  metaDescription:
+    "Pick your country to see its consent system and registry — India, UK, US, Canada, Australia, Spain — then track registration and the family conversation.",
+  steps: [
+    "Choose your country under 'Where do you live?' to load its consent system (opt-in or opt-out), official registry and legal framework.",
+    "Tick the checklist stage by stage — the registry entry and the family conversation are tracked separately, and critical items carry a 'key step' badge.",
+    "Watch the completion percentage and the 'Do these next' list update, then click 'Copy result' to export the whole checklist.",
+  ],
   intro:
     "Whether an organ donation wish is actually carried out comes down to two things: a record on the official registry and a family who already knows the decision. This checklist sets out the registration route and the family conversation step by step, and tells you whether the place you live runs an opt-in system, where nothing happens unless you register, or an opt-out system, where adults are treated as willing unless they record a refusal. It is informational and submits nothing anywhere.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Fantasy Character Name Generator – 6 Two-Part Names",
+  metaDescription:
+    "Roll six two-part fantasy names per click from a fixed pool of twelve invented roots like Aeloria and Kaelith — Copy or Download the set as .txt.",
   intro:
     "The Fantasy Character Name Generator returns six two-part fantasy names per run, each built by pairing entries from a curated pool of twelve invented high-fantasy roots such as Aeloria, Thornwood, Kaelith, Fenrith, Ysolde and Varkon. Results are de-duplicated within a run and the Generate button rolls a fresh set, so you can keep drawing until a name sounds right for the character. It is for writers, game masters and players who need a usable name now rather than a naming language built from scratch.",
   useCases: [

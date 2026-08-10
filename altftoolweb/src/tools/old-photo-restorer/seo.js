@@ -1,4 +1,12 @@
 const seo = {
+  title: "Old Photo Restorer – Fix Faded & Sepia Scans Online",
+  metaDescription:
+    "Restore faded scans in the browser: contrast lift, luminance-based sepia removal and 3×3 sharpening, with a drag-to-compare slider. Up to 15 MB, PNG out.",
+  steps: [
+    "Press Select Vintage Photo or drag a scan onto the upload panel — JPG, PNG and WebP up to 15 MB.",
+    "Tick Enhance Fine Details and/or Remove Sepia Tone, then press Restore Image to run the contrast, de-sepia and sharpening pass.",
+    "Drag the Before/After split slider to inspect the change, then Download the result as restored-photo.png or use Copy Image.",
+  ],
   intro:
     "The Old Photo Restorer runs a scanned or photographed print through a three-step canvas pipeline — contrast and brightness lift, optional sepia removal by luminance conversion, and a 3×3 sharpening convolution — and shows the result against the original in a drag-to-compare slider. It is meant for anyone digitising family albums who wants faded, flat or yellowed prints to read clearly again without learning a photo editor. Images up to 15 MB are processed in the page and downloaded back as PNG.",
   useCases: [

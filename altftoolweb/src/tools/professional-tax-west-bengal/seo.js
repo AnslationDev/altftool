@@ -1,4 +1,12 @@
 const seo = {
+  title: "West Bengal Professional Tax Calculator (2023 Slabs)",
+  metaDescription:
+    "Monthly PT for West Bengal's five post-2023 slabs — nil up to Rs 10,000, Rs 200 above Rs 40,000 — with head count and the employer's deposit calendar.",
+  steps: [
+    "Enter the 'Monthly gross salary (INR)', how many 'Employees on this salary', and the 'Financial year starting April'.",
+    "The calculator matches the salary against the five-band 'West Bengal slab table' shown on the page, highlighting the row your figure falls in.",
+    "Read the 'Deduction per employee, per month', the 'Employer deposit each month', and the 'Employer deposit schedule' listing each wage month's 'Pay by' date, then use 'Copy result'.",
+  ],
   intro:
     "This calculator returns the professional tax deductible in West Bengal for a monthly salary, using Schedule Entry 1 of the West Bengal State Tax on Professions, Trades, Callings and Employments Act, 1979 as amended from 1 April 2023. It applies the five salary bands from nil up to Rs 10,000 a month through Rs 200 a month above Rs 40,000, multiplies by head count, and lays out the employer's month-by-month deposit calendar. Payroll and compliance teams can use it to size a monthly PT challan.",
   useCases: [

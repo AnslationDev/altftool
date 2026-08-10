@@ -1,4 +1,12 @@
 const seo = {
+  title: "Phone Number Regex: E.164, India, US/Canada & UK Patterns",
+  metaDescription:
+    "Copy-ready regex for E.164, Indian mobiles starting 6–9, US/Canada NANP and UK numbers — each with a live tester and a list of what it cannot verify.",
+  steps: [
+    "Pick a Region / format — E.164 canonical, India mobile (TRAI), US / Canada (NANP), United Kingdom (Ofcom) or Loose international (CRM input) — and type a number into 'Test a phone number'.",
+    "Read the instant Match or No match verdict, the pattern's scope, and its Accepts/Rejects example chips — the NANP pattern passes 415-555-2671 and rejects 115-555-2671.",
+    "Press Copy regex to take the /pattern/ into your codebase, and read 'Known limitations of this pattern' so you ship knowing what the regex cannot verify.",
+  ],
   intro:
     "This library provides copy-ready regular expressions for validating phone numbers in the formats developers actually meet: the ITU-T E.164 canonical form (+ and up to 15 digits), Indian 10-digit mobiles starting 6–9 per the TRAI numbering plan, US/Canada numbers under NANP rules, UK numbers with the Ofcom trunk-0 / +44 convention, and a loose 8–15-digit international catch-all. Every pattern has a live tester and an explicit list of what it cannot verify, so you know exactly what you are shipping.",
   useCases: [

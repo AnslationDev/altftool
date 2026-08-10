@@ -1,4 +1,12 @@
 const seo = {
+  title: "Duplicate Image Finder – Find Resized & Renamed Copies",
+  metaDescription:
+    "Hashes photos in your browser with dHash + aHash, groups pairs at 80%+ similarity, keeps the best copy and exports duplicate-report.csv — no uploads.",
+  steps: [
+    "Drop photos on the 'Drop images here or click to browse' zone — multiple images at once, including HEIC/HEIF; non-image files are skipped with a notice.",
+    "Press 'Find Duplicates' to compare every pair on 64-bit difference and average hashes, grouping matches at 80% or higher averaged similarity.",
+    "Review each group's '% match' badges (95%+ Exact, 85-94% Near), press 'Keep Best' to drop the lower-resolution copies, or 'Export CSV' for duplicate-report.csv.",
+  ],
   intro:
     "Duplicate Image Finder compares a batch of images with two 64-bit perceptual hashes — a difference hash and an average hash computed on greyscale — and groups any pair whose averaged similarity reaches 80% or more. Because it matches on visual structure rather than file bytes, it catches a resized, recompressed or renamed copy that a checksum comparison would treat as a different file. Photographers and anyone cleaning a photo folder get similarity-scored groups, a keep-best action, and a CSV report.",
   useCases: [

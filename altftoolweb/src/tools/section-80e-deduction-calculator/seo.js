@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 80E Calculator: Education Loan Interest Deduction",
+  metaDescription:
+    "Builds a year-by-year EMI schedule and marks which years fall inside Section 80E's 8-year window, plus the tax saved at your slab rate and 4% cess.",
+  steps: [
+    "Enter \"Loan amount (Rs)\", \"Interest rate (% per year)\" and \"Repayment tenure (years)\", then pick the financial year under \"Repayment starts in\" and your income tax slab rate.",
+    "The tool builds a reducing-balance EMI schedule and labels each financial year Deductible or Expired against the 8-assessment-year window.",
+    "Read the deductible interest, interest outside the 8-year window, and the tax saved at your slab plus 4% cess in the year-wise table; \"Copy result\" exports it.",
+  ],
   "intro": "Section 80E Education Loan Interest Deduction estimates how much of your education loan interest is actually deductible. It builds a full EMI amortisation from your loan amount, rate and tenure, splits interest year by year, and marks which years fall inside the eight assessment years that Section 80E allows from the year repayment begins. Because the section caps the years and not the rupees, a long tenure can leave interest stranded outside the window — the calculator shows exactly how much.",
   "useCases": [
     "A graduate starting repayment on a Rs 15 lakh loan, checking the first-year deduction before submitting an investment declaration.",

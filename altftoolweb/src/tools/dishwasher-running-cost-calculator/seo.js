@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dishwasher vs Hand Washing Cost per Load Calculator",
+  metaDescription:
+    "Price a dishwasher cycle against hand washing: label kWh and litres vs tap flow x minutes, hot-water energy from real physics. Per load and per year.",
+  steps: [
+    "Pick a Programme (each listed with its kWh and litres) or override with your machine's label figures, and set 'Detergent per cycle (INR)'.",
+    "Describe the hand wash with 'Tap flow rate (litres per minute)' and 'Minutes at the running tap', then set the electricity tariff, water price per 1000 litres and 'Loads washed per week'.",
+    "Read 'Difference per load' with the winner and the yearly saving, then click 'Copy result'.",
+  ],
   intro:
     "This calculator prices a single dishwasher cycle against washing the same load by hand, using the appliance's label energy and water figures on one side and tap flow rate times minutes on the other. Hand-wash heating is computed from physics rather than a rule of thumb: energy equals litres times temperature rise times water's specific heat of 4.186 kJ per kg per kelvin, divided by 3600 to reach kilowatt-hours. It is aimed at anyone deciding whether a dishwasher is worth its running cost.",
   useCases: [

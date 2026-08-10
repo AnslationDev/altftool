@@ -1,4 +1,12 @@
 const seo = {
+  title: "Australia Plug & Voltage Guide: Adapter or Converter?",
+  metaDescription:
+    "Check any device against Australia's 230 V 50 Hz AS/NZS 3112 sockets: adapter vs converter verdict, current drawn, and the 10-32 A outlet it needs.",
+  steps: [
+    "Select the plug on your device and type its label minimum and maximum voltage, frequency and rated power — or tap a preset like 'US hair dryer'.",
+    "Read the verdict for Australia: whether you need a type I travel adapter, a voltage converter, or nothing, and whether 50 Hz is compatible.",
+    "Check the current drawn at 230 V and the smallest AS/NZS 3112 socket rating — 10, 15, 20 or 32 A — that carries it, then click 'Copy result'.",
+  ],
   intro:
     "This guide decides whether your device needs a plug adapter, a voltage converter, or nothing at all in Australia. Australia supplies 230 V at 50 Hz on the AS/NZS 3112 socket — the two flat pins in a shallow V plus a vertical earth pin that the IEC calls type I — and the same standard covers New Zealand, Fiji and Papua New Guinea. Enter your plug type and the voltage range printed on the label to get the verdict, the current the device draws and the smallest socket rating that carries it.",
   useCases: [

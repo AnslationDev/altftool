@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lean Body Mass Calculator: Boer, James & Hume + FFMI",
+  metaDescription:
+    "Split weight into lean and fat mass from a known body fat % or the Boer, James and Hume formulas, with FFMI and a 1.6-2.2 g/kg protein range.",
+  steps: [
+    "Choose \"Known body fat %\" or \"Height and weight formula\" under Calculate from, then pick your sex and kg / cm or lb / in units.",
+    "Enter Weight and Height, plus either your Body fat (%) or a formula — Boer (1984), James (1976) or Hume (1966).",
+    "Read your lean mass, fat mass, FFMI, height-adjusted FFMI and the 1.6-2.2 g per kg protein guide, then press Copy result.",
+  ],
   "intro": "Lean Body Mass Calculator splits your body weight into lean mass and fat mass. Give it a body fat percentage you already know and it does the arithmetic directly; leave that out and it estimates lean mass from height, weight and sex using the Boer, James and Hume equations, showing all three side by side. It also reports fat-free mass index (FFMI), a height-adjusted FFMI and a protein range based on 1.6-2.2 g per kg of lean mass. Handy for lifters, coaches and anyone tracking a cut or a bulk.",
   "useCases": [
     "Convert a DEXA, caliper or smart-scale body fat reading into actual kilograms of muscle and fat.",

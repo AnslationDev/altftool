@@ -1,4 +1,12 @@
 const seo = {
+  title: "Which Fantasy House Am I? A 10-Question Sorting Quiz",
+  metaDescription:
+    "Ten questions score courage, ambition, curiosity, loyalty, resilience and secrecy across six houses - four classics plus Valoria and Umbra.",
+  steps: [
+    "Click Begin the Sorting to start the ten-question quiz.",
+    "Answer each screen (Question 1 of 10 through 10 of 10) by picking one of four options; every answer awards weighted points across all six houses.",
+    "See your house with its motto, traits and quote, check the Your Scores totals for all six houses, and click Take the Quiz Again to retake it.",
+  ],
   intro:
     "Which Fantasy House Do You Belong In? is a 10-question quiz that sorts you into one of six magical houses by scoring your answers on courage, ambition, curiosity, loyalty, resilience and secrecy. Four classic houses — Lion, Serpent, Raven and Badger — sit alongside two original ones, Valoria (the House of the Phoenix) and Umbra (the House of the Shadow), so the result is not limited to the familiar four. Each house comes with a motto, a written summary, five defining traits, a colour pair and a quote.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "NaNoWriMo Word Count Pace & Catch-Up Calculator",
+  metaDescription:
+    "Compare your word count with the 1,667-a-day par line, see the daily words now needed to hit 50,000, and where your current average actually lands you.",
+  steps: [
+    "Enter 'Day of the challenge' and 'Words written so far', or tap a preset such as '50,000 in 30 days' or '25,000 in 30 days'.",
+    "Adjust 'Word goal' (1,000 to 500,000) and 'Days in the challenge' (up to 92) for Camp-style or custom rounds.",
+    "Read how far you are ahead or behind par, the words needed per remaining day and your projected final total; 'Copy summary' exports it and 'Show' opens the full par table.",
+  ],
   intro:
     "A NaNoWriMo pace calculator compares your running word count against the par line for a 50,000-word, 30-day challenge — 1,667 words a day — and works out what you now need daily to finish on time. It reports how many words ahead or behind par you are, converts that gap into days, and projects where your current average will actually land you by the last day. The same arithmetic works for any goal and any number of days, so Camp-style 25,000-word months and 31-day variants are handled too.",
   useCases: [

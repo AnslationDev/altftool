@@ -1,4 +1,12 @@
 const seo = {
+  title: "Facebook 2FA Setup Guide: Accounts Center Checklist",
+  metaDescription:
+    "Step-by-step Facebook 2FA checklist for security key, authenticator app or SMS, with a readiness score that flags unsaved recovery codes and SMS fallback.",
+  steps: [
+    "Under \"Which second factor are you setting up?\", choose Security key or passkey, Authentication app (TOTP), or Text message (SMS).",
+    "Tick off each Setup checklist step as you finish it in Meta's Accounts Center — every step shows its menu path and a minutes estimate.",
+    "Read the Account readiness score out of 100 with its Strong/Good/Partial/Weak band and warnings; \"Copy result\" exports the summary.",
+  ],
   intro:
     "This guide walks through enabling two-factor authentication on a Facebook profile in Meta's Accounts Center, then scores how much lockout and takeover risk is left. Facebook offers three second factors — security key, authentication app and text message — and the checklist adapts to whichever you pick, including saving recovery codes and switching SMS off once a stronger factor works. It is aimed at anyone protecting a personal profile, a Page they admin, or a business account tied to ad spend.",
   useCases: [

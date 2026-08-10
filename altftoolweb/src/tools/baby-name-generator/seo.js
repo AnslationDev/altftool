@@ -1,4 +1,7 @@
 const seo = {
+  title: "Baby Name Generator with Origins and Meanings",
+  metaDescription:
+    "Browse 42 curated baby names with origin and meaning on every card. Filter by gender, 13 origins or a name search, and heart names into a shortlist.",
   intro:
     "The Baby Name Generator is a browsable, filterable set of 42 curated baby names, each shown with its linguistic origin and its meaning, that you narrow by gender, by any of 13 origins, or by typing part of a name. Expectant parents get a shortlist they can build up with the heart icon and copy out one name at a time, rather than an endless scroll of names with no context. Every entry carries the meaning alongside it, so a name never lands on the list purely on the strength of how it sounds.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tokens Per Word Calculator — Word Count to Tokens",
+  metaDescription:
+    "Paste a text sample to measure its tokens-per-word ratio vs the ~1.33 English baseline, or enter a real tiktoken count for the exact figure.",
+  steps: [
+    "Paste your writing into the Text sample box, and add a count from tiktoken or your provider's tokenizer in Actual token count (optional) if you have one.",
+    "The calculator estimates tokens at 1 token per 4 characters — or uses your actual count — and divides by the word count.",
+    "Read Tokens per word plus tokens per 1,000 words and the % versus the 1.33 English baseline; Copy result exports the summary.",
+  ],
   intro:
     "This calculator measures your text's tokens-per-word ratio — the number LLM billing actually depends on — from a pasted sample, using the published rule of thumb that 1 token equals about 4 characters or three-quarters of an English word. Writers, prompt engineers and developers use the ratio to convert word counts into token budgets for models like GPT and Claude. If you already have an exact count from tiktoken or a provider's token counter, enter it to get the true ratio for your writing style.",
   useCases: [

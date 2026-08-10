@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lerna Config Generator: lerna.json for Lerna v7 & v8",
+  metaDescription:
+    "Pick fixed or independent versioning, allowBranch, registry and dist-tag; copy a lerna.json that validates against Lerna's own JSON schema.",
+  steps: [
+    "Choose the \"Versioning mode\" (fixed or independent) and \"npm client\"; fixed mode asks for a \"Current fixed version\".",
+    "Set \"Allowed release branches\", the optional publish registry and npm dist-tag, ignoreChanges globs, and tick \"Use conventional commits to derive version bumps and changelogs\".",
+    "Click \"Copy JSON\" and save the output shown under \"Save as\" as lerna.json in your repository root.",
+  ],
   intro:
     "This tool generates a lerna.json for Lerna v7/v8 — the config file that decides whether your monorepo uses fixed (one shared version) or independent per-package versioning, and how lerna version and lerna publish behave. It emits the documented command.version and command.publish options: conventionalCommits, allowBranch, message, ignoreChanges, registry and distTag, with the $schema pointer for editor validation. Package maintainers get a valid config without reading two generations of Lerna docs.",
   useCases: [

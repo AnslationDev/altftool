@@ -1,4 +1,7 @@
 const seo = {
+  title: "SRI Hash Generator — SHA-256/384/512 Integrity Tags",
+  metaDescription:
+    "Hashes your file's exact bytes in-browser with Web Crypto and outputs the integrity attribute plus a ready script or link tag with crossorigin set.",
   intro:
     "This generator turns a file's exact bytes into the W3C Subresource Integrity metadata a browser checks before it runs a script or applies a stylesheet: a base64 SHA-256, SHA-384 or SHA-512 digest written as algorithm-digest inside an integrity attribute. It also assembles the matching script or link tag, including the crossorigin=\"anonymous\" attribute a cross-origin resource needs before the check can run at all. Hashing happens in the page with the Web Crypto API, so no file is uploaded anywhere.",
   useCases: [

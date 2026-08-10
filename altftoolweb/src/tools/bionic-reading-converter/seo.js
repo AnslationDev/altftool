@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bionic Reading Converter — Bold Text HTML/Markdown",
+  metaDescription:
+    "Bolds the first half of each word (adjustable 30-70% fixation), reports the exact share of letters emphasised and outputs escaped HTML or Markdown.",
+  steps: [
+    "Paste into the Text to convert box and set the Fixation strength (five levels covering 30-70% of each word) plus the contrast of the unbolded remainder.",
+    "The converter bolds the first ceil(word length × ratio) letters of every word, always leaving at least one letter plain.",
+    "Check the Letters emphasised percentage and the live Preview, then use Copy HTML or Copy Markdown to export the result.",
+  ],
   intro:
     "This bionic reading converter emboldens the opening letters of every word to create artificial fixation points, bolding the first ceil(word length × fixation ratio) letters — 50 percent of each word at the standard level 3 — while always leaving at least one letter plain so the contrast survives. It reports exactly what share of the text ends up in bold and outputs both HTML and Markdown. It is for readers who find heavy paragraphs hard to track, and for writers preparing accessible reading copy.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Is It Down Now? Check if a Site Is Down for Everyone",
+  metaDescription:
+    "Requests your URL from ALTFTool's server and reports the HTTP status code, response time in ms and final URL after redirects — down for all, or just you.",
+  steps: [
+    "Type the site's domain into the Lookup field — the https:// prefix is added for you, and private, local or reserved addresses are refused.",
+    "Press 'Get current result' to request the URL from ALTFTool's server instead of your own connection.",
+    "Read the Current result panel: the HTTP status code, the measured response time in milliseconds and the final URL after up to four redirects, with an updated timestamp and source.",
+  ],
   intro:
     "IsItDown Now checks whether a website is unreachable for everyone or only on your own connection, by requesting the URL from ALTFTool's server and reporting the HTTP status code, the round-trip time in milliseconds and the final URL after redirects. Enter a domain such as example.com — the https:// prefix is added for you — and an independent second opinion comes back in seconds. It is for anyone staring at a failed page and trying to work out whether to report an outage or fix their own network.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bajaj Bike Service Schedule Planner with Cost Estimate",
+  metaDescription:
+    "Plan every free and paid Bajaj service by km and month, price the parts due at each visit, and check a prepaid package against pay-per-visit totals.",
+  steps: [
+    "Enter Purchase / registration date, Current odometer (km), Average running (km per month) and Engine cooling — liquid-cooled models add coolant work that air-cooled bikes skip.",
+    "Tune the chart to your coupon book: Free services in your package, First service due at (km), Periodic interval after that (km), Labour per paid service (INR) and Prepaid service package price (INR, 0 to skip).",
+    "Read Next service due at with its date, the Service schedule table with Parts due and Cost per visit, the prepaid-vs-pay-per-visit verdict, then press Copy result.",
+  ],
   intro:
     "This planner builds a dated Bajaj service schedule from the maintenance chart: it works out the kilometre and month at which each free and paid visit falls due, lists the consumables that land on each one, and totals the cost so you can compare it against a prepaid package. Bajaj models use a running-in service near 750 km or 1 month and then a periodic cycle of roughly 4,500-5,000 km. Liquid-cooled models such as the Pulsar 220F, RS200 and Dominar also pick up coolant replacement and a radiator check.",
   useCases: [

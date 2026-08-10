@@ -1,4 +1,12 @@
 const seo = {
+  title: "Uber, Ola & Rapido Data Download Guide & Deadlines",
+  metaDescription:
+    "Plan a ride-app data request: count the GPS points held about you, size the archive, and cite the IT Rules 2021 24-hour/15-day or 30-day GDPR deadlines.",
+  steps: [
+    "Tick export categories under '1. Choose what to ask for' — Trip history, GPS route traces, Profile and saved places, Payments and receipts, Safety and incident records — or press 'Select all'.",
+    "Enter 'Years using the app', 'Rides per month' and 'Average ride length (minutes)' under '2. Describe your riding'.",
+    "Read 'Location points in the export' with the archive size, home-inference index and the Grievance Officer deadlines (24 h to acknowledge, 15 days to dispose), then press 'Copy plan'.",
+  ],
   intro:
     "This guide plans a ride-hailing data request for Uber, Ola or Rapido and converts your riding habits into the thing that actually matters: how many individual location points the operator holds about you. It counts pickup and drop coordinates plus GPS breadcrumbs along each route, sizes the archive, and lists the rules to quote when a request is ignored — the IT Rules 2021 Grievance Officer duty of acknowledgement within 24 hours and disposal within 15 days, and the 30-day access deadline under GDPR.",
   useCases: [

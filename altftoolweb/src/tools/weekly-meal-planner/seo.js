@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weekly Meal Planner with Macros and Shopping List",
+  metaDescription:
+    "Plan seven days of meals from protein, carb and fat grams — Atwater-factor calories, AMDR macro-split warnings and one merged shopping list.",
+  steps: [
+    "Set your Daily calorie target (kcal), then use Add meal to give each meal a Day, Slot, Protein/Carbs/Fat grams, Portions to cook and one-per-line Ingredients.",
+    "The planner derives calories at 4/4/9 kcal per gram and checks each day's split against the 45-65% carb, 10-35% protein and 20-35% fat AMDR ranges.",
+    "Read the Day by day table and the merged Shopping list, then click Copy plan to export both.",
+  ],
   intro:
     "A weekly meal planner lays out breakfast, lunch, dinner and snacks across seven days, converts the grams you enter into calories using the Atwater factors (4 kcal per gram of protein, 4 for carbohydrate, 9 for fat), and checks each day's macronutrient split against the Institute of Medicine's Acceptable Macronutrient Distribution Ranges. It then merges every ingredient line into one shopping list. It is for anyone doing a weekly shop who wants the plan to add up before they get to the supermarket.",
   useCases: [

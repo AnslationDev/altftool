@@ -1,4 +1,12 @@
 const seo = {
+  title: "UFW Rule Generator: Valid Rules & Safe Apply Order",
+  metaDescription:
+    "Build valid ufw allow, deny, reject or limit rules for ports, ranges or app profiles, with source CIDR and an apply order that puts SSH before ufw enable.",
+  steps: [
+    "Set 'Action' and 'Rule targets' ('A port or range' or 'An application profile'), then enter the port — 22, or 80,443, or 6000:6010.",
+    "Restrict it with 'From (source address or CIDR)' and a 'Comment', and set the 'SSH port to protect first' in the Safe apply order section.",
+    "Click 'Copy rule' for the sudo ufw command and follow the numbered apply-order steps ending with ufw enable.",
+  ],
   intro:
     "This generator writes syntactically valid ufw rules — the simple `ufw allow 22/tcp` form and the extended `ufw allow from 10.0.0.0/8 to any port 5432 proto tcp` form — and validates the parts ufw is strict about, such as requiring an explicit protocol for port lists and ranges. It also produces the ordering that keeps you connected: default policies, then an SSH rule, then your rules, then enable. Aimed at anyone administering a single Ubuntu or Debian server without a configuration management tool.",
   useCases: [

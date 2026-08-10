@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Triangle Generator — Border Trick Code, 4-200px",
+  metaDescription:
+    "Pick up, down, left or right, a 4-200px size and a colour to get the width:0;height:0 border-trick CSS for a triangle — N px tall on a 2N px base.",
   intro:
     "The CSS Triangle Generator writes the classic border-trick rule that turns a zero-sized box into a solid triangle: width:0; height:0; with two adjacent borders set to transparent and the third given your colour. Pick a direction (up, down, left or right), a size between 4 and 200 pixels and a colour, and you get the exact declaration block to paste into a class or a ::before pseudo-element. The chosen size sets each border width, so a size of 40 produces a triangle 40px tall on an 80px base.",
   useCases: [

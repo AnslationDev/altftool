@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meeting Notes Prompt Builder That Counts Missing Owners",
+  metaDescription:
+    "Paste raw notes: lines are sorted into decision, commitment or open question, owner and date gaps are counted, and the prompt forbids inventing them.",
+  steps: [
+    "Paste your notes into the Raw notes box, then optionally set Meeting title, Attendees, Output shape, Tone and 'Who will read it'.",
+    "Check the 'Gaps to close' count and the Line by line table, which tags each line Decision, Action, Open question or Context and marks commitments 'no owner' or 'no date'.",
+    "Press Copy prompt to take the generated prompt — with the exact gap counts and the instruction to mark gaps rather than fill them in — to your AI assistant.",
+  ],
   intro:
     "Meeting Notes Prompt Builder classifies every line of raw notes as a decision, a commitment, an open question or context, then checks whether each commitment names an owner and carries a due date. It reports the gaps as counts — how many commitments have nobody attached, how many have no date, how many questions were left open — and writes those exact figures into a prompt that instructs the assistant to mark them rather than fill them in. Analysis happens in the browser, so nothing is uploaded.",
   useCases: [

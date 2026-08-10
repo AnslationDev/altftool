@@ -1,4 +1,12 @@
 const seo = {
+  title: "Employee Handover Document Generator & Readiness Score",
+  metaDescription:
+    "List what you own, weight items critical 3 / important 2 / routine 1, and get a handover readiness score plus a document that names open blockers.",
+  steps: [
+    "Fill in 'Your exit' — your name, last working day and primary successor — then click 'Add item' to list each system, task or contact you own.",
+    "Set each item's Area, Criticality and Status and name who it is 'Handed to'; the weighted readiness percent and open critical items update live.",
+    "Click 'Copy document' to copy the assembled handover text, or 'Copy summary' for the one-line readiness figure with blockers named.",
+  ],
   intro:
     "This tool turns a list of what you own at work into a weighted handover readiness score and a structured handover document. Each item carries a criticality weight — 3 for critical, 2 for important, 1 for routine — and a completion factor from 0 for not started to 1 for documented and walked through, so readiness is the weighted sum rather than a flat count of ticked boxes. Anything critical that has not been fully transferred is reported as a blocker regardless of the overall percentage.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Resignation Letter Generator with Last-Day Calculator",
+  metaDescription:
+    "Draft a resignation letter and get the exact last working day from a 15, 30, 60 or 90-day notice, plus a shortfall and buyout estimate for early release.",
+  steps: [
+    "Fill in 'Your name', 'Designation' and 'Employer name', set the 'Date you are resigning', and pick a 'Notice period' from 15 days to 90 days (3 months).",
+    "Optionally set 'Last day you want (blank = full notice)', a Tone such as 'Requesting early release', a reason, and tick 'Notice counts working days only'.",
+    "Read the computed 'Last working day', any shortfall with its 'Notice buyout estimate', and the finished text under 'Your letter' — then press 'Copy letter'.",
+  ],
   intro:
     "Resignation Letter Generator drafts a formal resignation and calculates the last working day from the notice period in your appointment letter — 15, 30, 60 or 90 days, counted either as calendar days or working days only. Notice runs from the day after you submit, so 30 days given on 1 August ends on 31 August. If you propose an earlier last day, the tool shows the exact shortfall and estimates the buyout at daily rate multiplied by days short, using the salary component your contract names.",
   useCases: [

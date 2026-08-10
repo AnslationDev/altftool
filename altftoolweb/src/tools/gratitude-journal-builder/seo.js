@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gratitude Journal Builder: Three Good Things Daily",
+  metaDescription:
+    "Write three good things and why each happened — the researched format — with a rotating daily prompt, streak tracking and a monthly review you can copy.",
+  steps: [
+    "Pick an 'Entry date' and fill 'Good thing 1' to 'Good thing 3', each with 'Why it happened (optional)' — a rotating theme prompt is shown for that date.",
+    "Click 'Save entry' to add the day to the journal — entries live only in this browser tab.",
+    "Check your current and longest streak and the monthly review, then click 'Copy journal' to keep the text elsewhere.",
+  ],
   intro:
     "The Gratitude Journal Builder structures the 'three good things' exercise: each day you write three things that went well and, for each, why it happened — the format Seligman and colleagues tested in 2005, where a week of nightly entries was associated with higher happiness scores at follow-up. A rotating twelve-theme prompt changes daily so entries do not collapse into the same three answers, and the tool tracks current and longest streaks plus a monthly review of how many days you actually wrote.",
   useCases: [

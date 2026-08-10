@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Compare – Side-by-Side Diff with Similarity %",
+  metaDescription:
+    "Paste two texts for a line-by-line diff marking added, removed and modified lines, a similarity percentage, and a downloadable text-compare-report.txt.",
+  steps: [
+    "Paste the original into the 'Left text input' pane and the revision into 'Right text input'; the diff and statistics update in real time as you type.",
+    "Toggle Ignore whitespace, Ignore case or Line numbers in the options bar to keep formatting-only edits out of the comparison.",
+    "Read the Added, Removed, Modified, Similarity and Total lines cards, then Copy result or Download the report as text-compare-report.txt; Clear all empties both panes.",
+  ],
   intro:
     "This is a side-by-side text diff that lines up two blocks of text by line number and marks each row as unchanged, modified, added or removed, then scores similarity as the share of unchanged lines out of the longer document. Optional toggles let you ignore case and collapse runs of whitespace before the comparison, so formatting-only edits stop showing up as real changes. The result can be copied or downloaded as a plain-text report listing every differing line with its number and both versions.",
   useCases: [

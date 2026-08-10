@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Button Generator with Hover State and Gradient",
+  metaDescription:
+    "Build a .custom-button rule plus a matching :hover block — gradient or solid fill, radius, shadow depth and hover scale — and export the CSS with HTML.",
   intro:
     "CSS Button Generator builds a complete `.custom-button` rule plus a matching `:hover` rule from visual controls for padding, font size and weight, border radius, border, solid or 135° linear-gradient background, box-shadow depth and opacity, and hover scale. It is for developers and designers who want the hover state generated for them rather than hand-writing a second block. The preview is a real button you can hover, and the export includes both the CSS and the HTML snippet that uses it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Diagram Practice Tracker: Readiness Score & Queue",
+  metaDescription:
+    "Track which exam diagrams you can draw from memory within a time budget, get a weighted readiness percentage and a weakest-first practice queue.",
+  steps: [
+    "Click 'Add diagram' and give each one a 'Diagram name' and a 'Target time (min)' budget.",
+    "Log the 'Last attempt' for each diagram and, if it was attempted, the 'Time taken (min)'.",
+    "Read your overall exam readiness percentage and the 'Practise next (weakest first)' queue, then click 'Copy summary'.",
+  ],
   intro:
     "This tracker classifies every diagram on your exam syllabus by whether you last drew it from memory within a set time budget — the retrieval-practice standard for calling something exam-ready. Each diagram lands in one of four levels (exam-ready, close but too slow, learning, not practised) and the tool computes a weighted readiness percentage plus a weakest-first practice queue. It suits biology, geography, economics and engineering students whose papers award marks for accurate labelled diagrams.",
   useCases: [

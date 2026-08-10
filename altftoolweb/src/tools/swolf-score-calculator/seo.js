@@ -1,4 +1,12 @@
 const seo = {
+  title: "SWOLF Score Calculator with Per-25 m Normalisation",
+  metaDescription:
+    "Add length time to stroke count for a SWOLF score, normalised per 25 m so 50 m pools compare, with the stroke-vs-time trade-off table behind it.",
+  steps: [
+    "Choose 'One length' or 'Whole set', pick the 'Pool length (m)' — 25, 33.3 or 50 m — then enter 'Time for that length (seconds)' and 'Strokes in that length' (or total time, total strokes and lengths swum for a set).",
+    "Read the SWOLF score headline, with 'SWOLF normalised per 25 m', speed in m/s, 'Pace per 100 m', 'Distance per stroke' and stroke rate listed beneath it.",
+    "Check the 'Same score, different trade-off' table for the time each stroke count would need at your score, then press 'Copy result' or Reset.",
+  ],
   intro:
     "SWOLF, short for swim golf, is the time in seconds a length takes added to the number of strokes taken in it — swim a 25 m length in 20 seconds using 18 strokes and your SWOLF is 38. As in golf, lower is better, because you either moved faster or used fewer strokes. This calculator scores a single length or a whole set, normalises the result per 25 m so a 50 m pool can be compared with a short course one, and shows the trade-off table of stroke counts and times that all give the same score.",
   useCases: [

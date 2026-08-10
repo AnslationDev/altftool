@@ -1,4 +1,12 @@
 const seo = {
+  title: "Australia Driving Rules: Speed Limits & Alcohol by State",
+  metaDescription:
+    "Pick your state and licence class: speed limits from ACT 100 to NT 130 km/h, alcohol 0.05 on a full licence, zero for learner and provisional drivers.",
+  steps: [
+    "Choose the 'State or territory you are driving in', 'Your licence class', where your licence was issued, your age and length of stay.",
+    "Use the built-in km/h to mph converter and the blood-alcohol estimator (drinks, volume, ABV, body weight) for your trip.",
+    "Read 'Your legal blood-alcohol limit in Australia' and the state speed-limit table, then click 'Copy result'.",
+  ],
   intro:
     "This explainer covers what a visitor needs before driving in Australia: you drive on the left in a right-hand-drive car, all signs are in km/h, and the alcohol limit depends on your licence class rather than your age. It applies the Australian Road Rules defaults — 50 km/h inside built-up areas, 100 km/h outside them where nothing is signed — together with the state or territory maximum, which ranges from 100 km/h in the ACT to 130 km/h on parts of the Northern Territory's Stuart Highway.",
   useCases: [

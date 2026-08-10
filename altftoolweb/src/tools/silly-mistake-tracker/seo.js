@@ -1,4 +1,12 @@
 const seo = {
+  title: "Silly Mistake Tracker for Mock Tests: Marks-Lost Trend",
+  metaDescription:
+    "Log avoidable errors per mock in six categories — misreads, calc slips, wrong bubbles — and see marks lost, your worst category and first-to-latest trend.",
+  steps: [
+    "Set Marks lost per silly mistake (e.g. 5 for a +4/−1 MCQ answered wrong instead of right), then log each mock's counts across the six categories from Misread the question to Time-pressure guess.",
+    "Press Add mock after every test and Remove mock to drop one; blank category counts are treated as 0.",
+    "Read the latest mock's mistake count and marks lost, the trend versus your first mock, and the worst-category table with its Fix column, then press Copy result.",
+  ],
   intro:
     "The Silly Mistake Tracker applies the classic error-log method to mock tests: after each mock you log avoidable errors under six process categories — misread question, calculation slip, sign/unit error, wrong bubble, ignored instruction and time-pressure guess — and the tool computes marks lost per mock, the trend from your first to latest mock, and which category costs you most. It is for JEE, NEET, CAT, banking and board-exam aspirants whose scores leak marks to errors they already knew how to avoid.",
   useCases: [

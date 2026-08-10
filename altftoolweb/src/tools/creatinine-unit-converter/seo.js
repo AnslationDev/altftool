@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creatinine mg/dL to µmol/L Converter with CKD-EPI eGFR",
+  metaDescription:
+    "Convert serum creatinine between mg/dL and µmol/L with the 88.4 factor, check adult reference intervals, and estimate GFR via the CKD-EPI 2021 equation.",
+  steps: [
+    "Enter the 'Serum creatinine' value and choose the unit on the report — mg/dL or µmol/L.",
+    "Pick the reference range to use and enter an age from 18 to 110, or leave 'Age in years' blank to skip the eGFR estimate.",
+    "Read the converted value, its position against the reference interval and the CKD-EPI 2021 eGFR, then click 'Copy result'.",
+  ],
   intro:
     "The Creatinine Unit Converter changes a serum creatinine result between mg/dL and micromoles per litre using the factor 88.4, which comes from creatinine's molar mass of 113.12 g/mol. It also places the result against the usual adult reference intervals and, if you add an age, estimates GFR with the race-free CKD-EPI 2021 creatinine equation published in the New England Journal of Medicine. mg/dL is standard in the US and India; µmol/L is used across the UK, Europe, Canada and Australia.",
   useCases: [

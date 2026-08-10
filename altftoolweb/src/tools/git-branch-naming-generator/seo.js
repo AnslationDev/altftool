@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Branch Naming Convention Generator with Regex + CI",
+  metaDescription:
+    "Pick branch types, separator and a Jira-style ticket key; get the template, a validation regex, worked examples and a copy-paste CI check script.",
+  steps: [
+    "Tick the 'Branch types allowed', choose a 'Separator', set the 'Ticket project key', and toggle 'Require a ticket ID segment' or 'Include a username segment'.",
+    "The standard builds live: a branch template such as feature/PROJ-123-add-login-form, the validation regex, examples and the rule list.",
+    "Paste any name into 'Test a branch name against the standard' for a valid/reason verdict, read the script under 'Enforce it in CI', and click 'Copy standard'.",
+  ],
   intro:
     "This generator defines a git branch naming convention — allowed type prefixes, an optional Jira-style ticket segment, a separator and a kebab-case description — and turns it into a template, a validation regular expression, worked examples and a CI check script. Names are built from an alphabet that always satisfies git-check-ref-format, so nothing the standard allows can be rejected by git itself. It is for tech leads who want branch names that link to tickets and group cleanly in git UIs.",
   useCases: [

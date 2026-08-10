@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rainy Day Backup Plan Builder for Trip Itineraries",
+  metaDescription:
+    "Enter each day's rain forecast and what rain would ruin; get the compounded chance of losing a day, backup assignments and day swaps that cut the risk.",
+  steps: [
+    "For each itinerary day, enter the planned activity, chance of rain (%) and 'What rain does to it', or tick 'Already an indoor day'.",
+    "Under 'Indoor alternatives you have researched', click 'Add option' and record the hours each fills and whether it needs booking ahead.",
+    "Read the chance of losing at least one outdoor day, expected days lost before and after the suggested swaps, then click 'Copy plan'.",
+  ],
   intro:
     "Turns a set of daily rain percentages into the number that actually matters for a trip: the chance of losing at least one outdoor day, calculated as one minus the product of each day staying dry. Each day's risk is the forecast probability scaled by how badly rain ruins that particular plan — a covered market survives a shower, a boat trip does not — and the tool then assigns your indoor alternatives to the riskiest days and flags day swaps that move an outdoor plan off the wettest slot.",
   useCases: [

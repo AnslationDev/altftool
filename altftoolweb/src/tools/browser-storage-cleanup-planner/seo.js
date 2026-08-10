@@ -1,4 +1,12 @@
 const seo = {
+  title: "Browser Storage Cleanup Planner: What to Clear & Keep",
+  metaDescription:
+    "Pick a goal — tracking, space or a broken site — and get a clear/keep plan for localStorage, IndexedDB and service worker caches, with what breaks.",
+  steps: [
+    "Choose a goal under What are you trying to achieve? — Stop cross-site tracking, Reclaim disk space, Fix one misbehaving site, Hand the device to someone else or Shrink the re-identification surface — and your Browser: Chrome, Edge, Firefox or Safari.",
+    "Tick what to protect under Things you would rather not lose: Keep me signed in to the sites I use, Keep site preferences and granted permissions, Keep offline data for installed web apps.",
+    "Read the Stores to clear count with Privacy gain, Space reclaimed and Breakage risk meters, review the Clear these and Leave these alone lists with What breaks per store, then press Copy plan.",
+  ],
   intro:
     "Browser Storage Cleanup Planner sorts the dozen or so places a browser keeps your data into a clear list and a keep list, based on what you are actually trying to achieve. It covers the stores that \"Clear browsing data\" misses — localStorage, IndexedDB, service worker caches, extension storage and the copy held in your sync account — and states the cost of clearing each one before you do it. Useful when you want to break cross-site tracking or free disk space without signing yourself out of everything.",
   useCases: [

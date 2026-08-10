@@ -1,4 +1,7 @@
 const seo = {
+  title: "Baking Pan Size Converter: Exact Recipe Multiplier",
+  metaDescription:
+    "Scales recipes by pan brim volume — exact ingredient multiplier, bake-time and temperature advice, and overflow warnings past the two-thirds fill line.",
   intro:
     "The Baking Pan Size Converter divides your pan's brim volume by the recipe pan's brim volume to give the exact multiplier for every ingredient, then adds bake-time advice and an overflow warning based on how deep the batter would sit. Round volumes come from pi x radius squared x depth, rectangles from length x width x depth, with bundt and cupcake tins using their real published capacities. It is for home bakers who own the wrong tin and want the recipe scaled properly instead of guessed.",
   useCases: [

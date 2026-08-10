@@ -1,4 +1,7 @@
 const seo = {
+  title: "Before and After Image Slider – Drag to Compare",
+  metaDescription:
+    "Overlay two images and drag a wipe divider between them — by mouse, touch or arrow keys. Keeps the before image's aspect ratio; one-click Swap Images.",
   intro:
     "The Before/After Slider overlays two images in one frame and reveals them with a wipe divider you drag left or right, starting centred at 50 percent. The container locks itself to the before image's natural aspect ratio so neither picture is stretched, and the divider can be moved by mouse, by touch, or with the arrow keys on the range control beneath it. It is for showing an edit, a repair or a renovation where a side-by-side pair loses the point and the change needs to land in a single frame.",
   useCases: [

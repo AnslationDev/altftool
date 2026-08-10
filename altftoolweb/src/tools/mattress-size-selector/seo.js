@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mattress Size Selector: Width, Thickness & Firmness",
+  metaDescription:
+    "Turns sleeper count, height, weight and sleeping position into a size with 90 cm of width per adult, a thickness band and a 1-10 firmness rating.",
+  steps: [
+    "Pick 'Adults sharing the bed' and the 'Main sleeping position' (Side, Back, Stomach or Combination), then enter 'Tallest sleeper height (cm)', 'Heaviest sleeper weight (kg)' and an optional room width.",
+    "The 'Recommended mattress' card names the smallest standard size that fits, from Single to King XL, with its dimensions in centimetres and inches.",
+    "Check the thickness band, the firmness rating on the 1-10 scale and the room walkway check, then press 'Copy result' for the summary.",
+  ],
   intro:
     "This mattress size selector turns four facts — how many adults share the bed, the tallest sleeper's height, the heaviest sleeper's weight and the usual sleeping position — into a specific size, thickness band and firmness rating. It applies the standard bedding rules: a mattress should be at least 10 cm longer than the tallest sleeper, and each adult wants around 90 cm of width, which is a full single each. Thickness is set from body weight so the hips never bottom out on the support core.",
   useCases: [

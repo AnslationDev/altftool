@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS Calculator FY 2025-26: 194J, 194C, 194-I, 194Q",
+  metaDescription:
+    "Compute TDS on Indian payments under 194J, 194C, 194H, 194-I, 194Q and 194T with FY 2025-26 thresholds and the section 206AA no-PAN rate built in.",
+  steps: [
+    "Pick the TDS section (194J, 194C, 194H, 194-I, 194Q, 194T and more), the payee or payment type, and enter the Payment amount and what you already paid this payee this year.",
+    "Set 'PAN furnished by the deductee' to Yes or No — choosing No applies section 206AA, the higher of the section rate or 20%.",
+    "Read the 'TDS to deduct' figure with the threshold test, section rate, amount taxed and net payable to the deductee, then press Copy result for the full working.",
+  ],
   intro:
     "A TDS calculator tells a deductor how much tax to withhold from an Indian payment: it applies the section rate, checks the payment against the section threshold and applies the higher no-PAN rate under section 206AA. It is built for accountants, small-business payers and freelancers who need the exact figure for a bill under 194J, 194C, 194H, 194-I, 194Q or 194T. Rates and thresholds are the ones in force for FY 2025-26 after the Finance Act 2025 raised most limits with effect from 1 April 2025.",
   useCases: [

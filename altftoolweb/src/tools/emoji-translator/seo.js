@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emoji Translator: Turn Words Into Emoji (377-Word List)",
+  metaDescription:
+    "Type a sentence and 377 English words — feelings, animals, food, numbers — swap to emoji live, keeping punctuation and leaving unknown words as text.",
+  steps: [
+    "Type your sentence into the 'Input Text' box ('Type something here...').",
+    "Leave the Live toggle on to convert as you type, or press the 'Translate' button.",
+    "Copy the emoji version from the 'Translated Output' panel with the Copy button; words outside the 377-word dictionary pass through unchanged.",
+  ],
   intro:
     "The Emoji Translator swaps whole words for emoji using a fixed dictionary of 377 English words — greetings, feelings, animals, food, weather, verbs, family terms and the numbers one to ten — while leaving everything it does not recognise as plain text. Type a sentence and it converts as you go in live mode, keeping trailing punctuation attached so 'happy!' becomes '😊!'. It is a word-for-word substitution, not a meaning-based translation, so the same input always produces the same output.",
   useCases: [

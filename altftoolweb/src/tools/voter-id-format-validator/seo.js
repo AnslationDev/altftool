@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voter ID (EPIC) Format Validator – 3 Letters + 7 Digits",
+  metaDescription:
+    "Check an Indian EPIC number against the 3-letter + 7-digit pattern. Strips spaces, uppercases, and splits the letter and serial blocks. Format only.",
+  steps: [
+    "Type the number into the EPIC / Voter ID field and keep \"Remove spaces and use uppercase\" ticked so untidy input is normalized before the test.",
+    "The check runs live against the 3-letters-plus-7-digits pattern (like ABC1234567) and splits the Letter block and Serial block so a typo's position is obvious.",
+    "Read the \"Valid common EPIC format\" or invalid verdict, then use Copy or Download to save the check as voter-id-format-validator.txt.",
+  ],
   intro:
     "The Voter ID Format Validator checks whether an Indian EPIC number matches the common pattern of three letters followed by seven digits, and can normalize what you paste by stripping spaces and forcing uppercase before it tests. It splits the number into its three-character functional letter block and its seven-digit serial block so you can see exactly where a typo sits. This is a format check only — it confirms nothing about enrolment, identity, constituency or the current status of the record.",
   useCases: [

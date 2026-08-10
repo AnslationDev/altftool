@@ -1,4 +1,12 @@
 const seo = {
+  title: "Book Page Organizer — Topic Index Across Your Books",
+  metaDescription:
+    "Log topic, book and page range for every reference and get one sorted index — grouped by topic, ordered by book and start page — saved in your browser.",
+  steps: [
+    "Fill in Topic, Book, Page from and optionally \"Page to (blank for single page)\" and a Note; click Add page reference for more rows.",
+    "The organiser groups entries by topic (case-insensitive) and sorts each block by book title and start page, showing ranges as \"pp. 312-329\".",
+    "Click Copy index to paste the whole plain-text topic index into your notes app; entries persist in your browser's local storage.",
+  ],
   intro:
     "This organiser collects page references from every book you study — topic, book, page or page range, and an optional note — and builds one sorted topic index across all of them. It follows the ordering convention of a printed subject index: entries grouped by topic, then sorted by book title and start page, and the whole index can be copied as plain text into your notes app. It is made for students and researchers who keep rediscovering that the answer they need is 'somewhere in one of three books'.",
   useCases: [

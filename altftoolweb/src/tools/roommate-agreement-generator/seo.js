@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roommate Agreement Generator – Rent Split, Chores, Exit",
+  metaDescription:
+    "Split rent, utilities and deposit equally, by room area or custom percent, build a chore rotation and generate a ready-to-sign flatmate agreement.",
+  steps: [
+    "Enter the flat details — Flat address, City, Term (months), Move-in date — and the money: Total monthly rent (INR), Monthly utilities (INR) and Total security deposit (INR).",
+    "Choose a Split method (Equal split, By private room area or Custom percentage) and use Add flatmate to list 2–8 people with each person's name and room area or share.",
+    "Review the per-person split and the chore rotation, then press Copy agreement to take the full written agreement — guests, quiet hours, notice, exit — into a document.",
+  ],
   intro:
     "A roommate agreement is a written contract between flatmates — not with the landlord — that records who pays what, who cleans what, and how someone leaves. This generator splits rent, utilities and the security deposit equally, by private room area or by a custom percentage, builds a weekly chore rotation, and produces a ready-to-sign document covering guests, quiet hours, notice period and deposit refunds. It flags a deposit above the two months' rent cap set by India's Model Tenancy Act, 2021.",
   useCases: [

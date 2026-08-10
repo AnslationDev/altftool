@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Image Credit Pack Calculator: Cost per Image",
+  metaDescription:
+    "Enter pack credits, price and credits per image to get images per pack, true cost per image, how many weeks a pack lasts and your monthly pack budget.",
+  steps: [
+    "Enter 'Credits in one pack', 'Pack price (USD)' and 'Credits consumed per image' — read the last one from your service's generation screen, since it varies with resolution, steps and model.",
+    "Add your 'Planned images per week' so the planner can work out weekly credit burn and how long one pack lasts at your volume.",
+    "Read images per pack, effective cost per image, monthly cost (using an average 4.33 weeks per month) and credits stranded per pack, then click 'Copy plan'.",
+  ],
   intro:
     "This planner works out how far an AI image credit pack actually goes: images per pack (pack credits ÷ credits per image, rounded down), the effective cost per image, how many weeks the pack lasts at your volume, and the packs you must buy per month. It is built for designers and marketers on credit-based services — Leonardo, Ideogram, Stability, Canva and similar — where the advertised credit count hides the real per-image economics behind resolution- and step-dependent consumption rates.",
   useCases: [

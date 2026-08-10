@@ -1,4 +1,12 @@
 const seo = {
+  title: "Urdu Muhavare Explorer: 30 Idioms, Meanings & Quiz",
+  metaDescription:
+    "Browse 30 Urdu muhavare in Nastaliq with Roman transliteration, literal sense, meanings in Urdu and English, example sentences and a four-option quiz.",
+  steps: [
+    "Filter the 30 idioms by 'Theme' and 'Where it is used', or type into 'Search idiom, transliteration or meaning'.",
+    "Answer the 'Meaning quiz' by picking one of four meanings, then press 'Next idiom' — the score line tracks correct answers and accuracy.",
+    "Click 'Copy' to copy the 'Muhavara of the day' with its Roman reading, literal sense, meanings and example sentence.",
+  ],
   intro:
     "Urdu Muhavare Explorer is a browsable set of 30 Urdu idioms, each shown in Nastaliq with a Roman transliteration, the literal word-for-word sense, the meaning in Urdu and English, and a sentence that shows the idiom in real use. A muhavara is a phrase whose sense cannot be worked out from its words and which is inflected to fit its sentence, unlike a zarb-ul-misl, which is a complete proverb quoted as it stands. A seeded four-option quiz tests recall using distractors drawn from the same collection.",
   useCases: [

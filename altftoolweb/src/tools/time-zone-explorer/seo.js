@@ -1,4 +1,12 @@
 const seo = {
+  title: "Time Zone Explorer — Live Clocks for 39 World Cities",
+  metaDescription:
+    "Compare live clocks across 39 cities with UTC offsets, DST badges and hour differences from your home city — then copy or download a plain-text report.",
+  steps: [
+    "Type in the \"Add a city...\" search box and pick from the 39 built-in cities; the first card is marked Home and others show hours ahead or behind it.",
+    "Watch each card's analog and digital clock tick every second with its UTC offset, local date, day period and a DST Active badge when daylight saving applies.",
+    "Click Copy Report, or Download to save all times, offsets and differences as Timezone_Report.txt.",
+  ],
   intro:
     "Time Zone Explorer shows live analog and digital clocks for a shelf of world cities side by side, with each city's UTC offset, local date, day-or-night period and a badge when daylight saving is currently in effect. It reads the browser's built-in Intl API rather than a bundled offset table, so the offsets follow the current IANA zone rules, and every clock ticks once a second. Pick from 39 cities across six continents, set one as your home zone, and each other card shows the hour difference from it.",
   useCases: [

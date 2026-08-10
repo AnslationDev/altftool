@@ -1,4 +1,12 @@
 const seo = {
+  title: "Synonym Finder — Offline Thesaurus with Antonyms",
+  metaDescription:
+    "Type a word and get part of speech, synonyms and antonyms instantly from a built-in dataset of 580 headwords — no lookup requests, works offline.",
+  steps: [
+    "Type a dictionary-form word (run, not running) into the Search for a word... box.",
+    "The lookup matches your text against the bundled headword list as you type — no request is sent anywhere.",
+    "Read the part-of-speech tag with the Synonyms (count) and Antonyms (count) chip lists, or a No results found notice for words outside the dataset.",
+  ],
   intro:
     "This is an offline English thesaurus: type a word and it returns that headword's part of speech, its list of synonyms and its list of antonyms from a built-in dataset of 580 curated headwords carrying roughly 2,900 synonyms and 1,700 antonyms. Because the whole word list ships with the page, results appear as you type with no lookup request and no rate limit. Each entry is tagged as an adjective, verb, noun, adverb or preposition, so you can tell which sense of the word the alternatives belong to.",
   useCases: [

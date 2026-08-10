@@ -1,4 +1,12 @@
 const seo = {
+  title: "Road Trip Packing Checklist with Water & Car Checks",
+  metaDescription:
+    "Builds a packing list sized to travellers, days, season and terrain — water at 3 L per person per day — plus India's must-carry documents and car checks.",
+  steps: [
+    "Set Trip length (days), Adults, Children, Season and Terrain, and tick options such as 'Travelling with a pet' or 'Camping or self-catering'.",
+    "The checklist rebuilds instantly — the Drinking water to plan for and Sets of clothes quantities are computed from your travellers and days.",
+    "Tick items off as you pack to advance the '% packed' bar, and press Copy result to export the grouped list as text.",
+  ],
   intro:
     "This generator builds a road-trip packing and car-prep checklist sized to your actual trip: quantities scale with travellers and days, drinking water uses the WHO planning figure of about three litres per person per day, and the season and terrain you pick add the items those conditions genuinely need. It also lists the documents that must be produced on demand in India — licence, registration certificate, insurance and PUC — and the pre-departure car checks that prevent most roadside breakdowns.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Snake Draft Board: Serpentine Pick Order Generator",
+  metaDescription:
+    "Enter players in seed order and rounds to get every numbered pick, direction reversing each round. Recorded selections are checked for out-of-turn picks.",
+  steps: [
+    "List 'Players in seed order', one per line, and set 'Rounds' (1 to 50).",
+    "Record picks as they happen in 'Recorded selections' as Player | selection, one line per pick in order.",
+    "Read the numbered board of players-times-rounds slots with Pick, Round, Player and Selection — empty slots show 'Open' and out-of-turn picks are flagged 'Player mismatch'.",
+  ],
   intro:
     "The Snake Draft Board builds a serpentine pick order from a seeded list of players, reversing direction every round so round 1 runs top-to-bottom, round 2 bottom-to-top, and so on. Enter your players in seed order and a round count, and you get a numbered board of every pick slot — players multiplied by rounds — with each selection you record slotted against the pick that owns it. It also cross-checks each recorded selection against the player whose turn it actually is and flags a mismatch.",
   useCases: [

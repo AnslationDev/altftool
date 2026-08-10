@@ -1,4 +1,7 @@
 const seo = {
+  title: "Clipboard History Tool: Track 500 Copied Snippets",
+  metaDescription:
+    "Keeps your last 500 copied items in browser local storage, auto-tagged as URL, email, JSON, code, number or colour. Favourites survive a clear-out.",
   intro:
     "Clipboard History keeps a running list of the things you have copied, reading the clipboard when you return to the tab if you turn monitoring on, or taking entries you paste in by hand. Each entry is classified automatically as a URL, email address, JSON, code, number, hex colour or plain text, counted for characters and words, and timestamped, with up to 500 entries kept and duplicates promoted to the top rather than repeated. The whole list lives in your browser's local storage on this device.",
   useCases: [

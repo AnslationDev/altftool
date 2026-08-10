@@ -1,4 +1,12 @@
 const seo = {
+  title: "White, Pink & Brown Noise Player with Study Timer",
+  metaDescription:
+    "Synthesises white, pink or brown noise in your browser and loops it seamlessly for a timed session with a volume ramp-in and automatic fade to silence.",
+  steps: [
+    "Pick a Noise colour — white, pink or brown, each labelled with its dB/octave slope — and set the Session length in minutes (1 to 480).",
+    "Set 'Volume ramp up', 'Fade out at the end' and the Start and Target volume percentages, then press Play.",
+    "Watch Time remaining and the volume-envelope graph; the sound holds at target volume then fades to silence on its own, and Copy plan exports the session settings.",
+  ],
   intro:
     "Study Background Noise Player synthesises white, pink or brown noise in the browser and loops it seamlessly for a timed study session, with a slow volume ramp at the start and an automatic fade to silence at the end. The three colours differ by spectral slope — white is flat, pink falls about 3 dB per octave and brown about 6 dB per octave — which is why pink and brown sound progressively deeper and less hissy. Nothing is streamed or downloaded, so it keeps working offline and costs no bandwidth.",
   useCases: [

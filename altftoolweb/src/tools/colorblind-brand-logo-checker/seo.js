@@ -1,4 +1,12 @@
 const seo = {
+  title: "Colourblind Logo Checker: 4 CVD Simulations, Delta-E",
+  metaDescription:
+    "See a logo under protanopia, deuteranopia, tritanopia and achromatopsia at once, with CIE76 delta-E scores on its own colours — all in your browser.",
+  steps: [
+    "Upload your artwork through the 'Logo file' input — any image the browser can decode, such as PNG, JPEG, WebP or SVG; its name and pixel size appear beneath.",
+    "Drag the 'Severity' slider from 0 to 100% (100% is full dichromacy) and choose which deficiency to score under 'Score the palette for'.",
+    "Compare the Original canvas against the four simulations, check the 'Colour pairs that merge' count and the before/after delta-E table, then use 'Copy report'.",
+  ],
   intro:
     "Colourblind Logo Checker renders a logo four ways at once — protanopia, deuteranopia, tritanopia and achromatopsia — using the LMS cone-projection method of Viénot, Brettel and Mollon (1999). It then extracts the artwork's own dominant colours and scores every pair with CIE76 delta-E in CIELAB, flagging any pair that drops below the 2.3 just-noticeable-difference threshold once colour vision is reduced. Everything is computed in the browser with the canvas API, so the file is never uploaded.",
   useCases: [

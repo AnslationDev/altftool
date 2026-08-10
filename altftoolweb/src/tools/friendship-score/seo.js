@@ -1,4 +1,12 @@
 const seo = {
+  title: "Friendship Score Calculator — 0-100 Rating & Badges",
+  metaDescription:
+    "Rate trust, humour, loyalty, communication and shared history on five sliders — 65% of the score — plus a name hash for a repeatable 0-100 badge rating.",
+  steps: [
+    "Enter both names and rate the friendship on five 1-10 sliders, from Trust & Secret Keeping to Shared History & Quality Time.",
+    "Click Compute Friendship Score — the slider average carries 65% of the result and a hash of the alphabetically sorted names carries 35%.",
+    "See the 0-100 score with its badge tier, then click Copy Report or Download to save the text report as friendship-score-report.txt.",
+  ],
   intro:
     "Friendship Score turns two names and five self-rated qualities — trust, humour, loyalty, communication and shared history — into a single 0-100 friendship rating with an achievement badge. The five sliders (each 1-10) are averaged and carry 65% of the score, while a deterministic hash of both names, sorted so A & B always equals B & A, contributes the remaining 35%. It is built for entertainment: a repeatable, shareable score you can copy or download as a text report, not a psychological assessment.",
   useCases: [

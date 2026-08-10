@@ -1,4 +1,12 @@
 const seo = {
+  title: "Retro Font Pairing: 70s and 80s Fonts with WCAG Check",
+  metaDescription:
+    "Eight seventies and eighties Google Font pairs with period palettes scored live against WCAG 2.1 contrast. Shift lightness in HSL and copy the CSS.",
+  steps: [
+    "Pick one of the eight era pairings under '1. Pick an era', then tune 'Heading size (px)', 'Body size (px)' and the text/accent lightness-shift sliders (-40 to +40).",
+    "Watch 'Body text contrast' recompute as a live WCAG 2.1 ratio, with every palette combination listed alongside its verdict.",
+    "Preview with 'Load the real fonts' (fetched from fonts.googleapis.com), then click 'Copy CSS' to take the palette and font stacks, or 'Copy result' for the summary.",
+  ],
   intro:
     "Retro Vibe Font Pairing combines a seventies or eighties display face from Google Fonts with a readable text face, and ships each pair with a period palette that is scored live against the WCAG 2.1 contrast formula. Every colour is stored as HSL so you can shift text and accent lightness and watch the contrast ratio move, with the 4.5:1 AA threshold for normal text and 3:1 for large text applied automatically by size. Useful when a nostalgic palette needs to survive an accessibility review.",
   useCases: [

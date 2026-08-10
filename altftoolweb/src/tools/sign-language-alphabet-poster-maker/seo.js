@@ -1,4 +1,12 @@
 const seo = {
+  title: "ASL Alphabet Poster Maker: Printable A–Z with Quiz Mode",
+  metaDescription:
+    "Lay out the one-handed ASL alphabet and numbers 0–9 as a printable poster — pick 3 to 6 columns, hide letters for quiz mode, and see the page count.",
+  steps: [
+    "Pick the Poster content — Letters A-Z (26 handshapes), Numbers 0-9 (10) or Letters and numbers (36) — and a Columns setting from 3 to 6 across.",
+    "Toggle Include descriptions and 'Quiz mode (hide letters)', then check the summary: handshape count, grid layout, Printed pages (estimate) and look-alike pairs marked.",
+    "Press Print poster to send the preview to your printer or Copy as text for a plain-text version, and use the 'Handshapes people mix up' table to teach the look-alike pairs.",
+  ],
   intro:
     "Sign Language Alphabet Poster Maker lays out the one-handed American Sign Language manual alphabet — 26 letters plus the number handshapes 0 to 9 — as a printable classroom poster with a schematic diagram, a short shape label and a description for each handshape. Column count, descriptions and a label-hiding quiz mode are adjustable, and the page count is estimated for you before you print. Built for teachers, parents and beginner learners who want a reference sheet on the wall rather than an app.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shoe Size Converter – UK, US, EU, India & Foot cm",
+  metaDescription:
+    "Enter one size or your foot length in cm to see UK, US, EU and Indian equivalents on separate men's, women's and kids' charts — UK 8 men's = US 9, EU 42.",
+  steps: [
+    "Pick Men, Women or Kids, choose the system you know under 'I know my size in' (UK, US, EU, IN or cm), and type the size or measured foot length.",
+    "Or tap a quick preset — Men · UK 8, Women · EU 38, Kids · 17.5 cm foot; a length that falls between chart rows recommends sizing up instead of rounding.",
+    "Read the equivalent cards for UK, US, EU, India and foot length in cm and inches, see your row highlighted in the full chart, and press 'Copy my sizes'.",
+  ],
   intro:
     "This converter maps a shoe size between the UK, US, EU and Indian systems and back to foot length in centimetres, using separate men's, women's and kids' charts built on standard Brannock last measurements. Indian sizes match UK numbering exactly, US men's run one size above UK and US women's run two above, while EU sizes follow Paris-point stepping. Enter any one value — including a measured foot length — and every equivalent is shown at once, so you can order from an overseas site without guessing.",
   useCases: [

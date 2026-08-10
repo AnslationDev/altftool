@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pet Calming Sound Player – Firework Masking Planner",
+  metaDescription:
+    "Play a species-shaped noise loop in your browser and see the dB(A) actually reaching your pet — masking maths capped at the WHO 70 dB(A) guideline.",
+  steps: [
+    "Choose the Animal and Sound preset, then enter 'Speaker level at 1 m (dB A)', the pet's distance, the room level and 'Firework peaks heard indoors (dB A)'.",
+    "Press 'Play loop' — the noise is synthesised with the Web Audio API and band-limited to the range shown as 'Filter band applied'.",
+    "Read 'Level reaching your pet', the masking verdict and 'Suggested speaker level at 1 m' capped at 70 dB(A), then press 'Copy plan'.",
+  ],
   intro:
     "This tool generates a low-stimulation noise loop for an anxious animal and calculates how loud that loop has to be to stop firework peaks standing out. It combines the room's own sound level with the playback level using decibel addition (10·log10 of summed energy), applies the inverse-square law to work out what actually reaches the pet, and caps the answer at the WHO 70 dB(A) all-day guideline. It is aimed at owners who want the sound loud enough to work and quiet enough to leave running for hours.",
   useCases: [

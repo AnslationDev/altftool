@@ -1,4 +1,12 @@
 const seo = {
+  title: "IVF Due Date Calculator: Day-3, Day-5 & Day-6 Transfers",
+  metaDescription:
+    "Counts 261 days from a day-5 blastocyst transfer (263 day-3, 260 day-6, 266 from retrieval), plus the equivalent LMP date and scan milestones.",
+  steps: [
+    "Enter your \"Transfer or retrieval date\" and choose \"What that date refers to\" - day-5, day-3 or day-6 transfer, or the egg retrieval date.",
+    "Optionally set \"Show gestational age as of\" a date to see your current week, trimester stage and days to the due date.",
+    "Read the estimated due date (transfer date plus the 260-266 day offset), the equivalent LMP date and the milestone table from NT scan to post-term; \"Copy result\" copies the summary.",
+  ],
   intro:
     "After IVF the conception date is known to the day, so the due date is counted from the transfer rather than estimated from a last period: 261 days after a day-5 blastocyst transfer, 263 days after a day-3 transfer, 260 days after a day-6 transfer and 266 days after egg retrieval. This calculator applies those offsets, converts the result into the equivalent LMP date that gestational age is measured from, and lays out the scan and term milestones that follow. It is a dating tool, not medical advice.",
   useCases: [

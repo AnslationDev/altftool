@@ -1,4 +1,12 @@
 const seo = {
+  title: "Headphone Left/Right Balance Test: 440 Hz Tone Online",
+  metaDescription:
+    "Play a hard-panned 440 Hz sine tone that switches ears every 1.5 seconds to catch dead or swapped channels, with a timestamped log of each side.",
+  steps: [
+    "Put on your headphones or earbuds and click 'Start with permission' — the tone is synthesised by the browser, so nothing downloads or streams.",
+    "Listen as the 440 Hz sine tone starts hard-panned to the left channel, then flips to the other ear every 1.5 seconds.",
+    "Match what each ear heard against the 'Live local readings' log, which timestamps every Left/Right switch, then click 'Stop sensor'.",
+  ],
   intro:
     "This test plays a 440 Hz sine tone through the Web Audio API and pans it hard to one ear at a time, switching sides every 1.5 seconds, so you can hear whether both channels of a headphone, earbud or speaker pair actually work and whether left and right are the right way round. Each switch is written to a timestamped log showing which side is live, so you can match what you heard against what was sent. It is a routing and channel check you can run in a minute on any device with a browser.",
   useCases: [

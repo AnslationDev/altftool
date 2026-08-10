@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Renovation Budget Planner with GST & Contingency",
+  metaDescription:
+    "Price each room at its own ₹/sq ft rate, add designer fees, a 10-15% contingency and 18% GST on works contracts, and see the monthly saving needed.",
+  steps: [
+    "List each room with its \"Area (sq ft)\" and \"Rate (₹ per sq ft)\", using the \"Add room\" button for more rows.",
+    "Pick a \"Finish quality\" tier, set the architect fee %, \"Contingency buffer (%)\" and tick \"Registered contractor billing a works contract (apply GST)\".",
+    "Read \"Total renovation budget\" with cost per square foot and the \"Save each month\" figure, then use \"Copy result\".",
+  ],
   intro:
     "A renovation budget planner prices each room on its own rate per square foot and then adds the layers a headline quote usually leaves out. Room cost is area × rate × a quality multiplier, on top of which sit designer or architect fees, a contingency buffer of the 10–15% conventionally allowed in construction budgeting, and GST at 18% where a registered contractor bills the job as a works contract. The result is a grand total, a cost per square foot, and the monthly saving needed before work starts.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Braille Dot Chart Trainer: Learn the Six-Dot Cell",
+  steps: [
+    "Type up to 300 characters into 'Text to transliterate (uncontracted braille)' — letters, digits and the marks , ; : . ? ! ' - are supported.",
+    "Toggle the six numbered dot buttons under 'Press the dots' to identify any cell, or answer a quiz question and press 'Check answer'.",
+    "Click 'Copy braille' to copy the Unicode braille output with its cell count and the dot numbers for every character.",
+  ],
   intro:
     "Braille Dot Chart Trainer teaches the six-dot braille cell: dots 1, 2 and 3 down the left column and 4, 5 and 6 down the right, giving 64 possible patterns including the blank cell. It shows a full dot-number chart for a-z, 0-9 and common punctuation, transliterates typed text into uncontracted (grade 1) cells, and quizzes you on letters in three directions — cell to letter, dot numbers to letter, and letter to dots. Useful for teachers, accessibility staff and anyone starting braille from scratch.",
   useCases: [

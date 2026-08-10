@@ -1,4 +1,12 @@
 const seo = {
+  title: "Contact Memory Vault: Private Notes Saved In-Browser",
+  metaDescription:
+    "A two-field Contact and Memory notebook stored in your browser's localStorage — search both fields, export and reimport as a JSON file. No account.",
+  steps: [
+    "Type into the Contact and Memory boxes and press Add record — records are saved to this browser's localStorage under a single key.",
+    "Filter the Saved records list with the \"Search records\" box, which matches text across the Contact and Memory fields together.",
+    "Press Export JSON to download contact-memory-vault.json, or Import JSON to restore a backup — importing replaces every record currently saved.",
+  ],
   intro:
     "Contact Memory Vault is a two-field notebook — Contact and Memory — for recording what you know about the people in your life: coffee order, kids' names, the surgery they mentioned, a gift idea you overheard. Records are stored in your own browser's localStorage under a single key, searched with a plain-text filter across both fields, and exported or reimported as a JSON file you control. It suits anyone who keeps meaning to remember these details and would rather not put them in a cloud CRM.",
   useCases: [

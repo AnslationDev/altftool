@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ideal Gas Law Calculator – Solve PV=nRT for P, V, n, T",
+  metaDescription:
+    "Solve PV = nRT for pressure, volume, moles or kelvin temperature with R = 8.314462618 kPa·L/(mol·K); every substituted value is listed with the answer.",
+  steps: [
+    "Choose what to find in the 'Solve for' menu — Pressure P, Volume V, Amount n or Temperature T — and type the other three values as Pressure P (kPa), Volume V (L), Amount n (mol) and Temperature T (K).",
+    "Use the '1 mol at 25°C' example chip to load 101.325 kPa, 24.465 L, 1 mol and 298.15 K, or press Reset in the Inputs panel to return to the defaults.",
+    "Read the result with its 'PV = nRT' caption and the substituted P, V, n, T and R values, then Copy it or Download it as ideal-gas-law-calculator.txt.",
+  ],
   intro:
     "This calculator solves the ideal gas law PV = nRT for whichever of the four variables you leave unknown — pressure in kPa, volume in litres, amount in moles or absolute temperature in kelvin — using the gas constant R = 8.314462618 kPa·L·mol⁻¹·K⁻¹. Enter the three quantities you know, pick the one to solve for, and it returns the answer with the substituted values listed underneath. It suits chemistry and physics students and anyone checking a gas calculation against consistent SI-derived units.",
   useCases: [

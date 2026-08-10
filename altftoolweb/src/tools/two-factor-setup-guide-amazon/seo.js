@@ -1,4 +1,12 @@
 const seo = {
+  title: "Amazon 2-Step Verification Setup & Security Checklist",
+  metaDescription:
+    "15 weighted controls for your Amazon account: authenticator 2SV, backup method, device deregistration and voice-purchase codes, with 4 critical steps.",
+  steps: [
+    "Tick each of the 15 controls as you complete it on Amazon — grouped by area, with a red Critical badge and a point weight (+N) on each item.",
+    "Set a 'Target score (%)' to get the shortest route there: the remaining controls listed highest-weight first.",
+    "Watch the Hardening score update — it stays capped at 69% while any of the 4 critical controls is open — then click 'Copy result' to export what is left.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for an Amazon account: two-step verification with an authenticator app, the backup method Amazon requires, passkeys, device deregistration, saved cards, gift-card balance and Alexa voice purchasing. Amazon accounts are attacked for what they can spend rather than what they contain, so payment and ordering controls are scored alongside the sign-in ones. Four controls are marked critical and the score is held at 69% until all four are complete.",
   "useCases": [
     "Securing the account after an order you did not place appears in your order history.",

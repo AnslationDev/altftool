@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Tanker Cost Calculator: Monthly Tankers & ₹/kL",
+  metaDescription:
+    "Enter daily demand, piped supply and tanker size to get tankers needed per month, the monthly bill, cost per kilolitre and the blended water cost.",
+  steps: [
+    "Enter 'Household demand per day (L)' and 'Piped / borewell supply per day (L)' — the IS 1172 minimum of 135 L per person per day is noted under the field.",
+    "Set 'Litres per tanker' and 'Price per tanker (₹)', or tap a Tanker sizes preset from the 2,000 L Mini tanker to the 12,000 L Bulk tanker.",
+    "Read tankers needed per month (rounded up to whole tankers), the monthly spend, cost per litre and per kilolitre, and the blended cost of all water; 'Copy result' exports it.",
+  ],
   intro:
     "A water tanker cost calculator turns the gap between what your household uses and what the piped supply delivers into a number of tankers per month and a monthly bill. It works out the daily shortfall, multiplies it by the days in the month, divides by the litres per tanker and rounds up — because tankers are sold whole, never by the litre — then quotes the result per litre and per kilolitre so you can compare it directly with the municipal tariff, which is always published per kilolitre.",
   useCases: [

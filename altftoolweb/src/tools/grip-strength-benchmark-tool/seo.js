@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grip Strength Benchmark vs EWGSOP2, AWGS, FNIH Cut-offs",
+  metaDescription:
+    "Check a dynamometer reading against the EWGSOP2, AWGS and FNIH sarcopenia cut-offs, age-band norms, left-right asymmetry and grip divided by BMI.",
+  steps: [
+    "Enter Sex, Age (years) and your dynamometer readings — Dominant hand, best of 3 (kg) and Other hand, best of 3 (kg, 0 to skip) — plus an optional BMI for relative grip.",
+    "The benchmark recalculates as you type: the Best grip figure shows your reading in kg, pounds and newtons against the typical range for your age and sex, with the left/right difference flagged over 10 percent.",
+    "Compare the 'Published low-strength cut-offs' table, which shows your margin above or below EWGSOP2, AWGS and FNIH, then press Copy result for a text summary.",
+  ],
   intro:
     "Grip Strength Benchmark Tool compares a hand dynamometer reading against the three published low-strength cut-offs used in sarcopenia screening — EWGSOP2 (27 kg men, 16 kg women), AWGS (28 kg and 18 kg) and FNIH (26 kg and 16 kg) — and against the usual range of mean grip for your age band and sex. It also reports the left-to-right difference and grip divided by BMI. Grip strength is one of the strongest single predictors of physical function in older adults, which is why these thresholds exist.",
   useCases: [

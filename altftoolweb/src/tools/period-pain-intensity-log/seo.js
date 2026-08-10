@@ -1,4 +1,12 @@
 const seo = {
+  title: "Period Pain Intensity Log: 0-10 NRS Scale by Cycle Day",
+  metaDescription:
+    "Record cramp severity on the clinical 0-10 Numeric Rating Scale with cycle day and relief used; see averages by cycle day, peaks and severe-band days.",
+  steps: [
+    "In 'Add an entry', pick the date, set the cycle day (day 1 is the first day of bleeding) and slide the pain score from 0 to 10.",
+    "Tap the 'What you used' chips for relief methods, add an optional note of up to 200 characters, then press 'Add entry'.",
+    "Review the average, worst day, days in the severe band (7+) and the by-cycle-day breakdown, then click 'Copy result' to bring it to an appointment.",
+  ],
   intro:
     "The Period Pain Intensity Log records cramp severity on the 11-point Numeric Rating Scale used in clinics and pain research, where 0 is no pain and 10 is the worst imaginable, and groups the standard bands of mild (1-3), moderate (4-6) and severe (7-10). Each entry stores the cycle day and what you used for relief, so the log builds an average by cycle day, a peak, and a count of days in the severe band. It is designed to be the record you bring to an appointment rather than a diagnosis.",
   useCases: [

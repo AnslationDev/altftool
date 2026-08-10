@@ -1,4 +1,12 @@
 const seo = {
+  title: "Moving Checklist: 42 Tasks Across 6 Countdown Phases",
+  metaDescription:
+    "42 preset moving tasks from 8 weeks out to after moving day — tick, edit, add or delete them, track your percentage, and export a plain-text checklist.",
+  steps: [
+    "Click 'Build My Checklist' to load 42 preset tasks in six phases from 8 Weeks Before through Moving Day to After Moving.",
+    "Tick tasks off as you go, press 'Add Item' to insert your own task into any phase, and switch the All / Pending / Done filter to see only what is left.",
+    "Press 'Export' to download moving-checklist.txt with [x] or [ ] against each task and a progress line; the list auto-saves to your browser between visits.",
+  ],
   intro:
     "42-Task Moving Checklist starts you with 42 preset moving tasks split across six countdown phases, 8 weeks before, 4 weeks, 2 weeks, 1 week, moving day and after moving, then lets you tick, edit, delete or add to them and exports the result as a plain-text file. Progress is shown as a completed-over-total count and a percentage, and you can filter the list down to done or pending items. Everything is stored in your browser, so you can close the tab mid-move and pick the list up where you left it.",
   useCases: [

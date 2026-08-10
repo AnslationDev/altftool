@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trimester Symptom Guide: Pregnancy Week by Week",
+  metaDescription:
+    "Enter a gestational week (or your LMP) to see symptoms typical of that window, the antenatal checks due around it, and signs that are never routine.",
+  steps: [
+    "Choose \"I know my week\" and enter completed weeks (0-44) plus extra days, or \"Work it out from my last period\" with the first day of your last period.",
+    "Read the gestational age card: trimester, estimated due date, days remaining and progress through 40 weeks.",
+    "Review \"Commonly reported at N weeks\", the antenatal checks around this point and the \"Never wait on these\" urgent-signs list; \"Copy result\" copies the week summary.",
+  ],
   intro:
     "This guide maps a gestational week to the symptoms usually reported in that window and the antenatal checks usually offered around it. Gestational age is counted from the first day of the last menstrual period, trimesters split at 14w0d and 28w0d, and the estimated due date uses Naegele's rule of LMP plus 280 days. Enter a week from your scan report or work it out from your last period, and the timeline shows what is current, what is coming in the next four weeks, and which signs are never routine.",
   useCases: [

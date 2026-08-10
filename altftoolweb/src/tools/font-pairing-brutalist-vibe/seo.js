@@ -1,4 +1,7 @@
 const seo = {
+  title: "Brutalist Font Pairing: Grotesk + Monospace Combos",
+  metaDescription:
+    "Eight heavy grotesk + monospace pairings, the px size that fills a container edge to edge, ch-based column counts and copy-ready CSS with font imports.",
   intro:
     "This tool pairs a heavy grotesk with a monospace in eight brutalist combinations and does the two calculations that style actually needs: the font size at which your headline spans the container edge to edge, and how many monospace columns fit across it. Headline size comes straight from width = characters x size x average advance, so size = container / (characters x advance); the character grid comes from the CSS ch unit, which in a monospaced face is one column wide, typically 0.6em. It outputs ready CSS with the Google Fonts import, the computed size, the tracking value and a max-width expressed in ch.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Homophone Checker: Their/There, Affect/Effect & 41 Sets",
+  metaDescription:
+    "Paste text to catch 32 certain homophone errors like 'their is' and 'should of', and flag every word from 41 confusable sets — all in your browser.",
+  steps: [
+    "Paste your draft into the 'Your text' box — the preloaded sample shows errors like 'Their is' and 'should of' — and the check runs as you type.",
+    "Read the Likely errors count and the Fixes list, where each card gives the line number, the wrong word, the suggested replacement and the reason it is certain.",
+    "Check the 'Watch list — check these yourself' table, which lists every confusable word found with the meaning of each option, then press Copy report for a line-by-line summary.",
+  ],
   intro:
     "Homophone Confusion Checker reads a block of text and does two separate things: it reports 32 patterns where the surrounding words make the error certain — 'their is', 'should of', 'to many', 'your welcome' — and it lists every word belonging to one of 41 confusable sets so you can re-read those sentences yourself. The split matters, because a spell checker cannot flag 'principle' when you meant 'principal': both are correctly spelled words. Everything runs in your browser and nothing is uploaded.",
   useCases: [

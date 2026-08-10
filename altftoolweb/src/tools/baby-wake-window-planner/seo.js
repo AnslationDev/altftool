@@ -1,4 +1,7 @@
 const seo = {
+  title: "Baby Wake Window Planner: Nap Schedule by Age & Bedtime",
+  metaDescription:
+    "Give it age, wake time and target bedtime; it picks the nap count and exact nap clock times that land on your bedtime, using AASM totals to 36 months.",
   intro:
     "The Baby Wake Window Planner turns a baby's age, morning wake time and target bedtime into a full nap schedule by solving span = naps x nap length + (naps + 1) x wake window, then choosing the nap count whose required awake stretch sits closest to the middle of the age-appropriate range. It is built for parents and carers of children up to 36 months who want the day to actually end at the bedtime they picked. Nap length is derived rather than guessed: total daily sleep for the age (AASM consensus ranges from 4 months, National Sleep Foundation below that) minus the typical overnight portion, divided across the naps.",
   useCases: [

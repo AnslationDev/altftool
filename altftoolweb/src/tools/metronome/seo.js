@@ -1,4 +1,12 @@
 const seo = {
+  title: "Online Metronome — 30-260 BPM, Tap Tempo, Subdivisions",
+  metaDescription:
+    "Web Audio metronome from 30 to 260 BPM with 2/4, 3/4, 4/4 and 6/8 time, eighth to sixteenth subdivisions, tap tempo and an accented downbeat.",
+  steps: [
+    "Set the Tempo slider anywhere from 30 to 260 BPM, nudge it with the -5, -1, +1 and +5 buttons, or hit 'Tap tempo' — your last 6 taps are averaged.",
+    "Choose a 2/4, 3/4, 4/4 or 6/8 time signature, a Quarter, Eighth, Triplet or Sixteenth subdivision, and set the Volume slider.",
+    "Press Play (or the Space key) to start the click — the accented beat 1 sounds at a higher pitch, beat dots light up in turn, and your setup is saved for the next visit.",
+  ],
   intro:
     "This online metronome plays a click from 30 to 260 BPM using the Web Audio API's own clock, scheduling each tick about 100 milliseconds ahead so the pulse does not drift the way a JavaScript timer would. It supports 2/4, 3/4, 4/4 and 6/8 time, quarter, eighth, triplet and sixteenth subdivisions, tap tempo averaged over your last six taps, and an accented downbeat at a higher pitch. Musicians practising at home get a steady reference with the tempo, meter and volume remembered between visits.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stream Deck Icon Generator: 72, 144 and 288 px Keys",
+  metaDescription:
+    "Design square key icons with glyph, label, HSL colour and corner radius. Check label contrast against WCAG 3:1 and export SVG or PNG in your browser.",
+  steps: [
+    "Type a 'Key label' and optional 'Glyph (1-3 characters, blank = initials)', then pick the export size — 72 px native, 144 px 2x or 288 px 4x — plus style and layout.",
+    "Tune the Hue, Saturation, Lightness and 'Corner radius' sliders; the 'Label contrast' ratio recomputes live against the WCAG AA large-text threshold of 3:1.",
+    "Click PNG or SVG to download a file named after your label and size, like mute-mic-144.png, or 'Copy result' for the raw SVG markup.",
+  ],
   intro:
     "This generator builds square key icons for a Stream Deck or any other control surface: a coloured tile with a glyph, an optional label, an adjustable corner radius, and export at 72, 144 or 288 px. Colours are set in HSL and the label colour is chosen by measuring WCAG 2.x contrast — relative luminance L = 0.2126R + 0.7152G + 0.0722B, ratio = (L1 + 0.05) / (L2 + 0.05) — against the AA large-text threshold of 3:1. Everything renders in the browser and downloads as SVG or PNG, with no upload.",
   useCases: [

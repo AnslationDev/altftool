@@ -1,4 +1,12 @@
 const seo = {
+  title: "Karvonen Heart Rate Zone Calculator (Heart Rate Reserve)",
+  metaDescription:
+    "Enter resting heart rate plus age or a measured max to get five Karvonen training zones in bpm, using Tanaka, Fox, Gulati or Nes for max HR.",
+  steps: [
+    "Enter your Resting heart rate (bpm) and Age (years), then pick a Max HR formula — Tanaka: 208 − 0.7 × age, Fox: 220 − age, Gulati or Nes — or type a Measured max heart rate to override it.",
+    "Set a Custom intensity (% of heart rate reserve) to turn an instruction like 70% HRR into an exact bpm target shown alongside your heart rate reserve.",
+    "Read the 'Your five training zones' table from Zone 1 - Recovery to Zone 5 - VO2 max, each with its % HRR band and bpm range, then press Copy result.",
+  ],
   intro:
     "The Karvonen method sets training zones from heart rate reserve — target heart rate = ((maximum HR − resting HR) × intensity) + resting HR — rather than from a flat percentage of maximum heart rate. Because it anchors the bottom of the scale at your own resting pulse, two people the same age get different zones if one is fitter. Enter your resting heart rate plus either your age or a measured maximum, and you get all five zones in beats per minute along with any custom intensity you want to check.",
   useCases: [

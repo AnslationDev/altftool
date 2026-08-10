@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stream Scene Layout Planner — OBS Transform Coordinates",
+  metaDescription:
+    "Place gameplay, facecam and chat on a 1080p, 1440p or vertical canvas and get integer Position X/Y and Size W/H values for the OBS Edit Transform dialog.",
+  steps: [
+    "Pick your 'Stream canvas' — 1920 × 1080, 2560 × 1440, 1280 × 720 or 1080 × 1920 vertical — and the 'Capture aspect ratio', from 16:9 down to 4:3 retro / emulator.",
+    "Set 'Facecam width (% of canvas)' with its corner and inset, the 'Chat width (% of canvas)' and side, and the 'Outer margin (% per side)', which defaults to the 3.5% action-safe inset.",
+    "Read each source's integer 'Position X, Y' and 'Size W × H' from the table, note the reported letterbox or pillarbox bars, and press 'Copy transforms' to paste into OBS.",
+  ],
   intro:
     "The Stream Scene Layout Planner works out exactly where the gameplay capture, facecam and chat panel sit on a stream canvas and gives you the pixel Position X/Y and Size W/H to type into the OBS Edit Transform dialog. The capture is aspect-fitted with the standard scale = min(boxWidth / aspectWidth, boxHeight / aspectHeight), so any letterbox or pillarbox bars are measured and reported rather than quietly cropped, and the default margin is the SMPTE RP 218 action-safe inset of 3.5% per side.",
   useCases: [

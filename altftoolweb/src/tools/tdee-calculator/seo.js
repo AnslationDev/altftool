@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDEE Calculator: Maintenance Calories from 3 BMR Formulas",
+  metaDescription:
+    "Estimate daily calorie burn with Mifflin-St Jeor, Harris-Benedict or Katch-McArdle, an activity factor from 1.2 to 1.9, and cut-to-bulk targets.",
+  steps: [
+    "Fill in Your details: pick Metric (kg / cm) or Imperial (lb / ft), set Sex at birth, Age (years), height and weight, then choose an Activity level from Sedentary (factor 1.2) to Extra active (1.9).",
+    "Choose a BMR formula — Mifflin-St Jeor, Harris-Benedict (revised) or Katch-McArdle (needs body fat %) — and a Goal from Aggressive fat loss (−1000 kcal) to Muscle gain (+500 kcal); the result recalculates as you type.",
+    "Read the Daily target in kcal/day with BMR (at rest), Activity multiplier and TDEE (maintenance) beneath it, compare the All goals at a glance grid, and press Copy result for a plain-text summary.",
+  ],
   "intro": "TDEE Calculator estimates how many calories your body burns in a full day: it first works out your basal metabolic rate with Mifflin-St Jeor, Harris-Benedict or Katch-McArdle, then multiplies it by an activity factor from 1.2 (desk-bound) to 1.9 (physical job or twice-daily training). The result is your maintenance intake, alongside cut, recomposition and lean-bulk targets built from 250, 500 and 1000 kcal daily adjustments. It's for anyone setting a calorie number before they start tracking food.",
   "useCases": [
     "Set a starting calorie number before beginning a fat-loss phase, instead of guessing at '1,500 a day'.",

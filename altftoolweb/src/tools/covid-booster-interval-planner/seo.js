@@ -1,4 +1,12 @@
 const seo = {
+  title: "COVID Booster Interval Planner — Earliest Dose Date",
+  metaDescription:
+    "Enter your last dose and any recent infection, pick a 2, 3 or 6-month rule or custom day counts, and get your earliest eligible date and countdown.",
+  steps: [
+    "Enter the date of your last COVID vaccine dose and, optionally, the date of a recent infection (symptom onset or positive test).",
+    "Pick an Interval rule preset or set your own \"Minimum days since the last dose\" and \"Days to defer after infection\".",
+    "Read the Earliest eligible date — the later of the two rules, with the governing rule named — and click Copy result.",
+  ],
   intro:
     "Booster timing comes down to one comparison: the minimum gap since your last COVID-19 vaccine dose versus the deferral period after a recent infection, whichever falls later. This planner takes both dates, applies the interval rule you select — 2 months since a dose and 3 months after infection, a 3-month programme rule, or a 6-month seasonal spacing — and returns the earliest eligible date with a countdown. Intervals are inputs rather than fixed values because national guidance differs and changes.",
   useCases: [

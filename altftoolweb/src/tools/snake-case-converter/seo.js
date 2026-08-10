@@ -1,4 +1,12 @@
 const seo = {
+  title: "Snake Case Converter — Text to snake_case Online",
+  metaDescription:
+    "Converts any phrase to snake_case: splits at every space, hyphen or punctuation run, lowercases and joins with single underscores. Instant, free.",
+  steps: [
+    "Type or paste your phrase into the Input box, or click Load sample to try \"My Variable Name Here\".",
+    "The converter splits the text at every run of spaces, hyphens or punctuation, lowercases each piece and joins them with single underscores as you type — no convert button.",
+    "Read the snake_case identifier in the Result panel and click Copy to put it on your clipboard.",
+  ],
   intro:
     "The Snake Case Converter rewrites a phrase as snake_case by splitting the text at every run of non-alphanumeric characters, lowercasing each piece and joining them with single underscores. It is for developers and data people who need identifiers that match a Python, Ruby, SQL or JSON naming convention — \"My Variable Name Here\" comes back as my_variable_name_here. Spaces, hyphens, dots, slashes and punctuation are all treated as the same separator, so messy input collapses to one clean identifier.",
   useCases: [

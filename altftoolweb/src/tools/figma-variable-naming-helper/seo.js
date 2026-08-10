@@ -1,4 +1,12 @@
 const seo = {
+  title: "Figma Variable Naming Helper: Scheme, Tokens & Linter",
+  metaDescription:
+    "Set separator, case and tier rules for Figma variables, generate a starter token set, and lint pasted names for mixed casing and baked-in units.",
+  steps: [
+    "Define the scheme with the Prefix, Collection, Separator and Case fields plus the Include primitive/semantic tier checkbox — the rule is echoed back as plain sentences.",
+    "Press Copy generated names to take the rendered starter token set into your Figma file or token pipeline.",
+    "Paste current variables into Lint existing names to get the clean/errors/warnings count against your scheme; Reset scheme restores the defaults.",
+  ],
   intro:
     "A variable naming scheme is the set of rules that decide how design tokens are split into segments, how those segments are joined, and how words inside a segment are cased. This helper turns those three decisions into a written rule, renders a full starter token set in that scheme, and lints names you already have against it — flagging stray separators, mixed casing, units baked into names and duplicates. Useful for design system owners aligning a Figma file with the token names their codebase expects.",
   useCases: [

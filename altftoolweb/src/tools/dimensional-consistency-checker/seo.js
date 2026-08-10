@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dimensional Consistency Checker: Compare M L T Vectors",
+  metaDescription:
+    "Enter each side of an equation as base-dimension exponents like M1 L1 T-2 and get an exponent-by-exponent match table across all seven SI base dimensions.",
+  steps: [
+    "Type each side's exponents into 'Left-side dimension vector' and 'Right-side dimension vector' as tokens like M1 L1 T-2.",
+    "Adjust 'Allowed base symbols' (default M,L,T,I,Θ,N,J) or load the 'Force = mass × acceleration' preset.",
+    "Read the verdict — 'Dimension vectors match' or 'Dimensionally inconsistent' — with a per-dimension Match/Mismatch table.",
+  ],
   intro:
     "This checker compares the two sides of an equation as base-dimension vectors — exponents of mass M, length L, time T, current I, temperature Θ, amount N and luminous intensity J — and reports a match or an exponent-by-exponent mismatch. You reduce each side to base dimensions yourself and enter them as tokens like \"M1 L1 T-2\"; the tool then lines the exponents up in a table and counts the disagreements. It is a bookkeeping check on dimensional homogeneity, not an algebra parser or a unit converter.",
   useCases: [

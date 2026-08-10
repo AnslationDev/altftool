@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kitchen Chimney Cleaning Schedule Calculator",
+  metaDescription:
+    "Sets your filter-cleaning interval from hours cooked, frying intensity and burners, dates the next cleans, and sizes suction by the 10-20 ACH rule.",
+  steps: [
+    "Pick your Filter type and Cooking style, then enter Cooking hours a day under the hood, Burners usually running and Filters last cleaned on.",
+    "Add the kitchen's Length, Width and Ceiling height (ft) plus the Rated suction (m³/hr) so the required airflow is checked against your chimney.",
+    "Read the Clean the filters every N days verdict with the next due date, charcoal/service/duct intervals and yearly DIY vs outsourced cost; Copy plan exports it.",
+  ],
   intro:
     "The Chimney Cleaning Planner sets your kitchen chimney's filter-cleaning interval from the grease it actually collects rather than from a fixed calendar rule. It measures cooking load as hours a day multiplied by frying intensity and burners running under the hood, divides that into the filter's grease capacity, and schedules filter cleans, charcoal replacement, deep service and duct cleaning. It also sizes the required suction from your kitchen's volume using the 10–20 air-changes-per-hour rule.",
   useCases: [

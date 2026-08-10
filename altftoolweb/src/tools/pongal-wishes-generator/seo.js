@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pongal Wishes in Tamil for All Four Festival Days",
+  metaDescription:
+    "Greetings for Bhogi, Thai Pongal, Maattu Pongal and Kaanum Pongal in Tamil script with transliteration, your names, and an SMS-length counter.",
+  steps: [
+    "Pick the Day of the festival - Bhogi, Thai Pongal, Maattu Pongal or Kaanum Pongal - choose a Tone, and fill in Their name and Your name if you want them included.",
+    "Tick which Lines to include: Tamil script, Roman transliteration, English translation, plus the Harvest emoji option.",
+    "Click Copy greeting to copy the message; the panel reports its characters, SMS encoding and how many SMS parts it will use, and The four days section dates all four days for any year.",
+  ],
   intro:
     "This generator writes a Pongal greeting for whichever of the four days you are sending it on — Bhogi, Thai Pongal, Maattu Pongal or Kaanum Pongal — in Tamil script, with a Roman transliteration and an optional English line, and your names already in place. It uses the traditional phrasing people actually use, including the shout Pongalo Pongal and the line 'Thai pirandhaal vazhi pirakkum'. It also lays out the four dates for any year, counted from the 14 or 15 January start of the Tamil month of Thai.",
   useCases: [

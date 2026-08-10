@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vagrantfile Generator with Port & IP Validation",
+  metaDescription:
+    "Builds a Vagrant.configure(\"2\") file - box, forwarded ports (1-65535), static IP checked against VirtualBox's 192.168.56.0/21 range, and provisioners.",
+  steps: [
+    "Pick a \"Base box\" (or type a custom user/box), hostname, \"Memory (MB)\" and CPUs for the VirtualBox provider block.",
+    "Configure the private network's \"Static IP\" (checked against VirtualBox's 192.168.56.0/21 host-only range), \"Forwarded ports (host:guest, comma separated)\", synced folder paths and a shell or Ansible \"Provisioner\".",
+    "Click \"Copy result\", save the output as Vagrantfile in your project, and run vagrant up.",
+  ],
   intro:
     "This generator builds a complete Vagrantfile using Vagrant's configuration version 2 schema — box, hostname, forwarded ports, private networking, synced folders, a VirtualBox provider block with memory and CPUs, and an optional shell or Ansible provisioner. Every input is validated before the file is produced: ports must fall in 1-65535, hostnames must satisfy RFC 1123, and static IPs are checked against VirtualBox's default 192.168.56.0/21 host-only range so vagrant up does not fail on first boot.",
   useCases: [

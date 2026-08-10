@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to Handwriting Converter: 40 Fonts, PNG or PDF",
+  metaDescription:
+    "Renders typed or imported text as a handwritten A4-style page in one of 40 fonts on ruled, grid, blank or parchment paper — download as PNG or PDF.",
+  steps: [
+    "Type or paste your text, or click 'Import TXT/PDF' to load a .txt file or extract the text from a simple PDF.",
+    "Choose one of the 40 handwriting fonts, an ink colour and a paper style, then click 'Generate Handwritten Sheet'.",
+    "Save the 800 × 1130 px page with 'Download Image (PNG)' — named handwritten-note-<timestamp>.png — or 'Download PDF Document' for a one-page PDF.",
+  ],
   intro:
     "This renders typed text as a handwritten page on an 800 x 1130 pixel canvas sized to A4 proportions, drawing it character by character in one of 40 handwriting fonts over a choice of ruled, grid, blank or parchment paper. A jitter option adds per-letter variation — a slight scale change, a small rotation and a sine-wave baseline drift — so the result wobbles the way real handwriting does instead of sitting on a perfectly straight line. The finished page downloads as a PNG or as a single-page PDF.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screenshot Diff Tool: Compare Before/After Pixel by Pixel",
+  metaDescription:
+    "Upload Before and After screenshots; changed pixels are marked red with counts and a percentage to two decimals. Download the diff PNG or copy a report.",
+  steps: [
+    "Upload two screenshots into the 'Before' and 'After' zones (any image/* file).",
+    "Click 'Compare' to flag every pixel where the red, green and blue differences sum above 30.",
+    "Read Total Pixels, Changed, Unchanged and Change %, then click 'Download Diff PNG' (saves screenshot-diff.png) or 'Copy Report'.",
+  ],
   intro:
     "This tool compares two screenshots pixel by pixel and marks every changed pixel in red, using a per-pixel threshold of |ΔR| + |ΔG| + |ΔB| greater than 30 across the three colour channels. It reports the total pixel count, how many changed, how many did not, and the change as a percentage to two decimal places, then lets you download the annotated diff as a PNG. It is built for anyone who needs to prove a visual regression happened rather than argue about whether the page 'looks different'.",
   useCases: [

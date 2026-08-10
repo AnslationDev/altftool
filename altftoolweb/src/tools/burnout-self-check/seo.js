@@ -1,4 +1,12 @@
 const seo = {
+  title: "Burnout Self-Check: Score ICD-11's Three Dimensions",
+  metaDescription:
+    "Twelve statements rated 0–6 score exhaustion, cynicism and efficacy separately, return a burnout profile, and log a trend across saved checks.",
+  steps: [
+    "Rate the twelve statements under 'Over the last few weeks at work, how often have you…' on the 0–6 frequency scale from Never to Every working day.",
+    "Read your Burnout profile with its composite risk out of 6 and the separate Exhaustion, Cynicism and distance, and Professional efficacy bars.",
+    "Press Save today to add a dated entry to the Trend log, which reports the risk change against your previous saved check, or Copy result for the written summary.",
+  ],
   intro:
     "The Burnout Self-Check scores the three dimensions ICD-11 uses to define burnout — energy depletion, mental distance or negativism about the job, and reduced professional efficacy — from twelve statements rated 0 (never) to 6 (every working day). Instead of one overall number it returns a profile: engaged, overextended, disengaged, ineffective, or the full burnout pattern where all three dimensions line up. Saved checks build a trend log so you can see whether a workload change actually moved anything.",
   useCases: [

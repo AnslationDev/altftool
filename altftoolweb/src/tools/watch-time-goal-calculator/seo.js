@@ -1,4 +1,12 @@
 const seo = {
+  title: "Watch Time Goal Calculator: Videos to 4,000 Hours",
+  metaDescription:
+    "How many uploads and weeks to reach 4,000 YouTube watch hours, whether your pace fits the rolling 365-day window, and the view duration needed to finish.",
+  steps: [
+    "Enter your 'Watch-hour target' (defaults to the 4,000-hour Partner Programme requirement) and 'Watch hours so far (last 12 months)'.",
+    "Set 'Average views per video', 'Average view duration (minutes)', 'Uploads per week' and 'Weeks you want to finish in'.",
+    "Read 'Videos still needed', the 12-month rolling-window check and 'View duration needed to finish in time', then click 'Copy result'.",
+  ],
   intro:
     "Watch Time Goal Calculator works out how many uploads and how many weeks stand between you and a watch-hour target, using the identity that one video produces views x average view duration / 60 watch hours. It defaults to the 4,000 valid public watch hours the YouTube Partner Programme requires within a rolling 365 days, alongside 1,000 subscribers, and warns when your current pace would take longer than that window allows. Written for creators planning an upload schedule rather than guessing at it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wall Tile Calculator: Boxes, Courses & Cut Height",
+  metaDescription:
+    "Deducts every door and window, adds wastage and rounds up to whole boxes — plus tile courses up the wall, the cut course size, adhesive and grout.",
+  steps: [
+    "Enter \"Total wall run to tile (ft)\" and \"Tiling height (ft)\", or press \"Use all four walls of that room\" to fill the run from room length and width.",
+    "Set door and window counts and sizes under \"Openings to deduct\", then tile width and height in mm, tiles per box and the wastage allowance (%).",
+    "Read \"Boxes to order\" plus courses up the wall with the mm cut course, adhesive bags and grout kg; \"Copy result\" copies the whole take-off.",
+  ],
   intro:
     "This calculator works out wall tile quantity as (wall run x tiling height) minus every door and window opening, then divides the net area by the area of one tile, adds a wastage percentage and rounds up to whole boxes. It also reports how many full tile courses stack up the wall and the size of the cut course left at the end, which is the detail that decides whether a bathroom wall looks deliberate or improvised. Written for anyone specifying a bathroom, kitchen or utility wall before ordering.",
   useCases: [

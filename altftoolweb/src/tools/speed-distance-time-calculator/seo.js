@@ -1,4 +1,12 @@
 const seo = {
+  title: "Speed Distance Time Calculator: km/h, mph, m/s & Pace",
+  metaDescription:
+    "Divide distance in km by time in hours to get average speed in km/h, mph and m/s, plus running pace per km and per mile and the time to cover 100 km.",
+  steps: [
+    "Type the journey into the 'Distance (km)' and 'Time (hours)' fields — enter 1 hour 45 minutes as 1.75 decimal hours.",
+    "Read the average speed from Speed = Distance ÷ Time, converted to mph and m/s with mm:ss pace per km and per mile.",
+    "Click 'Copy' in the Result panel to copy every row, including 'Average Time per 100 km'.",
+  ],
   intro:
     "The Speed Distance Time Calculator divides a distance in kilometres by a time in hours to give average speed, then converts that single figure into km/h, mph and m/s alongside running pace in minutes per kilometre and minutes per mile. It is for drivers estimating a journey, runners and cyclists converting a finish time into pace, and students checking speed = distance ÷ time homework. It also reports how long 100 km takes at that pace, which is the number you need for fuel stops and route planning.",
   useCases: [
