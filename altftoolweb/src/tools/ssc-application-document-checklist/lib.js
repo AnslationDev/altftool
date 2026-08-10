@@ -307,7 +307,7 @@ export function checkAgeEligibility({ dobISO, cutoffISO, minAge, maxAge, relaxat
  * eligible ex-servicemen candidates pay nothing; everyone else pays Rs 100.
  */
 export function applicationFee({ isWoman = false, categoryId = "ur", isPwbd = false, isEsm = false } = {}) {
-  const exemptByCategory = categoryId === "sc-st" || categoryId === "pwbd-sc-st";
+  const exemptByCategory = categoryId === "sc-st" || categoryId.startsWith("pwbd-");
   const exempt = Boolean(isWoman) || Boolean(isPwbd) || Boolean(isEsm) || exemptByCategory;
   return {
     fee: exempt ? 0 : APPLICATION_FEE,

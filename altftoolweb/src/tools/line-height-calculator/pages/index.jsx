@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Baseline, Check, Copy, RotateCcw } from "lucide-react";
 
 import {
@@ -41,6 +41,13 @@ const DASH = "—";
 export default function ToolHome() {
   const [fields, setFields] = useState(DEFAULTS);
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const set = (key) => (event) => {
     const { value } = event.target;
@@ -69,7 +76,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(kind);
-      setTimeout(() => setCopied(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
@@ -89,8 +97,9 @@ export default function ToolHome() {
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Line Height Calculator</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Set a font size and a column width and get a line height that suits both, along with the
-          characters per line, the comfortable measure range and a baseline-grid version.
+          Set a font size, column width, text role and character width, and get a line height that
+          suits all four, along with the characters per line, the comfortable measure range and a
+          baseline-grid version.
         </p>
       </header>
 
@@ -189,7 +198,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Recommended line height
             </p>
@@ -238,7 +247,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             ["Characters per line", hasError ? DASH : `${result.cpl} (${result.measureVerdict})`],
             [

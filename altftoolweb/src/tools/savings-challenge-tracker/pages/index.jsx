@@ -163,7 +163,8 @@ export default function ToolHome() {
       const raw = window.localStorage.getItem(WEEK_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (Number.isFinite(parsed?.base) && parsed.base > 0) setBase(parsed.base);
+        const parsedBase = Number(parsed?.base);
+        if (Number.isFinite(parsedBase) && parsedBase > 0) setBase(parsedBase);
         if (modes.some((item) => item.id === parsed?.mode)) setMode(parsed.mode);
         if (Array.isArray(parsed?.markedWeeks)) {
           setMarkedWeeks(
@@ -180,7 +181,8 @@ export default function ToolHome() {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed?.monthDays && typeof parsed.monthDays === "object") setMonthDays(parsed.monthDays);
-        if (Number.isFinite(parsed?.dailySpend) && parsed.dailySpend >= 0) setDailySpend(parsed.dailySpend);
+        const parsedDailySpend = Number(parsed?.dailySpend);
+        if (Number.isFinite(parsedDailySpend) && parsedDailySpend >= 0) setDailySpend(parsedDailySpend);
         if (Array.isArray(parsed?.rules)) setRules(parsed.rules.filter((rule) => typeof rule === "string"));
       }
     } catch {
@@ -279,6 +281,14 @@ export default function ToolHome() {
   };
 
   const resetWeek = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the 52-week challenge? This clears every week you've marked, your base amount and challenge style saved in this browser.",
+      )
+    ) {
+      return;
+    }
     setMarkedWeeks([]);
     setBase(100);
     setMode("increasing");
@@ -286,6 +296,12 @@ export default function ToolHome() {
 
   const resetNoSpend = () => {
     if (!monthKey) return;
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Clear this month's no-spend days? This removes every day marked for this month in this browser.")
+    ) {
+      return;
+    }
     setMonthDays((prev) => ({ ...prev, [monthKey]: [] }));
   };
 
@@ -414,7 +430,9 @@ export default function ToolHome() {
                   type="number"
                   min="1"
                   value={base}
-                  onChange={(event) => setBase(event.target.value)}
+                  onChange={(event) =>
+                    setBase(event.target.value === "" ? "" : Number(event.target.value))
+                  }
                   className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
               </label>
@@ -580,7 +598,9 @@ export default function ToolHome() {
                   type="number"
                   min="0"
                   value={dailySpend}
-                  onChange={(event) => setDailySpend(event.target.value)}
+                  onChange={(event) =>
+                    setDailySpend(event.target.value === "" ? "" : Number(event.target.value))
+                  }
                   className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
                 <span className="mt-1 block text-xs text-[var(--muted-foreground)]">

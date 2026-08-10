@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Cake, Check, Copy, Download, RotateCcw } from "lucide-react";
 
 import { MAX_MESSAGE_LENGTH, SIZES, THEMES, buildInvitation } from "../lib";
@@ -37,6 +37,13 @@ export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
   const svgRef = useRef(null);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const card = useMemo(
     () =>
@@ -69,7 +76,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(card.plainText);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -206,7 +214,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="inv-rsvp-name">
-              RSVP contact name
+              RSVP contact name (optional)
             </label>
             <input
               id="inv-rsvp-name"
@@ -217,7 +225,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="inv-rsvp-contact">
-              RSVP phone or email
+              RSVP phone or email (optional)
             </label>
             <input
               id="inv-rsvp-contact"
@@ -425,7 +433,10 @@ export default function ToolHome() {
             </div>
 
             {card.warning && (
-              <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+              <p
+                role="alert"
+                className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+              >
                 {card.warning}
               </p>
             )}

@@ -296,14 +296,28 @@ export function compareUpsVsNps(rawInput) {
   const annuityReturnsPurchasePrice = input.annuityReturnsPurchasePrice !== false;
 
   // ---- UPS side -----------------------------------------------------------------
-  // Basic is held flat within each projection year, so the average of the last twelve
-  // months equals the basic drawn in the final year.
-  const completedIncrements = Math.max(0, Math.ceil(yearsToRetirement) - 1);
-  const avgBasicLast12 = currentBasic * Math.pow(1 + basicGrowthPercent / 100, completedIncrements);
-  const daAtSuperannuation = Math.max(
-    0,
-    daNowPercent + daStepPointsPerYear * completedIncrements,
-  );
+  // True trailing-12-month average of basic pay and DA rate immediately before
+  // superannuation, stepped month by month with the same basicInMonth()/daRateInMonth()
+  // logic projectNpsCorpus already uses for the NPS side. A single-year-snapshot shortcut
+  // (currentBasic compounded by completed whole years) only matches this for a
+  // whole-number yearsToRetirement; for a fractional value it silently ignores the
+  // fraction and overstates the average whenever an increment lands inside the trailing
+  // 12-month window.
+  const totalMonthsToRetirement = Math.round(yearsToRetirement * MONTHS_PER_YEAR);
+  const avgWindowMonths = Math.min(MONTHS_PER_YEAR, Math.max(1, totalMonthsToRetirement));
+  const lastMonthToRetirement = Math.max(1, totalMonthsToRetirement);
+  let trailingBasicSum = 0;
+  let trailingDaSum = 0;
+  for (
+    let month = lastMonthToRetirement - avgWindowMonths + 1;
+    month <= lastMonthToRetirement;
+    month += 1
+  ) {
+    trailingBasicSum += basicInMonth(currentBasic, basicGrowthPercent, month);
+    trailingDaSum += daRateInMonth(daNowPercent, daStepPointsPerYear, month);
+  }
+  const avgBasicLast12 = trailingBasicSum / avgWindowMonths;
+  const daAtSuperannuation = trailingDaSum / avgWindowMonths;
   const emolumentsAtSuperannuation = avgBasicLast12 * (1 + daAtSuperannuation / 100);
 
   // Proportionate rule: 25 years or more earns the full 50% rate, less is pro-rated.

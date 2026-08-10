@@ -138,11 +138,14 @@ export function calculateRoofArea({
   wastagePercent = 10,
   pricePerUnit = 0,
 } = {}) {
+  const isFlat = roofType === "flat";
   const raw = {
     buildingLengthFt,
     buildingWidthFt,
     overhangFt,
-    pitchValue,
+    // A flat roof forces riseIn12 to 0 below regardless of pitchValue, so an empty/invalid
+    // pitch field must not block an otherwise-valid flat-roof calculation.
+    ...(isFlat ? {} : { pitchValue }),
     coverageSqft,
     wastagePercent,
     pricePerUnit,
@@ -167,7 +170,6 @@ export function calculateRoofArea({
   }
   if (pricePerUnit < 0) return { error: "Price cannot be negative." };
 
-  const isFlat = roofType === "flat";
   const riseIn12 = isFlat ? 0 : toRiseIn12(pitchValue, pitchMode);
   if (!isNum(riseIn12)) {
     return { error: "Pitch is not usable — a roof cannot be at or beyond 90 degrees." };

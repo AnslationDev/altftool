@@ -19,7 +19,7 @@ const seo = {
     ],
     [
       "What makes an invented name hard to say?",
-      "Three or more consonants in a row, three or more vowels in a row, a two-consonant opening, and length outside about four to eight letters. This tool deducts 30, 20, 10 and 8 points per letter respectively for exactly those.",
+      "Three or more consonants in a row, three or more vowels in a row, a two-consonant opening, and length outside about four to eight letters. This tool deducts a flat 30, 20 or 10 points for those first three issues however severe they are, plus 8 points for every letter the blend falls outside the four-to-eight comfortable range.",
     ],
     [
       "Can I register an invented name for my child?",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PaintRoller, RotateCcw } from "lucide-react";
 
 import {
@@ -64,6 +64,13 @@ export default function ToolHome() {
   const [crewSize, setCrewSize] = useState(DEFAULTS.crewSize);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -104,7 +111,8 @@ export default function ToolHome() {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
       setCopyError("");
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
       setCopyError("Couldn't copy automatically — select and copy the summary text manually.");
@@ -339,7 +347,7 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

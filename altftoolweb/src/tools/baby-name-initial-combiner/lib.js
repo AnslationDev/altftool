@@ -118,7 +118,7 @@ function capitalise(word) {
   return word[0].toUpperCase() + word.slice(1);
 }
 
-/** The eight splicing rules, each returning [partFromA, partFromB] or null. */
+/** The ten splicing rules, each returning [partFromA, partFromB] or null. */
 const STRATEGIES = [
   {
     key: "head-tail",
@@ -239,6 +239,10 @@ export function blendNames({ nameA = "", nameB = "", ending = "", minScore = 0 }
       seen.add(raw);
 
       const said = pronounceability(raw);
+      // An unsayable blend (e.g. all-consonant, zero-vowel) must never be kept — the
+      // weighted average could otherwise let a high balance score alone push it past
+      // the floor even though pronounceability was forced to 0.
+      if (said.score === 0) return;
       const balance = balanceScore(partOne, partTwo);
       const score = Math.round(said.score * PRONOUNCE_WEIGHT + balance * BALANCE_WEIGHT);
 

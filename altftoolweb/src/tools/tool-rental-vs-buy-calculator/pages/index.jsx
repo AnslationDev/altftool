@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Wrench } from "lucide-react";
 
 import {
@@ -64,6 +64,9 @@ const VERDICT = {
 export default function ToolHome() {
   const [values, setValues] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const set = (key) => (event) =>
     setValues((prev) => ({ ...prev, [key]: event.target.value }));
@@ -101,7 +104,7 @@ export default function ToolHome() {
         ["Buy — cost of capital", DASH],
         ["Buy — resale recovered", DASH],
         ["Buy — total", DASH],
-        ["Consumables (both options)", DASH],
+        ["Consumables (already included in both totals above)", DASH],
         ["Cost per usage day — rent", DASH],
         ["Cost per usage day — buy", DASH],
         ["Break-even usage", DASH],
@@ -118,7 +121,7 @@ export default function ToolHome() {
         ["Buy — cost of capital", money(result.capitalCost)],
         ["Buy — resale recovered", `-${money(result.resaleValue)}`],
         ["Buy — total", money(result.buyTotal)],
-        ["Consumables (both options)", money(result.consumables)],
+        ["Consumables (already included in both totals above)", money(result.consumables)],
         ["Cost per usage day — rent", money2(result.rentPerUsageDay)],
         ["Cost per usage day — buy", money2(result.buyPerUsageDay)],
         [
@@ -146,7 +149,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -242,7 +246,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Cheaper option over your horizon
             </p>
@@ -289,7 +293,7 @@ export default function ToolHome() {
             </p>
           ))}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

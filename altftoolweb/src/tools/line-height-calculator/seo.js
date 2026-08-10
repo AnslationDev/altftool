@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Line Height Calculator recommends leading from the two things that actually determine it: the font size and how wide the column is. It converts the column width into characters per line (measure ÷ average glyph advance), then adjusts a role-appropriate base ratio upward for long lines and downward for large type, because longer lines need more leading to guide the eye back and larger type already carries a bigger gap. It also reports whether the measure sits inside the 45-75 character band and whether the result clears the 1.5 line spacing WCAG 2.x SC 1.4.8 asks for in body text.",
+    "Line Height Calculator recommends leading from four inputs: font size, column width, the text's role and its average character width. It converts the column width into characters per line (measure ÷ average glyph advance, which the character-width input controls), then adjusts a role-appropriate base ratio upward for long lines and downward for large type, because longer lines need more leading to guide the eye back and larger type already carries a bigger gap. It also reports whether the measure sits inside the 45-75 character band and whether the result clears the 1.5 line spacing WCAG 2.x SC 1.4.8 asks for in body text.",
   useCases: [
     "Set body copy at 16px in a 640px column and find out the measure is too wide before the article ships.",
     "Snap a line height to a 4px baseline grid so text aligns with the rest of the spacing scale.",

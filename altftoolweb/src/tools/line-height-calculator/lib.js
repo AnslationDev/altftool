@@ -2,9 +2,11 @@
  * Line height calculator.
  * Pure module: no DOM, no React, no clock, no randomness.
  *
- * Line height is driven by two things a designer already knows: the font size
- * and how wide the column is. The column width is first converted to characters
- * per line, then leading is adjusted away from the role's base ratio:
+ * Line height is driven by four inputs: the font size, how wide the column is,
+ * the text's role (which sets the base ratio) and its average character width
+ * (which affects how the column width converts to characters per line). The
+ * column width is first converted to characters per line, then leading is
+ * adjusted away from the role's base ratio:
  *
  *   cpl   = measure / (fontSize * averageCharacterWidthRatio)
  *   ratio = base + (cpl - IDEAL_CPL) * CPL_COEFFICIENT
@@ -174,7 +176,7 @@ export function formatLineHeightCss(result) {
     ".text-block {",
     `  font-size: ${result.fontSize}px;`,
     `  line-height: ${result.ratio};`,
-    `  max-width: ${result.idealMeasure}px;`,
+    `  max-width: ${result.measure}px; /* ideal measure: ${result.idealMeasure}px */`,
     "}",
     ".text-block p + p {",
     `  margin-top: ${result.paragraphSpacingPx}px;`,

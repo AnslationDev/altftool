@@ -45,7 +45,7 @@ export const CUT_FIRST = [
   { group: "Hedges", reason: "Softens a sentence that should commit.", words: ["just", "somewhat", "somehow", "slightly", "almost", "nearly", "kind", "sort", "maybe", "perhaps", "probably"] },
   { group: "Filter verbs", reason: "Puts the narrator between the reader and the scene.", words: ["felt", "saw", "heard", "noticed", "realised", "realized", "watched", "seemed", "wondered", "thought", "decided"] },
   { group: "Empty adverbs", reason: "Tells what the verb should already show.", words: ["suddenly", "actually", "basically", "literally", "simply", "definitely", "certainly", "obviously", "immediately", "quickly", "slowly"] },
-  { group: "Throat clearing", reason: "Delays the sentence that matters.", words: ["began", "started", "proceeded", "managed", "began to", "started to"] },
+  { group: "Throat clearing", reason: "Delays the sentence that matters.", words: ["began", "started", "proceeded", "managed"] },
 ];
 
 const CUT_SET = new Map();
@@ -56,7 +56,22 @@ CUT_FIRST.forEach((entry) => {
 });
 
 const SENTENCE_SPLIT = /[.!?…]+["'”’)\]]*\s+|[.!?…]+["'”’)\]]*$/;
-const WORD_TOKEN = /[\p{L}\p{N}][\p{L}\p{N}'’\-–]*/gu;
+// Base token, plus optional trailing "[.,]digit..." runs so grouped numerals
+// like "12,000" or "3.5" stay one token instead of splitting on the separator.
+const WORD_TOKEN = /[\p{L}\p{N}][\p{L}\p{N}'’\-–]*(?:[.,]\d[\p{L}\p{N}'’\-–]*)*/gu;
+
+// A small set of abbreviations/initials whose trailing period should not be
+// treated as a sentence boundary (e.g. "Mr. Smith ran." is one sentence).
+const ABBREVIATION_PERIOD = /\b(?:Mr|Mrs|Ms|Dr|St|vs|e\.g|i\.e|[A-Z])\.(?=\s)/g;
+const ABBREVIATION_PLACEHOLDER = "\u0000";
+
+function guardAbbreviations(text) {
+  return text.replace(ABBREVIATION_PERIOD, (match) => `${match.slice(0, -1)}${ABBREVIATION_PLACEHOLDER}`);
+}
+
+function unguardAbbreviations(text) {
+  return text.split(ABBREVIATION_PLACEHOLDER).join(".");
+}
 
 /** Splits text into word tokens using the "hyphenated compound = one word" rule. */
 export function tokenise(text, { splitHyphens = false } = {}) {
@@ -70,28 +85,33 @@ export function countWords(text, options) {
   return tokenise(text, options).length;
 }
 
-function countSentences(text) {
-  if (typeof text !== "string") return 0;
-  const trimmed = text.trim();
-  if (!trimmed) return 0;
-  const parts = trimmed
-    .split(SENTENCE_SPLIT)
-    .map((part) => part.trim())
-    .filter(Boolean);
-  return parts.length === 0 ? 1 : parts.length;
-}
-
+/** Splits text into sentences, guarding common abbreviations so "Mr. Smith ran." is one sentence. */
 function sentenceList(text) {
   if (typeof text !== "string") return [];
-  return text
-    .trim()
+  const trimmed = text.trim();
+  if (!trimmed) return [];
+  return guardAbbreviations(trimmed)
     .split(SENTENCE_SPLIT)
-    .map((part) => part.trim())
+    .map((part) => unguardAbbreviations(part.trim()))
     .filter(Boolean);
+}
+
+// Single shared source of truth for the sentence count, so the reported total
+// never disagrees with sentenceList()'s own splitting/abbreviation logic (no
+// separate fallback here — punctuation-only text has zero sentences, matching
+// the 0-word longest/average stats derived from the same sentenceList()).
+function countSentences(text) {
+  if (typeof text !== "string") return 0;
+  if (!text.trim()) return 0;
+  return sentenceList(text).length;
 }
 
 function normalise(word) {
-  return word.toLowerCase().replace(/[’']s$/, "").replace(/[’']/g, "'");
+  return word
+    .toLowerCase()
+    .replace(/[’']s$/, "")
+    .replace(/[’']/g, "'")
+    .replace(/^[-–]+|[-–]+$/g, "");
 }
 
 /**

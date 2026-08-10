@@ -7,6 +7,8 @@ export default function BackgroundSelector({ backgrounds, onSelect }) {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [tempColor, setTempColor] = useState("#ffffff");
   const colorInputRef = useRef(null);
+  const colorTileRef = useRef(null);
+  const dialogRef = useRef(null);
 
   const handleApplyColor = () => {
     onSelect(tempColor);
@@ -22,6 +24,46 @@ export default function BackgroundSelector({ backgrounds, onSelect }) {
 
     return () => {
       document.body.style.overflow = "auto";
+    };
+  }, [showColorPicker]);
+
+  // Dialog behaviour for the colour-picker modal: move focus in on open, restore it to the
+  // trigger tile on close, close on Escape, and keep Tab from leaving the dialog.
+  useEffect(() => {
+    if (!showColorPicker) return undefined;
+
+    dialogRef.current?.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        setShowColorPicker(false);
+        return;
+      }
+
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      colorTileRef.current?.focus();
     };
   }, [showColorPicker]);
 
@@ -46,16 +88,18 @@ export default function BackgroundSelector({ backgrounds, onSelect }) {
           "
         >
           {backgrounds.map((bg, i) => (
-            <div
+            <button
               key={i}
+              type="button"
               onClick={() => onSelect(bg.src)}
-              className="cursor-pointer rounded-md border border-(--border) shadow-md hover:scale-105 transition overflow-hidden bg-(--card)"
+              aria-label={`Use ${bg.name} background`}
+              className="cursor-pointer rounded-md border border-(--border) shadow-md hover:scale-105 transition overflow-hidden bg-(--card) text-left w-full focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
             >
               {/* square image */}
               <div className="aspect-square w-full">
                 <ManagedImage
                   src={bg.src}
-                  alt={bg.name}
+                  alt=""
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -64,13 +108,16 @@ export default function BackgroundSelector({ backgrounds, onSelect }) {
               <p className="text-[10px] text-center py-1 truncate">
                 {bg.name}
               </p>
-            </div>
+            </button>
           ))}
 
           {/* ✅ SOLID COLOR TILE (MATCHED STYLE) */}
-          <div
+          <button
+            type="button"
+            ref={colorTileRef}
             onClick={() => setShowColorPicker(true)}
-            className="cursor-pointer rounded-md border border-(--border) shadow-md hover:scale-105 transition overflow-hidden bg-(--card)"
+            aria-label="Use a custom colour background"
+            className="cursor-pointer rounded-md border border-(--border) shadow-md hover:scale-105 transition overflow-hidden bg-(--card) text-left w-full focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           >
             <div className="aspect-square w-full flex items-center justify-center text-[10px] font-medium text-center px-1">
               Color
@@ -78,14 +125,21 @@ export default function BackgroundSelector({ backgrounds, onSelect }) {
             <p className="text-[10px] text-center py-1">
               Custom
             </p>
-          </div>
+          </button>
         </div>
       </div>
 
       {/* ✅ MODAL */}
       {showColorPicker && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 shadow-lg w-[260px] text-center">
+          <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Custom colour background"
+            tabIndex={-1}
+            className="bg-white rounded-xl p-6 shadow-lg w-[260px] text-center focus:outline-none"
+          >
 
             <h3 className="font-semibold mb-4 text-sm">Color Preview</h3>
 

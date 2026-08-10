@@ -384,6 +384,25 @@ export function buildInvitation({
   const venueLines = wrapText(cleanVenue, scale.value, inner);
   const addressLines = wrapText(address, scale.body, inner);
 
+  const rsvpParts = [];
+  if (String(rsvpName).trim()) rsvpParts.push(String(rsvpName).trim());
+  if (String(rsvpContact).trim()) rsvpParts.push(String(rsvpContact).trim());
+  const rsvpLine = rsvpParts.length
+    ? `RSVP to ${rsvpParts.join(" · ")}${String(rsvpBy).trim() ? ` by ${formatLongDate(rsvpBy)}` : ""}`
+    : String(rsvpBy).trim()
+      ? `Please RSVP by ${formatLongDate(rsvpBy)}`
+      : "";
+
+  // footerY / contentCeiling are computed up front, before the flowing
+  // address/message text is laid out, so that section can stop adding lines
+  // before they would run under the RSVP footer or past the bottom edge of
+  // the card, instead of emitting every line unconditionally and letting a
+  // long address/message overlap the footer or render off-canvas.
+  const footerY = panel.y + panel.height - Math.round(height * 0.055);
+  const footerGap = Math.round(scale.footer * 2);
+  const contentCeiling = footerY - footerGap;
+  let truncated = false;
+
   const blocks = [];
   let cursor = panel.y + Math.round(height * 0.06);
 
@@ -515,11 +534,15 @@ export function buildInvitation({
     });
     cursor += Math.round(scale.value * 1.25);
   });
-  addressLines.forEach((line, index) => {
+  for (let index = 0; index < addressLines.length; index += 1) {
+    if (cursor + scale.body > contentCeiling) {
+      truncated = true;
+      break;
+    }
     blocks.push({
       kind: "text",
       id: `address-${index}`,
-      text: line,
+      text: addressLines[index],
       x: centerX,
       y: cursor,
       size: scale.body,
@@ -528,37 +551,36 @@ export function buildInvitation({
       letterSpacing: 0,
     });
     cursor += Math.round(scale.body * 1.35);
-  });
-
-  if (messageLines.length > 0) {
-    cursor += Math.round(scale.body * 1.1);
-    messageLines.forEach((line, index) => {
-      blocks.push({
-        kind: "text",
-        id: `message-${index}`,
-        text: line,
-        x: centerX,
-        y: cursor,
-        size: scale.body,
-        weight: 400,
-        fill: colors.muted,
-        letterSpacing: 0,
-        italic: true,
-      });
-      cursor += Math.round(scale.body * 1.35);
-    });
   }
 
-  const rsvpParts = [];
-  if (String(rsvpName).trim()) rsvpParts.push(String(rsvpName).trim());
-  if (String(rsvpContact).trim()) rsvpParts.push(String(rsvpContact).trim());
-  const rsvpLine = rsvpParts.length
-    ? `RSVP to ${rsvpParts.join(" · ")}${String(rsvpBy).trim() ? ` by ${formatLongDate(rsvpBy)}` : ""}`
-    : String(rsvpBy).trim()
-      ? `Please RSVP by ${formatLongDate(rsvpBy)}`
-      : "";
+  if (messageLines.length > 0) {
+    const messageGap = Math.round(scale.body * 1.1);
+    if (cursor + messageGap + scale.body > contentCeiling) {
+      truncated = true;
+    } else {
+      cursor += messageGap;
+      for (let index = 0; index < messageLines.length; index += 1) {
+        if (cursor + scale.body > contentCeiling) {
+          truncated = true;
+          break;
+        }
+        blocks.push({
+          kind: "text",
+          id: `message-${index}`,
+          text: messageLines[index],
+          x: centerX,
+          y: cursor,
+          size: scale.body,
+          weight: 400,
+          fill: colors.muted,
+          letterSpacing: 0,
+          italic: true,
+        });
+        cursor += Math.round(scale.body * 1.35);
+      }
+    }
+  }
 
-  const footerY = panel.y + panel.height - Math.round(height * 0.055);
   if (rsvpLine) {
     blocks.push({
       kind: "text",
@@ -596,8 +618,10 @@ export function buildInvitation({
     });
   }
 
-  const contentBottom = cursor;
-  const overflow = contentBottom > footerY - Math.round(scale.footer * 2);
+  // Address/message lines above already stop themselves before crossing
+  // contentCeiling, so `truncated` is the sole source of truth for overflow:
+  // when nothing was cut, the RSVP footer can never overlap or run off-canvas.
+  const overflow = truncated;
 
   const plainText = [
     ageNumber === null ? "You're invited!" : `${cleanName} is turning ${ageNumber}!`,
@@ -625,7 +649,7 @@ export function buildInvitation({
     dateLong: formatLongDate(date),
     overflow,
     warning: overflow
-      ? "The text is close to the bottom edge — shorten the message or address, or switch to the taller story size."
+      ? "The address and/or closing message didn't fully fit above the RSVP line and was cut off — shorten it, or switch to the taller story size."
       : "",
   };
 }

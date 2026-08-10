@@ -152,8 +152,24 @@ export function quoteLiteral(value, type, dialect) {
 
 /** Split a comma-separated list, honouring quoted items. */
 export function splitList(text) {
-  return String(text ?? "")
-    .split(",")
+  const str = String(text ?? "");
+  const items = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < str.length; i += 1) {
+    const ch = str[i];
+    if (ch === "'") {
+      inQuotes = !inQuotes;
+      current += ch;
+    } else if (ch === "," && !inQuotes) {
+      items.push(current);
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  items.push(current);
+  return items
     .map((item) => item.trim().replace(/^'(.*)'$/s, "$1"))
     .filter((item) => item !== "");
 }
@@ -184,7 +200,23 @@ export function buildWhereClause({
   if (!spec) return { error: "Choose a SQL dialect." };
 
   const list = Array.isArray(conditions) ? conditions : [];
-  const active = list.filter((c) => c && String(c.column ?? "").trim() !== "");
+  const active = [];
+  const blankColumnButFilled = [];
+  list.forEach((c, idx) => {
+    if (!c) return;
+    if (String(c.column ?? "").trim() !== "") {
+      active.push(c);
+      return;
+    }
+    const hasValue = String(c.value ?? "").trim() !== "" || String(c.value2 ?? "").trim() !== "";
+    if (hasValue) blankColumnButFilled.push(idx + 1);
+  });
+  if (blankColumnButFilled.length > 0) {
+    const plural = blankColumnButFilled.length > 1;
+    return {
+      error: `Condition ${blankColumnButFilled.join(", ")} ${plural ? "have" : "has"} a value but no column name. Add a column name or clear the value.`,
+    };
+  }
   if (active.length === 0) {
     return { error: "Add at least one condition with a column name." };
   }
@@ -221,8 +253,12 @@ export function buildWhereClause({
         return { error: `Condition ${i + 1} (${op.sql}) has a value that is not a valid number.` };
       }
       literal = `${column} ${op.sql} (${rendered.join(", ")})`;
-      parameterised = `${column} ${op.sql} (${items.map(() => nextPlaceholder()).join(", ")})`;
-      items.forEach((item) => params.push(type === "number" ? Number(item) : item));
+      if (type === "column") {
+        parameterised = literal;
+      } else {
+        parameterised = `${column} ${op.sql} (${items.map(() => nextPlaceholder()).join(", ")})`;
+        items.forEach((item) => params.push(type === "number" ? Number(item) : item));
+      }
     } else if (op.arity === 2) {
       const lo = quoteLiteral(cond.value, type, spec);
       const hi = quoteLiteral(cond.value2, type, spec);
@@ -233,17 +269,24 @@ export function buildWhereClause({
         return { error: `Condition ${i + 1} (BETWEEN) needs both a lower and an upper value.` };
       }
       literal = `${column} BETWEEN ${lo} AND ${hi}`;
-      const a = nextPlaceholder();
-      const b = nextPlaceholder();
-      parameterised = `${column} BETWEEN ${a} AND ${b}`;
-      params.push(type === "number" ? Number(cond.value) : cond.value);
-      params.push(type === "number" ? Number(cond.value2) : cond.value2);
+      if (type === "column") {
+        parameterised = literal;
+      } else {
+        const a = nextPlaceholder();
+        const b = nextPlaceholder();
+        parameterised = `${column} BETWEEN ${a} AND ${b}`;
+        params.push(type === "number" ? Number(cond.value) : cond.value);
+        params.push(type === "number" ? Number(cond.value2) : cond.value2);
+      }
     } else {
       const rawValue = String(cond.value ?? "");
       if (rawValue.trim() === "") {
         return { error: `Condition ${i + 1} (${op.label}) needs a value.` };
       }
-      const patterned = op.pattern ? applyPattern(rawValue, op.pattern) : rawValue;
+      // Wildcard wrapping only makes sense for string literals — applying it
+      // when comparing against another column would bake the % characters
+      // into a quoted identifier instead of producing a LIKE pattern.
+      const patterned = op.pattern && type !== "column" ? applyPattern(rawValue, op.pattern) : rawValue;
       const rendered = quoteLiteral(patterned, type, spec);
       if (rendered === null) {
         return { error: `Condition ${i + 1} has a value that is not a valid number.` };

@@ -27,8 +27,7 @@
 /** sRGB relative luminance coefficients, from the sRGB specification. */
 export const LUMINANCE_COEFFICIENTS = { r: 0.2126, g: 0.7152, b: 0.0722 };
 
-/** WCAG contrast thresholds. */
-export const CONTRAST_AA_NORMAL = 4.5;
+/** WCAG contrast threshold for large text and graphical objects (this tool never renders body text directly on a swatch, so only the large/graphics threshold is used). */
 export const CONTRAST_AA_LARGE = 3;
 
 /** Below this LRV a wall gives back little light; above it a room stays bright. */
@@ -166,11 +165,6 @@ export function accentLightnessFor(hue, sat, startLight, wallRgb) {
 
 function makeSwatch(role, share, h, s, l, purpose) {
   const rgb = hslToRgb(h, s, l);
-  const white = [255, 255, 255];
-  const black = [0, 0, 0];
-  const onWhite = contrastRatio(rgb, white);
-  const onBlack = contrastRatio(rgb, black);
-  const useWhiteText = onWhite >= onBlack;
   return {
     role,
     share,
@@ -181,8 +175,6 @@ function makeSwatch(role, share, h, s, l, purpose) {
     rgb,
     css: rgbToCss(rgb),
     lrv: lrv(rgb),
-    textOn: useWhiteText ? "white" : "black",
-    textContrast: useWhiteText ? onWhite : onBlack,
   };
 }
 
@@ -210,6 +202,9 @@ export function buildRoomPalette({
     hemisphere === "south"
       ? { north: "south", south: "north", east: "east", west: "west" }[direction]
       : direction;
+  // The description of the light the room actually gets, from the hemisphere-corrected
+  // direction — never from the raw, unswapped `direction` the user picked.
+  const directionDescription = DIRECTIONS.find((entry) => entry.id === effectiveDirection).description;
 
   let hue = moodSpec.hue;
   let sat = moodSpec.sat;
@@ -295,6 +290,7 @@ export function buildRoomPalette({
     mood: moodSpec,
     direction: directionSpec,
     effectiveDirection,
+    directionDescription,
     depth: depthSpec,
     lightNote,
     swatches: [wall, secondary, accent, trim],

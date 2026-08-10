@@ -21,11 +21,25 @@ export const MAX_PAINTABLE_AREA_SQFT = 1_000_000;
 export const MAX_WALL_AREA_FACTOR = 8;
 
 /**
+ * Sanity floor on the wall-area multiplier. A real home's wall area always
+ * exceeds its carpet area (walls stand taller than the floor plan they
+ * enclose), so a factor below 1 cannot correspond to an actual room.
+ */
+export const MIN_WALL_AREA_FACTOR = 1;
+
+/**
  * Rule of thumb used by Indian painting contractors: paintable WALL area of a
  * home is roughly 3 to 3.5 times its carpet area for a standard 10 ft ceiling.
  * Ceiling area is counted separately (see CEILING_AREA_FACTOR).
  */
 export const DEFAULT_WALL_AREA_FACTOR = 3.2;
+
+/**
+ * Ceiling height the wall-area rule of thumb above is calibrated for. Wall
+ * area is (roughly) perimeter x height, so a taller or shorter ceiling scales
+ * the painted wall area linearly off this baseline.
+ */
+export const WALL_AREA_FACTOR_BASELINE_CEILING_FT = 10;
 
 /** A flat ceiling has the same plan area as the floor it covers. */
 export const CEILING_AREA_FACTOR = 1;
@@ -137,6 +151,9 @@ export function estimatePaintLabour({
   if (!isNum(wallAreaFactor) || wallAreaFactor <= 0) {
     return { error: "Wall area factor must be greater than zero." };
   }
+  if (wallAreaFactor < MIN_WALL_AREA_FACTOR) {
+    return { error: `Wall area factor below ${MIN_WALL_AREA_FACTOR} is not realistic for a home.` };
+  }
   if (wallAreaFactor > MAX_WALL_AREA_FACTOR) {
     return { error: `Wall area factor above ${MAX_WALL_AREA_FACTOR} is not realistic for a home.` };
   }
@@ -152,7 +169,8 @@ export function estimatePaintLabour({
   const tier = CITY_TIERS[cityTier];
   if (!tier) return { error: "Choose a valid city tier." };
 
-  const wallArea = carpetAreaSqft * wallAreaFactor;
+  const wallArea =
+    carpetAreaSqft * wallAreaFactor * (ceilingHeightFt / WALL_AREA_FACTOR_BASELINE_CEILING_FT);
   const ceilingArea = includeCeiling ? carpetAreaSqft * CEILING_AREA_FACTOR : 0;
   const paintableArea = wallArea + ceilingArea;
 
@@ -164,7 +182,6 @@ export function estimatePaintLabour({
 
   const finishRate = round2(grade.rate * tier.factor);
   const puttyRate = withPutty ? round2(PUTTY_LABOUR_RATE_PER_SQFT * tier.factor) : 0;
-  const ratePerSqft = round2(finishRate + puttyRate);
 
   const finishCost = paintableArea * finishRate;
   const puttyCost = paintableArea * puttyRate;
@@ -188,7 +205,6 @@ export function estimatePaintLabour({
     paintableArea: round2(paintableArea),
     finishRate,
     puttyRate,
-    ratePerSqft,
     finishCost: Math.round(finishCost),
     puttyCost: Math.round(puttyCost),
     subtotal: Math.round(subtotal),

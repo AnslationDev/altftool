@@ -2141,7 +2141,7 @@ export const toolMetaMap = {
   },
   "baby-name-initial-combiner": {
     "name": "Baby Name Initial Combiner",
-    "description": "Blend two parents' names into new baby name ideas using eight syllable-splicing rules, each result scored for pronounceability and balance.",
+    "description": "Blend two parents' names into new baby name ideas using ten syllable-splicing rules, each result scored for pronounceability and balance.",
     "category": "Lifestyle",
     "icon": "blend",
     "iconColor": "text-[var(--primary)]"
@@ -29232,7 +29232,7 @@ export const toolMetaMap = {
   },
   "text-to-binary": {
     "name": "Text to Binary / Binary to Text",
-    "description": "Convert text to binary and binary back to text instantly. Each character is converted to its 8-bit binary representation.",
+    "description": "Convert text to binary and binary back to text instantly. ASCII/Latin-1 characters map to 8 bits each; higher code points use more bits.",
     "category": [
       "Developer",
       "Converters"

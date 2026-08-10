@@ -7,14 +7,17 @@
  * whatever it resells for at the end.
  *
  *   rent total = usage days x day rate + trips x cost per trip
- *   buy total  = price + upkeep x years + storage x years + capital cost - resale value
+ *   buy fixed  = price + upkeep x years + storage x years + capital cost - resale value
  *
  * Setting the two equal gives the break-even usage:
  *
- *   break-even days = buy total / (day rate + trip cost / days per hire)
+ *   break-even days = buy fixed / (day rate + trip cost / days per hire)
  *
  * Consumables (blades, discs, bits, fuel) are charged the same way under both options, so
- * they are included in both totals and cancel out of the break-even.
+ * they are included in both totals and cancel out of the break-even. The `buyFixed` value
+ * above excludes consumables (it feeds the break-even math only); the returned `buyTotal`
+ * field is `buyFixed + consumables` — the two names deliberately differ so they are not
+ * mistaken for the same quantity.
  */
 
 /** Horizon default: three years is long enough to include one resale but short enough to trust. */
@@ -74,6 +77,9 @@ export function compareRentVsBuy({
   }
   if (hiresPerYear < 0 || hiresPerYear > 365) {
     return { error: "Jobs per year must be between 0 and 365." };
+  }
+  if (daysPerHire * hiresPerYear > 365) {
+    return { error: "Days per hire x jobs per year cannot exceed 365 days a year." };
   }
   if (!(horizonYears > 0) || horizonYears > MAX_HORIZON_YEARS) {
     return { error: `The horizon must be between 0 and ${MAX_HORIZON_YEARS} years.` };

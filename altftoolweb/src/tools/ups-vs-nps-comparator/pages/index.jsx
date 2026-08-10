@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Scale } from "lucide-react";
 
 import {
@@ -91,6 +91,9 @@ export default function ToolHome() {
   const [retirementYears, setRetirementYears] = useState(DEFAULTS.retirementYears);
   const [showSchedule, setShowSchedule] = useState(false);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copiedTimeoutRef.current), []);
 
   const result = useMemo(
     () =>
@@ -166,7 +169,9 @@ export default function ToolHome() {
       `  Estate left at superannuation: ${money(result.npsBequest)}`,
       "",
       `NPS return needed to match the UPS payout: ${heroValue}`,
-      `  (to match the 50% assured payout before DR: ${heroExDr})`,
+      result.minimumApplied
+        ? `  (to match the assured minimum of ${money(UPS_MIN_MONTHLY_PAYOUT)} a month: ${heroExDr})`
+        : `  (to match the 50% assured payout before DR: ${heroExDr})`,
       `Bequest value forgone under UPS: ${signedMoney(result.bequestGivenUpUnderUps)}`,
     ].join("\n");
   }, [
@@ -184,7 +189,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -531,7 +537,7 @@ export default function ToolHome() {
             >
               NPS return needed to match the UPS payout
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">{heroValue}</p>
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">{heroValue}</p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {failed
                 ? "Fix the input above to see a result."
@@ -590,10 +596,12 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             [
-              "To match the 50% assured payout before Dearness Relief",
+              !failed && result.minimumApplied
+                ? `To match the assured minimum of ${money(UPS_MIN_MONTHLY_PAYOUT)} a month`
+                : "To match the 50% assured payout before Dearness Relief",
               failed ? DASH : heroExDr,
             ],
             [
