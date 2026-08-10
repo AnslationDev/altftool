@@ -1,4 +1,12 @@
 const seo = {
+  title: "Newsletter Open Rate Calculator: Opens vs Delivered",
+  metaDescription:
+    "Open, click, click-to-open, bounce, unsubscribe and complaint rates on their correct bases, plus an open rate with privacy-proxy opens removed.",
+  steps: [
+    "Enter \"Emails sent\", \"Bounces (hard + soft)\", \"Unique opens\", \"Unique clicks\", \"Unsubscribes\" and \"Spam complaints\" from the campaign report.",
+    "Add \"Machine / privacy-proxy opens\", then set \"Your benchmark open rate (%)\" and \"Target open rate for the next send (%)\".",
+    "Read the open rate of delivered plus the adjusted open, click, click-to-open, bounce, unsubscribe and complaint rows, then press \"Copy result\".",
+  ],
   intro:
     "Newsletter Open Rate Calculator converts raw campaign counts into the six rates that matter — open, click, click-to-open, bounce, unsubscribe and spam complaint — each on the denominator the industry actually uses. Engagement rates are measured against delivered mail, which is sent minus bounces, while the bounce rate itself is measured against sent; mixing the two is the most common reporting mistake. It also produces an adjusted open rate with privacy-proxy opens removed, because pixel tracking counts prefetches as reads.",
   useCases: [

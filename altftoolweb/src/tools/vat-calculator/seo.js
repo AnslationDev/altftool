@@ -1,4 +1,12 @@
 const seo = {
+  title: "VAT Calculator: Add or Remove VAT at Any Rate",
+  metaDescription:
+    "Add VAT at any rate, or remove it by dividing by 1 + rate/100. Returns net, VAT, gross and the tax fraction — 15.25% of gross at 18%.",
+  steps: [
+    "Type the figure into the Amount field and set VAT / GST Rate (%), which open prefilled at 1000 and 18.",
+    "Choose Add VAT / GST or Remove VAT / GST in the Calculation dropdown — the Result panel recomputes as you type, with no calculate button.",
+    "Read the Net Amount, VAT Amount, Gross Amount, VAT Rate and Tax Fraction cards (15.25% of gross at an 18% rate), then press Copy to take the summary or Reset to restore the defaults.",
+  ],
   intro:
     "The VAT Calculator works in both directions at any rate: to add tax it computes VAT = net × rate ÷ 100 and gross = net + VAT, and to strip it out it divides back with net = gross ÷ (1 + rate ÷ 100), then reports VAT as the difference. Every result breaks out net, VAT and gross to two decimals alongside the tax fraction — rate ÷ (100 + rate) — which is the share of a tax-inclusive price the tax actually represents. It accepts any percentage, so the same box handles a 5%, 18% or 27% regime; the rate field simply starts at 18%.",
   useCases: [

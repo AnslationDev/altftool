@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Banner Maker: 600px Header, 2x Retina PNG",
+  metaDescription:
+    "Design a newsletter header at 560, 600 or 640 px, export a 2x PNG, and check the seam against light and dark client canvases. Copies the img markup.",
+  steps: [
+    "Type the Headline (up to 70 characters), an optional Kicker and Sub-line, and the Alt text shown when images are blocked.",
+    "Pick the Email content width (560, 600 or 640 px), the Banner proportion (2:1 tall hero, 3:1 standard header or 4:1 slim strip), the Pixel density (1x, 2x or 3x export) and a Theme, then press 'Switch to dark client' to see the banner on a dark canvas.",
+    "Check the 'Seam against a light client' and 'Seam against a dark client' contrast rows, press Download PNG to save newsletter-banner-1200x400.png at the default 600 px 3:1 2x settings, and press 'Copy image markup' for the img tag with the 1x width and height declared.",
+  ],
   intro:
     "Email Newsletter Banner Maker designs a header at a real email content width — 560, 600 or 640 CSS pixels — and exports it at 2x so it stays sharp on retina screens while the width attribute keeps the layout at 1x. It also scores the banner against a light and a dark client canvas, because email clients do not invert image pixels: a white header stays white and glares inside a dark-mode message. Built for newsletter writers and marketers who need a header that survives Gmail, Outlook and Apple Mail without a design tool.",
   useCases: [

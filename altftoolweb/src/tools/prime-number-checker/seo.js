@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prime Number Checker with the Factor Pair Shown",
+  metaDescription:
+    "Trial division while i × i ≤ n tells you if a number is prime; a composite shows its smallest divisor and pair, like 91 = 7 × 13. Below 2 is refused.",
+  steps: [
+    "Type the whole number into the Number field of the Inputs card, which opens on 97.",
+    "The verdict recomputes as you type: trial division runs from 2 while i × i ≤ n, and anything under 2 comes back as Enter a whole number ≥ 2.",
+    "Result reads Prime ✓, or Not prime with the factor pair beneath it such as 91 = 7 × 13; Copy places the inputs and verdict on the clipboard and Reset returns the field to 97.",
+  ],
   intro:
     "The Prime Number Checker tests whether a whole number is prime by trial division against every integer from 2 up to the square root of the number, and when it is not prime it returns the smallest divisor together with its pair — for example 91 = 7 × 13. It is for students checking homework, anyone verifying a number before using it in a puzzle or exercise, and developers sanity-checking a value by hand. Testing only up to the square root is what keeps it fast: any composite number must have a factor at or below that point.",
   useCases: [

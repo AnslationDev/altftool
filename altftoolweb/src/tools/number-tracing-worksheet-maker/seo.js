@@ -1,4 +1,12 @@
 const seo = {
+  title: "Number Tracing Worksheets in mm: Latin or Devanagari",
+  metaDescription:
+    "Set digit height in millimetres and get digits per row, numbers per page and the sheet count before printing. Latin 0-9 or Devanagari ०-९.",
+  steps: [
+    "Pick the Digit script — 'Latin — 0 1 2 3' or 'Devanagari — ० १ २ ३' — and the Paper size, then set First number and Last number.",
+    "Set Digit height (mm) anywhere from 8 to 45, Rows per number and Page margin (mm), and tick 'Print the number word'.",
+    "Read the sheets to print, digits per row and numbers per page, then press Print with printer scaling at 100%, not fit-to-page.",
+  ],
   intro:
     "Number Tracing Worksheet Maker lays out printable digit-tracing sheets by millimetre geometry: you set the digit height, paper size and margin, and it calculates how many digits fit a line, how many numbers fit a page and how many sheets you must print. Digits render in Latin numerals (0-9) or Devanagari numerals (०-९), with the English or Hindi number word above each block. It is aimed at preschool and Class 1 teachers, therapists working on pencil control, and parents who want the same sheet reprinted at a consistent size.",
   useCases: [

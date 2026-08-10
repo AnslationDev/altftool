@@ -1,4 +1,12 @@
 const seo = {
+  title: "Beach Day Planner: Tide, UV and Crowd by Half-Hour",
+  metaDescription:
+    "Scores every half-hour of daylight on UV at solar noon, the 2-3 hour heat lag, crowds and tide projected on the 12 h 25 min interval.",
+  steps: [
+    "Fill in the day: 'Sunrise' and 'Sunset' (05:45 and 20:15 by default) and 'A known high water time', which the planner projects forward on the 12 h 25 min semidiurnal interval.",
+    "Say what you want: choose 'Low tide — wide flat sand, rock pools, walking', the high-tide option or 'No preference' under 'What you want from the tide', then set 'Earliest you could arrive', 'Time you have to leave', 'How long you want to stay (hours)' and 'How busy this beach gets (%)'.",
+    "Read the 'Best window' time range and its score out of 100, alongside solar noon, strongest UV, hottest air and busiest times, the 'Tides today' list of high and low waters, and the 'Hour by hour' table grading each slot from 'Prime window' to 'Avoid if you can'. 'Copy plan' saves it.",
+  ],
   intro:
     "Scores every half-hour of daylight on a beach against the four things that do not peak at the same moment: UV, which is highest at solar noon — the exact midpoint of sunrise and sunset, not 12:00 on the clock; air temperature, which lags the sun by roughly two to three hours; crowds, which peak just after midday; and the tide, projected from one known high water on the semidiurnal interval of 12 hours 25 minutes and interpolated with the rule of twelfths. The result is the best continuous window for the length of visit you want.",
   useCases: [

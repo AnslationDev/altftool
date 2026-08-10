@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pitch % to BPM Calculator with Key Shift in Cents",
+  metaDescription:
+    "Resulting BPM = written BPM x (1 + pitch/100). Get the key shift in cents and semitones, the new running time, and whether it fits your fader range.",
+  steps: [
+    "Enter the Written tempo (BPM), the Pitch (%) and the track length in minutes and seconds, or tap a chip such as +4%.",
+    "Pick the Pitch fader range, then set 'Or aim for this tempo (BPM)' to get the pitch a target tempo needs.",
+    "Read the resulting tempo with the key shift in cents and semitones, the running time after pitching and whether it sits inside the fader; press Copy result.",
+  ],
   intro:
     "The Pitch Percent BPM Calculator converts a turntable or CDJ pitch fader position into the tempo the record actually plays at, using resulting BPM = written BPM x (1 + pitch / 100). Because pitch changes the playback rate, it also reports the musical side of the same move: the key shift is logarithmic at 1200 x log2(1 + pitch / 100) cents, which is why +6% raises the track by about one semitone rather than by 6% of an octave. The running time shortens by the same ratio, so a five-minute record at +8% finishes 22 seconds early.",
   useCases: [

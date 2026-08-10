@@ -1,4 +1,12 @@
 const seo = {
+  title: "Modular Spacing Scale Generator: CSS, Tailwind, JSON",
+  metaDescription:
+    "Build spacing from base × ratio^n — minor third to golden ratio — snap to a 4 or 8 pt grid, and export rem tokens as CSS, Tailwind, SCSS or JSON.",
+  steps: [
+    "Set Base spacing (px) — 16 by default, or tap a Base 4px, 8px, 12px or 16px chip — and pick a Scale ratio such as Minor third 6:5 or Golden ratio φ ≈ 1.618.",
+    "Choose Steps above the base and Steps below the base, set Snap to grid to a 4 pt or 8 pt grid, then name the tokens with T-shirt, Numeric or Sequential and a Token prefix.",
+    "The scale table lists every token with its px, rem and step-up percentage; choose CSS custom properties, Tailwind @theme, SCSS map or JSON design tokens and press Copy tokens.",
+  ],
   intro:
     "Modular Spacing Scale Generator builds a spacing system from a single base value and a fixed ratio, using value(n) = base × ratio^n so every step sits in the same proportion to its neighbour. Ratios are the classic musical intervals — minor third 6:5, major third 5:4, perfect fourth 4:3, perfect fifth 3:2 and the golden ratio — and the output can be snapped to a 2, 4 or 8 point grid so components still align. Exports as CSS custom properties, a Tailwind @theme block, an SCSS map or W3C-style JSON design tokens, all in rem.",
   useCases: [

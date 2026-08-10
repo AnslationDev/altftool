@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digit Span Test: Forward and Reverse Memory Span",
+  metaDescription:
+    "Adaptive span test from 3 digits: one more after each correct recall, back one after two misses. Graded against Miller's 7±2, with a CSV of every trial.",
+  steps: [
+    "Pick Digits Forward or Digits Reverse in the Test Mode card, then click the Start Test panel or press Space — the first sequence is 3 items.",
+    "Digits appear one at a time under 'Memorise This Sequence' (0.8 seconds each); when 'Your Turn — Recall the Sequence' shows, type them into the box and press Submit Answer or Enter.",
+    "Current Span, Best Span, Accuracy and Streak update after each trial and the span grade is read against Miller's 7±2; the CSV button in Attempt History downloads digit-span-test.csv.",
+  ],
   intro:
     "The digit span test measures short-term working memory by showing a random string of digits one at a time and asking you to type them back — forward in the order shown, or reverse in the opposite order. This version starts at 3 digits, adds one digit after every correct recall and drops back one (never below 3) after two misses in a row, so your span settles at the longest string you can reliably hold. Results are graded against Miller's classic 7±2 range and charted attempt by attempt, with a CSV export of every trial.",
   useCases: [

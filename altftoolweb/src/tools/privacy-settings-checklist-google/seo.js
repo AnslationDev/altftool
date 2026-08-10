@@ -1,4 +1,12 @@
 const seo = {
+  title: "Google Account Privacy Checklist: 26 Settings Audited",
+  metaDescription:
+    "Work through 26 Google controls — Web & App Activity and its audio and Chrome sub-toggles, YouTube, Gemini, Timeline, Drive links and app access.",
+  steps: [
+    "Pick 'Who are you locking this down for?' — the profile reweights the same list — and set the 'Target score (%)', which starts at 90.",
+    "Tick each of the 26 settings as you apply it in your own account; every row names where the control lives, what it costs to skip, and carries a Critical badge when it caps your score.",
+    "Watch the protection score, the 'Remaining exposure by area' bars and 'Shortest route to your target'; 'Copy result' exports the score, the critical settings still open and everything left to do.",
+  ],
   "intro": "This checklist audits the 26 Google account settings that decide what is recorded about you, how long it is kept, who can see it and which apps still have access. It covers Web & App Activity and its audio and Chrome sub-settings, the 3, 18 and 36-month auto-delete options, YouTube History, Gemini Apps Activity, Timeline location records, My Ad Center personalisation, Drive link sharing and third-party app connections. Because pausing a control and deleting what it already stored are separate actions, each is listed separately.",
   "useCases": [
     "Cut Google's retention of your searches, routes and watch history to the shortest option available and clear the backlog.",

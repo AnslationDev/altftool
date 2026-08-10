@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Counts each retailer's window from the right date - delivery for Amazon and Flipkart, purchase for Walmart and Target - 13 store and statutory policies.",
   steps: [
     "Enter 'What did you buy?' and choose 'Retailer or policy' from the built-in list, which shows each policy's day count, or set your own 'Return window (days)'.",
     "Fill 'Purchase date' and 'Delivery date', set 'Today' and pick the 'Return status'.",

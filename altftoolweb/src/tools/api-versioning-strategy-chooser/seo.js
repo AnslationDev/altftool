@@ -1,4 +1,12 @@
 const seo = {
+  title: "API Versioning: URL Path vs Header vs Media Type",
+  metaDescription:
+    "Ranks URL path, ?api-version, custom header and Accept media type versioning on six weighted criteria, with the client migration cost of each.",
+  steps: [
+    "Drag the 0-5 sliders under \"How much does each criterion matter?\" — HTTP cache friendliness, Client simplicity, Gateway routing & ops, REST / HTTP semantics, Explorability & debuggability and URL stability.",
+    "The ranking recalculates as you move them: Best match for your weights names the winner, who it is used by, and its migration effort of Low, Medium or High.",
+    "All four strategies are listed with a score percentage, a request example and a migration note, above the full ratings matrix; Copy ranking copies the ordered list.",
+  ],
   intro:
     "This tool ranks the four mainstream API versioning strategies — URL path (/v2/), query parameter (?api-version=), custom header (Stripe-Version) and media type content negotiation (Accept: application/vnd.example.v2+json) — against six weighted criteria including HTTP cache friendliness, client simplicity and gateway routing. Each strategy carries a documented migration-cost note and a real-world anchor (Stripe, Azure, GitHub). API designers get a ranked, defensible choice instead of the eternal path-versus-header debate.",
   useCases: [

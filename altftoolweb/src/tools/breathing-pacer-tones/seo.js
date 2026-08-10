@@ -1,4 +1,12 @@
 const seo = {
+  title: "Breathing Pacer with Tones: Box, 4-7-8 and Coherent",
+  metaDescription:
+    "A breathing pacer that glides a tone up as you inhale and down as you exhale. Set any in-hold-out-hold counts, or load Box 4-4-4-4, 4-7-8 or Coherent.",
+  steps: [
+    "Tap a preset — 'Box 4-4-4-4', 'Relaxing breath 4-7-8', 'Coherent 5.5-5.5', 'Equal 4-4' or 'Extended exhale 4-6' — or type your own 'Inhale (seconds)', 'Hold after inhale (seconds)', 'Exhale (seconds)' and 'Hold after exhale (seconds)'.",
+    "Set 'Session length (minutes)' and the 'Tone volume' slider, confirm the toggle reads 'Tones on' and try 'Test tone', then press 'Start'.",
+    "Follow the expanding circle and its phase countdown while the tone glides up on the inhale and down on the exhale; the panel below reports 'Breathing rate' in breaths/min, 'Breaths this session' and whether the exhale is longer, and 'Copy pattern' saves the summary.",
+  ],
   intro:
     "Breathing Pacer with Tones guides any inhale-hold-exhale-hold rhythm with a tone that glides upward as you breathe in and back down as you breathe out, so you can pace with your eyes closed. Set the four counts yourself or load a known pattern — box breathing 4-4-4-4, Dr Andrew Weil's 4-7-8 relaxing breath, or coherent breathing at 5.5 seconds each way, which works out to about 5.5 breaths per minute. It shows the resulting breath rate, the number of breaths in the session and how the exhale compares with the inhale.",
   useCases: [

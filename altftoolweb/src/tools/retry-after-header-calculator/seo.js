@@ -1,4 +1,12 @@
 const seo = {
+  title: "Retry-After Calculator: delay-seconds or HTTP-date",
+  metaDescription:
+    "Build an RFC 9110 Retry-After value in both forms, IMF-fixdate in GMT and whole seconds, with the 429/503 backoff table and a parser check.",
+  steps: [
+    "Choose \"Wait a fixed amount\" and enter \"Wait\" with a \"Unit\" of seconds, minutes, hours or days, or choose \"Come back at a set time\" and set \"Retry at (your local time)\".",
+    "Pick the \"Response status\", then fill \"Base delay (seconds)\", \"Multiplier per attempt\", \"Cap (seconds)\" and a \"Jitter strategy\" for the backoff schedule.",
+    "\"Send this header\" shows the delay-seconds form and the HTTP-date form side by side — press \"Copy result\", or paste an existing value into \"Check a value you already have\" to see how a client would read it.",
+  ],
   intro:
     "This calculator turns a wait you want to impose into a Retry-After field value that conforms to RFC 9110 section 10.2.3, where the grammar is strictly an HTTP-date or delay-seconds = 1*DIGIT. It renders both forms side by side, formats the date as an IMF-fixdate in GMT as required for senders by RFC 9110 section 5.6.7, and builds the exponential backoff table behind a 429 or 503 so each successive rejection pushes the client further out. It also parses a value you already have and tells you whether a client would accept it.",
   useCases: [

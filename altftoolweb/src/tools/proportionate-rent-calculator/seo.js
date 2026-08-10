@@ -1,4 +1,12 @@
 const seo = {
+  title: "Proportionate Rent Calculator: Pro-Rata Part Months",
+  metaDescription:
+    "Pro-rate rent for a move-in or move-out part month by actual days, a 30-day month or a 365-day year, with a month-by-month breakdown.",
+  steps: [
+    "Enter 'Monthly rent (INR)' and 'Monthly maintenance (INR)', then set 'First day of occupation' and 'Last day of occupation' in the two date pickers.",
+    "Choose the 'Apportionment method in the lease' — 'Actual days in the month', '30-day month' or '365-day year (366 in a leap year)' — and the formula for that convention appears under the select.",
+    "Read 'Total payable' with 'Rent for the period', 'Average daily rent', 'Full months billed in full' and 'Part months apportioned', check the 'Month-by-month breakdown' table, then press 'Copy result'.",
+  ],
   intro:
     "The Proportionate Rent Calculator apportions rent for a part month on move-in or move-out, using rent x days occupied / days in that calendar month, or a 30-day month, or a 365-day year, whichever convention the lease specifies. Whole calendar months always bill the full monthly rent, so only the first and last part months are apportioned. It shows the daily rate, a month-by-month breakdown and the same period priced by all three conventions, so a landlord and tenant can see exactly where a disputed figure comes from.",
   useCases: [

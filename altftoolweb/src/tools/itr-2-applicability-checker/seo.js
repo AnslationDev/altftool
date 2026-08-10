@@ -1,4 +1,12 @@
 const seo = {
+  title: "ITR-2 Applicability Checker: Which ITR Form to File",
+  metaDescription:
+    "Check capital gains, a second property, foreign assets, NRI status and income above Rs 50 lakh against ITR-2, ITR-1, ITR-3 and ITR-4 Sugam.",
+  steps: [
+    "Set 'Filing as' to Individual or Hindu Undivided Family (HUF), pick a 'Residential status' of Resident and ordinarily resident, Resident but Not Ordinarily Resident or Non-Resident (NRI), and enter 'Total income for the year (₹)' and 'Agricultural income (₹)'.",
+    "Choose 'House properties owned with income or loss' and 'Capital gains during the year' (a section 112A answer reveals a 'Listed long-term gain under section 112A (₹)' box), then tick whatever applies under 'Anything else that applies?' — foreign assets, directorship, unlisted shares, carried-forward losses, section 90 / 90A / 91 relief, start-up ESOP deferral, section 194N TDS, or income from business or profession.",
+    "Read the 'Verdict' panel, which names the 'Form to file' and lists 'Triggers found' one schedule at a time, then press 'Copy result', or 'Reset answers' to start again.",
+  ],
   "intro": "ITR-2 Applicability Checker tests your year against the things that push an individual or HUF out of the Sahaj form: capital gains, two or more house properties, foreign assets or income, NRI and RNOR status, total income above Rs 50 lakh, unlisted shares, directorships and carried-forward losses. It lists every trigger it finds and confirms whether ITR-2 is your form, or whether business income means ITR-3 or ITR-4 Sugam instead. Useful the moment you have sold property or shares and are unsure which return to open.",
   "useCases": [
     "You sold a flat or redeemed debt mutual funds this year and want to know if ITR-2 is now mandatory.",

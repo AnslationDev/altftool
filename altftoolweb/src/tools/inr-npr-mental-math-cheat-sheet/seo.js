@@ -1,4 +1,12 @@
 const seo = {
+  title: "NPR to INR in Your Head: the 5/8 Peg Shortcut",
+  metaDescription:
+    "Nepal pegs NPR 1.60 = INR 1, so ×5 ÷8 converts exactly. Compare quick, tuned and fraction rules with their error, plus a price ladder.",
+  steps: [
+    "Leave Today's rate (₹ per 1 NPR) on the 0.625 Nepal Rastra Bank peg or type a money changer's worse rate, then fill A price to check (NPR) or tap a Common prices chip.",
+    "The rule to memorise appears immediately — multiply by 5, divide by 8 — with a badge saying whether it lands Within 2% of the exact answer.",
+    "All three rules compared ranks the quick, tuned and fraction rules by implied rate and signed error, a price ladder shows exact versus in-your-head figures, and Copy sheet takes the lot.",
+  ],
   intro:
     "Nepal's currency is pegged, not floating: Nepal Rastra Bank has held NPR 1.60 = INR 1 since 12 February 1993, which makes 1 Nepalese rupee worth exactly 0.625 Indian rupees, or five-eighths. This sheet derives the mental arithmetic for that constant — multiply by 5 and divide by 8 for the exact answer, or use a coarser whole-number rule and see how far it strays — and does the same for the reverse direction, where ₹1 buys NRs 1.60. It is for travellers, students and cross-border traders who convert the same pair every day.",
   useCases: [

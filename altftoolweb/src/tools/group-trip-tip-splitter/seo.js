@@ -1,4 +1,5 @@
 const seo = {
+  title: "Split Group Trip Tips by Who Was Actually There",
   metaDescription:
     "Split each tip only between the travellers who were there, net off who paid, and settle in at most one fewer transfer than people. Whole-cent arithmetic.",
   steps: [

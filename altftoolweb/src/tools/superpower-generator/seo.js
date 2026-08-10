@@ -1,4 +1,12 @@
 const seo = {
+  title: "Superpower Generator: Power, Weakness and Origin Story",
+  metaDescription:
+    "Type an alter-ego name, pick one of six suit colours, and get a superpower, a Kryptonite weakness and an origin story. Same name, same hero.",
+  steps: [
+    "Type your hero name into the 'Superhero Alter-Ego Name' field, whose placeholder reads 'e.g. Clark Kent'.",
+    "Tap one of the six swatches under 'Choose Your Suit Color' — Red, Blue, Green, Yellow, Purple or Black — then press 'Generate My Superpower'.",
+    "After the 'Mutating DNA...' animation the persona card appears with your 'Primary Power' and its description, a 'Kryptonite (Weakness)' panel and an 'Origin Story' panel; 'Generate Another Hero' clears the form for a new name.",
+  ],
   intro:
     "The Superpower Generator turns a hero name and a suit colour into a complete comic-book persona — a power with its own rules, a comic weakness that undercuts it, and a one-line origin story. It works by hashing the characters of your alter-ego name together with your chosen colour and mapping the result onto a hand-written set of powers, so the same name and colour always give you the same hero. Type a name, pick one of six colours, and you get a card you can screenshot for a profile, a party game or a writing prompt.",
   useCases: [

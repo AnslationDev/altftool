@@ -1,4 +1,12 @@
 const seo = {
+  title: "Workout Caffeine Dose Calculator: 3-6 mg/kg Timing",
+  metaDescription:
+    "Scales caffeine to bodyweight at 3-6 mg/kg, sets the clock time to take it so peak lands at your session, and shows what is left at bedtime.",
+  steps: [
+    "Enter your bodyweight in kg and pick a Dose level — Low 3 mg/kg, Moderate 4.5 mg/kg, High 6 mg/kg, or Custom mg/kg — then set \"Training starts at\" and Bedtime.",
+    "Choose \"How you are taking it\" (capsule or brewed coffee lead 60 minutes, pre-workout powder or energy drink 45, caffeine gum 10), adjust \"Your caffeine half-life (hours)\" from the 5-hour default, and add any caffeine already taken today.",
+    "The result gives the dose in mg with the clock time to swallow it, the ergogenic range at your weight, milligrams still circulating at bedtime, an hour-by-hour decay table, and servings of coffee, espresso or gum that add up to it.",
+  ],
   intro:
     "A workout caffeine dose calculator scales caffeine to bodyweight using the 3-6 mg per kg ergogenic range from the ISSN position stand on caffeine and exercise performance, and tells you what time to take it so peak plasma caffeine lands at the start of your session. It also runs the dose forward through first-order elimination at a roughly five-hour half-life, so you can see how many milligrams are still circulating at bedtime. Safety checkpoints use the EFSA figures of 400 mg per day and 200 mg in a single dose for healthy adults.",
   useCases: [

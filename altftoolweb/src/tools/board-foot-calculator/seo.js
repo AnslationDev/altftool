@@ -1,4 +1,12 @@
 const seo = {
+  title: "Board Foot Calculator: Board Feet, CFT and Cost",
+  metaDescription:
+    "Thickness x width x length in inches ÷ 144 gives board feet. Enter inches, feet or mm, add a waste allowance, and price it per BF, CFT or cubic metre.",
+  steps: [
+    "Enter Thickness, Width and Length with each unit dropdown set to inches, feet, millimetres, centimetres or metres, then set Number of pieces.",
+    "Tap a quarter-size chip from 4/4 to 16/4 for rough hardwood, set Waste allowance (%), and price it per board foot, per cubic foot (CFT) or per cubic metre.",
+    "Read the 'Board feet to order' figure with volume in cubic feet, cubic metres and cubic inches plus cost per piece, then press Copy result.",
+  ],
   intro:
     "A board foot is a unit of timber volume equal to 144 cubic inches — a piece one inch thick, twelve inches wide and twelve inches long — and this calculator works it out as thickness x width x length in inches divided by 144. It converts the same volume to cubic feet (the CFT that Indian timber yards quote), cubic metres and cubic inches, adds a waste allowance and prices the order on whichever unit your supplier bills in. Woodworkers, furniture makers and site supervisors use it to turn a cutting list into a purchase quantity.",
   useCases: [

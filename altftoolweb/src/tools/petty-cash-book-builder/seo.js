@@ -1,4 +1,12 @@
 const seo = {
+  title: "Petty Cash Book Builder: Imprest, Heads, Reimbursement",
+  metaDescription:
+    "Post vouchers against a fixed float and get the running balance, totals by expense head for one journal entry, and the reimbursement that restores it.",
+  steps: [
+    "Set the Imprest float (₹), Opening cash in hand (₹), Extra cash received (₹) and the Period from / Period to dates.",
+    "Press 'Add voucher' for each payment and fill Date, Voucher no., Particulars, Expense head and Amount (₹).",
+    "Read the reimbursement to claim, closing balance and 'Totals by expense head'; enter 'Cash counted at close' to prove the book against the box.",
+  ],
   intro:
     "A petty cash book on the imprest system records small office payments against a fixed float, and this builder posts your vouchers to it: opening cash plus top-ups minus payments gives the running balance, and imprest minus closing balance gives the reimbursement that restores the float. It also produces the analytical columns — totals by expense head such as conveyance, stationery and postage — which are the figures your journal entry actually needs. Add the cash you physically counted and the book is proved against the box.",
   useCases: [

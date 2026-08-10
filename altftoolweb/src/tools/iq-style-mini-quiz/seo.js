@@ -1,4 +1,12 @@
 const seo = {
+  title: "IQ Style Mini Quiz: 10 Timed Questions, 7 Categories",
+  metaDescription:
+    "Ten multiple-choice questions on a per-question clock — 30s on Easy down to 15s on Expert — scored on accuracy, response time and category breakdown.",
+  steps: [
+    "On Quiz Setup choose All Categories or one of the seven, then a Difficulty tile: Easy at 30s/question, Medium 25s, Hard 20s or Expert 15s.",
+    "Press Start Quiz and work through the 10 questions using Previous, Skip and Next — a question still unanswered when the timer bar empties is skipped for you.",
+    "The report shows your score percentage and Estimated Rating with Correct, Wrong, Accuracy and Avg Response cards plus a Category Breakdown; Retake Quiz returns you to setup.",
+  ],
   intro:
     "The IQ Style Mini Quiz serves 10 timed multiple-choice questions drawn from a bank of 40 across seven categories — logical reasoning, pattern recognition, mathematics, memory, sequence completion, verbal reasoning and problem solving — and scores your accuracy, average response time and a per-category breakdown. Difficulty sets the clock: 30 seconds per question on Easy, 25 on Medium, 20 on Hard and 15 on Expert. It is a practice and self-check exercise for anyone preparing for aptitude tests, not a clinical IQ measurement.",
   useCases: [

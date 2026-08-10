@@ -1,4 +1,12 @@
 const seo = {
+  title: "LocalStorage Explorer — Read, Edit and Delete Keys",
+  metaDescription:
+    "List every localStorage key for this origin, edit long JSON values in a full textarea, add or delete entries, and clear the store with a confirm.",
+  steps: [
+    "Press Add Item and fill in Key Name (e.g. user_preferences) and Value (e.g. {\"theme\": \"dark\"}) in the multi-line box, or press Edit Item on an existing row.",
+    "Press Save to write the entry with setItem, or Refresh to rebuild the alphabetically sorted Key/Value table from localStorage.",
+    "Use Copy Value, Edit Item or Delete Item in the Actions column; Clear All wipes this domain's storage after a confirmation.",
+  ],
   intro:
     "LocalStorage Explorer lists every key and value the Web Storage API exposes for the current origin, sorted alphabetically, and lets you add, edit, copy or delete entries and clear the whole store. It calls localStorage.key() and getItem() across localStorage.length to build the list, and writes back with setItem(), removeItem() and clear(), refreshing the view after each change. It is a lightweight substitute for the browser devtools Application panel when you want to read and edit stored values without opening devtools.",
   useCases: [

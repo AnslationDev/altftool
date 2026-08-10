@@ -1,4 +1,12 @@
 const seo = {
+  title: "WHOIS Privacy Explainer: What a Lookup Still Shows",
+  metaDescription:
+    "Field-by-field: which registrant details a WHOIS or RDAP lookup publishes under ICANN's Registration Data Policy, and what a proxy service costs you.",
+  steps: [
+    "Pick who the domain is registered to, what it is for, which kind of top-level domain, and any Privacy service in use.",
+    "Tick what you put on the registration — Registrant Organization filled in, your home address, your personal phone and email.",
+    "The Personal exposure score out of 100 marks each field published, redacted, masked or anonymised, with what privacy costs you.",
+  ],
   intro:
     "WHOIS Privacy Explainer works out, field by field, what a public registration lookup shows for a domain and scores how much personal data that exposes. It reflects how registration data actually works today: under ICANN's Registration Data Policy, generic TLD registrant fields are redacted by default for natural persons, State/Province and Country stay public, and the email is replaced by an anonymised address or a web form. It also spells out what a privacy or proxy service costs you in disputes, transfers and proof of ownership.",
   useCases: [

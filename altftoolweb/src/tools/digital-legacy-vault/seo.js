@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digital Legacy Vault: Records and Handover Notes",
+  metaDescription:
+    "Pair each account, policy or document with what should happen to it. Kept in this browser's localStorage; export or import the whole list as JSON.",
+  steps: [
+    "Type what the entry is into the Record box — an account, policy, document or where a key is kept — and what should happen to it into the Instructions box.",
+    "Press Add record to save it to this browser's local storage; the 'Saved records (N)' heading counts them and the Search records box filters across both fields as the list grows.",
+    "Press Export JSON to download digital-legacy-vault.json as indented, readable JSON, or Import JSON to load a saved file back (it replaces every record after a confirmation).",
+  ],
   intro:
     "This is a private worksheet for building the list your family would need if you were suddenly unreachable: each entry pairs a Record — an account, policy, document or where a key is kept — with the Instructions for what should happen to it. Entries stay in this browser's local storage and can be searched, deleted, exported as a single JSON file or imported back on another machine. It is an organiser, not a password manager: nothing is encrypted, so name where a credential lives rather than writing the credential itself.",
   useCases: [

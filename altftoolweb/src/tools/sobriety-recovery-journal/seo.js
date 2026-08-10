@@ -1,4 +1,10 @@
 const seo = {
+  title: "Sobriety Recovery Journal: Day Count and Urge Log",
+  steps: [
+    "Type one line per day into \"Private journal entries\" as Date | urge 0-10 | trigger | coping response | win / note, or press the \"Three private entries\" example to load the layout.",
+    "Set \"Recovery start date\"; the day count, entry count, average urge, highest urge and distinct-trigger count recalculate as you type, with urge values clamped to 0-10.",
+    "Read the ranked \"Trigger / Times noted\" table of your five most-recorded triggers plus your last five entries, then press Download to save sobriety-recovery-journal.txt.",
+  ],
   intro:
     "The Sobriety Recovery Journal turns a plain list of daily entries — date, urge intensity from 0 to 10, trigger, coping response and a win or note — into a day count since the start date you set, an average and highest urge, and a ranked table of your five most frequently recorded triggers. It is a private reflection aid for someone keeping their own record between check-ins, not a treatment programme or a safety monitor. Everything is computed from the lines you type, in your browser, and nothing is stored or sent anywhere.",
   useCases: [

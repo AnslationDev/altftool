@@ -1,4 +1,12 @@
 const seo = {
+  title: "Google Takeout Planner: Archive Size, Parts, Risk",
+  metaDescription:
+    "Pick the Google products to export and see the likely archive size, how many parts at 1, 2, 4, 10 or 50 GB, and how sensitive the bundle is.",
+  steps: [
+    "Under 'Pick the products to export', tick the Google products you want, or use Select all / Deselect all.",
+    "In 'Describe the account', set Account age (years), how much media is stored (Light, Typical consumer account or Heavy), and the 'Maximum part size Takeout should use' — 1, 2, 4, 10 or 50 GB per file.",
+    "Read the estimated archive size and part count, the sensitivity score out of 100, and the roughly 7-day link validity; work through the 'How to make the request' checklist and press Copy plan.",
+  ],
   intro:
     "This guide plans a Google Takeout export: you choose which Google products to include, and it estimates the archive size, how many part files Takeout will produce at your chosen split size, and how sensitive the resulting bundle is. Takeout is Google's self-service data-portability tool at takeout.google.com, covering 50-plus products from Gmail and Photos to My Activity and Maps Timeline. It is aimed at anyone migrating accounts, keeping an offline backup, or auditing what Google actually holds before deleting anything.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "World Clock Dashboard: 12 Cities, Shared Work Hours",
+  metaDescription:
+    "Live local time, UTC offset and day for up to 12 cities, plus an overlap strip of hours inside everyone's working window. DST and +05:45 handled.",
+  steps: [
+    "Set \"Home city (everything is compared to this)\", then choose a city under \"Add a city\" and press Add — the board holds up to 12.",
+    "Set \"Working day starts\" and \"Working day ends\", and use the 12-hour clock / 24-hour clock toggle to change how times are shown.",
+    "Read the Board for each city's live time and UTC offset, check the Overlap strip for hours inside every city's working window, then press Copy board.",
+  ],
   intro:
     "A world clock dashboard is a single board showing the current local time, UTC offset and day for several cities at once, so you never have to add or subtract hours in your head. This one runs entirely in your browser on the IANA time-zone database that ships with the JavaScript engine, so daylight saving, half-hour zones like India's UTC+05:30 and 45-minute zones like Nepal's UTC+05:45 are all handled correctly. It is built for remote teams, freelancers with overseas clients and anyone scheduling calls across continents.",
   useCases: [

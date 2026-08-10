@@ -1,4 +1,12 @@
 const seo = {
+  title: "WHOIS Lookup over RDAP: Registrar, Dates, Status Codes",
+  metaDescription:
+    "Query a domain's RDAP record through IANA's bootstrap: registrar, creation and expiry dates, age in days, nameservers, DNSSEC and EPP codes explained.",
+  steps: [
+    "Type the Domain name (example.com is prefilled); the panel underneath echoes the domain to query, its top-level domain and the exact RDAP request URL.",
+    "Press Look up to hit the authoritative RDAP server for that TLD through the bootstrap redirector, or override it in the 'RDAP server (advanced)' field when a registry blocks the redirector or omits CORS headers.",
+    "Read Registered with plus Created, Expires, Last changed, Domain age, Days to expiry, Registry handle, IANA registrar ID, DNSSEC, the registrar abuse contact and the Registrant line, alongside the explained Status codes and Nameservers, then press Copy result.",
+  ],
   intro:
     "WHOIS Lookup shows who a domain is registered with, when it was created, when it expires and what state the registry has it in. It queries RDAP — the Registration Data Access Protocol defined in RFC 9082 and RFC 9083, which ICANN made mandatory for gTLD registries and registrars and which replaced port-43 WHOIS — through the IANA bootstrap redirector at rdap.org, then translates the raw JSON, including every EPP status code, into plain English. Useful for developers, domain buyers and anyone checking a domain before trusting it.",
   useCases: [

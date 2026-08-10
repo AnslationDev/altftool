@@ -1,4 +1,7 @@
 const seo = {
+  title: "Golden Hour Calculator: Blue Hour, Sunrise, Twilight",
+  metaDescription:
+    "Exact clock times for golden hour (sun 6° above to 4° below the horizon), blue hour, sunrise, sunset and all three twilights, from NOAA equations.",
   intro:
     "The Golden Hour Time Estimator calculates the exact clock times when the Sun sits between 6° above and 4° below the horizon — the golden hour — plus blue hour, sunrise, sunset, solar noon and all three twilights, for any date, latitude and longitude. It uses the NOAA Solar Calculator equations, which are accurate to about one minute between 72°N and 72°S, and shows the Sun's elevation across the whole day so you can see how quickly the light will change. It is made for photographers, videographers and drone pilots planning a shoot.",
   useCases: [

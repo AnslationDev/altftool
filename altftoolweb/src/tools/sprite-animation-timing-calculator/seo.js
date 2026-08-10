@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sprite Animation Timing Calculator with CSS steps()",
+  metaDescription:
+    "Turns frame count and fps into frame duration, sheet dimensions and CSS steps() keyframes, and flags rates that don't divide your refresh evenly.",
+  steps: [
+    "Enter 'Frame count', 'Frame rate (fps)', 'Frame width (px)', 'Frame height (px)' and 'Frames per row on the sheet'.",
+    "Pick your 'Display refresh rate (Hz)' and set the 'CSS selector' the generated rule should target.",
+    "Read 'Duration of one frame', 'Display refreshes per frame' and 'GIF frame delay', then press 'Copy CSS'.",
+  ],
   intro:
     "Sprite Animation Timing Calculator converts a frame count and a target frame rate into the numbers a sprite sheet animation actually needs: frame duration in milliseconds (1000 ÷ fps), full cycle length, sheet dimensions from the frame size and column count, and the CSS steps() keyframes that drive it. It also checks the rate against your display refresh — 24 fps on a 60 Hz screen gives 2.5 refreshes per frame, so frame lengths alternate and the motion judders — and flags GIF delays below the 2-centisecond floor browsers enforce.",
   useCases: [

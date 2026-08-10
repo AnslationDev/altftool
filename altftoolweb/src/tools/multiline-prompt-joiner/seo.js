@@ -1,4 +1,12 @@
 const seo = {
+  title: "Multiline Prompt Joiner: Escape for JSON, Python, Shell",
+  metaDescription:
+    "Collapse a multi-line prompt into one escaped string literal for JSON, JS template literals, Python, Java, YAML or POSIX shell. Runs in your browser.",
+  steps: [
+    "Paste your prompt into the 'Prompt (one idea per line)' textarea, which opens with a four-line sample system prompt already in it.",
+    "Pick a target under 'Output format' — JSON string, JavaScript template literal, Python double quotes, Java, C or Go string, YAML double-quoted scalar, POSIX shell single quotes or Bash ANSI-C quoting — set 'Line breaks' to Escape line breaks, Join with a space or Keep real line breaks, and tick 'Trim each line', 'Drop blank lines' or 'Include quotes'.",
+    "Read the finished literal in the monospace result block, with 'Lines joined', 'Characters out' and 'Escape characters added' listed beneath it, then press 'Copy result'; 'Reset' asks for confirmation before restoring the sample.",
+  ],
   intro:
     "Multiline Prompt Joiner collapses a prompt written across many lines into a single string literal, escaped for the language you are pasting it into. It applies the real grammar rules — RFC 8259 for JSON, ECMA-262 for JavaScript strings and template literals, the Python and Java literal grammars, YAML 1.2 double-quoted scalars, and POSIX shell quoting — so quotes, backslashes and control characters cannot break your file. Built for developers who keep long system prompts in config files, test fixtures or curl commands.",
   useCases: [

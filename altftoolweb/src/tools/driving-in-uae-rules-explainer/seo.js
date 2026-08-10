@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in the UAE: Licence Rules, Speed and Zero BAC",
+  metaDescription:
+    "Whether your home licence works depends on your visa, not your passport. Limits to 140 km/h, zero alcohol, and 24 black points suspend a licence.",
+  steps: [
+    "Choose Your status in the UAE — Visitor or tourist, or UAE residence visa holder — say where your licence was issued, and enter your age and Black points on your UAE record.",
+    "Read whether the licence is accepted, whether an International Driving Permit is required, the table from 40 km/h residential streets to 140 km/h on the E11, and the 999, 998, 997 and 996 numbers.",
+    "Use the Widmark estimate — drinks, size in ml, % ABV, body weight, body composition factor — for hours until the estimate reaches zero, then press Copy result.",
+  ],
   intro:
     "This explainer covers what a visitor needs before driving in the United Arab Emirates: you drive on the right in a left-hand-drive car, signs are in km/h, and the blood-alcohol limit is zero rather than merely low. It also settles the question that trips up newcomers most — whether your own licence is accepted depends on your visa status, because a tourist from an approved country may drive a rental car on a home licence while a UAE residence visa holder may not, and it tracks black points against the 24-point suspension threshold.",
   useCases: [

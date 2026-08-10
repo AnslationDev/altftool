@@ -1,4 +1,12 @@
 const seo = {
+  title: "WhatsApp Business Quick Replies: 10 Ready Templates",
+  metaDescription:
+    "Fill 10 customer replies with your business name, hours and links in English, Hindi or Hinglish. Shortcuts under 25 chars, messages under 1,024.",
+  steps: [
+    "Fill in Business name, Business hours, Usual delivery time, Catalogue link and Phone number, then set Language to English, Hindi or Hinglish.",
+    "Tick which of the ten to build under 'Templates to include' — Greeting message, Away / after hours, Order status, Return / refund policy and the rest.",
+    "Each card shows its /shortcut and its length against 1,024 characters; press Copy result for the whole set or Copy on a single reply.",
+  ],
   intro:
     "This builder fills a set of ten customer-reply templates — greeting, away, hours, catalogue, order status, delay, payment, returns, thank-you and quote follow-up — with your business name, hours, delivery time and links, in English, Hindi or Hinglish. Each generated reply gets a shortcut in the form the WhatsApp Business app accepts (lowercase, no spaces, 25 characters or fewer) and a live count against the 1,024-character quick-reply limit. Meant for shop owners and solo sellers who answer the same eight questions every day.",
   useCases: [

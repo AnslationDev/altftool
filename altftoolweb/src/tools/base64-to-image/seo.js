@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base64 to Image: Decode and Check the Real Format",
+  metaDescription:
+    "Paste a raw string or data:image URL and it decodes in the browser, reading the format from the file's magic number and the pixel size from the header.",
   intro:
     "Base64 to Image decodes a Base64 string — raw, or wrapped in a `data:image/...;base64,` URL from RFC 2397 — back into the original picture and shows you what it actually is. It identifies the format from the file's own magic number (the 8-byte PNG signature, JPEG's FFD8FF start-of-image, GIF89a, the RIFF/WEBP pair) rather than trusting the MIME type in the string, then reads the pixel dimensions straight out of the header. It is for developers debugging an API payload, an email template, or a CSS data URI that will not render.",
   useCases: [

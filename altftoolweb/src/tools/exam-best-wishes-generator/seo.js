@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Best Wishes Generator: 7 Languages + Days Left",
+  metaDescription:
+    "Good luck messages for boards, JEE, NEET, UPSC or CAT in English, Hinglish, Hindi, Marathi, Bengali, Gujarati or Tamil, with revision hours per subject.",
+  steps: [
+    "Enter the student's name and 'Sign off as (optional)', then pick the 'Exam' — Class 10 or Class 12 board exam, JEE, NEET, UPSC / State PSC, CAT / MBA entrance, University semester exam, School unit test or Government recruitment exam — and who they are to you under 'They are your'.",
+    "Set 'Message date' and 'First exam date' for the countdown, plus 'Study hours available per day' (capped at 16) and 'Subjects or papers left'. Choose a 'Language' from English, Hinglish (Roman), हिन्दी, मराठी, বাংলা, ગુજરાતી or தமிழ், and a tone: Motivating, Calming, Blessing or Light-hearted.",
+    "The panel leads with 'Days left to the exam' and adds total revision hours left, hours per subject and minutes per subject per day, followed by the message cards. 'Shuffle' rotates to different wording and 'Copy' takes one message.",
+  ],
   intro:
     "Exam Best Wishes Generator writes good luck messages for board exams, JEE, NEET, UPSC, CAT, semester papers and government recruitment tests in English, Hinglish, Hindi, Marathi, Bengali, Gujarati and Tamil. Alongside the wording it computes the countdown to the exam and a simple revision budget — days left multiplied by study hours per day, divided across the number of subjects — so the message can name a real number instead of a vague 'you still have time'. Tones range from motivating and calming to blessing and light-hearted.",
   useCases: [

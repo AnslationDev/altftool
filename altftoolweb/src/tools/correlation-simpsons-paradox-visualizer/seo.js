@@ -1,4 +1,12 @@
 const seo = {
+  title: "Correlation & Simpson's Paradox: Group vs Pooled r",
+  metaDescription:
+    "Paste rows as Group | x | y and get each group's Pearson r to six decimals beside the aggregate, with a sign-reversal flag when they disagree.",
+  steps: [
+    "Paste your data into 'Grouped x/y observations' as Group | x | y, one row per line, or load the 'Reversal example' preset.",
+    "Set 'Minimum observations per group' to 2 or higher so undersized groups are left out of the group table.",
+    "Read 'Possible Simpson's-paradox reversal' or 'No full sign reversal detected' above the aggregate r, with each group's n and within-group Pearson r listed below.",
+  ],
   intro:
     "This tool computes the Pearson correlation coefficient r separately inside each group of your data and again on the pooled data, then flags Simpson's paradox — the case where every group's r points one way but the aggregate r points the other. You paste rows as \"Group | x | y\", set a minimum group size (default 2), and get each within-group r to six decimals alongside the aggregate. It is for anyone checking whether a headline correlation survives once the data is split by the variable that actually separates the observations.",
   useCases: [

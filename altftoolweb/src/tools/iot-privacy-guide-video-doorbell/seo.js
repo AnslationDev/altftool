@@ -1,4 +1,7 @@
 const seo = {
+  title: "Video Doorbell Privacy Setup: Score 15 Controls",
+  metaDescription:
+    "Tick 15 weighted controls across account, framing, recordings and network, and see how many days of clips your card or plan holds before overwrite.",
   intro:
     "This guide scores a video doorbell installation against fifteen weighted controls covering account access, camera framing, recording retention and network isolation, and estimates how many days of clips your card or cloud plan actually holds. Controls that stop a stranger opening the live view are weighted highest, and any missing critical control caps the score so a well-framed camera on a weak account never reads as safe. It suits anyone setting up a doorbell that overlooks a shared path, a pavement or a neighbour's door.",
   useCases: [

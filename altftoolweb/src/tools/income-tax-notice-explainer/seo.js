@@ -1,4 +1,12 @@
 const seo = {
+  title: "Income Tax Notice Explained: 139(9), 143(1), 148",
+  metaDescription:
+    "What your income tax notice under 139(9), 143(1), 142(1), 148A or 245 means, the reply window the Act allows, and what happens if you miss it.",
+  steps: [
+    "Press the section button matching the one printed on your notice — 139(9), 143(1), 143(1)(a), 142(1), 143(2), 148A, 148, 245, 156, 133(6) or 131(1A).",
+    "Set 'Date printed on the notice' and today's date; 'Reply window allowed (days)' pre-fills from the section and can be overridden.",
+    "Read the days left to reply, the reply-by date, how serious it is and the typical next steps, then press Copy summary.",
+  ],
   intro:
     "This explainer decodes the section number printed on an Indian income tax notice — 139(9), 143(1), 143(1)(a), 142(1), 143(2), 148A, 148, 245, 156, 133(6) or 131(1A) — and tells you what it means, how many days the Income-tax Act, 1961 allows for a reply, and what happens if you miss the window. Enter the date on the notice and it counts down to the reply deadline. It is for individual taxpayers and small businesses who want to understand a communication from the department before deciding whether they need professional help.",
   useCases: [

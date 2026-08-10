@@ -1,4 +1,12 @@
 const seo = {
+  title: "Waist to Height Ratio Calculator: Your 0.50 Target",
+  metaDescription:
+    "Divide waist by height in cm for your WHtR, land in one of four bands from Low to High Risk, and see the exact waist that puts you at 0.50.",
+  steps: [
+    "Type your measurement into 'Waist Circumference (cm)' in the Inputs panel — it opens pre-filled with 80.",
+    "Set 'Height (cm)', which starts at 175; there is no calculate button, so the Result card recomputes on every keystroke and reads 0.46 with the caption Healthy at those defaults.",
+    "Read the ratio and its band, then the 'Risk Category', 'Health Advice', 'Recommended Max Waist', 'Difference from Target' and 'Healthy Target Ratio' tiles, and press Copy to put the whole summary on the clipboard.",
+  ],
   intro:
     "The Waist-to-Height Ratio Calculator divides your waist circumference by your height in the same units and places the result in one of four bands — below 0.40 Low, 0.40 to under 0.50 Healthy, 0.50 to under 0.60 Increased Risk, and 0.60 or above High Risk. It also shows the waist measurement that would put you at exactly 0.50, half your height, and how many centimetres you are above or below it. WHtR is a screening indicator of central body fat, not a diagnosis — it is information to take to a clinician, not a verdict.",
   useCases: [

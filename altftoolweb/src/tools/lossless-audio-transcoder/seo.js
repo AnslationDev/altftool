@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lossless Audio Transcoder: WAV, FLAC, MP3, OGG",
+  metaDescription:
+    "Convert audio to WAV, FLAC, MP3 or OGG with FFmpeg in WebAssembly — processed in the tab, never uploaded. WAV to FLAC round-trips bit-identical.",
+  steps: [
+    "Choose your recording in the Source file picker, which accepts any audio/* type your browser can decode.",
+    "Set Output format to wav, flac, mp3 or ogg and press Process locally — the FFmpeg WebAssembly engine loads at that moment and your recording is written to an in-memory filesystem, not uploaded.",
+    "The converted track downloads on its own as altftool-lossless-audio-transcoder.flac (or .wav, .mp3, .ogg) and the Local processing report confirms it completed locally.",
+  ],
   intro:
     "Lossless Audio Transcoder converts an audio file to WAV, FLAC, MP3 or OGG using a WebAssembly build of FFmpeg that runs inside the page, so the audio itself is never uploaded to a server. WAV and FLAC are both lossless PCM containers, meaning a WAV to FLAC conversion and back returns bit-identical samples — only the MP3 and OGG targets re-encode and discard data. It is aimed at anyone handed a file in the wrong container: musicians, podcasters, archivists and people feeding audio into software that only accepts one format.",
   useCases: [

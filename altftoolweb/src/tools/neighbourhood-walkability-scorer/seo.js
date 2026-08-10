@@ -1,4 +1,12 @@
 const seo = {
+  title: "Neighbourhood Walkability Scorer — Score 0 to 100",
+  metaDescription:
+    "Score an address on the Walk Score model: nine amenity categories, full marks inside 400 m, nothing past 2,400 m, plus block and intersection penalties.",
+  steps: [
+    "Enter 'Walk to nearest (minutes)' for each of the nine amenity categories — grocery, restaurants, shops, cafés, bank or ATM, park, school, library or bookshop and cinema/gym — adding 'How many within 10 minutes' for the counted ones.",
+    "Fill in 'Intersections per km²', 'Average block length (metres)', 'Walk to nearest transit stop (minutes)' and 'Typical gap between services (minutes)' under Street layout and transit.",
+    "Read the Walkability score out of 100 with its band, the pedestrian-friendliness penalty, the separate Transit access score, and the 'Points by category' table with its Biggest gaps list; Copy result copies the summary.",
+  ],
   intro:
     "Scores a neighbourhood out of 100 for how much of daily life is reachable on foot, using the structure of the published Walk Score methodology: nine amenity categories weighted to a 15-point total, a distance decay that gives full marks inside a five-minute walk (about 400 m) and nothing beyond a thirty-minute walk (about 2,400 m), then pedestrian-friendliness penalties of up to 5% each for low intersection density and long blocks. Transit access is scored separately, because a bus stop you cannot rely on is not access.",
   useCases: [

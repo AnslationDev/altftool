@@ -1,4 +1,12 @@
 const seo = {
+  title: "DNA Double Helix Explorer: A-T and G-C Hydrogen Bonds",
+  metaDescription:
+    "Rotating 16-rung double helix with 2 hydrogen bonds drawn on every A-T pair and 3 on every G-C. Pause it, or run 0.2x to 3x.",
+  steps: [
+    "Choose one of the three buttons under 'Exploration View' — Structural 3D View, Base Pairing Rules or Semiconservative Replication.",
+    "Drag the 'Rotation Velocity' slider anywhere from 0.2x to 3x, or press 'Pause Rotation' to hold the 16-rung helix still.",
+    "Read the canvas under the 'Antiparallel Strands' label: two dots on every A-T rung and three on every G-C rung, matching the 2 H-Bonds and 3 H-Bonds legend; 'Reset' returns the speed to 1x.",
+  ],
   intro:
     "The DNA Double Helix Explorer draws an animated Watson-Crick double helix on canvas, with 16 base-pair rungs between two antiparallel sugar-phosphate backbones and the hydrogen bonds drawn out as dots — two for every A-T pair and three for every G-C pair. Rotation can be paused or run from 0.2x to 3x speed, and separate views cover the 3D structure, the complementary base-pairing rules and semiconservative replication. It is a revision aid for biology students who need to see why the strands run 5' to 3' in opposite directions.",
   useCases: [

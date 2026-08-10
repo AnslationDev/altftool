@@ -1,4 +1,12 @@
 const seo = {
+  title: "Father's Day Message Generator — 4 Tones, 7 Recipients",
+  metaDescription:
+    "Heartfelt, funny, proud or a short caption, written for a dad, father-in-law, grandfather, stepdad, mentor — or a father who has passed away.",
+  steps: [
+    "Choose from the \"Who is it for?\" list — My dad, Father-in-law, Grandfather, Stepfather, Husband or partner, Uncle, mentor or father figure, or A father who has passed away — then set Tone to Heartfelt, Funny, Proud and grown-up or Short caption.",
+    "Type what you call him (Dad, Papa, Appa, Baba) and who to sign off as, set \"How many messages\" up to 6, and press Shuffle to draw a different set from the variants available for that tone and relationship.",
+    "Every message card shows its character count, how many SMS segments it needs and whether it fits a 700-character WhatsApp status; Copy takes one message, \"Copy all\" takes the set, and Reset restores the defaults.",
+  ],
   intro:
     "This generator writes Father's Day messages across four tones — heartfelt, funny, proud and a short caption — and adjusts the wording for who is receiving it: a dad, a father-in-law, a grandfather, a stepfather, a partner who is the father of your children, a mentor, or a father who has died. A remembrance keeps the message in the second person and swaps out any closing line that would read as celebration. It also works out the date, which is the third Sunday of June in India, the United States, the United Kingdom and much of Asia.",
   useCases: [

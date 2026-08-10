@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tone Consistency Rubric: Score Brand Voice 0-100",
+  metaDescription:
+    "Rate a draft on six anchored 1-5 scales — formality, warmth, directness, energy, jargon, humour — for a weighted 0-100 score and the fix-first miss.",
+  steps: [
+    "Name the piece under 'What are you grading?', then set the Target level for Formality, Warmth, Directness, Energy, Jargon density and Humour — each a 1-5 scale with a written anchor.",
+    "Set Observed on the same six dimensions and a Weight from 0 to 5, where 0 drops a dimension out of the score; press Add a second rater to have someone else score the same sample.",
+    "Read the Voice alignment score out of 100, its band from On voice to Off voice, and the Fix first dimension with its drift direction, then press Copy scorecard.",
+  ],
   intro:
     "A tone consistency rubric scores a piece of writing against a defined brand voice on six anchored 1-5 scales — formality, warmth, directness, energy, jargon density and humour — and returns a weighted 0-100 alignment score plus the direction of every miss. It uses a behaviourally anchored rating scale, so each level carries a concrete description instead of a vague label, and each dimension is normalised by the worst possible miss for its own target. Useful for content leads, editors and anyone reviewing AI-generated copy at volume.",
   useCases: [

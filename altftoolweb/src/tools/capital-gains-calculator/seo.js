@@ -1,4 +1,7 @@
 const seo = {
+  title: "Capital Gains Tax Calculator: Gain, Tax, Net Profit",
+  metaDescription:
+    "Enter buy price, sell price, quantity and your own tax rate to get the gain, tax owed, net profit and percentage return. A loss returns zero tax.",
   intro:
     "This calculator works out the capital gain on a holding as (sell price − buy price) × quantity, applies the tax rate you enter to that gain, and reports the tax owed, the net profit after tax, and the percentage return on the buy price. You supply the rate, so it works for any jurisdiction and for either a short-term or long-term slab — the tool does not assume one. Tax is applied only when the result is a gain; a loss returns zero tax rather than a negative figure, because how losses are offset depends on your local rules.",
   useCases: [

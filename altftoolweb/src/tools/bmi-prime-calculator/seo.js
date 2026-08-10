@@ -1,4 +1,12 @@
 const seo = {
+  title: "BMI Prime Calculator: BMI ÷ 25 or Asia-Pacific 23",
+  metaDescription:
+    "BMI Prime divides your BMI by 25 (WHO) or 23 (Asia-Pacific), so 1.00 is the healthy ceiling. Shows both, plus your weight at BMI Prime 1.00 in kg.",
+  steps: [
+    "Pick cm / kg or ft-in / lb under Units, then enter Height (cm) and Weight (kg) — the defaults are 175 and 82.",
+    "Set Reference range to 'WHO international — divide by 25' or 'WHO Asia-Pacific — divide by 23'; the note under the menu gives the healthy BMI band for each.",
+    "There is no calculate button — BMI Prime recomputes as you type, with the gauge marked '1.00 ceiling' and rows for BMI, Weight at BMI Prime 1.00, Distance from the healthy range and 'Prime against 25 / against 23'; Copy result copies the summary.",
+  ],
   intro:
     "BMI Prime is body mass index divided by the upper limit of the healthy BMI range, so the answer reads as a plain ratio: 1.00 sits exactly on the ceiling, 1.15 is fifteen percent above it, and 0.90 is ten percent below. This calculator computes BMI as weight in kilograms over height in metres squared, then divides by 25 for the WHO international range or by 23 for the WHO Asia-Pacific range. Because the result is dimensionless it compares cleanly across people of different heights and across the two reference standards.",
   useCases: [

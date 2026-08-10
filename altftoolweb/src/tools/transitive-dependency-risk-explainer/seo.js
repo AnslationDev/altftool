@@ -1,4 +1,12 @@
 const seo = {
+  title: "Transitive Dependency Risk: Graph Size and Advisories",
+  metaDescription:
+    "Model how direct deps expand by branching factor and package reuse into the installed graph, then read expected advisories per year and audit hours.",
+  steps: [
+    "Start from a typical shape — npm application, Python service, Go module, Java / Maven or Rust crate — or type your own figures.",
+    "Set 'Direct dependencies in your manifest', 'Average dependencies each package declares', 'Depth to expand (levels)' and 'Already-installed share at each new level (%)'.",
+    "Read the packages actually installed with expansion factor, expected advisories per year, install-script packages and the exposure band, then press 'Copy summary'.",
+  ],
   intro:
     "This tool models how a handful of direct dependencies expands into the full installed dependency graph, using a branching-tree model (direct deps x branching factor per level, collapsed for package reuse) plus a Poisson model for security-advisory arrivals. It is built for developers and security engineers who want to explain — to themselves or to a team — why a 25-package manifest turns into hundreds of installed packages, what that does to attack surface, and which supply-chain controls that size of graph actually justifies.",
   useCases: [

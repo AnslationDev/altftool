@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prediabetes Risk Self-Check: ADA/CDC Score and IDRS",
+  metaDescription:
+    "One set of answers scores the seven-item ADA/CDC risk test out of 11 and the Indian Diabetes Risk Score out of 100, with every point shown.",
+  steps: [
+    "Enter your age, 'Sex recorded at birth', height, weight and 'Waist at the navel (cm)'.",
+    "Pick 'Usual physical activity' and 'Family history of diabetes', and tick 'Ever told you have high blood pressure' if it applies.",
+    "Read both scores against the ADA high-risk threshold, the 'How each score was built' points table, and 'What to do next'.",
+  ],
   intro:
     "The Prediabetes Risk Self-Check scores your chance of having prediabetes or developing type 2 diabetes using two published questionnaires from one set of answers: the seven-item ADA/CDC prediabetes risk test scored out of 11, and the Indian Diabetes Risk Score (IDRS) scored out of 100 from age, waist, activity and family history. It returns both scores, an item-by-item breakdown, and lifestyle targets taken from the Diabetes Prevention Program. It is a screening prompt, not a diagnosis — only a blood test can confirm prediabetes.",
   useCases: [

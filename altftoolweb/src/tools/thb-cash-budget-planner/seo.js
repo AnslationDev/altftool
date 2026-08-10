@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thai Baht Cash Planner: Notes vs Card, GST and ATM Fees",
+  metaDescription:
+    "Size your baht float, price the changer markup and GST against Thai ATM withdrawals at ~฿220 a time, and check the RBI USD 3,000 note limit.",
+  steps: [
+    "Under The trip set Trip length (days), Travellers and On-ground spend per person per day (THB) — or tap the Budget, Mid-range or Comfortable chip — plus one-off cash costs, the cash share of daily spend and the Emergency buffer on the cash (%).",
+    "In Rates and fees enter the Mid-market rate (₹ per 1 THB), the Money changer's markup on notes (%), the Card foreign-currency markup (%), your Typical ATM withdrawal (THB) and any LRS already used this financial year (₹); the plan recalculates on every keystroke.",
+    "Read Carry in baht with its all-in rupee cost, the 'Buy notes in India' versus 'Withdraw at destination ATMs' comparison with the fee count, the 'Ask for these notes' denomination split and the RBI / LRS / TCS limits, then press Copy plan.",
+  ],
   intro:
     "This planner sizes the baht float for a Thailand trip and prices it against the card alternative. It applies the money changer's markup and the GST that Rule 32(2)(b) of the CGST Rules charges on buying foreign exchange, then compares that with drawing the same baht from Thai ATMs — where local banks add a flat fee of roughly ฿220 to every foreign-card withdrawal, which is what makes several small withdrawals expensive. It also flags the RBI limit of USD 3,000 in currency notes per visit and the ₹10,00,000 LRS threshold for TCS.",
   useCases: [

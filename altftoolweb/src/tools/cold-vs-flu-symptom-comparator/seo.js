@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cold vs Flu Symptom Comparator: Which One Is It?",
+  metaDescription:
+    "Tick symptoms, onset speed and temperature to weigh the cold and flu patterns, check the 48-hour antiviral window, and see emergency warning signs.",
+  steps: [
+    "Tick the symptoms present — Sore throat, Blocked or runny nose, Chills or shivering, Aching muscles or joints and the rest — and say whether it began Abruptly, over a few hours or Gradually, over a day or two.",
+    "Enter Hours since symptoms started and the Highest temperature measured in °C or °F, choose An adult or A child, and tick any emergency warning signs listed for that age group.",
+    "Read the flu-like and cold-like percentages, the Rare-to-Usual table of how each answer scored, and whether the 48 h antiviral window is open, then press Copy result.",
+  ],
   intro:
     "A common cold and influenza share a lot of symptoms, but they differ in two ways that are easy to observe: how fast the illness starts and how much of the whole body it involves. This comparator scores the features you report against the published cold and flu symptom profiles — nose-and-throat symptoms lean cold, while abrupt onset, fever, muscle aches, chills and exhaustion lean flu — and tells you whether you are still inside the 48-hour window in which influenza antivirals work best. It is a pattern comparison, not a diagnosis.",
   useCases: [

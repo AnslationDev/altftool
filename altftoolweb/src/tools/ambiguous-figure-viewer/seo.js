@@ -1,4 +1,7 @@
 const seo = {
+  title: "Ambiguous Figure Viewer: 12 Classic Optical Illusions",
+  metaDescription:
+    "Open the Necker cube, Rubin vase or duck-rabbit and switch between readings with Perceptual Focus hints, spotlight and blur. Mark solved, save as SVG.",
   intro:
     "An ambiguous figure is a single image with two mutually exclusive interpretations, and this viewer measures how long each one holds before your perception flips — the dominance duration used in psychophysics. Tap on every reversal you see in a Necker cube, Schröder stairs or Rubin's vase and it returns the mean, median, coefficient of variation and the gamma shape parameter k = mean² / variance. It is built for psychology students, teachers demonstrating bistable perception, and anyone curious how measurable their own perceptual switching is.",
   useCases: [

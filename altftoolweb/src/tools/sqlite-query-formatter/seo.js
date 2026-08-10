@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQLite Query Formatter with PRAGMA and Bind Params",
+  metaDescription:
+    "Breaks SELECT, FROM, JOIN, WHERE and GROUP BY onto their own lines, folds keyword case, and keeps '' escapes, [brackets] and :name params intact.",
+  steps: [
+    "Paste your statement into the \"SQLite SQL to format\" textarea — PRAGMA, '' escapes, [bracket] and `backtick` identifiers and ?, :name, @name, $name binds are all parsed.",
+    "Set Keyword case to UPPERCASE keywords, lowercase keywords or Keep as typed, and pick an Indent width of 2, 4 or 8 spaces.",
+    "Read the Formatted SQL panel, one clause per line, then press Copy SQL — or Reset to restore the sample query.",
+  ],
   intro:
     "This formatter rewrites SQLite SQL with each major clause — SELECT, FROM, JOIN, WHERE, GROUP BY, ORDER BY, LIMIT — on its own line, keywords case-folded against the official SQLite keyword list, and conditions split at top-level AND/OR. It understands SQLite specifics that generic formatters trip over: PRAGMA statements, doubled-quote string escapes ('It''s'), [bracket] and `backtick` identifiers, and ?, :name, @name and $name bind parameters. Formatting is purely lexical, so the output executes identically to the input.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gratuity Calculator India: 15/26 Formula and Tax Cap",
+  metaDescription:
+    "Gratuity under the Payment of Gratuity Act 1972, 15 days of basic plus DA per year divided by 26, with the section 10(10) Rs 20 lakh lifetime cap.",
+  steps: [
+    "Choose Employer type — covered by the Payment of Gratuity Act 1972, not covered, or Central/State government — and enter the last drawn monthly salary (basic + dearness allowance).",
+    "Enter Completed years of service and Extra months (0-11), tick the death or disablement box if the five-year condition does not apply, and add any gratuity exemption already used in earlier jobs.",
+    "Read Gratuity payable with the years counted, the '15 days / 26 working days' basis, and the Exemption test showing 'Exempt under section 10(10)' and 'Taxable as salary'; press Copy result.",
+  ],
   "intro": "Gratuity Calculator India applies the Payment of Gratuity Act, 1972 formula - 15 days of last drawn basic plus DA for every completed year, divided by 26 - and shows what you should receive when you resign or retire. It also runs the section 10(10) exemption test against the Rs 20 lakh lifetime cap so you can see how much of the payout is tax free and how much is added to salary income. Employers outside the Act (the 15/30 half-month basis) and government employees, whose gratuity is fully exempt, are handled separately.",
   "useCases": [
     "Estimate the gratuity in your full and final settlement before your last working day.",

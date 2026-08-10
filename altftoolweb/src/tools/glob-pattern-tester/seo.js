@@ -1,4 +1,7 @@
 const seo = {
+  title: "Glob Pattern Tester: Match Strings, See the Regex",
+  metaDescription:
+    "Test a glob using * and ? against a string and see the anchored regex it compiles to, with a match/no-match verdict and an ignore-case toggle.",
   intro:
     "The Glob Pattern Tester answers whether a glob matches a given string and shows the exact regular expression it compiles to: * becomes .*, ? becomes . , every other regex metacharacter is escaped literally, and the whole thing is anchored with ^ and $. Type a pattern like *.js and a string like app.js, toggle case-insensitivity if you need it, and you get a yes/no plus the compiled regex source. It is for developers debugging an ignore rule, a CI path filter or a config glob that is matching more or less than they expected.",
   useCases: [

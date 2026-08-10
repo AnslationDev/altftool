@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spark Plug Gap Tool: mm, Inch & Thou with Boost Rule",
+  metaDescription:
+    "Converts a plug gap using the exact 25.4 mm inch, checks it against the range for your engine type, and closes it 0.05 mm per 0.5 bar of boost.",
+  steps: [
+    "Enter the 'Measured or desired gap' and pick Millimetres, Inches or 'Thou (thousandths of an inch)' under Unit.",
+    "Choose the 'Engine type', fill in 'Peak boost pressure (bar, 0 if none)' and set the 'Electrode material'.",
+    "Read the gap in mm, thou and inches alongside the 'Target range to aim for' and the 'Adjustment needed' row.",
+  ],
   intro:
     "The Spark Plug Gap Tool converts a gap between millimetres, inches and thousandths of an inch using the exact definition of 1 inch = 25.4 mm, then checks the value against the range normally used for your class of engine. It also applies the standard forced-induction rule of thumb — close the gap by roughly 0.05 mm for every 0.5 bar of boost — because the voltage needed to strike an arc rises with both gap and cylinder pressure. It is aimed at anyone fitting plugs themselves and working from a spec sheet in the other unit system.",
   useCases: [

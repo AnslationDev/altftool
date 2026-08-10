@@ -1,4 +1,12 @@
 const seo = {
+  title: "UAE IDP Requirement Checker: Tourist vs Residence Visa",
+  metaDescription:
+    "Says whether the UAE expects an International Driving Permit with your licence, and why a residence visa stops both being accepted at all.",
+  steps: [
+    "Answer 'Where was your driving licence issued?' and 'What visa are you on?' from the two dropdowns.",
+    "Set 'What do you already hold?', the 'Date you arrive' and 'Your age (years)'.",
+    "Read the Verdict, the 'Convertible without a test' and 'Black points that cost the licence' rows, and the 'Carry in the car' checklist.",
+  ],
   intro:
     "This checker tells you whether the United Arab Emirates expects an International Driving Permit alongside your national licence, and - more importantly - what happens to that arrangement when a residence visa is issued. Traffic law is federal, under Federal Decree-Law No. 14 of 2024 on Traffic Regulation, but licensing is run by each emirate through the RTA in Dubai, Abu Dhabi Police and their counterparts. A visitor may hire on a recognised foreign licence; a resident may not drive on one at all, whatever validity is left on it.",
   useCases: [

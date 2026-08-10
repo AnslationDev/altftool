@@ -1,4 +1,12 @@
 const seo = {
+  title: "Log Level Planner: trace, debug, info, warn, error, fatal",
+  metaDescription:
+    "Answer five questions about an event and get its level on the log4j/SLF4J/RFC 5424 ladder, plus minimum levels for dev, CI, staging and production.",
+  steps: [
+    "Tick the boxes that describe the event: 'Is the event a failure (something did not work)?', 'Does it stop the whole process or service (crash, unrecoverable state)?', 'Was it recovered automatically (retry succeeded, fallback used)?', 'Is it a significant lifecycle or business event (startup, order placed, job finished)?' and 'Would it fire on every iteration, packet or row (very high volume)?' — irrelevant follow-ups grey out.",
+    "Under 'Minimum level per environment', tick 'Log volume is billed or storage-constrained' and 'The service handles high request volume' if either applies to the service.",
+    "'Recommended level' shows the level in monospace with its rationale, whether it is visible in production by default and any cautions, and the table gives dev, CI, staging and production a minimum level with the reason. 'Copy result' takes the level plus the per-environment list.",
+  ],
   intro:
     "This planner applies a decision tree to place any log event on the standard severity ladder — trace, debug, info, warn, error, fatal — using the semantics shared by log4j, SLF4J, Python logging and the syslog severities of RFC 5424: fatal means the process dies, error means an unrecovered failure, warn means degraded-but-succeeded, info tells the production story, debug and trace are developer diagnostics. It also recommends minimum levels per environment (dev, CI, staging, production) adjusted for traffic and log-cost pressure.",
   useCases: [

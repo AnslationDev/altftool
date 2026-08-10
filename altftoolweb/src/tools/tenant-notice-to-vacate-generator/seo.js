@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tenant Notice to Vacate: Rent & Deposit Settlement",
+  metaDescription:
+    "Checks your handover date against the agreement's notice period, prices part-month rent at monthly x 12 / 365, and nets the deposit into one figure.",
+  steps: [
+    "Enter Monthly rent (INR), \"Notice period in the agreement (days)\", the Date this notice is served, the Intended handover date and Rent paid up to.",
+    "Add the Security deposit held (INR), Utility and maintenance dues (INR) and any Agreed damage or cleaning deductions (INR).",
+    "Read the earliest compliant handover date, the day-rate rent and the single settlement figure, then press Copy letter for the Notice letter itself.",
+  ],
   intro:
     "This generator writes a tenant's notice to vacate and settles the money at the same time: it checks the handover date against the notice period in your agreement, charges rent only for the days you actually occupy, and shows what should come back from the security deposit. Part-month rent is worked out at a daily rate of monthly rent x 12 / 365, and the deposit is treated the way Section 11 of the Model Tenancy Act, 2021 describes — refunded when vacant possession is handed over, after deducting the tenant's liabilities.",
   useCases: [

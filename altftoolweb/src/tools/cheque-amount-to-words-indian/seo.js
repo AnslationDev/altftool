@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rupees in Words for a Cheque, With Lakh and Crore",
+  metaDescription:
+    "Turns 1,23,456.78 into \"Rupees One Lakh Twenty Three Thousand Four Hundred Fifty Six and Paise Seventy Eight Only\", plus international wording.",
+  steps: [
+    "Type the figure into Amount in rupees, or tap one of the quick amounts such as 1,23,456.78 or 1,00,00,000.",
+    "Choose Title Case, UPPERCASE or Sentence case under Letter case, keep End with \"Only\" ticked so nothing can be appended, and switch on Write paise as 78/100 if the form wants a fraction.",
+    "The Cheque courtesy line appears at the top, with Plain wording, International (million / billion) and both Indian and international digit groupings listed below, each with its own Copy button.",
+  ],
   intro:
     "The Indian numbering system groups digits as 2-2-3 after the hundreds place, which is why 1,23,456 reads as one lakh twenty three thousand four hundred fifty six rather than one hundred twenty three thousand. This converter turns any rupee figure into the courtesy line a cheque needs — starting with 'Rupees', stating paise separately out of one hundred, and closing with 'Only' so no words can be appended after it. It also shows the same amount in international million and billion wording and in both digit-grouping styles.",
   useCases: [

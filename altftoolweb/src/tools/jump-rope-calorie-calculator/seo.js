@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jump Rope Calorie Calculator with Work-Rest Intervals",
+  metaDescription:
+    "Uses the ACSM equation and Compendium MET bands of 8.8, 11.8 and 12.3, blending rope time with 1.5 MET rest so intervals are costed honestly.",
+  steps: [
+    "Enter 'Body weight (kg)', 'Skips per minute' and 'Total session (minutes)'.",
+    "Set 'Work (sec)' and 'Rest (sec)', or tap a preset such as 'Continuous' or '60 on / 30 off'.",
+    "Read Calories burned, 'Calories above resting (exercise only)' and the Compendium band, then press 'Copy result'.",
+  ],
   intro:
     "This calculator estimates skipping calories using the ACSM energy equation, kcal per minute = METs x 3.5 x body weight in kg / 200, with MET values taken from the 2011 Compendium of Physical Activities: 8.8 METs below 100 skips a minute, 11.8 at 100-120 and 12.3 at 120-160. Because almost nobody skips continuously, it also takes your work and rest interval and blends the working intensity with a 1.5 MET standing rest, so a 20-minute session at 60 seconds on and 30 seconds off is costed as the 13 minutes of rope time it really is.",
   useCases: [

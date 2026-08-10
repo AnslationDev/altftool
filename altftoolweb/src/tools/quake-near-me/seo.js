@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quake Near Me: Recent USGS Earthquakes by Distance",
+  metaDescription:
+    "Enter coordinates or use device location to list USGS-catalogued quakes of magnitude 2.5+ within 500 km, with haversine distance in km.",
+  steps: [
+    "Type a Latitude and Longitude, or press \"Use device location\" to fill both from the browser's geolocation.",
+    "Press \"Get current result\" to query the USGS FDSN event service for magnitude 2.5 and above within 500 km, newest first, capped at 50 events.",
+    "Read the Current result table — magnitude, place, haversine distance in km and origin time — with the USGS query URL printed underneath as the source.",
+  ],
   intro:
     "Quake Near Me queries the USGS earthquake catalog (the FDSN event API at earthquake.usgs.gov) for recent events around a latitude and longitude you supply, then lists each one with its magnitude, place name, origin time and the great-circle distance from your point computed with the haversine formula. By default it looks within a 500 km radius for events of magnitude 2.5 and above, newest first, up to 50 results. Enter coordinates by hand or tap the device-location button, and refresh whenever you want a current reading.",
   useCases: [

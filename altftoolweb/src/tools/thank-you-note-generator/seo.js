@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thank You Note Generator: Card, Email or Text Length",
+  metaDescription:
+    "Builds the four parts of a thank you note — greeting, specific thanks, impact, close — at 25-90 words for a card, 60-200 for email, 15-70 for a text.",
+  steps: [
+    "Fill in 'Who are you thanking', 'Your name', 'What for' and 'Where is it going'.",
+    "Name the specific gift or favour, then write one line under 'What difference did it make (one sentence, in your words)'.",
+    "Check the Word count against the channel target, read 'Note check', and press Rewrite for different wording or 'Copy note' to take it.",
+  ],
   intro:
     "A thank you note works when it contains four things: a greeting, thanks for something specific, a sentence on what it actually meant, and a forward-looking close with your name. This generator assembles those four parts around the details you supply — the gift, the favour, the role you interviewed for — and sizes the result for a handwritten card, an email or a text message. It then checks the draft: whether it names something specific, whether the impact line is yours rather than generic, and whether the length fits the channel.",
   useCases: [

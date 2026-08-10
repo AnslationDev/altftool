@@ -1,4 +1,12 @@
 const seo = {
+  title: "Refactor Prompt Builder: Fowler Names + Guardrails",
+  metaDescription:
+    "Names the Fowler refactorings to apply and writes hard constraints — identical outputs, frozen API, untouched tests — plus a complexity target.",
+  steps: [
+    "Set Language, summarise the code in What this code is, and optionally paste it into Paste the code.",
+    "Tick Refactoring goals such as Break up a long function and Reduce nesting — these become the Fowler directives Extract Function and Replace Nested Conditional with Guard Clauses — plus Hard constraints like Public API frozen, then set Current cyclomatic complexity and Target complexity.",
+    "Generated prompt appears with its goal count, constraint count and word and token estimate; press Copy prompt and paste it into your model.",
+  ],
   intro:
     "The Refactor Prompt Builder writes an AI refactoring prompt that names the exact refactorings to apply — Extract Function, Replace Nested Conditional with Guard Clauses, Replace Magic Literal and others from Fowler's catalogue — alongside hard constraints that keep observable behaviour, public APIs and existing tests unchanged. It also accepts a cyclomatic-complexity goal checked against McCabe's recommended per-function limit of 10, so 'clean this up' becomes a bounded, verifiable task instead of an invitation to rewrite.",
   useCases: [

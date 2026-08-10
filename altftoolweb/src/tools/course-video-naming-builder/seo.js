@@ -1,4 +1,12 @@
 const seo = {
+  title: "Course Video File Naming Builder: Zero-Padded Names",
+  metaDescription:
+    "Turn a module and lesson outline into one filesystem-safe name per lesson: zero-padded numbers, kebab/snake/Pascal case, 255-byte and duplicate checks.",
+  steps: [
+    "Paste your outline into the 'Course outline (module lines, lessons indented or bulleted)' textarea and set the Course code.",
+    "Edit the Naming pattern — it starts at {course}_M{mm}_L{ll}_{lesson} — or tap a token button such as {gg} or {module}, then pick a Case style (kebab-case, snake_case or PascalCase), a File extension and Number padding (digits).",
+    "Check the Longest name row against the 255-byte limit along with the Duplicate names and Warnings counts, then press Copy names to take one file name per lesson.",
+  ],
   intro:
     "Course Video Naming Builder converts a module-and-lesson outline into one consistent, zero-padded file name per lesson using a pattern you control. It slugifies titles into kebab, snake or Pascal case, strips the characters Windows forbids in a file name, keeps every name inside the 255-byte per-name limit used by ext4, APFS and NTFS, and flags duplicates and reserved device names such as CON or LPT1. Built for course creators, editors and VAs who need raw footage, edits and uploads to sort in teaching order on any machine.",
   useCases: [

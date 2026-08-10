@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Episode Length Planner: Fit the Run Order",
+  metaDescription:
+    "Hold fixed segments, split the leftover time by weight. Every block returns start and end timestamps, its share of runtime and a word budget at 150 wpm.",
+  steps: [
+    "Set 'Target length (minutes)' and 'Speaking rate (words per minute)', which defaults to 150 and is editable from 80 to 260.",
+    "Build the Running order: name each block, choose 'Fixed duration' or 'Flexible (shares leftover time)', give it Minutes or a Weight, tick Ad/sponsor for spots, and press Add segment for another row.",
+    "The 'Segment by segment' table returns Start, End, Duration, Share and Words for every block, with a warning when advertising passes 15% of runtime; Copy plan copies the whole running order.",
+  ],
   intro:
     "The Podcast Episode Length Planner fits a running order to a target runtime by holding your fixed segments at the durations you set and splitting whatever time is left between the flexible segments in proportion to their weights. Every block comes back with a start and end timestamp, a share of the episode and a word budget at your chosen speaking rate, which defaults to 150 words per minute. It is for producers who know an episode has to land at, say, 32 minutes and need to know how long the interview can actually run.",
   useCases: [

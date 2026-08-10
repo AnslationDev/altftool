@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chaldean Numerology Calculator: 1-8 Letter Table",
+  metaDescription:
+    "Name compound and root numbers on the Chaldean 1-8 table where 9 is never assigned, plus psychic and destiny numbers from a date of birth.",
+  steps: [
+    "Type the name into \"Name as it is written\" — spaces, dots and hyphens are ignored, and only A-Z letters are scored.",
+    "Enter \"Day of birth\", \"Month\" and \"Year\" to get the psychic and destiny numbers under \"Numbers from the date of birth\".",
+    "Read the \"Name compound number\" with its root, the letter-by-letter values and the classical 10-52 compound reading, then press \"Copy result\".",
+  ],
   intro:
     "The Chaldean Numerology Calculator converts a written name into its Chaldean compound number and single-digit root, and a date of birth into psychic (moolank) and destiny (bhagyank) numbers. It uses the classical Chaldean letter table in which letters take values 1 to 8 and 9 is never assigned, which is what separates it from the Pythagorean A=1 to Z=26 method. The unreduced compound total is shown alongside Cheiro's published reading for numbers 10 to 52, so you can see the working rather than a single unexplained figure.",
   useCases: [

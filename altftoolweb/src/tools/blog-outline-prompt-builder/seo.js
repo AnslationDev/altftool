@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blog Outline Prompt Builder with Word Budget per H2",
+  metaDescription:
+    "Splits a target word count into intro, H2, H3, FAQ and conclusion budgets, warns below 120 or above 500 words a section, and writes the prompt.",
+  steps: [
+    "Fill in Article topic, Who is reading and Primary search term (optional), then pick an Angle and What the reader wants.",
+    "Set Target length (words), Main H2 sections, H3 subsections per section and FAQ questions — a warning appears when each section would fall under about 120 words or over about 500.",
+    "Read the planned article length and its reading time at 238 words per minute, then press Copy prompt to take the Generated prompt with its per-block word budget.",
+  ],
   intro:
     "The Blog Outline Prompt Builder converts a target article length into an explicit word budget per outline block — introduction, H2 sections, H3 subsections, FAQ and conclusion — and writes an AI outline prompt with that budget embedded. It is built for content writers and SEO teams who want an outline that actually fits the word count they were briefed, using a 10% introduction share, an 8% conclusion share and the 238 words-per-minute average silent reading rate from Brysbaert's 2019 meta-analysis to estimate reading time.",
   useCases: [

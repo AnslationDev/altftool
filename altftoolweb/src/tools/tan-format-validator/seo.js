@@ -1,4 +1,12 @@
 const seo = {
+  title: "TAN Format Validator: Check AAAA99999A Offline",
+  metaDescription:
+    "Check a TAN against the four letters, five digits, one letter pattern in your browser — it names the failing position and decodes the location code.",
+  steps: [
+    "Stay on Single TAN and type the ten characters into the TAN field (placeholder AAAA99999A), or switch to Bulk list and paste one TAN per line into the 'One TAN per line' box.",
+    "The pattern check runs as you type, entirely in the browser — a malformed entry raises an alert naming the failing character and, where it can, a 'Did you mean' suggestion.",
+    "Read Structure for the grouped TAN plus Location code (positions 1-3), Income-tax office city, Deductor name initial (position 4), Serial (positions 5-9) and Final letter (position 10) — or a valid/invalid verdict per row in bulk mode — then press Copy result.",
+  ],
   intro:
     "A TAN is the ten-character Tax Deduction and Collection Account Number that section 203A of the Income-tax Act requires every deductor to quote, built as four letters, five digits and one closing letter. This validator checks that structure offline, splits the number into its location code, deductor initial, serial and final letter, and names the exact position that is wrong when it fails. It is built for payroll and accounts teams reconciling TDS challans, and for developers adding a client-side format check before an API call.",
   useCases: [

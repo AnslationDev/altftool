@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pet Name Generator: 15 Names, 6 Styles, 5 Species",
+  metaDescription:
+    "Pick dog, cat, rabbit, parrot or hamster plus a Cute, Royal, Funny, Cool, Unique or Traditional style, and get 15 distinct names to shortlist.",
+  steps: [
+    "Choose a Pet Type — dog, cat, rabbit, parrot or hamster — and a Style from Cute, Royal, Funny, Cool, Unique or Traditional.",
+    "Add an optional Custom Prefix (the field suggests \"e.g. Mr, Baby\") and press Start Generating.",
+    "Copy any of the 15 de-duplicated results with its copy button, or hit the heart to send it to Your Favorites.",
+  ],
   intro:
     "Pet Name Generator builds a batch of 15 unduplicated name ideas at a time by combining a base name for your animal — dog, cat, rabbit, parrot or hamster — with a style prefix drawn from one of six moods: Cute, Royal, Funny, Cool, Unique or Traditional. An optional keyword field lets you seed every result with a syllable of your own, so a favourite word can run through the whole batch. Each name can be copied with one tap or starred into a shortlist, which is what you want when a household is arguing over five candidates.",
   useCases: [

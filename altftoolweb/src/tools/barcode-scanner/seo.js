@@ -1,4 +1,7 @@
 const seo = {
+  title: "Barcode Scanner Online: EAN, UPC, Code 128 and QR",
+  metaDescription:
+    "Decode a barcode from an uploaded image or your camera: native BarcodeDetector, then jsQR, then Quagga. Copy the value or export .txt or JSON.",
   intro:
     "The Barcode Scanner decodes a barcode or QR code from an uploaded image or a live camera feed by running a three-stage pipeline: the browser's native BarcodeDetector first, then jsQR for QR codes with both polarities attempted, then Quagga for the 1D retail and logistics symbologies. It reports the decoded value together with the detected format — EAN-13, UPC-A, Code 128, Data Matrix, PDF417 and more — and keeps a local history of recent scans. It is for anyone who needs the number behind a barcode without installing a scanner app.",
   useCases: [

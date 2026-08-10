@@ -1,4 +1,12 @@
 const seo = {
+  title: "UAE VAT Calculator: Add or Remove 5% VAT in AED",
+  metaDescription:
+    "Add 5% VAT to a net AED price or extract it from a tax-inclusive one with the 5/105 fraction, plus the AED 375,000 and 187,500 registration thresholds.",
+  steps: [
+    "Pick a Direction — \"Add VAT\" when the amount is before VAT, or \"Remove VAT\" when it already includes VAT — then type the AED amount and the Quantity.",
+    "Leave Supply type on \"5% standard\", switch it to \"0% zero-rated\", or choose \"Custom rate\" and type your own figure into \"VAT rate (%)\"; every line recalculates as you type, with no calculate button.",
+    "Read the net, VAT and gross to two decimal places plus both unit prices, and type your last-12-month taxable supplies into the \"Registration threshold check\" box to see where you sit against the AED 375,000 mandatory and AED 187,500 voluntary thresholds.",
+  ],
   intro:
     "This calculator works out UAE VAT at the 5% standard rate in both directions: it adds VAT to a net price, and it extracts the VAT already sitting inside a tax-inclusive price using the 5/105 fraction. It follows Federal Decree-Law No. (8) of 2017, which introduced VAT in the UAE on 1 January 2018, and also flags where your 12-month taxable supplies sit against the AED 375,000 mandatory and AED 187,500 voluntary registration thresholds. It suits freelancers, retailers and finance teams checking invoice totals before filing a return.",
   useCases: [

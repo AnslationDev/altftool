@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bhangra Calorie Burn Calculator with MET Values",
+  metaDescription:
+    "Estimate bhangra calories from weight, minutes and intensity using kcal/min = MET x 3.5 x kg / 200, with break time at 1.5 MET and a net figure.",
+  steps: [
+    "Enter 'Body weight' with the kg or lb unit selector beside it, then 'Session length (minutes)', or tap one of the 15, 30, 45, 60 and 90 min presets.",
+    "Pick 'How hard were you going?' — from 'Learning steps (walk-through pace)' up to 'Performance / competition tempo, non-stop', each option showing its MET value — then set 'Share of session actually dancing (%)' and 'Sessions per week'.",
+    "Read 'Calories burned' in kcal, with 'Net of resting metabolism', 'Rate while dancing' in kcal/min, 'Per hour of non-stop bhangra', 'Average MET across the session' and 'Weekly total' beneath it, then press 'Copy result'.",
+  ],
   intro:
     "The Bhangra Calorie Burn Calculator estimates how much energy a bhangra session costs by multiplying a MET intensity value by your body weight and the minutes you danced. It uses the ACSM relationship kcal/min = MET x 3.5 x kg / 200, splits the session into dancing time and break time so standing around is not counted as full-effort dance, and reports both gross calories and calories net of resting metabolism. Useful for dancers, Vaisakhi and wedding performers, and anyone using bhangra practice as their main cardio.",
   useCases: [

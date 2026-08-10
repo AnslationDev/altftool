@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST E-Invoice Applicability: Rs 5 Crore Limit Check",
+  metaDescription:
+    "Enter PAN-level aggregate turnover to see if Rule 48(4) e-invoicing applies, from which date, and whether the 30-day IRP reporting window binds you.",
+  steps: [
+    "Enter the highest aggregate turnover in any FY since 2017-18 in Rs crore, plus the turnover in the last completed FY.",
+    "Choose your Entity type — SEZ units, banks, insurers, GTAs and multiplexes are carved out — and tick 'I make B2B, export, SEZ or deemed-export supplies'.",
+    "Read the verdict with 'Threshold crossed', 'Mandatory from' and its notification, then set an invoice date to get the 30-day IRP deadline.",
+  ],
   intro:
     "This checker tells you whether GST e-invoicing under Rule 48(4) of the CGST Rules applies to your business, from which date it started, and whether the 30-day IRP reporting window binds you. The test is PAN-level aggregate turnover in any financial year from 2017-18 onwards, measured against the notified thresholds that stepped down from Rs 500 crore in October 2020 to Rs 5 crore in August 2023. It is built for accountants, finance teams and business owners who need a defensible answer before their next B2B invoice goes out.",
   useCases: [

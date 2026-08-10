@@ -1,4 +1,12 @@
 const seo = {
+  title: "Glasgow Coma Scale Calculator: E/V/M Score 3-15",
+  metaDescription:
+    "Add eye (1-4), verbal (1-5) and motor (1-6) to a GCS total of 3-15 with E/V/M notation, severity band, GCS-Pupils and a T suffix for intubated cases.",
+  steps: [
+    "Under Scale wording choose 'Adult / verbal child' or 'Pre-verbal child', then pick Eye opening (E), Verbal response (V) and Best motor response (M) from the numbered menus.",
+    "Set Pupil reactivity for the GCS-Pupils score, or tick 'Not testable (intubated)' so the verbal component is reported as a T suffix instead of a number.",
+    "Total GCS updates immediately with the E/V/M notation and rows for Severity band, Unreactive pupils and GCS-Pupils (GCS-P), above a Severity bands table; Copy result copies the score and Reset restores the defaults.",
+  ],
   intro:
     "The Glasgow Coma Scale Calculator adds the three Glasgow Coma Scale components — eye opening (1-4), verbal response (1-5) and best motor response (1-6) — into a total between 3 and 15, and reports it in the standard E/V/M notation. It also applies the conventional severity bands (3-8 severe, 9-12 moderate, 13-15 mild) and the GCS-Pupils score, which subtracts the number of unreactive pupils from the total. Wording follows the Glasgow Structured Approach to Assessment, with a separate option set for pre-verbal children.",
   useCases: [

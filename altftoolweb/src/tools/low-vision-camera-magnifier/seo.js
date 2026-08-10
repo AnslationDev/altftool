@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turn Your Camera Into a 5x Low-Vision Magnifier",
+  metaDescription:
+    "Live camera magnifier for small print: zoom 1x to 5x in 0.1 steps, contrast up to 3x, invert and grayscale. Nothing is recorded or uploaded.",
+  steps: [
+    "Press Start camera and grant the browser camera permission; the tool requests the rear, environment-facing lens.",
+    "Hold the device over the page and drag the Zoom slider between 1x and 5x, then the Contrast slider up to 3x.",
+    "Switch on Invert colors or Grayscale to cut glare, and press Stop camera to end every track on the stream.",
+  ],
   intro:
     "Low-Vision Camera Magnifier turns a phone or laptop camera into a live electronic magnifier: it opens the rear-facing camera and renders the stream with adjustable zoom from 1× to 5×, contrast from 0.7× to 3×, plus colour inversion and grayscale. It is the software equivalent of a handheld video magnifier for reading small print — a medicine label, a restaurant menu, a utility bill — without buying dedicated hardware. Nothing is recorded or uploaded; the video is filtered in the page and the stream stops the moment you press stop.",
   useCases: [

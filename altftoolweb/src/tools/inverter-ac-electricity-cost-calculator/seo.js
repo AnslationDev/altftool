@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inverter AC Running Cost: ISEER, Setpoint and Tariff",
+  metaDescription:
+    "Average draw is rated cooling ÷ ISEER, then about 6% per degree from 24 C. Adds standby and a 5% stabiliser loss to give monthly units and rupee cost.",
+  steps: [
+    "Enter Capacity (ton) and ISEER from the BEE label, then Hours of running per day and Days used per month.",
+    "Set Thermostat setting (C) — 24 C is the BEE reference, each degree lower adds about 6% — plus Tariff (per kWh), and tick the servo stabiliser box if one is wired in.",
+    "Read the monthly electricity cost with effective average draw in W, units per day, the season total and the saving against the comparison ISEER; press Copy result.",
+  ],
   intro:
     "This calculator turns an inverter AC's BEE label into a rupee figure on your electricity bill. Average input power is the rated cooling divided by ISEER — 1.5 ton is 5,275 W of cooling, so an ISEER 4.7 unit draws about 1,122 W on average — and that is then adjusted for your thermostat setting using BEE's rule that consumption changes by roughly 6% per degree Celsius from the 24 C reference. Standby draw and servo stabiliser losses are included, so the monthly number is closer to what the meter records than a nameplate wattage.",
   useCases: [

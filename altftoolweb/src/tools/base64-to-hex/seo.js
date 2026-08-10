@@ -1,4 +1,5 @@
 const seo = {
+  title: "Base64 to Hex Converter: Read the Raw Bytes",
   intro:
     "Base64 to Hex decodes a Base64 string into its raw bytes and prints those bytes as hexadecimal — two hex digits per byte, so on the default settings the output is exactly twice the decoded length. It reads the standard RFC 4648 §4 alphabet as well as URL-safe input using - and _, strips whitespace and a leading data: URL header, and can render the result in uppercase A-F, with a 0x prefix, and grouped into pairs, 4-character words or 8-character blocks. It is for engineers inspecting a binary blob that arrived as text.",
   useCases: [

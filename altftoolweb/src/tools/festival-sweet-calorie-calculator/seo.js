@@ -1,4 +1,12 @@
 const seo = {
+  title: "Festival Sweet Calorie Calculator: 35 Indian Mithai",
+  metaDescription:
+    "Count gulab jamun, laddoo or halwa by the piece and see kcal, added sugar in grams and teaspoons, and the share of the WHO 10% free-sugar ceiling.",
+  steps: [
+    "Set 'Your daily calorie intake (kcal)' — it starts at 2,000 — then use 'Pick a section' to switch between Laddoo, Barfi and katli, Syrup sweets, Halwa and katori and Milk sweets.",
+    "Tap + or − beside each sweet to count the pieces you ate, up to 30 of any one; the box opens with 2 gulab jamun and 1 kaju katli already in it.",
+    "Read 'Total for the box' in kcal with the added sugar in grams and teaspoons, plus rows for the WHO 10% ceiling and the 5% further-benefit level; 'Copy summary' saves it and 'Reset' restores the default box.",
+  ],
   intro:
     "The Festival Sweet Calorie Calculator gives calories, added sugar and fat per piece for 35 common Indian sweets — laddoo, barfi, gulab jamun, jalebi, halwa and kheer — and totals whatever combination you actually ate. It converts the sugar into teaspoons and measures it against the WHO free-sugar guideline of under 10% of daily energy, which is 50 g on a 2,000 kcal day, and the 5% further-benefit level of 25 g. Written for anyone who wants to enjoy Diwali, Eid or Raksha Bandhan sweets while knowing roughly where the day stands.",
   useCases: [

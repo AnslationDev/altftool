@@ -1,4 +1,5 @@
 const seo = {
+  title: "Invisible Character Generator: U+200B, ZWJ, ZWNJ",
   metaDescription:
     "Copy Zero-Width Space (U+200B), ZWNJ, ZWJ, Non-Breaking Space (U+00A0) and 6 more, each with its code point and a preview toggle.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Private Dream Journal: Tag and Search Recurring Dreams",
+  metaDescription:
+    "Log a dream title plus free-text tags, then search every entry for a recurring theme. Saved in this browser's local storage; export the journal as JSON.",
+  steps: [
+    "Type the dream into the Dream title and Dream notes and tags boxes, using one consistent word for each recurring theme.",
+    "Press Add record to write the entry to this browser's local storage, then type that theme word into the Search records box.",
+    "The Saved records heading shows how many entries matched; press Export JSON to download dream-pattern-journal.json.",
+  ],
   intro:
     "Dream Pattern Journal is a private dream log: you record a dream title and a free-text notes-and-tags field, and every entry is saved in this browser's local storage rather than to an account. Because the search box matches across the whole entry, tagging dreams with your own words — falling, teeth, that house, a person's name — turns the journal into a way to pull up every occurrence of a recurring theme later. It is for anyone tracking recurring dreams over months who does not want that material sitting on someone else's server.",
   useCases: [

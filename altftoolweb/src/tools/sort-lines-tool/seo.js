@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sort Lines Alphabetically: A-Z or Z-A, Locale-Aware",
+  metaDescription:
+    "Paste a list and get it back sorted A to Z or Z to A with localeCompare, so accents sort as a dictionary would. Blank lines are dropped.",
+  steps: [
+    "Paste your lines into the Input box, or press \"Load sample\" for the banana / apple / cherry / date list.",
+    "Set \"Order\" to \"A → Z\" or \"Z → A\" and leave \"Ignore case\" ticked so Apple and apple sort together.",
+    "The Result panel re-sorts as you type and drops blank lines; press \"Copy\" to take the sorted list.",
+  ],
   intro:
     "Sort Lines Tool reorders every line of pasted text alphabetically, A to Z or Z to A, using JavaScript's locale-aware string comparison so accented and non-English characters land where a dictionary would put them rather than where their byte values fall. It suits anyone tidying a list — keyword sets, CSV columns, import files, glossary entries — who wants the sorted result back in one paste-and-copy step. An ignore-case option is on by default, so Apple and apple sit together instead of all capitals being pushed to the top.",
   useCases: [

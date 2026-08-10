@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telugu Samethalu: 30 Proverbs with Real Meanings",
+  metaDescription:
+    "30 Telugu proverbs with ISO 15919 transliteration, a literal translation, the figurative meaning, a Telugu gloss and honest English equivalents.",
+  steps: [
+    "Pick a Theme, or type into \"Search proverb, transliteration or meaning\" — the box suggests anger, కాకి, koṇḍalu.",
+    "Scroll Browse proverbs and compare each sametha's Literally line with its Meaning line, the Telugu gloss and its theme tag.",
+    "Take the four-option Meaning quiz on whatever you have filtered to and watch the correct / attempted accuracy, or press Copy to keep the Sametha of the day.",
+  ],
   intro:
     "Telugu Samethalu Explorer is a searchable collection of 30 Telugu proverbs, each shown with an ISO 15919 transliteration, a strictly literal translation, the figurative sense it carries in real use, a Telugu gloss and the closest English proverb where one honestly exists. A sametha is a complete saying quoted unchanged, so the literal and figurative readings are kept apart — in most proverbs they are deliberately far from each other. A seeded four-option quiz draws both the question and its distractors from the same set.",
   useCases: [

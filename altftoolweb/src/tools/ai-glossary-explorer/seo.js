@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Glossary: 63 Machine Learning Terms Explained",
+  metaDescription:
+    "Search 63 AI and machine learning terms across eight areas — each with a one-line definition, a concrete example, related terms and a self-test quiz.",
+  steps: [
+    "Type into Search terms and definitions — overfitting, embedding, attention, bias — or narrow the 63 entries with the Area filter and the Level filter (Beginner, Intermediate, Advanced).",
+    "Open an entry for its one-line definition, longer explanation, worked Example, Also called aliases and Read next links, then walk sideways through Related terms or Mentioned by.",
+    "Press Copy entry to take the definition and example, or use Test yourself to answer a multiple-choice question and press Next question for another of the 63 terms.",
+  ],
   intro:
     "AI Glossary Explorer is a searchable, plain-English glossary of 63 artificial intelligence and machine learning terms, grouped into eight areas from foundations and deep learning through to evaluation, safety and deployment. Each entry gives a one-sentence definition that stands on its own, two or three sentences of detail, a concrete example rather than a restatement, and links to the terms worth reading next. A built-in multiple-choice quiz turns the same entries into self-testing, and every filter and lookup runs in the browser.",
   useCases: [

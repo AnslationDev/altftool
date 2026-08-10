@@ -1,4 +1,12 @@
 const seo = {
+  title: "Typing Speed Test Game: Gross WPM, Net WPM, Accuracy",
+  metaDescription:
+    "Type a randomly generated prompt and get gross WPM, net WPM, CPM and accuracy, scored on the 5-keystroke word; the timer starts on your first key.",
+  steps: [
+    "Pick a Test length in seconds and a Prompt length (words) between 5 and 400 to generate the prompt.",
+    "Type into the \"Type here\" box — the clock starts on your first keystroke and every character is marked correct or incorrect as you go.",
+    "When the prompt or the timer runs out, read Net words per minute alongside Gross WPM, CPM and Accuracy, then press Copy result, New prompt or Restart same prompt.",
+  ],
   intro:
     "The Typing Speed Game measures how fast and how accurately you type by timing you against a randomly generated prompt of common English words and scoring the run in words per minute. It uses the standard typing convention that one word equals five keystrokes including the space, so gross WPM is (characters typed ÷ 5) ÷ minutes and net WPM subtracts one word per minute for each uncorrected mistake. It is built for students, job applicants preparing for a typing test, and anyone tracking their own progress with a keyboard.",
   useCases: [

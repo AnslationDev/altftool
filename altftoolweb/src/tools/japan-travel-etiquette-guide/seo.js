@@ -1,4 +1,12 @@
 const seo = {
+  title: "Japan Travel Etiquette: Rules Ranked by Your Itinerary",
+  metaDescription:
+    "Tick the temples, trains, ryokan and restaurants on your trip and get the etiquette rules that apply, ranked by severity, plus a readiness score.",
+  steps: [
+    "Under \"Where will you actually be?\", tick the places on your itinerary — Temples and shrines, Restaurants and izakaya, Trains and city transport, Ryokan, onsen and public baths.",
+    "Set \"What kind of trip\" and \"How many rules to show\"; anything carrying a legal penalty is shown whatever you tick.",
+    "Work down \"Fix these first\", tick each rule you already know to raise the Etiquette readiness percentage, then press Copy briefing.",
+  ],
   intro:
     "This guide turns Japanese etiquette into a briefing for the specific places you will visit, ranking each rule by how much trouble getting it wrong actually causes. Tick the temples, restaurants, trains, ryokan, shops, homes, offices and streets on your itinerary and it returns the rules that apply, weighted by severity and by the kind of trip you are taking, plus a readiness score for the ones you already know. The underlying principle it teaches is the one Japanese public life runs on: do not impose on the people around you.",
   useCases: [

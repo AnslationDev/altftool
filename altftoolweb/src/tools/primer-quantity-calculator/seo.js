@@ -1,4 +1,12 @@
 const seo = {
+  title: "Primer Quantity Calculator: Litres, Tins and Cost",
+  metaDescription:
+    "Litres = area x coats / (spreading rate x absorbency), so AAC block at 0.60 needs far more than smooth plaster. Gives tins to buy, thinner and cost.",
+  steps: [
+    "Choose \"I know the area\" and type Surface to prime (sq ft), or \"Work it out from a room\" and enter Room length (ft), Room width (ft), Wall height (ft) and Doors and windows to deduct (sq ft).",
+    "Pick the Primer type, such as Interior wall primer (water-based) at 100-120 sq ft / L / coat, then the Surface being primed with its absorbency factor, the Coats, a Wastage allowance (%) and the Primer price (INR per litre).",
+    "Primer needed gives the litres and the tin combination to buy, with Coverage on this surface, a fewest-tins alternative, the thinner range and Cost per sq ft; Copy result saves the estimate.",
+  ],
   intro:
     "This calculator gives the litres of primer a job needs from the formula litres = area × coats ÷ (spreading rate × absorbency factor). The spreading rate is the figure printed on the tin — around 100-120 sq ft per litre per coat for Indian wall primers — and the absorbency factor scales it for what you are actually priming, so fresh cement plaster at 0.78 and AAC block at 0.60 use far more than the smooth plaster the published rate assumes. You also get the cheapest tin combination, the thinner range and the material cost.",
   useCases: [

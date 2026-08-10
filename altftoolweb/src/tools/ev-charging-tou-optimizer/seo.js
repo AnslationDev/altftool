@@ -1,4 +1,12 @@
 const seo = {
+  title: "EV Charging TOU Optimizer: Cheapest Window First",
+  metaDescription:
+    "Split a charge across time-of-use windows: energy grossed up by charging efficiency, hours at your kW rating, cheapest priced window filled first.",
+  steps: [
+    "Enter \"Energy needed at battery (kWh)\", \"Charger power (kW)\" and \"Charging efficiency (%)\" — the defaults are 45 kWh, 7.2 kW and 90%.",
+    "List your blocks in \"Tariff windows\", one per line as Start-end | price per kWh, such as 00:00-06:00 | 5.5.",
+    "The Window / Price per kWh / Hours / Grid kWh / Cost table fills the cheapest window first, and the caption reports any hours that do not fit.",
+  ],
   intro:
     "This optimizer works out the cheapest way to split an EV charging session across time-of-use tariff windows: it converts the energy you need at the battery into grid energy by dividing by your charging efficiency, turns that into hours at your charger's kW rating, then fills the cheapest priced window first and spills into the next cheapest until the hours are used up. It is for anyone on a TOU or day/night electricity tariff who wants to know what a full charge actually costs and whether it fits inside the off-peak block.",
   useCases: [

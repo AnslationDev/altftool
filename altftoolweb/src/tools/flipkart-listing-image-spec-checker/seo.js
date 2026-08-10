@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flipkart Image Spec Checker: 500px Min, 1500px Zoom",
+  metaDescription:
+    "Check a catalogue image before upload: 500 px minimum side, 1500 px recommended for zoom, a near-square crop, 80-90% frame fill and a white background.",
+  steps: [
+    "Enter the image Width and Height in pixels plus Product fill % and Margin %, and tick White background if the backdrop is clean white.",
+    "Adjust Product fill % and Margin % until the listed issues clear — the 500px minimum side, 1500px zoom recommendation and square-crop rule re-run on every keystroke.",
+    "Read the verdict, 'Looks catalogue-ready' or 'Needs edits' with each failing rule named, then press Copy to take the issue list.",
+  ],
   intro:
     "This checker tests a Flipkart catalogue image against the seller image guidelines before you upload it. It applies the size rules — at least 500 x 500 px, 1500 x 1500 px or larger recommended so zoom stays sharp, and a 5000 px ceiling — along with the primary-image rules: JPEG format, a plain white background, the product occupying roughly 85% of the frame, and no watermarks, borders, collages or promotional text. It also converts your frame fill into the margin left on each side, which is the number QC teams actually look at.",
   useCases: [

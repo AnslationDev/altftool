@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cold Email Prompt Builder: 50–125 Words, One Ask",
+  metaDescription:
+    "Writes an AI drafting prompt with one persona, one trigger event and exactly one ask, budgeting opener, value and ask inside 50-125 words.",
+  steps: [
+    "Fill the three text fields — 'Who the email is to (role and company type)', 'Who you are' and 'Concrete outcome you deliver' — which open with a Head of RevOps at a 200-person B2B SaaS company written to by a founder of a two-person data tooling startup.",
+    "Choose 'Trigger — why write today' from Raised funding, Started a new role, Published a post, talk or interview, Launched a product or feature, Hiring for a relevant role or 'No trigger — pure cold', add a 'Trigger detail (optional)', pick 'The one ask' (Short call, Interest question (reply-based), Offer a resource or Referral to the right person) and set 'Email length (words)', which accepts 40 to 200.",
+    "The panel scores your planned length against the 50-125 word band and lists the opener, value section and ask budgets, the reading time in seconds and the 40-character subject line cap, with the full text under 'Generated prompt'. 'Copy prompt' hands it to your model.",
+  ],
   intro:
     "The Cold Email Prompt Builder writes an AI drafting prompt for a single outreach email, sized in words and built around three things that decide whether it gets a reply: a specific persona, a real trigger event, and exactly one ask. It allocates your word budget across opener, value section and ask, and flags any length outside the roughly 50-125 word band that Boomerang's analysis of millions of email threads found responded best. Six trigger types and four ask types each swap a different structural instruction into the prompt.",
   useCases: [

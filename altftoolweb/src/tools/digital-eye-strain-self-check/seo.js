@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digital Eye Strain Self-Check: CVS-Q Score Out of 32",
+  metaDescription:
+    "Rate 16 screen-related eye symptoms by frequency and intensity using the published CVS-Q method — a total out of 32 against the cut-off of 6.",
+  steps: [
+    "Enter Screen hours per day (for context), then work down the 16 symptom cards — Burning, Itching, Feeling of a foreign body in the eye, Tearing or watering, Excessive blinking, Eye redness and the rest.",
+    "For each symptom pick How often (Never, Occasionally, or Often or always) and How strong (Moderate or Intense); the intensity dropdown stays disabled while frequency is Never, and the score updates as you go.",
+    "Read the CVS-Q total score out of 32 against the published cut-off of 6, with the band, symptoms reported, share of the maximum, your highest scoring symptoms and the Symptom breakdown table, then press Copy result.",
+  ],
   intro:
     "The Digital Eye Strain Self-Check scores 16 screen-related eye symptoms using the method published for the Computer Vision Syndrome Questionnaire (CVS-Q). Each symptom is rated for frequency (never, occasionally, often or always) and intensity (moderate or intense); the two are multiplied and recoded so every symptom contributes 0, 1 or 2 points, giving a total out of 32 with a cut-off at 6. It is a screening instrument used in occupational health research — it measures how much symptom burden you carry, not what is causing it.",
   useCases: [

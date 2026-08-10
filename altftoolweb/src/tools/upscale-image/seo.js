@@ -1,4 +1,12 @@
 const seo = {
+  title: "Upscale Image in Browser: Lanczos 3, Bicubic, 8x",
+  metaDescription:
+    "Enlarge a picture up to 8x with Lanczos 3, bicubic, bilinear or nearest-neighbour resampling, in the browser — nothing is uploaded. 40 megapixel cap.",
+  steps: [
+    "Choose a file under 'Image to enlarge' (the picker accepts any image/* file), then set Scale factor to 1.5x, 2x, 3x, 4x, 6x or 8x.",
+    "Pick a Resampling method — Lanczos 3, Bicubic (Catmull-Rom), Bilinear or Nearest neighbour — drag Sharpening up to 1.5, choose PNG (lossless), JPEG (smaller) or WebP as the Output format, and press 'Upscale image'.",
+    "Output size fills in with Output megapixels, Output file size, Method used and Scale applied beside an Original / Upscaled preview; 'Download upscaled image' saves it as name-1600x1200.png, and outputs over 40 megapixels are refused with a message.",
+  ],
   intro:
     "Upscale Image enlarges a picture in your browser by resampling it with a real reconstruction filter — Lanczos 3, bicubic Catmull-Rom, bilinear or nearest neighbour — rather than letting the browser stretch it. Each output pixel is a normalised weighted average of the source pixels around the matching position, with alpha handled in premultiplied form so transparent areas cannot bleed colour into opaque ones. It is for anyone who needs a larger version of a logo, screenshot or photo without sending the file to a server.",
   useCases: [

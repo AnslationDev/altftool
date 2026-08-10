@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Answer Presentation Checker: 18-Point Rubric",
+  metaDescription:
+    "Tick the presentation habits your written answers follow and get a weighted score out of 100 for structure, headings, diagrams, emphasis, legibility.",
+  steps: [
+    "Tick the habits your answers already follow in the Structure panel — a direct 1-2 line introduction, logical order, one point per paragraph, a closing conclusion, length matched to the marks.",
+    "Work through 'Headings & signposting', 'Diagrams & figures', 'Emphasis & underlining' and 'Legibility & layout'; each of the 18 items shows its own weight in brackets, from 5 pts for logical order down to 2 pts for margins.",
+    "Read the Presentation score percentage with its band, the earned/max points for each of the five categories, and the 'Biggest wins to fix first' list of the highest-weight unticked habits; press Copy result.",
+  ],
   intro:
     "This checker scores the presentation of a written exam answer out of 100 using an 18-point weighted checklist covering structure, headings and signposting, diagrams, underlining and legibility. The habits and their weights are condensed from recurring feedback in examiner reports and answer-writing guides, with answer structure weighted heaviest. Students preparing for university or board exams tick what their practice answers already do and get a category-by-category breakdown plus the highest-value habits to fix first.",
   useCases: [

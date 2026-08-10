@@ -1,4 +1,12 @@
 const seo = {
+  title: "Product Recall Watchlist: Search US CPSC Recalls",
+  metaDescription:
+    "Search the U.S. CPSC recall database by product word and get up to 50 notices with recall date, title, official recall number and the CPSC page link.",
+  steps: [
+    "Type a product word into the Lookup box — it opens on 'battery' — such as stroller, heater or charger.",
+    "Press 'Get current result'; the button reads 'Checking source…' while it queries the SaferProducts.gov CPSC recall web service by recall title.",
+    "'Current result' reports how many U.S. CPSC recall results came back with an Updated timestamp, then lists up to 50 rows of recall date, recall title, recall number and the CPSC URL, with the source shown underneath.",
+  ],
   intro:
     "This watchlist searches the U.S. Consumer Product Safety Commission's public recall database by recall title and returns the matching notices with their recall date, title, official recall number and a link to the CPSC page. Type a product word — battery, stroller, heater, charger — and you get the live CPSC records rather than a news write-up of them. It is for anyone checking whether something already in their home has been recalled, and it reads the regulator's own feed so the recall number you cite is the real one.",
   useCases: [

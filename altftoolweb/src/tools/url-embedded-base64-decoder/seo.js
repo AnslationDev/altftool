@@ -1,4 +1,12 @@
 const seo = {
+  title: "Base64 in URL Decoder: See a Link's Real Destination",
+  metaDescription:
+    "Scan a redirect link for base64, base64url and hex blobs, decode up to four layers, and reveal the target URL or your email. Nothing is fetched.",
+  steps: [
+    "Set 'What are you pasting?' to 'A whole link to scan' or 'A single base64 or hex string'.",
+    "Paste into the 'Link' box (its placeholder shows a track.example redirect) or the 'Encoded string' box; decoding runs as you type, with no button to press and no request made to the link.",
+    "Read 'What the link really points at', then 'Candidates examined' and 'Blobs that decoded to text', and work through the findings where each blob is tagged with its encoding plus 'contains a link', 'contains an address' or 'N layers deep'; press 'Copy result' to save it.",
+  ],
   intro:
     "Redirect and tracking links routinely carry their real destination — and often the recipient's email address — inside a base64 or hex blob. This tool tokenises a link three ways, tries it raw and percent-decoded, decodes anything that turns out to be readable UTF-8 text under RFC 4648 base64 or base64url, and keeps going when a result is itself encoded, up to four layers. It is the practical way to see where a shortened or wrapped link leads without requesting it, because everything is decoded locally in your browser.",
   useCases: [

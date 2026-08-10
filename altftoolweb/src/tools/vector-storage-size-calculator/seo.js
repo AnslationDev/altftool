@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vector Index Size Calculator With HNSW and IVF Overhead",
+  metaDescription:
+    "Size a vector index from count, dimensions and data type: adds HNSW graph links (M × 2 × 4 bytes/vector), IVF ids and centroids, metadata and replicas.",
+  steps: [
+    "Enter Number of vectors (or tap the 100K, 1M, 10M, 100M presets) and Dimensions per vector, then pick a Data type such as float32.",
+    "Choose HNSW or IVF as the Index type and set HNSW M (links per node), Metadata per vector (bytes) and Replicas (total copies).",
+    "Read the Estimated total index size in IEC units, broken into raw vector data, index overhead as a % of data, metadata and per replica.",
+  ],
   intro:
     "This calculator estimates the total storage a vector index needs from vector count, dimensions and data type: raw data is count × dimensions × bytes per dimension, and index overhead follows the Faiss sizing rules (HNSW adds M × 2 × 4 bytes of graph links per vector; IVF adds 8-byte ids plus a 4×√N centroid table, the conservative end of Faiss's recommended 4×√N-16×√N range). It is for engineers capacity-planning a Pinecone, Qdrant, Milvus, pgvector or Faiss deployment who need a defensible RAM and disk figure before provisioning.",
   useCases: [

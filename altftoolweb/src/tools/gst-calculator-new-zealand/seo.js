@@ -1,4 +1,12 @@
 const seo = {
+  title: "NZ GST Calculator: Add 15% or Remove It with 3/23",
+  metaDescription:
+    "Add 15% GST by multiplying by 1.15, or remove it with Inland Revenue's 3/23 rule. Includes historical rates and the NZ$60,000 registration check.",
+  steps: [
+    "Choose 'GST-exclusive (add GST)' or 'GST-inclusive (remove GST)', then enter the Amount (NZD) and Quantity.",
+    "Leave GST rate on '15% — standard rate (from 1 Oct 2010)' or pick 12.5%, 10% or the zero-rated option for older or exempt supplies; removing GST applies the inclusive price x 3 / 23.",
+    "Read Price excluding GST, GST at the selected rate, Price including GST and GST as a share of the inclusive price, then press Copy result — the turnover box below flags the NZ$60,000 registration threshold and your filing options.",
+  ],
   intro:
     "This calculator converts between GST-exclusive and GST-inclusive prices in New Zealand at the 15% rate imposed by section 8 of the Goods and Services Tax Act 1985. Adding GST multiplies the net price by 1.15; removing it uses Inland Revenue's published shortcut of multiplying the inclusive price by 3 and dividing by 23, which is 0.15/1.15 written exactly. It is built for sole traders, contractors and small businesses pricing work, checking a supplier invoice, or testing turnover against the NZ$60,000 registration threshold.",
   useCases: [

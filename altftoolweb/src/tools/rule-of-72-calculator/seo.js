@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rule of 72 Calculator: Years to Double vs Exact",
+  metaDescription:
+    "Divide 72 by your annual return for years to double, next to the exact logarithmic figure and the error between them, plus 3x, 4x and 8x milestones.",
+  steps: [
+    "Choose Calculation Mode — Years to Double or Required Rate — then set the Annual Rate of Return (%) or Target Years to Double (yrs), plus the Investment Amount in rupees.",
+    "Compare the Years to Double card (72 divided by the rate) with Exact Years from the logarithmic formula, and read Approx Error in years and percent; accuracy is best between 6% and 10%.",
+    "Check the 2x, 3x, 4x and 8x Investment Milestones and the Rate Comparison at 4, 6, 8, 10, 12 and 15%, then press Copy Summary or Export CSV to save rule-of-72-calculation.csv.",
+  ],
   intro:
     "The Rule of 72 Calculator estimates how long an investment takes to double by dividing 72 by the annual rate of return, and runs the same shortcut in reverse to find the rate needed to double within a target number of years. Alongside the shortcut it computes the exact answer from the compound formula, ln(2) ÷ ln(1 + r), and reports how far the approximation is off in years and as a percentage. It also charts the doubling, tripling, quadrupling and 8× milestones so you can see the whole compounding path rather than a single number.",
   useCases: [

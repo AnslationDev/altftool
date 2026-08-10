@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Release Calendar Planner: Record-By Dates",
+  metaDescription:
+    "Turn a first drop date, cadence and edit turnaround into every publish date with its edit-lock and recording deadline, plus batch sessions.",
+  steps: [
+    "Set \"First publish date\", pick a \"Release cadence\" — Weekly, Twice weekly, Every 2 weeks or Every 4 weeks — and enter \"Episodes in the season\".",
+    "Enter \"Episodes per recording session\", \"Edit turnaround (days)\" and \"Scheduled-early buffer (days)\", then set \"Mid-season break after episode (0 = none)\" and \"Break length (weeks)\".",
+    "Read the \"Episode grid\" columns Ep, Publishes, Edit locked and Recorded by, plus the \"Batch recording sessions\" table, then press \"Copy calendar\".",
+  ],
   intro:
     "The Podcast Release Calendar Planner turns a first-drop date, a cadence and your edit turnaround into a dated grid of every publish date plus the edit-lock and recording deadline that sits behind it. It works backwards from each release — recording deadline = publish date minus the scheduled-early buffer minus the edit turnaround — and groups episodes into batch recording sessions dated by the earliest deadline in each batch. Built for solo hosts and small production teams planning a season before the first guest is booked.",
   useCases: [

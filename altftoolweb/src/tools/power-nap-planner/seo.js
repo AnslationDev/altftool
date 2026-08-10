@@ -1,4 +1,12 @@
 const seo = {
+  title: "Power Nap Planner: Alarm Time, No Sleep Inertia",
+  metaDescription:
+    "Slow-wave sleep starts near 20 minutes in. Enter your window, sleep latency and bedtime to get a nap length, an alarm time and the grogginess to expect.",
+  steps: [
+    "Enter 'When you would lie down', 'When you must be sharp again', \"Tonight's intended bedtime\", 'Minutes you take to fall asleep' and 'Hours you slept last night'.",
+    "Compare 'Every option, side by side' — each nap length with its Alarm time, Grogginess in minutes and a Yes or No under Fits — and heed the alert when a nap ends within six hours of your bedtime.",
+    "'Set your alarm for' shows the recommended time, with Lie down at, Likely asleep by, Fully sharp again by and expected grogginess listed beneath it; Copy result copies the plan.",
+  ],
   intro:
     "The Power Nap Planner works out which nap length fits the time you have and what to set the alarm for, so you wake before slow-wave sleep rather than in the middle of it. Slow-wave sleep typically begins about 20 minutes into a nap, which is why a 10-20 minute nap leaves you clear-headed while a 30-45 minute one leaves you groggier than before — the effect known as sleep inertia. It also checks the nap against tonight's bedtime, since napping within six hours of bed bleeds off the sleep pressure you need to fall asleep.",
   useCases: [

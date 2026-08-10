@@ -1,4 +1,12 @@
 const seo = {
+  title: "Navratri Wishes by Night: Goddess, Colour, 5 Languages",
+  metaDescription:
+    "Pick one of the nine nights and get a greeting naming that night's Nava Durga form and colour, in Hindi, Marathi, Gujarati, English or Telugu.",
+  steps: [
+    "Choose Language — Hindi, Marathi, Gujarati, English or Telugu — and 'Which night?', from Day 1 Maa Shailaputri to Day 9 or 'Any night of the festival'.",
+    "Set 'Who is it for?' to Family & elders, Friends, Colleagues & clients or Status / caption, ask for 1 to 8 messages, and add their name and a sign-off.",
+    "Read the greeting with the night's goddess, colour and bhog plus characters and SMS parts, then press 'Copy all' or 'Shuffle wording' for new phrasing.",
+  ],
   intro:
     "The Navratri Wishes Generator writes a greeting for a specific night of the festival, naming that night's form of Durga and the colour associated with it, in Hindi, Marathi, Gujarati, English or Telugu. The nine goddesses follow the fixed Nava Durga order — Shailaputri, Brahmacharini, Chandraghanta, Kushmanda, Skandamata, Katyayani, Kalaratri, Mahagauri and Siddhidatri — while the colour list is the popular convention that rotates each year. Messages are tagged by audience so a client greeting never reads like a garba caption.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hindu Baby Name Finder by Nakshatra, Pada & Meaning",
+  metaDescription:
+    "Pick a nakshatra and pada to get names starting with that syllable, each shown with its Sanskrit root in IAST, its meaning and its linked deity.",
+  steps: [
+    "Choose 'Starting letter' or 'Nakshatra & pada', then set the 'Nakshatra (birth star)' and the 'Pada (quarter)'.",
+    "Narrow the list with the Gender, 'Linked deity or figure' and 'Meaning contains' filters.",
+    "Read the Matching names table — Name, Sanskrit root, Meaning and Deity / figure — and press 'Copy list' to take it away.",
+  ],
   intro:
     "This finder lists Hindu baby names with the Sanskrit word each one comes from, the meaning, and the deity or epic figure the name is linked to. It also carries the traditional namakaran chart: the zodiac's 360 degrees split into 27 nakshatras of 13 degrees 20 minutes each, every nakshatra divided into four padas, and each pada carrying a starting syllable for the child's name. Pick a nakshatra and pada and the list narrows to names beginning with those syllables, or simply browse by letter, gender, deity or a word in the meaning.",
   useCases: [

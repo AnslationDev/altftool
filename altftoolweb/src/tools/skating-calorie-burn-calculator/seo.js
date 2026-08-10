@@ -1,4 +1,12 @@
 const seo = {
+  title: "Skating Calorie Burn Calculator: MET by Discipline",
+  metaDescription:
+    "Inline, quad, ice and speed skating calories from your km/h and minutes, matched to the Compendium MET row for that discipline and pace.",
+  steps: [
+    "Choose a \"Discipline\" — Inline skating / rollerblading, Ice skating (recreational), Quad roller skating / rink session, or Competitive speed skating.",
+    "Enter \"Body weight (kg)\", \"Average skating speed (km/h)\" and \"Time skating (minutes)\"; for inline and ice the speed selects the nearest published intensity row.",
+    "Read the calories burned with \"Matched Compendium row\", \"Intensity used\" in METs, \"Distance covered\" and \"Energy per km\", then press \"Copy result\".",
+  ],
   intro:
     "The Skating Calorie Burn Calculator estimates the energy cost of inline, quad and ice skating from your average speed and time on the skates, using the ACSM equation kcal/min = MET x 3.5 x body mass in kg / 200. Intensity comes from the 2011 Compendium of Physical Activities rows measured for each discipline: 7.5, 9.8, 12.3 and 14.0 METs for in-line skating at 9, 11, 13 and 15 mph, 5.5 METs for ice skating at 9 mph or less and 9.0 METs above that, 7.0 METs for quad roller skating and 13.3 METs for competitive speed skating.",
   useCases: [

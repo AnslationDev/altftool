@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unix Timestamp Converter: Epoch to Local, UTC and ISO",
+  metaDescription:
+    "Paste epoch seconds or milliseconds — over 10 digits is read as ms — and get local time, UTC, ISO 8601 and your offset in minutes. Converts back too.",
+  steps: [
+    "Paste the value into the Unix timestamp field — anything longer than 10 digits is read as milliseconds and anything shorter as seconds — or press Now to load the current instant.",
+    "To go the other way, pick a moment in the Date and time picker; it writes the matching epoch seconds straight back into the timestamp field.",
+    "The panel shows Seconds, Milliseconds, Local time, UTC time, ISO 8601 and Timezone offset in minutes side by side; Copy seconds puts the integer on the clipboard.",
+  ],
   intro:
     "The Unix Timestamp Converter turns an epoch value — seconds or milliseconds since 1970-01-01 00:00:00 UTC — into six readable forms at once: seconds, milliseconds, your local time, the UTC string, ISO 8601, and your current UTC offset in minutes. It detects the unit automatically, treating any value longer than 10 digits as milliseconds and anything shorter as seconds, so you can paste a log value without stopping to count zeros. The conversion runs both ways: pick a date and time and it gives you back the epoch seconds to copy.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Production Budget Calculator with GST and Fee",
+  metaDescription:
+    "Crew day rates, gear rental, post hours and flat costs, then contingency, production fee and 18% GST. Shows cost per finished minute and shoot day.",
+  steps: [
+    "Fill the Crew and 'Gear and rental' sections — Line item, Day rate (INR), Days and Quantity on each row — using Add line for extra rows.",
+    "Enter 'Edit, grade and mix hours' with the Post hourly rate (INR), add any 'Other flat costs', then set Contingency (%), Production fee (%), GST / sales tax (%), Finished runtime (minutes) and Shoot days.",
+    "Read the 'Grand total including tax' with the line-by-line build-up — direct costs, contingency, production fee, pre-tax total, tax, cost per finished minute and cost per shoot day — then press Copy result.",
+  ],
   intro:
     "The Video Production Budget Calculator builds a quotable total from four cost blocks — crew day rates, gear rental, post-production hours and flat costs — then applies contingency, a production fee and tax in the order production companies actually quote them. Contingency is added to direct costs first, the fee is charged on that combined base, and tax is applied last to the pre-tax total. It also divides the result into a cost per finished minute and a cost per shoot day so you can sanity-check a quote against past jobs.",
   useCases: [

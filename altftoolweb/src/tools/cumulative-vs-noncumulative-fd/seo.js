@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cumulative vs Non-Cumulative FD: Payout, Break-Even",
+  metaDescription:
+    "Compare quarterly compounding with monthly, quarterly, half-yearly or annual payouts at the same rate, plus the break-even reinvestment rate and TDS.",
+  steps: [
+    "Enter the Deposit amount (INR), the Interest rate (% per year) and the Tenure (years, 1 to 10).",
+    "Pick the 'Payout frequency on the non-cumulative option' — Monthly, Quarterly, Half-yearly or Annually — set the rate you would reinvest payouts at (0 if the income is spent) and your marginal slab rate, and tick the resident senior citizen box for the higher TDS threshold.",
+    "Read what compounding is worth over the term, the actual payout beside the cumulative maturity value, the Break-even reinvestment rate, and the TDS and post-tax value of each structure; press Copy result.",
+  ],
   intro:
     "This comparator puts a cumulative fixed deposit, which leaves interest inside the deposit to compound quarterly at P x (1 + r/4)^(4n), beside a non-cumulative deposit that pays the same interest out monthly, quarterly, half-yearly or annually. It shows the payout you would actually receive, the total the compounding option earns instead, and — solved numerically — the reinvestment rate at which the payout route catches up. It is for savers choosing between an income deposit and a growth deposit at the same bank and rate.",
   useCases: [

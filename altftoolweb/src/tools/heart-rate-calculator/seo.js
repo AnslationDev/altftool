@@ -1,4 +1,7 @@
 const seo = {
+  title: "Heart Rate Zone Calculator: Tanaka & Karvonen bpm",
+  metaDescription:
+    "Max HR from the Tanaka formula (208 − 0.7 × age), then five training zones in bpm — Karvonen heart-rate reserve if you add resting HR.",
   intro:
     "This calculator estimates your maximum heart rate with the Tanaka formula — 208 minus 0.7 times your age — and turns it into five training zones in beats per minute. Enter age alone and the zones are plain percentages of max HR; add your resting heart rate and it switches to the Karvonen method, which works from heart rate reserve (max minus resting) so the numbers reflect your own conditioning. It is for runners, cyclists and gym users who want real bpm targets to program into a watch instead of a vague 'moderate effort'.",
   useCases: [

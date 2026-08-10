@@ -1,4 +1,12 @@
 const seo = {
+  title: "Duplicate Marksheet Application Letter & Affidavit",
+  metaDescription:
+    "Draft the board or university application, a notarised-affidavit skeleton and a checklist that changes with the reason — lost, stolen or damaged.",
+  steps: [
+    "Fill in Full name (as on the marksheet), Roll / enrolment number, Examination name, Year of examination and Board / university.",
+    "Pick who the letter is 'Addressed to' and the 'Reason the original is unavailable' — lost or stolen reveals a Police complaint / FIR number field and adds the FIR to the checklist, while damaged asks you to surrender the original instead.",
+    "Press Copy letter to send to the office and Copy affidavit to take to the notary; 'Document checklist for this reason' lists every attachment that applies.",
+  ],
   intro:
     "This helper drafts the three things a duplicate marksheet application needs: the formal request letter to the board or university, a notarised-affidavit skeleton, and the supporting-document checklist — which changes with the reason the original is unavailable. A lost or stolen marksheet normally needs a police complaint or FIR plus an affidavit on non-judicial stamp paper, while a damaged marksheet is surrendered with the application instead. It is built for students and graduates replacing a board or university marksheet.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "File Metadata Explorer: Magic Bytes, EXIF, CRC-32",
+  metaDescription:
+    "Reads a file's header bytes in your browser: magic-number format, EXIF tags, pixel size, CRC-32 and entropy — and flags a wrong extension.",
   intro:
     "The File Metadata Explorer reads a file's actual header bytes and reports what they say: the magic number that identifies the true format, image width and height from the PNG IHDR or JPEG SOFn header, EXIF camera tags, MPEG audio frame values, PDF version and page count, plus a CRC-32 checksum and Shannon entropy. It is built for anyone who needs to verify a file rather than trust its name — an extension can say .jpg while the bytes say PNG. Parsing runs entirely in the browser through the File API, so nothing is uploaded.",
   useCases: [

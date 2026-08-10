@@ -1,4 +1,12 @@
 const seo = {
+  title: "Desert Hydration Calculator: Water and Sodium Needs",
+  metaDescription:
+    "Fluid and sodium replacement for hot dry air, from weight, temperature, humidity and hours out. Warns above the 1.5 L per hour absorption ceiling.",
+  steps: [
+    "Enter Body weight (kg), Hours in the heat, Air temperature (C) and Relative humidity (%), then set the Activity level.",
+    "Tick 'Heat acclimatised' after two or more weeks of daily exposure, and 'Salty sweater' if you get white salt marks on skin or kit.",
+    "Read the total fluid for the day, the sip size every 15 minutes, the sodium to replace, and the hour-by-hour drinking plan table.",
+  ],
   intro:
     "The Desert Climate Hydration Calculator estimates how much fluid and sodium you need to replace during exposure to hot, very dry air, by adding heat-scaled sweat loss and dry-air respiratory loss on top of a 35 mL/kg daily maintenance baseline. It reports a per-hour drinking rate, a sip size every 15 minutes, and the sodium carried out in that sweat using ACSM's 200-2000 mg per litre sweat sodium range. It is aimed at desert hikers, pilgrims, outdoor workers and anyone travelling somewhere the humidity sits below 20 percent.",
   useCases: [

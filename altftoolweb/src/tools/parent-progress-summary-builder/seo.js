@@ -1,4 +1,12 @@
 const seo = {
+  title: "Parent Progress Summary: Marks, Grade, Attendance",
+  metaDescription:
+    "Turn subject marks and attendance into a copy-ready summary: weighted percentage, A1-E grade band, the 75% attendance check, strengths and focus areas.",
+  steps: [
+    "Enter Student name, Term / exam label and Attendance (%), then fill each subject's Marks obtained and Maximum marks.",
+    "Press 'Add subject' for extra rows; the overall figure is total obtained over total maximum, graded on the 10-point A1 to E bands.",
+    "Read the overall grade, strengths at 75%+ and focus areas below 60%, then press Copy summary to paste the one-page text.",
+  ],
   intro:
     "This tool converts a student's subject-wise marks and attendance percentage into a plain-language, one-page progress summary a parent can read in a minute. The overall score uses the weighted percentage (total obtained over total maximum), grades follow the 10-point bands common on Indian report cards (A1 for 91-100 down to E below 33), and attendance is checked against the widely used 75% minimum for exam eligibility. Teachers, tutors and parents get a copy-ready text block with strengths and focus areas already picked out.",
   useCases: [

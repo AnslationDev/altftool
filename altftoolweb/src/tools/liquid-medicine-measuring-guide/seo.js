@@ -1,4 +1,12 @@
 const seo = {
+  title: "Liquid Medicine Dose: mg to mL and the Right Syringe",
+  metaDescription:
+    "Divide the prescribed mg by the bottle mg/mL to get the volume, pick the smallest oral syringe that holds it, and see what the nearest mark delivers.",
+  steps: [
+    "Choose whether the prescription gives the dose in Milligrams (mg) or Millilitres (mL), then enter it along with the Strength on the bottle.",
+    "Set \"Strength is written as\" to mg per 5 mL or mg per mL to match the label, and add Doses per day, Bottle size and Body weight if you have them.",
+    "Read \"Fill the syringe to\" for the millilitres and syringe size, check \"Actually delivered at that marking\" for the rounding error, then press Copy result.",
+  ],
   intro:
     "The Liquid Medicine Measuring Guide converts a prescribed dose into the millilitres you actually draw up, using the proportion volume = dose in mg divided by concentration in mg per mL. It picks the smallest oral syringe that holds the dose in one draw, rounds to that syringe's printed graduation, and shows how many milligrams the rounded marking really delivers. It exists because household teaspoons have been measured anywhere from 2.5 mL to over 7 mL, which is why medicines-safety bodies insist on millilitres and a syringe.",
   useCases: [

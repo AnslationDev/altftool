@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hypothermia Checklist: Swiss HT I-IV Field Staging",
+  metaDescription:
+    "Stage a casualty HT I to HT IV from what you can see, get the rewarming steps in order, the time back to 35 C and the wind chill. Not medical advice.",
+  steps: [
+    "Under 'What you can see', pick the casualty's state from 'Alert, talking, shivering' to 'No normal breathing, no pulse found'.",
+    "Fill in Core temperature (°C, if measured), Air temperature (°C) and Wind speed (km/h), tick 'Clothing is still wet', then choose from 'Rewarming available right now'.",
+    "Read the rewarming time to 35 °C with the Swiss stage, work through 'Do this, in this order' and 'Never do these', then press Copy plan.",
+  ],
   intro:
     "Hypothermia is a core body temperature below 35 °C (95 °F), and the Swiss staging system grades it from HT I to HT IV using signs a rescuer can see without a thermometer: shivering and alert, drowsy with shivering stopped, unconscious with vital signs, and no vital signs at all. This checklist stages the casualty, orders the rewarming actions for that stage, estimates how long each rewarming method needs to get back above 35 °C, and computes the 2001-standard wind chill and frostbite risk for the conditions you are working in.",
   useCases: [

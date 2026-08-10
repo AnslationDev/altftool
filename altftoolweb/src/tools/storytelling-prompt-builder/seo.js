@@ -1,4 +1,12 @@
 const seo = {
+  title: "Storytelling Prompt Builder: 4 Classic Narrative Arcs",
+  metaDescription:
+    "Turns a premise into a full AI writing prompt on a three-act, Hero's Journey, Freytag or kishōtenketsu arc, with POV, tone, pacing and ending fixed.",
+  steps: [
+    "Type your one-line premise into \"Story premise (required)\", then optionally name the protagonist, setting, genre and themes.",
+    "Choose the Narrative arc — Three-act structure (Syd Field), Hero's Journey (Campbell / Vogler), Freytag's pyramid or Kishōtenketsu — plus point of view, tone, pacing, a Resolved, Ambiguous or Twist ending, and a target of Flash fiction (~1,000 words), Short story (~3,000) or Long short story (~6,000).",
+    "The \"Generated prompt\" panel expands the arc into numbered beats with the craft constraints attached and reports the arc label, beat count, prompt word and character count and an estimated token count; \"Copy prompt\" puts it on the clipboard to paste into your model.",
+  ],
   intro:
     "The Storytelling Prompt Builder turns a one-line premise into a complete fiction-writing prompt with a real narrative arc, point of view, tone, pacing and ending baked in. It structures the story around classic frameworks — Syd Field's three-act structure, the Campbell/Vogler Hero's Journey, Freytag's pyramid or kishōtenketsu — and adds craft constraints such as show-don't-tell and consistent viewpoint. It is built for writers, hobbyists and game designers who want AI story drafts with proper structure instead of meandering output.",
   useCases: [

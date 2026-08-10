@@ -1,4 +1,12 @@
 const seo = {
+  title: "Visual Working Memory Test: 5 Rounds, 500 Points",
+  metaDescription:
+    "A change-localisation task: shapes flash for 1-3 seconds, then click where they were. Five rounds out of 500 points, and it reports your memory span.",
+  steps: [
+    "Pick a difficulty on the intro screen — Beginner (2-4 items, 3x3 grid, 3 seconds), Easy (3-5, 4x4, 2 seconds), Medium (4-7, 4x4, 1.5 seconds) or Hard (5-9, 5x5, 1 second) — then press \"Start Memory Test\".",
+    "After the countdown the coloured shapes flash for that level's display time; once the grid clears, click every cell a shape occupied and press \"Submit Answer\" — the recall phase is untimed.",
+    "Cells turn green for correct, red for wrong and orange for missed, and after 5 rounds \"Test Complete!\" reports your score out of 500, your memory span in items, best streak and correct rounds.",
+  ],
   intro:
     "The Visual Working Memory Test is a five-round change-localisation task: coloured shapes flash on a grid for between 1 and 3 seconds depending on difficulty, the grid clears, and you click the cells where they were. Each round scores as the percentage of target cells you recovered, out of 500 points total, and the result reports your memory span — the largest set size you recalled with no misses and no false clicks. It is a self-test and a game for anyone curious about their own visual span, not a clinical or diagnostic instrument.",
   useCases: [

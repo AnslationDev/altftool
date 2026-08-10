@@ -1,4 +1,12 @@
 const seo = {
+  title: "IFSC Code Validator: Check Format, Bank and Branch",
+  metaDescription:
+    "Tests an IFSC against the RBI pattern — 4 letters, a 0, then 6 alphanumerics — then splits bank prefix from branch code. Catches O-for-zero typos.",
+  steps: [
+    "Type or paste the code into the 'IFSC code' field, or load the 'HDFC example' or 'SBI example' preset.",
+    "Leave 'Normalize input' on so spaces are removed and the code is upper-cased before the 4 letters + 0 + 6 alphanumerics test runs.",
+    "The result reads 'Structurally valid IFSC' or 'Invalid IFSC structure', with rows for Normalized, Bank prefix, Bank and Branch identifier.",
+  ],
   intro:
     "The IFSC Decoder & Validator checks an Indian Financial System Code against the RBI's 11-character structure — four letters for the bank, a reserved 0 in the fifth position, then six letters or digits for the branch — and splits out the bank prefix and branch identifier. It normalises what you paste by stripping spaces and upper-casing, then names the bank for 14 common prefixes such as SBIN, HDFC, ICIC and UTIB. Anyone typing an IFSC into a NEFT, RTGS or IMPS form can catch a malformed code before the transfer is attempted.",
   useCases: [

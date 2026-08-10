@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tablet Strength Split Calculator: Halves and Quarters",
+  metaDescription:
+    "Divide a target dose by your tablet strength and round to whole, half or quarter tablets, with the nearest dose below and above and days of supply.",
+  steps: [
+    "Enter 'Target dose (mg)' and 'Tablet strength (mg)'.",
+    "Choose 'How the tablet can be divided' — 'Not splittable — whole tablets only', 'Single score line — halves' or 'Cross score — quarters' — and optionally fill 'Doses per day (optional)' and 'Tablets in the pack (optional)'.",
+    "Read 'Tablets per dose' with its 'Exact match' or 'No exact match with these pieces' badge, then 'Difference from target' in mg and percent, 'Nearest below target', 'Nearest above target' and 'Days a pack lasts', and press 'Copy result'.",
+  ],
   intro:
     "The Tablet Strength Split Calculator divides a target dose by the strength of the tablets you actually have, then rounds that figure to the pieces the tablet can be broken into — whole tablets, halves from a single score line, or quarters from a cross score. It reports the closest achievable dose, the nearest option below and above it, how far each is from the target in milligrams and percent, and how long a pack will last. It is arithmetic for checking a prescribed dose, not permission to split any particular tablet.",
   useCases: [

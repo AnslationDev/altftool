@@ -1,4 +1,12 @@
 const seo = {
+  title: "X (Twitter) 2FA Setup: Security Key, App or SMS",
+  metaDescription:
+    "Enable X two-factor authentication under Settings and privacy, Security and account access. SMS needs a paid plan; save the single backup code.",
+  steps: [
+    "Choose Security key, Authentication app or Text message (SMS), and tick the paid X subscription box — X has limited SMS 2FA to subscribers since 20 March 2023.",
+    "Work down the Setup checklist, ticking each item; every step shows its Path, such as Settings and privacy, Security and account access, Security, plus a minute estimate.",
+    "Watch the Account readiness score out of 100 as you save the single backup code, revoke connected apps and end old sessions, then press Copy result for what is still outstanding.",
+  ],
   intro:
     "This guide takes you through switching on two-factor authentication for an X (formerly Twitter) account under Settings and privacy, Security and account access, Security, Two-factor authentication — and then scores what is still exposed. X offers three methods there: security key, authentication app and text message, with text message restricted to paid subscribers since March 2023. The checklist also covers the single backup code, password reset protect, old sessions and the connected apps that keep working after a password change.",
   useCases: [

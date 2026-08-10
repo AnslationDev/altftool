@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Air Filter Reminder: Next Change Date and Cost",
+  metaDescription:
+    "Both filter limits applied — rated hours and calendar months — shortened for your AQI band and pets, with the next change dated and the yearly cost.",
+  steps: [
+    "Pick the 'Appliance' — Room air purifier or Split or window air conditioner — and set 'Hours run per day', 'Typical outdoor air quality' (the CPCB bands from Good to Severe) and 'Power draw (watts)'.",
+    "Tick anything under 'Indoor sources that clog filters faster' — pets, smoking or incense, construction, open-kitchen frying — and give each filter a date under 'When was each filter last changed or washed?'.",
+    "Read the yearly cost with the 'Filter schedule' table giving the interval in days, the next-due date and cost per filter, plus the AHAM two-thirds CADR check on a purifier; 'Copy plan' saves the summary.",
+  ],
   intro:
     "This tracker converts a filter's dual rating — so many running hours or so many months, whichever comes first — into a real replacement date for your usage, and totals what the appliance costs to run for a year. Filter life is shortened by a loading factor built from the CPCB National AQI band outside plus indoor sources like pets, indoor smoking and nearby construction. For purifiers it also checks size against AHAM's two-thirds rule, where CADR in CFM should be at least two-thirds of the room's floor area for an 8 ft ceiling.",
   useCases: [

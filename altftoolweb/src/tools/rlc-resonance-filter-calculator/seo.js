@@ -1,4 +1,12 @@
 const seo = {
+  title: "RLC Resonance Calculator: Q Factor and Bandwidth",
+  metaDescription:
+    "Enter R in ohms, L in mH and C in µF for a series or parallel RLC circuit: resonant frequency, Q factor, −3 dB bandwidth and √(L/C) impedance.",
+  steps: [
+    "In the Inputs panel type Resistance R (Ω), Inductance L (mH) and Capacitance C (µF), or tap the '50 Ω · 10 mH · 1 µF' example chip to load them.",
+    "Set Topology to Series RLC or Parallel RLC approximation — the result recomputes on every keystroke, so there is nothing to submit; Reset restores R 50, L 10 and C 1.",
+    "Read the headline resonance in Hz plus Angular frequency, Q factor, Bandwidth, Approx. lower / upper and Characteristic impedance, then use Copy or Download to save rlc-resonance-filter-calculator.txt.",
+  ],
   intro:
     "This calculator returns the resonant frequency of an RLC circuit as f₀ = 1 / (2π√(LC)), then the Q factor, −3 dB bandwidth, approximate lower and upper corner frequencies and the characteristic impedance √(L/C) for either a series or a parallel topology. Enter resistance in ohms, inductance in millihenries and capacitance in microfarads and it handles the unit conversion. Q is computed as √(L/C)/R for series and R·√(C/L) for parallel, which is why the same three components give very different selectivity in the two arrangements.",
   useCases: [

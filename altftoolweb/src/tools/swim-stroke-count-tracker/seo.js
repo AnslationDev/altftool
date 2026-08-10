@@ -1,4 +1,12 @@
 const seo = {
+  title: "Swim Stroke Count Tracker: Distance per Stroke, Drift",
+  metaDescription:
+    "Log the strokes in each length of a 25, 33.3 or 50 m pool and get the average, spread, distance per stroke and first-to-second-half drift.",
+  steps: [
+    "Type each length's count into 'Strokes in each length, in order', separated by commas, spaces or new lines, and pick Pool length (m): 25, 33.3 or 50.",
+    "Poolside, put the latest count in 'Strokes in the length you just swam' and press 'Log length', or 'Undo last' to drop a mistake.",
+    "Read the average strokes per length with distance per stroke in metres, spread, standard deviation and the drift across the set, then press 'Copy summary'.",
+  ],
   intro:
     "Stroke count per length is the standard pool-side measure of swimming efficiency, and distance per stroke is simply the pool length divided by the strokes taken in it. This tracker logs the count for every length of a set, then reports the average, the highest and lowest, the standard deviation and the percentage drift between the first and second half — the figure that shows whether your stroke is shortening as you tire. It is designed to be compared against your own earlier sessions at the same pace, not against anyone else.",
   useCases: [

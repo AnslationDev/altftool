@@ -1,4 +1,12 @@
 const seo = {
+  title: "Second Car Affordability Checker: 20/4/10 and EMI",
+  metaDescription:
+    "Runs a second vehicle through six tests: 20% down, 4-year loan, transport under 10% of gross income, EMI ratio, emergency fund months and parking.",
+  steps: [
+    "Enter Gross monthly income (INR), Other loan EMIs — home, personal (INR), and the Existing vehicle EMI and running cost per month.",
+    "Add the Second vehicle on-road price, Down payment, Loan interest rate (% a year), Loan tenure (years), the new running cost, Liquid savings today, Monthly household expenses, Parking slots you own and Vehicles you will own after this.",
+    "The headline gives what the second vehicle costs a month as EMI plus running, and The six tests marks each benchmark pass, warn or fail with the figure and the fix; Copy result saves the verdict.",
+  ],
   intro:
     "This second car affordability checker tests a proposed vehicle purchase against six benchmarks at once: the 20/4/10 rule (at least 20% down, no more than a four-year loan, and all transport costs under 10% of gross income), your total EMI-to-income ratio against the 40% comfortable level and the roughly 50% lender cap, how many months of household expenses your emergency fund still covers after the down payment, and whether you own a parking slot for every vehicle. The EMI itself uses the standard reducing-balance formula.",
   useCases: [

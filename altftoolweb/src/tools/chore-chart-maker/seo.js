@@ -1,4 +1,7 @@
 const seo = {
+  title: "Chore Chart Maker: Round-Robin Rota for Any Household",
+  metaDescription:
+    "Deals chores out round-robin — chore 1 to person 1, wrapping back at the end — so any two people differ by at most one chore. Same lists, same chart.",
   intro:
     "The Chore Chart Maker takes a list of chores and a list of people and deals the chores out round-robin, so chore number 1 goes to the first person, chore 2 to the second, and the count wraps back to the start once everyone has one. It is built for households, flatshares and classrooms that want an assignment nobody can argue with, and it returns a two-column chart of every chore next to the name it landed on. Because the order is fixed by position rather than chosen at random, the same two lists always produce the same chart.",
   useCases: [

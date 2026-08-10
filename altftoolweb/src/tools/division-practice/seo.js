@@ -1,4 +1,10 @@
 const seo = {
+  title: "Division Practice: Timed Sets with Worked Steps",
+  steps: [
+    "Choose a Division Type — Basic Division, Long Division, Division with Remainders, Decimal Division, Large Number Division or Mixed Practice — and a Difficulty Level from Beginner (Divisors 1-10) to Expert (Divisors 12-99).",
+    "Set Number of Questions to 10, 15, 20, 30 or 50, press 'Start Practice', then type each answer (remainder questions take the 'quotient R remainder' form) and press Submit, with Hint, Show Steps and Skip beside it.",
+    "The results screen gives Accuracy, Correct and Avg Time with a question-by-question review reading 'Your answer: … | Correct: …', and 'Practice Again' starts a fresh set.",
+  ],
   intro:
     "Division Practice generates timed sets of division questions — basic facts, long division, division with remainders, decimal division and large numbers — and marks each answer as you type it, with a step-by-step worked solution shown when you get one wrong. Five difficulty bands set the divisor range, from beginner (divisors 1-10) up to expert (divisors 12-99), and sets run to 10, 15, 20, 30 or 50 questions. Accuracy, streaks and time per question are saved in the browser so a student can see progress across sessions.",
   useCases: [

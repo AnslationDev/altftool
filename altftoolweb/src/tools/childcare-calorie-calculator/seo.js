@@ -1,4 +1,12 @@
 const seo = {
+  title: "Childcare Calorie Calculator: 2.0–4.0 MET, Gross & Net",
+  metaDescription:
+    "Calories burned looking after children from MET x 3.5 x kg / 200 — five intensities from 2.0 to 4.0 MET, with net calories and a weekly total.",
+  steps: [
+    "Enter 'Body weight (kg)' and 'Minutes per session', which start at 70 and 60, because the MET equation multiplies kilograms by minutes.",
+    "Pick the intensity under 'Childcare activity': Light supervision / feeding (2.0 MET), Bathing, dressing, light care (2.5 MET), General childcare, active standing (3.0 MET), Playing with children, moderate effort (3.5 MET) or Carrying child / active play (4.0 MET), then set 'Sessions per week', which starts at 7.",
+    "The 'Childcare calorie estimate' panel updates live with the intensity in MET, the burn rate in kcal/min, the session burn as gross kcal with net kcal in brackets, and the weekly estimate. 'Copy output' puts those four lines on the clipboard.",
+  ],
   intro:
     "Looking after children burns real energy, and this calculator quantifies it with the standard MET equation: calories per minute = MET x 3.5 x body weight in kg / 200. You pick the kind of care — from light supervision at 2.0 MET up to carrying a child and active play at 4.0 MET — enter your weight, the minutes per session and sessions per week, and get the burn rate, the session total and a weekly figure. It reports both gross calories and net calories, the latter subtracting the 1 MET you would have burned sitting still anyway.",
   useCases: [

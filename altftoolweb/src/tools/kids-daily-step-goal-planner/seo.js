@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Daily Step Goal by Age and Sex, With WHO Minutes",
+  metaDescription:
+    "Paediatric pedometer targets — 13,000 steps a day for boys 6-11, 11,000 for girls — plus the WHO 60-minute goal and play minutes to close the gap.",
+  steps: [
+    "Enter Age (years), pick Boy or Girl under Step standard, then Steps so far today and Active minutes so far today.",
+    "The Daily step target appears with the published range for that age band, next to the WHO active-minute goal and strength-play days.",
+    "Read the Ways to finish the day on target table for the minutes each activity needs, then press Copy plan.",
+  ],
   intro:
     "The Kids Daily Step Goal Planner sets a child's step target from published paediatric pedometer standards rather than the adult 10,000-step rule, and pairs it with the WHO physical activity goal of 60 minutes of moderate-to-vigorous activity a day for ages 5 to 17. For ages 6 to 11 it uses the BMI-referenced standards of 13,000 steps a day for boys and 11,000 for girls; adolescents get 11,000, the mid-point of the published 10,000 to 11,700 range. It then converts whatever is left into minutes of walking, skipping, tag or dancing.",
   useCases: [

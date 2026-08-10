@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salary Slip Generator: Payslip with Net Pay in Words",
+  metaDescription:
+    "Build a monthly payslip from your own earning and deduction heads, prorate by paid days, and get gross, deductions and net pay spelled out in words.",
+  steps: [
+    "Enter Company name, Pay month, Employee name, Employee ID, Designation and Department, plus optional PAN, UAN and Bank account.",
+    "Set Days in month and Paid days, tick 'Prorate earnings for loss of pay' so each earning head scales by paid days / days in month, then edit the Earnings and Deductions rows or press Add row for another head.",
+    "The slip totals Gross earnings, Total deductions and Net pay with the amount written out in words; press Copy result, or Print to save it as a PDF.",
+  ],
   "intro": "Salary Slip Generator builds a clean monthly payslip from earning and deduction heads you control. Add or rename rows like basic, HRA, conveyance, provident fund, professional tax or TDS, set the paid days so earnings prorate automatically for loss of pay, and the tool totals gross earnings, total deductions and net pay — with the net amount spelled out in words the way Indian payslips show it. Useful for small employers, HR teams without payroll software, and anyone who needs a tidy payslip copy to print or save as PDF.",
   "useCases": [
     "Issue payslips for a small team when the accounting software does not produce them.",

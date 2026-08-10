@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Trimmer: Cut MP4, MOV or WebM in Your Browser",
+  metaDescription:
+    "Trim MP4, MOV, WebM, MKV, AVI or M4V with in-browser FFmpeg: Fast Trim stream-copies at a keyframe, Precise Trim re-encodes at CRF 18-32.",
+  steps: [
+    "Press Select Video, or drag an MP4, MOV, WebM, MKV, AVI or M4V onto the dashed panel — the badge reads 'No server upload' because the file is read in the page.",
+    "Set the range with the Start and End sliders, the Start seconds / End seconds boxes or the Set Start and Set End buttons that snap to the playhead, use Play Selection to check it, then pick Fast Trim or Precise Trim (with its CRF 18-32 slider), choose MP4, WebM or Original, toggle Keep audio, and press Trim Video.",
+    "Press Download Clip to save the result, named from the source with the range appended — for example holiday-00-00-05-to-00-00-20.mp4 — or New Trim to clear it and cut another range.",
+  ],
   intro:
     "The Video Trimmer cuts a section out of an MP4, MOV, WebM, MKV, AVI or M4V file using FFmpeg compiled to WebAssembly, offering either a Fast Trim that stream-copies at the nearest keyframe with no re-encode, or a Precise Trim that re-encodes with H.264 or VP9 at a CRF you choose between 18 and 32. Set the start and end points against a waveform-free scrub bar, preview the selection, decide whether to keep the audio, and export as MP4, WebM or the original container. The video is processed in your browser, so nothing is uploaded.",
   useCases: [

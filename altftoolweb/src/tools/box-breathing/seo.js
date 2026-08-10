@@ -1,4 +1,7 @@
 const seo = {
+  title: "Box Breathing Timer: 4-4-4-4, 4-7-8 and 4 More",
+  metaDescription:
+    "A guided breathing timer that paces inhale, hold and exhale with a moving square or circle, in six patterns, by 2-30 rounds or 1-20 minutes.",
   intro:
     "This is a guided breathing timer that paces inhale, hold, exhale and hold to a fixed count, with box breathing (4-4-4-4) as the default and five other patterns including relaxing 4-7-8, coherent 5-5, calming 4-6 and energizing 6-2-4-2. A moving dot traces the square for patterns with both holds and an expanding circle for the rest, so you follow the shape rather than watch a number. Set the session by rounds (2 to 30) or by minutes (1 to 20), and the timer logs sessions, total minutes and a day streak in your browser only.",
   useCases: [

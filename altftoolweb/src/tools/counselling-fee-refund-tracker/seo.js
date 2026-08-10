@@ -1,4 +1,12 @@
 const seo = {
+  title: "Counselling Fee Refund Tracker: UGC 100/90/80/50/0",
+  metaDescription:
+    "Estimate an admission-withdrawal refund from your dates: UGC 100/90/80/50/0% slabs, an up-to-5% processing cut capped at Rs 5,000.",
+  steps: [
+    "Enter \"Aggregate fees paid (INR)\" and \"Caution / security deposit (INR)\" — the deposit sits outside the percentage slabs and is returned in full.",
+    "Set \"Last date of admission (notified)\", your \"Withdrawal request date\" and \"Expected processing time (days)\".",
+    "Read the \"Refund slab\", \"Refund percentage\", \"Processing deduction\", \"Amount forfeited\" and \"Expected refund by\" rows against the UGC refund slabs table, then press \"Copy result\".",
+  ],
   intro:
     "This tracker estimates the refund due when a student withdraws an admission, using the UGC fee-refund policy of October 2018: 100% of aggregate fees if the withdrawal is 15 or more days before the notified last date of admission, then 90%, 80%, 50% and 0% as the withdrawal moves later. It also handles the separately refundable security deposit and the processing deduction of up to 5% (capped at Rs 5,000) allowed in the full-refund slab. It is for students and parents juggling seat-acceptance fees across counselling rounds.",
   useCases: [
