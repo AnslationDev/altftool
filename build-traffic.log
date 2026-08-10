@@ -1,0 +1,449 @@
+
+> altftools@0.1.0 prebuild
+> npm run generate:registry
+
+
+> altftools@0.1.0 generate:registry
+> node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs && node scripts/generate-tool-seo-map.mjs
+
+✅ toolMetaMap generated
+✅ toolRuntimeMap generated (3816 tools)
+✅ toolSeoMap generated (2685 tools, 7 shards)
+
+> altftools@0.1.0 build
+> node scripts/use-patched-next-dependencies.mjs && node scripts/assert-no-server-tool-loader.mjs && node scripts/assert-transform-manifest.mjs && node scripts/run-with-node-memory.mjs next build --webpack && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs
+
+Server tool-loader guard: OK (no non-client importer of the tool runtime map).
+Transform manifest guard: OK (64 converters — library attribution, engine, and sample output all verified).
+▲ Next.js 16.2.11 (webpack)
+- Experiments (use with caution):
+  · cpus: 1
+  ⨯ webpackBuildWorker
+  ✓ webpackMemoryOptimizations
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.2min
+  Running TypeScript ...
+  Finished TypeScript in 104ms ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/310) ...
+  Generating static pages using 1 worker (77/310) 
+  Generating static pages using 1 worker (154/310) 
+(node:51818) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  Generating static pages using 1 worker (232/310) 
+✓ Generating static pages using 1 worker (310/310) in 11.3s
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)                                              Revalidate  Expire
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /[slug]
+├ ƒ /academy
+├ ƒ /account
+├ ƒ /account/forgot-password
+├ ƒ /account/login
+├ ƒ /account/signup
+├ ƒ /ad-preview
+├ ○ /ai.txt                                                      1d      1y
+├ ○ /alternatives                                                1d      1y
+├ ○ /alternatives/[incumbent]
+├ ƒ /altfcalculators
+├ ƒ /altfcalculators/[toolSlug]
+├ ƒ /altfgame
+├ ○ /altfgame/[slug]
+├ ○ /altfgame/category/[name]
+├ ƒ /altflinking
+├ ƒ /altfloveimg
+├ ƒ /altfloveimg/background-remover
+├ ƒ /altfloveimg/compress
+├ ƒ /altfloveimg/crop
+├ ƒ /altfloveimg/editor
+├ ƒ /altfloveimg/jpg-to-png
+├ ƒ /altfloveimg/jpg-to-webp
+├ ƒ /altfloveimg/meme
+├ ƒ /altfloveimg/png-to-jpg
+├ ƒ /altfloveimg/resize
+├ ƒ /altfloveimg/rotate
+├ ƒ /altfloveimg/upscaler
+├ ƒ /altfloveimg/watermark
+├ ƒ /altfloveimg/webp-to-jpg
+├ ƒ /altflovepdf
+├ ƒ /altflovepdf/[toolSlug]
+├ ƒ /altfworld
+├ ƒ /altfworld/about
+├ ƒ /altfworld/forums
+├ ƒ /altfworld/forums/[category]
+├ ƒ /altfworld/forums/[category]/[subcategory]
+├ ƒ /altfworld/forums/[category]/[subcategory]/[thread]
+├ ƒ /altfworld/marketplace
+├ ƒ /altfworld/members
+├ ƒ /altfworld/profile/[handle]
+├ ƒ /altfworld/resources
+├ ƒ /altfworld/search
+├ ƒ /altpintrest
+├ ƒ /altpintrest/explore
+├ ƒ /ancestory
+├ ƒ /ancestory/meaning
+├ ƒ /api/ad-events
+├ ƒ /api/altflinking/admin/listings
+├ ƒ /api/altflinking/admin/orders
+├ ƒ /api/altflinking/campaigns
+├ ƒ /api/altflinking/listings
+├ ƒ /api/altflinking/orders
+├ ƒ /api/altflinking/orders/[id]
+├ ƒ /api/blogs
+├ ƒ /api/domainops
+├ ○ /api/embed-index                                             1d      1y
+├ ƒ /api/health
+├ ƒ /api/linking-smoke-dev
+├ ○ /api/n8n/workflows                                           1d      1y
+├ ƒ /api/netcheck
+├ ƒ /api/oembed
+├ ○ /api/open-data/exam-photo-specs                              1d      1y
+├ ○ /api/open-data/transform-converters                          1d      1y
+├ ƒ /api/pages/inventory
+├ ƒ /api/revalidate
+├ ƒ /api/sale/geocode
+├ ƒ /api/sale/home-deals
+├ ƒ /api/sale/image-proxy
+├ ƒ /api/sale/nearby-deals
+├ ƒ /api/sale/places
+├ ƒ /api/sale/search
+├ ƒ /api/search/nearby
+├ ƒ /api/seo/page-code
+├ ƒ /api/signals
+├ ƒ /api/skill-demand-analyzer/analyze
+├ ƒ /api/tools/ai-domain-generator/openai
+├ ƒ /api/tools/ai-jd-analyzer
+├ ƒ /api/tools/currency-converter/[...path]
+├ ƒ /api/tools/dependency-vulnerability-lookup
+├ ƒ /api/tools/financial-update/gemini
+├ ƒ /api/tools/financial-update/stock
+├ ƒ /api/tools/giphy
+├ ƒ /api/tools/link-preview
+├ ƒ /api/tools/live-utility
+├ ƒ /api/tools/logo-slogan-generator
+├ ƒ /api/tools/metal-prices
+├ ƒ /api/tools/pagespeed
+├ ƒ /api/tools/plant-identify
+├ ƒ /api/tools/remove-bg
+├ ƒ /api/tools/skill-demand/jobs
+├ ƒ /api/tools/skill-demand/jsearch
+├ ƒ /api/trends
+├ ƒ /api/vitals
+├ ƒ /apps
+├ ○ /apps/[slug]
+├ ƒ /bharat-virasat
+├ ƒ /blogs
+├ ○ /blogs/[slug]
+├ ƒ /blogs/-/opengraph-image
+├ ○ /blogs/author/[author]
+├ ○ /blogs/category/[category]
+├ ○ /blogs/tag/[tag]
+├ ƒ /blogs/topics
+├ ○ /blogs/topics/[topic]
+├ ƒ /blogs/view-all/[section]
+├ ƒ /bops
+├ ƒ /bops/housing-services
+├ ƒ /bops/housing-services/airflow-masters
+├ ƒ /bops/housing-services/aqualux-baths
+├ ƒ /bops/housing-services/bathroom-remodeling
+├ ƒ /bops/housing-services/bugshield-pro
+├ ƒ /bops/housing-services/cityhop-movers
+├ ƒ /bops/housing-services/cladco-exteriors
+├ ƒ /bops/housing-services/clearview-windows
+├ ƒ /bops/housing-services/climatech
+├ ● /bops/housing-services/climatech/blog/[slug]
+├ ƒ /bops/housing-services/draindoctors
+├ ƒ /bops/housing-services/ecovolt-solar
+├ ƒ /bops/housing-services/freshcoat-interiors
+├ ƒ /bops/housing-services/greenguard-pest
+├ ƒ /bops/housing-services/guardnest
+├ ƒ /bops/housing-services/gutterflow-pros
+├ ƒ /bops/housing-services/helios-solar
+├ ƒ /bops/housing-services/irongate-security
+├ ƒ /bops/housing-services/kairos
+├ ƒ /bops/housing-services/kairos/termites-pest-control
+├ ƒ /bops/housing-services/movemint
+├ ƒ /bops/housing-services/nightwatch-security
+├ ƒ /bops/housing-services/packngo
+├ ƒ /bops/housing-services/panecraft
+├ ƒ /bops/housing-services/peakshield-roofing
+├ ƒ /bops/housing-services/pest-control
+├ ƒ /bops/housing-services/pest-control/[...slug]
+├ ƒ /bops/housing-services/pest-killer
+├ ƒ /bops/housing-services/pipeworks-pro
+├ ƒ /bops/housing-services/plumber
+├ ƒ /bops/housing-services/polarflame
+├ ƒ /bops/housing-services/rainright-gutters
+├ ƒ /bops/housing-services/roofers
+├ ƒ /bops/housing-services/roomrevive
+├ ƒ /bops/housing-services/sentinel-secure
+├ ƒ /bops/housing-services/siding-pros
+├ ƒ /bops/housing-services/sidingworks
+├ ƒ /bops/housing-services/sunyield-solar
+├ ƒ /bops/housing-services/swiftshift-movers
+├ ƒ /bops/housing-services/tiletrend-bath
+├ ƒ /bops/housing-services/topnotch-roofing
+├ ƒ /bops/housing-services/window-replacement
+├ ƒ /bops/housingneeds
+├ ƒ /bops/housingneeds/bathroom
+├ ƒ /bops/housingneeds/cleaning
+├ ƒ /bops/housingneeds/electrical
+├ ƒ /bops/housingneeds/fencing
+├ ƒ /bops/housingneeds/flooring
+├ ƒ /bops/housingneeds/foundation
+├ ƒ /bops/housingneeds/garage-driveway
+├ ƒ /bops/housingneeds/gutters
+├ ƒ /bops/housingneeds/home-security
+├ ƒ /bops/housingneeds/hvac
+├ ƒ /bops/housingneeds/interiors
+├ ƒ /bops/housingneeds/kitchen
+├ ƒ /bops/housingneeds/landscaping
+├ ƒ /bops/housingneeds/moving
+├ ƒ /bops/housingneeds/pestcontrol
+├ ƒ /bops/housingneeds/plumbing
+├ ƒ /bops/housingneeds/restoration
+├ ƒ /bops/housingneeds/roofing
+├ ƒ /bops/housingneeds/siding
+├ ƒ /bops/housingneeds/solar
+├ ƒ /bops/housingneeds/tree-service
+├ ƒ /bops/housingneeds/windows
+├ ƒ /bops/insurance
+├ ƒ /bops/insurance/auto-insurance
+├ ƒ /bops/insurance/commercial-insurance
+├ ƒ /bops/insurance/familyguard-life
+├ ƒ /bops/insurance/final-expense-insurance
+├ ƒ /bops/insurance/health-insurance
+├ ƒ /bops/insurance/home-insurance
+├ ƒ /bops/insurance/homesafe-cover
+├ ƒ /bops/insurance/life-insurance
+├ ƒ /bops/insurance/medibright-health
+├ ƒ /bops/insurance/medicare
+├ ƒ /bops/insurance/motorcycle-insurance
+├ ƒ /bops/insurance/pawcover
+├ ƒ /bops/insurance/pet-insurance
+├ ƒ /bops/insurance/renters-insurance
+├ ƒ /bops/insurance/shieldsure-auto
+├ ƒ /bops/insurance/small-business-insurance
+├ ƒ /bops/insurance/travel-insurance
+├ ƒ /bops/legal-services
+├ ƒ /bops/legal-services/crashclaim
+├ ƒ /bops/legal-services/familyfirst-law
+├ ƒ /bops/legal-services/injuryadvocates
+├ ƒ /bops/legal-services/legacywills
+├ ƒ /bops/legal-services/shielddefense
+├ ƒ /bops/legal-services/visapath
+├ ƒ /bops/loans
+├ ƒ /bops/loans/auto-loan
+├ ƒ /bops/loans/auto-refinance
+├ ƒ /bops/loans/autoloan-express
+├ ƒ /bops/loans/bad-credit-loan
+├ ƒ /bops/loans/bizfund-capital
+├ ƒ /bops/loans/business-loan
+├ ƒ /bops/loans/clearpath-debt
+├ ƒ /bops/loans/credit-builder-loan
+├ ƒ /bops/loans/debt-consolidation
+├ ƒ /bops/loans/heloc
+├ ƒ /bops/loans/home-mortgage
+├ ƒ /bops/loans/homebridge-mortgage
+├ ƒ /bops/loans/lendleap
+├ ƒ /bops/loans/mortgage-refinance
+├ ƒ /bops/loans/personal-loan
+├ ƒ /bops/loans/sba-loan
+├ ƒ /bops/loans/student-loan-refinance
+├ ƒ /bops/pet-services
+├ ƒ /bops/pet-services/furry-stay
+├ ƒ /bops/pet-services/happy-tails
+├ ƒ /bops/pet-services/paw-academy
+├ ƒ /bops/pet-services/pawsome-grooming
+├ ƒ /bops/pet-services/vetcare-plus
+├ ƒ /bops/senior-care
+├ ƒ /bops/senior-care/comfortcare-home
+├ ƒ /bops/senior-care/goldenyears-living
+├ ƒ /bops/senior-care/guardianalert
+├ ƒ /bops/senior-care/memorylane-care
+├ ƒ /bops/senior-care/serenebaths
+├ ƒ /bops/senior-care/stairlift-solutions
+├ ƒ /bops/tripfindbox
+├ ● /bops/tripfindbox/[slug]
+├ ƒ /bops/tripfindbox/about-us
+├ ƒ /bops/tripfindbox/api/travel/airports
+├ ƒ /bops/tripfindbox/api/travel/search
+├ ƒ /bops/tripfindbox/blogs
+├ ƒ /bops/tripfindbox/blogs/[slug]
+├ ƒ /bops/tripfindbox/booking
+├ ƒ /bops/tripfindbox/contact-us
+├ ƒ /bops/tripfindbox/privacy-policy
+├ ƒ /bops/tripfindbox/search/loading
+├ ƒ /bops/tripfindbox/search/no-results
+├ ƒ /bops/tripfindbox/search/results
+├ ƒ /bops/tripfindbox/site-map
+├ ƒ /bops/tripfindbox/terms-and-conditions
+├ ƒ /bops/tripfindbox/travel/details
+├ ƒ /brandrating
+├ ƒ /brandrating/[slug]/[category]
+├ ƒ /brandrating/[slug]/[category]/[pdetail]
+├ ƒ /buysmart
+├ ƒ /buysmart/redirect
+├ ƒ /buysmart/stores/[slug]
+├ ƒ /buysmart/view-all
+├ ƒ /buzzfeed
+├ ○ /deals                                                       1d      1y
+├ ○ /deals/[slug]
+├ ƒ /desktop
+├ ƒ /docs
+├ ƒ /embed
+├ ƒ /embed/widget/[slug]
+├ ƒ /embed/widget/exam-photo/[slug]
+├ ƒ /embed/widget/transform/[slug]
+├ ○ /exam-photo
+├ ○ /exam-photo/[exam]
+├ ƒ /exclusivedeals
+├ ƒ /exclusivedeals/[slug]
+├ ƒ /exclusivedeals/[slug]/[id]
+├ ƒ /exclusivedeals/all-stores
+├ ƒ /exclusivedeals/e-blogs/[slug]/[id]
+├ ƒ /exclusivedeals/store
+├ ƒ /exclusivedeals/store/[slug]/[id]
+├ ƒ /extensions
+├ ƒ /extensions/[slug]
+├ ƒ /fact-net
+├ ƒ /fact-net/articles/[slug]
+├ ƒ /fact-net/categories
+├ ƒ /fact-net/categories/[...categoryPath]
+├ ƒ /fact-net/listings
+├ ƒ /fact-net/search
+├ ƒ /fact-net/sitemap.xml
+├ ƒ /flightradar
+├ ƒ /fodey-new
+├ ƒ /fodey-new/landing
+├ ƒ /free-ai-tool
+├ ƒ /fullscrn
+├ ○ /games                                                       1d      1y
+├ ƒ /games/[slug]
+├ ƒ /geektyper
+├ ƒ /homeserv
+├ ƒ /homeserv/contact-us
+├ ƒ /homeserv/privacy-policy
+├ ○ /homeserv/services/[slug]
+├ ƒ /homeserv/terms-of-use
+├ ƒ /human-benchmark
+├ ƒ /imgprompt
+├ ƒ /imgprompt/api/config
+├ ƒ /imgprompt/api/generate
+├ ƒ /imgprompt/api/suggest
+├ ƒ /imgprompt/studio
+├ ƒ /imgprompt/studio/[tool]
+├ ƒ /indexnow-key.txt
+├ ƒ /kym
+├ ƒ /kym/[slug]
+├ ƒ /labs
+├ ○ /lander/[slug]
+├ ƒ /licenses
+├ ƒ /live-activity-simulation
+├ ○ /llms-full.txt                                               1d      1y
+├ ○ /llms.txt                                                    1d      1y
+├ ○ /locations                                                   1d      1y
+├ ○ /locations/[geo]
+├ ○ /manifest.webmanifest
+├ ƒ /n8n
+├ ○ /n8n/[slug]
+├ ○ /n8n/category/[slug]
+├ ○ /n8n/node/[slug]
+├ ƒ /news
+├ ƒ /news/[slug]
+├ ƒ /news/api
+├ ƒ /news/headlines
+├ ƒ /news/local
+├ ƒ /news/newsletter
+├ ƒ /news/topics
+├ ƒ /news/topics/[topic]
+├ ƒ /news/trending
+├ ○ /open-data
+├ ƒ /patatap
+├ ƒ /personality
+├ ƒ /personality/question/[id]
+├ ƒ /personality/result
+├ ƒ /pixel-thought
+├ ƒ /pixel-thought/meditation
+├ ƒ /playbuzz
+├ ƒ /playbuzz/quiz-play
+├ ƒ /policypages/about
+├ ƒ /policypages/affiliate
+├ ƒ /policypages/contact
+├ ƒ /policypages/cookie
+├ ƒ /policypages/disclaimer
+├ ƒ /policypages/faq
+├ ƒ /policypages/privacy
+├ ƒ /policypages/termsandconditions
+├ ƒ /prank-socialmedia
+├ ○ /prank-socialmedia/editor/[slug]
+├ ○ /prank-socialmedia/sitemap.xml
+├ ƒ /prank-socialmedia/templates
+├ ƒ /pranx
+├ ƒ /pranx/[slug]
+├ ƒ /pranx/[slug]/[child]
+├ ○ /press
+├ ƒ /products
+├ ƒ /products/[slug]
+├ ƒ /prompts/seedream-5-pro
+├ ƒ /radio-garden
+├ ƒ /request-a-tool
+├ ○ /robots.txt
+├ ○ /rss.xml                                                     5m      1y
+├ ƒ /sale
+├ ƒ /search
+├ ƒ /search-eng
+├ ƒ /siding
+├ ƒ /signals
+├ ƒ /signals/[slug]
+├ ƒ /site-map
+├ ○ /sitemap.xml                                                 1h      1y
+├ ƒ /sketchflow
+├ ƒ /skill/[skill]/[country]
+├ ƒ /smartlink
+├ ƒ /soft-murmur
+├ ƒ /status
+├ ƒ /supportsetting
+├ ƒ /supportsetting/[...slug]
+├ ƒ /tools
+├ ○ /tools/[category]
+├ ƒ /tools/[category]/[slug]
+├ ƒ /tools/all/[slug]
+├ ƒ /tools/all/-/opengraph-image
+├ ƒ /tools/all/api-stress-estimator
+├ ƒ /tools/developer/api-stress-estimator
+├ ƒ /top11
+├ ○ /top11/[slug]
+├ ƒ /top9
+├ ○ /top9/[slug]
+├ ƒ /tradeon
+├ ○ /tradeon/asset/[symbol]
+├ ○ /tradeon/chart/[symbol]
+├ ƒ /tradeon/dashboard
+├ ƒ /tradeon/workspace
+├ ƒ /transform
+├ ● /transform/[slug]
+├ ƒ /transform/api/[slug]
+├ ƒ /trendingvids
+├ ƒ /unsubscribe
+├ ƒ /wattpad
+├ ○ /wattpad/book/[slug]
+├ ○ /wattpad/category/[slug]
+├ ○ /wattpad/read/[bookSlug]/[chapter]
+├ ƒ /windowswap
+├ ƒ /windowswap/pricing
+└ ƒ /windowswap/sendGift
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+Amplify artifact gate: 203.28 MiB / 215.00 MiB; pruned 2 unused WASM asset and 4 build-only artifact.
+Prerender size gate: 8 pages checked; largest .next/server/app/deals.html (0.48 MiB / 1.00 MiB).
