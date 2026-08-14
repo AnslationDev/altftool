@@ -260,6 +260,13 @@ export async function buildToolMetadata(slug) {
     title: seoContent.title || buildFallbackToolTitle(tool.name || slug),
     description: seoContent.metaDescription,
     path: `/tools/all/${slug}`,
+    // Point at this route's own generated share card. createPageMetadata always
+    // sets openGraph.images, and an explicit images array overrides Next's
+    // file-based opengraph-image convention — so without this line the new
+    // opengraph-image.jsx would be generated and never used, and every tool page
+    // would keep sharing the one generic og-default.png. Same wiring as
+    // blogs/[slug]/page.jsx, which passes its own /blogs/<slug>/opengraph-image.
+    image: `/tools/all/${slug}/opengraph-image`,
   });
 }
 

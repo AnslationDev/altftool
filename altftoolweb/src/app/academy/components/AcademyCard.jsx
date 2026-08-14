@@ -2,28 +2,35 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import { SkeletonBlock } from "@/components/ui/skeleton";
+import { getAcademyRating } from "../data/academies";
+
+/**
+ * What the price line should say, or "" when there is nothing honest to print.
+ *
+ * `price` arrives as a string from academies.js ("499", "Free", "3,500", and one
+ * record with a trailing space) and as a coerced number from Firestore, where a
+ * missing value becomes 0. Only a real amount gets a ₹.
+ */
+function formatAcademyPrice(price) {
+  const raw = String(price ?? "").replace(/^₹\s*/, "").trim();
+  if (!raw) return "";
+  if (/^free$/i.test(raw)) return "Free";
+  // Strip grouping separators before testing, so "3,500" counts as a number.
+  const amount = Number(raw.replace(/,/g, ""));
+  if (!Number.isFinite(amount) || amount <= 0) return "";
+  return `₹${raw}`;
+}
 
 export default function AcademyCard({ academy }) {
   if (!academy) return null;
-
-  // The pill's value is whatever the Firestore academy record carries, but
-  // normalizeAcademy (packages/core/src/firebaseContent.js:138) defaults a
-  // missing `rating` to 0 — so `rating !== null && rating !== undefined` was
-  // true for every live row, and any platform with no rating in the CMS
-  // rendered "User rating: 0" against its name. Nobody scored it 0; the
-  // constant did. Absent and genuinely-zero are indistinguishable once that
-  // default has been applied, so only a positive finite number is shown.
-  //
-  // The label no longer says "User rating" either: this site has no review
-  // form, no vote endpoint and no store API, so nothing here comes from users.
-  const parsedRating = Number(academy.rating);
-  const displayRating = Number.isFinite(parsedRating) && parsedRating > 0 ? parsedRating : null;
-
+  const rating = getAcademyRating(academy);
+  const academyPriceLabel = formatAcademyPrice(academy?.price);
   return (
     <a
       href={academy?.academyUrl || "#"}
+      id="academy-card"
       target="_blank"
       rel="noopener noreferrer"
       className="
@@ -34,18 +41,28 @@ export default function AcademyCard({ academy }) {
       "
     >
 
-      <div className="flex items-center justify-between mb-4">
+      <div className={`flex items-center justify-between ${rating ? "mb-2" : "mb-4"}`}>
 
         <div className="relative h-10 w-32 sm:h-12 sm:w-36">
           <AcademyLogoImage key={academy.image || academy.id || academy.name} academy={academy} />
         </div>
 
-        {displayRating !== null ? (
-          <div className="academy-pill flex h-[28px] items-center rounded-[7px] px-[10px] text-sm font-medium">
-            Rating: {displayRating}
+        {rating ? (
+          <div className="academy-pill flex h-[28px] items-center gap-[6px] rounded-[7px] px-[10px] text-sm font-medium">
+            <Star size={16} className="fill-(--warning) stroke-(--warning)" aria-hidden="true" />
+            {rating.value}
+            <span className="sr-only">{` out of ${rating.scale}`}</span>
           </div>
         ) : null}
       </div>
+
+      {rating ? (
+        <p className="mb-4 text-[11px] leading-4 text-(--muted-foreground)">
+          {`${rating.measures}, from ${formatRatingCount(rating.count)} ratings. Checked `}
+          <time dateTime={rating.checkedOn}>{rating.checkedOn}</time>
+          .
+        </p>
+      ) : null}
 
       <span
         className="
@@ -96,16 +113,23 @@ export default function AcademyCard({ academy }) {
 
       <div className="flex items-center justify-between">
 
+        {/*
+          The ₹ used to be hardcoded in front of whatever `price` held, which
+          produced two wrong labels. Khan Academy's price is the string "Free",
+          so its card read "₹Free". And on the live path /academy renders from
+          Firestore, where normalizeAcademy coerces a missing price to 0 — so a
+          paid platform with no price recorded advertised itself at "₹0".
+
+          A price is now shown only when there is a number to show, and "Free"
+          is rendered as the word it is.
+        */}
         <div className="flex flex-col leading-tight">
           <span className="academy-muted-text text-[11px] font-bold uppercase tracking-[0.6px]">
-            Starting at
+            {academyPriceLabel ? "Starting at" : "Pricing"}
           </span>
 
           <span className="flex items-center gap-1 text-base font-extrabold text-(--foreground)">
-
-            {String(academy.price).trim().toLowerCase() === "free"
-              ? "Free"
-              : `₹${academy.price}`}
+            {academyPriceLabel || "On their site"}
           </span>
         </div>
 
@@ -121,6 +145,20 @@ export default function AcademyCard({ academy }) {
       </div>
     </a>
   );
+}
+
+/**
+ * Thousands separators without Intl.
+ *
+ * `toLocaleString` resolves against whatever ICU data the runtime ships, so the
+ * server and the browser can disagree on the grouping and React reports a
+ * hydration mismatch. The count is transcribed from the store listing, so it is
+ * always a plain integer and a regex is enough.
+ */
+function formatRatingCount(count) {
+  const n = Number(count);
+  if (!Number.isFinite(n) || n <= 0) return "an unstated number of";
+  return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function AcademyLogoImage({ academy }) {

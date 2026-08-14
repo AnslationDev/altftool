@@ -222,6 +222,21 @@ export default function UploadZone({
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
+
+                  {/* Extraction limits that shaped the text this file contributes */}
+                  {file.warnings?.length > 0 && (
+                    <ul className="w-full space-y-1.5 rounded-xl border border-amber-300 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-3">
+                      {file.warnings.map((warning, warningIdx) => (
+                        <li
+                          key={warningIdx}
+                          className="flex items-start gap-2 text-xs font-semibold text-amber-700 dark:text-amber-300"
+                        >
+                          <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          <span>{warning}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               );
             })}
