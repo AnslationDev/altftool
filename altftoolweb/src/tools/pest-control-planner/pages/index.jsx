@@ -76,9 +76,10 @@ export default function ToolHome() {
       );
     }
     lines.push("");
-    lines.push(`First visit: ${money(plan.firstVisitTotal)}`);
-    lines.push(`Next 12 months as scheduled: ${money(plan.planTotal)} across ${plan.visitsInPlan} visits`);
-    lines.push(`Long-run annual average: ${money(plan.annualisedTotal)} (${money(plan.monthlyEquivalent)} a month)`);
+    lines.push(`Initial treatment-cycle budget: ${money(plan.firstVisitTotal)}`);
+    lines.push(`Illustrative 12-month budget: ${money(plan.planTotal)} across ${plan.visitsInPlan} estimated technician visits`);
+    lines.push(`Modelled annual average: ${money(plan.annualisedTotal)} (${money(plan.monthlyEquivalent)} a month)`);
+    lines.push(`${plan.assumptionsBaseline}; replace every rate, interval and warranty with written provider terms.`);
     return lines.join("\n");
   }, [ok, plan, area]);
 
@@ -120,8 +121,8 @@ export default function ToolHome() {
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Pest Control Planner</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Choose the pests you are dealing with and get the treatment method professionals use, how
-          often it has to be repeated, a twelve-month visit calendar and the cost including GST.
+          Build an editable budget scenario from example treatment approaches, repeat intervals and
+          callback assumptions, then compare the result with written local quotes.
         </p>
       </header>
 
@@ -266,14 +267,14 @@ export default function ToolHome() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-              Cost over the next 12 months
+              Illustrative 12-month budget
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
               {ok ? money(plan.planTotal) : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
-                ? `${plan.visitsInPlan} scheduled visits · first visit ${money(plan.firstVisitTotal)}`
+                ? `${plan.visitsInPlan} estimated technician visits · initial cycle budget ${money(plan.firstVisitTotal)}`
                 : "Pick at least one pest to build a plan"}
             </p>
           </div>
@@ -297,9 +298,9 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["First visit, all pests together", ok ? money(plan.firstVisitTotal) : DASH],
+            ["Initial treatment-cycle budget", ok ? money(plan.firstVisitTotal) : DASH],
             ["GST on the 12-month plan", ok ? (plan.gstRate > 0 ? money(plan.planGst) : "Not charged") : DASH],
-            ["Long-run annual average", ok ? money(plan.annualisedTotal) : DASH],
+            ["Modelled annual average", ok ? money(plan.annualisedTotal) : DASH],
             ["Spread per month", ok ? money(plan.monthlyEquivalent) : DASH],
             [
               "Multi-pest bundling discount",
@@ -348,14 +349,18 @@ export default function ToolHome() {
           </section>
 
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-            <h2 className="text-base font-semibold">Twelve-month visit calendar</h2>
+            <h2 className="text-base font-semibold">Twelve-month treatment-cycle calendar</h2>
+            <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">
+              A multi-round cycle is budgeted in its start month. Follow-up visits may fall in a
+              later month and must be dated with the provider.
+            </p>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[340px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
                     <th scope="col" className="py-2 pr-3 font-semibold">Month</th>
-                    <th scope="col" className="py-2 pr-3 font-semibold">Due</th>
-                    <th scope="col" className="py-2 text-right font-semibold">Cost</th>
+                    <th scope="col" className="py-2 pr-3 font-semibold">Cycle starts</th>
+                    <th scope="col" className="py-2 text-right font-semibold">Cycle budget</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -363,7 +368,14 @@ export default function ToolHome() {
                     <tr key={entry.offset} className="border-b border-[var(--border)] last:border-0">
                       <td className="py-2 pr-3 font-semibold">{entry.month}</td>
                       <td className="py-2 pr-3 text-[var(--muted-foreground)]">
-                        {entry.pests.length > 0 ? entry.pests.join(", ") : "No visit"}
+                        {entry.treatments.length > 0
+                          ? entry.treatments
+                              .map(
+                                (treatment) =>
+                                  `${treatment.label} (${treatment.visits} visit${treatment.visits === 1 ? "" : "s"} in cycle)`,
+                              )
+                              .join(", ")
+                          : "No cycle starts"}
                       </td>
                       <td className="py-2 text-right">
                         {entry.costWithTax > 0 ? money(entry.costWithTax) : DASH}
@@ -378,10 +390,12 @@ export default function ToolHome() {
       ) : null}
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Rates are Indian market reference figures and vary by city, chemical used and access. Only
-        use an operator licensed under the Insecticides Act, 1968, ask for the product label and
-        safety data sheet, and follow the stated re-entry time — especially with infants, pregnancy,
-        asthma or pets in the home. This is planning information, not medical or legal advice.
+        {ok ? plan.assumptionsBaseline : "August 2026 demo baseline"}: displayed rates, minimums,
+        intervals, rounds and warranties are illustrative assumptions—not live market data, a quote,
+        a recommended treatment schedule or promised coverage. Replace them with written terms from
+        qualified local providers before booking. Ask for the product label and safety data sheet,
+        and follow its re-entry instructions, especially with infants, pregnancy, asthma or pets in
+        the home. This is planning information, not medical, legal or safety advice.
       </p>
     </main>
   );

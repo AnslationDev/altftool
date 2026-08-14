@@ -3,13 +3,13 @@
 import { useState } from "react";
 import {
   Stethoscope, Syringe, Microscope, HeartPulse, Phone, ShieldCheck, BadgeCheck,
-  PawPrint, Star, Clock, MapPin, ChevronDown, ArrowRight, Check, Plus, Menu, X,
+  PawPrint, Clock, MapPin, ChevronDown, ArrowRight, Check, Plus, Menu, X,
 } from "lucide-react";
 import "./vetcare-plus.css";
 
-const QUOTE_URL = "https://example.com/quote/vetcare-plus";
-const PHONE_TEL = "tel:+18225550122";
-const PHONE_DISPLAY = "(822) 555-0122";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1644675443401-ea4c14bad0e6?auto=format&fit=crop&w=1600&q=80",
@@ -24,85 +24,64 @@ const SERVICES = [
   {
     icon: Stethoscope,
     title: "Wellness Checkups",
-    text: "Nose-to-tail exams, weight and dental checks, and a written care plan — all from your living room floor.",
-    meta: "45–60 min visit",
+    text: "Illustrative copy showing where a mobile-vet provider could describe a wellness visit.",
+    meta: "Example duration field",
   },
   {
     icon: Syringe,
     title: "Vaccinations",
-    text: "Core and lifestyle vaccines for dogs and cats, with digital records you can share with groomers and boarders.",
-    meta: "Same-visit records",
+    text: "Illustrative copy showing where a licensed provider could explain vaccine and record policies.",
+    meta: "Example record field",
   },
   {
     icon: Microscope,
     title: "In-Home Diagnostics",
-    text: "Bloodwork, urinalysis, skin and ear cytology collected at home and processed at our partner lab.",
-    meta: "Results in 24–48 hrs",
+    text: "Illustrative copy showing where a provider could describe available tests and laboratory arrangements.",
+    meta: "Example result-time field",
   },
   {
     icon: HeartPulse,
     title: "Sick Visits",
-    text: "Limping, tummy trouble, itching or just not themselves? A licensed vet comes to you — often the same week.",
-    meta: "Priority scheduling",
+    text: "Illustrative copy showing where a provider could define appointment scope and urgent-care exclusions.",
+    meta: "Availability placeholder",
   },
 ];
 
 const STEPS = [
   {
-    title: "Request a quote",
-    text: "Tell us your pet, ZIP code and what you need. We reply with clear flat-rate pricing — no surprise line items.",
+    title: "Example enquiry step",
+    text: "This demo shows where an enquiry step could appear; it does not collect pet, location, or contact details.",
   },
   {
     title: "Pick a window",
-    text: "Choose a 2-hour arrival window that fits your day, including evenings and Saturdays in most areas.",
+    text: "A real provider could publish verified scheduling and arrival-window policies here.",
   },
   {
     title: "Meet your vet at home",
-    text: "A licensed veterinarian and assistant arrive with everything needed. Your pet never leaves the couch.",
-  },
-];
-
-const REVIEWS = [
-  {
-    quote:
-      "My senior lab shakes the whole drive to the clinic. VetCare+ did his annual exam on our porch and he wagged the entire time.",
-    name: "Priya S.",
-    detail: "Dog parent — annual wellness visit",
-  },
-  {
-    quote:
-      "Two cats, zero carriers, zero yowling. The vet was patient, thorough, and emailed the vaccine records before she left the driveway.",
-    name: "Marcus T.",
-    detail: "Cat parent — vaccines for two",
-  },
-  {
-    quote:
-      "They caught an ear infection early during a routine visit and treated it on the spot. The flat quote was exactly what we paid.",
-    name: "Elena R.",
-    detail: "Dog parent — sick visit",
+    text: "This illustrative step does not arrange a visit or represent a licensed veterinary team.",
   },
 ];
 
 const FAQS = [
   {
     q: "Which areas do you cover?",
-    a: "VetCare+ vets serve most neighborhoods within our metro service map, typically within a 25-mile radius of the city center. Request a quote with your ZIP code and we will confirm coverage right away.",
+    a: "This fictional page has no service area. Contact a licensed local veterinary practice directly to confirm availability and travel policies.",
   },
   {
     q: "What does a home visit cost?",
-    a: "Visits are flat-rate quoted up front based on your location and the services needed. A typical wellness exam with core vaccines costs about the same as a clinic visit once you factor in your time and travel — with zero stress for your pet.",
+    a: "This demo does not provide pricing. Ask a licensed practice for a written estimate covering the visit, tests, medicines, travel, and follow-up care.",
   },
   {
     q: "Are your veterinarians licensed?",
-    a: "Yes. Every VetCare+ visit is performed by a state-licensed veterinarian, supported by a trained veterinary assistant. We are fully insured and follow Fear-Free handling practices.",
+    a: "VetCare+ is fictional and has no clinicians or credentials. Verify a real professional's current licence and practice details with the appropriate veterinary authority.",
   },
   {
     q: "What if my pet needs X-rays or surgery?",
-    a: "We handle checkups, vaccines, diagnostics and most sick visits at home. If your pet needs imaging, surgery or emergency care, your vet will refer you to a trusted local hospital and send your records ahead.",
+    a: "This page does not provide triage, referrals, diagnostics, or emergency care. Contact a licensed veterinarian or emergency animal hospital for medical advice and treatment.",
   },
 ];
 
-function QuoteButton({ big, ghost, label = "Get a Free Quote" }) {
+function QuoteButton({ big, ghost, label = "Preview Quote CTA" }) {
   const cls = [
     "vetcare-btn",
     big ? "vetcare-btn--big" : "",
@@ -139,7 +118,6 @@ export default function VetCarePlusPage() {
           >
             <a className="vetcare-nav-link" href="#services" onClick={() => setMenuOpen(false)}>Services</a>
             <a className="vetcare-nav-link" href="#how" onClick={() => setMenuOpen(false)}>How It Works</a>
-            <a className="vetcare-nav-link" href="#reviews" onClick={() => setMenuOpen(false)}>Reviews</a>
             <a className="vetcare-nav-link" href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
           </nav>
           <div className="vetcare-nav-cta">
@@ -168,15 +146,14 @@ export default function VetCarePlusPage() {
             <div className="vetcare-hero-copy">
               <span className="vetcare-kicker">
                 <PawPrint size={14} aria-hidden="true" />
-                Mobile Veterinary Care
+                Fictional mobile-vet layout
               </span>
               <h1>
                 The vet comes to <em>your pet</em> — not the other way around
               </h1>
               <p className="vetcare-hero-sub">
-                Licensed veterinarians for checkups, vaccines, diagnostics and sick
-                visits, delivered at home. No car rides, no waiting rooms, no
-                white-knuckle carriers.
+                A design demonstration showing how a verified mobile veterinary
+                provider could organize service, scheduling, and care information.
               </p>
               <div className="vetcare-hero-actions">
                 <QuoteButton big />
@@ -186,15 +163,15 @@ export default function VetCarePlusPage() {
                 </a>
               </div>
               <ul className="vetcare-hero-points">
-                <li><Check size={17} aria-hidden="true" /> Flat-rate quotes before you book</li>
-                <li><Check size={17} aria-hidden="true" /> Evening and Saturday windows available</li>
-                <li><Check size={17} aria-hidden="true" /> Digital records emailed after every visit</li>
+                <li><Check size={17} aria-hidden="true" /> Example pricing-policy placement</li>
+                <li><Check size={17} aria-hidden="true" /> Example scheduling-policy placement</li>
+                <li><Check size={17} aria-hidden="true" /> Example records-policy placement</li>
               </ul>
             </div>
             <div className="vetcare-frame vetcare-frame--hero">
               <img
                 src={IMG.hero}
-                alt="Veterinarian gently examining a calm dog during a home visit"
+                alt="Licensed stock photo illustrating a veterinarian examining a dog"
               />
             </div>
           </div>
@@ -204,16 +181,16 @@ export default function VetCarePlusPage() {
         <section className="vetcare-trust" aria-label="Trust and credentials">
           <div className="vetcare-wrap vetcare-trust-row">
             <span className="vetcare-trust-item">
-              <BadgeCheck size={21} aria-hidden="true" /> Licensed Veterinarians
+              <BadgeCheck size={21} aria-hidden="true" /> Credential Placeholder
             </span>
             <span className="vetcare-trust-item">
-              <ShieldCheck size={21} aria-hidden="true" /> Fully Insured
+              <ShieldCheck size={21} aria-hidden="true" /> Insurance Placeholder
             </span>
             <span className="vetcare-trust-item">
-              <HeartPulse size={21} aria-hidden="true" /> Fear-Free Handling
+              <HeartPulse size={21} aria-hidden="true" /> Handling-Policy Example
             </span>
             <span className="vetcare-trust-item">
-              <Clock size={21} aria-hidden="true" /> 2-Hour Arrival Windows
+              <Clock size={21} aria-hidden="true" /> Scheduling Example
             </span>
           </div>
         </section>
@@ -224,12 +201,12 @@ export default function VetCarePlusPage() {
             <div className="vetcare-section-head">
               <span className="vetcare-kicker">
                 <Stethoscope size={14} aria-hidden="true" />
-                What We Do
+                Example Service Cards
               </span>
-              <h2 className="vetcare-h2">Clinic-grade care, couch-side delivery</h2>
+              <h2 className="vetcare-h2">Preview a mobile-vet service menu</h2>
               <p className="vetcare-lead">
-                Everything a routine clinic visit covers — performed where your pet
-                already feels safe.
+                These cards demonstrate content structure only; no veterinary service,
+                diagnosis, booking, or medical advice is provided.
               </p>
             </div>
             <div className="vetcare-card-grid">
@@ -250,41 +227,41 @@ export default function VetCarePlusPage() {
         </section>
 
         {/* Photo trio */}
-        <section className="vetcare-section vetcare-section--tint" aria-label="Home visit photos">
+        <section className="vetcare-section vetcare-section--tint" aria-label="Illustrative stock photos">
           <div className="vetcare-wrap">
             <div className="vetcare-section-head">
               <span className="vetcare-kicker">
                 <PawPrint size={14} aria-hidden="true" />
-                Calm Patients
+                Illustrative Gallery
               </span>
-              <h2 className="vetcare-h2">What a home visit actually looks like</h2>
+              <h2 className="vetcare-h2">Licensed stock imagery for the layout</h2>
             </div>
             <div className="vetcare-card-grid">
               <div className="vetcare-frame vetcare-frame--card">
                 <img
                   src={IMG.exam}
-                  alt="Vet listening to a dog's heartbeat with a stethoscope at home"
+                  alt="Licensed stock photo illustrating a veterinary examination"
                   loading="lazy"
                 />
               </div>
               <div className="vetcare-frame vetcare-frame--card">
                 <img
                   src={IMG.vaccine}
-                  alt="Veterinarian preparing a vaccine while a relaxed pet waits nearby"
+                  alt="Licensed stock photo illustrating veterinary supplies near a pet"
                   loading="lazy"
                 />
               </div>
               <div className="vetcare-frame vetcare-frame--card">
                 <img
                   src={IMG.cat}
-                  alt="Cat being gently examined in familiar home surroundings"
+                  alt="Licensed stock photo illustrating a cat examination"
                   loading="lazy"
                 />
               </div>
               <div className="vetcare-frame vetcare-frame--card">
                 <img
                   src={IMG.comfort}
-                  alt="Pet relaxing on a blanket at home after a stress-free checkup"
+                  alt="Licensed stock photo of a pet relaxing on a blanket"
                   loading="lazy"
                 />
               </div>
@@ -298,9 +275,9 @@ export default function VetCarePlusPage() {
             <div className="vetcare-section-head">
               <span className="vetcare-kicker">
                 <MapPin size={14} aria-hidden="true" />
-                Simple Process
+                Example Workflow
               </span>
-              <h2 className="vetcare-h2">Booked in minutes, done in one visit</h2>
+              <h2 className="vetcare-h2">Preview a three-step visit flow</h2>
             </div>
             <div className="vetcare-steps">
               {STEPS.map((step, i) => (
@@ -315,57 +292,28 @@ export default function VetCarePlusPage() {
         </section>
 
         {/* Mid-page CTA band */}
-        <section className="vetcare-section vetcare-section--tint" aria-label="Get a quote">
+        <section className="vetcare-section vetcare-section--tint" aria-label="Preview quote call to action">
           <div className="vetcare-wrap">
             <div className="vetcare-midcta">
               <div className="vetcare-midcta-copy">
-                <h2>Due for a checkup? Skip the car ride.</h2>
+                <h2>Preview a mobile-vet call to action</h2>
                 <p>
-                  Get a flat-rate quote for your pet's next wellness exam, vaccines
-                  or sick visit. Quotes are free and take under a minute to request.
+                  This disabled component does not collect pet details, request a quote,
+                  contact a clinic, or promise availability.
                 </p>
                 <QuoteButton big />
                 <a href={PHONE_TEL} className="vetcare-midcta-phone">
                   <Phone size={17} aria-hidden="true" />
-                  Or call {PHONE_DISPLAY}
+                  Demo Call · {PHONE_DISPLAY}
                 </a>
               </div>
               <div className="vetcare-midcta-media">
                 <img
                   src={IMG.midband}
-                  alt="Happy dog resting comfortably at home after a vet visit"
+                  alt="Licensed stock photo of a dog resting comfortably at home"
                   loading="lazy"
                 />
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Reviews */}
-        <section className="vetcare-section" id="reviews">
-          <div className="vetcare-wrap">
-            <div className="vetcare-section-head">
-              <span className="vetcare-kicker">
-                <Star size={14} aria-hidden="true" />
-                Pet Parents Say
-              </span>
-              <h2 className="vetcare-h2">Less stress for them, less hassle for you</h2>
-            </div>
-            <div className="vetcare-review-grid">
-              {REVIEWS.map((r) => (
-                <article className="vetcare-review" key={r.name}>
-                  <div className="vetcare-stars" aria-label="Rated 5 out of 5 stars">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} size={17} fill="currentColor" aria-hidden="true" />
-                    ))}
-                  </div>
-                  <blockquote>&ldquo;{r.quote}&rdquo;</blockquote>
-                  <cite>
-                    {r.name}
-                    <span>{r.detail}</span>
-                  </cite>
-                </article>
-              ))}
             </div>
           </div>
         </section>
@@ -408,16 +356,16 @@ export default function VetCarePlusPage() {
         {/* Final CTA band */}
         <section className="vetcare-final" aria-label="Final call to action">
           <div className="vetcare-wrap">
-            <h2>Your pet's happiest vet visit yet</h2>
+            <h2>Preview the final call-to-action band</h2>
             <p>
-              Request a free flat-rate quote for a home visit, or call and talk to a
-              real person about your pet's needs. No obligation, no waiting room.
+              VetCare+ is fictional. The disabled controls do not request a visit,
+              contact a clinician, or provide veterinary advice.
             </p>
             <div className="vetcare-final-actions">
               <QuoteButton big />
               <a href={PHONE_TEL} className="vetcare-final-phone">
                 <Phone size={19} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
+                Demo Call · {PHONE_DISPLAY}
               </a>
             </div>
           </div>
@@ -428,10 +376,10 @@ export default function VetCarePlusPage() {
       <footer className="vetcare-footer">
         <div className="vetcare-wrap vetcare-footer-inner">
           <p>
-            <strong>VetCare+</strong> — Mobile veterinary visits at home. Call{" "}
+            <strong>VetCare+</strong> — Fictional mobile-vet design preview. Demo control:{" "}
             <a href={PHONE_TEL} className="vetcare-nav-phone">{PHONE_DISPLAY}</a>
           </p>
-          <p className="vetcare-footer-note">Independent service provider listing.</p>
+          <p className="vetcare-footer-note">Design demonstration, not a provider listing.</p>
         </div>
       </footer>
     </div>

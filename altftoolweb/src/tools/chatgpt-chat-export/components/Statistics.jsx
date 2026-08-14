@@ -8,8 +8,6 @@ import {
   Type,
   FileCode,
   Table,
-  Image,
-  Link,
   Clock,
   BookOpen,
   BarChart3,
@@ -25,16 +23,14 @@ export default function Statistics({ conversation }) {
   if (!conversation?.messages?.length) return null;
 
   const statItems = [
-    { label: "Total Messages", value: stats.totalMessages, icon: MessageSquare, color: "text-primary" },
-    { label: "User Messages", value: stats.userMessages, icon: User, color: "text-blue-500" },
-    { label: "Assistant Messages", value: stats.assistantMessages, icon: Bot, color: "text-emerald-500" },
-    { label: "Word Count", value: stats.wordCount.toLocaleString(), icon: BookOpen, color: "text-violet-500" },
-    { label: "Character Count", value: stats.charCount.toLocaleString(), icon: Type, color: "text-amber-500" },
-    { label: "Code Blocks", value: stats.codeBlocks, icon: FileCode, color: "text-cyan-500" },
-    { label: "Tables", value: stats.tables, icon: Table, color: "text-rose-500" },
-    { label: "Images", value: stats.images, icon: Image, color: "text-pink-500" },
-    { label: "Links", value: stats.links, icon: Link, color: "text-indigo-500" },
-    { label: "Reading Time", value: `${stats.readingTime} min`, icon: Clock, color: "text-orange-500" },
+    { label: "Total Messages", value: stats.totalMessages, icon: MessageSquare },
+    { label: "User Messages", value: stats.userMessages, icon: User },
+    { label: "Assistant Messages", value: stats.assistantMessages, icon: Bot },
+    { label: "Word Count", value: stats.wordCount.toLocaleString(), icon: BookOpen },
+    { label: "Character Count", value: stats.charCount.toLocaleString(), icon: Type },
+    { label: "Code Blocks", value: stats.codeBlocks, icon: FileCode },
+    { label: "Tables", value: stats.tables, icon: Table },
+    { label: "Reading Time", value: `${stats.readingTime} min`, icon: Clock },
   ];
 
   return (
@@ -53,7 +49,7 @@ export default function Statistics({ conversation }) {
               key={item.label}
               className="flex flex-col items-center gap-1 rounded-lg bg-[--surface-soft] p-3 text-center"
             >
-              <Icon className={`h-4 w-4 ${item.color}`} />
+              <Icon className="h-4 w-4 text-(--primary)" />
               <span className="text-lg font-bold text-[--foreground]">
                 {item.value}
               </span>

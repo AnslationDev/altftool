@@ -164,7 +164,7 @@ export default function Hero({ loading = false }) {
   shadow-lg shadow-black/10
 ">
         <div className="
-    grid grid-cols-2 lg:grid-cols-4
+    grid grid-cols-1 sm:grid-cols-3
     gap-x-3 sm:gap-x-4 lg:gap-x-5 2xl:gap-x-6
     gap-y-5 sm:gap-y-6
   ">

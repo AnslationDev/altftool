@@ -2,6 +2,7 @@ import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { evaluateDependencyAudit } from "./lib/dependency-audit-policy.mjs";
 
 const require = createRequire(import.meta.url);
 const workspace = process.argv[2];
@@ -108,8 +109,6 @@ if (knownLockfileFinding) {
     `Accepted Next.js lockfile-only PostCSS advisory: build resolves patched postcss ${resolvedPostcssVersion}.`,
   );
 }
-
-const severityRank = { info: 0, low: 1, moderate: 2, high: 3, critical: 4 };
 
 function advisories(finding) {
   return (finding?.via || [])
@@ -329,11 +328,16 @@ if (workspace === "altftoolweb") {
   }
 }
 
-const blockers = Object.values(vulnerabilities).filter(
-  (finding) => (severityRank[finding?.severity] || 0) >= severityRank.high,
-);
+const auditEvaluation = evaluateDependencyAudit({
+  auditResult,
+  report,
+  vulnerabilities,
+});
 
-if (blockers.length > 0 || (!knownLockfileFinding && auditResult.status !== 0)) {
+if (!auditEvaluation.ok) {
+  if (auditEvaluation.executionIssues.length > 0) {
+    console.error(auditEvaluation.executionIssues.join("\n"));
+  }
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   process.exit(1);
 }

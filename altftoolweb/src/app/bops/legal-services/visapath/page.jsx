@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import "./visapath.css";
 
-const QUOTE_URL = "https://example.com/quote/visapath";
-const PHONE_TEL = "tel:+18775550454";
-const PHONE_DISPLAY = "(877) 555-0454";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1581553673739-c4906b5d0de8?auto=format&fit=crop&w=1600&q=80",

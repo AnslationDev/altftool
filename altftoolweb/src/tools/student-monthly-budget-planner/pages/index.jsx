@@ -202,7 +202,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {(hasError
             ? [
                 ["Money in", DASH],
@@ -257,11 +257,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.rule ? (
-        <section
-          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
-          role="status"
-          aria-live="polite"
-        >
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">50/30/20 check</h2>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             The 50/30/20 rule suggests at most 50% of money-in on needs, 30% on wants, and at

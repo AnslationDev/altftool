@@ -129,7 +129,7 @@ export default function ResultPage() {
             >
               <Sparkles className="w-4 h-4" />
 
-              Personality Assessment Complete
+              Four-Question Reflection Complete
             </div>
           </div>
 
@@ -146,7 +146,7 @@ export default function ResultPage() {
                 px-2
               "
             >
-              Your Results
+              Your Answer Snapshot
             </h1>
 
             <p
@@ -164,8 +164,8 @@ export default function ResultPage() {
               "
             >
               {result?.allAnswered
-                ? "Here's what your answers show across four core traits."
-                : "Answer every question to see your full trait breakdown."}
+                ? "Here is how your four answers map across four reflection dimensions."
+                : "Answer every question to see all four directional scores."}
             </p>
           </div>
 
@@ -296,7 +296,7 @@ export default function ResultPage() {
           <div className="mt-8 sm:mt-10">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-medium">
-                Assessment Progress
+                Reflection Progress
               </span>
 
               <span className="text-sm text-(--muted-foreground)">
@@ -344,9 +344,9 @@ export default function ResultPage() {
                   leading-relaxed
                 "
               >
-                Your responses remain private and secure.
-                This assessment helps analyze your personality
-                traits and behavioral preferences.
+                Your answer choices are read from this browser.
+                This reflection summarizes the four directional scores shown
+                above.
               </p>
             </div>
           </div>

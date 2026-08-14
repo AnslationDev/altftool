@@ -1,10 +1,10 @@
 const toolConfig = {
   slug: "multi-country-clock",
-  name: "Multi Country Clock Tool",
+  name: "Multi Time Zone Clock Tool",
   category: ["Web"],
-  description: "View current time across multiple countries simultaneously.",
+  description: "Compare current time across multiple browser-supported IANA zones.",
   icon: "clock",
-  iconColor: "text-blue-600",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

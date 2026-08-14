@@ -26,7 +26,7 @@ export const motorcycleInsurance = {
   ],
 
   quoteLabel: "Compare quotes",
-  quoteUrl: "https://example.com/quote/motorcycle-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What motorcycle insurance covers",
   coverageIntro:

@@ -18,9 +18,9 @@ import {
   Clock,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/freshcoat-interiors";
-const PHONE_TEL = "tel:+18335550187";
-const PHONE_DISPLAY = "(833) 555-0187";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=80",

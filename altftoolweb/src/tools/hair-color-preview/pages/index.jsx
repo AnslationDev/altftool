@@ -106,7 +106,7 @@ export default function HairColorPreview() {
             <div className="h-1 bg-gradient-primary rounded-full" />
           </div>
           <p className="text-lg text-(--muted-foreground) max-w-2xl mx-auto">
-            Upload a photo and try on 30+ hair colors from natural to bold fashion shades.
+            Upload a photo and try on 16 hair colors from natural to bold fashion shades.
           </p>
         </div>
 

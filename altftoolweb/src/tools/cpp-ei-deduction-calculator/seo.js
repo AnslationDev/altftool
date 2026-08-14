@@ -14,15 +14,15 @@ const seo = {
   faqs: [
     [
       "How is CPP calculated on a paycheque?",
-      "Subtract the $3,500 annual basic exemption (prorated across your pay periods) from pensionable earnings, then apply the 5.95% employee rate up to the YMPE. The employer matches it exactly. For 2025 the YMPE is $71,300, giving a maximum first-tier employee contribution of $4,034.10.",
+      "Subtract the $3,500 annual basic exemption (prorated across your pay periods) from pensionable earnings, then apply the 5.95% employee rate up to the YMPE. The employer matches it exactly. For 2026 the YMPE is $74,600, giving a maximum first-tier employee contribution of $4,230.45.",
     ],
     [
       "What is CPP2 and who pays it?",
-      "CPP2 is the second additional contribution introduced in 2024. It applies at 4% to earnings between the YMPE and the YAMPE, paid by both employee and employer. In 2025 that band runs from $71,300 to $81,200, so the maximum employee CPP2 contribution is $396.",
+      "CPP2 is the second additional contribution introduced in 2024. It applies at 4% to earnings between the YMPE and the YAMPE, paid by both employee and employer. In 2026 that band runs from $74,600 to $85,000, so the maximum employee CPP2 contribution is $416.",
     ],
     [
       "How much EI is deducted from my pay?",
-      "The employee rate is applied to insurable earnings up to the annual maximum, and the employer pays 1.4 times that amount. For 2025 the rate outside Quebec is 1.64% on maximum insurable earnings of $65,700, giving a maximum employee premium of $1,077.48; Quebec's federal rate is 1.31% because QPIP covers parental benefits.",
+      "The employee rate is applied to insurable earnings up to the annual maximum, and the employer pays 1.4 times that amount. For 2026 the rate outside Quebec is 1.63% on maximum insurable earnings of $68,900, giving a maximum employee premium of $1,123.07; Quebec's federal rate is 1.30%, giving a maximum of $895.70, because QPIP covers parental benefits.",
     ],
     [
       "Do self-employed people pay CPP and EI?",

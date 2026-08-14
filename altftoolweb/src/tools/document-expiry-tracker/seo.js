@@ -2,7 +2,7 @@ const seo = {
   intro:
     "The Document Expiry Tracker is a private register for renewal dates: you add one record per document — passport, visa, driving licence, insurance policy, professional certificate — with its expiry date and the reminder you want against it, and the list is saved in your own browser rather than an account. Records stay searchable across every field, and the whole set exports to a JSON file you can back up or import into another browser. It suits anyone whose renewals are scattered across email, wallet and filing cabinet with no single list.",
   useCases: [
-    "A family has four passports, two driving licences and a car insurance policy renewing at different points in the year, and needs one place that says what runs out next.",
+    "A family has four passports, two driving licences and a car insurance policy renewing at different points in the year, and needs one searchable register holding every document and its date instead of seven reminders scattered across three inboxes.",
     "A contractor holds professional certifications and a work visa with separate renewal windows, and wants a note against each one saying how early the paperwork has to start.",
     "You are moving to a new laptop and want your renewal list to travel with you — export the JSON, import it on the new machine, and nothing goes through a server.",
   ],
@@ -13,7 +13,7 @@ const seo = {
     ],
     [
       "Free-text reminders, not a fixed schema",
-      "The reminder field takes whatever the document actually needs — 'renew 9 months early, appointments book out' — instead of forcing every record into the same lead time.",
+      "The second box is one free-text field holding the expiry date and the reminder together, so it takes whatever the document actually needs — '14 Mar 2027, renew 9 months early, appointments book out' — instead of a fixed date picker and a fixed lead time.",
     ],
     [
       "Portable JSON in and out",
@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "Can I move my list to another device?",
-      "Yes. Export JSON on the first browser and use Import JSON on the second; every record keeps its fields and is given an id if it lacks one. Transfer the file over a channel you trust, since it contains your own expiry dates.",
+      "Yes. Export JSON on the first browser and use Import JSON on the second; import asks you to confirm first because it replaces every record already saved there instead of merging, and each imported record keeps its fields and is given an id if it lacks one. Transfer the file over a channel you trust, since it contains your own expiry dates.",
     ],
   ],
 };

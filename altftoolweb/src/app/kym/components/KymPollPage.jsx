@@ -169,7 +169,6 @@ export default function KymPollPage() {
           <h1>{pollPage.title}</h1>
           <img className="kym-article-hero" src={pollPage.heroImage.src} alt="" />
           <div className="kym-article-meta">
-            <span>By {pollPage.author}</span>
             <span>{pollPage.date}</span>
             <a href="#comments">Comments</a>
             <button onClick={handleShare} type="button">

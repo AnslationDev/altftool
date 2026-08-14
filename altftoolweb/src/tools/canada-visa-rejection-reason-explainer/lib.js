@@ -294,17 +294,10 @@ export function getGround(id) {
 
 const norm = (value) => String(value).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
-/** Word count of a normalised keyword phrase - longer phrases are more distinctive. */
-const specificity = (keyword) => norm(keyword).split(" ").filter(Boolean).length;
-
 /**
  * Match the text of an IRCC refusal letter against each ground's keyword list.
- * Deterministic. Confidence is driven by how specific the strongest matched phrase
- * is relative to that ground's most distinctive keyword, not by how many keywords
- * the ground happens to have - otherwise a verbatim, decisive quote could never
- * score highly for a ground with a long keyword list, and a short, generic phrase
- * shared with another ground could look just as confident as a precise one.
- * Additional matched keywords add a small corroboration bonus on top.
+ * Deterministic: score is the count of distinct keywords found, confidence is that
+ * count as a percentage of the ground's keyword list.
  *
  * @returns {{error:string}|{matches:Array<{id:string,title:string,score:number,confidence:number,matchedTerms:string[]}>}}
  */
@@ -317,20 +310,16 @@ export function matchRefusalText(text, { limit = 3 } = {}) {
   for (const ground of REFUSAL_GROUNDS) {
     const matchedTerms = ground.keywords.filter((keyword) => haystack.includes(norm(keyword)));
     if (matchedTerms.length === 0) continue;
-    const maxKeywordWeight = Math.max(...ground.keywords.map(specificity));
-    const bestMatchWeight = Math.max(...matchedTerms.map(specificity));
-    const baseConfidence = (bestMatchWeight / maxKeywordWeight) * 100;
-    const corroboration = Math.min(15, (matchedTerms.length - 1) * 5);
     matches.push({
       id: ground.id,
       title: ground.title,
       score: matchedTerms.length,
-      confidence: Math.min(100, Math.round(baseConfidence + corroboration)),
+      confidence: Math.round((matchedTerms.length / ground.keywords.length) * 100),
       matchedTerms,
     });
   }
 
-  matches.sort((a, b) => b.confidence - a.confidence || b.score - a.score);
+  matches.sort((a, b) => b.score - a.score || b.confidence - a.confidence);
   return { matches: matches.slice(0, Math.max(1, Math.trunc(limit))) };
 }
 

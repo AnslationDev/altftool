@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "creator-income-tracker",
   "title": "Creator Income Tracker",
-  "description": "Sponsorship, affiliate aur platform payouts locally track kare.",
+  "description": "Track sponsorship, affiliate and platform payouts in one place, stored locally.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Business",

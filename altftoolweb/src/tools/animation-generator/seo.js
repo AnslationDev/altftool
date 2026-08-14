@@ -63,9 +63,9 @@ const seo = {
     ],
   ],
   steps: [
-    "Choose a base animation — Fade In, Slide Right or Bounce — then set duration, delay and easing. Use the replay and pause buttons to re-run the motion as you change values.",
-    "Refine it: edit the 0%, 50% and 100% keyframe stops (opacity plus an optional transform like scale(1.2)), adjust translate, rotate and scale, pick a solid colour or a 45-degree two-colour gradient for the element, and set the trigger to autoplay, hover or click.",
-    "Copy the generated @keyframes block from the code preview into your stylesheet and add the animation shorthand with the timing values you chose — or use Export Video for a 2-second WebM of the motion at the pixel size you specify.",
+    "Choose Fade In, Slide Right or Bounce in the top dropdown, then set duration and easing. The synchronized Animation Controls panel adds delay, one or infinite iterations, normal or alternate direction, and forwards, backwards, both or none fill mode; Replay restarts the result and the adjacent button pauses or resumes it.",
+    "Refine the preview with Translate X, Translate Y, Rotate, Scale and Opacity, choose Auto Play, On Hover or On Click, and pick a solid colour or a 45-degree two-colour gradient. Editing any 0%, 50% or 100% keyframe activates the customAnimation preview and preserves the optional transform text, such as scale(1.2).",
+    "Select and copy the @keyframes block shown under Generated CSS, then add an animation shorthand with the timing values you chose. Export Video records about two seconds at the pixel size you enter and downloads animation.webm, while Export Lottie downloads animation.json.",
   ],
 };
 

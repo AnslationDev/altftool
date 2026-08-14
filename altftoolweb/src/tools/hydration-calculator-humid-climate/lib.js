@@ -303,8 +303,14 @@ export function humidHydrationPlan({
     age >= OLDER_ADULT_AGE ? BASELINE_ML_PER_KG.older : BASELINE_ML_PER_KG.adult;
   const baselineL = (baselineMlPerKg * weightKg) / 1000;
 
-  const exerciseSweatL = intensityDef.sweatLPerHour * exerciseHours * multiplier;
-  const passiveHours = Math.max(0, outdoorHours - exerciseHours);
+  // Only training done outdoors/without AC receives the humid-heat multiplier.
+  // Otherwise unrelated outdoor exposure would inflate an indoor gym session.
+  const heatedExerciseHours = Math.min(exerciseHours, outdoorHours);
+  const indoorExerciseHours = Math.max(0, exerciseHours - heatedExerciseHours);
+  const exerciseSweatL =
+    intensityDef.sweatLPerHour *
+    (indoorExerciseHours + heatedExerciseHours * multiplier);
+  const passiveHours = Math.max(0, outdoorHours - heatedExerciseHours);
   const passiveSweatL = PASSIVE_SWEAT_L_PER_HOUR * passiveHours * multiplier;
   const totalSweatL = exerciseSweatL + passiveSweatL;
 
@@ -326,6 +332,8 @@ export function humidHydrationPlan({
     baselineMlPerKg,
     baselineL,
     exerciseSweatL,
+    heatedExerciseHours,
+    indoorExerciseHours,
     passiveSweatL,
     passiveHours,
     totalSweatL,

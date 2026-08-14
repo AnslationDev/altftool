@@ -92,7 +92,7 @@ export default function CountryQuizPage() {
             {[
               { icon: Globe, label: "200+ Countries" },
               { icon: Zap, label: "Real-Time Data" },
-              { icon: BookOpen, label: "9 Question Types" },
+              { icon: BookOpen, label: "10 Question Types" },
               { icon: BarChart3, label: "Performance Tracking" },
               { icon: Star, label: "Achievements" },
               { icon: Clock, label: "Timed Challenges" },

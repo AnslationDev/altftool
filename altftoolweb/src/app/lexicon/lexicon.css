@@ -1,0 +1,268 @@
+/*
+ * AltF Lexicon — product token layer
+ *
+ * Extends the shared AltFTool design system rather than replacing it. Every
+ * token is namespaced --afl-* so nothing leaks, and every one is defined for
+ * both themes because the site ships a light default with a dark toggle.
+ *
+ * Two devices carry the whole product and appear on every surface:
+ *
+ *   1. The four part-of-speech hues. WordNet has exactly four open classes
+ *      (noun, verb, adjective, adverb), so four hues cover the corpus with no
+ *      "other" bucket. The same hue is used in the sense list, the POS chips,
+ *      the relation web, the letter tiles and the collection cards — learn it
+ *      once, read it everywhere.
+ *   2. The syllable line. `ser · en · DIP · i · ty` under the headword, stress
+ *      raised and inked. It is the one thing no other dictionary renders as a
+ *      visual object, and it is legible before you read a single definition.
+ *
+ * Backdrop motif is ruled lines (a dictionary column), deliberately distinct
+ * from AltF Ideas' dotted grid so the two products never read as one.
+ */
+
+:root {
+  --afl-noun: var(--anslation-ds-accent);
+  --afl-verb: var(--anslation-ds-success-text);
+  --afl-adjective: var(--anslation-ds-warning-text);
+  --afl-adverb: var(--anslation-ds-danger-text);
+  --afl-phrase: var(--anslation-ds-muted-strong);
+
+  --afl-noun-soft: var(--anslation-ds-accent-soft);
+  --afl-verb-soft: var(--anslation-ds-success-soft);
+  --afl-adjective-soft: var(--anslation-ds-warning-soft);
+  --afl-adverb-soft: var(--anslation-ds-danger-soft);
+  --afl-phrase-soft: var(--anslation-ds-soft);
+
+  --afl-rank-1: var(--anslation-ds-border-strong);
+  --afl-rank-2: var(--anslation-ds-muted);
+  --afl-rank-3: var(--anslation-ds-muted-strong);
+  --afl-rank-4: var(--anslation-ds-text-soft);
+  --afl-rank-5: var(--anslation-ds-text);
+
+  --afl-track: var(--anslation-ds-border);
+  --afl-rule: var(--anslation-ds-border);
+  --afl-tile-face: var(--anslation-ds-surface);
+  --afl-tile-edge: var(--anslation-ds-border-strong);
+  --afl-tile-ink: var(--anslation-ds-text-soft);
+  --afl-stress: var(--anslation-ds-text);
+}
+
+/* A dictionary is a typographic product, so the headword gets a real serif.
+   System serifs only — a webfont for one element is not worth the request,
+   and every platform in this stack ships a good one. */
+:root {
+  --afl-font-serif: ui-serif, "Iowan Old Style", "Source Serif 4", Charter,
+    "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+}
+
+/* ---------- ruled-column backdrop ---------- */
+.afl-rule-bg {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--afl-rule) 0,
+    var(--afl-rule) 1px,
+    transparent 1px,
+    transparent 2rem
+  );
+}
+
+/* ---------- headword ---------- */
+.afl-headword {
+  font-family: var(--afl-font-serif);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- syllable line ---------- */
+.afl-syllables {
+  font-family: var(--afl-font-serif);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.1em;
+  line-height: 1.5;
+}
+.afl-syllables__part {
+  color: var(--muted-foreground);
+}
+/* The stressed syllable is inked, uppercased and nudged up a hair. That tiny
+   vertical offset is what makes the stress readable at a glance rather than
+   something you have to decode. */
+.afl-syllables__part--stress {
+  color: var(--afl-stress);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  position: relative;
+  top: -0.055em;
+}
+.afl-syllables__dot {
+  color: var(--afl-track);
+  font-weight: 400;
+}
+
+/* ---------- part-of-speech chip ---------- */
+.afl-pos {
+  --afl-pos-ink: var(--afl-phrase);
+  --afl-pos-bg: var(--afl-phrase-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-style: italic;
+  font-family: var(--afl-font-serif);
+  color: var(--afl-pos-ink);
+  background: var(--afl-pos-bg);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--afl-pos-ink) 18%, transparent);
+  white-space: nowrap;
+}
+.afl-pos--noun {
+  --afl-pos-ink: var(--afl-noun);
+  --afl-pos-bg: var(--afl-noun-soft);
+}
+.afl-pos--verb {
+  --afl-pos-ink: var(--afl-verb);
+  --afl-pos-bg: var(--afl-verb-soft);
+}
+.afl-pos--adjective {
+  --afl-pos-ink: var(--afl-adjective);
+  --afl-pos-bg: var(--afl-adjective-soft);
+}
+.afl-pos--adverb {
+  --afl-pos-ink: var(--afl-adverb);
+  --afl-pos-bg: var(--afl-adverb-soft);
+}
+
+/* ---------- sense list ---------- */
+.afl-sense {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  gap: 0.25rem 0.5rem;
+  padding-block: 0.625rem;
+}
+.afl-sense__n {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+  padding-top: 0.15rem;
+}
+.afl-sense__gloss {
+  font-family: var(--afl-font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--foreground);
+}
+/* Usage examples are the second-most-read thing on a word page after the
+   first gloss, so they get a rule rather than being buried in body text. */
+.afl-sense__example {
+  font-family: var(--afl-font-serif);
+  font-style: italic;
+  color: var(--muted-foreground);
+  border-left: 2px solid var(--afl-track);
+  padding-left: 0.625rem;
+  margin-top: 0.375rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .afl-sense {
+    grid-template-columns: 1.4rem 1fr;
+  }
+  .afl-sense__gloss {
+    font-size: 1rem;
+  }
+}
+
+/* ---------- commonness meter ---------- */
+.afl-meter {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+.afl-meter__seg {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 1px;
+  background: var(--afl-track);
+}
+.afl-meter__seg--on {
+  background: var(--afl-meter-ink, var(--afl-rank-3));
+}
+
+/* ---------- letter tile (the A–Z motif) ---------- */
+.afl-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  background: var(--afl-tile-face);
+  color: var(--afl-tile-ink);
+  box-shadow:
+    inset 0 0 0 1px var(--afl-tile-edge),
+    0 1px 0 var(--afl-tile-edge);
+  font-family: var(--afl-font-serif);
+  font-weight: 600;
+  text-transform: uppercase;
+  transition:
+    transform var(--anslation-ds-motion-base, 0.15s) ease-out,
+    box-shadow var(--anslation-ds-motion-base, 0.15s) ease-out;
+}
+.afl-tile:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 0 1px var(--primary),
+    0 6px 16px -6px color-mix(in srgb, var(--primary) 45%, transparent);
+}
+/* The count in the tile corner is what turns the A–Z grid from navigation
+   into information — you can see the shape of the language in it. */
+.afl-tile__count {
+  position: absolute;
+  right: 0.3rem;
+  bottom: 0.15rem;
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.62;
+  text-transform: none;
+}
+
+/* ---------- cards ---------- */
+.afl-card {
+  transition:
+    border-color var(--anslation-ds-motion-base, 0.15s) ease-out,
+    transform var(--anslation-ds-motion-base, 0.15s) ease-out,
+    box-shadow var(--anslation-ds-motion-base, 0.15s) ease-out;
+}
+.afl-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--afl-accent, var(--border-strong));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+/* ---------- answer-first block (the chunk AI engines lift) ---------- */
+.afl-answer {
+  border-left: 3px solid var(--primary);
+}
+
+/* ---------- entry column rule (long word pages) ---------- */
+.afl-divide > * + * {
+  border-top: 1px solid var(--border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afl-tile,
+  .afl-tile:hover,
+  .afl-card,
+  .afl-card:hover {
+    transform: none;
+    transition: none;
+  }
+}

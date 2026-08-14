@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "csv-carbon-footprint-analyzer",
   "title": "CSV Carbon Footprint Analyzer",
-  "description": "Utility aur travel exports se estimated footprint calculate kare.",
+  "description": "Calculate an estimated carbon footprint from your utility and travel CSV exports.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

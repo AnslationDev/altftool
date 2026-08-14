@@ -1,5 +1,5 @@
-import PageView from "./PageView";
 import JsonLd from "@/platform/seo/JsonLd";
+import VerificationPreview from "@/app/brandrating/(components)/VerificationPreview";
 import {
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
@@ -7,16 +7,8 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { resolveBrandCategoryRoute } from "../catalog";
 
-function formatCategoryName(slug) {
-  return String(slug || "Brands")
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
 const describe = (categoryName) =>
-  `Compare ${categoryName.toLowerCase()} brands, ratings, features, reviews, and FAQs on AltFTool before you choose.`;
+  `Source verification preview for ${categoryName.toLowerCase()} brand information on AltFTool.`;
 
 /**
  * The first path segment is decorative — nothing here ever read it — so
@@ -27,9 +19,8 @@ const describe = (categoryName) =>
  * this hole (see its header) but nothing imported it.
  *
  * Resolving against the catalogue lets a URL that maps to a real subcategory
- * point its canonical at the one path the sitemap advertises, and marks
- * everything else noindex. Nothing 404s: the UI links some of these shapes
- * itself, so they must keep answering — they just stop being indexable copies.
+ * point at one stable canonical path. Every route remains noindex while the
+ * source-verification workflow is incomplete.
  */
 async function resolve(params) {
   const { slug, category } = await params;
@@ -38,21 +29,21 @@ async function resolve(params) {
     slug,
     category,
     status,
-    categoryName: subcategory?.name || formatCategoryName(category),
+    categoryName: subcategory?.name || "Brand category",
     path: subcategory?.canonicalPath || `/brandrating/${slug}/${category}`,
   };
 }
 
 export async function generateMetadata({ params }) {
-  const { status, categoryName, path } = await resolve(params);
+  const { categoryName, path } = await resolve(params);
 
   return createPageMetadata({
-    title: `${categoryName} - Best Brands & Ratings | AltFTool`,
+    title: `${categoryName} Source Verification Preview | AltFTool`,
     description: describe(categoryName),
     path,
-    // "unavailable" means the catalogue could not be read, so we cannot tell a
-    // real category from a made-up one — noindex is the safe answer either way.
-    noindex: status !== "ok",
+    // The route stays out of search until its source pipeline is complete.
+    noindex: true,
+    follow: true,
   });
 }
 
@@ -61,17 +52,14 @@ export default async function Page(props) {
 
   return (
     <>
-      {/* Collection + breadcrumb only. The brand cards, their ranks and their
-          ratings arrive in the browser from Firestore, and the reviews strip is
-          the same static (data)/reviews.json on every route — so there is no
-          truthful ItemList, Product, AggregateRating or Review to emit here.
-          The first path segment is skipped: /brandrating/[slug] has no page. */}
+      {/* Collection + breadcrumb only. The compatibility screen intentionally
+          exposes no ranked ItemList, Product, AggregateRating, or Review data. */}
       <JsonLd
         id={`brandrating-${category}-schema`}
         data={[
           createCollectionPageJsonLd({
             path,
-            name: `${categoryName} - Best Brands & Ratings`,
+            name: `${categoryName} source verification preview`,
             description: describe(categoryName),
           }),
           createBreadcrumbJsonLd([
@@ -81,7 +69,7 @@ export default async function Page(props) {
           ]),
         ]}
       />
-      <PageView {...props} />
+      <VerificationPreview entityName={categoryName} entityType="category" />
     </>
   );
 }

@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import "./cladco-exteriors.css";
 
-const QUOTE_URL = "https://example.com/quote/cladco-exteriors";
-const PHONE_DISPLAY = "(833) 555-0121";
-const PHONE_TEL = "tel:+18335550121";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1574359411659-15573a27fd0c?auto=format&fit=crop&w=1600&q=80",

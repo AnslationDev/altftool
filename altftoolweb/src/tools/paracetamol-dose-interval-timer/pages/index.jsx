@@ -62,10 +62,19 @@ export default function ToolHome() {
       "Paracetamol Dose Interval Timer",
       `Last dose: ${formatClock12(result.lastDose)} · ${result.dosesTaken} dose(s) of ${MG.format(result.mgPerDose)} mg in 24 hours`,
       `Taken so far: ${MG.format(result.takenMg)} mg of a ${MG.format(result.dailyMaxMg)} mg limit`,
-      `Next dose no earlier than: ${formatClock12(result.nextDoseMinutes)}`,
       `Doses still available today: ${result.remainingDoses}`,
     ];
-    if (result.overLimit) lines.push("OVER THE 24-HOUR LIMIT — seek medical advice.");
+    if (result.remainingDoses > 0) {
+      lines.splice(3, 0, `Next dose no earlier than: ${formatClock12(result.nextDoseMinutes)}`);
+    } else {
+      lines.push(
+        "No further dose fits the information entered; the earliest rolling-window release cannot be calculated without the full dose log.",
+      );
+    }
+    if (result.mgOverLimit) lines.push("OVER THE 24-HOUR MILLIGRAM LIMIT — seek medical help now.");
+    else if (result.countOverLimit) {
+      lines.push("OVER THE FOUR-DOSE LIMIT — do not take another dose; seek professional advice.");
+    }
     return lines.join("\n");
   })();
 
@@ -203,12 +212,15 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="numeric"
-              min="60"
+              min={mode === "adult" ? "500" : "60"}
               max="1000"
               step="10"
               value={mgPerDose}
               onChange={(event) => setMgPerDose(event.target.value)}
             />
+            <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+              This arithmetic assumes every dose counted above used this same amount.
+            </p>
           </div>
           {mode === "child" && (
             <div>
@@ -255,7 +267,7 @@ export default function ToolHome() {
               {hasError
                 ? "Fix the inputs above to see the timing."
                 : result.remainingDoses === 0
-                  ? "No further doses fit in this 24-hour period."
+                  ? "No further dose fits the information entered; check the full dose log."
                   : `${formatDuration(result.intervalMinutes)} after the last dose · ${result.remainingDoses} dose${result.remainingDoses === 1 ? "" : "s"} left today`}
             </p>
           </div>
@@ -322,8 +334,10 @@ export default function ToolHome() {
                 : `${MG.format(result.recommendedDoseMg)} mg`,
             ],
             [
-              "Allowance resets around",
-              hasError ? DASH : formatClock12(result.twentyFourHourResetMinutes),
+              "If no more is taken, full reset by",
+              hasError
+                ? DASH
+                : `24h after the last dose (${formatClock12(result.twentyFourHourResetMinutes)})`,
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
@@ -381,8 +395,7 @@ export default function ToolHome() {
         <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
           <h2 className="text-base font-semibold">Before you take the next dose</h2>
           <ul className="mt-3 space-y-2 text-sm text-[var(--muted-foreground)]">
-            {/* The lead warning is already shown prominently in the alert box above
-                when overLimit is true — do not repeat it here as a routine bullet. */}
+            {/* The lead overdose warning is already shown in the alert above. */}
             {(result.overLimit ? result.warnings.slice(1) : result.warnings).map((warning) => (
               <li key={warning} className="flex gap-2">
                 <span aria-hidden="true" className="text-[var(--primary)]">

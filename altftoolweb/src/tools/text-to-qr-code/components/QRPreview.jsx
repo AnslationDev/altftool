@@ -66,6 +66,11 @@ export default function QRPreview({
   const maxBytes = QR_BYTE_CAPACITY[errorLevel] || QR_BYTE_CAPACITY.M;
   const exceedsCapacity = hasContent && payloadBytes > maxBytes;
   const canRenderQr = hasContent && !exceedsCapacity;
+  // qrcode.react serializes a blob: logo URL into SVG output, which stops
+  // working once the page revokes that temporary URL. Derive a self-contained
+  // raster format while a logo is present instead of downloading a broken SVG.
+  const effectiveDownloadFormat =
+    customLogo && downloadFormat === "svg" ? "png" : downloadFormat;
 
   const getCanvas = useCallback(() => {
     if (typeof document === "undefined") return null;
@@ -76,7 +81,7 @@ export default function QRPreview({
     const canvas = getCanvas();
     if (!canvas) return;
 
-    if (downloadFormat === "svg") {
+    if (effectiveDownloadFormat === "svg") {
       const parent = canvas.parentElement;
       const svgEl = parent?.querySelector("svg");
       if (!svgEl) {
@@ -93,10 +98,10 @@ export default function QRPreview({
     }
 
     const dataUrl = canvas.toDataURL(
-      downloadFormat === "jpeg" ? "image/jpeg" : "image/png",
+      effectiveDownloadFormat === "jpeg" ? "image/jpeg" : "image/png",
       0.95
     );
-    triggerDownload(dataUrl, `qr-code.${downloadFormat}`);
+    triggerDownload(dataUrl, `qr-code.${effectiveDownloadFormat}`);
   }
 
   function triggerDownload(href, filename) {
@@ -232,7 +237,7 @@ export default function QRPreview({
               marginSize={margin}
               imageSettings={imageSettings}
             />
-            {downloadFormat === "svg" && (
+            {effectiveDownloadFormat === "svg" && (
               <QRCodeSVG
                 id="qr-svg-output"
                 value={computedValue}
@@ -259,12 +264,14 @@ export default function QRPreview({
                 Format
               </label>
               <select
-                value={downloadFormat}
+                value={effectiveDownloadFormat}
                 onChange={(e) => setDownloadFormat(e.target.value)}
                 className="px-3 py-1.5 bg-(--background) border border-(--border) rounded-lg text-sm font-semibold"
               >
                 <option value="png">PNG</option>
-                <option value="svg">SVG</option>
+                <option value="svg" disabled={Boolean(customLogo)}>
+                  {customLogo ? "SVG (remove logo first)" : "SVG"}
+                </option>
                 <option value="jpeg">JPEG</option>
               </select>
             </div>

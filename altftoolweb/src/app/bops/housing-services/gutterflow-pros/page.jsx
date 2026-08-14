@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 import "./gutterflow-pros.css";
 
-const QUOTE_URL = "https://example.com/quote/gutterflow-pros";
-const PHONE_DISPLAY = "(855) 555-0232";
-const PHONE_TEL = "tel:+18555550232";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1620385019253-b051a26048ce?auto=format&fit=crop&w=1600&q=80",

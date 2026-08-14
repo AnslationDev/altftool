@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["The list never leaves your device", "Records live in this browser's local storage, so a schedule of your valuables is not sitting in someone else's database."],
-    ["Search across every field", "Typing a brand, room or serial filters the whole inventory instantly, which is what you need under claim-time pressure."],
+    ["Search across both fields", "Typing a brand, model or serial number filters the whole inventory instantly, which is what you need under claim-time pressure."],
     ["Portable JSON export and import", "One click writes the inventory to a JSON file you can store in a safe, on a backup drive or off-site, and import back on another machine."],
   ],
   faqs: [

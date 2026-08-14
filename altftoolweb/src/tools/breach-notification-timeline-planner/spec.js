@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "breach-notification-timeline-planner",
   "title": "Breach Notification Timeline Planner",
-  "description": "Incident discovery se required review aur notification milestones map kare.",
+  "description": "Map the review and notification milestones required from the date a breach is discovered.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

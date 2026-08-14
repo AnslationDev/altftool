@@ -312,11 +312,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl
-          className="mt-5 divide-y divide-[var(--border)] text-sm"
-          aria-live="polite"
-          aria-atomic="true"
-        >
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Total depreciation so far", ok ? INR.format(result.totalLoss) : DASH],
             ["Average loss per year", ok ? INR.format(result.perYearLoss) : DASH],

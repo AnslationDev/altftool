@@ -129,7 +129,7 @@ export default function EstimateForm() {
               <form onSubmit={onSubmit} className="space-y-5" noValidate>
                 <div className="grid sm:grid-cols-2 gap-5">
                   <Field icon={User}  label="Full Name"    placeholder="Jane Doe"            value={form.name}  error={errors.name}  onChange={update("name")} />
-                  <Field icon={Phone} label="Phone Number" placeholder="(555) 123-4567"      value={form.phone} error={errors.phone} onChange={update("phone")} type="tel" />
+                  <Field icon={Phone} label="Phone Number" placeholder="Demo only"      value={form.phone} error={errors.phone} onChange={update("phone")} type="tel" />
                 </div>
                 <Field icon={Mail} label="Email Address" placeholder="jane@example.com" value={form.email} error={errors.email} onChange={update("email")} type="email" />
 

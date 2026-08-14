@@ -539,7 +539,9 @@ export default function MainComponent() {
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
           if (token !== processingTokenRef.current) return;
           const page = await pdf.getPage(pageNumber);
+          if (token !== processingTokenRef.current) return;
           const textContent = await page.getTextContent();
+          if (token !== processingTokenRef.current) return;
           const items = textContent.items || [];
 
           const lines = [];
@@ -732,8 +734,17 @@ export default function MainComponent() {
 
   const printSummary = () => {
     if (!summary) return;
-    const win = window.open("", "_blank", "width=640,height=800,noopener");
+    // A `noopener` window feature makes window.open() return null in conforming
+    // browsers, which prevents us from writing and printing the escaped document.
+    // Open same-origin about:blank, then sever the opener before writing content.
+    const win = window.open("", "_blank", "width=640,height=800");
     if (!win) return;
+    try {
+      win.opener = null;
+    } catch {
+      // Some browsers expose opener as read-only. The printed content below is
+      // fully escaped and contains no script or external navigation.
+    }
     win.document.write(`<!DOCTYPE html><html><head><title>PDF Summary</title>
       <style>body{font-family:system-ui,sans-serif;max-width:700px;margin:2rem auto;padding:0 1rem;color:#111;line-height:1.6}
       h1{font-size:1.25rem;margin-bottom:0.5rem}pre{white-space:pre-wrap;word-wrap:break-word}</style></head>

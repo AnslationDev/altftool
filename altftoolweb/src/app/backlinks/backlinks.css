@@ -1,0 +1,438 @@
+/*
+ * AltF Backlinks — product token layer
+ *
+ * Extends the shared AltFTool design system. Namespaced --bl-* so nothing
+ * leaks, and declared for both themes because the platform ships light by
+ * default with a dark toggle.
+ *
+ * Design brief: this is a worklist, not a gallery. Someone opens it to find the
+ * next three places to submit, opens them in tabs, and leaves. So the visual
+ * system optimises for scanning a long list and for making the outbound action
+ * unmissable — dense rows, one strong action colour, and an impact number that
+ * reads without a legend.
+ */
+
+:root {
+  --bl-tier-s: var(--anslation-ds-success-text);
+  --bl-tier-a: var(--anslation-ds-primary-text);
+  --bl-tier-b: var(--anslation-ds-info-text);
+  --bl-tier-c: var(--anslation-ds-muted-strong);
+
+  --bl-free: var(--anslation-ds-success-text);
+  --bl-freemium: var(--anslation-ds-info-text);
+  --bl-paid: var(--anslation-ds-warning-text);
+  --bl-unknown: var(--anslation-ds-muted-strong);
+
+  --bl-effort-low: var(--anslation-ds-success-text);
+  --bl-effort-medium: var(--anslation-ds-warning-text);
+  --bl-effort-high: var(--anslation-ds-danger-text);
+
+  --bl-track: var(--anslation-ds-border);
+  --bl-tint: 8%;
+  --bl-tint-strong: 14%;
+  --bl-shadow: var(--anslation-ds-shadow-md);
+}
+
+/* ---------- impact badge ----------
+   A number plus a short arc. The arc exists so a row can be judged at a glance
+   while scrolling; the number exists so the judgement is never colour-only. */
+.bl-impact {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+}
+.bl-impact svg {
+  transform: rotate(-90deg);
+  position: absolute;
+  inset: 0;
+}
+.bl-impact__track {
+  stroke: var(--bl-track);
+}
+.bl-impact__value {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* ---------- rows ----------
+   A list, not a card grid. 661 entries in cards would be endless scrolling;
+   rows let someone compare six at once. */
+.bl-row {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--card-border, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--card);
+  transition:
+    border-color 160ms var(--anslation-ds-ease-out, ease),
+    box-shadow 160ms var(--anslation-ds-ease-out, ease);
+}
+@media (hover: hover) {
+  .bl-row:hover {
+    border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+    box-shadow: var(--bl-shadow);
+  }
+}
+.bl-row:focus-within {
+  border-color: var(--primary);
+}
+
+/* ---------- chips ---------- */
+.bl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  padding: 0.1875rem 0.5rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid color-mix(in srgb, var(--bl-chip-hue, var(--border)) 32%, transparent);
+  background: color-mix(in srgb, var(--bl-chip-hue, var(--muted)) var(--bl-tint), transparent);
+  color: var(--bl-chip-hue, var(--muted-foreground));
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+/* ---------- filter rail ----------
+   Filters are links, not checkboxes: each state is a real URL so the facets are
+   crawlable and shareable, and the page works with JS disabled. */
+.bl-facet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  transition: background 140ms var(--anslation-ds-ease-out, ease), color 140ms;
+}
+.bl-facet:hover {
+  background: var(--surface-soft);
+  color: var(--foreground);
+}
+.bl-facet[aria-current="true"] {
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 600;
+}
+.bl-facet__count {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- the outbound action ----------
+   The whole point of a row. Deliberately the highest-contrast thing in it. */
+.bl-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 2.25rem;
+  padding-inline: 0.875rem;
+  border-radius: var(--anslation-ds-radius);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 140ms var(--anslation-ds-ease-out, ease);
+}
+.bl-open:hover {
+  background: var(--primary-hover);
+}
+
+/* ---------- start-here strip ---------- */
+.bl-start {
+  border: 1px solid color-mix(in srgb, var(--bl-tier-s) 30%, transparent);
+  background: color-mix(in srgb, var(--bl-tier-s) var(--bl-tint), transparent);
+  border-radius: var(--anslation-ds-radius-xl);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-row,
+  .bl-row:hover {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   Sheet view
+   ------------------------------------------------------------
+   A deliberate imitation of a spreadsheet, because the source of this data IS
+   a spreadsheet and the people maintaining it already think in rows, columns
+   and a frozen header. The card list is for deciding; this is for working
+   through.
+
+   Everything visual here is doing a job a spreadsheet does: hairline grid on
+   every cell so the eye can track across a wide row, a row-number gutter so you
+   can say "line 84", a frozen header and frozen first column so context
+   survives scrolling, and zebra banding for the same reason.
+   ============================================================ */
+
+:root {
+  --bl-sheet-bg: var(--anslation-ds-surface);
+  --bl-sheet-alt: var(--anslation-ds-page);
+  --bl-sheet-rule: var(--anslation-ds-border);
+  --bl-sheet-head: var(--anslation-ds-soft);
+  --bl-sheet-head-ink: var(--anslation-ds-text-soft);
+  --bl-sheet-gutter: var(--anslation-ds-page);
+  --bl-sheet-gutter-ink: var(--anslation-ds-muted);
+  --bl-sheet-hover: var(--anslation-ds-hover);
+}
+
+/* The scroll container. Horizontal scroll lives here and nowhere else, so the
+   page body never scrolls sideways on a phone. */
+.bl-sheet-wrap {
+  overflow: auto;
+  border: 1px solid var(--bl-sheet-rule);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--bl-sheet-bg);
+  max-height: 78vh;
+  overscroll-behavior-x: contain;
+}
+
+.bl-sheet {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+  font-size: 0.8125rem;
+  color: var(--foreground);
+  background: var(--bl-sheet-bg);
+}
+
+/* Header: frozen, and above the frozen first column at the intersection. */
+.bl-sheet thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--bl-sheet-head);
+  color: var(--bl-sheet-head-ink);
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  padding: 0.5rem 0.625rem;
+  border-right: 1px solid var(--bl-sheet-rule);
+  border-bottom: 1px solid var(--bl-sheet-rule);
+}
+
+.bl-sheet tbody td {
+  padding: 0.375rem 0.625rem;
+  border-right: 1px solid var(--bl-sheet-rule);
+  border-bottom: 1px solid var(--bl-sheet-rule);
+  vertical-align: middle;
+  white-space: nowrap;
+  background: inherit;
+}
+
+.bl-sheet tbody tr {
+  background: var(--bl-sheet-bg);
+}
+.bl-sheet tbody tr:nth-child(even) {
+  background: var(--bl-sheet-alt);
+}
+.bl-sheet tbody tr:hover {
+  background: var(--bl-sheet-hover);
+}
+
+/* Row-number gutter and the site column both freeze, so a wide row keeps its
+   identity while you scroll right. */
+.bl-sheet__gutter {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 3rem;
+  min-width: 3rem;
+  background: var(--bl-sheet-gutter) !important;
+  color: var(--bl-sheet-gutter-ink);
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.bl-sheet thead .bl-sheet__gutter {
+  z-index: 4;
+}
+
+.bl-sheet__sticky {
+  position: sticky;
+  left: 3rem;
+  z-index: 2;
+  box-shadow: 1px 0 0 var(--bl-sheet-rule);
+}
+.bl-sheet thead .bl-sheet__sticky {
+  z-index: 4;
+}
+
+/* Sortable header: the whole cell is the target, and the active direction is
+   spelled out rather than implied by an arrow alone. */
+.bl-sheet__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+}
+.bl-sheet__sort:hover {
+  color: var(--primary);
+}
+.bl-sheet__sort[aria-sort] {
+  color: var(--primary);
+}
+
+.bl-sheet__num {
+  font-family: var(--anslation-ds-font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Micro-actions: only ink up on row hover or keyboard focus, so 30 rows of
+   buttons do not shout over the data. */
+.bl-sheet__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+.bl-micro {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  color: var(--muted-foreground);
+  opacity: 0.55;
+  transition: opacity 120ms ease-out, background 120ms ease-out, color 120ms ease-out;
+}
+.bl-sheet tbody tr:hover .bl-micro,
+.bl-micro:focus-visible {
+  opacity: 1;
+}
+.bl-micro:hover {
+  background: var(--surface-soft);
+  color: var(--primary);
+}
+.bl-micro[data-copied="true"] {
+  color: var(--bl-free);
+  opacity: 1;
+}
+
+/* Compact chip for inside cells — the row-height budget is ~30px. */
+.bl-cell-chip {
+  display: inline-block;
+  padding: 0.0625rem 0.375rem;
+  border-radius: 0.1875rem;
+  border: 1px solid color-mix(in srgb, var(--bl-chip-hue, var(--border)) 34%, transparent);
+  background: color-mix(in srgb, var(--bl-chip-hue, var(--muted)) 12%, transparent);
+  color: var(--bl-chip-hue, var(--muted-foreground));
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.625rem;
+  line-height: 1.5;
+}
+
+/* View toggle */
+.bl-view {
+  display: inline-flex;
+  padding: 0.1875rem;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--canvas);
+  gap: 0.125rem;
+}
+.bl-view a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.75rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  transition: background 140ms ease-out, color 140ms ease-out;
+}
+.bl-view a:hover {
+  color: var(--foreground);
+}
+.bl-view a[aria-current="page"] {
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-micro,
+  .bl-view a {
+    transition: none;
+  }
+}
+
+/* ---------- filter rail: collapsed on small screens ----------
+   The rail is ~29 rows. On a phone it stacks above the results, which means a
+   long scroll past filters before reaching a single row of data.
+
+   Collapsing it into a <details> fixes that with no JavaScript: on mobile the
+   summary is a tap target and the body is closed; from lg up the summary is
+   hidden and the body is forced open, so desktop behaves exactly as before.
+   Using CSS rather than the `open` attribute is what lets one markup tree serve
+   both without a client component. */
+.bl-filter-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--surface);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.bl-filter-summary::-webkit-details-marker {
+  display: none;
+}
+.bl-filter-summary::after {
+  content: "▾";
+  color: var(--muted-foreground);
+  transition: transform 140ms ease-out;
+}
+.bl-filter-collapse[open] > .bl-filter-summary::after {
+  transform: rotate(180deg);
+}
+.bl-filter-collapse > .bl-filter-body {
+  padding-top: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .bl-filter-collapse > .bl-filter-summary {
+    display: none;
+  }
+  /* Forced because <details> keeps its body hidden without the open attribute,
+     and we deliberately do not set that attribute. */
+  .bl-filter-collapse > .bl-filter-body {
+    display: block !important;
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-filter-summary::after {
+    transition: none;
+  }
+}

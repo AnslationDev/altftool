@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator turns a target bar weight into the exact plates to hang on each sleeve: weight per side is (target − bar − both collars) ÷ 2, and plates are chosen heaviest first from the denominations you actually own. Bar weights and disc sizes follow IWF and IPF competition specifications — a 20 kg men's bar, a 15 kg women's bar, 2.5 kg collars and 25/20/15/10/5/2.5/1.25 kg discs — with a pound mode for 45 lb bars. When a number cannot be made, it shows the closest loading and how much it falls short.",
+    "This calculator turns a target bar weight into plates to hang on each sleeve: weight per side is (target − bar − both collars) ÷ 2, and an exact bounded search finds a closest combination from the denominations you actually own. The selected combination is listed from the largest plate to the smallest for sleeve loading. Bar weights and disc sizes follow IWF and IPF competition specifications — a 20 kg men's bar, a 15 kg women's bar, 2.5 kg collars and 25/20/15/10/5/2.5/1.25 kg discs — with a pound mode for 45 lb bars. When a number cannot be made, it shows the closest loading and how much it falls short.",
   useCases: [
     "Load a competition-style attempt of 142.5 kg on a 20 kg bar with 2.5 kg collars without doing the arithmetic mid-session.",
     "Find out what the closest loadable weight is in a hotel gym that only has 10 lb and 25 lb plates.",

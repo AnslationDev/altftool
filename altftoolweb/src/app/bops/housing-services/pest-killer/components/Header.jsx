@@ -21,7 +21,7 @@ export default function Header() {
     { label: 'About Us', href: '#about' },
     { label: 'Services', href: '#services' },
     { label: 'Testimonial', href: '#testimonial' },
-    { label: 'Contact Us', href: 'tel:+919711177747' },
+    { label: 'Contact Us', href: '#demo-only' },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default function Header() {
           {links.map(l => <a key={l.label} href={l.href}>{l.label}</a>)}
         </nav>
         <div className="header-cta">
-          <a href="tel:+919711177747" className="btn-green">Book Free Inspection</a>
+          <a href="#demo-only" className="btn-green">Book Free Inspection</a>
         </div>
         <button className="hamburger" onClick={() => setOpen(!open)} aria-label="menu">
           <i className={open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'}></i>
@@ -53,7 +53,7 @@ export default function Header() {
       </div>
       <div className={`mobile-nav ${open ? 'open' : ''}`}>
         {links.map(l => <a key={l.label} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>)}
-        <a href="tel:+919711177747" className="btn-green">Book Free Inspection</a>
+        <a href="#demo-only" className="btn-green">Book Free Inspection</a>
       </div>
     </header>
   );

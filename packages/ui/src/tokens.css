@@ -71,6 +71,23 @@ html[data-theme="light"] {
   --anslation-ds-danger-soft: #fde2dd;
   --anslation-ds-info-soft: #e0f2fe;
 
+  /* Illustration primitives. Decorative product artwork may compose these
+     through semantic variables, but raw skin/hair tones still belong in the
+     shared primitive layer so app-local CSS and data files never own colour
+     values. */
+  --anslation-ds-illustration-skin-1: #8d5a3c;
+  --anslation-ds-illustration-skin-2: #c68642;
+  --anslation-ds-illustration-skin-3: #e8b98a;
+  --anslation-ds-illustration-skin-4: #f6d5b8;
+  --anslation-ds-illustration-skin-5: #a86b3c;
+  --anslation-ds-illustration-skin-6: #d29b6e;
+  --anslation-ds-illustration-hair-1: #3b2b20;
+  --anslation-ds-illustration-hair-2: #5a4030;
+  --anslation-ds-illustration-hair-3: #241a14;
+  --anslation-ds-illustration-hair-4: #6b4423;
+  --anslation-ds-illustration-hair-5: #2f2119;
+  --anslation-ds-illustration-blush: #f79bab;
+
   /* Text-safe status colours. The base --anslation-ds-success/danger/info/warning
      values are tuned for fills, icons and borders; several fail AA against
      white/page/soft-tint backgrounds at the sizes they're actually used at

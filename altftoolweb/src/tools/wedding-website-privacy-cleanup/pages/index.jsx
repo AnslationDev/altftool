@@ -234,7 +234,7 @@ export default function ToolHome() {
               type="button"
               onClick={reset}
               aria-label="Reset the audit to its defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

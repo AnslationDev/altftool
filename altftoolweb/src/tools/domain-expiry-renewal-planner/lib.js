@@ -358,7 +358,9 @@ export function planDomainRenewal({
 
   const actions = [];
   if (phase === "dropped") {
-    actions.push("The name has dropped. Check availability — if someone else has taken it, a backorder or a UDRP claim are the only routes left, and neither is quick.");
+    actions.push(
+      "The name has dropped. Check availability; if someone else has taken it, options may include a purchase inquiry or broker, a backorder for a future release, or qualified legal advice when you have relevant rights.",
+    );
   } else if (phase === "pending-delete" || phase === "redemption") {
     actions.push("Open a restore request with the registrar today and quote the domain's redemption status. Do not simply pay a renewal — it will not work.");
   } else if (phase === "auto-renew-grace") {
@@ -380,7 +382,9 @@ export function planDomainRenewal({
     actions.push("Record the auth code procedure and where the account credentials live, so a renewal is not blocked by one person being unavailable.");
   } else {
     actions.push("Set a backorder with a drop-catch service if you want another shot at the exact name the moment it becomes registerable again.");
-    actions.push("If someone else registers it first and it matches a trademark you hold, a UDRP or URS complaint is the only recovery path — budget weeks, not days.");
+    actions.push(
+      "If a later registration may conflict with a trademark or other rights you hold, seek qualified legal advice about options such as UDRP, URS, negotiation, or court remedies; eligibility, cost, and timing vary.",
+    );
   }
 
   return {

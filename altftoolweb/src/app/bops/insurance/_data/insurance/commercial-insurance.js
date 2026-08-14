@@ -26,7 +26,7 @@ export const commercialInsurance = {
   ],
 
   quoteLabel: "Compare quotes",
-  quoteUrl: "https://example.com/quote/commercial-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What commercial insurance covers",
   coverageIntro:

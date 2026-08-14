@@ -1,32 +1,32 @@
 const seo = {
   intro:
-    "The Pest Control Planner matches each pest to the treatment method professionals actually use, the interval it must be repeated at, and what a visit should cost for your floor area. Cockroach gel baiting repeats roughly every three months, mosquito treatment monthly, bed bugs need two rounds twelve to fifteen days apart, and a post-construction anti-termite chemical barrier under IS 6313 Part 3 is a five-year job. It produces a twelve-month visit calendar and a cost including 18% GST, which pest control services attract under SAC 998531.",
+    "The Pest Control Planner creates an editable budget scenario from a dated demo catalogue of treatment approaches, repeat intervals, callback periods and Indian-rupee rate assumptions. It separates treatment-cycle starts from estimated technician visits and can model GST. The August 2026 demo defaults are not live market data, a provider quote, a recommended schedule or a promised warranty; replace them with written local terms before booking.",
   useCases: [
-    "Deciding whether a quarterly cockroach contract or a one-off spray makes sense for a 1,000 sq ft flat",
-    "Budgeting a five-year anti-termite barrier for an independent house and seeing the annualised cost, not just the upfront bill",
-    "Planning a monsoon mosquito schedule alongside an existing quarterly general treatment without paying twice for the same visit",
+    "Comparing editable one-pest and multi-pest budget scenarios for the same floor area",
+    "Seeing how an assumed multi-round treatment changes visit count without double-counting its cycle cost",
+    "Taking a dated demo estimate to local providers and replacing assumptions with written quotes and callback terms",
   ],
   benefits: [
-    ["Method matched to pest", "Gel baiting, residual spray, drill-fill-seal and injection are not interchangeable — each pest gets the right one."],
-    ["Real intervals", "Costs are annualised against the actual repeat cycle, so a five-year termite job is not compared to a monthly spray."],
-    ["Calendar you can book from", "A month-by-month table shows which treatments fall together and which month costs the most."],
+    ["Editable scenarios", "Change area, selected pests, severity, property type and chemistry preference to compare planning cases."],
+    ["Assumptions stay visible", "The dated demo baseline is labelled clearly so an estimate is not mistaken for a live quote or warranty."],
+    ["Cycles and visits separated", "The month table shows cycle starts while multi-round work is counted as multiple estimated technician visits."],
   ],
   faqs: [
     [
-      "How often should pest control be done in a home?",
-      "General cockroach and ant treatment every three to four months, mosquito treatment monthly through the season, rodent baiting every two months until activity stops, and an anti-termite barrier once every five years. Warranty length depends on the pest: for cockroaches, mosquitoes, termites and wood borer the free-callback warranty matches the full interval, but for ants, bed bugs, rodents, lizards and houseflies it typically runs out before the next full treatment is due, so check the agency's specific terms.",
+      "Does this tool prescribe how often pest control should be done?",
+      "No. Its intervals, round counts and callback periods are illustrative demo assumptions for comparing scenarios, and they are not interchangeable with each other: in the demo catalogue the assumed callback period equals the full repeat interval only for cockroaches, mosquitoes, termites and wood borer, while for ants, bed bugs, rodents, lizards and houseflies it is shorter than the interval, leaving an assumed gap with no cover before the next cycle. Infestation, product label, property conditions and local rules can change the appropriate plan. Ask qualified providers for a written inspection-based schedule and written callback terms.",
     ],
     [
-      "How much does pest control cost in India?",
-      "A general cockroach or ant treatment runs roughly ₹1–1.5 per sq ft with a minimum around ₹800, so a 1,000 sq ft flat is about ₹1,000–1,500 per visit. Bed bug treatment costs roughly five to six times that, since it needs a stronger residual chemistry applied across two rounds twelve to fifteen days apart, and post-construction termite work runs ₹5–8 per sq ft with a five-year warranty.",
+      "Are the displayed prices current provider quotes?",
+      "No. They are an August 2026 demo baseline, not live market data. They also do not scale the way a round count suggests — a multi-round assumption carries a higher per-sq-ft rate as well as the extra round, so in the demo catalogue one bed-bug cycle works out at roughly five to six times a cockroach cycle for the same floor area once the assumed minimum call-out no longer binds, not twice it. Use the figures only to compare scenarios, then replace the displayed assumptions with itemised local quotes that state taxes, number of visits, products, exclusions and callback terms.",
     ],
     [
-      "Is gel baiting better than spraying for cockroaches?",
-      "For indoor kitchen infestations, yes — gel bait is placed in hinges and crevices, is carried back to the harbourage and works for weeks, with no evacuation needed. Spraying gives a faster visible knockdown but scatters the population and does not reach the nest, which is why most professionals now bait first.",
+      "Why does the calendar show a cycle instead of every visit date?",
+      "The planner works in whole months. It charges an assumed multi-round treatment in the month its cycle starts and separately counts the estimated technician visits. Exact follow-up dates can cross a month boundary, so confirm and record them from the provider's written schedule.",
     ],
     [
       "Is pest control safe with children and pets at home?",
-      "Only with the right chemistry and the stated re-entry time observed. Ask for odourless or herbal formulations, request the product label and safety data sheet, and use an operator licensed under the Insecticides Act, 1968. If anyone in the home is pregnant, asthmatic or an infant, check with a doctor before treatment — this tool is planning information, not medical advice.",
+      "Safety cannot be determined by this calculator or by an 'odourless' or 'herbal' label. Use qualified local providers, ask for the exact product label and safety data sheet, and follow its re-entry instructions. Seek appropriate medical advice for pregnancy, asthma, infants or other health concerns.",
     ],
   ],
 };

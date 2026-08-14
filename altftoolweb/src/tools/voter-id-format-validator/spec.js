@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "voter-id-format-validator",
   "title": "Voter ID Format Validator",
-  "description": "EPIC number pattern validate aur normalize kare.",
+  "description": "Validate and normalize the EPIC number pattern on an Indian voter ID.",
   "badge": "India-Specific Utilities",
   "category": [
     "India",

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ev-battery-degradation-analyzer",
   "title": "EV Battery Degradation Analyzer",
-  "description": "Charge logs se range aur capacity trend estimate kare.",
+  "description": "Estimate range and battery capacity trends from your EV's charge logs.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

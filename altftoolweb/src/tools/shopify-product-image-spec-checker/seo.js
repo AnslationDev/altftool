@@ -1,14 +1,14 @@
 const seo = {
   intro:
-    "This checker tests a product photo against Shopify's published image limits before you upload it: a maximum of 25 megapixels (up to 5000 x 5000 px per side), a maximum file size of 20 MB, a minimum of 800 x 800 px for product-page zoom, and 2048 x 2048 px as the recommended square size. It also compares the image to the single aspect ratio your store uses and reports how much a centre crop to that shape would remove, because Shopify's own advice is to keep one ratio across every product so collection grids line up.",
+    "This checker tests a product photo against Shopify's published image limits before you upload it: a maximum of 25 megapixels (up to 5000 x 5000 px per side), a file size smaller than 20 MB, and 2048 x 2048 px as the recommended square size. It also applies a clearly labelled, theme-dependent detail heuristic and compares the image to the single aspect ratio your store uses, because Shopify's own advice is to keep one ratio across every product so collection grids line up.",
   useCases: [
     "Check whether a 30 megapixel camera export will be refused before you drag 200 files into the admin.",
-    "Find out why zoom is not working on a product page shot at 600 x 600 px.",
+    "Flag a 600 x 600 px photo that may show little extra detail in a theme's zoom view.",
     "See how much of a square photo is lost when your theme crops to a 4:5 portrait grid.",
     "Confirm a HEIC file straight off an iPhone is supported without converting it first.",
   ],
   benefits: [
-    ["Hard limits first", "The 25 MP / 5000 px and 20 MB ceilings are the ones that actually block an upload, and they are checked separately."],
+    ["Hard limits first", "The 25 MP / 5000 px limits and the under-20-MB rule can block an upload, and they are checked separately."],
     ["Crop maths, not guesswork", "Reports the exact percentage a centre crop to your store ratio removes."],
     ["Grid consistency", "Flags an image that will leave uneven padding next to the rest of your catalogue."],
   ],
@@ -19,11 +19,11 @@ const seo = {
     ],
     [
       "What are Shopify's image upload limits?",
-      "25 megapixels of resolution (up to 5000 x 5000 px per side) and 20 MB per file. A 7000 x 5000 px camera export is 35 megapixels and will be refused, so downscale before uploading rather than after a failed batch.",
+      "Up to 25 megapixels and 5000 x 5000 px per side, with a file size smaller than 20 MB. A 7000 x 5000 px camera export is 35 megapixels and will be refused, so downscale before uploading rather than after a failed batch.",
     ],
     [
       "Why is zoom not working on my Shopify product images?",
-      "Product-page zoom needs at least 800 x 800 pixels. Below that there is nothing extra to magnify, so most themes disable the zoom cursor entirely.",
+      "Zoom behavior is controlled by your Shopify theme, so there is no universal 800 px platform rule. A small source image can still provide little extra detail when enlarged; check the theme's own media settings and test the product page on desktop and mobile.",
     ],
     [
       "Do all my product images need the same aspect ratio?",

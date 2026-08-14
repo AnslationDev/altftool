@@ -43,6 +43,7 @@ export default function ToolHome() {
   const [settings, setSettings] = useState(DEFAULTS);
   const [loadError, setLoadError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   // A generated test image so a real result is on screen before anything is uploaded.
   useEffect(() => {
@@ -184,6 +185,28 @@ export default function ToolHome() {
     image.src = url;
   }, []);
 
+  // Drop routes through the same handleFile as the picker, so the type check,
+  // the long-edge downscale and the error messages are all shared.
+  // preventDefault is required on dragover as well as drop — without it the
+  // browser navigates away to the dropped file and the settings are lost.
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (event) => {
+    // Ignore the dragleave fired when the cursor crosses onto a child element.
+    if (event.currentTarget.contains(event.relatedTarget)) return;
+    setIsDragging(false);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setIsDragging(false);
+    // The input is single-file, so take the first entry only.
+    handleFile(event.dataTransfer?.files?.[0]);
+  };
+
   const download = () => {
     const canvas = canvasRef.current;
     if (!canvas || hasError) return;
@@ -260,7 +283,15 @@ export default function ToolHome() {
         </p>
       </header>
 
-      <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className={`rounded-xl bg-[var(--card)] p-5 ring-1 transition ${
+          isDragging ? "ring-[var(--primary)]" : "ring-[var(--border)]"
+        }`}
+        onDragEnter={handleDragOver}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
         <label className={LABEL_CLASS} htmlFor="image-file">
           Your photo (JPEG, PNG or WebP)
         </label>

@@ -1,0 +1,404 @@
+/*
+ * AltF Detour — product token layer
+ *
+ * Extends the shared AltFTool design system. Everything is namespaced --dtr-*
+ * so nothing leaks, and every token is defined for both themes because the
+ * platform ships light by default with a dark toggle.
+ *
+ * Design intent: this is a distraction product living inside a productivity
+ * platform, so it should read as a lighter room in the same building — not a
+ * different building. Same type, same surfaces, looser radii, one warm accent
+ * that appears nowhere else on AltFTool.
+ *
+ * bored.com uses hard-shadow neo-brutalism. Copying it would be derivative and
+ * would fight the platform shell it has to sit inside.
+ */
+
+:root {
+  --dtr-accent: var(--anslation-ds-warning-text);
+  --dtr-accent-soft: var(--anslation-ds-warning-soft);
+  --dtr-accent-text: var(--anslation-ds-warning-text);
+  --dtr-accent-foreground: var(--anslation-ds-status-foreground);
+
+  --dtr-time: var(--anslation-ds-primary-text);
+  --dtr-work: var(--anslation-ds-info-text);
+  --dtr-sound: var(--anslation-ds-accent);
+  --dtr-mobile: var(--anslation-ds-success-text);
+
+  --dtr-tile-1: var(--anslation-ds-warning-soft);
+  --dtr-tile-2: var(--anslation-ds-info-soft);
+  --dtr-tile-3: var(--anslation-ds-success-soft);
+  --dtr-tile-4: var(--anslation-ds-accent-soft);
+  --dtr-tile-5: var(--anslation-ds-danger-soft);
+  --dtr-tile-6: var(--anslation-ds-primary-soft);
+  --dtr-tile-ink: var(--anslation-ds-text);
+
+  --dtr-grid-dot: var(--anslation-ds-border);
+}
+
+/* ---------- backdrop ---------- */
+.dtr-dots {
+  background-image: radial-gradient(circle, var(--dtr-grid-dot) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ---------- card ---------- */
+.dtr-card {
+  transition:
+    transform 0.16s cubic-bezier(0, 0, 0.2, 1),
+    border-color 0.16s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.16s cubic-bezier(0, 0, 0.2, 1);
+}
+.dtr-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--dtr-accent);
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+.dtr-card:focus-within {
+  border-color: var(--dtr-accent);
+}
+
+/* The whole card is clickable via a stretched link, but the visible focus ring
+   must sit on the card rather than on a zero-size anchor. */
+.dtr-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.dtr-card:has(.dtr-card__link:focus-visible) {
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* ---------- facet strip ----------
+   Four glyphs carrying minutes / work-safe / sound / mobile. Readable at a
+   glance without reading — the thing bored.com has no equivalent of. */
+.dtr-facets {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+}
+.dtr-facet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+.dtr-facet svg {
+  width: 0.8125rem;
+  height: 0.8125rem;
+  flex-shrink: 0;
+}
+.dtr-facet--off {
+  opacity: 0.32;
+}
+
+/* ---------- mood tiles ---------- */
+.dtr-tile {
+  position: relative;
+  overflow: hidden;
+  color: var(--dtr-tile-ink);
+  transition:
+    transform 0.16s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.16s cubic-bezier(0, 0, 0.2, 1);
+}
+.dtr-tile:hover {
+  transform: translateY(-3px) rotate(-0.4deg);
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+.dtr-tile__emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+  display: block;
+}
+
+/* ---------- time picker ---------- */
+.dtr-time-option {
+  transition:
+    background 0.16s cubic-bezier(0, 0, 0.2, 1),
+    border-color 0.16s cubic-bezier(0, 0, 0.2, 1),
+    color 0.16s cubic-bezier(0, 0, 0.2, 1);
+}
+.dtr-time-option[aria-pressed="true"] {
+  background: var(--dtr-accent);
+  border-color: var(--dtr-accent);
+  color: var(--dtr-accent-foreground);
+  font-weight: 600;
+}
+
+/* ---------- the button ----------
+   The hero control. Deliberately oversized and deliberately the only thing
+   above the fold — the reference product in this space is one button, and
+   burying it under a nav would be a worse version of a solved design. */
+.dtr-go {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  background: var(--dtr-accent);
+  color: var(--dtr-accent-foreground);
+  border: none;
+  cursor: pointer;
+  padding: 2rem 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--dtr-accent) 90%, transparent);
+  transition:
+    transform 0.18s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.18s cubic-bezier(0, 0, 0.2, 1);
+}
+.dtr-go:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 24px 52px -18px color-mix(in srgb, var(--dtr-accent) 95%, transparent);
+}
+.dtr-go:active {
+  transform: translateY(0) scale(0.985);
+}
+.dtr-go:focus-visible {
+  outline: 3px solid var(--dtr-accent);
+  outline-offset: 4px;
+}
+.dtr-go[data-spinning="true"] {
+  animation: dtr-wobble 0.5s ease-in-out infinite;
+}
+@keyframes dtr-wobble {
+  0%,
+  100% {
+    transform: rotate(-1.4deg) scale(1.02);
+  }
+  50% {
+    transform: rotate(1.4deg) scale(1.02);
+  }
+}
+
+/* ---------- search ----------
+   `type="search"` gets a native clear button in WebKit that lands directly
+   underneath our own, so two X's stack. Ours stays, because the native one
+   cannot be reached by keyboard or given an accessible name. */
+.dtr-search-input::-webkit-search-cancel-button,
+.dtr-search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ---------- toys ---------- */
+.dtr-toy-stage {
+  touch-action: none;
+}
+
+.dtr-bubble {
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background:
+    radial-gradient(
+      circle at 34% 30%,
+      color-mix(in srgb, var(--dtr-accent) 26%, var(--anslation-ds-surface)) 0%,
+      color-mix(in srgb, var(--dtr-accent) 48%, transparent) 58%,
+      color-mix(in srgb, var(--dtr-accent) 22%, transparent) 100%
+    );
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition:
+    transform 0.1s ease-out,
+    opacity 0.18s ease-out,
+    box-shadow 0.18s ease-out;
+}
+.dtr-bubble:hover {
+  transform: scale(1.08);
+}
+.dtr-bubble:focus-visible {
+  outline: 2px solid var(--dtr-accent);
+  outline-offset: 2px;
+}
+.dtr-bubble--popped {
+  transform: scale(0.72);
+  opacity: 0.22;
+  background: var(--muted, var(--anslation-ds-soft));
+  box-shadow: var(--anslation-ds-shadow-sm);
+  cursor: default;
+}
+
+.dtr-big-button {
+  width: clamp(9.5rem, 40vw, 14rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  color: var(--anslation-ds-status-foreground);
+  font-weight: 800;
+  font-size: clamp(0.85rem, 2.6vw, 1.05rem);
+  letter-spacing: 0.04em;
+  background: radial-gradient(
+    circle at 38% 30%,
+    var(--anslation-ds-danger) 0%,
+    var(--anslation-ds-danger-text) 100%
+  );
+  box-shadow: var(--anslation-ds-shadow-lg);
+  transition: transform 0.12s ease-out;
+}
+.dtr-big-button:hover {
+  transform: scale(1.03);
+}
+.dtr-big-button:active {
+  transform: scale(0.94);
+}
+.dtr-big-button:focus-visible {
+  outline: 3px solid var(--anslation-ds-danger);
+  outline-offset: 5px;
+}
+
+/* Useless switch — a box, a lid, and a hand that comes out of it. */
+.dtr-switch-box {
+  position: relative;
+  width: min(19rem, 82vw);
+  height: 10.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border, var(--anslation-ds-border));
+  background: var(--card, var(--anslation-ds-surface));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.dtr-switch-lid {
+  position: absolute;
+  top: 0;
+  right: 1.75rem;
+  width: 5rem;
+  height: 0.55rem;
+  border-radius: 0 0 0.35rem 0.35rem;
+  background: var(--dtr-accent);
+  transform-origin: top center;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dtr-switch-lid--open {
+  transform: rotateX(72deg);
+}
+.dtr-switch-hand {
+  position: absolute;
+  top: -3.2rem;
+  right: 3.4rem;
+  width: 1.6rem;
+  height: 3.2rem;
+  border-radius: 0.8rem 0.8rem 0.35rem 0.35rem;
+  background: var(--dtr-accent);
+  transition: transform 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dtr-switch-hand--out {
+  transform: translateY(5.4rem) translateX(-2.6rem) rotate(14deg);
+}
+.dtr-switch {
+  position: relative;
+  width: 5.5rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border, var(--anslation-ds-border));
+  background: var(--muted, var(--anslation-ds-soft));
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease-out;
+}
+.dtr-switch--on {
+  background: var(--dtr-accent);
+}
+.dtr-switch:focus-visible {
+  outline: 3px solid var(--dtr-accent);
+  outline-offset: 3px;
+}
+.dtr-switch-knob {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  background: var(--anslation-ds-surface);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: transform 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dtr-switch--on .dtr-switch-knob {
+  transform: translateX(2.65rem);
+}
+
+/* The void — words drift up and dissolve. */
+.dtr-void {
+  background:
+    radial-gradient(
+      ellipse at 50% 120%,
+      color-mix(in srgb, var(--dtr-accent) 12%, transparent) 0%,
+      transparent 62%
+    ),
+    var(--card, var(--anslation-ds-surface));
+}
+.dtr-void-word {
+  position: absolute;
+  bottom: 5.5rem;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  pointer-events: none;
+  color: var(--dtr-accent-text, var(--anslation-ds-warning-text));
+  animation: dtr-drift var(--dtr-void-duration, 7s) linear forwards;
+}
+@keyframes dtr-drift {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) scale(var(--dtr-void-scale, 1));
+  }
+  12% {
+    opacity: 0.9;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-52vh) translateX(var(--dtr-void-drift, 0)) scale(calc(var(--dtr-void-scale, 1) * 0.7));
+  }
+}
+
+.dtr-fade-in {
+  animation: dtr-fade-in 0.42s cubic-bezier(0, 0, 0.2, 1);
+}
+@keyframes dtr-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dtr-card,
+  .dtr-card:hover,
+  .dtr-tile,
+  .dtr-tile:hover,
+  .dtr-go,
+  .dtr-go:hover,
+  .dtr-big-button:hover,
+  .dtr-bubble:hover {
+    transform: none;
+    transition: none;
+  }
+  .dtr-go[data-spinning="true"] {
+    animation: none;
+  }
+  /* The void and the switch still need their motion to make sense at all, so
+     they are shortened rather than removed. */
+  .dtr-void-word {
+    animation-duration: 2.5s;
+  }
+  .dtr-fade-in {
+    animation: none;
+  }
+}

@@ -32,7 +32,7 @@ const ServiceAreas = () => {
             <p className="text-[#374151] mb-5">We serve many additional neighborhoods across India. Call us - chances are we're already in your area.</p>
             <div className="flex flex-wrap gap-3">
               <Link to="/book" className="btn btn-primary">Check Availability</Link>
-              <a href="tel:7865679554" className="btn btn-secondary">Call (786) 567-9554</a>
+              <a href="#demo-only" className="btn btn-secondary">Call (786) 567-9554</a>
             </div>
           </div>
         </div>

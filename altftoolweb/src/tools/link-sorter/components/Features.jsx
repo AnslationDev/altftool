@@ -43,7 +43,8 @@ const Features = () => {
             Why Use Our Link Shortener?
           </h2>
           <p className="text-base sm:text-lg text-(--muted-foreground) max-w-2xl mx-auto leading-relaxed">
-            Shorten and share your URLs quickly and securely
+            Shorten and share your URLs in seconds — the shortening itself is
+            done by cleanuri.com, with TinyURL as a fallback
           </p>
         </div>
 

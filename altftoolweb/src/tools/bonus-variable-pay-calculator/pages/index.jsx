@@ -86,13 +86,13 @@ export function computeBonus({
   const perCycleGross = effectiveCycles > 0 ? grossPayout / effectiveCycles : 0;
   const perCycleNet = effectiveCycles > 0 ? netPayout / effectiveCycles : 0;
   const fixedPay = mode === "percent" ? Math.max(0, ctc - targetAnnual) : null;
-  // Fixed pay is a full-year figure by definition (it's what's left of the
-  // annual CTC once the annual target variable pay is removed), but cash
-  // actually received during the year tracks the same eligible-months
-  // window as the bonus itself -- someone eligible for only 4 of 12 months
-  // was only paid roughly 4/12 of the fixed component too.
-  const proratedFixedPay = fixedPay === null ? null : (fixedPay * monthsEligible) / 12;
-  const totalCash = proratedFixedPay === null ? null : proratedFixedPay + grossPayout;
+  // "Months eligible" is a bonus-eligibility window, not a proof of how many
+  // months of fixed salary were paid (a new bonus plan can start mid-
+  // employment, probation can be excluded), so the annual fixed CTC component
+  // is NOT prorated from this field. The total below is therefore stated as
+  // exactly what it is -- annual fixed pay plus the calculated bonus -- and
+  // the footnote flags that a part-year employee received less fixed pay.
+  const totalCash = fixedPay === null ? null : fixedPay + grossPayout;
   const shortfall = proratedTarget - grossPayout;
 
   return {
@@ -105,7 +105,6 @@ export function computeBonus({
     perCycleGross,
     perCycleNet,
     fixedPay,
-    proratedFixedPay,
     totalCash,
     shortfall,
     achievement: proratedTarget > 0 ? (grossPayout / proratedTarget) * 100 : 0,
@@ -492,16 +491,10 @@ export default function ToolHome() {
               calc.fixedPay === null
                 ? null
                 : ["Fixed pay component of CTC (full year)", money(calc.fixedPay)],
-              calc.proratedFixedPay === null
-                ? null
-                : [
-                    "Fixed pay for months eligible",
-                    `${money(calc.proratedFixedPay)} · ${num(toNumber(monthsEligible))} of 12 months`,
-                  ],
               calc.totalCash === null
                 ? null
                 : [
-                    "Total cash for the year (fixed + bonus, prorated)",
+                    "Annual fixed pay + calculated bonus",
                     money(calc.totalCash),
                   ],
             ]
@@ -536,6 +529,8 @@ export default function ToolHome() {
         Informational estimate only. Bonus schemes differ — some cap the individual multiplier, some
         apply the company factor before the rating, and statutory bonus under the Payment of Bonus
         Act 1965 is a separate entitlement. Tax here is a flat effective rate, not a slab computation.
+        Eligible months prorate the bonus target only; the fixed pay shown is the full-year figure, so
+        if you also joined or left partway through the year your actual fixed pay was lower than that.
       </p>
     </main>
   );

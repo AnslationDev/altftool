@@ -14,9 +14,9 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/cityhop-movers";
-const PHONE_TEL = "tel:+18555550239";
-const PHONE_DISPLAY = "(855) 555-0239";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 function QuoteButton({ className = "cityhop-btn", label = "Get a Free Quote" }) {
   return (

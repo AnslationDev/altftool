@@ -34,7 +34,7 @@ const cleaning = {
     "Background-checked, bonded cleaners"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/cleaning",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "House Cleaning Guide: Services, Costs & Tips",
     "description": "Compare standard, deep, and move-out cleaning, learn what drives house cleaning costs, and know what to expect from background-checked, bonded cleaning crews."

@@ -4,57 +4,57 @@ import { useEffect, useMemo, useState } from "react";
 import logoImage from "./Logo.png";
 import "./styles.css";
 
-const phoneNumber = "+17185550167";
-const phoneDisplay = "(718) 555-0198";
+const phoneNumber = "#demo-only";
+const phoneDisplay = "Demo only";
 
 const services = [
   {
     title: "Cedar Roofing",
     text: "Natural beauty, durability, and expert craftsmanship built to protect and impress.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0241-1-scaled.webp",
+      "/assets/og-default.png",
     alt: "Cedar roofing project",
   },
   {
     title: "EPDM / TPO",
     text: "Durable, energy-efficient roofing systems designed for long-term protection.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IMG_9179-scaled.webp",
+      "/assets/og-default.png",
     alt: "Workers on a rooftop",
   },
   {
     title: "Flat Roofing",
     text: "Dependable flat roofing systems for homes, buildings, and commercial properties.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IGOR-1-scaled.webp",
+      "/assets/og-default.png",
     alt: "Flat roof with vents",
   },
   {
     title: "Metal Roofing",
     text: "Strong, modern, energy-efficient roofs with lasting performance and style.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0711-1-scaled.webp",
+      "/assets/og-default.png",
     alt: "Modern metal roof",
   },
   {
     title: "Shingles",
     text: "Affordable and reliable shingle roofing installed with quality materials.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0778-scaled.webp",
+      "/assets/og-default.png",
     alt: "Shingle roof project",
   },
   {
     title: "Slate",
     text: "Timeless natural protection with premium installation and restoration detail.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0332-scaled.webp",
+      "/assets/og-default.png",
     alt: "Slate roof with trees",
   },
   {
     title: "Spanish Tile",
     text: "Mediterranean character, lasting durability, and carefully finished tile work.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0203-scaled.webp",
+      "/assets/og-default.png",
     alt: "Spanish tile roof",
   },
 ];
@@ -66,7 +66,7 @@ const blogPosts = [
     excerpt:
       "Learn the early warning signs of flat roof damage before small leaks become expensive repairs.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IGOR-1-scaled.webp",
+      "/assets/og-default.png",
     category: "Flat Roofing",
     description: [
       "Flat roofs are common across Queens, Brooklyn, Manhattan, and Long Island because they are practical for residential and commercial buildings. The challenge is that water, foot traffic, and weather changes can create hidden problems.",
@@ -80,7 +80,7 @@ const blogPosts = [
     excerpt:
       "Cedar roofing needs the right care plan to keep its natural character and weather resistance.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0241-1-scaled.webp",
+      "/assets/og-default.png",
     category: "Cedar Roofing",
     description: [
       "Cedar roofs add warmth, texture, and curb appeal, but they need steady maintenance to perform well in New York weather.",
@@ -94,7 +94,7 @@ const blogPosts = [
     excerpt:
       "Compare two popular single-ply roofing systems for durability, energy performance, and maintenance.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IMG_9179-scaled.webp",
+      "/assets/og-default.png",
     category: "EPDM / TPO",
     description: [
       "EPDM and TPO are both strong choices for commercial flat roofs. EPDM is known for flexibility and proven long-term performance, while TPO is valued for heat reflection and energy efficiency.",
@@ -108,7 +108,7 @@ const blogPosts = [
     excerpt:
       "Metal roofs offer clean style, strong protection, and long-term performance for modern properties.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0711-1-scaled.webp",
+      "/assets/og-default.png",
     category: "Metal Roofing",
     description: [
       "Metal roofing is growing in popularity because it gives properties a sharp modern look while also delivering durability.",
@@ -122,7 +122,7 @@ const blogPosts = [
     excerpt:
       "Know the difference between a simple repair and a full roof replacement decision.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0778-scaled.webp",
+      "/assets/og-default.png",
     category: "Shingles",
     description: [
       "Shingle roofs are reliable, affordable, and versatile, but every system has a service life. Missing shingles, granule loss, curled edges, and repeated leaks can point to replacement.",
@@ -136,7 +136,7 @@ const blogPosts = [
     excerpt:
       "Slate roofs need specialized repair methods to preserve their natural strength and timeless look.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0332-scaled.webp",
+      "/assets/og-default.png",
     category: "Slate Roofing",
     description: [
       "Slate roofing is known for longevity and classic appearance. It is also a system that requires experienced handling because damaged tiles must be repaired carefully.",
@@ -150,7 +150,7 @@ const blogPosts = [
     excerpt:
       "Spanish tile adds distinct character and dependable protection when installed and maintained correctly.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0203-scaled.webp",
+      "/assets/og-default.png",
     category: "Spanish Tile",
     description: [
       "Spanish tile roofing brings a warm, architectural look that stands out. It is also durable when the roof deck, underlayment, and flashing are installed properly.",
@@ -164,7 +164,7 @@ const blogPosts = [
     excerpt:
       "Waterproofing can reduce leak risk and protect important structural details from long-term damage.",
     image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IMG_9179-scaled.webp",
+      "/assets/og-default.png",
     category: "Waterproofing",
     description: [
       "Waterproofing is one of the most important parts of protecting a building in New York. Roofs, parapets, walls, and below-grade areas all need proper moisture control.",
@@ -177,7 +177,7 @@ const blogPosts = [
     title: "Facade Restoration Basics for NYC Properties",
     excerpt:
       "Facade issues can affect safety, curb appeal, and water protection for residential and commercial buildings.",
-    image: "https://maspethroofing.com/wp-content/uploads/2025/04/img2.webp",
+    image: "/assets/og-default.png",
     category: "Facade Restoration",
     description: [
       "Facade restoration improves building appearance and helps protect the structure from water intrusion. Cracks, damaged joints, and loose materials should be reviewed quickly.",
@@ -190,64 +190,64 @@ const blogPosts = [
 const clientLogosOne = [
   [
     "Acadia",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Acadia.webp",
+    "/assets/og-default.png",
   ],
   [
     "Adaptive",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Adaptive-green.webp",
+    "/assets/og-default.png",
   ],
   [
     "Aiello Associates",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/AIELLO-ASSOCIATES.webp",
+    "/assets/og-default.png",
   ],
-  ["Autun", "https://maspethroofing.com/wp-content/uploads/2025/04/Autun.webp"],
+  ["Autun", "/assets/og-default.png"],
   [
     "BAR Construction",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Bar.webp",
+    "/assets/og-default.png",
   ],
   [
     "Consigli",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Consigli.webp",
+    "/assets/og-default.png",
   ],
   [
     "Cushman Wakefield",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Cushman-Wakefield.webp",
+    "/assets/og-default.png",
   ],
   [
     "DHI Construction",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/DHI-Construction.webp",
+    "/assets/og-default.png",
   ],
 ];
 
 const clientLogosTwo = [
   [
     "Extra Space",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Extra-space.webp",
+    "/assets/og-default.png",
   ],
   [
     "Gabrielli Truck",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Gabrielli-Truck.webp",
+    "/assets/og-default.png",
   ],
   [
     "Hudson Meridian",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Hudson-Meridian.webp",
+    "/assets/og-default.png",
   ],
-  ["Mega", "https://maspethroofing.com/wp-content/uploads/2025/04/Mega.webp"],
+  ["Mega", "/assets/og-default.png"],
   [
     "Prologis",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Prologis.webp",
+    "/assets/og-default.png",
   ],
   [
     "Rimkus",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Rimkus.webp",
+    "/assets/og-default.png",
   ],
   [
     "Triton",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Triton.webp",
+    "/assets/og-default.png",
   ],
   [
     "Vornado",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/vornado.webp",
+    "/assets/og-default.png",
   ],
 ];
 
@@ -403,7 +403,7 @@ export default function App() {
       <header>
         <div className="topbar">
           <span>54-30 44th Street, Queens, NY 11378</span>
-          <a className="topbar-phone" href={`tel:${phoneNumber}`}>
+          <a className="topbar-phone" href={phoneNumber} aria-disabled="true" tabIndex={-1}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -449,7 +449,7 @@ export default function App() {
             <img src={logoImage.src} alt="CrestNova Roofing" />
           </button>
 
-          <a className="mobile-contact-link" href={`tel:${phoneNumber}`}>
+          <a className="mobile-contact-link" href={phoneNumber} aria-disabled="true" tabIndex={-1}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -604,7 +604,7 @@ export default function App() {
       <footer className="footer">
         <span>54-30 44th Street, Queens, NY 11378</span>
         <span>(c) 2026 CrestNova Roofing. Landing page recreation.</span>
-        <span className="footer-phone">(718) 555-0198</span>
+        <span className="footer-phone">Demo only</span>
       </footer>
     </div>
   );
@@ -764,7 +764,7 @@ function HomeContent({ activeIndex, moveCarousel, handleSubmit, onNavigate }) {
           </div>
           <figure className="about-image reveal from-right">
             <img
-              src="https://maspethroofing.com/wp-content/uploads/2025/04/img2.webp"
+              src="/assets/og-default.png"
               alt="Modern building with service vehicles"
             />
           </figure>
@@ -868,12 +868,9 @@ function QuestionSection({ handleSubmit }) {
 
       <div className="question-grid">
         <div className="map-wrap reveal from-left">
-          <iframe
-            title="CrestNova Roofing map"
-            src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=54-30%2044th%20Street,%20Queens,%20NY%2011378&t=&z=14&ie=UTF8&iwloc=B&output=embed"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+          <div className="flex h-full min-h-64 items-center justify-center bg-muted/40 p-6 text-center text-muted-foreground" role="note">
+            Location map unavailable in this design demonstration.
+          </div>
         </div>
 
         <div className="question-form-shell reveal from-right">

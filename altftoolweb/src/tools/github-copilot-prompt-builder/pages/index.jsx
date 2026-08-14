@@ -90,8 +90,8 @@ export default function ToolHome() {
           GitHub Copilot Prompt Builder
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Structure a coding task the way GitHub's own guidance recommends — goal, inputs, output,
-          constraints, then a concrete example — rendered as a comment block in your language's
+          Structure a coding task the way GitHub’s own guidance recommends — goal, inputs, output,
+          constraints, then a concrete example — rendered as a comment block in your language’s
           syntax, ready to paste above your cursor.
         </p>
       </header>

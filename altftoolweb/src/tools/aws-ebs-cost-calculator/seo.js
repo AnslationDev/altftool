@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "How much do EBS snapshots cost?",
-      "Standard-tier EBS snapshots cost $0.05 per GB-month of stored data in us-east-1. Snapshots are incremental, so you pay for changed blocks rather than the full volume size each time; the archive tier is cheaper per GB but has a 90-day minimum and slower restores.",
+      "Standard-tier EBS snapshots cost $0.05 per GB-month of stored data in us-east-1. Enter the total incremental snapshot GB stored across the fleet; the calculator does not multiply that total by volume count. The archive tier is cheaper per GB but has a 90-day minimum and slower restores.",
     ],
   ],
 };

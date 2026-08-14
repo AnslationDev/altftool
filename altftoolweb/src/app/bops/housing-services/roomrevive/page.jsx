@@ -4,9 +4,9 @@ import "./roomrevive.css";
 import { useState } from "react";
 import { ArrowUpRight, Check, Menu, Phone, Sparkles, X } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/roomrevive";
-const PHONE_TEL = "tel:+18555550287";
-const PHONE_DISPLAY = "(855) 555-0287";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1600&q=80",

@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle
 } from '../components/ui/dialog';
-import { cn } from '../lib/utils';
 import {
   Upload,
   ZoomIn,
@@ -27,7 +26,7 @@ const PdfPreviewTool = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewHD, setPreviewHD] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
   const previewRequestIdRef = useRef(0);
   const pdfInstanceRef = useRef(null);
 
@@ -75,6 +74,25 @@ const PdfPreviewTool = () => {
     }
     setLoading(false);
   };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+  };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+    const file = e.dataTransfer?.files?.[0];
+    if (!file) return;
+    if (file.type !== "application/pdf" && !/\.pdf$/i.test(file.name)) {
+      alert("Please drop a PDF file.");
+      return;
+    }
+    renderPDF(file);
+  };
   const handleFullPreview = async (pageNum) => {
     if (!pdfInstance) return;
     const requestId = ++previewRequestIdRef.current;
@@ -115,27 +133,10 @@ const PdfPreviewTool = () => {
       /* Upload Section */
     }
     {pages.length === 0 && !loading && <Card
-      className={cn(
-        "p-8 text-center border-2 border-dashed rounded-lg hover:border-primary/50 transition-colors",
-        isDragging && "border-primary/50 bg-primary/5"
-      )}
-      onDragOver={(e) => {
-        e.preventDefault();
-      }}
-      onDragEnter={(e) => {
-        e.preventDefault();
-        setIsDragging(true);
-      }}
-      onDragLeave={(e) => {
-        e.preventDefault();
-        setIsDragging(false);
-      }}
-      onDrop={(e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const file = e.dataTransfer.files?.[0];
-        if (file) renderPDF(file);
-      }}
+      className={`p-8 text-center border-2 border-dashed rounded-lg transition-colors ${dragActive ? "border-primary/50" : "hover:border-primary/50"}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
     >
       <FileText className="mx-auto h-12 w-12 text-(--muted-foreground)" />
       <h3 className="mt-4 text-lg font-medium">Drop your PDF here</h3>

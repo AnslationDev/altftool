@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How long can I stay in Korea on a C-3 visa?",
-      "Up to 90 days, and the day of entry counts as the first day. The exact period of sojourn is stamped on entry. To stay longer you must apply for an extension through HiKorea before that period expires — it is never granted automatically, and overstaying carries fines and entry bans.",
+      "Up to 90 days, and the day of entry counts as the first day. The exact period of sojourn is stamped on entry. Do not submit a C-3 itinerary over 90 days in reliance on a later extension; shorten the itinerary or ask the Korean mission which visa category fits the intended stay. Any change after entry is case-specific and never automatic, and overstaying carries fines and entry bans.",
     ],
     [
       "How much is a Korean short-term visa?",

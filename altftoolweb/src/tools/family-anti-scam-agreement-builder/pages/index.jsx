@@ -375,11 +375,7 @@ export default function ToolHome() {
           )}
         </div>
 
-        <dl
-          className="mt-5 divide-y divide-[var(--border)] text-sm"
-          aria-live="polite"
-          aria-atomic="true"
-        >
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Clauses included", failed ? DASH : `${result.clauses.length} of ${RULES.length}`],
             ["Scam types with no rule", failed ? DASH : String(result.uncovered.length)],
@@ -399,7 +395,7 @@ export default function ToolHome() {
         )}
 
         {!failed && result.warnings.length > 0 && (
-          <ul className="mt-3 grid gap-2" aria-live="polite">
+          <ul className="mt-3 grid gap-2">
             {result.warnings.map((warning) => (
               <li
                 key={warning}

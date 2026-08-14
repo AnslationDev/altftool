@@ -172,6 +172,30 @@ test("keeps scanning past an unterminated hex string instead of swallowing the r
   );
 });
 
+test("keeps scanning after invalid hex syntax before a later dictionary close", () => {
+  // Regression: the later dictionary's first '>' used to terminate the stray
+  // '<' as if everything between them were a hex string, hiding every cue.
+  const bytes = pdfBytes(
+    "1 0 obj\nstray <\n2 0 obj << /S /JavaScript /JS (evil()) /Launch true /EmbeddedFile true >>",
+  );
+  const result = inspectPdfActiveContentBytes(bytes, {
+    fileName: "invalid-hex.pdf",
+    fileSize: bytes.byteLength,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(group(result, "javascript").count, 2);
+  assert.equal(group(result, "launchActions").count, 1);
+  assert.equal(group(result, "attachments").count, 1);
+  assert.equal(result.summary.groupsWithCues, 3);
+  assert.equal(result.summary.selectedMarkerCount, 4);
+  assert.equal(result.summary.invalidHexStrings, 1);
+  assert.equal(
+    result.warnings.some((item) => /invalid hex-string syntax/iu.test(item)),
+    true,
+  );
+});
+
 test("rejects renamed input, empty input, missing PDF header, and oversize metadata", () => {
   assert.equal(
     validatePdfActiveContentFile({ name: "sample.txt", size: 1 }).ok,

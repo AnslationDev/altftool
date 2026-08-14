@@ -45,7 +45,7 @@ export default function DebtPayoffPlanner() {
             </div>
 
             {/* Results */}
-            <ResultsPanel result={result} showDetails={showDetails} slug={SLUG} name={NAME} />
+            <ResultsPanel result={result} showDetails={showDetails} setShowDetails={setShowDetails} slug={SLUG} name={NAME} />
           </div>
         </div>
 
@@ -161,7 +161,7 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
   );
 }
 
-function ResultsPanel({ result, showDetails, slug, name }) {
+function ResultsPanel({ result, showDetails, setShowDetails, slug, name }) {
   if (!result) {
     return (
       <div

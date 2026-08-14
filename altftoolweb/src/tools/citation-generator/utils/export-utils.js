@@ -5,6 +5,14 @@
  * Handles exporting citations to different formats.
  */
 
+export const escapeHtml = (value) =>
+  String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
 export const exportToTxt = (citation, title = "citation") => {
   const element = document.createElement("a");
   const file = new Blob([citation], { type: "text/plain" });
@@ -15,13 +23,13 @@ export const exportToTxt = (citation, title = "citation") => {
   document.body.removeChild(element);
 };
 
-export const exportToDocx = (citation, title = "citation") => {
-  // Simple HTML to DOCX approach using a Blob
+export const exportToWordDoc = (citation, title = "citation") => {
+  // HTML document that Word can open; this is deliberately .doc, not DOCX.
   const html = `
     <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-    <head><meta charset='utf-8'><title>${title}</title></head>
+    <head><meta charset='utf-8'><title>${escapeHtml(title)}</title></head>
     <body>
-      <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">${citation}</p>
+      <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">${escapeHtml(citation)}</p>
     </body>
     </html>
   `;
@@ -34,14 +42,31 @@ export const exportToDocx = (citation, title = "citation") => {
   document.body.removeChild(element);
 };
 
-export const exportToPdf = (citation, title = "citation") => {
-  // For a real PDF, we'd need a library like jsPDF. 
-  // As a fallback for this environment, we can trigger the print dialog or export as text with .pdf extension
-  // (Note: renaming .txt to .pdf won't make it a real PDF, but in some cases it's a placeholder)
-  // Let's try to use the print method for a cleaner "save as PDF" experience if the user wants.
-  
-  const printWindow = window.open('', '_blank');
-  printWindow.document.write(`<html><head><title>${title}</title></head><body><pre>${citation}</pre></body></html>`);
-  printWindow.document.close();
+export const populateCitationPrintDocument = (printWindow, citation, title = "citation") => {
+  const document = printWindow?.document;
+  if (!document?.body || typeof document.createElement !== "function") return false;
+
+  document.title = String(title ?? "citation");
+  const pre = document.createElement("pre");
+  pre.textContent = String(citation ?? "");
+  document.body.replaceChildren(pre);
+  return true;
+};
+
+export const printCitation = (citation, title = "citation") => {
+  // The browser print dialog may offer "Save as PDF"; no PDF is generated here.
+  const printWindow = window.open("", "_blank");
+  if (!printWindow) return false;
+  try {
+    printWindow.opener = null;
+  } catch {
+    // Some browsers expose opener as read-only; textContent still prevents injection.
+  }
+  if (!populateCitationPrintDocument(printWindow, citation, title)) {
+    printWindow.close?.();
+    return false;
+  }
+  printWindow.focus?.();
   printWindow.print();
+  return true;
 };

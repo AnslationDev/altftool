@@ -27,12 +27,12 @@ export default function MainComponent() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [results, setResults] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
 
   const fileInputRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files?.[0];
+  const processFile = (file) => {
     if (!file) return;
     if (!file.type.startsWith("image/")) {
       setError("Please select a valid image file.");
@@ -46,6 +46,26 @@ export default function MainComponent() {
       setResults(null);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleFileUpload = (e) => {
+    processFile(e.target.files?.[0]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+    processFile(e.dataTransfer?.files?.[0]);
   };
 
   const performCanvasAnalysis = (imgEl) => {
@@ -239,7 +259,13 @@ export default function MainComponent() {
           {!imageSrc ? (
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-(--border) hover:border-teal-500 rounded-xl p-12 text-center cursor-pointer transition-all bg-(--page) flex flex-col items-center justify-center min-h-[300px]"
+              onDragOver={handleDragOver}
+              onDragEnter={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all bg-(--page) flex flex-col items-center justify-center min-h-[300px] ${
+                dragActive ? "border-teal-500" : "border-(--border) hover:border-teal-500"
+              }`}
             >
               <Upload className="h-10 w-10 text-teal-500/70 mb-4 animate-bounce" />
               <p className="text-sm font-semibold text-(--foreground)">Drag & Drop your picture here</p>

@@ -52,3 +52,6 @@ packages/*/node_modules/
 # local design notes
 apple/
 DESIGN.md
+
+# Agent/IDE local configs
+.claude/

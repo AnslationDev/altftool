@@ -63,8 +63,8 @@ const seo = {
     ],
   ],
   steps: [
-    "Paste your endpoint JSON, or drop in an OpenAPI/Swagger file (JSON or YAML) or a Postman collection.",
-    "Click Generate Swagger Docs to build the OpenAPI 3.0 spec and open the interactive preview.",
+    "For a manual spec, click New Documentation, paste endpoint JSON in the Input JSON tab, then click Generate Swagger Docs to build the OpenAPI 3.0 spec and open Preview Docs.",
+    "For an existing spec, drop an OpenAPI/Swagger JSON or YAML file on the import panel, or use Import from Postman for a collection export. Imports are converted immediately and open Preview Docs automatically — there is no second Generate click.",
     "Download JSON, YAML, Markdown, HTML or PDF — or copy a share link to the rendered docs.",
   ],
 };

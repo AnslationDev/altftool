@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import "./greenguard-pest.css";
 
-const QUOTE_URL = "https://example.com/quote/greenguard-pest";
-const PHONE_DISPLAY = "(855) 555-0219";
-const PHONE_TEL = "tel:+18555550219";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1724556295094-62d093eddd87?auto=format&fit=crop&w=1600&q=80",

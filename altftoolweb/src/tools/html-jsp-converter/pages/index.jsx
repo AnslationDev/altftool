@@ -258,9 +258,16 @@ function jspToHtml(input, options) {
       /<c:out\b([^>]*?)\/>|<c:out\b([^>]*?)>([\s\S]*?)<\/c:out>/gi,
       (full, selfAttrs, bodyAttrs, body) => {
         const attrs = selfAttrs ?? bodyAttrs ?? "";
-        const valueMatch = attrs.match(/value=["']\{\{\s*([^}"']+?)\s*\}\}["']/i);
+        // Accept both forms of the value attribute: when "EL to placeholders"
+        // is on, convertElToHandlebars has already rewritten value="${expr}"
+        // into value="{{ expr }}"; when it is off the raw EL is still there.
+        // Matching only the {{ }} form silently left whole <c:out> elements
+        // unconverted whenever that option was toggled off.
+        const valueMatch = attrs.match(
+          /value=["'](?:\{\{\s*([^}"']+?)\s*\}\}|\$\{\s*([^}"']+?)\s*\})["']/i,
+        );
         if (!valueMatch) return full;
-        const expr = valueMatch[1];
+        const expr = valueMatch[1] ?? valueMatch[2];
         const defaultAttrMatch = attrs.match(/\bdefault=["']([^"']*)["']/i);
         const escapeXmlMatch = attrs.match(/\bescapeXml=["']([^"']*)["']/i);
         const fallbackText = (body && body.trim()) || (defaultAttrMatch ? defaultAttrMatch[1] : "");
@@ -268,7 +275,11 @@ function jspToHtml(input, options) {
         if (fallbackText) notes.push(`default "${fallbackText}"`);
         if (escapeXmlMatch) notes.push(`escapeXml=${escapeXmlMatch[1]}`);
         const suffix = notes.length ? ` <!-- c:out ${notes.join(", ")} -->` : "";
-        return `{{ ${expr} }}${suffix}`;
+        // Emit the token in whichever dialect the rest of the pass is using,
+        // so unwrapping <c:out> never re-introduces {{ }} into output the user
+        // asked to keep as EL.
+        const token = options.elToPlaceholders ? `{{ ${expr} }}` : `\${${expr}}`;
+        return `${token}${suffix}`;
       },
     )
     .replace(/<c:if\b([^>]*)>/gi, (_, attrs) => `<!-- c:if${attrs} -->`)
@@ -302,7 +313,7 @@ function MetricCard({ icon: Icon, label, value, helper }) {
   return (
     <div className="tool-card min-w-0 overflow-hidden !p-4">
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--primary-soft)] text-[var(--primary)]">
           <Icon className="h-5 w-5" />
         </span>
         <div className="min-w-0">
@@ -323,8 +334,8 @@ function ToggleOption({ active, label, helper, onClick }) {
       aria-pressed={active}
       className={`rounded-lg border p-3 text-left transition ${
         active
-          ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200"
-          : "border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:border-blue-300"
+          ? "border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)]"
+          : "border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:border-[var(--primary)]"
       }`}
     >
       <span className="flex items-center gap-2 text-sm font-semibold">
@@ -385,11 +396,11 @@ export default function HTMLJSPConverter() {
     <main className="mx-auto w-full max-w-[1240px] px-4 pb-12 pt-8 text-[var(--foreground)] sm:px-6 sm:pt-10 lg:px-8">
       <section className="text-center">
         <div className="flex flex-wrap justify-center gap-2">
-          <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 dark:bg-blue-500/10 dark:text-blue-200">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-soft)] px-4 py-2 text-sm font-semibold text-[var(--primary)]">
             <Sparkles className="h-4 w-4" />
             Developer converter
           </span>
-          <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-200">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[var(--success-soft)] px-4 py-2 text-sm font-semibold text-[var(--success)]">
             <CheckCircle2 className="h-4 w-4" />
             Browser-side only
           </span>
@@ -419,7 +430,7 @@ export default function HTMLJSPConverter() {
         <div className="tool-card min-w-0 overflow-hidden !p-5 sm:!p-6">
           <div className="flex flex-col gap-4 min-[900px]:flex-row min-[900px]:items-start min-[900px]:justify-between">
             <div className="flex min-w-0 items-start gap-3">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--primary-soft)] text-[var(--primary)]">
                 <Wand2 className="h-6 w-6" />
               </span>
               <div className="min-w-0">
@@ -460,12 +471,12 @@ export default function HTMLJSPConverter() {
                 }}
                 className={`rounded-lg border px-4 py-3 text-left transition ${
                   mode === key
-                    ? "border-blue-500 bg-blue-600 text-white shadow-sm"
-                    : "border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:border-blue-300"
+                    ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                    : "border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:border-[var(--primary)]"
                 }`}
               >
                 <span className="block text-sm font-semibold">{item.label}</span>
-                <span className={`mt-1 block text-xs ${mode === key ? "text-blue-50" : "text-[var(--muted-foreground)]"}`}>
+                <span className={`mt-1 block text-xs ${mode === key ? "text-[var(--primary-foreground)]" : "text-[var(--muted-foreground)]"}`}>
                   {item.helper}
                 </span>
               </button>
@@ -500,12 +511,12 @@ export default function HTMLJSPConverter() {
             value={input}
             onChange={(event) => setInput(event.target.value)}
             spellCheck={false}
-            className="mt-2 min-h-[380px] w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 text-[var(--foreground)] outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+            className="mt-2 min-h-[380px] w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20"
           />
 
           <div className="mt-5">
             <div className="flex items-center gap-2 text-sm font-semibold text-[var(--foreground)]">
-              <Settings2 className="h-4 w-4 text-blue-600" />
+              <Settings2 className="h-4 w-4 text-[var(--primary)]" />
               Conversion options
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -532,7 +543,7 @@ export default function HTMLJSPConverter() {
           <div className="tool-card min-w-0 overflow-hidden !p-5 sm:!p-6">
             <div className="flex flex-col gap-4 min-[900px]:flex-row min-[900px]:items-start min-[900px]:justify-between">
               <div className="flex min-w-0 items-start gap-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--primary-soft)] text-[var(--primary)]">
                   <FileCode className="h-6 w-6" />
                 </span>
                 <div className="min-w-0">
@@ -574,7 +585,7 @@ export default function HTMLJSPConverter() {
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="tool-card min-w-0 overflow-hidden !p-5">
               <div className="flex items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--success-soft)] text-[var(--success)]">
                   <CheckCircle2 className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
@@ -584,7 +595,7 @@ export default function HTMLJSPConverter() {
               </div>
               <ul aria-live="polite" role="status" className="mt-4 space-y-3">
                 {result.messages.map((message) => (
-                  <li key={message} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-100">
+                  <li key={message} className="rounded-lg border border-[var(--success)] bg-[var(--success-soft)] px-3 py-2 text-sm text-[var(--foreground)]">
                     {message}
                   </li>
                 ))}
@@ -593,7 +604,7 @@ export default function HTMLJSPConverter() {
 
             <div className="tool-card min-w-0 overflow-hidden !p-5">
               <div className="flex items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-500/10">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--warning-soft)] text-[var(--warning)]">
                   <Code2 className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
@@ -610,7 +621,7 @@ export default function HTMLJSPConverter() {
                         : "No <script> tags found that need review before deploying as JSP.",
                     ]
                 ).map((warning) => (
-                  <li key={warning} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
+                  <li key={warning} className="rounded-lg border border-[var(--warning)] bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--foreground)]">
                     {warning}
                   </li>
                 ))}

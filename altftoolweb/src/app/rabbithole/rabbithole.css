@@ -1,0 +1,394 @@
+/*
+ * AltF Rabbithole — product token layer
+ *
+ * Extends the shared AltFTool design system rather than replacing it. Every
+ * token is namespaced --rh-* so nothing leaks, and every one is defined for
+ * both themes because the site ships a light default with a dark toggle.
+ *
+ * The design brief is "field guide", not "dashboard": this is a catalogue of
+ * the strange parts of the web, so the visual system is editorial — one hue
+ * per category used consistently across tiles, cards, detail headers and
+ * filter chips, so the colour teaches the taxonomy without a legend.
+ *
+ * Light mode uses the 600 ramp and dark mode the 400 ramp. The dark hues fail
+ * contrast on the near-white light page, which is why every tone is declared
+ * twice rather than shared.
+ */
+
+:root {
+  --rh-amber: var(--anslation-ds-warning-text);
+  --rh-violet: var(--anslation-ds-accent);
+  --rh-fuchsia: var(--anslation-ds-accent);
+  --rh-indigo: var(--anslation-ds-info-text);
+  --rh-sky: var(--anslation-ds-info-text);
+  --rh-blue: var(--anslation-ds-info-text);
+  --rh-emerald: var(--anslation-ds-success-text);
+  --rh-rose: var(--anslation-ds-danger-text);
+  --rh-teal: var(--anslation-ds-primary-text);
+  --rh-stone: var(--anslation-ds-muted-strong);
+  --rh-orange: var(--anslation-ds-warning-text);
+  --rh-cyan: var(--anslation-ds-secondary);
+  --rh-lime: var(--anslation-ds-success-text);
+  --rh-purple: var(--anslation-ds-accent);
+  --rh-yellow: var(--anslation-ds-warning-text);
+  --rh-red: var(--anslation-ds-danger-text);
+  --rh-pink: var(--anslation-ds-danger-text);
+  --rh-green: var(--anslation-ds-success-text);
+
+  /* Cleared by the global header, which is sticky at 4rem. Left undefined this
+     silently parks the filter bar underneath it. */
+  --rh-sticky-top: 4rem;
+
+  /* White ink on the hue here, so keep the highlight restrained. */
+  --rh-mark-wash: 16%;
+  --rh-mark-sheen: 7%;
+
+  /* Tint used behind a hue — kept very light so body text stays readable. */
+  --rh-tint-alpha: 8%;
+  --rh-tint-alpha-strong: 14%;
+  --rh-ring-alpha: 22%;
+
+  --rh-mark-ink: var(--anslation-ds-primary-foreground);
+  --rh-shadow-card: var(--anslation-ds-shadow-sm);
+  --rh-shadow-lift: var(--anslation-ds-shadow-md);
+}
+
+/*
+ * Every element that carries a category hue sets --rh-hue once (inline, from
+ * the tone name) and everything below reads it. One variable, no per-category
+ * CSS classes, and a new category needs no stylesheet change.
+ */
+.rh-toned {
+  --rh-hue-soft: color-mix(in srgb, var(--rh-hue) var(--rh-tint-alpha), transparent);
+  --rh-hue-soft-strong: color-mix(
+    in srgb,
+    var(--rh-hue) var(--rh-tint-alpha-strong),
+    transparent
+  );
+  --rh-hue-ring: color-mix(in srgb, var(--rh-hue) var(--rh-ring-alpha), transparent);
+}
+
+/* ---------- page furniture ---------- */
+
+/* A hairline label used above section headings. */
+.rh-eyebrow {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* ---------- generated site mark ----------
+ * Third-party screenshots would mean 300 external requests, a privacy leak on
+ * every card, and permanent rot as the sites redesign. Instead each entry gets
+ * a mark derived from its own slug: stable, offline, and visually distinct
+ * enough to be recognisable on a second visit.
+ */
+.rh-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--rh-hue, var(--rh-stone));
+  color: var(--rh-mark-ink);
+  font-family: var(--anslation-ds-font-mono);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/*
+ * The wash is deliberately weaker in light mode. Dark mode puts near-black ink
+ * on the hue, so lightening the plate raises contrast; light mode puts white
+ * ink on it, so the same wash drove the glyph down to about 2.5:1. The two
+ * themes therefore get different alphas rather than a shared value.
+ */
+.rh-mark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at var(--rh-mark-x, 30%) var(--rh-mark-y, 25%),
+      color-mix(in srgb, var(--anslation-ds-on-media) var(--rh-mark-wash, 34%), transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      var(--rh-mark-angle, 135deg),
+      color-mix(in srgb, var(--anslation-ds-on-media) var(--rh-mark-sheen, 16%), transparent),
+      transparent 55%,
+      color-mix(in srgb, var(--anslation-ds-overlay) 18%, transparent)
+    );
+}
+
+.rh-mark__glyph {
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+}
+
+/* ---------- cards ---------- */
+
+.rh-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--card-border, var(--border));
+  border-radius: var(--anslation-ds-radius-xl);
+  background: var(--card);
+  box-shadow: var(--rh-shadow-card);
+  transition:
+    transform 180ms var(--anslation-ds-ease-out, ease),
+    box-shadow 180ms var(--anslation-ds-ease-out, ease),
+    border-color 180ms var(--anslation-ds-ease-out, ease);
+}
+
+@media (hover: hover) {
+  .rh-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--rh-shadow-lift);
+    border-color: var(--rh-hue-ring, var(--border));
+  }
+}
+
+.rh-card:focus-within {
+  border-color: var(--rh-hue-ring, var(--border));
+  box-shadow: var(--rh-shadow-lift);
+}
+
+/* The whole card is clickable via a stretched link, so the visible focus ring
+   has to be drawn on the card rather than the invisible anchor. */
+/* The overlay sits inside the card, so it takes the card's radius directly.
+   `inherit` here resolves against the anchor, whose own radius is 0. */
+.rh-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--anslation-ds-radius-xl);
+}
+
+.rh-card__link:focus-visible {
+  outline: none;
+}
+
+.rh-card:has(.rh-card__link:focus-visible) {
+  outline: 2px solid var(--rh-hue, var(--primary));
+  outline-offset: 2px;
+}
+
+/* ---------- category tile ---------- */
+
+.rh-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--card-border, var(--border));
+  border-radius: var(--anslation-ds-radius-xl);
+  background:
+    linear-gradient(var(--rh-hue-soft), var(--rh-hue-soft)),
+    var(--card);
+  transition:
+    transform 180ms var(--anslation-ds-ease-out, ease),
+    border-color 180ms var(--anslation-ds-ease-out, ease);
+}
+
+@media (hover: hover) {
+  .rh-tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--rh-hue-ring);
+  }
+}
+
+.rh-tile:has(a:focus-visible) {
+  outline: 2px solid var(--rh-hue);
+  outline-offset: 2px;
+}
+
+/* A soft wash in the category hue, bottom-right, to differentiate the 18
+   tiles at a glance without shouting. */
+.rh-tile::after {
+  content: "";
+  position: absolute;
+  right: -30%;
+  bottom: -60%;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--rh-hue);
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .rh-tile::after {
+  opacity: 0.14;
+}
+
+/* ---------- chips ---------- */
+
+.rh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius-pill);
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  background: var(--background);
+  transition:
+    background 180ms var(--anslation-ds-ease-out, ease),
+    color 180ms var(--anslation-ds-ease-out, ease),
+    border-color 180ms var(--anslation-ds-ease-out, ease);
+}
+
+.rh-chip--toned {
+  color: var(--rh-hue);
+  border-color: var(--rh-hue-ring);
+  background: var(--rh-hue-soft);
+}
+
+button.rh-chip {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  button.rh-chip:hover {
+    border-color: var(--rh-hue-ring, var(--border));
+    color: var(--foreground);
+  }
+}
+
+button.rh-chip[aria-pressed="true"] {
+  color: var(--rh-mark-ink);
+  background: var(--rh-hue, var(--primary));
+  border-color: var(--rh-hue, var(--primary));
+  font-weight: 500;
+}
+
+/* ---------- detail header ---------- */
+
+.rh-detail-head {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--card-border, var(--border));
+  border-radius: var(--anslation-ds-radius-2xl);
+  background:
+    linear-gradient(var(--rh-hue-soft), transparent 70%),
+    var(--card);
+}
+
+/* ---------- meta table ---------- */
+
+.rh-meta {
+  display: grid;
+  gap: 0;
+}
+
+.rh-meta__row {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 8rem) 1fr;
+  gap: 1rem;
+  padding: 0.625rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.rh-meta__row:first-child {
+  border-top: 0;
+}
+
+.rh-meta__key {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding-top: 0.125rem;
+}
+
+/* ---------- responsive grid ----------
+ * auto-fill with a minmax floor, so the same class works from a 320px phone up
+ * to a wide desktop without breakpoint juggling. The min() keeps the floor
+ * below the smallest supported viewport minus gutters, which is what stops the
+ * single-column case from overflowing.
+ */
+.rh-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr));
+}
+
+.rh-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+}
+
+.rh-grid--tight {
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+}
+
+/* ---------- line clamps ---------- */
+
+.rh-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- sticky filter rail ---------- */
+
+.rh-filter-bar {
+  position: sticky;
+  top: var(--rh-sticky-top, 0px);
+  z-index: 20;
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+  .rh-filter-bar {
+    background: var(--background);
+  }
+}
+
+/* Horizontal chip scroller on narrow screens — from lg the chips wrap
+   instead, because there is room for two or three rows without pushing the
+   results below the fold. */
+.rh-scroller {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+.rh-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.rh-scroller > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rh-card,
+  .rh-tile,
+  .rh-chip {
+    transition: none;
+  }
+  .rh-card:hover,
+  .rh-tile:hover {
+    transform: none;
+  }
+  .rh-scroller {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+}

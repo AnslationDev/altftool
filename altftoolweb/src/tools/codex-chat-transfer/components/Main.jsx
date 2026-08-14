@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import {
   RefreshCw,
@@ -10,6 +10,7 @@ import {
   FileText,
   Check
 } from "lucide-react";
+import { parseChatInput } from "../lib";
 
 const FORMATS = [
   { id: "openai", label: "OpenAI JSON" },
@@ -40,11 +41,7 @@ export default function MainComponent() {
     setTimeout(() => setSuccess(""), 3000);
   };
 
-  useEffect(() => {
-    handleConvert(inputText, outputFormat);
-  }, [inputText, outputFormat]);
-
-  const handleConvert = (input, format) => {
+  const handleConvert = useCallback((input, format) => {
     setError("");
     setOutputText("");
 
@@ -52,74 +49,10 @@ export default function MainComponent() {
       return;
     }
 
-    let parsedMessages = [];
+    let parsedMessages;
 
-    // 1. Try to parse JSON array
     try {
-      const cleanInput = input.trim();
-      if (cleanInput.startsWith("[") || cleanInput.startsWith("{")) {
-        const parsed = JSON.parse(cleanInput);
-        if (Array.isArray(parsed)) {
-          parsedMessages = parsed.map((m) => ({
-            role: m.role || "user",
-            content: m.content || m.text || "",
-          }));
-        } else if (parsed.messages && Array.isArray(parsed.messages)) {
-          // Anthropic/Other nested structure
-          parsedMessages = parsed.messages.map((m) => ({
-            role: m.role || "user",
-            content: m.content || "",
-          }));
-          if (parsed.system) {
-            parsedMessages.unshift({ role: "system", content: parsed.system });
-          }
-        } else {
-          throw new Error("JSON structure must be an array of messages or contain a messages array.");
-        }
-      } else {
-        // Parse raw Markdown/Text logs
-        const lines = cleanInput.split("\n");
-        // Matches the full heading token (both "**Role:**" and "**Role**:" conventions)
-        // so the leftover text never keeps a stray "**" fragment from the marker.
-        const HEADER_PATTERNS = [
-          { role: "user", re: /^\*\*user\*\*:?\s*|^\*\*user:\*\*\s*/i },
-          { role: "assistant", re: /^\*\*assistant\*\*:?\s*|^\*\*assistant:\*\*\s*|^\*\*bot\*\*:?\s*|^\*\*bot:\*\*\s*/i },
-          { role: "system", re: /^\*\*system\*\*:?\s*|^\*\*system:\*\*\s*|^#\s*system\b:?\s*/i },
-        ];
-        let currentRole = "user";
-        let currentContent = [];
-        // Tracks whether a heading has actually opened the current block, so the
-        // very first block isn't pushed as a spurious empty message before any
-        // heading has been seen.
-        let hasOpenedBlock = false;
-
-        const flushBlock = () => {
-          const blockText = currentContent.join("\n").trim();
-          if (hasOpenedBlock || blockText) {
-            parsedMessages.push({ role: currentRole, content: blockText });
-          }
-        };
-
-        for (const line of lines) {
-          let matchedHeader = null;
-          for (const { role, re } of HEADER_PATTERNS) {
-            const m = line.match(re);
-            if (m) {
-              matchedHeader = { role, rest: line.slice(m[0].length) };
-              break;
-            }
-          }
-          if (matchedHeader) {
-            flushBlock();
-            currentRole = matchedHeader.role;
-            currentContent = [matchedHeader.rest];
-            hasOpenedBlock = true;
-          } else {
-            currentContent.push(line);
-          }
-        }
-        flushBlock();
-      }
+      parsedMessages = parseChatInput(input);
     } catch (err) {
       setError(`Failed to parse input: ${err.message}. Make sure your JSON format is valid.`);
       return;
@@ -139,10 +72,7 @@ export default function MainComponent() {
       setOutputText(JSON.stringify(formatted, null, 2));
     } 
     else if (format === "anthropic") {
-      const systemMsg = parsedMessages
-        .filter((m) => m.role === "system")
-        .map((m) => m.content)
-        .join("\n\n");
+      const systemMsg = parsedMessages.find((m) => m.role === "system")?.content || "";
       const messages = parsedMessages
         .filter((m) => m.role !== "system")
         .map((m) => ({
@@ -152,7 +82,7 @@ export default function MainComponent() {
       setOutputText(JSON.stringify({ system: systemMsg, messages }, null, 2));
     }
     else if (format === "gemini") {
-      const systemMessages = parsedMessages.filter((m) => m.role === "system");
+      const systemMsg = parsedMessages.find((m) => m.role === "system");
       const contents = parsedMessages
         .filter((m) => m.role !== "system")
         .map((m) => ({
@@ -160,10 +90,10 @@ export default function MainComponent() {
           parts: [{ text: m.content }],
         }));
       const payload = { contents };
-      if (systemMessages.length) {
+      if (systemMsg) {
         payload.systemInstruction = {
           role: "system",
-          parts: [{ text: systemMessages.map((m) => m.content).join("\n\n") }]
+          parts: [{ text: systemMsg.content }]
         };
       }
       setOutputText(JSON.stringify(payload, null, 2));
@@ -202,18 +132,17 @@ export default function MainComponent() {
       });
       setOutputText(lines.join("\n"));
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => handleConvert(inputText, outputFormat), 0);
+    return () => window.clearTimeout(timer);
+  }, [handleConvert, inputText, outputFormat]);
 
   const handleCopy = () => {
-    navigator.clipboard
-      .writeText(outputText)
-      .then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
-      })
-      .catch(() => {
-        setError("Could not copy to clipboard.");
-      });
+    navigator.clipboard.writeText(outputText);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   const handleDownload = () => {
@@ -243,17 +172,13 @@ export default function MainComponent() {
           <RefreshCw className="h-8 w-8 text-teal-500 shrink-0" /> Codex Chat Transfer
         </h1>
         <p className="mt-2 text-md text-slate-600 dark:text-slate-300 max-w-2xl text-center">
-          Refactor dialogue models and export system configurations between modern LLM formats in real-time.
+          Convert message arrays or Markdown transcripts into six target LLM formats in real time.
         </p>
       </div>
 
       {/* Alerts */}
       {success && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="mb-6 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm flex items-center justify-center transition-all animate-fade-in"
-        >
+        <div className="mb-6 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm flex items-center justify-center transition-all animate-fade-in">
           <span>{success}</span>
         </div>
       )}
@@ -297,11 +222,7 @@ export default function MainComponent() {
           </div>
           
           {error && (
-            <div
-              role="alert"
-              aria-live="assertive"
-              className="px-4 py-3 bg-red-500/10 border-t border-red-500/30 text-red-600 text-xs flex items-start gap-2 max-h-32 overflow-y-auto"
-            >
+            <div className="px-4 py-3 bg-red-500/10 border-t border-red-500/30 text-red-600 text-xs flex items-start gap-2 max-h-32 overflow-y-auto">
               <span className="font-mono break-all">{error}</span>
             </div>
           )}

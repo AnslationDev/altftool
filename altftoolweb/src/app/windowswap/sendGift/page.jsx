@@ -3,9 +3,9 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Gift WindowSwap All-Access",
+    title: "WindowSwap Local Gift Draft Preview",
     description:
-      "Send a WindowSwap All-Access gift subscription with a custom message and share calming window views from around the world with someone special.",
+      "Save a private WindowSwap gift idea in this browser. No subscription, payment, email, or gift delivery is available.",
     path: "/windowswap/sendGift",
   });
 }

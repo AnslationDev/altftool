@@ -34,7 +34,15 @@ import {
  *   with reset returning to idle. `isActive` stays exported (derived) so
  *   older consumers (StepApp.jsx) keep working unchanged.
  */
-export default function useStepCounter() {
+/**
+ * @param {{detectorOpts?: object}} [options] Optional detector threshold
+ * overrides. Serializing numeric options keeps an equivalent object literal
+ * from restarting the detector on every render.
+ */
+export default function useStepCounter(options = {}) {
+  const detectorKey = options.detectorOpts
+    ? JSON.stringify(options.detectorOpts)
+    : "";
   const [state, setState] = useState(createEmptyState);
   const [hydrated, setHydrated] = useState(false);
   const [status, setStatus] = useState("idle"); // "idle" | "tracking" | "paused" | "stopped"
@@ -224,21 +232,41 @@ export default function useStepCounter() {
   useEffect(() => {
     if (!isActive || sensorMode !== "motion") return undefined;
 
-    const detector = createStepDetector((count) => addSteps(count));
+    const detectorOpts = detectorKey ? JSON.parse(detectorKey) : {};
+    const detector = createStepDetector(
+      (count) => addSteps(count),
+      detectorOpts,
+    );
 
     const handleMotion = (event) => {
-      const ts =
-        typeof event.timeStamp === "number" && event.timeStamp > 0
-          ? event.timeStamp
+      // Use one monotonic clock for every sample. Event timestamps vary by
+      // browser epoch and some engines have exposed them in seconds.
+      const now =
+        typeof performance !== "undefined" &&
+        typeof performance.now === "function"
+          ? performance.now()
           : Date.now();
       const acc = event.acceleration;
       const accG = event.accelerationIncludingGravity;
+      const sample = {};
 
-      if (acc && acc.x !== null && acc.x !== undefined) {
-        detector.process({ linear: { x: acc.x, y: acc.y, z: acc.z } }, ts);
-      } else if (accG && accG.x !== null && accG.x !== undefined) {
-        detector.process({ gravity: { x: accG.x, y: accG.y, z: accG.z } }, ts);
+      if (
+        acc &&
+        Number.isFinite(acc.x) &&
+        Number.isFinite(acc.y) &&
+        Number.isFinite(acc.z)
+      ) {
+        sample.linear = { x: acc.x, y: acc.y, z: acc.z };
       }
+      if (
+        accG &&
+        Number.isFinite(accG.x) &&
+        Number.isFinite(accG.y) &&
+        Number.isFinite(accG.z)
+      ) {
+        sample.gravity = { x: accG.x, y: accG.y, z: accG.z };
+      }
+      if (sample.linear || sample.gravity) detector.process(sample, now);
     };
 
     window.addEventListener("devicemotion", handleMotion);
@@ -246,7 +274,7 @@ export default function useStepCounter() {
       window.removeEventListener("devicemotion", handleMotion);
       detector.reset();
     };
-  }, [isActive, sensorMode, addSteps]);
+  }, [isActive, sensorMode, addSteps, detectorKey]);
 
   /* ----------------------------- active-time ticker ---------------------------- */
 

@@ -6,12 +6,10 @@ export async function generateMetadata() {
     // All 100 quizzes are served from this single URL via ?id= (see
     // components/QuizPage.jsx useSearchParams), so there is one indexable page
     // here, not 100 — it has zero impressions in the 7-day GSC export. The copy
-    // is fixed because "Play Quiz – Playbuzz" and "your Playbuzz quiz" used
-    // another company's name as our own page title; the structural problem
-    // (per-quiz routes) is reported, not solved here.
+    // is generic because all quiz records share this query-parameter route.
     title: "Play a Free Quiz — Personality Tests & Trivia",
     description:
-      "Pick a quiz, answer a few questions and get your result straight away. Free personality quizzes and trivia in the same format as Playbuzz, no signup.",
+      "Pick a quiz, answer a few questions and get your result straight away. Free personality quizzes and trivia with no signup.",
     path: "/playbuzz/quiz-play",
   });
 }

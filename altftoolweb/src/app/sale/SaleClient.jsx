@@ -21,9 +21,6 @@ const FlashSales = dynamic(() => import("./components/FlashSales"), {
 const DealOfDay = dynamic(() => import("./components/DealOfDay"), {
   loading: () => <RouteCardGridSkeleton cards={5} />,
 });
-const UserFeedback = dynamic(() => import("./components/UserFeedback"), {
-  loading: () => <RouteSectionSkeleton cards={3} />,
-});
 const FAQsSection = dynamic(() => import("./components/FAQsSection"), {
   loading: () => <RouteSectionSkeleton cards={2} />,
 });
@@ -42,9 +39,6 @@ export default function SaleLocatorPage() {
 
   //  Search query — used ONLY by SalesNearYou
   const [nearbySearch, setNearbySearch] = useState("");
-
-  //  Newsletter
-  const [email, setEmail] = useState("");
 
   // API-fetched deals state
   const [apiDeals, setApiDeals] = useState(null);
@@ -328,20 +322,13 @@ export default function SaleLocatorPage() {
         <DealOfDay dealOfDay={homeDeals.dealOfDay} />
       </RouteLazySection>
 
-      <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={300}>
-        <UserFeedback feedback={saleData.feedback} />
-      </RouteLazySection>
-
       <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={260}>
         <FAQsSection faq={saleData.faq} />
       </RouteLazySection>
 
       {/* ──  Newsletter  */}
       <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={360}>
-        <NewsletterSection
-          email={email}
-          setEmail={setEmail}
-        />
+        <NewsletterSection />
       </RouteLazySection>
     </div>
   );

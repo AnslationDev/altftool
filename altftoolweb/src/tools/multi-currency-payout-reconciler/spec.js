@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "multi-currency-payout-reconciler",
   "title": "Multi-Currency Payout Reconciler",
-  "description": "Payout CSVs ko invoices, FX, fees aur withholding se match kare.",
+  "description": "Match payout CSVs against invoices, allowing for FX, fees and withholding.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",

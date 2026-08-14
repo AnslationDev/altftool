@@ -24,7 +24,7 @@ export const businessLoan = {
   ],
 
   quoteLabel: "See my options",
-  quoteUrl: "https://example.com/quote/business-loan",
+  quoteUrl: "#demo-only",
 
   featuresTitle: "One place, every way to fund your business",
   featuresIntro:

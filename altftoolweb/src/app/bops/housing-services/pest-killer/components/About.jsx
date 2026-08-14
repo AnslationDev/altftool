@@ -85,7 +85,7 @@ export default function About() {
               </div>
             </div>
           </div>
-          <a href="tel:+919711177747" className="btn-green">Contact Us</a>
+          <a href="#demo-only" className="btn-green">Contact Us</a>
         </div>
       </div>
     </section>

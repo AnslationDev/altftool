@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import "./comfortcare-home.css";
 
-const QUOTE_URL = "https://example.com/quote/comfortcare-home";
-const PHONE_DISPLAY = "(888) 555-0521";
-const PHONE_TEL = "tel:+18885550521";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const SERVICES = [
   {

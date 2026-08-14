@@ -46,7 +46,7 @@ const ServiceDetail = () => {
 
           <div className="flex gap-3 mt-8">
             <Link to="/book" state={{ service: service.slug }} className="btn btn-primary px-8">Book This Service</Link>
-            <a href="tel:7865679554" className="btn bg-white/10 border border-white/30 text-white px-7">Call Now</a>
+            <a href="#demo-only" className="btn bg-white/10 border border-white/30 text-white px-7">Call Now</a>
           </div>
         </div>
       </div>

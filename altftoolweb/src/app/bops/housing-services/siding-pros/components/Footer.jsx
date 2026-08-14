@@ -66,10 +66,10 @@ export default function Footer() {
               properties. Built to protect, beautify, and last a lifetime.
             </p>
             <div className="mt-6 space-y-3 text-sm text-white/80">
-              <a href="tel:+18005551234" className="flex items-center gap-3 hover:text-[#00AEEF] transition">
-                <Phone className="w-4 h-4 text-[#00AEEF]" /> (800) 555-1234
+              <a href="#demo-only" className="flex items-center gap-3 hover:text-[#00AEEF] transition">
+                <Phone className="w-4 h-4 text-[#00AEEF]" /> Demo only
               </a>
-              <a href="mailto:hello@eliteshield.com" className="flex items-center gap-3 hover:text-[#00AEEF] transition">
+              <a href="#demo-only" className="flex items-center gap-3 hover:text-[#00AEEF] transition">
                 <Mail className="w-4 h-4 text-[#00AEEF]" /> hello@eliteshield.com
               </a>
               <div className="flex items-center gap-3">

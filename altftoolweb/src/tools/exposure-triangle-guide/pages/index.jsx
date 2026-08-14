@@ -3,6 +3,15 @@
 import { useMemo, useState } from "react";
 import { Aperture, Check, Copy, Download } from "lucide-react";
 
+// Meter bar scale: meterPct maps evAdjusted linearly across [METER_EV_MIN, METER_EV_MAX],
+// and clampExposureMeterValue pins the ARIA value into that same range.
+import {
+  METER_EV_MAX,
+  METER_EV_MIN,
+  clampExposureMeterValue,
+  exposureMeterPercent,
+} from "../lib";
+
 const APERTURE_OPTIONS = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16];
 const SHUTTER_OPTIONS = ["1/4000", "1/2000", "1/1000", "1/500", "1/250", "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", "1/2", "1"];
 const ISO_OPTIONS = [100, 200, 400, 800, 1600, 3200, 6400];
@@ -14,10 +23,6 @@ const SCENE_PRESETS = {
   "Indoor Portrait": { aperture: "2", shutter: "1/125", iso: "800" },
   "Night Street": { aperture: "1.8", shutter: "1/60", iso: "3200" },
 };
-
-// Meter bar scale: meterPct maps evAdjusted linearly across [METER_EV_MIN, METER_EV_MAX].
-const METER_EV_MIN = -2;
-const METER_EV_MAX = 16;
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -71,10 +76,8 @@ export default function ToolHome() {
       subjectSpeed === "sports" ? 1 / 500 : 1 / 1000;
     const subjectFreeze = t <= subjectNeed ? "Good" : "Weak";
     const stopDelta = Number(evAdjusted) - (Number(targetEv) || 10);
-    const meterPct = Math.max(
-      0,
-      Math.min(100, ((Number(evAdjusted) - METER_EV_MIN) / (METER_EV_MAX - METER_EV_MIN)) * 100),
-    );
+    const meterValue = clampExposureMeterValue(evAdjusted);
+    const meterPct = exposureMeterPercent(evAdjusted);
 
     const recommendations = [];
     if (subjectFreeze === "Weak") recommendations.push("Use a faster shutter speed for your subject movement.");
@@ -99,6 +102,7 @@ export default function ToolHome() {
       subjectFreeze,
       minSafeShutter: `1/${Math.round(1 / minSafeShutter)}`,
       stopDelta: stopDelta.toFixed(1),
+      meterValue,
       meterPct,
       recommendations,
       altPairs,
@@ -308,7 +312,7 @@ export default function ToolHome() {
                 aria-label="Adjusted EV meter"
                 aria-valuemin={METER_EV_MIN}
                 aria-valuemax={METER_EV_MAX}
-                aria-valuenow={Number(result.evAdjusted)}
+                aria-valuenow={result.meterValue}
                 aria-valuetext={`EV ${result.evAdjusted}`}
               >
                 <span className="block h-full bg-[var(--primary)]" style={{ width: `${result.meterPct}%` }} />

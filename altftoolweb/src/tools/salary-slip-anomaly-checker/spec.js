@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "salary-slip-anomaly-checker",
   "title": "Salary Slip Anomaly Checker",
-  "description": "Totals, deductions aur month-to-month changes verify kare.",
+  "description": "Verify the totals and deductions on a salary slip and flag month-to-month changes.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Finance",

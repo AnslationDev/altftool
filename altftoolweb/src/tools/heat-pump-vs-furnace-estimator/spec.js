@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "heat-pump-vs-furnace-estimator",
   "title": "Heat Pump vs Furnace Estimator",
-  "description": "Climate, efficiency aur tariffs se running cost compare kare.",
+  "description": "Compare heat pump and furnace running costs for your climate, efficiency and tariffs.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

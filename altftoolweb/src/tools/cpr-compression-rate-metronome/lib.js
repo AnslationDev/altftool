@@ -229,7 +229,7 @@ export function cprPhaseAt(elapsedSeconds, timing) {
     ? 0
     : Math.max(0, timing.cycleSeconds - withinCycle);
 
-  const switchElapsed = timing.switchSeconds > 0 ? elapsed % timing.switchSeconds : 0;
+  const sessionMetrics = cprSessionMetricsAt(elapsed, timing, totalCompressions);
 
   return {
     cycleIndex,
@@ -238,9 +238,35 @@ export function cprPhaseAt(elapsedSeconds, timing) {
     compressionInCycle: compressionIndexInCycle + 1,
     totalCompressions,
     breathSecondsLeft: round(breathSecondsLeft, 1),
+    ...sessionMetrics,
+  };
+}
+
+/**
+ * Metrics that belong to the complete practice session rather than the current
+ * pacing segment. The UI starts a new segment when BPM or cycle timing changes,
+ * but keeps passing the same monotonic session elapsed time here so the rescuer
+ * swap countdown and measured rate do not restart with every edit.
+ */
+export function cprSessionMetricsAt(sessionElapsedSeconds, timing, totalCompressions) {
+  const elapsed = Number(sessionElapsedSeconds);
+  const total = Number(totalCompressions);
+  if (
+    !timing ||
+    timing.error ||
+    !Number.isFinite(elapsed) ||
+    elapsed < 0 ||
+    !Number.isFinite(total) ||
+    total < 0
+  ) {
+    return null;
+  }
+
+  const switchElapsed = timing.switchSeconds > 0 ? elapsed % timing.switchSeconds : 0;
+  return {
     secondsToSwitch: round(Math.max(0, timing.switchSeconds - switchElapsed), 1),
     // Below ~1s of data the ratio is dominated by rounding noise (e.g. 1 compression
     // over 0.05s reads as 1200/min) — withhold the figure until it means something.
-    averageRate: elapsed >= 1 ? round((totalCompressions / elapsed) * 60) : null,
+    averageRate: elapsed >= 1 ? round((total / elapsed) * 60) : null,
   };
 }

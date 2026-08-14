@@ -26,7 +26,7 @@ export const autoLoan = {
   ],
 
   quoteLabel: "Get pre-approved",
-  quoteUrl: "https://example.com/quote/auto-loan",
+  quoteUrl: "#demo-only",
 
   featuresTitle: "Financing for however you buy",
   featuresIntro:

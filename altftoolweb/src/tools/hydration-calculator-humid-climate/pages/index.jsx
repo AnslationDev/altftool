@@ -50,7 +50,7 @@ export default function ToolHome() {
   const [outdoorHours, setOutdoorHours] = useState(DEFAULTS.outdoorHours);
   const [sweatType, setSweatType] = useState(DEFAULTS.sweatType);
   const [wakingHours, setWakingHours] = useState(DEFAULTS.wakingHours);
-  const { copy, isCopied, announcement } = useCopyToClipboard();
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const num = (value) => (value === "" ? NaN : Number(value));
 
@@ -77,7 +77,7 @@ export default function ToolHome() {
     if (hasError) return "";
     return [
       "Hydration Calculator — Humid Climate",
-      `Conditions: ${tempC} °C, ${humidityPct}% RH — heat index ${result.heatIndexC.toFixed(1)} °C${result.heatIndexOutOfRange ? " (beyond the published chart)" : ""}`,
+      `Conditions: ${tempC} °C, ${humidityPct}% RH — ${result.heatIndexOutOfRange ? "heat index beyond the published chart range (planning calculation capped)" : `heat index ${result.heatIndexC.toFixed(1)} °C`}`,
       `Training: ${result.intensityLabel} for ${exerciseHours} h, ${outdoorHours} h outdoors/without AC, ${wakingHours} h awake`,
       `Drink today: ${result.totalL.toFixed(2)} L (${NUM.format(result.totalMl)} ml, about ${Math.round(result.glassesOf250Ml)} glasses of 250 ml)`,
       `Pace: about ${result.perHourL.toFixed(2)} L/hour across waking hours`,
@@ -100,6 +100,7 @@ export default function ToolHome() {
     setOutdoorHours(DEFAULTS.outdoorHours);
     setSweatType(DEFAULTS.sweatType);
     setWakingHours(DEFAULTS.wakingHours);
+    resetCopyState();
   };
 
   const rows = [
@@ -107,7 +108,9 @@ export default function ToolHome() {
       "Heat index (feels like)",
       hasError
         ? DASH
-        : `${result.heatIndexC.toFixed(1)} °C / ${result.heatIndexF.toFixed(0)} °F${result.heatIndexOutOfRange ? " (beyond the published chart)" : ""}`,
+        : result.heatIndexOutOfRange
+          ? "Beyond published chart range (calculation capped)"
+          : `${result.heatIndexC.toFixed(1)} °C / ${result.heatIndexF.toFixed(0)} °F`,
     ],
     ["Sweat multiplier from heat", hasError ? DASH : `${result.sweatMultiplier.toFixed(2)}x`],
     ["Baseline fluid (body weight)", hasError ? DASH : `${result.baselineL.toFixed(2)} L`],

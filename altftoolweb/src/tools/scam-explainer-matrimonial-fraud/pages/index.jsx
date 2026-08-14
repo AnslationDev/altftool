@@ -184,7 +184,8 @@ export default function ToolHome() {
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <h2 className="text-base font-semibold">What have you verified independently?</h2>
         <p className="mt-1 text-sm leading-6 text-[var(--muted-foreground)]">
-          Each of these is a check an outsider cannot fake. Tick only what you have actually done.
+          Tick only checks you completed through independently sourced channels. No single video,
+          contact or document proves identity; each can be staged or compromised.
         </p>
         <div className="mt-4 space-y-3">
           {VERIFICATION_CHECKS.map((check) => (

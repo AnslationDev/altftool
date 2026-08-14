@@ -282,11 +282,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl
-          className="mt-5 divide-y divide-[var(--border)] text-sm"
-          role="status"
-          aria-live="polite"
-        >
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Estimated archive size", hasError ? DASH : result.totalLabel],
             ["Heart-rate samples", hasError ? DASH : NUM.format(result.hrSamples)],

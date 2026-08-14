@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Happy Tails — Dog Walking & Pet Sitting",
-  description: "GPS-tracked walks and loving in-home pet sitting from vetted, insured walkers. Get a walking quote.",
+  description: "Design demonstration for a fictional dog-walking and pet-sitting page; no walker, booking, quote, tracking, or guarantee is offered.",
   robots: { index: false, follow: true, googleBot: { index: false, follow: true } },
   alternates: { canonical: "/bops/pet-services/happy-tails" },
 };

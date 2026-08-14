@@ -2,7 +2,7 @@
 
 export default function SpirographFeatures() {
     const features = [
-        { icon: "🎯", title: "20+ Curated Presets", desc: "Instant access to Classic Flower, Geometric Star, Complex Mandala and more ready-to-use designs." },
+        { icon: "🎯", title: "20 Curated Presets", desc: "Instant access to Classic Flower, Geometric Star, Complex Mandala and more ready-to-use designs." },
         { icon: "🎨", title: "Full Color Control", desc: "Custom stroke colors, background selection, and multi-color line effects with palette quick-picks." },
         { icon: "🔄", title: "Dual Pattern Modes", desc: "Switch between Hypotrochoid (inside) and Epitrochoid (outside) circle drawing modes." },
         { icon: "📐", title: "Precise Parameters", desc: "Fine-tune radius, pen distance, smoothness, line width and hole percentage with exact inputs." },

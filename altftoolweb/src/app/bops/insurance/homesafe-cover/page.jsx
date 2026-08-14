@@ -22,9 +22,9 @@ import {
 import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./homesafe-cover.css";
 
-const QUOTE_URL = "https://example.com/quote/homesafe-cover";
-const PHONE_TEL = "tel:+18665550323";
-const PHONE_DISPLAY = "(866) 555-0323";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1733493520076-56882ea21085?auto=format&fit=crop&w=1600&q=80",

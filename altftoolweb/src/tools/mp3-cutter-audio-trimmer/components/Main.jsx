@@ -187,6 +187,9 @@ export default function MainComponent() {
   // *current* file, independent of React's batched state updates - see
   // loadAudioFile/handleMetadata/buildWaveform.
   const durationKnownRef = useRef(false);
+  // Every upload gets a generation token so a slower decode from an older
+  // file cannot overwrite the waveform or duration for the current file.
+  const loadTokenRef = useRef(0);
 
   // Rounded to milliseconds so float noise from subtracting two
   // already-rounded times (e.g. 0.06 - 0.01) can't nudge a UI-selected
@@ -248,6 +251,7 @@ export default function MainComponent() {
 
   useEffect(() => {
     return () => {
+      loadTokenRef.current += 1;
       if (sourceUrlRef.current) URL.revokeObjectURL(sourceUrlRef.current);
       if (resultUrlRef.current) URL.revokeObjectURL(resultUrlRef.current);
       ffmpegRef.current?.terminate?.();
@@ -273,6 +277,7 @@ export default function MainComponent() {
     clearResult();
     if (sourceUrlRef.current) URL.revokeObjectURL(sourceUrlRef.current);
     sourceUrlRef.current = "";
+    loadTokenRef.current += 1;
     durationKnownRef.current = false;
     setFile(null);
     setSourceUrl("");
@@ -287,18 +292,21 @@ export default function MainComponent() {
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  const buildWaveform = async (selectedFile) => {
+  const buildWaveform = async (selectedFile, loadToken) => {
     setIsAnalyzing(true);
     setPeaks([]);
+    let audioContext = null;
 
     try {
       const AudioContextClass =
         window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) throw new Error("AudioContext unsupported");
 
-      const audioContext = new AudioContextClass();
+      audioContext = new AudioContextClass();
       const arrayBuffer = await selectedFile.arrayBuffer();
+      if (loadToken !== loadTokenRef.current) return;
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      if (loadToken !== loadTokenRef.current) return;
       const sampleCount = 160;
       const blockSize = Math.max(1, Math.floor(audioBuffer.length / sampleCount));
       const channels = Array.from(
@@ -321,6 +329,7 @@ export default function MainComponent() {
         return Number(Math.min(1, peak).toFixed(3));
       });
 
+      if (loadToken !== loadTokenRef.current) return;
       setPeaks(nextPeaks);
       // Use the ref, not the `duration` state closed over at call time:
       // loadAudioFile's setDuration(0) for a new file hasn't been applied to
@@ -333,12 +342,18 @@ export default function MainComponent() {
         setDuration(length);
         setEndTime(length);
       }
-      await audioContext.close();
     } catch (err) {
-      console.warn("Waveform generation failed:", err);
-      setPeaks([]);
+      if (loadToken === loadTokenRef.current) {
+        console.warn("Waveform generation failed:", err);
+        setPeaks([]);
+      }
     } finally {
-      setIsAnalyzing(false);
+      if (audioContext) {
+        try {
+          await audioContext.close();
+        } catch {}
+      }
+      if (loadToken === loadTokenRef.current) setIsAnalyzing(false);
     }
   };
 
@@ -360,6 +375,8 @@ export default function MainComponent() {
     if (sourceUrlRef.current) URL.revokeObjectURL(sourceUrlRef.current);
     const url = URL.createObjectURL(selectedFile);
     sourceUrlRef.current = url;
+    const loadToken = loadTokenRef.current + 1;
+    loadTokenRef.current = loadToken;
 
     durationKnownRef.current = false;
     setFile(selectedFile);
@@ -369,7 +386,7 @@ export default function MainComponent() {
     setStartTime(0);
     setEndTime(0);
     setOutputFormat(ext === "wav" ? "wav" : "mp3");
-    buildWaveform(selectedFile);
+    buildWaveform(selectedFile, loadToken);
   };
 
   const handleMetadata = () => {
@@ -378,7 +395,13 @@ export default function MainComponent() {
     // Infinity here until the media is seeked - bail out without marking
     // the duration known so the WebAudio-decode fallback in buildWaveform
     // can still supply it.
-    if (!audio?.duration || !Number.isFinite(audio.duration)) return;
+    if (
+      !audio?.duration ||
+      !Number.isFinite(audio.duration) ||
+      audio.currentSrc !== sourceUrlRef.current
+    ) {
+      return;
+    }
 
     durationKnownRef.current = true;
     const length = Number(audio.duration.toFixed(3));

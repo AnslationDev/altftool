@@ -1,20 +1,14 @@
 "use client";
 
 import React from "react";
-import Papa from "papaparse";
 import { Card, Button, StatCard, EmptyState } from "@altftool/ui";
+import { buildDiabetesLogsCsv, validateTargetRange } from "../lib";
 
 const calculateA1c = (avgGlucoseMgDl) => {
   // eAG = (28.7 * A1C) - 46.7
   // A1C = (eAG + 46.7) / 28.7
   return ((avgGlucoseMgDl + 46.7) / 28.7).toFixed(1);
 };
-
-// A profile target of 0 is a legitimate value (falsy but not "missing"), so
-// this checks for absence explicitly instead of using a plain falsy check
-// that would treat a saved 0 the same as an unset field.
-const isMissingTarget = (value) =>
-  value === undefined || value === null || value === "" || !Number.isFinite(Number(value));
 
 const formatLifestyle = (log) => {
   const parts = [];
@@ -42,18 +36,7 @@ const shortDateLabel = (dateStr) => {
 
 const exportLogsToCsv = (logs) => {
   if (!logs || logs.length === 0) return;
-  const rows = logs.map((log) => ({
-    Date: log.date || "",
-    Time: log.time || "",
-    "Reading Type": (log.readingType || "").replace("_", " "),
-    Reading: log.reading,
-    Unit: log.unit,
-    "Carbs (g)": log.carbs === "" || log.carbs == null ? "" : log.carbs,
-    "Water (glasses)": log.water === "" || log.water == null ? "" : log.water,
-    "Exercise (mins)": log.exercise === "" || log.exercise == null ? "" : log.exercise,
-    Notes: log.notes || "",
-  }));
-  const csv = Papa.unparse(rows);
+  const csv = buildDiabetesLogsCsv(logs);
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -67,7 +50,7 @@ const exportLogsToCsv = (logs) => {
 };
 
 export default function Dashboard({ logs, profile, onDelete, onGoToLog, onGoToProfile }) {
-  if (!profile || isMissingTarget(profile.targetMin) || isMissingTarget(profile.targetMax)) {
+  if (!profile || validateTargetRange(profile.targetMin, profile.targetMax)) {
     return (
       <EmptyState
         title="Setup Required"
@@ -93,8 +76,8 @@ export default function Dashboard({ logs, profile, onDelete, onGoToLog, onGoToPr
   );
 
   const avgReading = Math.round(readingsMgDl.reduce((a, b) => a + b, 0) / readingsMgDl.length);
-  const highest = Math.round(Math.max(...readingsMgDl));
-  const lowest = Math.round(Math.min(...readingsMgDl));
+  const highest = Math.max(...readingsMgDl);
+  const lowest = Math.min(...readingsMgDl);
 
   const inRangeCount = readingsMgDl.filter(r => r >= profile.targetMin && r <= profile.targetMax).length;
   const inRangePercentage = Math.round((inRangeCount / readingsMgDl.length) * 100);

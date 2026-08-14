@@ -501,8 +501,10 @@ html:has(.top8-root){scroll-behavior:smooth}
 
 /* sticky CTA */
 .top8-root .stickycta{position:fixed;left:0;right:0;bottom:18px;width:max-content;margin-inline:auto;max-width:calc(100% - 32px);z-index:55;display:flex;align-items:center;gap:22px;background:rgba(20,21,18,.92);backdrop-filter:blur(14px);color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:10px 10px 10px 24px;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);max-width:calc(100% - 32px)}
+.top8-root .stickycta>div{min-width:0}
 .top8-root .stickycta b{display:block;font-size:13px;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top8-root .stickycta span{font-size:11px;color:#a9aaa3}
+.top8-root .stickycta .primary{flex-shrink:0}
 
 /* ============================== MISC PAGES ============================== */
 .top8-root .sp-hero,.top8-root .countries-hero,.top8-root .cmp-hero-sec,.top8-root .author-hero{padding:170px 0 60px}

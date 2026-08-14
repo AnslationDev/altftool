@@ -1,0 +1,179 @@
+/*
+ * Top3 — standalone Tailwind v4 instance scoped to /top3 only.
+ * Mirrors the pattern used by src/app/imgprompt/globals.css and
+ * src/app/fact-net/fact-net.css: source("./") + @source restrict the
+ * utility scanner to this folder, and every token that also exists in
+ * the site-wide theme (accent, accent-soft, font-sans/display/mono)
+ * resolves through a namespaced --top3-* variable that only exists on
+ * .top3-scope — with the global token as fallback — so nothing here
+ * can override AltFTool's own design tokens on other routes.
+ *
+ * The html/body rules from the original standalone index.css moved to
+ * .top3-root: route CSS stays attached for the life of the document,
+ * so painting the document here would repaint every page the visitor
+ * opens next (scripts/check-global-css-leaks.mjs fails the build on
+ * exactly that).
+ */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+@source "./";
+
+@theme inline {
+  /* Tokens unique to Top3 — inlined as literals, no :root emission. */
+  --color-paper: #f5f1e8;
+  --color-paper-soft: #ede7d9;
+  --color-paper-warm: #e9e0cb;
+  --color-ink: #111010;
+  --color-ink-soft: #2a2826;
+  --color-ink-mute: #6b655c;
+  --color-line: #1a18171a;
+  --color-line-strong: #1a181733;
+  --color-ochre: #c99a3e;
+  --color-moss: #4a5a3a;
+
+  /* Tokens whose names also exist in src/app/globals.css — route through
+     the namespaced variable inside .top3-scope, global token elsewhere. */
+  --color-accent: var(--top3-accent, var(--accent));
+  --color-accent-soft: var(--top3-accent-soft, var(--accent-soft));
+  --font-display: var(--top3-font-display, var(--font-primary));
+  --font-sans: var(--top3-font-sans, var(--font-primary));
+  --font-mono: var(--top3-font-mono, var(--anslation-ds-font-mono));
+}
+
+.top3-scope {
+  --top3-accent: #b8451e;
+  --top3-accent-soft: #d9633c;
+  --top3-font-display: "Fraunces", ui-serif, Georgia, serif;
+  --top3-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --top3-font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* "by Alt F" co-brand byline (shared @/app/_altf lockup): its label reads
+   var(--muted-foreground), which flips light in the site's dark theme — but
+   Top3 is always paper, so pin the byline to Top3's own ink palette. */
+.top3-root .altf-by-label {
+  color: #6b655c;
+}
+.top3-root .altf-by-logo {
+  color: #111010;
+}
+
+/* Was `html, body { … }` in the standalone build. */
+.top3-root {
+  background: #f5f1e8;
+  color: #111010;
+  font-family: var(--top3-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Paper grain texture */
+.top3-root .paper-grain {
+  background-image:
+    radial-gradient(ellipse at top left, rgba(255,255,255,0.5), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(184,69,30,0.04), transparent 60%);
+}
+
+.top3-root .paper-noise {
+  position: relative;
+}
+.top3-root .paper-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.top3-root .display {
+  font-family: var(--top3-font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+/* Marquee (keyframes namespaced — @keyframes are document-global and
+   "marquee" is already taken by src/app/siding and siding-pros) */
+@keyframes top3-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.top3-root .animate-marquee {
+  animation: top3-marquee 40s linear infinite;
+}
+
+/* Ticker */
+@keyframes top3-ticker {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.top3-root .animate-ticker {
+  animation: top3-ticker 18s linear infinite;
+}
+
+/* Selection */
+.top3-root ::selection {
+  background: #111010;
+  color: #f5f1e8;
+}
+
+/* Custom scrollbar — scoped to scrollable elements inside the section;
+   the document-level scrollbar keeps the site default on purpose. */
+.top3-root ::-webkit-scrollbar { width: 10px; height: 10px; }
+.top3-root ::-webkit-scrollbar-track { background: transparent; }
+.top3-root ::-webkit-scrollbar-thumb { background: #1a181733; border-radius: 10px; }
+.top3-root ::-webkit-scrollbar-thumb:hover { background: #1a181755; }
+
+/* Utilities */
+.top3-root .hairline { border-color: #1a181733; }
+.top3-root .hairline-t { border-top: 1px solid #1a181733; }
+.top3-root .hairline-b { border-bottom: 1px solid #1a181733; }
+.top3-root .hairline-x { border-left: 1px solid #1a181733; border-right: 1px solid #1a181733; }
+
+.top3-root .num-tabular { font-variant-numeric: tabular-nums; }
+
+/* Smooth underline */
+.top3-root .link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.4s cubic-bezier(.2,.7,.2,1);
+}
+.top3-root .link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Ranking digit background */
+.top3-root .big-digit {
+  font-family: var(--top3-font-display);
+  font-weight: 300;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+}
+
+/* Card image shine on hover */
+.top3-root .img-shine {
+  position: relative;
+  overflow: hidden;
+}
+.top3-root .img-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.9s cubic-bezier(.2,.7,.2,1);
+}
+.top3-root .img-shine:hover::after {
+  transform: translateX(100%);
+}
+
+/* Reveal helper */
+.top3-root .reveal-mask {
+  overflow: hidden;
+  display: inline-block;
+}

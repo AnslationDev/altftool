@@ -29,6 +29,7 @@ function HeroSection({ brand, category }) {
     brand?.additionalBenefits || brand?.additionalBenefit
   );
   const safeRating = Math.max(0, Math.min(5, Number(brand?.rating ?? 0)));
+  const hasRating = safeRating > 0;
 
   const fullStars = Math.floor(safeRating);
   const hasHalf = safeRating % 1 >= 0.5;
@@ -90,12 +91,14 @@ function HeroSection({ brand, category }) {
               "Recently Updated"}
           </p>
 
-          <div className="flex items-center gap-2 text-(--muted-foreground) mb-4 font-semibold">
-            <ThumbsUp className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-            {brand?.visits
-              ? `${brand.visits} People Visited This Week`
-              : `${getRatingLabel(safeRating)} · ${formatRating(safeRating)}/5 overall rating`}
-          </div>
+          {brand?.visits || hasRating ? (
+            <div className="flex items-center gap-2 text-(--muted-foreground) mb-4 font-semibold">
+              <ThumbsUp className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+              {brand?.visits
+                ? `${brand.visits} People Visited This Week`
+                : `${getRatingLabel(safeRating)} · ${formatRating(safeRating)}/5 overall rating`}
+            </div>
+          ) : null}
 
           <p className="text-(--muted-foreground) mb-6 leading-relaxed">
             {brand?.description}
@@ -129,31 +132,38 @@ function HeroSection({ brand, category }) {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6 pt-4 lg:pt-6">
 
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="flex">
-                  {[...Array(fullStars)].map((_, i) => (
-                    <Star key={`f-${i}`} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
-                  ))}
+            {/* The star block renders only for a brand that carries a rating. An
+                unrated brand used to get five grey stars and "0/5" here, which
+                publishes a zero score instead of publishing nothing. */}
+            {hasRating ? (
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex">
+                    {[...Array(fullStars)].map((_, i) => (
+                      <Star key={`f-${i}`} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+                    ))}
 
-                  {hasHalf && <StarHalf className="w-6 h-6 fill-yellow-400 text-yellow-400" />}
+                    {hasHalf && <StarHalf className="w-6 h-6 fill-yellow-400 text-yellow-400" />}
 
-                  {[...Array(emptyStars)].map((_, i) => (
-                    <Star key={`e-${i}`} className="w-6 h-6 text-gray-300" />
-                  ))}
+                    {[...Array(emptyStars)].map((_, i) => (
+                      <Star key={`e-${i}`} className="w-6 h-6 text-gray-300" />
+                    ))}
+                  </div>
+
+                  <span className="text-2xl font-semibold">
+                    {Number.isInteger(safeRating) ? safeRating : safeRating.toFixed(1)}/5
+                  </span>
                 </div>
 
-                <span className="text-2xl font-semibold">
-                  {Number.isInteger(safeRating) ? safeRating : safeRating.toFixed(1)}/5
-                </span>
+                <p className="text-lg">
+                  {brand?.visits
+                    ? `Trusted By ${brand.visits}+ Customers`
+                    : `${getRatingLabel(safeRating)} overall rating`}
+                </p>
               </div>
-
-              <p className="text-lg">
-                {brand?.visits
-                  ? `Trusted By ${brand.visits}+ Customers`
-                  : `${getRatingLabel(safeRating)} overall rating`}
-              </p>
-            </div>
+            ) : (
+              <div />
+            )}
 
             {externalLink ? (
               <a

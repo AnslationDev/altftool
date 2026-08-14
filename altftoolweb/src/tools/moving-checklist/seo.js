@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "40-Task Moving Checklist starts you with 42 preset moving tasks split across six countdown phases, 8 weeks before, 4 weeks, 2 weeks, 1 week, moving day and after moving, then lets you tick, edit, delete or add to them and exports the result as a plain-text file. Progress is shown as a completed-over-total count and a percentage, and you can filter the list down to done or pending items. Everything is stored in your browser, so you can close the tab mid-move and pick the list up where you left it.",
+    "42-Task Moving Checklist starts you with 42 preset moving tasks split across six countdown phases, 8 weeks before, 4 weeks, 2 weeks, 1 week, moving day and after moving, then lets you tick, edit, delete or add to them and exports the result as a plain-text file. Progress is shown as a completed-over-total count and a percentage, and you can filter the list down to done or pending items. Everything is stored in your browser, so you can close the tab mid-move and pick the list up where you left it.",
   useCases: [
     "You have signed a lease that starts in two months and want a phase-by-phase plan that already knows when to book movers, when to redirect post and when to arrange utility disconnection.",
     "Two people are packing the same flat and one of you wants to export the pending items as a text file to paste into a shared note.",

@@ -58,7 +58,7 @@ test("performance budget report passes small chunks, media, and lazy tool bounda
     writeFixtureFile(
       rootDir,
       "altftoolweb/src/platform/registry/toolRuntimeMap.js",
-      'export const toolRuntimeMap = { one: () => import("@/tools/one/entry"), two: () => import("@/tools/two/entry") };',
+      'export const toolRuntimeMap = { one: () => import("@/tools/one/entry.jsx"), two: () => import("@/tools/two/entry.tsx") };',
     );
     writeFixtureFile(
       rootDir,
@@ -82,6 +82,47 @@ test("performance budget report passes small chunks, media, and lazy tool bounda
     assert.equal(report.adminSource.lazyEditorAssets, true);
     assert.match(markdown, /Performance Budget Report/);
     assert.doesNotMatch(JSON.stringify(report), /PRIVATE KEY-----/);
+  } finally {
+    fs.rmSync(rootDir, { recursive: true, force: true });
+  }
+});
+
+test("performance budget recognizes extensionless and extension-bearing tool entries", async () => {
+  const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "altft-performance-entry-extensions-"));
+  const extensions = ["", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts"];
+  const priorityToolSlugs = extensions.map((_, index) => `tool-${index}`);
+
+  try {
+    const runtimeEntries = extensions.map((extension, index) =>
+      `"tool-${index}": () => import("@/tools/tool-${index}/entry${extension}")`,
+    );
+    writeFixtureFile(
+      rootDir,
+      "altftoolweb/src/platform/registry/toolRuntimeMap.js",
+      `export const toolRuntimeMap = { ${runtimeEntries.join(", ")} };`,
+    );
+    writeFixtureFile(
+      rootDir,
+      "altftoolweb/src/app/tools/[category]/[slug]/ToolClient.jsx",
+      'const Tool = dynamic(() => loadToolModule(slug), { ssr: false, loading: () => null });',
+    );
+
+    const report = await buildPerformanceBudgetReport({
+      ...defaultOptions(rootDir),
+      appBudgets: [],
+      criticalAssets: [],
+      minDynamicToolImports: priorityToolSlugs.length,
+      priorityToolSlugs,
+      requireBuild: false,
+    });
+
+    assert.equal(report.totals.dynamicToolImports, priorityToolSlugs.length);
+    assert.equal(
+      report.totals.priorityToolRuntimeCoverage,
+      `${priorityToolSlugs.length}/${priorityToolSlugs.length}`,
+    );
+    assert.equal(report.totals.missingPriorityToolRuntimes, 0);
+    assert.deepEqual(report.source.runtimeImportMismatches, []);
   } finally {
     fs.rmSync(rootDir, { recursive: true, force: true });
   }

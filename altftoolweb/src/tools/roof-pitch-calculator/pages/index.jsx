@@ -64,6 +64,10 @@ const toNumber = (raw) => {
   const value = Number(trimmed);
   return Number.isFinite(value) ? value : NaN;
 };
+const toOptionalNumber = (raw) => {
+  const trimmed = String(raw).replace(/,/g, "").trim();
+  return trimmed === "" ? 0 : toNumber(trimmed);
+};
 
 export default function ToolHome() {
   const [mode, setMode] = useState(DEFAULTS.mode);
@@ -82,8 +86,8 @@ export default function ToolHome() {
         value: toNumber(value),
         rise: toNumber(rise),
         run: toNumber(run),
-        spanFt: toNumber(span),
-        overhangFt: toNumber(overhang),
+        spanFt: toOptionalNumber(span),
+        overhangFt: toOptionalNumber(overhang),
       }),
     [mode, value, rise, run, span, overhang],
   );

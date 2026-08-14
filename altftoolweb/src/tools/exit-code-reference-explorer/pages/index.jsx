@@ -247,7 +247,7 @@ export default function ToolHome() {
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Signal numbers follow signal(7) on Linux x86-64; SIGBUS, SIGUSR1/2 and a few others carry
         different numbers on Alpha, SPARC and MIPS. sysexits.h codes are a BSD convention many —
-        but not all — programs follow. When in doubt, the program's own man page wins.
+        but not all — programs follow. When in doubt, the program&apos;s own man page wins.
       </p>
     </main>
   );

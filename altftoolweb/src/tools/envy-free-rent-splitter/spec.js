@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "envy-free-rent-splitter",
   "title": "Envy-Free Rent Splitter",
-  "description": "Room preferences aur total rent se fair shares optimize kare.",
+  "description": "Split rent into envy-free shares from each housemate's room preferences and the total.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

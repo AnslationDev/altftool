@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import "./ecovolt-solar.css";
 
-const QUOTE_URL = "https://example.com/quote/ecovolt-solar";
-const PHONE_TEL = "tel:+18555550254";
-const PHONE_TEXT = "(855) 555-0254";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_TEXT = "Demo only";
 
 const STATS = [
   { num: "25 yr", cap: "panel performance warranty on installed modules" },

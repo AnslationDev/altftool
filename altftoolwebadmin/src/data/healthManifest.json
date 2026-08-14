@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-05T23:30:17.744Z",
+  "generatedAt": "2026-08-06T18:16:47.889Z",
   "tools": {
     "total": 3947,
     "healthy": 3947,
@@ -27,8 +27,8 @@
         "partial": 16,
         "broken": 0
       },
-      "automatedTests": 179,
-      "automatedCoverage": 5,
+      "automatedTests": 221,
+      "automatedCoverage": 6,
       "networkDependent": 66,
       "envDependent": 4,
       "api": {

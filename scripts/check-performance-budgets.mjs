@@ -431,7 +431,7 @@ async function checkSourceGuardrails(rootDir, sourceRoot, options) {
   if (await pathExists(runtimeMapFile)) {
     const content = await readFile(runtimeMapFile, "utf8");
     const runtimeImportMatches = [
-      ...content.matchAll(/(?:["']([^"']+)["']|([a-zA-Z_$][\w$]*))\s*:\s*\(\)\s*=>\s*import\(["']@\/tools\/([^"']+)\/entry["']\)/g),
+      ...content.matchAll(/(?:["']([^"']+)["']|([a-zA-Z_$][\w$]*))\s*:\s*\(\)\s*=>\s*import\(["']@\/tools\/([^"']+)\/entry(?:\.(?:jsx?|tsx?|mjs|cjs|mts|cts))?["']\)/g),
     ];
     runtimeToolSlugs = runtimeImportMatches.map((match) => match[1] || match[2]);
     runtimeImportMismatches = runtimeImportMatches

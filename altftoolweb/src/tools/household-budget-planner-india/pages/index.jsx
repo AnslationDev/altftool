@@ -353,7 +353,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Total monthly income", hasError ? dash : money(result.totalIncome)],
             [
@@ -403,11 +403,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (
-        <section
-          className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
-          role="status"
-          aria-live="polite"
-        >
+        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
           <h2 className="text-base font-semibold">Ratio health check</h2>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[320px] text-left text-sm">

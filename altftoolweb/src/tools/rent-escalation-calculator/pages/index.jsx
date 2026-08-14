@@ -254,11 +254,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl
-          className="mt-5 divide-y divide-[var(--border)] text-sm"
-          aria-live="polite"
-          aria-atomic="true"
-        >
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Rent in the final month", hasError ? "—" : money(result.finalMonthlyRent)],
             [

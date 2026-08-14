@@ -21,7 +21,7 @@ const SearchBar = ({ searchQuery = "", setSearchQuery }) => {
           <h2 className="text-center subheading mb-2">🔍 Search Timezones</h2>
 
           <p className="text-center description mb-6">
-            Search by country, city, or timezone name
+            Search by IANA city, region, or time-zone identifier
           </p>
 
           {/* Search Input */}
@@ -39,7 +39,7 @@ const SearchBar = ({ searchQuery = "", setSearchQuery }) => {
             <Search aria-hidden="true" className="w-5 h-5 text-(--primary)" />
 
             <label htmlFor="timezone-search" className="sr-only">
-              Search by country, city, or timezone name
+              Search by IANA city, region, or time-zone identifier
             </label>
             <input
               id="timezone-search"

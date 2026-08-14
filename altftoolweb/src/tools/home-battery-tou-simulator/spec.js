@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "home-battery-tou-simulator",
   "title": "Home Battery TOU Simulator",
-  "description": "Tariffs aur load profile se charging/discharging scenarios compare kare.",
+  "description": "Compare home battery charge and discharge scenarios against your tariffs and load profile.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

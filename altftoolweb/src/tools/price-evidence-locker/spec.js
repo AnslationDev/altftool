@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "price-evidence-locker",
   "title": "Price Evidence Locker",
-  "description": "Product price aur offer claims ka timestamped evidence save kare.",
+  "description": "Save timestamped evidence of a product's price and the offer claims made about it.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Shopping",

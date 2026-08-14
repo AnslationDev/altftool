@@ -952,6 +952,73 @@ export function createCollectionPageJsonLd({ path, name, description } = {}) {
   };
 }
 
+/** A dictionary or glossary represented as one controlled vocabulary. */
+export function createDefinedTermSetJsonLd({
+  path,
+  name,
+  description,
+  termCount,
+} = {}) {
+  if (!path || !name) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${absoluteUrl(path)}#defined-term-set`,
+    name,
+    description,
+    url: absoluteUrl(path),
+    inLanguage: "en",
+    numberOfItems: Number.isFinite(termCount) ? termCount : undefined,
+    publisher: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+  };
+}
+
+/** One dictionary entry linked to its DefinedTermSet. */
+export function createDefinedTermJsonLd({
+  path,
+  name,
+  description,
+  setPath,
+  setName,
+  termCode,
+  partOfSpeech,
+  alternateName,
+  sameAs = [],
+} = {}) {
+  if (!path || !name || !description) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "@id": `${absoluteUrl(path)}#defined-term`,
+    name,
+    description,
+    url: absoluteUrl(path),
+    inLanguage: "en",
+    termCode: termCode || name,
+    alternateName: alternateName || undefined,
+    additionalProperty: partOfSpeech
+      ? {
+          "@type": "PropertyValue",
+          name: "partOfSpeech",
+          value: partOfSpeech,
+        }
+      : undefined,
+    inDefinedTermSet: setPath
+      ? {
+          "@type": "DefinedTermSet",
+          "@id": `${absoluteUrl(setPath)}#defined-term-set`,
+          name: setName || undefined,
+          url: absoluteUrl(setPath),
+        }
+      : undefined,
+    sameAs: sameAs.length ? sameAs : undefined,
+  };
+}
+
 export function createPersonJsonLd({
   path,
   name,

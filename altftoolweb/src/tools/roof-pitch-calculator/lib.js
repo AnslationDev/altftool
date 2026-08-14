@@ -120,6 +120,24 @@ export function convertPitch({
 } = {}) {
   if (!PITCH_MODES.includes(mode)) return { error: "Pick one of the supported pitch notations." };
 
+  // Span and overhang only feed the "apply it to a roof" rafter-length section
+  // below; the pitch conversion itself needs only mode/value (or rise/run).
+  // Leaving them out must therefore never block the conversion, so a blank,
+  // null or omitted entry is read as "not supplied" (0 ft). A figure that was
+  // actually supplied but is unusable — unparseable or negative — is reported
+  // rather than silently zeroed, so the caller sees their mistake instead of
+  // rafter lengths quietly computed from a span of nothing.
+  const normalizedSpan = spanFt === "" || spanFt === null || spanFt === undefined ? 0 : spanFt;
+  const normalizedOverhang =
+    overhangFt === "" || overhangFt === null || overhangFt === undefined
+      ? 0
+      : overhangFt;
+  if (!isNum(normalizedSpan) || !isNum(normalizedOverhang)) {
+    return { error: "Enter a valid number for span and overhang." };
+  }
+  if (normalizedSpan < 0) return { error: "Span cannot be negative." };
+  if (normalizedOverhang < 0) return { error: "Overhang cannot be negative." };
+
   const tangent = toTangent({ mode, value, rise, run });
   if (!isNum(tangent)) {
     const invalidPitchMessage = {
@@ -143,19 +161,11 @@ export function convertPitch({
   const slopeFactor = Math.sqrt(1 + tangent * tangent);
   const hipFactor = Math.sqrt(2 + tangent * tangent);
 
-  // Span and overhang only feed the "apply it to a roof" rafter-length
-  // section below — they are optional and must never block the pitch
-  // conversion above, which needs only mode/value (or rise/run). A blank,
-  // non-numeric or negative entry is treated as "not supplied" (0 ft)
-  // instead of failing the whole result.
-  const spanFtSafe = isNum(spanFt) && spanFt > 0 ? spanFt : 0;
-  const overhangFtSafe = isNum(overhangFt) && overhangFt > 0 ? overhangFt : 0;
-
   // Rafter geometry. Half the span is the common rafter run on a gable or hip.
-  const commonRunFt = spanFtSafe / 2;
+  const commonRunFt = normalizedSpan / 2;
   const riseFt = commonRunFt * tangent;
   const rafterFt = commonRunFt * slopeFactor;
-  const overhangRafterFt = overhangFtSafe * slopeFactor;
+  const overhangRafterFt = normalizedOverhang * slopeFactor;
   const totalRafterFt = rafterFt + overhangRafterFt;
   const hipRafterFt = commonRunFt * hipFactor;
 
@@ -167,9 +177,11 @@ export function convertPitch({
     ratioRunPerRise: Number.isFinite(ratioRunPerRise) ? round2(ratioRunPerRise) : NaN,
     slopeFactor: round4(slopeFactor),
     hipFactor: round4(hipFactor),
+    // Backward-compatible public alias used by existing callers.
+    areaMultiplier: round4(slopeFactor),
     pitchName: pitchName(riseIn12),
 
-    spanFt: round2(spanFtSafe),
+    spanFt: round2(normalizedSpan),
     commonRunFt: round2(commonRunFt),
     riseFt: round2(riseFt),
     rafterFt: round2(rafterFt),

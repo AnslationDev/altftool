@@ -14,7 +14,7 @@
  *   i.e. 60 mg/kg/day, and never more than the adult maximum.
  *
  * Times are handled as "HH:MM" strings and minutes past midnight. Nothing here
- * reads the system clock.
+ * reads the system clock — pass the current time in if you want a countdown.
  */
 
 export const MINUTES_PER_DAY = 1440;
@@ -111,6 +111,7 @@ export function childDailyMaxMg(weightKg) {
  * @param {number} input.mgPerDose Milligrams in each of those doses.
  * @param {number} [input.intervalHours] Gap you are using between doses.
  * @param {number} [input.dailyMaxMg] Override the 24-hour ceiling.
+ * @param {number|null} [input.nowMinutes] Current time for the countdown.
  * @returns {object} results or { error }
  */
 export function computeParacetamolPlan({
@@ -121,6 +122,7 @@ export function computeParacetamolPlan({
   mgPerDose = 1000,
   intervalHours = MIN_INTERVAL_HOURS,
   dailyMaxMg = null,
+  nowMinutes = null,
 } = {}) {
   if (!MODES.some((entry) => entry.id === mode)) {
     return { error: "Choose whether this is adult or weight-based child dosing." };
@@ -130,13 +132,16 @@ export function computeParacetamolPlan({
   if (lastDose === null) return { error: "Enter the last dose time in 24-hour HH:MM form." };
 
   const doses = Number(dosesTaken);
-  if (!Number.isFinite(doses) || doses < 1 || doses > MAX_DOSES_INPUT) {
-    return { error: `Doses taken in the last 24 hours should be between 1 and ${MAX_DOSES_INPUT}.` };
+  if (!Number.isInteger(doses) || doses < 1 || doses > MAX_DOSES_INPUT) {
+    return {
+      error: `Doses taken in the last 24 hours should be a whole number between 1 and ${MAX_DOSES_INPUT}.`,
+    };
   }
 
   const perDose = Number(mgPerDose);
-  if (!Number.isFinite(perDose) || perDose < MIN_DOSE_MG || perDose > MAX_DOSE_MG) {
-    return { error: `A single dose should be between ${MIN_DOSE_MG} and ${MAX_DOSE_MG} mg.` };
+  const minimumDose = mode === "adult" ? ADULT_DOSE_MIN_MG : MIN_DOSE_MG;
+  if (!Number.isFinite(perDose) || perDose < minimumDose || perDose > MAX_DOSE_MG) {
+    return { error: `A single ${mode === "adult" ? "adult " : ""}dose should be between ${minimumDose} and ${MAX_DOSE_MG} mg.` };
   }
 
   const interval = Number(intervalHours);
@@ -167,16 +172,15 @@ export function computeParacetamolPlan({
     return { error: "Could not work out a 24-hour limit from those values." };
   }
 
-  const takenMg = Math.round(doses) * perDose;
+  const takenMg = doses * perDose;
   const remainingMg = ceiling - takenMg;
   const dosesLeftByMg = remainingMg >= perDose ? Math.floor(remainingMg / perDose) : 0;
   // The spacing rule limits how many doses physically fit in a 24-hour period.
   const slotsPerDay = Math.floor(24 / interval);
-  const dosesLeftBySpacing = Math.max(0, slotsPerDay - Math.round(doses));
-  // Standard labelling also caps every adult and child dosing schedule at
-  // MAX_DOSES_PER_DAY doses in any 24 hours, regardless of interval or milligram
-  // total — this must always be enforced alongside the other two limits.
-  const dosesLeftByCount = Math.max(0, MAX_DOSES_PER_DAY - Math.round(doses));
+  const dosesLeftBySpacing = Math.max(0, slotsPerDay - doses);
+  // Standard labelling caps adult and child schedules at four doses in any
+  // 24 hours, independently of the spacing and milligram ceilings.
+  const dosesLeftByCount = Math.max(0, MAX_DOSES_PER_DAY - doses);
   const remainingDoses = Math.min(dosesLeftByMg, dosesLeftBySpacing, dosesLeftByCount);
   const bindingLimits = [];
   if (dosesLeftByMg === remainingDoses) bindingLimits.push("the 24-hour milligram limit");
@@ -188,14 +192,13 @@ export function computeParacetamolPlan({
     bindingLimits.length > 1
       ? `more than one limit (${bindingLimits.join(" and ")})`
       : bindingLimits[0];
-  const overLimit = takenMg > ceiling;
+  const mgOverLimit = takenMg > ceiling;
+  const countOverLimit = doses > MAX_DOSES_PER_DAY;
+  const overLimit = mgOverLimit || countOverLimit;
   const atLimit = !overLimit && remainingDoses === 0;
 
   const intervalMinutes = Math.round(interval * 60);
   const nextDoseMinutes = wrapMinutes(lastDose + intervalMinutes);
-  // Doses already taken were not individually timestamped, only the most recent
-  // one — so the soonest this module can say the 24-hour allowance is
-  // guaranteed to have fully rolled over is 24 hours after that last dose.
   const twentyFourHourResetMinutes = wrapMinutes(lastDose);
 
   const schedule = [];
@@ -207,14 +210,31 @@ export function computeParacetamolPlan({
     });
   }
 
+  let countdown = null;
+  if (nowMinutes !== null && Number.isFinite(Number(nowMinutes))) {
+    const now = wrapMinutes(nowMinutes);
+    const untilNext = wrapMinutes(nextDoseMinutes - now);
+    const sinceLast = wrapMinutes(now - lastDose);
+    countdown = {
+      now,
+      minutesUntilNext: sinceLast >= intervalMinutes ? 0 : untilNext,
+      minutesSinceLast: sinceLast,
+      dueNow: sinceLast >= intervalMinutes,
+    };
+  }
+
   const warnings = [];
-  if (overLimit) {
+  if (mgOverLimit) {
     warnings.push(
       `That is ${takenMg} mg in 24 hours, above the ${ceiling} mg limit. Paracetamol overdose can damage the liver without early symptoms — contact a doctor or poisons service now, even if you feel fine.`,
     );
+  } else if (countOverLimit) {
+    warnings.push(
+      `You entered ${doses} doses in the last 24 hours, above the standard maximum of ${MAX_DOSES_PER_DAY}. Do not take another dose. Check the complete dose log and medicine label, and contact a pharmacist, doctor or poisons service promptly—especially if any dose was larger, another product also contained paracetamol, or you are unsure.`,
+    );
   } else if (atLimit) {
     warnings.push(
-      `No further doses fit in this 24-hour period — you are limited by ${limitingFactor}. Wait until 24 hours after your last dose before taking any more.`,
+      `No further doses fit in the information entered — you are limited by ${limitingFactor}. This tool only knows the most recent dose time, so it cannot determine when the earliest older dose leaves the rolling 24-hour window. Check the full dose log and medicine label, or ask a pharmacist before taking more.`,
     );
   }
   if (mode === "adult" && ceiling > OTC_LABEL_DAILY_MAX_MG) {
@@ -241,7 +261,7 @@ export function computeParacetamolPlan({
     weightKg: weight,
     recommendedDoseMg: recommendedDose,
     lastDose,
-    dosesTaken: Math.round(doses),
+    dosesTaken: doses,
     mgPerDose: perDose,
     intervalHours: interval,
     intervalMinutes,
@@ -253,11 +273,14 @@ export function computeParacetamolPlan({
     dosesLeftBySpacing,
     dosesLeftByCount,
     limitingFactor,
+    mgOverLimit,
+    countOverLimit,
     overLimit,
     atLimit,
     nextDoseMinutes,
     twentyFourHourResetMinutes,
     schedule,
+    countdown,
     warnings,
     usedShare: (takenMg / ceiling) * 100,
     // Clamped to 0-100 so it can be used directly as a bar width.

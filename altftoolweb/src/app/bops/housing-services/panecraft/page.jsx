@@ -13,9 +13,9 @@ import {
 } from "lucide-react";
 import "./panecraft.css";
 
-const QUOTE_URL = "https://example.com/quote/panecraft";
-const PHONE_TEL = "tel:+18555550243";
-const PHONE_DISPLAY = "(855) 555-0243";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1711006777187-2c991e1b90b2?auto=format&fit=crop&w=1600&q=80",

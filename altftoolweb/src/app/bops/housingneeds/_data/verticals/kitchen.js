@@ -35,7 +35,7 @@ const kitchen = {
     "Permits and layout changes demystified"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/kitchen",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Kitchen Remodeling Guide: Cabinets & Costs",
     "description": "Learn how a kitchen remodel fits together: cabinet reface vs replace, quartz vs granite countertops, islands, backsplash, permits, and what drives cost."

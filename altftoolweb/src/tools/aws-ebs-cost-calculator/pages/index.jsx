@@ -67,7 +67,7 @@ export default function ToolHome() {
       `Storage: ${money(result.storageCost)}`,
       `Provisioned IOPS: ${money(result.iopsCost)}`,
       `Provisioned throughput: ${money(result.throughputCost)}`,
-      `Snapshots: ${result.volumeCount} × ${NUM.format(Number(snapshotGb))} GB standard tier = ${money(result.snapshotCost)}`,
+      `Snapshots: ${NUM.format(result.snapshotGbTotal)} GB total stored data at the standard tier = ${money(result.snapshotCost)}`,
       `Total per month: ${money(result.total)}`,
     ].join("\n");
   }, [hasError, result, sizeGb, snapshotGb]);
@@ -219,7 +219,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="ebs-snapshot">
-              Snapshot storage per volume (GB, standard tier)
+              Total snapshot storage (GB, standard tier)
             </label>
             <input
               id="ebs-snapshot"
@@ -232,7 +232,7 @@ export default function ToolHome() {
               onChange={(event) => setSnapshotGb(event.target.value)}
             />
             <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-              Per volume, like volume size — multiplied by the number of identical volumes above.
+              Enter the total incremental snapshot data stored across all volumes; this is not multiplied by volume count.
             </p>
           </div>
         </div>

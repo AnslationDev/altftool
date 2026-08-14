@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "availability-time-zone-finder",
   "title": "Availability & Time-Zone Finder",
-  "description": "Multiple schedules se common meeting windows dhoonde.",
+  "description": "Finds meeting windows that work across several schedules.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

@@ -407,7 +407,7 @@ export default function ToolHome() {
                 )}
                 {isCopied("results") ? "Copied" : "Copy this page as CSV"}
               </button>
-              <button type="button" className={PRIMARY_BTN} onClick={reset}>
+              <button type="button" className={GHOST_BTN} onClick={reset}>
                 <RotateCcw className="h-4 w-4" aria-hidden="true" />
                 Reset
               </button>

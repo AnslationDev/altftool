@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "wearable-sleep-csv-analyzer",
   "title": "Wearable Sleep CSV Analyzer",
-  "description": "Oura, Whoop aur Fitbit exports ke sleep trends dikhaye.",
+  "description": "See sleep trends from your Oura, Whoop or Fitbit CSV exports.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Health & Fitness",

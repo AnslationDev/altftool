@@ -4,8 +4,8 @@
  * A loaded bar is symmetrical, so:
  *   weight per side = (target - bar - 2 x collar) / 2
  * and the plates are chosen to hit the closest achievable per-side weight
- * from what is actually in the rack (preferring heavier denominations first
- * when more than one combination reaches the same weight).
+ * from what is actually in the rack. The selected plates are returned in
+ * descending denomination order for sleeve loading.
  *
  * Plate denominations and bar weights follow IWF / IPF competition specifications:
  * a men's bar is 20 kg, a women's bar 15 kg, and competition collars are 2.5 kg each.
@@ -16,6 +16,17 @@
 const SCALE = 1000;
 const toUnits = (value) => Math.round(value * SCALE);
 const fromUnits = (units) => units / SCALE;
+
+function greatestCommonDivisor(a, b) {
+  let left = Math.abs(a);
+  let right = Math.abs(b);
+  while (right) {
+    const next = left % right;
+    left = right;
+    right = next;
+  }
+  return left || 1;
+}
 
 /** IWF / IPF competition disc denominations in kilograms, heaviest first. */
 export const KG_PLATES = [25, 20, 15, 10, 5, 2.5, 1.25, 0.5, 0.25];
@@ -161,6 +172,15 @@ function bestPerSideLoading(list, capacityUnits) {
   const capacity = Math.min(capacityUnits, totalAvailableUnits);
   if (capacity <= 0) return { loadedUnits: 0, counts };
 
+  // Every achievable total is a multiple of the denominations' GCD. Running
+  // the DP in that smaller unit keeps normal kg/lb inventories in the low
+  // thousands of states instead of scanning up to two million thousandths.
+  const unitDivisor = list
+    .filter((plate) => plate.pairs > 0)
+    .map((plate) => toUnits(plate.weight))
+    .reduce((gcd, units) => greatestCommonDivisor(gcd, units), 0) || 1;
+  const scaledCapacity = Math.floor(capacity / unitDivisor);
+
   const chunkItems = [];
   list.forEach((plate, denomIndex) => {
     const unitsEach = toUnits(plate.weight);
@@ -168,20 +188,24 @@ function bestPerSideLoading(list, capacityUnits) {
     let chunk = 1;
     while (remainingPairs > 0 && unitsEach > 0) {
       const take = Math.min(chunk, remainingPairs);
-      chunkItems.push({ denomIndex, plateCount: take, unitWeight: unitsEach * take });
+      chunkItems.push({
+        denomIndex,
+        plateCount: take,
+        unitWeight: (unitsEach / unitDivisor) * take,
+      });
       remainingPairs -= take;
       chunk *= 2;
     }
   });
 
   // reachable[s] = true once some subset of chunk items sums to exactly s.
-  const reachable = new Uint8Array(capacity + 1);
+  const reachable = new Uint8Array(scaledCapacity + 1);
   reachable[0] = 1;
-  const parent = new Int32Array(capacity + 1).fill(-1);
+  const parent = new Int32Array(scaledCapacity + 1).fill(-1);
   for (let ci = 0; ci < chunkItems.length; ci++) {
     const { unitWeight } = chunkItems[ci];
-    if (unitWeight <= 0 || unitWeight > capacity) continue;
-    for (let s = capacity; s >= unitWeight; s--) {
+    if (unitWeight <= 0 || unitWeight > scaledCapacity) continue;
+    for (let s = scaledCapacity; s >= unitWeight; s--) {
       if (!reachable[s] && reachable[s - unitWeight]) {
         reachable[s] = 1;
         parent[s] = ci;
@@ -189,7 +213,7 @@ function bestPerSideLoading(list, capacityUnits) {
     }
   }
 
-  let best = capacity;
+  let best = scaledCapacity;
   while (best > 0 && !reachable[best]) best -= 1;
 
   let cursor = best;
@@ -201,5 +225,55 @@ function bestPerSideLoading(list, capacityUnits) {
     cursor -= item.unitWeight;
   }
 
-  return { loadedUnits: best, counts };
+  return { loadedUnits: best * unitDivisor, counts };
+}
+
+/**
+ * Nearest weight that can be loaded at or below a target, given the rack.
+ * Kept as a public compatibility helper for existing consumers.
+ */
+export function nearestLoadableWeight(input) {
+  const result = computePlateLoading(input);
+  if (result.error) return result;
+  return {
+    weight: result.achievedWeight,
+    exact: result.exact,
+    loading: result.loading,
+  };
+}
+
+/**
+ * Build a percentage ladder, rounding each target down to what the supplied
+ * rack can actually load. Kept backward-compatible with the original API.
+ */
+export function loadingLadder({
+  topWeight,
+  percentages,
+  barWeight,
+  collarWeight = 0,
+  inventory,
+  unit = "",
+} = {}) {
+  if (!isNum(topWeight) || topWeight <= 0) return [];
+  const list = Array.isArray(percentages) ? percentages : [];
+
+  return list
+    .filter((pct) => isNum(pct) && pct > 0)
+    .map((pct) => {
+      const target = (topWeight * pct) / 100;
+      const result = computePlateLoading({
+        targetWeight: target,
+        barWeight,
+        collarWeight,
+        inventory,
+        unit,
+      });
+      return {
+        percentage: pct,
+        requested: target,
+        loadable: result.error ? null : result.achievedWeight,
+        loading: result.error ? null : result.loading,
+        error: result.error ?? null,
+      };
+    });
 }

@@ -21,13 +21,13 @@ const contactCards = [
     icon: "phone",
     label: "Call us",
     value: company.phone,
-    href: `tel:${company.phoneHref}`,
+    href: company.phoneHref,
   },
   {
     icon: "mail",
     label: "Email us",
     value: company.email,
-    href: `mailto:${company.email}`,
+    href: "#demo-only",
   },
   {
     icon: "clock",
@@ -308,7 +308,7 @@ export default function Contact() {
               description="Everything you need to know before getting started. Still curious? Just drop us a line."
             />
             <a
-              href="mailto:hello@luminawindows.in"
+              href="#demo-only"
               className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-bronze-700 hover:text-bronze-800"
             >
               <Icon name="mail" className="h-4 w-4" />
@@ -397,7 +397,7 @@ export default function Contact() {
 
             <div className="mt-6 flex flex-col gap-3">
               <a
-                href={`tel:${company.phoneHref}`}
+                href={company.phoneHref}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-bronze-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-bronze-700/20 transition-all hover:-translate-y-0.5 hover:bg-bronze-700"
               >
                 <Icon name="phone" className="h-4 w-4" />

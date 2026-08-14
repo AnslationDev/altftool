@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "sobriety-recovery-journal",
   "title": "Sobriety Recovery Journal",
-  "description": "Sober days, urges, triggers aur coping wins privately track kare.",
+  "description": "Privately track sober days, urges, triggers and the coping wins in between.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Health & Wellness",

@@ -18,7 +18,6 @@ export const roundupArticle = {
   title:
     "The Weekly Meme Roundup: Bowie Knife99, Julie Tsirkin, Tryna Ignore It And More",
   category: "Editorial",
-  author: "Phil",
   date: "May 29, 2026",
   heroImage,
   videoImage,

@@ -138,8 +138,8 @@ export default function ToolHome() {
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Text Diff Viewer</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Align two versions side by side, highlight the exact words that changed inside each edited
-          line, keep a version history, and export the comparison.
+          Align two versions side by side, highlight word changes inside edited lines, keep a
+          version history, and export the comparison. Oversized lines use a bounded full-line view.
         </p>
       </header>
 
@@ -220,17 +220,17 @@ export default function ToolHome() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-              Similarity
+              {!hasError && !result.statsExact ? "Approx. similarity" : "Similarity"}
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)] sm:text-5xl">
-              {hasError ? DASH : `${result.similarityPct}%`}
+              {hasError ? DASH : `${result.statsExact ? "" : "≈"}${result.similarityPct}%`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? DASH
                 : result.identical
                   ? "The two versions match under the current options."
-                  : `${num.format(result.wordsAdded)} word(s) added, ${num.format(result.wordsRemoved)} removed`}
+                  : `${result.statsExact ? "" : "Estimated: "}${num.format(result.wordsAdded)} word(s) added, ${num.format(result.wordsRemoved)} removed`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -261,7 +261,12 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Churn", hasError ? DASH : `${result.churnPct}% of all words`],
+            [
+              !hasError && !result.statsExact ? "Approx. churn" : "Churn",
+              hasError
+                ? DASH
+                : `${result.statsExact ? "" : "≈"}${result.churnPct}% of all words`,
+            ],
             ["Lines changed", hasError ? DASH : num.format(result.changedRows)],
             ["Lines added", hasError ? DASH : num.format(result.addedRows)],
             ["Lines removed", hasError ? DASH : num.format(result.removedRows)],
@@ -285,6 +290,12 @@ export default function ToolHome() {
             </div>
           ))}
         </dl>
+        {!hasError && (!result.statsExact || !result.wordHighlightsExact) ? (
+          <p className="mt-4 text-xs leading-5 text-[var(--muted-foreground)]">
+            Bounded mode is active: headline word statistics are estimates, and oversized changed
+            lines are shown as full-line replacements instead of exact word highlights.
+          </p>
+        ) : null}
       </section>
 
       {!hasError && (
@@ -387,7 +398,8 @@ export default function ToolHome() {
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Similarity and churn are measured over words, not lines, so reflowing a paragraph barely
-        moves them while rewriting a sentence does. Version history lives in this tab only.
+        moves them while rewriting a sentence does. Oversized comparisons are explicitly marked as
+        bounded estimates. Version history lives in this tab only.
       </p>
     </main>
   );

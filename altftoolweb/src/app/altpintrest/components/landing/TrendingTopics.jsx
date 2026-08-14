@@ -5,42 +5,30 @@ import { motion } from 'framer-motion';
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&auto=format&fit=crop&q=80";
 
-const TRENDING_STORIES = [
+const TOPIC_COLLECTIONS = [
   {
     id: 1,
-    title: 'Top 10 Neumorphic & Modern UI Design Trends in 2026',
-    author: 'Alex Rivera',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+    title: 'Neumorphic and modern UI inspiration',
     image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1000&auto=format&fit=crop&q=90',
-    tag: 'Trending UI',
-    likes: '4.2k',
+    tag: 'UI design',
   },
   {
     id: 2,
-    title: 'Designing Cyberpunk & GenAI Visual Aesthetics',
-    author: 'Elena Rostova',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
+    title: 'Cyberpunk and generative-art aesthetics',
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1000&auto=format&fit=crop&q=90',
     tag: 'AI Art',
-    likes: '8.9k',
   },
   {
     id: 3,
-    title: 'Building Modern Conversational AI Cards & Interfaces',
-    author: 'Marco Rossi',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+    title: 'Conversational interface card ideas',
     image: 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1000&auto=format&fit=crop&q=90',
     tag: 'Conversational UI',
-    likes: '3.1k',
   },
   {
     id: 4,
-    title: 'French Crop & Anime Avatar Midjourney Prompt Guide',
-    author: 'Sophia Chen',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80',
+    title: 'Anime avatar and portrait prompt ideas',
     image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=1000&auto=format&fit=crop&q=90',
     tag: 'Prompts',
-    likes: '6.7k',
   },
 ];
 
@@ -51,13 +39,13 @@ export default function TrendingTopics({ onSelectTopic }) {
       {/* Left-Aligned Section Heading */}
       <div className="mb-4 sm:mb-6 text-left">
         <h2 className="text-3xl sm:text-[42px] lg:text-[44px] font-bold text-[#111111] dark:text-white tracking-tight leading-tight">
-          Trending story collections
+          Explore topic collections
         </h2>
       </div>
 
       {/* Story Cards Rail / Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-5 w-full">
-        {TRENDING_STORIES.map((story, index) => (
+        {TOPIC_COLLECTIONS.map((story, index) => (
           <motion.div
             key={story.id}
             initial={{ opacity: 0, y: 15 }}
@@ -94,19 +82,9 @@ export default function TrendingTopics({ onSelectTopic }) {
                 {story.title}
               </h3>
 
-              {/* Author Info */}
-              <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 dark:border-zinc-800/80">
-                <img
-                  src={story.avatar}
-                  alt={story.author}
-                  onError={(e) => {
-                    e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80";
-                  }}
-                  className="w-6 h-6 rounded-full object-cover ring-2 ring-gray-100 dark:ring-zinc-800"
-                  loading="lazy"
-                />
-                <span className="text-xs font-medium text-gray-600 dark:text-gray-400 truncate">
-                  {story.author}
+              <div className="pt-3 border-t border-gray-100 dark:border-zinc-800/80">
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                  Browse collection
                 </span>
               </div>
             </div>

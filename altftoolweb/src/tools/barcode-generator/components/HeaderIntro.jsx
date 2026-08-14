@@ -1,7 +1,7 @@
 import { Gift, LayoutGrid, ShieldCheck, Zap } from "lucide-react";
 
 const CHIPS = [
-  { icon: LayoutGrid, label: "20+ Formats" },
+  { icon: LayoutGrid, label: "20 Formats" },
   { icon: ShieldCheck, label: "High Quality" },
   { icon: Zap, label: "Instant Preview" },
   { icon: Gift, label: "100% Free" },
@@ -17,7 +17,7 @@ export default function HeaderIntro() {
         </span>
       </h1>
       <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground sm:text-base">
-        Create high-quality barcodes in seconds. Supports 20+ formats with customization options
+        Create high-quality barcodes in seconds. Supports 20 formats with customization options
         and bulk generation.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">

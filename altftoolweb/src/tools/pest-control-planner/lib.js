@@ -1,9 +1,10 @@
 /**
- * Pest Control Planner — treatment, interval and cost model for Indian homes.
+ * Pest Control Planner — illustrative treatment, interval and cost scenarios
+ * for Indian homes.
  *
- * For each pest the catalogue records the method professionals actually use, how
- * many rounds one treatment needs, how often it has to be repeated, the warranty
- * usually offered, and a per-sq-ft reference rate with a minimum call-out.
+ * The dated catalogue contains editable-scenario defaults, not provider quotes,
+ * prescribed treatment schedules or promised warranties. The UI tells users to
+ * replace these assumptions with written local quotes before booking.
  *
  * Statutory / standards references:
  *  - Disinfecting and exterminating services (SAC 998531) attract 18% GST.
@@ -16,18 +17,21 @@
 /** GST on disinfecting and pest control services, SAC 998531. */
 export const GST_RATE = 0.18;
 
+/** Identifies the illustrative baseline; it is not a claim of live market data. */
+export const ASSUMPTIONS_BASELINE = "August 2026 demo baseline";
+
 export const MONTHS = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
 /**
- * Pest catalogue.
- * ratePerSqft   INR per sq ft of carpet area, tier-1 city reference
- * minCharge     minimum call-out for that treatment
- * rounds        visits that make up one complete treatment
- * intervalMonths how often the complete treatment must be repeated
- * warrantyMonths typical free-callback period offered by agencies
+ * Illustrative pest catalogue used to compare scenarios.
+ * ratePerSqft    demo INR per sq ft assumption
+ * minCharge      demo minimum call-out assumption
+ * rounds         assumed visits in one complete treatment cycle
+ * intervalMonths assumed gap between cycle starts
+ * warrantyMonths assumed callback period for comparison only
  */
 export const PESTS = [
   {
@@ -272,6 +276,12 @@ export function planPestControl({
       monthIndex,
       month: MONTHS[monthIndex],
       pests: due.map((row) => row.label),
+      treatments: due.map((row) => ({
+        id: row.id,
+        label: row.label,
+        visits: row.rounds,
+      })),
+      visits: due.reduce((sum, row) => sum + row.rounds, 0),
       costBeforeTax: round2(cost),
       costWithTax: round2(cost + gstOn(cost)),
     });
@@ -299,5 +309,6 @@ export function planPestControl({
     monthlyEquivalent: round2((annualisedBeforeTax + gstOn(annualisedBeforeTax)) / 12),
     visitsInPlan: rows.reduce((sum, row) => sum + row.visitsInPlan, 0),
     gstRate: includeGst ? GST_RATE : 0,
+    assumptionsBaseline: ASSUMPTIONS_BASELINE,
   };
 }

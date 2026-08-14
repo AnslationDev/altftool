@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Copy, Download, Check, FileText, File as FileIcon, FileType } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { exportToTxt, exportToPdf, exportToDocx } from '../utils/export-utils';
+import { exportToTxt, printCitation, exportToWordDoc } from '../utils/export-utils';
 
 const CitationPreview = ({ citation, style }) => {
   const [copied, setCopied] = useState(false);
@@ -42,18 +42,18 @@ const CitationPreview = ({ citation, style }) => {
           <FileText size={16} /> TXT
         </button>
         <button
-          onClick={() => exportToPdf(citation)}
+          onClick={() => printCitation(citation)}
           disabled={!citation}
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <FileType size={16} /> PDF
+          <FileType size={16} /> Print / Save PDF
         </button>
         <button
-          onClick={() => exportToDocx(citation)}
+          onClick={() => exportToWordDoc(citation)}
           disabled={!citation}
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <FileIcon size={16} /> DOCX
+          <FileIcon size={16} /> Word .doc
         </button>
       </div>
 

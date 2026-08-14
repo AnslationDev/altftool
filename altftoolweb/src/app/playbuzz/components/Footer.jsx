@@ -10,7 +10,7 @@
     >
       <div className="max-w-[1760px] mx-auto text-xs border-0 p-0 flex justify-center">
         <span style={{ color: 'var(--anslation-ds-footer-muted)' }}>
-          Copyright 2026 Playbuzz Clone. All rights reserved.
+          Copyright 2026 ALTFTool Quiz Studio. All rights reserved.
         </span>
       </div>
     </footer>

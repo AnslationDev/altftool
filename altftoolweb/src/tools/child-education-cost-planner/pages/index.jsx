@@ -19,8 +19,6 @@ const yearsFmt = new Intl.NumberFormat("en-IN", {
 
 const money = (v) => inr.format(Number.isFinite(v) ? v : 0);
 const rate = (v) => `${pct.format(Number.isFinite(v) ? v : 0)}%`;
-// Rounds away binary floating-point subtraction artifacts (e.g. 18.1 - 6.1)
-// before they hit the screen or the copied report text.
 const years = (v) => yearsFmt.format(Number.isFinite(v) ? v : 0);
 
 const DEFAULTS = {
@@ -40,12 +38,9 @@ const PRESETS = [
 ];
 
 const num = (v) => {
-  const s = String(v).trim();
-  // Number("") is 0, not NaN — an emptied field must fail the "every field
-  // must be a number" completeness check below rather than silently costing
-  // as if the user had typed 0.
-  if (s === "") return NaN;
-  const n = Number(s);
+  const value = String(v).trim();
+  if (value === "") return NaN;
+  const n = Number(value);
   return Number.isFinite(n) ? n : NaN;
 };
 
@@ -83,11 +78,6 @@ export default function ToolHome() {
     const yearsToGo = start - age;
     const gr = g / 100;
     const rr = r / 100;
-    // Support a fractional final year (e.g. a 5.5-year MBBS course): charge
-    // a full fee for every whole year and a pro-rated fee for the trailing
-    // partial year, instead of rounding the whole duration up or down to
-    // the nearest whole year (which silently added or dropped a full year
-    // of fees for any non-integer duration).
     const wholeYears = Math.floor(dur);
     const partialYear = Math.round((dur - wholeYears) * 100) / 100;
     const D = partialYear > 0 ? wholeYears + 1 : wholeYears;
@@ -114,9 +104,6 @@ export default function ToolHome() {
     const gap = Math.max(0, corpusNeeded - futureSavings);
 
     const monthlyRate = rr / 12;
-    // A rounded 0 here (e.g. yearsToGo of a couple of weeks) must not zero
-    // out the SIP while the shortfall/lumpsum stats still show a real
-    // number — fund any positive gap over at least one month.
     const months = yearsToGo > 0 ? Math.max(1, Math.round(yearsToGo * 12)) : 0;
     let monthlySip = 0;
     if (gap > 0 && months > 0) {
@@ -231,10 +218,10 @@ export default function ToolHome() {
                   <input
                     id="cec-duration"
                     type="number"
-                    inputMode="numeric"
+                    inputMode="decimal"
                     min="1"
                     max="10"
-                    step="1"
+                    step="0.5"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     className={inputClass}
@@ -369,9 +356,9 @@ export default function ToolHome() {
                 {state.error}
               </div>
             ) : (
-              <div aria-live="polite" role="status">
+              <div>
                 <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
+                  <div aria-live="polite" role="status">
                     <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                       Monthly SIP needed
                     </p>

@@ -22,12 +22,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
  */
 export default function useWakeLock(shouldHold) {
   const sentinelRef = useRef(null);
+  /**
+   * navigator.wakeLock.request() is async, so Start → Pause faster than the
+   * browser answers used to leave the granted lock held for the life of the
+   * page: `release()` ran while sentinelRef was still null, and the request
+   * resolved afterwards and stored a sentinel nobody would ever release. The
+   * screen then stayed awake, and `active` reported true, while paused.
+   *
+   * Every release bumps this counter; a request that resolves against a stale
+   * generation releases itself instead of taking effect.
+   */
+  const genRef = useRef(0);
   const [active, setActive] = useState(false);
   const [supported] = useState(
     () => typeof navigator !== "undefined" && "wakeLock" in navigator,
   );
 
   const release = useCallback(async () => {
+    genRef.current += 1;
     const sentinel = sentinelRef.current;
     sentinelRef.current = null;
     setActive(false);
@@ -41,8 +53,19 @@ export default function useWakeLock(shouldHold) {
 
   const acquire = useCallback(async () => {
     if (!supported || sentinelRef.current) return;
+    const gen = genRef.current;
     try {
       const sentinel = await navigator.wakeLock.request("screen");
+      // Released while the browser was deciding, or a second request won the
+      // race — either way this sentinel must not be kept.
+      if (gen !== genRef.current || sentinelRef.current) {
+        try {
+          await sentinel.release();
+        } catch {
+          /* already gone */
+        }
+        return;
+      }
       sentinelRef.current = sentinel;
       setActive(true);
       // The browser drops the lock on its own when the page is hidden; keep

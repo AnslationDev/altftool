@@ -29,8 +29,8 @@ import {
 } from "lucide-react";
 import "./swiftshift-movers.css";
 
-const PHONE_DISPLAY = "(866) 555-0177";
-const PHONE_TEL = "tel:+18665550177";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const MARQUEE_ITEMS = [
   { icon: Sofa, label: "Sectionals" },

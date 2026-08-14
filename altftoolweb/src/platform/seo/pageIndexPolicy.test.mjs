@@ -24,3 +24,28 @@ test("Top49 policy does not capture similarly prefixed routes", () => {
   assert.equal(shouldNoindexPagePath("/top490"), false);
   assert.equal(shouldNoindexPagePath("/top49-preview"), false);
 });
+
+test("paused editorial preview remains centrally noindex", () => {
+  assert.equal(shouldNoindexPagePath("/buzzfeed"), true);
+  assert.equal(shouldNoindexPagePath("/buzzfeed/story-preview"), true);
+  assert.equal(shouldNoindexPagePath("/buzzfeed-preview"), false);
+});
+
+test("AltfWorld mock community routes remain centrally noindex", () => {
+  assert.equal(shouldNoindexPagePath("/altfworld"), true);
+  assert.equal(shouldNoindexPagePath("/altfworld/community/sample"), true);
+  assert.equal(shouldNoindexPagePath("/altfworld-preview"), false);
+});
+
+test("quarantined Animal Hub routes remain centrally noindex", () => {
+  assert.equal(shouldNoindexPagePath("/animalhub"), true);
+  assert.equal(shouldNoindexPagePath("/animalhub/mammals/lion"), true);
+  assert.equal(shouldNoindexPagePath("/animalhub-preview"), false);
+});
+
+test("quarantined Top3 mock rankings remain centrally noindex", () => {
+  assert.equal(shouldNoindexPagePath("/top3"), true);
+  assert.equal(shouldNoindexPagePath("/top3/technology/best-vpns"), true);
+  assert.equal(shouldNoindexPagePath("/top30"), false);
+  assert.equal(shouldNoindexPagePath("/top3-preview"), false);
+});

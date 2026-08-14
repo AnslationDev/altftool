@@ -8,6 +8,9 @@ import {
   getProductProgress,
 } from "../packages/core/src/productRegistry.js";
 import {
+  PRODUCT_REGISTRY as WEB_PRODUCT_REGISTRY,
+} from "../altftoolweb/packages/core/src/productRegistry.js";
+import {
   SIGNAL_CATALOG,
   getSignalBySlug,
 } from "../packages/core/src/signalCatalog.js";
@@ -32,6 +35,9 @@ test("product registry has unique ids and valid phases", () => {
   assert.ok(PRODUCT_REGISTRY.every((product) => phases.has(product.phase)));
   assert.ok(PRODUCT_REGISTRY.every((product) => product.name && product.summary));
   assert.equal(getProductById("signals")?.publicPath, "/signals");
+  assert.equal(getProductById("ideas")?.publicPath, "/ideas");
+  assert.equal(getProductById("tradeon")?.publicPath, "/tradeon");
+  assert.deepEqual(WEB_PRODUCT_REGISTRY, PRODUCT_REGISTRY);
 });
 
 test("product progress accounts for every registry entry", () => {

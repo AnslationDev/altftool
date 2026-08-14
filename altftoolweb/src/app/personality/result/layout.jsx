@@ -5,7 +5,7 @@ export async function generateMetadata() {
   return {
     ...(await createPageMetadata({
       title: "Personality Test Result",
-      description: "View your private AltFTool personality test completion summary and next steps.",
+      description: "View four locally calculated directional scores from AltFTool's four-question self-reflection exercise.",
       path: "/personality/result",
     })),
     robots: {

@@ -3,15 +3,12 @@
 import { useState } from "react";
 import { Heart, RotateCcw, Info, Copy, Download, CheckCircle2 } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { calculateBodySurfaceArea } from "../lib";
 
 const HR_MIN = 20;
 const HR_MAX = 300;
 const SV_MIN = 10;
 const SV_MAX = 500;
-const HEIGHT_MIN = 50;
-const HEIGHT_MAX = 250;
-const WEIGHT_MIN = 20;
-const WEIGHT_MAX = 300;
 
 const CO_RANGES = [
   { label: "Low", range: "< 4.0", color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-200", description: "Reduced cardiac output — may indicate heart failure, shock, or severe valvular disease." },
@@ -25,10 +22,6 @@ const CI_RANGES = [
   { label: "Normal", range: "2.5 – 4.0", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Normal cardiac index — adequate for body size." },
   { label: "High", range: "> 4.0", color: "text-orange-600", bg: "bg-orange-50", border: "border-orange-200", description: "Elevated cardiac index — may indicate high-output states." },
 ];
-
-function calculateBSA(heightCm, weightKg) {
-  return Math.sqrt((heightCm * weightKg) / 3600);
-}
 
 function getCoCategory(co) {
   if (co < 4.0) return CO_RANGES[0];
@@ -123,20 +116,15 @@ export default function ToolHome() {
     let ciCategory = null;
 
     if (method === "ci") {
-      const h = parseFloat(height);
-      const w = parseFloat(weight);
-      const heightGiven = height.trim() !== "";
-      const weightGiven = weight.trim() !== "";
-      if (heightGiven || weightGiven) {
-        if (isNaN(h) || isNaN(w) || h < HEIGHT_MIN || h > HEIGHT_MAX || w < WEIGHT_MIN || w > WEIGHT_MAX) {
-          setError(`Enter a height between ${HEIGHT_MIN}–${HEIGHT_MAX} cm and a weight between ${WEIGHT_MIN}–${WEIGHT_MAX} kg to calculate the cardiac index.`);
-          setResult(null);
-          return;
-        }
-        bsa = calculateBSA(h, w);
-        ci = co / bsa;
-        ciCategory = getCiCategory(ci);
+      const bodySize = calculateBodySurfaceArea(height, weight);
+      if (bodySize.error) {
+        setError(bodySize.error);
+        setResult(null);
+        return;
       }
+      bsa = bodySize.bsa;
+      ci = co / bsa;
+      ciCategory = getCiCategory(ci);
     }
 
     setError("");

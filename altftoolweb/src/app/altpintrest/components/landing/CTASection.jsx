@@ -229,22 +229,22 @@ export default function CTASection({ onExplore }) {
 
             {/* Pill Badge */}
             <div className="inline-flex items-center px-3.5 sm:px-4 py-1.5 rounded-full border border-gray-200 dark:border-zinc-700 bg-gray-100/80 dark:bg-zinc-800/80 backdrop-blur-xs text-gray-700 dark:text-gray-300 text-xs sm:text-sm font-medium mb-3 sm:mb-4 shadow-2xs">
-              Testimonials
+              Visual discovery
             </div>
 
             {/* Main Headline */}
             <h2 className="text-xl sm:text-4xl lg:text-[42px] font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
-              Trusted by creators
+              Build your inspiration board
             </h2>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-3xl font-semibold text-gray-400 dark:text-gray-500 tracking-tight mt-0.5">
-              from various industries
+              with ideas worth revisiting
             </p>
 
             {/* Description Text */}
             <p className="text-xs sm:text-base text-gray-500 dark:text-gray-400 font-normal max-w-md mt-2 sm:mt-3 mb-6 sm:mb-8 leading-relaxed">
-              Learn why creators and visionaries trust AltPintrest to find inspiration and bring ideas to life.
+              Browse visual ideas, save favorites locally, and revisit them when you need inspiration.
             </p>
 
             {/* EXPLORE BUTTON */}

@@ -392,19 +392,21 @@ export function buildChecklist({ traits = [], done = [] } = {}) {
   };
 }
 
-/** Default share of daily runs assumed to be additionally kept via tail rules
- * (errors, slow-p95, guardrail blocks, negative feedback) on top of the head
- * sample -- a starting estimate, not a measurement. Replace with your real
- * error/slow-run/feedback rate once you have one. */
+/** Default share of daily runs expected to match tail rules (errors, slow-p95,
+ * guardrail blocks, negative feedback). A matching run that was already kept
+ * by head sampling is not counted twice. A starting estimate, not a
+ * measurement -- replace it with your real error/slow-run/feedback rate once
+ * you have one. */
 export const DEFAULT_TAIL_KEEP_RATE_PCT = 5;
 
 /**
  * Head + tail sampling plan.
- * Head rate is chosen so the daily trace budget is met; tail rules always keep
- * the traces you actually debug (errors, slow runs, thumbs-down). Those
- * tail-kept traces are additional volume on top of the head sample, so they
- * are folded into storedTraces/storageGb via tailKeepRatePct rather than
- * silently left out of the storage estimate.
+ * Head rate reserves room inside the daily trace budget for the expected tail
+ * matches. Tail rules then keep matching runs only from the unsampled pool, so
+ * one run is never counted twice and captured volume never exceeds traffic.
+ * Tail-kept traces are real stored volume, so they are folded into
+ * storedTraces/storageGb via tailKeepRatePct rather than silently left out of
+ * the storage estimate.
  */
 export function computeSamplingPlan({
   requestsPerDay,
@@ -426,27 +428,42 @@ export function computeSamplingPlan({
   if (target <= 0) return { error: "Trace budget per day must be greater than zero." };
   if (days <= 0) return { error: "Retention must be at least one day." };
   if (kb <= 0) return { error: "Average trace size must be greater than zero." };
-  if (Number.isNaN(tailPct) || tailPct < 0) {
-    return { error: "Tail-kept share must be zero or a positive percentage." };
+  // A share of daily runs cannot exceed 100% of them, so the upper bound is
+  // part of the validation, not a nicety.
+  if (Number.isNaN(tailPct) || tailPct < 0 || tailPct > 100) {
+    return { error: "Tail-kept share must be between 0 and 100 percent." };
   }
 
-  const rawRate = target / runs;
-  const headRate = Math.min(1, Math.max(MIN_HEAD_SAMPLE_RATE, rawRate));
+  const targetRate = Math.min(1, target / runs);
+  const tailRate = tailPct / 100;
+  // capturedRate = headRate + (1 - headRate) * tailRate. Solve for
+  // headRate so the combined expected volume, not just the head sample,
+  // targets the user's daily budget.
+  const rawHeadRate =
+    tailRate >= 1
+      ? targetRate >= 1
+        ? 1
+        : 0
+      : (targetRate - tailRate) / (1 - tailRate);
+  const headRate = Math.min(1, Math.max(MIN_HEAD_SAMPLE_RATE, rawHeadRate));
   const sampledPerDay = runs * headRate;
-  // Treated as non-overlapping with the head sample (a run kept by a tail
-  // rule may already have been head-sampled too), which errs toward a
-  // conservative, slightly-too-high storage estimate rather than an
-  // optimistic, too-low one.
-  const tailKeptPerDay = runs * (Math.max(0, tailPct) / 100);
-  const capturedPerDay = sampledPerDay + tailKeptPerDay;
+  // Tail rules only ever add runs the head sample already dropped: a run kept
+  // by both is one stored trace, not two. Counting tailKeptPerDay against the
+  // unsampled pool is the union P(head) + (1 - P(head)) * P(tail), which also
+  // keeps captured volume from exceeding the traffic that actually happened.
+  const unsampledPerDay = Math.max(0, runs - sampledPerDay);
+  const tailKeptPerDay = unsampledPerDay * tailRate;
+  const capturedPerDay = Math.min(runs, sampledPerDay + tailKeptPerDay);
   const storedTraces = capturedPerDay * days;
   const storageGb = (storedTraces * kb) / KB_PER_GB;
+  const overBudget = capturedPerDay > target + 0.5;
 
   return {
     headRate,
     headRatePct: round(headRate * 100, 3),
-    capped: rawRate > 1,
-    floored: rawRate < MIN_HEAD_SAMPLE_RATE,
+    capped: target / runs >= 1,
+    floored: rawHeadRate < MIN_HEAD_SAMPLE_RATE,
+    overBudget,
     sampledPerDay: Math.round(sampledPerDay),
     tailKeptPerDay: Math.round(tailKeptPerDay),
     capturedPerDay: Math.round(capturedPerDay),
@@ -497,7 +514,7 @@ export function buildSummary({ traits = [], checklist, sampling, redaction } = {
       "",
       "Sampling plan:",
       `- Head sample ${sampling.headRatePct}% of runs (~${sampling.sampledPerDay.toLocaleString("en-US")}/day)`,
-      `- Tail-kept extra volume: ~${sampling.tailKeptPerDay.toLocaleString("en-US")}/day (est.)`,
+      `- Tail-kept additional volume after head-sample overlap: ~${sampling.tailKeptPerDay.toLocaleString("en-US")}/day (est.)`,
       `- Estimated stored trace volume: ${sampling.storageGb} GB (head + tail combined)`,
       ...sampling.tailRules.map((r) => `- ${r}`)
     );

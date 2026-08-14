@@ -19,7 +19,6 @@ const normalizeQuiz = (quiz) => {
   return {
     ...quiz,
     title: quiz.title,
-    author: quiz.author || quiz.creator || null,
     cardImage,
     heroImage,
     category,
@@ -746,9 +745,7 @@ export const quizzesData = rawQuizzesData.map(normalizeQuiz);
 export const articlesData = quizzesData.map((quiz) => ({
   id: quiz.id,
   title: quiz.title,
-  author: quiz.author,
   image: quiz.cardImage,
-  plays: quiz.plays,
   category: quiz.category,
   showInFeatured: quiz.showInFeatured ?? true,
   showInPopular: quiz.showInPopular ?? true
@@ -759,7 +756,6 @@ export const trendingData = quizzesData
   .map((quiz) => ({
     id: quiz.id,
     title: quiz.title,
-    author: quiz.author,
     image: quiz.cardImage
   }));
 

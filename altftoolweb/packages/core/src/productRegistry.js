@@ -57,6 +57,17 @@ export const PRODUCT_REGISTRY = Object.freeze([
     summary: "Trend, demand, competition, and opportunity discovery connected to useful actions.",
   },
   {
+    id: "ideas",
+    name: "AltF Ideas",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/ideas",
+    adminPath: "/altftool/products",
+    summary:
+      "Searchable corpus of scored startup ideas with transparent signals and a practical first move.",
+  },
+  {
     id: "idea-lab",
     name: "AltF IdeaLab",
     phase: phases.discover.id,
@@ -192,6 +203,15 @@ export const PRODUCT_REGISTRY = Object.freeze([
     status: "live",
     publicPath: "/business-ops",
     summary: "Travel, home-service, loan, and insurance destinations organized as focused business workflows.",
+  },
+  {
+    id: "tradeon",
+    name: "AltF Tradeon",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "partial",
+    publicPath: "/tradeon",
+    summary: "Educational market dashboards, interactive charts, public crypto pricing, and clearly labelled illustrative multi-asset analysis.",
   },
   {
     id: "impact",

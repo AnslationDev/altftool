@@ -75,8 +75,6 @@ const ceilTo = (value, dp) => {
   return Math.ceil(value * factor) / factor;
 };
 
-const clamp = (value, lo, hi) => Math.min(hi, Math.max(lo, value));
-
 // classify() is fed a pi value already rounded to 2dp, so a raw pi within
 // 0.005 of a band threshold crosses it once rounded. Any "usual range"
 // weight window shown alongside the band label has to be widened by this
@@ -118,36 +116,16 @@ export function adultPonderalIndex({ heightCm, weightKg }) {
   // Same build, average height: keeps PI constant and solves for weight at 1.70 m.
   const weightAtReferenceHeight = pi * REFERENCE_HEIGHT_M ** 3;
 
-  // The "usual range" weight figures below are solved purely from height, so at
-  // the extreme ends of LIMITS.heightCm they can fall outside LIMITS.weightKg —
-  // a figure the weight field itself would refuse. Clamp both ends into the
-  // input's own accepted range (min <= max preserved) so the reference never
-  // cites a weight the calculator won't let the user enter.
-  const piWeightMin = clamp(
-    floorTo((ADULT_USUAL_PI.min - PI_ROUND_TOLERANCE) * cube, 1),
-    LIMITS.weightKg.min,
-    LIMITS.weightKg.max,
-  );
-  const piWeightMax = Math.max(
-    piWeightMin,
-    clamp(ceilTo((ADULT_USUAL_PI.max - PI_ROUND_TOLERANCE) * cube, 1), LIMITS.weightKg.min, LIMITS.weightKg.max),
-  );
-  const bmiWeightMin = clamp(round(HEALTHY_BMI.min * square, 1), LIMITS.weightKg.min, LIMITS.weightKg.max);
-  const bmiWeightMax = Math.max(
-    bmiWeightMin,
-    clamp(round(HEALTHY_BMI.max * square, 1), LIMITS.weightKg.min, LIMITS.weightKg.max),
-  );
-
   return {
     pi: round(pi, 2),
     piExact: pi,
     bmi: round(bmi, 1),
     band,
     heightM: round(heightM, 3),
-    piWeightMin,
-    piWeightMax,
-    bmiWeightMin,
-    bmiWeightMax,
+    piWeightMin: floorTo((ADULT_USUAL_PI.min - PI_ROUND_TOLERANCE) * cube, 1),
+    piWeightMax: ceilTo((ADULT_USUAL_PI.max - PI_ROUND_TOLERANCE) * cube, 1),
+    bmiWeightMin: round(HEALTHY_BMI.min * square, 1),
+    bmiWeightMax: round(HEALTHY_BMI.max * square, 1),
     weightAtReferenceHeight: round(weightAtReferenceHeight, 1),
     /** Positive when BMI's healthy ceiling is stricter than the PI range allows. */
     ceilingGapKg: round(ADULT_USUAL_PI.max * cube - HEALTHY_BMI.max * square, 1),
@@ -180,29 +158,12 @@ export function newbornPonderalIndex({ birthWeightG, lengthCm }) {
   const pi = (100 * birthWeightG) / cube;
   const band = classify(round(pi, 2), NEWBORN_BANDS);
 
-  // Same clamping as the adult "usual range" figures: keep the appropriate-weight
-  // reference inside LIMITS.birthWeightG so it never cites a weight the birth
-  // weight field itself would reject.
-  const weightMinG = clamp(
-    Math.floor(((NEWBORN_BANDS[1].min - PI_ROUND_TOLERANCE) * cube) / 100),
-    LIMITS.birthWeightG.min,
-    LIMITS.birthWeightG.max,
-  );
-  const weightMaxG = Math.max(
-    weightMinG,
-    clamp(
-      Math.ceil(((NEWBORN_BANDS[1].max - PI_ROUND_TOLERANCE) * cube) / 100),
-      LIMITS.birthWeightG.min,
-      LIMITS.birthWeightG.max,
-    ),
-  );
-
   return {
     pi: round(pi, 2),
     piExact: pi,
     band,
-    weightMinG,
-    weightMaxG,
+    weightMinG: Math.floor(((NEWBORN_BANDS[1].min - PI_ROUND_TOLERANCE) * cube) / 100),
+    weightMaxG: Math.ceil(((NEWBORN_BANDS[1].max - PI_ROUND_TOLERANCE) * cube) / 100),
   };
 }
 

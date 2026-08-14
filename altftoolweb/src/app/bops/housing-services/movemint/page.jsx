@@ -23,9 +23,9 @@ import {
 } from "lucide-react";
 import "./movemint.css";
 
-const QUOTE_URL = "https://example.com/quote/movemint";
-const PHONE_TEL = "tel:+18335550139";
-const PHONE_DISPLAY = "(833) 555-0139";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?auto=format&fit=crop&w=1600&q=80",

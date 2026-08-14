@@ -81,23 +81,52 @@ export default function ImageNoiseGrainAdder() {
   const [settings, setSettings] = useState(PRESETS[0].settings);
   const [activePreset, setActivePreset] = useState("none");
   const [isProcessing, setIsProcessing] = useState(false);
-  
+  const [isDragging, setIsDragging] = useState(false);
+
   const fileInputRef = useRef(null);
 
-  const handleUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => {
-          setOriginalImage(img);
-          setImage(img);
-        };
-        img.src = event.target.result;
+  // Single loader shared by the file picker and the drop zone, so both paths
+  // decode the file identically.
+  const loadImageFile = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        setOriginalImage(img);
+        setImage(img);
       };
-      reader.readAsDataURL(file);
-    }
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUpload = (e) => {
+    loadImageFile(e.target.files?.[0]);
+  };
+
+  // The card promises "Drag and drop or click to browse", so the drop has to be
+  // handled here. preventDefault is required on dragover as well as drop —
+  // without it the browser navigates away to the dropped file.
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    // Ignore the dragleave fired when the cursor crosses onto a child element.
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    // The input is single-file and accept="image/*"; mirror both here.
+    const file = Array.from(e.dataTransfer?.files || []).find((item) =>
+      item.type.startsWith("image/")
+    );
+    loadImageFile(file);
   };
 
   const handleReset = () => {
@@ -126,9 +155,13 @@ export default function ImageNoiseGrainAdder() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={() => fileInputRef.current.click()}
+            onDragEnter={handleDragOver}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             className="relative group cursor-pointer"
           >
-            <div className="relative bg-(--card) border-2 border-dashed border-(--border) rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center transition-all hover:border-blue-500/50 max-w-lg mx-auto">
+            <div className={`relative bg-(--card) border-2 border-dashed rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center transition-all hover:border-blue-500/50 max-w-lg mx-auto ${isDragging ? "border-blue-500/50" : "border-(--border)"}`}>
               <div className="p-3 rounded-full bg-blue-500/10 text-blue-500 mb-3 group-hover:scale-110 transition-transform duration-500">
                 <Upload size={24} />
               </div>

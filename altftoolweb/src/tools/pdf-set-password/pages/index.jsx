@@ -11,9 +11,9 @@ export default function ToolHome() {
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
   const [resultUrl, setResultUrl] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
 
-  const handleFile = useCallback((e) => {
-    const f = e.target.files?.[0];
+  const acceptFile = useCallback((f) => {
     if (!f) return;
     if (f.type !== "application/pdf") { setMessage("Please select a valid PDF file."); setStatus("error"); return; }
     setFile(f);
@@ -21,6 +21,26 @@ export default function ToolHome() {
     setMessage("");
     setResultUrl(null);
   }, []);
+
+  const handleFile = useCallback((e) => {
+    acceptFile(e.target.files?.[0]);
+  }, [acceptFile]);
+
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault();
+    setDragActive(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e) => {
+    e.preventDefault();
+    setDragActive(false);
+  }, []);
+
+  const handleDrop = useCallback((e) => {
+    e.preventDefault();
+    setDragActive(false);
+    acceptFile(e.dataTransfer?.files?.[0]);
+  }, [acceptFile]);
 
   const handleSet = useCallback(async () => {
     if (!file) return;
@@ -68,7 +88,12 @@ export default function ToolHome() {
 
         {/* Upload */}
         <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-          <label className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-8 cursor-pointer transition-colors ${file ? "border-primary/50 bg-primary/5" : "border-border hover:border-primary/30 hover:bg-surface-soft"}`}>
+          <label
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-8 cursor-pointer transition-colors ${file || dragActive ? "border-primary/50 bg-primary/5" : "border-border hover:border-primary/30 hover:bg-surface-soft"}`}
+          >
             <input type="file" accept="application/pdf" className="hidden" onChange={handleFile} />
             <Upload className={`h-8 w-8 ${file ? "text-primary" : "text-muted-foreground"}`} />
             {file ? (

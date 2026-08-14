@@ -15,7 +15,6 @@ const img54 = { src: "/kym-images/kym-54.png" };
 export const pollPage = {
   category: "Poll",
   title: "Choose Your Pick For May 2026's Meme Of The Month",
-  author: "KYM Staff",
   date: "May 29, 2026",
   heroImage,
   intro:

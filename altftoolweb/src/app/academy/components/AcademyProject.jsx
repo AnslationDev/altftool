@@ -133,15 +133,18 @@ export default function AcademyProject() {
           />
         </RouteLazySection>
 
-        <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={300}>
-          {/*
-            <Feedback /> removed. data/feedback.js holds ten entries built from
-            three quotes: "Ankit Mishra" and "Nidhi Maurya" each appear four
-            times saying exactly the same thing. Nobody wrote them, and the
-            padding is what gives it away. The component and its data are left in
-            place for whenever there is real feedback, given with permission.
-          */}
-        </RouteLazySection>
+        {/*
+          The <Feedback /> carousel and its RouteLazySection wrapper are both
+          gone. Leaving the wrapper around a JSX comment gave it undefined
+          children while keeping fallback={<RouteSectionSkeleton cards={3} />}
+          and minHeight={300}, so the page rendered a permanent three-card
+          loading skeleton where the testimonials used to be.
+
+          data/feedback.js holds ten entries built from three quotes: "Ankit
+          Mishra" and "Nidhi Maurya" each appear four times saying exactly the
+          same thing. Nobody wrote them. The component and its data are left in
+          place for whenever there is real feedback, given with permission.
+        */}
         <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={260}>
           <FaqSection />
         </RouteLazySection>

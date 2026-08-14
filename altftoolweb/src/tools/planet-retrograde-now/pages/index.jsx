@@ -133,7 +133,12 @@ function Timeline({ timeline }) {
 export default function ToolHome() {
   const [chosenDate, setChosenDate] = useState(null);
   const [selected, setSelected] = useState("Mercury");
-  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1800 });
+  const {
+    copy: copyToClipboard,
+    isCopied,
+    announcement,
+    reset: resetCopyState,
+  } = useCopyToClipboard({ resetMs: 1800 });
 
   const todayUtc = useSyncExternalStore(subscribeToNothing, readTodayUtc, readNoDate);
   const dateValue = chosenDate ?? todayUtc;
@@ -179,6 +184,7 @@ export default function ToolHome() {
   function reset() {
     setChosenDate(null);
     setSelected("Mercury");
+    resetCopyState();
   }
 
   return (
@@ -248,7 +254,7 @@ export default function ToolHome() {
             )}
             {isCopied("summary") ? "Copied!" : "Copy summary"}
           </button>
-          <button type="button" className={PRIMARY_BTN} onClick={reset} aria-label="Reset to today and Mercury">
+          <button type="button" className={GHOST_BTN} onClick={reset} aria-label="Reset to today and Mercury">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>

@@ -119,7 +119,7 @@ export default function ToolHome() {
         {suggestions.matches && suggestions.matches.length > 0 && (
           <div className="mt-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-              Closest matching grounds
+              Keyword suggestions — verify against your notice
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               {suggestions.matches.map((match) => (
@@ -133,7 +133,8 @@ export default function ToolHome() {
                 >
                   {match.title}
                   <span className="ml-2 font-normal text-[var(--muted-foreground)]">
-                    {match.confidence}% match
+                    {match.matchedTerms.length} matching term
+                    {match.matchedTerms.length === 1 ? "" : "s"}
                   </span>
                 </button>
               ))}

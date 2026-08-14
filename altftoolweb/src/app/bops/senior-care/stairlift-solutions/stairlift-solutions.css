@@ -87,7 +87,7 @@
 
 /* ---------- Trust bar ---------- */
 .stairlift-trustbar { background: var(--sl-sage-deep); color: #ffffff; padding: 26px 0; }
-.stairlift-trustbar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; text-align: center; }
+.stairlift-trustbar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; text-align: center; }
 .stairlift-trustbar strong { display: block; font-family: var(--sl-serif); font-size: 30px; }
 .stairlift-trustbar span { font-size: 16px; color: #e4ecdf; }
 

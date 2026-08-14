@@ -26,7 +26,7 @@ export const homeMortgage = {
   ],
 
   quoteLabel: "Get pre-approved",
-  quoteUrl: "https://example.com/quote/home-mortgage",
+  quoteUrl: "#demo-only",
 
   featuresTitle: "Financing built around buying a home",
   featuresIntro:

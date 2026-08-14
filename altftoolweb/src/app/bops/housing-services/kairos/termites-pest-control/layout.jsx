@@ -1,9 +1,9 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const metadata = createPageMetadata({
-  title: "Kairos Termite and Pest Control Preview",
+  title: "Kairos Fictional Pest-Service UI Preview",
   description:
-    "Review the Kairos termite and pest-control service preview within the AltFTool Business Ops directory.",
+    "Explore a fictional, non-operational pest-service interface preview within the ALTFTool Business Ops gallery.",
   path: "/bops/housing-services/kairos/termites-pest-control",
   canonical: "/bops/housing-services/kairos",
   noindex: true,

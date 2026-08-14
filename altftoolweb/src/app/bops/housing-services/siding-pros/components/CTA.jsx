@@ -38,11 +38,11 @@ export default function CTA() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="tel:+18005551234"
+                href="#demo-only"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full glass-dark text-white font-semibold hover:bg-white/15 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                (800) 555-1234
+                Demo only
               </a>
             </div>
           </div>

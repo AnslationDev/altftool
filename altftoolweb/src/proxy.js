@@ -14,6 +14,7 @@ import {
 } from "./platform/navigation/exactRouteManifest.js";
 import { getDynamicTopLevelSlugCandidate } from "./platform/navigation/topLevelRouteManifest.js";
 import { isBazaarRouteBlocked } from "./platform/navigation/bazaarRoutePolicy.js";
+import { isQuarantinedRoute } from "./platform/navigation/quarantinedRoutePolicy.js";
 import {
   fetchDynamicRouteConfig,
   isDynamicRouteActiveForSlug,
@@ -22,17 +23,6 @@ import {
 // Pre-consolidation category slugs (e.g. /tools/calculator, /tools/utility)
 // → canonical category routes. Static data, computed once per worker.
 const LEGACY_CATEGORY_REDIRECTS = getLegacyCategorySlugMap();
-
-// These product families remain in Git for remediation, but must not be
-// reachable until their unsourced rankings/financial claims are replaced.
-// Rewriting to the framework 404 route preserves the normal error UI while
-// setting a real 404 status (layout-level notFound() can stream a soft 404).
-const QUARANTINED_ROUTE_PREFIXES = [
-  "/ai-explore",
-  "/top8",
-  "/top11",
-  "/tradeon",
-];
 
 const REDIRECTS_MAP = {
   "/blog": "/blogs",
@@ -72,9 +62,7 @@ export async function proxy(request) {
 
   if (
     isBazaarRouteBlocked(pathname) ||
-    QUARANTINED_ROUTE_PREFIXES.some(
-      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
-    )
+    isQuarantinedRoute(pathname)
   ) {
     return notFoundRewrite(request);
   }

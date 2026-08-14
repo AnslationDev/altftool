@@ -26,7 +26,7 @@ export const rentersInsurance = {
   ],
 
   quoteLabel: "Compare quotes",
-  quoteUrl: "https://example.com/quote/renters-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What renters insurance covers",
   coverageIntro:

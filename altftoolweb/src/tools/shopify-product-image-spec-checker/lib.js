@@ -4,9 +4,10 @@
  * Rules encoded here are Shopify's published product image requirements
  * (help.shopify.com/en/manual/products/product-media/product-media-types):
  *  - Maximum resolution: 25 megapixels, up to 5000 x 5000 px per side.
- *  - Maximum file size: 20 MB.
+ *  - File size must be smaller than 20 MB.
  *  - Recommended size for square product photos: 2048 x 2048 px.
- *  - Zoom on the product page needs at least 800 x 800 px.
+ *  - Product-page zoom is controlled by the theme, not the platform; 800 x 800 px
+ *    is a conservative detail heuristic this checker reports as a warning only.
  *  - Supported file types: JPEG, PNG, PSD, TIFF, BMP, GIF, SVG, HEIC and WebP.
  *  - Shopify recommends using one aspect ratio across every product image in a
  *    store so collection grids line up; this checker compares your image to a
@@ -24,7 +25,10 @@ export const MAX_SIDE_PX = 5000;
 /** Shopify's per-file upload ceiling. */
 export const MAX_FILE_SIZE_MB = 20;
 
-/** Below this the product-page zoom does not engage usefully. */
+/**
+ * A conservative detail heuristic, not a Shopify upload rule. Themes decide
+ * whether and how product zoom is enabled.
+ */
 export const ZOOM_MIN_SIDE_PX = 800;
 
 /** Shopify's recommended square product photo. */
@@ -118,21 +122,21 @@ export function checkShopifyImage({
   checks.push({
     id: "filesize",
     label: "File size",
-    status: fileSizeMB > MAX_FILE_SIZE_MB ? "fail" : "pass",
+    status: fileSizeMB >= MAX_FILE_SIZE_MB ? "fail" : "pass",
     detail:
-      fileSizeMB > MAX_FILE_SIZE_MB
-        ? `${fileSizeMB} MB is over the ${MAX_FILE_SIZE_MB} MB per-file limit.`
-        : `${fileSizeMB} MB is within the ${MAX_FILE_SIZE_MB} MB per-file limit.`,
+      fileSizeMB >= MAX_FILE_SIZE_MB
+        ? `${fileSizeMB} MB is not smaller than Shopify's ${MAX_FILE_SIZE_MB} MB per-file limit.`
+        : `${fileSizeMB} MB is under Shopify's ${MAX_FILE_SIZE_MB} MB per-file limit.`,
   });
 
   const zoomReady = shortest >= ZOOM_MIN_SIDE_PX;
   checks.push({
     id: "zoom",
-    label: "Zoom",
+    label: "Detail / zoom heuristic",
     status: zoomReady ? "pass" : "warn",
     detail: zoomReady
-      ? `Shortest side is ${shortest} px, above the ${ZOOM_MIN_SIDE_PX} px zoom threshold.`
-      : `Zoom needs at least ${ZOOM_MIN_SIDE_PX} px on the shortest side; this image is ${shortest} px.`,
+      ? `Shortest side is ${shortest} px, so there is useful detail for themes that provide product zoom.`
+      : `Shortest side is ${shortest} px. Your theme controls zoom, but an image below ${ZOOM_MIN_SIDE_PX} px may show little extra detail when enlarged.`,
   });
 
   checks.push({

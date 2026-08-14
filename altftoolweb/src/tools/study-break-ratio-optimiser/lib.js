@@ -66,14 +66,16 @@ export function pickProtocol(focusSpanMinutes) {
   if (eligible.length > 0) {
     return eligible.reduce((a, b) => (b.workMinutes > a.workMinutes ? b : a));
   }
-  const work = Math.max(1, Math.round(focusSpanMinutes));
-  // Rounding the raw span can land exactly on a documented protocol's work
-  // minutes (e.g. a 24.6-24.99 min span rounds to 25) — prefer the real,
-  // sourced protocol over building a "custom" one that would just duplicate it.
-  const roundedEligible = PROTOCOLS.filter((p) => p.workMinutes <= work);
-  if (roundedEligible.length > 0) {
-    return roundedEligible.reduce((a, b) => (b.workMinutes > a.workMinutes ? b : a));
-  }
+  // Never round a stated focus limit upward: someone who enters 24.9 minutes
+  // should not be prescribed a 25-minute block that exceeds that limit. The
+  // selection rule above is "longest work block that does not exceed the focus
+  // span", so the custom block must be floored, not rounded.
+  //
+  // Flooring also removes the risk of emitting a "custom" block that merely
+  // duplicates a documented protocol: this code is only reached when no
+  // protocol fits, i.e. the span is under the shortest protocol's 25 minutes,
+  // so the floored block is at most 24 and can never equal 25/50/52/90.
+  const work = Math.max(1, Math.floor(focusSpanMinutes));
   const brk = Math.max(
     MIN_CUSTOM_BREAK_MINUTES,
     Math.round(work / CUSTOM_RATIO_WORK_PER_BREAK),

@@ -35,7 +35,7 @@ const electrical = {
     "Permits and inspections handled"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/electrical",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Electrical Guide: Panel Upgrades & Wiring",
     "description": "Understand home electrical work: 100A vs 200A panel upgrades, rewiring, EV chargers, generator hookups, NEC code compliance, permits, and what drives cost."

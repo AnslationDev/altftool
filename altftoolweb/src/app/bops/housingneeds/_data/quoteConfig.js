@@ -125,8 +125,7 @@ export function resolveQuoteAction(vertical, config) {
     return {
       mode: "phone",
       label: entry.phoneDisplay.trim(),
-      // tel: tolerates only digits, + and a few separators.
-      href: `tel:${entry.phoneNumber.replace(/[^\d+]/g, "")}`,
+      href: "#demo-only",
     };
   }
 

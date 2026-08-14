@@ -1,0 +1,134 @@
+{
+  "source": "https://docs.google.com/spreadsheets/d/1FUnrMfWeW3WaiZsB0qJEwvpqwQECZJD7jg6r5JrlYQE",
+  "total": 661,
+  "skipped": 0,
+  "groups": [
+    {
+      "id": "launch",
+      "label": "Launch platforms",
+      "blurb": "One-shot launches where timing and preparation decide the outcome.",
+      "count": 58
+    },
+    {
+      "id": "ai-directory",
+      "label": "AI tool directories",
+      "blurb": "Fast-growing listings specifically for AI-powered tools.",
+      "count": 115
+    },
+    {
+      "id": "marketplace",
+      "label": "Marketplaces and app stores",
+      "blurb": "Extension, plugin and integration stores. Real review processes, real distribution.",
+      "count": 69
+    },
+    {
+      "id": "startup",
+      "label": "Startup directories",
+      "blurb": "Startup listings, beta lists and founder media.",
+      "count": 59
+    },
+    {
+      "id": "software-directory",
+      "label": "Software directories",
+      "blurb": "General tool and software catalogues with real search traffic.",
+      "count": 108
+    },
+    {
+      "id": "review-platform",
+      "label": "Review platforms",
+      "blurb": "B2B review sites. Slow to approve, strong once live.",
+      "count": 3
+    },
+    {
+      "id": "dev-registry",
+      "label": "Developer registries",
+      "blurb": "Package, image and docs hosting that carries real authority.",
+      "count": 39
+    },
+    {
+      "id": "design-gallery",
+      "label": "Design galleries",
+      "blurb": "Showcases judged on craft. A good screenshot matters more than copy.",
+      "count": 34
+    },
+    {
+      "id": "content-platform",
+      "label": "Publishing platforms",
+      "blurb": "Write once, link back. Editorial standards vary widely.",
+      "count": 32
+    },
+    {
+      "id": "pr-source",
+      "label": "PR and source platforms",
+      "blurb": "Get quoted or distribute a release. Slower, higher ceiling.",
+      "count": 31
+    },
+    {
+      "id": "business-directory",
+      "label": "Business directories",
+      "blurb": "Company and local listings. Unglamorous, consistently indexed.",
+      "count": 50
+    },
+    {
+      "id": "profile-entity",
+      "label": "Profiles and entities",
+      "blurb": "Owned pages you control: company, founder, knowledge-panel entities.",
+      "count": 49
+    },
+    {
+      "id": "community",
+      "label": "Communities and forums",
+      "blurb": "Answer real questions. Never drop a bare link.",
+      "count": 6
+    },
+    {
+      "id": "other",
+      "label": "Other opportunities",
+      "blurb": "Everything that does not fit the buckets above.",
+      "count": 8
+    }
+  ],
+  "facets": {
+    "group": {
+      "startup": 59,
+      "launch": 58,
+      "marketplace": 69,
+      "dev-registry": 39,
+      "design-gallery": 34,
+      "content-platform": 32,
+      "software-directory": 108,
+      "ai-directory": 115,
+      "profile-entity": 49,
+      "business-directory": 50,
+      "other": 8,
+      "pr-source": 31,
+      "community": 6,
+      "review-platform": 3
+    },
+    "cost": {
+      "free": 299,
+      "freemium": 213,
+      "unknown": 106,
+      "paid": 43
+    },
+    "status": {
+      "todo": 196,
+      "verified": 153,
+      "conditional": 54,
+      "unverified": 258
+    },
+    "priority": {
+      "P0": 33,
+      "P1": 164,
+      "P2": 204,
+      "P3": 260
+    },
+    "effort": {
+      "low": 175,
+      "medium": 343,
+      "high": 143
+    }
+  },
+  "quickWins": 56,
+  "freeCount": 512
+}

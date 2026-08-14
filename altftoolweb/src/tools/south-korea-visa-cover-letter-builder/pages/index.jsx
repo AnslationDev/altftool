@@ -73,9 +73,10 @@ export default function ToolHome() {
 
   const result = useMemo(() => buildKoreaCoverLetter(form), [form]);
   const hasError = Boolean(result.error);
+  const canCopyLetter = !hasError && !result.letterBlocked;
 
   const copyLetter = async () => {
-    if (hasError) return;
+    if (!canCopyLetter) return;
     try {
       await navigator.clipboard.writeText(result.letter);
       setCopied(true);
@@ -247,8 +248,14 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyLetter}
-              disabled={hasError}
-              aria-label={copied ? "Cover letter copied to the clipboard" : "Copy the finished cover letter to the clipboard"}
+              disabled={!canCopyLetter}
+              aria-label={
+                result.letterBlocked
+                  ? "Cover letter unavailable because the itinerary exceeds 90 days"
+                  : copied
+                    ? "Cover letter copied to the clipboard"
+                    : "Copy the finished cover letter to the clipboard"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
@@ -306,9 +313,15 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <h2 className="text-base font-semibold">Your cover letter</h2>
-        <pre className="mt-3 max-h-[28rem] overflow-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-6 whitespace-pre-wrap">
-          {hasError ? DASH : result.letter}
-        </pre>
+        {!hasError && result.letterBlocked ? (
+          <p role="alert" className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+            {result.letterBlockingReason} Update the travel dates before copying or submitting a letter.
+          </p>
+        ) : (
+          <pre className="mt-3 max-h-[28rem] overflow-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-6 whitespace-pre-wrap">
+            {hasError ? DASH : result.letter}
+          </pre>
+        )}
       </section>
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">

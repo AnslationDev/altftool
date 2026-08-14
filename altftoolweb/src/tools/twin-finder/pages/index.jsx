@@ -102,12 +102,15 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const first = makeDemoImage(0, 0);
-    const second = makeDemoImage(24, 6);
-    if (first && second) {
-      setPhotoA({ ...first, name: "Demo photo A" });
-      setPhotoB({ ...second, name: "Demo photo B" });
-    }
+    const frameId = window.requestAnimationFrame(() => {
+      const first = makeDemoImage(0, 0);
+      const second = makeDemoImage(24, 6);
+      if (first && second) {
+        setPhotoA({ ...first, name: "Demo photo A" });
+        setPhotoB({ ...second, name: "Demo photo B" });
+      }
+    });
+    return () => window.cancelAnimationFrame(frameId);
   }, []);
 
   const result = useMemo(() => compareImages(photoA, photoB), [photoA, photoB]);

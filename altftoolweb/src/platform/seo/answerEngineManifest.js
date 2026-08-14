@@ -14,6 +14,47 @@ import {
   EXAM_SPECS,
   SPECS_READ_ON,
 } from "@/app/exam-photo/data/examSpecs";
+import ideasManifest from "../../../public/data/ideas/manifest.json";
+import backlinksManifest from "../../../public/data/backlinks/manifest.json";
+import { getAtlasStats } from "@altftool/core/atlas";
+import { STATS as detourStats } from "@altftool/core/detour";
+import { getStats as getPersonaStats } from "@altftool/core/persona";
+import { STATS as rabbitholeStats } from "@altftool/core/rabbithole";
+
+/*
+ * The Lexicon manifest is shipped as gzip, so it cannot be imported by this
+ * server module. `npm run verify:lexicon` compares every value below with the
+ * generated manifest and fails the build if the two ever drift.
+ */
+export const LEXICON_FIGURES = Object.freeze({
+  total: 147478,
+  indexable: 135574,
+  words: 83253,
+  phrases: 64225,
+  senses: 207235,
+  withPronunciation: 35490,
+  withExamples: 34261,
+  rhymeGroups: 22528,
+  collections: 199,
+  inflections: 4099,
+  wordLists: 545,
+});
+
+const atlasStats = getAtlasStats();
+const personaStats = getPersonaStats();
+const formatCount = (value) => Number(value).toLocaleString("en-US");
+
+function discoverySuiteLines(site) {
+  return [
+    `- [AltF Ideas](${site}/ideas): ${formatCount(ideasManifest.total)} structured startup ideas; ${formatCount(ideasManifest.published)} highest-ranked dossiers are indexable. Scores are directional, not predictions.`,
+    `- [AltF Atlas](${site}/altfatlas): ${atlasStats.live} live and ${atlasStats.retired} archived useful-website entries, with access, processing, limits, and checked dates recorded per entry.`,
+    `- [AltF Detour](${site}/detour): ${detourStats.sites} entertaining websites across ${detourStats.categories} categories, filterable by time, device, sound, and work-safety attributes.`,
+    `- [AltF Rabbithole](${site}/rabbithole): ${rabbitholeStats.total} interesting websites across ${rabbitholeStats.categories} categories and ${rabbitholeStats.collections} collections.`,
+    `- [AltF Backlinks](${site}/backlinks): ${backlinksManifest.total} product-submission opportunities across ${backlinksManifest.groups.length} groups. Costs, effort, and status are maintained fields, not endorsement or authority scores.`,
+    `- [AltF Lexicon](${site}/lexicon): ${formatCount(LEXICON_FIGURES.total)} English entries and ${formatCount(LEXICON_FIGURES.senses)} senses derived from the sources and licences named on the Lexicon sources page.`,
+    `- [AltF Persona](${site}/persona): ${personaStats.personas} character specifications and ${personaStats.shots} shot recipes. It specifies prompts rather than generating media; its quote worksheet totals user-entered figures and supplies no market rates or legal advice.`,
+  ];
+}
 
 // Consumed by src/app/robots.js to emit an explicit allow group. Two kinds of
 // agent are in here and they are not interchangeable:
@@ -392,6 +433,8 @@ export function buildLlmsTxt() {
 - [Transform](${site}/transform): ${TRANSFORM_TOOLS.length} format converters for developers, grouped as ${transformCategoryList()}. Each has its own page under ${site}/transform/ — see the full list in ${site}/llms-full.txt rather than guessing a slug.
 - [Exam photo & signature sizes](${site}/exam-photo): the upload rules ${EXAM_SPECS.length} Indian recruitment and entrance bodies publish, each quoted from a named notification, plus a browser resizer that hits the spec.
 - [Security & Privacy](${site}/tools/security-privacy): privacy, scam-safety, authentication, and security inspection tools.
+- [AltF discovery suites](${site}/products): Ideas, Atlas, Detour, Rabbithole, Backlinks, Lexicon, and Persona.
+${discoverySuiteLines(site).join("\n")}
 - [Blog](${site}/blogs): practical guides, comparisons, and product updates.
 - [Docs](${site}/docs): public platform documentation.
 
@@ -470,6 +513,19 @@ ${TRANSFORM_TOOLS.map((tool) => transformLine(site, tool)).join("\n")}
 Read out of the named notification on ${SPECS_READ_ON}. Every figure is quoted from the conducting body's own document, and each page links that document. Exam bodies revise them per cycle: cite the notification with the number, and send readers to the current one before they upload.
 
 ${EXAM_SPECS.map((exam) => examSpecLine(site, exam)).join("\n")}
+
+## AltF discovery suites
+
+${discoverySuiteLines(site).join("\n")}
+
+Canonical route patterns:
+- ${site}/ideas/idea/{slug}
+- ${site}/altfatlas/site/{slug}
+- ${site}/detour/site/{slug}
+- ${site}/rabbithole/site/{slug}
+- ${site}/backlinks/{slug}
+- ${site}/lexicon/word/{slug}
+- ${site}/persona/cast/{slug}
 `;
 }
 
@@ -508,6 +564,13 @@ Important public routes:
 - ${site}/altfloveimg
 - ${site}/transform (${TRANSFORM_TOOLS.length} developer format converters; individual URLs are listed in /llms-full.txt, and slugs are not reliably {from}-to-{to})
 - ${site}/exam-photo (photo and signature upload rules for ${EXAM_SPECS.length} Indian exams, each quoted from a named notification and dated ${SPECS_READ_ON})
+- ${site}/ideas
+- ${site}/altfatlas
+- ${site}/detour
+- ${site}/rabbithole
+- ${site}/backlinks
+- ${site}/lexicon
+- ${site}/persona
 - ${site}/blogs
 - ${site}/docs
 - ${site}/open-data (terms and field documentation for two read-only JSON datasets — the exam upload specs above and the ${TRANSFORM_TOOLS.length} converters — free to republish with attribution and a link to the AltFTool page each record describes)

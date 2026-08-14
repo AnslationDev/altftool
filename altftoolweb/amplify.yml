@@ -14,6 +14,16 @@ frontend:
       commands:
         - export ALTFT_DEFER_BULK_PRERENDER=true
         - export ALTFT_BUILD_CPUS=1
+        # Keep the compiler isolated, but cap the heap it inherits from
+        # NODE_OPTIONS. Next's webpack build worker is a child process; giving
+        # that child a 12 GiB old-space ceiling on LARGE_16GB left too little
+        # room for the Next parent plus native, buffer and artifact allocations,
+        # so the kernel killed the worker before V8 could report a heap OOM.
+        #
+        # 10240 is the measured passing ceiling for the current route graph.
+        # Lowering old space by 2 GiB kept observed total/native RSS within the
+        # builder limit; old-space size is not a total-process RSS limit. Keep
+        # this aligned with scripts/run-with-node-memory.mjs and the runbook.
         - export ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240
         - export ALTFT_WEBPACK_BUILD_WORKER=true
         - npm run build

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "identity-minimizing-dsar-planner",
   "title": "Identity-Minimizing DSAR Planner",
-  "description": "Privacy request verify karte waqt minimum necessary identity proof plan kare.",
+  "description": "Plan the minimum identity proof needed to verify a privacy request.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

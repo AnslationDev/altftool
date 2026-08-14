@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
   return {
     ...(await createPageMetadata({
       title: `Personality Test Question ${id}`,
-      description: "Answer a short AltFTool personality test question and continue your private assessment.",
+      description: "Answer one short self-reflection question and continue toward a locally calculated four-trait snapshot.",
       path: `/personality/question/${id}`,
     })),
     robots: {

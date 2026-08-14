@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 import "./polarflame.css";
 
-const QUOTE_URL = "https://example.com/quote/polarflame";
-const PHONE_HREF = "tel:+18555550298";
-const PHONE_TEXT = "(855) 555-0298";
+const QUOTE_URL = "#demo-only";
+const PHONE_HREF = "#demo-only";
+const PHONE_TEXT = "Demo only";
 const TAGLINE = "Cold done hot. Heat done cool.";
 
 const IMG = {

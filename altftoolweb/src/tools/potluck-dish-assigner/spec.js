@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "potluck-dish-assigner",
   "title": "Potluck Dish Assigner",
-  "description": "Dietary constraints aur course balance ke saath dishes assign kare.",
+  "description": "Assign potluck dishes across guests, balancing courses and dietary constraints.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

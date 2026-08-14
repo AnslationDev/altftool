@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "travel-disruption-evidence-pack",
   "title": "Travel Disruption Evidence Pack",
-  "description": "Delays, bookings, receipts aur claim evidence organize kare.",
+  "description": "Organize delays, bookings, receipts and claim evidence into one travel pack.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Travel",

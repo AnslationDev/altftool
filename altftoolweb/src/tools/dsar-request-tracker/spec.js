@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "dsar-request-tracker",
   "title": "DSAR Request Tracker",
-  "description": "Data-access requests, deadlines, responses aur evidence manage kare.",
+  "description": "Manage data-access requests with their deadlines, responses and supporting evidence.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

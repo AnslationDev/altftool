@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Field, Input, Select, Button, Alert } from "@altftool/ui";
+import { TARGET_BOUNDS_MG_DL, validateTargetRange } from "../lib";
 
 export default function UserProfile({ initialProfile, onSave }) {
   const [formData, setFormData] = useState(initialProfile || {
@@ -28,16 +29,9 @@ export default function UserProfile({ initialProfile, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Guard against an inverted target range (min > max). Left unchecked,
-    // Dashboard's `r >= targetMin && r <= targetMax` range filter becomes
-    // impossible to satisfy for any reading, so "Time in Target" would
-    // silently and permanently read 0% no matter how well-controlled the
-    // user's readings are.
-    const min = Number(formData.targetMin);
-    const max = Number(formData.targetMax);
-    if (Number.isFinite(min) && Number.isFinite(max) && min > max) {
-      setError("Minimum target must be less than or equal to maximum target.");
+    const validationError = validateTargetRange(formData.targetMin, formData.targetMax);
+    if (validationError) {
+      setError(validationError);
       setSuccess(false);
       return;
     }
@@ -109,10 +103,24 @@ export default function UserProfile({ initialProfile, onSave }) {
         <h3 className="mb-4 text-xl font-bold text-(--foreground)">Target Blood Sugar Range (mg/dL)</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Field label="Minimum (Target)">
-            <Input type="number" min="0" value={formData.targetMin} onChange={handleChange("targetMin")} className="min-h-[56px] px-4 py-3 text-lg" />
+            <Input
+              type="number"
+              min={TARGET_BOUNDS_MG_DL.min}
+              max={TARGET_BOUNDS_MG_DL.max}
+              value={formData.targetMin}
+              onChange={handleChange("targetMin")}
+              className="min-h-[56px] px-4 py-3 text-lg"
+            />
           </Field>
           <Field label="Maximum (Target)">
-            <Input type="number" min="0" value={formData.targetMax} onChange={handleChange("targetMax")} className="min-h-[56px] px-4 py-3 text-lg" />
+            <Input
+              type="number"
+              min={TARGET_BOUNDS_MG_DL.min}
+              max={TARGET_BOUNDS_MG_DL.max}
+              value={formData.targetMax}
+              onChange={handleChange("targetMax")}
+              className="min-h-[56px] px-4 py-3 text-lg"
+            />
           </Field>
         </div>
       </div>

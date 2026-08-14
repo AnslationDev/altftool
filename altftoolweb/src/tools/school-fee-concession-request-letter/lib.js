@@ -297,11 +297,18 @@ export function buildInstalmentPlan({ payable, instalments, firstDueISO, interva
  * makes an affordability case concrete.
  */
 export function computeAffordability({ payable, monthlyIncome }) {
+  const blank =
+    monthlyIncome === undefined ||
+    monthlyIncome === null ||
+    (typeof monthlyIncome === "string" && monthlyIncome.trim() === "");
+  if (blank) return { annualIncome: 0, feeShare: null };
+
   const income = Number(monthlyIncome);
-  // Income only feeds one optional sentence in the letter, so an invalid or
-  // negative figure is treated the same as "not entered" rather than
-  // blocking the whole letter with a fatal error.
-  if (!Number.isFinite(income) || income <= 0) return { annualIncome: 0, feeShare: null };
+  if (!Number.isFinite(income)) {
+    return { error: "Monthly household income must be a valid number." };
+  }
+  if (income < 0) return { error: "Monthly household income cannot be negative." };
+  if (income === 0) return { annualIncome: 0, feeShare: null };
   const annualIncome = income * 12;
   const amount = Number(payable);
   if (!Number.isFinite(amount) || amount < 0) return { error: "The payable amount is not a valid number." };
@@ -334,28 +341,49 @@ const ROMAN_CLASS_LEVELS = {
  * "Class 8", "8th"). Returns null when the label can't be confidently parsed
  * (e.g. "Nursery", "LKG") so callers can fall back to their default.
  */
-function parseClassLevel(className) {
-  const raw = clean(className)
+function normaliseClassLabel(className) {
+  return clean(className)
     .toUpperCase()
-    .replace(/^CLASS\s+/, "")
-    .replace(/(ST|ND|RD|TH)$/, "")
+    .replace(/^CLASS(?:\s+|[-:/]\s*)/, "")
     .trim();
-  if (!raw) return null;
-  if (Object.prototype.hasOwnProperty.call(ROMAN_CLASS_LEVELS, raw)) return ROMAN_CLASS_LEVELS[raw];
-  const numeric = Number(raw);
-  return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
 }
 
-/**
- * The RTE Act's free-education guarantee (s.3(2)/s.12(1)(c)) covers only
- * elementary education, Class I-VIII. Classes below Class I (Nursery, LKG,
- * UKG) and unparseable labels are treated as elementary/uncertain so the
- * citation still appears by default, matching prior behaviour.
- */
-function isElementaryClass(className) {
+function parseClassLevel(className) {
+  const raw = normaliseClassLabel(className);
+  if (!raw) return null;
+
+  const roman = /^(XII|XI|X|IX|VIII|VII|VI|V|IV|III|II|I)(?=$|[\s./_-])/.exec(raw)?.[1];
+  if (roman && Object.prototype.hasOwnProperty.call(ROMAN_CLASS_LEVELS, roman)) {
+    return ROMAN_CLASS_LEVELS[roman];
+  }
+
+  const numeric = /^(\d{1,2})(?:ST|ND|RD|TH)?(?=$|[\s./_-])/.exec(raw)?.[1];
+  const level = Number(numeric);
+  return Number.isFinite(level) && level > 0 ? level : null;
+}
+
+export function classifyRteClass(className) {
+  const raw = normaliseClassLabel(className);
+  if (/^(?:PRE[-\s]?PRIMARY|NURSERY|LKG|UKG|KG(?:[-\s]?[12])?|KINDERGARTEN(?:[-\s]?[12])?)(?:$|[\s./_-])/.test(raw)) {
+    return "pre-primary";
+  }
   const level = parseClassLevel(className);
-  if (level === null) return true;
-  return level <= 8;
+  if (level === null) return "unknown";
+  return level <= 8 ? "elementary" : "post-elementary";
+}
+
+function rteParagraphForClass(className, displayClass) {
+  const category = classifyRteClass(className);
+  if (category === "elementary") {
+    return `My child belongs to a weaker section or disadvantaged group. Section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 requires specified schools to admit at least ${RTE_RESERVED_SHARE_PERCENT} per cent of their class I intake from those groups and provide the children admitted under that provision free and compulsory elementary education till completion. Section 3(2) protects a covered child from fees or charges that may prevent completion of elementary education. I request that the school verify my child's eligibility and admission status under the applicable RTE and State rules and, if covered, apply those protections.`;
+  }
+  if (category === "pre-primary") {
+    return `My child belongs to a weaker section or disadvantaged group. The proviso to section 12(1) of the Right of Children to Free and Compulsory Education Act, 2009 applies the entry-level provisions to pre-school admission where the school imparts pre-school education. I request that the school verify whether this provision and the applicable State rules cover my child's admission and, if so, apply the corresponding protections.`;
+  }
+  if (category === "post-elementary") {
+    return `My child belongs to a weaker section or disadvantaged group. As ${displayClass} is beyond elementary education, which the Right of Children to Free and Compulsory Education Act, 2009 defines as Class I to Class VIII, this request does not claim an RTE fee entitlement for the current class. I ask that the school consider our circumstances under its own concession policy and any applicable State rules.`;
+  }
+  return `My child belongs to a weaker section or disadvantaged group. Because the class or entry level is not clear, I ask that the school verify whether section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 and the applicable State rules cover this admission. If they do not, please consider our circumstances under the school's own concession policy.`;
 }
 
 export function buildFeeConcessionLetter({
@@ -380,7 +408,12 @@ export function buildFeeConcessionLetter({
   affordability,
   phone,
   email,
+  assessment,
 }) {
+  if (affordability?.error) return { error: affordability.error };
+  // Preserve the legacy alias for direct callers while the page uses
+  // `affordability` consistently.
+  if (assessment?.error) return { error: assessment.error };
   if (fee?.error) return { error: fee.error };
   if (concession?.error) return { error: concession.error };
   if (requestKind !== REQUEST_KINDS.CONCESSION && plan?.error) return { error: plan.error };
@@ -431,11 +464,7 @@ export function buildFeeConcessionLetter({
       ? `Our declared household income is about ${formatINR(affordability.annualIncome)} a year, so the amount now payable is ${formatPercent(affordability.feeShare)} of it.`
       : "";
 
-  const rteLine = ground.rte
-    ? isElementaryClass(className)
-      ? `My child falls in the weaker section and disadvantaged group category. Section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 requires a private unaided school to admit at least ${RTE_RESERVED_SHARE_PERCENT} per cent of the strength of class I from that category and to provide free and compulsory elementary education till its completion, with reimbursement by the government under section 12(2). Section 3(2) of the same Act says no child shall be liable to pay any fee or charge that may prevent them from completing elementary education. I request that our case be considered under those provisions.`
-      : `My child belongs to the weaker section and disadvantaged group category recognised under the Right of Children to Free and Compulsory Education Act, 2009. As Class ${cls} falls outside the Act's free elementary-education entitlement, which covers Class I to Class VIII, I ask that the school consider our circumstances under its own concession policy for this category.`
-    : "";
+  const rteLine = ground.rte ? rteParagraphForClass(className, `Class ${cls}`) : "";
 
   const subject = `Request for ${requestKind === REQUEST_KINDS.INSTALMENTS ? "permission to pay the fee in instalments" : requestKind === REQUEST_KINDS.CONCESSION ? "fee concession" : "fee concession and payment in instalments"} — ${student}, Class ${cls}${sec ? `-${sec}` : ""} (Admission No. ${admission})`;
 
