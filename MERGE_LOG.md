@@ -141,3 +141,33 @@ Root commit 7ec6266b8d... = exact root of `canonical-admin/main`. Unrelated hist
 - codex/hard-404-admin-20260803
 - codex/admin-tools-slugs-auth-20260803
 - codex/aws-amplify-admin-20260803
+
+## Sanity build (after all branch processing)
+
+Ran `npm run build:web` and `npm run build:admin` from repo root (per CLAUDE.md, both wrap
+`next build --webpack`).
+
+**First pass found two real defects introduced by this session's merges** (both fixed, see
+commit `f4fd351da`):
+1. `altftoolweb/src/app/personality/components/PersonalityLoader.jsx` — deleted during the
+   codex/preserve-all-work-20260730 merge as (believed) orphaned; it is actually imported by
+   `Categories.jsx`. Webpack failed with "Module not found". Restored the file from its last
+   known-good commit (`6abdaecdb`).
+2. `altftoolweb/src/app/tools/page.jsx` — a byte-identical duplicate pair of
+   `export const dynamic = "force-static"` / `export const revalidate = 86400`, left by a
+   silent (non-conflicting) 3-way auto-merge that concatenated both sides. Webpack failed with
+   "Identifier 'dynamic' has already been declared". Removed the duplicate. Swept the rest of
+   `altftoolweb/src` for the same duplicate-declaration signature — no other instances found
+   (3 other flagged files were false positives from `dynamicParams` prefix-matching `dynamic`).
+
+**Second pass, after both fixes:**
+- `npm run build:admin` — **PASS**. `✓ Compiled successfully in 21.4s`, full route manifest
+  printed, no errors.
+- `npm run build:web` — **FAILS**, but on a pre-existing, environment-specific issue unrelated
+  to any merge in this session: `next/font` cannot fetch `Noto Sans Devanagari` from
+  `fonts.gstatic.com` in `src/app/bazaar/components/BazaarShell.jsx` (network egress to Google
+  Fonts is blocked in this sandbox). Confirmed pre-existing: `git log 4b7c50007..HEAD -- 
+  .../BazaarShell.jsx` returns zero commits — this file was never touched by any merge done in
+  this session, and the failure is a network fetch error, not a syntax/logic defect. This would
+  not be expected to fail in a normal CI/Amplify environment with internet access. All actual
+  code-level errors surfaced by this build were the two listed above, both fixed.
