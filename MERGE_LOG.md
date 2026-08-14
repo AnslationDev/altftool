@@ -59,3 +59,4 @@ Full membership lists are at the bottom of this file.
 - origin/claude/silly-shirley-5282cc: skipped, already ancestor
 - perf/embed-picker-payload: skipped, already ancestor
 - seo/aeo-integrity-and-answer-first: skipped, already ancestor
+- fix/sitemap-xml-escaping: skipped, already ancestor
