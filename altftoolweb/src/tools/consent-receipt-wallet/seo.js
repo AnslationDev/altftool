@@ -1,4 +1,12 @@
 const seo = {
+  title: "Consent Receipt Wallet: Log Who Has Your Data",
+  metaDescription:
+    "Keep your own record of every organization you gave data to, with purpose and expiry, stored in your browser's localStorage and exportable as JSON.",
+  steps: [
+    "Type who received the data in the Organization field and what for in Purpose and expiry, then click Add record.",
+    "Filter the Saved records list with the Search records box, which matches text in both fields at once.",
+    "Click Export JSON to download consent-receipt-wallet.json as your backup; Import JSON reads it back in another browser, replacing what is saved there.",
+  ],
   intro:
     "The Consent Receipt Wallet is a private log of who you gave data to: each record holds the organization and a free-text note on the purpose and expiry, saved in this browser's localStorage and searchable across both fields. It is for people who want their own copy of what they agreed to — the gym that took an ID scan, the app that asked for contacts, the shop that kept a phone number — rather than trusting each company's records. Nothing is uploaded, and the whole list exports to a JSON file you keep.",
   useCases: [

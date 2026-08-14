@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rental Yield Calculator: Gross and Net After Tax",
+  metaDescription:
+    "Gross and net rental yield after vacancy, society charges and municipal tax, with the 30% Section 24(a) deduction and Section 24(b) interest applied.",
+  steps: [
+    "Enter 'Property purchase price (INR)' and 'Stamp duty, registration, brokerage, interiors (INR)', then 'Monthly rent received (INR)' and 'Vacant weeks per year'.",
+    "Add the running costs — 'Society charges + repairs per year (INR)', 'Municipal property tax paid per year (INR)', 'Property insurance per year (INR)', 'Property management fee (% of rent)' and 'Home loan interest paid per year (INR)' — and pick 'Your income tax slab rate (%)'.",
+    "Read 'Net rental yield after tax' beside the gross yield, then the 'Income from house property' table stepping from Gross Annual Value through the municipal tax deduction, the 30% standard deduction under Section 24(a), Section 24(b) interest, tax payable and loss carried forward; Copy result copies the summary.",
+  ],
   intro:
     "Rental yield is the annual rent a property earns expressed as a percentage of what the property cost you, and this calculator works out both the gross figure and the net figure that survives vacancy, society charges, municipal tax and income tax. The tax layer follows the Income from house property head of the Income-tax Act, 1961 — municipal taxes paid are deducted from gross annual value, then a flat 30% standard deduction under Section 24(a), then interest on borrowed capital under Section 24(b). It is built for landlords and first-time property investors who want to compare a flat against a fixed deposit or an index fund on a like-for-like after-tax basis.",
   useCases: [

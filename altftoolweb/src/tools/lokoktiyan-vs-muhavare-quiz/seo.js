@@ -1,4 +1,12 @@
 const seo = {
+  title: "Muhavara vs Lokokti Quiz: 32 Hindi Lines With Reasons",
+  metaDescription:
+    "Sort real Hindi lines into muhavare and lokoktiyan from a 32-item pool. Every answer gives the grammatical reason, and a round number repeats the round.",
+  steps: [
+    "Set \"Questions in this round (1–32)\" and a Round number — the same round number always produces the same questions in the same order.",
+    "For each line under \"Classify each line as muhavara or lokokti\", tap \"Muhavara (मुहावरा)\" or \"Lokokti (लोकोक्ति)\", then press Check answers.",
+    "Read the Score with its Correct, Percentage and Verdict rows, plus the Meaning and Why explanation under each item; press New round for a fresh set.",
+  ],
   intro:
     "Muhavara vs Lokokti Quiz tests the one distinction Hindi language papers ask about most often: a muhavara is a phrase that only means something once it is built into a sentence, while a lokokti is a complete sentence that can be quoted as it stands and carries a general truth. Each round draws questions from a pool of 32 real examples and, after grading, explains why every line falls on the side it does. It is built for CBSE and state-board students, competitive-exam candidates and anyone teaching Hindi vyakaran.",
   useCases: [

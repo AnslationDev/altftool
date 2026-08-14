@@ -1,4 +1,12 @@
 const seo = {
+  title: "Event Video Delivery Dates and Edit-Hour Estimates",
+  metaDescription:
+    "Turns the last day of the shoot into dated deliverables, edit hours per finished minute, start-by dates and a capacity check in business or calendar days.",
+  steps: [
+    "Set Last day of the event, Editing hours per working day, and Turnaround counted in to Business days (Mon–Fri) or Calendar days.",
+    "Tick the deliverables you owe, such as Highlight film, and adjust Finished runtime (minutes) and Turnaround (days after event).",
+    "Read the Schedule table's Edit hours, Start by and Due columns, plus Working days available and Editor utilisation, then press Copy plan.",
+  ],
   intro:
     "An event video delivery planner converts the last day of a shoot into dated deadlines for every deliverable, estimates the editorial hours behind each one, and works backwards to the day that edit has to start. Effort uses the way editorial work is normally quoted — fixed hours for ingest and export, plus hours per finished minute of runtime — and turnaround can be counted in business days or calendar days to match the wording in your contract. It is built for event videographers and production coordinators who need to know before signing whether the schedule is physically achievable.",
   useCases: [

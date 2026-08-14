@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Tag Naming Generator: SemVer 2.0.0 Format + Regex",
+  metaDescription:
+    "Set MAJOR.MINOR.PATCH, the v prefix, a prerelease channel and an environment label; get the format template, a validation regex and git commands.",
+  steps: [
+    "Enter MAJOR, MINOR and PATCH, tick 'Use the conventional \"v\" prefix (v1.2.3)', and add a Custom prefix such as app@ if a monorepo needs one.",
+    "Tick 'Include a prerelease segment (-alpha/-beta/-rc)' to set a Prerelease channel and Prerelease iteration, and use Environment suffix plus Environment name to place a label either as a prerelease identifier or as +build metadata.",
+    "Read the Next release tag with its Format template and Validation regex, take the annotated git commands under 'Cut the release', and press Copy standard to save the whole thing.",
+  ],
   intro:
     "This generator designs a consistent git release tag format built on Semantic Versioning 2.0.0: the conventional v prefix, MAJOR.MINOR.PATCH, optional alpha/beta/rc prerelease segments and environment labels as either prerelease identifiers or build metadata. It outputs the format template, a validation regex that rejects malformed tags (including leading zeroes), the git commands to cut an annotated tag, and notes on how SemVer precedence treats each part. It is for teams standardising release tags across repositories and CI pipelines.",
   useCases: [

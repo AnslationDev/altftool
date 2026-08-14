@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTML to JS Template Literal Converter (Both Ways)",
+  metaDescription:
+    "Wrap HTML in a JS template literal with backticks, backslashes and ${ escaped and {{ placeholders }} rewritten as escapeHtml calls. Reverses back to HTML.",
+  steps: [
+    "Choose HTML to JS or JS to HTML, then type into Source code, press Load sample, or Upload code from a .html, .htm, .js, .jsx or .txt file.",
+    "Switch the toggles you need — Escape helper, Mount code, Base-path assets, Template variables, Strip script tags — and the output rebuilds as you type.",
+    "Read the Generated JS pane with its warnings, press Copy, or Download the file as converted.js — converted.html when running the reverse direction.",
+  ],
   intro:
     "This converter turns a block of HTML into a JavaScript template literal — escaping backticks, backslashes and ${ so the markup survives, rewriting {{ mustache }} placeholders into ${escapeHtml(variableName)}, and emitting the variable declarations, an escapeHtml helper and the innerHTML mount code alongside it. Run it the other way and it pulls the template literal back out of a const html = `…`, .innerHTML = `…` or return `…` assignment and turns every ${expression} back into a readable {{ placeholder }}. It is for front-end developers moving markup between a static file and generated JS without hand-escaping every character.",
   useCases: [

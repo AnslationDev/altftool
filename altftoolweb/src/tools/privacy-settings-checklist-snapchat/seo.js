@@ -1,4 +1,7 @@
 const seo = {
+  title: "Snapchat Privacy Settings: 25-Point Ghost Mode Audit",
+  metaDescription:
+    "Work through 25 Snapchat privacy settings — Ghost Mode, Quick Add, mobile-number discovery, My Eyes Only, My AI data — and score what is still open.",
   "intro": "This checklist covers the 25 Snapchat settings that decide who can find you, who can see your live location, who can message you and what stays saved after a snap disappears. It leads with Ghost Mode on the Snap Map, the Quick Add suggestion switch and mobile-number discoverability, because those three are how unwanted contact and location exposure actually happen. It also covers the story audience, Memories and My Eyes Only, Spotlight and Our Story submissions, My AI data retention, connected apps and two-factor authentication.",
   "useCases": [
     "Get a teenager's account off the Snap Map and out of Quick Add in one pass.",

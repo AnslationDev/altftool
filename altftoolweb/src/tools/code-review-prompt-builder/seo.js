@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Code Review Prompt Builder with OWASP Checklists",
+  metaDescription:
+    "Builds a review prompt with correctness, OWASP Top 10, performance and style checklists, blocker to nit severities, and a 400-LOC review-size split.",
+  steps: [
+    "Fill in 'Language / stack' and 'Change size (lines of code)', and optionally 'What the change does' plus the diff itself under 'Paste the diff or code'.",
+    "Tick the Review focus boxes — Correctness, Security, Performance, Style & readability, Maintainability & tests — so each one's checklist is written into the prompt.",
+    "Check the 'Change under review' LOC readout, which asks for extra passes above ~400 LOC, then press 'Copy prompt' and paste the Generated prompt into ChatGPT, Claude or Copilot Chat.",
+  ],
   intro:
     "The Code Review Prompt Builder assembles an AI code-review prompt from proven checklists — correctness defect classes, OWASP Top 10 (2021) security categories, performance anti-patterns, style and maintainability — with a four-level severity scheme and a review-size check. It is built for developers who paste diffs into ChatGPT, Claude or Copilot Chat and want findings with file, line, failure scenario and a minimal fix instead of a vague rewrite, and it warns when a change exceeds the ~400-line effective review size found in SmartBear's study of peer review at Cisco.",
   useCases: [

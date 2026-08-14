@@ -1,4 +1,12 @@
 const seo = {
+  title: "WCAG Quick Auditor: 19 Structural Checks on Pasted HTML",
+  metaDescription:
+    "Paste up to 750,000 characters of HTML for 19 structural checks: alt text, labels, heading order, duplicate IDs, landmarks. Nothing is rendered.",
+  steps: [
+    "Paste markup into Source to inspect, or press Choose local file to load a .html, .htm or .txt file, up to 750,000 characters.",
+    "Press Run structural audit; the source is tokenized as text and never inserted into the page DOM.",
+    "Review Findings and the Structural inventory counts, then press Copy counts-only report for a summary with no source or locations.",
+  ],
   intro:
     "WCAG Quick Auditor tokenises pasted HTML as inert text and runs 19 deterministic structural checks against it — missing lang, empty or skipped headings, images without alt, unlabelled form fields, unnamed buttons and links, duplicate IDs, untitled iframes, tables without headers, missing or duplicated main landmarks, and positive tabindex values. Nothing is rendered, no script runs, and no URL is fetched, so it reports what the markup says rather than what the page does. It is for developers and content editors who want the obvious markup failures caught before a real accessibility review.",
   useCases: [

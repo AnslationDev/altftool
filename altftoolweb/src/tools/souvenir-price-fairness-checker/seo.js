@@ -1,4 +1,12 @@
 const seo = {
+  title: "Souvenir Price Checker: Markup vs the Median You Saw",
+  metaDescription:
+    "Test a market quote against the median of prices you recorded yourself. Get the markup, an opening counter, a target and a walk-away price.",
+  steps: [
+    "Type what you are buying, the Price quoted to you, per piece, and pick the Currency.",
+    "List the Prices you saw elsewhere for the same item, separated by commas, spaces or new lines — three or more makes the median meaningful — and set How many pieces.",
+    "Read the verdict with the Markup over the local median, then use the three negotiating numbers: Open at (the cheapest price you saw), Aim to settle at (the median) and Walk away above (10% over the dearest); press Copy result.",
+  ],
   intro:
     "This checker measures a souvenir quote against the median of the prices you recorded yourself for the same item, and reports the markup as (quoted ÷ median − 1) × 100. The median is used rather than the average because in a sample of five or six market prices a single inflated quote pulls the average up but leaves the middle value untouched. It is for travellers standing in a market who want a number before answering the seller, and it returns an opening counter-offer, a target and a walk-away price alongside the verdict.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Road Trip Fuel Cost: Mileage, Tolls, Cost per Head",
+  metaDescription:
+    "Adjust rated mileage for highway, city or ghat roads, AC and a roof carrier, then get fuel, tolls, refuel stops and the per-head share.",
+  steps: [
+    "Under The trip, enter One-way distance (km) and People sharing the cost, tick Driving back as well to double the distance, then add Tolls, both ways (INR) and Parking, permits, other (INR) under Other costs and timing.",
+    "Under The vehicle, choose Petrol, Diesel, CNG or Auto LPG, enter Rated mileage, Fuel price and Tank capacity, set Road conditions to Open highway cruising, Mixed highway and towns, City and heavy traffic or Hills and ghat roads, and tick AC running most of the way or Loaded roof carrier fitted.",
+    "Trip total shows the all-in cost and what each traveller pays, with rows for Effective mileage, Fuel needed, Refuel stops needed, Usable range per tank and Cost per km (all in); press Copy result.",
+  ],
   intro:
     "Trip fuel cost is distance divided by mileage, multiplied by pump price — but the mileage in that formula is never the number on the brochure. This calculator adjusts your rated figure for the roads you will actually drive (highway cruising beats the combined figure by about 10%, ghat roads fall roughly 25% below it), for air conditioning at about a 7% penalty and for a loaded roof carrier at about 10%, then adds tolls, splits the total per head and works out how many refuel stops the tank forces on you.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Password Regex Patterns: NIST 8-Char to 4-Class",
+  metaDescription:
+    "Five copy-ready password policy regexes, from an 8-character NIST floor to four-class lookaheads and a 12–64 passphrase rule — every token explained.",
+  steps: [
+    "Pick one of the five policies from the 'Policy level' dropdown — from 'Minimum length only (NIST floor)' up to 'Passphrase policy (12–64, NIST style)'.",
+    "Type a made-up sample into 'Test a candidate password' to get a live Passes/Fails verdict against that policy (never test a real password).",
+    "Read the token-by-token breakdown and the policy's caveats, then click 'Copy regex' to copy the pattern in /source/flags form.",
+  ],
   intro:
     "This library provides five copy-ready password policy regular expressions — from the NIST SP 800-63B minimum of 8 characters, through the classic corporate upper/lower/digit and four-class complexity rules built from stacked (?=.*X) lookaheads, to a 12–64 character length-first passphrase policy. Every token of every pattern is explained, and each policy states plainly what it cannot do, because NIST's current guidance favours length and breached-password screening over composition rules.",
   useCases: [

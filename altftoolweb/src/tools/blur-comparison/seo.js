@@ -1,4 +1,7 @@
 const seo = {
+  title: "Image Blur Comparison Slider — Preview CSS blur() 1–100px",
+  metaDescription:
+    "Drag a split line to compare a photo against a 1–100px CSS Gaussian blur, then export the blurred version as a PNG at full native resolution.",
   intro:
     "Blur Comparison applies the CSS Gaussian blur filter to an image at a radius you choose from 1 to 100 pixels and splits the view down a draggable line, so the sharp original and the blurred version sit side by side in the same frame. It is for anyone who has to pick a blur strength by eye rather than by guessing a number — designers testing a background, or someone obscuring a detail in a screenshot. The chosen radius exports as a PNG rendered at the image's full native resolution.",
   useCases: [

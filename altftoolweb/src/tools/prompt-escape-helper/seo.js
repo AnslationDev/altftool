@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prompt Escape Helper: JS, JSON, Python, Shell, SQL",
+  metaDescription:
+    "Escape a prompt for JavaScript, JSON, Python, shell, SQL, YAML or CSV using each target’s real rule, and count the quotes and braces that changed.",
+  steps: [
+    "Paste your prompt into the “Your prompt” box; the line underneath counts how many of the 200,000 allowed characters you have used.",
+    "Pick a target from the “Escape for” menu, grouped as JavaScript, Python, Shell, Data, Other languages and Markup — including “Shell — POSIX 'single quoted'”, “Python str.format / f-string” and “CSV field (RFC 4180)” — and untick “Include the surrounding quotes” for the inner literal only.",
+    "Read the Escaped output block with Characters added, Original length, Escaped length and Growth, and the “What needed escaping” table counting Backslashes, Double quotes, Single quotes, Backticks, Opening braces, Closing braces, Dollar signs, Line breaks and Tabs; “Copy escaped” copies the result.",
+  ],
   intro:
     "Prompt Escape Helper converts a prompt into a string literal that survives being pasted into source code, applying the real quoting rule of the target: backslash escapes for C-family strings, doubled single quotes for SQL and single-quoted YAML, the '\\'' idiom for POSIX shell, RFC 4180 quoting for CSV, and doubled braces for Python str.format and C# interpolated strings. It reports how many backslashes, quotes, braces and line breaks had to be handled, so you can see what would have broken. Useful for anyone hard-coding a long prompt into an application, a test fixture or a shell script.",
   useCases: [

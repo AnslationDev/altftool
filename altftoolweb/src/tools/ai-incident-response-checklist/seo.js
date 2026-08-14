@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Incident Response Checklist on NIST SP 800-61",
+  metaDescription:
+    "Build a runbook for harmful output, data leaks, prompt injection or leaked prompts — NIST four phases, GDPR 72-hour trigger, Copy as Markdown.",
+  steps: [
+    "Select the \"Incident type\" — harmful output, sensitive data leaked in a response, prompt-injection abuse or a leaked system prompt — and the \"Severity\".",
+    "Tick \"Users saw the output\", \"Personal data involved\" or \"Third-party model / API\"; personal data adds the DPO and GDPR Article 33 72-hour assessment steps.",
+    "Work through the four NIST SP 800-61 phases, watch the \"N of M steps done\" counter, then press \"Copy as Markdown\" to paste the runbook into your incident channel.",
+  ],
   intro:
     "The AI Incident Response Checklist generates a tailored, step-by-step response plan for incidents involving AI system output — harmful content shown to users, sensitive data leaked in a response, prompt-injection abuse, or a leaked system prompt or model artefact. It structures every checklist on the NIST SP 800-61 incident-handling lifecycle (preparation, detection and analysis, containment and recovery, post-incident activity) and adapts the steps to severity, personal-data involvement and third-party model use. It is built for engineering leads, security teams and AI product owners who need a working runbook before or during an incident.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Battery Replacement Planner: How Long Is Left?",
+  metaDescription:
+    "Estimates remaining starter-battery life from type — flooded, MF, EFB or AGM — adjusted for heat and short trips, minus a penalty for symptoms you see.",
+  steps: [
+    "Choose the Battery type fitted — conventional flooded, maintenance-free, EFB or AGM, each showing its typical months — and enter Battery age in months from the date stamped on the case.",
+    "Tick how the car is used (hot climate, mostly short trips under 15 minutes, a start-stop car on a plain battery) and every warning sign you have noticed, such as slow cranking or a swollen case.",
+    "Read Estimated remaining life as a percentage beside the verdict, with typical life, the usage factor applied, adjusted expected life and months left, then press Copy result or follow \"What to do next\".",
+  ],
   intro:
     "The Car Battery Replacement Planner estimates how much service life is left in a starter battery by taking its typical life for the construction fitted — flooded, maintenance-free, EFB or AGM — adjusting it for heat and charging pattern, then subtracting a penalty for the failure symptoms you are already seeing. It is for drivers deciding whether to replace a battery now or wait, especially before a long trip or a cold season. The two adjustments that matter most are sustained under-bonnet heat and habitual short trips, because both leave a lead-acid battery permanently undercharged.",
   useCases: [

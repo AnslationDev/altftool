@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram Caption Checker: 2,200 Chars, 30 Hashtags",
+  metaDescription:
+    "Check a caption against the 2,200-character and 30-hashtag limits, see where the feed cuts it at ~125 characters, and catch duplicate or numeric tags.",
+  steps: [
+    "Paste your post text into the \"Your caption\" box — nothing is uploaded, the caption stays in your browser.",
+    "Read Characters used against the 2,200 cap and the Hashtags row against 30, then press Tidy to strip repeated tags and trailing blank lines.",
+    "Check \"What the feed shows\" for the text that lands before the \"... more\" cut at roughly 125 characters, then press Copy caption.",
+  ],
   intro:
     "Instagram Caption Spec Checker measures a caption against the platform's published limits — 2,200 characters and 30 hashtags per post — and shows where the feed collapses it behind the \"... more\" link at roughly 125 characters. It also catches the things that silently cost reach: hashtags repeated in different cases (Instagram treats them as the same tag but each still counts towards the 30), all-numeric tags that never become links, URLs that are not clickable in a caption, and trailing blank lines that get stripped on save.",
   useCases: [

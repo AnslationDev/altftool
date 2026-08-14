@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Rental Cost Comparison: Landed Cost per Trip",
+  metaDescription:
+    "Price self-drive quotes on one real trip: day rate, insurance, excess km, delivery fee, GST and fuel policy, with the refundable deposit excluded.",
+  steps: [
+    "Under Your trip fill in Days on rent, Kilometres you will drive, Pump price (₹ per litre), Real mileage (km per litre) and GST on the rental charges (%).",
+    "For each Quote name enter Daily rate (₹), Insurance / CDW per day (₹), Included km per day and Excess km charge (₹ per km) or tick Unlimited kilometres, add the Delivery / pickup fee and Refundable deposit (₹), and pick a Fuel policy — Same-to-same, Prepaid tank or Fuel included; Add a quote takes it up to four.",
+    "Cheapest landed cost names the winner and lists Rental invoice (with GST), Fuel, Cost per day, Cost per kilometre, Next kilometre costs and Deposit blocked, which stays out of the total; the ranked table compares every quote and Copy result copies it.",
+  ],
   intro:
     "A car rental cost comparison prices competing self-drive quotes against one real trip instead of their headline day rates. It adds the daily tariff, the per-day insurance or CDW, the excess-kilometre charge on whatever you drive beyond the included allowance and any delivery fee, applies GST to that rental subtotal, then adds fuel separately — petrol and diesel sit outside GST in India, so they belong after tax. Prepaid-tank policies are costed with the unrefunded litres included, and the refundable deposit is reported but never counted as spend.",
   useCases: [

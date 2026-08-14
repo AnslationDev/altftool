@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Speed Calculator: Fit a Clip to a Target Runtime",
+  metaDescription:
+    "Divide current length by target runtime to get the exact speed multiplier. Accepts seconds, m:ss or h:mm:ss and shows the trim needed to stay under 1.5x.",
+  steps: [
+    "Enter \"Current length\" and \"Target runtime\" as seconds, m:ss or h:mm:ss; optionally put removed material in \"Cutting first (optional)\".",
+    "Add the \"Timeline frame rate (fps)\" and an optional \"Script word count\" to get output frames and the delivery rate in words per minute.",
+    "Read the \"Speed needed\" multiplier with its verdict, the cut-instead times for 1.25x and 1.5x, and the pitch shift in semitones; \"Copy result\" exports it.",
+  ],
   intro:
     "To make a video fit a fixed runtime you divide: speed multiplier = current length ÷ target length. A 3 minute 12 second cut that has to land at 90 seconds needs 2.13×. This calculator does that arithmetic, accepts durations as seconds, m:ss or h:mm:ss, and lets you subtract material you are willing to cut before the speed change is applied. It also solves the problem in reverse — given a speed ceiling such as 1.25× or 1.5×, it tells you exactly how many seconds you would have to remove instead.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Explore Indian Monuments by State, Era, Style & UNESCO",
+  metaDescription:
+    "Filter India's major monuments by state, era, architectural style and UNESCO year — each entry lists the patron, build period and defining feature.",
+  steps: [
+    "Search by monument, city, patron or keyword (e.g. Chola, stepwell, Shah Jahan), then narrow with the State or union territory, Historical era and Architectural style dropdowns, or tick 'Show only UNESCO World Heritage entries'.",
+    "Pick a Sort by order and read the summary panel: Monuments matched, UNESCO World Heritage entries in view, and the earliest and most recent construction dates.",
+    "Browse the result cards — each shows Built period, Style, Patron and Era plus any UNESCO year badge — and press Copy list for a plain-text list of up to 40 matches.",
+  ],
   intro:
     "The Indian Heritage Monument Explorer is a filterable reference to India's major monuments, indexed by state, historical era, architectural style and UNESCO World Heritage inscription year. Each entry gives the construction period, the ruler or patron who commissioned it and the single feature that defines it, so a fort, a stepwell and a rock-cut vihara can be compared side by side. It is built for students, teachers, quiz setters and travellers planning a heritage route rather than a single stop.",
   useCases: [

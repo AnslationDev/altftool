@@ -1,4 +1,7 @@
 const seo = {
+  title: "JSON to TypeScript Interface and Type Generator",
+  metaDescription:
+    "Paste JSON and get exported TypeScript declarations, with every nested object hoisted into its own named interface. Type aliases optional.",
   intro:
     "JSON to TypeScript converts a pasted JSON object into exported TypeScript declarations, walking the structure recursively and giving every nested object its own named interface instead of an inline shape. Primitives are typed from the value's runtime type — string, number, boolean — while null becomes any, and you can switch the output between `export interface Name { }` and `export type Name = { }` and turn trailing semicolons on or off. It is for frontend and Node developers who have a sample API response and want typed models for it in seconds.",
   useCases: [

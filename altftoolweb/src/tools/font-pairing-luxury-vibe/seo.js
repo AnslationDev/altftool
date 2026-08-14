@@ -1,4 +1,12 @@
 const seo = {
+  title: "Luxury Font Pairing: Optical Tracking & Hairline Check",
+  metaDescription:
+    "Pair a high-contrast display serif with a quiet sans, get letter-spacing derived from size, and see when hairlines drop below half a device pixel.",
+  steps: [
+    "Pick a Font pair such as Playfair Display + Lato or Bodoni Moda + Jost, choose a Scale, and set Body px and Display px.",
+    "Enter the Device pixel ratio for your target screen (1 for an office monitor, 2 for retina) and tick \"All caps display\" for an uppercase headline.",
+    "Read the Display tracking value and the Hairline device-px reading, then press Copy CSS to take the Google Fonts request plus the custom properties.",
+  ],
   intro:
     "Luxury Vibe Font Pairing combines high-contrast display serifs with restrained sans body faces and calculates the two numbers that decide whether the result looks expensive or cheap: optical tracking and hairline thickness. Tracking pivots at 16 px — type set larger is tightened, type set smaller is opened up, with an extra 0.08em when the setting is all caps. The hairline check treats the stem as 8% of the em, divides by the face's stroke contrast, and warns when the thin stroke falls below half a device pixel and greys out.",
   useCases: [

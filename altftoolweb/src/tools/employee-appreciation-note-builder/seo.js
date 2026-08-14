@@ -1,4 +1,12 @@
 const seo = {
+  title: "Employee Appreciation Note Builder: SBI + 7 Checks",
+  metaDescription:
+    "Write recognition with the Situation-Behaviour-Impact model. Scores the draft on 7 checks: measurable impact, vague-praise words, and a 7-day window.",
+  steps: [
+    "Fill the Situation, Behaviour and Impact boxes, and put a number in Impact — the checks look for one.",
+    "Pick Where it will be sent and Date it happened; praise more than 7 days after the event is flagged as late.",
+    "Read the specificity score out of 7 and the Checks list, then press Copy result to take the note.",
+  ],
   intro:
     "This builder writes appreciation notes using the Situation-Behaviour-Impact model from the Center for Creative Leadership: name the moment, describe the behaviour you observed, then state what changed. It scores the draft on seven checks — including whether the impact contains an actual number, whether any adjective-only praise words slipped in, and whether you are sending it within a week of the event. Built for managers, peers and team leads who want recognition that survives being quoted in a performance review.",
   useCases: [

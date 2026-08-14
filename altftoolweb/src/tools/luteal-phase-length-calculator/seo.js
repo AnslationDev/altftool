@@ -1,4 +1,12 @@
 const seo = {
+  title: "Luteal Phase Length Calculator from Ovulation to Period",
+  metaDescription:
+    "Counts the days from the day after ovulation to the day before your period, so a 28-day cycle with ovulation on day 14 returns 14 days.",
+  steps: [
+    "Enter the 'Ovulation date' and 'Day 1 of the period that followed'.",
+    "Add 'Day 1 of the period before ovulation (optional)' to also get follicular phase and total cycle length.",
+    "Read the luteal phase length in days, its Band, and the 'Test date if a period is missed (18 DPO)' row, then press 'Copy result'.",
+  ],
   intro:
     "The Luteal Phase Length Calculator measures the second half of your cycle — the days from ovulation to the start of your next period — from two dates you already have on your chart. It uses the standard fertility-charting rule that the luteal phase runs from the day after ovulation up to and including the day before the period, so a textbook 28-day cycle with ovulation on day 14 returns 14 days. Add the previous period start date and it also returns follicular phase length and total cycle length, which always add up to the cycle.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Privacy Policy Diff: Find Retention and Sharing Edits",
+  metaDescription:
+    "Compares two policy versions line by line and counts how many added or removed lines contain collect, share, retain, delete, consent, transfer or cookie.",
+  steps: [
+    "Paste the old wording into 'Previous policy' and the new wording into 'Updated policy'.",
+    "Leave 'Treat capitalization-only changes as equal' ticked so a re-cased heading is not counted as both an addition and a removal.",
+    "The result gives added and removed counts plus privacy-sensitive changed lines, then lists the first 100 changes marked + or −.",
+  ],
   intro:
     "This tool compares two versions of a privacy policy line by line and reports which lines were added, which were removed, and how many of those changed lines touch privacy-sensitive language. It splits both texts on line breaks, drops blank lines, and treats a line as changed when its trimmed text has no match in the other version — optionally ignoring capitalization. Any added or removed line containing collect, share, retain, delete, sell, consent, right, transfer, processor or cookie is counted separately as a privacy-sensitive change, so the substantive edits surface ahead of the cosmetic ones.",
   useCases: [

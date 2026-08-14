@@ -1,4 +1,12 @@
 const seo = {
+  title: "Notice Period Buyout Calculator for Indian IT Jobs",
+  metaDescription:
+    "Last working day, shortfall buyout on basic, gross or CTC at ÷30 or ÷26, leave offset and encashment, and a dated handover plan. No GST on recovery.",
+  steps: [
+    "Enter your Resignation date, Contractual notice in days (30, 45, 60 or 90), Days you will actually serve, Earned leave balance, and your monthly basic, gross and CTC.",
+    "Set Recovery charged on to Basic salary, Gross monthly salary or Monthly CTC, choose Monthly ÷ 30 or Monthly ÷ 26 for the per-day rate, and tick the earned-leave offset box if HR allows it.",
+    "Read your last working day, the chargeable shortfall, the buyout with no GST, leave encashment and net full-and-final impact, plus the four-phase handover table, then press Copy plan.",
+  ],
   intro:
     "This planner maps out an Indian notice period end to end: it computes your last working day from the resignation date, the buyout (notice recovery) for any shortfall at your contract's per-day salary rate, how far earned leave can offset that shortfall, and a dated four-phase handover schedule. It is built for developers and other IT professionals resigning in India, where notice length comes from the appointment letter — 30, 60 or 90 days in most IT contracts — and notice recovery attracts no GST per CBIC Circular 178/10/2022-GST.",
   useCases: [

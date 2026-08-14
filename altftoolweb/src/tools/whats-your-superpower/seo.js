@@ -1,4 +1,12 @@
 const seo = {
+  title: "What's Your Superpower? 10-Question Personality Quiz",
+  metaDescription:
+    "10 questions map how you handle friends, pressure and risk to one of 8 powers — Telepathy to Time Control — with 4 strengths and 3 weaknesses each.",
+  steps: [
+    "Answer the 10 questions, four options each — the quiz advances automatically the moment you pick, with a Question N/10 progress bar on top.",
+    "Each option adds weighted points to the eight power scores — typically 2 to the power it fits best and 1 to a related one.",
+    "Get your top-scoring power — one of eight from Super Strength to Shapeshifting — with its strengths, weaknesses and a quote; 'Retake Quiz' starts over.",
+  ],
   intro:
     "What's Your Superpower? is a 10-question personality quiz that maps how you handle friends, pressure and risk onto one of eight powers — Super Strength, Telepathy, Invisibility, Flight, Time Control, Super Speed, Healing Touch or Shapeshifting. Each answer adds weighted points to two powers at once, and the highest total after 10 questions is your result. You get a profile of that power with four strengths and three weaknesses, so it names the downside of your style as well as the upside.",
   useCases: [

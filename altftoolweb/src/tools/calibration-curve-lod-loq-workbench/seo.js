@@ -1,4 +1,12 @@
 const seo = {
+  title: "LOD & LOQ Calculator: 3.3σ/10σ Calibration Curve",
+  metaDescription:
+    "Fits your concentration | response pairs by least squares, then returns LOD = 3.3σ/slope and LOQ = 10σ/slope with slope, intercept, R² and residuals.",
+  steps: [
+    "Paste one standard per line into the Calibration points textarea in concentration x | response y form — it opens with a six-point curve running 0 | 0.02 to 5 | 5.11, and needs at least three valid pairs whose x values vary.",
+    "Set the LOD sigma factor and LOQ sigma factor number fields (3.3 and 10 by default, so entering 3 reproduces the 3σ convention), or press the Six-point curve chip under Examples; the fit recomputes on every keystroke.",
+    "Read the LOD · LOQ result line above the y = slope·x + intercept caption, the Slope, Intercept, Residual SD, R² and Points rows, and the x / y / Fitted y / Residual table. Download saves calibration-curve-lod-loq-workbench.txt and Reset restores the defaults.",
+  ],
   intro:
     "This workbench fits a straight calibration line to your concentration/response pairs by unweighted ordinary least squares, then derives detection limits from the scatter around that line: LOD = 3.3 × σ ÷ |slope| and LOQ = 10 × σ ÷ |slope|, the sigma-factor convention used in ICH Q2. σ here is the residual standard deviation, √(Σresiduals² ÷ (n − 2)). You paste one \"concentration | response\" pair per line and get the slope, intercept, R², residual SD and a per-point residual table alongside the two limits.",
   useCases: [

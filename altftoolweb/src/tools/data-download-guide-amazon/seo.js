@@ -1,4 +1,7 @@
 const seo = {
+  title: "Download Your Amazon Data: Categories, Size & Timeline",
+  metaDescription:
+    "Plan an Amazon data request: pick categories, estimate archive size from your usage, and catch the confirmation email that quietly cancels requests.",
   intro:
     "This guide plans an Amazon data request from Account → Data Privacy, estimating the archive size from your own order volume, Alexa usage and years as a customer, and rating each category for what it exposes. Amazon states a request can take up to 30 days, and it only queues the request after you click the confirmation link it emails you — the step most abandoned requests fail at. Categories range from orders and payments to Alexa voice recordings, advertising audiences and Kindle reading activity.",
   useCases: [

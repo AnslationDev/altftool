@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ride-Hailing App Permissions: What to Revoke Now",
+  metaDescription:
+    "Score 16 cab-app permissions by sensitivity: background location, contacts and microphone are optional, call logs and calendar score full exposure.",
+  steps: [
+    "Enter the app in App name (for the report), then answer How do you want to enter permissions? with Checklist or Paste list.",
+    "Under Permissions and settings this app currently holds, tick what is granted, or start from Typical cab app, Everything granted or Clear all.",
+    "Read the Privacy score out of 100 with its Verdict band, then work through Revoke these first, Worth reviewing and Justified - but know what they see.",
+  ],
   intro:
     "The Ride Hailing App Permission Audit separates the safety features you chose from the data collection you did not. Sixteen permissions are weighted by sensitivity, with precise location scored as genuinely core and the harder cases — background location, microphone for in-trip audio recording, contacts for emergency contacts and trip sharing — scored as optional, worth keeping only if you actually use them. Call logs, calendar and Bluetooth scanning have no ride-hailing use at all and score as full exposure.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "WhatsApp Privacy Checklist: 27 Settings, Scored",
+  metaDescription:
+    "Audit 27 WhatsApp privacy settings — last seen, groups, link previews, IP protection, encrypted backup — and see a weighted Protection score.",
+  steps: [
+    "Answer 'Who are you locking this down for?' to pick a risk profile, then set the Target score (%) field.",
+    "Work through the 27 settings, ticking each one you have applied; every row shows Where to find it and If you skip it.",
+    "Read the Protection score, the Critical settings still open count and the Shortest route to your target list, then press Copy result.",
+  ],
   "intro": "This checklist covers the 27 WhatsApp settings that decide what someone with your number can see, who can add you to groups, what traces your messages leave and whether your cloud backup is readable by anyone but you. Message content is end-to-end encrypted by default; last seen, the online indicator, your profile photo, group membership, link previews, call IP address and the iCloud or Google Drive backup are not, and each has its own control. Pick the risk profile that matches your situation and the score re-weights accordingly.",
   "useCases": [
     "Stop an ex or a persistent contact watching your online status and last-seen time in real time.",

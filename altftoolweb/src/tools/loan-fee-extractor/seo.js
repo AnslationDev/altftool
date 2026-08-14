@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Agreement Fee Extractor: Find Hidden Charges",
+  metaDescription:
+    "Paste loan agreement text to sort every fee clause into six categories: processing, late payment, prepayment, rate reset, insurance, collection.",
+  steps: [
+    "Paste the agreement into the \"Loan agreement text\" box and set the \"Currency label\" field, which defaults to INR.",
+    "Leave \"Show extracted clause snippets\" switched on so each match keeps up to 240 characters of its source sentence.",
+    "Read the Type, Amount / rate and Context table, then press Download to save it as loan-fee-extractor.txt.",
+  ],
   intro:
     "The Loan Fee Extractor scans pasted loan agreement text sentence by sentence and pulls out every clause that mentions a charge, penalty or rate reset, sorting the matches into six categories: processing and origination, late payment, prepayment and foreclosure, rate reset, insurance and add-ons, and collection or bounce charges. For each match it also lifts the numeric amount or percentage from the sentence and shows the surrounding clause snippet, capped at 240 characters. It is for borrowers who want a fast map of where the money leaks in a long agreement before they read it line by line.",
   useCases: [

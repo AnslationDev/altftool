@@ -1,4 +1,12 @@
 const seo = {
+  title: "Retake IELTS, TOEFL, PTE or Duolingo? Hours vs Weeks",
+  metaDescription:
+    "Prices your score gap at ~200 guided hours per CEFR level and compares it with the hours your deadline leaves: realistic, tight, or reconsider.",
+  steps: [
+    "Pick \"Which test did you take?\" — IELTS (0–9), TOEFL iBT (0–120), PTE Academic (10–90) or Duolingo English Test (10–160) — then enter your \"Current overall score\" and \"Target score\" on that scale.",
+    "Enter \"Weeks until you need the score\" and \"Realistic study hours per week\"; the gap is converted to band equivalents (15 TOEFL points, 10 PTE points or 25 Duolingo points to a band) and priced at 200 study hours per band.",
+    "The Recommendation headline reads \"Retake — realistic\", \"Retake — but it will be tight\", \"Reconsider the plan\" or \"Not feasible as planned\", over rows for Score gap, Band-equivalent gap, Estimated study hours needed, Study hours available and \"Weeks needed at this pace\"; Copy result copies it.",
+  ],
   intro:
     "This helper tells you whether retaking IELTS, TOEFL iBT, PTE Academic or the Duolingo English Test is realistic by comparing the study hours your score gap needs against the hours you actually have before your deadline. It prices improvement using the Cambridge English guideline of roughly 200 guided study hours per CEFR level (about one IELTS band), converting TOEFL, PTE and Duolingo gaps to band equivalents via the published score concordances. It is built for applicants who missed a university's language requirement and must decide between rebooking, delaying an intake or changing programme.",
   useCases: [

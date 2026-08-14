@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Milestone & Vaccine Vault: Private Local Log",
+  metaDescription:
+    "Log first steps, first words and shot dates as entries kept in your browser's local storage - searchable, deletable and exportable as JSON.",
+  steps: [
+    "Write the shot or milestone into the Milestone or vaccine box and the date into Date and details.",
+    "Press Add record — the entry is written to this browser's local storage and appears under Saved records, which the Search records box filters across both fields.",
+    "Press Export JSON to save every record as kids-milestone-vaccine-vault.json; Import JSON reads that file back into another browser, replacing what is stored there.",
+  ],
   intro:
     "The Kids Milestone & Vaccine Vault is a private log where each entry has two fields — the milestone or vaccine, and the date and details — kept in your own browser's local storage rather than on a server or in an account. You can search across every saved entry, delete individual records, and export the whole set as a JSON file you can back up or import into another browser. It is for parents who want one running record of first steps, first words and shot dates without handing that information to an app.",
   useCases: [

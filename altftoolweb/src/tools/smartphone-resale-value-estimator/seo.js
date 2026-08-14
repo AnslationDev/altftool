@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smartphone Resale Value Estimator by Age & Condition",
+  metaDescription:
+    "Estimate a used phone's worth from launch price, months of age, grade, storage and demand — with instant trade-in and patient private-sale figures.",
+  steps: [
+    "Enter 'Launch price of your variant (INR)' and 'Age (months since you bought it)', then choose a Condition from Sealed / unused down to Cracked glass (×0.38).",
+    "Pick a Storage variant and 'Resale demand for the brand', and tick what applies under 'What else is true of it', such as 'Manufacturer warranty still valid' at +6% or 'Battery health below 80% / replacement due' at -9%.",
+    "Read 'Estimated value today' with the Instant trade-in and 'Patient private sale' figures, plus 'Losing per month' and 'Losing per day', and press Change under 'Depreciation assumptions' to edit the first-year drop.",
+  ],
   intro:
     "This estimator works out what a used smartphone is worth by taking its launch price and multiplying it through a declining-balance retention curve for age, a cosmetic grade factor, a storage-variant factor, a brand-demand factor and additive adjustments for the box, bill, warranty, battery health and repair history. The default curve assumes 45% of value goes in the first year and 30% of the remainder each year after, which is roughly how organised buyback grids are shaped. Every factor is shown and can be replaced with numbers from a real quote.",
   useCases: [

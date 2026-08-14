@@ -1,4 +1,12 @@
 const seo = {
+  title: "Refinance Savings Calculator: Break-Even Month",
+  metaDescription:
+    "Amortise your current loan against a refinance offer, net off processing, legal, valuation and foreclosure costs, and see the break-even month.",
+  steps: [
+    "Fill in Current Outstanding Balance, Current Interest Rate and Remaining Tenure, or press Load Sample to start from the worked scenario.",
+    "Enter New Interest Rate and New Tenure, then the switch costs: Processing Fee, Legal Charges, Valuation Charges, Prepayment Penalty, Cashback / Waiver and Tax Benefit Impact.",
+    "Read New EMI, Net Savings and Break-even Month in the Refinance Verdict panel, then press Copy Summary or Export CSV to save refinance-savings.csv.",
+  ],
   intro:
     "The Refinance Savings Calculator amortises your existing loan and a proposed refinance offer month by month using the standard EMI formula, then subtracts the full switching cost to show what you actually keep. It is for borrowers holding a balance-transfer offer who want to know whether a lower rate survives the processing fee, legal and valuation charges, and the foreclosure penalty on the outstanding balance. You get the new EMI, total interest on each loan, net savings after costs, and the break-even month at which the cheaper EMI has repaid the switch.",
   useCases: [

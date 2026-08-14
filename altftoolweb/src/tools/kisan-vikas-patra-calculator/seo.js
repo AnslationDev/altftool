@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kisan Vikas Patra: 115-Month Doubling at 7.5%",
+  metaDescription:
+    "KVP maturity value and the exact doubling period from ln(2)/ln(1+r), with a year-by-year table. Notified rate 7.5% p.a. over 9 years 7 months.",
+  steps: [
+    "Enter \"Amount invested (₹)\", the \"Interest rate (% p.a., compounded yearly)\" and the \"Holding period (months)\".",
+    "Press \"Use notified 7.5% / 115 months\" to snap both fields back to the currently notified combination.",
+    "Read the Maturity value with the amount invested and interest earned, scan the year-by-year balance table, then press Copy result.",
+  ],
   intro:
     "Kisan Vikas Patra is a Government of India savings certificate whose tenure is fixed so the money invested comes back exactly doubled, and this calculator works out both halves of that promise: the maturity value for any amount and the exact doubling period implied by the rate. It applies annual compounding, solving ln(2) / ln(1 + r) for the doubling time, and uses the notified 7.5% per annum rate with its 115-month (9 years 7 months) tenure as the starting point. Useful if you are choosing between KVP and a bank fixed deposit, or checking what an older certificate bought at a different quarterly rate will pay out.",
   useCases: [

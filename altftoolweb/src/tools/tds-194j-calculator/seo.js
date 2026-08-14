@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS Calculator Section 194J: 10%, 2% and No-PAN 20%",
+  metaDescription:
+    "Works out 194J TDS on professional or technical fees at 10% or 2%, applies the yearly aggregate exemption limit, and the 206AA 20% rate without PAN.",
+  steps: [
+    "Choose the 'Nature of payment' — each option shows its 10% or 2% rate — and the 'Financial year', which sets the Rs 50,000 or Rs 30,000 threshold.",
+    "Enter 'Amount being paid or credited now (INR)' and 'Already paid to this payee this year (INR)', and untick 'Payee has furnished a valid PAN' if none is on file.",
+    "Read 'TDS to deduct now' with the rate applied, the yearly aggregate and 'Net amount payable to the payee', then press 'Copy result'.",
+  ],
   intro:
     "This calculator works out the tax deductible at source under section 194J of the Income-tax Act on fees for professional services, fees for technical services, royalty, non-compete payments and director's remuneration. It applies the 10% general rate and the 2% rate reserved for technical services, film-distribution royalty and call-centre payments, tests the yearly aggregate against the exemption limit in the first proviso, and switches to the 20% section 206AA rate when no PAN is on file. Useful for accounts teams cutting vendor payments and for freelancers checking the deduction on their own invoice.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "HP to kW Converter: 200 hp = 149.14 kW, PS and BTU/h",
+  metaDescription:
+    "Converts on the exact 745.6998716 W and 735.49875 W definitions, keeps metric PS apart from hp, and adds drivetrain loss and power per tonne.",
+  steps: [
+    "Type the figure into \"Power value\" and pick its \"Unit of that value\" — kilowatts, mechanical horsepower, metric PS, watts, electrical horsepower, BTU/h, ft·lbf/s, kgf·m/s or boiler horsepower.",
+    "Choose a \"Drivetrain (for crank vs wheel power)\", from no loss up to All-wheel drive automatic at about 25%, and optionally add \"Vehicle weight (optional)\" in kilograms or pounds.",
+    "The headline gives the kilowatt figure — 200 hp reads 149.14 kW — with every other unit listed under it, plus \"Crank versus wheel power\" and \"Power-to-weight\" in hp, kW and PS per tonne; \"Copy result\" copies the lot.",
+  ],
   intro:
     "This converter moves a power figure between mechanical horsepower, metric PS, kilowatts, watts, BTU/h and related units using their exact definitions rather than rounded factors: mechanical horsepower is 550 ft·lbf/s = 745.6998716 W, metric horsepower is 75 kgf·m/s = 735.49875 W, and electrical horsepower is defined as exactly 746 W. It also separates crankshaft power from wheel power using a drivetrain-loss allowance, and reports power-to-weight in hp, kW and PS per tonne. Built for anyone comparing a German PS figure against a US horsepower figure, or a dyno printout against a manufacturer's claim.",
   useCases: [

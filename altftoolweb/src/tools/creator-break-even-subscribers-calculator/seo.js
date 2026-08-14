@@ -1,4 +1,12 @@
 const seo = {
+  title: "Break-Even Subscribers Calculator for Paid Memberships",
+  metaDescription:
+    "How many members cover your monthly costs after platform %, processing % and the flat per-payment charge, blended across tiers, with churn replacements.",
+  steps: [
+    "Enter 'Monthly production costs (INR)', 'Platform fee (% of pledge)', 'Payment processing (%)', 'Flat processing charge per payment (INR)', 'Monthly churn (%)' and 'Net new members a month'.",
+    "Under 'Tiers and the mix of members' give each tier a Tier name, 'Price a month (INR)' and 'Share of members (%)'; the header shows 'Shares total N%' and turns red until it reaches 100. 'Add a tier' goes up to six tiers and Remove deletes one.",
+    "Read 'Paying members needed to break even' with the net value of one member underneath, then 'Share of a pledge you keep', 'Fees lost each month at that size' and 'Replacements needed each month for churn'. 'Check a target' takes a member count and reports the net income and what is left after production costs.",
+  ],
   intro:
     "Break-even membership count is your monthly production cost divided by what one member is actually worth after fees, where net per member equals price multiplied by (1 minus the platform rate minus the processing rate) minus the flat processing charge. This calculator blends several tiers by the share of members on each, then adds the churn replacements you must recruit every month just to stand still. Built for creators launching a membership and deciding whether the tier prices they picked can ever cover the work.",
   useCases: [

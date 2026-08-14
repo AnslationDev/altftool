@@ -1,4 +1,12 @@
 const seo = {
+  title: "Is My Child Ready for a Phone? 14-Question Quiz",
+  metaDescription:
+    "Scores 14 weighted questions about observable behaviour, not age, then names the weakest area, a device tier and the rules to start with.",
+  steps: [
+    "Enter Child's age (years), 5 to 17 — age decides the device tier and whether social accounts are allowed, while the score itself comes from behaviour.",
+    "Answer all fourteen questions grouped under Self-regulation, Responsibility, Online judgement, Practical need and Household readiness, choosing Rarely or never, Sometimes, Usually or Consistently.",
+    "Read the Readiness score with its Verdict, Suggested device, Weakest area and Review together every rows, then press Copy result to take the Starting rules for this result away as text.",
+  ],
   intro:
     "This quiz scores a child's readiness for a first phone from fourteen weighted questions about behaviour a parent can actually observe — handing a device back without a fight, telling you when something goes wrong, knowing what not to share — rather than from their age. Four of those questions are treated as safety fundamentals and hold the recommendation back even when the total is high. The result gives a percentage, the weakest area, a suggested device tier and a set of starting rules, including the fact that mainstream social platforms set 13 as their minimum age.",
   useCases: [

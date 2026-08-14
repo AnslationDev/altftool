@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL WHERE Clause Builder: AND/OR Groups, IN, NULL",
+  metaDescription:
+    "Compose AND/OR groups with =, LIKE, IN, BETWEEN and IS NULL into a parenthesised WHERE clause with inline literals or ?, $1, :name or @name binds.",
+  steps: [
+    "Choose a Parameter style — \"Inline literals ('value')\", '? — JDBC / SQLite / MySQL', '$1, $2 — PostgreSQL', ':name — Oracle / SQLAlchemy' or '@name — SQL Server / BigQuery' — and set 'Join groups with' to AND or OR.",
+    "In each Group set 'Conditions joined with', then fill Column, Operator (from '= equals' through 'IN list', 'BETWEEN two values' and 'IS NOT NULL'), the Value and a Value type of Text, Number or 'Column / raw SQL'; 'Add condition' and 'Add group' extend the builder.",
+    "The 'Generated WHERE clause' panel updates live with multi-condition groups parenthesised and lists the Conditions count and Bind parameters — press 'Copy clause' to take the SQL, or Reset to restore the starting groups.",
+  ],
   intro:
     "This builder composes SQL WHERE clauses visually from AND/OR condition groups, covering all the standard predicates — comparisons, LIKE, IN lists, BETWEEN ranges and IS NULL checks — and parenthesising groups correctly because AND binds tighter than OR in every SQL engine. Values can be emitted as safely escaped inline literals or as bind parameters in ?, $1, :name or @name style to match JDBC, PostgreSQL, Oracle or SQL Server conventions. It is for developers and analysts assembling non-trivial filters without hand-balancing parentheses.",
   useCases: [

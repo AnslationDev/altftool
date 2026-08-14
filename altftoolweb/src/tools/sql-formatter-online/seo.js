@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL Formatter Online: Clause-Per-Line, No Upload",
+  metaDescription:
+    "Split a one-line query onto SELECT, FROM, WHERE and JOIN lines with 1-8 space indent and your keyword case. Tokenized in your browser, never uploaded.",
+  steps: [
+    "Paste your query into the \"SQL to format\" box, which starts on a sample SELECT with JOIN, GROUP BY, HAVING and ORDER BY crammed onto single lines.",
+    "Set \"Indent width (spaces)\" to anything from 1 to 8 and \"Keyword case\" to UPPERCASE, lowercase or \"Leave as typed\".",
+    "The Formatted panel prints the clause-per-line query with Statements, SELECT clauses, Tokens and the minified length beside it; \"Copy SQL\" takes the formatted text and \"Copy one-line\" takes the One-line version.",
+  ],
   intro:
     "A SQL formatter rewrites the whitespace in a query so each clause starts on its own line and every list item is indented consistently, without changing a single token. This one tokenizes the statement using SQL:2016 lexical rules — single-quoted literals with '' doubling, double-quoted and backtick identifiers, -- line comments and /* */ blocks — then re-emits it with SELECT, FROM, WHERE, GROUP BY, HAVING and ORDER BY on their own lines and JOIN, AND and OR indented under them. It runs entirely in your browser, so the query is never uploaded.",
   useCases: [

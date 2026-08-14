@@ -1,4 +1,12 @@
 const seo = {
+  title: "Google Sheets AI Prompt Builder with A1 Ranges",
+  metaDescription:
+    "Name the tab, range and headers once: get a prompt with correct A1 quoting, each header's column letter and QUERY Col index, and the cell budget checked.",
+  steps: [
+    "Enter the \"Tab name\", the \"Range (A1 notation)\" in a form such as A1:E500, A2:E or A:E, and the \"Header row number\".",
+    "List your \"Column headers, left to right\" separated by commas or new lines, set \"What should the assistant do?\" and \"Where should the answer go?\", and tick \"The header row is frozen\" if it is.",
+    "\"Full reference\" prints the correctly quoted A1 reference against the 10,000,000-cell budget, with size, data rows, headers named and prompt length listed; \"Copy prompt\" copies the finished prompt.",
+  ],
   intro:
     "Google Sheets AI Prompt Builder writes a spreadsheet-assistant prompt that names the tab, the A1 range, the header row and every column — quoting the tab name the way A1 notation requires and mapping each header to both its column letter and its QUERY Col index. The range is measured against the real Google Sheets limits: 10,000,000 cells per spreadsheet, 18,278 columns per sheet ending at ZZZ, and 50,000 characters per cell. It suits anyone whose AI answers reference columns that do not exist or break the moment a tab name contains a space.",
   useCases: [

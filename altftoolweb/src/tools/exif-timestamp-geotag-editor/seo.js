@@ -1,4 +1,12 @@
 const seo = {
+  title: "EXIF Date & GPS Editor: JSON Sidecar, No Rewrite",
+  metaDescription:
+    "Records corrected EXIF dates and coordinates as a filename.altftool-sidecar.json file. Original image bytes stay untouched; apply with ExifTool.",
+  steps: [
+    "Choose the photo under 'Local file(s)' — only the first file you select is processed.",
+    "Type the corrected date in EXIF's YYYY:MM:DD HH:MM:SS form and signed decimal coordinates into 'Characters, metadata edits, or processing notes', then press 'Run local workbench'.",
+    "The browser downloads yourphoto.jpg.altftool-sidecar.json holding source, requestedEdits, generatedAt and a warning that the original bytes are unchanged.",
+  ],
   intro:
     "The EXIF Timestamp & Geotag Editor records the date and coordinate changes you want made to a photo as a JSON sidecar file, saved alongside the original as filename.altftool-sidecar.json. It deliberately does not rewrite the image's own EXIF block: browsers cannot safely repack every maker-note and sub-directory structure a camera writes, so instead of corrupting the file it produces an explicit, machine-readable record of the intended edits. Each sidecar carries four fields — the source filename, the edits you typed, an ISO 8601 generation timestamp, and a warning that the original bytes are untouched.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tokens to Words Converter: Budget to Words and Pages",
+  metaDescription:
+    "Turn an LLM token budget into words, pages and reading time at ~0.75 words per token, with presets for prose, technical text, other languages and code.",
+  steps: [
+    "Type a figure into Token budget, or tap one of the presets: 1,024, 4,096, 8,192, 32,768 or 128,000.",
+    "Pick a Content type — Plain English prose, Technical / jargon-heavy writing, Non-English European language or Source code / JSON — and a Page convention of single-spaced (~500 words) or double-spaced (~250 words).",
+    "Read \"Approximate words\" with the character count, page count and reading time at 238 words/min, then press Copy result.",
+  ],
   intro:
     "This converter turns an LLM token budget into an approximate word count, page count and reading time, based on the documented rule of thumb that 1 token equals about three-quarters of an English word (4 characters). It helps writers, students and developers answer the practical question behind every context window and max-token setting: how much actual text does this budget hold? Presets adjust the ratio for technical writing, non-English languages and source code, which all tokenize more heavily than plain prose.",
   useCases: [

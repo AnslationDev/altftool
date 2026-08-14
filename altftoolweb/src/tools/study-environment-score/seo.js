@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Environment Score: Rate 6 Weighted Factors",
+  metaDescription:
+    "Rates phone placement, noise, desk, lighting, clutter and temperature 0-5, weights them into a score out of 100 and ranks the top fixes.",
+  steps: [
+    "Slide each of the six factor sliders from 0 to 5 — phone placement carries the largest weight at 25 points.",
+    "Read the Environment score out of 100 and the 'Fix these first' list, ranked by how many points each fix recovers.",
+    "Change one factor and re-rate to see the points recovered, then use Copy result to export the breakdown.",
+  ],
   intro:
     "This tool scores a study environment out of 100 by rating six factors — phone placement, noise, desk and chair, lighting, clutter, and temperature — each on a 0-5 scale and weighting them (score = Σ weight × rating/5). Phone placement carries the largest weight (25 points) because it is the distractor students most often log, and the result ranks which fixes would recover the most points. It is for students setting up or troubleshooting a home, hostel or library study space.",
   useCases: [

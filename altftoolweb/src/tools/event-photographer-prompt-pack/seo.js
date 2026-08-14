@@ -1,4 +1,12 @@
 const seo = {
+  title: "Event Photographer Prompt Pack and Shoot Planner",
+  metaDescription:
+    "10 fill-in-the-blank prompts for shot lists, client emails and gallery copy, plus a planner for frames, cards, 3-2-1 archive and edit hours.",
+  steps: [
+    "Under Card, storage and edit-time planner enter Shoot length (hours), Frames per hour (all cameras), Average RAW file size (MB), Card capacity as printed (GB), Share of frames delivered (%), Editing minutes per delivered image and Copies you keep (3-2-1 rule)",
+    "Under Prompt library narrow the 10 prompts with Search prompts or the Category dropdown — Shot lists, Client emails, Gallery copy, Operations or Difficult conversations — then select a card and complete its variables under Fill in the blanks",
+    "The planner reports Frames expected, RAW written, Frames per card on a usable GiB card, Cards to carry, Archive across all copies and Editing time; Copy plan and Copy prompt each write to the clipboard, Clear fields empties the variables and Reset restores the planner and prompt",
+  ],
   intro:
     "Event Photographer Prompt Pack pairs a shoot planner with a library of fill-in-the-blank AI prompts for shot lists, client emails and gallery copy. The planner takes your shoot length, frames per hour and average RAW size and returns the frames you will shoot, how many cards to carry, how much archive space three copies will need under the 3-2-1 backup rule, and how many hours the edit will take at your own minutes-per-image. The prompts cover wedding and corporate shot lists, booking confirmations, pre-event questionnaires, delivery emails, pricing replies and the difficult conversations about weather and disappointment.",
   useCases: [

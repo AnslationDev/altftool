@@ -1,4 +1,12 @@
 const seo = {
+  title: "Charger Wattage Calculator: Volts x Amps, Cable Cap",
+  metaDescription:
+    "Multiply your charger's V x A, clip it to the cable rating and device limit, then get usable watts, charge time and the USB-C PD profile.",
+  steps: [
+    "Under Device Battery enter 'Battery capacity' with its 'Capacity unit', 'Battery nominal voltage' and 'Device max accepted watts'.",
+    "Under Charger Label enter 'Voltage (V)', 'Current (A)', 'Cable current limit (A)' and 'Efficiency (%)', then drag the Start battery and Target battery sliders.",
+    "Read Rated Output, After Cable Limit, Usable Power and Charge Time with the detected USB-C PD profile, then use 'Copy Summary' or export CSV as charger-wattage-calculator.csv.",
+  ],
   intro:
     "Charging power is simply volts times amps, and the speed you actually get is the lowest of three ceilings: what the charger is rated for, what the cable can carry, and what the device will accept. This calculator multiplies your charger's V x A label, clips that figure to your cable's current rating and the device's own power limit, applies a conversion-loss factor (86% by default) and then estimates how long it will take to move the battery from its current percentage to your target. It also names the USB Power Delivery profile the voltage corresponds to and flags heat risk when you sit near the device ceiling.",
   useCases: [

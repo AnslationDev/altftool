@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vendor Data Inventory: GDPR Article 30 in 8 Columns",
+  metaDescription:
+    "Turn one pipe-separated line per vendor into a register of purpose, data categories, people, location, retention, DPA and owner, with gaps counted.",
+  steps: [
+    "Paste one record per line into \"Records (one per line)\", separating Vendor, Purpose, Data categories, People, Location, Retention, DPA / terms and Owner with the | character.",
+    "Leave \"Require complete rows\" switched on so \"Flag missing columns\" counts every line that is short of the eight fields or has a blank one.",
+    "\"Structured inventory\" returns the eight-column table with missing cells shown as —, plus Complete rows, Needs review and Columns tiles; the table renders the first 100 records, and Copy and Download export only what is shown.",
+  ],
   intro:
     "The Vendor Data Processing Inventory turns one line per vendor into a structured eight-column register — Vendor, Purpose, Data categories, People, Location, Retention, DPA / terms and Owner — and counts how many rows are complete versus how many are still missing a field. It is the shape a record of processing activities takes under GDPR Article 30: who processes personal data for you, why, whose data, where it sits, how long it is kept, and under which contract. It is for whoever has been handed the job of listing every SaaS tool that touches customer or staff data before an audit, a security questionnaire or a DPA review.",
   useCases: [

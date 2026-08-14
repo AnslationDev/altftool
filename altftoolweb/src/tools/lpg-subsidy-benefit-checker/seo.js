@@ -1,4 +1,12 @@
 const seo = {
+  title: "LPG Subsidy Checker: Ujjwala ₹300 & the 12-Refill Cap",
+  metaDescription:
+    "Enter your city's cylinder price to see the effective cost after the ₹300 PMUY subsidy, your yearly bill, and where the 12-refill cap bites.",
+  steps: [
+    "Enter the Cylinder price in your city (INR), pick a Cylinder size — 14.2 kg (standard domestic) or 5 kg (small domestic) — the Consumer type and Refills bought in a year; PMUY users can adjust the Subsidy per 14.2 kg refill.",
+    "Read what a subsidised cylinder actually costs — counter price minus the DBT credit — plus gross yearly spend, net yearly cost, net cost per kg, and how many refills fall outside the annual cap.",
+    "Check 'Can this household get a PMUY connection?' — the adult-woman, existing-connection and household-category tests each show a pass or fail — then press Copy result.",
+  ],
   intro:
     "This checker turns the LPG price on your bill into what the cylinder actually costs after the subsidy is credited back by DBT. Domestic LPG has been sold at market price since the PAHAL scheme began, with any subsidy transferred to the consumer's bank account afterwards, and PMUY beneficiaries receive a targeted subsidy per 14.2 kg refill capped at twelve refills a year. Enter your city price and how many cylinders you buy to see the effective price, the yearly bill and where the refill cap bites.",
   useCases: [

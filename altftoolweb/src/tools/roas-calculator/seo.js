@@ -1,4 +1,12 @@
 const seo = {
+  title: "ROAS Calculator with Break-Even ROAS & Profit Check",
+  metaDescription:
+    "Revenue ÷ spend is only half the story — enter your margin to get break-even ROAS (3.33× at 30%), estimated profit, ROI and CPA/CPC/AOV/CR.",
+  steps: [
+    "In the 'ROAS Calculator' tab enter 'Ad spend' and 'Campaign revenue' (currency PLN, INR, USD or EUR) and set 'Gross margin (%)' with the slider or a 15–70% preset.",
+    "Press 'Add optional data: conversions and clicks' to include Conversions and Clicks for the funnel metrics.",
+    "Read the ROAS, ROI and Break-even ROAS cards plus the estimated result after costs; 'Show supporting metrics: CPA, CPC, AOV and CR' reveals the rest.",
+  ],
   intro:
     "The ROAS Calculator divides attributed revenue by ad spend to give Return on Ad Spend, then uses your product margin to work out the break-even ROAS — 1 ÷ net margin — that separates a campaign that looks good from one that actually makes money. At a 30% net margin the break-even is 3.33×, so a 2.5× ROAS is a loss even though the ads returned more revenue than they cost. It is for performance marketers and store owners who need the profit answer, not just the revenue multiple.",
   useCases: [

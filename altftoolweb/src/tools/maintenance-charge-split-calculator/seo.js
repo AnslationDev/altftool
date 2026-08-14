@@ -1,4 +1,12 @@
 const seo = {
+  title: "Society Maintenance Split: Landlord vs Tenant Share",
+  metaDescription:
+    "Split a society bill across 13 Bye-law 68 heads with an editable landlord % each, and check non-occupancy against the 10% of service charges cap.",
+  steps: [
+    "Type each head of the monthly society bill under Amount / month — property tax, water, sinking fund, lift and the rest.",
+    "Set Landlord share (%) per head, or apply a Split preset such as Bye-law convention or Tenant pays all usage heads, and pick Project over (months).",
+    "Tenant pays every month appears with the landlord figure, both sides over the projection period, and the 10% non-occupancy cap check.",
+  ],
   intro:
     "The Maintenance Charge Split Calculator divides a housing society bill head by head between the flat owner and the tenant, then reports each side's monthly and annual total. It uses the heads of charge listed in Bye-law 68 of the Model Bye-laws for Co-operative Housing Societies — property tax, water, common electricity, repair fund, sinking fund, service charges, lift, parking, non-occupancy, insurance, lease rent and the education fund — with an editable landlord percentage for every head. It also checks non-occupancy charges against the 10%-of-service-charges ceiling.",
   useCases: [

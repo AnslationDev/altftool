@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chladni Plate Simulator: Nodal Patterns by Frequency",
+  metaDescription:
+    "Set drive frequency, plate side, thickness and material - steel, aluminium, brass, glass or acrylic - to draw the Chladni figure from thin-plate theory.",
+  steps: [
+    "Enter the \"Drive frequency (Hz)\" and pick a Plate material — Mild steel, Aluminium 6061, Brass, Soda-lime glass or Acrylic (PMMA).",
+    "Set \"Plate side (mm)\" and \"Thickness (mm)\", then move the \"Damping ratio\" slider to sharpen or flatten the resonance peak.",
+    "Read the Nearest plate mode (m, n), its resonant frequency and the Fundamental (1,1) row beside the rendered Chladni canvas, then press Copy summary.",
+  ],
   intro:
     "A cymatics simulator draws the Chladni figure a vibrating plate produces: the set of lines where the standing wave has zero displacement, which is exactly where sand collects. Plate resonances come from Kirchhoff-Love thin-plate theory — f(m,n) = (pi/2) x sqrt(D / rho h) x [(m/L)^2 + (n/L)^2], with flexural rigidity D = E h^3 / 12(1 - v^2) — and the figure is the nodal set of the classic two-term Chladni superposition. It is for physics teachers, students and makers planning a real Chladni plate before cutting metal.",
   useCases: [

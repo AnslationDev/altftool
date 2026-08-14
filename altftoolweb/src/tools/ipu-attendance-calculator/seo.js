@@ -1,4 +1,12 @@
 const seo = {
+  title: "IPU Attendance Calculator: 75% Rule, Subject-Wise",
+  metaDescription:
+    "Per-subject GGSIPU attendance against the 75% bar, how many of the classes left you must attend, how many you can skip, and the condonation bands.",
+  steps: [
+    "For each paper enter Classes held, Classes attended and 'Classes still to come', adding papers with the 'Add another subject' button.",
+    "Leave 'Attendance required per subject (%)' at 75 unless your institute says otherwise; the panel beside it sets out the Dean/Director's 5-point condonation and the Vice-Chancellor's further 5 points.",
+    "'Overall attendance so far' and a 'Subject by subject' table appear at once, giving Now, Must attend, Can skip and Best possible per paper plus the weakest subject; Copy result copies the summary.",
+  ],
   intro:
     "This calculator works out your GGSIPU attendance one subject at a time — attended ÷ held × 100 — and compares each paper against the University's 75% requirement for sitting the end-term examination. Because IPU judges attendance per subject rather than as a semester average, it also computes how many of the classes still scheduled you cannot afford to miss, and how many you can skip and still finish above the bar. It is built for IPU undergraduates tracking detention risk mid-semester, when there is still time to act.",
   useCases: [

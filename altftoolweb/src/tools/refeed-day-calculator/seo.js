@@ -1,4 +1,12 @@
 const seo = {
+  title: "Refeed Day Calculator: Carbs, Calories and Macros",
+  metaDescription:
+    "Mifflin-St Jeor maintenance with protein held constant and fat at a floor, giving refeed carb grams and what the day costs your weekly deficit.",
+  steps: [
+    "Enter sex, age, height (cm), body weight (kg), activity level and your Normal diet-day calories (kcal), then set Protein (g per kg body weight) and Refeed-day fat (g per kg body weight).",
+    "Pick a Refeed level and Refeed days per week (1, 2 or 3); maintenance comes from Mifflin-St Jeor plus the activity multiplier, protein stays fixed, fat drops to its floor and carbohydrate takes the remaining calories at 4 kcal per gram.",
+    "Read the refeed-day carbohydrate figure in grams, the 'Diet day vs refeed day' macro table, the 'What it costs the week' deficit maths and the upper-bound scale rise, then press 'Copy result'.",
+  ],
   intro:
     "A refeed day is a planned day at or slightly above maintenance calories where the extra energy comes almost entirely from carbohydrate. This calculator derives maintenance from the Mifflin-St Jeor equation plus an activity multiplier, holds protein constant, drops fat to a floor around 0.5 g per kg, and gives carbohydrate the remaining calories using the Atwater factors of 4, 4 and 9 kcal per gram. It also shows the weekly deficit before and after the refeed, so you can see exactly what the day costs in fat loss.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Customer Support Reply Prompts + Flesch Grade Check",
+  metaDescription:
+    "Score a draft reply with Flesch reading ease and Flesch-Kincaid grade, then build a rewrite prompt carrying your channel cap, tone and policy facts.",
+  steps: [
+    "Under \"What are you writing?\" pick one of the six jobs — Rewrite a macro, Soften the tone, Escalation summary, Decline a request, Apology with a remedy or Follow-up / closing note — then paste your text into Draft reply or ticket notes.",
+    "Set Channel (Email reply at 1200 chars through Public reply on X at 280), Tone, Target reading grade (4-14), and add anything binding under \"Policy and facts the reply may rely on\".",
+    "Draft reading grade appears with Flesch reading ease, average words per sentence, syllables per word and Draft length vs channel cap; Copy prompt takes \"Your rewrite prompt\" into any AI chat.",
+  ],
   intro:
     "Customer Support Prompt Pack scores a draft support reply with the Flesch Reading Ease and Flesch-Kincaid Grade Level formulas, then assembles a rewrite prompt that carries the score, your channel's character cap, your tone and your policy facts into any AI assistant. It covers the six jobs a support queue repeats daily: rewriting a macro, softening tone, summarising an escalation, declining a request, apologising with a remedy and closing the loop. Written for support agents, team leads and anyone maintaining a saved-reply library.",
   useCases: [

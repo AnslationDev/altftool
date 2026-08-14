@@ -1,4 +1,7 @@
 const seo = {
+  title: "Navy Body Fat Calculator (Neck, Waist, Hip Tape Method)",
+  metaDescription:
+    "US Navy circumference equations turn neck, waist and hip tapes into body fat % with a ±3.5-point range, ACE bands, lean mass, FFMI and a goal weight.",
   intro:
     "The Navy Body Fat Calculator estimates body fat percentage from height plus a neck and waist tape measurement for men, and neck, waist and hip for women, using the US Navy circumference equations developed by Hodgdon and Beckett at the Naval Health Research Center in 1984 and still used for the Department of Defense tape test. It runs both published forms of the equation — the metric 495/(1.0324 − 0.19077·log10(waist − neck) + 0.15456·log10(height)) − 450 for men and its imperial counterpart — and classifies the result against the American Council on Exercise bands, adding fat mass, lean mass, fat-free mass index and a goal weight if you supply your weight. It is informational only: the method's standard error against hydrostatic weighing is around 3.5 percentage points, so speak to a clinician or a registered dietitian before acting on the figure.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Runbook Template Generator: 8-Section Markdown",
+  metaDescription:
+    "Fill in the service, alert and severity and get an eight-section Markdown runbook — symptoms, diagnostic checks, remediation, rollback, escalation.",
+  steps: [
+    "Enter Service or system, Alert or failure mode and Owning team, then pick a Severity — SEV1 - Critical through SEV4 - Low, each carrying its own acknowledgement and update targets.",
+    "Fill Symptoms, Diagnostic checks and Remediation steps one per line, plus the optional Rollback steps, Escalation contacts, Dashboard URL, Log query and Last reviewed fields.",
+    "The preview assembles eight Markdown sections — Summary, Severity and response targets, Symptoms, Diagnostic checks, Remediation, Rollback / safety net, Escalation, After the incident — then press Copy Markdown to paste it beside your alert rule.",
+  ],
   intro:
     "A runbook template generator turns one alert into a structured Markdown document that tells a responder what they should be seeing, which checks to run in order, how to mitigate, and who to escalate to. It follows the alert-playbook structure recommended in the Google SRE Workbook — every page-worthy alert links to a runbook — and pairs each severity with acknowledgement and update targets from the usual four-level SEV ladder. Fill in the service, the alert and your own steps, then paste the output next to the alert rule in your repository.",
   useCases: [

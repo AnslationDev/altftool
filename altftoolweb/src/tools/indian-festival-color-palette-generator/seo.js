@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Festival Colour Palettes with WCAG Contrast",
+  metaDescription:
+    "Six-role palettes for Diwali, Holi, Onam, Pongal and Durga Puja, with a 50-900 tint ramp and every text pairing graded against 4.5:1 and 3:1.",
+  steps: [
+    "Choose a Festival — Diwali, Holi, Onam, Pongal, Durga Puja, Navratri, Eid, Baisakhi or Ganesh Chaturthi — and a Ground tone.",
+    "Set Hue rotation (degrees) between -180 and 180 to move the palette toward an existing brand colour.",
+    "Read \"Pairings meeting WCAG AA for body text\", then press Copy CSS for the 50-900 ramp or Copy result for the contrast audit.",
+  ],
   intro:
     "Indian Festival Colour Palette Generator produces a six-role palette — ground, surface, primary, secondary, accent and neutral — for Diwali, Holi, Onam, Pongal, Durga Puja, Navratri, Eid, Baisakhi and Ganesh Chaturthi, with swatches named after the materials each festival uses. Every palette ships with a 50-900 tint and shade ramp built by mixing the hero colour toward white and black in sRGB, plus a contrast audit of each text pairing against the WCAG 2.x thresholds of 4.5:1 for body text and 3:1 for large text. For designers producing festival campaigns who need colours that both look right and stay readable.",
   useCases: [

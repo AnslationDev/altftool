@@ -1,4 +1,12 @@
 const seo = {
+  title: "Internal Marks Calculator: Weighted Sessional Total",
+  metaDescription:
+    "Each component contributes (scored ÷ max) × weight% × internal max. Add your tests, assignments and attendance to get the exact and rounded internal.",
+  steps: [
+    "Set the 'Internal component maximum (marks)' field — it opens on 30 — or start from a preset button such as 'Mid-terms 60% + assignments 25% + attendance 15%'.",
+    "For every component fill in its name, Marks scored, 'Out of (maximum)' and 'Weight (% of internal)', using Add component and Remove so the weights match your university's scheme.",
+    "Internal marks shows as total / internal maximum with the percentage and the rounded figure usually recorded, and one breakdown line per component reading scored/max (percent) × weight; Copy result copies the breakdown.",
+  ],
   intro:
     "This calculator computes your internal assessment (sessional) marks by the weighted-percentage formula universities actually use: each component's score fraction times its weight, scaled to the internal maximum — contribution = (scored ÷ max) × weight% × internal max. Enter your mid-term tests, assignments and attendance with the weights from your university's scheme, and see the exact contribution of each component plus the rounded total that goes on record. Built for students tracking sessionals through the semester.",
   useCases: [

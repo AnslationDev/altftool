@@ -1,4 +1,12 @@
 const seo = {
+  title: "PDF Active Content Inspector: JS & OpenAction Cues",
+  metaDescription:
+    "Counts /JavaScript, /OpenAction, /Launch, /SubmitForm, /EmbeddedFile and more across nine categories in a PDF up to 20 MB. Nothing is decoded or run.",
+  steps: [
+    "Press Choose PDF and pick one local file, maximum 20 MB, carrying a %PDF- header in its first 1,024 bytes.",
+    "The bounded pass counts markers across nine categories; check Selected cues, Tokens inspected and Streams skipped for truncation warnings.",
+    "Press Export counts to save pdf-active-content-cue-counts.json, which holds tallies but no scripts, URLs or filename.",
+  ],
   intro:
     "The PDF Active Content Inspector counts the structural name markers that indicate a PDF can do something beyond display text — /JavaScript and /JS, /OpenAction and /AA, /Launch, /SubmitForm and /ImportData, /URI and /GoToR, /EmbeddedFile, /AcroForm and /XFA, /RichMedia and /Named — grouped into nine categories. It is a bounded lexical pass that reads the file's token structure only: stream bodies, comments and string values are skipped, and no script, action, URL, attachment or media is ever decoded, followed or executed. It is a triage aid for security, IT and document-handling teams, not a parser, sandbox or antivirus scanner.",
   useCases: [

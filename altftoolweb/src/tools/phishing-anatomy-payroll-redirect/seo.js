@@ -1,4 +1,12 @@
 const seo = {
+  title: "Payroll Bank-Change Request: Phishing Red Flags",
+  metaDescription:
+    "Score a salary bank-change email out of 100 on lookalike domains, Reply-To mismatch, no-call excuses and cut-off timing, and price one diverted cycle.",
+  steps: [
+    "Paste the From address, Reply-To address, your organisation's mail domain and the Message text of the bank-change request.",
+    "Answer Things only you can check: a different account name, arrival by email rather than the HR self-service portal, a refused phone call, payroll cut-off timing.",
+    "Read the Red-flag score out of 100 with its findings, enter Net pay per cycle for the exposure, then press Copy result for the verification steps.",
+  ],
   intro:
     "Payroll redirect fraud is a business email compromise in which someone impersonating an employee asks HR or payroll to pay their salary into a different bank account. This page scores a request against the signals that define the pattern — a personal or lookalike sender domain, a Reply-To that points elsewhere, an excuse for avoiding a phone call, timing against the payroll cut-off, and an account in a name that is not the employee's — and estimates what one undetected cycle costs. It is a checking aid for payroll and HR teams, not a substitute for calling the employee on the number already in your records.",
   useCases: [

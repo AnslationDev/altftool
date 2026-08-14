@@ -1,4 +1,12 @@
 const seo = {
+  title: "Furniture Layout Planner: Clearances and Floor Plan",
+  metaDescription:
+    "Add up your furniture's real footprint against the room, check 91 cm walkways and the 60% floor rule, and get a to-scale floor plan to print.",
+  steps: [
+    "Enter Room width (cm) and Room length (cm), plus Doorways into the room and an optional TV screen diagonal in inches.",
+    "Press Add piece and choose from the catalogue, where each option is labelled with its standard size such as \"Queen bed (60x80 in) — 152 x 203 cm\", then set a quantity.",
+    "Read Floor covered by furniture against the 60% guideline with each clearance warning, then press Copy plan or print the to-scale floor plan.",
+  ],
   intro:
     "The Furniture Layout Planner adds up the real footprint of the furniture you own, compares it with your room's floor area, and checks the result against standard residential clearance rules — 91 cm (36 in) for a main walkway, 61 cm (24 in) beside a bed, 46 cm (18 in) between a sofa and a coffee table and 91 cm to pull a dining chair out. It is for anyone measuring up before buying a sofa or moving into a new room, and it applies the widely used guideline that furniture should cover no more than 60% of the floor. Piece sizes are standard manufactured dimensions, including ISPA mattress sizes.",
   useCases: [

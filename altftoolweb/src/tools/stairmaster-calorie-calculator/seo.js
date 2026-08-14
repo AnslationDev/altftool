@@ -1,4 +1,12 @@
 const seo = {
+  title: "StairMaster Calorie Burn From Steps Per Minute",
+  metaDescription:
+    "Body weight × gravity × climb rate ÷ 25% efficiency, not a flat MET. 70 steps/min on an 8-inch step gives 9.0 MET, and leaning on the rails cuts ~20%.",
+  steps: [
+    "Enter Body weight (kg), Steps per minute, Minutes and Step height (m) — the 0.2032 default is the standard 8-inch step.",
+    "Set Handrail use to \"Hands off, or light fingertip balance only\", \"Resting hands on the rails\" or \"Leaning weight through the rails\", and add an optional Calorie target.",
+    "Read the StairMaster estimate — kcal/min and MET, gross versus active kcal, total steps, vertical metres and floors — then press Copy output.",
+  ],
   intro:
     "The Stairmaster Calorie Calculator estimates step-mill energy expenditure from the mechanical work of lifting your body mass — body weight times gravity times climbing speed — divided by the roughly 25 percent gross efficiency of stair climbing, with resting metabolism added back on. Because climbing is almost pure vertical work, that approach responds properly to step rate, step height and handrail use instead of applying one flat MET value to every session. At 70 steps per minute on a standard 8-inch step it reproduces the 9.0 MET figure the Compendium of Physical Activities lists for a stair-treadmill ergometer.",
   useCases: [

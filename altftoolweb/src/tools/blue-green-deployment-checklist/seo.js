@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blue-Green Deployment Checklist with Rollback Triggers",
+  metaDescription:
+    "Build a cutover checklist with the DNS wait set at twice your TTL, a canary ramp, session and migration steps, and numeric rollback triggers.",
+  steps: [
+    "Pick the Traffic switch mechanism — DNS record swap, Load balancer target group swap, Kubernetes ingress / service selector or Service mesh weighted routing — plus Workload type, Database migration strategy and Session storage.",
+    "Set the DNS record TTL (seconds), Canary ramp steps (1–6), Hold per ramp step (minutes), Baseline error rate (%) and Baseline p95 latency (ms).",
+    "The plan returns the change window in minutes, the traffic ramp, rollback triggers in percent and milliseconds and the 2x TTL blue-alive wait across five tickable phases; Copy checklist exports markdown.",
+  ],
   intro:
     "A blue-green deployment checklist generator that turns your switch mechanism, schema strategy and latency baseline into an ordered cutover plan with numeric abort triggers. It sizes the DNS propagation wait at twice the record TTL — the margin that covers resolvers caching an answer for its full TTL under RFC 1035 — and builds the canary ramp from the standard 1/5/10/25/50/100 ladder used by progressive delivery controllers. Intended for the engineer who owns the cutover and needs a plan reviewers can argue with before the window opens.",
   useCases: [

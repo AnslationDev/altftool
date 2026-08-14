@@ -1,4 +1,12 @@
 const seo = {
+  title: "Panic Breathing Pacer: Slow to 6 Breaths a Minute",
+  metaDescription:
+    "Starts at the rate you are breathing now and ramps down toward 6 breaths a minute. Choose Settle 4:6, Long exhale 4:8, Even 5:5 or Box 4:2:6:2.",
+  steps: [
+    "Choose a Breathing shape — Settle 4:6, Long exhale 4:8, Even 5:5 or Box 4:2:6:2 — then enter \"Breaths per minute right now\" (6 to 30), \"Target breaths per minute\" (4 to 12) and a Session length between 1 and 15 minutes.",
+    "Press Start and follow the expanding circle, which names the current phase, counts the seconds remaining in it and shows the breaths per minute as the pace ramps down; Pause halts it and Resume picks up where you stopped.",
+    "Track Time left, which breath you are on, the exhale share of each breath and whether the ramp reaches resonance at 6 bpm; \"Copy plan\" puts the pattern, the ramp and the grounding steps on your clipboard.",
+  ],
   intro:
     "The Panic Breathing Pacer is an extended-exhale breathing guide built for the moment anxiety spikes, when breathing is already fast. Rather than asking you to jump straight to a slow rate, it starts near the rate you are breathing at now — often 18 to 25 breaths a minute — and ramps down breath by breath towards about 6 a minute, the rate associated with peak heart-rate variability. Most patterns give the exhale more time than the inhale, because heart rate falls during exhalation, though an even 5:5 pattern is offered for anyone who finds a long exhale uncomfortable; the instructions ask for small, quiet breaths rather than deep ones.",
   useCases: [

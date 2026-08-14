@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Stabilizer: Fix Shaky Footage in Your Browser",
+  metaDescription:
+    "Smooth shaky clips with FFmpeg's deshake filter run as WebAssembly in your browser — light, medium or strong correction, MP4 output, no upload.",
+  steps: [
+    "Choose your clip under \"Source file\" (accepts any video type) and pick light, medium or strong under \"Stabilization\" — a 16, 24 or 32 pixel search radius.",
+    "Press \"Process locally\" — the FFmpeg WebAssembly engine loads and runs the deshake filter with mirrored edges on your own machine.",
+    "The stabilized clip downloads automatically as altftool-video-stabilizer.mp4, re-encoded to H.264 video with AAC audio.",
+  ],
   intro:
     "The Video Stabilizer smooths shaky handheld footage by running FFmpeg's deshake filter in your browser, searching a motion window of 16, 24 or 32 pixels depending on whether you pick light, medium or strong correction. The result is re-encoded to H.264 video with AAC audio and downloads as an MP4, and because FFmpeg is compiled to WebAssembly and runs in the page, the clip is never uploaded. It suits creators fixing a walking shot, a phone clip or a handheld interview without opening an editor.",
   useCases: [

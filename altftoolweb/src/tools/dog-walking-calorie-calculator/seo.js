@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dog Walking Calorie Calculator with Sniff Stops",
+  metaDescription:
+    "Scores moving time and standing time (1.3 METs) separately with the ACSM equation, and gives your dog's daily energy from RER = 70 x kg^0.75.",
+  steps: [
+    "Enter 'Your body weight (kg)', 'Walk length (minutes)' and 'Walks per day', and choose 'Walking pace when moving' from a slow amble at 3.2 km/h up to very brisk at 6.4 km/h.",
+    "Set 'Share of the walk standing still (%)', 0 to 90 in steps of 5, so sniff stops are scored at 1.3 METs rather than walking intensity, then give the Dog's weight (kg), Life stage and Energy level.",
+    "'Calories you burn on this walk' lists net energy, moving and standing minutes, distance and the METs used, with today's and this week's totals; 'Your dog's daily energy and activity' gives RER, MER and how the walk compares, and Copy result copies both.",
+  ],
   intro:
     "The Dog Walking Calorie Calculator works out the energy you burn on a walk by scoring moving time and sniff-stop time separately, using the ACSM equation kcal/min = MET x 3.5 x body mass in kg / 200 with 2011 Compendium of Physical Activities walking values (2.8 METs at 3.2 km/h up to 5.0 METs at 6.4 km/h, and 1.3 METs for standing still). It also gives your dog's resting and maintenance energy requirement from the veterinary allometric equation RER = 70 x body weight in kg to the power 0.75, and compares your daily walk time to usual exercise guidance for the dog's energy level.",
   useCases: [

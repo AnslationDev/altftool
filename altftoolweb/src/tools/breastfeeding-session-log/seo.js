@@ -1,4 +1,12 @@
 const seo = {
+  title: "Breastfeeding Session Log: Feeds, Gaps & Side Split",
+  metaDescription:
+    "Log each feed's start time, side and minutes; get total time at the breast, start-to-start gaps, longest overnight stretch and the left/right split.",
+  steps: [
+    "Under \"Add a feed\", set the Start time, choose Left, Right or Both for Side, and enter the Duration (minutes).",
+    "Press Add feed for each session — every logged row stays editable, and the day's totals recalculate as you go.",
+    "Read Feeds in the day, Average gap (start to start), Longest stretch incl. overnight and the Left / right split, then press Copy summary.",
+  ],
   intro:
     "A breastfeeding session log records the start time, side and duration of every feed, then totals the day: minutes at the breast, start-to-start gaps, left-right balance and the longest stretch between feeds including overnight. It is built for the first weeks at home, when guidance from the AAP and WHO describes roughly 8-12 feeds in every 24 hours and alternating the starting breast to keep supply even. The log stays in your browser and produces a plain-text summary you can hand to a midwife, health visitor or paediatrician.",
   useCases: [

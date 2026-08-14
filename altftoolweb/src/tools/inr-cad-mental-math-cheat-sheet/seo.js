@@ -1,4 +1,12 @@
 const seo = {
+  title: "CAD to INR in Your Head: Rate Shortcuts + Error %",
+  metaDescription:
+    "Enter the day's rupees-per-dollar rate for three mental rules — whole multiplier, percentage nudge, simple fraction — each labelled with its error %.",
+  steps: [
+    "Type the day's rate into Today's rate (₹ per 1 CAD), then set A price to check (CAD) or tap a Common prices chip such as Casual restaurant main.",
+    "The sheet splits that rate into a decimal shift and a working multiplier, then builds a Quick rule, a Tuned rule and a Fraction rule from it.",
+    "Read All three rules compared for the Steps, Implied rate and Error of each, memorise the one badged best, then press Copy sheet.",
+  ],
   intro:
     "This cheat sheet turns a rupees-per-dollar exchange rate into arithmetic you can do standing at a till in Canada. It splits the rate into a decimal shift and a working multiplier between 1 and 10, then searches three families of shortcut — a whole-or-half multiplier, that multiplier plus an easy percentage nudge like 10%, 25% or 5%, and the nearest simple fraction — and reports the fixed percentage error of each, because a pure multiplier is off by the same percentage whatever the price. It is for Indian travellers, students and new arrivals in Canada who want a rule they can trust to within about 2% without unlocking a phone.",
   useCases: [

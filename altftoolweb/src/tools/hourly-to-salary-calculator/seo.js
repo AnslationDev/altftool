@@ -1,4 +1,7 @@
 const seo = {
+  title: "Hourly to Salary Calculator: Yearly, Monthly, Daily Pay",
+  metaDescription:
+    "Multiply rate x hours per week x weeks per year for gross annual pay, then see monthly, weekly and daily figures. Set your own weeks, not a fixed 52.",
   intro:
     "An hourly wage becomes an annual salary by multiplying rate × hours per week × weeks per year, and this calculator does exactly that, then splits the result into monthly (annual ÷ 12), weekly and daily figures. Enter your rate, your usual weekly hours and how many weeks you actually work — 52 if you are paid through your holiday, fewer if you are not — and you get the gross equivalent salary in one step. Contractors, hourly employees and anyone comparing a wage offer against a salaried one get a like-for-like number.",
   useCases: [

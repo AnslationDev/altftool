@@ -1,4 +1,12 @@
 const seo = {
+  title: "Contraction Timer with 5-1-1 Rule Check for Labour",
+  metaDescription:
+    "Tap to time each contraction, get start-to-start gaps and averages, and test the pattern against the 5-1-1, 4-1-1 or 3-1-1 rule your maternity unit uses.",
+  steps: [
+    "Select your unit's threshold in the 'Pattern rule from your unit' dropdown — 5-1-1, 4-1-1 or 3-1-1, each requiring the pattern to hold for an hour.",
+    "Press 'Start contraction' when one begins and 'Stop contraction' when it eases; 'Undo last' removes a mistimed entry and 'Clear' wipes the session.",
+    "Read the average gap timed start to start, the three Met/Not yet rule checks, and press 'Copy summary' for a phone-ready report for triage.",
+  ],
   intro:
     "A contraction timer records how long each contraction lasts and how far apart they are, measured start to start rather than end to start. Tap once when a contraction begins and again when it eases, and the session tracks average duration, average frequency, whether the pattern is regular, and whether it satisfies a chosen call-the-unit rule such as 5-1-1: contractions five minutes apart, lasting a minute, sustained for an hour. The summary is written in the form a midwife will ask for over the phone.",
   useCases: [

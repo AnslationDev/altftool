@@ -1,4 +1,12 @@
 const seo = {
+  title: "University Portal Phishing: Read the Link Right to Left",
+  metaDescription:
+    "Splits a student-portal link into scheme, subdomain, registrable domain and path, marks the part that decides where you land, and never fetches it.",
+  steps: [
+    "Paste the suspect link into \"Link from the message\" and type the address you already know into \"Your institution's domain\", such as ox.ac.uk.",
+    "Every part — scheme, user info, subdomain, registrable domain, port, path, query and fragment — is separated as text; the link is never opened or resolved.",
+    "Read \"You would actually be talking to\" for the registrable domain, check the \"Decides where you go?\" column, then press Copy result.",
+  ],
   intro:
     "A fake student portal works by putting your university's name somewhere in a web address where it carries no authority — a subdomain, a path, or the text before an @ sign — while the registrable domain belongs to the attacker. This page splits a link into scheme, user info, subdomain, registrable domain, port, path, query and fragment, marks the one part that decides where the browser connects, and compares it with the domain you already know. It also lists what the harvesting page itself gets wrong, from a silent password manager to a browser-in-the-browser popup.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "HRA Exemption: Metro 50% vs Non-Metro 40% (Rule 2A)",
+  metaDescription:
+    "Runs Rule 2A twice on the same salary to show the 50% metro cap against 40% elsewhere, which of the three limits binds, and the tax the gap is worth.",
+  steps: [
+    "Enter Monthly basic pay, Monthly DA counted for retirement benefits, Monthly HRA received and Monthly rent actually paid in INR.",
+    "Set \"Months in the year (1-12)\" and pick your slab rate from the dropdown so the cess-inclusive tax is worked out.",
+    "Compare the metro 50% cap against the non-metro 40% cap, see which of the three Rule 2A limits binds, and read the monthly rent below which the two answers match.",
+  ],
   intro:
     "This tool shows how much of your house rent allowance stays tax-free in a metro city versus anywhere else, by running Rule 2A of the Income-tax Rules twice on the same salary. Rule 2A exempts the least of three amounts — the HRA actually received, rent paid minus 10% of salary, and 50% of salary in Delhi, Mumbai, Kolkata or Chennai (40% everywhere else) — so the city rate only changes the answer when the percentage cap is the binding one. It is for salaried employees under the old tax regime who are relocating, comparing offers, or checking what their landlord's city costs them at tax time.",
   useCases: [

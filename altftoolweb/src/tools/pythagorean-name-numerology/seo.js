@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pythagorean Name Numerology Calculator (Chart 1 to 9)",
+  metaDescription:
+    "Get expression, soul urge and personality numbers from any name on the Pythagorean 1–9 chart, with master numbers 11, 22, 33 kept and karmic debts shown.",
+  steps: [
+    "Type the Full name (only A–Z letters are scored), set Treat the letter Y as Automatic, Always a vowel or Always a consonant, and optionally an Alternative spelling to compare.",
+    "Read the Expression (destiny) number with its reduction steps, the Soul urge (vowels) and Personality (consonants) cards, and the letter-by-letter chart values with vowels highlighted.",
+    "Check the Spelling comparison table for how many of the 3 numbers change between the two spellings, then press Copy result for the summary.",
+  ],
   intro:
     "Pythagorean Name Numerology converts a written name into three numbers: the expression (destiny) number from every letter, the soul urge from the vowels alone, and the personality number from the consonants alone. It uses the Pythagorean chart in which the alphabet cycles 1 to 9 — A=1 through I=9, J=1 through R=9, and S=1 through Z=8 — and leaves the master numbers 11, 22 and 33 unreduced. Totals of 13, 14, 16 and 19 are flagged as the classical karmic debt numbers so you can see them before reduction.",
   useCases: [

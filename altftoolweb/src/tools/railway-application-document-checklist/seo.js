@@ -1,4 +1,12 @@
 const seo = {
+  title: "RRB Application Checklist: Photo Specs and Fee Refund",
+  metaDescription:
+    "Post-group certificates, the 35x45 mm photo and signature JPEG limits, and what the ₹500 fee really costs after the ₹400 CBT-1 refund.",
+  steps: [
+    "Choose your Post group — Group D, NTPC, ALP, Technician, JE or paramedical — then the Community claimed and the Number of CENs you are applying to.",
+    "Under \"Which of these apply?\", tick concession grounds such as Woman candidate, Person with benchmark disability, Ex-serviceman or Economically Backward Class.",
+    "Read the net fee after the CBT-1 refund, work through \"Uploads you need\" (photograph 35 mm x 45 mm JPEG, 20-50 KB), then press Copy checklist.",
+  ],
   intro:
     "This checklist assembles a Railway Recruitment Board application: the details the online form asks for, the pixel and file-size limits on the photograph and signature uploads, the certificates each post group needs, and what the examination fee actually costs once the CBT-1 refund lands. RRB CENs charge ₹500 with ₹400 refunded to candidates who appear in the first Computer Based Test, and ₹250 fully refunded to candidates in the concession bracket — so the real cost is ₹100 for most male General and OBC candidates and nothing for everyone else, before bank charges.",
   useCases: [

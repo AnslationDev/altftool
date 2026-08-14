@@ -1,4 +1,12 @@
 const seo = {
+  title: "Image Budget Calculator: KB per Hero and Other Image",
+  metaDescription:
+    "Split a total page image budget in KB across hero and supporting images — heroes take half — for a per-image KB target in WebP/AVIF, JPEG or PNG.",
+  steps: [
+    "Type the page's image count into 'Number of images', which opens on 12, and the ceiling into 'Total image budget KB', which opens on 1200.",
+    "Set 'Hero/large images' — 2 by default — and pick WebP/AVIF, JPEG or PNG under 'Target format'; the Image budget panel rewrites as you type.",
+    "The panel prints the format target, the total KB, and 'Hero images' beside 'Other images' with a per-image KB figure each, heroes sharing half the budget; press Copy output or Reset.",
+  ],
   intro:
     "The Image File Size Budget Calculator subtracts your HTML, CSS, JS and font weight from a total page weight budget, then works out how many images fit in what is left using width x height x DPR squared x bits-per-pixel x a format factor, divided by 8. It estimates a photographic JPEG at 1.0 bit per pixel by default and scales that by format — WebP at 0.70, AVIF at 0.50, PNG-8 at 1.5 and PNG-24 at 8.0 of a comparable JPEG — then reports transfer time on Slow 3G, Fast 3G, 4G and broadband. It is for front-end and performance work where a design calls for a gallery and someone has to say whether the budget survives it.",
   useCases: [

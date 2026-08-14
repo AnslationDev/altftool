@@ -1,4 +1,12 @@
 const seo = {
+  title: "Snell's Law Simulator: Refraction and Critical Angle",
+  metaDescription:
+    "Drag the incident angle 0–89° between air, water, glass and diamond. Solves n₁sinθ₁ = n₂sinθ₂ live and flags total internal reflection past θc.",
+  steps: [
+    "Pick \"Incident Medium 1 (n₁)\" and \"Refracting Medium 2 (n₂)\" from Air (1.0003), Water (1.333), Glass (1.52) or Diamond (2.417).",
+    "Drag the \"Incident Angle (θ₁)\" slider anywhere from 0° to 89°; the canvas redraws the incident, reflected and refracted rays against the dashed Normal Line.",
+    "Read the Optical Telemetry panel for Refraction Angle (θ₂), Critical Angle (θc) and Relative Ratio (n₁/n₂) — θ₂ reads TIR once the ray is totally internally reflected.",
+  ],
   intro:
     "The Light Refraction Simulator draws a laser hitting a boundary between two media and solves Snell's law, n₁ sin θ₁ = n₂ sin θ₂, for the refracted angle in real time as you drag the incident angle from 0° to 89°. Pick the incident and refracting medium from air (n = 1.0003), water (1.333), glass (1.52) or diamond (2.417) and the canvas redraws the incident, reflected and refracted rays against the normal line. When the geometry has no solution the tool flags Total Internal Reflection and reports the critical angle from sin θc = n₂ / n₁.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Breach Response Checklist: 16 Weighted Steps",
+  metaDescription:
+    "Score your response to a leaked email address across 16 weighted steps grouped by window — 24 hours, a week, a month, ongoing — and see what has slipped.",
+  steps: [
+    "Set \"Date you learned about the exposure\" — it cannot be later than today — so every step is measured against its 24-hour, one-week, one-month or ongoing window.",
+    "Tick the 16 weighted steps across the four groups: Confirm the exposure, Reset passwords everywhere, Lock accounts with 2FA, and Watch for breach-themed phishing.",
+    "Read the Response score with Steps completed, Critical steps still open and Steps past their window, then press \"Copy result\" for the plan of what is left.",
+  ],
   intro:
     "The Email Data Breach Response Checklist scores your response to a leaked email address across 16 weighted steps, grouped by the window each one belongs in — first 24 hours, first week, first month, and ongoing. An email address is not just a contact detail; it is the username, and often the recovery contact, for every account tied to it, so the score is weighted towards the two things that actually close off access: resetting the email account and any reused password first, then locking the accounts it protects with a second factor. Enter the date you found out and the tool flags which steps have already slipped past their window.",
   useCases: [

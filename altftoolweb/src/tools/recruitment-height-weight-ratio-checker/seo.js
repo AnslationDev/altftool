@@ -1,4 +1,12 @@
 const seo = {
+  title: "Height Weight Ratio Checker for Army & SSC GD",
+  metaDescription:
+    "Turn weight proportionate to height into a kg range via BMI (170 cm allows about 53.5-72 kg) and check height and chest for Agniveer GD or SSC GD.",
+  steps: [
+    "Pick the Recruitment scheme, Indian Army Agniveer GD, SSC GD Constable male or female, or Custom standard.",
+    "Enter Your height (cm) and Your weight (kg), plus Chest relaxed (cm) and Chest fully expanded (cm) where the scheme measures chest.",
+    "Read Accepted weight for your height as a kg band, plus the Standard-by-standard result marking each height, weight and chest check pass or fail.",
+  ],
   intro:
     "This checker converts a recruitment scheme's physical standard into the exact weight range, in kilograms, that your height allows — using Body Mass Index (weight in kg divided by height in metres squared), the measure recruitment medical boards apply when a notification says weight must be 'proportionate to height and age'. It also checks your height and chest against the published minimums for Indian Army Agniveer GD and SSC GD Constable, or against figures you type from your own notification. Alongside the BMI band it shows the Devine (1974) reference weight, the ideal-body-weight formula quoted in service medical notes.",
   useCases: [

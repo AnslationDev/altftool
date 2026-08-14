@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timezone and Locale Fingerprint: What Sites See",
+  metaDescription:
+    "See the IANA timezone, live UTC offset, language list and number formats any page reads with no prompt, and whether a VPN contradicts them.",
+  steps: [
+    "Leave Signals to analyse on This browser (live), or switch to a Compare profile to model another location.",
+    "Press Re-read to recompute today's UTC offset, the daylight-saving shift and the Timezone vs language region check.",
+    "Look for the signal rows badged Distinctive rather than Common, then press Copy report.",
+  ],
   intro:
     "Timezone and Locale Fingerprint Viewer shows the location and language signals a website reads with no permission prompt: your IANA timezone, the UTC offset on today's date, whether that zone observes daylight saving, your ordered language list, and the calendar, numbering system and separators your locale resolves to. Offsets are calculated by formatting one instant in the zone and differencing it against UTC, so the value is the real current offset rather than a stored table. It also compares the timezone's country against the region in your language tag, the disagreement that a VPN typically produces.",
   useCases: [

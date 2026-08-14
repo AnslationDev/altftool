@@ -1,4 +1,12 @@
 const seo = {
+  title: "Holiday Photo Sharing: Score Your Empty-House Risk",
+  metaDescription:
+    "Score how many nights of an empty house your posting advertises. Live posting, public audience, dates and tags weighed; mitigations capped at 60%.",
+  steps: [
+    "Under \"1. When you post\", set Nights away and \"Day of the trip your first post goes up\", or tick \"Nothing gets posted until everyone is home\".",
+    "Tick what applies across the groups — Who can see it, What the post says, Location data, What is in frame and Automatic sharing — then the items under \"What the house has going for it\", such as a house-sitter, post held, an alarm or a close-friends list.",
+    "\"Exposure after mitigations\" gives a percentage and a band, a Group / Active / Points table and a \"Change these first\" list; the mitigations can remove at most 60% because a published absence cannot be un-published, and Copy result copies the summary.",
+  ],
   intro:
     "The Family Holiday Photo Sharing Guide scores how much your trip posting advertises an empty house, weighing the things that actually matter — posting live rather than after you return, a public audience, stated dates, location tags, and a house or number plate in frame — against the arrangements you have made at home. It reports the number of nights your absence is publicised, and caps how much any mitigation can reduce that, because a published post cannot be recalled. Written for families who want to share the holiday without turning it into a notice board.",
   useCases: [

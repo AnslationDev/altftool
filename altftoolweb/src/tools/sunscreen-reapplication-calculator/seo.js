@@ -1,4 +1,12 @@
 const seo = {
+  title: "How Much Sunscreen to Use and When to Reapply",
+  metaDescription:
+    "Tick the uncovered body areas for a dose in ml on the teaspoon rule, plus a reapply interval from UV index, activity and 40 or 80-minute water resistance.",
+  steps: [
+    "Under Which areas will be uncovered? tick Face, neck and ears, each arm, each leg, Front of torso and Back and shoulders, then enter SPF on the bottle and UV index today.",
+    "Set Skin type, Time outdoors (minutes), What you will be doing, Water resistance on the label (none, 40 or 80 minutes) and an optional Bottle size (ml, optional).",
+    "Read Per application in ml and level teaspoons, plus the Reapply every, Applications for this outing and Bottle will cover rows, then press Copy result.",
+  ],
   intro:
     "The Sunscreen Reapplication Calculator works out both halves of using sunscreen properly: how much to put on, and how often to put it on again. The dose uses the teaspoon rule adopted by the Cancer Council Australia and the British Association of Dermatologists — about 5 ml for each of the head and neck, each arm, each leg, the front of the torso and the back — and the interval follows the two-hour standard, tightened to the 40 or 80 minutes your label actually claims once you are swimming or sweating heavily.",
   useCases: [

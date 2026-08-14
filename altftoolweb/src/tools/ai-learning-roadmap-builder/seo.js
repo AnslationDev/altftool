@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Learning Roadmap: Prerequisite-Ordered Study Plan",
+  metaDescription:
+    "Pick a goal and your hours per week to get an ordered plan from how LLMs work through retrieval and LoRA, with each module placed in a study week.",
+  steps: [
+    "Choose a goal under 'What do you want to be able to do?' - Prompt reliably at work, Build AI features and RAG apps, Fine-tune open models or Go deep on training and alignment - then set Prompting experience and Coding background.",
+    "Enter Study hours per week (1 to 60), pick a Start date, and optionally type a figure into 'Weeks available (optional)'; there is no calculate button, the plan rebuilds as you type.",
+    "Read Plan length in weeks with Modules to study, Total study hours, Calendar length and Target finish, then the Week-by-week modules list and the Hours by stage table; Copy result copies the roadmap.",
+  ],
   intro:
     "AI Learning Roadmap Builder turns a goal, a starting point and your weekly study hours into an ordered curriculum that runs from how language models work through retrieval, evaluation and parameter-efficient fine-tuning. Modules are linked by hard prerequisites and sorted topologically, so nothing is scheduled before the thing it depends on, and each module's hour budget is divided by your available hours to place it in a specific study week. Useful for self-taught learners and for managers who need a defensible upskilling plan rather than a reading list.",
   useCases: [

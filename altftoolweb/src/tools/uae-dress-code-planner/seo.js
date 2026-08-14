@@ -1,4 +1,12 @@
 const seo = {
+  title: "UAE Dress Code & Packing Planner by Month and Emirate",
+  metaDescription:
+    "Pick your month, emirate and venues — Sheikh Zayed Grand Mosque, malls, beaches, souks — for a packing count and the coverage rule each place expects.",
+  steps: [
+    "Choose Month of travel and Emirate — Dubai, Abu Dhabi, Sharjah and Ajman, Ras Al Khaimah and Fujairah, or Al Ain — then set Trip length and Laundry every.",
+    "Tick where you will actually go, from Sheikh Zayed Grand Mosque and malls to souks, beaches and desert safari, plus \"My trip falls during Ramadan\" if it applies.",
+    "Read the items-to-pack count with the Qty / Item / Why that many table and each venue's coverage rule, then press Copy plan.",
+  ],
   intro:
     "This planner works out what to wear and how much to pack for the United Arab Emirates from the month, the emirate, the places on your itinerary and whether you are travelling during Ramadan. Monthly climate normals for Dubai, Abu Dhabi, Sharjah, the northern emirates and Al Ain set the layering band, and the packing count comes from one rule — carry a laundry cycle plus a spare set while a wash dries, capped at the trip length. It then applies the coverage rules that are actually enforced: the Sheikh Zayed Grand Mosque's wrists-and-ankles requirement, the shoulders-and-knees dress code posted at mall entrances, Sharjah's stricter public decency code, and the hard line around swimwear.",
   useCases: [

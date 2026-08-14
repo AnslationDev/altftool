@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meesho Catalog Image Checker: Size, Ratio & Watermark",
+  metaDescription:
+    "Test a Meesho catalogue photo against the 500 x 500 px minimum, 1:1 or 3:4 framing and watermark rules, and see how much a square thumbnail crops.",
+  steps: [
+    "Enter the image's Width, Height and File MB, type its Format (JPEG or PNG are accepted), and tick Clean background or Has watermark/text to declare those checks.",
+    "Read the verdict — Ready for catalogue, Review warnings or Fails QC — with each rule (Minimum size, Aspect ratio, Watermark, logo & price text, Contact details) listed separately.",
+    "Press Copy report to copy every check with its PASS/WARN/FAIL status, or Reset to return to the 1000 x 1000 px JPG defaults.",
+  ],
   intro:
     "This checker tests a Meesho catalogue photo against the image requirements applied across common supplier categories: a 500 x 500 px minimum with 1000 x 1000 px or larger recommended, square 1:1 framing (with 3:4 portrait accepted in several apparel categories), JPEG or PNG, a clean background, and no watermark, price badge, contact detail or collage. It also works out how much of a non-square photo the square catalogue thumbnail would crop away, which is the most common surprise after upload.",
   useCases: [

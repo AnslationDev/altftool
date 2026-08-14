@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blue Light Curfew Calculator — Screens-Down Time",
+  metaDescription:
+    "Work back from your alarm through sleep and fall-asleep time to tonight's night-mode, screens-down and lights-out times, with 90-minute cycle alignment.",
+  steps: [
+    "Set 'Wake-up time' and 'Target sleep (hours)' — any value from 3 to 14 hours, defaulting to 8 — for the night you are planning.",
+    "Enter 'Time you take to fall asleep (minutes)' and a screen curfew, typed in minutes or picked from the Light — 30 min, Standard — 60 min and Strict — 120 min presets.",
+    "Read 'Screens down at' plus the 'Warm / night mode from', 'Lights out, in bed' and 'Cycle-aligned lights out' rows, then use 'Copy result' to save tonight's schedule.",
+  ],
   intro:
     "A blue light curfew calculator works backwards from your alarm to show the exact clock time you should stop using bright screens tonight. It chains four steps — alarm minus target sleep gives the time you need to be asleep, minus your sleep-onset latency gives lights-out, minus your chosen curfew gives screens-down, and an extra lead time marks when to switch devices to warm or night mode. Useful for anyone who keeps missing their intended bedtime because the wind-down never actually starts.",
   useCases: [

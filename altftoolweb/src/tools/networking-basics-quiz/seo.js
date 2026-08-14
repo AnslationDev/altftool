@@ -1,4 +1,10 @@
 const seo = {
+  title: "Networking Quiz: 15 Questions on OSI, TCP/IP, DNS",
+  steps: [
+    "Read the first of 15 questions — What does TCP stand for? — and tap one of the four answers.",
+    "The right answer turns green and a wrong one turns red straight away; press Next Question to move on.",
+    "After the fifteenth question press See Results for a score out of 15 with the matching percentage, then Try Again to start over.",
+  ],
   intro:
     "The Networking Basics Quiz is a 15-question multiple-choice test on computer networking fundamentals, covering the OSI model, TCP/IP, well-known port numbers, DNS and DHCP, MAC addressing, IPv4 address classes, subnet masks, network topologies and firewalls. Each question has four options, marks your answer right or wrong the moment you pick it, and the run ends with a score out of 15 and a percentage. It suits students revising for a first networking module, candidates warming up for CompTIA Network+ or CCNA study, and anyone about to be asked networking questions in an interview.",
   useCases: [

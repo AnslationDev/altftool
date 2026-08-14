@@ -1,4 +1,12 @@
 const seo = {
+  title: "Percentage Practice: 7 Question Types, Worked Steps",
+  metaDescription:
+    "Unlimited percentage questions across 7 types and 5 difficulty levels, each marked with full working. Practice, 60-second timed or 3-life survival.",
+  steps: [
+    "Under Game Mode pick Practice, Timed Challenge or Survival, then a Question Type and a Difficulty Level.",
+    "Set Number of Questions or a Time Limit from 30s to 3min, hit Start Practice, and answer each question in turn.",
+    "On the results screen read accuracy per question type and the Answer Review working, then hit Export CSV.",
+  ],
   intro:
     "Percentage Practice generates unlimited percentage questions across seven types — find X% of Y, reverse percentage, what percent is X of Y, percentage increase, percentage decrease, discount price and original price before discount — and marks each answer with a worked step-by-step solution. Choose one of five difficulty levels, from beginner numbers between 10 and 100 to expert values up to 10,000 with awkward percentages like 13.75%, and run it as untimed practice, a timed challenge or a 3-life survival round. The results screen breaks accuracy down by question type so you can see which one is actually costing you marks.",
   useCases: [

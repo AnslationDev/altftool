@@ -1,4 +1,7 @@
 const seo = {
+  title: "Pomodoro Study Timer — 25/5/15 Cycle, Custom Lengths",
+  metaDescription:
+    "Run 25-minute focus blocks with 5 and 15-minute breaks, adjust each from 1 to 120 minutes, and count completed sessions with a progress ring.",
   intro:
     "The Pomodoro Study Timer runs the classic focus cycle — a 25-minute work block, a 5-minute short break and a 15-minute long break after four blocks — with a countdown ring, a completed-session counter and durations you can override from 1 to 120 minutes. Each finished focus block adds to the session tally, so a study afternoon leaves a visible count rather than a vague sense of how much you did. It is aimed at students and anyone doing deep work who wants structure on a single task at a time.",
   useCases: [

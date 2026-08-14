@@ -1,4 +1,5 @@
 const seo = {
+  title: "CSS Box Shadow Generator: Blur, Spread and Inset",
   intro:
     "This generator assembles a CSS box-shadow value in the exact order the spec requires — offset-x, offset-y, blur-radius, spread-radius, colour, with an optional leading inset keyword — from sliders rather than trial-and-error edits. Offsets run from −50 px to 50 px, blur from 0 to 100 px and spread from −50 px to 50 px, and it returns both the bare value and the complete `box-shadow: …;` declaration ready to paste. It is for anyone who can picture the shadow they want but keeps forgetting whether blur comes before spread.",
   useCases: [

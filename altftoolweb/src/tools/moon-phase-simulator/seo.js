@@ -1,4 +1,12 @@
 const seo = {
+  title: "Moon Phase Simulator: Orbit and Earth View Together",
+  metaDescription:
+    "Scrub the 29.53-day synodic month and watch the Sun-Earth-Moon diagram and the disc seen from Earth update together, with age, angle and % lit.",
+  steps: [
+    "Drag the 'Synodic Month Day' slider through the 29.5-day cycle, or use 'Phase Fast Jump' for New Moon (0d), 1st Quarter (7.4d), Full Moon (14.8d) or 3rd Quarter (22.1d).",
+    "Press 'Auto Play' to run the cycle at the chosen 'Playback Speed', and 'Pause Cycle' to stop on a day.",
+    "Compare the top-down Sun-Earth-Moon diagram with the disc as seen from Earth, reading the day, phase angle in degrees and percentage illuminated.",
+  ],
   intro:
     "The Moon Phase Simulator lets you drag the Moon through the 29.53-day synodic month and watch two views update together: a top-down diagram of the Sun–Earth–Moon geometry, and the disc as it would look from Earth at that moment. Illumination is computed from the phase angle as (1 − cos θ) × 50 percent, so 0° reads as a new moon, 90° as a first quarter half-disc and 180° as full. It exists for the moment a student stops accepting that phases are 'the Earth's shadow' and needs to see that half the Moon is always lit and only our viewing angle changes.",
   useCases: [

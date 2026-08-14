@@ -1,4 +1,12 @@
 const seo = {
+  title: "FIRE Calculator: Your Number at Any Withdrawal Rate",
+  metaDescription:
+    "FIRE number = annual expenses ÷ your SWR — 25× at 4%, 33.3× at 3%. Projects your SIP over 360 monthly steps and names the crossing year.",
+  steps: [
+    "Enter Yearly Expenses in Retirement, Current Retirement Savings, Monthly SIP Contribution, Expected Return (% p.a.) and Safe Withdrawal Rate (%).",
+    "Press Calculate to divide those expenses by your withdrawal rate and project the corpus across 360 monthly steps.",
+    "Your FIRE Number and Projected Corpus appear, and Year-by-Year Breakdown opens a table of invested, interest and balance for each year.",
+  ],
   intro:
     "Your FIRE number is your annual retirement spending divided by your safe withdrawal rate — at the classic 4% rule that is 25 times a year's expenses, and this calculator lets you move the rate to see how much the target shifts. It then projects your corpus forward month by month for 30 years using corpus = (corpus + monthly SIP) × (1 + annual return ÷ 12), starting from what you have already saved, and reports the first year in which the projected balance clears the target. A year-by-year table breaks the balance into money invested and growth earned.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Actions Secrets: Org, Repo or Environment Scope?",
+  metaDescription:
+    "Describe each CI secret and get the right GitHub Actions scope — organization, repository or environment — with reasons, gh CLI commands and limit checks.",
+  steps: [
+    "Describe each secret: set the Secret name, choose Used by (One repository, Several repositories, Most / all repositories) and tick 'Different value per environment' or 'Needs approval gating (required reviewers)'; Add secret adds more rows.",
+    "Fill in Deployment environments (comma separated) and an optional Organization slug so the generated gh secret set commands target your real environments and org.",
+    "Read the Scope split, each secret's assigned scope with its reason and ready-to-run gh CLI commands, review the Settings checklist, then press Copy result.",
+  ],
   intro:
     "This planner assigns each of your CI secrets to the correct GitHub Actions scope — organization, repository or environment — using the rules from GitHub's secrets documentation: environment secrets for values that differ per environment or need deployment protection rules, organization secrets for values shared across repositories, and repository secrets for the rest. It outputs the reasoning per secret, ready-to-run gh CLI commands, and a checklist of the settings screens you still have to touch.",
   useCases: [

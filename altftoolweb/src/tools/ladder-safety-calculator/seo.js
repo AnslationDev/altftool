@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ladder Safety Calculator: OSHA 4-to-1 Base Distance",
+  metaDescription:
+    "Base distance at the OSHA 4-to-1 angle (about 75.5°), minimum ladder length with 3 ft of rail above the roof, highest safe rung and ANSI load check.",
+  steps: [
+    "Set Units to Feet or Metres, then enter Height of the top support point — the eave, sill or landing edge — and Ladder working length, using the extended length rather than the sum of the sections.",
+    "Choose the Ladder duty rating, add Climber weight (kg) and Tools and materials carried up (kg), and tick \"I step off onto a roof or landing\" if you transfer onto one.",
+    "\"Set the feet this far from the wall\" gives the base distance and the OSHA 4-to-1 angle, with Working length along the rails, Minimum ladder length, Rail above the support point, Highest rung you may stand on and Practical reach height below; press Copy result.",
+  ],
   intro:
     "This calculator turns a wall height into a ladder set-up you can measure: how far the feet go from the wall, whether your ladder is long enough, the highest rung you may stand on and how far you can actually reach. It applies the OSHA 4-to-1 rule from 29 CFR 1926.1053 — the base sits one quarter of the working length out from the wall, an angle of about 75.5 degrees — plus the 3 ft rail extension required for stepping onto a roof and ANSI A14 duty ratings for the load check. Useful for painters, roofers, electricians, window cleaners and anyone clearing gutters at home.",
   useCases: [

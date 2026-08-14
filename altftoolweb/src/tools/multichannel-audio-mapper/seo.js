@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Channel Mapper — Swap Stereo or Fold to Mono",
+  metaDescription:
+    "Remap audio channels with FFmpeg WebAssembly in your browser: swap left/right or fold one channel to mono, from any audio or video file, out as WAV.",
+  steps: [
+    "Pick an audio or video file under 'Source file' — the input accepts audio/* and video/*, so an MP4 or MOV works without demuxing the audio first.",
+    "Choose keep, swap-stereo, left-mono or right-mono from the 'Mapping' menu, then press 'Process locally' to run FFmpeg's pan filter in the browser tab.",
+    "The remapped audio downloads as altftool-multichannel-audio-mapper.wav, with progress and the FFmpeg log shown in the 'Local processing report' panel.",
+  ],
   intro:
     "Multichannel Audio Mapper rewrites the channel layout of an audio or video file using FFmpeg's pan filter, with four mappings: keep the layout unchanged, swap left and right, fold the left channel to mono, or fold the right channel to mono. It runs FFmpeg compiled to WebAssembly inside the page, takes any audio or video input, and writes out a WAV. It exists for the moment you discover an interview was recorded with the useful voice on one channel and hiss on the other.",
   useCases: [

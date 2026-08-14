@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sample Size and Power Calculator for Cohen's d",
+  metaDescription:
+    "d = 0.5 at 80% power and alpha 0.05 gives 63 per group, 126 total. Reports the z-values used and a recruitment number padded for 15% attrition.",
+  steps: [
+    "Enter the Standardized effect size (Cohen d), where 0.2 is small, 0.5 medium and 0.8 large, or tap the d=0.5, 80% power example.",
+    "Pick a target power of 80, 90 or 95%, a two-sided alpha of 0.10, 0.05 or 0.01, and whether the design is a paired difference or two equal independent groups.",
+    "The result gives the per-group n and the study total, with the z alpha and z power values used and a recruitment figure padded for 15% attrition.",
+  ],
   intro:
     "The Sample Size & Power Calculator returns the number of observations needed to detect a standardised mean difference, using the normal approximation n = k × ((z_α/2 + z_β) ÷ d)², where k is 2 for two equal independent groups and 1 for a one-sample or paired design. You choose Cohen's d, a target power of 80%, 90% or 95%, and a two-sided alpha of 0.10, 0.05 or 0.01, and it reports the per-group figure, the total, the z-values it used, and a padded number that survives 15% attrition. It is for anyone sizing a study, an A/B test or a survey before collecting a single data point.",
   useCases: [

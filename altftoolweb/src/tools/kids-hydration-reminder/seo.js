@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Hydration Reminder: School-Day Water Schedule",
+  metaDescription:
+    "A timed school-day drinking schedule from EFSA intake values for ages 2-17, plus AAP activity fluid per 20 minutes and the bottle refills to pack.",
+  steps: [
+    "Under About your child set Age (years), the Reference values (EFSA differs from age 9) Girl/Boy option, Weather today, Active play or sport (minutes) and Water bottle size (ml).",
+    "Under The school day enter Wake time, School starts, School ends and Bedtime so each reminder lands on a real clock hour.",
+    "Read the Drinks target for the day with the Extra for activity and Bottle refills at school rows, check the Reminder schedule table of Time, Reminder and Drink, then press Copy schedule.",
+  ],
   intro:
     "Kids Hydration Reminder builds a timed school-day drinking schedule from a child's age, the weather and how much sport they will do. The baseline comes from EFSA's 2010 Adequate Intake values for total water — 1.3 L a day at ages 2-3, 1.6 L at 4-8, and 1.9-2.1 L at 9-13 — of which roughly three quarters has to come from drinks because the rest arrives in food. Extra fluid for activity follows the American Academy of Pediatrics guidance of 100-250 mL every 20 minutes for 9-12 year olds and 1.0-1.5 L an hour for adolescents, with hotter weather moving the figure to the top of that range.",
   useCases: [

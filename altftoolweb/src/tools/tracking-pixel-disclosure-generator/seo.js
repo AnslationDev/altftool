@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tracking Pixel Disclosure Generator for Privacy Policies",
+  metaDescription:
+    "Tick the pixels your site loads and get disclosure text, a vendor table with cookie names and purposes, and a real opt-out list.",
+  steps: [
+    "Fill in Site name, 'Legal entity (controller)', 'Main audience / regime' (EU / EEA, United Kingdom, India (DPDP Act, 2023), California (CCPA/CPRA) or Global audience), 'Lawful basis claimed', 'Your retention period (months)' and a Privacy contact email.",
+    "Under 'Pixels and tags on your site', tick the tags you actually load from the ten in the catalogue: Google Analytics 4, Google Ads conversion and remarketing tag, Meta Pixel, LinkedIn Insight Tag, Microsoft Advertising UET tag, TikTok Pixel, Pinterest Tag, Hotjar tracking code, Microsoft Clarity and the Email open-tracking pixel.",
+    "Read the Pixel / Vendor / Purpose / Identifiers table, the 'How to opt out' links and the 'Obligations these pixels bring with them' warnings, then press Copy disclosure for the plain-text version.",
+  ],
   intro:
     "The Tracking Pixel Disclosure Generator turns a checklist of the advertising and analytics tags on your site into publishable disclosure text: a plain-language explanation of what a pixel is, a table naming each vendor, purpose and stored identifier, and a working opt-out list. It follows GDPR Art. 13(1)(e), which requires the categories of recipients to be disclosed at collection, and flags where ePrivacy Directive Art. 5(3) forces consent before a pixel may store anything on the device. Built for site owners writing or refreshing the tracking section of a privacy policy.",
   useCases: [

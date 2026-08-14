@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Address Leaked? 17-Step Exposure Checklist",
+  metaDescription:
+    "Score your response to a leaked home address across 17 weighted steps in 24-hour, one-week, one-month and ongoing windows. Overdue steps flagged.",
+  steps: [
+    "Set \"Date you learned about the exposure\" to the day the address surfaced.",
+    "Tick the 17 weighted steps as you finish them, grouped into 24-hour, one-week, one-month and ongoing windows.",
+    "Read the response score, which is held at 69% while any step badged Critical is open, then press Copy result for the outstanding list.",
+  ],
   intro:
     "The Home Address Exposure Checklist scores your response to a leaked or published residential address across 17 weighted steps, grouped by the window each one belongs in — first 24 hours, first week, first month, and ongoing. Because an address cannot be rotated the way a password can, the score is weighted towards the two things that actually reduce harm: keeping the household physically safe, and stopping banks, telcos and password-reset flows from treating the address as proof of identity. Enter the date you found out and the tool flags which steps have already slipped past their window.",
   useCases: [

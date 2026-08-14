@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sick Leave Email Generator with Auto Return Date",
+  metaDescription:
+    "Writes the dates, return day and cover arrangement, skips weekends for the next working day, and scores the note against a 45-110 word target.",
+  steps: [
+    "Fill in Your name, First day off and Last day off, and leave Expected return blank to have the next working day worked out for you.",
+    "Pick a Tone, How reachable will you be and a Subject line style, then name Who is covering (optional) and anything that genuinely cannot wait.",
+    "Check Words in the email against the 45-110 target and the length verdict, then press Copy subject or Copy email under Your email.",
+  ],
   intro:
     "Sick Leave Email Generator writes the short note a manager actually needs when you are ill: the dates you are off, the day you expect to be back, and who is covering your work. It calculates the return date as the next working day after your last day off, skipping weekends, and scores the finished email against a 45-110 word target — long enough to answer the obvious questions, short enough to read on a phone. Symptom detail is never generated, because in most workplaces you are not obliged to describe a medical condition to your line manager.",
   useCases: [

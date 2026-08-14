@@ -1,4 +1,12 @@
 const seo = {
+  title: "Refund Request Email Builder - Dated Reply Deadline",
+  metaDescription:
+    "Build a refund email with order facts, days since delivery counted for you, a dated reply deadline and the escalation route for India, UK, EU or US.",
+  steps: [
+    "Fill the order facts: 'Where you bought it' (India, United Kingdom, European Union or United States), 'What went wrong', the order number, item, Amount paid, and the Order, Delivery and sending dates. [pages/index.jsx:100-188; lib.js:27-61, 75-106]",
+    "Set 'Days to reply' (3-60), pick a Tone - Firm, Polite or Final notice - and state 'What you want', or leave it blank for that reason's default ask. [pages/index.jsx:190-226; lib.js:16-18, 115-129]",
+    "Check Days since delivery against the region's reference window and the checklist, then press Copy result for the subject plus body, or Copy body for the email alone. [pages/index.jsx:246-307]",
+  ],
   intro:
     "The Refund Request Email Builder assembles a written refund request around the four things sellers respond to: the order facts, the number of days since delivery, one specific ask, and a dated deadline with a named escalation route. It counts the days from your delivery date to the date you send the email and compares them with the headline consumer-protection window for India, the UK, the EU or the US. Informational only — it drafts a letter, it does not give legal advice.",
   useCases: [

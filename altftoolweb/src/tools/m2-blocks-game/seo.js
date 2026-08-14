@@ -1,4 +1,10 @@
 const seo = {
+  title: "Merge Blocks: Column-Drop 2048 Puzzle on a 6x8 Board",
+  steps: [
+    "Tap a column on the 6-column by 8-row board to launch the next numbered block; two touching blocks of the same value merge into their double.",
+    "Reach the target beside LV — 32 on level 1, 64 on level 2 — before the moves left counter runs out, spending Undo, Shuffle or Hammer boosters if you stall.",
+    "Clear the target to see your star rating, then press Next Level for the doubled target or Retry Level to replay the same one.",
+  ],
   intro:
     "Merge Blocks is a column-drop puzzle game played on a 6-column by 8-row board, where you launch numbered blocks into a column and any two matching numbers that end up touching combine into their double, chaining upward as long as the new value keeps matching. Each level asks you to reach a target of 2 to the power of (4 + level) — 32 on level 1, 64 on level 2, 128 on level 3 and so on — within a move budget that starts at 21 and tightens by one per level down to a floor of 10. It is a short-session number puzzle for anyone who likes 2048 but wants a drop-and-stack board with a clear goal per round.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Travel Photography Permission & Drone Rules Checklist",
+  metaDescription:
+    "Grade what you plan to shoot by consequence — prohibited, permit or consent — and check drone flights against EASA 120 m and FAA Part 107 400 ft limits.",
   intro:
     "This checklist grades what you plan to photograph by consequence, then checks a planned drone flight against the published numeric limits of the EASA Open category and FAA Part 107. Situations are scored separately rather than lumped together, because needing a tripod permit and photographing a military checkpoint are different orders of problem. The drone check uses the real thresholds: a 120 m ceiling and 30 m from uninvolved people under EASA, 400 ft above ground level under Part 107.",
   useCases: [

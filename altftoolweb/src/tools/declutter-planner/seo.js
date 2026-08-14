@@ -1,4 +1,12 @@
 const seo = {
+  title: "Declutter Planner: Time Estimate and Session Plan",
+  metaDescription:
+    "Estimate sorting time from item counts and decision pace, add 8 minutes an item to list the sell pile, and get dated sessions in KonMari order.",
+  steps: [
+    "Tick the categories under \"What are you sorting?\" — Clothes and shoes, Books and magazines, Papers and documents, Kitchen and dining through to Sentimental items — and type a rough item count beside each one.",
+    "Set Minutes per session, Sessions per week, \"Share you expect to keep (%)\", Seconds per decision and the First session date, then tick \"I will actually list the sell pile\" to add 8 minutes an item for photographs, listing and messages.",
+    "Read Total time, the Keep, Sell, Donate and Bin or recycle counts and the dated Session schedule, then press \"Copy result\" for the whole plan as text or Reset to start again.",
+  ],
   intro:
     "This planner turns a decluttering intention into a dated schedule: it estimates sorting time as items × seconds per decision × a difficulty multiplier, adds a fixed setup block and the listing time for anything you intend to sell, then packs the work into sessions of the length you actually have. Categories are always worked in the KonMari order — clothes, books, papers, komono, sentimental — because decision speed builds on the easy categories and the sentimental box is the slowest thing in the house. It also splits what leaves into sell, donate and bin using per-category shares, and counts the charity and tip runs that split implies.",
   useCases: [

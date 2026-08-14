@@ -1,4 +1,12 @@
 const seo = {
+  title: "Convert File Encoding: UTF-8, UTF-16, Windows-1252",
+  metaDescription:
+    "Detect a text file encoding from its bytes, re-encode to UTF-8, UTF-16 LE or BE, ASCII or Windows-1252, and repair Ã© mojibake before you download.",
+  steps: [
+    "Drop text, CSV, JSON, XML, HTML, CSS, JS, logs, or code files onto the Upload Panel; the Encoding Detection Panel then reports the Detected encoding, a Confidence percentage and any BOM found.",
+    "In the Encoding Selector pick a Source Encoding (Auto Detect, UTF-8, UTF-16 LE, Shift_JIS, GB18030, Big5, EUC-KR, Windows ANSI and more) and a Target Encoding (UTF-8, UTF-8 with BOM, UTF-16 LE, UTF-16 BE, ASCII, Windows ANSI or ISO-8859-1), ticking \"Repair garbled UTF-8 text decoded as ANSI or ISO\" if the preview shows mojibake.",
+    "Check the Validation Panel for errors, then use Copy Converted Text, Download Active File — saved as the original base name plus the target encoding, such as report_utf8.csv — or Batch Download All.",
+  ],
   intro:
     "The File Encoding Conversion Tool reads a text file's raw bytes, detects its character encoding from the byte-order mark or byte patterns, and re-encodes it to UTF-8, UTF-8 with BOM, UTF-16 LE or BE, ASCII, Windows-1252 or ISO-8859-1. It decodes in strict mode first, so a file that is not actually valid in the chosen source encoding is reported rather than silently filled with replacement characters, and it can repair classic mojibake — text where UTF-8 bytes were read as Latin-1, producing sequences like Ã© and â€™. It is for developers, data engineers and anyone who has opened a CSV or log and found the accents turned into gibberish.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Browser Am I Using? Device & Privacy Check",
+  metaDescription:
+    "Detects your browser, engine, OS, screen and viewport, scores your privacy signals out of 100 and probes 23 web APIs. Runs locally, nothing sent.",
+  steps: [
+    "Load the dashboard: it reads your user-agent, viewport, screen size and time zone locally, with nothing uploaded.",
+    "Read the Privacy signals card for your score out of 100, then the Web API support table covering all 23 probes.",
+    "Press Copy report for a plain-text snapshot, or Re-scan after changing a browser setting to compare the two.",
+  ],
   intro:
     "This dashboard reports everything a web page can learn about your browser without asking permission: the browser and engine parsed from the user-agent string, the operating system, viewport and screen geometry, the privacy signals you send, and which of 20 web APIs are actually available. Detection matches the most specific user-agent token first — Edge before Chrome, Chrome before Safari — because every Chromium browser carries the earlier names in its UA. Everything runs locally; nothing is transmitted or stored.",
   useCases: [

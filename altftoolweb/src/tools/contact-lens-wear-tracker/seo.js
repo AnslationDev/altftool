@@ -1,4 +1,12 @@
 const seo = {
+  title: "Contact Lens Replacement Date & Wear Hour Tracker",
+  metaDescription:
+    "Count 1, 14, 30, 90 or 365 days from the day the pack was opened for the exact replacement date, percent of lens life used and CDC case change date.",
+  steps: [
+    "Choose your Lens replacement schedule - daily disposable 1 day, two-weekly 14, monthly 30, quarterly 90 or conventional 365 - and enter the date the pack was opened.",
+    "Add Hours worn per wearing day, Wearing days per week and the date the lens case was last replaced.",
+    "Read the replacement date, percent of lens life used, cumulative hours worn and the CDC three-month case change date, then press Copy result.",
+  ],
   intro:
     "The Contact Lens Wear Tracker counts a lens replacement window from the day the blister or vial was opened — 1 day for daily disposables, 14 for two-weekly, 30 for monthly, 90 for quarterly and 365 for conventional lenses — and reports the exact replacement date, the percentage of life used and the cumulative hours worn. It also applies the CDC hygiene rule that a lens storage case should be replaced at least every three months. Useful for anyone who has lost track of when a pack was opened or who wants to see how many lenses a year their wearing pattern actually consumes.",
   useCases: [

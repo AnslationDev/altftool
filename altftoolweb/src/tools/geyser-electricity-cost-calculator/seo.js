@@ -1,4 +1,10 @@
 const seo = {
+  title: "Geyser Electricity Cost Calculator + Standing Loss",
+  steps: [
+    "Set Heater type to Storage tank geyser or Instant / tankless heater, then add Tank capacity (litres), BEE star rating and Hours left switched on per day.",
+    "Fill Bucket baths per day, Litres per bucket, Showers per day, Minutes per shower, Shower flow (litres per minute), Bathing and Mains water temperature (°C), Days used per month and Electricity tariff (₹ per unit).",
+    "Read Cost per month with Standing loss from the tank shown as its own line, plus Cost per bucket and Cost per minute of shower, then press Copy result.",
+  ],
   intro:
     "A geyser's electricity bill is the sum of two things: the heat that goes into the water you use, and the heat the tank leaks into the bathroom while it sits switched on. This calculator computes the first from the standard heat equation — litres × 4.186 kJ per kg per °C × temperature rise ÷ 3600 — and the second from the BEE standing-loss figure printed on the star label, scaled for tank size and the hours you leave the switch on. It is for anyone trying to work out whether the bill comes from long showers, a cold-winter inlet, or simply forgetting to switch the geyser off.",
   useCases: [

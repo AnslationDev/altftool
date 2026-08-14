@@ -1,4 +1,12 @@
 const seo = {
+  title: "Japanese New Year Wishes: Nengajo Text with Romaji",
+  metaDescription:
+    "Build a nengajo in keigo, polite or casual Japanese, with Hepburn romaji and English. Checks matsunouchi dates and the Reiwa era line before you send.",
+  steps: [
+    "Set Who is it for?, Politeness level and Sending before or after 1 January, plus the incoming year.",
+    "Fill Month, Day and Region under 'Which card is right on the day you send it?' to test matsunouchi timing.",
+    "Each greeting comes back with Hepburn romaji and an English gloss; press Copy all to take every one.",
+  ],
   intro:
     "Japanese New Year Wishes assembles a complete nengajo message from the four parts a real card uses: the opening greeting (賀詞), thanks for the year that has ended, the request for continued goodwill, and a closing wish. You choose keigo, polite or casual, and whether you are writing before or after 1 January, and every line comes back with Hepburn romaji and an English gloss. It also checks the calendar rules — matsunouchi, risshun and the era year — that decide which card is actually correct on the day you send it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "IPA to Text: Turn a Transcription Back Into Words",
+  metaDescription:
+    "Paste an IPA transcription and get the English word it spells, matched against about 430 General American entries. Homophones all returned and speakable.",
+  steps: [
+    "Paste a transcription into the IPA Input box — enclosing slashes, brackets and spaces are stripped before lookup — or press \"Load sample\" to drop in hɛloʊ.",
+    "If fewer than 40% of the characters are recognised phonetic symbols, a red warning says it does not look like IPA; open IPA SYMBOL REFERENCE for the Vowels, Diphthongs, Plosives and Stress symbol sets to fix it.",
+    "\"Likely English Word(s)\" lists every match with the first tagged Best, the speaker button on each row reads it aloud in en-US at 0.9 rate, and Copy puts the comma-separated candidates on the clipboard.",
+  ],
   intro:
     "The IPA to Text Helper takes an International Phonetic Alphabet transcription and returns the English word or words it spells, matching the cleaned input against a built-in dictionary of roughly 430 common-word transcriptions. Slashes, brackets and spaces are stripped before lookup, homophones come back together — /tu/ returns both 'to' and 'two' — and each candidate can be read aloud with your browser's speech synthesis. It is for language learners, linguistics students and dictionary readers who have the pronunciation and need the spelling.",
   useCases: [

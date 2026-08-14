@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bhutan Entry Checklist: SDF Cost and Visa Documents",
+  metaDescription:
+    "Total Bhutan's Sustainable Development Fee across your party and nights, add the USD 40 visa fee, and test your passport against the six-month rule.",
+  steps: [
+    "Pick 'Which route applies to you' — the visa route or the India, Bangladesh and Maldives permit route — then set 'Date of entry' and 'Travel document expiry'.",
+    "Enter 'Nights in Bhutan' and any 'Nights waived by a current incentive', then the head counts for 'Travellers aged 12 and over', 'Children aged 6 to 11 (half SDF)' and 'Children under 6 (no SDF)'.",
+    "Tick 'Travelling beyond Thimphu and Paro' or 'Trekking or visiting a restricted area', read the SDF-plus-visa-fee total with the Required document list, and press 'Copy checklist'.",
+  ],
   intro:
     "Bhutan prices a visit by law rather than by tour package: the Sustainable Development Fee is levied under the Tourism Levy Act of Bhutan, 2022 on every night halted in the country, currently USD 100 per person per night for international visitors and Nu. 1,200 for Indian nationals, with half rate for children aged 6 to 11 and nothing for under-sixes. This checklist multiplies the levy across your party and nights, adds the USD 40 visa application fee where one is due, tests your passport against the six-month rule, and lists the permit, insurance, itinerary and guide documents the application actually asks for.",
   useCases: [

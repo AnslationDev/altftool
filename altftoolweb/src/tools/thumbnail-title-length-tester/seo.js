@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Title Length & Thumbnail Overlap Tester",
+  metaDescription:
+    "Measures a title against the 100-character field and the ~60 characters a listing shows, then reports which thumbnail words the title already repeats.",
+  steps: [
+    "Type the Video title into its box and the words burned into the image into Thumbnail text.",
+    "Set Canvas font px, Canvas width and Listing cut chars, which default to 96, 1280 and 60.",
+    "Read the status — Clean pairing, Tighten it or Needs rewrite — with Title length, Repeated words, Combined ideas and Screen text px, then press Copy.",
+  ],
   intro:
     "The Thumbnail Title Length Tester measures a video title against the 100 character title field and the roughly 60 characters a listing shows before it truncates, then compares the title's content words with the words burned into the thumbnail. It reports what percentage of the thumbnail's wording the title already carries, which words appear only in one place, and whether the thumbnail text is still legible once the image is scaled to the 210 pixel search-result size. Aimed at creators and editors deciding whether a thumbnail is adding a second idea or just echoing the first.",
   useCases: [

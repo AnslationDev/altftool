@@ -1,4 +1,12 @@
 const seo = {
+  title: "Backpacking Weight Calculator and Packing List",
+  metaDescription:
+    "Enter nights, body weight and night low for base weight, food at 4.4 kcal/g, water at 1 kg/L, and a check against the 20% of body weight ceiling.",
+  steps: [
+    "Enter Nights out, Your body weight (kg), Expected night low (°C) and Daily energy target (kcal).",
+    "Set Water carried between sources (L), Resupply every N days (0 = none) and Tent shared between, then tick the Conditions: Rain expected, Cooking on a stove, Trekking poles.",
+    "Read Base weight (no food, water or fuel) against the 20% target for your body weight, plus Food carried, Water carried and Sleeping bag comfort rating, then press Copy list.",
+  ],
   intro:
     "This builder treats a backpacking list as a weight budget rather than a checklist. It separates base weight — everything that is not eaten, drunk or burned — from consumables, sizes food by calorie density at the classic 125 kcal per ounce (4.4 kcal per gram), counts water at 1 kg per litre, and checks the loaded total against the 20%-of-body-weight carrying guideline. The sleep system is chosen from the expected night low using the ISO 23537 comfort rating rather than the survival limit printed on the label.",
   useCases: [

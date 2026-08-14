@@ -1,4 +1,12 @@
 const seo = {
+  title: "Facebook Self Exposure: 13 Ready-to-Run Search Queries",
+  metaDescription:
+    "Turn your name, username or profile.php id into 13 site: and quoted-phrase searches covering public group posts, events, the directory and archives.",
+  steps: [
+    "Fill in Name on your profile and Username, profile link or numeric id — a username needs five or more letters, numbers and full stops.",
+    "Add a city and an employer, school or club to unlock the remaining queries, and set Open queries in to your preferred search engine.",
+    "Press Copy on any of the 13 queries, or Run it to open the group, event, m.facebook.com, directory or archive search in that engine.",
+  ],
   intro:
     "This builder assembles thirteen search-engine queries from your Facebook name, username or numeric profile id, city and employer, using documented operators (site:, quoted phrases, OR, minus) to surface the parts of your account that profile privacy settings do not cover: public group posts, event pages, photo pages, the m.facebook.com mirror, the public people directory, sites that link to your profile and archived snapshots. Usernames are validated against Facebook's rule of at least five characters using letters, numbers and full stops, and profile.php?id= links are handled as numeric ids. It builds strings for you to run; it never searches, scrapes or stores anything.",
   useCases: [

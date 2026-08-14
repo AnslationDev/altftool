@@ -1,4 +1,12 @@
 const seo = {
+  title: "URL Query String Encoder: JSON to RFC 3986 Parameters",
+  metaDescription:
+    "Turn a JSON object into a percent-encoded query string — six array styles, %20 or + for spaces, and a strict RFC 3986 mode for OAuth 1.0a signing.",
+  steps: [
+    "Paste your parameters into the \"Parameters as JSON\" textarea and optionally add a \"Base URL\" for a full-URL output.",
+    "Pick the \"Arrays\" and \"Nested objects\" flattening styles and whether \"A space becomes\" %20 or +, plus toggles like \"Strict RFC 3986 — also encode ! ' ( ) *\".",
+    "Click \"Copy result\" to grab the encoded query string, and check the parameter-by-parameter table and encoded-length warnings below it.",
+  ],
   intro:
     "This tool turns a JSON object into a correctly percent-encoded URL query string, following RFC 3986's rule that everything outside the unreserved set (letters, digits, hyphen, dot, underscore, tilde) must be escaped when used as data. Developers building API calls, webhooks or tracking URLs choose how arrays and nested objects are flattened — repeated keys, brackets, indices, comma, space or pipe delimited — and whether a space becomes %20 or a form-urlencoded plus sign.",
   useCases: [

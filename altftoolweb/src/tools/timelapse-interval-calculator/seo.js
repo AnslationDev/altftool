@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timelapse Interval Calculator: Frames, Clip, Card GB",
+  metaDescription:
+    "Enter shoot hours, interval and playback fps to get the shot count, finished clip length, storage in GB and whether your card is big enough.",
+  steps: [
+    "Fill in Shoot hours, Interval sec, Playback fps, MB/photo and Card GB.",
+    "Change Interval sec or Playback fps to trade smoothness against frame count — at 24 fps, one second of clip needs 24 shots.",
+    "Read Shots, Clip length, Storage in GB and whether Card reads fits or too small, then press Copy.",
+  ],
   intro:
     "This calculator links the three numbers that define a timelapse — shooting interval, frame count and finished clip length — so fixing any two gives you the third. It uses the exact relationships frames = shooting time ÷ interval, clip length = frames ÷ playback frame rate, and time compression = interval × playback frame rate, which is why a 2 second interval at 24 fps always compresses time by 48× whatever the shoot length. It also sizes the card space the sequence needs and warns when an interval is too short for the exposure plus file write.",
   useCases: [

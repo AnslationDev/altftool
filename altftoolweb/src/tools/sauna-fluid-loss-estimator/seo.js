@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sauna Sweat Loss Calculator: Litres and Rehydration",
+  metaDescription:
+    "Sweat lost per sauna session from a before/after weigh-in or from room temperature and humidity, with the ACSM 125-150% amount to drink back.",
+  steps: [
+    "Choose \"Estimate from the room conditions\" or \"Measured from my weight change\" at the top of the form.",
+    "In estimate mode fill Body weight (kg), Height (cm), Sauna type, Room temperature (°C) and Room humidity (%); in measured mode fill Weight before (kg), Weight after (kg), Fluid drunk during (ml) and Urine passed during (ml) — both modes need Minutes per round and Number of rounds.",
+    "Sweat lost is reported in litres and ml alongside sweat rate per hour, body mass lost as a percentage, the \"Drink back afterwards (125-150%)\" range and sodium lost in mg; Copy result copies the summary and Reset restores the defaults.",
+  ],
   intro:
     "The Sauna Fluid Loss Estimator calculates how much sweat a sauna session cost you and how much to drink back. In measured mode it uses the standard sweat-rate equation — sweat equals body-mass change plus fluid drunk minus urine passed, with one kilogram of body mass treated as one litre of water. In estimate mode it models sweat rate from how far the room sits above skin temperature and how much the humidity blocks evaporation. Replacement follows the ACSM guidance of drinking 125-150% of the deficit, because some of what you drink leaves again as urine before rehydration finishes.",
   useCases: [

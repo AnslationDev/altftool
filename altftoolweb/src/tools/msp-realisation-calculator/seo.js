@@ -1,4 +1,12 @@
 const seo = {
+  title: "MSP Realisation Calculator: Net Price Per Quintal",
+  metaDescription:
+    "Subtract mandi fee, arhtiya commission, hamali, bardana and transport from the quoted price to see the net per quintal you keep against MSP.",
+  steps: [
+    "Enter Notified MSP (₹ per quintal), Mandi price offered (₹ per quintal) and Quantity sold (quintals).",
+    "Add Market fee / cess (% of price), Commission agent (% of price), Hamali, weighing, loading (₹ per quintal), Gunny bags / bardana (₹ per quintal) and Transport for the whole lot (₹), ticking the PDPS box if you are registered.",
+    "Read Net realisation per quintal, the shortfall or surplus against MSP for the lot and the Mandi price needed so net equals MSP, then press Copy result.",
+  ],
   intro:
     "MSP realisation is the price a farmer actually keeps per quintal after a mandi sale, expressed against the notified Minimum Support Price. This calculator subtracts the market fee or cess, the arhtiya commission, hamali and weighing charges, bardana and transport from the price quoted in the yard, then shows the net per quintal, the rupee gap against MSP for the whole lot, and the mandi price you would need for your net to equal MSP. It also applies the Price Deficiency Payment Scheme rule under PM-AASHA, where the payment is capped at 25% of MSP.",
   useCases: [

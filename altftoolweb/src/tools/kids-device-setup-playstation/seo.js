@@ -1,4 +1,12 @@
 const seo = {
+  title: "PlayStation Parental Controls Planner for PS5, PS4",
+  metaDescription:
+    "Plan the PSN child account, spending limit, communication and play-time settings for your child's age, with the PEGI/ESRB ceiling and menu paths.",
+  steps: [
+    "Enter the Child's age (years), pick the Console and how they play online, then set School-day and Weekend-day allowances in minutes.",
+    "Work through the Essential, Recommended and Optional checklist on the console, ticking each item; Family controls coverage updates as you go.",
+    "Read the PEGI and ESRB age-rating ceiling and weekly play-time budget, then press Copy plan to take the remaining steps to the console.",
+  ],
   intro:
     "This planner produces the PlayStation family-safety settings for one child: the PSN child account, the monthly spending limit, the Communication and User-Generated Content restriction, play-time limits, and the age-rating ceiling their age already meets under PEGI and ESRB. It covers both the account-level controls in Family Management and the console-level System Restrictions that stop a child creating a fresh unrestricted user. Every step names the menu path on PS5 or PS4.",
   useCases: [

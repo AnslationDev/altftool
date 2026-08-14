@@ -1,4 +1,12 @@
 const seo = {
+  title: "Motorcycle Engine Comparison: BMEP, PS/L, Piston Speed",
+  metaDescription:
+    "Compare two bikes on specific power, torque density, BMEP = 2π × nᵣ × torque ÷ swept volume, power-to-weight and mean piston speed at peak power.",
+  steps: [
+    "For Engine A and Engine B choose 'Start from a published spec' — Hero Splendor Plus through Kawasaki Ninja 650 — or leave it on Custom / edited.",
+    "Enter Displacement (cc), Peak power (PS), Peak power rpm, Peak torque (Nm), Kerb weight (kg) and Stroke (mm, optional), then pick Four-stroke or Two-stroke.",
+    "The table returns Specific power (PS/L), BMEP (bar), Mean piston speed at peak power (m/s) and the City tractability index; 'Copy result' copies the lot.",
+  ],
   intro:
     "Engine displacement comparison puts two motorcycle engines side by side on the derived figures that displacement alone hides: specific power in PS per litre, torque density in Nm per litre, brake mean effective pressure, power-to-weight and mean piston speed at peak power. BMEP is computed from the textbook relation BMEP = 2π x nᵣ x torque ÷ swept volume (nᵣ = 2 for a four-stroke), which is why a 350 cc single making 27 Nm and a 650 cc twin making 64 Nm can be judged on the same scale. It is aimed at buyers and students who want to know why a 155 cc sport bike feels nothing like a 155 cc commuter.",
   useCases: [

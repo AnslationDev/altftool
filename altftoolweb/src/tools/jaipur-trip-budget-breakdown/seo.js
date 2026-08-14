@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jaipur Trip Budget Calculator With Entry Tickets",
+  metaDescription:
+    "Splits a Jaipur trip into travel, stay, food, autos and monument entry at the published Indian or foreign rates, with the composite ticket netted off.",
+  steps: [
+    "Choose a Travel style such as Backpacker or Comfort, set Travellers and Nights in Jaipur, and pick the Ticket price band for Indian or foreign nationals.",
+    "Tick the sites under 'Monuments you plan to enter' — anything already inside the composite ticket is shown as covered by composite ticket, not charged twice.",
+    "Read the Total trip cost with per person and per person per day figures, the line-by-line table, then press Copy result.",
+  ],
   intro:
     "This planner breaks a Jaipur holiday into travel, stay, food, autos, monument entry, shopping and a contingency buffer, then reports the cost per person and per person per day. Entry fees are the published Rajasthan two-tier rates — one price for Indian nationals, a higher one for foreign nationals — and the two-day composite ticket is netted off so the forts it already covers are not charged twice. Rooms are billed for nights while meals and transport are billed for the extra arrival day, which is where most hand-made trip budgets go wrong.",
   useCases: [

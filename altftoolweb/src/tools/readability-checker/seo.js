@@ -1,4 +1,12 @@
 const seo = {
+  title: "Readability Checker: Flesch, Fog, SMOG, Coleman",
+  metaDescription:
+    "Score text on Flesch reading ease, Flesch-Kincaid, Gunning Fog, Coleman-Liau and SMOG at once, with word, sentence, syllable and complex-word counts.",
+  steps: [
+    "Paste or type your draft into the 'Your Text' box, which opens with a sample sentence you can overwrite.",
+    "Scoring reruns on every keystroke, so the Text Statistics panel moves as you edit: Words, Sentences, Syllables, Characters, Complex Words and Avg Words/Sentence.",
+    "Read the banded verdict — Very Easy, Easy, Fairly Easy, Standard, Fairly Difficult or Very Confusing, with 'Flesch-Kincaid: n/100' beneath it — then the Readability Scores card listing Flesch-Kincaid Grade, Gunning Fog Index, Coleman-Liau Index and SMOG Index.",
+  ],
   intro:
     "Readability Checker scores pasted text against five standard formulas at once — Flesch reading ease, Flesch-Kincaid grade level, the Gunning Fog index, the Coleman-Liau index and SMOG — and reports the counts they are built from: words, sentences, syllables and words of three or more syllables. The reading-ease score uses the classic 206.835 − 1.015 × (words per sentence) − 84.6 × (syllables per word), and is banded from Very Easy at 90+ down to Very Confusing below 10. It is aimed at anyone who has to hit a stated reading level — plain-language policy, patient information, exam material, marketing copy — and wants to see which sentences are pulling the grade up.",
   useCases: [

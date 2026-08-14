@@ -1,4 +1,12 @@
 const seo = {
+  title: "Post Office Time Deposit Calculator: 1 to 5 Year TD",
+  metaDescription:
+    "Interest compounds quarterly but pays out annually. See the yearly payout, effective yield, year-by-year schedule, 80C position and early-closure penalty.",
+  steps: [
+    "Enter the deposit amount in rupees and pick a tenure of 1, 2, 3 or 5 years; the interest rate field fills with that tenure's notified rate and stays editable.",
+    "Choose your income-tax slab rate and tick Senior citizen (higher TDS threshold) to apply the right section 194A limit.",
+    "Read the interest paid each year, the effective annual yield after quarterly compounding, the year-by-year payout table and the early-closure payout, then press Copy result.",
+  ],
   intro:
     "The Post Office Time Deposit Calculator projects a National Savings Time Deposit account over its 1, 2, 3 or 5 year tenure, applying the scheme's actual mechanics: interest is compounded quarterly but paid out annually, so the calculator reports the effective annual yield, the yearly payout, the year-by-year schedule and what the same money would have become had every payout been re-deposited. It also flags the ₹1,000 minimum, the ₹100 multiple rule, the section 80C position and the TDS threshold. It is for savers choosing a tenure, and is informational rather than tax advice.",
   useCases: [

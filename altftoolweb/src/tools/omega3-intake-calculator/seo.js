@@ -1,4 +1,12 @@
 const seo = {
+  title: "Omega-3 Intake Calculator: EPA and DHA mg Per Day",
+  metaDescription:
+    "Turn weekly servings of fish, chia, walnuts and any supplement into average EPA+DHA mg a day, scored against 250 mg minimum and 1,000 mg optimal.",
+  steps: [
+    "Under \"Marine Sources (Servings per Week)\", enter weekly servings of Salmon / Mackerel, Sardines / Anchovies and Other Fish (Tuna, Cod, etc).",
+    "Add \"Chia / Flaxseeds (1 Tbsp)\" and \"Walnuts (1 oz / Handful)\" servings plus your \"Fish / Algae Oil Supplement\" in combined EPA+DHA mg per day, then press \"Calculate Intake\".",
+    "\"Your Omega-3 Analysis\" returns your mg/day, the percentage of the 1,000 mg optimal target, and a Deficient, Adequate for Basic Health or Optimal for Cognitive Health verdict.",
+  ],
   intro:
     "The Omega-3 Intake Calculator converts your weekly servings of fish, seeds, walnuts and any daily supplement into an average EPA + DHA figure in milligrams per day, then scores it against a 250 mg/day minimum and a 1,000 mg/day optimal target. It uses per-serving estimates of roughly 1,500 mg for salmon or mackerel, 1,200 mg for sardines or anchovies, 300 mg for leaner fish, and about 100 mg of EPA/DHA equivalent for plant sources after accounting for poor ALA conversion. It is for anyone wondering whether their actual eating pattern gets them near the intakes cited in heart and brain health guidance.",
   useCases: [

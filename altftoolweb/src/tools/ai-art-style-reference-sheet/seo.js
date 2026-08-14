@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Art Style Sheet: 8 Axes and a CLIP Token Estimate",
+  metaDescription:
+    "Lock medium, lighting, lens, composition, colour, era, finish and mood into a reusable prompt sheet, with a coverage score and 75-token estimate.",
+  steps: [
+    "Enter your Subject, then tap phrases under each of the eight axes — Medium, Lighting, Lens and camera, Composition, Colour, Era or movement, Surface and finish, and Mood — and add your own comma-separated phrases.",
+    "Optionally pick one axis under 'Emphasise one axis' and set the Emphasis weight between 0.5 and 2.0 to apply (phrase:weight) syntax, choose an aspect ratio, and toggle the negative prompt presets.",
+    "Watch Style coverage, the style-phrase count, Axes named and Estimated CLIP tokens against the 75 usable tokens, then press 'Copy sheet' to take the definition from 'Your reference sheet'.",
+  ],
   intro:
     "AI Art Style Reference Sheet builds a reusable image-prompt style definition across eight axes — medium, lighting, lens, composition, colour, era, surface finish and mood — and scores how many of them you have actually named. It de-duplicates phrases, applies (phrase:weight) attention syntax to one axis when you want to push it, and estimates the prompt against CLIP's 77-token context so you know when the tail of your prompt stops being read. For anyone who gets one good image and then cannot reproduce the look.",
   useCases: [

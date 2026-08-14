@@ -1,4 +1,7 @@
 const seo = {
+  title: "CAC Calculator: Per-Channel Cost and LTV:CAC Ratio",
+  metaDescription:
+    "Works out CAC per marketing channel and blended, grades your LTV:CAC ratio against the 3:1 benchmark, and exports the breakdown as CSV.",
   intro:
     "This calculator works out Customer Acquisition Cost channel by channel — CAC = spend ÷ customers acquired — and then a blended CAC from total spend ÷ total customers across every channel you list. Enter your average customer lifetime value and it grades the LTV:CAC ratio against the standard 3:1 benchmark, ranks channels from cheapest to most expensive, and shows the spend gap between your best and worst performer. Figures are in rupees, and everything stays in the browser.",
   useCases: [

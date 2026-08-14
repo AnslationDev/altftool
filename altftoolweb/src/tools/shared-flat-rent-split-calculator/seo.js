@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shared Flat Rent Split Calculator by Room and Area",
+  metaDescription:
+    "Common areas split equally per head, bedrooms by floor area with 12% for an attached bathroom. Whole-rupee shares that add up to the rent exactly.",
+  steps: [
+    "Enter Total monthly rent (INR), Shared bills each month (INR) and \"Rent attributed to common areas (%)\" — at 100% everyone pays the same, at 0% rent follows bedroom size alone.",
+    "Under Bedrooms press Add room for each bedroom, set its Floor area (sq ft) and \"People sharing this room\", then tick Room features: Attached bathroom (+12%), Private balcony (+6%), Air conditioning (+10%) or \"No window, or faces noise\" (−8%).",
+    "The \"Who pays what\" table lists each room's Weight, Per person and Room total, above rows for Common-area pool, Bedroom pool, Shared bills per person and \"A plain equal split would be\"; Copy result copies the split.",
+  ],
   intro:
     "This calculator divides flat rent between flatmates using a two-pool method: a set share of the rent covers common areas and is charged equally per head, and the rest is allocated across bedrooms in proportion to floor area adjusted for an attached bathroom, a balcony, air conditioning or a poor outlook. A room shared by two people has its bedroom cost halved, and every share is rounded to whole rupees by the largest-remainder method so the individual amounts add up to the rent exactly. It is for flatmates who want the split written down with the reasoning visible rather than argued from memory.",
   useCases: [

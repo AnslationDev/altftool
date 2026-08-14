@@ -1,4 +1,7 @@
 const seo = {
+  title: "Child Fever Log: Core-Equivalent Temps and Fluids",
+  metaDescription:
+    "Logs each reading with site, fluids and medicine, corrects armpit and oral temps to core, and sets a Holliday-Segar fluid target from weight.",
   intro:
     "The Child Fever Log records each temperature reading with the time, the measurement site, the fluids your child drank and any medicine given, then converts every reading to a core-equivalent temperature so the numbers are comparable. It uses the standard fever definition of 38.0 °C (100.4 °F) core, adds the usual site corrections of about 0.5 °C for armpit and 0.4 °C for oral readings, and estimates daily fluid needs with the Holliday-Segar 100/50/20 mL/kg maintenance rule plus roughly 12% extra per degree of fever. The output is a plain summary you can read out at a clinic or paste into a message.",
   useCases: [

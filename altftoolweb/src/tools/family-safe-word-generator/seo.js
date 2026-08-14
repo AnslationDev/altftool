@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Safe Word Generator: 5 Words, 42.6 Bits",
+  metaDescription:
+    "Draws a verification phrase from a 92-word list with crypto.getRandomValues; five words plus three digits gives about 42.6 bits. Never transmitted.",
+  steps: [
+    "Under Your private phrase, set Number of words and Final digits — the default five words plus three digits is about 42.6 bits from the 92-word pool.",
+    "Press Generate private phrase; changing the selectors afterwards does not replace what is shown until you press Generate another, so nothing is overwritten by accident.",
+    "Press Copy phrase and record it offline, checking the Estimated search space in bits printed beneath the phrase.",
+  ],
   intro:
     "The Family Safe-Word Generator builds a spoken verification phrase by drawing words at random from a fixed 92-word list of plain, easily heard English nouns and appending random digits — the default of five words plus three digits gives about 42.6 bits of entropy. Every character comes from the browser's crypto.getRandomValues with rejection sampling, so no word or digit is more likely than another, and the phrase is never stored or transmitted. It is for families who want an agreed answer to the question \"prove it's really you\" when a call, voice note or message claims there is an emergency.",
   useCases: [

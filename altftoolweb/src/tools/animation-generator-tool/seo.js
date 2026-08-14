@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Animation Generator — 15 Presets, Live Preview",
+  metaDescription:
+    "15 CSS keyframe presets — fade, slide, bounce, shake — with duration, delay, easing, iterations, direction and fill mode. Copy or download the CSS.",
   intro:
     "The Animation Generator builds ready-to-paste CSS keyframe animations from 15 presets — fade, slide in four directions, rotate, bounce, scale up and down, pulse, shake, flip, swing and heartbeat — and lets you set every part of the animation shorthand: duration, delay, timing function, iteration count, direction and fill mode. It previews the result live on a sample element and outputs both the @keyframes block and the matching animation property, which you can copy or download as a .css file. It is for front-end developers and designers who want to see how ease-out at 0.6s actually feels before committing it to a stylesheet.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Warranty and Receipt Tracker Saved in Your Browser",
+  metaDescription:
+    "Log each purchase as an Item plus warranty and receipt details, search every field, and export the lot to warranty-receipt-vault.json. Not encrypted.",
+  steps: [
+    "Type the product into Item and its serial number, seller, purchase date and cover expiry into Warranty and receipt details.",
+    "Press Add record to save it to this browser's localStorage, then use Search records to match text in either field later.",
+    "Press Export JSON for a warranty-receipt-vault.json copy, or Import JSON to load one back after confirming it replaces every record saved here.",
+  ],
   intro:
     "The Warranty & Receipt Vault is a local record keeper for the purchase details you only need once, at the worst moment: each entry has an Item field and a free-text field for warranty and receipt details such as serial number, seller, purchase date and cover expiry. Records are saved in your browser's own localStorage, searchable across every field, and exportable to a JSON file you can back up or move to another device. It stores what you type — it does not verify warranty terms or remind you when cover ends.",
   useCases: [

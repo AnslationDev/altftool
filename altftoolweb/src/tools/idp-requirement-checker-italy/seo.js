@@ -1,4 +1,10 @@
 const seo = {
+  title: "Italy IDP Checker: Do You Need One With Your Licence?",
+  steps: [
+    "Choose where your licence was issued, what you already hold, and why you are in Italy from the three dropdowns.",
+    "Add the date you arrive, an optional departure date and your age in years; the verdict recalculates as you type.",
+    "Read the verdict, the \"How long your licence works here\" row and the \"Carry in the car\" list, then press Copy result.",
+  ],
   intro:
     "This checker tells you whether Italy expects an International Driving Permit alongside your national licence, based on where the licence was issued, why you are in the country and your age. It applies Article 135 of the Codice della Strada, which lets a non-EU licence be used in Italy only when it is accompanied by an International Driving Permit or a sworn Italian translation, and Article 136, which stops that licence working once you have held registered residence for more than a year. Italy is party to both the 1949 Geneva and the 1968 Vienna Conventions, so either permit format counts.",
   useCases: [

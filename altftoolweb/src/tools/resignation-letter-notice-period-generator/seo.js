@@ -1,4 +1,12 @@
 const seo = {
+  title: "Resignation Letter Generator With Last Working Day",
+  metaDescription:
+    "Enter your notice period, leave adjustment and buyout days to get your exact last working day, a dated handover plan and a ready resignation letter.",
+  steps: [
+    "In the Notice period card set \"Date you submit the resignation\" and \"Your working week\", enter \"Notice period in the contract\" with its Notice unit, then add \"Leave adjusted against notice (days)\" and \"Days you want bought out or waived\".",
+    "Fill in Letter details — Your name, Employee ID, Designation, \"Addressed to (manager / HR)\", Company name and \"Reason stated in the letter\" — and the draft rewrites itself as you type; there is no submit button.",
+    "Read \"Your last working day\" with its Notice starts / Full notice would end on / Notice actually served rows and the Phase, Dates, Focus handover table, then press \"Copy dates\" or \"Copy letter\".",
+  ],
   intro:
     "This generator computes your last working day from the notice period your contract specifies, then writes the resignation letter around that date. Months are added as calendar months with end-of-month clamping, so a one-month notice given on 31 January ends on 28 February rather than a guessed thirty days later; leave adjusted against notice and any days you are asking to be bought out are then subtracted. The output includes a dated three-phase handover plan sized to the working days you actually have left.",
   useCases: [

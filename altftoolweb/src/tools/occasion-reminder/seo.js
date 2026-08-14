@@ -1,4 +1,12 @@
 const seo = {
+  title: "Occasion Reminder: Recurring Dates and Lead Times",
+  metaDescription:
+    "Roll yearly or monthly dates forward, set a per-entry lead time, and sort into Today, This Week, Upcoming, Missed or Completed. Export JSON or CSV.",
+  steps: [
+    "Press '+ Add Occasion' (or Load Preset Pack) and fill in the title, a Category of Personal, Family, Work or Finance, the event date, a Recurrence of One Time, Monthly or Yearly, the remind-days-before figure and a Priority of Low, Medium or High.",
+    "Narrow the list with the All Status and All Categories dropdowns, and tick Completed on anything already handled.",
+    "The Reminder Timeline table lists Next Date, Reminder Date and a status of Upcoming, This Week, Today, Missed, Completed or Need Date, 'Clear Next Steps' ranks six actions, and Export JSON or Export CSV downloads occasion-reminders.json or occasion-reminders.csv.",
+  ],
   intro:
     "The Occasion Reminder builds a prep schedule from a list of dates: for each occasion it rolls a yearly or monthly recurrence forward to the next date still in the future, subtracts your chosen lead time to get a reminder date, and sorts everything into Today, This Week, Upcoming, Missed or Completed. A priority score — 30 points for high, 15 for medium, 5 for low, plus 30 if the date is today and 20 if it falls within seven days — ranks the top six things to act on next. The whole list exports to JSON or CSV so it can move into a calendar or task manager.",
   useCases: [

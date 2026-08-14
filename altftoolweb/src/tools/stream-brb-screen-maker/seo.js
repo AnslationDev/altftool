@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stream BRB Screen Maker with WCAG Contrast Check",
+  metaDescription:
+    "Build a BRB card at 1920x1080 or vertical, grade the text against the 4.5:1 and 3:1 WCAG thresholds, keep it title-safe, export SVG or PNG.",
+  steps: [
+    "Pick a Canvas size of 1920 x 1080, 2560 x 1440, 1280 x 720 or 1080 x 1920 vertical, and set Countdown (minutes, 0 to hide).",
+    "Write the Headline and the Message under the countdown, then set the Background, Headline & countdown and Accent & message colours; contrast is graded live against the WCAG 4.5:1 and 3:1 thresholds.",
+    "Press PNG or SVG to download brb-screen.png or brb-screen.svg, or press Copy SVG to paste the markup straight into your overlay.",
+  ],
   intro:
     "The Stream BRB Screen Maker builds a be-right-back holding card at full stream resolution and tells you whether the text is actually readable on it. Contrast between the text and the background is measured with the WCAG 2.2 formula — relative luminance from linearised sRGB channels, then (L1 + 0.05) / (L2 + 0.05) — and graded against the 3:1 large-text and 4.5:1 normal-text AA thresholds. Layout guides follow SMPTE RP 218, which puts the action-safe area at the central 93% of the frame and the title-safe area at 90%. Export the finished scene as SVG or PNG.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Secret Santa Generator With Exclusions & Reveal Codes",
+  metaDescription:
+    "Shuffles until nobody draws themselves, an excluded pair or last year’s person, then hands out six-character reveal codes. Export CSV or JSON.",
+  steps: [
+    "Paste names into \"Participants (one per line or comma-separated)\" and add blocked pairs under \"Exclusions (format: Name A - Name B)\".",
+    "Optionally paste last year's draw into Previous-Year Pairings, set the Attempt Limit, then press Generate Pairings.",
+    "Read Generated Pairings and the Anonymous Reveal Codes, then use Copy All, Export JSON or Export CSV to save secret-santa-pairs.csv.",
+  ],
   intro:
     "The Secret Santa Pair Generator assigns every participant exactly one gift recipient by Fisher-Yates shuffling the recipient list and re-shuffling until no one draws themselves, no excluded pair appears, and no last-year repeat slips through. You paste names one per line or comma-separated, add exclusions as \"Name A - Name B\" (blocked in both directions), and get the full pairing list plus per-person reveal codes you can hand out so nobody sees the whole draw. It suits family draws, office gift exchanges and friend groups that need couples or housemates kept apart.",
   useCases: [

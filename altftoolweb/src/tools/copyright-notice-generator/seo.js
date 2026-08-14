@@ -1,4 +1,12 @@
 const seo = {
+  title: "Copyright Notice Generator: Symbol, Year, Owner",
+  metaDescription:
+    "Build a notice with the three elements in 17 U.S.C. §401(b) — symbol, year of first publication and owner — as plain text, HTML, meta tag or header.",
+  steps: [
+    "Type the Copyright owner and the Year of first publication, then choose \"What is it going on?\" — Website or app footer, Software / source code, Book or print publication, Sound recording / music release and five more.",
+    "Pick a Symbol style of © (symbol), Copyright (word), Copyright © (both) or Copr. (abbreviation), a Rights phrase such as All rights reserved or Licensed CC BY 4.0, and tick the year-range box if the work is still being updated.",
+    "Take the line you need from \"Copy for each place it goes\" — Plain text, HTML, HTML meta tag, Source-code header, and a Sound-recording line for ℗ media — each with its own Copy button; Reset restores the defaults.",
+  ],
   intro:
     "This generator assembles a copyright notice from the three elements the law names: the © symbol (or the word Copyright, or Copr.), the year of first publication, and the name of the copyright owner — the form set out in 17 U.S.C. §401(b). It outputs the notice as plain text, escaped HTML, an HTML meta tag and a source-file header comment, and adds the separate ℗ line that sound recordings take under §402. Copyright already exists from the moment a work is fixed, so the notice is about putting the world on record, not about creating the right.",
   useCases: [

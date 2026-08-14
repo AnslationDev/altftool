@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian English Loanwords: 61 Words and Their Roots",
+  metaDescription:
+    "Trace 61 English words to Sanskrit, Hindi, Tamil and more: original word, literal meaning, route into English and era, disputed cases flagged.",
+  steps: [
+    "Type into 'Look up an English word' — it opens on shampoo, and searching a source language such as Tamil or a meaning such as boat matches too.",
+    "Read the Word origin card: Source language, Original word, Literal meaning, Route into English, First English use, Field and Etymology status, with a note underneath.",
+    "Narrow the table below with the Source language, Field and Etymology status menus — entries scholars argue over carry a 'disputed' tag — then press Copy origin to copy the featured entry.",
+  ],
   intro:
     "Indian English Loanword Finder traces 61 ordinary English words back to the Indian-subcontinent languages they came from, showing the original word, its literal meaning, the route it travelled, and roughly when it first appears in English. The span runs from 'pepper', in English before 900 AD through Greek and Latin, to 'cushy', picked up as army slang around the First World War. Where an etymology is genuinely disputed — 'punch', 'verandah', 'opal' — the entry is labelled as disputed instead of stating a guess as fact.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Karnataka II PUC Percentage Calculator (Out of 600)",
+  metaDescription:
+    "Aggregate over 600 with the class awarded - Distinction 85%, First 60% - plus a separate 35%-per-subject pass check and the marks you fell short by.",
+  steps: [
+    "Fill each row of Your marksheet with the Subject name, Marks scored and Maximum marks, ticking \"Optional subject\" on the four non-language subjects; Add subject and Remove change the list length.",
+    "The Aggregate percentage is the total marks over the grand total of 600, the class awarded follows the bands (Distinction 85%, First 60%, Second 50%, Pass 35%), and each subject is separately checked against the 35% minimum.",
+    "Under the headline you get Class awarded, Optional subjects only and \"Subjects below 35%\", plus a subject-by-subject table marking every row Pass or \"Short by\" a number of marks; Copy result copies the summary and Reset clears the marksheet.",
+  ],
   intro:
     "Karnataka II PUC percentage is the plain aggregate — total marks obtained divided by the grand total of 600 across six subjects of 100 marks each, times 100. This calculator applies that formula, awards the class on the board's bands (Distinction 85% and above, First class 60%, Second class 50%, Pass class 35%), and separately checks the rule that trips students up: you must also clear 35% in every individual subject, not just on the aggregate. It reports the optional-subject percentage too, since many degree colleges count only the four non-language subjects.",
   useCases: [

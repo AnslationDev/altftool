@@ -1,4 +1,10 @@
 const seo = {
+  title: "Video Hook Generator: 12 Patterns Timed to 3s",
+  steps: [
+    "Enter Topic, Audience, Outcome and Timeframe, then pick a Format — Short / Reel / vertical (under 60s), Standard video (2-10 min) or Long form (10 min+).",
+    "Set Tone, Speaking pace WPM (150 by default) and List count; the heading then reads how many of the generated hooks fit that format's 3, 6 or 10 second budget.",
+    "Every hook card carries its pattern name, spoken seconds and word count with a Copy button, and the Review your hook box scores a line you already wrote, listing the issues it found.",
+  ],
   intro:
     "A video hook is the opening line that has to earn the next few seconds of attention, and this generator writes one for each of twelve named copywriting patterns — curiosity gap, contrarian, negative/mistake, numbered promise, stakes framing and more — using your topic, audience and outcome. Every line is timed at your chosen speaking pace against an opening budget of three seconds for short vertical video, six for a standard upload and ten for long form. There is also a checker for a hook you already wrote, which flags filler openings like 'hey guys, welcome back' and vague wording.",
   useCases: [

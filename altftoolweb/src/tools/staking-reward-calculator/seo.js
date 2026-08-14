@@ -1,4 +1,12 @@
 const seo = {
+  title: "Staking Reward Calculator — APR to APY After Commission",
+  metaDescription:
+    "Turns an advertised APR into effective APY and end balance, deducting validator commission before compounding at your payout frequency.",
+  steps: [
+    "Enter Tokens staked, the Advertised APR (%) and the Validator commission (% of rewards).",
+    "Pick a Reward payout frequency and Staking period in years; untick 'Automatically restake rewards (compound)' to model withdrawn payouts.",
+    "Read the final balance, Effective APY, rewards earned and the Balance year by year table, then click Copy result.",
+  ],
   intro:
     "This staking reward calculator turns an advertised APR into the tokens you would actually hold at the end of a staking period, after the validator's commission and with rewards compounded at your payout frequency. It uses the standard compound-interest identity A = P(1 + r/n)^(nt), and reports the effective APY as (1 + r/n)^n − 1 — the same conversion banks use for APY disclosure. It is for anyone comparing validators, exchanges or chains where one quotes APR and another quotes APY.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teacher Privacy Checklist: 19 Prioritised Actions",
+  metaDescription:
+    "Filters 19 actions to your teaching setting and platforms, then scores readiness across student data, accounts and devices, and your own boundaries.",
+  steps: [
+    "Choose 'Where you teach' — Primary school, Secondary, College or university, Private tuition or Independent online teaching — and tick 'Parents or students have my personal number' if it applies.",
+    "Enter Classes or sections you teach and Students per class, then pick from 'Platforms you use for class work' so actions tied to tools you do not use drop out of the list and the score.",
+    "Read the Readiness percentage with 'Actions done', work through 'Do these first' and 'The full kit' across the three tracks, then press Copy plan.",
+  ],
   intro:
     "The Teacher Privacy Starter Kit filters a 19-item action library down to what actually applies to your setting and the platforms you use, then scores readiness as a weighted percentage across three tracks: student data, accounts and devices, and your own boundaries as a teacher. It separates two different problems that get lumped together — protecting student records under school-issued accounts, and stopping a personal mobile number handed to one class WhatsApp group from following you forever — and ranks actions by consequence rather than listing them alphabetically. Built for teachers in primary, secondary, college, tuition and independent online settings who need a short list, not a compliance manual.",
   useCases: [

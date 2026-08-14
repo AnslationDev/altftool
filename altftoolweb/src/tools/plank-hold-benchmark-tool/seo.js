@@ -1,4 +1,12 @@
 const seo = {
+  title: "Plank Hold Benchmark: Age-Adjusted Target Timer",
+  metaDescription:
+    "Time a front plank, then score it against a 120-second reference cut 1% per year after 39, with bands from Needs work to Exceptional.",
+  steps: [
+    "Get into a forearm plank and press Start on the stopwatch, pressing Stop when your hips drop, or type a time you recorded elsewhere into Hold time (seconds).",
+    "Enter your Age (years); the 120-second reference falls 1% for each year over 39, and the Sex field is recorded on the result without changing the target.",
+    "Read the percentage of target, the band from Needs work to Exceptional and the seconds needed for the next band, then press Copy result.",
+  ],
   intro:
     "The Plank Hold Benchmark Tool times a front plank with a built-in stopwatch and compares the hold against an age-adjusted target. The target starts from a 120-second reference — the figure spine biomechanist Stuart McGill treats as a reasonable front-plank standard for a healthy adult — and reduces it by 1% for each year over 39, matching the roughly 1% per year decline in muscular endurance after 40. Results are expressed as a percentage of that target, with bands from Needs work through to Exceptional, plus how many more seconds would reach the next band.",
   useCases: [

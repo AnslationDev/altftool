@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dating App Data Request: Size Your Tinder Archive",
+  metaDescription:
+    "Estimate the swipes, matches and messages in a Tinder, Bumble or Hinge export, flag special-category data, and request it before deleting the account.",
+  steps: [
+    "Under Choose what to ask for, tick the export categories you want; ones tagged special category carry stronger legal protection.",
+    "Enter Years on the app, Swipes per day, Match rate (%) and Messages per match to size the archive.",
+    "Read the swipe, match and message counts with the estimated archive size and sensitivity score, then follow How to make the request before deleting the account.",
+  ],
   intro:
     "A dating-app archive is not just a profile — it is every swipe with a timestamp, every match including the ones you removed, and the conversations you thought disappeared when you unmatched. This planner estimates those record counts from your swipe rate, match rate and message habit, sizes the archive, and marks the parts that count as special-category data: sexual orientation is protected under GDPR Article 9 and treated as sensitive personal information under India's SPDI Rules 2011. It also sets out the order of operations, because deleting the account destroys your ability to request any of it.",
   useCases: [

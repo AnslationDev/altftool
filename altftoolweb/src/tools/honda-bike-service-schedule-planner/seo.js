@@ -1,4 +1,12 @@
 const seo = {
+  title: "Honda Two-Wheeler Service Schedule & Parts Planner",
+  metaDescription:
+    "Dates every Honda service at 1,000 km, 4,000 km then every 3,000 km, whichever comes first, with the chain or CVT parts and cost due at each visit.",
+  steps: [
+    "Pick a Vehicle type — 'Motorcycle (chain drive)' or 'Scooter (CVT / belt drive)' — then enter 'Purchase / registration date', 'Current odometer (km)' and 'Average running (km per month)'.",
+    "Set 'Services to plan (1-20)' and 'Free services in your package', adjust 'First service due at (km)', 'Second service due at (km)' and 'Periodic interval after that (km)' if your service book differs, and enter 'Labour per paid service (INR)' and 'Parts price level (% of listed)'.",
+    "Read 'Next service due at' with its approximate date and free-or-paid flag, then the Service schedule table (#, Due at, Approx. date, Type, Parts due, Cost) and the totals for 'Parts across the plan', 'Labour across the plan' and 'Total estimated cost'. 'Copy result' copies the plan.",
+  ],
   intro:
     "This planner converts a Honda two-wheeler's maintenance chart into a dated list of visits, showing the kilometre and the month at which each free and paid service falls due and which consumables land on each one. Honda models in India typically use a running-in service near 1,000 km or 1 month, a second visit around 4,000 km or 4 months, and a repeating 3,000 km cycle after that. Motorcycles and scooters share the visit schedule but get different parts lists, because a chain drive and a CVT wear in different places.",
   useCases: [

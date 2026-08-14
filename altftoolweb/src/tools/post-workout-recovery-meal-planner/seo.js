@@ -1,4 +1,12 @@
 const seo = {
+  title: "Post-Workout Recovery Meal Planner: Protein & Carbs",
+  metaDescription:
+    "Bodyweight and session in, out come protein at 0.25-0.40 g/kg, carbs at 1.0-1.2 g/kg/h, fluid, sodium — and eight meal portions that hit them.",
+  steps: [
+    "Enter Bodyweight (kg), Session type, Session length (minutes), How hard it felt, Hours until your next session and Age (years); leave \"Bodyweight lost during the session (kg, optional)\" blank to estimate sweat loss from length and intensity.",
+    "Set Hours until your next session below eight to switch on the rapid-refuel carbohydrate rate — above eight, that row reads \"Not required — next session is 8+ hours away\".",
+    "Read protein in grams and g per kg (floored at 20 g, capped at 40 g), carbohydrate and the carb-to-protein ratio, fluid to drink back, sodium and leucine from whole food versus whey, then use the \"Portions that hit these targets\" table of omnivore, vegetarian and vegan pairings; Copy result saves it.",
+  ],
   intro:
     "A post-workout recovery meal planner converts your bodyweight and the session you just finished into four numbers: grams of protein, grams of carbohydrate, millilitres of fluid and milligrams of sodium to take in during the recovery window. Protein follows the ISSN per-dose guidance of 0.25 to 0.40 g per kg bodyweight within a practical 20-40 g band, carbohydrate follows the 1.0-1.2 g per kg per hour rapid-refuelling rate used when the next session is under eight hours away, and fluid follows the ACSM rule of drinking back about 1.5 litres for every kilogram of bodyweight lost. It then turns those targets into actual food portions across eight omnivore, vegetarian and vegan combinations.",
   useCases: [

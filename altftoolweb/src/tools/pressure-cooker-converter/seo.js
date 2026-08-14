@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pressure Cooker Time Converter: Whistles & Minutes",
+  metaDescription:
+    "Divides conventional time by 3 (4 for tender veg) and estimates whistles at 3.5 minutes each, with a chart of 18 Indian dishes and altitude scaling.",
+  steps: [
+    "Choose Food picker and a dish from What are you cooking?, or Custom time with the recipe minutes and Type of dish.",
+    "Open Altitude adjustment and type Your altitude (metres) or tap Mumbai, Delhi, Bengaluru, Shimla or Leh.",
+    "Read the stovetop whistles and the electric minutes at high pressure with the release method and water ratio, then Copy or Download.",
+  ],
   intro:
     "The Pressure Cooker Time Converter turns a conventional cooking time into pressure-cooker minutes and stovetop whistles, dividing conventional time by 3 for soups, stews, soaked beans, tough meat and root vegetables (by 4 for tender vegetables) and estimating whistles as pressure minutes ÷ 3.5. It also carries a chart of 18 common Indian dishes — toor dal, basmati, brown rice, chole, kala chana, rajma, potatoes, chicken, mutton, keema — each with its whistle count, electric-cooker minutes, water ratio and whether to use natural or quick release. Above 600 m it adds roughly 5% cooking time for every additional 300 m of altitude.",
   useCases: [

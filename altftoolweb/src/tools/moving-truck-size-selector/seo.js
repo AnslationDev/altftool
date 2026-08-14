@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Size Moving Truck Do I Need? Cu Ft Calculator",
+  metaDescription:
+    "Count furniture and cartons for packed cu ft at cube-sheet allowances, weight at 7 lb per cu ft, and the smallest vehicle that holds it at 85% fill.",
+  steps: [
+    "Enter counts under the Bedroom, Living, Appliances and Other groups — each label prints its cube allowance, such as 'Sofa, 3-seat (45 cu ft)' or 'Double / queen bed with mattress (60 cu ft)'.",
+    "Add your 'Packing cartons (any size)', rated at 3.5 cu ft each, plus any leftover volume in 'Anything else (cu ft)'.",
+    "Read the Recommended vehicle and its load body alongside Total packed volume, Estimated weight, Usable body volume and Body fill, plus the note saying how many cu ft to shed to drop to the next size down.",
+  ],
   intro:
     "This selector converts an inventory of furniture, appliances and cartons into a packed volume in cubic feet, then names the smallest goods vehicle that can carry it. It uses removal-survey cube allowances per item (a 3-seat sofa is 45 cu ft, a double bed 60 cu ft, a mixed carton 3.5 cu ft), estimates weight with the moving industry's household-goods density of 7 lb per cubic foot, and compares both against each vehicle's load body at 85% stacking efficiency. Vehicles range from a mini tempo to a 32 ft single-axle container.",
   useCases: [

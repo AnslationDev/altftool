@@ -1,4 +1,12 @@
 const seo = {
+  title: "Changesets Config Generator: .changeset/config.json",
+  metaDescription:
+    "Build .changeset/config.json with changelog-github, npm access, base branch, fixed and linked groups, ignore list and updateInternalDependencies.",
+  steps: [
+    "Pick the Changelog generator and, for the GitHub option, type your GitHub repository (org/repo).",
+    "Set npm access, Base branch, updateInternalDependencies, and any Fixed groups, Linked groups or Ignore packages.",
+    "Press Copy JSON and save the output as .changeset/config.json.",
+  ],
   intro:
     "This tool generates the .changeset/config.json that controls how @changesets/cli versions and publishes a monorepo — changelog generator, npm access level, base branch, fixed and linked package groups, internal-dependency bump policy and ignored packages. It emits the documented option names and shapes, including the [\"@changesets/changelog-github\", { repo }] tuple for GitHub-linked changelogs. Maintainers get a valid config with the sharp edges (restricted access, fixed-vs-linked semantics) explained inline.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pirate Name Generator with Ship, Crew, Bounty, Motto",
+  metaDescription:
+    "Each roll returns one of fifteen pirate personas - name, ship, crew of 8 to 60, bounty from $150,000 to $4,500,000, ocean, weapon and motto.",
+  steps: [
+    "Open the tool on the empty card that reads \"Click generate to meet yer pirate self\".",
+    "Press Generate Pirate to draw one of the fifteen personas, from Scurvy Dog Smith with a crew of 8 to Dread Pirate Hawkins with 60.",
+    "Read the Crew Size, Bounty, Ocean and Weapon tiles and the quoted motto, then press Copy Pirate to put all seven fields on the clipboard.",
+  ],
   intro:
     "Pirate Name Generator hands you a complete pirate identity rather than just a name: each roll returns one of fifteen written personas with its ship, crew size, bounty, home ocean, signature weapon and motto. Crews run from Scurvy Dog Smith's eight hands aboard The Rat Trap to sixty under Dread Pirate Hawkins on the Shadow Pearl, with bounties from $150,000 up to $4,500,000, so the identity comes with a built-in sense of rank. The whole card copies to the clipboard as one block of text, which is what you want when it is going into a character sheet or a party invite.",
   useCases: [

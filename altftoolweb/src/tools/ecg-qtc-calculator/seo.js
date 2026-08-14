@@ -1,4 +1,12 @@
 const seo = {
+  title: "QTc Calculator: Bazett, Fridericia, Framingham, Hodges",
+  metaDescription:
+    "Enter QT in ms and heart rate to get Bazett, Fridericia, Framingham and Hodges QTc side by side, checked against male, female and child reference bands.",
+  steps: [
+    "Enter QT Interval (ms) between 100 and 800 and Heart Rate (bpm) between 20 and 300, then pick Male, Female or Child.",
+    "Press Calculate QTc — the RR interval is derived as 60/HR and Bazett, Fridericia, Framingham and Hodges are computed from the same inputs.",
+    "Check the Bazett gauge against the Reference Ranges panel, then press Download to save the QTc_Report_<value>ms.txt file.",
+  ],
   intro:
     "ECG QTc Calculator corrects a measured QT interval for heart rate and shows the result from four published formulas side by side: Bazett (QT ÷ √RR), Fridericia (QT ÷ ∛RR), Framingham (QT + 0.154 × (1 − RR)) and Hodges (QT + 1.75 × (HR − 60)). Enter the QT interval in milliseconds and the heart rate in bpm; RR is derived as 60 ÷ HR, Bazett is reported as the headline figure, and the value is placed against sex- and age-specific reference bands. It is an educational reference for students, paramedics and clinicians comparing correction methods, not a diagnostic device — interpretation of any ECG belongs with the treating clinician.",
   useCases: [

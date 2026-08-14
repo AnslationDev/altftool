@@ -1,4 +1,12 @@
 const seo = {
+  title: "Skipping Rope Calorie Calculator: Rounds and Rest",
+  metaDescription:
+    "Scores work rounds and rest gaps separately using 2011 Compendium METs — 8.8, 11.8 or 12.3 by skip rate — and reports gross and net calories.",
+  steps: [
+    "Enter Body weight (kg), Rounds, Work per round (seconds) and Rest between rounds (seconds) for the session you have planned.",
+    "Pick a Skip rate (skips/min) band — Slow pace (under 100 skips/min), Moderate pace (100-120 skips/min) or Fast pace (120-160 skips/min) — and a Recovery style of Standing / catching breath, Light stretching or shaking out, or Walking it off slowly.",
+    "Read Session time, Work calories, Recovery calories, Total skips, Calories / minute and Calories / 100 skips, then press Copy result to keep the session summary.",
+  ],
   intro:
     "The Skipping Rope Outdoor Calorie Tool estimates the energy cost of an interval skipping session by scoring the work rounds and the recovery gaps separately, then adding them. It uses the ACSM metabolic equation kcal/min = MET x 3.5 x body mass in kg / 200, with rope-jumping MET values taken from the 2011 Compendium of Physical Activities: 8.8 METs under 100 skips per minute, 11.8 METs at 100-120, and 12.3 METs at 120-160. Built for anyone doing timed rounds outdoors — park sessions, boxing-style circuits, or a rope block bolted onto a run.",
   useCases: [

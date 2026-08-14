@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stationary Bike Calorie Calculator (ACSM Watts)",
+  metaDescription:
+    "Exercise bike calories from the ACSM leg-cycling equation - watts, or resistance level and cadence. Gross and net kcal, METs, kJ and efficiency.",
+  steps: [
+    "Choose 'Average power (watts)' if your console shows watts, or 'Resistance level + cadence' if it only shows a dial.",
+    "Enter Body weight and Duration (minutes), then either the average power or the resistance level, levels on your bike and average cadence (rpm).",
+    "Read the gross calories burned plus net calories, estimated power, METs, oxygen uptake, mechanical work in kJ and gross mechanical efficiency.",
+  ],
   intro:
     "This calculator converts an exercise bike session into calories using the ACSM leg-cycle-ergometry equation, VO2 (mL/kg/min) = (10.8 × watts) / body mass in kg + 7, with oxygen uptake priced at 5 kcal per litre. If your console shows watts, that is the accurate route. If it only shows a resistance level, power is approximated from flywheel physics — braking torque times angular velocity — which is transparent about being an estimate rather than pretending a dial number is a wattage. Gross and net calories, METs, mechanical work in kilojoules and gross efficiency are all reported.",
   useCases: [

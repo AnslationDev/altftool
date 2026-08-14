@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cash Deposit Limit Checker: Rule 114E, 194N, 269ST",
+  metaDescription:
+    "Enter a year of cash deposits and withdrawals to see which Rule 114E, PAN and section 194N thresholds you cross, with the 194N TDS the bank deducts.",
+  steps: [
+    "Under \"Your financial year figures (INR)\" enter the totals you have — \"Cash deposited into savings accounts (year total)\", \"Cash withdrawn from all bank accounts\", \"Largest cash deposit made on one day\" and \"Largest cash sum received from one person in a day\".",
+    "Tick \"I have filed my income tax returns for the last three years\" and, where it applies, \"The account holder is a co-operative society (₹3 crore section 194N limit)\".",
+    "\"Every threshold, checked\" marks each limit Crossed or Within limit with the rule behind it, while the summary gives the section 194N threshold that applies to you, the amount liable, the TDS the bank must deduct and any section 271DA penalty exposure; \"Copy result\" copies the lot.",
+  ],
   intro:
     "This checker compares a financial year of cash deposits, withdrawals and card payments against every threshold that makes a bank report you under Rule 114E of the Income-tax Rules, 1962 — the Statement of Financial Transactions that feeds your Annual Information Statement. It also applies the Rule 114B and Rule 114BA PAN-quoting rules, the section 194N TDS slabs on cash withdrawals, and the section 269ST prohibition on receiving ₹2,00,000 or more in cash from one person in a day. You get a line-by-line verdict showing which limits you cross, the rule behind each and what it means before you file.",
   useCases: [

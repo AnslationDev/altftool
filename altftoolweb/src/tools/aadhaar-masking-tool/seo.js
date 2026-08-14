@@ -1,4 +1,12 @@
 const seo = {
+  title: "Aadhaar Masking Tool with Verhoeff Checksum Check",
+  metaDescription:
+    "Mask Aadhaar numbers to last 4, last 2, first & last 4 or fully, with a Verhoeff checksum check. Bulk paste in, CSV out; nothing leaves your browser.",
+  steps: [
+    "Choose Single and type a number into 'Aadhaar number', or choose Bulk and paste a list one per line.",
+    "Pick a masking mode — Show last 4, Show last 2, Show first & last 4 or Full mask — and set the mask char.",
+    "Read the Formatted, Masked, Checksum and Privacy score cards, then press 'Copy Masked' or CSV to save aadhaar-masked-list.csv.",
+  ],
   intro:
     "This tool masks Aadhaar numbers and checks their structure locally: it strips formatting to 12 digits, runs the Verhoeff checksum that Aadhaar numbers are built on, and rewrites each number with only the digits you choose left visible. Four masking modes are available — full mask, last 2, last 4 (the convention UIDAI's own masked Aadhaar uses), or first and last 4 — with a mask character of your choosing. Paste a whole list separated by newlines, commas, semicolons, pipes or tabs and export the masked results as CSV; the numbers are processed in the page and never sent anywhere.",
   useCases: [

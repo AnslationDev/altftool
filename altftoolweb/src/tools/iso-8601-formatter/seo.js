@@ -1,4 +1,7 @@
 const seo = {
+  title: "ISO 8601 Date Formatter – UTC Timestamp & Unix Seconds",
+  metaDescription:
+    "Convert any date to the ISO 8601 UTC form YYYY-MM-DDTHH:mm:ss.sssZ, with Unix seconds, UTC and local time shown for the same instant.",
   intro:
     "The ISO 8601 Formatter converts any date/time your browser can parse into the canonical ISO 8601 UTC string, YYYY-MM-DDTHH:mm:ss.sssZ, and shows the same instant as a Unix timestamp in seconds, a UTC string and your local time. Type something like 2026-07-20 15:30 and you get 24-character ISO output plus the epoch value, with an explicit error when the input cannot be parsed. It is for developers writing API payloads, log formats and database values that must be timezone-unambiguous.",
   useCases: [

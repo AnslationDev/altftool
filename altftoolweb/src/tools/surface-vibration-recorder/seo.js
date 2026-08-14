@@ -1,4 +1,12 @@
 const seo = {
+  title: "Surface Vibration Recorder - X/Y/Z Accelerometer Log",
+  metaDescription:
+    "Logs your phone accelerometer as a timestamped timeline: X, Y and Z in m/s² to three decimals plus rotation rate, latest 200 samples.",
+  steps: [
+    "Rest the phone flat on the surface you are checking - a washing machine, desk or machine housing - because the log reads the device's own accelerometer.",
+    "Press \"Start with permission\" and approve the motion prompt; on iOS that fires DeviceMotionEvent.requestPermission(), after which the button reads \"Stop sensor\".",
+    "Watch the \"Live local readings\" table: every row is an ISO timestamp, the X, Y and Z acceleration including gravity to three decimals in m/s², and the combined gyroscope rotation-rate magnitude, keeping the latest 200 samples.",
+  ],
   intro:
     "This is a browser-based vibration logger that reads your phone's accelerometer through the DeviceMotion API and builds a timestamped timeline of how much a surface is shaking. Each sample records the X, Y and Z components of acceleration including gravity in m/s² to three decimals, plus a single combined rotation-rate figure taken as the vector magnitude of the alpha, beta and gamma gyroscope axes. Put the phone on the washing machine, the desk or the machine housing, press start, and you get a rolling log of the last 200 readings without installing anything.",
   useCases: [

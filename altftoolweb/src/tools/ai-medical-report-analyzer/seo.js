@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blood Test Report Analyzer: 23 Labs vs Ranges",
+  metaDescription:
+    "Enter up to 23 CBC, metabolic, liver, thyroid and coagulation values to see each labelled low, normal or high with a weighted low-to-critical risk band.",
+  steps: [
+    "Fill in whichever values you have across the five panels — \"Complete Blood Count (CBC)\", \"Basic Metabolic Panel (BMP)\", \"Liver Function Tests (LFT)\", \"Thyroid Function\" and \"Coagulation Studies\" — each field printing its own reference range as you type.",
+    "Press \"Analyze Report\"; every entered value is labelled against that range — Hypokalemia, Microcytic, Thrombocytopenia — and given a 0-3 severity weight.",
+    "Read \"Overall Assessment\" with its risk band, the \"Abnormal Findings\" list and the Recommendations, then use \"Copy Report\" or Download for a Medical_Report_<date>.txt file.",
+  ],
   intro:
     "The AI Medical Report Analyzer takes 23 common blood-test values across five panels — CBC, basic metabolic panel, liver function, thyroid and coagulation — compares each against a standard adult reference range, and labels it low, normal or high with the differential that abnormality usually points to. It then adds up a severity weight per abnormal result to place the set in a low, moderate, high or critical band and produces a plain-text report you can take to an appointment. It is an educational reference for reading your own lab printout, not a diagnosis, and every value stays in your browser.",
   useCases: [

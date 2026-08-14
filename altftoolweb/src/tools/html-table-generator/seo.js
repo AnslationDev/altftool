@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTML Table Generator — Semantic Markup + CSS Themes",
+  metaDescription:
+    "Build a table up to 10x10 with real thead/tbody markup, editable cells and zebra, minimal, dark or teal CSS — copy it or download custom-table.html.",
+  steps: [
+    "Set Rows and Columns (1-10 each), drag Cell Padding (4-24px) and Border Width (0-5px), and pick a Design Theme Preset like Classic Zebra Stripe.",
+    "Type your data straight into the Table Editor's cell inputs — the first row is always emitted as thead/th and the rest as tbody/td.",
+    "Click Copy Source for the markup plus .custom-table CSS, or Download file to save a standalone custom-table.html.",
+  ],
   intro:
     "This generator builds a semantic HTML table — the first row emitted as <thead><th> and the rest as <tbody><td> — from a grid you type into directly, then hands you the markup and a matching CSS block. Choose from 1 to 10 rows and 1 to 10 columns, set cell padding from 4px to 24px and border width from 0 to 5px, pick a zebra, minimal, dark or teal theme, and copy the result or download it as a complete .html file. It suits anyone who needs correct table markup without hand-typing every <tr> and <td>.",
   useCases: [

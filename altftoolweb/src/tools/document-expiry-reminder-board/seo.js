@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Expiry Tracker: Passport, Licence, PUC, Visa",
+  metaDescription:
+    "Track every expiry date with a staged reminder ladder, the date each renewal window opens, and a six-month passport check against your travel date.",
+  steps: [
+    "Set Today's date and, if you are travelling, a Planned travel date, then for each row pick a Document type such as Passport, Driving licence, Pollution Under Control certificate or Warranty or AMC, give it a Name on the board and a Reference number, and set the date it Expires on.",
+    "Edit \"Remind me this many days before (comma separated)\" to set that document's reminder ladder, and press Add a document for every other item you want tracked.",
+    "The summary reports Documents tracked, Already expired, Expiring within 90 days, the Next expiry and any Travel validity problems, a Before you travel section names the documents at risk, and Copy result exports the whole board.",
+  ],
   intro:
     "This board tracks the expiry date of every document you own and turns each one into a reminder ladder — typically 90, 30 and 7 days out — instead of a single alarm that arrives too late to be useful. It also dates the day each renewal window opens, using the real rules: an Indian passport may be re-issued from a year before expiry, and a driving licence may be renewed from 30 days before it under section 15 of the Motor Vehicles Act. Add a travel date and it checks passports and visas against the six-month validity rule most destinations apply on entry.",
   useCases: [

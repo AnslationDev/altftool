@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Policy One-Pager Generator for Staff AI Use",
+  metaDescription:
+    "Build a one-page staff AI guide: five core clauses on approved tools, data bans, review duty and incident reporting, plus optional ones you toggle.",
+  steps: [
+    "Enter your Company or team name and the Approved tools (comma separated) staff may use, plus an optional effective date and incident contact.",
+    "Tick the Optional clauses you want, covering disclosure, prompt hygiene, decisions about people, impersonation, IP and security bypasses; the five core clauses are always included.",
+    "Read the assembled one-pager and its rule count, then press Copy one-pager to paste it into your handbook or wiki.",
+  ],
   intro:
     "The AI Policy One Pager Generator assembles a single-page do-and-don't guide for staff AI use from a curated clause library covering the sections corporate AI acceptable-use policies consistently include: approved tools, confidential and personal data rules, human review duty, disclosure, IP and incident reporting. Five core clauses are always present and six more can be toggled, so the output stays short enough that people actually read it. It is built for founders, IT and HR leads who need workable guidance today while the full policy is still in review.",
   useCases: [

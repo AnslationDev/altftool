@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stat Card Generator: Big Numbers, Correct % Change",
+  metaDescription:
+    "Lay out 1 to 4 stats at sizes like 1080x1080 or 1920x1080, format as compact, currency or percent, and show both % and percentage-point change.",
+  steps: [
+    "Fill in Headline, Source line, and each stat's Value, Caption and Previous value (optional).",
+    "Pick a Placement size such as Instagram square 1080x1080 or Deck slide 1920x1080, choose a Palette, and use Add stat for up to four.",
+    "Check the number and caption contrast rows, then press PNG to save the card as a .png named for the preset and its pixel size.",
+  ],
   intro:
     "A stat card is a graphic built around one big number — a growth figure, a conversion rate, a headline result — with a caption, a change indicator and a source line. This generator lays out one to four stats on a grid at real placement sizes, formats the value with Intl number formatting (plain, compact, currency or percentage) and calculates the change two ways: relative change, (current − previous) ÷ |previous| × 100, and the difference in percentage points. A rate that moves from 4% to 6% is up 50% relative and up 2 percentage points, and the card shows both rather than letting you quote the wrong one.",
   useCases: [

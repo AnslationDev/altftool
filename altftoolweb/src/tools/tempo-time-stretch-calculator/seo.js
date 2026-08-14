@@ -1,4 +1,12 @@
 const seo = {
+  title: "BPM Time Stretch Calculator: Length and Pitch Shift",
+  metaDescription:
+    "Enter two tempos to get the stretch percentage, new clip length, and the resampled pitch shift in semitones and cents — 120 to 128 BPM is 93.75%.",
+  steps: [
+    "Enter Original tempo (BPM) and Target tempo (BPM), or tap a BPM preset chip, then the Clip length in Minutes and Seconds.",
+    "Pick a Sample rate (Hz) from 44,100 up to 192,000 so the varispeed rate is worked out for the same move.",
+    "Read the stretch percentage, New clip length and Pitch shift if resampled in semitones and cents, then press Copy result.",
+  ],
   intro:
     "Tempo Time Stretch Calculator shows what happens to length and pitch when audio recorded at one tempo is played at another. Length scales by the ratio of the two tempos — a 120 BPM loop played at 128 BPM becomes 93.75% of its original duration — and if the change is done by resampling rather than elastic stretching, pitch moves by 12·log2 of the speed ratio, which is 1.117 semitones in that example. It reports the stretch percentage DAWs display, the new clip length, the shift in semitones and cents, and the varispeed sample rate.",
   useCases: [

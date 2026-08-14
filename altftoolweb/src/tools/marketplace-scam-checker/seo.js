@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marketplace Scam Checker: 17 Rules, 0-100 Signal Score",
+  metaDescription:
+    "Paste a buyer or seller message and match it against 17 rules — escrow, overpayment, OTP, remote access, advance fees — for a 0-100 signal score.",
+  steps: [
+    "Choose \"I am selling\" or \"I am buying\", paste the message into Message text (up to 40,000 characters), and optionally add Listing amount and Claimed payment amount.",
+    "Press \"Review message\" to run the 17 rules across the nine warning categories entirely in your browser — no upload and no lookup.",
+    "Read the 0-100 signal score, the redacted evidence cards and Safer next steps, then press \"Copy report\" or Download for marketplace-message-safe-summary.txt.",
+  ],
   intro:
     "Marketplace Scam Checker reads a buyer or seller message you paste and matches it against 17 deterministic rules grouped into nine warning categories — off-platform payment, fake escrow or courier stories, overpayment, OTP and PIN requests, remote access, urgency, advance fees, shipping pressure and account-takeover instructions — then returns a 0 to 100 signal score and the specific steps to verify before you act. Negations are detected, so a line like 'never share your OTP' does not count against the message. The score is triage, not a fraud verdict: nothing is checked live, and a clean result does not mean the person is genuine.",
   useCases: [

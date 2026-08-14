@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cite ChatGPT or Any AI Tool in APA 7, MLA 9, Chicago",
+  metaDescription:
+    "Build an APA 7, MLA 9 or Chicago note citation for a generative AI tool, with the matching in-text form and a journal-style acknowledgement sentence.",
+  steps: [
+    "Pick a Citation style — APA 7, MLA 9 or Chicago (notes) — then fill in the AI tool name, Provider, Model or version, and the Date the output was generated.",
+    "Add the Tool URL, a Prompt summary (MLA puts the prompt in the title-of-source slot) and what the AI helped with for the acknowledgement sentence.",
+    "Read the Reference entry, the In-text / note usage line, the Acknowledgement statement and the Style note, then press Copy all to take the three together.",
+  ],
   intro:
     "The AI Attribution Statement Builder formats a citation for a generative-AI tool in APA 7, MLA 9 or Chicago style, following each style body's published guidance on citing AI — the APA Style blog's 'How to cite ChatGPT' pattern, the MLA Style Center's prompt-as-title template, and Chicago's note-only approach. It also produces a journal-style acknowledgement sentence stating what the tool did and that the author takes responsibility. It is built for students and researchers who used AI assistance and need to attribute it correctly.",
   useCases: [

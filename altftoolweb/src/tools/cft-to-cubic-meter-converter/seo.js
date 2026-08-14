@@ -1,4 +1,12 @@
 const seo = {
+  title: "CFT to Cubic Meter Converter — Brass, Litres, Tonnes",
+  metaDescription:
+    "Converts cubic feet to cubic metres (×0.0283168), brass, litres and yards, then applies bulk density for tonnes, tipper loads and cost per unit.",
+  steps: [
+    "Choose Start from: A volume — entering the Volume and its Unit — or L × W × H with the Measured in length unit.",
+    "Pick the Material (for weight) with its kg/cu m bulk density, set the Tipper capacity (cft) and an optional Rate (₹) to price the load.",
+    "Read the volume in cubic metres, cft and brass with weight in kg and tonnes, tipper loads to order and per-unit rates; Copy result exports the summary.",
+  ],
   intro:
     "One cubic foot is exactly 0.028316846592 cubic metres, because a foot is defined as exactly 0.3048 metres. This converter moves a construction load between cubic feet, cubic metres, litres, brass, cubic yards and cubic inches, then multiplies by bulk density to give the weight in kilograms and tonnes, the number of tipper loads and the cost per unit. Bulk densities offered are the unit weights from IS 875 Part 1, plus the 1,440 kg per cubic metre figure that defines the standard 50 kg cement bag.",
   useCases: [

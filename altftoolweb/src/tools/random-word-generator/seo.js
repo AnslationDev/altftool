@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Word Generator: 6 Unique Words per Click",
+  metaDescription:
+    "Draw six distinct nouns and adjectives from a curated 40-word list of concrete, image-rich words. Copies one word per line for prompts and party games.",
+  steps: [
+    "Press the New words button to draw a batch from the 40-word list of concrete nouns and adjectives.",
+    "Read the six words shown as a list — they are guaranteed distinct within a batch, while separate presses are independent draws that can overlap.",
+    "Press Copy to put the whole batch on the clipboard as one word per line, ready for a prompt sheet or game round.",
+  ],
   intro:
     "Random Word Generator returns six distinct English nouns and adjectives per press, drawn without repetition from a curated 40-word list of concrete, image-rich words such as lantern, glacier, cipher and saffron. Because the six are guaranteed unique, every batch gives you six different prompts rather than the same word twice, and the whole set copies as one word per line. It is built for writing prompts, word games and brainstorming, not for password material or vocabulary study.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mobile Voting App: Run a Poll on One Device",
+  metaDescription:
+    "Build a poll with 2-10 options, pass one device round for single-tap votes, and export the tally as CSV or JSON. Everything stays in local storage.",
+  steps: [
+    "Fill in Poll Title, Organizer Name and at least two Voting Options — Add Option takes you up to 10 — plus an optional Voting Deadline.",
+    "Press Create Poll, hand the device round, and each person taps an option, then Submit Vote and Confirm Vote.",
+    "Counts and percentages update on the poll card; the admin panel's CSV and JSON buttons save Poll_Title_results.csv with percentages to one decimal place.",
+  ],
   intro:
     "The Mobile Voting App is a browser-based polling station: you create a poll with a title, an organiser, 2 to 10 unique options and an optional closing deadline, then collect single-tap votes and watch live counts and percentages update as they come in. It is built for the person running a team decision, a classroom vote or a stall at a live event who wants a ballot in under a minute. Polls and the record of who has already voted are kept in this browser's local storage, so it works as a shared voting device or kiosk rather than a hosted link you email out.",
   useCases: [

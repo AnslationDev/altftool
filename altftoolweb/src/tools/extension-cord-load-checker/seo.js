@@ -1,4 +1,12 @@
 const seo = {
+  title: "Extension Cord Load Calculator: Amps, 80% & Drop",
+  metaDescription:
+    "Add up what is plugged into one board, convert watts to amps and check it against the strip rating, cord ampacity, the 80% rule and voltage drop.",
+  steps: [
+    "Set \"Mains supply\" (India / EU / UK — 230 V, North America — 120 V or Japan — 100 V), the \"Board rating printed on the strip (A)\", the \"Cord conductor size\" such as \"1.5 mm² flexible — 16 A\", and \"Cord length (m)\".",
+    "Add appliances from the chip row under \"What is plugged in\" — Room heater 2000 W, Electric kettle 1500 W, Fridge 250 L — adjust \"Watts each\" and Quantity, and tick \"Runs 3 hours or more (continuous)\" to apply the 80% ceiling.",
+    "The bar reports the percentage of the rating in use, and the rows give \"Safe limit\" with whichever limit binds, \"Continuous ceiling (80% rule)\", \"Headroom left\", \"Maximum watts you may plug in\", \"Peak start-up current\" and \"Voltage drop along the cord\".",
+  ],
   intro:
     "This checker adds up everything plugged into one extension board and converts it to amps with I = watts / (volts x power factor), then compares that current against the lower of two limits: the amp rating printed on the board and the ampacity of its flexible cord. It also applies the 80% continuous-load ceiling from NEC 210.19(A)(1) for anything running three hours or more, and estimates voltage drop from the two-way copper run so a long thin cord does not quietly cook itself. Use it before plugging a heater, kettle or air conditioner into a strip that was only ever meant for chargers and a lamp.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Menu Font Pairing With Minimum Size and Leader Dots",
+  metaDescription:
+    "Pick a pair like Playfair Display + Karla, set lighting and reading distance, and get the minimum body size in pt plus the leader dots that fit a column.",
+  steps: [
+    "Choose a Font pair — Playfair Display + Karla, Lora + Source Sans 3, Cormorant + Jost, Bitter + Open Sans, Amatic SC + Nunito Sans or Frank Ruhl Libre + Assistant.",
+    "Set Lighting (Bright daylight cafe, Normal interior lighting, Dim restaurant / candlelight or Very dim bar), 'Reading distance (mm)', 'Menu column width (mm)', 'Body size (pt)', 'Longest dish name (characters)' and 'Price (characters)'.",
+    "Read the Minimum body size in pt and px with the required cap height in mm, characters per line and 'Leader dots between name and price', then press 'Copy CSS' or 'Copy URL' for the Google Fonts request.",
+  ],
   intro:
     "Food And Cafe Font Pairing matches warm display faces with readable body fonts for menus, boards and packaging, and calculates the two print numbers that decide whether a menu works in the room. Minimum body size comes from the legibility convention that character height should be at least 1/200 of the reading distance, scaled up for dim lighting: at 400 mm in a candlelit dining room that lands near 10 pt. Leader-dot counts come from the column width minus the dish name, the price and a 2 mm gap either side.",
   useCases: [

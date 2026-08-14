@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kafka Topic Naming Builder — Convention & Rule Validator",
+  metaDescription:
+    "Compose Kafka topic names from domain, entity, event and version, then derive retry, dead-letter, consumer-group and ACL names — broker rules checked.",
+  steps: [
+    "Pick a Naming template, Separator and Case, then fill the \"Domain (bounded context)\", Entity, Event type and Schema version fields.",
+    "Choose the Retry topics ladder — none, \"5 min and 30 min\", or \"5 min, 30 min and 2 h\" — and tick \"Add a dead-letter topic\".",
+    "Read the Topic name with its length out of 249 characters, the Companion topics table and the \"Legal on any Kafka broker\" validation line, then press \"Copy names\".",
+  ],
   intro:
     "A Kafka topic naming builder composes a topic name from ordered segments — message type, domain, entity, event type and schema version — and validates the result against the rules the broker actually enforces: a 249-character limit, the legal charset [a-zA-Z0-9._-], the reserved \"__\" prefix, and the dot-versus-underscore collision Kafka rejects at creation time. It also derives the matching retry, dead-letter, consumer-group and ACL-prefix names so a whole topic family stays consistent.",
   useCases: [

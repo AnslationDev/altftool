@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPI Refund Scam: Why a PIN Can Only Send, Not Receive",
+  metaDescription:
+    "A UPI PIN only authorises money leaving your account. Check any 'refund' step against that rule, see the real debit, and get the 1930 reporting path.",
+  steps: [
+    "Under 'Check the request', set 'What do you think is happening?' and 'What are you being asked to do?' to see which way money moves.",
+    "Enter the Refund promised (INR), the Amount on the PIN screen (INR) and 'Times you approved' to get the net position after the 'refund'.",
+    "Tick the red flags to score the conversation, read 'The call, line by line' stages, and use helpline 1930 and cybercrime.gov.in if money has gone.",
+  ],
   intro:
     "The UPI refund scam works by getting you to authorise a payment while you believe you are receiving one. A UPI PIN authorises money leaving your account: receiving money on UPI needs nothing beyond your UPI ID or linked mobile number, and never a PIN, a QR scan or approval of a collect request. This explainer checks any request against that rule, shows the arithmetic of a promised refund against what is actually debited, walks through the call script stage by stage, and lists what to do if a payment has already gone through.",
   useCases: [

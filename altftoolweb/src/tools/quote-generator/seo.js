@@ -3,6 +3,14 @@
 // array (76 entries, 9 with author === "Unknown") — keep these numbers in sync if the
 // quote list changes.
 const seo = {
+  title: "Quote Generator: 76 Quotes, Styled PNG Card at 2x",
+  metaDescription:
+    "Pick from 76 attributed quotes in eight themes, style the card with 8 backgrounds and 3 fonts, and download a 2x-resolution PNG named after the author.",
+  steps: [
+    "Filter by category tab — Motivation, Success, Business, Leadership, Life, Wisdom, Technology or Programming — or search quotes and authors.",
+    "Press Generate for a fresh quote, then set one of 8 backgrounds, 3 fonts, 4 text sizes and left, centre or right alignment.",
+    "Download as Image writes a PNG named after the author, captured by html2canvas at scale 2.",
+  ],
   intro:
     "Quote Generator pulls a quote at random from a built-in library of 76 quotes across eight themes - Motivation, Success, Business, Leadership, Life, Wisdom, Technology and Programming - then lets you style the card and download it as a PNG rendered at 2x resolution. Most quotes carry a named author; 9 are marked Unknown. You pick one of eight background treatments, three typefaces, four text sizes and left, centre or right alignment, and the card you see is exactly what gets exported. It is aimed at people making social posts, slide openers or story graphics who do not want to open a design app for one line of text.",
   useCases: [

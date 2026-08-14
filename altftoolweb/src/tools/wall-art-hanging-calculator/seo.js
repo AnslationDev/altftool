@@ -1,4 +1,12 @@
 const seo = {
+  title: "Picture Hanging Calculator: Nail Height & Spacing",
+  metaDescription:
+    "Nail height from frame size and wire drop so the art centres on the 145 cm gallery line, plus sofa clearance, gallery-row marks and hook rating.",
+  steps: [
+    "Enter Frame width (cm), Frame height (cm), Wire drop below top edge (cm) and Artwork weight (kg), leaving Target centre height above floor (cm) on the 145 cm gallery line.",
+    "Tick \"Hanging above a sofa, console or headboard\" to add Furniture top height (cm) and Clear gap above it (cm), and fill Number of frames, Gap between frames (cm) and Wall width available (cm) for a row.",
+    "Mark the nail at gives the height above the floor, with Hooks needed, Minimum hook rating and a Frame / Left edge / Centre / Right edge table measured from the left of the wall; Copy result saves the lot.",
+  ],
   intro:
     "This wall art hanging calculator converts a frame's dimensions and its wire drop into the exact height to drive the nail, so the centre of the artwork lands on the 145 cm (57 in) gallery centre line museums use. It also handles the two cases that trip people up: hanging above a sofa or console, where the frame must clear the furniture by 15–25 cm, and hanging a row of frames, where every nail height is identical but the horizontal marks must be measured. Hook ratings are sized with a 2× safety factor on the artwork weight.",
   useCases: [

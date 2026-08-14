@@ -1,4 +1,10 @@
 const seo = {
+  title: "EXIF Viewer: Check a Photo's GPS, Camera and Dates",
+  steps: [
+    "Drop a photo on the 'Upload an image' zone or click to browse — it takes .jpg, .png, .webp, .gif, .tiff and .bmp, with full EXIF only from JPEG.",
+    "Read the Camera, Exposure, GPS, Dates and Software sections, or open the Privacy tab, where GPS Location is rated high and Author Name medium.",
+    "On the Export tab press JSON, TXT or CSV to download the tags as filename-metadata.json, .txt or .csv.",
+  ],
   intro:
     "Image Metadata Viewer reads the EXIF block out of a JPEG's APP1 segment in your browser and lays it out in six sections — File Info, Camera, Exposure, GPS, Dates and Software — including make and model, lens, shutter speed, f-number, ISO, orientation and decoded GPS latitude and longitude. It then runs a privacy pass that flags embedded coordinates as high risk, an Artist name as medium, a copyright string as low and editing software as informational, and warns when two or more personal identifiers appear together. You can export everything as JSON, plain text or CSV before deciding what to strip.",
   useCases: [

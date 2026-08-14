@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ranked-Choice Vote Tabulator: Show Every Round",
+  metaDescription:
+    "Paste ranked ballots as \"A > B > C\" and see each instant-runoff round — votes, share, eliminations — until one option passes 50% of live ballots.",
+  steps: [
+    "Type your ballots into the Ranked ballots box, one per line highest to lowest as \"A > B > C\", and set the Tie-break order field (default \"A, B, C\") — or press the Five ballots chip under Examples to load a worked set.",
+    "Every keystroke re-runs the count with no calculate button: the lowest-scoring candidate is eliminated each round and those ballots transfer to the next surviving preference, with your Tie-break order settling a tie for last place.",
+    "Read the winner line with its \"Majority in round N\" caption and the Round / Candidate / Votes / Share table beneath it, then use the Copy or Download buttons to save it as ranked-choice-vote-tabulator.txt.",
+  ],
   intro:
     "Ranked-Choice Vote Tabulator runs a full instant-runoff count on ranked ballots you paste in one per line as \"A > B > C\", and shows every round: each candidate's first-preference votes, their share, and who was eliminated. A candidate wins the moment they hold more than 50% of the ballots still counting; otherwise the lowest-scoring candidate is dropped and those ballots transfer to their next surviving preference. It is for anyone running a group decision — a committee, a club, a team picking a venue — who needs the arithmetic to be visible rather than asserted.",
   useCases: [

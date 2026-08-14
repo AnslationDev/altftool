@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Transfer Certificate (TC) Request Letter",
+  metaDescription:
+    "Draft a TC application to the principal with the academic session derived from the date, an expected issue date in school days, dues and reminder date.",
+  steps: [
+    "Fill Student and school — Student's full name, admission number, Class, section, roll number, school and addressee — then set the Reason for the transfer and the Date of this application, from which the academic session is derived.",
+    "Enter School office processing time (school days) and Wait this many days before a reminder, add rows under Pending dues with their amounts, and tick Cite Section 5 of the RTE Act, 2009 — relevant for elementary classes 1 to 8 where it applies.",
+    "Read Expect the certificate by with the session label, Processing time allowed, Send a reminder on and Dues to clear first, then press Copy letter to take the text shown under Letter preview.",
+  ],
   intro:
     "A transfer certificate request is the written application a parent submits to a school before a child leaves, and this tool assembles it from the student's name, admission number, class, reason and pending dues. It works out the academic session from the application date (Indian sessions run April to March), adds the school office's stated processing time in school days to give an expected issue date, and sets a follow-up date so a stalled TC does not go unchased. Where the child is in Classes 1 to 8, it can cite Section 5 of the Right of Children to Free and Compulsory Education Act, 2009, under which the head teacher must issue the certificate immediately.",
   useCases: [

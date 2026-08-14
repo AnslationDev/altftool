@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voiceover Rate Calculator: Session + Usage Fee Quote",
+  metaDescription:
+    "Price a voiceover from word count and read pace, then multiply by media, territory, term and exclusivity. Shows session fee, usage fee and net.",
+  steps: [
+    "Enter Script word count, Read pace (words per minute), Rate per finished minute and Minimum session fee.",
+    "Under Licence set Where it runs, Territory, Licence term and Exclusivity, plus any Rush surcharge (%) or Agent commission (%).",
+    "Quote total breaks out Session fee, the Usage multiplier chain, Usage fee and Performer receives — then press Copy quote.",
+  ],
   intro:
     "A voiceover rate card splits a quote into two parts: a session fee that pays for the performer's time and recording, and a usage fee that pays for the right to broadcast it. This calculator applies that structure — session fee is the per-finished-minute rate against the script length with a minimum floor, and the usage fee multiplies it by media, territory, licence term and exclusivity, the same variables the GVAA and Gravy for the Brain guides use. For voice artists writing quotes and for producers checking whether a bid is in the right range.",
   useCases: [

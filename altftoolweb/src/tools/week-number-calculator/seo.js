@@ -1,4 +1,12 @@
 const seo = {
+  title: "Week Number Calculator: ISO-8601 Week for Any Date",
+  metaDescription:
+    "Get the ISO-8601 week number and week-year for any date, plus the Monday and Sunday that bound it, the day of year, month and quarter.",
+  steps: [
+    "Open the 'Date' picker in the Inputs panel; it starts empty and the Result card reads 'Select a date.' until you choose one.",
+    "Pick the day you need — there is no calculate button, and the result recomputes at once using the ISO rule that shifts the date to the Thursday of its own week and compares it with the week containing 4 January.",
+    "Read the 'Week 34' style headline with its 'ISO Year' caption, then the 'Week Start (Mon)', 'Week End (Sun)', 'Day of Week', 'Day of Year', 'Month' and 'Quarter' tiles, and press Copy for a text summary.",
+  ],
   intro:
     "Week Number Calculator returns the ISO-8601 week number for any date, using the standard's rule that weeks run Monday to Sunday and week 1 is the week containing that year's first Thursday. Alongside the number it gives the ISO week-year, the Monday and Sunday that bound the week, the day of the week, the day of the year, the month and the calendar quarter. It is for anyone whose planning system talks in week numbers — manufacturing schedules, European project plans, sprint calendars, delivery dates quoted as week 34.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Redaction Checker: Is Text Still Under the Black Box?",
+  metaDescription:
+    "Opens a redacted PDF, PNG, JPEG or WebP up to 50 MB in your browser and reports text still extractable under the marks, Redact annotations and metadata.",
+  steps: [
+    "Select the final redacted export you intend to share — PDF, PNG, JPEG or WebP up to 50 MB — rather than the editable source.",
+    "Press Check evidence to parse the text layer, annotation subtypes, attachments and scripts with PDF.js, or scan pixels for transparency, dark bands and EXIF.",
+    "Read the verdict, page counts and findings, then Download report writes <name>-redaction-check.json holding counts and rule ids, never the matched values.",
+  ],
   intro:
     "This checker opens a redacted PDF or image in your browser and looks for the evidence that a redaction failed — text still extractable under a black box, redaction annotations that were drawn but never applied, embedded attachments, document scripts and identifying metadata. PDFs are parsed with PDF.js page by page for their text layer, annotation subtypes, image paint operators, attachments and JavaScript actions; images are decoded to pixels and scanned for transparency, near-black bands and EXIF, XMP, GPS or PNG text-chunk markers. It is for anyone about to release a document they have blacked out, and it returns one of three verdicts: high-risk evidence found, manual review required, or no obvious automated signal.",
   useCases: [

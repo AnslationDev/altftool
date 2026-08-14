@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cart Bill Splitter: Per-Item Splits and Settle Up",
+  metaDescription:
+    "Splits each line equally, by percentage, by quantity or exact amount; tax and delivery follow each person's subtotal. Settles in at most n-1 transfers.",
+  steps: [
+    "Add everyone under Participants, typing each Name and the amount they Paid, then start the bill with Add Item under Cart Items.",
+    "Give each line an Item Price and a Split Method — Equal Split, Percentage, Quantity or Exact Amount — tap the Owners buttons to choose who shares it, and add tax or delivery under Taxes & Fees.",
+    "Individual Breakdown shows each person's share with the shared charges apportioned by subtotal, and Settlement Roadmap lists who pays whom; its copy button writes a Bill Settlement Summary to the clipboard.",
+  ],
   intro:
     "Cart Bill Splitter divides a shared bill line by line rather than by head count: each item can be split equally, by percentage, by quantity of units, or by an exact typed amount, and shared charges like tax and delivery are then apportioned in proportion to what each person actually ordered. It is for flatmates splitting a grocery order and for tables where three people shared the starters and one drank all the wine. The settlement step uses greedy cash-flow minimisation, which clears any group in at most n − 1 transfers.",
   useCases: [

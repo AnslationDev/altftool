@@ -1,4 +1,7 @@
 const seo = {
+  title: "Alphabet Explorer: 19 Scripts, Character by Character",
+  metaDescription:
+    "Latin, Greek, Cyrillic, Arabic, Hangul, Thai and 13 more scripts, each letter with its name, pronunciation, U+ code point and an example word.",
   intro:
     "Alphabet Explorer is a character-by-character reference for 19 writing systems — Latin, Greek, Cyrillic, Arabic, Hebrew, Devanagari, Hiragana, Katakana, Hangul, Thai, Urdu and eight Indic scripts — where tapping any letter shows its name, its romanised pronunciation, its Unicode code point and an example word in the language. It lays each script out in its own reading direction, so the three right-to-left scripts render and navigate right-to-left, and it can read a character aloud through the browser's speech synthesis. Each letter can be copied straight to the clipboard.",
   useCases: [

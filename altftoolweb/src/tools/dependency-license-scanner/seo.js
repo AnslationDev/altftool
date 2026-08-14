@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dependency License Scanner for package-lock.json",
+  metaDescription:
+    "Sort every package in package.json or package-lock.json into declared, review cue, unresolved or missing, and export a JSON report. Nothing is uploaded.",
+  steps: [
+    "Paste your manifest into JSON source, or use Choose JSON to load a .json file within the 2,000,000-character limit.",
+    "Press Review declared licenses to bucket each package as Declared text, Review cue, Unresolved declaration or Missing field.",
+    "Filter the findings by status, then use Download local JSON to save dependency-license-declared-metadata-report.json.",
+  ],
   intro:
     "The Dependency License Scanner reads the license strings already written into a package.json or package-lock.json and sorts every package into four buckets: declared, review cue, unresolved declaration, and missing field. It flags text matches for AGPL, GPL/LGPL/EUPL/MPL, SSPL/BUSL/Commons Clause/PolyForm/Elastic, non-commercial wording, and UNLICENSED so you know which entries need a human to look at them. It is for engineers preparing an open-source review who need a first-pass inventory of what their lockfile actually declares — not a legal opinion.",
   useCases: [

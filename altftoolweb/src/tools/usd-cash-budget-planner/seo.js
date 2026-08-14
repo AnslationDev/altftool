@@ -1,4 +1,12 @@
 const seo = {
+  title: "How Much USD Cash to Carry: RBI Limit, GST and TCS",
+  metaDescription:
+    "Split a US trip between notes and card, priced with the changer markup, GST on forex, the USD 3,000 RBI note limit and the LRS TCS threshold.",
+  steps: [
+    "Enter Trip length (days), Travellers, On-ground spend per person per day (USD) and Share of daily spend that will be cash (%).",
+    "Set the Mid-market rate, Money changer's markup on notes (%), Card foreign-currency markup (%) and LRS already used this financial year.",
+    "Read Ask for these notes for the denomination mix, compare buying notes in India against destination ATMs, and check the USD 3,000 RBI cash limit per visit.",
+  ],
   intro:
     "This planner splits a United States trip budget into the dollars you should physically carry and the spend you should leave on a card, then prices both. The cash side applies the money changer's markup and the GST on buying foreign exchange, which Rule 32(2)(b) of the CGST Rules sets on a slab — 1% of the gross amount up to ₹1,00,000, so ₹1,00,000 of notes carries ₹180 of GST — while the card side applies the issuer's foreign-currency markup plus 18% GST on that fee. It also tests the plan against the RBI limit of USD 3,000 in currency notes per visit and the ₹10,00,000 LRS threshold at which TCS starts.",
   useCases: [

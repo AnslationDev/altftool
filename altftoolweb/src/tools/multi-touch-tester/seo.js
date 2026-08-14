@@ -1,4 +1,12 @@
 const seo = {
+  title: "Multi-Touch Tester: See Every Contact and Pointer ID",
+  metaDescription:
+    "Press several fingers on the test surface: each contact draws a dot labelled with its Pointer Events ID, so dropped touches show up.",
+  steps: [
+    "Press \"Start with permission\" to open the touch test surface inside the \"Live local readings\" panel.",
+    "Press several fingers, a stylus or a mouse onto the surface at once — each contact draws a dot labelled with its pointer ID, and the surface disables browser touch actions so scrolling and pinch-zoom cannot steal them.",
+    "Drag the contacts around and watch for a dot that vanishes or reappears under a new ID, then press \"Stop sensor\" to end the test.",
+  ],
   intro:
     "Multi-Touch Tester draws a labelled dot for every simultaneous contact your screen reports, using the browser's Pointer Events API so each finger keeps its own pointer ID from touchdown to release. Press several fingers on the test surface at once and you can see how many contacts the digitizer tracks together, whether any of them drop out mid-drag, and whether a dot lands where you actually touched. It is meant for anyone checking a touchscreen, a stylus, or a trackpad after a repair, a drop, or a suspect screen protector.",
   useCases: [

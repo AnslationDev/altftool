@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Word and PDF Metadata Reveals About You",
+  metaDescription:
+    "See what dc:creator, cp:lastModifiedBy, Company, /Producer and XMP IDs tell a recipient. Tick what your file still carries for a score and clean-up order.",
+  steps: [
+    "Choose File type — \"Word, Excel or PowerPoint (OOXML)\", \"PDF\" or \"A Word file exported to PDF\" — and answer \"Who receives it?\".",
+    "Under \"What is still in the file?\", tick the fields your document still carries (Author name, Last modified by, Company, Tracked changes, XMP document and instance IDs and the rest), or start from Typical uncleaned file, Worst case or Fully cleaned.",
+    "You get an exposure score out of 100 with the highest-risk field, the flagged dangerous combinations, and a Clean-up order for that specific file.",
+  ],
   intro:
     "This explainer maps the metadata inside Office and PDF files to the specific thing each field tells a recipient. An OOXML file (.docx, .xlsx, .pptx) is a ZIP whose docProps/core.xml holds dc:creator and cp:lastModifiedBy and whose docProps/app.xml holds Company, Manager, Template and TotalTime; a PDF keeps an Information dictionary with /Author, /Producer and /CreationDate plus an XMP packet with lineage identifiers. Tick what your file still carries and it scores the exposure, flags the worst combinations, and gives a clean-up order.",
   useCases: [

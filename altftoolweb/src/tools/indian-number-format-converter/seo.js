@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lakh Crore to Million Converter — Indian Number Format",
+  metaDescription:
+    "Convert lakh, crore and lakh crore to million, billion, trillion with exact powers of ten, shown in Indian 2-2-3 and international 3-3-3 grouping.",
+  steps: [
+    "Type the amount in the Number field — commas are fine, 1,50,00,000 and 15000000 both work — and pick its unit from the Written in dropdown (plain number, thousand, lakh, crore, arab, kharab, lakh crore, million, billion or trillion).",
+    "Read the live result as you type: the spoken Indian and international forms, the Indian grouping (2-2-3) and International grouping (3-3-3) rows, and the amount re-expressed in each named unit.",
+    "Press Copy result to copy a text summary of both notations, or Reset to restore the 15-million example.",
+  ],
   intro:
     "This converter translates numbers between the Indian numbering system (lakh, crore, lakh crore, grouped 2-2-3 as 1,50,00,000) and the international short scale (million, billion, trillion, grouped 3-3-3 as 15,000,000). The mapping is exact powers of ten: 1 lakh = 100,000, 1 crore = 10 million, 1 billion = 100 crore and 1 trillion = 1 lakh crore. It is built for anyone reading Indian financial news, startup funding reports or government budgets alongside international figures.",
   useCases: [

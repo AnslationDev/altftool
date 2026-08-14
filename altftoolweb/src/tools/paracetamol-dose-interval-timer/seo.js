@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paracetamol Dose Timer: Next Dose and 4000 mg Limit",
+  metaDescription:
+    "Enter your last dose time, doses taken and mg per dose to see the earliest next dose, doses left and which limit binds first. Not medical advice.",
+  steps: [
+    "Pick Who is this for — Adult or child 16 and over, or Child, dosed by weight, which adds a Child weight (kg) field dosed at 15 mg per kg.",
+    "Enter Time of the last dose, Doses taken in the last 24 hours, Milligrams in each dose and Gap between doses (hours); the result recalculates as you type.",
+    "Read Taken in the last 24 hours, 24-hour limit applied, Left in the allowance, Doses still available and Limited first by, then press Copy result to hand the summary to whoever takes over.",
+  ],
   intro:
     "Paracetamol dosing is governed by two separate limits — a minimum gap between doses, usually 4 to 6 hours, and a 24-hour total of 4000 mg for adults (many labels use 3000 mg). This timer takes the time of your last dose, how many doses have been taken in the past 24 hours and the strength of each, then returns the earliest time for the next dose, how many doses remain and which limit you will reach first. Weight-based paediatric dosing at 15 mg/kg per dose is supported. It is informational arithmetic on the label limits, not medical advice.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Government Portal Password Tester: 8-14 Char Rules",
+  metaDescription:
+    "Check a password against the 8-14 character rule shape Indian government portals use, and see which rule fails: length, symbols, login ID, mobile or PAN.",
+  steps: [
+    "Type the password you are about to set into \"Candidate password\" and press Show to check what you typed.",
+    "Fill Login / user ID, Registered mobile number, PAN (tax portals only) and \"Days since last change\" so reuse of those identifiers is tested.",
+    "Read the Rules passed tally out of the full rule count, then the rule-by-rule list naming each constraint a portal form would reject.",
+  ],
   intro:
     "Government Portal Password Tester checks a candidate password against the rule shape Indian government portals share: 8 to 14 characters, at least one uppercase letter, one lowercase letter, one digit and one special character from a short accepted list, no spaces, and nothing derived from your login ID, registered mobile number or PAN. It reports each rule separately, flags characters such as angle brackets and quotes that these forms reject as injection attempts, and estimates how long the password would survive guessing. Everything runs in the browser — no value is transmitted or stored.",
   useCases: [

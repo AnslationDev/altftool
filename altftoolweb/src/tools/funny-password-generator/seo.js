@@ -1,4 +1,12 @@
 const seo = {
+  title: "Funny Password Generator: WobblyPlatypus472$ Style",
+  metaDescription:
+    "Memorable passwords built as adjective + noun + a 100-999 number + one symbol, 6-30 characters, with a length-based Weak/Fair/Good/Strong meter.",
+  steps: [
+    "Drag the Password Length slider anywhere between 6 and 30 characters.",
+    "Toggle Numbers and Symbols on or off, then press Generate Password.",
+    "Read the Weak, Fair, Good or Strong bar, then use the eye and copy icons beside the field.",
+  ],
   intro:
     "Funny Password Generator builds memorable passphrase-style passwords on a fixed pattern: a silly adjective, a noun, a three-digit number from 100 to 999, and one symbol from !@#$%^&* — producing results like \"WobblyPlatypus472$\". It draws from roughly 290 adjectives and 320 nouns, with a length slider from 6 to 30 characters that the output always matches exactly: the tool trims the combination if it runs long and pads it with extra random characters if it comes up short. A built-in strength meter grades the output by length: Weak under 6, Fair under 10, Good under 14, and Strong at 14 characters or more.",
   useCases: [

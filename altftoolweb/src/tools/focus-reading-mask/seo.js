@@ -1,4 +1,12 @@
 const seo = {
+  title: "Focus Reading Mask: Highlight One Line, Dim the Rest",
+  metaDescription:
+    "Paste text and read one line at a time: the active line is highlighted, the rest fade to 40% opacity. Step through with Previous and Next line buttons.",
+  steps: [
+    "Paste or edit your text in the 'Text, one focus line per row' box — each newline becomes one focus row.",
+    "Step through with the 'Previous line' and 'Next line' buttons while the counter reads 'Line X of Y'.",
+    "Read the active line highlighted on a filled background at full contrast while every other line stays visible but faded to 40% opacity.",
+  ],
   intro:
     "A focus reading mask shows one line of text at full contrast and dims every other line, so your eye has a single place to land. This one splits whatever you paste on its line breaks — one row per line — renders the active row bold on a filled background and drops the rest to 40% opacity, and moves the highlight with Previous line and Next line buttons while a counter reads Line 3 of 12. It is a reading aid for anyone who loses their place mid-paragraph, not a diagnostic or a medical device.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Social Profile Picture Sizes: Circle-Safe Avatar Kit",
+  metaDescription:
+    "Crop one square master to each platform's avatar size — 400px X, 800px YouTube, 512px icon — with the 70.71% circle-safe square drawn on the preview.",
+  steps: [
+    "Pick a square logo file under \"Source image (square works best)\" — a PNG, JPEG, WebP or SVG.",
+    "Frame it with the Zoom, Horizontal position and Vertical position sliders, keeping the wordmark inside the dashed 70.71% safe square, then tick the platforms you need.",
+    "Press Download all to save one PNG per platform, named avatar-<platform>-<size>x<size>.png, for example avatar-youtube-800x800.png.",
+  ],
   intro:
     "Brand Social Avatar Kit Generator crops one square master image into profile pictures at each platform's recommended upload size and shows the circle-safe area before you export. Because every major network masks a square avatar to a circle, only the centred square of 70.71% of the width — the largest square that fits inside an inscribed circle — is guaranteed to survive; the preview draws that boundary so a wordmark never loses its edges. Cropping and PNG export happen entirely in the browser, so the image is never uploaded.",
   useCases: [

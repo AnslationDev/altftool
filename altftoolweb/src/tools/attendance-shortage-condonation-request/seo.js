@@ -1,4 +1,12 @@
 const seo = {
+  title: "Attendance Condonation Letter & 75% Shortfall Maths",
+  metaDescription:
+    "Get your exact attendance percentage, how many classes short of 75% you are, and how many more would fix it — then draft the condonation request.",
+  steps: [
+    "Enter Classes or working days conducted, Classes attended, Attendance required (%), Classes still to be held and the Institution's condonation floor (%).",
+    "Choose Why the classes were missed, set Absent from and Absent until, and use Add the specifics (optional) so the matching evidence list appears.",
+    "Read Your attendance percentage with Minimum classes needed so far and Classes short right now, fill Student name, Roll or register number, Programme and Department, then press Copy letter.",
+  ],
   intro:
     "A condonation request asks an institution to waive a shortfall against its attendance rule so a student can still sit the examination, and this tool does the arithmetic before it writes the letter. From classes conducted and attended it gives the exact percentage, the number of classes you are short of the 75% bar that Indian boards and universities normally apply, and the smallest number of remaining classes that would pull you back over it — solved from (attended + x) / (conducted + x) >= the required fraction. It then drafts the application with the ground, the specific documents that ground needs, and the undertaking a committee expects to see.",
   useCases: [

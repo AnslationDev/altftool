@@ -1,4 +1,12 @@
 const seo = {
+  title: "Agent Memory Poisoning Inspector: Diff Two Exports",
+  metaDescription:
+    "Compare an earlier and newer AI memory export and flag added or modified entries carrying instruction overrides, hidden Unicode or permission expansion.",
+  steps: [
+    "Paste or Open file the Earlier snapshot and the Newer snapshot — JSON, or one memory entry per line — up to 1 MB each.",
+    "Press Inspect changes to diff them and run six rules across every added or modified path: overrides, zero-width Unicode, identity, permissions, secrecy, links.",
+    "Read the Added, Modified, Removed and high, medium and low cue counts, then Counts-only report saves agent-memory-audit.json without any memory value.",
+  ],
   intro:
     "The Agent Memory Poisoning Inspector diffs two exports of an AI assistant's stored memory — a before and an after — and runs six detection rules over everything that was added or modified, flagging instruction-override language, invisible or direction-changing Unicode, identity and role rewrites, permission expansion, secrecy or forced-persistence phrasing, and instructions that point at an external URL. It exists because persistent memory is a durable injection surface: a single line written during one conversation keeps steering every later one. Both snapshots are parsed and compared in the browser, and the exportable report deliberately contains counts and rule IDs only — never your memory values or their paths.",
   useCases: [

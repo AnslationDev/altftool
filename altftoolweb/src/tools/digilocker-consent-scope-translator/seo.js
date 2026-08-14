@@ -1,4 +1,12 @@
 const seo = {
+  title: "DigiLocker Consent Scope Checker: 8 Named Items",
+  metaDescription:
+    "Paste a DigiLocker consent JSON or labeled text: each of 8 scope items is marked stated, ambiguous or missing. No account access, nothing uploaded.",
+  steps: [
+    "Paste the consent or requester payload into the Paste consent or request JSON/text box — JSON, or labeled lines like \"Purpose: Identity verification\" — up to 120,000 characters.",
+    "Press Explain stated scope to label all eight items (requester, document types, requested fields, purpose, duration, frequency, retention, revocation) explicitly stated, needs clarification or not stated.",
+    "Review the interpretation notices, then press Download coverage counts to save altftool-consent-scope-coverage-counts.json, which carries the summary counts only.",
+  ],
   intro:
     "This tool reads a pasted DigiLocker-style consent or requester payload and sorts it into eight scope items — requester, document types, requested fields, purpose, access duration, access frequency, retention, and revocation — marking each one explicitly stated, needs clarification, or not stated. It is for anyone deciding whether to approve a document-sharing request and wanting to see, item by item, what the wording actually commits to. Nothing connects to a DigiLocker account: the page parses the JSON or labeled text you supply, locally, and treats vague phrasing like \"as required\", \"indefinitely\" or \"ongoing\" as ambiguous rather than as an answer.",
   useCases: [

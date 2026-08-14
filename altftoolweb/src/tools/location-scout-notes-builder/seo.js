@@ -1,4 +1,12 @@
 const seo = {
+  title: "Location Scout Notes: Sun Angle, Golden Hour, Score",
+  metaDescription:
+    "Log a recce with NOAA sun elevation and bearing at your shoot time, golden and blue hour windows, and a weighted score across eight criteria.",
+  steps: [
+    "Enter \"Location name\", \"Shoot date\", \"Planned shoot time (local)\", \"Latitude (north positive)\", \"Longitude (east positive)\" and \"UTC offset at the location (hours)\" — include daylight saving, as the tool does not look up time zones.",
+    "Move the eight Scorecard sliders from 0 to 5: \"Quiet enough to record dialogue\" and \"Permission is straightforward\" carry weight 5, \"Light is usable and controllable\" weight 4, down to \"Signal and connectivity\" at weight 1. Add contacts and socket positions under \"Free notes\".",
+    "\"Location score\" returns a weighted percentage and grade, with \"Sun at your shoot time\" as elevation and compass bearing, plus sunrise/sunset, solar noon, morning and evening golden hour and evening blue hour. \"Copy note\" copies the whole recce note.",
+  ],
   intro:
     "This scouting tool records a location alongside the sun's actual position there, using the NOAA solar position equations to give sunrise, solar noon, sunset, golden hour and blue hour for the exact date and coordinates you enter, plus the sun's elevation and compass bearing at your planned shoot time. It then scores the location across eight criteria weighted by how often each one ruins a shoot — noise and permission count most. Built for anyone doing a recce who needs the note to survive the walk back to the car.",
   useCases: [

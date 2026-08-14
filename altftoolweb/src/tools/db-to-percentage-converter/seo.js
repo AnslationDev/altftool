@@ -1,4 +1,12 @@
 const seo = {
+  title: "dB to Percentage Converter: Amplitude and Power",
+  metaDescription:
+    "Enter dB, a percentage or a gain multiplier and read all four: 20·log10 amplitude and 10·log10 power ratios, each as a percentage.",
+  steps: [
+    "Set \"I am entering\" to Decibels (dB), Amplitude percentage, Power percentage or Linear amplitude ratio (gain), then type your figure into the Value field, whose unit label follows the mode.",
+    "Or press one of the shortcut chips — -60, -20, -12, -6, -3, 0, 3 or 6 dB — to jump straight to that level.",
+    "Read the Amplitude percentage headline with its gain multiplier, plus the Amplitude ratio, Power ratio, Power percentage and perceived-loudness rows and the Reference points table, then press Copy result.",
+  ],
   intro:
     "dB To Percentage Converter turns a decibel value into the linear amplitude ratio, power ratio and percentage it represents, and converts back from any of them. It applies the two standard definitions from IEC 60027-3: dB = 20·log10(ratio) for amplitude quantities such as voltage, sound pressure and sample values, and dB = 10·log10(ratio) for power quantities such as watts and intensity. Useful when you need the actual multiplier for a gain node, a normalisation step or a spec sheet rather than a rule of thumb.",
   useCases: [

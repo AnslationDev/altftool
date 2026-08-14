@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to QR Code — Wi-Fi, vCard & 8 More Payload Types",
+  metaDescription:
+    "Encode text, URLs, Wi-Fi, vCards and events as QR codes with colour, sizes to 512 px, L-H error correction and a centre logo — export PNG, SVG or JPEG.",
+  steps: [
+    "Pick a payload from the ten type tabs — Text, URL, Email, Phone, SMS, WhatsApp, Wi-Fi, Contact, Location or Event — and fill in its fields; the code redraws as you type.",
+    "Under 'Customize QR Code', set the colours, a Size from Small (150) to Print (512), the Margin, Error Correction from Low (7%) to High (30%), and optionally Upload a centre logo.",
+    "Choose PNG, SVG or JPEG in the Format selector and press 'Download QR Code' — the file saves as qr-code.png, qr-code.svg or qr-code.jpeg, with Copy, Print and Share below.",
+  ],
   intro:
     "Text to QR Code encodes plain text, a URL, an email, a phone number, an SMS, a WhatsApp link, Wi-Fi credentials, a vCard contact, a geo location or a calendar event into a scannable QR code using the standard payload formats each phone camera already understands. Pick the payload type, fill the fields, and the code redraws live as you type. You control colour, size from 150 to 512 px, quiet-zone margin, error-correction level L/M/Q/H and an optional centre logo, then export PNG, SVG or JPEG.",
   useCases: [

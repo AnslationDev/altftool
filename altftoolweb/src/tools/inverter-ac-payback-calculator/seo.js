@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inverter AC Payback Calculator: ISEER vs Tariff",
+  metaDescription:
+    "Find how many years an inverter AC's price premium takes to repay, from its ISEER, running hours and your tariff with yearly escalation.",
+  steps: [
+    "Enter the Cooling capacity and pick Tons (TR) or Kilowatts (kW), then choose a Usage pattern preset, which sets equivalent full-load hours to 500, 800, 1,400 or 2,000 a year.",
+    "Type the Inverter unit ISEER and Fixed-speed unit ISEER from the BEE labels, both installed prices, the tariff in rupees per kWh and the yearly tariff increase.",
+    "Read the payback period and open Year-by-year savings for the cumulative table, then press Copy result to keep the kWh saved, price premium and net benefit.",
+  ],
   intro:
     "This calculator finds how many years an inverter air conditioner needs to repay its higher purchase price through lower electricity bills. It models annual consumption as rated capacity in watts × equivalent full-load hours ÷ (ISEER × 1000), where ISEER is the BEE star-label seasonal efficiency ratio, then escalates the yearly saving by your tariff growth rate and interpolates the year the cumulative saving crosses the price premium. It is aimed at buyers deciding whether the extra money for a 5-star inverter unit is worth it for their own usage and tariff.",
   useCases: [

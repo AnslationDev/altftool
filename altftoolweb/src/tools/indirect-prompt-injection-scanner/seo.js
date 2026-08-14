@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prompt Injection Scanner for Untrusted Text & HTML",
+  metaDescription:
+    "Scans up to 500,000 characters of HTML, Markdown, CSV or text for hidden instructions and bidi Unicode, scoring each match with its line and column.",
+  steps: [
+    "Paste into 'Content to inspect' — up to 500,000 characters are scanned — and set Input format to HTML, Markdown, CSV or text, or use Load sample.",
+    "Press Scan locally to match instruction-override phrases, fake role markers, CSS-hidden markup, instruction-bearing comments and zero-width or bidirectional Unicode.",
+    "Read the Score /100 with the Signals, High, Medium and Low metrics and each finding's line and column, then press Download report for indirect-prompt-injection-scan.txt.",
+  ],
   intro:
     "Indirect Prompt Injection Scanner reads pasted HTML, Markdown, CSV or plain text and flags the patterns used to smuggle instructions into an AI system: instruction-override phrases, fake system and developer role markers, secret-disclosure and exfiltration requests, tool-activation commands, CSS-hidden markup, instruction-bearing HTML comments, and invisible or bidirectional Unicode. Each match is scored by severity — 18 points for high, 9 for medium, 4 for low, capped at 100 — and reported with its line, column and surrounding evidence, with zero-width characters rendered as visible [U+200B ZERO WIDTH SPACE] style labels. Matches are review signals for a human, not proof that content is malicious or safe.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Check the Latest GitHub Release Tag for Any Repo",
+  metaDescription:
+    "Paste owner/repo or a github.com URL and read the latest release: tag, publish time, prerelease flag and asset count, with a link to the release page.",
+  steps: [
+    "In the Lookup field enter the repository as owner/repo - vercel/next.js is the default - or paste a github.com URL, which is trimmed to owner/repo.",
+    "Press Get current result; the tool calls GitHub's /repos/{owner}/{repo}/releases/latest endpoint and shows Checking source... while the request runs.",
+    "Current result prints Repository, Tag, Published, Prerelease and Assets rows, the fetch time, and a Source link straight to that GitHub release page.",
+  ],
   intro:
     "Release Watchtower looks up the newest published release of any public GitHub repository through the GitHub REST endpoint /repos/{owner}/{repo}/releases/latest and reports the tag, publish timestamp, prerelease flag and attached asset count. It is for developers and release managers who need to confirm what version a dependency is currently on without cloning the repo or logging into GitHub. Paste either an owner/repo pair such as vercel/next.js or a full github.com URL and you get the current answer plus a link to the release page.",
   useCases: [

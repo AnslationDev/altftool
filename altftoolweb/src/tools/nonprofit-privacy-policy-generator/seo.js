@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nonprofit Privacy Policy Generator: Donors & Grants",
+  metaDescription:
+    "Separate donor, volunteer and beneficiary sections, an Article 9(2) condition for sensitive records, plus the $250 and $75 IRS receipting thresholds.",
+  steps: [
+    "Name the organisation and its registration number, then tick What the organisation does — takes donations, recruits volunteers, holds records about people it helps.",
+    "Set retention in months for donation records, volunteer files and case records, and enter an example gift, the value given back and yearly contributions.",
+    "Notice completeness shows the percentage and word count, the deductible amount, acknowledgment duty and Schedule B threshold; Copy notice takes the text.",
+  ],
   intro:
     "A nonprofit privacy policy has to cover three populations that a generic website template treats as one: donors, whose records are shaped by tax law as much as by data protection law; volunteers, whose files often include criminal record checks; and the people the organisation helps, whose records commonly contain health, belief or political data. This generator writes those sections separately, names an Article 9(2) condition for the sensitive ones, and computes the US receipting thresholds — the 250 dollar written acknowledgment under 26 U.S.C. section 170(f)(8) and the 75 dollar quid pro quo disclosure under section 6115 — alongside the Schedule B contributor threshold and grant record retention under 2 CFR 200.334.",
   useCases: [

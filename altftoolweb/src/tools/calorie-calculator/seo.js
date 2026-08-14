@@ -1,4 +1,7 @@
 const seo = {
+  title: "Calorie and Macro Calculator (Mifflin-St Jeor)",
+  metaDescription:
+    "Mifflin-St Jeor BMR times an activity factor of 1.2-1.9, adjusted 250 or 500 kcal, split 30/40/30 into protein, carb and fat grams.",
   intro:
     "This calculator works out your daily calorie target and the gram split of protein, carbs and fat behind it, using the Mifflin-St Jeor equation for BMR (10 × kg + 6.25 × cm − 5 × age, then +5 for men or −161 for women), an activity multiplier from 1.2 to 1.9 for TDEE, and a goal adjustment of ±250 or ±500 kcal. It then divides the target into a 30% protein / 40% carbohydrate / 30% fat split and converts those calories to grams at 4, 4 and 9 kcal per gram. Everything is shown — BMR, TDEE and target — so you can see which step produced the number, not just the final figure.",
   useCases: [

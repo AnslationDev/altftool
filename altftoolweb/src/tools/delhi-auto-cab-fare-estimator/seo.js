@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delhi Auto & Taxi Fare Calculator (Notified Meter)",
+  metaDescription:
+    "Price a Delhi trip on the notified meter: ₹25 for 1.5 km, ₹9.50 per km, ₹0.75 a minute waiting, and the 25% night charge from 11pm to 5am.",
+  steps: [
+    "Pick the Vehicle — auto rickshaw, black-and-yellow taxi or an app cab — then enter trip distance in km and the pickup time.",
+    "Add waiting minutes, Large bags, Tolls and parking and a Surge multiplier, or tap a Common Delhi runs preset such as Connaught Place to IGI T3.",
+    "Read the estimated fare with the 25% night surcharge applied, overwrite any figure in Delhi rate cards used, and press Copy result.",
+  ],
   intro:
     "This estimator prices a Delhi trip on the meter tariff notified by the Transport Department, Government of NCT of Delhi: ₹25 covers the first 1.5 km in an auto rickshaw, ₹9.50 applies to every kilometre after that, waiting is billed at ₹0.75 a minute, and the whole metered amount goes up 25% between 11 pm and 5 am. Black-and-yellow taxis use the same structure at ₹25 for the first kilometre and ₹14 (non-AC) or ₹16 (AC) per kilometre. Switch the vehicle to an app cab and it prices the trip the way aggregators do — base fare, per kilometre, per ride minute and a demand multiplier — so you can see whether the quote on your screen is in the right range before you accept it.",
   useCases: [

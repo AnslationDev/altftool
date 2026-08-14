@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Number Plate Validator: State, BH & Diplomatic",
+  metaDescription:
+    "Check an Indian registration number against the state series, BH series, diplomatic and defence formats — with each part parsed and the regex to reuse.",
+  steps: [
+    "Type a Registration number like MH 12 AB 1234 (spaces, hyphens and the defence arrow are ignored), or switch to 'A list' mode and paste up to 500 lines, one number per line.",
+    "Read the Canonical form with the format family, the state or issuer, and every parsed block — state code, RTO office code, letter series and serial — or the valid/invalid count for a batch.",
+    "Press Copy result for the verdict, and take the regular expression for any of the four formats from the 'Patterns used' table into your own form validation.",
+  ],
   intro:
     "This validator parses an Indian vehicle registration number and tells you whether it is well formed, which family it belongs to, and what each block means. It covers the standard state series (two-letter state code, RTO office code, letter series and four-digit serial), the Bharat BH series introduced by GSR 594(E) in 2021, diplomatic CD, CC and UN plates, and Ministry of Defence plates. The regular expression behind each format is shown so you can drop the same rule into your own form validation.",
   useCases: [

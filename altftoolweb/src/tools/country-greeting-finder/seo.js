@@ -1,4 +1,7 @@
 const seo = {
+  title: "How to Say Hello in 34 Countries + Pronunciation",
+  metaDescription:
+    "Native greeting for 34 countries with written pronunciation, separate formal and informal forms, the likely reply, and expected bow, handshake or kiss.",
   intro:
     "This finder shows how to say hello in 34 countries, giving each one its native-script greeting, a written pronunciation guide, separate formal and informal variants, a natural reply you are likely to hear back, and a note on the accompanying gesture — bow, handshake, or cheek kiss. Search matches the country, the language or the greeting itself, so \"Japan\", \"Japanese\" and \"konnichiwa\" all reach the same card. It is for travellers, hosts and anyone opening a message to someone abroad who wants the greeting that fits the situation rather than a single generic word.",
   useCases: [

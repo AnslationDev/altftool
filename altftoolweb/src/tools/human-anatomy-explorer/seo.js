@@ -1,4 +1,12 @@
 const seo = {
+  title: "Human Anatomy Explorer: 11 Organs, 6 Body Systems",
+  metaDescription:
+    "Click an organ on the body diagram, filter by the six body systems, and switch on Educational mode for plain-language descriptions.",
+  steps: [
+    "Click a region of the interactive body diagram, or type into Search organs to find the brain, heart, lungs, liver, stomach, kidneys, intestines, bones, muscles or skin.",
+    "Narrow the diagram with the body system filters: Nervous, Circulatory, Respiratory, Digestive, Skeletal or Muscular.",
+    "Read the selected organ's description, function and facts in the detail panel, and tick Educational mode for the simplified wording.",
+  ],
   intro:
     "This explorer is an interactive body diagram covering 11 organs and structures — brain, eyes, heart, lungs, liver, stomach, kidneys, intestines, bones, muscles and skin — grouped into six systems: nervous, circulatory, respiratory, digestive, skeletal and muscular. Click a region or search by name and the panel gives that organ's description, what it does, and a short set of facts; an educational mode swaps the clinical wording for a simplified explanation. It is built for students, teachers and curious readers, and is general reference material rather than medical guidance.",
   useCases: [

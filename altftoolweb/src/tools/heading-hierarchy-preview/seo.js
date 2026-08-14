@@ -1,4 +1,12 @@
 const seo = {
+  title: "Type Scale Generator: H1-H6 Sizes, Spacing, CSS",
+  metaDescription:
+    "Set a base size and ratio (1.067-1.618) to get H1-H6 size, line height, weight and margins as copyable rem or px CSS.",
+  steps: [
+    "Enter Body size px and Root px, then pick a Scale ratio from Minor second · 1.067 through Golden ratio · 1.618.",
+    "Set Heading weight and Body line height, and choose rem or px in the CSS unit list.",
+    "The Preview column renders H1 to H6 with each level's px size and line height; press Copy to put the generated CSS on the clipboard, or Reset to return to the 18px / Major third defaults.",
+  ],
   intro:
     "The Heading Hierarchy Preview turns a base font size and a modular scale ratio into a complete H1 to H6 specification — size in px and rem, line height, font weight, and the space above and below each heading — and shows the whole ladder rendered together. Sizes follow the classical modular scale size = base × ratio^step using musical-interval ratios from the minor second (1.067) to the golden ratio (1.618); body spacing is checked against WCAG 2.1 success criterion 1.4.12, which expects text to stay readable at a line height of 1.5 and paragraph spacing of twice the font size.",
   useCases: [

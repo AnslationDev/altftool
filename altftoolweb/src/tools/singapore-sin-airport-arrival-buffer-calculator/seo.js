@@ -1,4 +1,12 @@
 const seo = {
+  title: "When to Leave Home for Changi Airport (SIN) Calculator",
+  metaDescription:
+    "Work back from your Changi departure time through gate close, check-in cut-off, immigration and the drive to one leave-home time, with a full timeline.",
+  steps: [
+    "Enter the \"Scheduled departure time\" printed on the ticket, then set \"Screening layout\" to \"Screening at the boarding gate (typical T1 and T3 piers)\" or \"Central screening after immigration (typical T2 and T4)\", and pick Baggage.",
+    "Choose where you are \"Starting from\" — \"Marina Bay / CBD / Raffles Place\" at 25 minutes or \"Johor Bahru (via Woodlands checkpoint)\" at 75 — then set \"Road conditions\", \"Terminal queues\" and your personal buffer in minutes.",
+    "The plan gives the leave-home time plus \"Be inside the terminal by\", \"Boarding gate closes\", \"Spare time at the gate\" and \"Driven by\", with a \"Minute-by-minute timeline\" of every step; \"Copy plan\" saves it.",
+  ],
   intro:
     "This calculator turns a Singapore Changi departure time into the single time you need to leave home, working backwards through the boarding-gate close, immigration, security, bag drop and the drive itself. It uses the larger of three deadlines - the roughly three-hour arrival Changi advises, the airline check-in cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. It also accounts for the piers where screening happens at the boarding gate rather than at a central checkpoint, which changes when you have to be standing at the gate.",
   useCases: [

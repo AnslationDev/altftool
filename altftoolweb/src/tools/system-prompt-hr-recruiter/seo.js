@@ -1,4 +1,12 @@
 const seo = {
+  title: "HR Recruiter System Prompt Builder (Fairness Rules)",
+  metaDescription:
+    "Builds an AI recruiting assistant system prompt with protected-characteristic and proxy bans, GDPR-style privacy rules and a humans-decide safeguard.",
+  steps: [
+    "Fill in 'Roles hired for (required)', then Company, Industry, Hiring location and 'Company context and values'.",
+    "Tick the boxes under 'Tasks the assistant handles', 'Fairness rules' and 'Privacy rules', choose a Tone and set the 'Token budget for the system prompt'.",
+    "'Your system prompt' is assembled below with an Estimated prompt size in tokens, the characters and completeness percentage, counts of the rules included and a 'Gaps worth closing' list; Copy prompt puts the text on the clipboard.",
+  ],
   intro:
     "This builder generates a system prompt for an AI recruiting assistant with fairness and privacy constraints written in as hard rules — never inferring protected characteristics, avoiding proxy criteria like postcodes and career gaps, and keeping every hiring decision with a human. The rule text reflects US protected classes under Title VII, the ADEA, the ADA and GINA, plus GDPR-style data minimisation. It is for recruiters and HR teams who want AI drafting help without drifting into regulated automated decision-making.",
   useCases: [

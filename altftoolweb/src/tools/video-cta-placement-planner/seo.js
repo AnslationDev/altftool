@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video CTA Timing Planner With YouTube Card Limits",
+  metaDescription:
+    "Turns a video length into timestamped CTA slots: protects the opening hook, spaces mid-roll asks, and puts the end screen in the last 5-20 seconds.",
+  steps: [
+    "Set Length (minutes) and Length (seconds), Calls to action in total, and the Hook to keep clear (seconds).",
+    "Pick a Placement style, then set End screen length (seconds) or clear 'Reserve the last slot for an end screen'.",
+    "Read the Placement sheet of Time, Ask and How to deliver it rows, with Cards needed shown against the 5 YouTube allows; press Copy plan.",
+  ],
   intro:
     "Video CTA Placement Planner turns a video's length into a timestamped list of call-to-action slots, keeping the opening hook free of any ask, spacing mid-roll asks across the body, and putting the end screen where YouTube actually allows it — in the final 5 to 20 seconds of a video at least 25 seconds long. It also counts the cards you would need against YouTube's limit of 5 per video and flags asks that land too close together. Useful for creators and editors who script CTAs before the edit rather than bolting them on afterwards.",
   useCases: [

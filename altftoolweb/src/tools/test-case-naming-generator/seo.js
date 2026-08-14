@@ -1,4 +1,12 @@
 const seo = {
+  title: "Test Case Naming Generator for Jest, pytest, JUnit",
+  metaDescription:
+    "Turn given-when-then scenarios into test names in four conventions, plus a Jest, pytest, JUnit 5, Go or RSpec skeleton that obeys each runner’s rules.",
+  steps: [
+    "Enter the unit under 'What is under test?', then fill each scenario's Given (starting state, optional), When (the trigger) and Then (expected outcome) boxes — Add scenario adds another row.",
+    "Choose a Naming convention, a Test framework and the identifier casing; pytest's test_ prefix and Go's TestXxx form are applied automatically.",
+    "The Suite file name and each generated test name appear, followed by a Suite skeleton whose bodies throw so a copied stub cannot pass; press Copy result.",
+  ],
   intro:
     "A test name should describe the behaviour under test well enough that a red build in CI needs no further investigation to understand. This generator takes the unit under test plus a given, a when and a then, and renders the name in whichever convention your team uses — given-when-then, should-style, plain assertion, or Roy Osherove's UnitOfWork_StateUnderTest_ExpectedBehavior — then emits a skeleton for Jest, Vitest, Mocha, pytest, JUnit 5, Go, RSpec or xUnit. Runner rules such as pytest's test_ prefix and Go's TestXxx signature are applied for you.",
   useCases: [

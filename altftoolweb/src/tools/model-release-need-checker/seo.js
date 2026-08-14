@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do I Need a Model Release? Commercial Use Checker",
+  metaDescription:
+    "Answer four questions about use, identifiability, location and region to see whether a model or property release is needed, and which extra signatures.",
+  steps: [
+    "Answer the four questions: how the images will be used, whether anyone is identifiable, where it was shot, and where it will be published.",
+    "Tick anything else in the frame — subject under 18, sensitive context, recognisable private property, artwork or a pet.",
+    "The Verdict gives the release position, with Documents to collect and a Why list explaining each flag.",
+  ],
   intro:
     "This checker works out whether a photo shoot typically needs a signed model or property release, by combining the intended use, whether anyone in the frame is identifiable, where it was shot and where it will be published. It follows the standard rule that a model release addresses the subject's right of publicity and is triggered by commercial use — advertising, promotion, packaging, merchandise or royalty-free stock — rather than by taking the photograph. It also flags the separate cases of minors, sensitive contexts, artwork copyright and UK/EU data-protection duties.",
   useCases: [

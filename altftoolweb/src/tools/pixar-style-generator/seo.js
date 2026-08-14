@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pixar Style Generator: Photo to 512px 3D Character",
+  metaDescription:
+    "Turns a photo or image URL into a 512x512 PNG character render, then tunes it with emboss (0-6px), bloom (0-45px) and vibrancy (1x-2.2x) sliders.",
+  steps: [
+    "Under Load Source Photo press Upload Local Photo to pick an image file, or paste a link into Or paste direct image URL link... and press Load — Load Sample Photo fills it with a stock portrait.",
+    "The image is sent to the Flux model at image.pollinations.ai as soon as it loads, returning a 512x512 character render; the local canvas keeps producing a centre-cropped 512px result even if that call fails.",
+    "Drag 3D Emboss Depth (Clay borders) across 0-6px, Cinema Focus Glow (Bloom) across 0-45px and Toy Color Saturation (Vibrancy) from 1x to 2.2x, then press Download Stylized Image for the PNG, or Reset Settings.",
+  ],
   intro:
     "The Pixar Style Generator turns a photo into a glossy 3D animated character portrait by sending it to the Flux image model with a fixed claymation style prompt, then letting you fine-tune the result with local canvas shaders. Load a picture from your device or paste a direct image URL, and you get a 512x512 PNG with three live controls: emboss depth for rounded clay edges, bloom glow for the soft cinema focus, and a vibrancy multiplier for toy-bright colour. It is aimed at anyone who wants an animated-film avatar without opening a 3D suite or writing prompts.",
   useCases: [

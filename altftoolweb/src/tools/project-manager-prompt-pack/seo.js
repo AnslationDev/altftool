@@ -1,4 +1,12 @@
 const seo = {
+  title: "12 Project Manager AI Prompts: Status, RAID, Escalation",
+  metaDescription:
+    "Twelve delivery prompts filled with your project context, a 120, 250 or 500-word budget, and a reader directive — with [TBC] instead of invented dates.",
+  steps: [
+    "Fill Project name, Outcome the project must deliver, Key stakeholders, Delivery method and This period's raw notes.",
+    "Set Who reads the output to Delivery team, Sponsor, Executive or External client, and Output length to Brief (120 words), Standard (250) or Detailed (500).",
+    "Pick a prompt — weekly status, RAID log, risk escalation and nine more — then press Copy prompt, or Copy all prompts for the whole category.",
+  ],
   intro:
     "This pack assembles twelve project-delivery prompts — weekly status update, RAID log, risk escalation, stakeholder email, delay announcement, kickoff brief, milestone plan, scope change request, retrospective design, meeting-notes-to-actions, dependency interrogation and resource conflict — around the project context you enter once. Two extra controls do the work that most prompt libraries leave out: an output length that injects a hard word budget of 120, 250 or 500 words, and a reader profile that injects an explicit instruction about jargon, detail and where the ask belongs. Every prompt also forbids the model from inventing a date, owner or figure, telling it to write [TBC] instead.",
   useCases: [

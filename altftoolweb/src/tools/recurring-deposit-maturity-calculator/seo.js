@@ -1,4 +1,12 @@
 const seo = {
+  title: "RD Calculator: Recurring Deposit Maturity and TDS",
+  metaDescription:
+    "Values every RD instalment for its own holding period at quarterly compounding, then shows year-wise interest, section 194A TDS and post-tax value.",
+  steps: [
+    "Enter the Monthly instalment (INR), the Interest rate (% per year) and the Tenure (months) between 6 and 120 — or tap a tenure preset — then pick your marginal slab rate.",
+    "Set the TDS status boxes: 'Senior citizen', 'PAN given to bank' and 'Form 15G / 15H filed', so the right section 194A threshold and deduction rate are applied to each year's interest.",
+    "Read the Maturity value, the 'Interest credited year by year' table and the value after tax; enter a figure under 'Work backwards from a goal' for the instalment needed, then press 'Copy result'.",
+  ],
   intro:
     "This calculator gives the maturity value of a bank recurring deposit by valuing each monthly instalment separately: an instalment paid in month m of an n-month RD stays invested for (n − m + 1) months and grows at the quarterly compounded rate, so the maturity value is the sum of those n amounts. It also splits the interest by year, applies section 194A TDS and shows the post-tax figure. Savers use it because an RD's headline rate overstates the return — only the first instalment earns interest for the full term.",
   useCases: [

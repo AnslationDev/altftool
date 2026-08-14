@@ -1,4 +1,12 @@
 const seo = {
+  title: "Split PDF Online: By Pages, Batches, Extract or Remove",
+  metaDescription:
+    "Preview the exact file-by-file plan, then split a PDF by every page, fixed batches, custom groups, extract or remove modes — output as PDF or ZIP.",
+  steps: [
+    "Press Choose PDF to load your file, then pick a mode: Every Page, Fixed Batches, Custom Groups, Extract Pages or Remove Pages",
+    "Type pages as ranges like 1-3, 7, review the file-by-file output plan shown before anything is generated, then press Split PDF",
+    "One output downloads as a single PDF; multiple parts download as a ZIP of numbered PDFs plus a split-plan.txt manifest",
+  ],
   intro:
     "PDF Split Tool breaks one PDF into separate files using five modes — one file per page, fixed batches of N pages, custom semicolon-separated page groups, extract selected pages into a single PDF, or remove selected pages and keep the rest. It shows the output plan, file by file, before anything is generated (the first 80 planned files are listed on screen; the full plan is still exported even for larger splits), then downloads a single PDF or a DEFLATE-compressed ZIP containing every part plus a split-plan.txt manifest. Page selections accept ranges such as 1-3, 7, 10-12.",
   useCases: [

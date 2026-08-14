@@ -1,4 +1,12 @@
 const seo = {
+  title: "Invoice vs Time Log Reconciler: Per-Activity Variance",
+  metaDescription:
+    "Paste time-log rows as Activity | hours | rate and invoice lines as Activity | amount, set a tolerance, and get the variance on every activity.",
+  steps: [
+    "Paste one row per line into Time-log rows in the hinted Activity | hours | rate format, for example Research | 5.5 | 1500.",
+    "Paste the bill into Invoice lines as Activity | amount, then set Amount tolerance, which defaults to 1, or press the 'Three lines' example chip.",
+    "The Result reads '2/3 lines match' over a table of Activity, Expected from log, Invoiced, Variance and Status; Copy puts it on the clipboard and Download saves invoice-to-time-log-reconciler.txt.",
+  ],
   intro:
     "The Invoice-to-Time-Log Reconciler multiplies each time-log row's hours by its rate, sums the result per activity, and compares that expected amount against the invoiced amount for the same activity, marking a line Match when the variance falls within your tolerance and Review when it does not. Paste time-log rows as 'Activity | hours | rate' and invoice lines as 'Activity | amount', set a tolerance (default ±1), and you get a per-activity variance table plus a match count such as 2/3. It is for freelancers, agencies and clients who need to know exactly which line drifted, not just that the invoice total looks wrong.",
   useCases: [

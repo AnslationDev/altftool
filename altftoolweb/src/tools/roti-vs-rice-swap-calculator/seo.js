@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roti vs Rice: Equivalent Portion by Calories or Carbs",
+  metaDescription:
+    "Match rotis to katoris of rice on calories or carbohydrate from dry weight - atta grams and raw rice - and see what the swap costs in protein and fibre.",
+  steps: [
+    "Choose Roti → rice or Rice → roti, then enter Rotis on your plate, Ghee per roti (g) and Atta per roti (g) - or tap the Small roti (20 g), Standard roti (30 g) and Large roti (45 g) presets.",
+    "Set Cooked rice per katori (g), then pick Calories or Carbohydrate under Match the swap on.",
+    "Read the Equivalent cooked rice headline in grams, katoris and raw rice, compare the Roti side and Rice side columns for energy, protein, carbohydrate, fat and fibre, then press Copy result.",
+  ],
   intro:
     "This calculator finds the rice portion that matches your rotis on calories or on carbohydrate, and shows what the swap costs in protein and fibre. Both sides are worked out from the dry ingredient — grams of atta for the roti and grams of raw rice behind the cooked serving — because that is the only weight you can measure accurately, with a cooking factor of about 2.7 applied to rice and 1.35 to dough. Composition figures are typical values for Indian staples per 100 g raw: whole wheat atta at 341 kcal with 11.2 g fibre, milled white rice at 345 kcal with 0.2 g fibre.",
   useCases: [

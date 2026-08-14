@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scam Message Checker: Score SMS, WhatsApp & Email",
+  metaDescription:
+    "Paste an SMS, WhatsApp or email and get a 0-100 signal score, the exact phrases that matched ten scam patterns, and safer next steps. Runs in-browser.",
+  steps: [
+    "Under \"Paste the message\", choose the Message source — SMS, WhatsApp or Email — and paste the text into the \"Message text\" box, which accepts up to 20,000 characters.",
+    "Press \"Review message\" (or \"Load example\" first); the pattern rules, link inspection and Unicode checks all run in the page, and \"Clear\" empties the box.",
+    "Read the \"Signal score\" out of 100 next to the \"Evidence groups\" and \"Links found\" counts, check the \"Observed evidence\" cards quoting each matched phrase, then take the \"Safer next steps\" list with \"Copy checklist\".",
+  ],
   intro:
     "This is a local checklist that scans the text of an SMS, WhatsApp message or email against ten deterministic scam-pattern rules — urgency, hard-to-reverse payment, OTP and PIN requests, remote-access instructions, authority and relationship claims — plus structural checks on any links and hidden Unicode characters. It returns a 0-100 signal score, the exact phrases that matched, and a list of safer next steps tailored to what it found. The message never leaves the page, which matters because the thing you want checked usually contains your own name, account details or a link you were told to open.",
   useCases: [

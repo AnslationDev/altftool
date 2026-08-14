@@ -1,4 +1,12 @@
 const seo = {
+  title: "Invoice Attachment Phishing Anatomy: Score the Red Flags",
+  metaDescription:
+    "Paste an invoice email's file name, From, Reply-To and body for a red-flag score out of 100 naming double extensions and macro lures.",
+  steps: [
+    "Enter the Attachment file name (for example Invoice_4417.pdf.lnk), the From address, any Reply-To address and the Supplier domain you expect.",
+    "Add the Subject line and paste the Message body, then read the Red-flag score out of 100 and the band beneath it.",
+    "Check the File name with formatting tricks removed row and the listed findings, then press Copy result to record why the invoice was held.",
+  ],
   intro:
     "This tool takes apart a suspicious invoice email and names the specific trick each part is using — a double extension such as Invoice.pdf.lnk, a Unicode right-to-left override that reverses the visible file name, a password in the body that stops your gateway scanning the archive, or a Reply-To on a different domain from the From. It scores what you paste against the attachment classes Microsoft blocks in Outlook and the wording used to talk people into clicking Enable Content, then lists the verification steps that actually settle the question. Everything runs in your browser; nothing is uploaded.",
   useCases: [

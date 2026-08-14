@@ -1,4 +1,12 @@
 const seo = {
+  title: "Disposable Email: Lockout Risk Score for a Signup",
+  metaDescription:
+    "Scores five dependencies — password reset, login codes, payments, receipts, longevity — out of 100 and compares throwaway, temp inbox, alias and mailbox.",
+  steps: [
+    "Choose What are you signing up for? — a one-off file download, newsletter, free trial, shopping order, work SaaS tool or a bank/government service — and set Days you must still receive mail there.",
+    "Tick the dependencies that apply: email is the only password reset, login codes or magic links arrive by email, money changes hands, you will need the receipt or warranty later, you expect to use it in a year — plus whether the signup form rejects disposable domains.",
+    "Read the lockout score out of 100 with the Recommended address type, then the How each address type holds up table showing whether each keeps mail long enough and whether it is password-protected; Copy decision saves it.",
+  ],
   intro:
     "This explainer scores how much an account depends on receiving mail later — password resets, login codes, payment notices, receipts, longevity — and turns that score into a verdict on whether a disposable address is safe. It compares four kinds of address by the properties that actually decide the outcome: how long each keeps a delivered message, whether the inbox is readable without a password, whether the address can still serve as your account-recovery inbox, and whether signup forms reject it. Open 10-minute inboxes have no authentication at all, so any login code sitting in one is readable by anyone who types the same address.",
   useCases: [

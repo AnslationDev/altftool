@@ -1,4 +1,10 @@
 const seo = {
+  title: "Section 44ADA Calculator: 50% Presumptive Income Tax",
+  steps: [
+    "Enter Digital gross receipts (INR) and Cash gross receipts (INR), then pick the new or old tax regime and your age.",
+    "Add any Chapter VI-A deductions, and the actual profit from your books if you want the section 44AB(d) audit warning.",
+    "Read the presumptive income at 50%, the ceiling that applies, total tax and the advance tax due by 15 March, then press Copy result.",
+  ],
   intro:
     "Section 44ADA lets an eligible professional declare half of gross receipts as taxable profit and skip formal books of account, and this calculator applies that 50% rate along with the receipts ceiling and the cash-receipts test that decides which ceiling you get. The limit is Rs 50,00,000, or Rs 75,00,000 where cash receipts stay within 5% of total receipts, a proviso inserted by the Finance Act 2023. It also prices the tax under the new or old regime and flags when declaring a lower profit would trigger a section 44AB audit.",
   useCases: [

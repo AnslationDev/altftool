@@ -1,4 +1,12 @@
 const seo = {
+  title: "Godh Bharai and Baby Shower Invitation Wording",
+  metaDescription:
+    "Write godh bharai, valaikappu, seemantham or baby shower invites in 7 languages, with the date spelled out and the SMS part count shown.",
+  steps: [
+    "Fill in Mother-to-be / couple, Hosted by, Date, Start time, Venue / address, RSVP contact and Extra line.",
+    "Pick the Ceremony — Godh Bharai, Seemantham, Valaikappu, Dohale Jevan, Shaad, Srimantham or Sip & See — a Language, and a Warm, Traditional, Playful or Formal tone.",
+    "Read each Option with its SMS encoding and SMS parts if sent as a text, press Shuffle for different phrasing, then Copy the wording you want.",
+  ],
   intro:
     "Baby Shower Invitation Wording turns the honouree's name, ceremony type, date, time and venue into complete, ready-to-send invitation text in English, Hinglish, Hindi, Marathi, Bengali, Gujarati and Tamil. It covers eight real pre-birth and post-birth ceremonies — godh bharai, seemantham, valaikappu, dohale jevan, shaad, srimantham, a general baby shower and a sip-and-see — in warm, traditional, playful or formal tones. The date is written out in full using the language's own calendar names, and each option reports its character count and SMS part count so you know how it will land on WhatsApp or as a text.",
   useCases: [

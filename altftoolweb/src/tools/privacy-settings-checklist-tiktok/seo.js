@@ -1,4 +1,12 @@
 const seo = {
+  title: "TikTok Privacy Checklist: All 28 Settings, Scored",
+  metaDescription:
+    "Tick off 28 TikTok settings: private account, all four suggestion toggles, downloads, duet, stitch, DMs and ad partner data - with a score.",
+  steps: [
+    "Answer \"Who are you locking this down for?\" — private personal account, creator with a public account, or teen account — and set a Target score (%).",
+    "Work down the 28 rows grouped as Account visibility, What people can do with your videos, Who can reach you, Data and advertising, and Account security, ticking each after you apply it in TikTok.",
+    "Watch Protection score, held at 69% while any Critical setting is open, plus Remaining exposure by area; Copy result exports what is still to do with its menu path.",
+  ],
   "intro": "This checklist covers the 28 TikTok settings that decide who can find your account, what other people are allowed to do with your videos, who can message you and how much of your activity feeds advertising. It leads with the private-account switch and the four separate 'suggest your account to others' toggles, then the reuse permissions — downloads, duet, stitch and comments — that stay open even on tidy accounts. Ad personalisation and partner data are treated as two controls because they are, and both are opt-out.",
   "useCases": [
     "Stop TikTok suggesting your account to colleagues and family from a synced contact list.",

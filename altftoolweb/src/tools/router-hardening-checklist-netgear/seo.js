@@ -1,4 +1,12 @@
 const seo = {
+  title: "Netgear Router Hardening Checklist: 22 Weighted Steps",
+  metaDescription:
+    "Score what is still open on a Nighthawk: admin login, WPA mode, WPS, Remote Management, UPnP and ReadySHARE, each with its routerlogin.net menu path.",
+  steps: [
+    "Pick a profile in 'What is this router carrying?' — Ordinary home broadband, Work from home, Media and USB storage heavy, or Small shop or clinic — which sets how heavily each step is weighted.",
+    "Tick the items across the five groups: Admin account, Wi-Fi, Facing the internet, Devices on your LAN, and Firmware and lifecycle. Each row shows its point weight and a Critical badge where it applies; 'Mark all done' and 'Clear all' toggle every box at once.",
+    "Read the Hardening score percentage with 'Steps done', 'Critical steps still open' and 'Biggest remaining exposure', then set 'Last firmware check' to get the days elapsed and 'Quarterly checks missed' against the 90-day rule. 'Copy result' copies the summary.",
+  ],
   intro:
     "This Netgear hardening checklist runs a weighted 22-point security pass over a Nighthawk or R-series router — the admin login, WPA2/WPA3 mode, WPS, Remote Management, UPnP, port forwards, ReadySHARE USB sharing and guest Wi-Fi — and scores what is still open rather than simply counting boxes. Every step names the exact page under routerlogin.net, so you are not guessing where Netgear moved a setting. A firmware-age check turns the date you last looked for an update into the number of quarterly cycles you have missed.",
   useCases: [

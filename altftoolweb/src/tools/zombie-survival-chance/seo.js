@@ -1,4 +1,12 @@
 const seo = {
+  title: "Zombie Survival Quiz: 10 Questions, 8 Traits, 5 Ranks",
+  metaDescription:
+    "A 10-question quiz scoring eight weighted traits into a survival percentage and one of five ranks, from Zombie Bait to Zombie Slayer Legend.",
+  steps: [
+    "Answer the 10 questions — first move against a horde, weapon, transport, food strategy, leadership, fitness, medical knowledge, risk attitude, camping skill and what you'd do if bitten — one tap per option, advancing automatically.",
+    "After the last answer, the Calculating Survival screen combines your eight trait totals — strength, agility, intelligence, stealth, courage, charisma, combat, survival — with 3x/2x/1x weights, divided by 1.5 and capped at 100.",
+    "Your Results show the percentage, a rank from Zombie Bait to Zombie Slayer Legend, Strengths and Weaknesses chips and a line of advice; press Retake Quiz to try different answers.",
+  ],
   intro:
     "The Zombie Survival Chance Calculator is a 10-question quiz that scores your answers across eight traits — strength, agility, intelligence, stealth, courage, charisma, combat and survival — and turns them into a percentage and one of five apocalypse ranks, from Zombie Bait to Zombie Slayer Legend. Combat, strength, intelligence, courage and survival carry the heaviest weight; charisma counts least. It is a personality quiz for entertainment, not a preparedness assessment.",
   useCases: [

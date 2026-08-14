@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scandinavian Palette Generator: Nordic Colours with LRV",
+  metaDescription:
+    "Generate a low-saturation Nordic scheme with Light Reflectance Value and WCAG contrast per surface, warmth tuned to which way the room faces.",
+  steps: [
+    "Type a Seed word or phrase, pick the Room orientation, and set the Warmth slider from 0 (cold stone) to 100 (warm plaster).",
+    "Press Shuffle seed for a fresh scheme and check the \"Palette and LRV\" table — walls are usually kept at LRV 60 or above and ceilings at 80 or above.",
+    "Read the 60-30-10 allocation and the Contrast table, then press Copy palette, or choose CSS variables, Tailwind @theme or JSON and press Copy snippet.",
+  ],
   intro:
     "The Scandinavian Palette Generator produces a calm Nordic colour scheme — ceiling white, wall white, plaster, birch, cold stone, muted sage and charcoal — with saturation held between 2% and 18% so nothing shouts. Each surface reports its Light Reflectance Value, the 0-100 measure paint suppliers publish, alongside WCAG contrast, and the palette compensates for room aspect: north-facing schemes are warmed to offset cool daylight, south-facing ones can run cooler. A 60-30-10 split shows how much of each colour to actually use.",
   useCases: [

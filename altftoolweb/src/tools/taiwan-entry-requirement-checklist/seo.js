@@ -1,4 +1,12 @@
 const seo = {
+  title: "Taiwan Entry Checklist: Visa-Free Days & Passport Rule",
+  metaDescription:
+    "Test your stay against Taiwan's 90, 30 or 14-day visa-free admission, the passport rule for your nationality, and the certificate's 90-day window.",
+  steps: [
+    "Pick your Entry route and Purpose of the visit, then set Days you will stay, Arrival date, Passport expiry date and Travellers in the party.",
+    "Tick 'My passport only needs to cover the stay (US, Canada, Japan and a few more)' if it applies, and on the Travel Authorization Certificate route fill Certificate issue date (optional) to test the 90-day window.",
+    "Read 'Admission on this route' in days alongside Passport must reach, Passport check, Extendable and Certificate on arrival, tick off the Required documents, then press Copy checklist.",
+  ],
   intro:
     "Taiwan admits most European, North American, Australian, Japanese and Korean citizens visa-free for 90 days, Singaporeans and Malaysians for 30, and several South East Asian nationalities for 14 under a renewable trial scheme — and none of those stays can normally be extended once you are in the country. This checklist tests your trip against the right admission, applies the six-month passport rule or the shorter rule that covers US, Canadian and Japanese citizens, and checks whether a free Travel Authorization Certificate issued on a given day is still usable on your arrival date.",
   useCases: [

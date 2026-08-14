@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nepali Birthday Wishes: Timi or Tapai, Both Scripts",
+  metaDescription:
+    "Complete Nepali birthday messages in Devanagari or Roman letters, written separately for casual timi and polite tapai, with dai, bhai, didi and bahini.",
+  steps: [
+    "Enter the Name of the birthday person, then choose Your relationship (Friend, Elder brother (dai), Mother (aama) and so on) and a Tone such as Casual & warm (timi) or Formal & respectful (tapai).",
+    "Set Script to Devanagari (नेपाली) or Roman / Nepali in English letters, pick How many wishes (1 to 4), and press Shuffle wording for a different set of phrasings.",
+    "Check the Addressed as, Script and Politeness level summary, then press Copy all, or press Copy under any single wish.",
+  ],
   intro:
     "The Nepali Birthday Wishes Generator writes complete birthday messages in Nepali, in Devanagari or Roman letters, and switches the whole sentence between the polite तपाईं (tapai) register and the casual तिमी (timi) register rather than just swapping a pronoun. That distinction matters because Nepali verb endings change with it — rahanuhos is polite, rahanu is casual — and getting it wrong is the most common mistake non-native writers make. Relationship terms follow Nepali usage, including the separate words for elder and younger siblings: dai, bhai, didi and bahini.",
   useCases: [

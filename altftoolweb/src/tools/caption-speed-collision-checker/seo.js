@@ -1,4 +1,12 @@
 const seo = {
+  title: "SRT & VTT Caption Checker: CPS, Overlaps, Lines",
+  metaDescription:
+    "Audit SRT or WebVTT cues for overlaps, 20 CPS and 180 WPM reading speed, 1-7 second duration and line limits — tags stripped before counting.",
+  steps: [
+    "Use Open file for a local .srt or .vtt, paste the cues into the caption box, or press Load sample.",
+    "Set Maximum CPS, Maximum WPM, Minimum and Maximum duration (seconds), Maximum visible lines and Maximum characters per line, then press Check captions.",
+    "Read the per-cue findings for overlaps in milliseconds and over-speed cues, then press Download counts-only report to save caption-audit-counts-only.json.",
+  ],
   intro:
     "The Caption Speed & Collision Checker parses an SRT or WebVTT file and flags every cue that overlaps the previous one, runs too fast to read, or breaks your line limits — using editorial defaults of 20 characters per second, 180 words per minute, 1–7 second cue duration, 2 lines, and 42 characters per line. It strips markup tags and HTML entities before counting, so styling like <i> or &amp; never inflates a reading-speed number. Subtitlers, localisation QA and accessibility reviewers get a per-cue finding list plus a counts-only report that contains no caption text at all.",
   useCases: [

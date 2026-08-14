@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coding Model Picker: Hosted, Open-Weight or Local",
+  metaDescription:
+    "Score five ways to run a coding assistant across ten weighted criteria: repo size, language mix, privacy rules, ops appetite and running cost.",
+  steps: [
+    "Choose the kind of work, repository size, language mix, what may leave your network and your setup and ops appetite, then set the running-cost slider.",
+    "Tick any hard constraint — coding without a network, fine-tuning on your own code, or a regulated industry — which eliminates options outright.",
+    "Read the best fit score out of 100, the full ranking, what your constraints ruled out and how the score was built, then press Copy result.",
+  ],
   intro:
     "Coding Model Picker ranks five ways to run a coding assistant — a hosted frontier model, the same model inside your own cloud tenant, open weights on your GPUs, open weights on an inference provider, and a small quantised model on your laptop — against ten weighted criteria. The score is plain arithmetic: each criterion gets an importance of 0-3 from your answers, each option a 0-5 rating on structural properties such as offline capability, weight availability and billing model, and the result is the weighted total as a percentage of the maximum. Useful when a team has to justify a choice on privacy, repo scale and budget rather than on a leaderboard.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "File Name Sanitiser for Portal Uploads (POSIX-Safe)",
+  metaDescription:
+    "Rewrite a file name into the POSIX portable set - letters, digits, dot, hyphen, underscore. Fixes spaces, accents and CON/PRN names, keeps the extension.",
+  steps: [
+    "Type the rejected file name into File name to clean, including its extension.",
+    "Choose what to Replace bad characters with, set Maximum length, and tick Lowercase everything if the portal is case-sensitive.",
+    "Read the Safe file name and the Problems found list covering spaces, accents and reserved names such as CON, then press Copy name and rename your file.",
+  ],
   intro:
     "This sanitiser rewrites any file name into the POSIX portable filename character set — letters, digits, dot, hyphen and underscore (POSIX.1-2017 §3.282) — which is the safest alphabet for government portals, legacy Java/ASP upload validators, URLs and every operating system. It replaces spaces and symbols, transliterates accents (é becomes e), lowercases the extension, avoids Windows reserved device names like CON and PRN, and truncates long names while always preserving the extension. It is built for applicants whose scans keep bouncing off upload forms with vague errors.",
   useCases: [

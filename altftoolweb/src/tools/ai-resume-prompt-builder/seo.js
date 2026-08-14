@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Resume Prompt Builder: XYZ Bullets, ATS-Safe",
+  metaDescription:
+    "Builds a resume-rewriting prompt for ChatGPT, Claude or Gemini using the XYZ formula, ATS format rules and your numbers, with a no-fabrication rule.",
+  steps: [
+    "Choose What should the AI do? — Rewrite my experience bullets, Write my professional summary, Tailor my resume to a job description or Restructure the full resume — and type your Target role and Industry.",
+    "Set Seniority level and Tone, paste your real achievements and numbers plus comma-separated ATS keywords, and tick 'I will paste the job description along with my resume' when you are tailoring.",
+    "Check the prompt word count, the Task, Target role, Seniority framing, Tone and ATS keywords included rows, and the Before you send it checklist, then press Copy prompt to paste it above your resume text.",
+  ],
   intro:
     "This builder assembles a structured resume-rewriting prompt for ChatGPT, Claude, Gemini or any other assistant, combining a recruiter role frame, your target job and seniority, your real numbers, and the XYZ achievement formula — \"Accomplished [X] as measured by [Y], by doing [Z]\" — that Google's recruiting team popularised for bullet points. It also pins down applicant-tracking constraints: standard section headings, plain text, no tables or columns, and keywords mirrored from the job description. Every generated prompt carries an explicit no-fabrication rule, because inventing employers, dates and metrics is the main failure mode of AI resume editing.",
   useCases: [

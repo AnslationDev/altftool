@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Psychology Analyzer + WCAG Contrast Check",
+  metaDescription:
+    "Enter one hex colour for its hue family, emotional and market-by-market readings, and its measured WCAG 2.1 contrast against white and black.",
   intro:
     "A colour psychology analyser takes one hex value and reports three things about it: the emotional associations its hue family carries, how that hue is read in different markets, and its measured WCAG 2.1 contrast ratio against white and black. The hue is classified from its HSL angle on the standard twelve-part wheel, and contrast is computed with the official relative-luminance formula (0.2126R + 0.7152G + 0.0722B on linearised sRGB). It is built for brand designers and product teams choosing a palette that has to work emotionally and pass accessibility review.",
   useCases: [

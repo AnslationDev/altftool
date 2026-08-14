@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stock Price & Volume Dashboard: Last 30 Daily Closes",
+  metaDescription:
+    "Chart a ticker's last 30 daily closes and volume side by side, with day-over-day change and the 30-day high and low. End-of-day data, not live quotes.",
+  steps: [
+    "Type a ticker such as AAPL or TSLA into the 'Search your stock (e.g. AAPL, TSLA)' box — the input is uppercased as you type.",
+    "Click 'Search' — the dashboard fetches the last 30 daily bars for the symbol; a bad symbol or exhausted quota shows 'Invalid stock symbol or API limit reached'.",
+    "Read the 'Current Price' tile with its day-over-day change, the 'Volume', 'Day High' and 'Day Low' tiles, and the 'Price Trend (30 Days)' and 'Volume Analysis' charts, which refresh every 5 seconds.",
+  ],
   intro:
     "Type a ticker such as AAPL or TSLA and this dashboard pulls the last 30 daily bars from Alpha Vantage's TIME_SERIES_DAILY feed and charts the closing price and traded volume side by side. Above the charts it shows the latest close, the change and percentage change against the previous session, that day's volume, and the highest and lowest close inside the 30-day window. An AI summary of the symbol is generated alongside the numbers, and the view refreshes on a five-second timer.",
   useCases: [

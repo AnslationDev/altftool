@@ -1,4 +1,12 @@
 const seo = {
+  title: "Simple Interest Calculator: SI = (P × R × T) ÷ 100",
+  metaDescription:
+    "Enter principal, annual rate and years to get interest, maturity amount, the interest per year, month and day, and return as a % of principal.",
+  steps: [
+    "Enter the Principal Amount, Annual Interest Rate (%) and Time (Years) — use fractions like 0.5 for six months.",
+    "The Result panel recomputes Simple Interest = (Principal × Rate × Time) ÷ 100 on every keystroke, with the formula printed below the calculator.",
+    "Read the Interest Earned, Maturity Amount, Annual, Monthly and Daily Interest and Return on Investment cards, and press Copy to copy the full breakdown.",
+  ],
   intro:
     "The Simple Interest Calculator applies the standard formula SI = (Principal × Rate × Time) ÷ 100 and returns the interest, the maturity amount, and the same interest broken down per year, per month and per day. Enter three numbers — amount, annual rate and years — and you get what the loan or deposit actually costs or earns, plus the total return as a percentage of principal. It is for anyone comparing a fixed-rate deposit, a friendly loan or a short-term advance where interest does not compound.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "When to Leave for Kochi Airport (COK): Transfer Plan",
+  metaDescription:
+    "Works back from your COK departure through hour-by-hour Kochi traffic, Terminal 1 or 3 formalities and the Aluva metro leg to the minute you leave.",
+  steps: [
+    "Enter the Scheduled departure (24-hour) from your ticket and pick the Terminal: Domestic flight - Terminal 1 or International flight - Terminal 3.",
+    "Choose Starting from with its km, Getting there by such as Metro to Aluva then taxi or auto, the Conditions, and Your own buffer (minutes).",
+    "Read Leave at, the Latest you could possibly leave, the road and metro legs, the binding cutoff and the minute-by-minute timeline.",
+  ],
   intro:
     "This planner works backwards from a flight's scheduled departure at Cochin International Airport (COK) to the minute you should leave, allowing for how Kochi traffic changes by hour of day. It applies the check-in and bag-drop close, the boarding gate close and the airline's 2-hour domestic or 3-hour international arrival advice, then adds terminal-side time for entry, bag drop, emigration, security and the walk to the gate at Terminal 1 or Terminal 3. Because Kochi Metro Line 1 ends at Aluva, about 10 km from the terminal, a metro leg is treated as fixed minutes that traffic cannot touch, with only the last stretch simulated as a drive.",
   useCases: [

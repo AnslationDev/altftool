@@ -1,4 +1,12 @@
 const seo = {
+  title: "Motor Insurance IDV Calculator with Tariff Depreciation",
+  metaDescription:
+    "Applies the motor tariff slabs — 5%, 15%, 20%, 30%, 40%, 50% to five years — to your car and accessories, and prices the cut from a lower IDV.",
+  steps: [
+    "Enter 'Ex-showroom listed price (INR)' and 'Age of the vehicle (completed months)', or tap a preset such as '30 months'.",
+    "Add anything fitted afterwards under 'Accessories not in the listed price (INR)' — a CNG kit, music system or alloy wheels.",
+    "Read the Insured Declared Value and its depreciation band, then enter an 'IDV you plan to declare (INR)' to see the 'Claim shortfall you would bear'.",
+  ],
   intro:
     "Insured Declared Value is the manufacturer's listed selling price of your vehicle less depreciation for its age, and it is the amount a total loss or theft claim pays. This calculator applies the India Motor Tariff depreciation slabs — 5% up to six months, 15% to one year, 20%, 30%, 40% and 50% through year five, and mutual agreement beyond that — to the vehicle and separately to accessories not included in the listed price. It also shows what happens to a partial-loss claim when the IDV declared is lower than the correct figure.",
   useCases: [

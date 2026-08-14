@@ -1,4 +1,12 @@
 const seo = {
+  title: "Financial Year and Assessment Year Finder (India)",
+  metaDescription:
+    "Maps any date to its Indian FY and AY, the April-March quarter, the four section 211 advance tax dates and the section 139 filing deadlines.",
+  steps: [
+    "Pick the date of the income, invoice or transaction in the date field, or type it into \"Or type it as YYYY-MM-DD\" — both are bound to the same value and open on 2025-12-15.",
+    "The mapping updates as you type: the headline gives FY and AY, and the list below adds the quarter and its span, the day number within the financial year, days still to run, the percentage elapsed and whether that FY holds a leap day.",
+    "Read the four section 211 advance tax instalments and the section 139 filing dates for that assessment year, each with a \"From your date\" column counting the days before or after, then press Copy result — or use \"Financial year starting in\" to look a year up directly.",
+  ],
   intro:
     "The Indian financial year runs from 1 April to 31 March, and the assessment year is the twelve months beginning on the 1 April immediately after it — so income earned in FY 2024-25 is assessed in AY 2025-26. This finder maps any date to its financial year, assessment year and quarter, shows how far through the year that date sits, and lists the statutory dates that follow: the four advance tax instalments under section 211 and the return deadlines under section 139. The rule comes from section 3 of the Income-tax Act, 1961, which defines the previous year, and section 2(9), which defines the assessment year.",
   useCases: [

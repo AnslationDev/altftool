@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vegan Macro Calculator with Plant Protein Adjustment",
+  metaDescription:
+    "Plant-based protein, fat and carb targets from Mifflin-St Jeor, raised by a 1.0-1.3 digestibility factor, with a 14 g/1,000 kcal fibre goal.",
+  steps: [
+    "Under 'About you' enter Sex (for the BMR equation), Age (years), Weight (kg) and Height (cm), then pick an Activity level from Sedentary to Extra active and a Goal from 'Lose weight quickly (-750 kcal)' to 'Gain weight (+500 kcal)'.",
+    "Under 'Plant-based settings' set 'Protein (g per kg of body weight)', which defaults to 1.6, the 'Plant digestibility adjustment (1.0-1.3)', which defaults to 1.15, and 'Fat (% of energy)', which defaults to 27.",
+    "Read the Daily protein target with its base grams and adjustment, the Protein, Fat and Carbohydrate cards, the BMR and TDEE rows and the 'Fibre target (14 g per 1,000 kcal)', then press Copy result; the food table converts the target into grams of seitan (25 g protein per 100 g), tempeh (19 g) or firm tofu (17 g).",
+  ],
   intro:
     "The Vegan Macro Calculator sets daily protein, fat and carbohydrate targets for a plant-based diet, raising the protein figure by a digestibility adjustment because most plant proteins score lower than animal proteins on PDCAAS and DIAAS. Calories come from the Mifflin-St Jeor equation multiplied by an activity factor and adjusted for your goal; fat is a chosen share of energy, carbohydrate takes the remainder, and fibre is set at the 14 g per 1,000 kcal adequate intake. It also shows how many grams of tofu, lentils, tempeh or seitan the protein target actually represents.",
   useCases: [

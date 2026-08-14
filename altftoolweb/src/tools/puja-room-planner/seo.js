@@ -1,4 +1,12 @@
 const seo = {
+  title: "Puja Room Planner: Shrine Size & Platform Height in mm",
+  metaDescription:
+    "Size a home mandir from your idols: shrine width and depth in mm, platform height that puts the deity's face at your eye level, plus seating depth.",
+  steps: [
+    "Enter 'Number of idols or frames', the widest idol's width and depth in mm, the tallest idol's height, and 'Your standing height (cm)'.",
+    "Choose 'How you pray' — Seated on the floor or Standing — pick where in the home, and tick 'Under a staircase', 'Shares a bathroom wall' or 'Inside a bedroom'.",
+    "Read 'Platform height for the idols' in mm with shrine width, seating depth, total depth and floor area; 'Copy result' saves the plan as text.",
+  ],
   intro:
     "This planner sizes a home puja space from the things you can measure: shrine width comes from the number of idols plus a 100 mm gap between them and a 75 mm side margin, shrine depth adds a 250 mm zone in front for the lamp, bell and thali, and platform height is set so the idol's face lands at your eye level — about 0.48 of standing height when you sit cross-legged on the floor and 0.936 when you stand. It also totals the seating depth a family needs and flags placements that traditional Vastu practice advises against. The dimensions are geometry; the direction notes are recorded convention, not a ruling.",
   useCases: [

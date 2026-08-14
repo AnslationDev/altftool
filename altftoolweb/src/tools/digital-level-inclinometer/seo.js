@@ -1,4 +1,7 @@
 const seo = {
+  title: "Phone Digital Level & Inclinometer (Tilt in Degrees)",
+  metaDescription:
+    "Use your phone's orientation sensor as a spirit level: logs beta, gamma and combined tilt in degrees, keeping the last 200 readings in your browser.",
   intro:
     "This turns a phone into a spirit level and inclinometer by reading the DeviceOrientation sensor and logging the combined tilt off horizontal, computed as the hypotenuse of the front-back (beta) and left-right (gamma) angles. Each timestamped row keeps beta, gamma and alpha alongside that single tilt figure in degrees, so you can see whether a surface is off in one axis or both. It starts only after you press start and grant sensor permission, and readings never leave the browser.",
   useCases: [

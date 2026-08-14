@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Prepayment Calculator - Cut Tenure, Save Interest",
+  metaDescription:
+    "Enter loan amount, rate, tenure and a monthly prepayment; it amortises month by month and returns the EMI, the reduced tenure and interest saved.",
+  steps: [
+    "Enter Loan Amount, Interest Rate (% p.a.), Loan Tenure (Years) and Monthly Prepayment — the form opens on ₹50,00,000 at 9% over 20 years with ₹5,000 extra a month.",
+    "Press Calculate; the tool derives the scheduled EMI from P × r × (1+r)^n / ((1+r)^n − 1), then walks the balance one month at a time with the extra amount applied straight to principal.",
+    "Total Payment (with Prepayment) appears with Interest Saved beneath it, and the tiles below give Monthly EMI, Original Tenure and Reduced Tenure expressed in years and months.",
+  ],
   intro:
     "The Loan Prepayment Calculator shows what happens to your loan when you pay a fixed extra amount towards principal every month: it computes the scheduled EMI from the standard formula P x r x (1+r)^n / ((1+r)^n - 1), then runs the loan month by month with the extra payment applied straight to principal, and reports the shortened tenure alongside the interest saved. Enter loan amount, annual rate, tenure in years and the extra monthly amount, and you get the original EMI, the reduced tenure in years and months, and the total saving. It is for borrowers deciding whether a small monthly top-up is worth committing to.",
   useCases: [

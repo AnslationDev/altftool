@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bangkok Trip Budget: Baht, Rupees, Forex Markup",
+  metaDescription:
+    "Splits a Bangkok trip into rupee costs (airfare, visa) and baht costs (room, food, BTS), converts at your forex markup and estimates the 7% VAT refund.",
+  steps: [
+    "Pick a Travel style (sets the starting rates) — Backpacker, Comfort or a higher tier — then set Travellers, Nights in Bangkok and Rupees per 1 baht (today's rate).",
+    "Choose How you pay in Thailand — Cash changed in Bangkok (money changer) +1%, Prepaid forex card loaded in India +2% or Indian debit or credit card abroad +3.5% — set the Season, add a Contingency buffer (%), and tick Claim the tourist VAT refund on shopping at the airport.",
+    "Read Total trip cost with the per person and per person per day line, check the Baht to budget on the ground, Effective rate after markup and VAT refund reclaimable rows, then press Copy result.",
+  ],
   intro:
     "This planner splits a Bangkok holiday into the two currencies it is actually paid in — rupees for the return airfare, visa and insurance, and baht for the room, food, BTS rides, temples and shopping — then converts the baht half at the rate you will really get after the forex markup. Rooms are charged for nights while daily spends are charged for nights + 1 days, rooms are counted as ceil(travellers ÷ people per room), and the season factor moves the room rate alone. It also estimates the 7% VAT you can reclaim on shopping at the airport under Thailand's VAT Refund for Tourists scheme.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hotel Wi-Fi Safety and In-Room Safe Checklist",
+  metaDescription:
+    "A room-arrival routine for the door, hotel Wi-Fi, the in-room safe and smart devices — scored by property, with camera checks critical in rentals.",
+  steps: [
+    "Choose 'Where are you staying?' — Chain hotel, Independent or boutique hotel, Budget hotel, guesthouse or hostel private room, or Homestay, serviced apartment or short-term rental.",
+    "Tick items through the six stages — Before you arrive, First five minutes in the room, Cameras and smart devices, Getting online, Documents and valuables, Before you check out — noting which carry the 'critical here' badge for your property.",
+    "Read Room readiness as a percentage with the open critical items and the 'Do these next' list, check the Completion by stage table, then press Copy result.",
+  ],
   intro:
     "The Hotel Wi-Fi and Safe Checklist turns arriving in a room into a short, ordered routine — door, network, safe, smart devices, checkout — and scores how much of it you have actually done. Which items count as critical depends on the property you choose: a chain hotel is mainly a shared-network problem, while a homestay or short-term rental raises the camera and smart-device checks to mandatory, because that is where undisclosed recording is a documented issue. Written for business travellers, solo travellers and anyone who has never questioned what an in-room safe really protects.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Standby Power Cost Calculator – Ranked Cost per Year",
+  metaDescription:
+    "Add your devices, tariff and idle hours to see what standby power costs in ₹ per year, ranked worst-first — a set-top box alone can waste ₹880.",
+  steps: [
+    "Set the Electricity tariff (₹ per unit) and add devices from the 'Choose a device to add…' preset list, each with a typical measured standby wattage.",
+    "Adjust each row's Standby watts, How many and Idle hours a day fields — every line computes watts × quantity × idle hours × 365 ÷ 1000.",
+    "Read the 'Wasted every year' rupee figure and the 'Ranked by what it costs' table, then press Copy result to copy the summary.",
+  ],
   intro:
     "Standby power is the electricity a device draws while it is switched off but still plugged in, and this calculator turns your own list of devices into a rupee figure per year. Each line uses the same arithmetic — watts × quantity × idle hours per day × 365 ÷ 1000 — and the result is ranked so the worst offender is obvious. The ranking usually surprises people: a phone charger left in the socket draws under 0.1 W, while a DTH set-top box in standby can draw 15 W around the clock.",
   useCases: [

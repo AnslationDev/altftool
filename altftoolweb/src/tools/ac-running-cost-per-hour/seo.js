@@ -1,4 +1,12 @@
 const seo = {
+  title: "AC Running Cost Per Hour: Tonnage, ISEER and Tariff",
+  metaDescription:
+    "Cooling capacity divided by ISEER gives the average draw; times your rupee tariff it gives cost per hour, day and month. 1 ton = 3,516.85 W.",
+  steps: [
+    "Choose Tonnage + ISEER or Rated power in watts, then set Cooling capacity (tons) and ISEER from the BEE label — the star chips fill 3.30 through 4.90.",
+    "Enter Load factor (%), Electricity tariff (₹ per unit), Hours run per day and Days used per month.",
+    "Cost per hour leads the result, with rows for Average draw at your load factor, Energy per hour, Units per month, Cost per month and CO2 per month; Copy result saves them.",
+  ],
   intro:
     "This calculator gives the rupees an air conditioner burns per hour by dividing its cooling capacity by its ISEER to get the average electrical draw, then multiplying by your tariff. ISEER is BEE's Indian Seasonal Energy Efficiency Ratio — annual cooling output in watt-hours divided by annual electricity input — and 1 ton of refrigeration equals 3,516.85 W of cooling, so a 1.5 ton machine at ISEER 3.8 averages about 1,388 W. Enter the label figures and your unit rate to see hourly, daily and monthly cost.",
   useCases: [

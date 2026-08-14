@@ -1,4 +1,12 @@
 const seo = {
+  title: "Writing Model Picker: Score 6 AI Options on 11 Criteria",
+  metaDescription:
+    "Rank six ways to write - frontier, retrieval-backed, fast mid-tier, self-hosted, on-device or grammar checker - on 11 weighted criteria.",
+  steps: [
+    "Answer What do you mostly need?, Typical length, How fact-dependent is it? and Confidentiality.",
+    "Set How much do you publish?, Matching a specific voice and Running cost, and tick I work in more than one language if it applies.",
+    "Best fit score names the winner out of 100 and Full ranking bars all six options, with a note when the top two are close; press Copy result to keep it.",
+  ],
   intro:
     "Writing Model Picker scores six ways of getting writing done — a frontier hosted model, a model wired to live search or retrieval, a fast mid-tier model, open weights you host, a small model on your own device, and a dedicated grammar and style checker — against eleven weighted criteria. Your answers set an importance of 0-3 per criterion, each option carries a 0-5 rating on properties that do not change with the next release, and the score is the weighted total as a percentage of the maximum. It is aimed at anyone choosing between drafting, editing and ideation tools where confidentiality, fact-checking and volume matter as much as prose quality.",
   useCases: [

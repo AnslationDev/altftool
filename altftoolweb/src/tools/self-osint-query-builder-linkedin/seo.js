@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Exposure Check: 12 Search-Engine Queries",
+  metaDescription:
+    "Builds site:, filetype: and quoted-phrase queries from your name and /in/ handle to show the indexed profile, republished copies and PDFs about you.",
+  steps: [
+    "Enter Your full name (as on the profile) and the Public profile URL or the part after /in/, plus the optional employer, City or region and Work email domain fields.",
+    "Set Open queries in to Google, Bing or DuckDuckGo — the Queries ready to run count shows how many of the 12 templates your inputs have unlocked.",
+    "Work through the groups Your profile as strangers see it, Activity and content, Where your profile is republished and Documents and contact details, using Run it on a single query or Copy all.",
+  ],
   intro:
     "This builder assembles twelve search-engine queries from your own name, LinkedIn vanity URL, employer, city and work email domain, using documented operators — site:, filetype:, quoted phrases, OR and the minus exclusion — to show what a stranger can read about your professional life without logging in. It covers your indexed public profile, country-subdomain copies, public posts and articles, sites that republish your profile URL, scraped aggregator entries and PDFs carrying your contact details. It builds strings for you to run yourself; it never searches, scrapes or stores anything.",
   useCases: [

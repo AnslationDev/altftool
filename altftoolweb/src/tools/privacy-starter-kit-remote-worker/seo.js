@@ -1,4 +1,12 @@
 const seo = {
+  title: "Remote Worker Privacy Starter Kit: Home Office Audit",
+  metaDescription:
+    "Scores a home office across router, laptop, accounts and calls, skipping controls that don't apply, and counts devices kept off the work network.",
+  steps: [
+    "Pick your work machine — 'Company-managed laptop' or 'My own device (BYOD)' — and your household: alone, with family, or a shared flat.",
+    "Enter 'Devices on your home network' and 'Of those, how many share the work laptop's network', then tick the controls you already have under Home network, Devices, Accounts and Calls.",
+    "Read the baseline score, points earned, critical controls still open and the devices kept off the work network.",
+  ],
   intro:
     "The Remote Worker Privacy Starter Kit scores a home-office security baseline across the router, the work machine, the accounts behind it and video calls, counting only the controls that actually apply to your situation. Tell it whether the laptop is company-managed or your own and who else lives in the house, and it drops the irrelevant items — no penalty for skipping a personal backup on a managed device, or headphones when you live alone. It also measures network segmentation directly: how many of the devices on your home network still share a link with the machine you work on.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prompt Whitespace Normalizer: Strip U+200B, NBSP",
+  metaDescription:
+    "Collapses double spaces, tabs and stacked blank lines and removes U+00A0, U+200B and U+FEFF, with a count of characters removed and tokens saved.",
+  steps: [
+    "Paste into 'Prompt to clean' — CRLF endings, U+00A0 no-break spaces, U+200B zero-width spaces and the U+FEFF byte-order mark all come through.",
+    "Set Tabs to 'Replace each run with one space', 'Expand to spaces' or 'Keep tabs as they are', and cap Maximum consecutive blank lines.",
+    "Read Characters removed with the estimated tokens saved, toggle Show whitespace to reveal the marks, then take the Cleaned prompt with Copy result.",
+  ],
   intro:
     "Prompt Whitespace Normalizer rewrites a pasted prompt so that every run of repeated spaces, tab, stacked blank line and invisible Unicode character is reduced to clean, predictable text. It handles the characters that copy-paste drags in without showing them: U+00A0 no-break space, U+200B zero-width space, U+FEFF byte-order mark, Windows CRLF line endings and the U+2000-U+200A quad and hair spaces. Useful for anyone maintaining prompt libraries, system messages or few-shot examples where stray characters change tokenisation and inflate cost.",
   useCases: [

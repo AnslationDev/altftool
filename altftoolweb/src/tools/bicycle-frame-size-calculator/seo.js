@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bicycle Frame Size Calculator by Inseam, Not Height",
+  metaDescription:
+    "Road seat tube = inseam x 0.67, mountain inches = inseam x 0.226, hybrid x 0.63, plus LeMond saddle height and the shop height chart side by side.",
+  steps: [
+    "Enter Height (cm) and Cycling inseam (cm), measured barefoot from the floor to the top of a hardback book pulled up between your legs.",
+    "Choose Bike type: Road / gravel, Mountain, or Hybrid / city.",
+    "Read the seat tube figure alongside \"Saddle height, BB centre to saddle top\" and \"Target standover height\", then press Copy result.",
+  ],
   intro:
     "Bicycle frame size is set by your inseam, not your height, and this calculator applies the classic fit multipliers to prove it: road seat tube = inseam × 0.67 centre-to-top (0.65 centre-to-centre), mountain frame in inches = inseam in centimetres × 0.226, and hybrid = inseam × 0.63. It reports those alongside the height-band chart a bike shop quotes, plus the LeMond saddle height of inseam × 0.883 and the standover clearance each discipline needs. Two riders of the same height can need different frames, and seeing both methods side by side shows when that is happening to you.",
   useCases: [

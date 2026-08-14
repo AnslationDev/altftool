@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emergency Fund Calculator India: Months You Need & Target",
+  metaDescription:
+    "Adjusts the six-month baseline for income type, earners, dependants, health cover and EMIs, then gives a rupee target and the month you reach it.",
+  steps: [
+    "Enter 'Essential expenses (INR / month)' and 'Loan EMIs (INR / month)', then pick your income type, earners in the household, dependants and health insurance.",
+    "Add what is 'Already set aside and liquid (INR)', the monthly amount you can add and the return on the parked money.",
+    "Read 'Emergency fund you should hold' as months of outgo and a rupee target, with the time to fully fund it; click 'Copy result'.",
+  ],
   intro:
     "An emergency fund is measured in months of essential outgo, not in a round rupee figure — and this calculator works out how many months you specifically need. It starts from the standard six-month planning baseline and adjusts it for income type, number of earners, dependants, health cover and how much of your outgo is locked into EMIs, then converts the answer into a rupee target, your current coverage and the time to close the gap at a chosen monthly contribution and liquid-fund return.",
   useCases: [

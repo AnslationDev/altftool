@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vitamin IU to mcg Converter for Vitamin A, D and E",
+  metaDescription:
+    "1 IU of vitamin D is 0.025 mcg; retinol is 0.3 mcg RAE and natural vitamin E 0.67 mg. Pick the exact form and get %DV and the upper intake level.",
+  steps: [
+    "Choose the exact entry under Vitamin and form — Retinol, a carotenoid, Cholecalciferol (D3) or ergocalciferol (D2), or natural versus synthetic alpha-tocopherol.",
+    "Type the Amount on the label and set Unit entered to IU, mcg or mg.",
+    "Read International Units, Micrograms, Milligrams, Percent of Daily Value and the Adult upper intake level, then press Copy result.",
+  ],
   intro:
     "The Vitamin IU to Microgram Converter turns an International Unit figure on a supplement label into micrograms or milligrams using the specific factor for that vitamin and chemical form, because an IU is defined separately for each one. It covers vitamin D (1 IU = 0.025 mcg), vitamin A as retinol or as carotenoids (0.3 down to 0.025 mcg RAE per IU) and vitamin E in natural and synthetic forms (0.67 mg and 0.45 mg per IU), and reports the result against the Daily Value and the adult tolerable upper intake level. Useful for anyone reading an older label in IU next to a newer one in micrograms.",
   useCases: [

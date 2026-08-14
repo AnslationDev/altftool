@@ -1,4 +1,12 @@
 const seo = {
+  title: "Net Banking 2FA Checklist: 15 RBI-Based Controls",
+  metaDescription:
+    "A bank-neutral 15-control checklist: separate login and transaction passwords, app token over SMS, payee cooling period and card channel limits.",
+  steps: [
+    "Set the Target score (%) field, which starts at 90 — anything above 69% requires every control tagged Critical.",
+    "Tick each control you have already set across the four groups: Login credentials, Second factor, Transaction controls, and Monitoring and recovery.",
+    "Read the Hardening score with Controls completed and Critical controls missing, follow the shortest-route list of remaining controls, then press Copy result.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for Indian net banking that works at any bank: distinct login and transaction passwords, an app-based token in place of SMS, the beneficiary cooling period, lower daily transfer limits, per-card channel controls, low alert thresholds and the RBI reporting deadline. It leans on rules that apply across banks rather than one bank's menu wording: RBI's additional factor of authentication, the customer-set card controls banks must offer, and the circular on limiting customer liability in unauthorised electronic transactions. Four controls are marked critical and the score is capped at 69% until all four are done. Informational only, not legal or financial advice: your bank's own terms govern any dispute.",
   "useCases": [
     "Setting up net banking on a new account and changing the passwords printed in the welcome kit.",

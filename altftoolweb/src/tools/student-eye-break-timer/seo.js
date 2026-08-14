@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Pomodoro Timer With 20-20-20 Eye Breaks",
+  metaDescription:
+    "Fits the 20-20-20 eye rule into 25-minute pomodoros with a 20-second glance mid-block, and lays the whole revision session out with a finish time.",
+  steps: [
+    "Pick a preset such as Classic pomodoro or Eye-safe 20/5, then set Start time, Study block (minutes), Short break (minutes), Blocks before a long break and Number of sets.",
+    "Press Start session — the button becomes Pause, then Resume — and the timer flags a 20 second distance glance whenever a block runs past the 20 minute eye rule.",
+    "Read You finish at for the session end time, then Eye glances in total, Longest unbroken near work and the block-by-block table of clock times; Copy schedule puts it on the clipboard.",
+  ],
   intro:
     "This planner merges two schedules that do not naturally line up: the Pomodoro Technique's 25 minute study block with a break after each one, and the 20-20-20 eye rule, which asks for a look into the distance after at most 20 minutes of near work. Because a 25 minute block overshoots the eye rule by five minutes, it schedules a 20 second glance at the 20 minute mark inside the block — you look up, you do not stop studying. It then lays the whole revision session out on the clock so you know the finish time before you start.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Employee Monitoring: What 13 Tools Actually Capture",
+  metaDescription:
+    "See what screenshots, keystroke logs, DLP agents and MDM really capture, score what your employer put in writing, and draft the request to HR.",
+  steps: [
+    "Under What is in place?, tick the practices you know of from the thirteen listed — web proxy or DNS filtering, endpoint agent or DLP, periodic screenshots, keystroke logging, webcam capture, location tracking, MDM on your personal phone — each showing what it sees and whether it reaches beyond work.",
+    "Under What has your employer actually told you?, tick only the ten disclosure items that exist in writing, not ones you were told verbally.",
+    "Coverage of your working life scores what is monitored and Disclosure score scores what has been explained, with Not in writing listing the gaps; A request you can send drafts the neutral note to HR, and Copy draft takes it.",
+  ],
   intro:
     "This explainer sets out what thirteen common workplace monitoring practices actually capture — from web proxy logs and endpoint agents through to keystroke logging, webcam capture and mobile device management on a personal phone — and scores how much of it your employer has put in writing against the ten items a workable monitoring notice normally covers. It then assembles a neutral written request you can send to HR for the gaps. The legal backdrop described includes the Digital Personal Data Protection Act, 2023, which treats an employer as a Data Fiduciary and lists employment among the legitimate uses in Section 7.",
   useCases: [

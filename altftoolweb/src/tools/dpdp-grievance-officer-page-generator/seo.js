@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grievance Officer Page Generator for Indian Sites",
+  metaDescription:
+    "Officer name, email, phone, address plus statutory windows — 24h/15 days under IT Rules, 48h/one month under E-Commerce Rules — as Markdown, HTML or text.",
+  steps: [
+    "Fill Registered entity name, Website URL, Officer name, email, phone and postal address, then set Which rules apply — personal data only (DPDP Act, 2023), intermediary (IT Rules, 2021), e-commerce entity, or both.",
+    "Leave Acknowledge within (hours, blank = statutory) and Resolve within (days, blank = statutory) empty to take the rule's own windows, or type your own — a promise slower than the rule is flagged.",
+    "Switch the Published page output between Markdown, HTML and Plain text, clear the nine-item Checklist (named officer, email, phone, postal address, both windows, escalation route, page date, DPO), then press Copy page.",
+  ],
   intro:
     "This generator writes the grievance redressal block an Indian website has to publish: the named officer, a working email, a phone number, a postal address and the exact time limits within which complaints are acknowledged and decided. It encodes the three regimes that fix those limits — Rule 3(2) of the IT (Intermediary Guidelines) Rules, 2021, Rule 4(5) of the Consumer Protection (E-Commerce) Rules, 2020, and section 13 of the Digital Personal Data Protection Act, 2023 — and flags any promise on your page that is slower than the rule allows. Output is available as Markdown, ready-to-paste HTML or plain text.",
   useCases: [

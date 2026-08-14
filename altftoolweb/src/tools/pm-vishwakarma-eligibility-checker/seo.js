@@ -1,4 +1,12 @@
 const seo = {
+  title: "PM Vishwakarma Eligibility: 18 Trades, ₹2 Lakh Loan",
+  metaDescription:
+    "Test your craft against the 18 notified trades and the age, family and prior-loan rules, then price the ₹15,000 toolkit voucher, stipend and 5% loan.",
+  steps: [
+    "Choose your craft under \"Trade practised\" (the 18 notified trades plus \"Something else\"), enter \"Age in completed years\", and tick the boxes for practising in the unorganised sector, a PMEGP/PM SVANidhi/Mudra loan in the last 5 years, a family member already enrolled, and government service.",
+    "Set \"Training days planned\" and \"Digital transactions a month\", then pick \"Credit tranche to model\" — Tranche 1 at ₹1,00,000 over 18 months or Tranche 2 at ₹2,00,000 over 30 months.",
+    "Read the eligibility verdict and any blockers, then the \"Monthly instalment at 5%\", the \"Interest avoided by the 8% subvention\" and the indicative first-year benefit value, and press \"Copy result\".",
+  ],
   intro:
     "This checker tests an artisan against the four published PM Vishwakarma conditions — the trade must be one of the 18 notified crafts, the applicant must be at least 18 and practising the craft on the date of registration, must not hold an outstanding loan from a similar self-employment scheme taken in the last 5 years, and only one member per family may register. It then prices the benefit package: a toolkit e-voucher of up to ₹15,000, a stipend of ₹500 for each day of training, ₹1 per digital transaction up to 100 a month, and a collateral-free loan of ₹1 lakh or ₹2 lakh at 5% interest backed by an 8% government subvention. Aimed at artisans and craftspeople in the unorganised sector and the Common Service Centre staff who help them enrol.",
   useCases: [

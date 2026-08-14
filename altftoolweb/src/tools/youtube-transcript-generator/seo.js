@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Transcript Generator: SRT, VTT, json3, Panel",
+  metaDescription:
+    "Paste YouTube's Show transcript panel or drop a .srt, .vtt or .json3 file to get timestamped paragraphs, word count, speaking rate — all in your browser.",
+  steps: [
+    "Paste the \"Show transcript\" panel into \"Caption text\", or use \"Or upload a caption file\" to load a .srt, .vtt or .json3 file, and optionally paste the video URL — it is used only to name the download.",
+    "Set \"New paragraph after a pause of (seconds)\" anywhere from 0.5 to 10, and tick \"Remove [Music] style sound labels\", \"De-duplicate rolling auto-captions\" and \"Keep a timestamp on each paragraph\".",
+    "Read the Transcript words figure with Detected format, Caption span, Speaking rate, Characters, Reading time at 238 wpm and Video ID, then \"Copy transcript\" or \"Download\", which saves <videoId>-transcript.txt.",
+  ],
   intro:
     "The YouTube Transcript Generator converts YouTube caption data into a clean, readable transcript: paste the text from a video's \"Show transcript\" panel, or drop in a downloaded .srt, .vtt or .json3 caption file, and it rebuilds the words into paragraphs with timestamps. It parses all four caption formats, strips [Music] style sound labels and the repeated lines that YouTube's rolling auto-captions produce, then reports word count, caption duration, speaking rate and reading time at 238 words per minute. It is built for creators writing show notes, students turning lectures into study notes, and marketers repurposing video into blog posts — all in the browser, with nothing uploaded to a server.",
   useCases: [

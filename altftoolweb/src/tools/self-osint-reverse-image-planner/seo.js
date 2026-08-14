@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reverse Image Search Planner for Your Own Photos",
+  metaDescription:
+    "Ranks Google Lens, Bing, Yandex and TinEye by what each can actually do, lists the crops to submit, and scores exposure. No photo is uploaded.",
+  steps: [
+    "Enter 'Photos to audit' — 1 to 50 in one sitting — and pick from 'What are you trying to find?': copies of this exact photo, other photos of my face, whether the location is identifiable, or what text is readable in the frame.",
+    "Tick the boxes under 'What do these photos contain?' — shows my face clearly, same photo used on more than one account, shows my home or building exterior, a vehicle number plate, a work badge or office interior, GPS EXIF still in the original, a child's face — each with its weight shown.",
+    "Read the Exposure score out of 100 with total searches and hands-on time, then follow 'Step 1 — submit these versions of each photo', 'Step 2 — run them in this order' with an Open link per engine, and 'Step 3 — fix what you found'; Copy plan takes the whole plan.",
+  ],
   intro:
     "This planner turns a description of your profile photos into an ordered reverse-image audit: it ranks Google Lens, Bing Visual Search, Yandex Images and TinEye by what each can actually do, lists the crops to submit, and scores the exposure the photos carry. The ranking reflects real engine capability — TinEye finds copies of the same photograph but never a different photo of the same person, and Google deliberately does not offer face matching, while Yandex is the strongest free engine at face similarity. Nothing is uploaded; the tool only produces the plan you then run yourself.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ideal Body Measurements Calculator (McCallum Ratios)",
+  metaDescription:
+    "Chest, waist, arms, thighs and calves scaled from your wrist (chest = wrist x 6.5), plus a Steve Reeves joint-ratio mode and waist-to-height check.",
+  steps: [
+    "Choose the Proportion system — \"McCallum — everything from the wrist\" or \"Reeves — each muscle from its joint\" — and set Units to Inches or Centimetres.",
+    "Enter Wrist girth and, optionally, Height; picking Reeves adds Ankle girth, Knee girth, Head girth and Pelvis girth fields, measured with the tape snug over bone.",
+    "Target chest appears with the chest-to-waist ratio and shoulder target, above the table of Chest, Waist, Upper arm, Thigh and the remaining targets; press Copy result or Reset.",
+  ],
   intro:
     "This calculator turns a single wrist measurement into classic physique proportion targets for chest, waist, hips, thighs, neck, arms, calves and forearms, using John McCallum's ratio system: chest equals 6.5 times wrist girth, and every other target is a fixed percentage of that chest figure. A second mode uses Steve Reeves' joint ratios, sizing each muscle against the nearest joint — arms at 252% of the wrist, calves at 192% of the ankle, thighs at 175% of the knee. It is aimed at lifters who want a structure-based goal instead of an arbitrary number on a tape measure.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "USA Visa Cost Estimator: MRV, SEVIS and Rupee Total",
+  metaDescription:
+    "MRV USD 185-315 by class, the SEVIS I-901 fee, reciprocity and card markup, added up per applicant in rupees at the exchange rate you set.",
+  steps: [
+    "Pick the visa class and the number of applicants — every applicant, including infants, pays the full MRV fee — then the rupees-per-USD exchange rate.",
+    "Add the issuance (reciprocity) fee, the card cross-currency markup, and the charges you pay in India: photographs, OFC and consulate travel, courier.",
+    "Read the total application cost with the MRV and SEVIS I-901 lines, the per-applicant figure and the non-refundable-if-refused amount, then press Copy result.",
+  ],
   intro:
     "A USA visa cost estimator separates the three government payments a nonimmigrant application actually involves — the MRV application fee set by the Schedule of Fees for Consular Services at 22 CFR 22.1, the SEVIS I-901 fee paid to the Department of Homeland Security by students and exchange visitors, and the nationality-based visa issuance or reciprocity fee charged only after approval — then adds photographs, travel to the OFC and consulate, and card markup to give one rupee total. Since 17 June 2023 the MRV fee is USD 185 for B, C, D, F, I, J and M applicants, USD 205 for petition-based H, L, O, P, Q and R classes, USD 265 for K fiance(e) visas and USD 315 for E treaty categories. It is aimed at students, families and employers who need the full outlay per applicant rather than a single headline figure.",
   useCases: [

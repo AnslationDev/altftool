@@ -1,4 +1,7 @@
 const seo = {
+  title: "Compatibility Quiz: 10 Weighted Questions, 0-100",
+  metaDescription:
+    "Answer 10 four-option questions in romance, friendship, lifestyle, intellectual, travel or career. Weighted points give a 0-100 score in five bands.",
   intro:
     "The Compatibility Quiz asks 10 four-option questions in one of six themes — romance, friendship, lifestyle, intellectual, travel or career — and turns the answers into a 0-100 score by summing the weight attached to each option and dividing by the 10-point maximum per question. Each score lands in one of five bands, from Different Paths below 40 up to Perfect Match at 90 and above, with a review screen showing every answer you gave. It is written for fun and conversation, not as a psychological assessment.",
   useCases: [

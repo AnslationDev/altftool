@@ -1,4 +1,12 @@
 const seo = {
+  title: "FASTag Recharge Planner: Daily Burn & Top-Up Date",
+  metaDescription:
+    "Turns toll crossings into a FASTag burn rate: cost per journey, days of cover left, the date to recharge by and how much, with the 1.5x return rule.",
+  steps: [
+    "Enter the One-way toll fee (INR), your Round trips per week (the label reads 'Single crossings per week' when the return box is unticked) and your Current FASTag balance (INR).",
+    "Tick 'I come back through the same plaza within 24 hours' to price a round trip at 1.5 one-way fares, then set the Buffer you never want to go below (INR), 'I want each recharge to last (days)' and a Local monthly pass price if one is offered.",
+    "Recommended top-up appears with Burn per day, Days of cover left, a 'Recharge by' date, 'That top-up buys', the Return-journey concession saving and the Monthly pass verdict, plus a 'Next six recharges' table; Copy result copies the plan.",
+  ],
   intro:
     "This planner converts a toll routine into a FASTag burn rate — cost per journey, spend per day, month and year — and returns the date the current balance runs down to your chosen buffer plus the top-up that will cover the next stretch. It applies the return-journey rule in the National Highways Fee (Determination of Rates and Collection) Rules, 2008, where a return trip completed within 24 hours costs one and a half one-way fares instead of two. Aimed at daily commuters and anyone tired of a tag going low at the plaza.",
   useCases: [

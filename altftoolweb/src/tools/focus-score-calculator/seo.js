@@ -1,4 +1,12 @@
 const seo = {
+  title: "Focus Score Calculator: Rate 5 Habits Out of 100",
+  metaDescription:
+    "Answer five questions on sleep, screen time, exercise and deep work for a score out of 100, a band from Depleted to Elite, and a breakdown.",
+  steps: [
+    "Set 'Average Sleep Duration' and 'Non-Work Screen Time (Daily)' on the two sliders.",
+    "Pick 'Sleep Quality' (Poor to Excellent), 'Exercise Frequency' and 'Deep Work Sessions' (Rarely to Daily), then press 'Calculate My Focus Score'.",
+    "Read your score out of 100 with its grade under 'Your Focus Potential' and the 'Score Breakdown' donut; 'Recalculate' returns you to the inputs.",
+  ],
   intro:
     "This calculator turns five everyday habits into a single focus score out of 100, weighting sleep 35 points, non-work screen time 25, exercise 20 and deep-work sessions 20. You answer five questions — sleep duration, sleep quality, daily non-work screen hours, exercise frequency and how often you protect uninterrupted blocks — and get a numbered score, a band from Depleted to Elite Focus, a breakdown of where the points came from, and tips aimed at whichever category scored lowest. It is a self-reflection aid, not a clinical or diagnostic assessment.",
   useCases: [

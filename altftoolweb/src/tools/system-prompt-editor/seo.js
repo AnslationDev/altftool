@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Copy Editor System Prompt Builder (AP, Chicago, APA)",
+  metaDescription:
+    "Build a system prompt that makes AI edit to AP, Chicago or APA style at a set depth — proofread, copyedit or line edit — with every change tracked.",
+  steps: [
+    "Describe the \"Content type (required)\" and audience, then pick a \"Style guide\" — AP Stylebook, Chicago Manual of Style, APA Style (7th ed.) or house style.",
+    "Choose the \"Depth of edit\" (Proofread, Copyedit or Line edit) and a \"Change tracking\" mode, and tick hard rules such as \"Never edit quoted material\".",
+    "Review the generated system prompt with its estimated token count, then click \"Copy prompt\".",
+  ],
   intro:
     "This builder produces a system prompt that turns an AI into a disciplined copy editor: a named style guide (AP, Chicago or APA), an explicit depth of edit on the proofread–copyedit–line-edit ladder, and change-tracking rules so every alteration is visible. The edit-depth definitions follow the ladder used by the Chicago Manual of Style and the Editorial Freelancers Association. It is for writers, content teams and editors who want AI editing help without silent rewrites.",
   useCases: [

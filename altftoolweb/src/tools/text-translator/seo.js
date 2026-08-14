@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Translator: 11 Languages, With Copy and Speak",
+  metaDescription:
+    "Translate between any two of 11 languages, then copy, share or hear it. Text goes to Google’s translate endpoint, so keep confidential material out.",
+  steps: [
+    "Choose Source and Target from the two 11-language dropdowns, then type or paste into the \"Your Text\" panel.",
+    "Press Translate; the swap button between the selects exchanges both languages and the panel contents for a back-translation check.",
+    "Read the \"Translation\" panel and use its Copy, Speak or Share buttons — Speak reads it in a voice matched to the target language.",
+  ],
   intro:
     "Text Translator converts a passage between any two of 11 languages — English, Spanish, French, German, Simplified Chinese, Japanese, Korean, Russian, Portuguese, Arabic and Hindi — by sending it to Google's translate endpoint and returning the joined result. It is for anyone who needs a quick, readable rendering of a message, a review or a paragraph of documentation rather than a certified translation. The output panel can be copied, shared, or spoken aloud with a voice matched to the target language's BCP 47 tag.",
   useCases: [

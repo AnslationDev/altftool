@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brand Voice Guidelines from Four Tone Dimensions",
+  metaDescription:
+    "Set the four NN/g tone dimensions and get do and don't rules, preferred and banned wording, and a Flesch-Kincaid grade target you can copy as Markdown.",
+  steps: [
+    "Enter the Brand or product name and Primary audience (optional), then list Words to ban, comma or line separated.",
+    "Drag the four 0-100 sliders — Formality (Formal ↔ Casual), Humour (Serious ↔ Funny), Deference (Respectful ↔ Irreverent) and Energy (Matter-of-fact ↔ Enthusiastic).",
+    "Read the Target reading level as a Flesch-Kincaid grade with its words-per-sentence figure, then press Copy guide to take the Markdown.",
+  ],
   intro:
     "Brand Voice Guideline Generator converts four tone settings into a written voice guide your writers can actually follow. It uses the Nielsen Norman Group four-dimension tone model — Formal vs Casual, Serious vs Funny, Respectful vs Irreverent, Matter-of-fact vs Enthusiastic — and turns each setting into concrete do and don't rules, preferred and banned wording, and readability targets such as average sentence length and Flesch-Kincaid grade. It is built for marketing leads, content designers and founders who need one agreed document before briefing freelancers or an agency.",
   useCases: [

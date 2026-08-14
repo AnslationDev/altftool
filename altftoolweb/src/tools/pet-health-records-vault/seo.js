@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pet Health Records Vault: Local Log with JSON Export",
+  metaDescription:
+    "Keep every pet's vaccinations, doses, weights and vet visits in one searchable list saved in this browser's localStorage, and export it all as JSON.",
+  steps: [
+    "Type the animal's name in the Pet box and the vaccination, medicine dose, weight reading or vet visit in the Health record box.",
+    "Press Add record — entries save to this browser's localStorage and appear under \"Saved records\", filterable with the Search records box.",
+    "Press Export JSON to download pet-health-records-vault.json, or use Import JSON on another device to restore it — the import replaces every saved record.",
+  ],
   intro:
     "Pet Health Records Vault keeps one searchable list of your animals' health history — each entry pairs the pet's name with a health record such as a vaccination, medicine dose, weight reading or vet visit. Records are saved in this browser's own localStorage instead of an account, and the whole vault exports to a single JSON file you can back up or carry to another device. It suits multi-pet households and anyone tired of digging through paper cards and WhatsApp photos the moment a vet asks when the last rabies shot was given.",
   useCases: [

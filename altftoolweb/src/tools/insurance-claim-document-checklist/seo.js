@@ -1,4 +1,12 @@
 const seo = {
+  title: "Insurance Claim Document Checklist + IRDAI Deadline",
+  metaDescription:
+    "Pick health, motor or life claim and get the exact documents an Indian insurer asks for, plus the 15- or 30-day IRDAI settlement deadline as a date.",
+  steps: [
+    "Choose a 'Claim type' — health cashless or reimbursement, motor own damage or theft, life death or maturity — and tick the conditions that apply.",
+    "Enter 'Date the last document was submitted' to turn the IRDAI limit into a calendar 'Settlement deadline for the insurer'.",
+    "Tick documents off your generated list, then press 'Copy checklist' to take the ticked and unticked items with you.",
+  ],
   intro:
     "This checklist builder produces the document set an Indian insurer will ask for on a health, motor or life claim, adding conditional paperwork such as an FIR, implant sticker or post-mortem report only when your situation calls for it. It also applies the IRDAI settlement timelines — 15 days for a health reimbursement claim from the last necessary document, 30 days for a general insurance claim from the last document you submit, and 30 days for a life claim, extended to 120 days where an investigation is ordered. Cashless health treatment runs on its own hour-based clock instead — decided within 1 hour for pre-authorisation and 3 hours for discharge. Claimants use it to assemble a complete file the first time instead of losing weeks to document queries.",
   useCases: [

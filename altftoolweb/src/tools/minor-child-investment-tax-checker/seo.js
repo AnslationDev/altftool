@@ -1,4 +1,12 @@
 const seo = {
+  title: "Minor Child Income Clubbing: Section 64(1A) Check",
+  metaDescription:
+    "Which parent must club a minor's investment income under section 64(1A), how much of the Rs 1,500 section 10(32) exemption survives, and the tax due.",
+  steps: [
+    "Pick 'Where does the child's income come from', then enter 'Income this year (INR)' and the parent's tax regime.",
+    "Enter both parents' total income excluding the child's, the clubbing parent's marginal rate (%), and tick whether the marriage subsists.",
+    "Read whose return the income goes into, the section 10(32) exemption (max Rs 1,500), the amount added and the extra tax outgo.",
+  ],
   intro:
     "This checker applies section 64(1A) of the Income-tax Act to work out whose return a minor child's investment income belongs in, and how much of it survives the section 10(32) exemption of Rs 1,500 per child. It picks the clubbing parent using the statutory test — the parent with the higher total income while the marriage subsists, otherwise the parent who maintains the child — and applies the proviso that keeps the child's own earnings and a section 80U disability out of clubbing altogether. It also flags that section 115BAC withdraws the Rs 1,500 exemption under the new regime.",
   useCases: [

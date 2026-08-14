@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roof Box Capacity Planner: Litres vs Roof Load Limit",
+  metaDescription:
+    "Check a packing list against usable litres and your car's dynamic roof load limit — bars and empty box included — plus the highway fuel penalty.",
+  steps: [
+    "Under \"Car and box\" enter \"Dynamic roof load limit (kg)\" from the owner's manual, \"Crossbars / rails weight (kg)\", \"Empty box weight (kg)\", \"Box volume (litres)\" and \"Box max load inside (kg)\".",
+    "Choose How you pack — Hard suitcases, Mixed bags or Soft duffels, making 70%, 80% or 90% of gross volume usable — then count the Medium suitcase, Duffel bag, 4-person tent and other items under \"What goes in the box\", and add Trip distance and mileage for the fuel penalty.",
+    "\"Box filled to\" gives the fill percentage and names the limiting factor, with Usable box volume against gross litres, Total weight on the roof against the allowance, and \"Extra fuel for the trip\" in litres and rupees. \"Copy result\" copies the plan.",
+  ],
   intro:
     "A roof box capacity planner checks a packing list against the two ceilings that actually stop you: the usable litres inside the box and the vehicle's dynamic roof load limit, which must cover the crossbars, the empty box and the contents together. It applies a packing-efficiency factor to the box's gross litre rating, because rigid suitcases leave corner voids and rarely fill more than about 70% of it, then reports which of the two limits you hit first. It also estimates the highway fuel penalty a loaded box adds.",
   useCases: [

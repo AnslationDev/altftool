@@ -1,4 +1,12 @@
 const seo = {
+  title: "Release Notes Prompt Builder: Breaking Changes First",
+  metaDescription:
+    "Prefix changes breaking, security, deprecated, feature or fix, pick a channel from a 60-word in-app note to a 900-word blog post, and date the removal.",
+  steps: [
+    "Fill in Product name, 'Version or release name' and Release date, then paste your shipped changes one per line into the Changes box, each prefixed breaking, security, deprecated, feature, improvement, fix or known.",
+    "Choose 'Published as' — In-app notification at 60 words, Customer email at 250, GitHub release at 600 or Blog or docs page at 900 — and set 'Deprecation notice period (days)' plus 'Highlights up top'.",
+    "The Generated prompt orders breaking changes and security fixes above features; read the removal date, the word budget for that channel and the prompt length in words and tokens, then press 'Copy prompt'.",
+  ],
   intro:
     "A release notes prompt builder sorts a flat list of shipped changes into breaking changes, security fixes, deprecations, features, improvements, bug fixes and known issues, then writes an announcement prompt in that order — because a reader has to meet what breaks them before what delights them. It sizes the note against the channel it will be published on, from a 60-word in-app notice to a 900-word blog post, and calculates the exact date a deprecation stops working from your release date and notice period.",
   useCases: [

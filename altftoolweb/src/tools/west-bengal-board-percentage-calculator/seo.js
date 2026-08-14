@@ -1,4 +1,12 @@
 const seo = {
+  title: "West Bengal Board Percentage Calculator: Madhyamik & HS",
+  metaDescription:
+    "Madhyamik marks out of 700 with WBBSE letter grades; HS out of 500 with the best-five rule applied and the dropped elective named.",
+  steps: [
+    "Pick the exam - 'Madhyamik (WBBSE, class 10)' or Higher Secondary - then enter each subject's 'Marks scored' and 'Maximum marks', using 'Add subject' for a fourth elective.",
+    "For Higher Secondary, tick 'Always counts (language paper)' on the two language rows; the best three remaining electives are added to make the 500-mark total and the dropped subject is named.",
+    "Read the 'Aggregate percentage' with division, per-subject AA-D grades for Madhyamik and any subject below the pass mark, then press 'Copy result'.",
+  ],
   intro:
     "West Bengal's two boards count marks differently, and this tool applies the right rule to each. Madhyamik under WBBSE totals all seven subjects out of 700 and reports a letter grade per subject on the AA to D bands, where D (below 25) is the fail band. Higher Secondary under WBCHSE totals only five subjects out of 500 — both compulsory languages plus the best three electives — so the weakest elective is dropped, which is exactly why students take a fourth optional elective as insurance.",
   useCases: [

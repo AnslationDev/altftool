@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screen Recording Redactor: Blur or Cover, Baked In",
+  metaDescription:
+    "Cover parts of a screen recording with timed solid, blur or pixelate boxes, then export a flattened WebM locally — the hidden pixels leave the file.",
+  steps: [
+    "Press Select video and load a screen recording — any video/* file your browser can decode; the file stays on this device.",
+    "Choose a New region style of Solid cover, Blur or Pixelate, drag over the preview to add a region, then set its Start and End in seconds in the Region inspector.",
+    "Press Export redacted WebM, which re-records the canvas in real time, then Download WebM to save your-filename-redacted.webm.",
+  ],
   intro:
     "This tool covers sensitive areas of a screen recording with timed rectangles — solid fill, blur or pixelation — and re-encodes the video so the hidden pixels are gone from the file, not just hidden behind an overlay. Each region has its own start and end time, so a password field can be covered for the eight seconds it is visible and left alone after that. Export redraws every frame onto a canvas at the video's native resolution and records it at 30fps through MediaRecorder into a WebM, entirely on your machine.",
   useCases: [

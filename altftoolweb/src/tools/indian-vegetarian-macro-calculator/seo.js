@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Vegetarian Macro Calculator (Roti, Dal, Paneer)",
+  metaDescription:
+    "Mifflin-St Jeor calories with a 1.0-1.25 vegetarian protein adjustment, then a plate builder in chapatis, katoris of dal and rice, paneer, curd and ghee.",
+  steps: [
+    "Fill in Sex (for the BMR equation), Age (years), Weight (kg), Height (cm), Activity level and Goal, from Maintain weight to Lose weight (-500 kcal).",
+    "Set Protein (g per kg of body weight), the Protein quality adjustment (1.0-1.25) and Fat (% of energy) to get a Daily calorie target with BMR and TDEE shown.",
+    "Under Build today's plate enter portions of Chapati / roti, Cooked toor dal, Paneer or Soya chunks — a katori is 150 g — and read Plate against target.",
+  ],
   intro:
     "The Indian Vegetarian Macro Calculator sets daily protein, fat and carbohydrate targets for a lacto-vegetarian diet and then converts them into the portions Indian households actually measure in — chapatis, katoris of dal and rice, grams of paneer, glasses of milk and teaspoons of ghee. Calories come from the Mifflin-St Jeor equation multiplied by an activity factor and adjusted for your goal, with protein raised by a quality adjustment because cereals and pulses score lower than dairy on digestibility scales. The plate builder totals what you plan to eat and shows exactly how far it falls short of, or overshoots, each target.",
   useCases: [

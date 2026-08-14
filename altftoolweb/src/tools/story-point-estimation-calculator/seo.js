@@ -1,4 +1,12 @@
 const seo = {
+  title: "Story Points to Hours Calculator Using Team Velocity",
+  metaDescription:
+    "Convert story points to hours from your team's own rate — sprint person-hours divided by velocity — with a confidence range and sprints needed.",
+  steps: [
+    "Enter \"Story points to convert\" or tap one of the Fibonacci chips (1, 2, 3, 5, 8, 13, 21, 34).",
+    "Fill in \"Team velocity (points per sprint)\" and \"Sprint person-hours (whole team)\", and set the confidence percentage.",
+    "Read the \"Estimated effort\" in hours with its optimistic-pessimistic range and \"Sprints needed\", then click \"Copy result\".",
+  ],
   intro:
     "This calculator converts story points into an hour estimate by dividing your team's sprint person-hours by its velocity — the empirical hours-per-point method described in Mike Cohn's Agile Estimating and Planning, since points have no universal time value. It is built for scrum masters, tech leads and engineers who need to answer 'how long will this take?' for stakeholders, and it returns a midpoint plus an optimistic–pessimistic range driven by a confidence percentage.",
   useCases: [

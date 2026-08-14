@@ -1,4 +1,12 @@
 const seo = {
+  title: "Superscript Generator — Unicode Text You Can Paste",
+  metaDescription:
+    "Turn digits, letters and + − = ( ) into real Unicode superscript that survives a paste anywhere. Characters with no raised form are listed, not hidden.",
+  steps: [
+    "Type or paste into the Input Text box ('Type or paste your text here…'); a live character count sits underneath it.",
+    "The Superscript Output panel converts as you type — digits become ⁰¹²³⁴⁻⁹, + − = ( ) become their U+207A-U+207E forms — and anything with no raised form, such as lowercase q, is listed under 'Unsupported characters' and left exactly as typed.",
+    "Press Copy to put the Unicode superscript on your clipboard, use the info button to see the full Supported Characters list, or press Reset to empty the box.",
+  ],
   intro:
     "The Superscript Generator rewrites typed text as Unicode superscript characters — digits become ⁰ ¹ ² ³ ⁴–⁹ (U+2070, U+00B9–00B3 and U+2074–2079), the operators + − = ( ) become U+207A–U+207E, and most letters map to their raised modifier-letter forms. Because the output is real characters rather than formatting, it survives a paste into a tweet, a spreadsheet cell, a filename or a plain-text field with no formatting toolbar. Anything with no superscript form is left as typed and listed so you know what did not convert.",
   useCases: [

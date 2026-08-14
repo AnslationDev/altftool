@@ -1,4 +1,12 @@
 const seo = {
+  title: "AC Office Hydration Planner: Hourly ml Reminders",
+  metaDescription:
+    "Turn your working hours, office temperature, humidity and caffeine into timed reminders with a millilitre target and a refill count for your own bottle.",
+  steps: [
+    "Enter Body weight (kg), Start of working day, End of working day, Office temperature (°C) and Office relative humidity (%).",
+    "Count your Filter coffee (240 ml), Espresso shots, Tea (240 ml), Cola (330 ml) and Energy drink (250 ml), and set Reminder every (minutes).",
+    "Read the Drink at your desk total with Your reminder schedule and Refills needed for your container, then use Copy result.",
+  ],
   intro:
     "The Air-Conditioned Office Hydration Planner converts your working hours, room temperature, humidity and caffeine intake into a timed drinking schedule with a millilitre figure for each reminder. It separates the two things air conditioning actually does: it raises respiratory and transepidermal water loss slightly, both computed here against a reference 22 °C / 40% RH room, and it removes the environmental cues that normally prompt you to drink. ASHRAE Standard 55 puts comfortable indoor humidity at 30-60%, and most conditioned offices run below that.",
   useCases: [

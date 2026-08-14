@@ -1,4 +1,12 @@
 const seo = {
+  title: "Free Online Screen Recorder — WebM VP9, No Upload",
+  metaDescription:
+    "Record your screen in the browser at 24, 30 or 60 fps with pause/resume, then download a VP9 WebM — recordings stay in the page and are never uploaded.",
+  steps: [
+    "Open the settings panel to set Video Quality (High 2.5 Mbps or Standard 1 Mbps), Include Audio, and Frame Rate: 24, 30 or 60 fps.",
+    "Click Start Recording and pick the screen or window in the browser's share dialog; Pause/Resume and Stop control the capture while the timer counts only recorded time.",
+    "Play the capture back in the preview player, then click Download to save screen-recording-<timestamp>.webm, or Delete to discard it.",
+  ],
   intro:
     "The Screen Recorder captures your screen through the browser's own getDisplayMedia and MediaRecorder APIs and writes a WebM file encoded with VP9 — no extension, no upload, no account. You choose 24, 30 or 60 fps, high (2.5 Mbps) or standard (1 Mbps) quality, and whether to include audio, then record, pause and resume, watch the result back in the player and download it. It suits anyone who needs a quick demo, bug report or walkthrough clip and does not want a desktop recorder for a two-minute capture.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video to 5x5 PNG Sprite Sheet, In Your Browser",
+  metaDescription:
+    "Sample a local video every 1, 2 or 5 seconds and tile the first 25 frames at 240px wide into one PNG. FFmpeg runs in the page; nothing is uploaded.",
+  steps: [
+    "Choose your clip with Source file — the picker accepts any video/* file, and it is written to an in-page FFmpeg filesystem rather than uploaded.",
+    "Set Sampling to 1 frame/second, 1 frame/2 seconds or 1 frame/5 seconds, then press Process locally.",
+    "FFmpeg WebAssembly scales each frame to 240px wide, tiles the first 25 into a 5x5 sheet and downloads altftool-video-frame-to-sprite-extractor.png.",
+  ],
   intro:
     "The Video Frame to Sprite Extractor samples frames from a local video at one frame every 1, 2 or 5 seconds, scales each to 240 pixels wide, and tiles the first 25 of them into a single 5x5 PNG sprite sheet. It runs FFmpeg compiled to WebAssembly inside your browser, so the video is decoded on your own machine and only the finished PNG is downloaded. It suits anyone who needs a contact sheet of a clip — video preview scrubbers, storyboards, QA passes, thumbnail picking — in one file rather than 25 loose images.",
   useCases: [

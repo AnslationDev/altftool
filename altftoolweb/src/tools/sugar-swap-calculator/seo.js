@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sugar Substitute Conversion Calculator (17 Sweeteners)",
+  metaDescription:
+    "Convert any of 17 sweeteners to an equally sweet amount of another, with calories, glycaemic index, JECFA ADI use for your weight and baking notes.",
+  steps: [
+    "Pick the Sweetener in the recipe and what to Swap it for from the grouped lists (Sugars, Syrups, High-intensity, Sugar alcohols, Rare sugars), then enter the Amount in the recipe (g).",
+    "Add Your body weight (kg) so the Acceptable Daily Intake percentage is computed for you rather than a generic adult.",
+    "Read the Use instead grams with calories before and after, the glycaemic index change and any warnings, then click Copy result to keep the summary.",
+  ],
   intro:
     "The Sugar Swap Calculator converts a recipe amount of one sweetener into the equally sweet amount of another using relative sweetening power per gram, with sucrose set to 1. It then shows the calories gained or lost, the glycaemic index of each, how much of the JECFA Acceptable Daily Intake the new amount uses for your body weight, and whether the substitute actually bakes, browns and provides bulk. Seventeen sweeteners are covered, from jaggery and honey to stevia, sucralose, erythritol and allulose.",
   useCases: [

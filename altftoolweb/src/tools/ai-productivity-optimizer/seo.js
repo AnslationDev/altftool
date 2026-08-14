@@ -1,4 +1,10 @@
 const seo = {
+  title: "AI Productivity Optimizer: A Focus Plan for Your Day",
+  steps: [
+    "Pick your Primary Role — Developer, Designer, Writer / Creator, Manager / Executive or Student — and your Biggest Distractor from Multitasking / Context Switching, Social Media / Phones, Emails / Slack Messages or Perfectionism / Overthinking.",
+    "Set Peak Energy Time to Morning (Early Bird), Afternoon (Mid-day Sprinter) or Night (Night Owl), choose a Primary Goal such as \"Focus longer on deep work\", then press Generate AI Stack.",
+    "The result names your profile and returns a Core Methodology, an Optimal Schedule built around that energy window and an AI Tool Stack list; Start Over takes you back to the four questions.",
+  ],
   intro:
     "AI Productivity Optimizer turns four answers — your role, your peak energy window, your biggest distractor and your main goal — into a named focus method, a concrete daily schedule and a short tool list, using a fixed rule set rather than generic advice. Pick Morning and it returns 90-minute ultradian focus blocks with an Eat-the-Frog start at 8 AM; pick Night and it moves admin to the morning and deep creative work past 8 PM. It is a starting template for someone who has read about a dozen productivity systems and wants one picked for their chronotype.",
   useCases: [

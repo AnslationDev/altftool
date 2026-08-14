@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS on FD Interest Calculator: Section 194A and 15G/H",
+  metaDescription:
+    "Section 194A TDS at 10%, or 20% without PAN, on the full FD interest once the threshold is crossed, plus Form 15G/15H eligibility and net payout.",
+  steps: [
+    "Enter the FD interest with this bank for the year, the depositor age band, and whether PAN is updated with the bank.",
+    "Pick the declaration filed — none, Form 15G below 60, or Form 15H for 60 and above — and your marginal tax rate.",
+    "Read the TDS the bank will deduct, the threshold status, the net interest credited and the Form 15G / 15H check.",
+  ],
   intro:
     "Banks deduct TDS on fixed deposit interest under Section 194A once your interest with that bank crosses the annual threshold — and the deduction applies to the whole interest, not just the excess. This calculator works out the TDS at 10% (or 20% where PAN is not on record), checks whether you qualify to file Form 15G or 15H to stop the deduction, and shows the net interest credited plus any tax still payable at your slab. Useful for depositors planning FD ladders and for retirees relying on interest income.",
   useCases: [

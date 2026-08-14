@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cookie Banner Dark Pattern Checker: 14 Tricks Scored",
+  metaDescription:
+    "Tick what a cookie banner does and score it against 14 patterns EU regulators name, with the rule each one runs into and how to refuse.",
+  steps: [
+    "Under 'What does the banner do?' tick everything you can see across the four groups — Removing the choice, Steering the eye, Misleading labels and Wearing you down — covering 14 patterns from 'No refuse button on the first screen' to 'Non-essential toggles switched on by default' and 'Advertising hidden under legitimate interest'.",
+    "Enter 'Clicks to accept everything' and 'Clicks to refuse everything', each between 1 and 20, so the extra clicks refusal costs are counted.",
+    "Read the Manipulation score percentage with its band, the 'Patterns found, worst first' list showing each Severity out of 5 plus the rule it runs into, and the 'What to do on this banner' steps, then press 'Copy report'.",
+  ],
   intro:
     "Consent Banner Dark Pattern Spotter scores a cookie banner against 14 manipulative design techniques that EU regulators have named directly, plus the click asymmetry between accepting and refusing. Each pattern is tied to the rule it runs into — GDPR Article 4(11) on freely given consent, Recital 32 on pre-ticked boxes, Article 7(3) on withdrawal being as easy as consent, and the EDPB Cookie Banner Taskforce report adopted in January 2023. The output is a manipulation percentage, the findings ranked by severity, and the exact steps to refuse on the banner in front of you.",
   useCases: [

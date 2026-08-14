@@ -1,4 +1,7 @@
 const seo = {
+  title: "Klondike Solitaire: Draw 1 or Draw 3 with Undo",
+  metaDescription:
+    "Play standard Klondike — 7 tableau piles, a 24-card stock, 4 foundations — with unlimited undo, highlighted legal moves and traditional +10 scoring.",
   intro:
     "Klondike Solitaire is the classic single-player card game — 28 cards dealt into seven tableau piles, the remaining 24 held in the stock, and four foundations to build up from Ace to King in each suit. This version plays the standard rules with either Draw 1 or Draw 3, keeps a full undo history so you can walk back every move, and scores you the traditional way: +5 to move from waste to tableau, +10 to reach a foundation, +5 for each card you flip face-up, and −15 for pulling a card back off a foundation. A timer, move counter and personal best are tracked alongside the score.",
   useCases: [

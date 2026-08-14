@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shipping Policy Generator with a Working-Day ETA",
+  metaDescription:
+    "Walks working days from your dispatch cut-off — skipping Sundays, non-shipping Saturdays and your holidays — then drafts the Rule 5(3) policy text.",
+  steps: [
+    "Under Delivery ETA check set Order placed on and Order placed at, the Same-day dispatch cut-off, Packing time (working days), Destination zone such as Metro to metro, and Holidays with no dispatch or delivery.",
+    "Tick Ships on Saturday, Ships on Sunday or This order is COD, then complete Store and charges — free shipping threshold, flat charge, COD fee and limit, damage reporting window and grievance hours.",
+    "Expected delivery window prints the earliest and latest dates with the cut-off verdict, the date the parcel is handed to the carrier and the calendar-day span, and the policy text renders underneath for Copy policy.",
+  ],
   intro:
     "The Shipping and Delivery Policy Generator writes an ecommerce shipping page and, alongside it, calculates a real delivery window by walking working days rather than adding a flat number of calendar days. It applies the dispatch cut-off, packing time, zone transit band, non-shipping Saturdays, Sundays and your own holiday list, then drafts clauses on charges, cash on delivery, tracking, damaged parcels and delays. The disclosure requirements it follows come from Rule 5(3) of the Consumer Protection (E-Commerce) Rules 2020.",
   useCases: [

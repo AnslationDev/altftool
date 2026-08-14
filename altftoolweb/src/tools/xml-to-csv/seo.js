@@ -1,4 +1,12 @@
 const seo = {
+  title: "XML to CSV Converter - Flatten Nested Tags Online",
+  metaDescription:
+    "Paste or upload XML up to 8 MB and get RFC 4180 CSV: repeating elements become rows, nested tags dotted columns, attributes @-prefixed columns.",
+  steps: [
+    "Paste your document into \"XML input\" or click \"Upload .xml\" (files up to 8 MB).",
+    "Pick the \"Column delimiter\" - comma, semicolon, tab or pipe - and toggle \"Include a header row\" and \"Include attributes as columns\".",
+    "Check the detected row element and the first-25-row preview, then click \"Copy CSV\" or \"Download\" to save a UTF-8 BOM .csv or .tsv file.",
+  ],
   intro:
     "This XML to CSV converter turns the repeating elements in an XML document into spreadsheet rows, flattening nested tags into dotted column names and attributes into @-prefixed columns. Output follows RFC 4180: fields containing the delimiter, a double quote or a line break are wrapped in double quotes, and embedded quotes are doubled. It is built for anyone who has been handed a product feed, bank statement or API dump as XML and needs it in Excel, Google Sheets or a database import.",
   useCases: [

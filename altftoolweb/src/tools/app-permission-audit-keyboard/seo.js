@@ -1,4 +1,12 @@
 const seo = {
+  title: "Keyboard App Permission Audit: Score and Revoke List",
+  metaDescription:
+    "Scores what a third-party keyboard reaches beyond the keys — network, cloud sync, clipboard history, contacts — out of 100, with a ranked revoke list.",
+  steps: [
+    "Type the App name (for the report), then choose Checklist or Paste list to enter what the keyboard holds.",
+    "Tick items under Permissions and settings this app currently holds, or start from the Typical keyboard preset and adjust.",
+    "Read the Privacy score out of 100 with Revoke these first, Worth reviewing and Every item, with its manifest name, then press Copy result.",
+  ],
   intro:
     "The Keyboard App Permission Audit scores what a third-party keyboard can reach beyond the keys — network access, cloud dictionary sync, clipboard history, contacts and location — and returns a 0-100 privacy score with a ranked list of what to switch off. Being your keyboard is inherently high-trust: Android warns that an input method may collect all the text you type, including passwords and card numbers, and on iOS a keyboard cannot reach the network at all until you turn on Allow Full Access. The audit weights each item by sensitivity and by whether typing genuinely needs it.",
   useCases: [

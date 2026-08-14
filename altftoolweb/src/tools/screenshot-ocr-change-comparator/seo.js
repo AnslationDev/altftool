@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screenshot OCR Change Comparator: Line + Word Diff",
+  metaDescription:
+    "Diff two screenshots' OCR text you paste and confirm you reviewed: line and word additions, removals, replacements and a similarity percentage.",
+  steps: [
+    "Use 'Choose screenshot' on the 'Before screenshot' and 'After screenshot' panels — PNG, JPEG or WebP up to 20 MB — to load local previews.",
+    "Paste each transcript into 'Before transcript' and 'After transcript' from your own OCR, correct it against the preview, and tick 'I reviewed this transcript' on both.",
+    "Press 'Compare reviewed text' for the line and word change counts and similarity percentage, then 'Download counts' to save screenshot-ocr-change-counts-only.json.",
+  ],
   intro:
     "This tool diffs the text of two screenshots by comparing OCR transcripts you paste and confirm you have reviewed, running a longest-common-subsequence diff at both line and word level and reporting additions, removals, replacements, unchanged counts and a similarity percentage. It deliberately does not perform OCR itself — you use the recognition already built into your operating system or device, then correct it — because an unreviewed transcript turns recognition errors into fake changes. Screenshot previews and transcripts stay in the tab, and the exportable report contains counts only, never the text itself.",
   useCases: [

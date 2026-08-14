@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marla to Kanal and Square Feet Converter with Pricing",
+  metaDescription:
+    "Convert marla, kanal, sarsai, killa and murabba under the 272.25 sq ft revenue marla or the 225 sq ft society marla, and price a plot at any rate.",
+  steps: [
+    "Answer \"Which marla does your layout use?\" — Revenue marla 272.25 sq ft (30.25 sq yd) or Society marla 225 sq ft (25 sq yd).",
+    "Type the plot size into Area and pick its Unit — sarsai, marla, kanal, sq ft, sq yd, sq m, acre, murabba or hectare — then optionally add a Rate and \"Rate is quoted per\" unit.",
+    "\"In square feet\" leads the result with the spoken form (kanal, marla, sarsai), every unit listed below it, and Plot value showing the total and the equivalent rate per unit.",
+  ],
   intro:
     "In the Punjab, Haryana and Himachal revenue system a marla is one hundred and sixtieth of an acre — 272.25 square feet, or 30.25 square yards — and twenty marla make one kanal of 5,445 square feet. This converter moves a plot across sarsai, marla, kanal, killa and murabba as well as square feet, square yards, square metres and hectares, prices it from a rate in any of those units, and states the result the way it is spoken: so many kanal, so many marla. It also handles the 225 sq ft society marla that many planned layouts use instead.",
   useCases: [

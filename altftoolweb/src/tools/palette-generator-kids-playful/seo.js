@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Playful Palette Generator With WCAG Text Tones",
+  metaDescription:
+    "Bright themed palettes for kids’ design, each hue paired with a text-safe sibling walked to 4.5:1 AA or 7:1 AAA contrast against the page.",
+  steps: [
+    "Pick a Theme — Rainbow, Candy shop, Jungle, Ocean, Crayon box or Birthday party — and set Page ground to Light page or Dark page.",
+    "Choose the Contrast target 'AA — 4.5:1 body text' or 'AAA — 7:1 body text', nudge Hue rotation (degrees) within -180 to 180, and press Next variation to step through Variation 0-5.",
+    "Every swatch shows its Fill hex with the ratio on page, a Text-safe hex with the lightness shift it needed, and the best label colour; Copy CSS takes the custom properties, Copy result the contrast figures.",
+  ],
   intro:
     "The Kids Playful Palette Generator produces bright themed colour sets and then repairs each hue into a text-safe version by walking its lightness one percent at a time until it meets the WCAG 2.x contrast ratio you pick — 4.5:1 for AA or 7:1 for AAA. You get a fill colour for blocks, badges and illustrations, plus a darker or lighter sibling of the same hue that is safe for captions and body copy on the page ground. It suits anyone designing school worksheets, children's apps, nursery branding or family event pages where the colour has to stay cheerful without making words hard to read.",
   useCases: [

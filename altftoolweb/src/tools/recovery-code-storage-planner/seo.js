@@ -1,4 +1,12 @@
 const seo = {
+  title: "2FA Backup Code Storage Planner: 3-2-1 Rule Check",
+  metaDescription:
+    "Grades where your 2FA backup codes live against 3 copies, 2 media, 1 off-site, and flags a copy on the authenticator phone or in the account it unlocks.",
+  steps: [
+    "Tick every place your 2FA backup codes live — a printout in a home fire safe, a metal backup plate, the password manager's notes field, a screenshot in the phone gallery — and enter how many accounts you hold codes for.",
+    "Tick \"One of them is my password manager\" and \"One of them is my primary email\" so the planner can test for a circular dependency.",
+    "Read Plan resilience as a percentage with a Pass or Fail on each rule — 3 copies, 2 kinds of media, one off-site, no copy on the authenticator device — then press Copy plan or work through \"Add these next\".",
+  ],
   intro:
     "Recovery Code Storage Planner grades a plan for storing 2FA backup codes against the 3-2-1 backup rule — three copies, on two kinds of media, with one copy off-site — and against two failures unique to authentication. The first is keeping the codes on the same phone that runs your authenticator app, which means one theft takes both the factor and its fallback. The second is a circular dependency: storing the codes only inside the password manager or email account they are meant to recover. You get a resilience score, a pass or fail on each rule, and the specific locations to add next.",
   useCases: [

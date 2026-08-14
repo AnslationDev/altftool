@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shopping App Permission Audit: Score 0-100 & Revoke List",
+  metaDescription:
+    "Scores the 17 permissions and settings a shopping app holds, 0-100, ranks what to revoke first, and names each Android manifest permission.",
+  steps: [
+    "Type the app into 'App name (for the report)', then choose 'Checklist' or 'Paste list' to enter its permissions.",
+    "Tick each item under 'Permissions and settings this app currently holds', or start from the 'Typical marketplace' chip and untick what your app does not hold.",
+    "Read the 0-100 Privacy score, work through 'Revoke these first', and press 'Copy result' to save the list with each Android manifest name.",
+  ],
   intro:
     "The Shopping App Permission Audit scores an e-commerce app against the three things it has to do — browse, take payment, deliver — and flags everything collected beyond that. Seventeen permissions and settings are weighted by sensitivity, including the ones shopping apps most often ask for without needing: SMS access (OTP autofill works through the SMS Retriever API with no permission), call logs, calendar and background location. The result is a 0-100 score, a ranked revoke list and the exact Android manifest name for each item.",
   useCases: [

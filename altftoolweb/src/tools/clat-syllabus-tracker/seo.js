@@ -1,4 +1,12 @@
 const seo = {
+  title: "CLAT Syllabus Tracker: Weighted 5-Section Progress",
+  metaDescription:
+    "Track all five CLAT sections at their published weights, log 30 days of reading, and project marks on 120 questions under +1 / -0.25 marking.",
+  steps: [
+    "Press Show topics on a section such as Legal Reasoning and set each topic to Not started, Covered once, Practised with passages or Mastered in mocks.",
+    "Tick days in the 30-box Daily reading practice log, then enter Questions attempted (of 120) and Accuracy on what you attempt (%).",
+    "Read Weighted syllabus readiness, Projected marks and Accuracy at which guessing breaks even, then press Copy result.",
+  ],
   intro:
     "This tracker scores CLAT preparation the way the paper is actually built: topic-level progress in each of the five sections, weighted by the Consortium of NLUs' published section weights of 20% English, 25% Current Affairs with General Knowledge, 25% Legal Reasoning, 20% Logical Reasoning and 10% Quantitative Techniques. It also keeps a 30-day reading log — CLAT is a comprehension paper, so daily passage reading is the habit that moves the score — and converts an attempt-and-accuracy plan into marks under the +1 for a correct answer, −0.25 for a wrong answer scheme.",
   useCases: [

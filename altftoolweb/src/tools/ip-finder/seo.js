@@ -1,4 +1,12 @@
 const seo = {
+  title: "IP Address Finder: IANA Block, Subnet and Reverse DNS",
+  metaDescription:
+    "Classify an IPv4 or IPv6 address against the IANA special-purpose registries, get its subnet boundaries and reverse-DNS name. Geolocation is opt-in.",
+  steps: [
+    "Type an IPv4 or IPv6 address such as 8.8.8.8 or 2001:4860:4860::8888, and set the IPv4 subnet prefix length.",
+    "The registry block, routability, decimal, hexadecimal and binary forms and the reverse-DNS pointer are worked out offline; press 'Look up details' or 'Use my IP' to add ISP and location.",
+    "Read the subnet CIDR, mask, broadcast, host range and usable host count, then press Copy result.",
+  ],
   intro:
     "The IP Address Finder tells you what an IPv4 or IPv6 address actually is: which IANA special-purpose block it belongs to, whether it can be routed on the public internet, its subnet boundaries at any prefix length, and its reverse-DNS pointer name. Classification runs entirely in your browser against the IANA registries (RFC 1918 private space, RFC 6598 carrier-grade NAT, RFC 3927 link-local, RFC 4193 unique local and the rest), so no address leaves the page unless you press the lookup button. It is built for network engineers, support teams and developers who need to say quickly whether an address in a log line is a customer, a VPN, or their own LAN.",
   useCases: [

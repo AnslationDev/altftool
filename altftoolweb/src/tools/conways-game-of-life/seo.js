@@ -1,4 +1,7 @@
 const seo = {
+  title: "Conway's Game of Life: Draw, Step, Run to 30 gen/s",
+  metaDescription:
+    "Draw cells by dragging, single-step one generation, or run at 1-30 generations a second. Live generation and population counts; edges do not wrap.",
   intro:
     "Conway's Game of Life is a cellular automaton in which every cell on a grid lives or dies each generation by four rules: a live cell with two or three live neighbours survives, one with fewer than two dies of underpopulation, one with more than three dies of overcrowding, and a dead cell with exactly three live neighbours becomes alive. This simulator lets you draw cells directly on a 12-pixel grid, step one generation at a time or run continuously from 1 to 30 generations per second, and watch the generation count and live population update as it goes. It is for anyone learning emergence, teaching the automaton, or just wanting to watch a glider cross the screen.",
   useCases: [

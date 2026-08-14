@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Edit Boundary Visualizer: Flag Clicks & DC Steps",
+  metaDescription:
+    "Draw a local waveform and shortlist timestamps where the sample jump or DC offset spikes. Up to 30 MB and 10 minutes; export the list as JSON.",
+  steps: [
+    "Press Choose an audio file and pick a local file - up to 30 MB, with decoded limits of 10 minutes, stereo, 96 kHz.",
+    "In Screen settings choose Outlier sensitivity (Sensitive to Very conservative), a Minimum sample jump of 0.04 to 0.25 and a Merge nearby cues window of 25 to 200 ms.",
+    "Waveform overview marks each hit and the review candidate(s) table lists its time, cue and score; press Export timings JSON to save audio-boundary-candidates.json.",
+  ],
   intro:
     "The Audio Edit Boundary Visualizer draws a 1,000-bucket waveform envelope of a local audio file and flags the moments where the sample-to-sample jump or the local DC offset changes abruptly enough to deserve a human listen. It scans in 10 ms bins, takes the largest first-difference in each bin, and converts it to a robust modified z-score against the median and MAD of the whole file, so a click that is loud relative to that particular recording gets flagged even if it would be quiet in another. It is aimed at editors, podcast producers and reviewers who want a shortlist of suspicious timestamps rather than a claim about whether a file was edited.",
   useCases: [

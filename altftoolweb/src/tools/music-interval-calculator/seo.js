@@ -1,4 +1,12 @@
 const seo = {
+  title: "Music Interval Calculator: Name, Semitones & Cents",
+  metaDescription:
+    "Pick two notes to get the spelling-aware interval name — C–F# is an augmented 4th, C–Gb a diminished 5th — plus cents, inversion and just ratios.",
+  steps: [
+    "Set the First note and Second note with the Letter, Accidental and Octave dropdowns, or tap a preset like Perfect fifth, Tritone or Major tenth; adjust 'Concert pitch, A4 (Hz)' if you need non-440 tuning.",
+    "The calculator names the interval from staff spelling, not just semitones — C to F# reads as an augmented fourth while C to Gb reads as a diminished fifth, both at six semitones.",
+    "Read the Semitones, Cents (12-TET), frequency ratio, pure (just) ratio with its tempering error, Inversion and MIDI numbers rows, then press Copy result to copy the breakdown.",
+  ],
   intro:
     "A musical interval is named by two things: the number of staff degrees the two notes occupy, and how the actual semitone distance compares with the major or perfect size of that number. This calculator applies both rules, so C to F# comes back as an augmented fourth while C to Gb comes back as a diminished fifth even though each spans six semitones. It also reports cents, the inversion, the equal-tempered frequency ratio and the five-limit just ratio the interval is tuned against.",
   useCases: [

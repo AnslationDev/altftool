@@ -1,4 +1,7 @@
 const seo = {
+  title: "Contribution Margin Calculator: Per Unit, Ratio, Total",
+  metaDescription:
+    "Price minus variable cost per unit, that figure as a percentage of price, and the total across your volume — three outputs from three numbers.",
   intro:
     "Contribution Margin Calculator works out how much of each sale is left to cover fixed costs and profit, using contribution margin per unit = price per unit minus variable cost per unit, the contribution margin ratio as that figure divided by price, and total contribution as margin per unit times units sold. Enter three numbers — price, variable cost and units — and you get all three outputs at once. It is aimed at small business owners, freelancers and finance students pricing a product or checking whether a line is worth keeping.",
   useCases: [

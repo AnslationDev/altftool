@@ -1,4 +1,12 @@
 const seo = {
+  title: "Netflix Account Security Checklist: 15 Weighted Controls",
+  metaDescription:
+    "Weighted 15-control Netflix checklist: password, device sign-out, Household and billing checks. Score capped at 69% until all critical controls are done.",
+  steps: [
+    "Work through the grouped checklist, ticking each control you have set on your Netflix account — every row shows its +weight and the four highest-impact rows carry a Critical badge.",
+    "Watch the Hardening score panel update: it reports Controls completed, Weighted points and Critical controls missing, and holds the score at 69% while any critical control is open.",
+    "Enter a Target score (%) to get the shortest 'Do these next' route, highest-impact control first, then press Copy result for a text summary of your score band and remaining controls.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for a Netflix account: a unique password, signing out of all devices, reviewing the device access list, profile lock PINs, the Netflix Household setting and the billing checks that catch a quiet takeover. Netflix does not offer authenticator-app two-factor authentication, so the password and the device list carry the load here, which is why they are scored highest. Four controls are marked critical and the score is held at 69% until all four are done.",
   "useCases": [
     "Ejecting an old flatmate, ex-partner or former friend who still streams on your account.",

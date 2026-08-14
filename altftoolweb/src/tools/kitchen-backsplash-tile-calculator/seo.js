@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kitchen Backsplash Tile Calculator: Boxes and Cost",
+  metaDescription:
+    "Sizes the band from counter run and cabinet height, adds the hob panel, deducts windows, and converts net area into boxes with wastage and spares.",
+  steps: [
+    "Enter the Counter run to tile (running ft) and Backsplash height (inches), or press Derive band height to work it from your cabinet height with the counter at 36 in.",
+    "Add the hob panel width and extra height up to the chimney, any windows and socket cutouts, then pick a tile size chip or type the tile size in mm, tiles per box and price per box.",
+    "Read Boxes to order plus the full take-off — net area, tiles required, adhesive bags and grout kg — and use Copy result to export it.",
+  ],
   intro:
     "This calculator sizes a kitchen backsplash tile order as counter run multiplied by band height, plus the taller panel behind the hob, minus any window, and then converts that net area into whole boxes with a wastage allowance. It assumes the standard Indian modular kitchen geometry of a 36 inch counter with overhead cabinets starting at 54 to 60 inches, giving an 18 to 24 inch tiled band. It is for homeowners and kitchen fitters pricing a splashback before placing the order.",
   useCases: [

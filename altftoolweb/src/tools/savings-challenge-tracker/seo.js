@@ -1,4 +1,12 @@
 const seo = {
+  title: "52-Week Savings Challenge Tracker & No-Spend Month",
+  metaDescription:
+    "Tick each week and watch the total build: base × 1,378 on the increasing style, plus streaks, projected finish date and a no-spend day grid.",
+  steps: [
+    "Pick 52-Week Challenge or No-Spend Challenge, then set Base amount from the 100 / 200 / 500 presets or type a Custom base amount.",
+    "Choose a Challenge style — Increasing, Flat or Reverse — and tap each week cell in the grid as you save it.",
+    "Saved so far tracks against Final target, with Weeks marked, Current streak and Projected finish; Copy progress exports the summary.",
+  ],
   intro:
     "This is a tap-to-mark tracker for two savings habits: the classic 52-week challenge, where week n saves your base amount times n and the year totals base x 1,378, and a no-spend month calendar that counts the days you spent nothing. Choose a base amount and a style — increasing, flat or reverse — then tick each week or day as you follow through, and the grid keeps your running total, current streak and best streak — and for the 52-week challenge, a projected finish date. Everything is stored in this browser's localStorage, so the challenge survives a refresh without an account.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quote Graphic Generator: 7 Exact Social PNG Sizes",
+  metaDescription:
+    "Type auto-fits the canvas at 1080x1080, 1080x1920, 1200x627 and four more sizes, with a WCAG 2.1 contrast check. PNG is drawn in your browser.",
+  steps: [
+    "Type the Quote and fill in Attributed to and Handle or brand line, then choose a Placement size — Instagram square 1080x1080, Story / Reel 1080x1920, Pinterest pin 1000x1500 and four more.",
+    "Pick a Palette or tick Use my own colours to set Background, Text and Accent; the quote wraps and steps its font size down until it fits, and Text contrast against background is reported as a ratio.",
+    "Press PNG to download the file as quote-ig-portrait-1080x1350.png, drawn on a canvas in your browser, or use Copy details for the size, colours and contrast verdict.",
+  ],
   intro:
     "This quote graphic generator sets a line of text as a finished social image at the exact pixel size each placement expects — 1080x1080 and 1080x1350 for Instagram feed, 1080x1920 for stories and Reels, 1600x900 for X, 1200x627 for LinkedIn and 1000x1500 for Pinterest. The type is auto-fitted: it wraps the quote and steps the font size down until the block fits the canvas, so long quotes never overflow. Every colour combination is checked against the WCAG 2.1 contrast formula, and story layouts keep the top 250px and bottom 420px clear of the app's own interface.",
   useCases: [

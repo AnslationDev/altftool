@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Merge vs Rebase vs Squash: Which to Use and When",
+  metaDescription:
+    "Answer four questions about your branch and get a merge, rebase or squash recommendation with the reasoning, ASCII history previews and exact commands.",
+  steps: [
+    "Set \"Commits on your branch (not on target)\" and a history preference, then tick \"Others have pulled this branch or based work on it\" if it is shared.",
+    "Tick \"Each commit is meaningful on its own\" to steer between rebase and squash — shared branches always get a merge recommendation under the golden rule.",
+    "Compare the ASCII previews for merge commit, rebase + fast-forward and squash merge, then click \"Copy result\" to take the exact git commands.",
+  ],
   intro:
     "This helper decides between git merge, rebase and squash merge for a specific branch by applying the golden rule of rebasing from Pro Git: never rewrite commits that exist outside your repository and that others may have based work on. Answer four questions — whether the branch is shared, how many commits it has, whether they are individually meaningful, and your history preference — and it returns a recommendation, the reasoning, ASCII history previews and the exact commands to run.",
   useCases: [

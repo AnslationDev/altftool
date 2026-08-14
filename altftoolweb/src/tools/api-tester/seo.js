@@ -1,4 +1,7 @@
 const seo = {
+  title: "API Tester: 7 HTTP Methods, Auth, Saved Collections",
+  metaDescription:
+    "GET to OPTIONS with Bearer or Basic auth, {{variable}} substitution, and status, time, size and headers on every response. Collections stay local.",
   intro:
     "API Tester is a browser-based REST client that builds and sends a request across all seven HTTP methods — GET, POST, PUT, PATCH, DELETE, HEAD and OPTIONS — then shows the status code, round-trip time in milliseconds, response size and full response headers. It supports query params, custom headers, a raw JSON body, Bearer and Basic auth, and {{variable}} placeholders that are substituted into the URL, headers and body before sending. Requests go straight from your browser to the target API, and saved collections, environment variables and the last 50 requests are kept in local storage on your own machine.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Profile Finder: Stats, Repos and Languages",
+  metaDescription:
+    "Look up any public GitHub user or org: profile card, top repos ranked by stars plus forks, and a language split from their 30 latest repos.",
+  steps: [
+    "Type a handle into the 'Enter GitHub username (e.g. gaearon)...' box, or pick one of the 'Try searching' examples such as vercel or torvalds.",
+    "Press 'Find Profile' to call GitHub's public REST API for the profile and that account's 30 most recently updated public repositories.",
+    "Read the profile card's followers, public repo and gist counts and join date, the 'Code Language Distributions' bar, and the 'Popular Repositories' cards ranked by stars plus forks.",
+  ],
   intro:
     "GitHub Profile Finder looks up any public GitHub username or organisation through GitHub's own REST API and returns the profile card — bio, company, location, website, join date, public repo count, followers, following and gists — alongside that account's 30 most recently updated repositories. From those repos it ranks the top 8 by stars plus forks and works out a language split as the share of repos written in each language. It is for anyone sizing up a developer, a candidate or an open-source organisation without clicking through half a dozen GitHub tabs.",
   useCases: [

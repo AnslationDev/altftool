@@ -1,4 +1,7 @@
 const seo = {
+  title: "Bond Yield Calculator: Current Yield & Approximate YTM",
+  metaDescription:
+    "Current yield is coupon ÷ price; approximate YTM uses (C + (F − P)/n) ÷ ((F + P)/2). Also shows the discount or premium to face value.",
   intro:
     "A bond yield calculator converts a bond's face value, coupon rate, market price and years to maturity into two numbers: current yield (annual coupon ÷ market price) and an approximate yield to maturity using the standard bond-yield approximation, (C + (F − P) / n) ÷ ((F + P) / 2). It is built for investors comparing bonds that trade above or below par, where the printed coupon rate no longer describes the return. You get the annual coupon in currency, the current yield, the approximate YTM and the discount or premium to face value in one pass.",
   useCases: [

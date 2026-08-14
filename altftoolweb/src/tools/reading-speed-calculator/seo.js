@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reading Speed Calculator: Timed WPM Test, 3 Passages",
+  metaDescription:
+    "Read a 72, 75 or 80-word passage hidden until a 3-second countdown, then get your words per minute and band, from Beginner to Speed Reader.",
+  steps: [
+    "Under Choose Passage pick Technology & Future, The Ocean Depths or Urban Architecture — each card shows its word count — then press Start Reading Test.",
+    "Read the text as it un-blurs at the end of the 3-second countdown; the timer beside the passage title ticks every 100 ms and shows elapsed seconds to one decimal place.",
+    "Press I Finished Reading for your WPM and band — Beginner under 150, Below Average 150-250, Average 250-350, Advanced 350-500, Speed Reader over 500 — and the attempt joins History, which keeps the last 8 with the passage used.",
+  ],
   intro:
     "Reading Speed Calculator times you reading one of three fixed passages and divides its word count by your elapsed time to give a words-per-minute figure — the standard WPM formula, words ÷ minutes. The passage stays blurred until a 3-second countdown ends, the timer runs at tenth-of-a-second resolution while you read, and you stop it yourself with a button when you reach the end. Results are banded from Beginner under 150 WPM to Speed Reader above 500, with your last 8 attempts kept so you can see whether a number is repeatable.",
   useCases: [

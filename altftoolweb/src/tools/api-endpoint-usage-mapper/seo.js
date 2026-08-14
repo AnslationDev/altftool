@@ -1,4 +1,7 @@
 const seo = {
+  title: "Map API Endpoint Usage from Logs, cURL and fetch",
+  metaDescription:
+    "Paste access logs, cURL, fetch or Express routes: IDs collapse to :id and each endpoint gets request counts, error rate, p95 and a risk grade.",
   intro:
     "The API Endpoint Usage Mapper turns pasted access logs, cURL commands, fetch/Axios calls and Express-style route definitions into a normalized endpoint inventory, collapsing concrete IDs (numbers, UUIDs, prefixed keys like ord_91) into :id so /api/users/42 and /api/users/73 count as one endpoint. For each method + path it reports request count, success and error counts, error rate, average, min/max and p95 latency, and a Low/Medium/High risk grade. Backend engineers, SREs and API owners use it to see which routes actually carry traffic before they refactor, version or deprecate anything.",
   useCases: [

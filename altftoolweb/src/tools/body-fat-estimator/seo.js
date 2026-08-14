@@ -1,4 +1,7 @@
 const seo = {
+  title: "Body Fat Calculator: Navy Tape, BMI, 3-Site Caliper",
+  metaDescription:
+    "Run US Navy tape, BMI regression and Jackson-Pollock 3-site caliper on the same stats, with fat and lean mass, bands and a goal weight.",
   intro:
     "The Body Fat % Estimator runs three different estimation methods on the same person: the US Navy tape formula from neck, waist and hip circumference, a BMI regression using height, weight, age and sex, and the Jackson-Pollock three-site skinfold equation, which converts caliper readings into body density and then into fat via the Siri conversion 495 / density - 450. It is aimed at people who own calipers or a tape measure and want to see whether the methods agree before trusting any one of them. Each result is split into fat mass and lean mass, banded from essential to excess, and can be saved locally to build a history.",
   useCases: [

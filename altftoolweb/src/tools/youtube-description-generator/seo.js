@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Description Generator with Chapter Checks",
+  metaDescription:
+    "Build hook, chapters, links, CTA and hashtags into one description, checked live against the 5,000-character cap, 60-hashtag cap and chapter rules.",
+  steps: [
+    "Fill in \"Opening line (the part shown before …more)\", \"Summary\", and \"Chapters — one per line, as 0:00 Title\".",
+    "Add \"Links mentioned\", \"Gear and resources\", \"Call to action\", \"Social links\" and \"Hashtags\", and tick \"Add an affiliate-link disclosure\" or \"Add section headings\" if you want them.",
+    "Watch \"Characters used\" against 5,000 and the Chapters valid / not valid flag, check the \"What viewers see before …more\" preview, then press \"Copy description\".",
+  ],
   intro:
     "This YouTube description generator assembles a description in the order viewers actually read it — hook, summary, chapters, links, call to action, hashtags — and validates it live against YouTube's published limits. It counts against the 5,000-character description cap and the 60-hashtag cap, and checks your timestamps against the three conditions YouTube requires before it will build automatic chapters. It is for creators who want a repeatable description template rather than a blank box, and it writes nothing to a server.",
   useCases: [

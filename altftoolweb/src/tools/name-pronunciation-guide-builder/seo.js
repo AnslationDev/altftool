@@ -1,4 +1,12 @@
 const seo = {
+  title: "Name Pronunciation Card: Respelling, Stress, NATO",
+  metaDescription:
+    "Turns your name into syllable breaks, a plain-English respelling with the stressed syllable capitalised, and its ICAO/NATO letter spelling.",
+  steps: [
+    "Type your name into Your name, and optionally add Your own respelling such as PREE-yuh plus a Rhymes with line.",
+    "Under 'Which syllable is stressed?' click the syllable you emphasise so the card capitalises it.",
+    "The Say it card shows the respelling, Syllable breaks and Initials, with the ICAO/NATO letters under 'Spelling it out on a call'; Copy card copies the whole card.",
+  ],
   intro:
     "The Name Pronunciation Guide Builder turns a name into a shareable card containing four things: the syllable breaks, a plain-English respelling with the stressed syllable in capitals, the letter-by-letter spelling in the ICAO/NATO alphabet, and a list of the spelling patterns readers usually get wrong. The respelling uses open and closed syllable rules — Priya becomes PREE-yuh, Aarav becomes AH-ruhv — and you can override it with your own version at any point. Paste the finished card into an email signature, a LinkedIn bio or a first-day introduction.",
   useCases: [

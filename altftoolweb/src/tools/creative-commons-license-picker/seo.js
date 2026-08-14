@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creative Commons License Picker: CC BY, SA, NC, ND",
+  metaDescription:
+    "Answer two questions — commercial use and adaptations — to get the right CC 4.0 license, what reusers may do, and attribution in plain text and HTML.",
+  steps: [
+    "Answer May others use the work commercially? and May others share adaptations of the work?, or tick the CC0 box to waive everything.",
+    "Choose the kind of work — photograph, article, music, dataset or source code — and fill in the title, creator name and source link.",
+    "Read the recommended licence and its Free Cultural Works status, then press Copy attribution or Copy HTML for the rel=\"license\" snippet.",
+  ],
   intro:
     "The Creative Commons Licence Picker maps the two questions the licence suite is built on — may others use the work commercially, and may they share adaptations — onto the six Creative Commons 4.0 licences and the CC0 public domain dedication. Alongside the recommended licence it lists exactly what a reuser may and may not do, flags the traps that catch first-time licensors, and generates attribution in the Title-Author-Source-Licence pattern Creative Commons recommends, in both plain text and HTML. It is aimed at photographers, writers, educators, musicians and open data publishers deciding how to release their own work. It is informational only and is not legal advice.",
   useCases: [

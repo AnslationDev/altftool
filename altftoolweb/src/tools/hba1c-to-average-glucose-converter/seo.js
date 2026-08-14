@@ -1,4 +1,12 @@
 const seo = {
+  title: "HbA1c to Average Glucose: %, mmol/mol, mg/dL Converter",
+  metaDescription:
+    "Convert HbA1c between DCCT %, IFCC mmol/mol and eAG in mg/dL or mmol/L using the ADAG equation eAG = 28.7 × A1C − 46.7. 7% = 53 mmol/mol, 154 mg/dL.",
+  steps: [
+    "Choose the Input format — HbA1c DCCT/NGSP (%), HbA1c IFCC (mmol/mol), or Average glucose in mg/dL or mmol/L — and type your result in the Value field.",
+    "The converter applies eAG = 28.7 × A1C − 46.7 and IFCC = (DCCT − 2.15) × 10.929 as you type; results outside the 4–12% ADAG span are marked 'Outside ADAG derivation'.",
+    "Read the other three formats in the IFCC, eAG and eAG mmol/L cards along with the ADA band label; Reset restores the 7.0% example.",
+  ],
   intro:
     "The HbA1c to Average Glucose Converter translates a glycated haemoglobin result between the four formats laboratories use: DCCT/NGSP percent, IFCC mmol/mol, and estimated average glucose in mg/dL or mmol/L. It applies the ADAG regression published by Nathan and colleagues in Diabetes Care (2008), eAG = 28.7 × A1C − 46.7 mg/dL, together with the NGSP master equation IFCC = (DCCT − 2.15) × 10.929. An HbA1c of 7.0% therefore equals 53 mmol/mol and an average glucose of about 154 mg/dL or 8.6 mmol/L.",
   useCases: [

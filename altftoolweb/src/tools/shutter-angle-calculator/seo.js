@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shutter Angle Calculator: 180° Rule and Flicker Check",
+  metaDescription:
+    "Convert a shutter angle to the 1/x speed your camera menu asks for at any fps — 180° is 1/48s at 24fps — and check it against 50 Hz or 60 Hz mains.",
+  steps: [
+    "Pick 'I have the shutter angle' or 'I have the shutter speed', then type the Shutter angle (degrees) and the Frame rate (fps).",
+    "Set 'Mains frequency where you are shooting' to 50 Hz or 60 Hz so the banding check runs against your exposure.",
+    "Read 'Shutter speed to dial in', the 'Exposure against the 180° rule' stops row and the 'Nearest flicker-free angle' row, then press Copy result.",
+  ],
   intro:
     "The Shutter Angle Calculator converts between the rotary shutter angle a cinema camera displays and the 1/x shutter speed a stills-derived menu asks for, at any frame rate. The relationship is exposure time = angle / (360 x fps), so the familiar 180-degree rule — exposing for half of each frame interval — gives 1/48 s at 24 fps and 1/50 s at 25 fps. It also checks the resulting exposure against 50 Hz and 60 Hz mains lighting, which pulses at twice the supply frequency and causes rolling bands when the exposure does not span a whole number of pulses.",
   useCases: [

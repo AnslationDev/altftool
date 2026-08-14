@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON Compare: LCS Diff That Ignores Formatting",
+  metaDescription:
+    "Both sides are re-printed at two-space indentation before an LCS diff runs, so only real changes show. Paste, upload .json files or fetch two URLs.",
+  steps: [
+    "Fill JSON Document A (Left) and JSON Document B (Right): paste into each textarea, press Upload JSON to pick a .json file, or paste an endpoint into the \"Paste JSON API URL to load (CORS enabled)\" box and press Fetch. Load Sample JSON fills both sides at once.",
+    "Press Compare JSON Documents. Each side is parsed and re-serialised with JSON.stringify(value, null, 2) before the longest-common-subsequence diff runs, so minified-versus-pretty formatting never registers; a bad side is reported as \"Invalid JSON inside Panel A\" with the parser's own message.",
+    "Comparison Result shows Added lines and Removed lines counts, or \"Both documents match 100%!\", above two synchronised line-numbered panes with removals highlighted on the left and additions on the right. Clear All empties both inputs and the diff.",
+  ],
   intro:
     "JSON Compare parses both inputs, re-serialises each one with two-space indentation, then aligns the two using a longest-common-subsequence diff so only genuine differences are highlighted — reformatting, minification and stray whitespace disappear before the comparison starts. Added lines are marked on the right panel, removed lines on the left, and a running count of each is shown above the result. You can paste the two documents, upload files, or fetch them from URLs, and invalid JSON is reported per panel with the parser's own error message.",
   useCases: [

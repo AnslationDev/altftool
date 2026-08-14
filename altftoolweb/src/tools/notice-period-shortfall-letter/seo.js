@@ -1,4 +1,12 @@
 const seo = {
+  title: "Notice Period Shortfall: Buyout Cost & Waiver Letter",
+  metaDescription:
+    "Prices unserved notice days at salary ÷ 30, 26 or the month's actual days, sets leave encashment against it, and drafts the waiver or buyout request.",
+  steps: [
+    "Enter the Resignation date, Contractual notice (days), Last working day you want, Monthly salary used for recovery (INR) and Accrued leave balance (days).",
+    "Choose Which salary component and the Per-day divisor in the contract — Fixed 30 days per month, 26 working days per month, or the actual days in the month — then pick What you are asking for.",
+    "Read the Net amount at stake with the shortfall in days, the per-day rate and all four waiver outcomes, then press Copy letter for the draft.",
+  ],
   intro:
     "This tool prices a notice-period shortfall — the days between the last working day you want and the one your contract requires — and drafts the letter asking for them to be waived, halved or bought out. It computes the per-day rate as your monthly salary divided by the divisor your contract uses (30 days, 26 working days, or the actual days in the month), applies your accrued leave balance against the recovery, and compares four settlement outcomes side by side. It also notes that CBIC Circular No. 178/10/2022-GST confirms no GST is payable on notice pay recovery.",
   useCases: [

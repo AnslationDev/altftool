@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Summarizer — Extractive, No AI, Runs in Browser",
+  metaDescription:
+    "Pulls the first, middle and last sentences from your text — nothing rewritten, nothing uploaded. Three fixed lengths, with your last 10 summaries kept.",
+  steps: [
+    "Paste your text under the \"Paste your text\" label and pick short, medium or long — exactly one, two or three sentences of output.",
+    "Click Summarize: the tool splits sentences at . ? ! boundaries and keeps them by position (first, middle, last) with no rewriting.",
+    "Copy the result or click Download to save it as summary.txt; your last 10 runs stay available under History.",
+  ],
   intro:
     "This is an extractive summarizer: it splits your text into sentences at full stops, question marks and exclamation marks, then pulls out sentences by position rather than rewriting anything. Short returns the opening sentence, Medium returns the first and the last, and Long returns the first, the middle and the last, so every word in the summary is a word you wrote. It suits a quick skim of an article, a set of notes or a long email when you want the framing sentences without reading the whole thing.",
   useCases: [

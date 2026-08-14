@@ -1,4 +1,12 @@
 const seo = {
+  title: "Final Exam Score Needed Calculator by Grade Weight",
+  metaDescription:
+    "Enter your current grade, the final's weight and your target to get the minimum exam score in percent and marks — plus every grade band and what-ifs.",
+  steps: [
+    "Enter your Current grade so far (%), the Final exam weight (%), your Target overall grade (%) and the Final exam maximum marks.",
+    "Read 'Score needed in the final', which updates as you type — the minimum percent and its marks out of your paper's maximum, showing 0% when the target is already secured or 'Not reachable' when even a perfect final falls short.",
+    "Check 'Score needed for each grade band' for A through Pass and the 'What if you score...' table of overall outcomes, then press Copy result.",
+  ],
   "intro": "Exam Score Needed Calculator solves the one question every student asks before finals: what is the minimum I can score and still hit my target? It takes the grade you carry in from assignments and mid-terms, the percentage weight of the final paper, and your target overall grade, then returns the exact score required — in percent and in raw marks. It also lists the score needed for every grade band and shows what your overall grade would be at a range of possible exam scores.",
   "useCases": [
     "Work out the minimum final exam score that keeps your course grade at an A before you plan your revision hours.",

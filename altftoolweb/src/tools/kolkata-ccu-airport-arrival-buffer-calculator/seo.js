@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kolkata CCU Airport: What Time to Leave Home",
+  metaDescription:
+    "Counts back from your departure through gate close, security, bag drop and the drive from your area to one leave-home time for Dum Dum.",
+  steps: [
+    "Enter the Scheduled departure time printed on the ticket, then pick Flight type and Baggage — Checked bag to drop, or Cabin bag only, checked in online.",
+    "Pick Starting from (Salt Lake, New Town, Howrah / Salkia, Behala / Joka and more), then tune Driving time with no traffic (minutes), Road conditions and Terminal queues.",
+    "Read Leave home by, the Driven by row naming which deadline binds, and the Minute-by-minute timeline; Copy plan puts the whole schedule on the clipboard.",
+  ],
   intro:
     "This calculator turns a Kolkata CCU departure time into the single time you need to leave home, working backwards through the boarding-gate close, security, emigration, bag drop and the drive along VIP Road or the EM Bypass. It uses the larger of two deadlines - the advised reporting time (2 hours domestic, 3 hours international at Netaji Subhas Chandra Bose International) and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. The airline's bag-drop cut-off is shown too, for reference, though it is earlier than both of those deadlines so it does not change the leave-home time.",
   useCases: [

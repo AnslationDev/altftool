@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stream Time Zone Converter – DST-Correct Local Times",
+  metaDescription:
+    "Convert one stream start time into every audience zone via IANA data — DST correct for the exact date, with day shifts and prime-time flags.",
+  steps: [
+    "Pick the Stream date, the Start time (24-hour) and the source zone under 'That time is in'.",
+    "Tick the Audience time zones checkboxes for every region you announce to; offsets come from the IANA database for that exact date.",
+    "Read the 'Local start time by zone' table with day-shift and slot labels, then press Copy result for a paste-ready announcement.",
+  ],
   intro:
     "This converter resolves one stream start time in one IANA time zone to a single UTC instant, then re-renders that instant in every audience zone you tick. Because it reads the IANA time zone database rather than a fixed offset table, daylight saving is applied for the exact date entered — a 20:00 London slot lands on a different US hour in July than in January. Streamers, community managers and remote hosts use it to announce a schedule once without a wall of manual conversions.",
   useCases: [

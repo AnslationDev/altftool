@@ -1,4 +1,12 @@
 const seo = {
+  title: "Permanent PDF & Image Redaction, Flattened Locally",
+  metaDescription:
+    "Draw masks and export a flattened PDF or PNG with no selectable text left. Up to 40 pages, 50 MB, at 96, 144 or 216 DPI, all in your browser.",
+  steps: [
+    "Press Choose PDF or image and load a PDF, PNG, JPEG, WebP, GIF, BMP or AVIF file up to 50 MB, with PDFs up to 40 pages.",
+    "Drag on the page to add a mask under Cover sensitive areas, or press Add centered mask, then pick a PDF raster quality of 96, 144 or 216 DPI.",
+    "Press Export flattened PDF, inspect every page in the preview, then download the file, which is named after the source with -redacted appended.",
+  ],
   intro:
     "This redactor removes sensitive content from a PDF or image by rasterizing every page to a canvas, painting fully opaque rectangles over the areas you mark, and rebuilding the file from those flattened pixels — so the finished PDF contains no selectable text, no original page objects and nothing underneath the boxes to recover. A black rectangle drawn in a PDF editor usually sits on top of text that is still in the file and can be copied straight out; this rebuilds the page instead. Everything happens in your browser, and you choose the export resolution: 96, 144 or 216 DPI.",
   useCases: [

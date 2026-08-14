@@ -1,4 +1,12 @@
 const seo = {
+  title: "Air Fryer vs Oven Electricity Cost Calculator (per Meal)",
+  metaDescription:
+    "Compare a meal's kWh and cost in an air fryer vs an electric oven — preheat at full watts, cooking at the duty cycle — plus yearly INR and time savings.",
+  steps: [
+    "Enter each appliance's Rated power (watts), Preheat time (minutes), Cook time (minutes) and Element duty cycle while cooking (0-1) for both the air fryer and the conventional electric oven.",
+    "Set your Electricity tariff (INR per kWh) and Meals cooked this way per week — the comparison recalculates as you type, with no submit button.",
+    "Read the Saving per meal figure and the per-meal table of Energy used, Electricity cost and Total time (preheat + cook), then press Copy result for the text summary or Reset to restore defaults.",
+  ],
   intro:
     "This calculator compares the electricity a meal costs in an air fryer against the same meal in a conventional electric oven, splitting each cook into a preheat phase at full rated power and a cooking phase at the thermostat's duty cycle. Energy equals rated watts divided by 1000, multiplied by preheat hours plus cook hours times the duty cycle. It exists because the headline wattage alone is misleading: a short preheat and a small cavity matter as much as the rating on the plate.",
   useCases: [

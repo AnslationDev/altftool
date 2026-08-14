@@ -1,4 +1,12 @@
 const seo = {
+  title: "Real Estate Prompt Pack with Fair Housing Screen",
+  metaDescription:
+    "12 fill-in-the-blank AI prompts for listings, outreach and negotiation, each screened against 24 phrases HUD guidance flags under the Fair Housing Act.",
+  steps: [
+    "Narrow the 12 prompts with the Search prompts box or the Category select, then click a prompt card to load it.",
+    "Fill in the blanks for that prompt — Clear fields empties them, Use example values puts the sample placeholders back.",
+    "The panel reports estimated tokens, blanks filled, word and character counts and the fair housing check; press Copy prompt, and paste finished copy into \"Screen finished copy for fair housing language\" to get each flagged phrase with its protected class and a suggested rewrite.",
+  ],
   intro:
     "The Real Estate Agent Prompt Pack is a library of 12 fill-in-the-blank AI prompts covering the work agents repeat every week: listing descriptions, portal headlines, walkthrough video scripts, seller and expired-listing outreach, neighbourhood guides, buyer briefs, viewing feedback, offer presentation, price-reduction conversations and post-completion follow-up. Every prompt carries the same standing rule — describe the property, never the sort of person who should buy it — and everything you type is screened against 24 phrases that HUD advertising guidance flags under section 3604(c) of the Fair Housing Act. Fill the blanks in your browser and paste the finished prompt into any assistant.",
   useCases: [

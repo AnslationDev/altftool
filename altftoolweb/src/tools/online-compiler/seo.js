@@ -1,4 +1,12 @@
 const seo = {
+  title: "Online HTML, CSS & JavaScript Compiler with Live Preview",
+  metaDescription:
+    "Write HTML, CSS and JS in a Monaco editor; the sandboxed preview re-renders 600 ms after you stop typing. Console panel included, export as a .zip.",
+  steps: [
+    "Write in the HTML, CSS and JavaScript tabs of the Monaco editor, or open Templates to start from one of the built-in starter layouts.",
+    "Leave Auto on and the sandboxed preview re-renders 600 ms after you stop typing, or press Run (Ctrl+S); console.log, warnings and uncaught errors land in the Console panel.",
+    "Choose Download → Download .zip to save index.html, style.css and script.js as one archive named after the project.",
+  ],
   intro:
     "The Online Code Compiler is a three-pane HTML, CSS and JavaScript playground: you write in a Monaco editor, and 600 ms after you stop typing the three files are assembled into one document and rendered in a sandboxed iframe. A console panel mirrors every console.log, warning and error from the preview, including uncaught exceptions with line and column numbers and unhandled promise rejections. Projects save to your browser and export as a ZIP containing index.html, style.css and script.js ready to open anywhere.",
   useCases: [

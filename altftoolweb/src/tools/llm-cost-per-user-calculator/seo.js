@@ -1,4 +1,12 @@
 const seo = {
+  title: "LLM Cost Per User: Chat History Grows Quadratically",
+  metaDescription:
+    "Cost per active user from sessions, tokens and per-million rates, including the resent transcript that grows prompt tokens with the square of turn count.",
+  steps: [
+    "Under Usage enter Monthly active users, Sessions per user per month, Messages per session, and the system, user and reply token counts.",
+    "Set Input rate, Output rate, Cached input rate and Prompt cache hit rate, and leave “Resend the full conversation history on every turn” ticked for a stateless chat API.",
+    "Read Cost per active user per month, alongside cost per session, cost per message and the gross margin against your price per user.",
+  ],
   intro:
     "Cost per active user is the AI unit economic that decides whether a feature is priceable: sessions per user × cost per session, where a session costs (prompt tokens × input rate + output tokens × output rate) ÷ 1,000,000. The number most spreadsheets miss is conversation history — a stateless chat API resends the system prompt and the whole transcript on every turn, so prompt tokens grow with turn number and a session's total grows quadratically. For n turns with a system prompt of s tokens, user messages of u and replies of a, total prompt tokens are n·s + u·n(n+1)/2 + a·n(n−1)/2.",
   useCases: [

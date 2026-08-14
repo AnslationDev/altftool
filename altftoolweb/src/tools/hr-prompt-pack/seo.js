@@ -1,4 +1,12 @@
 const seo = {
+  title: "HR Prompt Pack: 12 Prompts for Hiring, Reviews, Policies",
+  metaDescription:
+    "12 fill-in-the-blank prompts for job posts, structured interview guides with rubrics, 30-60-90 plans, policies and evidence-based reviews.",
+  steps: [
+    "Search prompts or pick a Category — Hiring, Job Descriptions, Onboarding, Policies, Performance or Employee Comms — and tap one of the 12 prompt cards.",
+    "Fill in the blanks for that prompt, press 'Use example values' to load the placeholders, or 'Clear fields' to empty them again.",
+    "Check the estimated token count, the blanks-filled count and the context-window note, then press Copy prompt to paste the finished text into your assistant.",
+  ],
   intro:
     "The HR Prompt Pack is a library of 12 fill-in-the-blank AI prompts covering the documents people teams write most often: job posts, de-biased adverts, structured interview guides with scorecards, 30-60-90 onboarding plans, plain-English policies, evidence-based performance reviews, SBI feedback scripts and exit interviews. Each prompt fixes the structure and the fairness constraints in advance — behavioural questions in STAR form, rubrics tied to observable evidence, no comment on protected characteristics — so the draft is usable rather than generic. Everything is assembled in your browser and copied out to whichever assistant you use.",
   useCases: [

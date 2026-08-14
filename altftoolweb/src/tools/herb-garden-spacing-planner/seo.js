@@ -1,4 +1,12 @@
 const seo = {
+  title: "Herb Garden Spacing Planner: Will They Fit Your Bed?",
+  metaDescription:
+    "Each herb gets a square of its own spacing — 30 cm basil, 60 cm rosemary — so you see if your picks fit the bed, plus soil depth and sun hours.",
+  steps: [
+    "Enter Bed length and Bed width, and set Measured in to cm, inches or feet.",
+    "Under \"How many of each herb?\" set a count against any of the 15 herbs — each row shows that herb's spacing in cm, soil depth in cm and daily sun hours.",
+    "Read \"Bed space used\" as a percentage with Deepest soil required and Sun the sunniest herb wants, then the Plant by plant table of spacing, depth, sun and Fits alone; Copy plan puts the summary on your clipboard.",
+  ],
   intro:
     "A herb garden spacing planner works out whether the herbs you want will actually fit the bed you have. It gives each plant a square of side equal to its recommended plant-to-plant spacing — the way horticulture extension guides state herb spacing — so one basil needs 30 × 30 cm and one rosemary needs 60 × 60 cm, then totals the footprint against your bed area and reports how many of each herb the bed could hold on its own. It also carries the minimum soil depth and daily sun hours for fifteen kitchen herbs, and flags the runners that will take over a shared bed.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Expense Tracker with Category Pie & 6-Month Charts",
+  metaDescription:
+    "Log expenses by date and one of seven categories — totals, highest category, pie and six-month bar charts recalculate on every add or delete.",
+  steps: [
+    "Fill the Add New Expense form — description, amount, date and one of the seven categories from Food & Dining to Other — and click 'Add Expense'.",
+    "Filter the list with the All Categories dropdown to isolate one category, or delete entries you no longer want; totals recalculate on every change.",
+    "Read the Total Expenses, Highest Category and Total Entries cards plus the category pie chart and six-month bar chart — entries persist in your browser's local storage.",
+  ],
   intro:
     "The Expense Tracker logs what you spend — description, amount, date and one of seven categories — and turns the running list into a live dashboard: total spent, your biggest category, entry count, a category pie chart and a bar chart of the last six months. Entries are stored in your browser's local storage, so the list is still there when you come back, and amounts are formatted in Indian rupees. Add, filter by category and delete entries; the totals and both charts recalculate on every change.",
   useCases: [

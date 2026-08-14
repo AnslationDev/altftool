@@ -1,4 +1,12 @@
 const seo = {
+  title: "Case Study AI Prompt Builder with STAR Framework",
+  metaDescription:
+    "Turn your problem, approach and measurable results into a case study prompt on Problem-Solution-Result, STAR or Challenge-Solution-Impact.",
+  steps: [
+    "Fill \"The problem (required)\", \"The approach / solution (required)\" and \"Measurable results (required)\", plus Client name, Industry and \"Key metrics to quote verbatim (optional)\".",
+    "Choose a Framework — \"Problem – Solution – Result\", \"STAR (Situation, Task, Action, Result)\" or \"Challenge – Solution – Impact\" — then a Case study length of Brief (one-pager), Standard or Deep dive, a Tone and an Audience, and tick \"Anonymise the client\" if the name cannot be used.",
+    "The Generated prompt is assembled below with \"Estimated prompt tokens\" at roughly 4 characters per token; \"Copy prompt\" puts it on the clipboard to paste into your AI assistant.",
+  ],
   intro:
     "The Case Study Prompt Builder assembles a complete, structured AI prompt for writing a business case study from the three facts every case study needs: the problem, the approach and the measurable result. It structures the prompt around a recognised framework — Problem–Solution–Result, STAR (Situation, Task, Action, Result) or Challenge–Solution–Impact — and instructs the AI to use only the facts you supply, so nothing gets invented. It is built for marketers, founders and consultants who have the raw wins but not the time to brief a writer.",
   useCases: [

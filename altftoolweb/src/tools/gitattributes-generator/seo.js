@@ -1,4 +1,12 @@
 const seo = {
+  title: ".gitattributes Generator: text=auto, LFS and binary",
+  metaDescription:
+    "Build a .gitattributes with the exact git syntax: text=auto, the binary macro, filter=lfs diff=lfs merge=lfs -text, export-ignore and custom diff drivers.",
+  steps: [
+    "Pick a Line-ending policy — \"Normalize — LF in repo, native line endings on checkout\", \"LF everywhere\" or \"No global rule\" — and tick \"Keep .bat / .cmd / .ps1 as CRLF\" and \"Force .sh scripts to LF\".",
+    "List your Binary patterns, Git LFS patterns, export-ignore paths and linguist-generated patterns, and use \"Add diff driver\" for each pattern to driver-name pair.",
+    "Check the \"Attribute rules generated\" count and press Copy file to take the finished .gitattributes.",
+  ],
   intro:
     "This generator builds a .gitattributes file using the exact attribute syntax from the official git documentation: text=auto for line-ending normalization, the binary macro for images and archives, filter=lfs diff=lfs merge=lfs -text for Git LFS tracking, export-ignore for git archive, and diff=<driver> for custom diff drivers. It is aimed at developers on mixed Windows, macOS and Linux teams who want line endings and binary handling settled once, at the repository level, instead of per-machine core.autocrlf settings.",
   useCases: [

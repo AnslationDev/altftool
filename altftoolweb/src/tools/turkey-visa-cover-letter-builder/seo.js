@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turkey Visa Cover Letter Builder With Date Checks",
+  metaDescription:
+    "Draft a Türkiye e-Visa cover letter and test your dates against the 30/90-day stay, the 90-in-180 rule and 60-days-beyond-stay passport validity.",
+  steps: [
+    "Enter \"Full name (as in passport)\", \"Passport number\", \"Passport expiry date\", \"Nationality\" and \"Occupation\".",
+    "Set \"Visa type and stay allowance\", \"Arrival in Türkiye\", \"Departure from Türkiye\", \"Days in Türkiye in the last 180\" and \"Funds available (EUR)\".",
+    "Read the letter alongside the exact dates and figures that would fail — stay overshoot, the 90/180 total and the 60-days-beyond-stay passport date — then press \"Copy letter\".",
+  ],
   intro:
     "The Turkey Visa Cover Letter Builder drafts a Türkiye e-Visa or consulate cover letter and runs your dates against the three rules that actually decide the application: the stay allowance printed on the visa (30 or 90 days), the 90-days-in-any-180-days limit on visitor presence, and the passport rule requiring validity for at least 60 days beyond the duration of stay. Enter your passport details, arrival and departure dates, purpose, itinerary and available funds, and you get a formatted letter plus a list of the specific dates and figures that would fail. It is informational, for travellers preparing their own file — not immigration advice.",
   useCases: [

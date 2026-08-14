@@ -1,4 +1,12 @@
 const seo = {
+  title: "Posting Schedule Planner: Board, Week and Analytics",
+  metaDescription:
+    "Plan posts across 8 platforms with caption limits beside the box — X 280, Instagram 2,200, LinkedIn 3,000 — in a board, week calendar and analytics.",
+  steps: [
+    "Press New Post and fill the Post Info tab — Post Title, Platform, Content Type, Campaign Goal, Status, Cover Color and Notes / Next Steps — then Caption & Tags, where a live character count sits beside the platform limits (Instagram 2,200, Twitter/X 280, LinkedIn 3,000, TikTok 2,200, YouTube 5,000, Facebook 63,206) and the hashtag tally.",
+    "Set Publish Date and Publish Time on the Schedule tab, add likes, comments and shares on the Metrics tab once the post is out, then press Save Post — Update Post when editing an existing card.",
+    "Switch between the Board, Calendar and Analytics tabs: the board searches by title, caption or hashtag and changes a post's status inline, the strip above counts Total, Scheduled, Published, Draft, Review and Archived, and the calendar lays the same posts across seven days.",
+  ],
   intro:
     "The Posting Schedule Planner is a social content calendar that holds each post's title, platform, format, date and time, caption, hashtags, goal and status, and shows the same set of posts as a filterable board, a seven-day week calendar and an analytics view. It is for solo marketers and small teams who are running eight platforms out of a spreadsheet and want caption limits, approval status and published-post metrics in one place. Every post carries a status from Draft, Scheduled, Published, Needs Review or Archived, so what is waiting on sign-off is visible without a separate tracker.",
   useCases: [

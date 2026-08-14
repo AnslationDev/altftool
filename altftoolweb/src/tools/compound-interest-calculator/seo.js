@@ -1,4 +1,7 @@
 const seo = {
+  title: "Compound Interest Calculator with Year-by-Year Table",
+  metaDescription:
+    "A = P(1+r/n)^nt with daily, monthly, quarterly, half-yearly or yearly compounding - maturity amount, interest earned and a year-wise balance table in ₹.",
   intro:
     "This compound interest calculator applies the standard formula A = P(1 + r/n)^(nt), where n is 365 for daily, 12 for monthly, 4 for quarterly, 2 for half-yearly and 1 for yearly compounding, and reports the maturity amount, the interest portion and a year-by-year balance table in rupees. Savers comparing a fixed deposit against a recurring alternative can see exactly how much of the final figure is interest rather than principal. It models a single lump sum with no further deposits and no tax deducted.",
   useCases: [

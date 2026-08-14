@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Loan Eligibility Calculator: FOIR and RBI LTV Cap",
+  metaDescription:
+    "Estimate your sanction from income, existing EMIs, age and property value — the lower of the FOIR repayment limit and the RBI loan-to-value ceiling.",
+  steps: [
+    "Enter Net monthly income (INR), Other monthly income (rent, co-applicant), Existing monthly EMIs (INR), FOIR allowed by lender (%), Interest rate (% per year), Tenure wanted (years), Your age (years), Employment type and Property agreement value (INR).",
+    "Figures recompute as you type, and the \"Use the typical FOIR for this income\" button fills in the FOIR band lenders normally allow at that income level.",
+    "Estimated eligible loan gives the sanction and the tenure it assumes, above rows for Eligible on repayment capacity, Eligible on RBI LTV ceiling, Binding constraint, Indicative EMI, Own contribution (down payment) and Total interest over the tenure; press Copy result.",
+  ],
   intro:
     "This calculator estimates the home loan a lender is likely to sanction by applying two tests at once: the FOIR (Fixed Obligation to Income Ratio) cap on how much of your monthly income can go to EMIs, and the RBI loan-to-value ceiling on how much of the property value can be financed. The EMI you can afford is capitalised into a principal with the reducing-balance present value formula P = EMI x (1 - (1 + r)^-n) / r, and the sanction is the lower of the income-based and LTV-based limits. It is built for first-time buyers sizing a budget before they pay a booking amount.",
   useCases: [

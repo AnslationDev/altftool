@@ -1,4 +1,12 @@
 const seo = {
+  title: "Advance Tax for Freelancers: 4 Instalments After TDS",
+  metaDescription:
+    "Slab tax under the new or old regime, less Section 194J TDS, split 15%/45%/75%/100% across the 15 June, 15 Sept, 15 Dec and 15 March due dates.",
+  steps: [
+    "Pick New regime or Old regime, then fill in Gross professional receipts, Business expenses, Chapter VI-A deductions and TDS deducted by clients in rupees.",
+    "The planner applies the slab rates, the Section 87A rebate, surcharge with marginal relief and 4% cess, then subtracts your TDS to get the advance tax for the year.",
+    "Read the Instalment schedule table — due date, cumulative 15/45/75/100%, Pay now amount and Upcoming or Past due date status — then press Copy result.",
+  ],
   "intro": "Freelancer Advance Tax Planner turns a year of consulting or professional income into the four advance tax instalments the Income Tax Act actually asks for. It computes slab tax under the new or old regime, applies the Section 87A rebate, surcharge with marginal relief and 4% cess, subtracts the TDS your clients deducted under Section 194J, and then spreads the balance across the 15 June, 15 September, 15 December and 15 March due dates. Built for freelancers, consultants, doctors, designers and other professionals with no employer withholding their tax for them.",
   "useCases": [
     "Decide how much to set aside each quarter once a few retainer clients are locked in for the year.",

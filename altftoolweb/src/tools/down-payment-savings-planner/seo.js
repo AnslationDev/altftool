@@ -1,4 +1,12 @@
 const seo = {
+  title: "Down Payment Savings Planner: Stamp Duty and RBI LTV",
+  metaDescription:
+    "Monthly saving for a house down payment, with price growth to the purchase date, stamp duty and registration in cash, and a check against the RBI LTV cap.",
+  steps: [
+    "Enter \"Property price today (₹)\", \"Years until you buy\", \"Property price growth (% per year)\" and \"Down payment (% of price)\".",
+    "Add \"Stamp duty, registration & charges (%)\", \"Already saved for this (₹)\", \"Return on those savings (% per year)\" and your home loan rate and tenure.",
+    "Read \"Save every month\" with the \"Cash needed on the day\" and \"Loan and EMI\" rows, then the \"Against the RBI loan-to-value ceiling\" panel; press Copy result.",
+  ],
   intro:
     "A down payment planner works out the monthly saving that puts the right amount of cash in your hands on the day you buy, not the day you plan. It inflates the property price to the purchase date, adds stamp duty and registration — costs a housing loan does not cover — compounds what you have already set aside, then solves the ordinary-annuity payment C = gap × i ÷ ((1+i)^n − 1) for the shortfall. It also checks the down payment against the RBI loan-to-value ceiling, which sets the legal minimum a bank can accept.",
   useCases: [

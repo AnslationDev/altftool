@@ -1,4 +1,12 @@
 const seo = {
+  title: "Anna University Attendance Calculator — 75% Rule",
+  metaDescription:
+    "Enter classes held and attended: get your percentage, whether you clear the 75% exam rule or the 65% condonation band, plus classes needed to reach 75%.",
+  steps: [
+    "Enter 'Classes held so far' and 'Classes you attended', plus the optional 'Classes planned for the whole term' and classes per week.",
+    "Read the percentage against the 75% exam requirement and 65% condonation floor, with rows for classes to attend in a row and classes you can still miss.",
+    "Press 'Copy result' for the percentage, status and term plan as text; 'Reset' restores the 40 held / 28 attended defaults.",
+  ],
   intro:
     "Attendance percentage is attended classes divided by classes held, times 100, and Anna University requires at least 75% in a course before a student is permitted to sit its end-semester examination. This calculator returns that percentage, places it against the 75% requirement and the 65% condonation floor, and solves the two questions that actually matter: how many classes in a row you must attend to climb back to 75%, and how many you can still miss without falling below it. Where you know the total classes planned for the term, it also reports the absolute number you must attend across the whole course.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "EWS Certificate Check: Rs 8 Lakh and 4 Asset Bars",
+  metaDescription:
+    "Runs the under-Rs-8-lakh family income limit and four property exclusions — 5 acres, 1,000 sq ft flat, 100 and 200 sq yard plots — with unit conversion.",
+  steps: [
+    "Enter family income under Salary and pension, Agriculture, Business, Profession and Other sources (rent, interest, dividends).",
+    "Add Agricultural land, Residential flat area, Residential plot in a notified municipality and Residential plot elsewhere, choosing acres, hectares, square feet, square yards or square metres per row.",
+    "Read Criteria met as a count of the conditions passed, with the room left under the income limit and each converted area, then press Copy result.",
+  ],
   intro:
     "An EWS certificate requires two things at once: the family's gross annual income must be below ₹8 lakh, and the family must not own any of four listed properties — 5 acres of agricultural land, a 1,000 sq ft flat, a 100 sq yard plot in a notified municipality, or a 200 sq yard plot elsewhere. This checker applies both tests as they are written in the Department of Personnel and Training memorandum of 31 January 2019, including the rule that property in different cities is clubbed together first. Area fields accept acres, hectares, square feet, square yards or square metres.",
   useCases: [

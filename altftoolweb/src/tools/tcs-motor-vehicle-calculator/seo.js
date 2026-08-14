@@ -1,4 +1,12 @@
 const seo = {
+  title: "TCS on Car Purchase Calculator: 1% Above Rs 10 Lakh",
+  metaDescription:
+    "Section 206C(1F) charges 1% on the whole invoice once a vehicle crosses Rs 10,00,000. Covers the 5% no-PAN rate and exempt buyers.",
+  steps: [
+    "Pick \"What is being sold\" — Motor vehicle (car, SUV, two-wheeler, commercial vehicle) or Notified luxury good — and enter the Sale consideration on the invoice (INR).",
+    "Clear \"Buyer has furnished a PAN\" to apply the 5% rate under section 206CC, or tick \"Buyer is an exempt entity\" for a government body, foreign mission or PSU carrier.",
+    "\"TCS the seller collects\" shows the amount, with Rate applied, Threshold crossed? and Total the buyer pays listed under it — Copy result takes the summary.",
+  ],
   intro:
     "Section 206C(1F) of the Income-tax Act requires a seller to collect 1% tax at source from the buyer when a motor vehicle sells for more than Rs 10,00,000, and this calculator works out the amount and the total the buyer actually pays. The Rs 10,00,000 figure is a trigger rather than an exemption slab, so once the value is crossed the 1% runs on the entire sale consideration. The same 1% now extends to notified luxury goods above Rs 10,00,000 from 22 April 2025, and the tool also covers the exempt buyer categories and the 5% no-PAN rate under section 206CC.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Future Job Predictor: Score 5 Careers on 10 Skills",
+  metaDescription:
+    "Rate 10 skills on 0-100 sliders; each career starts at 70 and moves 0.15 per point off 50. Returns a ranked list, radar chart and study roadmap.",
+  steps: [
+    "On step 1 enter Age, Country, \"Education Level\" and \"Current Occupation\", then on step 2 rate all ten skills — Programming, Communication, Leadership, Creativity, Mathematics, Design, Writing, AI Knowledge, Data Analysis, Problem Solving — on 0-100 sliders.",
+    "Pick your interests, personality traits and work preferences (Remote, Hybrid, Office, Startup, Corporate, High Salary, Work Life Balance) across steps 3 to 5, then press \"Run Compatibility Engine\".",
+    "Open the \"Fit Analytics\" tab for the five ranked careers with Salary range, Future Demand, Automation Risk and Est. Prep Time, or \"Study Roadmap\" for the missing skills and certification sequence.",
+  ],
   intro:
     "Future Job Predictor scores you against five forward-looking careers — AI & Prompt Engineer, Climate Restoration Architect, Cybersecurity Analyst Pro, UI & UX Designer and Space Operations Engineer — by rating eleven skills on 0-100 sliders and picking your interests, personality traits and work preferences. Each career starts from a base match of 70 and moves by 0.15 points for every point your rating on its four required skills sits above or below 50, with a further +5 for a Remote or High Salary preference match and +1 for each selected interest that matches the career, capped at 100. The ranked result comes with a skill-fit radar, a salary comparison chart, a four-stage roadmap and each role's automation-risk and demand figures.",
   useCases: [

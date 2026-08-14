@@ -1,4 +1,12 @@
 const seo = {
+  title: "Simply Supported Beam Deflection & Stress Calculator",
+  metaDescription:
+    "Max deflection, bending moment, bending stress and span/deflection ratio for a simply supported beam under a centre point load or a uniform load.",
+  steps: [
+    "Under Simply supported load case pick Center point load or Uniform load over full span.",
+    "Enter Load P (N) or w (N/m), Span L (m), Elastic modulus E (GPa), Second moment I (cm⁴) and Section modulus Z (cm³) — or press the Steel center load example.",
+    "Read the maximum deflection in mm in the Result panel, with the Maximum moment (N·m), Bending stress (MPa) and Span / deflection rows beneath it.",
+  ],
   intro:
     "The Beam Deflection & Stress Calculator solves the two standard simply supported cases — a central point load and a uniformly distributed load — returning maximum deflection, maximum bending moment, bending stress and the span-to-deflection ratio. It uses the textbook closed-form results PL³/48EI and 5wL⁴/384EI for deflection, PL/4 and wL²/8 for moment, and σ = M/Z for stress. It is for students, makers and engineers sanity-checking a section size, and it assumes linear-elastic small-deflection behaviour rather than performing a code design check.",
   useCases: [

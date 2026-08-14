@@ -1,4 +1,12 @@
 const seo = {
+  title: "Consent Inventory Mapper: Collection to Withdrawal",
+  metaDescription:
+    "Paste pipe-separated lines to build a five-column consent record - collection point, purpose, action, withdrawal route, owner - with gaps counted.",
+  steps: [
+    "Type one record per line into Records (one per line), using | between collection point, purpose, consent action, withdrawal route and owner.",
+    "Leave Require complete rows ticked so every line missing one of the five fields is flagged as needs-review.",
+    "Read the Structured inventory table, which lists the first 100 records with complete and needs-review counts, then Copy or Download it.",
+  ],
   intro:
     "The Consent Inventory Mapper turns pipe-separated lines into a five-column table — collection point, purpose, consent action, withdrawal route and owner — and counts how many rows are missing a field so gaps are visible before an audit finds them. It is built for the person inside a small business who has to write down where consent is actually captured: the signup checkbox, the newsletter opt-in, the cookie banner, and who owns each one. It organises what you type and is general information, not legal advice on whether any of it is lawful.",
   useCases: [

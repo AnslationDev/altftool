@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Usage Journal: First-Pass Rate & Time Saved",
+  metaDescription:
+    "Log each AI task with one of five outcomes weighted 1.0 to 0, and get an effectiveness score out of 100, a first-pass rate and net minutes saved.",
+  steps: [
+    "Under Log a task fill What did you ask for?, Date, Assistant or model, Attempts / re-prompts, Minutes spent on the AI and Minutes it saved you.",
+    "Pick the Outcome — Used as-is, Light edit, Heavy rewrite, Redone from scratch or Abandoned — and press Add entry.",
+    "Read Net time saved in hours with the First-pass rate (used as-is, one attempt) and Effectiveness score rows, then press Copy result to take the summary and the tab-separated entries.",
+  ],
   intro:
     "AI Usage Journal is a running log of the tasks you hand to an AI assistant, scored so you can see how often the output ships untouched and how much time it really saves. Each entry records the task, the model, the number of re-prompts and one of five outcomes — used as-is, light edit, heavy rewrite, redone from scratch, abandoned — which are weighted 1.0, 0.75, 0.4, 0.15 and 0 to produce an effectiveness score out of 100. Useful for anyone who has to justify an AI subscription, choose between assistants, or find the task types where the tool is quietly costing more time than it saves.",
   useCases: [

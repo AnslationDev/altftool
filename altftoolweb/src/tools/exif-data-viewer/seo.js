@@ -1,4 +1,7 @@
 const seo = {
+  title: "EXIF Viewer for JPEG: Every Tag, GPS Included",
+  metaDescription:
+    "Reads a JPEG's APP1 segment in your browser and lists every tag — camera, exposure, ISO, focal length and GPS — with unknown fields shown by hex ID.",
   intro:
     "The EXIF Data Viewer opens a JPEG's APP1 metadata segment in your browser and lists every tag it contains — camera make and model, capture and digitised dates, exposure time, F-number, ISO, focal length, orientation, and the GPS block when the photo carries one. It parses the raw bytes directly: it checks the JPEG start marker, finds the Exif header, reads whether the TIFF block is little-endian (II) or big-endian (MM), then walks each 12-byte directory entry and decodes ASCII, short, long and rational values. Tags it recognises get plain-English names; anything else is shown by its hex tag ID so nothing is hidden from you.",
   useCases: [

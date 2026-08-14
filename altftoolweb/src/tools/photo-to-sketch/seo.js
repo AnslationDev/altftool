@@ -1,4 +1,12 @@
 const seo = {
+  title: "Photo to Sketch: Pencil Drawing in Your Browser",
+  metaDescription:
+    "Grayscale, invert, blur and colour-dodge a JPG, PNG or WEBP into pencil lines. Blur radius 1-20 px, contrast, intensity, colored pencil; PNG download.",
+  steps: [
+    "Drop an image on the Drop a photo to sketch panel or press Select Photo — JPG, PNG and WEBP are supported, up to 25 MB.",
+    "Move the Sketch Controls sliders — Blur Radius from 1 to 20 px, Contrast from -60 to 80, Sketch Intensity from 0 to 100% — and switch on Colored Pencil to tint the lines with each pixel's own hue.",
+    "Compare the sketch against the original in the preview, then press Download PNG to save altftool-sketch-<timestamp>.png, or New Photo to start again.",
+  ],
   intro:
     "Photo to Sketch converts a photograph into a pencil drawing using the classic four-step dodge pipeline: the image is reduced to luminance grayscale (0.299R + 0.587G + 0.114B), that layer is inverted, the inversion is softened with a separable box blur, and the two are recombined with a colour-dodge blend so only the edges survive as graphite lines. Three sliders expose the parts that matter — blur radius 1–20 px for how soft the shading reads, contrast −60 to +80 for how hard the darks bite, and sketch intensity 0–100% for how far the result moves from the original photo. A colored-pencil toggle tints the finished lines with each pixel's original hue, and the output saves as PNG.",
   useCases: [

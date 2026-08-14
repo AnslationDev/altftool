@@ -1,4 +1,12 @@
 const seo = {
+  title: "Epworth Sleepiness Scale: 8-Question Score Out of 24",
+  metaDescription:
+    "Rate eight dozing situations 0-3 for an Epworth score out of 24 with its band — 11+ marks excessive daytime sleepiness worth raising with a doctor.",
+  steps: [
+    "Rate each of the eight situations under \"Chance of dozing\" from 0 (would never doze) to 3 (high chance) — or click \"Set all to never\" to start from zero.",
+    "Read your Epworth total out of 24 with its band from the interpretation table: 0-10 normal, 11-12 mild, 13-15 moderate, 16-24 severe.",
+    "Note the \"Situation with the highest rating\" and click \"Copy result\" to save the full breakdown for a clinician.",
+  ],
   intro:
     "The Epworth Sleepiness Scale measures how likely you are to doze off during eight ordinary sedentary situations, each rated 0 (would never doze) to 3 (high chance), giving a total between 0 and 24. It was introduced by Murray Johns in Sleep (1991) and is the questionnaire most sleep clinics hand out at a first appointment. A total above 10 is the conventional marker of excessive daytime sleepiness and is a reason to talk to a doctor rather than simply drink more coffee.",
   useCases: [

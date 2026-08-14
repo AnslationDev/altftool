@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voltage Drop Calculator: Minimum Wire Size in mm²",
+  metaDescription:
+    "Uses R = p x k x L / A with 0.0175 copper, 0.0282 aluminium and k of 2 or root-3, then back-solves the minimum mm² that meets your 3% drop target.",
+  steps: [
+    "Choose Circuit — \"DC / single-phase 2-wire\" or \"Balanced three-phase\" — and Conductor: Copper or Aluminium.",
+    "Enter Nominal voltage (V), Current (A), One-way length (m), Conductor area (mm²) and Target maximum drop (%), or load the \"230 V copper\" example.",
+    "Read the volt drop with its percentage and the row \"Minimum area for target (resistance only)\" in mm², then use Copy or Download.",
+  ],
   intro:
     "The Voltage Drop & Wire Gauge Calculator works out how many volts a cable run loses under load, using R = ρ × k × L / A with a resistivity of 0.0175 Ω·mm²/m for copper and 0.0282 for aluminium, a path factor k of 2 for DC and single-phase two-wire circuits and √3 for balanced three-phase, then drop = I × R. It is for electricians, solar and battery installers, and anyone running a long cable who needs to know whether the far end still sees usable voltage. Alongside the drop in volts and percent, it back-solves the minimum conductor area that would meet your target percentage.",
   useCases: [

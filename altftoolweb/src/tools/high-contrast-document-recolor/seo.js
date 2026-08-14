@@ -1,4 +1,12 @@
 const seo = {
+  title: "High-Contrast Document Recolor for Faint Scans",
+  metaDescription:
+    "Load a page image, push contrast up to 4x, toggle grayscale or invert, and export a full-resolution PNG without uploading anything.",
+  steps: [
+    "Choose a scan or photo in the Page image picker, which accepts any image file.",
+    "Drag Contrast from 0.5x up to 4x and Brightness from 0.5x to 2x, and switch Grayscale or Invert on.",
+    "Press Export PNG to save high-contrast-page.png at the image's original pixel dimensions.",
+  ],
   intro:
     "This tool re-renders a scanned or photographed page for easier reading by applying four canvas filters — contrast from 0.5x to 4x, brightness from 0.5x to 2x, a grayscale toggle and a full inversion toggle — with a live preview and a PNG export at the image's original pixel dimensions. Grayscale is on and contrast starts at 1.8x, which is usually enough to lift faint pencil or low-toner text off the paper. It is for readers with low vision or light sensitivity, and for anyone stuck with a badly scanned handout.",
   useCases: [

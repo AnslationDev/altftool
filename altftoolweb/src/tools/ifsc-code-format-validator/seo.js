@@ -1,4 +1,12 @@
 const seo = {
+  title: "IFSC Code Format Validator: 11-Character RBI Structure",
+  metaDescription:
+    "Checks all 11 characters — four bank letters, the reserved 0, six branch characters — in your browser, and suggests a fix for the letter-O typo.",
+  steps: [
+    "Type or paste the code into the 'IFSC code' box — spaces and hyphens are ignored and lowercase is upper-cased.",
+    "For a list, press Show under 'Check a list of codes' and paste one IFSC per line.",
+    "Read the Valid format or Invalid format verdict and the 'Character by character' table, then click the suggested code to correct a typo.",
+  ],
   intro:
     "An IFSC is an eleven-character code laid down by the Reserve Bank of India: four letters identifying the bank, the digit zero in the fifth position reserved for future use, and six alphanumeric characters identifying the branch. This validator checks that structure character by character in the browser without any network call, flags the two typos that cause most rejections — the letter O typed for the reserved zero, and a zero typed inside the bank code — and suggests the corrected code. A batch mode checks a whole list at once.",
   useCases: [

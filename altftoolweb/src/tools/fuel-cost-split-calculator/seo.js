@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fuel Cost Split Calculator — Share by Kilometres Ridden",
+  metaDescription:
+    "Split fuel, tolls and shared costs by person-kilometres, so someone aboard for half the trip pays half a full share. Rounded amounts match the total.",
+  steps: [
+    "Enter 'Total distance driven (km)', 'Mileage (km per litre)', 'Fuel price (per litre)', 'Tolls for the whole trip' and 'Other shared costs (parking, ferry, permits)'.",
+    "Under 'Who rode how far', give each traveller a Name and their 'Kilometres aboard', using 'Add person' for extra riders — shares update live in proportion to person-kilometres.",
+    "Read each person's share, the amount they pay and the 'vs equal' difference in the results table — rounded so amounts add back to the exact total — then press 'Copy result'.",
+  ],
   intro:
     "This calculator settles a shared road trip by person-kilometres: each traveller pays total cost × their kilometres ÷ the sum of everyone's kilometres, so someone who joins halfway pays half the share of someone who rode the whole way. Trip cost is built as fuel (distance ÷ km/l × price per litre) plus tolls plus any other shared expense. Shares are rounded to the paisa and the remainder is pushed onto the largest share so the amounts always add back to the exact total.",
   useCases: [

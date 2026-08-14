@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trip Shoe Packing: Fewest Pairs That Cover It All",
+  metaDescription:
+    "Tick the conditions your trip has, from formal evenings to wet ground and rough trail, and get the smallest set of pairs that covers them all.",
+  steps: [
+    "Under What does the trip demand?, tick the conditions that apply — Walking or sightseeing all day, Smart casual daytime, Formal evening or dress code, Rain or wet ground, Beach, pool or shower block, Hiking or rough trail, Gym or running, Snow or sub-zero, Long drives.",
+    "Set Space you have for shoes (litres), tick Wear the heaviest pair on the journey, and untick anything under Shoes available to you that you do not own — each of the 12 entries shows its grams and litres.",
+    "Pairs you need reports the smallest covering set, named under Take these, with rows for Total weight of the set, Weight in the bag, Saved by wearing a pair and Space in the bag against your litres; press Copy plan.",
+  ],
   intro:
     "Packing shoes is a minimum set cover problem: each pair covers some of the conditions a trip throws at you, and you want the fewest pairs that cover them all. This planner searches every combination in its catalogue rather than guessing, returning the smallest set and, among equally small sets, the lightest one — then shows what it weighs packed once you wear the heaviest pair on the journey. Shoes are the bulkiest thing in most bags, so removing one pair usually frees more space than a week of clothing.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Incident Severity Matrix Builder: SEV-1 to SEV-5 Table",
+  metaDescription:
+    "Define SEV-1 to SEV-5 — impact, first-response target, update cadence, escalation — and copy the Markdown table straight into a runbook or wiki.",
+  steps: [
+    "Enter your Organisation or team name and pick the Number of severity levels — two to five, labelled SEV-1 to SEV-n.",
+    "Open each level tab and edit its Level name, Impact definition, Examples, First response target, Status update cadence and Escalation path.",
+    "Check the Generated matrix preview, then press Copy Markdown to paste the table and per-level definitions into your runbook or wiki.",
+  ],
   intro:
     "This builder produces an incident severity matrix — the table that maps SEV-1 through SEV-5 to customer impact, first-response targets, status-update cadence and escalation paths — and exports it as clean Markdown. It follows the numbered-severity convention used in Google SRE incident management and the Atlassian and PagerDuty incident handbooks, where SEV-1 is the most severe. Engineering managers, SREs and support leads can adapt every field to their own on-call reality and paste the result straight into a runbook or wiki.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "50/30/20 Budget Prompt Builder for AI Assistants",
+  metaDescription:
+    "Splits take-home pay 50/30/20, sizes a 3-6 month emergency fund and the monthly saving your goal needs, then writes an AI prompt with those rupee figures.",
+  steps: [
+    "Enter Monthly take-home income (INR), Current essential spending per month, Household size and your savings goal with its amount and Months to reach the goal.",
+    "Pick a Budgeting style — 50/30/20, zero-based or envelope — and the tool computes the needs/wants/savings caps, the 3-6 month emergency-fund range and the goal's required monthly saving.",
+    "Review the Generated prompt with those exact rupee figures baked in and press Copy prompt to paste it into your chat assistant.",
+  ],
   intro:
     "The Budget Prompt Builder turns your monthly take-home pay into a 50/30/20 allocation — 50% needs, 30% wants, 20% savings and debt — and writes an AI budgeting prompt that carries those exact rupee figures, your household size and your goal deadline. It also sizes an emergency fund at three to six months of essential spending and works out the monthly saving your named goal requires. It suits anyone who wants a chat assistant to plan a household budget from real numbers instead of generic advice.",
   useCases: [

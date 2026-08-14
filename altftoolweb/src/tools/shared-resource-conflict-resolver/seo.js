@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shared Resource Booking Conflict Resolver by Priority",
+  metaDescription:
+    "Paste booking requests as resource, start, end, requester and priority; clashes go to the lowest priority number, with an optional buffer in minutes.",
+  steps: [
+    "Paste one request per line into 'Requested bookings' as Resource | start | end | requester | priority (lower wins).",
+    "Set 'Buffer between bookings (minutes)' so back-to-back requests on the same resource count as a conflict instead of a clean handover.",
+    "Read the decision table — each row marked Accepted or 'Needs reschedule' with a reason naming the requester it 'Conflicts with' — plus the accepted-requests count.",
+  ],
   intro:
     "Give this resolver a list of booking requests — resource, start, end, requester and a priority number — and it works through them in time order, accepting each one that fits and flagging the rest, awarding any clash to the lowest priority number. You can also set a buffer in minutes that keeps accepted bookings apart, so back-to-back requests count as a conflict rather than a tidy handover. It is for whoever ends up arbitrating the one meeting room, the shared van or the single good camera.",
   useCases: [

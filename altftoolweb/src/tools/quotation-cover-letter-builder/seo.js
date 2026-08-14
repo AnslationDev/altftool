@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quotation Cover Letter Builder with GST and Validity",
+  metaDescription:
+    "Prices your line items, takes the discount off the subtotal, then charges GST on the net, and writes the covering note with a validity date.",
+  steps: [
+    "Type the Line items as \"Description | quantity | unit price\", one per line, up to 25, then set Discount (%) and a GST rate (%) slab of 0, 5, 12, 18 or 28.",
+    "Set Valid for (days, 1–180), Advance on approval (%), Delivery lead time (days) and Tone; the discount comes off the subtotal before GST is charged on the net.",
+    "Check Total payable with the Subtotal, Taxable value, GST, Advance and Balance rows, then Copy result takes the subject line and the whole Covering letter.",
+  ],
   intro:
     "The Quotation Cover Letter Builder prices your line items, applies the discount and then the GST on the discounted value — the order a tax invoice requires — and wraps the result in a covering note. The letter states the quotation number and date, the itemised total, an explicit validity date, the advance and balance in rupees rather than percentages, the delivery lead time and one next step. Written for freelancers, agencies and small suppliers who send quotes by email and want them accepted rather than negotiated.",
   useCases: [

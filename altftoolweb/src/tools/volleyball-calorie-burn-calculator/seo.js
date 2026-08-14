@@ -1,4 +1,12 @@
 const seo = {
+  title: "Volleyball Calorie Calculator: Beach 8.0 vs Indoor 6.0",
+  metaDescription:
+    "Calories burned per set from MET x 3.5 x kg / 200 — beach sand 8.0, competitive indoor 6.0, casual six-a-side 3.0, with breaks priced at 1.3 METs.",
+  steps: [
+    "Enter your Body weight in kg or lb and pick Where and how you played: beach sand, indoor competitive or casual.",
+    "Give Sets played, Average minutes per set and Total time between sets, or tap the 4 sets shortcut.",
+    "Total calories burned applies MET x 3.5 x kg / 200, pricing the between-set breaks at 1.3 METs.",
+  ],
   intro:
     "The Volleyball Calorie Burn Calculator estimates the energy cost of a match from your body weight, the number of sets, their average length and the time spent between them, using the MET equation kcal/min = MET x 3.5 x kg / 200. All three settings are published Compendium of Physical Activities values: beach volleyball in sand at 8.0 METs, competitive indoor play at 6.0 and casual six-a-side at 3.0. It is aimed at club, beach and social players who want a per-set figure rather than one blanket number for the sport.",
   useCases: [

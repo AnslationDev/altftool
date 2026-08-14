@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apple Data Download Request Planner: Size and Split",
+  metaDescription:
+    "Plan a privacy.apple.com request: size the archive, pick 1–25 GB parts, see what only exports from the device. Up to 7 days to prepare, 14 to download.",
+  steps: [
+    "Under \"1. Choose the data you want\", tick categories such as iCloud Photos, iCloud Drive or Apple Media Services, or use Select all.",
+    "Under \"2. Describe the account\", set \"Apple Account age (years)\", \"How much media is in iCloud\" and \"Maximum file part size\" of 1, 5, 10 or 25 GB per file.",
+    "Read the estimated archive size and part count, plus the rows for data exported from the device instead and the 14-day download window, then press Copy plan.",
+  ],
   intro:
     "This guide plans an Apple ID data request at privacy.apple.com and estimates how large the archive will be, how many part files it will arrive in, and which categories Apple physically cannot include. Apple states that a request may take up to 7 days while it verifies the request came from you, and the finished archive stays available to download for 14 days. It also separates portal data from end-to-end encrypted data such as Health, passwords and message content, which you export from the iPhone or Mac instead.",
   useCases: [

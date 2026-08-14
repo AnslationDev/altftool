@@ -1,4 +1,12 @@
 const seo = {
+  title: "Android Hardening Checklist by Version & Patch Age",
+  metaDescription:
+    "Filter dozens of Android security settings to your OS version and threat profile, weight them by impact, and grade your security patch date.",
+  steps: [
+    "Pick your Android version, answer How is this phone used? (everyday, someone who might get their hands on my phone, high risk, or work phone/BYOD), and enter the Security patch level date.",
+    "Tick the items that apply, from Use a PIN of at least six digits and Enable lockdown mode on the power menu to Turn off 2G, Set a SIM PIN and Move sensitive apps into Private Space.",
+    "Read the Hardening score with the count of items done weighted by impact, the patch-level grade against Android's monthly bulletins, and the settings your version does not have.",
+  ],
   intro:
     "Android Hardening Checklist filters roughly three dozen concrete Android security settings to the version you are actually running and the situation the phone is used in, then weights each one by how much risk it removes to produce a hardening score. Items are tagged with the Android release that introduced them — lockdown mode in Android 9, the 2G switch and privacy dashboard in Android 12, restricted settings in Android 13, Private Space and theft detection in Android 15, Advanced Protection in Android 16 — so nothing sends you looking for a menu that does not exist. It also grades your security patch level against Android's monthly bulletin cycle.",
   useCases: [

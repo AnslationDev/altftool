@@ -1,4 +1,12 @@
 const seo = {
+  title: "RICE Protocol Timer: Ice 10-20 Min Every 2-3 Hours",
+  metaDescription:
+    "Run ice-on/ice-off cycles for a fresh sprain: 10-20 minute applications every 2-3 hours for 24-48 hours, with sleep-time sessions marked as skip.",
+  steps: [
+    "Set Ice on (minutes), Hours between applications, First application at, Protocol length (hours) and your bed and wake times under Settings.",
+    "Press Start to run the ice-on countdown — the progress bar flips to the ice-off phase when the pack should come off.",
+    "Check the Application schedule table, where sessions inside your sleep window are marked \"asleep — skip\", then press Copy plan.",
+  ],
   intro:
     "A RICE protocol timer runs the ice-on and ice-off cycles for a fresh sprain or strain: 10 to 20 minutes of cold at a time, repeated every 2 to 3 hours while you are awake, through the first 24 to 48 hours. RICE stands for Rest, Ice, Compression and Elevation, and this tool covers all four — the countdown handles the icing, while the schedule marks which applications fall during sleep so you are not setting alarms, and the checklists cover safe bandage tension and when to stop icing altogether.",
   useCases: [

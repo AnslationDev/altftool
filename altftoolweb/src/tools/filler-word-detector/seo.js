@@ -1,4 +1,12 @@
 const seo = {
+  title: "Filler Word Detector: Cut Very, Just and Padding Phrases",
+  metaDescription:
+    "Marks intensifiers, hedges, filler adverbs and wordy phrases in your prose, scores filler per 100 words and returns a stripped draft.",
+  steps: [
+    "Paste your writing into the text box to scan it for intensifiers, hedges, filler adverbs and wordy phrases.",
+    "Work through 'Your text, marked up', where each highlighted filler carries its own fix under 'What to do about each one'.",
+    "Check the Filler density per 100 words, then take the Stripped draft with Copy draft or the findings with Copy report.",
+  ],
   intro:
     "A filler word detector scans prose for the four kinds of padding that weaken it: intensifiers such as very and really that prop up a weak word instead of replacing it, hedges such as just and I think that withdraw the claim, filler adverbs such as basically and obviously, and wordy phrases such as \"due to the fact that\" that use five words for one. It reports how many appear per 100 words, marks every hit in your text, gives a specific fix for each, and produces a stripped draft with the safely deletable ones removed and the wordy phrases swapped for their short forms.",
   useCases: [

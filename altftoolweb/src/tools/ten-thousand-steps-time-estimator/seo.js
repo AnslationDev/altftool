@@ -1,4 +1,12 @@
 const seo = {
+  title: "How Long 10,000 Steps Takes at Your Cadence and Height",
+  metaDescription:
+    "Divide your step target by your cadence for minutes and km (step length from height), subtract steps already taken, and split the rest into equal walks.",
+  steps: [
+    "Set a Daily step target (or tap the 6,000–12,000 presets), your Cadence in steps per minute and your Height in cm.",
+    "Enter Steps already taken today and how many walks to split the rest over; add Body weight (kg, optional) for calories.",
+    "Read the total walking time, distance in km, intensity band and the per-walk steps and minutes table, then click Copy result.",
+  ],
   intro:
     "10000 Steps Time Estimator divides your step target by your walking cadence to show how many minutes on your feet the goal actually costs, then converts the steps into distance using the standard pedometer relationship step length ≈ 0.415 x height for men and 0.413 x height for women. It also subtracts the steps you have already racked up incidentally and splits the remainder into equal walks. Useful for anyone trying to fit a step goal into a working day rather than guessing at it.",
   useCases: [

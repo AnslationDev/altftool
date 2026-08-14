@@ -1,4 +1,12 @@
 const seo = {
+  title: "Relieving Letter Request With Statutory Due Dates",
+  metaDescription:
+    "Computes tenure from your joining date and last working day, dates the 2-working-day wage and 30-day gratuity deadlines, then drafts the letter.",
+  steps: [
+    "Enter Date of joining, Last working day, Date of this letter and Reminders already sent.",
+    "Tick what is still pending under What to ask for, then fill in your name, Employee ID, Designation held and Company name.",
+    "The panel dates the wage and gratuity deadlines and states your gratuity position; press Copy letter to take the draft.",
+  ],
   intro:
     "This tool drafts the letter that chases a pending relieving letter, experience certificate and full and final settlement, with the statutory deadlines already computed. It works out your exact tenure in years, months and days from the joining date and last working day, dates the two-working-day wage settlement deadline under section 5(2) of the Payment of Wages Act, 1936, the thirty-day gratuity deadline under section 7(3) of the Payment of Gratuity Act, 1972, and escalates the tone automatically the longer the employer has taken.",
   useCases: [

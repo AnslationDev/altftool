@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ultrasound vs LMP Due Date: ACOG Redating Comparator",
+  metaDescription:
+    "Compares period-based and scan-based due dates, measures the gap in days and applies ACOG redating thresholds to show which date a clinic would keep.",
+  steps: [
+    "Enter the 'First day of the last period' and 'Usual cycle length (days)' (20-45), then the 'Date of the ultrasound' and the gestational age the scan reported in weeks and days.",
+    "Both due dates compute as you type — the 'Gap between the two dates' panel checks the gap against the ACOG threshold for the gestational age at the scan.",
+    "Read 'Dating usually adopted' with the two due-date cards and the redating-threshold table; 'Copy result' copies the comparison and 'Reset' restores the defaults.",
+  ],
   intro:
     "This comparator puts two due dates side by side: the one from Naegele's rule (last period + 280 days, shifted for a cycle that is not 28 days) and the one implied by the gestational age your ultrasound reported. It measures the gap in days and checks it against the ACOG redating thresholds — 5 days up to 8w6d, 7 days to 15w6d, 10 days to 21w6d, 14 days to 27w6d and 21 days from 28 weeks — so you can see whether a clinician would normally keep the period date or adopt the scan date.",
   useCases: [

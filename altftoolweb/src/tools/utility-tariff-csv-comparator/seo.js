@@ -1,4 +1,12 @@
 const seo = {
+  title: "Electricity Tariff Comparator for Your Own kWh Split",
+  metaDescription:
+    "Ranks plans on your own off-peak, standard and peak kWh: total = (fixed charge + energy) x (1 + tax %), with unpriced bands flagged as Missing labels.",
+  steps: [
+    "Paste your consumption into \"Usage by tariff label\", one \"label | kWh\" line per band, such as \"off-peak | 180\".",
+    "List every offer in \"Tariff plans\" as \"Plan | fixed charge | label:price, label:price\", then set \"Tax / surcharge (%)\".",
+    "Read the ranked table of Plan, Fixed, Energy, Total and Missing labels, then Copy it or Download utility-tariff-csv-comparator.txt.",
+  ],
   intro:
     "The Utility Tariff CSV Comparator runs one electricity usage profile against several plans at once and ranks them by total cost, using total = (fixed charge + Σ kWh × rate for each usage label) × (1 + tax %). You paste your consumption as 'label | kWh' lines — off-peak, standard, peak, or whatever bands your bill uses — and each plan as 'Plan | fixed charge | label:price, label:price', and it returns a sorted table with fixed, energy and total for every plan. It is for anyone holding two or three tariff offers who wants the comparison done on their own numbers rather than the supplier's example household.",
   useCases: [

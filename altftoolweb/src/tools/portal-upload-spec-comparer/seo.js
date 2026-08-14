@@ -1,4 +1,12 @@
 const seo = {
+  title: "Portal Upload Spec Comparer: UPSC, SSC, IBPS, NTA",
+  metaDescription:
+    "Intersects photo and signature rules for UPSC OTR, SSC, IBPS and NTA — a 20-50 KB JPG photo clears all four. Type your file's KB for a verdict.",
+  steps: [
+    "Choose Photograph or Signature under Document type, then tick the exam bodies under Portals to compare — UPSC (OTR), SSC (mySSC OTR), IBPS, NTA NEET and the rest each show their own KB window.",
+    "Type the size of the scan you already have into Check a file you already have (size in KB); every ticked portal returns Fits or the reason it bounces in the Your file column.",
+    "Common size window gives the KB band and the JPG/JPEG format accepted by all of them, or None with the clash named, alongside the tightest portal and any fixed pixel demand such as IBPS 200×230 px.",
+  ],
   intro:
     "This comparer puts the photo and signature upload rules of major Indian exam portals — UPSC OTR, SSC, IBPS, NTA NEET and JEE Main — side by side and computes the interval intersection: the single size window and format that satisfies every selected portal at once. For example, a photograph of 20-50 KB in JPG passes UPSC (20-300 KB), SSC (20-50 KB), IBPS (20-50 KB) and NTA (10-200 KB) simultaneously. It is built for aspirants filling several forms a season who want one photo file and one signature file that work everywhere.",
   useCases: [

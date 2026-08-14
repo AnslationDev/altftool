@@ -1,4 +1,12 @@
 const seo = {
+  title: "Basketball Heart Rate Zones and Shuttle Drill Planner",
+  metaDescription:
+    "Five conditioning zones in bpm from age or measured max, the 85-90% live-play band, a shuttle planner with a bpm restart cue, and 1-minute recovery.",
+  steps: [
+    "Enter Age (years) and Resting heart rate (bpm), choose a Max heart rate formula and Zone method, or type a Measured max heart rate (bpm) to override the estimate.",
+    "In Shuttle drill planner set Repetitions, Work per rep (seconds), Rest between reps (seconds) and the Restart cue (% of max heart rate), then log Peak heart rate at the end of the drill and Heart rate one minute later.",
+    "Read the Live-play heart rate band, the Court conditioning zones table, Total block time and 'Start the next rep below' in bpm, plus the one-minute drop scored against the 12 bpm threshold, then press Copy result.",
+  ],
   intro:
     "This calculator turns your age or a measured maximum heart rate into five basketball conditioning zones in beats per minute, from shooting-day recovery work up to suicides and 17s, and shows the live-play band of roughly 85–90% of maximum that match analysis reports for time on court. It also plans a shuttle block — repetitions, work and rest seconds, work-to-rest ratio and total time — with a heart-rate restart cue so the next rep begins when you have actually recovered, and scores your one-minute heart rate recovery against the 12 bpm threshold used in the cardiology literature.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Car Size Selector: Seats, Boot and Length",
+  metaDescription:
+    "Enter people, child seats and a luggage list to get the smallest body type that fits - boot needed is your luggage volume divided by 0.8 efficiency.",
+  steps: [
+    "Under 'Who travels', enter Adults, Children, 'Child seats side by side in one row' and 'Longest car your parking takes (m)' - or press the 4.0 m tax bracket, 4.8 m standard bay or 5.5 m open drive chip.",
+    "Under 'What goes in the boot', set counts for items such as Medium check-in suitcase (70 L), Compact folding pushchair (60 L) or Golf bag (90 L), and adjust 'Packing efficiency (0.2 to 1)'.",
+    "The 'Smallest body type that works' panel names the pick with its seats, usable boot and length, and the 'Every body type against your needs' table marks each option Works or prints the reason it fails; Copy result copies the recommendation.",
+  ],
   intro:
     "This selector matches a car body type to the people and luggage you actually carry, then recommends the smallest one that clears every requirement. Boot volumes are published to the VDA method, which counts how many 200 × 100 × 50 mm blocks fit the space, so real suitcases never fill a boot to its rated figure — the tool divides your luggage volume by a packing efficiency of about 0.8 to get the boot you truly need. It also handles the trap most seven-seater buyers miss: with the third row upright, the boot behind it typically collapses to 150-300 litres.",
   useCases: [

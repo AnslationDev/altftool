@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tech Spec Prompt Builder: 13 Design-Doc Sections",
+  metaDescription:
+    "Builds a design-doc prompt across 13 weighted sections with a word target each, a completeness score and reading time at 238 words per minute.",
+  steps: [
+    "Fill Document title, Problem this design solves, Goals, one per line and Non-goals, one per line, then set Depth to Brief (one-pager), Standard design doc or Thorough (cross-team review).",
+    "Tick the boxes under Sections to include — Goals, Non-goals and Proposed design are marked Required, and every section shows its weight.",
+    "Check Outline completeness, Target length and Reading time at 238 wpm, read the generated text under Your prompt, then press Copy prompt.",
+  ],
   intro:
     "Tech Spec Prompt Builder assembles a design-document prompt from thirteen canonical sections — context, goals, non-goals, proposed design, alternatives, risks, rollout, observability, security, testing, API changes, open questions and milestones — and attaches a word target to each. It scores the outline for completeness by weight, and estimates reading time at 238 words per minute, the average adult silent reading rate for non-fiction reported in Brysbaert's 2019 meta-analysis. For engineers who keep getting design docs sent back for the same three missing sections.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ride Fare Split Calculator — Split a Cab by KM",
+  metaDescription:
+    "Fixed charges split equally; the distance fare is cut at every drop so each stretch is paid by whoever is still aboard. Shares always total the fare paid.",
+  steps: [
+    "Enter 'Total fare paid (INR)' and 'Fixed charges — base fare, tolls, parking (INR)', which are the amounts split equally between everyone.",
+    "For each rider fill 'Passenger N name' and 'Drop at (km)', measured from where the ride started, using Add passenger for more rows.",
+    "The table returns every passenger's Drop, what they Pay and their 'vs equal split' saving, alongside the distance driven end to end; Copy result copies the split with the per-km rate.",
+  ],
   intro:
     "This calculator divides a single shared cab fare between passengers by the kilometres each one actually rode. Fixed charges — base fare, booking fee, tolls and parking — are split equally because they do not change with who is in the car, and the remaining distance fare is spread at a constant rate per kilometre and then cut at every drop point, so each stretch is paid for only by the people still on board. On a ₹450 fare over 20 km with a ₹50 base and drops at 5, 12 and 20 km, the shares come out at ₹50, ₹120 and ₹280.",
   useCases: [

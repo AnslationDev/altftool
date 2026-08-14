@@ -1,4 +1,7 @@
 const seo = {
+  title: "SQL JOIN Fan-Out Debugger: Why Your SUM Is Too High",
+  metaDescription:
+    "Give each table's grain and key cardinality to get the exact row-multiplication factor, which aggregates are inflated, and two corrected queries.",
   intro:
     "This debugger computes the row-multiplication factor of a join and tells you exactly which aggregates it corrupts: describe each table's grain and its join key cardinality, and it returns the fan-out factor for every table, marks each SUM, COUNT, AVG, MIN and MAX as inflated, distorted or safe, and emits the corrected SQL. The rule it applies is the definition of a joined table in ISO/IEC 9075-2 §7.10 — a join is a filtered cross product, so one parent row matching m child rows becomes m result rows, and two fanning children of the same parent multiply to m1 x m2. It is for analysts and engineers whose total went up after adding a join and who need to know the exact factor before trusting the number.",
   useCases: [

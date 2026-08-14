@@ -1,4 +1,7 @@
 const seo = {
+  title: "Indian Festival Greeting Card Maker, 11 Languages",
+  metaDescription:
+    "Make Diwali, Eid, Pongal or Onam cards with the real greeting in 11 Indian languages. Export 1080px square, 1080x1920 story or A5 at 300 dpi.",
   intro:
     "The Indian Festival Greeting Card Maker builds a shareable festival card from a festival, a language and your own message. It carries the everyday greeting for twelve festivals — Diwali, Holi, Eid, Pongal, Onam, Ganesh Chaturthi, Navratri, Baisakhi, Ugadi, Raksha Bandhan, Makar Sankranti and Christmas — in up to eleven Indian languages, and draws the motif that goes with each one: a row of diyas for Diwali, a pookalam for Onam, kites for Sankranti, a crescent and star for Eid. Export a 1080 px square, a 1080 × 1920 story or an A5 print at 300 dpi.",
   useCases: [

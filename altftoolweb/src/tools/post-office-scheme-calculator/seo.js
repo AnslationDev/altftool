@@ -1,4 +1,10 @@
 const seo = {
+  title: "Post Office NSC, KVP and MIS Maturity Calculator",
+  steps: [
+    "Pick a Scheme: 'NSC — compound maturity estimate', 'KVP — maturity estimate' or 'MIS — monthly income estimate'.",
+    "Fill in Deposit (₹), the Annual rate (%) from the current India Post quarterly notification, Term (years) and Compounds per year.",
+    "The result gives the estimated maturity, or estimated monthly income for MIS, with Deposit and Estimated interest rows; Download saves post-office-scheme-calculator.txt.",
+  ],
   intro:
     "The Post Office Scheme Calculator estimates what an NSC, KVP or MIS deposit returns for a rate and term you supply: NSC and KVP use the compound formula A = P(1 + r/n)^(nt), while MIS reports monthly income as principal x rate ÷ 12 with the deposit returned separately at the end. Enter the amount, the annual rate from the current India Post quarterly notification and the term, and you get maturity value, interest earned and a row-by-row breakdown. It is for savers comparing small-savings schemes before walking into a post office. Verify rates, limits and tax treatment officially before you commit.",
   useCases: [

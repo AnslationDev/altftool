@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Code Converter: HEX, RGB, HSL, CMYK and Alpha",
+  metaDescription:
+    "Paste any one colour — HEX, rgba(), hsl(), cmyk() or a named colour — and get all seven notations at once, with alpha preserved. No convert button.",
   intro:
     "The Color Code Conversion Tool takes one colour in any common CSS notation — HEX, 8-digit HEXA, rgb(), rgba(), hsl(), hsla(), cmyk() or a named colour like rebeccapurple — and returns all seven notations at once, with a live preview swatch and one-click copy. It detects the input format for you rather than making you choose it from a menu, and keeps your last 14 colours in a local history you can re-open or export as JSON. It is aimed at front-end developers and designers moving a value between a stylesheet, a design file and a print spec.",
   useCases: [

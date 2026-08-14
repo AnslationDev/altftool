@@ -1,4 +1,7 @@
 const seo = {
+  title: "Code Beautifier: JS, JSON, CSS, HTML, XML, SQL",
+  metaDescription:
+    "Re-indent or compact JavaScript, JSON, CSS, HTML, XML and SQL up to 500,000 characters. Invalid JSON comes back with the exact line and column.",
   intro:
     "Code Beautifier re-indents a messy snippet — JavaScript, JSON, CSS, HTML, XML or SQL — into readable, consistently nested code, and compacts it again on demand. Indentation for the JavaScript, CSS and HTML family is produced by js-beautify; JSON is parsed with the browser's own parser so a syntax error is reported with its exact line and column, and SQL is re-laid-out one clause per line with parenthesised sub-queries indented. It is for developers reading minified output, a log line or a snippet pasted out of a chat.",
   useCases: [

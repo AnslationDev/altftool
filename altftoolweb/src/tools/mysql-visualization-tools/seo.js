@@ -1,4 +1,12 @@
 const seo = {
+  title: "MySQL ER Diagram Builder & Browser SQL Query Runner",
+  metaDescription:
+    "Paste CREATE TABLE statements to draw a draggable ER diagram, export PNG or JSON, and run SELECT with JOIN and aggregates. No database connection.",
+  steps: [
+    "Paste your MySQL CREATE TABLE statements into SQL Schema Input, or drop CSV, SQL or JSON files onto the dataset uploader.",
+    "Drag the tables around the Live ER Diagram, and type a SELECT with WHERE, JOIN ... ON, GROUP BY or LIMIT into Query Visualization to highlight the schema pieces it touches.",
+    "Open the Export Panel for Copy schema, Download JSON as mysql-visualization-workspace.json, or Export PNG as mysql-er-diagram.png.",
+  ],
   intro:
     "This MySQL visualization workspace parses your CREATE TABLE statements into tables, columns, primary keys, unique constraints and foreign keys, then draws them as a draggable ER diagram you can export as PNG or JSON. It also runs a browser-side SELECT engine over CSV or JSON data you upload, supporting WHERE, JOIN … ON, GROUP BY, ORDER BY, LIMIT and the COUNT, SUM, AVG, MIN and MAX aggregates. It is built for developers, analysts and students who want to see a schema and test queries against it without installing a MySQL server or handing a schema dump to a hosted service.",
   useCases: [

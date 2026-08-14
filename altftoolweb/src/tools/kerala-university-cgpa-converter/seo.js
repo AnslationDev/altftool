@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kerala University CGPA to Percentage Converter",
+  metaDescription:
+    "Convert Kerala University CGPA to percentage (CGPA x 10 on the 10-point scale), roll semester SGPAs into a weighted CGPA and plan a target SGPA.",
+  steps: [
+    "Pick the 'Grade point scale on your mark list', switch between the CGPA to percentage and Percentage to CGPA buttons, and type your value. [pages/index.jsx:146-220]",
+    "Fill the 'CGPA from semester SGPAs' rows (Add semester extends the list) and the 'SGPA still needed for a target CGPA' fields - current CGPA, credits completed, credits remaining and target. [pages/index.jsx:291-341, 367-392]",
+    "Read the Equivalent percentage with its Letter grade, the Credit weighted CGPA, and the 'Average SGPA needed on remaining credits', then press Copy result. [pages/index.jsx:236-288, 352-364, 403-421]",
+  ],
   intro:
     "This converter reads a University of Kerala grade point average as a proportion of its scale: percentage of marks = CGPA divided by the scale maximum, times 100. On the 10 point mark list that reduces to CGPA x 10, so 7.6 is 76%, and setting the scale correctly is what keeps the answer right when an older mark list uses a lower ceiling. It also rolls semester SGPAs into a credit weighted CGPA and works out the average SGPA the remaining credits must carry to reach a target.",
   useCases: [

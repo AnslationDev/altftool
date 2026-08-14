@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dockerfile Security Linter: root, :latest, curl to bash",
+  metaDescription:
+    "Paste a Dockerfile and get line-numbered findings for curl piped to a shell, ADD from a URL, :latest bases, secret-like ENV and a root final stage.",
+  steps: [
+    "Paste your build file into the Dockerfile source box, or press Choose file to pick a Dockerfile, or Load hardened sample for a digest-pinned multi-stage example.",
+    "Press Run local inspection; backslash continuations are joined into logical instructions and each FROM ... AS stage is tracked separately, with no image built, pulled or executed.",
+    "Read the Stages, Instructions, High and Review cues counts plus each entry under Review findings with its Line number and stage, then press Download report to save dockerfile-audit-counts-only.json, or Copy report.",
+  ],
   intro:
     "The Dockerfile Security Linter parses a pasted Dockerfile into logical instructions — honouring line continuations and the # escape parser directive — and flags roughly a dozen risky build patterns at high, medium or review severity, each with the line number and build stage it came from. It catches curl or wget piped straight into a shell, ADD from a remote URL, ENV and ARG names that look like secrets, :latest or untagged base images, unpinned apt/apk installs, COPY . into the image, a final stage still running as root, and a missing HEALTHCHECK. It reads text only: it never builds, pulls, runs or scans an image, so findings are review cues rather than proof of a vulnerability.",
   useCases: [

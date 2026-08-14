@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dinosaur Explorer: 20 Species, Sizes and Timeline",
+  metaDescription:
+    "Browse 20 prehistoric animals with pronunciation, diet, size and five facts each — filter by period, diet or size and compare heights to a 1.8 m human.",
+  steps: [
+    "Type into the 'Search dinosaurs...' box or narrow the 20 species with the Period, Diet and Size dropdowns — Jurassic or Cretaceous, Carnivore or Herbivore, Small through Large.",
+    "Switch between Grid view and List view; the 'Geological timeline (millions of years ago)' strip draws the Triassic, Jurassic and Cretaceous to scale and plots the first six matches.",
+    "Open a card for its Length, Height, Weight, Habitat, Location and Lived-in-mya stats, a Size Comparison drawn against an average 1.8 m human, and five Fun Facts; 'Back to explorer' returns to the list.",
+  ],
   intro:
     "Dinosaur Explorer is a browsable reference card set for 20 well-known prehistoric animals — from Compsognathus to Brachiosaurus — with pronunciation, name meaning, diet, length, height, weight, habitat, range and five facts each. You can filter by period (Jurassic, Cretaceous), diet and size class, search by name, place each animal on a Mesozoic timeline spanning 252 to 66 million years ago, and see its height drawn against an average 1.8 m human. It is built for school projects and curious kids, not for taxonomic research.",
   useCases: [

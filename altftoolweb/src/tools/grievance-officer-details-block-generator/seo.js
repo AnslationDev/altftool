@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grievance Officer Details Block + Statutory Deadlines",
+  metaDescription:
+    "Publish grievance officer name, designation, email, phone and office hours as text or HTML, with Rule 4(6) 48-hour and IT Rules 24-hour deadlines.",
+  steps: [
+    "Under 'Which frameworks apply', tick the ones that bind you: Consumer Protection (E-Commerce) Rules, 2020; IT (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021; the urgent content categories; and the Digital Personal Data Protection Act, 2023.",
+    "Fill Officer details — Legal name of the business, Role held (Grievance Officer, Resident Grievance Officer, Nodal Contact Person, Chief Compliance Officer or Data Protection Officer), Officer's name, Designation, Email, Phone, Postal address for the officer and Office hours — then set 'Complaint received at' to date the acknowledgement and redressal deadlines.",
+    "Switch the Disclosure block between Plain text and HTML, then press Copy block to publish the notice, with every commitment carrying the rule number it comes from.",
+  ],
   intro:
     "The Grievance Officer Details Block Generator produces the published notice naming your grievance officer, with designation, email, phone, postal address and office hours, plus the response commitments the applicable law imposes. Rule 4(6) of the Consumer Protection (E-Commerce) Rules, 2020 requires an e-commerce entity to display those details and to acknowledge a consumer complaint within 48 hours and redress it within one month. Rule 3(2)(a) of the IT (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 sets 24 hours and 15 days for intermediaries. Enter when a complaint arrived and it dates both deadlines.",
   useCases: [

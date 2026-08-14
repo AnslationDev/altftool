@@ -1,4 +1,12 @@
 const seo = {
+  title: "Career Switch Prompt Builder: Score Your Skill Overlap",
+  metaDescription:
+    "Compare your skills against a target role's requirements, see the overlap percentage and gap list, and get an AI prompt with a study timeline.",
+  steps: [
+    "Enter your Current role and Target role, then paste comma-separated lists into the Current skills and Target skills boxes — the page opens on Marketing executive to Product manager.",
+    "Choose a Plan focus — prioritise the gap list, the CV rewrite, the interview narrative or the outreach messages — and the Overlap percentage, Band and Learning time in weeks recalculate as you type.",
+    "Read the Gaps line under the score, then press Copy prompt to put the generated switch-plan prompt on your clipboard; Reset basics restores the starting roles and focus.",
+  ],
   intro:
     "The Career Switch Prompt Builder compares the skills you already have against the skills a target role advertises, scores the overlap as a percentage of the requirement list, and writes an AI prompt that turns that gap analysis into a switch plan. It also converts the gaps into a study budget — hours per missing skill multiplied by the number of gaps, divided by the hours you can study each week — so the plan has a real timeline attached. Built for people changing field who need to know what actually transfers before they rewrite a CV.",
   useCases: [

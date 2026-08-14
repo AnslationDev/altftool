@@ -1,4 +1,12 @@
 const seo = {
+  title: "Key Signature Quiz — Name Major & Minor Keys Instantly",
+  metaDescription:
+    "Drill all 15 key signatures with instant scoring. Every answer shows the last-sharp or second-to-last-flat rule, plus a full reference table.",
+  steps: [
+    "Set Questions (1 to 30), choose Major keys, Minor keys or Mixed major and minor under 'Ask for', and tick 'Sharp signatures' or 'Flat signatures' under 'Include signatures'.",
+    "Answer each multiple-choice question, or press 'New question set' for a fresh randomised set — every answered question shows the circle-of-fifths rule behind the correct key.",
+    "Read your running score and accuracy percentage, press 'Copy result' to copy the summary, and check any signature in the 'All 15 key signatures' reference table.",
+  ],
   intro:
     "A key signature quiz turns a printed group of sharps or flats into the major and minor key it represents, then tests you on it with instant scoring. It uses the circle of fifths and the two standard reading rules: the major key sits one semitone above the last sharp, and with two or more flats the second-to-last flat names the key. Built for music students, choir and band players and anyone sight-reading unfamiliar scores who wants the answer and the reasoning together.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Curtain Thermal Savings Estimator: Watts, kWh, Payback",
+  metaDescription:
+    "Splits window gain into solar (area x SHGC x irradiance) and conducted (area x U x delta T), applies the curtain attenuation, divides by the AC COP.",
+  steps: [
+    "Set Glass width, Glass height and Number of windows like this in Feet or Metres, then pick a Glazing option — Single clear 5 mm through Double glazed low-E — which supplies the SHGC and U-value used.",
+    "Choose a Curtain type, from Sheer net curtain, light colour up to Reflective blackout with a pelmet, set Sun on the glass (W/sqm) using the West facing or Skylight chips, and enter Outdoor minus indoor temperature (°C).",
+    "Fill Hours a day the curtains are drawn in sun, Cooling days a year, Air conditioner COP, Electricity tariff (INR per kWh) and What the curtains cost in total; Saved every year gives the rupee figure, with Heat kept out in watts, AC capacity freed up in tons and Payback on the curtains.",
+  ],
   intro:
     "This estimator splits window heat into its two real components — solar gain A x SHGC x irradiance and conducted gain A x U x ΔT — then applies the curtain's interior attenuation coefficient to the first and a smaller U-value reduction to the second, exactly as ASHRAE Fundamentals treats interior shading. Dividing the heat removed by the air conditioner's coefficient of performance converts it into kilowatt-hours and rupees. Intended for anyone deciding whether blackout or thermal curtains are worth their price on a hot west-facing window.",
   useCases: [

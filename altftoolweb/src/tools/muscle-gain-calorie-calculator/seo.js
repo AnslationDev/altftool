@@ -1,4 +1,12 @@
 const seo = {
+  title: "Muscle Gain Calorie Calculator for a Lean Bulk",
+  metaDescription:
+    "Works the surplus back from your target gain rate in % of body weight a month, on Mifflin-St Jeor maintenance, then splits it into protein, fat and carbs.",
+  steps: [
+    "Fill in Sex, Age (years), Height (cm), Weight (kg) and Activity level, then set Target gain (% of body weight per month) or tap the Beginner, Intermediate or Advanced preset (1-1.5%, 0.5-1%, 0.25-0.5%).",
+    "Set Protein (g per kg per day) and Fat (g per kg per day); the Daily calorie target recalculates from Mifflin-St Jeor maintenance and states the surplus above maintenance and the weekly gain in kg.",
+    "Read the 'Daily macronutrient targets' table for protein, fat and carbohydrate in grams, kcal and percent, then press 'Copy result' for the whole plan or 'Reset' to restore the defaults.",
+  ],
   intro:
     "Muscle Gain Calorie Calculator works the surplus backwards from the rate of weight gain you actually want, instead of guessing at a round number. Maintenance comes from the Mifflin-St Jeor equation multiplied by an activity factor; the target rate is set as a percentage of body weight per month — roughly 1 to 1.5 percent for beginners, 0.5 to 1 percent for intermediates and 0.25 to 0.5 percent for advanced lifters — and converted to daily calories using the 7,700 kcal per kilogram equivalence. It then splits the total into protein, fat and carbohydrate targets.",
   useCases: [

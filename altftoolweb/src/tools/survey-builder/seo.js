@@ -1,4 +1,12 @@
 const seo = {
+  title: "Survey Builder: 5 Question Types, CSV Export",
+  metaDescription:
+    "Build a questionnaire from short text, paragraph, multiple choice, checkbox and 1-5 rating questions, fill it in, chart the answers and export a CSV.",
+  steps: [
+    "Press Create New Survey, give it a Survey Title and Description, then press Add Question and pick a type: Short Text, Paragraph, Multiple Choice, Checkboxes or Rating (1-5).",
+    "Press Create Survey to store it in this browser's localStorage, then press Take on the survey card to fill the form in; questions marked required block submission until answered.",
+    "Open Analytics for a bar chart of every choice question and a mean score out of 5 for ratings, then press Export CSV to download a file named after the survey plus _responses.csv.",
+  ],
   intro:
     "This is a self-contained survey builder that lets you assemble a questionnaire from five question types — short text, paragraph, multiple choice, checkboxes and a 1–5 star rating — then fill it in, chart the answers and export them as CSV. Surveys and responses are kept in this browser's localStorage rather than on an account, so you can draft and test a form without signing up for a survey platform. The analytics view bar-charts every choice question, gives each rating question a mean score out of 5, and lists free-text answers in full.",
   useCases: [

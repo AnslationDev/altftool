@@ -1,4 +1,12 @@
 const seo = {
+  title: "Definition of Done Generator with Compliance Clauses",
+  metaDescription:
+    "Build a Definition of Done from project type, team size, release cadence and coverage target, adding GDPR, HIPAA, PCI DSS, SOC 2 or WCAG 2.2 AA items.",
+  steps: [
+    "Set \"What are you building?\", \"How often do you release?\", \"Engineers on the team\" and \"Coverage target for changed files (%)\" — enter 0 to leave coverage out.",
+    "Tick the Compliance and standards boxes that apply: GDPR (EU personal data), HIPAA (US health data), PCI DSS (card payments), SOC 2 or Accessibility (WCAG 2.2 AA).",
+    "Read \"Checks in your Definition of Done\" with the required and recommended split and the reason attached to each check, then press Copy markdown.",
+  ],
   intro:
     "A Definition of Done is the shared checklist every increment must pass before the team calls it finished — the Scrum Guide requires one and requires it to be the same for every item in the increment, but deliberately does not say what goes on it. This generator assembles a concrete one from four inputs: what you are building, how many engineers are on the team, how often you release, and which compliance regimes apply. Every check carries the reason it exists, and compliance checks name the clause they come from.",
   useCases: [

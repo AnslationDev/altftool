@@ -1,4 +1,12 @@
 const seo = {
+  title: "SVG Cleaner: Strip Scripts, Metadata & Editor Cruft",
+  metaDescription:
+    "Parse an SVG as XML in your browser and strip scripts, event handlers, foreignObject, CSS, editor namespaces and remote refs before downloading.",
+  steps: [
+    "Select your file with the \"Local file(s)\" picker — one SVG is processed per run, and if you select several only the first is used.",
+    "Press \"Run local workbench\"; the file is parsed as SVG XML in the page, files with DOCTYPE or ENTITY declarations are refused, and script, style, foreignObject, animate, embed and metadata elements plus unsafe attributes and non-fragment references are removed.",
+    "The cleaned copy downloads as altftool-clean.svg and the \"Verified result\" table reports Original characters, Cleaned characters, \"Active elements removed\" and \"Unsafe attributes removed\".",
+  ],
   intro:
     "This local cleaner parses an SVG as XML, rejects malformed files and entity declarations, then removes scripts, CSS, foreignObject content, animation elements, event handlers, editor metadata and every non-fragment URL before downloading a re-serialised copy. SVG is executable markup rather than a passive picture, so the conservative policy intentionally removes features that could change attributes later or load remote content. Treat the result as defence in depth: keep untrusted uploads isolated and serve them as downloads instead of relying on any browser cleaner as your only security boundary.",
   useCases: [

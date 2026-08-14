@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wedding Trip Packing List with Outfit & Baggage Weights",
+  metaDescription:
+    "Builds a wedding packing list by function - one outfit each, shoes by dress code - and weighs it against a 15 kg or 23 kg checked-bag allowance.",
+  steps: [
+    "Count each function under 'Functions you are attending', set the 'Trip length (days)' and pick an 'Outfit style'.",
+    "Choose a 'Baggage plan' — 'Checked bag, domestic (15 kg)' or 'Checked bag, international (23 kg)' — and optionally tick 'Wear the heaviest outfit on the journey instead of packing it'.",
+    "Read the 'Packed weight' total against the allowance, tick items off the grouped checklist, and press 'Copy list' for a plain-text version.",
+  ],
   intro:
     "This builder sizes a wedding trip by events rather than by days: one outfit per function, plus a casual set for every two days of the trip and one travel outfit. Footwear is chosen per dress-code tier instead of per event, so six functions still need at most four pairs. It then adds up the outfit weights — heavy ethnic wear runs about 2.2 kg for a ceremony outfit and 1.8 kg for a reception one — and checks the total against a 15 kg domestic or 23 kg international checked allowance.",
   useCases: [

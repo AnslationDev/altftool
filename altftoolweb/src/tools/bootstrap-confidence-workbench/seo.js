@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bootstrap Confidence Interval Calculator, Seeded",
+  metaDescription:
+    "Percentile bootstrap CI for a sample mean, 100-20,000 resamples at 90/95/99% — seeded, so the same data, iterations and seed reproduce the same interval.",
+  steps: [
+    "Paste your observations into Numeric sample, separated by commas, spaces or semicolons — or press the Eight values example to load 12, 15, 18, 19, 22, 25, 27, 31.",
+    "Set Bootstrap iterations anywhere from 100 to 20,000, choose a Confidence level (%) of 90%, 95% or 99%, and set the Seed; the defaults are 2000 iterations and seed 104729.",
+    "Read the interval reported to six decimals alongside the Sample size, Sample mean, Iterations, Seed and Bootstrap median rows, then use Copy or Download to save bootstrap-confidence-workbench.txt.",
+  ],
   intro:
     "The Bootstrap Confidence Workbench builds a percentile bootstrap confidence interval for a sample mean by resampling your data with replacement n times per iteration, then reading the interval off the sorted bootstrap distribution at the α and 1−α quantiles, where α = (100 − confidence) / 200. Because resampling is driven by a seeded linear congruential generator, the same sample, iteration count and seed always return the same interval — which matters when a number goes into a report someone else has to reproduce. You choose 90%, 95% or 99% confidence and anywhere from 100 to 20,000 iterations, and get back the interval, the sample mean, the sample size and the bootstrap median.",
   useCases: [

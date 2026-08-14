@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Pilot Success Criteria and Sample Size Builder",
+  metaDescription:
+    "Set must-have and nice-to-have go/no-go criteria for an AI pilot, then size the observations per arm needed at 95% confidence and 80% power.",
+  steps: [
+    "Under “The pilot” set Pilot name, Pilot length (weeks), Confidence level, Statistical power and the Primary metric the pilot is sized on — an average metric also asks for the Standard deviation of the primary metric.",
+    "For each row under Success criteria fill “What you are measuring”, Metric type, Direction, Baseline today (%), Target (%) and Tier — “Must-have (gates the decision)” or “Nice-to-have” — using Add criterion and Remove to size the list, leaving “Observed at the end” blank until the pilot finishes.",
+    "Read “Observations needed per arm” with the total across both arms and the per-week rate, then “Decision right now”, the “Decision rule to agree now” sentence and the Criteria sheet marking each row Pass, Fail or Not measured; Copy sheet copies it.",
+  ],
   intro:
     "The AI Pilot Success Criteria Builder turns a vague AI trial into a written go/no-go rule: you declare the must-have and nice-to-have metrics, their baseline and target, and it calculates how many observations per arm you need to prove that lift is real. Sample size comes from the standard two-sided normal-approximation formulas — n = (z(1-alpha/2) + z(1-beta))^2 x [p1(1-p1) + p2(1-p2)] / (p1-p2)^2 for rates, and n = 2 x (z(1-alpha/2) + z(1-beta))^2 x sigma^2 / delta^2 for averages. It is built for product, operations and data leads who have to defend a pilot decision to a budget holder.",
   useCases: [

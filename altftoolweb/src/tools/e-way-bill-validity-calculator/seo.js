@@ -1,4 +1,12 @@
 const seo = {
+  title: "E-Way Bill Validity Calculator: Rule 138(10) Slabs",
+  metaDescription:
+    "Work out e-way bill validity under Rule 138(10): 200 km a day, 20 km for ODC, expiry at midnight of the next day, and the 8-hour extension window.",
+  steps: [
+    "Enter 'Approximate distance (km)', the 'Generation date' and 'Generation time (24h HH:MM)', or click the '420 km regular' or '65 km ODC' example preset.",
+    "Set 'Movement type' to 'Regular / non-ODC' or 'Over-dimensional cargo' to switch between the 200 km and 20 km per day slabs.",
+    "Read the '<n> days estimated validity' with the Slab, Estimated end and 'Extension window' rows, then Copy it or Download e-way-bill-validity-calculator.txt.",
+  ],
   intro:
     "This calculator applies Rule 138(10) of the CGST Rules, 2017 to work out how long an e-way bill remains valid: one day for the first 200 km and one further day for every additional 200 km or part of it for ordinary cargo, and blocks of 20 km instead for over dimensional cargo or a multimodal shipment with a leg by ship. It also applies the Explanation to that rule, under which validity expires at midnight of the day following the date of generation, and shows the eight-hour window either side of expiry in which a transporter may extend the bill. For consignors, transporters and logistics teams planning a route.",
   useCases: [

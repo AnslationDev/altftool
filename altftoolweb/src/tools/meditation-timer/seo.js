@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meditation Timer With Interval Bells and Streaks",
+  metaDescription:
+    "Sit 5 to 60 minutes with a settle-in delay, bells every N minutes or at marks you list, and Web Audio bell tones. Session log stays in your browser.",
+  steps: [
+    "Pick a Duration of 5 to 60 minutes or Custom up to 180, and set the Settle-in delay slider between 10 and 30 seconds.",
+    "Under Interval bells choose None, Every or Custom — Every rings from 1 to 15 minutes, Custom takes minute marks typed as 5, 10, 18.",
+    "Press Begin sitting, use Hide clock if you would rather not watch a countdown, and the finished sit adds to Sessions, Total minutes and Current streak.",
+  ],
   intro:
     "This meditation timer runs a silent sitting of 5 to 60 minutes (or any custom length) with a preparation countdown, an optional opening bell, interval bells placed either every N minutes or at exact minute marks you list, and a closing bell. The bells are synthesised in the browser from stacked inharmonic partials — a singing bowl, a temple bell and a soft chime — rather than loaded as audio files, so nothing buffers mid-sit. Finished sessions go into a private log that tracks total minutes, average length, current streak and longest streak.",
   useCases: [

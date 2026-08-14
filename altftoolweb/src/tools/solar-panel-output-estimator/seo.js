@@ -1,4 +1,12 @@
 const seo = {
+  title: "Solar Panel Output Estimator: kWh After Real Losses",
+  metaDescription:
+    "Daily, monthly and annual kWh from panel wattage and peak sun hours, with system, shading, temperature and inverter losses set separately — plus savings.",
+  steps: [
+    "Under Panel Setup enter \"Panel wattage\", \"Number of panels\" and \"Peak sun hours / day\" — or start from a Quick Preset: Balcony 800W, Home 3kW, Home 5kW, Shop 10kW or Portable 200W.",
+    "Under Loss Factors set \"System loss %\", \"Shading loss %\", \"Temperature loss %\" and \"Inverter efficiency %\"; the four multiply into the performance ratio that is applied to peak kW × sun hours, and \"Self-use %\", \"Tariff INR / kWh\" and \"Available area sqm\" drive the savings and roof-fit checks.",
+    "Read Output Result — daily kWh, peak capacity, performance ratio and panel area — with the Monthly Output Curve and the self-used versus exported split; \"Copy\" takes the summary and \"CSV\" saves solar-panel-output-estimator.csv.",
+  ],
   intro:
     "The Solar Panel Output Estimator works out daily, monthly and annual generation from array size and peak sun hours using the standard derating chain: kWp multiplied by sun hours multiplied by a performance ratio built from system loss, shading loss, temperature loss and inverter efficiency. It is for homeowners and small businesses sizing a rooftop or balcony array who want to see how each loss eats into the headline panel rating before a vendor quote arrives. With the default 10% system, 4% shading and 8% temperature losses and a 96% inverter, the performance ratio lands near 76%, so a 3 kWp array at 5.1 sun hours produces roughly 11.7 kWh a day rather than the 15.3 kWh the panel label implies.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "TNEA Cutoff Calculator: Maths + (Physics+Chemistry)/2",
+  metaDescription:
+    "Cutoff out of 200 with Maths at full weight and Physics and Chemistry at half, for TNEA engineering or the medical/agriculture group, plus a target check.",
+  steps: [
+    "Pick Engineering (TNEA) or Medical / agriculture group, then set Maximum mark per subject on your marksheet to 100 or 200.",
+    "Type the Mathematics or Biology mark with Physics mark and Chemistry mark, plus the Cutoff you are aiming for (out of 200).",
+    "Cutoff mark gives the score out of 200 with the formula, each subject's contribution, and the stream mark still required for your target.",
+  ],
   intro:
     "A Tamil Nadu cutoff is a mark out of 200 in which the stream subject counts in full and Physics and Chemistry count half each — Maths + (Physics + Chemistry) ÷ 2 for engineering, Biology + (Physics + Chemistry) ÷ 2 for the medical and agriculture group. This calculator applies that rule to your +2 marksheet, shows exactly how much each subject contributed, and works out the stream-subject mark still needed to hit a target cutoff. Marksheets scored out of 200 per subject are normalised first, so the older Maths ÷ 2 + Physics ÷ 4 + Chemistry ÷ 4 form gives the same answer.",
   useCases: [

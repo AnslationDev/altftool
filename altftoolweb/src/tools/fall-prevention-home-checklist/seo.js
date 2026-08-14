@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fall Prevention Home Checklist With a Safety Score",
+  metaDescription:
+    "Tick hazards across seven rooms, from the CDC checklist and NICE guidance, for a weighted safety score and the fixes left ranked by impact.",
+  steps: [
+    "Work through the seven room sections — 'Entrance and outside', 'Stairs and hallways', 'Living room', Kitchen, Bedroom, Bathroom and 'Lighting and general' — ticking each item already sorted; every row shows its impact plus whether the fix is 'Free, do it today', a 'Small spend' or 'Needs a hand or a tradesperson'.",
+    "Tick anything that applies under 'Personal risk questions', the first three of which are the STEADI key questions, and use 'Mark all done' or 'Clear all' to set every checklist box at once.",
+    "Read the 'Home safety score' percentage with its band, then the 'Items completed', 'Weighted hazard points cleared', 'Free fixes still outstanding' and 'STEADI screening' rows, work down 'Next actions, ranked', and press 'Copy actions'.",
+  ],
   intro:
     "The Fall Prevention Home Checklist walks through seven areas of a home — entrance, stairs, living room, kitchen, bedroom, bathroom and lighting — using the hazards named in the CDC 'Check for Safety' checklist and NICE guideline CG161 on falls in older people. Each item carries an impact weight and an effort level, so the tool produces a weighted safety score and a ranked action list that puts high-impact free fixes first. It also asks the three STEADI screening questions, because a previous fall, unsteadiness or fear of falling raises risk whatever the house looks like.",
   useCases: [

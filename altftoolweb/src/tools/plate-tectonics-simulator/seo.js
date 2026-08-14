@@ -1,4 +1,12 @@
 const seo = {
+  title: "Plate Tectonics Simulator: 3 Boundaries, 1-15 cm/yr",
+  metaDescription:
+    "Animated cross-section of divergent, convergent and transform plate boundaries, with a 1-15 cm/yr velocity slider and the landforms each produces.",
+  steps: [
+    "Pick 'Divergent (Spreading)', 'Convergent (Subduction)' or 'Transform (Strike-Slip)' under Plate Boundary Type.",
+    "Drag the Plate Relative Velocity slider between 1 and 15 cm/yr, and use Pause Motion or Animate Motion to freeze the frame.",
+    "Read that boundary's Geologic Features Formed and Seismic Hazard beside the cross-section of plates, subducting slab and asthenosphere.",
+  ],
   intro:
     "The Plate Tectonics Simulator draws an animated cross-section of the lithosphere for the three plate boundary types — divergent, convergent and transform — with a relative plate velocity you set anywhere from 1 to 15 cm per year. Each boundary comes with a side panel naming the landforms it produces, its seismic hazard level and its melting mechanism, so the moving picture and the geology vocabulary stay side by side. It is built for earth science students and teachers who need boundary behaviour shown rather than described.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Alloy vs Steel Wheels: Weight, Fuel & Payback Compared",
+  metaDescription:
+    "Enter both wheels' weights and prices to see kg saved with rotating-mass weighting, the annual fuel value and when - if ever - alloys repay the premium.",
+  steps: [
+    "Enter Vehicle kerb weight (kg), then each wheel's 'weight, each (kg)' and 'price, each (INR)' for steel and alloy, and set 'Wheels being changed' to '4 road wheels' or '5 (with matching spare)'.",
+    "Fill 'Annual running (km)', 'Current mileage (km per litre)' and 'Fuel price (INR per litre)'; every figure recomputes live as you type, with no submit button.",
+    "Read 'Weight saved by the alloy set' and the breakdown rows through 'Payback from fuel saving', then press 'Copy result' for a text summary or 'Reset' to restore the defaults.",
+  ],
   intro:
     "This comparison converts the alloy-versus-steel wheel decision into numbers: how many kilograms of unsprung, rotating mass an alloy set removes, what that is worth in fuel, and how long the saving takes to repay the price premium. Rotating mass is weighted using the wheel-and-tyre inertia factor, so each kilogram at the rim counts as about 1.6 kg of dead weight under acceleration. The fuel effect uses the standard mass-reduction rule that a 10% cut in vehicle mass buys roughly 6-7% better fuel economy.",
   useCases: [

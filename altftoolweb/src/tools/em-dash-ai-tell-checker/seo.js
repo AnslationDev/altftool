@@ -1,4 +1,12 @@
 const seo = {
+  title: "Em Dash Checker: AI Writing Tells per 1,000 Words",
+  metaDescription:
+    "Counts em dashes, curly quotes, semicolons and rule-of-three lists as rates per 1,000 words, shows the sentence behind each flag, and can replace them.",
+  steps: [
+    "Paste your draft into the Draft textarea, replacing the sample, and set 'Em dash flag threshold (per 1,000 words)' if 3 is not your house limit.",
+    "Pick comma, full stop, spaced hyphen or opening bracket under 'Replace em dashes with'; the report recalculates as you type.",
+    "Read the em dashes per 1,000 words figure and the tell score out of 100, open 'Tell by tell' for the flagged sentences, then press Copy report or Copy draft.",
+  ],
   intro:
     "The Em Dash AI Tell Checker counts the punctuation and structure habits that stand out in unedited language-model prose — em dashes (U+2014), curly quotes, the ellipsis glyph, semicolons, sentence-initial connectives such as Moreover and Ultimately, rule-of-three lists, and \"not only... but also\" framing — and reports each as a rate per 1,000 words. It also measures sentence- and paragraph-length variation using the coefficient of variation, since evenly sized sentences are one of the clearest signs a draft has not been read aloud. Every flag threshold is shown and adjustable, so you can see why a passage was marked.",
   useCases: [

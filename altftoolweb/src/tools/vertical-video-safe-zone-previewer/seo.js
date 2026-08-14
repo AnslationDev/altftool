@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vertical Video Safe Zone Previewer for 9:16 Reels",
+  metaDescription:
+    "Stage a 9:16 frame against dashed top and bottom guides, then export your review notes as a dated plain-text report. Your clip never leaves the browser.",
+  steps: [
+    "Choose a still or clip with the \"Optional reference image/video\" file picker, which accepts image/* and video/* and renders it from a local object URL that is never uploaded.",
+    "Judge it inside the 9:16 preview box against the dashed \"Top safe-zone boundary\" and \"Caption / controls obstruction review\" guides, and write each boundary call into \"Content and review notes\".",
+    "Press \"Export review report\" to download altftool-vertical-video-safe-zone-previewer.txt — the tool name, an ISO timestamp, your notes, and a reminder to re-check every safe-zone assumption in the platform's own upload preview.",
+  ],
   intro:
     "The Vertical Video Safe-Zone Previewer overlays a 9:16 frame with dashed top and bottom boundary guides so you can see which parts of a Reel, Short or TikTok will sit under the platform's own interface. Load a reference frame or clip from your device, position it against the guides, write your review notes, and export the whole review as a plain-text report. It is a visual staging aid for creators and editors, not a scraper of platform layout specs — the guides are yours to adjust against a real platform preview before you publish.",
   useCases: [

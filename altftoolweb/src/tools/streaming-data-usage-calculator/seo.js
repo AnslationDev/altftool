@@ -1,4 +1,12 @@
 const seo = {
+  title: "Streaming Data Usage Calculator: GB Per Hour",
+  metaDescription:
+    "1080p at 5 Mbps costs about 2.36 GB an hour. Convert any bitrate to data per minute, hour and month, and see how long your allowance lasts.",
+  steps: [
+    "Pick from the Quality list — audio presets such as \"Music, normal quality (AAC 128 kbps)\" through video ones such as \"1080p full HD (~5 Mbps)\" and \"4K UHD (~16 Mbps)\" — or choose Custom bitrate and type a figure into \"Bitrate in kbps\".",
+    "Set \"Protocol overhead (%, 0-30)\", which starts at 5, then fill Hours per day, Days in the period and Data allowance in GB; the figures recompute as you type, with no calculate button.",
+    "Read \"Data used per hour\" at the top plus the Per minute, Per day, Allowance used, \"Hours the allowance covers\" and \"Days at this daily habit\" rows and the \"An hour at every quality\" table, then press Copy result or Reset.",
+  ],
   intro:
     "The Streaming Data Usage Calculator converts a stream's bitrate into the mobile data it consumes per minute, hour and month, and tells you how many hours of viewing a given allowance covers. It uses one identity — bytes = bitrate in bits per second ÷ 8 × seconds — which means 1 Mbps sustained for an hour is exactly 0.45 GB, then adds an editable protocol overhead of 5% for the TCP/IP, TLS, manifest and telemetry traffic real apps generate on top of the media payload. It is for anyone on a capped or roaming plan deciding whether an hour of 1080p is worth the data.",
   useCases: [

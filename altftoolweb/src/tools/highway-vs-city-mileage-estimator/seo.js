@@ -1,4 +1,12 @@
 const seo = {
+  title: "City + Highway Mileage: True Combined km/l Calculator",
+  metaDescription:
+    "Blends city and highway km/l with the fuel-weighted harmonic mean — the simple average overstates economy — and prices your monthly litres in rupees.",
+  steps: [
+    "Enter 'City mileage (km per litre)', 'Highway mileage (km per litre)' and the 'Share of distance driven in the city (%)' — or tap a preset chip like 'EPA 55/45' or 'Mostly highway'.",
+    "Add 'Distance per month (km)' and 'Fuel price (per litre)' to turn the blend into litres and rupees.",
+    "Read the combined km/l headline, the 'Simple average (wrong method)' row showing how much it overstates economy, and the monthly fuel and cost rows, then press 'Copy result'.",
+  ],
   intro:
     "This estimator blends a vehicle's city and highway km/l into one combined figure using the fuel-weighted harmonic formula: combined km/l = 1 ÷ (city share ÷ city km/l + highway share ÷ highway km/l). That is the only correct way to mix the two, because the thirsty city kilometres consume a bigger share of the fuel than of the distance — averaging the two mileage numbers directly always flatters the result. It also converts the blend into litres and rupees for your monthly running distance.",
   useCases: [

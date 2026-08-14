@@ -1,4 +1,12 @@
 const seo = {
+  title: "Human Life Value Calculator: Your Term Cover Gap",
+  metaDescription:
+    "Discounts your growing future income to today, adds loans and goals, subtracts savings and existing cover to show the term insurance you still need.",
+  steps: [
+    "Enter your current age, retirement age, annual income and your own annual expenses in INR.",
+    "Set the expected income growth and discount rate per year, then add outstanding loans, future goals, savings and existing life cover.",
+    "Read the Human Life Value and the additional cover you should buy, then press Copy result.",
+  ],
   intro:
     "The Human Life Value Calculator estimates the economic value of your remaining working life — the present value of every rupee you would still have earned and handed to your family. It discounts your growing future income back to today, adds outstanding loans and planned goals such as education and marriage, then subtracts your savings and existing policies to reveal the term insurance gap. It is built for salaried earners, business owners and anyone comparing quoted sum assured against a defensible number.",
   useCases: [

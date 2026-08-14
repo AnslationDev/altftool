@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Exam Negative Marking Calculator (0.25 Penalty)",
+  metaDescription:
+    "Scores IBPS and SBI prelims section by section with the one-fourth penalty, and shows marks lost, net score and where the cutoff sits.",
+  steps: [
+    "Pick an Exam pattern: IBPS PO Prelims, IBPS Clerk Prelims, SBI PO Prelims or IBPS RRB Officer Scale I Prelims.",
+    "For English Language, Quantitative Aptitude and Reasoning give Questions attempted and Accuracy (%), then set Extra questions guessed and Options left standing on a guess.",
+    "Read Net score after penalty against the Cutoff you are aiming at, with the Attempted / Correct / Lost / Net table per section, then press Copy result.",
+  ],
   intro:
     "This banking negative marking calculator converts section-wise attempts and accuracy into the net score an IBPS or SBI objective test actually awards, applying the official penalty of one-fourth of a question's marks for every wrong answer. It scores English, Quantitative Aptitude and Reasoning separately because sectional timing forces separate attempt decisions, then totals the marks earned against the marks surrendered. Since these papers carry five options and a 0.25 deduction, a blind guess is worth exactly zero on average — the tool shows how much elimination changes that.",
   useCases: [

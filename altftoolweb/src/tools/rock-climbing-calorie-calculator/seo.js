@@ -1,4 +1,10 @@
 const seo = {
+  title: "Rock Climbing Calorie Calculator: Wall vs Belay",
+  steps: [
+    "Enter your body weight in kg or lb and the total session length in minutes.",
+    "Choose what you were climbing, from \"Top-rope, easy to moderate routes\" at 5.8 MET to \"Bouldering at your limit / campus work\" at 8.0 MET, then the routes or problems attempted, the minutes on the wall per attempt, and optionally the height gained per attempt in m or ft.",
+    "Read the session calories split between wall time and belaying, the kcal per route and average MET, and the physics cross-check giving the mechanical work of the vertical gain.",
+  ],
   intro:
     "The Rock Climbing Calorie Calculator estimates a bouldering or roped session by separating minutes actually on the wall from minutes spent belaying, brushing and resting. Wall time uses the rock climbing codes from the Compendium of Physical Activities — 5.8 MET for low-to-moderate difficulty, 7.5 MET for hard ascent — converted with kcal/min = MET x 3.5 x kg / 200, and rest is priced at 2.0 MET. It also reports the pure lifting work, mass times gravity times height, as an independent physical cross-check.",
   useCases: [

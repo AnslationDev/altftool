@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Depreciation Calculator India: IDV and Tax WDV",
+  metaDescription:
+    "Ex-showroom price and age in months give the motor tariff value, 5% under six months to 50% at five years, beside the 15% or 30% written down value.",
+  steps: [
+    "Enter the ex-showroom or listed price when new and the age of the vehicle in months.",
+    "Pick the income tax depreciation block, motor car at 15% or bus, lorry or taxi on hire at 30%, and set your condition adjustment.",
+    "Compare the value on the motor tariff schedule against the year-by-year written down value table, then press Copy result.",
+  ],
   intro:
     "This calculator applies the two depreciation schedules that are written down in Indian rules rather than estimated: the motor tariff schedule of depreciation, which reduces a vehicle's listed price by 5% under six months rising to 50% at five years and is what insurers use to fix insured value, and the income tax written down value method at 15% for a motor car or 30% for a bus, lorry or taxi run on hire. Enter the ex-showroom price and the vehicle's age to see both figures side by side, along with a year-by-year table. Beyond five years the tariff table stops and value is mutually agreed, so the model continues at a rate you choose.",
   useCases: [

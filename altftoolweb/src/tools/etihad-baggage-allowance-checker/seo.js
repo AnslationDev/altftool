@@ -1,4 +1,12 @@
 const seo = {
+  title: "Etihad Baggage Allowance Checker: Weight vs Piece Rules",
+  metaDescription:
+    "Checks bags against Etihad weight-concept limits, the 2 × 23 kg piece rule on US, Canada and Brazil routes, and the 7 kg 50 × 40 × 21 cm Economy cabin.",
+  steps: [
+    "Pick your \"Cabin, fare or route\" — an Economy 23/25/30/35 kg weight-concept sector, or an Economy 2 × 23 kg fare to or from the US, Canada or Brazil.",
+    "Tick \"I am carrying one\" for the cabin bag and personal item, press Add bag for each checked piece, and enter its Weight (kg) and dimensions.",
+    "Read Excess checked weight in kg, the count of things to fix before you fly (any bag over 32 kg is flagged), then press Copy result.",
+  ],
   intro:
     "This checker tests your bags against Etihad Airways' published cabin and check-in limits and reports the shortfall in kilograms or pieces. Etihad uses a weight concept across most of its Abu Dhabi network — one total figure covering every checked bag together — but switches to a piece concept on journeys touching the United States, Canada and Brazil, where the allowance becomes 2 × 23 kg in Economy and 2 × 32 kg in Business. Cabin baggage is checked separately at 7 kg and 50 × 40 × 21 cm in Economy, or two pieces under a 12 kg combined limit in Business and First.",
   useCases: [

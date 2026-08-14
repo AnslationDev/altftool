@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Anti-Scam Agreement: Safe Word + OTP Rules",
+  metaDescription:
+    "Write household rules on OTPs, callbacks, a cooling-off period and a two-person payment limit, then score the signed agreement against six scam types.",
+  steps: [
+    "Fill in Household name, Who is the first call when something feels wrong?, the Cooling-off period before money moves (hours) and the Payment above which two people must agree (INR), then list every signatory under Who is agreeing to this? using Add a person.",
+    "Type a Family safe word — the builder rates the one you chose — decide whether to Print the safe word inside the agreement, and tick the entries under Clauses to include.",
+    "Read the Scam coverage score out of 100 and which of the six scam types are still uncovered, then press Copy agreement to take the numbered clauses and signature line.",
+  ],
   intro:
     "A family anti-scam agreement is a short written set of household rules — never share an OTP, always hang up and call back, wait before paying, two people approve anything large — signed by everyone who shares money decisions. This builder assembles those clauses, fills in your own cooling-off period, two-person payment threshold and safe word, then scores the result against six scam types: OTP and PIN requests, relatives-in-trouble impersonation, fake authority and 'digital arrest' calls, investment and task schemes, fake payment tricks, and remote-access installs. The clauses state rules that hold without exception in India, including that no bank or agency ever asks for an OTP and that receiving money on UPI never needs a PIN.",
   useCases: [

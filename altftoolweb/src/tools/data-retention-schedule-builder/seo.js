@@ -1,4 +1,7 @@
 const seo = {
+  title: "Data Retention Schedule Builder: 7-Column Table Output",
+  metaDescription:
+    "Paste records one per line, pipe-separated, for a seven-column schedule — category, purpose, system, period, trigger, method, owner — with gaps flagged.",
   intro:
     "The Data Retention Schedule Builder turns a plain list of records into a structured seven-column retention schedule covering data category, purpose, system, retention period, deletion trigger, deletion method and owner. You type one record per line with fields separated by a pipe character, and it returns a formatted table plus a count of complete rows and rows still missing a column. It is aimed at privacy, IT and operations staff who need a defensible written schedule rather than a spreadsheet nobody maintains.",
   useCases: [

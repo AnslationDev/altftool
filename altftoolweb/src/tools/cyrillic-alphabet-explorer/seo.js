@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cyrillic Alphabet Explorer: 33 Letters, ICAO & ISO 9",
+  metaDescription:
+    "All 33 Russian letters with names, sounds and Latin lookalikes, plus a transliterator using ICAO passport romanisation or reversible ISO 9:1995.",
+  steps: [
+    "Paste Russian into the 'Cyrillic text' box, which opens with Москва, Санкт-Петербург, Чайковский, Юлия already in it.",
+    "Pick the 'Romanisation standard': 'ICAO passport (Russian passports since 2013)', which avoids diacritics, or 'ISO 9:1995 System A (scholarly)', which maps one Latin letter per Cyrillic letter and is fully reversible.",
+    "The 'Romanised' line rewrites as you type — Юлия comes out Iuliia under the passport standard — with counts for Cyrillic letters in the text, letters that look and sound Latin and the share already readable, and 'Copy result' takes the pair. Below, 'The alphabet' filters the letters by All 33, Vowels, Consonants or Signs.",
+  ],
   intro:
     "The modern Russian alphabet has 33 Cyrillic letters — 10 vowels, 21 consonants and two silent signs — and this explorer gives each one its Russian name, its sound and its romanised form. It transliterates any Cyrillic text two ways: the ICAO Doc 9303 standard used on Russian passports, which uses no diacritics, and ISO 9:1995, which maps one Latin letter to one Cyrillic letter and is fully reversible. It also flags the eighteen letters whose shapes are borrowed from or resemble Latin ones, which is where most beginners go wrong.",
   useCases: [

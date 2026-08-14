@@ -1,4 +1,12 @@
 const seo = {
+  title: "Room RT60 Echo Meter: Clap Decay Log, -35 to -55 dB",
+  metaDescription:
+    "Run a clap or sweep recording through FFmpeg in your browser at a -35, -45 or -55 dB floor and download the decay log. Not a calibrated RT60.",
+  steps: [
+    "Choose your clap or sweep recording in the Source file picker, which accepts audio/*, then set Noise floor to -35dB, -45dB or -55dB.",
+    "Press Process locally — the FFmpeg WebAssembly engine loads only at that point and runs silencedetect plus astats on the file in its in-memory filesystem rather than uploading it.",
+    "The diagnostic log downloads as altftool-room-rt60-echo-meter-analysis.txt with the silence boundaries and peak/RMS levels, while the Local processing report panel lists the File, Size, Type and Profile used.",
+  ],
   intro:
     "The Room RT60 Echo Meter analyses a clap or sweep recording you upload and reports how long the sound tail stays above a noise floor you pick — -35 dB, -45 dB or -55 dB — using FFmpeg's silencedetect and astats decay diagnostics. It is aimed at anyone setting up a home studio, podcast corner, meeting room or practice space who wants a repeatable number for how live the room sounds. The result is a decay and level report you can compare before and after adding treatment, not a calibrated RT60 certificate.",
   useCases: [

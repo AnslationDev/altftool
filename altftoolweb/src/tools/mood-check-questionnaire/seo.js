@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mood Check Questionnaire: Nine Items, Scored 0-27",
+  metaDescription:
+    "Rate nine low-mood statements 0 to 3 over the last 14 days: total out of 27, bands at 5, 10, 15 and 20. A reflection aid, not a diagnosis.",
+  steps: [
+    "For each of the nine statements, pick how often it applied over the last 14 days: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day.",
+    "Set the unscored difficulty question, from Not difficult at all through Extremely difficult, for how much the symptoms affected daily life.",
+    "Read the Total score out of 27 with its severity band and the statements marked more than half the days; any self-harm answer above zero raises its own alert.",
+  ],
   intro:
     "The Mood Check Questionnaire is a nine-item self-check that asks how often, over the last 14 days, each of nine common low-mood symptoms applied — covering interest, mood, sleep, energy, appetite, self-worth, concentration, restlessness and thoughts of self-harm. Each is rated 0 (not at all) to 3 (nearly every day), giving a total from 0 to 27 with severity bands at 5, 10, 15 and 20, the same cut-points used by the nine-item mood screeners routinely handed out in primary care. It is a reflection aid, not a diagnosis, and everything you enter stays in your browser.",
   useCases: [

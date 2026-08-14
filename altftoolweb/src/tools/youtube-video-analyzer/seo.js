@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube URL Parser: Video ID, Clean Link, Chapters",
+  metaDescription:
+    "Pull the 11-character video id out of any YouTube URL, strip si= and utm_ tracking, rebuild nocookie embeds, and check title, hashtag and chapter rules.",
+  steps: [
+    "Paste the address into \"YouTube URL\" — watch, youtu.be, Shorts, embed or live — and paste your video title and description to have them checked.",
+    "Enter \"Video length (optional, m:ss)\" so the final chapter is measured, and set the Embed options \"Privacy-enhanced host\" and \"Limit end-screen suggestions (rel=0)\".",
+    "Read the video id and tracking parameters under \"What the link says\", copy a rebuilt link from \"Clean links\", and read the Metadata audit against the 100-character title, 5000-character description and three chapter rules.",
+  ],
   intro:
     "The YouTube Video Analyzer works on the two things you can actually hold in your hand: the link, and the metadata you wrote. It pulls the 11-character video id out of any YouTube URL shape — watch, youtu.be, Shorts, embed, live, legacy /v/ — reads the t, start, end, list and index parameters, separates playback parameters from tracking ones such as the si token the share button now appends, and rebuilds the canonical watch link, the timestamped share link, the youtube-nocookie embed and the fixed i.ytimg.com thumbnail paths. Paste your title and description as well and they are measured against YouTube's published limits: 100 characters for a title, 5000 for a description, 15 hashtags before all of them are ignored, and the three chapter rules — first marker at 0:00, at least three markers, every chapter 10 seconds or longer. Everything runs locally in the page; it never contacts YouTube, so it cannot report view counts, durations, channel names or publish dates.",
   useCases: [

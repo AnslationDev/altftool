@@ -1,4 +1,12 @@
 const seo = {
+  title: "AWS Lambda Cost Calculator: Requests + GB-Seconds",
+  metaDescription:
+    "Monthly cost from invocations, memory and duration at $0.20 per million requests and $0.0000166667 per GB-second, with the always-free tier applied.",
+  steps: [
+    "Enter Invocations per month, set Memory (MB) by typing it or tapping a preset from 128 up to 10240, and give the Average billed duration (ms).",
+    "Leave 'Apply the always-free tier (1,000,000 requests and 400,000 GB-seconds a month)' ticked, or untick it to price the workload gross.",
+    "Read the Estimated monthly cost with its Request charge, Compute charge, Compute used in GB-seconds, Billable after free tier and Cost per million invocations, then press 'Copy result'.",
+  ],
   intro:
     "The AWS Lambda Cost Calculator estimates your monthly Lambda bill from three inputs — invocations per month, configured memory and average duration — using AWS on-demand pricing for x86 functions in US East (N. Virginia): $0.20 per million requests plus $0.0000166667 per GB-second of compute. Compute is calculated as invocations x duration in seconds x memory in GB, where 1 GB = 1,024 MB, then the always-free tier of 1,000,000 requests and 400,000 GB-seconds is subtracted. It is for engineers and architects sizing a serverless workload before committing to it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Language Detector: 19 Scripts, Ranked Confidence",
+  metaDescription:
+    "Detect a text's language in your browser: Unicode script detection across 19 blocks, up to five ranked candidates with confidence, and character stats.",
+  steps: [
+    "Paste into the 'Text to analyze' box, or press Load sample to drop in the French sentence 'Bonjour, comment allez-vous aujourd'hui ?'",
+    "Detection reruns on every keystroke with no upload: each character is matched against 19 Unicode script blocks first, then Latin-script text is scored against 14 per-language character profiles.",
+    "Read Detection results — up to five ranked candidates, the top one flagged Best, each with a confidence percentage — alongside Detected scripts with each script's share and the Character statistics panel; Copy puts the ranked list on the clipboard.",
+  ],
   intro:
     "The Language Detector identifies what language a piece of text is written in by combining two signals: Unicode script detection across 19 script blocks (Latin, Cyrillic, Arabic, Devanagari, Chinese, Hangul, Tamil, Thai and more) and per-language character-frequency profiles that separate the 14 Latin-script languages it distinguishes. It returns up to five ranked candidates with a confidence score for each, a breakdown of which scripts appear and in what proportion, and character statistics — total characters, words, letters and unique characters. When more than one script is present it flags the text as possibly mixed-language rather than forcing a single answer.",
   useCases: [

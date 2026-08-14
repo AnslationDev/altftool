@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in Germany: Speed, Alcohol and IDP Rules",
+  metaDescription:
+    "50 km/h in town, 100 on country roads, 130 advisory on the Autobahn — plus your own 0.05% or zero BAC limit and whether your licence needs an IDP.",
+  steps: [
+    "Under Your details enter Your age (years) and Licence held for (years), choose Where your licence was issued (EU / EEA, non-EU in Latin script, or non-EU in a non-Latin script), set Length of stay (days), and tick Towing a caravan or trailer if it applies.",
+    "Read Your legal blood-alcohol limit in Germany — 0.05 % for fully licensed drivers 21 and over, an absolute zero inside the two-year Probezeit — alongside International Driving Permit and Foreign licence recognised for, and the Speed limits table in km/h and mph.",
+    "Work the Morning-after estimate fields (drinks, drink volume, ABV, body weight, sex r-value, hours elapsed) for a Widmark reading, check What must be in the car and Rules that catch visitors out, then press Copy result.",
+  ],
   intro:
     "This explainer sets out the rules a visiting driver actually has to obey in Germany: drive on the right, 50 km/h in built-up areas, 100 km/h on country roads, and no general limit on unrestricted Autobahn where 130 km/h is only an advisory speed. It works out which blood-alcohol limit applies to you personally — 0.05 % under StVG §24a, or an absolute zero under §24c if you are under 21 or still in the two-year probationary period — and whether your licence needs an International Driving Permit alongside it. Speeds are shown in km/h and mph together, and a Widmark-equation estimate shows how long alcohol from the night before is likely to stay in your system.",
   useCases: [

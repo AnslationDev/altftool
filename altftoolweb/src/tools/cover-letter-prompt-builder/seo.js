@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cover Letter Prompt Builder: 4 Moves, Word Budget",
+  metaDescription:
+    "Splits a 250-400 word letter across opening hook, proof of fit, why this employer and close at 15/35/30/20%, and marks anything you did not supply.",
+  steps: [
+    "Pick a Letter type — applying to a posted job, referred by someone inside, cold / speculative outreach, career change or internal move — and set 'Letter length (words)', one page being about 250-400.",
+    "Fill in 'Role you are applying for', Employer, Tone and Format, then 'Your achievements, with numbers' and 'Verified facts about this employer' — leave the hiring manager blank and the letter opens 'Dear Hiring Team'.",
+    "Check the Paragraph budget table splitting the words across the opening hook, proof of fit, why this employer and close, then press 'Copy prompt' and work through 'Before you send it'.",
+  ],
   intro:
     "The Cover Letter Prompt Builder writes the instruction you give ChatGPT, Claude or Gemini so the letter it returns has a real structure instead of generic praise. It uses the conventional four-move cover letter — opening hook, proof of fit, why this employer, close and call to action — and splits your total word budget across them at 15%, 35%, 30% and 20%, keeping the letter inside the one-page 250–400 word band recruiters expect. It is for job seekers who already have achievements and company research and want the model to use those facts rather than invent new ones.",
   useCases: [

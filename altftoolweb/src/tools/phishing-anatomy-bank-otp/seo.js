@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fake Bank OTP SMS: Anatomy of the Scam + Scanner",
+  metaDescription:
+    "Takes the 'share your OTP to reactivate' SMS apart line by line, then scores any message you paste against 13 weighted markers and its links.",
+  steps: [
+    "Paste an SMS, email or WhatsApp message into Scan a message; defanged forms such as bad[.]top and hxxp:// are read as written.",
+    "The 13 weighted markers and every link are scored in this tab, reported as Markers matched, Points from the wording and Points from the links.",
+    "Read the Risk score with its band and the Strongest link problem named, then press Copy result to keep the findings.",
+  ],
   intro:
     "This explainer dissects the fake bank OTP message — the \"your account is suspended, share the OTP to reactivate\" SMS — one line at a time, naming the tell in each sentence and why it works. A built-in scanner scores any message you paste against 13 weighted markers of the same scam family, from OTP and CVV requests to APK downloads, and separately inspects every link: the registrable domain, punycode, userinfo tricks, shorteners and bare IP hosts. It is for anyone who wants to recognise the next one on sight rather than memorise a blocklist.",
   useCases: [

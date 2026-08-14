@@ -1,4 +1,7 @@
 const seo = {
+  title: "HTML to JSP Converter with EL and Context Path",
+  metaDescription:
+    "Turn HTML into JSP: {{ }} becomes ${...} EL, root-relative src and href gain ${pageContext.request.contextPath}, plus page and JSTL taglib directives.",
   intro:
     "This converter takes plain HTML and produces a JSP page — turning {{ placeholders }} into ${...} Expression Language, rewriting root-relative src, href and action attributes to ${pageContext.request.contextPath}/…, and prepending the page and JSTL core taglib directives when they are missing. Reversed, it strips the <%@ %> directives, rewrites <%= %> expressions and EL into {{ }} tokens, and demotes scriptlets, jsp:include and c:if / c:forEach blocks into HTML comments so the markup opens in a browser. It is aimed at Java web developers moving a static template into a Servlet/JSP app, or pulling a JSP back out for design work.",
   useCases: [

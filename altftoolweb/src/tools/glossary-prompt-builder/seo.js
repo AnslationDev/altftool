@@ -1,4 +1,12 @@
 const seo = {
+  title: "Glossary Prompt Builder Using ISO 704 Definitions",
+  metaDescription:
+    "Pull acronyms and repeated terms out of your own docs, then build a prompt that demands genus-plus-differentia definitions and bans circular wording.",
+  steps: [
+    "Name the \"Domain or product the glossary covers\" and paste at least 25 words into \"Source text — docs, specs or help articles to scan\", adding anything the scan would miss under \"Terms you already know you need — one per line\".",
+    "Set \"Maximum terms (1–120)\", pick a Definition style (Intensional — genus plus differentia, Extensional — list the members, or Plain language — for customers) and an Audience, then tick the Extra fields per entry such as \"Commonly confused with\" or \"Deprecated synonyms\".",
+    "\"Terms to define\" shows how many candidates were found and where each came from in the candidate table; press Copy prompt to take the ISO 704 brief to your model.",
+  ],
   intro:
     "A glossary prompt builder scans a body of documentation for glossary candidates — acronyms, capitalised multi-word phrases and repeated domain nouns — and writes an AI prompt that defines each one under the terminology rules of ISO 704. That means intensional definitions built as a broader class plus the characteristics that distinguish the term, wording that could be substituted for the term in a sentence, and a hard ban on circular definitions. Product, docs and data teams use it to agree on one definition per concept before the disagreement shows up in a report.",
   useCases: [

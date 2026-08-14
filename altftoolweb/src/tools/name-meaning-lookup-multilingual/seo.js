@@ -1,4 +1,12 @@
 const seo = {
+  title: "Name Meaning Lookup: Root Word and Cognate Forms",
+  metaDescription:
+    "Look up a name's root word and its forms in other languages; search in Latin, Arabic, Hebrew, Greek or Devanagari. Disputed etymologies are labelled.",
+  steps: [
+    "Type a name into the \"Name to look up\" box in Latin script or in Arabic, Hebrew, Greek or Devanagari, or tap an example chip such as Iskandar, محمد or राजन्.",
+    "Read the entry: the root word with its gloss in its own script, the Proto-Indo-European or Proto-Semitic ancestor where one is established, and its descendants in the Language / Form / Meaning table.",
+    "Press \"Copy result\" for that entry, or open \"Show everything in the dictionary\" to browse every headword grouped by origin.",
+  ],
   intro:
     "Most name-meaning pages give you a one-line gloss and no way to check it. This one shows the working. Every entry names the language the name is first attested in, the word it is built on — the Semitic three-consonant root, the Sanskrit verbal root, the Greek or Germanic compound — and the gloss of that word, then lists the forms the same name takes elsewhere: John as Yōḥānān, Ioannes, Yahya, Juan, Giovanni, Ivan and Seán. Where a reconstructed ancestor is well established it is shown with its descendants, so you can see that Sanskrit rājan, Latin rēx and the rīc inside Richard are one inherited word rather than a coincidence, and that Amrita and Greek ambrosia are the same compound built twice. Names whose etymology scholarship genuinely disputes — Mary is the famous case — are labelled disputed and the competing proposals are listed instead of one being picked. The dictionary is offline and fixed: you can search it in Latin script or in Arabic, Hebrew, Greek or Devanagari, and if a name is not in it you are told so plainly rather than being handed an invented meaning.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flesch-Kincaid Grade Checker and AI Rewrite Prompt",
+  metaDescription:
+    "Score any text with the Flesch-Kincaid formula, then build a rewrite prompt with a hard sentence-length cap for grades 2-3 through college level.",
+  steps: [
+    "Paste the passage into \"Text or prompt to adjust\" — at least 10 words, below which the tool refuses to score rather than give a misleading grade.",
+    "Pick a Target reading level from Grades 2-3 (age 7-9) up to College / professional, and tick \"Keep essential technical terms (defined on first use)\" if the jargon has to stay.",
+    "\"Current Flesch-Kincaid grade\" appears with words per sentence, syllables per word and Flesch Reading Ease, and the Generated rewrite prompt is ready for Copy prompt.",
+  ],
   intro:
     "The Reading Level Prompt Adjuster scores any text with the Flesch-Kincaid grade formula (0.39 × words-per-sentence + 11.8 × syllables-per-word − 15.59) and builds an AI rewrite prompt targeting the grade band you choose, from grades 2-3 to college level. Instead of vaguely asking an AI to \"simplify this\", the generated prompt sets checkable rules: a maximum sentence length, plain-word substitutions and a ban on adding or changing content. Teachers, technical writers and accessibility editors get rewrites they can verify by re-scoring.",
   useCases: [

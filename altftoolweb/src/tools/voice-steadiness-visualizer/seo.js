@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voice Steadiness Visualizer: Pitch and Volume Spread",
+  metaDescription:
+    "Reads your mic and reports current volume, estimated pitch in Hz, average volume and pitch spread. Autocorrelation over 70-500 Hz; nothing is recorded.",
+  steps: [
+    "Press Start microphone and grant the browser permission prompt.",
+    "Sustain a comfortable vowel or read a short sentence — pitch is estimated by autocorrelation across the 70-500 Hz range and frames below an RMS of 0.01 return no pitch.",
+    "Watch Current volume, Estimated pitch, Average volume and Pitch spread with the rolling 40-sample bar chart, then press Stop microphone.",
+  ],
   intro:
     "The Voice Steadiness Visualizer listens through your microphone and shows how consistent your loudness and pitch are while you speak or hold a vowel, sampling roughly five times a second and reporting current volume, estimated fundamental frequency in Hz, average volume and pitch spread. Pitch is found by autocorrelation over the 70–500 Hz range on a 2048-sample window, and frames quieter than an RMS of 0.01 are treated as silence. It is a practice and awareness aid for speech exercises, presentation rehearsal and voice training — it is not a medical device and produces no diagnosis.",
   useCases: [

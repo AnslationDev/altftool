@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compound Interest Chart vs Simple Interest Growth",
+  metaDescription:
+    "Plots a lump sum plus monthly deposits against simple interest, with the effective annual rate, exact doubling period and interest-overtakes year.",
+  steps: [
+    "Enter Starting amount (INR), Added every month (INR), Annual return (%) and Years (60 max), then pick a Compounding frequency — Annually, Half-yearly, Quarterly, Monthly or Daily — and whether the contribution goes in at the start or end of each month.",
+    "The Growth curve redraws with the compound balance against the same money at simple interest, and the 'Year by year' table lists Year, Paid in, Interest and Balance.",
+    "Read the headline balance alongside Total paid in, Interest earned, Extra from interest on interest, Effective annual rate, Doubling period and the year interest overtakes contributions, then press 'Copy result'.",
+  ],
   intro:
     "This visualiser plots the balance of a lump sum plus a monthly contribution against the same money earning simple interest, so the widening gap between the two lines is the interest earned on interest. It works month by month using the effective monthly rate (1 + r/m)^(m/12) - 1, which handles annual, half-yearly, quarterly, monthly and daily compounding correctly alongside a monthly deposit. It also reports the effective annual rate, the exact doubling period from ln 2 / ln(1 + EAR), and the year in which interest earned overtakes everything you have paid in.",
   useCases: [

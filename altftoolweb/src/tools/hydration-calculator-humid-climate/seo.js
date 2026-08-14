@@ -1,4 +1,12 @@
 const seo = {
+  title: "Humid Climate Hydration Calculator (Heat Index)",
+  metaDescription:
+    "Scales sweat loss by the NWS heat index from your temperature and humidity, adds it to a 35 mL/kg baseline, and warns above 1.0 L per hour.",
+  steps: [
+    "Enter Sex, Age, Body weight (kg) and Waking hours, then Air temperature (°C) and Relative humidity (%) so the NWS heat index can be computed.",
+    "Set Training intensity today, Training hours today, Hours outdoors or without AC, and How salty does your sweat run? — 500, 900 or 1,500 mg of sodium per litre.",
+    "Read Drink today in litres and 250 ml glasses, with the sodium estimate and a warning if the pace would pass the 1.0 L per hour the kidneys can clear, then press Copy plan.",
+  ],
   intro:
     "This calculator estimates a day's fluid target for humid heat by adding sweat losses to a body-weight baseline of 35 mL per kg per day (30 mL/kg from age 65), then scaling those sweat losses by the US National Weather Service heat index computed from your air temperature and relative humidity. It exists because humidity is the part ordinary hydration maths ignores: sweat only cools you when it evaporates, and as the air approaches saturation you sweat more for less cooling. It is for anyone training or working in muggy conditions who wants a planning number, plus a sodium estimate and a safe drinking ceiling — informational only, not medical advice.",
   useCases: [

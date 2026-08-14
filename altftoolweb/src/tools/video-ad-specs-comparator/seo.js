@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Ad Specs Checker for 10 Social Placements",
+  metaDescription:
+    "Test a cut's length, frame size, file size and container against Meta, YouTube, TikTok, LinkedIn, X, Snapchat and Pinterest rules, pass or fail per rule.",
+  steps: [
+    "Enter the cut's \"Length (seconds)\", \"File size (MB)\", \"Frame width (px)\" and \"Frame height (px)\", or press a shape preset such as \"Vertical 1080x1920\" or \"Square 1080x1080\".",
+    "Pick the Container — .mp4, .mov, .m4v, .webm, .avi or .mpeg — and tick the entries under \"Placements to check\", from Instagram & Facebook Reels ads to YouTube Bumper ad.",
+    "\"Placements this cut can run in\" gives the accepted count, and \"Placement by placement\" names the exact length, aspect, resolution, file size or container rule each failure breaks.",
+  ],
   intro:
     "The Video Ad Specs Comparator takes one cut — its length, frame size, file size and container — and tests it against the published upload rules for ten major ad placements across Meta, YouTube, TikTok, LinkedIn, X, Snapchat and Pinterest. Instead of a static table it returns a pass or fail per rule, naming the exact limit each placement breaks, so you know whether you need a new crop, a shorter edit or just a lower bitrate. Built for social and performance marketers deciding how many versions of a hero video they actually have to cut.",
   useCases: [

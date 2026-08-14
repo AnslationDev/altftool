@@ -1,4 +1,10 @@
 const seo = {
+  title: "A/B Test Significance Calculator (Two-Sided Z-Test)",
+  steps: [
+    "Enter your test counts in the Variant A visitors, Variant A conversions, Variant B visitors and Variant B conversions fields (defaults 1000/100 vs 1000/125).",
+    "Pick 90%, 95% or 99% in the Confidence target (%) select - this sets the alpha the two-sided p-value is compared against.",
+    "Read the live verdict - Statistically significant or Not significant at target - with the p-value to six decimals, z score, both conversion rates and relative uplift; Copy or Download saves a-b-test-significance-calculator.txt.",
+  ],
   metaDescription:
     "Calculate a two-sided pooled proportion z-test from visitor and conversion counts, with rates, uplift, z-score, p-value, and confidence.",
   intro:

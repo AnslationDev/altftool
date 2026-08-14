@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Hydration Calculator: 30 mL/kg, 1,500 mL Floor",
+  metaDescription:
+    "Daily fluid target for an older adult at 30 mL/kg with a 1,500 mL floor, plus fever, heat and activity add-ons and the EFSA drinks comparison.",
+  steps: [
+    "Enter Body weight (kg), Body temperature (°C), Sustained activity today (minutes) and Fluid taken so far today (mL), and tick Hot day or heatwave if it applies.",
+    "Tick anything under Medicines and conditions that affect fluid balance, and enter a Doctor-set fluid restriction (mL, optional) if one has been prescribed — that figure replaces the calculation.",
+    "Read the Daily fluid target with its Baseline (30 mL per kg) and EFSA adequate intake from drinks rows plus the In everyday servings table, then press Copy target.",
+  ],
   intro:
     "The Senior Hydration Target Calculator sets a daily fluid figure for an older adult from the 30 mL per kilogram of body weight rule used in geriatric nutrition practice, with the 1,500 mL a day minimum that ESPEN treats as the floor for older adults. It then adds roughly 12% per degree of fever, 500 mL for a hot day and 500 mL per hour of sustained activity, and compares the result with the EFSA adequate intake from drinks of 2,000 mL for men and 1,600 mL for women. Medicines that alter fluid balance are flagged for discussion rather than silently added to the total.",
   useCases: [

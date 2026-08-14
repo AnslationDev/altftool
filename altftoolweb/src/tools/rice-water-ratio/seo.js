@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rice Water Ratio Chart: 13 Grains, 3 Cooking Methods",
+  metaDescription:
+    "Basmati 1:1.5, jasmine 1:1.25 — exact water for 13 grains by open pot, pressure cooker or rice cooker, with cooked yield and servings.",
+  steps: [
+    "Under Pick your grain choose one of the 13 chips, then enter the raw amount with the cups / grams toggle.",
+    "Under Cooking method pick Open pot, Pressure cooker or Rice cooker — or set a headcount in Cooking for and press Set quantity.",
+    "Read Water needed in ml and cups (1 cup = 240 ml) with Cooked yield and Serves, then Copy plan or Download the cooking-plan .txt file.",
+  ],
   intro:
     "This guide gives the exact water-to-grain ratio for 13 grains — basmati, jasmine, sona masoori, brown, parboiled sella, sticky rice, quinoa, dalia, couscous, whole and small millets, oats and poha — separately for an open pot, a pressure cooker and an electric rice cooker. Enter your quantity in cups or grams and it returns the water in millilitres, the ratio by volume, the expected cooked yield and roughly how many people it serves. All ratios are by volume with 1 cup taken as 240 ml, and each grain carries its own rinse and soak instructions.",
   useCases: [

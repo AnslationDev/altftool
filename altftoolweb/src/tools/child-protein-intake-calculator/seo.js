@@ -1,4 +1,12 @@
 const seo = {
+  title: "Child Protein Intake Calculator: DRI RDA by Age",
+  metaDescription:
+    "Weight times the DRI RDA (1.05 g/kg at 1-3, 0.95 at 4-13, 0.85 at 14-18), with the 1.2-2.0 g/kg athlete range and portions of eggs, milk and paneer.",
+  steps: [
+    "Enter Age (years) between 1 and 18 and Body weight (kg), and set 'Reference RDA (differs only from age 14)' to Girl or Boy.",
+    "Choose an Activity level — 'Typical activity — school PE and play' uses the DRI RDA for the age band, 'Active — sport or training 3-5 days a week' uses 1.2 g/kg and 'Competitive — training most days' 1.5 g/kg — and enter 'Daily calories (0 to skip the check)' for the AMDR test.",
+    "'Daily protein target' shows the grams with the g/kg rate, weight and age band, and 'What that looks like on a plate' converts it into portions of eggs, milk, curd, paneer, tofu, chickpeas, chicken, almonds, chapati and rice; Copy result copies the target.",
+  ],
   intro:
     "Child Protein Intake Calculator multiplies a child's body weight by the Dietary Reference Intake protein RDA for their age band — 1.05 g/kg at ages 1-3, 0.95 g/kg at 4-13 and 0.85 g/kg at 14-18 — to give a daily protein target in grams. For children who train, it swaps in the 1.2-2.0 g/kg/day athlete range from the 2016 joint position of the Academy of Nutrition and Dietetics, Dietitians of Canada and the ACSM, and it checks the result against the protein AMDR of 10-30% of energy. The output includes how many eggs, glasses of milk or portions of paneer that target corresponds to.",
   useCases: [

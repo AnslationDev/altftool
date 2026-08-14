@@ -1,4 +1,7 @@
 const seo = {
+  title: "AI Job Description Analyzer: Score, Bias, Skills",
+  metaDescription:
+    "Paste a job post and score it out of 100: Flesch readability, masculine-coded wording from the Gaucher 2011 list, and your own skill match.",
   intro:
     "The AI JD Analyzer scores a pasted job description out of 100 and tells you what is missing from it — the named skills, the seniority band, how hard it is to read, and any gendered wording. Readability uses the Flesch Reading Ease and Flesch–Kincaid Grade Level formulas; the wording check uses the masculine- and feminine-coded word stems published by Gaucher, Friesen and Kay (2011). It is built for recruiters tightening a post before it goes live and for candidates deciding whether a role is worth applying to.",
   useCases: [

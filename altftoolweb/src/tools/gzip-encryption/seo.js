@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gzip Compress & Decompress Text to Base64 Online",
+  metaDescription:
+    "Gzip-compress text into a Base64 string or decode one back to plain text (RFC 1952), with live size stats. Compression, not encryption.",
+  steps: [
+    "Pick 'Compress' or 'Decompress' mode - the Sample button loads a matching example text or gzip Base64 payload.",
+    "Paste your text (or a gzip Base64 string) into the input; the output updates live along with the Input Size, Output Size, Compression and Savings cards.",
+    "Copy the Base64 result with 'Copy', or press 'Download' to save it as compressed.txt (decompressed.txt in Decompress mode).",
+  ],
   intro:
     "This tool gzip-compresses text and returns the result as a Base64 string, and takes a gzip Base64 string back to the original text. Compression uses the DEFLATE algorithm inside the standard gzip container (RFC 1952), the same format as a .gz file or an HTTP Content-Encoding: gzip response, and the Base64 wrapper makes the binary output safe to paste into JSON, a config file or a chat message. It reports input and output sizes as you type, so you can see the ratio for your own payload.",
   useCases: [

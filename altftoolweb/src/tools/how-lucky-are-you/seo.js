@@ -1,4 +1,12 @@
 const seo = {
+  title: "How Lucky Are You? 10-Question Luck Profile Quiz",
+  metaDescription:
+    "Ten questions score six luck profiles at once — Lucky Star to Lucky Penny — and the highest total wins, with traits and advice. Just for fun.",
+  steps: [
+    "Read the prompt under QUESTION 1 of 10 and click one of its four answer options.",
+    "Keep answering until the progress bar reaches question 10; each option adds points to all six luck profiles at once.",
+    "Read your luck score out of 100 with the profile name, Key Traits and Advice, then press Retake Quiz to run it again.",
+  ],
   intro:
     "This is a 10-question entertainment quiz that sorts you into one of six luck profiles — Lucky Star, Four-Leaf Clover, Rabbit's Foot, Horseshoe, Rainbow Chaser or Lucky Penny — based on how you answer questions about risk, superstition and what you credit your good outcomes to. Every option adds points to all six profiles at once, and the profile with the highest total after the last question is the one you get, along with a luck score, four traits and a piece of advice. It measures attitude to fortune, not fortune itself, and is meant to be shared and argued over rather than believed.",
   useCases: [

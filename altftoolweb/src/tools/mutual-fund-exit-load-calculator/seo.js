@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mutual Fund Exit Load Calculator with STT & Free Exit",
+  metaDescription:
+    "Exit load on redemption value, the 10% free-exit allowance, 0.001% STT on equity schemes, and the rupees you save by waiting out the load period.",
+  steps: [
+    "Set \"Describe my holding by\" to Number of units or Amount invested, then enter \"Purchase NAV (INR)\", \"Current / applicable NAV (INR)\", \"Holding period (days since allotment)\" and a Scheme type of Equity-oriented (STT applies) or Debt / other (no STT).",
+    "Enter \"Exit load (%)\", \"Load period (days)\" and \"Free-exit allowance (% of units held)\", or tap a preset such as \"Equity fund — 1% within 1 year\"; untick \"Redeem everything\" to redeem only part of the holding.",
+    "\"Net redemption proceeds\" heads the result, itemised as Units free of load, Value attracting the load, Exit load, Securities transaction tax at 0.001%, Total deductions and Net gain after charges, with the rupees saved by waiting the remaining days. \"Copy result\" copies it.",
+  ],
   intro:
     "Exit load is a charge on the redemption value of mutual fund units — units redeemed multiplied by the applicable NAV — when you sell inside the holding period stated in the scheme information document. This calculator applies that rate, subtracts the free-exit allowance most equity schemes give on 10% of units, adds securities transaction tax of 0.001% for equity-oriented schemes, and returns the net proceeds. Useful before pressing redeem, because the load falls away entirely once the units cross the load period.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Accountant Prompt Pack: 9 Fill-in-the-Blank Prompts",
+  metaDescription:
+    "Nine fill-in-the-blank AI prompts for reconciliation triage, variance analysis, journal narratives, fee emails, records chasing and close checklists.",
+  steps: [
+    "Find a prompt with 'Search prompts' or the Category dropdown — the counter underneath reads 'n of 9 prompts'.",
+    "Under 'Fill in the blanks' type your own figures into the prompt's fields, or press 'Use example values' to load the worked example (or 'Clear fields' to empty them).",
+    "Check 'Estimated prompt size' in tokens and the 'n of n blanks filled' line, then press 'Copy prompt' and paste it into your assistant.",
+  ],
   intro:
     "The Accountant Prompt Pack is a library of 9 fill-in-the-blank AI prompts for the recurring work of practice and industry accounting: reconciliation difference triage, journal narratives, variance analysis, plain-English report explanations, fee and scope emails, records chasing, close checklists and control reviews. Every prompt carries the same standing rule — the model works only from the figures and rule text you paste, shows its arithmetic, and flags judgement calls as judgement instead of inventing thresholds from memory. You fill the blanks in your browser and copy the finished prompt into any assistant.",
   useCases: [

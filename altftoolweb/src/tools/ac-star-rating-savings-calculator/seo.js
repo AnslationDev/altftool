@@ -1,4 +1,12 @@
 const seo = {
+  title: "AC Star Rating Savings: ISEER Payback Calculator",
+  metaDescription:
+    "Enter two models' ISEER and price with your hours, cooling days and tariff to get the exact payback year, the lifetime benefit and the CO2 avoided.",
+  steps: [
+    "Under Usage and tariff enter Capacity (ton), Hours per day, Cooling days per year, Tariff (per kWh) and Tariff rise per year (%).",
+    "Type the ISEER and Price for the Higher-rated model and the Model you are comparing with, or tap a preset chip such as 5-star (5).",
+    "Read Payback on the price premium against Years you will keep it, with the kWh saved per year, CO2 avoided per year and the year-by-year table.",
+  ],
   intro:
     "This calculator works out how long a higher BEE star rating takes to pay back its price premium, using each model's ISEER and the formula annual kWh = (tons x 3516.85 / ISEER) x hours x days / 1000. It compares the two units' yearly electricity, turns the difference into a rupee saving at your tariff, escalates that saving each year, and solves for the exact payback point as n = ln(1 + premium x g / first-year saving) / ln(1 + g). You also get lifetime net benefit, a year-by-year table, and the CO2 avoided at the Indian grid factor of 0.71 kg per kWh.",
   useCases: [

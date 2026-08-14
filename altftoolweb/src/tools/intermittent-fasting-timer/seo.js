@@ -1,4 +1,12 @@
 const seo = {
+  title: "Intermittent Fasting Timer: 16:8, 18:6, OMAD Phases",
+  metaDescription:
+    "Track a 16:8, 18:6, 20:4 or OMAD fast live, see which metabolic phase your elapsed hours reach, and log every fast with a target-hit streak.",
+  steps: [
+    "Pick a protocol tile — 14:10, 16:8, 18:6, 20:4, OMAD 23:1, 5:2 or Custom with its 1-36 hour slider — then set 'Eating window starts at'.",
+    "Press 'Start fast now' (or the 'Started at <window close>' button), and correct the moment in the 'Fast actually started at' field if you began earlier.",
+    "Watch Hours fasted, Hours remaining and the named metabolic phase update live, then press 'End fast & log it' to add the fast to Fast history and extend the Streak.",
+  ],
   intro:
     "Intermittent Fasting Timer counts your fasting window live against a chosen protocol — 14:10, 16:8, 18:6, 20:4, OMAD 23:1, 5:2 or a custom target from 1 to 36 hours — and shows which metabolic phase the elapsed hours put you in, from the fed state through glycogen depletion at 4 to 12 hours, the fat-burning switch at 12, rising ketosis and autophagy from 16, and deep autophagy past 24. Every completed fast is logged with its achieved hours and target completion, and a streak counts consecutive days where a logged fast reached its target. Phase timings are population averages, not a reading of your own metabolism.",
   useCases: [

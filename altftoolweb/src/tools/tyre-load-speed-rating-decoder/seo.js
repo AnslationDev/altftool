@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tyre Load Index and Speed Rating Decoder (ETRTO)",
+  metaDescription:
+    "Decode a sidewall code like 205/55 R16 91V into kg per tyre and km/h from the ETRTO tables, plus sidewall height, overall diameter and revs per kilometre.",
+  steps: [
+    "Type the code into \"Tyre code from the sidewall\", or tap an example chip such as 205/55 R16 91V or LT265/75R16 123/120Q.",
+    "Set \"Tyres on the vehicle\" and, optionally, \"Gross vehicle weight (kg, optional)\" from the VIN plate so the fitted set is checked against it.",
+    "Read \"Load per tyre\" in kg with the load index and speed symbol in km/h, plus section width, sidewall height and rim diameter, then press Copy result.",
+  ],
   intro:
     "This decoder turns a sidewall code such as 205/55 R16 91V into the numbers behind it: the kilograms one tyre may carry, the speed the tyre is rated for in km/h and mph, and the geometry that follows from the size — sidewall height, overall diameter and revolutions per kilometre. Load index and speed symbol values come from the ETRTO tables reproduced in ECE Regulation 30, so 91 means 615 kg per tyre and V means 240 km/h. Enter your vehicle's gross weight and it also checks that the fitted set can legally carry it.",
   useCases: [

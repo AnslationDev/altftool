@@ -1,4 +1,12 @@
 const seo = {
+  title: "A, An, The or No Article — English Grammar Drill",
+  metaDescription:
+    "Practise a, an, the and the zero article. Each answer shows the corrected sentence and the rule — including why it's an hour but a university.",
+  steps: [
+    "Tick the article categories to practise — from 'a or an — the sound rule' to 'No article — generic, institutions, names' — and set the number of questions (5–42).",
+    "Answer each sentence by choosing a, an, the or '— (no article)'; the corrected sentence and the rule behind it appear right under your choice.",
+    "Watch the score percentage update live, then click 'Copy result' to copy your score and missed rules, or 'New set of questions' for a fresh drill.",
+  ],
   intro:
     "English has three articles — a, an and the — plus a fourth option that learners forget: no article at all. This drill tests all four across the situations that actually decide the choice: the sound rule behind an hour and a university, first mention against second mention, unique and specified nouns, and the generic plurals and institutions that take nothing. Each answer is followed by the corrected sentence and the rule that produced it, so the pattern sticks rather than the single item.",
   useCases: [

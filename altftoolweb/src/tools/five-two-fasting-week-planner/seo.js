@@ -1,4 +1,12 @@
 const seo = {
+  title: "5:2 Fasting Planner: Weekly Calories and Deficit",
+  metaDescription:
+    "Pick two 500 or 600 kcal days, estimate maintenance with Mifflin-St Jeor, and see weekly intake, deficit and kg a week at 7,700 kcal per kg of fat.",
+  steps: [
+    "Set Restricted-day allowance to 'Women — 500 kcal' or 'Men — 600 kcal', then enter Weight (kg), Height (cm), Age (years) and Activity level for the Mifflin-St Jeor estimate, or switch Maintenance calories to 'I know my own figure'.",
+    "Tap two of the day buttons under 'Restricted days — pick two, ideally not next to each other'; choosing a third replaces the day you picked first, and back-to-back days raise a warning.",
+    "Weekly calorie deficit appears with the kg a week it implies at 7,700 kcal per kg of fat, above Estimated BMR, Weekly intake on this plan, Average across the week and Projected loss in 4 weeks; Copy result saves the week.",
+  ],
   intro:
     "The 5:2 Fasting Week Planner turns the pattern's two rules — eat normally on five days, restrict to about 500 kcal for women or 600 kcal for men on two non-consecutive days — into a full week of numbers. It estimates maintenance calories with the Mifflin-St Jeor equation and an activity factor, then works out weekly intake, the deficit against maintenance, and the rate of loss that deficit implies at the conventional 7,700 kcal per kilogram of body fat. Consecutive restricted days and rates faster than the usual 0.5–1 kg a week range are flagged.",
   useCases: [

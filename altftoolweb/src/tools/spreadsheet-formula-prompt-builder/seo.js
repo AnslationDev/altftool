@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spreadsheet Formula Prompt Builder for Excel & Sheets",
+  metaDescription:
+    "Turn a pasted header row into real A1 column letters and bounded ranges, then build an AI prompt tied to Excel 365, 2019, Sheets or Calc.",
+  steps: [
+    "Paste your header row into 'Header row — paste it, tab or comma separated'; it splits on tabs, commas or pipes and reads only the first non-empty line.",
+    "Set 'Header is on row' and 'Last row with data', then pick the Application (Excel 365/2021, Excel 2019/2016, Google Sheets or LibreOffice Calc) and the Argument separator.",
+    "Read the generated prompt with each header mapped to its real column letter and bounded range, then press 'Copy prompt' and paste it into your AI assistant.",
+  ],
   intro:
     "The Spreadsheet Formula Prompt Builder turns a pasted header row into real A1-style column letters and bounded data ranges, then writes an AI prompt that asks for a formula in the dialect of the app you actually use — Excel 365, Excel 2019/2016, Google Sheets or LibreOffice Calc. It exists because most formula answers fail for one of two reasons: the model guesses the wrong column letters, or it hands an Excel 2016 user XLOOKUP. The generated prompt pins down the layout, names the functions your version has, names the ones it does not, and sets the argument separator to a comma or semicolon to match your locale.",
   useCases: [

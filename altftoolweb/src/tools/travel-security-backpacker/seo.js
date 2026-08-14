@@ -1,4 +1,12 @@
 const seo = {
+  title: "Backpacker Security Checklist: 24 Measures, 6 Domains",
+  metaDescription:
+    "Score hostel theft, device, account, document, payment and personal-safety cover across 24 measures, then get the cheapest kit plan inside your budget.",
+  steps: [
+    "Tick what you already do under Free - habits and settings, Cheap kit (under ₹1,000) and Bigger spend.",
+    "Enter Budget for new kit (INR) and a Coverage target per domain between 50% and 100%.",
+    "Buy in this order lists the cheapest gap-closing purchases, after Free measures still unticked.",
+  ],
   intro:
     "The Backpacker Digital Safety Checklist scores a long-trip security setup across six risk domains — dormitory theft, device loss, account takeover, documents, payments and personal safety — then plans the cheapest set of additions that closes the biggest gaps within a budget you set. Fourteen of the twenty-four measures cost nothing, and the planner always exhausts those before it recommends spending a rupee. Built for hostel travellers, long-stay nomads and anyone sharing a room with strangers for weeks at a time.",
   useCases: [

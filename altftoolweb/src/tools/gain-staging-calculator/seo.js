@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gain Staging Calculator: dBFS to dBu, dBV and Volts",
+  metaDescription:
+    "Convert one level between dBFS, dBu, dBV, volts RMS and percent under EBU R68, SMPTE RP155 or ARD alignment, with the gain move to hit a target dBFS.",
+  steps: [
+    "Type the Level, choose its Unit — dBFS, dBu, dBV, Volts RMS or % of full scale — and pick an 'Alignment standard' such as 'EBU R68 — 0 dBu at −18 dBFS'.",
+    "Adjust '0 dBFS equals (dBu)' for a custom alignment and set the 'Target level for the gain move (dBFS)'.",
+    "Read the dBFS headline with headroom to clipping, the dBu, dBV, voltage, percent and 16/24-bit sample rows, and the dB gain change with fader multiplier, then press 'Copy result'.",
+  ],
   intro:
     "This calculator converts one audio level between dBFS, dBu, dBV, volts RMS and percent of full scale. dBu and dBV are absolute voltage scales — 0 dBu is 0.7746 V RMS and 0 dBV is 1 V RMS — while dBFS only becomes a voltage once an alignment standard fixes how much analogue headroom sits above the reference level, which is why the tool asks which standard you work to. Engineers use it to line up converters, patch analogue gear into a digital session and keep every stage in its linear range.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emotion Detector: 7 Expression Scores per Face",
+  metaDescription:
+    "Scores every detected face across happy, sad, angry, surprised, fearful, disgusted and neutral. face-api.js runs in your browser — no upload.",
+  steps: [
+    "Choose Upload Photo or Live Webcam, then drop a JPG, PNG or WEBP under 10MB onto the Select Photo area.",
+    "Wait while \"Running AI Face Analytics...\" shows — the Tiny Face Detector runs at inputSize 512 with scoreThreshold 0.5 and traces 68 facial landmarks.",
+    "Read the Analysis Report: Dominant Mood, an Emotion Matrix bar for all seven expressions, and Technical Integrity scored out of 100, then hit Download, Share or Copy.",
+  ],
   intro:
     "The Emotion Detector runs face-api.js models in your browser to find faces in a photo or webcam frame and score each one across seven expression classes — happy, sad, angry, surprised, fearful, disgusted and neutral — returning a confidence value for every class rather than a single label. It uses the Tiny Face Detector at a 512px input size with a 0.5 score threshold, plus the 68-point facial landmark model to trace jaw, brows, eyes, nose and mouth. Models are downloaded once and everything after that runs locally with WebGL, so no image is ever uploaded.",
   useCases: [

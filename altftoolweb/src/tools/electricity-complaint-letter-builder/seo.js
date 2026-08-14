@@ -1,4 +1,12 @@
 const seo = {
+  title: "Electricity Bill Complaint Letter with Section 56 Dates",
+  metaDescription:
+    "Recompute the bill from your meter readings and draft a complaint citing the section 56(2) two-year arrear bar and 15 clear days before disconnection.",
+  steps: [
+    "Choose the Complaint type — high bill, faulty meter, wrong tariff category, old arrears or a disconnection notice — and the amount the bill demands.",
+    "Enter previous and current meter readings, the multiplying factor, average tariff per unit, fixed charges and duties to recompute the units.",
+    "Press Copy letter for a draft naming the excess demanded, the section 56(2) two-year limitation date and the earliest lawful disconnection date.",
+  ],
   intro:
     "An electricity complaint letter is the written grievance a consumer files with a distribution licensee about a wrong bill, a faulty meter, an old arrear or an unreliable supply. This builder recomputes the bill from your own meter readings — units equal current reading minus previous reading, multiplied by the meter's multiplying factor — and sets the difference against the amount demanded. It also applies two hard rules from the Electricity Act, 2003: section 56(2) bars recovery of a sum more than two years after it first became due unless it has been shown continuously as an arrear, and section 56(1) allows disconnection only after fifteen clear days' written notice.",
   useCases: [

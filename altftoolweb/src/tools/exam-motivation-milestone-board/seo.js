@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Milestone Board: Target Dates, Ahead or Behind",
+  metaDescription:
+    "Space 2 to 12 prep milestones between your start date and exam day, get a target date for each, and see if you are ahead, on track or behind.",
+  steps: [
+    "Set \"Preparation start date\" and \"Exam date\", then name each entry under \"Milestones (in order — tick them off as you go)\"; \"Add milestone\" extends the list, which accepts 2 to 12 milestones.",
+    "Tick a milestone's checkbox as you finish it. The board compares your completed count against what even pacing expects by today, allowing a tolerance of one milestone either way.",
+    "\"Preparation progress\" gives the percentage plus an ahead, on track or behind verdict, with \"Plan expects by today\", \"Cycle elapsed\" and \"Days to exam\"; \"Milestone targets\" lists each evenly spaced date and \"Copy board\" copies it.",
+  ],
   intro:
     "This board spaces your exam-preparation milestones evenly between your start date and exam day, assigns each a target date, and compares milestones actually completed against what linear pacing expects by today — the same planned-versus-actual idea used in earned-value tracking. Marking off visible sub-goals exploits the small-wins effect documented in Amabile and Kramer's progress-principle research. It is built for long prep cycles — boards, NEET, JEE, UPSC — where motivation sags between the start and the exam.",
   useCases: [

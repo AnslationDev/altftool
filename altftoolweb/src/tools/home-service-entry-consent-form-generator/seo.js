@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Service Entry Consent Form and Visit Quote",
+  metaDescription:
+    "Write an entry consent form for one job, date and arrival window: access method, off-limits rooms, damage excess, plus a quote with billing blocks.",
+  steps: [
+    "Fill in \"Who and where\" — Occupier giving permission, Property address, Service company, Technician name and Work agreed.",
+    "Under \"Visit and access\", set Visit date, Window opens, Window closes, Free-cancellation notice (hours), how the technician gets in and any off-limits rooms.",
+    "In \"Quote\", enter Estimated job length (minutes), Hourly labour rate, Billing block (minutes) and Minimum charge (minutes), then press Copy form.",
+  ],
   intro:
     "A home service entry consent form is the written permission a householder gives a technician to come inside, limited to one job, one date and one arrival window. This generator writes that permission with the clauses that decide what happens when things go wrong (identification at the door, off-limits rooms, isolation of water, gas or power, damage excess, cancellation) and prices the visit the way trades actually bill it: labour rounded up into whole blocks, subject to a minimum charge, plus call-out, parts and tax. For householders booking a repair and for small service firms who want one form instead of a verbal understanding.",
   useCases: [

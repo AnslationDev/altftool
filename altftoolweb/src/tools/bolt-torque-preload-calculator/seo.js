@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bolt Torque to Preload Calculator (T = K x F x d)",
+  metaDescription:
+    "Converts torque in N·m to clamp load with T = K x F x d, and back: enter bolt diameter, nut factor K and a proof-load target in kN to get both figures.",
+  steps: [
+    "In the Inputs panel enter Nominal diameter (mm), Applied torque (N·m), Nut factor K and Proof load target (kN).",
+    "Tap the M10 · 45 N·m example chip to load a worked set, or Reset to put every field back to its default — the Result recomputes on each change.",
+    "Read the \"… kN estimated preload\" headline with the Torque for entered target and Estimated % of entered target rows, then use Copy or Download to save bolt-torque-preload-calculator.txt.",
+  ],
   intro:
     "The Bolt Torque & Preload Calculator applies the short-form torque equation T = K x F x d, converting an applied torque in newton-metres into the clamp load a fastener of a given nominal diameter should produce for a chosen nut factor K, and working the same relationship backwards to give the torque needed to hit a target preload. It is for anyone specifying or sanity-checking a tightening spec — a mechanic questioning a workshop figure, or an engineer comparing a dry and a lubricated assembly. The equation is a first-order estimate; approved fastener procedures govern real assemblies.",
   useCases: [

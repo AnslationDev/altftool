@@ -1,4 +1,12 @@
 const seo = {
+  title: "20-20-20 Eye Rest Timer with Breaks, Streaks & Exercises",
+  metaDescription:
+    "Chimes every 20 minutes for a 20-second look at 20 feet, rotates eight eye exercises and tracks breaks, screen time and streaks on your device.",
+  steps: [
+    "Set the 'Work interval' (15-60 min slider or the 20/30/45/60 min presets) and your 'Daily break goal', then press 'Start the loop'.",
+    "Work until the chime — the tab title carries the countdown — then follow the 20-second break screen and its named exercise, or press 'Skip to work'.",
+    "Use Pause, 'Break now' or Stop mid-loop; breaks taken, screen time and your day streak build up in the seven-day chart, stored on your device.",
+  ],
   intro:
     "The 20-20-20 Eye Rest Timer runs the screen-break rule on a loop: every 20 minutes of work it interrupts you for a fixed 20-second break spent looking at something 20 feet — about 6 metres — away. It chimes at both ends, shows the countdown in the browser tab title, and rotates through eight different eye exercises so no two consecutive breaks are the same. Break counts, tracked screen time and your day streak are kept on your device, with the last seven days shown as a bar chart.",
   useCases: [

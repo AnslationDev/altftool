@@ -1,4 +1,12 @@
 const seo = {
+  title: "Balcony Makeover Planner: Budget and Slab Load Check",
+  metaDescription:
+    "Prices flooring, planters, seating and lights by area, then converts the added weight to kN/m² against the 3.0 kN/m² balcony load in IS 875 (Part 2).",
+  steps: [
+    "Choose a Floor finish — each option carries its own weight, from Artificial grass at 3 kg/m² to Loose pebbles, 40 mm deep at 64 kg/m² — then enter Balcony length (m) and Balcony depth (m).",
+    "Set Floor rate (INR per m², laid), which prefills from the finish you picked, plus Planters with Planter diameter (mm) and Planter height (mm), Seats, Light fittings, the per-item costs and Storeys in the building; every figure is editable and the plan recomputes as you type.",
+    "The Makeover budget headline gives the total and the cost per sq ft, with rows for Seats the length can take, Depth left in front of a chair and Railing height for this building; the Weight added to the slab panel ends in Share of the 3 kN/m² allowance and a verdict. Copy result saves the plan.",
+  ],
   intro:
     "This planner prices a balcony makeover by area and item count, and then does the check most mood boards skip: it adds up the weight. Floor finish weight per square metre, wet potting mix at 1,400 kg per cubic metre in every pot, and people plus furniture are converted to kg/m² and then to kN/m², and compared with the 3.0 kN/m² imposed load that IS 875 (Part 2) specifies for balconies in residential buildings. You get a budget, a per-square-foot rate, a seating fit check and a clear signal on whether the plan is light or needs an engineer's eye.",
   useCases: [

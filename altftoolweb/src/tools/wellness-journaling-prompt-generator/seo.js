@@ -1,4 +1,7 @@
 const seo = {
+  title: "Wellness Journaling Prompt Generator by Theme",
+  metaDescription:
+    "Draw non-repeating prompts from eight themed banks - gratitude, stress, grief and more - with a session length and rough word target.",
   intro:
     "A wellness journaling prompt generator draws a set of themed reflective questions — gratitude, self-compassion, stress, relationships, grief and more — and pairs them with a timed session plan so you know how long to write. Prompts are pulled without repetition from a curated bank, so a three-prompt session never asks the same question twice, and a redraw gives a completely different set. The session timing follows the expressive-writing convention of roughly 15 to 20 minutes of continuous writing, which is the format used in most structured writing studies.",
   useCases: [

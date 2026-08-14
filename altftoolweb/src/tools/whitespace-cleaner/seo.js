@@ -1,4 +1,12 @@
 const seo = {
+  title: "Whitespace Cleaner: Trim Lines, Tabs & Blank Lines",
+  metaDescription:
+    "Paste text to convert every tab to one space, trim each line and delete blank lines in one pass - output updates live, Windows CRLF comes out as LF.",
+  steps: [
+    "Paste text into the Input panel, or press 'Load sample' to see the transform run on padded, tabbed and blank lines.",
+    "The Result panel updates on every keystroke: each tab becomes one space, every line is trimmed and lines left empty are dropped.",
+    "Press Copy on the Result panel to take the cleaned text, or Clear to empty the input and start over.",
+  ],
   intro:
     "Whitespace Cleaner does three fixed things to pasted text: it replaces every tab with a single space, trims leading and trailing whitespace from each line, and deletes lines that are empty once trimmed. The cleaned text appears as you type and rejoins the surviving lines with standard newlines, so Windows CRLF line endings come out as plain LF. It is for anyone pasting text out of a PDF, spreadsheet, email or chat log that arrives padded with stray tabs, indentation and blank rows.",
   useCases: [

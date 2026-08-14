@@ -1,4 +1,12 @@
 const seo = {
+  title: "KPI Definition Prompt Builder with Margin-of-Error Check",
+  metaDescription:
+    "Define a metric's numerator, denominator and grain, see the 95% margin of error on a worked example, and get an AI prompt that pins down edge cases.",
+  steps: [
+    "Fill in the Metric name, Type, Numerator and Denominator, a Sample numerator and Sample denominator (the default worked example is 820 of 1000), plus Grain and Direction.",
+    "Review the three result tiles — Value, MOE in ±percentage points and the prompt's token estimate — which recalculate as you edit.",
+    "Read the generated analytics-engineer prompt in the preview pane and press Copy prompt; Reset restores the worked example after a confirmation.",
+  ],
   intro:
     "The KPI Definition Prompt Builder takes a metric's numerator, denominator, type and reporting grain, evaluates a worked example, and — for percentage metrics — computes the 95% margin of error using the normal approximation z × √(p(1−p)/n) along with the denominator you would need to hit a target margin. It then writes an AI prompt that turns all of it into a definition with the edge cases decided rather than caveated. For analysts and PMs tired of two dashboards disagreeing about the same number.",
   useCases: [

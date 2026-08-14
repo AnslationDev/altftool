@@ -1,4 +1,12 @@
 const seo = {
+  title: "Join Photo & Signature to an Exact Pixel and KB Size",
+  metaDescription:
+    "Stack a passport photo above a signature at 350x525 or another exam size, and bisect JPEG quality until the file lands inside your KB window.",
+  steps: [
+    "Under \"1. Upload Passport Photo\" and \"2. Upload Signature\", choose a JPEG, PNG or WEBP image for each panel.",
+    "Pick from \"Select Exam Preset\" — UPSC Combined (350x525), IBPS / Bank Exam (400x550), SSC Combined (300x500) or GATE Exam (480x640) — or set Width (px) and Height (px), then drag the Photo vs Sign Split slider.",
+    "Press \"Download Joined Image\" to save the canvas as merged-document with its pixel dimensions and KB size in the filename, or switch the format to PDF (.pdf) first.",
+  ],
   intro:
     "Join Photo & Signature stacks a passport photo above a signature on a single canvas at an exact pixel size, then binary-searches the JPEG quality until the result lands inside a target KB range — the two things exam portals reject uploads for. A ratio control decides how the height is split between the photo panel and the signature panel, a gap and background colour separate them, and each image can be scaled and is centred inside its own clipped panel. Built-in presets cover the common combined-upload sizes, and everything is drawn in your browser canvas, so the photo and signature are never uploaded.",
   useCases: [

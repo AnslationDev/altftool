@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 194-IB TDS on Rent Calculator for Tenants",
+  metaDescription:
+    "Rent over Rs 50,000 a month: 2% from 1 Oct 2024 (5% before), capped at the last month's rent, with Form 26QC and Form 16C due dates.",
+  steps: [
+    "Enter 'Monthly rent (INR)', 'Months of tenancy in this financial year' and 'Rent payable for the last month (INR)'.",
+    "Set 'Date of deduction' to pick the 2% or 5% statutory rate, and untick 'Landlord has furnished a valid PAN' to apply the 20% section 206AA rate.",
+    "Read 'TDS to deposit', 'Cap: last month's rent', 'Cap bites?' and the 'Form 26QC due' and 'Form 16C to landlord by' dates, then press 'Copy result'.",
+  ],
   intro:
     "Section 194-IB makes an individual or HUF tenant deduct tax on house rent when the rent exceeds Rs 50,000 for a month or part of a month and the tenant is not covered by a tax audit. This calculator applies the 2% rate in force for deductions made on or after 1 October 2024 (5% before that), applies the section 194-IB(4) cap that stops the deduction exceeding the last month's rent, and dates the Form 26QC and Form 16C obligations. Written for salaried tenants and small professionals who pay rent from their own pocket and have no TAN.",
   useCases: [

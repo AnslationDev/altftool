@@ -1,4 +1,12 @@
 const seo = {
+  title: "Variable Font Axis Tester: fvar Ranges and @font-face",
+  metaDescription:
+    "Open a .ttf or .otf and read its fvar table: every axis with its real min, default and max, every named instance, and the @font-face rule they imply.",
+  steps: [
+    "Press \"Choose font\" and pick a .ttf or .otf — WOFF and WOFF2 are zlib and Brotli containers a page script cannot unpack.",
+    "Drag the per-axis sliders, or tap a named instance such as Condensed Bold to jump every slider to its coordinates; the sample renders in the uploaded font itself.",
+    "Read the axes table — tag, name, min, default, max and the CSS property each drives — then press \"Copy CSS\" for the @font-face rule.",
+  ],
   intro:
     "The Variable Font Axis Explorer opens a .ttf or .otf and reads its fvar table byte by byte — the OpenType table that declares what a variable font can actually do. It lists every axis with its four-character tag, its minimum, its default and its maximum in the font's own fixed-point coordinates, resolves the axis and instance labels out of the name table, and shows every named instance the foundry shipped with its exact coordinates. Registered axes are matched against the OpenType axis registry so you can see which CSS property drives each one: wght to font-weight, wdth to font-stretch, slnt to font-style: oblique, opsz to font-optical-sizing. Custom axes are named as such, because only font-variation-settings can move them. The sliders render the real uploaded font through the browser's FontFace API, and the exported @font-face rule carries the true ranges rather than a guess. The file is read in the page and never uploaded.",
   useCases: [

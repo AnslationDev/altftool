@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Kind of Genius Are You? 10-Question Type Quiz",
+  metaDescription:
+    "A 10-question quiz that scores six thinking styles — Logical, Creative, Social, Physical, Natural, Introspective — and returns strengths and blind spots.",
+  steps: [
+    "Answer each of the 10 questions by tapping one of its four options — the 'Question X of 10' counter and progress bar track how far along you are.",
+    "Every option adds weighted points to several of the six genius types at once; after the last answer the quiz shows 'Analyzing your responses...'.",
+    "Get your top-scoring type with its summary, strengths, weaknesses, famous example and quote — press 'Retake Quiz' to start over.",
+  ],
   intro:
     "What Kind of Genius Are You? is a 10-question personality quiz that sorts your thinking style into one of six genius types — Logical, Creative, Social, Physical, Natural or Introspective. Each of the four answers per question adds weighted points (0 to 3) to several types at once, and the type holding the highest total at the end is your result. You get a written profile of that type, four signature strengths, three blind spots, a famous figure who shares the style and a quote to go with it.",
   useCases: [

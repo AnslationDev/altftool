@@ -1,4 +1,12 @@
 const seo = {
+  title: "Night Driving Checklist: Lights, Glass and Fatigue",
+  metaDescription:
+    "Score 20 pre-drive checks with the essential ones as blockers, plus hours-awake impairment in BAC terms and time inside the 02:00-06:00 window.",
+  steps: [
+    "Under 'The drive' enter the 'Departure hour (0–23)', 'Hours behind the wheel', 'Hours awake at departure' and 'Sleep in the last 24 hours'.",
+    "Work through the Lights, Vision, Driver and Vehicle sections and tick the 20 checks; items badged 'essential' — both low beams, both brake lights, the windscreen cleaned inside, 7 hours of sleep — become blockers, and optional ones like fog lamps can be marked 'Not applicable to my car'.",
+    "Read the Readiness score with its verdict, the 'Hours awake by arrival' row and its BAC-equivalent impairment figure, the 'Hours in the 02:00–06:00 window' and the breaks to plan, then press 'Copy result'.",
+  ],
   intro:
     "A night driving safety checklist scores a vehicle and its driver before a dark-hours journey, separating equipment faults from fatigue risk. The twenty checks are weighted and the essential ones — working low beams, both brake lights, a windscreen cleaned on the inside, adequate sleep — are reported as blockers rather than lost points. Fatigue is assessed with Dawson and Reid's published finding that 17 hours awake matches roughly 0.05% blood alcohol and 24 hours matches 0.10%, plus the hours your route spends inside the 02:00–06:00 window when sleep-related crashes peak.",
   useCases: [

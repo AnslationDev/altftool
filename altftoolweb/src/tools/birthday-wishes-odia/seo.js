@@ -1,4 +1,12 @@
 const seo = {
+  title: "Odia Birthday Wishes Generator — Script or Roman Text",
+  metaDescription:
+    "Full Odia birthday messages by relationship, tone and age — in Odia script or Roman transliteration, built on 'janmadinara hardika shubhechha'.",
+  steps: [
+    "Enter the 'Name of the birthday person' and pick 'Your relationship' (Friend, Brother, Sister, Mother, Father, Elder and more), 'Tone' and 'Script' — Odia script or Roman letters.",
+    "Optionally set 'Age turning' and 'How many wishes' (1 to 4), and press 'Shuffle wording' for a different set of wordings.",
+    "Each wish appears with its own Copy button; 'Copy all' takes the whole set for a family group chat.",
+  ],
   intro:
     "The Odia Birthday Wishes Generator writes full birthday messages in Odia, in the Odia script or in Roman transliteration, selected by relationship, tone and the age being celebrated. The standard greeting it builds on is 'ଜନ୍ମଦିନର ହାର୍ଦ୍ଦିକ ଶୁଭେଚ୍ଛା' (janmadinara hardika shubhechha). Forms of address follow Odia usage — bhai for a brother, bhauni for a sister, maa and bapa for parents — so the message fits the person rather than being a generic greeting with a name dropped in.",
   useCases: [

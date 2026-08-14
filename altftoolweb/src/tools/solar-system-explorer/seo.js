@@ -1,4 +1,12 @@
 const seo = {
+  title: "Solar System Explorer: Animated Orbits, Planet Data",
+  metaDescription:
+    "Watch all eight planets orbit at their real periods, from Mercury's 88 days to Neptune's 164.8 years, with radius, mass, gravity and temperature cards.",
+  steps: [
+    "Choose a world in the \"Planet Selection\" grid — all eight from Mercury to Neptune, with Earth selected by default.",
+    "Drag the \"Orbit Speed Multiplier\" slider between 0.2x and 5x in 0.2 steps, and use \"Pause Orbits\" to freeze an alignment or \"Resume Orbits\" to start it moving again.",
+    "The planet card lists Equatorial Radius, Mass, Surface Gravity, Mean Temp, Rotation Day and Orbital Year beside its AU distance, while the canvas is labelled \"Interactive Planetary Orbits (Not to scale for visibility)\"; Reset returns to Earth at 1x and time zero.",
+  ],
   intro:
     "Solar System Explorer is an animated top-down planetarium that orbits all eight planets around the Sun at speeds set by their real orbital periods, from Mercury's 88 days to Neptune's 164.8 years, and shows a data card for whichever planet you select. It is aimed at students, teachers and anyone explaining why the outer planets crawl while the inner ones race — Kepler's Third Law, where the square of the orbital period scales with the cube of the orbital distance. Each card gives equatorial radius, mass, surface gravity, mean temperature, rotation day, orbital year and distance from the Sun in AU.",
   useCases: [

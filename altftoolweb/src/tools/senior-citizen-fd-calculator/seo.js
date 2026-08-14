@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Citizen FD Calculator: Extra Rate, TDS & 80TTB",
+  metaDescription:
+    "Price the senior citizen FD rate premium in rupees with quarterly compounding, the Rs 1,00,000 section 194A TDS threshold and the 80TTB deduction.",
+  steps: [
+    "Enter 'Deposit amount (INR)', the 'Depositor's age (completed years)', the 'Bank's ordinary card rate (%)' and 'Tenure (years)'.",
+    "Set 'Senior premium, ages 60–79 (points)' and 'Premium from age 80 (points)', add 'Other deposit interest in the year (INR)', choose your 'Marginal slab rate', and tick 'Old tax regime', 'PAN given to bank' or 'Form 15H filed' in the Tax position box.",
+    "Read 'Extra earned from the senior rate' in rupees, then 'Maturity value at the senior rate' against 'Maturity value at the ordinary rate', the 'TDS threshold that applies', 'TDS deducted across the term' and 'Section 80TTB deduction claimed', and press 'Copy result'.",
+  ],
   intro:
     "This calculator prices the extra interest rate banks give depositors aged 60 and above — usually 0.50 percentage points, with a further step for those aged 80 or more — by running the deposit at both the ordinary card rate and the senior rate with quarterly compounding, then reporting the rupee difference. It also applies the two tax rules that matter to senior depositors: the ₹1,00,000 section 194A TDS threshold and the ₹50,000 section 80TTB deduction on deposit interest, which is only available under the old regime.",
   useCases: [

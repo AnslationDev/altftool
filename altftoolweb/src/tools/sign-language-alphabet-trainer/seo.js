@@ -1,4 +1,12 @@
 const seo = {
+  title: "ASL Alphabet Trainer: 26 Signs, 5 Practice Modes",
+  metaDescription:
+    "Learn all 26 ASL fingerspelling handshapes through flashcards, two quiz directions, a practice run and a word speller. Progress saves locally.",
+  steps: [
+    "Pick a mode from Learn, Quiz, Recognition, Practice or Word Speller — Learn opens the 26 \"Alphabet Cards\" with a Show Descriptions toggle and a Realistic Hand Signs / Outline Diagrams style switch.",
+    "Use Quiz to name the letter for a sign and Recognition to pick the sign for a letter, or type into \"Enter Word or Phrase\" in Word Speller and set the Speed slider anywhere from 0.4s to 2.0s per letter.",
+    "Watch the header counters: a letter only counts toward \"26 Mastered\" after 5 or more attempts at 80% accuracy, and your Streak and per-letter scores are kept in your browser.",
+  ],
   intro:
     "The Sign Language Alphabet Trainer teaches the 26 handshapes of the American Sign Language manual alphabet through five modes — flashcards, letter-to-sign quiz, sign recognition, an A-to-Z practice run and a word speller that fingerspells whatever you type. Every answer is scored per letter, and a letter is marked mastered only once you have answered it at least 5 times with 80% or better accuracy. Progress, streaks and per-letter scores are kept in your browser, so you can build up the alphabet over several short sessions.",
   useCases: [

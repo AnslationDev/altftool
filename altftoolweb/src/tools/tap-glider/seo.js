@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tap Glider: One-Tap Arcade Flyer, Free in Browser",
+  metaDescription:
+    "Tap, click or press Space to flap through pillar gaps. The gap narrows from 174px to 118px as you score; bronze at 10, silver 20, gold 40.",
+  steps: [
+    "Press Start flying, or tap the play area, to launch the glider — Space, Arrow Up and W all flap too.",
+    "Flap in short regular taps to slip through each pillar gap for a point, and press P to pause mid-run.",
+    "On the Flight over card compare Score against Best, collect bronze at 10, silver at 20 and gold at 40, then press Play again.",
+  ],
   intro:
     "Tap Glider is a one-input arcade game: every tap, click or press of Space, Up or W gives the glider an upward kick of 430 pixels per second while gravity pulls it back down at 1500 px/s², and each pillar gap you slip through is one point. The difficulty ramps with your score — the gap starts at 174 pixels and narrows by 1.6 pixels per point down to a floor of 118, while scroll speed climbs from 148 px/s to a capped 236 — so the run gets harder in a way you can feel rather than suddenly. Medals land at 10 points for bronze, 20 for silver and 40 for gold, and your best score is kept in the browser.",
   useCases: [

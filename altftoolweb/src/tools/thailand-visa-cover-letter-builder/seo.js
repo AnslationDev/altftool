@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thailand Tourist Visa Cover Letter Builder (e-Visa)",
+  metaDescription:
+    "Write a Thai e-Visa cover letter and check the dates that matter: the 60-day permitted-to-stay stamp, THB 20,000/40,000 funds rule and any overstay fine.",
+  steps: [
+    "Fill the Applicant fields (Full name as in passport, Passport number and expiry, Occupation, Home address) and the Visa and trip section: Visa type, Arrival in Thailand, Departure from Thailand, Funds you can evidence (THB) and Travellers together.",
+    "Review the computed checks: Permitted to stay until, With a 30-day extension, Overstay on these dates with its THB fine, Funds you must evidence and the Digital Arrival Card window.",
+    "Take the finished text from Your cover letter with the Copy letter button and work through the Document checklist; Reset restores the sample data.",
+  ],
   intro:
     "The Thailand Visa Cover Letter Builder writes the covering letter for a Thai e-Visa tourist application and works out the dates that decide whether your trip is legal. A single-entry Tourist Visa is stamped with a permitted-to-stay date 60 days after entry, extendable once by 30 days for THB 1,900, and this tool shows both dates, the funds you must evidence — THB 20,000 per person or THB 40,000 per family — and the exact overstay fine at THB 500 a day up to THB 20,000 if your flight falls outside them.",
   useCases: [

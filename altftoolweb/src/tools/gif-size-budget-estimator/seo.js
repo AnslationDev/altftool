@@ -1,4 +1,12 @@
 const seo = {
+  title: "GIF Size Estimator: Frames, Palette, Byte Budget",
+  metaDescription:
+    "Estimate GIF bytes from width, height, frames and palette using GIF89a container maths, then see the frame count and width that fit a 1-15 MB budget.",
+  steps: [
+    "Enter Width, Height, Frames and Palette colours (2–256), or tap a preset such as 640×360.",
+    "Pick a Size budget from Email-friendly at 1 MB up to Large upload at 15 MB, set Content type and how much changes per frame, and say whether Dithering is on.",
+    "Read the Estimated file size with its ±40% range, plus the frame count and pixel width that still land inside the budget.",
+  ],
   intro:
     "GIF file size is driven by four things: pixel count, palette depth, frame count and how much of each frame changes. This estimator combines the exact container overhead defined by the GIF89a specification — a 6-byte header, a 7-byte logical screen descriptor, a colour table of 3 × 2ⁿ bytes, a 19-byte Netscape looping block, plus 20 bytes and a sub-block prefix per frame — with a modelled figure for the LZW-compressed pixel data. It also works backwards, telling you how many frames or how many pixels wide the animation can be and still land inside a 1 MB, 5 MB or 15 MB upload limit.",
   useCases: [

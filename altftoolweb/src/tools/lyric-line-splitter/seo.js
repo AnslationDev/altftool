@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lyric Line Splitter for Karaoke and Subtitle Timing",
+  metaDescription:
+    "Re-wrap pasted lyrics at 10-42 characters a line, break at breath punctuation, merge orphans, and get minimum screen time at 17 chars per second.",
+  steps: [
+    "Paste the song into the \"Paste lyrics\" box, leaving a blank line between verses and the chorus to mark a stanza break.",
+    "Set \"Characters per line (10-42)\", 32 by default, and \"Lines per screen (1-4)\", then tick merging orphan fragments into their neighbour and keeping verse/chorus stanza breaks.",
+    "Read the split line count, the longest line, lines over the limit and the total minimum display time, then press \"Copy split lyrics\".",
+  ],
   intro:
     "Lyric Line Splitter re-wraps pasted song lyrics into karaoke-ready lines using a character-per-line cap, defaulting to 32 characters and allowing anything from 10 up to the Netflix Timed Text ceiling of 42. It wraps on whole words, prefers to break after breath punctuation once a line has reached half the limit, merges orphan fragments back into their neighbours, and reports the minimum on-screen time for each line at the Netflix adult reading speed of 17 characters per second. It is built for karaoke producers, subtitlers and lyric-video editors who need consistent line lengths before timing a track.",
   useCases: [

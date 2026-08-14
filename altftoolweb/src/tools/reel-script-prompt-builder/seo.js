@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reel Script Prompt Builder: Second-by-Second Beats",
+  metaDescription:
+    "Builds an AI script prompt with a time-coded beat sheet — hook inside 3s, payoff in the final 20%, CTA in the last 2-5s — on a ~2.5 words/second budget.",
+  steps: [
+    "Pick a Platform, each shown with its published maximum such as Instagram Reels (max 180s) or TikTok (max 600s), then set Runtime (seconds) from 10 up to that ceiling.",
+    "Enter Topic / promise of the video, Target viewer (optional), a Hook style such as Common mistake or Result first, a Tone, and a Call to action.",
+    "Read the Word budget at ~2.5 words/sec headline and the beat sheet rows giving each beat's start and end seconds, then press Copy prompt.",
+  ],
   intro:
     "The Reel Script Prompt Builder generates an AI script-writing prompt with a second-by-second beat sheet: hook inside the first 3 seconds, setup, value body, a payoff filling the final 20% of the runtime, and a CTA compressed into the last 2–5 seconds. Timings follow the retention guidance published for Reels, TikTok and Shorts — viewers decide within about 3 seconds, and completion rate drives distribution. It is built for creators and social media managers who want scripts paced to the second rather than a wall of undifferentiated copy.",
   useCases: [

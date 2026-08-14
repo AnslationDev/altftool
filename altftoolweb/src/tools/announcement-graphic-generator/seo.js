@@ -1,4 +1,12 @@
 const seo = {
+  title: "Announcement Graphic Maker With a Modular Type Scale",
+  metaDescription:
+    "Six templates at real placement sizes, from 1080x1080 Instagram to a 1200x400 email banner, with type sized by one ratio and a countdown line in UTC days.",
+  steps: [
+    "Pick one of the six Template buttons — Launch, Product update, Event, We're hiring, Milestone or Maintenance — then fill \"Headline\" (90 characters maximum), \"Eyebrow\" and \"Subhead\".",
+    "Set \"Placement size\" from Instagram square 1080x1080 to Email banner 1200x400, choose a \"Palette\", and pick a \"Type scale ratio\" between minor third 1.200 and golden ratio 1.618; on a dated template also set \"Countdown measured from\".",
+    "The canvas redraws live and the \"PNG\" button downloads announcement-<template>-<width>x<height>.png, while \"Copy details\" copies the headline size and layout figures.",
+  ],
   intro:
     "An announcement graphic is the image that carries a launch, an event date, a new hire or a maintenance window, and this generator builds one from six templates at real placement sizes. Type sizes come off a modular scale rather than being picked by hand: the headline sits at step zero and each supporting line drops one step, multiplied by a chosen ratio — minor third 1.200, major third 1.250, perfect fourth 1.333 or the golden ratio 1.618 — which is what keeps the hierarchy readable at any canvas size. Give the tool a date and a reference day and it adds a countdown line calculated in whole UTC days.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sunscreen Reapply Timer: 2-Hour, 40 or 80 Minute Rule",
+  metaDescription:
+    "Clock times for every reapplication — 2 hours dry, or the bottle's 40 or 80 minute rating when wet — plus the millilitres each round needs.",
+  steps: [
+    "Set Time you go outdoors and Time outdoors (minutes), then pick \"What you will be doing\" — dry, sweating heavily, or in and out of water — and the Water resistance on the bottle: no claim, 40 minutes or 80 minutes.",
+    "Tick the areas you are covering under \"Areas you are covering\": Face, ears, head and neck at 1 tsp, Both arms and hands at 2 tsp, Front of torso, Back of torso and Both legs and feet.",
+    "\"Reapply every\" gives the interval and the reason for it, with First application 15 min before you step out, Applications needed, Amount each time in ml and tsp and Total for the session, then Today's schedule lists each clock time; press Copy result.",
+  ],
   intro:
     "The Sunscreen Reapply Timer turns standard sunscreen label directions into clock times for a specific outing: apply 15 minutes before you go outdoors, reapply at least every 2 hours when dry, and switch to your bottle's water-resistance rating — 40 or 80 minutes, the only two claims regulators allow — once you are swimming or sweating. It also sizes each application using the teaspoon rule, about 5 ml per body region and roughly 35 ml for a whole adult body. Useful for beach days, long rides, outdoor shifts and match days where a vague 'reapply often' is easy to forget.",
   useCases: [

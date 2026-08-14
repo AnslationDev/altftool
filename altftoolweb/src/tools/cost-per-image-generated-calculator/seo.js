@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Image Cost Calculator: Price per Usable Image",
+  metaDescription:
+    "Divide spend by keepers, not renders: acceptance rate, retouch passes, review time and fixed costs give the real cost per usable image and a batch budget.",
+  steps: [
+    "Enter 'Images generated (billed renders)', price per render, 'Acceptance rate (% usable)', extra passes per keeper and review seconds; pick USD, INR, EUR or GBP.",
+    "Read 'Cost per usable image' with renders per keeper and the multiple of the sticker price.",
+    "Enter 'Finished images needed' under Budget for a finished set to get the Projected budget, then click 'Copy result'.",
+  ],
   intro:
     "Cost per usable image is the total spend on a generation run divided by the number of images good enough to ship, not the price of a single render. This calculator takes your render count, price per render, acceptance rate, retouch passes and human review time, then returns the real unit cost, the money lost on rejected renders and the budget for a target number of finished images. It is built for designers, marketers and product teams pricing AI image work before they commit to a volume.",
   useCases: [

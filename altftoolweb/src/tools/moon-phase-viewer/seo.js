@@ -1,4 +1,12 @@
 const seo = {
+  title: "Moon Phase Today: Illumination, Age and Calendar",
+  metaDescription:
+    "Tonight's phase name, exact illumination percentage and moon age in days, plus a month grid and the next new and full moon times.",
+  steps: [
+    "Open the page — it reads your device's current date and shows tonight's phase name, the Illumination percentage to one decimal, and the Moon age in days.",
+    "Step through the grid with the Previous month, Today and Next month buttons; each cell shows the phase at local noon and days holding the exact instant are badged Full or New.",
+    "Read Upcoming moon events for the next new moon, first quarter, full moon and last quarter with local times, then press Copy summary.",
+  ],
   intro:
     "Moon Phase Today & Calendar reports the current phase name, the illuminated fraction of the disc as a percentage, and the moon's age in days since the last new moon, computed with the astronomy-engine ephemeris rather than an approximation of the 29.53-day cycle. Alongside it sits a month grid drawing every day's phase with its illumination, and the dates and clock times of the next new moon, first quarter, full moon and last quarter. It is for anyone planning around moonlight — a night shoot, a stargazing session, a fast or festival date — who needs the real figure for a specific day rather than a rough phase name.",
   useCases: [

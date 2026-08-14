@@ -1,4 +1,12 @@
 const seo = {
+  title: "Seasonal Home Maintenance Checklist for Your Zone",
+  metaDescription:
+    "Filters jobs to your NBC climate zone, home type and systems, ordered by priority with a minute estimate each, on the IMD four-season calendar.",
+  steps: [
+    "Pick your Climate zone (Hot & dry through Cold), your Home type, and the Season — Winter, Summer / pre-monsoon, Southwest monsoon, Post-monsoon or Whole year.",
+    "Tick what you actually own under \"Systems in this home\" — air conditioners, geyser, water tank, kitchen chimney, RO purifier, inverter, solar, garden — to filter the jobs.",
+    "Work down the priority-ordered list, check \"Estimated hands-on time\" and \"Half-day sessions needed\", then press \"Copy checklist\".",
+  ],
   intro:
     "This checklist generator turns your climate zone, home type and installed systems into the specific maintenance jobs that matter for a given season, each with a priority and a realistic time estimate. Seasons follow the India Meteorological Department's four-season calendar — winter (Jan–Feb), pre-monsoon (Mar–May), southwest monsoon (Jun–Sep) and post-monsoon (Oct–Dec) — and zones follow the five-zone climate classification used by the National Building Code of India. It is for homeowners and tenants who want a short, ordered list instead of a generic hundred-item checklist written for another continent.",
   useCases: [

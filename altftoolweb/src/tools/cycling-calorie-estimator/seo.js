@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cycling Calorie Calculator Using a Physics Power Model",
+  metaDescription:
+    "Calories from the power a ride actually demands — rolling resistance, drag and gravity at 24% efficiency — with the Compendium MET figure alongside.",
+  steps: [
+    "Enter Distance (km), Average speed (km/h), Your weight (kg) and Bike, kit and bottles (kg).",
+    "Pick the 'Bike, position and surface' option — road bike on the hoods, gravel, knobby-tyre mountain bike — then set Average gradient (%) and Headwind (km/h, negative for tailwind).",
+    "Read Calories burned with ride time, average watts at the pedals, kcal per km and the Compendium MET figure, plus the drag, rolling and climbing shares under 'Where the effort goes'.",
+  ],
   intro:
     "This estimator calculates the mechanical power a ride demands — rolling resistance, aerodynamic drag and gravity — and converts that work into calories at 24% gross cycling efficiency, the ratio that makes one kilojoule of pedalling work cost almost exactly one kilocalorie. Because it models the physics rather than looking up a single activity code, it responds properly to gradient, headwind, tyre and surface type, and the weight of the bike as well as the rider. The 2011 Compendium of Physical Activities MET figure is shown alongside for comparison, and the two often differ because MET values were measured over mixed real-world riding.",
   useCases: [

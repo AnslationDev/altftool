@@ -1,4 +1,12 @@
 const seo = {
+  title: "Electricity Bill Calculator: Appliance-Wise Units & Cost",
+  metaDescription:
+    "Enter each appliance's wattage, hours and count plus your tariff to get monthly units, energy, fixed and duty charges, and the biggest power users ranked.",
+  steps: [
+    "List devices with 'Power (watts)', 'Hours / day' and Quantity — 'Add appliance' adds rows, and each row shows its own units and rupees.",
+    "Under 'Tariff & charges' set 'Rate per unit (₹/kWh)', 'Billing days', 'Fixed charges (₹)' and 'Tax / duty (%)', or tap a preset like '1 BHK basic'.",
+    "Read the 'Estimated monthly bill' with per-day, per-year and the 'Biggest power users' share bars; 'Copy result' copies the full report.",
+  ],
   "intro": "Electricity Bill Calculator turns your appliance list into a realistic monthly bill: enter each device's wattage, how many hours a day it runs and how many you own, then add your per-unit tariff, fixed charges and electricity duty. It reports total units (kWh), the rupee cost, the per-day average and a ranked view of which appliances are actually driving the bill. Useful for households, PGs, shops and small offices trying to find where the money goes before the next meter reading.",
   "useCases": [
     "Work out how much an air conditioner running 6 hours a night actually adds to the monthly bill.",

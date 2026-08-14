@@ -1,4 +1,12 @@
 const seo = {
+  title: "Clinic Front Desk AI Prompts + SMS Segment Counter",
+  metaDescription:
+    "Administrative prompts for reminders, waitlists, recalls and complaints, screened for clinical advice, with GSM 03.38 segment counting (160 or 70).",
+  steps: [
+    "Use 'Search prompts' or the Category list, then click a prompt card — appointment reminders, cancellation waitlists, no-show follow-ups, insurance, recalls.",
+    "Complete the 'Fill in the blanks' fields with placeholder names, or press 'Use example values'; 'Clear fields' empties them again.",
+    "'Copy prompt' takes the finished text, and pasting a script into 'Paste the reminder, recall or voicemail script' returns Encoding, Segments and flagged phrases.",
+  ],
   intro:
     "Clinic Front Desk Prompt Pack is a library of administrative AI prompts for the non-clinical work of a practice — appointment reminders, cancellation waitlists, missed-appointment follow-ups, insurance explanations, recalls and complaint acknowledgements. Every message you draft is screened for two things a front desk must avoid: clinical advice that only a clinician may give, and identifiable clinical detail that does not belong in an unsecured SMS or a voicemail. It also counts the message into real SMS segments using the GSM 03.38 rules, so a reminder that must fit 160 characters actually does.",
   useCases: [

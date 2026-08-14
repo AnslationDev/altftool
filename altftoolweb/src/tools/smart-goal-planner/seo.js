@@ -1,4 +1,12 @@
 const seo = {
+  title: "SMART Goal Planner: Score Out of 100 and Pace Check",
+  metaDescription:
+    "Scores a goal 20 points per SMART criterion, then compares the pace you have actually held with the rate needed to hit the target by the deadline.",
+  steps: [
+    "Write the 'Goal statement' and 'Why it matters (the objective it serves)', then name the 'Metric being counted' — the page opens on paying customers going from 120 to 300.",
+    "Fill 'Baseline at start', 'Target', 'Current value' and 'Proven rate per day', set the 'Start date', 'Due date' and 'Reading taken on', and use 'Add milestone' for each checkpoint.",
+    "Read the SMART score out of 100 with its status line, then 'Pace needed', 'Pace held so far', 'Projected at deadline' and 'Lands on, at this pace', plus the SMART breakdown scoring each criterion out of 20; 'Copy plan' saves it.",
+  ],
   intro:
     "The SMART Goal Planner scores a goal out of 100 against the five criteria George T. Doran published in Management Review in November 1981 — Specific, Measurable, Achievable, Relevant and Time-bound — at 20 points each, then works out whether the pace you have actually held will land it by the deadline. Progress is measured as (current − baseline) ÷ (target − baseline), and the required pace as the remaining amount divided by the days left. It is for anyone converting a vague intention into a plan with a number and a date on it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hindi Patra Lekhan Format: Aupcharik and Anaupcharik",
+  metaDescription:
+    "Builds a formal or informal Hindi letter in the right order - सेवा में, विषय, महोदय, भवदीय - with a 60-150 word check and matching संबोधन and स्वनिर्देश.",
+  steps: [
+    "Choose a formal (औपचारिक) or informal (अनौपचारिक) letter under पत्र का प्रकार - leave application, complaint, editor, job, congratulation or invitation.",
+    "Fill the recipient designation, कार्यालय, स्थान and विषय for a formal letter, or pick पाठक से संबंध for an informal one, then write the body in विषय-वस्तु.",
+    "The प्रारूप अंक score, paragraph count and a 60-150 word check sit beside the assembled letter; press पत्र कॉपी करें to copy it.",
+  ],
   intro:
     "This guide lays out the two Hindi letter formats taught in school — औपचारिक (formal) and अनौपचारिक (informal) — and assembles a complete letter in the correct order as you fill in the fields. The formal path builds the सेवा में block, one-line विषय, महोदय salutation and भवदीय close; the informal path picks the संबोधन, अभिवादन and स्वनिर्देश that agree with your relationship to the reader, so a letter to an elder is never signed 'तुम्हारा मित्र'. Written for Class 8-12 students preparing पत्र-लेखन for board exams and for anyone who needs a correctly formatted Hindi application.",
   useCases: [

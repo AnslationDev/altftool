@@ -1,4 +1,12 @@
 const seo = {
+  title: "ITR-3 or ITR-4? Check Which Form You Must File",
+  metaDescription:
+    "Answer questions on business income, 44AD/44ADA, F&O, directorships and foreign assets to see whether ITR-3 is mandatory or ITR-1/2/4 will do.",
+  steps: [
+    "Pick 'Who is filing?' — Individual, HUF, Firm / LLP / AOP / BOI or Company — and enter 'Estimated total income for the year (INR)'.",
+    "Tick what applies under 'Business and professional income' (Section 44AD / 44ADA / 44AE, F&O, partner remuneration) and 'Facts that rule out the simpler forms' (directorship, unlisted shares, foreign assets).",
+    "Read the 'Verdict' with the 'Why this answer' reasons, then press 'Copy result'.",
+  ],
   intro:
     "The ITR-3 Applicability Checker tells you whether your business or professional income forces you onto ITR-3, or whether the simpler ITR-1 (Sahaj), ITR-2 or ITR-4 (Sugam) is enough. It walks through the facts that actually decide the form — presumptive taxation under Sections 44AD, 44ADA and 44AE, partnership income, intraday and F&O trading, unlisted shares, directorships, foreign assets and the ₹50 lakh ITR-4 income ceiling. Freelancers, consultants, traders, shop owners and firm partners can use it before filing to avoid picking a defective form.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Series and Parallel DC Circuit Simulator With Ohm's Law",
+  metaDescription:
+    "Set 1-48 V and two 1-100 ohm resistors, wire them in series or parallel, open the switch: resistance, current and power update with the electron flow.",
+  steps: [
+    "Under \"Circuit Configuration\" choose \"Series Circuit\" or \"Parallel Circuit\", then drag \"Battery Voltage\" between 1 and 48 V and the \"Resistor R1\" and \"Bulb Resistance R2\" sliders between 1 and 100 ohms.",
+    "Use \"Close Switch\" and \"Open Switch\" to complete or break the loop — an open switch halts the electron animation on the canvas and the bulb stops glowing.",
+    "\"Live Multimeter Readout\" reports Total Resistance, Current, Power and a Circuit Status of Closed (Flowing) or Open (Broken), recalculated as I = V ÷ R and P = V × I on every change; \"Reset\" restores the defaults.",
+  ],
   intro:
     "Electric Circuit Builder is an interactive DC circuit schematic that solves Ohm's law live as you change the parts: set the battery from 1 V to 48 V, set two resistors between 1 Ω and 100 Ω each, wire them in series or parallel, and open or close the switch. It computes total resistance (R₁ + R₂ in series, R₁R₂ ÷ (R₁ + R₂) in parallel), current as I = V ÷ R and power as P = V × I, then animates electron flow around the loop and brightens the bulb in proportion to the power dissipated. It is built for students and teachers who want to see cause and effect rather than work through the algebra on paper.",
   useCases: [

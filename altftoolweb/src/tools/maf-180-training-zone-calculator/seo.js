@@ -1,4 +1,12 @@
 const seo = {
+  title: "MAF 180 Formula Calculator for Aerobic Heart Rate",
+  metaDescription:
+    "180 minus your age with the -10, -5, 0 or +5 category adjustment: your MAF ceiling, the 10 bpm band under it, and MAF test pace per km and mile.",
+  steps: [
+    "Enter Age (years) and, optionally, a Resting heart rate, then choose one of the four Health and training category radios worth -10, -5, 0 or +5 bpm, plus a Senior adjustment (0-10 bpm) if it applies.",
+    "The MAF heart rate ceiling updates live, with the working shown underneath: starting value 180 - age, category adjustment, senior adjustment applied, and the ceiling as a percentage of heart rate reserve.",
+    "Under 'MAF test pace' enter Distance covered (km) and Time taken (minutes) for pace per kilometre, pace per mile and average speed, then press 'Copy result' to save the zone and the pace.",
+  ],
   intro:
     "The MAF 180 Formula, devised by Dr Philip Maffetone, produces a maximum aerobic function heart rate: subtract your age from 180, then adjust by −10, −5, 0 or +5 beats depending on illness, injury history and how long you have trained consistently. The result is a ceiling for aerobic base work, not a target to chase, and the training band is the 10 bpm immediately beneath it. This calculator applies the category rules and the age-65-plus allowance, then converts a MAF test run into pace per kilometre and per mile so you can track aerobic progress month to month.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rome Trip Cost from India: Tourist Tax & Coperto",
+  metaDescription:
+    "Prices flights, Schengen visa, rooms and meals in euro and rupees, with Rome's per-night tourist tax (10-night cap) and per-person coperto.",
+  steps: [
+    "Enter Travellers, Nights in Rome, Travel style (sets the starting rates), Season (moves the room rate) and Rupees per 1 euro (today's rate).",
+    "Set Accommodation category (sets the tourist tax), Tourist tax per person per night (€), Coperto per person per meal (€), the Schengen visa fee per person (€) and Contingency buffer (%).",
+    "Read the Line / Euro / Rupees / Share table with Tourist tax charged, Effective rate after markup and Cost of one extra night, then press Copy result.",
+  ],
   intro:
     "This planner prices a Rome holiday in the three buckets it is actually paid from: rupees for the return airfare, insurance and visa service charge, a euro-denominated Schengen consular fee, and euro spent on the ground for the room, food, metro, sights and shopping. Rooms are charged for nights while daily spends are charged for nights + 1 days, rooms are counted as ceil(travellers ÷ people per room), and a forex markup is applied only to the money actually spent in Italy. It separates out the two lines that surprise first-time visitors — Rome's contributo di soggiorno, charged per person per night at the property and capped at 10 consecutive nights, and the coperto that a trattoria adds per person per sitting.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Watercolor Mixing Game: 6 Pigments, 5 Color Levels",
+  metaDescription:
+    "Blend Crimson, Cobalt, Amber, Emerald, Violet and Ivory to hit a target shade. Four or five strokes a level, scored on RGB distance.",
+  steps: [
+    "Tap a pigment to add it to your mix — Crimson, Cobalt, Amber, Emerald, Violet or Ivory.",
+    "Each stroke averages into the mix in RGB, with four or five strokes a level; ↩ Undo Stroke takes the last one back.",
+    "Paint & Judge ✓ scores Your Mix against Target by RGB distance, across the five levels from Sunrise Blush to Royal Plum.",
+  ],
   intro:
     "Watercolor is a colour-mixing puzzle in which you blend six pigments — Crimson, Cobalt, Amber, Emerald, Violet and Ivory — to match a target shade across five hand-named levels, from Sunrise Blush to Royal Plum. Each stroke you add is averaged into the mix in RGB, you get only four or five strokes per level, and your score comes from how close the blended colour lands to the target measured as straight-line distance in RGB space. It is a short, calm game for anyone who enjoys colour: five levels, an undo button, and an average score at the end.",
   useCases: [

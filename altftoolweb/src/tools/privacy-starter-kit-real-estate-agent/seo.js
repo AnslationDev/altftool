@@ -1,4 +1,7 @@
 const seo = {
+  title: "Real Estate KYC Retention Register: 5-Year PMLA Rule",
+  metaDescription:
+    "Turn a broker's client documents into a dated retention register: five-year PMLA keep-until dates, purpose-limitation deletes, unmasked Aadhaar flagged.",
   intro:
     "The Real Estate Agent Privacy Kit turns the pile of client documents in a broker's files into a dated retention register. Each row is classified against two rules: the five-year record-keeping duty that applies to notified reporting entities under India's Prevention of Money-Laundering Act, and purpose limitation, which ends the basis for holding a document once the enquiry it supported has closed. Identity copies that should never be held in unmasked form, such as a full-number Aadhaar image or a document left sitting in a WhatsApp gallery, are flagged separately whatever the deal outcome.",
   useCases: [

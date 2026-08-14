@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Usage Log for Assignments: Declaration Builder",
+  metaDescription:
+    "Record which AI tool helped with which part of a submission, how the output was used and what you asked, then export as Markdown or plain text.",
+  steps: [
+    "Enter the Assignment title, optionally your name and Course / unit code, and set Output format to Markdown or Plain text.",
+    "For each entry give the Part of the assignment, the AI tool, How the output was used — Brainstorming through to Output used verbatim (quoted and cited) — a date and what you asked; Add another entry up to 50.",
+    "Check Recorded uses, Tools used and Heaviest reliance recorded, then press Copy log to paste the generated declaration into your appendix.",
+  ],
   intro:
     "The AI Usage Log for Assignments records, entry by entry, which AI tools helped with which parts of a submission — the section of the work, the tool, how the output was used, what was asked and when — and exports it as a clean Markdown or plain-text declaration. Its fields follow what university academic-integrity policies and UNESCO's 2023 guidance on generative AI in education ask students to declare when AI use is permitted. It is built for students and teaching staff who need a consistent, honest record attached to submissions.",
   useCases: [

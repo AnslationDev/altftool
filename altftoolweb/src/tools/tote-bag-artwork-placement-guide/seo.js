@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tote Bag Artwork Placement: Safe Print Area Guide",
+  metaDescription:
+    "Work out the safe print area on a tote after side seams, handle stitching and the gusset fold, plus the offsets from the top and left edge.",
+  steps: [
+    "Pick a Tote size — the default is Classic shopper, 15 x 16 in with a 3 in gusset, alongside Mini tote, Small tote, Large shopper, Boat tote / jumbo and Deep grocery tote — and a Press platen of 10 x 12, 12 x 14 or 14 x 16 in, or leave it on 'No platen limit (screen print / hand press)'.",
+    "Set the four clearance fields — 'Clear of each side seam (in)', 'Handle stitching ends this far below the top (in)', 'Extra clear space below the handles (in)' and 'Clear above the base seam (in)' — then the Artwork width ratio, Artwork height ratio, Vertical position and Export resolution (DPI).",
+    "Read the Safe print area, the 'Measure from the top edge' and 'Measure from the left edge' offsets and the pixel size at your DPI, then press Copy result; entering your Artwork file width (px) and height under 'Is your file sharp enough?' checks the file against the 150 DPI floor.",
+  ],
   intro:
     "The safe print area on a tote is the flat panel minus three things: a clearance from each side seam, the handle stitching at the top, and roughly half the gusset depth at the bottom, because on a box-bottom bag that portion folds under to form the base. This guide works out the usable width and height for common tote blanks, fits your artwork inside without distorting it, and gives the offsets from the top and left edges so you can mark the bag with a ruler. Aimed at print-on-demand sellers, screen printers and anyone sending tote artwork to a decorator for the first time.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "FAQ Prompt Builder with Intent Mix and FAQPage Schema",
+  metaDescription:
+    "Paste a product description, choose 3 to 30 questions across pricing, setup, comparison, trust, support and policy, and set 40-60 word snippet answers.",
+  steps: [
+    "Enter the product or service name and paste the product description — declared in the prompt as the only facts the model may use.",
+    "Set how many questions (3-30), pick an Answer length such as \"Snippet — 40 to 60 words\", choose a Tone, and tick the question categories to cover.",
+    "Optionally tick \"Also ask for schema.org FAQPage JSON-LD\", check the Questions planned count, then press Copy prompt.",
+  ],
   intro:
     "An FAQ generator prompt builder turns a product description into a controlled AI prompt that returns a specific number of questions, spread across the buyer-intent categories you choose, with answers written to a set word length. It ranks the recurring terms in your description so wording stays consistent, and it can request a matching schema.org FAQPage JSON-LD block alongside the visible text. The point is coverage and honesty: pricing, limits and objections get their own questions instead of being quietly skipped.",
   useCases: [

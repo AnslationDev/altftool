@@ -1,4 +1,12 @@
 const seo = {
+  title: "Luggage Weight Splitter for Bags, Limits and People",
+  metaDescription:
+    "Give every bag its own kilo limit, flag any at 85% of allowance, and let Auto Balance move the heaviest item to the bag with the most free space.",
+  steps: [
+    "Pick an Allowance preset such as India domestic (cabin 7 kg, checked 15 kg), press Add Bag and edit each bag's name and Limit kg.",
+    "Add each item with Weight each kg, Quantity, Owner and Priority, then press Auto Balance to drop the heaviest items into the emptiest bags.",
+    "Watch Allowance used and the per-bag over/near-limit flags, then use Copy Plan or CSV to save luggage-weight-split.csv.",
+  ],
   intro:
     "Luggage Weight Splitter distributes a packing list across every bag and traveller in your group, tracks each bag against its own kilo limit, and flags any bag that is over — or within 85% of — its allowance before you reach the airport. Auto Balance runs a largest-item-first pass that repeatedly drops the heaviest remaining item into whichever bag has the most free capacity, which is the standard greedy fix for uneven bags. Families and groups travelling on mixed allowances get a per-bag plan they can export as CSV or copy as a checklist, instead of re-weighing suitcases on a bathroom scale.",
   useCases: [

@@ -1,4 +1,5 @@
 const seo = {
+  title: "Photo Blur Detector: Sharpness Score and Heatmap",
   intro:
     "Blur Detector measures how sharp a photo is by converting it to Rec.601 luminance, averaging the brightness difference between each pixel and its right and lower neighbours, and turning that gradient energy into a sharpness score, a blur percentage and a six-step verdict from Sharp down to Severe Blur. It also tiles the image into blocks and paints a red heatmap over the softest ones, so you can see whether the whole frame is soft or only part of it. It is a quick triage pass for photographers and anyone culling a shoot, not a substitute for zooming in at 100 percent.",
   useCases: [

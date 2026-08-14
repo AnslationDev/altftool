@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hair Growth Tracker - Real cm per Month Rate",
+  metaDescription:
+    "Log dated length measurements, add trims back so haircuts don't hide growth, compare with the 1.25 cm/month norm and project your target date.",
+  steps: [
+    "Log each entry's \"Date measured\", \"Length (cm)\" and \"Cut off since the previous measurement (cm)\", using \"Add measurement\" for more rows.",
+    "Set an optional \"Target length (cm)\" to project when you would reach it at your own measured rate.",
+    "Read the growth rate in cm/month against the 1.25 cm/month reference and the between-measurements table, then click \"Copy result\".",
+  ],
   intro:
     "The Hair Growth Progress Tracker turns a series of dated length measurements into a real growth rate in centimetres per month, adding back every centimetre you trimmed so a haircut does not register as lost growth. Rates are compared against the reference figure of roughly 15 cm of scalp growth a year, about 1.25 cm a month, with 1.0 to 1.5 cm a month covering most adults. It also projects the date you would reach a target length at your own measured rate rather than an average one.",
   useCases: [

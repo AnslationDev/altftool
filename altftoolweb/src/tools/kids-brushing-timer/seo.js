@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Brushing Timer - Two Minutes in 4 Quadrants",
+  metaDescription:
+    "A 2-minute tooth brushing timer split into four 30-second mouth quadrants with prompts, an optional tongue step, stars and a daily streak.",
+  steps: [
+    "Choose a \"Session length\" from 1:00 to 3:00 (2:00 recommended) and tick \"Add a tongue-brushing step\" if you want it.",
+    "Press \"Start brushing\" - the countdown walks through each mouth-quadrant step with its own prompt and awards a star per completed step.",
+    "Finish to grow the sessions-per-day count and brushing streak, then click \"Copy summary\" for the session breakdown.",
+  ],
   intro:
     "The Kids Brushing Timer runs the two-minute brushing session recommended by NHS, ADA and FDI dental guidance and splits it into four 30-second mouth quadrants so every corner gets equal time. Each quadrant gets its own on-screen prompt, an optional tongue step is added at the end, and finished sessions build a star count and a daily streak. It is aimed at parents of children who are still learning to brush properly and at anyone who guesses at two minutes and stops at forty seconds.",
   useCases: [

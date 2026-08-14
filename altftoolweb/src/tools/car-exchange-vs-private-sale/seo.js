@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Exchange vs Private Sale: Net Proceeds Compared",
+  metaDescription:
+    "Nets a dealer offer and loyalty bonus against a private sale after reconditioning, RTO, depreciation and delay, and solves the break-even asking price.",
+  steps: [
+    "Enter 'Dealer exchange offer (INR)', 'Exchange / loyalty bonus on the new car (INR)' and 'Realistic private sale price today (INR)'.",
+    "Add the private-sale friction: detailing and pre-sale repairs, listing fees, 'RTO transfer, NOC and PUC you pay', loan outstanding and foreclosure charge, days you expect it to take to sell, monthly holding cost, your hours and hourly value, discount rate and annual depreciation.",
+    "The headline names the winner — Private sale wins, Dealer exchange wins or Too close to call — and the gap in rupees, both valued today; Copy result copies the friction total, the break-even private price, the premium percentage it needs and the cost of every extra day unsold.",
+  ],
   intro:
     "A dealer exchange quote and a private-sale asking price are not comparable numbers until both are reduced to what actually lands in your hand, on the same date. This comparison nets the exchange offer and loyalty bonus against a private sale after reconditioning, listing fees, RTO paperwork, the depreciation a car keeps accruing while it waits for a buyer, and the present value of money that arrives weeks later. It also solves for the break-even asking price — the figure a private sale must genuinely close at to beat the dealer, which is usually well above the offer on the table.",
   useCases: [

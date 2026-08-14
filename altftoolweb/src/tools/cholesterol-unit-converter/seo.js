@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cholesterol mg/dL to mmol/L Converter - Full Panel",
+  metaDescription:
+    "Convert a lipid panel both ways - 38.67 for cholesterol, 88.57 for triglycerides - with non-HDL, the ratio and a Friedewald LDL estimate.",
+  steps: [
+    "Pick the Entered unit (mg/dL or mmol/L) and type Total cholesterol, HDL cholesterol and Triglycerides from your report. [pages/index.jsx:33-42; lib.js:30-33]",
+    "Leave 'LDL cholesterol (optional)' blank to estimate it - its placeholder reads 'Leave blank to estimate' - and set the HDL reference to Male or Female. [pages/index.jsx:43-49; lib.js:73-76]",
+    "Read the 'Converted lipid panel' with every value in both units plus Non-HDL cholesterol and the Total / HDL ratio, then press Copy output. [pages/index.jsx:51-64; _shared/QuickToolPage.jsx:91-116]",
+  ],
   intro:
     "The Cholesterol Unit Converter changes a full lipid panel between mg/dL and mmol/L, using 38.67 mg/dL per mmol/L for total, LDL, HDL and non-HDL cholesterol and 88.57 mg/dL per mmol/L for triglycerides. Those two factors differ because cholesterol and triglycerides are different molecules, which is the single most common error when converting a report by hand. It also derives non-HDL cholesterol, the total-to-HDL ratio and, if LDL was not measured, the Friedewald estimate.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Newsletter Privacy Policy Generator: CAN-SPAM & CASL",
+  metaDescription:
+    "Assembles the subscriber notice — consent proof, tracking pixel, unsubscribe — and dates the 10-business-day opt-out and the CASL 60-day link.",
+  steps: [
+    "Enter the Newsletter name, Published by, Physical postal address, Contact for privacy requests and Email service provider, then pick How subscribers join.",
+    "Tick What the list does, which adds the sections those practices make necessary, and enter the Subscription date and Unsubscribe request received.",
+    "Read Notice completeness with the opt-out deadline, the CASL 60-day and CAN-SPAM 30-day mechanism dates and implied-consent expiry, then press Copy notice.",
+  ],
   intro:
     "A newsletter privacy policy is the subscriber-facing notice that records three separate things: how consent to email was obtained and can be proved, what the tracking pixel and wrapped links inside each message collect, and what happens to an address after someone unsubscribes. This generator assembles that notice and works out the deadlines the law attaches to it — the 10 business days both CAN-SPAM and CASL allow for actioning an opt-out, the 60 days a CASL unsubscribe link must stay live, and the 24-month or 6-month expiry of implied consent under Canadian law.",
   useCases: [

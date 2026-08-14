@@ -1,4 +1,12 @@
 const seo = {
+  title: "Long Weekend Planner: Which Leaves Buy the Most Days",
+  metaDescription:
+    "Indian holidays 2024-2028 run through a knapsack optimiser: set a leave budget up to 60 and get the exact dates to file, at 2+ days off per leave.",
+  steps: [
+    "Pick the Year, choose 5-day week or 6-day week for your work pattern, and set Leaves you can spend anywhere from 0 to 60.",
+    "Add company or state holidays under Your own holidays with Add holiday; they are saved in this browser and merged into the year.",
+    "Your optimised plan names the exact leave dates and total days off, Free long weekends cost nothing, and Download writes long-weekend-plan-<year>.txt.",
+  ],
   intro:
     "Long Weekend Planner reads a year of Indian public holidays, finds every stretch where a handful of leave days bridges a holiday to a weekend, and then runs a knapsack optimiser to pick the exact combination of dates that buys the most total days off within your leave budget. It only proposes a bridge when the payoff is at least 2 days off per leave applied and never spends more than 4 leaves on a single block, so nothing in the plan is a bad trade. Salaried employees planning the year in January get a dated list of leaves to file, not a generic holiday calendar.",
   useCases: [

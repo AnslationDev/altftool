@@ -1,4 +1,12 @@
 const seo = {
+  title: "Writing Sprint Timer with Words-Per-Minute Tracking",
+  metaDescription:
+    "Run 25/5 Pomodoro writing sprints with a long break after every fourth, log words per sprint, and see your wpm and how many sprints your target needs.",
+  steps: [
+    "Set Sprint length (minutes), Break length (minutes), Sprints in this session and your Word target for the day, then press Start",
+    "When each countdown ends, type Words written in that sprint and press Add sprint to log it",
+    "Read your measured pace in wpm, your best sprint, and how many sprints the target still needs, then press Copy log to save the session",
+  ],
   intro:
     "A writing sprint timer runs a focused countdown, then a break, then repeats — the Pomodoro pattern of a 25-minute interval, a 5-minute short break, and a longer 15-minute break after every fourth sprint. What makes it a tracker rather than a clock is the log: enter the words you produced in each sprint and it computes words per minute for every sprint, your overall pace, whether you are speeding up or slowing down, and how many more sprints your word target actually needs.",
   useCases: [

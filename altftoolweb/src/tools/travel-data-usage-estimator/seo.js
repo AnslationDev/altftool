@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Data Usage Estimator for Roaming and eSIM Packs",
+  metaDescription:
+    "Turn trip length and daily maps, streaming, calls and photo backup into a trip MB total and a recommended pack size with 20% head-room.",
+  steps: [
+    "Enter Trip length (days), then Navigation (hours/day) at 5 MB per hour, Video streaming, Music / podcasts and Social feeds hours per day.",
+    "Add Video calls and Voice / VoIP calls in minutes per day, Background apps (MB/day), photo and video backup settings and a Network overhead (%).",
+    "Read Estimated data for the whole trip and the recommended GB pack with head-room, then press Copy result.",
+  ],
   intro:
     "This estimator converts your daily phone habits into a megabyte figure for a whole trip, using the published consumption rates for each activity: about 5 MB per hour of turn-by-turn navigation, 0.7 GB per hour of standard-definition video, 72 MB per hour of 160 kbps music, 5 MB per minute of video calling and 60 MB per minute of 1080p video backup. It adds a configurable network-overhead allowance for headers and retries on weak roaming signal, then recommends a pack size with 20% head-room. It is for travellers choosing between a roaming add-on, an eSIM data plan and a local SIM before they leave.",
   useCases: [

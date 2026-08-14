@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Testimonial Consent Form & Release Builder",
+  metaDescription:
+    "Build a signable testimonial release naming each permitted channel, the territory, a licence term with a real end date, and how consent is withdrawn.",
+  steps: [
+    "Fill in participant name and email, the role and employer shown on screen, your company name and registered address, and the recording date.",
+    "Tick each permitted placement under 'Where it may appear', then set territory, licence term in years, consideration and withdrawal notice in days.",
+    "Check the form completeness figure, then press 'Copy form' to take the release out for signature.",
+  ],
   intro:
     "A video testimonial consent form is the written permission that lets a business publish a named customer's recorded words, face and voice, and it is only useful if it states four things: the exact channels, the territory, how long the permission lasts, and how the person takes it back. This generator writes those four terms into a signable release along with editing limits, consideration, sub-licensing rules and a data-protection clause. It is built for marketing, customer-marketing and founder-led teams who film customer stories and want a paper trail before the video goes live.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "AMP Email Image Sizes: amp-img, Retina, 200 KB Cap",
+  metaDescription:
+    "Turn a placement into CSS size, 2x source pixels and estimated weight per format, with the amp-img tag and Gmail's 200 KB AMP part budget.",
+  steps: [
+    "Pick a Placement — Full-width hero, Two-column card, Three-across product, Article thumbnail, Header logo or Inline icon — with an amp-img layout of responsive, fixed or intrinsic, then set Email content width (px), Pixel density to export for and the Aspect ratio width and height.",
+    "Choose an Export format (AVIF, WebP, JPEG 75/85, PNG-24 or GIF) and what the image contains, then enter how many images of this size the email has plus your AMP markup size (KB) and Inline amp-custom CSS (KB).",
+    "Read \"Export the source at\" for the pixel dimensions, check the AMP part used bar against the 200 KB limit, press Copy tag under Ready-to-paste markup, and compare weights in \"Same image, every format\".",
+  ],
   intro:
     "AMP Email Image Size Guide turns a placement in your email column into the three numbers you actually need: the CSS display size, the source pixel size to export for retina screens, and an estimated file weight per format. It also builds the matching amp-img tag — AMP for Email forbids plain img and requires width, height and a layout attribute — and tracks the 200 KB ceiling Gmail places on the AMP part of a message. Weight figures are planning estimates from typical bytes-per-pixel rates, not encoder output.",
   useCases: [

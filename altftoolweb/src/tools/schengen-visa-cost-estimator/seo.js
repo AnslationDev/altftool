@@ -1,4 +1,12 @@
 const seo = {
+  title: "Schengen Visa Cost in Rupees: Fee, VFS, Insurance",
+  metaDescription:
+    "Adds the EUR 90 / EUR 45 / free Visa Code fee to VFS service fee, courier, photos, insurance and card markup, and flags a fee over the half-fee cap.",
+  steps: [
+    "Set the 'Fee category' and head counts — 'Applicants aged 12 and over', 'Children aged 6 to 11', 'Children under 6' — plus the 'Exchange rate (rupees per EUR 1)'.",
+    "Under 'Charges you pay in India' enter the visa centre service fee per applicant, passport return courier, photographs, travel medical insurance, other charges and 'Card cross-currency markup (%)'.",
+    "Read 'Total application cost' with 'Government share of the total' and 'Non-refundable if the visa is refused', check the 'Line by line' table, then press 'Copy result'.",
+  ],
   intro:
     "A Schengen visa cost estimator adds the statutory short-stay visa fee to every commercial charge around it — visa centre service fee, courier, photographs, travel medical insurance and card markup — and converts the lot into one rupee total. The visa fee itself comes from Article 16 of the EU Visa Code (Regulation (EC) No 810/2009): EUR 90 for applicants aged twelve and over since 11 June 2024, EUR 45 for children aged six to eleven, and nothing at all for children under six. It is built for travellers and travel desks who need the real cash outlay for a family, not just the headline fee, and it flags a service fee that breaks the Visa Code cap of half the visa fee.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pub/Sub vs Queue vs Kafka: Scored in 9 Questions",
+  metaDescription:
+    "Answer nine questions on consumers, replay, ordering, retention and retry, and get work queue, pub/sub, partitioned log and event bus ranked with reasons.",
+  steps: [
+    "Answer the nine questions on consumer count, replay, ordering, retention, throughput, processing model, routing, latency and per-message controls.",
+    "Answers that are hard constraints rule a pattern out completely — asking to replay from the beginning knocks out the work queue instead of just lowering it.",
+    "Read the Recommended pattern with its percentage fit, Typical technologies, Runner-up and Confidence, plus 'Full ranking and why' listing For and Against.",
+  ],
   intro:
     "This decision helper scores four messaging patterns — work queue, pub/sub topic, partitioned log and event bus — against nine properties of your workload: consumer count, replay needs, ordering, retention, throughput, processing model, routing, latency and per-message retry control. Answers that are hard constraints rather than preferences rule a pattern out entirely, so a request to replay from the beginning removes plain queues instead of merely marking them down. Every score is shown, so you can argue with the rubric rather than trust it.",
   useCases: [

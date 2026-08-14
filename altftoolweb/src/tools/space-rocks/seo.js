@@ -1,4 +1,12 @@
 const seo = {
+  title: "Space Rocks: Asteroid-Style Shooter in Your Browser",
+  metaDescription:
+    "Thrust-and-drift asteroid shooter: rocks split from large to small for 20, 50 and 100 points, waves add rocks and speed, keyboard or touch controls.",
+  steps: [
+    "Press Start on the overlay, then rotate with Left/Right or A/D, thrust with Up or W and fire with Space — or use the on-screen touch pads on a phone.",
+    "Shoot every rock: large rocks split into two mediums and mediums into two smalls, scoring 20, 50 and 100 points; clear the field to start the next, faster wave.",
+    "Watch Score, Best, Wave and Lives in the header; P pauses, and the Game over overlay reports your score and wave with a Play again button, best score saved in-browser.",
+  ],
   intro:
     "Space Rocks is a browser remake of the classic vector asteroid shooter: you fly a thrust-and-drift ship around a wrapping playfield, shooting drifting rocks that split from large into two mediums and then into two smalls before vanishing. It is for anyone who wants a couple of minutes of arcade reflex play with real inertia physics rather than a game where the ship stops when you let go. You start with three lives, clear every rock to advance a wave, and each wave adds a rock and a little speed.",
   useCases: [

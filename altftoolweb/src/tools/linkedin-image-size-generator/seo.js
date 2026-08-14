@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Image Size Generator: 10 Exact Presets",
+  metaDescription:
+    "Resize one image to LinkedIn 1200x1200 posts, the 1584x396 profile banner and 300x300 Page logo, with crop preview and a 1.5x upscale warning.",
+  steps: [
+    "Pick a file under Artwork (stays in your browser), or type Artwork width (px) and Artwork height (px) to plan sizes without uploading anything.",
+    "Choose Fit — Cover, fill and centre-crop or Contain, fit whole image, pad edges — and set Export format to PNG or JPEG.",
+    "Press Export all, or Download this size on a single preset, to save files named linkedin-<preset>-<width>x<height>.png.",
+  ],
   intro:
     "LinkedIn Image Size Generator takes one piece of artwork and re-frames it for every LinkedIn slot — 1200 x 1200 square feed posts, 1080 x 1350 portrait and document slides, 1200 x 627 link cards, 1920 x 1080 article covers, the 1584 x 396 profile banner and 300 x 300 Company Page logo. It uses standard cover (fill and centre-crop) and contain (fit and pad) geometry, so you can see exactly which part of the frame survives before you export. Each size also gets an upscale check: anything stretched past 1.5x is flagged as too small for a retina feed.",
   useCases: [

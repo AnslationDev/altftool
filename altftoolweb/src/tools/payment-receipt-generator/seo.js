@@ -1,4 +1,12 @@
 const seo = {
+  title: "Payment Receipt Generator with Amount in Words & Balance",
+  metaDescription:
+    "Number receipts as RCPT-2026-0007, spell the amount in Indian lakh or short-scale words, and show the balance still due on the invoice.",
+  steps: [
+    "Set the Receipt date, Currency (INR, USD, EUR, GBP, AED, SGD, AUD, CAD or JPY), Series prefix, Number pattern from the {PREFIX} {YYYY} {SEQ} tokens, and the Serial number with its zero padding.",
+    "Fill in Issued by, Received from, Against invoice, the Payment mode with its transaction / cheque reference, the Invoice total, Already paid before this receipt and Amount received now.",
+    "Read the receipt number, the amount in words and the balance due — or the overpayment flag — then press \"Copy receipt\" to take the plain-text Receipt text block.",
+  ],
   intro:
     "A payment receipt is the document a seller issues to acknowledge money that has actually been received, as distinct from an invoice, which only demands it. This generator numbers that receipt from a pattern you control, names the payment instrument and its reference, spells the amount in words in either Indian (lakh/crore) or short-scale (thousand/million) form, and works out the balance still outstanding as invoice total minus everything receipted so far. It is built for freelancers, studios and small businesses collecting part payments across borders in INR, USD, EUR, GBP, AED, SGD, AUD, CAD or JPY.",
   useCases: [

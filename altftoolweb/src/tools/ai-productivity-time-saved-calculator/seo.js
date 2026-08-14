@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Time Saved Calculator: Before and After Timings",
+  metaDescription:
+    "Weekly and annual hours saved by AI from your own before/after timings and runs per week over 46 working weeks. Tasks that got slower show as negative.",
+  steps: [
+    "Fill Task 1 name and enter Before AI (minutes per run), With AI (minutes per run) and Times per week, counting the time spent reviewing AI output in the \"with AI\" figure.",
+    "Use Add task for each extra task and Remove to drop one, then set Working weeks per year — 46 by default, which is 52 minus leave and holidays.",
+    "Hours saved per week appears at the top; the breakdown lists each task's min/wk with the percentage faster or slower, then the annual hours and full-working-day equivalent, and Copy result copies it.",
+  ],
   intro:
     "The AI Time Saved Calculator estimates weekly and annual hours saved by AI using the before/after task-timing method: (minutes before − minutes with AI) × runs per week, summed across tasks and multiplied by your working weeks per year (default 46). Because it works from measured timings rather than vendor productivity multipliers, it also handles the honest case where a task got slower with AI. It is built for individuals and team leads who want a defensible savings number for a review, business case or renewal decision.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chain of Custody Log with SHA-256 Event Hash Chain",
+  metaDescription:
+    "Register items with SHA-256 or SHA-512 digests, log custody events with offset timestamps, and export canonical JSON plus an optional hash chain.",
+  steps: [
+    "Register each evidence item with its ID, recorded digest algorithm — SHA-256 at 64 hex characters or SHA-512 at 128 — and the hexadecimal digest.",
+    "Add custody events with a timestamp carrying Z or a numeric UTC offset such as 2026-07-24T14:30:00+05:30, plus the actor and, for transfer or return, the recipient.",
+    "Press Validate & prepare, then download the private full export or the counts-only JSON that omits IDs, digests, timestamps, people and notes.",
+  ],
   intro:
     "This organizer builds a structured chain-of-custody record: you register evidence items with their identifiers and recorded digests, then log custody events — acquisition, copy, transfer, access, return and seal — each with an offset-bearing timestamp, actor, recipient, location and note, and it validates that every event references a real item, that acquisition comes first and only once per item, and that timestamps never run backwards. An optional SHA-256 chain links the events together, each hash computed as SHA-256 of the previous event hash, a newline, and the canonical JSON of the event. It is for investigators, IT and security staff and anyone documenting how a file or device was handled, who needs the record to be consistent and machine-checkable rather than a free-text log.",
   useCases: [

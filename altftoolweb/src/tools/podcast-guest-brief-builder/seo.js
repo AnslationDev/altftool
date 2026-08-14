@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Guest Brief Builder: Timed Rundown & Questions",
+  metaDescription:
+    "Turn a recording length into a timecoded rundown, a question count that fits at 1.5, 2.5 or 4 minutes each, and a pre-record tech checklist.",
+  steps: [
+    "Fill in 'Guest name', 'Guest role', 'Company or project' and 'Episode topic', then set 'Recorded length (minutes)' and 'Segments (1-6)'.",
+    "Set 'Intro (minutes)', 'Outro (minutes)' and 'Technical buffer (% of recording)', choose a 'Question depth' of Quick takes (1.5 min per question), Standard interview (2.5) or Deep dive (4), and pick an 'Edit style' of Light, Normal or Heavy.",
+    "Read 'Questions to prepare' with 'Interview time after intro, outro and buffer' and 'Estimated published runtime' beneath it, work down the 'Timed rundown' blocks with their mm:ss timecodes and the 'Pre-record tech checklist', then press 'Copy brief'.",
+  ],
   intro:
     "Podcast Guest Brief Builder converts a target recording length into a timed rundown, a question count that actually fits the tape, and a pre-record tech checklist. It budgets the episode as intro plus segments plus outro plus a technical buffer, then divides the remaining interview minutes by the minutes a question realistically consumes (1.5 for quick takes, 2.5 for a standard interview, 4 for a deep dive). Built for hosts and producers who want to send a guest something concrete instead of a vague 'let's just chat'.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Schengen Cover Letter Builder With 90/180 Day Check",
+  metaDescription:
+    "Builds a printable Type C cover letter and checks the 90/180-day count, passport validity three months past departure and EUR 30,000 insurance cover.",
+  steps: [
+    "Fill the Applicant block — full name as in passport, nationality, passport number, issue and expiry dates, occupation, employer and home address.",
+    "Under Trip set the main destination (most nights), arrival and departure dates, days already used in the last 180 and the fee band, then add funds, insurer, insurance cover in EUR and your ties to home.",
+    "Read 'Days of presence this trip' against the 90-day allowance, the date your passport must stay valid to and any warnings, then press Copy letter and work down the Document checklist.",
+  ],
   intro:
     "The Schengen Visa Cover Letter Builder turns your trip details into a printable Type C cover letter and checks the stay against the rules the consulate applies. It counts days of presence the way the Schengen Borders Code does — the day of entry and the day of exit both count toward the 90 days allowed in any 180-day period — and flags a passport that will not stay valid three months past your departure, insurance below the EUR 30,000 minimum in Article 15 of the Visa Code, or an application lodged outside the six-month to 15-day window. It is for first-time and repeat applicants who want the covering letter and the arithmetic to agree.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vehicle Downsizing Savings: TCO, Payback and CO2",
+  metaDescription:
+    "Compare fuel, insurance, servicing, parking and depreciation on today's value, priced against the cabs the lost trips need. Payback and CO2 included.",
+  steps: [
+    "Pick Fuel type, tick 'The household runs a second vehicle today' if it applies, then fill Distance per year (km), Fuel economy (km per litre or kg), Insurance per year (₹), Service and repairs per year (₹), Parking per year (₹) and Resale value today (₹) under Vehicle you run today, Second vehicle in the household and Vehicle you would keep or buy",
+    "Under Shared figures and the switch set Fuel price (₹ per litre or kg), Depreciation (% of value per year), Added cab and transit per year (₹), Price of the replacement (₹) and Cash from selling what you let go (₹)",
+    "Saving per year after downsizing heads the panel, with Cost now — total per year, After — total per year, After — added cab and transit, Fuel avoided per year, CO2 avoided per year, One-time cost to switch, Payback period and Cost per km now against Cost per km after listed below; Copy result copies the comparison and Reset restores the defaults",
+  ],
   intro:
     "This calculator compares the full annual cost of running your vehicles today against running one smaller vehicle instead, and reports the yearly saving, the fuel and CO2 avoided, and how long the switch takes to pay for itself. Each vehicle is costed the way a total-cost-of-ownership model does it: fuel from distance divided by fuel economy, plus insurance, maintenance, parking and depreciation charged on the vehicle's current market value rather than its original price. The trips that lose a vehicle are priced too, through an added cab or public-transport line, so the saving is not flattered by pretending they disappear.",
   useCases: [

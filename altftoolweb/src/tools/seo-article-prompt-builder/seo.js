@@ -1,4 +1,12 @@
 const seo = {
+  title: "SEO Article Prompt Builder: AI Brief with Word Budgets",
+  metaDescription:
+    "Turn a target query, search intent and heading plan into an AI writing prompt with per-section word budgets, title and meta limits and a ~1% query cap.",
+  steps: [
+    "Enter the 'Target search query' and 'Who is searching', pick a 'Search intent', then set 'Target length (words)', 'H2 sections', 'H3s per H2' and 'FAQ questions'.",
+    "The builder budgets every section live — opening block, words per H2, FAQ block and conclusion — plus 'Max exact-query mentions' at a ~1% density cap.",
+    "Read the 'Generated prompt' with the 60-character title-tag and 70-160 character meta-description limits written in, and click 'Copy prompt'.",
+  ],
   intro:
     "The SEO Article Prompt Builder turns a target search query, its search intent and a chosen heading structure into a complete AI writing prompt with the word budget and on-page limits embedded. It is built for SEO writers and content teams, and encodes the working rules of the trade: a roughly 60-character title tag, a 70-160 character meta description, exactly one H1, an answer-first opening block, and an exact-query usage cap of about 1% of the word count to stay clear of keyword stuffing.",
   useCases: [

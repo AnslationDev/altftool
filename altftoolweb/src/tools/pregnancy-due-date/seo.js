@@ -1,4 +1,12 @@
 const seo = {
+  title: "Due Date Calculator: LMP, Conception or IVF Transfer",
+  metaDescription:
+    "Due date from LMP + 280 days adjusted for cycle length, conception + 266, or IVF transfer + 261 days, with trimester dates and dated milestones.",
+  steps: [
+    "Choose a Calculation method — Last menstrual period, Conception date or IVF transfer — and enter the date in the field that method swaps in.",
+    "For LMP set Average cycle length (days), accepted from 21 to 40; for IVF pick Day-3 embryo or Day-5 embryo. The panel prints the Formula it is applying underneath.",
+    "Read Estimated due date with Gestational age today, Trimester and Days remaining, plus the dated trimester spans and milestones including the Anatomy scan window and Full term, then press Copy summary.",
+  ],
   intro:
     "The Pregnancy Due Date Calculator estimates an expected delivery date three ways — Naegele's rule of LMP + 280 days adjusted for cycle length, conception date + 266 days, or an IVF transfer date + 261 days for a day-5 embryo (263 for day-3) — and then works back to gestational age, trimester dates and milestone windows. It is for anyone who has just found out they are pregnant, or who conceived through IVF and knows the calculator on most sites assumes a 28-day cycle they do not have. All three routes are normalised to the same 40-week timeline, so the week-by-week output is consistent whichever input you started from.",
   useCases: [

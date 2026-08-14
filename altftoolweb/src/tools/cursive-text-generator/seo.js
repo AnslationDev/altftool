@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cursive Text Generator: Real Unicode Script Letters",
+  metaDescription:
+    "Turns a-z into Unicode Mathematical Script from U+1D49C and U+1D4B6, filling the eleven gap letters so nothing pastes as a blank box. Digits stay plain.",
   intro:
     "The Cursive Text Generator rewrites your letters as Unicode Mathematical Script characters — the 𝒜–𝒵 and 𝒶–𝓏 range starting at code points U+1D49C and U+1D4B6 — so the result is real text you can paste anywhere rather than an image or an installed font. Eleven letters that Unicode placed in the older Letterlike Symbols block instead (ℬ ℰ ℱ ℋ ℐ ℒ ℳ ℛ ℯ ℊ ℴ) are substituted automatically, which is the step most converters get wrong and leave as blanks. Digits, spaces and punctuation pass through unchanged.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "URL Regex Patterns for Links, Domains and IPv4",
+  metaDescription:
+    "Five copy-ready regex patterns: http(s) URLs, RFC 3986 URIs, RFC 1035 domains, website fields, IPv4 hosts. Live tester plus each pattern's false accepts.",
+  steps: [
+    "Pick one of the five patterns from the Pattern dropdown: http(s) URL, full form; Any scheme URI (RFC 3986); Domain name (strict, RFC 1035 limits); Website field (protocol optional); or IPv4 host (range-checked) with port.",
+    "Type a value into the 'Test a URL or domain' field (pre-filled with https://example.com/path?q=1) and the Test result reads Match or No match as you type, above the Scope and Pattern length rows.",
+    "Press 'Copy regex' to take the pattern as /source/flags, and read 'Known limitations of this pattern' for the documented false accepts and false rejects before you ship it.",
+  ],
   intro:
     "This library collects copy-ready regular expressions for URLs and domains: full http(s) links with port, query and fragment parts, any-scheme URIs per RFC 3986, strict bare domains enforcing RFC 1035's 63-character label and 253-character name limits, protocol-optional website form fields, and range-checked IPv4 hosts. Each pattern has a live tester plus a frank list of what it accepts wrongly and rejects wrongly, so developers can choose the right trade-off instead of trusting a random Stack Overflow answer.",
   useCases: [

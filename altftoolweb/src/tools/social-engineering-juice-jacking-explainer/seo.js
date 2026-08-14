@@ -1,4 +1,10 @@
 const seo = {
+  title: "Juice Jacking Risk: Does a USB Data Path Exist?",
+  steps: [
+    "Answer what you are plugging into, which cable, whether the phone stays locked, and how current the operating system is.",
+    "Tick anything else true of the phone, such as USB debugging enabled, rooted or jailbroken, or tapping Trust without reading it.",
+    "Read the relative exposure index out of 100 with its band, the weighting behind it, and the What actually closes it list.",
+  ],
   intro:
     "Juice jacking is data theft or malware delivery over a USB charging connection, and it can only happen when a USB data path exists between your phone and something acting as a host. This explainer takes your power source, cable, lock state, OS currency and a few settings, then returns a relative exposure index and — more usefully — tells you whether a data path exists at all. Charging from your own adapter, your own power bank, a charge-only cable or a data blocker scores zero because the data lines are simply not connected, and the tool says plainly that public advisories exist while documented victim cases remain scarce.",
   useCases: [

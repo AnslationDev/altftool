@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Visa Rejection Reasons and How to Reapply",
+  metaDescription:
+    "ICA publishes no reason and no appeal. Work through form and photo compliance, local contact, funds, purpose, ties and record, then score what you fixed.",
+  steps: [
+    "Paste the wording from your refusal notice into the optional box; the matching runs on the page and offers the Closest matching grounds with a percentage next to each.",
+    "Under \"Which reason was ticked on your notice?\" tick every ground that applies — more than one is common — then work through the \"Fix this before you reapply\" checklist that appears under each ground.",
+    "Reapplication readiness shows a percentage and how many fixes are ticked off, with rows for Grounds selected, How serious, Review or appeal route, Before you reapply and Fixes outstanding; Copy result exports the explanation and the checklist.",
+  ],
   intro:
     "Singapore's Immigration & Checkpoints Authority does not tell you why an entry visa application was unsuccessful, so this explainer works backwards from the requirements the application is actually assessed against. It covers Form 14A and photograph compliance, the local contact or authorised agent who submits it, financial capacity, purpose of visit, ties to your country of residence and any adverse immigration record - and gives you a scored checklist for each. The grant of a visa is a discretionary decision of the Controller of Immigration under the Immigration Act 1959, with no appeal and no published reasons.",
   useCases: [

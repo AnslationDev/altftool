@@ -1,4 +1,12 @@
 const seo = {
+  title: "Malaysia eVISA Cover Letter and 30-Day Pass Dates",
+  metaDescription:
+    "Write the eVISA cover letter and check three dates: the 3-month visa validity, the 30-day social visit pass, and the Arrival Card window.",
+  steps: [
+    "Under 'Applicant' fill 'Full name (as in passport)', 'Nationality', 'Passport number' and 'Passport expiry date'.",
+    "Under 'Visa and trip' add 'Visa issue date (if known)', 'Arrival in Malaysia', 'Departure from Malaysia', 'Airport or checkpoint of entry' and 'Itinerary (one line per leg)'.",
+    "Read 'Length of stay' with the 'Digital Arrival Card window' dates, then press 'Copy letter'.",
+  ],
   intro:
     "The Malaysia Visa Cover Letter Builder produces the covering letter for an eVISA application and works out the three dates that decide whether the trip goes smoothly. A single-entry eVISA is valid for three months from issue, each entry permits a social visit stay of up to 30 days, and the free Malaysia Digital Arrival Card can only be submitted in the three days before arrival counting the arrival day itself. The tool applies all three to your dates, plus the six-month passport rule, and writes the letter around your purpose, itinerary and funding.",
   useCases: [

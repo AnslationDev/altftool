@@ -1,4 +1,12 @@
 const seo = {
+  title: "Health Records App Permission and Sharing Audit",
+  metaDescription:
+    "Score a health, ABHA or lab-report app across 16 permissions and settings: Health Connect reads, background reads, cloud backup, sharing and analytics.",
+  steps: [
+    "Type the app into 'App name (for the report)', then choose Checklist or 'Paste list' — the paste box takes the Play Store permission list, one permission per line.",
+    "Tick what the app actually holds across the 16 items, from 'Health Connect / HealthKit read' and 'Read health data in the background' to 'Cloud backup of records', 'Share records with partner clinics by default' and 'Biometric app lock', or start from the 'Typical records app', 'Everything granted' or 'Clear all' chips.",
+    "Read the Privacy score out of 100 with its exposure band and granted count, work through 'Revoke these first', 'Worth reviewing' and 'Justified — but know what they see', then press 'Copy result'.",
+  ],
   intro:
     "The Health Records App Permission Audit scores a personal health record, ABHA or lab-report app across sixteen permissions and privacy settings, because the biggest leak in this category is rarely a runtime prompt — it is a sharing toggle that defaults to on or an analytics SDK that reports screen names like 'HIV test result'. Health Connect and HealthKit access, background reads, cloud backup and default sharing with partner clinics are each weighted by sensitivity, and a biometric app lock is scored as a core control because it reduces risk rather than adding to it.",
   useCases: [

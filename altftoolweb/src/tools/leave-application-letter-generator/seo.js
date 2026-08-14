@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leave Application Letter Generator, School or Work",
+  metaDescription:
+    "Builds the receiver block, subject line, salutation and close for school, college or office leave, days counted inclusively, with a format checklist.",
+  steps: [
+    "Pick Applying to — School, College or university, or Office or workplace — and a Leave type such as Sick leave, Earned / privilege leave or Bereavement, then fill Your full name, the class or designation field and the institution or employer name.",
+    "Set First day of leave, Last day of leave and Date on the letter; tick Count working days only to exclude weekends, and Mention attached document if a certificate goes with the application.",
+    "Days of leave requested gives the inclusive count beside Calendar days in the period, Working days (Mon-Fri) and the generated Subject line; Your letter holds the finished draft for Copy letter, and Format checklist marks off which parts of the format are still missing.",
+  ],
   intro:
     "Leave Application Letter Generator assembles a leave application in the standard formal format — receiver's block, date, subject line, salutation, body, complimentary close and signature block — for a school, college or workplace. It counts the leave period inclusively, so 3 to 5 August is three days, and adapts the salutation and close to the recipient: a student writing to a Principal signs off 'Yours obediently', while an employee writing to a named manager uses 'Yours sincerely'. A checklist shows which parts of the format are present.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gym & Fitness Font Pairing + Headline Fit Calculator",
+  metaDescription:
+    "Six condensed display and body pairs - Oswald, Anton, Bebas Neue, Teko - with the largest single-line px size for your headline at any container width.",
+  steps: [
+    "Choose a Font pair — Oswald + Roboto, Anton + Inter, Barlow Condensed + Barlow, Teko + Rubik, Bebas Neue + Open Sans or Archivo Black + Archivo — and type your Headline.",
+    "Pick a Container (Phone hero 375 px, Story / Reel, Square post, Desktop hero 1440 px or Gym banner 3000 px) or override it with 'Custom width (px, optional)', set 'Body size (px)' and toggle 'Uppercase headline'.",
+    "Read 'Largest single-line size' in px with the character count and container width underneath, plus 'Average character width' in em, 'Exact fit before rounding' and the remaining slack. 'Same headline, every placement' repeats the fit for every container, and the CSS block copies alongside the Google Fonts URL.",
+  ],
   intro:
     "Fitness Brand Font Pairing combines condensed display faces with readable body fonts for gyms, sports teams and supplement brands, then solves the fitting problem those faces exist for: given a headline and a container width, what is the largest size that still holds one line. The calculation uses each family's average character advance — around 0.42em for Barlow Condensed and Bebas Neue, 0.44em for Oswald, 0.62em for Archivo Black — so a twelve-character headline in Oswald across a 343 px phone hero lands at 64 px.",
   useCases: [

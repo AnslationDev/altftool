@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ryanair Excess Baggage Calculator: Per-Flight Fees",
+  metaDescription:
+    "Totals Ryanair bag fees per passenger per one-way flight from your own booking's prices, and ranks every 10 kg/20 kg bag combo against per-kg excess.",
+  steps: [
+    "Set Passengers and 'One-way flights (a return is 2)', tick 'Priority & 2 Cabin Bags' if bought, and enter the 10 kg/20 kg bags and hold weight packed per passenger.",
+    "Fill 'Prices from your booking' — Priority, each check-in bag size, 'Excess weight, per kg at the airport', gate-bag and airport check-in fees.",
+    "Read the trip total with the per-passenger-per-flight figure, and the 'Cheapest way to carry that weight' table ranking every legal combination of up to 3 hold bags.",
+  ],
   intro:
     "This estimator totals what Ryanair baggage actually costs by applying the two rules that catch people out: every fee is charged per passenger per one-way flight, and no allowance is ever pooled across a booking. It prices Priority & 2 Cabin Bags, 10 kg and 20 kg hold bags, per-kilogram excess weight, gate-bag fees and airport check-in from the figures your own booking quotes, then enumerates every legal combination of up to three hold bags to show whether a second bag beats paying for the overweight.",
   useCases: [

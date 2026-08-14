@@ -1,4 +1,7 @@
 const seo = {
+  title: "VO2 Max Estimator: Cooper, Rockport and Step Test",
+  metaDescription:
+    "VO2 max in ml/kg/min from a Cooper 12-minute run, 1.5-mile run, Rockport walk, Queens College step test or resting heart rate, rated on Cooper norms.",
   intro:
     "The VO2 Max Estimator converts a simple field test into an estimate of your maximal oxygen uptake in ml/kg/min, then places it on the Cooper Institute norm table for your age and sex. It implements five published equations — the Cooper 12-minute run, the 1.5-mile run, the Rockport 1-mile walk (Kline 1987), the Queens College step test (McArdle 1972) and the resting heart-rate method (Uth 2004) — so you can pick whichever test you can actually do. It is for runners, cyclists and anyone tracking aerobic fitness without lab access.",
   useCases: [

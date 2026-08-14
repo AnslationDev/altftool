@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leave Encashment Tax Calculator: ₹25 Lakh Exemption",
+  metaDescription:
+    "Runs the section 10(10AA)(ii) four-way test: received, ₹25 lakh lifetime cap, 10 months’ salary, 30 days a year, and shows what stays taxable.",
+  steps: [
+    "Set Employer type to \"Private / non-government employer\" or \"Central or State government employee\", and pick retirement/resignation or encashment while still in service.",
+    "Enter Average monthly salary, last 10 months (₹), Completed years of service, Leave earned per year (days), leave already taken, and Leave encashment received (₹).",
+    "Read \"Exempt under section 10(10AA)\", the Taxable as salary figure and the four-limb Exemption test, then press Copy result.",
+  ],
   "intro": "Leave Encashment Tax Calculator runs the section 10(10AA)(ii) four-way test that decides how much of a private-sector retirement payout is tax free: the amount actually received, the Rs 25 lakh lifetime ceiling that applies from 1 April 2023, ten months of average salary from the last ten months, and the cash value of unavailed leave counted at a maximum of 30 days per completed year. It shows each limb, the binding one, and the balance that is added to salary income. Government retirees and encashment taken while still in service are handled with their own rules.",
   "useCases": [
     "Work out the tax on a leave encashment cheque in your full and final settlement before you retire or resign.",

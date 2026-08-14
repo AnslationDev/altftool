@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creator Contract Rights Timeline: Usage & Exclusivity",
+  metaDescription:
+    "Turn a brand deal's durations into three dates: usage end, exclusivity end and the renewal notice deadline, plus a five-clause scan of the wording.",
+  steps: [
+    "Paste the rights wording into \"Contract rights and dates\" and set the \"Posting / effective date\".",
+    "Enter \"Usage duration (days)\", \"Exclusivity duration (days)\" and \"Renewal notice before expiry (days)\" — the defaults are 90, 60 and 15.",
+    "Read the Usage end, Exclusivity end and Renewal review dates, plus the Clause signal / Mentioned table that marks Territory or Edits as \"Not found\".",
+  ],
   intro:
     "This tool turns the durations buried in a brand deal into three dates: usage end = posting date + usage days, exclusivity end = posting date + exclusivity days, and the renewal review date = usage end minus the notice period. Paste the rights wording and it also scans it for five clause signals — paid usage or whitelisting, exclusivity, renewal, territory, and edits or derivatives — and tells you which are mentioned and which are missing. It is a scheduling aid for creators juggling several deals, not contract interpretation.",
   useCases: [

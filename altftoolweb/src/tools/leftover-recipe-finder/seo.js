@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leftover Recipe Finder: 100 Dishes From Your Fridge",
+  metaDescription:
+    "Tick what is left from 80 ingredients and see which of 100 recipes you can cook now, plus the ones you are one item away from. Salt and oil assumed.",
+  steps: [
+    "Tick what you actually have from the 80 ingredients grouped as Grains & breads, Dals & beans, Veggies & aromatics, Dairy, paneer & eggs, Sauces & condiments and Meat & seafood, or start from a preset such as Typical Indian fridge, Hostel / bachelor pad or Sunday leftovers.",
+    "Narrow the 100 recipes with the Veg only, Under 15 min and No stove filters, or press \"Surprise me\" to spotlight one dish you can already cook.",
+    "Read \"Cook it now\" for full matches and \"One ingredient away\" for the rest, each card giving the cuisine, cooking time in minutes and a written method; under \"You still need\", tap the missing item to add it if you actually have it.",
+  ],
   intro:
     "The Leftover Ingredients Recipe Finder matches what is actually in your fridge against 100 recipes and splits the results into two lists: dishes you can cook right now with nothing missing, and dishes you are exactly one ingredient away from. You tick items from 80 common ingredients grouped into grains, dals and beans, vegetables and aromatics, dairy and eggs, sauces, and meat and seafood; basic staples — salt, oil, water, turmeric, chilli powder, cumin and mustard seeds — are assumed and left out of the matching. Each result carries its cuisine, cooking time in minutes, whether it needs a stove, and a written method with quantities.",
   useCases: [

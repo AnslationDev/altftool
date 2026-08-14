@@ -1,4 +1,12 @@
 const seo = {
+  title: "CUET Countdown: Days Left and Per-Subject Readiness",
+  metaDescription:
+    "Days to CUET plus a readiness bar per subject from syllabus coverage and forgetting-curve decay, with marks projected at +5 and -1.",
+  steps: [
+    "Set Today's date, the CUET exam date and Questions on each subject paper, then enter Units in the syllabus and Units studied per subject.",
+    "Set Last revised on for each paper or press 'Revised today', and tune Memory stability (days) and the Retention floor.",
+    "Read the days left, Average readiness, Projected total marks and each subject's revision due date on the readiness bars.",
+  ],
   intro:
     "This CUET countdown scores each of your subject papers on readiness rather than coverage alone: readiness is the fraction of the syllabus you have studied multiplied by an Ebbinghaus retention term, e raised to minus days-since-revision divided by memory stability. A chapter list finished in March but untouched since is therefore shown as weak, and the tool tells you the date each subject's revision falls due. It also projects marks under the CUET scheme of +5 for a correct answer and -1 for a wrong one, which is why a badly retained paper can project a negative score.",
   useCases: [

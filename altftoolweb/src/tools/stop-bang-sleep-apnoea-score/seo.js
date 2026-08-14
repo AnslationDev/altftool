@@ -1,4 +1,12 @@
 const seo = {
+  title: "STOP-BANG Score Calculator: Sleep Apnoea Risk 0-8",
+  metaDescription:
+    "Answer the four STOP questions and enter weight, height, age, neck size and sex; BMI is worked out for you and the score bands 0-2, 3-4 and 5-8.",
+  steps: [
+    "Tick the four S · T · O · P items — loud snoring, daytime tiredness, observed pauses in breathing and high blood pressure.",
+    "Fill the B · A · N · G half: Weight (kg), Height (cm), Age (years), Neck circumference (cm) measured at the Adam's apple, and Sex.",
+    "Read the STOP-BANG score out of 8 with its risk band, the STOP subscore, your BMI and whether the refined high-risk criteria are met, then press Copy result.",
+  ],
   intro:
     "The STOP-BANG questionnaire scores eight risk factors for obstructive sleep apnoea — loud Snoring, daytime Tiredness, Observed pauses in breathing, high blood Pressure, BMI over 35, Age over 50, Neck circumference over 40 cm and male Gender — one point each, for a total out of 8. It comes from Chung and colleagues (Anesthesiology, 2008) and is widely used in pre-operative assessment because it is quick and deliberately sensitive. A total of 0-2 is low risk, 3-4 intermediate and 5-8 high risk of moderate-to-severe apnoea.",
   useCases: [

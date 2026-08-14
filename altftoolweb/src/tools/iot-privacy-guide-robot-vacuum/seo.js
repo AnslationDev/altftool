@@ -1,4 +1,12 @@
 const seo = {
+  title: "Robot Vacuum Privacy: Map, Camera and Cloud Audit",
+  metaDescription:
+    "Tick 15 weighted controls and the cloud toggles you leave on, then see which of seven data types — floor plan, camera frames, audio — leave your home.",
+  steps: [
+    "Under 'What leaves your home right now' tick the cloud features you have switched on — cloud maps, obstacle photo upload, remote live view, linked assistants, app location permission.",
+    "Work through the 15 weighted controls grouped as Account and cloud, Mapping data, Cameras and sensors, and Network and lifecycle, ticking each control you have applied.",
+    "Read the Privacy setup score with its band, held at 69% while a critical control is open, and the Household data footprint marking each data type 'Leaving the home' or 'Stays local'; press Copy result.",
+  ],
   intro:
     "This guide scores a robot vacuum setup against fifteen weighted controls covering the app account, saved maps, camera and microphone features and end-of-life disposal, then models which categories of household data — floor plan, camera frames, audio, room labels, occupancy pattern, location and identity — leave the house because of the cloud features you leave switched on. The footprint model attributes each data type to the specific toggle driving it, so you can see which single setting is carrying the risk. It is for anyone whose vacuum has built a LIDAR map of their home and who wants to know where that map lives.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Escalation Calculator for 11-Month and Yearly Steps",
+  metaDescription:
+    "Compounds each rent step instead of adding it: rent at every step, total outgo, average monthly rent and the true annual rate for an 11-month cycle.",
+  steps: [
+    "Enter the Base monthly rent (INR), the Escalation at each step (%), how often it applies under 'Escalate every (months)' and the Lease term (months) — or tap a preset such as '5% every 11 months' or '8% yearly'.",
+    "Each step compounds as base x (1 + rate) raised to the number of steps, so three 5% steps land 15.76% above the base rather than 15%, and an 11-month cycle is converted to its equivalent yearly rate.",
+    "Read the Total rent over the lease, rent in the final month, extra paid because of escalation, Effective annual escalation and the 'Step-by-step schedule' table, then press 'Copy result'.",
+  ],
   intro:
     "This calculator projects what a lease actually costs when rent escalates, applying the compounding formula rent = base x (1 + escalation) ^ number of steps rather than adding the percentage to the base each time. Give it the starting rent, the escalation percentage, how often it applies and the lease length, and it returns the rent for every step, the total outgo, the average monthly rent and the true annualised escalation rate. It is useful to tenants comparing offers and to landlords pricing a multi-year lease.",
   useCases: [

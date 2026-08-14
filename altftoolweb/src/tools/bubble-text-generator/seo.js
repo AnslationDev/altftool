@@ -1,4 +1,7 @@
 const seo = {
+  title: "Bubble Text Generator — Circled Letters to Copy & Paste",
+  metaDescription:
+    "Turn letters and digits into Unicode circled characters — hello becomes ⓗⓔⓛⓛⓞ — real text that pastes into bios, usernames and chats, not an image.",
   intro:
     "The Bubble Text Generator maps ordinary letters and digits onto Unicode's Enclosed Alphanumerics characters — Ⓐ at U+24B6, ⓐ at U+24D0, ① at U+2460 — so \"hello\" becomes ⓗⓔⓛⓛⓞ as real text you can copy and paste anywhere. Type or paste in any text and every letter and digit is converted to its circled equivalent; punctuation and other symbols pass through unchanged. Because the output is characters and not an image, it survives a paste into a bio, username or chat message.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dough Hydration Calculator with Baker's Percentages",
+  metaDescription:
+    "Flour is 100%; everything else is a share of it. Sourdough starter is split into its own flour and water, so true hydration is not overstated.",
+  steps: [
+    "Choose Instant yeast or Sourdough starter, then enter Flour weight in grams — water, salt and the rest follow as baker's percentages or grams.",
+    "For sourdough, set Starter hydration so the levain's flour and water are counted, or move the Target hydration solver (50-100%) and hit Apply to recipe.",
+    "Read the true hydration figure with its band label and the gram breakdown table, then use Copy formula or download dough-hydration-formula.txt.",
+  ],
   intro:
     "The Dough Hydration Calculator works in baker's percentages, where flour is always 100% and every other ingredient is expressed as a share of the flour weight, then reports true hydration as total water divided by total flour times 100. For sourdough it splits your starter into its flour and water halves using the starter's own hydration, so a 20% starter at 100% hydration correctly contributes half its weight to each side of the ratio. Bakers get an exact gram breakdown, a hydration band telling them how the dough will feel, and a solver that works out how much water to add to hit a target.",
   useCases: [

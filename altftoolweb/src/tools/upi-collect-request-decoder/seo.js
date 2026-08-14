@@ -1,4 +1,10 @@
 const seo = {
+  title: "UPI Collect Request Decoder: Read It Before Paying",
+  steps: [
+    "Paste the upi:// URI or QR text into the \"UPI URI or QR text\" box, or press Example to load a sample payload.",
+    "Read the Decoded request panel: the action label, Payee, Payee UPI ID and Stated amount, plus warnings for duplicate or invisible-Unicode parameters.",
+    "Press Copy report for the full field list, or Clear to wipe the payload — decoding happens in this tab with no network lookup.",
+  ],
   intro:
     "The UPI Collect Request Decoder parses a pasted upi:// URI in your browser and shows you exactly what it would do — whether it is a collect request that debits you, a pay intent that credits someone else, or a mandate that authorises recurring debits — along with every parameter it carries. It reads the 17 standard UPI fields (pa, pn, am, mam, cu, tn, tr, tid, mc, mid, msid, mtid, mode, orgid, purpose, url, sign), flags anything unrecognised, and prints a plain-language warning for each risk it finds. It is for anyone who has been sent a payment link or QR text and wants to read it before opening a payment app.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Amount in Words for Cheques: Indian or International",
+  metaDescription:
+    "Spells a money amount for a cheque, invoice or agreement in lakh-crore or million-billion, with paise or cents worded separately. Eight currencies.",
+  steps: [
+    "Type the figure into Amount, pick the Currency, and set the numbering system to \"Indian — lakh, crore\" or \"International — million, billion\".",
+    "Switch on the house-style toggles you need: End with \"Only\", Minor units as 50/100, Hyphenate (Twenty-One) and British \"and\".",
+    "Press Copy result for the Cheque courtesy line, or take the Invoice / receipt wording, Agreement style (figures + words) or Whole-number words only from the list below.",
+  ],
   intro:
     "This converter turns a money figure into the exact wording used on cheques, invoices and agreements, in either the Indian numbering system (2-2-3 grouping with lakh at 10^5 and crore at 10^7) or the international short scale (3-digit grouping with million at 10^6 and billion at 10^9). It covers eight currencies and spells the minor unit — paise, cents, pence, fils — separately out of one hundred, matching the ISO 4217 minor-unit rule. Accountants, cashiers and contract drafters get four ready wordings at once: cheque line, invoice line, agreement style with figures alongside words, and plain number words.",
   useCases: [

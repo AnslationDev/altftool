@@ -1,4 +1,7 @@
 const seo = {
+  title: "Reel BGM Finder: Match Your Clip to a Mood and Track",
+  metaDescription:
+    "Describe your reel and get up to five tracks across twelve mood categories, each with its vibe and typical footage — a curated list, not a live chart.",
   intro:
     "Describe the reel you are editing — \"gym progress clip\", \"aesthetic travel montage\", \"rainy day emotional\" — and this finder maps that phrasing onto one of twelve short-form mood categories and returns up to five matching background tracks, each with its vibe and the kind of footage it is typically cut to. Matching runs in two tiers: your words are first mapped to a standard mood such as Motivational Workout or Relaxed Cooking, and if nothing maps, the text is searched against every track's vibe and trending-use description. It works from a curated offline list rather than a live chart, so results are instant and consistent, and every suggestion is a starting point you then locate inside your platform's own licensed audio library.",
   useCases: [

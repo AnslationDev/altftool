@@ -1,4 +1,7 @@
 const seo = {
+  title: "Blood Sugar Log: Time in Range and Estimated HbA1c",
+  metaDescription:
+    "Scores each reading against its own ADA band, fasting 80-130 and 2h post-meal under 180 mg/dL, then reports time in range and an estimated HbA1c.",
   intro:
     "The Blood Sugar Log records each glucose reading against the context it was taken in — fasting, before a meal, two hours after a meal, bedtime or random — so it is judged against the ADA target band for that moment rather than one blanket number. It then reports your time in range against the 70-180 mg/dL zone, your average per context, and an estimated HbA1c from the ADAG regression A1c% = (average mg/dL + 46.7) / 28.7 over your last 90 days. It is a record to take to your care team, not a substitute for a lab test or for medical advice.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "PPF Maturity Calculator: 15-Year Value and Extensions",
+  metaDescription:
+    "See what a PPF account matures to after 15 years at 7.1%, lump sum before 5 April or spread monthly, plus 5, 10 and 15-year extension scenarios.",
+  steps: [
+    "Enter a Yearly deposit (INR) between Rs 500 and Rs 1,50,000 and choose the Deposit pattern — 'Lump sum before 5 April' or 'Spread evenly across 12 months'.",
+    "Set the Interest rate (% p.a.), which starts at 7.1, and pick an Extension after 15 years — No extension, +5, +10 or +15 years — then choose whether to keep depositing every year or stop and let the balance earn interest.",
+    "Read the maturity value with Total deposited, Total interest earned, interest as a share of maturity and the balance at end of year 15, plus the Year-by-year growth table of Deposit / Interest / Balance, then press Copy result.",
+  ],
   "intro": "PPF Maturity Calculator shows what a Public Provident Fund account is worth at the end of its 15-year term, compounding your yearly deposits at the prevailing rate and crediting interest at the close of each financial year. You can model a lump sum paid before 5 April or deposits spread across 12 months, then extend the account in 5-year blocks either with fresh contributions or with the balance simply earning interest. It suits anyone deciding how much of the Rs 1.5 lakh annual ceiling to use and whether to extend at maturity.",
   "useCases": [
     "Check the 15-year maturity value of depositing the full Rs 1,50,000 every April versus Rs 5,000 a month.",

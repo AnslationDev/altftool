@@ -1,4 +1,12 @@
 const seo = {
+  title: "Room Paint Calculator: Litres, Cans and Total Cost",
+  metaDescription:
+    "Wall area minus doors and windows, divided by your paint's coverage and coats, into a 20/10/4/1 L can list plus paint, labour and contingency cost.",
+  steps: [
+    "Fill Length (ft), Width (ft) and Height (ft) for the room, tick Include Ceiling if it is being painted, and enter No. Doors, No. Windows, Door area each (sqft) and Window area each (sqft) so the openings are deducted from wall area.",
+    "Choose Interior Emulsion, Enamel, Distemper or Texture Finish to prefill Coverage (sqft/liter) and Price per liter, then set Wall coats, Ceiling coats, Primer coats, Wastage %, Labor Rate (₹/sqft) and Contingency %; + Add Room repeats this for each extra room.",
+    "Read Total Paintable Area, Total Paint Needed in litres, Paint Cost, Labor Amount and Total Amount, then the Shopping List (Can Sizes) in 20L, 10L, 4L and 1L cans and the Room-by-Room Area Summary table.",
+  ],
   intro:
     "The Room Paint Calculator estimates how many litres of paint a room needs by measuring wall area as 2 × (length + width) × height, subtracting every door and window opening, adding the ceiling as length × width, then dividing by your paint's coverage per litre and multiplying by the number of coats. You can add several rooms at once, set separate wall, ceiling and primer coats, add a wastage percentage, and it returns a shopping list broken into 20 L, 10 L, 4 L and 1 L cans plus a cost total of paint, labour at a rate per square foot, and a contingency percentage. It is for anyone pricing a repaint before calling a contractor or walking into a paint shop.",
   useCases: [

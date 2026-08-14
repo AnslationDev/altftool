@@ -1,4 +1,12 @@
 const seo = {
+  title: "Carpool Rotation Scheduler with Fair Turn Counting",
+  metaDescription:
+    "Each trip date goes to the eligible driver with the fewest turns so far, ties broken by seats then name, and every row is checked against the group size.",
+  steps: [
+    "Fill Members and driver availability with one line per person in the Member | can drive yes/no | seats including driver format, for example Asha | yes | 4. Seats count the driver, so anyone entered as 1 or marked no stays a passenger.",
+    "Paste one date per line into Trip dates. Each date in turn goes to the eligible driver with the fewest assignments so far, ties broken by the larger seat count and then alphabetically, so the same inputs always rebuild the same rota.",
+    "The headline reads \"4 trip(s) scheduled\" with an eligible driver(s) caption, over a table of Date, Driver, Seats, Passengers and Check that marks each row Seats fit or Capacity review when the car is smaller than the group. Copy or Download saves it as carpool-rotation-scheduler.txt.",
+  ],
   intro:
     "The Carpool Rotation Scheduler assigns a driver to each trip date by always picking the eligible person with the fewest turns so far, breaking ties by the largest vehicle and then alphabetically — so the driving load evens out across the group instead of falling on whoever volunteers most. List members as \"Name | can drive yes/no | seats including driver\" and paste one trip date per line, and you get a table of date, driver, seats, passengers and a capacity check. Only members who can drive and have more than one seat are put into the rotation.",
   useCases: [

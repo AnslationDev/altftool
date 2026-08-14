@@ -1,4 +1,7 @@
 const seo = {
+  title: "Storyboard Builder with SMPTE Timecode and Shot Timing",
+  metaDescription:
+    "Sequence shots with running SMPTE non-drop-frame timecode at 23.976-60 fps, check dialogue fits each shot at your wpm pace, export a sheet or CSV.",
   intro:
     "A storyboard builder turns an ordered list of shots — each with a size, an action line, dialogue and a duration — into a timed production sheet with running SMPTE ST 12-1 non-drop-frame timecode. It adds up total runtime in seconds and frames at your chosen frame rate, estimates how long each line of dialogue takes at a words-per-minute pace (150 wpm is the broadcast voice-over default), and flags any shot too short to hold its own dialogue. It is for directors, editors and video marketers planning a cut before anything is shot.",
   useCases: [

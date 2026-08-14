@@ -1,4 +1,12 @@
 const seo = {
+  title: "US Visa Refusal Explained: INA 214(b), 221(g) & More",
+  metaDescription:
+    "Pick the INA section on your refusal slip for what the officer decided, whether a waiver exists, and a checklist of the fixes you can score off.",
+  steps: [
+    "Paste the wording from your refusal notice if you have it; the matching runs on the page and offers the closest grounds with a percentage match.",
+    "Tick every ground that applies under Which reason was ticked on your notice? — more than one is common.",
+    "Read Reapplication readiness as a percentage with the severity, the review or appeal route and the reapply advice, plus each ground's INA citation and legal basis.",
+  ],
   intro:
     "This explainer turns the statute number on a US visa refusal slip into plain English and a checklist of what to fix. Every consular refusal is made under a named section of the Immigration and Nationality Act - most often INA 214(b) for nonimmigrant intent or INA 221(g) for a document or administrative hold - and the section decides whether you are looking at a one-week fix, a discretionary judgement or a lifetime inadmissibility. Select the section printed on your slip to see what the officer decided, whether a waiver exists, and what evidence changes the answer.",
   useCases: [

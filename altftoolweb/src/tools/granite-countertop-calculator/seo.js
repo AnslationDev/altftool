@@ -1,4 +1,12 @@
 const seo = {
+  title: "Granite Countertop Calculator: Sq Ft, Running Ft, Cost",
+  metaDescription:
+    "Platform, backsplash and facia area plus wastage, converted to running feet at 2 ft depth, with edge profile and sink/hob cutouts billed separately.",
+  steps: [
+    "Enter Counter length (ft) and Counter depth (ft), then Backsplash length, Backsplash height (in), Front facia height (in) and a Wastage allowance (%).",
+    "Pick an edge Profile with its Exposed edge length (ft) and Edge charge (per running ft), then set the granite rate and the number of sink and hob cutouts.",
+    "Read Total cost alongside Area to order, Platform running feet and Equivalent running feet at 2 ft depth, then press Copy result.",
+  ],
   intro:
     "This calculator turns a kitchen platform's dimensions into granite square feet, running feet and a full cost, keeping the stone, the edge profile and the cutouts as separate line items the way a fabricator bills them. Area is the platform (length x depth) plus the backsplash (length x height) plus any front facia strip, grossed up by a wastage allowance; running feet are then derived at the standard 2 ft platform depth so a per-running-foot quote can be compared with a per-square-foot one. It suits homeowners checking a kitchen quote and fabricators pricing a job.",
   useCases: [

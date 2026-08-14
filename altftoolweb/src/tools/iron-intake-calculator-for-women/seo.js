@@ -1,4 +1,12 @@
 const seo = {
+  title: "Iron Intake Calculator for Women: mg/Day Target",
+  metaDescription:
+    "Daily iron target in mg from age, life stage, diet and period heaviness — IOM RDAs, the 1.8x vegetarian factor and the 45 mg upper limit.",
+  steps: [
+    "Enter your Age (years) and pick a Life stage: I have periods, No periods (menopause or absent), Pregnant, or Breastfeeding.",
+    "Set Diet to Includes meat or fish or to Vegetarian or vegan, which applies the 1.8x factor, then tap a period-heaviness card or type millilitres per cycle.",
+    "Read the Daily iron target in mg with its life-stage band and the tolerable upper limit for your age, then press Copy result for the breakdown.",
+  ],
   intro:
     "This calculator gives a daily iron target in milligrams for women and girls, starting from the Institute of Medicine dietary reference intakes and then adjusting for the two things that change the number most: a vegetarian diet, and how heavy your periods are. The vegetarian adjustment is the IOM's own 1.8x factor, which exists because non-heme iron from plants is absorbed at roughly 10% against about 18% from a mixed diet. Extra iron for heavy bleeding is worked out from the iron content of blood — about 0.5 mg per millilitre — rather than a rule of thumb.",
   useCases: [

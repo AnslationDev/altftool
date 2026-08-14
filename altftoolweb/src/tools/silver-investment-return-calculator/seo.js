@@ -1,4 +1,12 @@
 const seo = {
+  title: "Silver Investment Return Calculator: GST & Buyback",
+  metaDescription:
+    "Prices both ends of a silver trade - 3% GST, premium and buyback discount - to show real profit, annualised return and break-even price per kg.",
+  steps: [
+    "Enter the 'Buying price (₹ per kg)', 'Selling price (₹ per kg)', 'Quantity (kg)' and the purchase and sale dates that set the holding period.",
+    "Add the frictions: 'Making charge or premium (%)', 'GST on the purchase (%)' (default 3), 'Buyback deduction on sale (%)' and 'Tax on the gain (%)'.",
+    "Read 'Profit after costs and tax' with absolute and annualised return, how much of the quote's move went to costs, and the break-even selling price per kg; press 'Copy result'.",
+  ],
   intro:
     "Silver is bought above the quoted price and sold below it, so the price move is never the return. This calculator builds the real number from both ends: metal value plus any making charge or premium plus 3% GST plus buying costs on one side, and the sale value less the buyback discount, selling costs and tax on the other. It reports the profit in rupees, the absolute and annualised return on the money actually invested, and the selling price per kilogram at which you merely break even.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bargaining Simulator: Opening Counter and Walk-Away",
+  metaDescription:
+    "Sets your opening counter at 2 x target minus the asking price so the midpoint is your target, then plays the concessions out round by round.",
+  steps: [
+    "Pick the kind of seller - tourist-strip souvenir stall, local produce market, antiques or an unmetered taxi fare - choose a currency, and enter the seller's first quote.",
+    "Enter what you think a local pays, the premium you accept paying, the seller's assumed floor above the local price and how far above target you will still pay.",
+    "Read the Open at counter, your target, the walk-away price and the round-by-round ladder of offers over up to 8 rounds, then press Copy plan.",
+  ],
   intro:
     "This simulator works out the three numbers a haggle actually turns on — your opening counter, your target and your walk-away — and then plays the concessions out round by round. The opening counter uses mirrored anchoring: because splitting the difference is the default ending, the counter is placed so the midpoint of the two anchors is your target, which is counter = 2 × target − asking. Both sides then concede a shrinking share of the remaining gap, the pattern that signals an approaching limit, until the distance is small enough that somebody proposes meeting in the middle.",
   useCases: [

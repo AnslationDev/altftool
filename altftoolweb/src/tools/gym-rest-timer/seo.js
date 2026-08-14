@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gym Rest Timer: Per-Exercise Rests That Auto-Advance",
+  metaDescription:
+    "Give every exercise its own rest countdown — presets from 2-5 min strength to 30 s endurance — and the timer chains work and rest through the session.",
+  steps: [
+    "Build the session: set each exercise's name, Sets and 'Rest between sets (seconds)' or tap a preset from 'Power / max strength' (2–5 min) to 'Muscular endurance' (≤ 30 s), and press 'Add an exercise' for more.",
+    "Press Start — the countdown runs each working set and rest in turn with a sound cue at every change, and Skip jumps to the next interval.",
+    "Watch the 'Sets completed' and 'Time left in the session' rows, then press 'Copy result' for the session plan or Restart to run it again.",
+  ],
   intro:
     "This rest timer holds a different countdown for each exercise in a session and advances through work and rest intervals automatically, so you are not resetting a stopwatch between every set. The preset rests follow standard resistance-training guidance — roughly 2–5 minutes for maximal strength and power work, 30–90 seconds for hypertrophy, and 30 seconds or less for muscular endurance. It also shows how long the whole session will take and how that time splits between working and resting.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spin the Bottle Online - Random Name Picker for Groups",
+  metaDescription:
+    "Add or paste player names, spin one of five bottle designs, and land on a random name - equal slices, with the last 20 picks kept with timestamps.",
+  steps: [
+    "Type a name or paste a comma/newline-separated list into \"Add name or paste list...\" - at least 2 players, and repeated names are rejected.",
+    "Pick one of five \"Bottle Design\" options (Classic, Gold, Rose, Purple, Cyan) and optionally tick \"Sound effects\", which start off.",
+    "Press \"Spin the Bottle\"; after a 2-3.5 second spin the winner is announced and added to the History list of the last 20 picks with timestamps.",
+  ],
   intro:
     "Spin the Bottle puts your group's names around a circle and spins a bottle that lands on one of them at random, using a fresh random angle every spin so each player's slice has an equal chance. Add players one at a time or paste a whole list, pick one of five bottle looks, and spin — the result is announced on screen and the last 20 picks are kept with timestamps. It works as a party game and equally as a neutral way to pick who goes first, who answers next, or whose turn it is to fetch the drinks.",
   useCases: [

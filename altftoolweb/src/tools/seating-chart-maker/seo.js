@@ -1,4 +1,12 @@
 const seo = {
+  title: "Seating Chart Maker: Table Count & Guest Assignments",
+  metaDescription:
+    "Paste a guest list and get seats per table from table size at 22 in per cover, tables needed, per-table assignments and an NFPA room check.",
+  steps: [
+    "Paste names into 'Guest list — one per line, optional group after a comma'; the counter under the box reports how many guests were read.",
+    "Pick an 'Event type (sets the defaults)' such as Wedding or Conference, a 'Table type' (Round 48, 60 or 72 inch, Rectangular 6 ft or 8 ft, or 'Classroom row, 6 ft desk (one side only)'), a 'Space per guest' allowance of 20, 22 or 24 in, and enter 'Room length (ft)' and 'Room width (ft)'.",
+    "Read 'Tables needed' with 'Seats per table', 'How that is worked out', 'Table pitch (centre to centre)' and 'Room occupant load' at 15 sq ft each, scan the 'Table assignments' cards, then press 'Copy plan'.",
+  ],
   intro:
     "This seating chart maker turns a guest list into a table plan by calculating capacity from linear table edge rather than guesswork: seats = floor(perimeter ÷ space per guest), using the standard banquet allowance of 22 inches (56 cm) per cover. It then packs guests onto tables largest-group-first so parties stay together, and checks the room against the NFPA 101 occupant-load factor of 15 sq ft per person for assembly use with tables and chairs. It suits wedding planners, event managers and teachers laying out a room.",
   useCases: [

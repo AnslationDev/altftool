@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Emergency Medical Card with Local Phrases",
+  metaDescription:
+    "Build a printable wallet card with blood group, allergies and medication, plus 41 countries' emergency numbers and ten phrases in six languages.",
+  steps: [
+    "Under Trip, pick \"Country you are visiting\" and \"Language for the phrases\" — Hindi, Spanish, French, German, Italian or Japanese.",
+    "Under Medical details, fill Name on the card, Blood group, Allergies, Conditions, \"Regular medication with dose\" and the emergency contact name and number.",
+    "\"Emergency number to dial\" shows the country's number, \"Phrases on the card\" lists the phrases with romanisation, and \"Printable card text\" holds the card to print or copy before you close the tab.",
+  ],
   intro:
     "An emergency medical card is a single printed sheet carrying your blood group, allergies, conditions, regular medication and emergency contact, so a paramedic or stranger can act while you cannot speak. This builder adds two travel-specific layers: the published emergency service numbers for the country you are visiting, and ten critical phrases — I need a doctor, please call an ambulance, I cannot breathe — in Hindi, Spanish, French, German, Italian or Japanese with romanisation. Everything stays in your browser; nothing is uploaded.",
   useCases: [

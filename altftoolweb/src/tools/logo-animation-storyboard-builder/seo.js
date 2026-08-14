@@ -1,4 +1,12 @@
 const seo = {
+  title: "Logo Sting Storyboard: Frame-Accurate Beat Timings",
+  metaDescription:
+    "Split a logo sting into weighted beats and get whole-frame in and out points, SMPTE timecodes and a cubic-bezier easing curve for each one.",
+  steps: [
+    "Enter Total sting length (ms) and pick a Frame rate, then name each beat and give it a Relative weight.",
+    "Set an Easing per beat — decelerate, accelerate or standard — and use Add a beat for another step.",
+    "Read the In and Out timecodes, the frame count per beat and any warning for beats under 100ms, then press Copy shot list.",
+  ],
   intro:
     "The Logo Animation Storyboard Builder converts a total sting length and a set of weighted beats into whole-frame in and out points, SMPTE timecodes and a CSS cubic-bezier easing curve for each step. Frames are allocated by rounding the running cumulative total rather than each beat separately, so the parts always add up to the timeline exactly with no dropped or doubled frame. It also checks each beat against the motion band that reads as movement rather than a cut - roughly 100ms at the low end and 500ms for a single element - and flags stings long enough to need a pause control under WCAG 2.1 SC 2.2.2.",
   useCases: [

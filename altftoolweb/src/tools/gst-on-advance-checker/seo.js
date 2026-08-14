@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST on Advance Received: Goods vs Services Time of Supply",
+  metaDescription:
+    "Advances for services are taxed on receipt under section 13(2); goods are not. Get the verdict, CGST/SGST or IGST split, voucher and GSTR-1 line.",
+  steps: [
+    "Enter the Advance received, then choose What is being supplied, the supplier's registration status and Nature of supply.",
+    "Set the GST rate, or tick \"Rate not determinable yet\" to apply the rule 50 fallback of 18%, and tick reverse charge or export under LUT if they apply.",
+    "Read the verdict with the CGST/SGST or IGST split, then the Documents to issue and Where it is reported lists, and press Copy result.",
+  ],
   intro:
     "Whether an advance attracts GST depends entirely on the time of supply: section 13(2) makes an advance for services taxable on the day the payment is received, while Notification No. 66/2017-Central Tax removes that liability for advances against goods for every registered person outside the composition scheme. This checker takes the receipt, the type of supply, the registration status and the nature of supply, then returns the verdict, the CGST/SGST or IGST split, the receipt voucher required under section 31(3)(d) and the exact GSTR-1 and GSTR-3B lines. It also applies the rule 50 fallbacks of 18% when the rate is unknown and inter-State treatment when the place of supply is unknown.",
   useCases: [

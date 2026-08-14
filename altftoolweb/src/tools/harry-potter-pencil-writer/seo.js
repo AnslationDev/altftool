@@ -1,4 +1,12 @@
 const seo = {
+  title: "Harry Potter Style Text Generator with PNG Export",
+  metaDescription:
+    "Type text in Cinzel Decorative, MedievalSharp or UnifrakturMaguntia, set 24-96px with an optional glow, and download a 2x PNG.",
+  steps: [
+    "Type your message in the \"Write Your Spell Here\" box and pick Cinzel, MedievalSharp or UnifrakturMaguntia from the \"Choose Your Magical Font\" dropdown.",
+    "Set \"Text Size\" with the 24-96px slider (steps of 4) and switch the \"Magical Glow Effect\" toggle on or off.",
+    "Click \"Download Image\" to save magical-text.png captured at 2x scale, or \"Copy Text\" for the plain characters.",
+  ],
   intro:
     "This tool renders whatever you type in one of three fantasy display typefaces — Cinzel Decorative for engraved-looking capitals, MedievalSharp for a quill-and-parchment look, and UnifrakturMaguntia for blackletter runes — with an optional glow behind the letters. You set the size anywhere from 24 to 96 pixels, watch the preview update live, and export the result as a PNG rendered at 2× for a crisp image. It is for making spell-style titles, invitations and captions, not for editing the text itself.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Break-Even Units Calculator with Contribution Margin",
+  metaDescription:
+    "Enter fixed costs, price and variable cost to get break-even units rounded up, plus contribution margin per unit and break-even revenue.",
   intro:
     "The Break-Even Units Calculator answers one question in three inputs: how many units you must sell to cover your costs, calculated as fixed costs ÷ (price per unit − variable cost per unit), rounded up to a whole unit. Type in your fixed costs, selling price and variable cost and it returns the unit count along with contribution margin per unit and the break-even revenue that goes with it. It is the quick version for anyone who wants the number itself rather than a full cost-volume-profit model.",
   useCases: [

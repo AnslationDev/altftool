@@ -1,4 +1,12 @@
 const seo = {
+  title: "Elliptical Heart Rate Zones Scaled to Your Console",
+  metaDescription:
+    "Five ACSM zones from age and resting pulse via Tanaka (208 - 0.7 x age) or Karvonen, each with a stride rate and a resistance level on your machine.",
+  steps: [
+    "Enter 'Age (years)' and 'Resting heart rate (bpm)', which start at 40 and 65, then 'Top resistance level on your console' — 20 unless your cross-trainer uses another scale.",
+    "Choose the 'Maximum heart rate formula' from Tanaka (208 - 0.7 x age), Fox (220 - age) or Gulati (206 - 0.88 x age), and switch between the '% of maximum HR' and '% of heart rate reserve' buttons. Typing your live pulse into 'Reading on the console right now (optional)' highlights the matching band.",
+    "The 'Steady cardio zone' gives the bpm range with the resistance numbers to hold at 50-65 strides per minute, and the table lists all five bands from 'Very light — warm-up' to 'Near maximal — sprint intervals' with heart rate, strides per minute and resistance. 'Copy result' takes the lot.",
+  ],
   intro:
     "This calculator converts your age and resting pulse into the five ACSM intensity bands for cross-trainer work, using either percentage of maximum heart rate or the Karvonen heart rate reserve method with the Tanaka estimate of maximum heart rate (208 minus 0.7 times age). Because elliptical consoles number their resistance differently on every model, it scales each band to the top level on your own machine and pairs it with a stride-rate range. Enter the reading on the console and it will tell you which zone you are actually in.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "OAuth Scope Explainer: What Each Permission Grants",
+  metaDescription:
+    "Paste a scope list or consent URL — each Google, Graph, GitHub or Slack scope expanded into read/write, reach and deletion, plus PKCE and state checks.",
+  steps: [
+    "Paste into \"Scope list or authorization URL\" — either a bare scope list or the whole authorization URL from a consent screen's address bar — or load the Google consent URL, GitHub scope list, Microsoft Graph list or Slack scope list sample.",
+    "Read \"What each scope grants\": every scope gets a Low, Medium, High or Critical level plus its Access, Reach (your account, or every account in the organisation), Data sensitivity, and whether permanent deletion is included.",
+    "Check the \"Over-collection\" list for scopes a wider one already covers, review \"The authorization request itself\" for PKCE, state and redirect_uri findings, then press \"Copy review\".",
+  ],
   intro:
     "An OAuth consent screen tells you an app wants to \"see, edit, create and delete all of your Google Drive files\" and then hides the actual scope strings behind a caret. This tool takes the other route: paste the scope list, or the whole authorization URL out of the address bar while the consent screen is open, and every scope is expanded into what it actually grants — read or write, your account only or every account in the organisation, and whether permanent deletion is included. The levels come from a published rubric over those properties, not from a score. Scopes for Google, Microsoft Graph, GitHub, Slack and standard OpenID Connect are held in a catalogue that ships with the page, so nothing is uploaded and no provider is contacted.",
   useCases: [

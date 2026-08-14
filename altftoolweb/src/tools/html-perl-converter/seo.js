@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTML to Perl CGI Converter, and Perl Back to HTML",
+  metaDescription:
+    "Wrap HTML in a printed heredoc with each {{ placeholder }} declared as a Perl scalar, or pull the heredoc back out and strip the CGI boilerplate.",
+  steps: [
+    "Choose HTML to Perl or Perl to HTML, then paste into Source code, press Upload code for a .html, .pl, .cgi or .pm file, or press Load sample.",
+    "Toggle the conversion options — Add shebang, Strict + warnings, CGI header and Placeholders to scalars going out, or Strip boilerplate and VPerl expressions coming back.",
+    "Read the converted output with its warnings about unescaped dollar signs, then Copy it or Download converted.cgi or converted.html.",
+  ],
   intro:
     "This converter moves markup between plain HTML and Perl CGI in both directions: HTML to Perl wraps your markup in a heredoc printed after a CGI header, turning every {{ placeholder }} into a declared Perl scalar, and Perl to HTML pulls the heredoc body back out, strips the shebang and use strict/CGI boilerplate, and rewrites $scalars and <%= %> VPerl tags back into {{ placeholder }} form. It is aimed at anyone maintaining legacy CGI scripts who wants to edit the markup in a normal HTML editor instead of inside quoted Perl. Logic blocks like <% if ... %> are preserved as HTML comments rather than silently dropped, so nothing disappears without a trace.",
   useCases: [

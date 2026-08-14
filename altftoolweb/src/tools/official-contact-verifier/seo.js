@@ -1,4 +1,12 @@
 const seo = {
+  title: "Official Contact Verifier: Spot Lookalike Domains",
+  metaDescription:
+    "Compares a contact from a message against your own reference and returns one of five verdicts, stripping zero-width marks and flagging xn-- punycode.",
+  steps: [
+    "Choose the Contact type — Website hostname, Complete web address, Email address, Phone number or Account handle.",
+    "Fill 'Independently obtained official reference' and 'Contact from the message', tick 'I obtained the reference independently', then press Compare locally.",
+    "Read the verdict, from 'Entered values match' through 'Related hostname, not exact' to 'Entered values differ', and use Download value-free report to save official-contact-comparison.json.",
+  ],
   intro:
     "The Official Contact Verifier compares a contact detail taken from a message against a reference you looked up independently, and returns one of five verdicts: exact match, letter-case difference, related hostname, same origin with a different address, or simply different. Before comparing it strips zero-width and bidirectional Unicode characters — the invisible marks used to disguise a lookalike address — and flags any hostname using punycode (an xn-- label), which is how homograph domains are built. It handles hostnames, full URLs, email addresses, phone numbers and account handles, entirely in your browser: a string match is evidence the two values agree, not proof that the message or its sender is genuine.",
   useCases: [

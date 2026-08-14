@@ -1,4 +1,7 @@
 const seo = {
+  title: "Sleep CSV Analyzer for Oura, Whoop and Fitbit Exports",
+  metaDescription:
+    "Paste one night per line — date, sleep minutes, efficiency, resting HR, HRV — for averages plus each night's sleep measured against your own mean.",
   intro:
     "Wearable Sleep CSV Analyzer turns exported sleep rows — date, sleep minutes, efficiency percent, resting heart rate and HRV, one night per line — into a mean for each column plus a per-night table showing how far that night's sleep sat above or below your own average in minutes. It is for people who already track with an Oura ring, a Whoop strap or a Fitbit and want the numbers compared against themselves rather than against an app's badge. The output is a personal trend summary, not a clinical reading.",
   useCases: [

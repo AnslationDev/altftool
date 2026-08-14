@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reddit Privacy Checklist: 27 Settings and Habits",
+  metaDescription:
+    "Scores 27 Reddit controls by how much identity linkage they remove, re-weights for 5 risk profiles, and caps you at 69% while a critical one is open.",
+  steps: [
+    "Answer 'Who are you locking this down for?' — Pseudonymous main account, Throwaway or second account, Posting under your real name, Subreddit moderator or Balanced — and set your Target score (%).",
+    "Tick what you have already applied across Identity linkage, What your history reveals, Who can reach you, Ads and tracking and Account security, or use Mark all applied and Clear all.",
+    "Read your weighted score with 'Remaining exposure by area' and 'Shortest route to your target', then press Copy result.",
+  ],
   "intro": "This checklist scores a Reddit account against 27 real privacy controls and habits — search-engine indexing, the active-communities panel, public vote history, chat and private-message limits, ad personalisation, third-party app tokens and two-factor authentication — weighting each by how much identity linkage it actually removes. Reddit is unusual in that the highest-risk exposures are not toggles: your username is permanent, your comment history is public by default, and third-party archives keep copies of what you delete, so the audit gives those items the heaviest weights. Five risk profiles re-score the same list, and five controls are marked critical and cap the score at 69% while any is still open.",
   "useCases": [
     "Check whether a pseudonymous account you have posted from for years can still be traced back to your real name.",

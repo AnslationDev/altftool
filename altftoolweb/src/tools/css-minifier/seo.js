@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Minifier - Compress CSS and See Exact Bytes Saved",
+  metaDescription:
+    "Strips comments and whitespace only, so selectors and values are untouched. Reports exact byte savings; /*! license banners can be kept.",
   intro:
     "The CSS Minifier compresses a stylesheet by stripping comments, collapsing every run of whitespace to a single space, removing the spaces around braces, semicolons and commas, and dropping the final semicolon before each closing brace. It then reports the original size, the minified size, the bytes saved and the percentage saved to one decimal place, all measured on the real UTF-8 byte length. A toggle keeps /*! banner comments intact so licence headers survive compression.",
   useCases: [

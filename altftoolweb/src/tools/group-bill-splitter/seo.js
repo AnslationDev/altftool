@@ -1,4 +1,12 @@
 const seo = {
+  title: "Group Expense Splitter: Settle Up in Fewest Payments",
+  metaDescription:
+    "Log who paid what on a trip or flatshare, split each expense across everyone or just some, and get the shortest list of transfers that settles it.",
+  steps: [
+    "Type each person into Add member and press Add; a member named in an expense can't be removed until that expense is deleted or edited.",
+    "Under Add expense fill Description, Amount (₹) and Paid by, then in Split among leave Everyone selected or tap only the people who shared that item.",
+    "Balances show who is owed and who owes, Settle up (N payments) lists each transfer as payer → payee → amount, and Copy settle-up plan copies the trip total, per-head share and every payment for a group chat.",
+  ],
   intro:
     "The Group Expense Splitter tracks who paid for what on a shared trip or in a flatshare, works out each person's net balance, and then reduces the tangle of debts to a lean list of payments that clears it — repeatedly matching the largest debtor with the largest creditor until everyone is square, needing no more transfers than there are people in the group. Every expense can be split across the whole group or only the people it applies to, so one person's late-night snack does not land on everyone's bill. It is for the person holding the receipts at the end of a trip who wants a payment list, not a spreadsheet.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deprecation Planner: Announce, Warn, Brownout, Remove",
+  metaDescription:
+    "Turn one announcement date and three day offsets into announce, warn, brownout and removal dates, with comms templates and a 90-day notice check.",
+  steps: [
+    "Name the thing going away in 'What is being deprecated?', which opens with 'v1 /search endpoint', and put the migration target in 'Replacement (optional)' so it appears in the generated templates.",
+    "Set the 'Announcement date' and the three offsets in days — 'Warnings start (days after announce)', 'Brownouts start (days after announce)' and 'Removal (days after announce)' — which default to 30, 120 and 180.",
+    "Read the 'Removal date' and the four dated milestones, announce, warn, brownout and remove, each with its +Nd offset; under 90 days of total notice the planner flags the shortfall. 'Copy announcement' takes the announcement template, with the Runtime warning and Removal changelog entry templates below it.",
+  ],
   intro:
     "This planner turns one announcement date plus three offsets into a complete deprecation timeline — announce, warn, brownout/disable and remove — with exact calendar dates and ready-to-send templates for the notice, the runtime warning and the removal changelog entry. It follows the staged lifecycle used across the industry: warnings before brownouts, brownouts before removal, as in Node.js deprecation levels and GitHub's pre-shutdown API brownouts. It also flags timelines that give less than 90 days of notice on public surfaces.",
   useCases: [

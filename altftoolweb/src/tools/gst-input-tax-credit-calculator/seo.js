@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Input Tax Credit Calculator: Rule 88A Set-Off",
+  metaDescription:
+    "Cash GST payable per head after set-off in the section 49 and rule 88A order: IGST credit first, and no CGST-against-SGST cross utilisation.",
+  steps: [
+    "Under Output tax liability, enter Output IGST, Output CGST and Output SGST / UTGST in rupees, then fill the IGST, CGST and SGST / UTGST credit available under Input tax credit available.",
+    "Leave \"Spread the balance IGST credit to minimise cash outgo (allowed by rule 88A)\" ticked to optimise the allocation, or untick it to see the plain CGST-first order.",
+    "Read GST payable in cash with the head-wise cash, credit utilised and credit carried forward, plus the Set-off working matrix that marks CGST against SGST as not allowed.",
+  ],
   intro:
     "The GST Input Tax Credit Calculator works out how much GST you actually have to pay in cash after setting off the credit lying in your electronic credit ledger. It follows the statutory utilisation order under section 49 read with rule 88A — IGST credit is used first, and CGST and SGST credit clear their own heads before touching IGST — and never allows the CGST-against-SGST cross set-off the law prohibits. It is built for GSTR-3B preparers, accountants and business owners planning the month's tax outflow.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tool Rent vs Buy Calculator: Break-Even Usage Days",
+  metaDescription:
+    "Enter the day rate, trip cost, purchase price and resale value to get the break-even usage days at which owning a tool beats hiring it.",
+  steps: [
+    "Under Renting, enter the Hire rate (₹ per day), Days per hire, Jobs per year and the Collection and return cost per hire.",
+    "Fill the Buying group — Purchase price, Servicing per year, Storage per year and Resale value at the end (% of price) — then set Horizon (years) and the return your money would earn; the comparison recalculates as you type.",
+    "Read the verdict — Rent it, Buy it or Line ball — alongside Break-even usage in days and the cost per usage day for each option, then use Copy result for the full breakdown.",
+  ],
   intro:
     "This calculator answers the rent-or-buy question with a break-even figure: the number of usage days at which owning a tool becomes cheaper than hiring it. Renting is costed as a pure variable — day rate multiplied by usage days, plus the cost of each collection and return trip. Owning is costed as its fixed side: purchase price, annual servicing and storage, the capital tied up, less the resale value at the end of your horizon. Setting the two equal gives break-even days = net cost of owning divided by the effective cost of a rented day.",
   useCases: [

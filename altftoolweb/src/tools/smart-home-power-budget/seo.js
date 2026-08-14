@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smart Home Power Budget: Standby and Running Cost",
+  metaDescription:
+    "Add hubs, bulbs, cameras and docks for daily, monthly and yearly kWh at your tariff — plus the always-on watts your house draws with nobody home.",
+  steps: [
+    "Set 'Electricity tariff (per kWh)' and pick your Currency from Indian rupee, US dollar, Euro, Pound sterling or Australian dollar.",
+    "Tap chips under 'Add a device' — Wi-Fi router, Smart home hub / bridge, Smart LED bulb, Indoor security camera, Robot vacuum dock and more — then adjust How many, Active hours per day, Standby watts and Active watts on each row.",
+    "Read Monthly electricity cost with Energy per day, Energy per year, Average continuous draw, 'Always-on standby load' in watts and standby's share of all consumption; Copy result copies the budget.",
+  ],
   intro:
     "This budget totals what a connected home actually costs to run, calculating each device as qty x (active watts x active hours + standby watts x the remaining hours of the day), then rolling that up to kWh per day, month and year at your tariff. The number most people have never seen is the always-on figure: the sum of standby watts, which is what the house draws with nobody home. It is built for anyone who has added hubs, cameras, bulbs and speakers one at a time and wants to know what the pile of them adds to the bill.",
   useCases: [

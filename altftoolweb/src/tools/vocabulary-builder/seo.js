@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vocabulary Builder — 90-Word Flashcards and Quiz",
+  metaDescription:
+    "Drill 90 English words split 30/30/30 across Easy, Medium and Hard with a Word of the Day, flip flashcards and a four-option definition quiz.",
+  steps: [
+    "Pick Easy, Medium or Hard (30 words each) with the level filter, or stay on All Levels.",
+    "Tap a flashcard — or use the Flip and Random buttons — to reveal the definition, part of speech, example sentence and synonyms, then press Start Quiz.",
+    "Each quiz question shows a definition with four word choices, and the running Score: correct/total sits in the quiz header.",
+  ],
   intro:
     "The Vocabulary Builder is a flashcard and quiz trainer built on a fixed set of 90 English words — 30 Easy, 30 Medium and 30 Hard — each stored with its definition, part of speech, an example sentence and synonyms. It is aimed at students preparing for exams, ESL learners and anyone rebuilding reading vocabulary, and it gives you three ways to work: a Word of the Day, tap-to-flip flashcards, and a multiple-choice quiz that shows a definition and asks you to pick the matching word from four options.",
   useCases: [

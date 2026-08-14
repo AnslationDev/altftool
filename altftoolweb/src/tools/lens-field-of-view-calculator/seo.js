@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lens Field of View Calculator: Angle, Crop and DoF",
+  metaDescription:
+    "Angle of view, crop factor, scene coverage and depth of field from AOV = 2 arctan(sensor / 2f), across ten sensor formats.",
+  steps: [
+    "Choose the Sensor / format preset, from Medium format 44 × 33 down to a phone sensor, and enter the Focal length (mm).",
+    "Set the Subject distance (m), the Aperture (f-number) and the Subject height to frame (m).",
+    "Read the diagonal, horizontal and vertical angle of view, crop factor, scene width, hyperfocal distance and depth of field.",
+  ],
   intro:
     "The Lens Field of View Calculator works out how much of a scene a given focal length actually captures on a given sensor, using the thin-lens angle-of-view formula AOV = 2 · arctan(sensor dimension ÷ 2 × focal length). It reports horizontal, vertical and diagonal angles, the crop factor against the 43.27 mm full-frame diagonal, the scene width and height covered at your subject distance, and the hyperfocal distance and depth-of-field limits from H = f² ÷ (N × c) + f. Photographers, videographers and drone operators use it to pick a lens before they get to the location.",
   useCases: [

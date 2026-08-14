@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rainwater Harvesting: Litres From Your Roof Area",
+  metaDescription:
+    "Plan area x rainfall x runoff coefficient (0.9 metal, 0.85 RCC, 0.75 tile) minus first flush: litres per storm and per year, tank fill and overflow.",
+  steps: [
+    "Give the roof area on plan in Square feet or Square metres and pick the surface: RCC terrace 0.85, metal sheet 0.9 or clay tile 0.75.",
+    "Enter rain in one storm, annual rainfall, rainy days a year, and the first flush diverted each event in mm.",
+    "Read litres from one storm and across the year, with tank fill percentage, overflow to waste and days of demand covered.",
+  ],
   intro:
     "This estimator applies the standard rainwater harvesting formula — litres = plan roof area in square metres x rainfall in millimetres x runoff coefficient — because one millimetre of rain on one square metre is exactly one litre. It uses the runoff coefficients published in Central Ground Water Board rooftop harvesting guidance (about 0.85 for an RCC terrace, 0.9 for metal sheet, 0.75 for clay tile) and subtracts a first-flush diversion of roughly one litre per square metre from every storm. Written for homeowners and society committees sizing a sump before they commit to plumbing.",
   useCases: [

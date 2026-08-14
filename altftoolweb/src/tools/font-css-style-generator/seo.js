@@ -1,4 +1,12 @@
 const seo = {
+  title: "Font CSS Generator: clamp() Sizing and Gradient Text",
+  metaDescription:
+    "Build one CSS text rule with a live preview - clamp() responsive sizing, gradient text, shadow - then copy it or download style.css.",
+  steps: [
+    "Set 'Font Family', 'Weight', 'Font Size' and 'Letter Spacing' in the Controls panel and watch the live preview update.",
+    "Switch on 'Responsive clamp()' and set 'Mobile Min PX' and 'Desktop Max PX' so font-size is emitted as clamp(minimum, fluid vw, maximum).",
+    "Copy the rule from the 'Generated CSS' panel, or press Download to save it as style.css.",
+  ],
   intro:
     "This generator writes a complete CSS text rule — family, size, weight, style, transform, letter-spacing, line-height, alignment, colour, gradient fill and text-shadow — from sliders you adjust against a live preview. Turn responsive on and the font-size is emitted as a clamp() with your minimum in px, a fluid vw middle value derived from the base size, and your maximum in px, which is the modern way to scale headings without media queries. You get the rule as copyable CSS or a downloadable style.css, plus a Google Fonts @import line at the top of the output when the family needs one.",
   useCases: [

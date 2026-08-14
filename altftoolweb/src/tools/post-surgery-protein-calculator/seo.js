@@ -1,4 +1,12 @@
 const seo = {
+  title: "Post-Surgery Protein Calculator: ESPEN g/kg Bands",
+  metaDescription:
+    "Estimate recovery protein near 1.5 g/kg/day and 25-30 kcal/kg/day from ESPEN bands, switching to adjusted body weight above BMI 30.",
+  steps: [
+    "Enter Usual weight before surgery (kg), Height (cm), Sex (for the ideal-weight formula) and Age (years).",
+    "Choose the Type of surgery and recovery band, set Meals and supplements per day, and optionally add Protein eaten so far today (g).",
+    "Read the daily guideline band in grams, the Rate applied in g/kg per day and the Reference weight used, then press Copy result.",
+  ],
   intro:
     "The Post-Surgery Protein Calculator turns weight, height, age and the type of operation into an informational daily protein and energy estimate, using the ESPEN surgical guideline figure of about 1.5 g protein per kg per day and 25-30 kcal per kg per day. It is written for patients and carers who have been told to 'get enough protein' after an operation and want to see the actual grams behind that advice, split across the meals and supplements they manage in a day. Where BMI is 30 or above it switches to adjusted body weight, following ESPEN's advice not to dose protein on actual weight in obesity.",
   useCases: [

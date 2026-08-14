@@ -1,4 +1,12 @@
 const seo = {
+  title: "Doubt Resolution Log with Retest Rate for Exam Prep",
+  metaDescription:
+    "Log study doubts with who resolved them, flag any open past 7 days, and track the retest rate — the share you actually re-solved on your own.",
+  steps: [
+    "Fill in 'Add a doubt' — subject, the doubt in one line, and date raised (blank = today) — then press 'Add doubt'.",
+    "When a doubt is cleared, click 'Mark resolved today', and click 'Mark retested' only after you re-solve a similar problem without help.",
+    "Watch the retest rate, doubts stale past 7 days and the per-subject Open/Resolved/Retested table, then click 'Copy summary'.",
+  ],
   intro:
     "This log tracks every study doubt from the day it is raised to the day it is resolved — and, crucially, whether you retested yourself on it afterwards. It applies the testing effect from cognitive psychology (Roediger & Karpicke, 2006): a doubt is only truly closed when you can re-solve a similar problem without help, so the log reports a retest rate alongside resolution time. Built for coaching students and self-study aspirants who want to stop the same doubts resurfacing in mock tests.",
   useCases: [

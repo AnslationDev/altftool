@@ -1,4 +1,7 @@
 const seo = {
+  title: "Oven to Air Fryer Converter — Time & Temp Calculator",
+  metaDescription:
+    "Convert oven recipes to air fryer settings: -25°C (50°F) and 20% less time, with tested presets, flip points and safe internal temperatures.",
   intro:
     "The Air Fryer Time & Temp Converter turns any oven recipe into air fryer settings using the standard rule of thumb: drop the temperature by 25°C (50°F) and cut the cooking time by 20%. Enter the oven temperature and minutes from the recipe and it returns the air fryer temperature rounded to the nearest 5°, the adjusted time, when to shake or flip, and when to start checking doneness. It also carries a cheat sheet of tested settings for everyday foods and a table of safe internal temperatures.",
   useCases: [

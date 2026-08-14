@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apple Legacy Contact Setup: Eligibility & Checklist",
+  metaDescription:
+    "Check the iOS 15.2 / two-factor requirements, plan the access key handover for up to 5 contacts, and see the 3-year window's end date and exclusions.",
+  steps: [
+    "Enter your age, the legacy contact's age, the device you are 'Setting it up on' with its OS version, and tick 'Two-factor authentication is on' if it applies.",
+    "Set how many legacy contacts you plan to name (1 to 5) and pick a date under 'If access were approved on' to model the access window.",
+    "Read the eligibility verdict, blockers and the day the three-year window would close, tick off the Essential, Recommended and Optional steps, then click 'Copy plan'.",
+  ],
   intro:
     "An Apple legacy contact is a person you name in advance who can request access to your Apple Account data after your death, using an access key you give them now plus a death certificate. The feature needs two-factor authentication and iOS 15.2 or macOS 12.1 or later, both people must be at least 13, and you can name up to 5 contacts. This guide checks whether your setup qualifies today, plans how the access key reaches them, and sets out the three-year access window and what it excludes.",
   useCases: [

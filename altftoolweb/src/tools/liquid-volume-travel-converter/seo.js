@@ -1,4 +1,12 @@
 const seo = {
+  title: "Liquid Volume Converter with 100 ml Cabin Bag Check",
+  metaDescription:
+    "US fl oz is 29.5735295625 ml, imperial 28.4130625 ml — exact factors across 14 units, plus a check against the 100 ml container and 1 litre bag rule.",
+  steps: [
+    "Enter a Volume and set Given in — millilitres, US or imperial fluid ounces, one of four cup definitions, spoons or pints — or tap a preset such as 3.4 US fl oz or 1 imperial pint.",
+    "Pick Show me this in for the headline figure and set How many identical containers you are packing.",
+    "All 14 units are listed underneath, and Cabin liquids check reports the container against the 100 ml limit and the total against the 1000 ml bag, plus how many of that size fit; Copy result copies the lot.",
+  ],
   intro:
     "This converter moves a liquid volume between millilitres, litres, US and imperial fluid ounces, four different cups, spoons and pints, using exact definitions rather than rounded factors — a US fluid ounce is 29.5735295625 ml and an imperial one is 28.4130625 ml. It then checks the container against the cabin-baggage liquids rule, which caps each container at 100 ml with everything inside a single transparent resealable bag of no more than one litre. It is aimed at travellers packing toiletries and at anyone reading a recipe or label written for another country.",
   useCases: [

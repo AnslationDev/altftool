@@ -1,4 +1,12 @@
 const seo = {
+  title: "Canva AI Prompt Builder: Exact Canvas Size and Copy Fit",
+  metaDescription:
+    "Writes a Canva brief with the real preset size, reduced aspect ratio, brand palette and type, and a headline budget from a 16 px readable floor.",
+  steps: [
+    "Pick a Canva format such as Instagram Post (square), YouTube Thumbnail or Poster A4 portrait (210 x 297 mm), set How many options to ask for, and describe What is the design for? and the Audience.",
+    "Enter Brand name, Brand colours (the first becomes the dominant colour) and Brand fonts, then write the Headline, Supporting line and Call to action against the live character budgets, and choose Visual direction, Tone of voice, Must include and Do not include.",
+    "Check the Canvas readout — pixel size, aspect ratio, the smallest width it is seen at and the headline type size — then press Copy prompt and paste it into Canva's Magic Design or Magic Media box.",
+  ],
   intro:
     "The Canva AI Prompt Builder writes a structured design brief that pins down the four things generative design tools get wrong without instruction: exact canvas size, aspect ratio, brand palette and type, and how much copy actually fits. Canvas sizes are real Canva presets (Instagram post 1080 x 1080, YouTube thumbnail 1280 x 720, A4 poster 2480 x 3508 at 300 DPI), aspect ratios are reduced with the greatest common divisor, and the character budget is derived from a 16 px minimum rendered text size at the smallest width the design is normally viewed at. It is for marketers and small-business owners who want on-brand output rather than a lucky first draft.",
   useCases: [

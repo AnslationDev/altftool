@@ -1,4 +1,12 @@
 const seo = {
+  title: "State PSC Exam Countdown: Prelims, Mains, Interview",
+  metaDescription:
+    "Enter UPPSC, BPSC, MPPSC or another commission's notified dates for days, weeks, the prelims-to-mains gap and study hours at your daily rate.",
+  steps: [
+    "Choose your State commission from the 21 listed — UPPSC, BPSC, MPPSC, RPSC, MPSC, TNPSC and the rest — or Another state commission.",
+    "Enter the Preliminary exam date, Main exam date and Interview / personality test date from the official notification, plus Study hours a day.",
+    "Read the days and weeks to the next stage, the prelims-to-mains gap and the study hours those days hold, then press Copy result.",
+  ],
   intro:
     "This countdown converts your state commission's exam calendar into the numbers that actually drive a study plan: whole days and weeks to the preliminary exam, the main exam and the interview, the gap between each stage, and the total study hours those days contain at your own daily rate. It covers the combined civil services examination run by commissions such as UPPSC, BPSC, MPPSC, RPSC, MPSC, TNPSC and about fifteen more, all of which follow the same prelims → mains → personality test structure. No exam dates are built in — you type in the dates from the official notification, so the count is never stale.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gravel Driveway Calculator: Tons, Yards and Loads",
+  metaDescription:
+    "Turn area and depth into cubic yards, tons, tonnes and truck loads, with a 25% compaction allowance and crusher run at 1.5 tons per cubic yard.",
+  steps: [
+    "Choose Build type — \"Single layer / top-up\" or \"New driveway — three courses\" — then set \"Measure by\" to Length × width or Total area and enter the figures in feet or metres.",
+    "Set the Depth unit and Finished depth, pick an Aggregate from the list, which prints its density (Crusher run / #411 at 1.5 ton/yd³, #57 clean crushed stone at 1.35), then set \"Compaction allowance (%)\", \"Price per short ton\" and \"Truck capacity (short tons per load)\".",
+    "Read \"Gravel to order\" in tons with loose yd³ and metric tonnes beneath it, the Area, Compacted volume, Truck loads and Estimated cost rows, and the \"Layer by layer\" Layer / Depth / Loose yd³ / Tons table, then press Copy result.",
+  ],
   intro:
     "This calculator converts a driveway's area and finished depth into the cubic yards, tonnes and truck loads of aggregate you need to order. It multiplies area by depth to get the compacted volume, adds a compaction allowance of about 25% because crushed stone settles under a roller, then applies supplier bulk densities — 1.5 short tons per cubic yard for crusher run, 1.35 for #57 clean stone — to reach a weight. It handles both a single top-up layer and the standard three-course build-up of base stone, clean stone and crusher run used on a new driveway over soil.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "CBSE Class 12 Syllabus Tracker: Chapter Checklist",
+  metaDescription:
+    "Mark every chapter not started, first reading done, revised, or revised with PYQs solved, and see your weighted completion and chapters per week.",
+  steps: [
+    "Tick the subjects you are taking - Physics, Chemistry, Mathematics, Biology, English Core, Accountancy, Business Studies, Economics or Computer Science (Python) - and enter 'Days left before the board exam'.",
+    "Press Show chapters on a subject and set each chapter's dropdown to Not started, First reading done, Revised or Revised + PYQs solved, or use 'Mark all mastered' and 'Clear this subject'.",
+    "The Syllabus completed percentage, Chapters fully mastered, 'Chapters a week to finish in time' and 'Days you can give each remaining chapter' update instantly; Copy result copies the per-subject summary.",
+  ],
   intro:
     "This tracker turns the CBSE Class 12 syllabus into a chapter-level checklist and reports one weighted completion percentage across the subjects you actually take. Each chapter carries a state — not started, first reading done, revised, or revised with previous-year questions solved — and only the last state counts as fully complete, so the score reflects exam readiness rather than pages turned. Chapter lists follow the rationalised NCERT books CBSE currently prescribes, with each subject's theory and practical or internal-assessment marks shown alongside.",
   useCases: [

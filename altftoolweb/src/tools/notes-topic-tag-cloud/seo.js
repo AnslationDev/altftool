@@ -1,4 +1,12 @@
 const seo = {
+  title: "Topic Tag Cloud for Notes: Spot Thin Study Areas",
+  metaDescription:
+    "Paste notes for a term-frequency tag cloud in five size tiers, stopwords removed. Names your dominant topics and the thin ones. Runs in your browser.",
+  steps: [
+    "Paste your notes into the 'Your notes' textarea, replacing the sample text that loads there.",
+    "Set 'Max tags shown' (40 by default, up to 100), 'Min word length' and 'Min occurrences' to control which terms survive the filters.",
+    "The cloud renders in five size tiers with each term's count, followed by 'Dominant topics (largest tier)', 'Thin topics (lowest count shown)', total words analysed and distinct topic terms found; Copy list copies the frequency list.",
+  ],
   intro:
     "This tool turns any block of study notes into a weighted tag cloud that shows which topics dominate your notes and which are barely covered. It uses classic term-frequency keyword extraction — tokenise, remove English stopwords, count occurrences — and scales each term into five size tiers by linear normalisation between the least and most frequent terms. It is built for students and note-takers who want a fast visual audit of coverage before an exam or a writing project, with all processing done locally in the browser.",
   useCases: [

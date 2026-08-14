@@ -1,4 +1,12 @@
 const seo = {
+  title: "Job Offer Comparison: Weight Salary vs Remote & Growth",
+  metaDescription:
+    "Score competing offers on weights you set: salary, remote, growth, stability, learning. Remote scores 100, hybrid 60, on-site 20; ESOP over a 4-year vest.",
+  steps: [
+    "Press Add Offer for each offer and fill its card in: Company Name, Job Role, Base Salary (₹), Bonus (%), ESOP/Stock (%), Joining Bonus (₹), Work Mode and the 0-10 ratings for Work-life Balance, Growth, Learning and Company Stability.",
+    "Open the Preferences tab and move the Weight Preferences sliders — Salary Importance, Remote Preference, Career Growth, Company Stability and Learning Opportunities, which start at 30, 20, 25, 15 and 10.",
+    "Open the Comparison tab for the recommendation and the Financial Analysis panel, then use Export as JSON or Export as CSV to save job-comparison-<timestamp>.json or .csv.",
+  ],
   intro:
     "The Job Offer Comparison Tool scores competing offers against weights you set yourself, so the winner reflects your priorities rather than the biggest headline number. You enter base salary, bonus, ESOP and joining bonus for each offer plus 0–10 ratings for work-life balance, growth, learning and company stability, then move five sliders — salary, remote, growth, stability and learning — and the tool normalises those weights by their total to produce a match score per offer. Work mode feeds in directly: remote scores 100, hybrid 60 and on-site 20 on that dimension. Everything stays in your browser's local storage, and the figures are informational estimates, not financial advice.",
   useCases: [

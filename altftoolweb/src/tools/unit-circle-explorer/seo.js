@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unit Circle Explorer: (cos θ, sin θ) and Exact Surds",
+  metaDescription:
+    "Enter an angle in degrees or radians and see the point (cos θ, sin θ), reference angle and all six ratios, with exact surds at the 16 special angles.",
+  steps: [
+    "Type the Angle and set 'Angle unit' to Degrees or Radians, or tap one of the special-angle buttons from 0° to 330°.",
+    "Drag the 'Drag around the circle (0° to 360°)' slider to sweep the terminal point and watch the radius, sin and cos lines follow.",
+    "Read the point (cos θ, sin θ) with quadrant, coterminal angle, reference angle and all six ratios, marked undefined where the divisor is zero; press Copy result.",
+  ],
   intro:
     "The Unit Circle Explorer shows where any angle lands on the circle of radius 1 centred at the origin, giving the exact point (cos θ, sin θ) along with its quadrant, reference angle and all six trigonometric ratios. It works from the definition of the unit circle itself — x = cos θ and y = sin θ, with tan θ = y/x — and prints the standard surd values at the sixteen special angles that are multiples of 30° and 45°. It is built for trigonometry and precalculus students who need to see why the signs flip from quadrant to quadrant.",
   useCases: [

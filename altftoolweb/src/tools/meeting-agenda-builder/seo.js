@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meeting Agenda Builder with Time Slots & Cost",
+  metaDescription:
+    "Give each agenda item an owner and minutes; get a running order with clock slots, an end time, a 10% buffer and the cost from attendees × hourly rate.",
+  steps: [
+    "Fill in the Meeting details — title, date, 'Start time (24-hour)', attendees and the 'Loaded cost per attendee per hour (INR)'.",
+    "Give each agenda item a Topic, Owner, Minutes and Purpose; 'Add item' appends more rows and the up/down arrows reorder the running order.",
+    "Read the Running order table with clock slots, the end time with its 10% buffer and the estimated meeting cost, then click 'Copy agenda' for the invite.",
+  ],
   intro:
     "The Meeting Agenda Builder converts a list of topics, owners and time allocations into a timed running order — every item gets a clock start and end derived from the meeting start time, and the meeting gets a total length, an end time and a cost. Meeting cost uses the standard loaded-cost formula: attendees × hourly cost per attendee × (total minutes ÷ 60). It is built for chairs, scrum masters and project managers who want an agenda that fits the calendar slot before the invite goes out.",
   useCases: [

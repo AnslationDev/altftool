@@ -1,4 +1,12 @@
 const seo = {
+  title: "Burn SRT or VTT Subtitles Into Video in the Browser",
+  metaDescription:
+    "Renders an .srt or .vtt permanently into the picture using FFmpeg WebAssembly: H.264 video, copied audio, three type sizes, nothing uploaded.",
+  steps: [
+    "Choose the video under Source file, then the caption track under Secondary file — the picker accepts .srt and .vtt.",
+    "Set Subtitle size to small, medium or large (FFmpeg force_style FontSize 16, 22 or 28) and press 'Process locally'.",
+    "FFmpeg WebAssembly re-encodes the video to H.264 and stream-copies the audio inside the tab, then downloads altftool-burn-in-subtitle-encoder.mp4.",
+  ],
   intro:
     "The Burn-In Subtitle Encoder permanently renders an SRT or WebVTT subtitle file into the picture of your video, producing an MP4 whose captions are part of the frames and cannot be switched off. It runs FFmpeg compiled to WebAssembly inside the browser tab — the video is written to an in-memory filesystem rather than uploaded — and applies the subtitles filter at one of three type sizes (16, 22 or 28 points) while re-encoding video with H.264 and copying the original audio stream untouched. It is the fix for platforms and players that ignore a separate subtitle track.",
   useCases: [

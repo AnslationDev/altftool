@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL Naming Conventions: Tables, Keys, Indexes, Limits",
+  metaDescription:
+    "Generate table, column, PK, FK, index and check naming rules with worked examples, checked against PostgreSQL's 63 bytes, MySQL's 64 and Oracle's 30.",
+  steps: [
+    "Choose a Case style, a Database system, and whether Table names are Plural (customers) or Singular (customer).",
+    "Set Surrogate key column to Bare id or Entity-prefixed (customer_id), pick Constraint and index naming, then type a Sample entity and Sample column.",
+    "Read the worked example for each object type — names past the identifier limit are flagged with their character count — then press Copy rules.",
+  ],
   intro:
     "This generator produces a complete database naming convention — tables, columns, primary and foreign keys, unique constraints, indexes and check constraints — with a worked example for every rule. Choose snake_case, camelCase or PascalCase, plural or singular tables, and prefixed (pk_, fk_, ix_) or PostgreSQL-suffix (_pkey, _fkey, _idx) constraint names, and every example is checked against your DBMS identifier limit: 63 bytes in PostgreSQL, 64 characters in MySQL 8, 128 in SQL Server and Oracle 12.2+, and 30 in older Oracle. It is built for teams writing a schema style guide before the first migration.",
   useCases: [

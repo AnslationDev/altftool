@@ -1,4 +1,7 @@
 const seo = {
+  title: "Chit Fund Calculator with XIRR on Your Bidding Month",
+  metaDescription:
+    "Simulate a chit month by month — discount, foreman commission, dividend — then price your bidding month as an XIRR against FD, RD, PPF and loan rates.",
   intro:
     "A chit is auctioned every month: the member willing to accept the biggest discount takes the pot, the foreman keeps his commission out of that discount, and whatever is left is shared back to every member as dividend. This calculator runs the full term month by month — subscription of chit value divided by the number of months, a discount you set tapering from the first month to the last, commission capped at the foreman percentage, and dividend of (discount minus commission) divided by members — then tells you what your chosen bidding month costs or earns. It ends with an XIRR on the actual cash flows, so an early bid is priced as borrowing and a late bid as saving, against FD, RD, PPF, gold loan and personal loan benchmarks.",
   useCases: [

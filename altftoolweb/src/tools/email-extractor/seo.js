@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Extractor: Pull Addresses from Text or HTML",
+  metaDescription:
+    "Pulls every local-part@domain.tld match from pasted text or HTML, lowercases and dedupes, counts each domain, and exports by line, comma or semicolon.",
+  steps: [
+    "Paste text, HTML source or a log dump into Raw Source Text, or press Load Sample.",
+    "Type a domain into Filter by Domain, choose Output Separator (New Line, Comma or Semicolon), and toggle Deduplicate Emails and Sort Alphabetically.",
+    "Read Extracted Emails List with its Domain Distribution counts, then press Copy, or Download to save extracted-emails.txt.",
+  ],
   intro:
     "Email Extractor pulls every email address out of a block of pasted text, HTML source or log output using the pattern local-part@domain.tld, lowercases them, and can deduplicate, sort alphabetically and filter to a single domain. Alongside the list it counts how many addresses belong to each domain, and lets you export the result separated by new lines, commas or semicolons so it drops straight into a mail client's To field or a CSV column. It is for anyone who has a messy paste — a forwarded thread, a scraped page, a support export — and needs the addresses out of it cleanly.",
   useCases: [

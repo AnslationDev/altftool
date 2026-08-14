@@ -1,4 +1,7 @@
 const seo = {
+  title: "Data Lens — CSV Profiler: Outliers, Nulls, Cleanup",
+  metaDescription:
+    "Profile a CSV in the browser: per-column type, missing counts, duplicate rows, 1.5×IQR outliers, correlations — then clean it and download the CSV back.",
   intro:
     "Data Lens profiles a CSV the way a data scientist opens one: it infers each column as numeric, date or categorical, then reports missing counts, exact duplicate rows, per-column min/max/mean/median/standard deviation and skew, IQR outliers using the standard 1.5 × IQR fences, a 20-bin histogram, and a Pearson correlation for every pair of numeric columns. It raises warnings for the things that quietly ruin an analysis — constant columns, all-unique ID columns, over 80% missing, correlations above 0.9 — and offers one-click cleaning steps you can export back out as CSV. It is for anyone who has just been handed a spreadsheet and needs to know what is wrong with it before building anything on top.",
   useCases: [

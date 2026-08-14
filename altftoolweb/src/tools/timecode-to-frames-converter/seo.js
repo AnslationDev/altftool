@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timecode to Frames Converter: Drop Frame & 23.976",
+  metaDescription:
+    "Convert SMPTE timecode, frame number and real seconds at 23.976-120 fps, with true 29.97 drop-frame and the 3.6s-per-hour non-drop drift shown.",
+  steps: [
+    "Set From to Timecode, Frames or Seconds and type the figure into Value — it starts at 01:02:03:12.",
+    "Pick a Frame rate from 23.976 fps (24 / 1.001) up to 120 fps and tick Drop frame for the 29.97 family; a timecode label that does not exist is refused with an error instead of a result.",
+    "The four cards report Frames, Active TC, Real clock and Drift in seconds, and Copy puts the frame count, active, non-drop, drop and real time on the clipboard while Reset returns to 01:02:03:12 at 29.97.",
+  ],
   intro:
     "This converter moves between SMPTE timecode, an absolute frame number and real elapsed seconds at any frame rate from 23.976 to 120 fps. It implements the SMPTE ST 12-1 drop-frame rule exactly: at 29.97 fps the frame labels :00 and :01 are skipped at the start of every minute except minutes divisible by ten, which removes 108 labels an hour and keeps timecode aligned with the wall clock. Non-drop timecode at 29.97 runs 3.6 seconds slow per hour, and the tool reports that drift alongside every conversion so you can see exactly where a session, an EDL or a delivery spec will disagree.",
   useCases: [

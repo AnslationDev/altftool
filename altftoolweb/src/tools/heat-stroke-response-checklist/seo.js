@@ -1,4 +1,12 @@
 const seo = {
+  title: "Heat Stroke Checklist: 40 °C Rule and Cooling Time",
+  metaDescription:
+    "Tell heat stroke from heat exhaustion by the 40 °C plus altered-mental-state rule, then get the cooling order, minutes to 38.9 °C and the NWS heat index.",
+  steps: [
+    "Tick the \"Nervous-system signs (any one is an emergency)\" that apply — confused or behaving irrationally, slurred speech, staggering or collapse, seizure, unresponsive — and anything under \"Other signs\".",
+    "Enter \"Core temperature (°C, rectal probe only)\", \"Minutes since collapse or first sign\", Air temperature and Relative humidity, then choose the \"Cooling method available right now\", from cold water immersion at 0.15–0.35 °C/min down to shade and rest only.",
+    "Read the cooling time needed to reach 38.9 °C, the ordered \"Do this, in this order\" list and the heat-index band for the conditions; Copy plan copies it to hand to the ambulance crew and Reset clears the checklist.",
+  ],
   intro:
     "Heat stroke is defined as a core body temperature above 40 °C (104 °F) combined with central nervous system dysfunction — confusion, slurred speech, seizure or collapse — and it is a medical emergency. This checklist separates heat stroke from heat exhaustion using that definition, then lays out the cooling steps in order and estimates how many minutes each cooling method needs to bring the casualty down to the 38.9 °C stop-cooling target. It also computes the National Weather Service heat index for the air temperature and humidity you enter.",
   useCases: [

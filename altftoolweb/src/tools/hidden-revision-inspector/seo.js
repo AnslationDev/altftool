@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hidden Revision Inspector: 19 DOCX/XLSX/PPTX Checks",
+  metaDescription:
+    "Unzip a DOCX, XLSX or PPTX in your browser and count tracked changes, comments, author fields, veryHidden sheets, macros and external links. Counts only.",
+  steps: [
+    "Press Choose file and pick a local OOXML package — DOCX, DOCM, DOTX, XLSX, XLSM, XLTX, PPTX, PPTM, POTX, PPSX or an OOXML ZIP — no larger than 20 MB compressed.",
+    "Click Inspect package; the archive is unzipped in this tab and the checks run across Revision history, Comments and notes, Metadata, Hidden structure, and Embedded and linked content.",
+    "Read Package entries, XML parts inspected, Checks with evidence and Evidence markers, then press \"Download counts-only report\" to save hidden-revision-counts-only.json.",
+  ],
   intro:
     "The Hidden Revision Inspector unzips an Office OOXML file in your browser and runs nineteen structural checks over its XML parts — tracked-change elements, the track-revisions setting and revision-log package parts; comments and speaker notes; populated core properties, author fields and custom properties; hidden sheets, very-hidden sheets, hidden slides, hidden-text markers, hidden rows and columns; and embedded files, VBA macro parts, a macro-enabled container marker, ActiveX parts, and relationships marked External. It reports counts only: it tells you that six comments and two author fields exist, never who wrote them or what they say. It is for anyone about to send a document outside their organisation who wants to know what is still inside it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Workflow Bottleneck Finder – Cycle Time Analyzer",
+  metaDescription:
+    "Paste steps as name, active, wait, rework minutes to get total cycle time, each step's wait share, and the step with the biggest time drag named.",
+  steps: [
+    "Paste one step per line into the \"Step, active minutes, wait minutes, rework minutes\" box, like Approval,10,96,8 — a five-step sample workflow is preloaded.",
+    "Each line's three numbers are totalled live, and every bar in the Bottleneck map is scaled against the largest step total with its wait-share percentage.",
+    "Read the Cycle time, Bottleneck and Steps cards to see the end-to-end minutes and which step carries the most drag.",
+  ],
   intro:
     "The Workflow Bottleneck Finder splits each step of a process into active minutes, wait minutes and rework minutes, adds them into a total per step, and names the step with the largest total as the bottleneck. Paste one line per step as name, active, wait, rework and you get the end-to-end cycle time, a bar for every step scaled against the worst one, and the share of each step that is pure waiting. It is the standard value-stream split of touch time versus queue time, done without a spreadsheet.",
   useCases: [

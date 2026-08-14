@@ -1,4 +1,12 @@
 const seo = {
+  title: "Daily Word Challenge: Guess the Word from Its Definition",
+  metaDescription:
+    "Guess the word from its dictionary definition in 5 tries with Wordle-style letter feedback. Two free hints, one shared word per day, streaks tracked.",
+  steps: [
+    "Read the day's clue in the Definition box — the same word is served to everyone that day, picked from the 30-word library by date.",
+    "Type your answer into the 'Type a N-letter word' field and press Guess; a guess must match the answer's length, and you get 5 attempts.",
+    "Each guess is marked per letter — green in the right place, amber elsewhere. Use 'Get a Hint' (two free hints: synonyms, then first/last letter and length) and watch your Wins and Streak counters update.",
+  ],
   intro:
     "Daily Word Challenge gives you a dictionary definition and five attempts to name the word it describes — a vocabulary puzzle rather than a letter puzzle, since you start from the meaning and work back to the word. Guesses are marked letter by letter in Wordle style: green where a letter is in the right place, amber where it belongs elsewhere in the word. Two optional hints are available, first the word's synonyms and then its shape, and the same word is served to everyone for the whole day.",
   useCases: [

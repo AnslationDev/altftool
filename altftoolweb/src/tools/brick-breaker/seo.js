@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brick Breaker: 6 Levels, 3 Lives, Paddle-Angle Aiming",
+  metaDescription:
+    "Six hand-built levels and three lives. Bounce angle comes from where the ball hits the paddle. Catch W, S and M capsules. Mouse, touch or arrows.",
+  steps: [
+    "Move the paddle with your mouse, a touch drag or the arrow keys; A and D also work.",
+    "Tap, click or press Space to launch, then strike the ball off the paddle edge to angle it sideways; press P to pause.",
+    "Clear the wall to reach the Next level overlay; losing your third ball ends the run at Game over with your score and best kept.",
+  ],
   intro:
     "Brick Breaker is a paddle-and-ball arcade game with six hand-built levels, three lives and three brick strengths, where the angle the ball leaves your paddle depends on where it hits — centre sends it straight up, the outer edge kicks it up to about 60 degrees sideways. Clear every brick to advance; each level raises the ball speed by a fixed step, and destroyed bricks have a 14 percent chance of dropping a capsule that widens the paddle, slows the ball or splits it into a multiball. It runs on mouse, touch drag or arrow keys, keeps your best score, and pauses itself when you switch tabs.",
   useCases: [

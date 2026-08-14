@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Fee Concession Request Letter Generator",
+  metaDescription:
+    "Draft a fee waiver or instalment request to the Principal: fee heads totalled, concession applied, a dated schedule that adds back exactly.",
+  steps: [
+    "Pick what you are asking for — 'Concession and instalments', 'Concession only' or 'Instalments only' — choose the 'Ground for the request' such as Loss of employment, and enter your 'Monthly household income'.",
+    "Fill Tuition fee, Transport fee, 'Activity and lab fee', Examination fee, Other charges and 'Arrears already outstanding', then ask by 'A percentage of the fee' or 'A specific amount' and set 'Number of instalments', 'Months between instalments' and 'First instalment on'.",
+    "Read 'Amount payable after the concession', the 'Share of annual household income' and the dated instalment table, then press 'Copy letter' for the drafted request or 'Copy summary' for the figures.",
+  ],
   intro:
     "A school fee concession request letter is the written application a parent makes to a principal asking for part of the fee to be waived, or for the year's fee to be paid in instalments. This builder adds up the fee heads, applies the concession you are asking for as a percentage or a flat amount, adds any arrears back, and generates a dated instalment schedule whose rows add back to the exact payable figure. It also expresses the amount as a share of your declared household income, which is the one number that turns a request into a case.",
   useCases: [

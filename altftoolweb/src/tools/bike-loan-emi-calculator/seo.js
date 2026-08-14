@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bike Loan EMI Calculator on the On-Road Price",
+  metaDescription:
+    "Two-wheeler EMI from the on-road price — ex-showroom, RTO, insurance, accessories — with total interest and a year-by-year amortisation schedule.",
+  steps: [
+    "Under On-road price, enter Ex-showroom price (₹), RTO tax and registration (₹), Insurance (₹) and Accessories and extras (₹).",
+    "Under The loan, set Down payment (₹), Annual interest rate (%) and Tenure (months) — 12 to 60-month presets are one tap — then add Processing fee (% of loan) and Documentation charge (₹), ticking 'Add the fee to the loan' if the dealer finances it.",
+    "Read Monthly instalment with the Amount financed, Total interest, Everything you pay and Loan to value rows, scan the 'Amortisation, year by year' table, then press Copy result.",
+  ],
   intro:
     "A bike loan EMI calculator works out the monthly instalment on a two-wheeler loan using the standard reducing-balance annuity formula, EMI = P × r × (1+r)ⁿ / ((1+r)ⁿ − 1), where r is the annual rate divided by twelve and n is the tenure in months. It builds the amount financed the way a lender does — from the on-road price, which is ex-showroom plus RTO tax and registration plus insurance plus accessories, less your down payment — and shows the processing fee both ways, paid up front or added to the loan. The output includes total interest and a year-by-year amortisation schedule.",
   useCases: [

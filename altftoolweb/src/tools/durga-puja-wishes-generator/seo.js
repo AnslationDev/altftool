@@ -1,4 +1,12 @@
 const seo = {
+  title: "Durga Puja Wishes in Bengali, Banglish or English",
+  metaDescription:
+    "Day-accurate greetings from Mahalaya to Bijoya Dashami in Bengali script, Banglish or English, with character, SMS segment and WhatsApp status checks.",
+  steps: [
+    "Choose the tithi under Day of the puja - Mahalaya through Bijoya Dashami - then set a Tone and pick Bengali script, Banglish or English as the Language / script.",
+    "Enter How many messages (up to 8), add a Recipient name and a Sign off as name, then press Shuffle for a different set of wordings.",
+    "Every message shows its character count, SMS segments at Unicode 70 or GSM-7 160 per segment, and whether it fits a 700-character WhatsApp status; press Copy all.",
+  ],
   intro:
     "This generator writes Durga Puja greetings for a specific day of the festival — Mahalaya, Maha Shashthi, Saptami, Ashtami, Navami or Bijoya Dashami — in Bengali script, Banglish or English. Each message pairs the correct greeting for that tithi with a line about the ritual that actually happens on it, such as the Nabapatrika bath on Saptami or the 108 lamps of Sandhi Puja, and then a closing chosen for the tone you pick. It also counts characters and shows how many SMS segments the message will use, since Bengali text is sent as Unicode and fits only 70 characters per segment.",
   useCases: [

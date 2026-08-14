@@ -1,4 +1,12 @@
 const seo = {
+  title: "Research Paper Summary Prompt with Word Budgets",
+  metaDescription:
+    "Build an AI prompt that summarises a paper into background, question, method, findings, limitations and implications, with word budgets that add up.",
+  steps: [
+    "Set 'Summary length in words' between 100 and 1500, choose who the summary is for — expert, student in an adjacent field, or educated non-specialist — and optionally name the research field.",
+    "Under 'Sections to include' tick Background & context, Research question / hypothesis, Method, Key findings, Limitations and Implications; Method takes 25% and Limitations 15% of the budget.",
+    "Leave 'Cite the section or page for each claim' on, optionally add a jargon glossary, then press Copy prompt and paste it plus your paper into your assistant.",
+  ],
   intro:
     "The Research Summary Prompt Builder writes an AI prompt that turns a research paper into a structured-abstract summary — background, research question, method, findings, limitations and implications — with a word budget attached to each section. The budgets are apportioned from your chosen total using largest-remainder rounding, so the section counts always add up exactly to the length you asked for, and the prompt carries an explicit rule that any detail the paper does not state must be written as \"not reported\" rather than guessed. It is built for students, reviewers and researchers who need a summary that keeps the method and the caveats instead of collapsing a paper into three cheerful sentences.",
   useCases: [

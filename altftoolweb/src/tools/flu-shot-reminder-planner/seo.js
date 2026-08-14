@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flu Shot Timing Planner: Booking and Protection Dates",
+  metaDescription:
+    "Get a booking date for your hemisphere's flu season and the day protection starts, 14 days after the shot, with travel and child two-dose schedules.",
+  steps: [
+    "Pick your hemisphere under 'Where do you live?', set 'Planning from (today)', and optionally add 'Last flu vaccination', 'Travelling on', and the checkbox for a child aged 6 months to 8 years having a first flu vaccine.",
+    "The planner places you in your season's window and shows 'Book your flu shot for' with a status such as 'You are inside the ideal window'.",
+    "Read 'Protected from' (14 days after the dose) and, for first-time children, the second priming dose 28 days later, then click 'Copy plan'.",
+  ],
   intro:
     "This planner turns the standing seasonal influenza guidance into two dates: when to book your annual flu vaccination, and the day protection actually starts, which is about 14 days after the injection. It uses the northern hemisphere window of September to October (aim to be done by the end of October), the southern hemisphere window of April to May, and the year-round pattern in the tropics, then adjusts for upcoming travel and for children under 9 who need two priming doses 28 days apart.",
   useCases: [

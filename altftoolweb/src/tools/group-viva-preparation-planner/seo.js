@@ -1,4 +1,12 @@
 const seo = {
+  title: "Group Viva Planner: Fair Round-Robin Question Rota",
+  metaDescription:
+    "Builds a round-robin viva practice rota where nobody questions themselves and everyone asks and answers equally, with per-round and total session timings.",
+  steps: [
+    "List names in 'Group members (one per line, in seating order, max 16)'.",
+    "Set 'Rotation rounds', 'Questions each asker puts per round', 'Minutes to answer one question' and 'Feedback minutes per question (0 for none)' — the plan recomputes as you type.",
+    "Read the 'Total session time', the per-member ask/answer counts and 'Rounds for full pairing coverage', plus the 'Round-by-round rotation' table of who asks whom; 'Copy plan' copies the whole schedule.",
+  ],
   intro:
     "This planner builds a round-robin questioning rota for group viva practice: with n members, the asking offset shifts every round, so nobody questions themselves, each member asks and answers the same number of questions, and after n − 1 rounds everyone has questioned everyone else exactly once. It is made for university students preparing for viva voce, oral defences and lab vivas in a study group, and it returns the full round-by-round schedule plus total and per-round timings.",
   useCases: [

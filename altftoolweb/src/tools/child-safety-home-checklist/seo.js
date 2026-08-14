@@ -1,4 +1,12 @@
 const seo = {
+  title: "Childproofing Checklist by Age with Readiness Score",
+  metaDescription:
+    "Filters home-safety items to your child's age and your stairs, balcony or water storage, then scores readiness with critical hazards counted triple.",
+  steps: [
+    "Enter your child's age in months, up to 72, and the hot water setting in °C.",
+    "Tick what your home has — internal stairs, balcony, pool, water drums — then tick off each hazard item you have already fixed.",
+    "Read the childproofing readiness percentage and how many critical items are still open, then press Copy result for the outstanding list.",
+  ],
   intro:
     "A childproofing checklist that filters roughly fifty published home-safety measures down to the ones that apply to a child of a given age in a home with your particular stairs, balconies, pool or water storage. Each item is tied to the motor skill that makes it relevant — rolling at 0 months, crawling at 6, pulling up at 12, climbing at 24 — and to the rule behind it, from CPSC 16 CFR small-parts and crib-slat limits to ASTM F1004 stair gates and the ANSI/WCMA A100.1 blind-cord standard. Tick items off and it scores your readiness, weighting critical hazards three times a routine one.",
   useCases: [

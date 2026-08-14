@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Statement Request Letter to Your Bank or NBFC",
+  metaDescription:
+    "Draft a formal letter asking for your loan statement, interest certificate, schedule, foreclosure figure or NOC, with the RBI Ombudsman clause.",
+  steps: [
+    "Enter your name, phone, address and email, then the Bank / NBFC name, Branch and Loan account number (LAN).",
+    "Choose the loan type and what you are asking for — loan account statement, interest certificate, amortisation schedule, foreclosure letter or NOC after closure — then set Period from and Period to, the date on the letter, and Acknowledge within (days).",
+    "Tick 'Print only the last 4 digits of the account number' if you prefer, pick how they should send it, and press Copy letter to take the draft with its RBI Ombudsman escalation clause.",
+  ],
   intro:
     "This generator turns your loan details into a formal written request asking a bank or NBFC for the loan account statement, interest certificate, amortisation schedule, foreclosure figure or post-closure NOC. It builds the standard business-letter structure — sender block, date, addressee, subject line, numbered list of documents, purpose, delivery preference and an acknowledgement deadline — and closes with the escalation path under the Reserve Bank – Integrated Ombudsman Scheme, 2021, which allows a complaint to the RBI Ombudsman once 30 days have passed without a reply. It is meant for borrowers who need documentary proof of interest paid for a tax return, a balance transfer or a loan closure file.",
   useCases: [

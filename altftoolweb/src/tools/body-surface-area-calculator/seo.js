@@ -1,4 +1,7 @@
 const seo = {
+  title: "Body Surface Area Calculator: Mosteller & Du Bois",
+  metaDescription:
+    "Height in cm and weight in kg give BSA in m²: the Mosteller square root beside the Du Bois figure. An arithmetic aid, not a dosing authority.",
   intro:
     "The Body Surface Area Calculator converts a height in centimetres and a weight in kilograms into BSA in square metres, using the Mosteller formula — the square root of height times weight divided by 3600 — and showing the Du Bois result, 0.007184 x height^0.725 x weight^0.425, alongside it. BSA is the figure many drug doses, cardiac indices and burn assessments are scaled to, so students, nurses and anyone checking a calculation need it in a hurry. It reports both formulas because they do not always agree, and it is an arithmetic aid, not a dosing authority.",
   useCases: [

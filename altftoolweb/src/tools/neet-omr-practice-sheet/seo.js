@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET OMR Sheet: Print 180 or 200-Question Practice",
+  metaDescription:
+    "Prints a NEET-style bubble sheet with (1)-(4) options, roll number grid and booklet code — 2025's 180 questions or the 2021-24 200-question layout.",
+  steps: [
+    "Choose the Paper pattern: NEET 2025 with 180 questions at 45 per subject, or the NEET 2021-2024 layout of 200 with Section A and B.",
+    "Set Roll number columns, then check \"Questions on this sheet\" and the number of answers it tells you to mark with a ball-point pen.",
+    "Press Print sheet for the (1)-(4) option grid, the 0-9 roll number bubbles and the booklet code row; Copy summary saves the pattern details as text.",
+  ],
   intro:
     "This tool generates a printable NEET-style OMR practice answer sheet — the bubble grid a candidate darkens with a ball-point pen in the National Eligibility cum Entrance Test (UG). It reproduces the NTA question numbering for both the 2021–2024 pattern (200 printed questions with Section A and B per subject) and the 2025 pattern (180 compulsory questions, 45 each in Physics, Chemistry, Botany and Zoology), plus a roll number digit grid and booklet code row. NEET aspirants use it to rehearse answer transfer so bubbling mistakes never cost marks on exam day.",
   useCases: [

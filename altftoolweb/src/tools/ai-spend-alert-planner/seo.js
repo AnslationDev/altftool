@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Spend Alert Planner: Budget Thresholds & Trip Dates",
+  metaDescription:
+    "Projects month-end AI spend from your run rate and shows the day each alert threshold trips, with a named owner and action per level plus spike detection.",
+  steps: [
+    "Enter your monthly AI budget, spend so far this month, today's day of the month and the biggest single day so far, in USD, EUR, GBP or INR.",
+    "List \"Alert thresholds (% of budget)\" — the default ladder is 50, 75, 90, 100 — and owners in escalation order, comma separated.",
+    "Read the projected month-end spend and the Alert thresholds table showing the day each level trips with its owner and action; \"Copy plan\" exports it.",
+  ],
   intro:
     "The AI Spend Alert Planner projects where a monthly AI budget will land and tells you which day each alert threshold is due to trip. It uses the linear run-rate method billing consoles use — daily burn equals spend to date divided by days elapsed, projected month equals daily burn times days in the month — and solves each threshold for the day it is crossed. Alongside the numbers it assigns a named owner and a concrete action to every level, because an alert nobody owns is just a notification.",
   useCases: [

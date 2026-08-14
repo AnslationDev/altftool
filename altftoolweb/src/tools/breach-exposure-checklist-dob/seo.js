@@ -1,4 +1,12 @@
 const seo = {
+  title: "Date of Birth Leaked? 17-Step Breach Response Plan",
+  metaDescription:
+    "Score the leak by what else was exposed — name, address, ID number — then work the 17 steps that stop the date acting as a PIN or security answer.",
+  steps: [
+    "Under 'What else was in the same leak?', tick only the categories that were exposed — Full legal name, Home address, Government ID number (PAN, Aadhaar, SSN, NI), Bank account or card number — never typing the values.",
+    "Work through the 17 steps grouped as 'Stop the date being a credential', 'Replace it in verification flows', 'Reduce where the date is published' and 'Watch for misuse', ticking each one as you finish it.",
+    "Read Response score and Combination risk with 'Critical steps still open' — the score is held at 69% while any step badged Critical is unticked — then press Copy result.",
+  ],
   intro:
     "The Date of Birth Exposure Checklist scores two things at once: how dangerous your leak is once the birth date is combined with whatever else was exposed, and how much of the 17-step response you have finished. A date of birth cannot be rotated like a password, so the work is removing it from credentials — PINs, security answers — and replacing it in the telephone identity checks banks and mobile operators still run on name, address and date of birth. Tick what else leaked and the combination score shows whether you are dealing with a nuisance or an application-grade identity set.",
   useCases: [

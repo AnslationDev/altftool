@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Filter Generator with Live Before/After Preview",
+  metaDescription:
+    "Tune blur, brightness, contrast, grayscale, hue-rotate and more on an image, compare with a draggable split, and copy only the CSS values you changed.",
   intro:
     "CSS Filter Effects builds a `filter` declaration from nine standard filter functions — blur, brightness, contrast, grayscale, hue-rotate, invert, opacity, saturate and sepia — and previews the result live on an image with a draggable before-and-after split. It is for front-end developers and designers tuning an image treatment who want the exact CSS rather than an exported bitmap. Only the values you actually change are written into the output, so the declaration stays as short as the effect requires.",
   useCases: [

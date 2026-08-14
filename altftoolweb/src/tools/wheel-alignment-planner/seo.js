@@ -1,4 +1,7 @@
 const seo = {
+  title: "Wheel Alignment vs Balancing: When Each Is Due",
+  metaDescription:
+    "Alignment runs about every 10,000 km or 6 months, balancing every 5,000 km — this planner adjusts for road quality and tells the symptoms apart.",
   intro:
     "The Wheel Alignment Planner schedules two jobs that are constantly confused: alignment, which sets camber, caster and toe so the wheels point where the steering says, and balancing, which distributes mass around each wheel so it does not shake at speed. It works from the standard intervals — roughly every 10,000 km or 6 months for alignment and every 5,000 km or 6 months for balancing — shortened for poor roads, and it separates the symptoms so a pull to one side is not treated as an imbalance. Events like a kerb strike, new tyres or replaced suspension parts make one of the jobs due immediately, whatever the odometer reads.",
   useCases: [

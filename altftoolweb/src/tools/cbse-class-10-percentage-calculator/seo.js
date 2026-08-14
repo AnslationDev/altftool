@@ -1,4 +1,12 @@
 const seo = {
+  title: "CBSE Class 10 Percentage Calculator: Best of Five Marks",
+  metaDescription:
+    "Computes the best-of-five percentage from subject marks out of 100, shows the all-subject average and flags any subject below the 33% pass mark.",
+  steps: [
+    "Enter each subject's marks out of 100; \"Add subject\" allows up to 10 subjects and Remove drops one.",
+    "The tool auto-selects your five highest-scoring subjects and averages them, checking every subject against the 33% pass mark.",
+    "Read the best-of-5 percentage, the overall all-subject average, and the per-subject table with Pass/Fail and indicative grade band; \"Copy result\" exports it.",
+  ],
   intro:
     "This calculator computes a CBSE Class 10 percentage from subject-wise marks using the best-of-five convention: the average of your five highest-scoring subjects out of 100 each. CBSE itself prints only marks and positional A1–E grades on the marksheet, so the best-of-five average is what schools, admission committees and CBSE's own screening use as 'the percentage'. The tool also shows the overall all-subjects average and flags any subject below the 33% pass mark from the Examination Bye-laws.",
   useCases: [

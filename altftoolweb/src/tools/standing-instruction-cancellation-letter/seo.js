@@ -1,4 +1,12 @@
 const seo = {
+  title: "Auto-Debit Cancellation Letter + Working-Day Counter",
+  metaDescription:
+    "Count the clear working days between lodging a NACH, e-mandate or UPI AutoPay cancellation and the next debit, then draft both letters.",
+  steps: [
+    "Pick the \"Type of standing instruction\", then set the date you are lodging the cancellation, the next scheduled debit date and the notice period asked for in working days.",
+    "Choose the working week to count against and paste your state's bank holidays as YYYY-MM-DD, then fill in the mandate reference, account number, IFSC, amount per debit and the company collecting the money.",
+    "Read the clear working days before the debit and the last day you could safely lodge, then press \"Copy bank letter\" and \"Copy notice\".",
+  ],
   intro:
     "A standing instruction, NACH mandate, card e-mandate or UPI AutoPay authority does not stop because you cancelled the service — it stops when the payment authority itself is withdrawn, at the bank and at the company presenting the debit. The part people get wrong is the timing: a cancellation lodged two calendar days before the debit can be zero working days before it, once a Sunday and a second Saturday are taken out. This tool counts the clear working days between the day you lodge and the day of the debit under your chosen working week plus any bank holidays you paste in, tells you the last working day on which you could still have lodged it, and drafts the letter to the bank and the matching notice to the biller. If the debit has already gone through, it switches to the three working-day deadlines in the RBI circular on limiting customer liability in unauthorised electronic banking transactions.",
   useCases: [

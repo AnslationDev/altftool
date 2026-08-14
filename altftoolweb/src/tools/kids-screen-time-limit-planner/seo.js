@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids' Screen Time Limits by Age, from WHO and AAP Rules",
+  metaDescription:
+    "Turns a child's age into a daily recreational screen budget from WHO and AAP guidance, split by purpose, with sleep and screens-off checks.",
+  steps: [
+    "Under The day, set Child's age (years) from 0 to 17, School or childcare (hours), Wake time, Bedtime, Physical activity planned (min) and Daytime naps, if any (min).",
+    "Under Screen minutes by purpose, enter Shows and video (min), Games (min) and Social and chat (min), plus Homework / study on a screen (min) and Video calls with family (min), which are tracked outside the recreational cap.",
+    "Read Recreational screen time today against the guideline for that age, then the Screens off by time, the sleep window and activity rows, and A suggested split of the allowance, and press Copy plan.",
+  ],
   intro:
     "Kids Screen Time Limit Planner converts a child's age into a daily recreational screen budget and splits that budget across shows, games and social use, while counting homework screens and family video calls separately. The limits come from WHO's under-5 guidance (no screen time below 2 years, up to 1 hour for ages 2-4), the AAP's 1-hour recommendation for ages 2-5, and the Canadian 24-Hour Movement Guidelines' 2-hour recreational ceiling, which this planner applies from age 6 onward since the AAP figure already covers age 5. It also tests the day against sleep ranges from the American Academy of Sleep Medicine — including a field for daytime naps, since the youngest bands' sleep targets assume naps are part of the total — and WHO physical activity targets, so a parent can see whether the plan still leaves room for sleep, movement and free play.",
   useCases: [

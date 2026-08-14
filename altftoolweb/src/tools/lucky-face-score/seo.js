@@ -1,4 +1,7 @@
 const seo = {
+  title: "Lucky Face Score Generator — For Fun, No Face Scan",
+  metaDescription:
+    "Turns any photo into a made-up luck score out of 100 by hashing the file's bytes — no face detection, no upload; the same photo always scores the same.",
   intro:
     "Lucky Face Score is a for-fun generator that turns any photo into a made-up luck score out of 100, with a badge, a fortune line and a lucky number, day and colour. There is no face detection and no AI: the tool hashes the file's bytes with FNV-1a (32-bit) and expands that hash with an xorshift generator, which is why the same picture always produces the same reading and a different picture always produces a different one. The photo is read inside your browser and never uploaded.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Rough Work Planner – Numbered Zone Method",
+  metaDescription:
+    "Plan exam rough sheets with the numbered-zone method: enter sheets, zones per side and questions to see if capacity fits, plus a formula bank side.",
+  steps: [
+    "Enter the rough sheets you will get, usable sides per sheet and the zones you will rule per side — folding a sheet in half twice gives 4 zones.",
+    "Add the questions that will need written working and any sides reserved as a formula / reuse bank.",
+    "The verdict reports zones enough or the shortfall with a zones-per-side fix; press Copy plan for the S1a-1 style zone-label summary.",
+  ],
   intro:
     "This planner applies the numbered-zone method for exam rough work: each rough side is ruled into a fixed grid of zones, every zone is labelled with the question it serves, and one side is reserved as a formula bank for values you will reuse. Given your sheet count, zones per side and the number of questions needing written working, it computes whether capacity meets demand and how many zones each question can claim — so you never lose an intermediate result and recompute it under time pressure.",
   useCases: [

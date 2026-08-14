@@ -1,4 +1,12 @@
 const seo = {
+  title: "WhatsApp Catalog Image Maker: 1:1, 500px+, Under 5MB",
+  metaDescription:
+    "Builds square catalogue tiles at 500-1600 px and sizes burned-in type above the 11 pt floor for a 177 pt grid tile. Exports PNG, checked under 5 MB.",
+  steps: [
+    "Type the Product name (up to 80 characters), a Price label and Badge text, then choose a Badge position, Theme and Export size (square) of 500, 800, 1024 or 1600 px.",
+    "Compare the two preview canvases — the full tile and the same tile shrunk to its real catalogue grid width in points — then press Download PNG.",
+    "The file saves as <product-name>-catalog-<size>.png and the checks underneath mark \"Square 1:1 tile\", \"At least 500 px per side\" and \"Under the 5 MB file limit\" as pass or fail, beside rows for the grid-legible font floor, corner-safe inset and WCAG contrast.",
+  ],
   intro:
     "WhatsApp Business Catalog Image Maker produces square product tiles that meet WhatsApp's catalogue rules — at least 500x500 pixels, 1:1, under 5 MB — and sizes any burned-in text so it survives the catalogue grid. Because two tiles share a phone screen roughly 390 points wide, each tile is only about 177 points across, so a label has to be large enough in the export to land at 11 points or more on screen; the tool works that floor out for you and also insets content past the rounded-corner crop. Aimed at small sellers building a catalogue by hand rather than through a design agency.",
   useCases: [

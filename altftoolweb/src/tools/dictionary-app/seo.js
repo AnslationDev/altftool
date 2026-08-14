@@ -1,4 +1,7 @@
 const seo = {
+  title: "English Dictionary With US/UK Audio and Word Quizzes",
+  metaDescription:
+    "Definitions by part of speech with synonyms, antonyms and examples, spoken in en-US or en-GB and translatable into Hindi, Spanish or French.",
   intro:
     "The Dictionary App looks up an English word and returns its definitions by part of speech, phonetic spelling, example sentences, synonyms and antonyms in a single search, then lets you translate any definition into Hindi, Spanish or French and hear the word spoken in a US or UK voice. Words you save go into your own collections, feed a multiple-choice quiz built from their real definitions, and count toward a daily streak. It is for learners building vocabulary rather than people who just need one meaning and a tab close.",
   useCases: [

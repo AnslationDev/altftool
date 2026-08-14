@@ -1,4 +1,12 @@
 const seo = {
+  title: "Invoice Number Generator — Series with FY & Monthly Reset",
+  metaDescription:
+    "Generate a whole invoice numbering series — prefix, date segment, zero-padded counter — resetting monthly, yearly or by Indian FY. Copy or export CSV.",
+  steps: [
+    "Set the Prefix, 'Date segment' (YYYY-MM, FY label 2026-27 and more), Separator and 'Digits (zero padding)', then pick a 'Reset rule': Sequential, Monthly reset, Calendar year reset or Indian financial year (Apr-Mar).",
+    "Choose 'Start number', 'Increment by' and 'How many numbers' (1 to 500) — the series regenerates live and warns when a scheme repeats a number or overflows the padding width.",
+    "Check 'First invoice number' and 'Last in series', then press 'Copy all' to copy the list or CSV to download invoice-numbers.csv with the number, sequence and period date columns.",
+  ],
   "intro": "Invoice Number Generator builds a full invoice numbering series in one pass: you pick a prefix, a date segment, a separator and a zero-padded counter, and it generates every number in the batch. Choose whether the counter runs straight through or resets each month, each calendar year, or each Indian financial year (April to March). It is built for freelancers, small businesses and accountants who need a numbering scheme that stays unique, sequential and audit-friendly.",
   "useCases": [
     "Set up next year's invoice series before the financial year starts on 1 April, using an FY2026-27 style prefix.",

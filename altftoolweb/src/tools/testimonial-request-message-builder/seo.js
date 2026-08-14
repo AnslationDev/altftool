@@ -1,4 +1,10 @@
 const seo = {
+  title: "Testimonial Request Builder for Email, WhatsApp, SMS",
+  steps: [
+    "Enter Client's name, Your name (sign-off), Project or service and the optional Result you want them to remember, such as 'checkout drop-off fell by 22%'",
+    "Choose Send it on — Email, WhatsApp, LinkedIn message or SMS — and a Tone of Warm, Professional or Brief, set Ask for a reply within (days, 0 = none), then tick up to four boxes under Questions to include: The problem before, The measurable result, What working together was like, The hesitation they had and Who they'd recommend it to",
+    "Your message renders the subject and body while the stats above report Channel, Questions asked, Length in characters with SMS segments, Reading time and Reply by; Copy message copies the draft and Reset restores the defaults",
+  ],
   intro:
     "A testimonial request builder assembles the exact message you send a past client to get a quote you can publish — the greeting, the two-to-four specific questions, the reply-by date and the promise of an approval step. Instead of asking an open question like \"could you write me a review?\", it asks for the situation before, the measurable result and who they would recommend it to, which is what turns a vague compliment into a usable quote. The draft is measured against real channel limits: 160 characters for a single GSM-7 SMS segment, 8,000 for a LinkedIn message and roughly 60 visible characters of an email subject line.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Oil Change Interval Planner: Distance vs Time Limit",
+  metaDescription:
+    "Work out the next oil change from the km and month limits together, shortened for severe service but never below half the normal interval.",
+  steps: [
+    "Pick the 'Engine oil type' — Mineral (20W-40 / 20W-50) at 5,000 km / 6 months, Semi-synthetic (10W-30 / 10W-40) at 7,500 km / 9 months, Fully synthetic (5W-30 / 0W-20) at 10,000 km / 12 months or Long-life synthetic at 15,000 km — then enter 'Kilometres since last change', 'Months since last change' and 'Average kilometres per month'.",
+    "Under Driving conditions tick everything that covers at least half your running; each shows its factor, from ×0.75 for mostly short trips under 8 km to ×1.1 for steady highway running, and the combined factor is clamped so the interval never falls below half the normal figure.",
+    "Read 'Change due in' with the percent-used bar, then the 'Normal (manual) interval', 'Your adjusted interval', 'Distance limit reached in', 'Time limit reached in' and 'Limit that hits first' rows, and press 'Copy result'.",
+  ],
   intro:
     "The Oil Change Interval Planner works out when your engine oil is actually due by applying the manufacturer's dual limit — a distance limit and a time limit, whichever arrives first — and then shortening it for severe-service conditions such as short trips, dust, towing and long idling. Enter your oil grade, the kilometres and months since the last drain, and your average monthly running to see how much of the interval is already used. It is built for owners who drive nothing like the manual's 'normal service' assumption and want a defensible interval rather than a guess.",
   useCases: [

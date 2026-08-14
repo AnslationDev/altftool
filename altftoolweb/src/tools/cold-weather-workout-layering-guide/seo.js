@@ -1,4 +1,12 @@
 const seo = {
+  title: "What to Wear for Cold Workouts — Wind Chill Layer Guide",
+  metaDescription:
+    "Enter temperature, wind and session type to get NWS wind-chill maths, a dressing temperature, frostbite exposure time and a layer for every body zone.",
+  steps: [
+    "Enter the Air temperature in °C and Wind speed in km/h, then pick the session under 'What you are doing' and its length in minutes.",
+    "Tick 'Rain, sleet or wet snow' or 'Asthma or cold-air wheeze' if either applies to the session.",
+    "Read the wind chill, dressing temperature and safe exposed-skin time, plus the zone-by-zone What to wear table, then click Copy result.",
+  ],
   intro:
     "The Cold Weather Workout Layering Guide turns the temperature, wind speed and your planned session into a specific kit list. It calculates the 2001 North American wind chill index used by the US National Weather Service and Environment Canada, adds the warmth your own effort generates using the classic coaching rule of dressing for 10 to 20 °F warmer than it is, then names a layer for the head, torso, hands, legs and feet — along with the frostbite exposure time for uncovered skin.",
   useCases: [

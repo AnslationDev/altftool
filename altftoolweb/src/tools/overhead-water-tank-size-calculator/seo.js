@@ -1,4 +1,12 @@
 const seo = {
+  title: "Overhead Water Tank Size Calculator (IS 1172 Litres)",
+  metaDescription:
+    "Turn residents at IS 1172's 135 LPCD plus garden and car-wash use into litres for the roof tank and sump, rounded up to standard tank sizes.",
+  steps: [
+    "Enter household demand — 'Number of residents', 'Litres per person per day' (default 135), 'Garden / plants per day (L)' and 'Vehicle washing per day (L)'.",
+    "Set 'Days of storage to keep' (0.5 to 14) and 'Share held overhead (%)', or tap a 'Per-capita demand presets' button to load a standard LPCD figure.",
+    "Read 'Overhead tank to install' with the next standard size to buy, the 'Underground sump required' row and the volume in m³ and cu ft, then use 'Copy result'.",
+  ],
   intro:
     "An overhead water tank size calculator converts your household's daily water demand into the number of litres the roof tank and the underground sump each need to hold. It multiplies residents by a litres-per-capita-per-day figure — 135 LPCD is the IS 1172:1993 minimum for a home with a full flushing system — adds garden and vehicle washing, multiplies by the days of storage you want in hand, then splits that total between overhead and sump and rounds up to the nearest tank sold off the shelf.",
   useCases: [

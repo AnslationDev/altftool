@@ -1,4 +1,12 @@
 const seo = {
+  title: "ULID Generator: 26-Char Sortable IDs, Five at Once",
+  metaDescription:
+    "Generate five 26-character ULIDs at a time: a 10-char millisecond timestamp plus 16 random chars in Crockford base32, so string sort is creation order.",
+  steps: [
+    "Open the tool — a first batch of five ULIDs is generated on load and listed one per row under the caption \"26-char, time-sortable\".",
+    "Press New ULIDs for a fresh batch of five: each is 10 Crockford base32 characters encoding the current millisecond followed by 16 random characters.",
+    "Press Copy to put all five on the clipboard as newline-separated lines; the button reads Copied for about 1.2 seconds before reverting.",
+  ],
   intro:
     "This ULID generator produces batches of five 26-character ULIDs: a 10-character timestamp encoded from the current millisecond followed by 16 characters of randomness, all in Crockford base32. Because the timestamp comes first and base32 sorts the same way lexicographically as it does numerically, ULIDs generated later always sort after earlier ones — the property that makes them a drop-in alternative to random UUIDs for database keys. Copy the whole batch in one click and paste it straight into a seed file, a test fixture or a schema example.",
   useCases: [

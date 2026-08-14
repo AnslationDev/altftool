@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Episode Cost Calculator + Break-Even CPM",
+  metaDescription:
+    "Add editing, transcription, artwork, hosting and amortised gear into one per-episode cost, then see cost per finished minute and break-even sponsor CPM.",
+  steps: [
+    "Fill the Your numbers grid with Finished episode length (minutes), Episodes released per month, Editing hours per episode, Editor rate (INR per hour) and the transcription, artwork, music licensing, guest fee and other per-episode figures.",
+    "Add the shared layers — Podcast hosting (INR per month), Software subscriptions, Gear investment (INR, one-off) and Episodes the gear should last — then Downloads per episode and Sponsor CPM (INR per 1000 downloads).",
+    "Read Cost per episode with the per-finished-minute figure under it, plus Break-even CPM, Break-even downloads at your CPM and Cost for a full year, and the Where the money goes bars showing each line as a percentage. Copy result puts the summary on the clipboard.",
+  ],
   intro:
     "The true cost of a podcast episode is the sum of its direct spend (editing, transcription, artwork, music, guest fees), its share of recurring subscriptions such as hosting and software divided by the episodes you publish each month, and the studio gear amortised across the episodes it will serve. This calculator adds those three layers, then converts the total into cost per finished minute and into the sponsor CPM you would need to cover it, using the standard podcast revenue formula of downloads divided by 1,000 multiplied by the CPM rate. It suits independent hosts pricing a show and agencies quoting a production retainer.",
   useCases: [

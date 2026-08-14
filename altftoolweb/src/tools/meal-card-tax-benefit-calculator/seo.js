@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meal Card Tax Benefit Calculator: Rs 50/Meal Exemption",
+  metaDescription:
+    "Splits your Sodexo or Pluxee card credit into the exempt Rs 50-per-meal portion and the taxable excess, with tax saved at your slab plus cess.",
+  steps: [
+    "Enter your \"Monthly card credit (INR)\", \"Working days in a month\" and pick 1-3 \"Meals claimed per working day\" (Rs 50-150 per day).",
+    "Choose your \"Income tax slab rate\", \"Surcharge\" and \"Tax regime\" - the old regime or Section 115BAC, where the exemption is not available.",
+    "Read \"Income tax saved in the year\" with the exempt-versus-taxable split; \"Copy result\" copies the summary and \"Show\" expands the month-by-month table.",
+  ],
   intro:
     "This calculator shows how much income tax you save each year by taking part of your salary as meal card credit, using the Rs 50 per meal perquisite exemption in Rule 3(7)(iii) of the Income-tax Rules, 1962. Enter the amount loaded on your Sodexo, Zaggle, Pluxee or Ticket Restaurant card, your working days and your slab, and it splits the credit into the exempt portion and the taxable perquisite. Salaried employees and payroll teams use it to size the monthly credit so nothing spills over the limit.",
   useCases: [

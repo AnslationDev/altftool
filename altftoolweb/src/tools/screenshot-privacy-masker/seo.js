@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screenshot Privacy Masker: Redact, Blur, Pixelate",
+  metaDescription:
+    "Cover screenshot regions with solid masks, blur or pixelation, then export a flattened PNG or JPEG. Runs in your browser; nothing is uploaded.",
+  steps: [
+    "Choose, drop or paste a screenshot up to 25 MB and 16 million pixels; anything larger is rejected rather than silently downscaled.",
+    "Drag a rectangle over each secret and set its mode to Solid mask, Blur or Pixelate, with Strength from 4 to 40 for the last two; Suggest regions proposes up to six text-like areas.",
+    "Pick PNG lossless or JPEG smaller file under Image format, press Download flattened image, then reopen the file and zoom in to confirm every secret is covered.",
+  ],
   intro:
     "This tool covers parts of a screenshot with solid black rectangles, a box blur or averaged pixelation, then flattens the result into a new PNG or JPEG so the hidden pixels no longer exist in the exported file. You draw, drag and resize regions over the image at its native resolution, set an effect strength from 4 to 40, and export — nothing is uploaded, which is the point when the thing you are hiding is an account number or a customer's name. Solid masks overwrite the area outright; blur and pixelate transform the original pixels and are weaker guarantees.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Atkins Phase Calculator: Net Carbs, Protein and Fat",
+  metaDescription:
+    "Get the net carb allowance for your Atkins phase and week on the 20 g / +5 g / +10 g ladder, plus protein per kg and the fat that fills your calories.",
+  steps: [
+    "Enter Sex (for the BMR equation), Age (years), Weight (kg) and Height (cm), then pick an Activity level from 'Sedentary (desk job, little exercise)' to 'Athlete (twice-daily or physical job)'.",
+    "Choose the Atkins phase — Phase 1 Induction through Phase 4 Lifetime Maintenance — plus 'Week number in this phase' (or 'Your carb tolerance (g net carbs/day)' in maintenance), a Goal, and Protein (g per kg body weight).",
+    "Read the Daily net carb allowance with the fat / protein / carb calorie split bar and the Atkins carb ladder table; a warning appears if fat falls under 20% of calories. Press 'Copy result' to save it.",
+  ],
   intro:
     "This calculator turns the four published Atkins phases into a daily macro target: the net carb allowance fixed by your phase, a moderate protein amount set per kilogram of body weight, and dietary fat filling the remaining calories. Energy needs come from the Mifflin-St Jeor equation multiplied by an activity factor, so the numbers move with your size and training load rather than a one-size-fits-all template. It is built for anyone running Atkins 20 or Atkins 40 who wants to know exactly how many net carbs today allows and what the rest of the plate should look like.",
   useCases: [

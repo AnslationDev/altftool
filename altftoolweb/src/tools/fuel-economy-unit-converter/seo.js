@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fuel Economy Converter: km/l, l/100 km, US & UK mpg",
+  metaDescription:
+    "Convert km/l, l/100 km, US mpg and imperial mpg in one step - the two gallons differ by 20% - and see the litres a trip distance needs.",
+  steps: [
+    "Type your 'Fuel economy figure' and pick its unit under 'Given in' - km/l, l/100 km, mpg US or mpg UK.",
+    "Add a 'Trip distance (km)' to see the litres, US gallons and imperial gallons that journey would burn at that economy.",
+    "Read every equivalent - kilometres per litre, litres per 100 km, miles per US gallon, miles per imperial gallon and miles per litre - and press 'Copy result'.",
+  ],
   intro:
     "This converter moves a fuel economy figure between kilometres per litre, litres per 100 km, miles per US gallon and miles per imperial gallon. Distance-per-volume and volume-per-distance units are reciprocals of each other, so l/100 km = 100 ÷ km/l, while the mpg figures scale by the gallon in use: 3.785411784 litres for the US gallon and 4.54609 litres for the imperial one. Enter one number and a trip distance to see every equivalent plus the litres and gallons the journey would take.",
   useCases: [

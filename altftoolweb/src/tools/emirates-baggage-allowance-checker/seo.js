@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emirates Baggage Allowance Checker: Weight vs Piece",
+  metaDescription:
+    "Test cabin and checked bags against Emirates weight or Americas piece allowances, the 32 kg per-bag ceiling and the 150/300 cm size caps.",
+  steps: [
+    "Pick your Cabin, fare or route so the checker applies the weight allowance or the Americas piece allowance, then tick “I am carrying one” under Cabin bag and Personal item and give each its Weight (kg) and three dimensions.",
+    "Under Checked bags press Add bag for each piece — up to 8 — with its weight and length, width and height, keeping every piece under 32 kg, 150 cm summed per bag and 300 cm across all bags; add your quoted Excess rate per kg, Fee per extra bag and Fee per overweight bag under Excess baggage pricing.",
+    "Read “Excess checked weight” in kg with either “Everything is within the published allowance” or the count of things to fix, then Fare / route, Free checked allowance, Total checked weight and Estimated excess charge plus the Bag-by-bag table; Copy result copies it.",
+  ],
   intro:
     "This checker tests your bags against the two different Emirates checked-baggage systems — the weight concept used on most of the network and the piece concept used to and from the Americas — and tells you exactly how many kilograms or how many pieces you are over. It also applies the size rules that catch people out: no single checked piece over 150 cm of length plus width plus height, and no more than 300 cm across all pieces added together. Cabin baggage is checked separately, at 7 kg and 55 × 38 × 20 cm in Economy, or two pieces under one combined weight ceiling in First and Business.",
   useCases: [

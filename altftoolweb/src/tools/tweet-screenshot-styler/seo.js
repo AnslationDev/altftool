@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tweet Screenshot Styler: SVG Quote Cards at 1080px",
+  metaDescription:
+    "Typeset your own post as a quote card at 1080x1080, 1080x1350, 1080x1920 or 1200x675 and download it as SVG. Counts truncate like X: 1,299 shows 1.2K.",
+  steps: [
+    "Paste the post text, then fill Display name, Handle, Post date and the Replies, Reposts and Likes counts.",
+    "Choose an Export size: Square post 1080 x 1080, Story / Reel 1080 x 1920 or Link card 1200 x 675.",
+    "Body type auto-sizes to fit the card; press SVG to download quote-card-square.svg, or Copy result for the text.",
+  ],
   intro:
     "Tweet Screenshot Styler typesets a post you have written into a quote graphic at real platform export sizes — 1080 × 1080 and 1080 × 1350 for Instagram feed, 1080 × 1920 for stories and reels, and 1200 × 675 for a summary-large-image link card. It wraps the text, picks the largest type size that still fits the space between the header and the footer, and renders engagement counts the way X does, truncating rather than rounding so 1,299 shows as 1.2K. Everything is drawn in the browser and downloads as a vector SVG.",
   useCases: [

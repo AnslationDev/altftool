@@ -1,4 +1,12 @@
 const seo = {
+  title: "ROPA Builder: GDPR Article 30 Register in 7 Columns",
+  metaDescription:
+    "Type one pipe-separated line per processing activity for an Article 30 register across 7 columns, with a count of rows missing a field.",
+  steps: [
+    "Type one activity per line in 'Records (one per line)', separating Activity | Purpose | Data categories | People | Processor | Retention | Safeguards with a pipe.",
+    "Leave the 'Require complete rows' toggle on so 'Flag missing columns' counts every row missing one of the seven fields.",
+    "Read the 'Structured inventory' table — the first 100 records — then Download it as ropa-builder.txt.",
+  ],
   intro:
     "The ROPA Builder turns one line per processing activity into a structured Record of Processing Activities table across the seven columns Activity, Purpose, Data categories, People, Processor, Retention and Safeguards — the working shape of a GDPR Article 30 register. Type or paste your rows with a pipe between fields and it counts complete rows, flags any row missing a column, and renders the register as a table of up to 100 activities. It is for privacy leads, ops managers and founders who need a first inventory they can review, not a legal filing.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Punjabi Birthday Wishes in Gurmukhi & Roman Script",
+  metaDescription:
+    "Birthday messages matched to your relationship - veer, bhain, mummy ji, satkaryog forms - in Gurmukhi or Roman script, with an optional age line.",
+  steps: [
+    "Fill in Name of the birthday person, then pick Your relationship, Tone and Script - Gurmukhi or Roman Punjabi in English letters - and optionally Age turning.",
+    "Choose How many wishes (up to 4) and press Shuffle wording to draw a different set from the same tone's wordings.",
+    "Copy a single wish with its Copy button or the whole set with Copy all, ready to paste into WhatsApp or an Instagram caption.",
+  ],
   intro:
     "The Punjabi Birthday Wishes Generator writes complete birthday messages in Punjabi, in either Gurmukhi script or Roman transliteration, based on the recipient's name, your relationship to them, the tone you want and the age they are turning. Punjabi uses different forms of address for a friend, a sibling and an elder, so the wording changes with the relationship instead of just swapping the name. Every message is stored as a matched Gurmukhi-Roman pair, so switching script keeps the meaning identical.",
   useCases: [

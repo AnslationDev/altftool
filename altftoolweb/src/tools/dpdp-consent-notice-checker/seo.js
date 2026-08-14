@@ -1,4 +1,7 @@
 const seo = {
+  title: "DPDP Consent Notice Checker: 8-Point Coverage Scan",
+  metaDescription:
+    "Paste a consent notice to see which of eight DPDP signals - fiduciary, purpose, withdrawal, grievance - are missing. A drafting aid, not certification.",
   intro:
     "The DPDP Consent Notice Checker scans a pasted consent notice for the eight signals a notice under India's Digital Personal Data Protection Act is normally expected to carry — data fiduciary identity, the personal data described, the purpose, the consent action, a withdrawal route, a rights route, a grievance contact, and plain-language wording — and returns a coverage percentage plus a list of what is missing. Each check is a keyword match against your text, so the report tells you which sections a reviewer will look for and cannot find. It is a drafting and review aid for privacy and product teams, not a compliance certificate.",
   useCases: [

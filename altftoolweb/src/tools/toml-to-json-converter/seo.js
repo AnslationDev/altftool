@@ -1,4 +1,12 @@
 const seo = {
+  title: "TOML to JSON Converter (Strict TOML v1.0.0 Parser)",
+  metaDescription:
+    "Convert Cargo.toml, pyproject.toml or any TOML v1.0.0 to JSON — dotted keys, arrays of tables and date-times handled; parse errors report the line.",
+  steps: [
+    "Paste your TOML — Cargo.toml, pyproject.toml, netlify.toml — into the TOML input box; it converts live, and spec violations like duplicate keys fail with the line number reported.",
+    "Choose the JSON formatting: 2 spaces, 4 spaces, Tabs or Minified; the stats panel counts Keys converted, Tables, Arrays of tables and Output size in chars.",
+    "Read the substitution warnings (date-times become strings, inf/nan become null) and press Copy JSON to copy the RFC 8259 output.",
+  ],
   intro:
     "This converter parses TOML v1.0.0 — tables, arrays of tables, dotted keys, inline tables, multi-line strings and RFC 3339 date-times — and emits clean RFC 8259 JSON, entirely in your browser. Duplicate keys and redefined tables are rejected exactly as the TOML spec demands, so a file that converts here is a file a strict parser will accept. It is built for developers who need Cargo.toml, pyproject.toml, netlify.toml or any app config as JSON for scripts, APIs or schema validation.",
   useCases: [

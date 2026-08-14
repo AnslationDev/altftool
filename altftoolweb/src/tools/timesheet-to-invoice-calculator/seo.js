@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timesheet to Invoice Calculator with Billing Rounding",
+  metaDescription:
+    "Enter time as 7:30, 7.5 or 7h 30m, set a 6 to 60-minute billing increment, and get the total with per-task rates, discount before tax and expenses.",
+  steps: [
+    "Set Billing increment and Rounding rule, then type each task's time into Time logged as 7:30, 7.5, 7h 30m or 450m.",
+    "Press Add line for each extra task so it carries its own rate; the Invoice total recalculates as you type, with no submit button.",
+    "Read Hours billed after rounding against Hours logged, then press Copy summary to take the invoice breakdown.",
+  ],
   intro:
     "This calculator converts logged time into a billable invoice total in three stages: it parses entries written as 7:30, 7.5, 7h 30m or 450m into decimal hours, applies your contractual billing increment (6, 10, 15, 30 or 60 minutes, rounded up, down or to nearest), then prices each line at its own rate and adds discount, tax and pass-through expenses. Tax is charged on the taxable value after the discount and only on lines marked taxable, so reimbursed expenses are not taxed twice. It is aimed at consultants, agencies and contractors who bill by the hour across several tasks at different rates.",
   useCases: [

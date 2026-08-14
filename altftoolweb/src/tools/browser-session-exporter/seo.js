@@ -1,4 +1,7 @@
 const seo = {
+  title: "Tab List to Markdown, HTML or JSON Link Exporter",
+  metaDescription:
+    "Pulls every http and https link out of pasted text, drops duplicates, and exports a Markdown bullet list, an HTML anchor list or a JSON array.",
   intro:
     "Browser Session Exporter pulls every http and https link out of a block of pasted text — a tab list, a bookmark export, a chat log, a research dump — removes duplicates, and rewrites the result as a Markdown link list, an HTML <ul> of anchors, or a JSON array. It names each link from the label written before the URL on the same line, and falls back to the bare hostname with www. stripped when there is no label. The extracted list, the formatted code and the copy or download button are all there in one pass, so a messy paste becomes a tidy index without hand-editing.",
   useCases: [

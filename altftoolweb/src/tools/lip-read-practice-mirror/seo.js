@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lip-Read Practice Mirror: Zoom and Slow-Motion Replay",
+  metaDescription:
+    "Mirror your camera, magnify the mouth up to 4x, record a clip and replay it as slowly as 0.35x. The video stays in the tab and is never uploaded.",
+  steps: [
+    "Press \"Start camera\" and grant camera permission; the live feed appears flipped left-to-right like a mirror and the button changes to \"Stop camera\".",
+    "Drag the \"Mouth-area zoom\" slider between 1x and 4x (it starts at 1.6x) so the mouth fills the frame, then press \"Record short practice\" and \"Stop recording\" when the phrase is done.",
+    "Set \"Replay speed\" anywhere from 0.35x to 1x (0.60x by default) and the clip plays back below the live mirror at that rate — video only, held as a temporary in-page URL that is discarded when you leave.",
+  ],
   intro:
     "Lip-Read Practice Mirror shows your own camera feed flipped left-to-right like a mirror, magnified from 1× up to 4× so the mouth fills the frame, and can record a short clip that replays in slow motion between 0.35× and 1× normal speed. It is a practice aid for people learning to lip-read or working on their own mouth shapes with a speech therapist's exercises. The camera starts only when you press Start camera, and clips stay in the page as a temporary object URL — nothing is uploaded or saved to disk.",
   useCases: [

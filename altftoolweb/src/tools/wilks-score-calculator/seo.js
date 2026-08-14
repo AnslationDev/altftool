@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wilks Score Calculator – Original 1994 Coefficients",
+  metaDescription:
+    "Enter bodyweight, squat, bench and deadlift in kg or lb to get your Wilks coefficient and score, plus totals needed for 300, 400 and 500 at your weight.",
+  steps: [
+    "Choose Men or Women under Coefficient set and Kilograms or Pounds under Units, then enter your Bodyweight, Squat, Bench press and Deadlift.",
+    "The Wilks score recomputes as you type — your total multiplied by the 1994 Wilks coefficient — with a warning when your bodyweight falls outside the polynomial's fitted range.",
+    "Read the Total lifted, Wilks coefficient and Band rows, check 'Totals needed at this bodyweight' for the 300, 400 and 500 Wilks targets, and press Copy result.",
+  ],
   intro:
     "The Wilks score is a powerlifting total multiplied by a bodyweight coefficient, so lifters in different weight classes can be ranked on one scale. The coefficient comes from Robert Wilks' 1994 fifth-order polynomial, 500 ÷ (a + bx + cx² + dx³ + ex⁴ + fx⁵) with x as bodyweight in kilograms, and it has separate constants for men and women. Enter a squat, bench and deadlift in kilograms or pounds and this returns the coefficient, the score and the total needed for common targets.",
   useCases: [

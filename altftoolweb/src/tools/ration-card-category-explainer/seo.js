@@ -1,4 +1,12 @@
 const seo = {
+  title: "AAY vs Priority Household Ration Card Entitlement",
+  metaDescription:
+    "See what your card gives: 35 kg a household for AAY, 5 kg a person for PHH. Priced at NFSA rates of ₹3/kg rice and ₹2/kg wheat, and at market rates.",
+  steps: [
+    "Choose AAY, Priority Household or a non-NFSA state card in the 'Card category' dropdown, then enter 'Members listed on the card' (1 to 30).",
+    "Set 'Share drawn as rice (%)' — the remainder is counted as wheat — plus 'Market rice price (INR per kg)' and 'Market wheat price (INR per kg)'; every figure recalculates as you type, with no calculate button.",
+    "Read 'Monthly foodgrain entitlement' at the top, then the rows for 'Cost at NFSA issue prices', 'Cost under PMGKAY' and 'Same grain at market prices', and the table 'The same household under each category'. 'Copy result' copies the breakdown; Reset restores the defaults.",
+  ],
   intro:
     "This explainer sets out what each ration card category is worth under the National Food Security Act, 2013: an Antyodaya Anna Yojana card carries a flat 35 kg of foodgrain per household per month, a Priority Household card carries 5 kg per person per month, and a non-NFSA state card carries whatever the state decides. It converts your household size into the monthly and yearly quantity, prices it at the Schedule I rates of ₹3 a kg for rice and ₹2 for wheat, and shows what the same grain would cost in the open market.",
   useCases: [

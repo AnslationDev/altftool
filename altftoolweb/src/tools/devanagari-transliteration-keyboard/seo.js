@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roman Hindi to Devanagari Converter, Both Directions",
+  metaDescription:
+    "Rule-based conversion between Roman Hindi and Devanagari, with a keep-or-strip punctuation toggle and a count of the characters the rules changed.",
+  steps: [
+    "Choose a direction with the Roman → Devanagari or Devanagari → Roman tab, then type or paste into Source phrase — or load the Namaste Bharat or नमस्ते भारत preset.",
+    "Leave Preserve punctuation ticked to Keep spaces, digits, and punctuation, or untick it to strip everything except letters, combining marks and whitespace before conversion.",
+    "The Result panel shows the converted phrase with Input characters, Output characters and Rule substitutions; Copy puts it on the clipboard and Download saves devanagari-transliteration-keyboard.txt.",
+  ],
   intro:
     "The Devanagari Transliteration Keyboard converts text between Roman Hindi and Devanagari script using rule-based local mapping — a dictionary of common Hindi spellings in the Roman-to-Devanagari direction, and a character-by-character vowel, consonant, matra and anusvara map in the Devanagari-to-Roman direction. You can keep or strip spaces, digits and punctuation, and it reports the input length, output length and how many characters the rules changed. It is a quick script converter for short phrases, not a full Hindi input method, so names, conjuncts, schwa deletion and regional spellings will need manual correction.",
   useCases: [

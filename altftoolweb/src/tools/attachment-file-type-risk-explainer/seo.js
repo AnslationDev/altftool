@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Attachment Risk Check: Only the Last Extension",
+  metaDescription:
+    "Rates an attachment from its file name alone: last extension, Outlook's blocked list, .pdf.exe double extensions, RTL overrides. Nothing is uploaded.",
+  steps: [
+    "Type the Attachment file name exactly as your mail client shows it, or tap a sample such as Invoice_4471.pdf.exe.",
+    "Only the final extension is read; the check also looks for a second extension, right-to-left override characters and trailing spaces.",
+    "Read the Risk score out of 100 with its verdict, the Findings list and Safe handling for this file, then press Copy result.",
+  ],
   intro:
     "Attachment File Type Risk Explainer rates an email attachment from its file name alone, using the one rule that decides what happens on a double-click: only the final extension counts. It sorts extensions into programs, scripts, shortcuts, macro-capable documents, containers and inert data, marks the ones on Microsoft's default Outlook blocked-attachment list, and detects the disguises — a second extension such as .pdf.exe, a right-to-left override character, trailing spaces, or an archive wrapped inside another archive. Nothing is uploaded; the name is analysed in the browser.",
   useCases: [

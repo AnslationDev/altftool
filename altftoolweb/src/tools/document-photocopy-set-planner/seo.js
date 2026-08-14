@@ -1,4 +1,12 @@
 const seo = {
+  title: "Photocopy Set Planner for Admission Documents",
+  metaDescription:
+    "Total photocopy sets, pages, attested sets and cost across application, verification, counselling and joining stages, plus two spare sets.",
+  steps: [
+    "Name each stage and fill in Sets per application and Applications / rounds, ticking Needs attestation on the stages that demand attested copies; Add stage takes you up to 10 stages.",
+    "Set Pages in one set, Spare sets (2 by default) and Cost per page (INR).",
+    "Read Sets to prepare with the total pages and cost, check the Per-stage breakdown table, then press Copy plan.",
+  ],
   intro:
     "This planner computes how many photocopy sets of your documents an admission or recruitment process actually needs: for each stage it multiplies sets-per-application by the number of applications, sums across stages, adds the customary two spare sets, and converts the total into pages and copying cost. It also counts separately how many sets need attestation, since those require signatures before the day. It is built for students and job applicants juggling form submission, document verification, counselling rounds and joining formalities at once.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "CalVer Version Generator with calver.org Tokens",
+  metaDescription:
+    "Turn a release date into a CalVer number using YYYY, YY, 0M, WW, DD, MINOR and MODIFIER tokens, with Ubuntu-style presets and a six-release preview.",
+  steps: [
+    "Type a token Scheme such as YYYY.MM.MICRO, or click a preset chip — YY.0M (Ubuntu style), YYYY.MINOR (JetBrains style), YYYY.WW — then set the Release year, Month and Day.",
+    "Add the MINOR value and MICRO value counters and an optional MODIFIER such as beta1 or rc2.",
+    "Read the Generated version with its token breakdown and the \"Preview timeline — next six monthly releases\" table, then press Copy version.",
+  ],
   intro:
     "This generator turns a release date into a Calendar Versioning (CalVer) number using the token scheme defined at calver.org — YYYY, YY, 0Y, MM, 0M, WW, 0W, DD, 0D plus MINOR, MICRO and MODIFIER — so YYYY.MM.MICRO on a July 2026 release yields 2026.7.0. It is built for release managers choosing or applying a date-based scheme, and previews what the next six monthly releases will be numbered. Presets cover well-known schemes such as Ubuntu's YY.0M (24.04 = April 2024) and JetBrains' YYYY.MINOR.",
   useCases: [

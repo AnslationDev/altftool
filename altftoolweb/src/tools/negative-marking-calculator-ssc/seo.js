@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC Negative Marking Calculator — CGL & CHSL Net Score",
+  metaDescription:
+    "Net score under real SSC schemes — CGL Tier-I's −0.50 of 2 marks means four wrong answers erase one correct — plus marks lost and break-even accuracy.",
+  steps: [
+    "Pick an 'Exam' preset — SSC CGL Tier-I (100 Q × 2 marks, −0.50), CGL Tier-II Paper-I, CHSL Tier-I, CPO Paper-I, MTS — or a custom scheme.",
+    "Enter your 'Correct answers' and 'Wrong answers' counts (defaults 70 and 20).",
+    "Read 'Marks lost to wrong answers' with the net score, break-even guessing accuracy and the 'How the penalty compounds' table, then press 'Copy result'.",
+  ],
   intro:
     "This calculator quantifies what negative marking costs in SSC exams using the formula net score = correct × marks − wrong × penalty. SSC CGL and CHSL Tier-I deduct 0.50 of each question's 2 marks per wrong answer, CGL Tier-II deducts 1 of 3, and CPO deducts 0.25 of 1 — so in the Tier-I scheme every four wrong answers erase one correct answer. Aspirants get the marks lost, the net score, and the break-even accuracy that tells them when attempting a doubtful question still pays.",
   useCases: [

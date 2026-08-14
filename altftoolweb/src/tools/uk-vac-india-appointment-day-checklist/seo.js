@@ -1,4 +1,12 @@
 const seo = {
+  title: "UK Visa Centre India: What to Carry and When to Leave",
+  metaDescription:
+    "Work back from your slot to a leave-home time (15 min early plus travel and buffer), and get a route-specific list of what to carry and leave behind.",
+  steps: [
+    "Enter your \"Appointment slot (24-hour)\", \"Travel time door to centre (minutes)\" and \"Traffic and parking buffer (minutes)\", then choose the Visa route — Standard Visitor, Student / Child Student, Skilled Worker or Family / Spouse / Settlement — and the Applicant age band.",
+    "Tick the circumstances that apply: staying in the UK more than 6 months, holding old or cancelled passports, wearing glasses, fresh henna or mehndi on your hands, or someone coming with you.",
+    "\"Leave home by\" gives the departure time and the \"Be at the entrance by\" row; work through the Carry with you, Wear and grooming, \"Leave at home or in the car\" and \"Know before you go\" lists, then press \"Copy checklist\".",
+  ],
   intro:
     "This planner turns a UK visa application centre slot in India into a departure time and a route-specific packing list. It works backwards from the appointment using the 15-minute early arrival the centres ask for, adds your travel time and a traffic buffer, and then lists the documents, photo and biometric rules, and the items the centre will not let inside. Built for first-time applicants on the Standard Visitor, Student, Skilled Worker and family routes who get one slot and cannot afford to be turned away.",
   useCases: [

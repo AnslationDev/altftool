@@ -1,4 +1,12 @@
 const seo = {
+  title: "Percentage Change vs Difference Calculator, 6 Modes",
+  metaDescription:
+    "Percentage change divides by the old value, percentage difference by the average — two answers for one pair. Plus percent of, what percent and pp.",
+  steps: [
+    "Under 'What do you want to work out?' choose Percentage change, Percentage difference, Percent of a number, X is what percent of Y, Increase or decrease by, or Percentage points.",
+    "Fill the two fields the mode relabels — 'Old value (baseline)' and 'New value' for change, 'First percentage (%)' and 'Second percentage (%)' for points.",
+    "Read the headline figure with its supporting rows, such as absolute change, multiplier and the reverse change needed to undo it, then press Copy result.",
+  ],
   intro:
     "Percentage change measures a before-and-after move as (new − old) ÷ |old| × 100, while percentage difference compares two values with no baseline as |a − b| ÷ their average × 100 — two different formulas that give two different answers for the same pair of numbers. This calculator covers both, plus percent of a number, X is what percent of Y, applying an increase or decrease, and the percentage-point gap between two rates. Each result is shown with the formula that produced it, so the answer can be checked rather than trusted.",
   useCases: [

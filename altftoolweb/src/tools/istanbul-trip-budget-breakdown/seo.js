@@ -1,4 +1,12 @@
 const seo = {
+  title: "Istanbul Trip Budget: Lira and Rupee Cost Breakdown",
+  metaDescription:
+    "Price flights, stay, food, Istanbulkart rides and sights in lira and rupees, with a drift factor that nets Turkish inflation against the lira's fall.",
+  steps: [
+    "Choose Travel style (sets the starting rates) — Backpacker, Comfort or Premium — then Season (moves the room rate), How you pay in Türkiye with its markup percentage, Travellers and Nights in Istanbul",
+    "Enter Rupees per 1 lira (today's rate), Months until you travel, Turkish price inflation (% a month) and Lira fall against the rupee (% a month), then adjust the line rates: Room rate per night (₺), Istanbulkart rides per person per day, Fare per Istanbulkart ride (₺) and Contingency buffer (%)",
+    "Total trip cost updates above a Line / Lira / Rupees / Share table, with Drift factor to travel date, Cost of that drift, Effective rate after markup and drift and Lira to budget on the ground listed below; Copy result copies the breakdown and Reset restores the defaults",
+  ],
   intro:
     "This planner prices an Istanbul trip in lira for everything spent on the ground — room, food, Istanbulkart rides, sights and the bazaars — and in rupees for the flights, e-Visa and insurance, then converts the lira half at the rate you will actually get. It adds a step ordinary trip budgets skip: a drift factor of (1 + monthly inflation)^months ÷ (1 + monthly lira depreciation)^months, which nets Turkish price rises against the lira's fall so that a quote read today still means something on the day you travel. Transport is modelled as rides × fare plus the one-off card price, because that is how Istanbul actually charges.",
   useCases: [

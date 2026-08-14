@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Medical History Tree - Private Local Notes",
+  metaDescription:
+    "Record relatives and their conditions in this browser's local storage, search across them, and export or import the whole list as JSON.",
+  steps: [
+    "Type into the two boxes — Family member and Condition and relation — and press Add record; the entry is written to this browser's local storage under a key for this tool.",
+    "Use the Search records box to filter the Saved records list across both fields, and the Delete button on any card to remove one entry after confirming.",
+    "Export JSON downloads family-medical-history-tree.json, and Import JSON reads a JSON array back in, replacing every record currently saved here.",
+  ],
   intro:
     "The Family Medical History Tree is a private note-keeper for hereditary health history: each record pairs a family member with the conditions and relation you want to remember, and the whole list is held in this browser's local storage until you export it as JSON. Add relatives one at a time, search across everything you have entered, delete individual entries, and import a JSON file back on another device. It is for anyone assembling the family-history answers a new GP, specialist or genetic counsellor asks for, without typing them into a cloud account first.",
   useCases: [

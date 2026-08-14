@@ -1,4 +1,12 @@
 const seo = {
+  title: "Date & Time Converter: Units, Unix Timestamps, Formats",
+  metaDescription:
+    "Four panels convert time units, turn Unix timestamps into UTC/ISO 8601 dates and back, rewrite dates in eight formats, and give exact date differences.",
+  steps: [
+    "Pick a panel from the Time Units, Unix Timestamp, Date Format and Date Difference tabs.",
+    "Enter your value — a number with its unit, a Unix timestamp in seconds (or press Now), any date such as 2025-12-31, or a start and end date.",
+    "Results update as you type: all eight units, UTC/Local/ISO 8601 strings, eight date formats, or a years-months-days duration — each with its own Copy button.",
+  ],
   intro:
     "Date / Time Conversions is a four-panel converter that handles time units, Unix timestamps, date formats and date differences in one place. It converts between eight units from milliseconds to years, turns a Unix epoch seconds value into UTC, local and ISO 8601 strings and back, rewrites any parsed date into eight formats including ISO 8601, US, European and YYYYMMDD compact, and reports the gap between two dates as calendar years-months-days alongside exact days, hours, minutes and seconds.",
   useCases: [

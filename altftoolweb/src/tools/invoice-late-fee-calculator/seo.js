@@ -1,4 +1,12 @@
 const seo = {
+  title: "Invoice Late Fee Calculator: Interest by Day Count",
+  metaDescription:
+    "Price an overdue invoice on actual/365, actual/360 or 30/360, with grace days, fixed or % fees, and presets for 1.5%/month, UK, EU and MSMED terms.",
+  steps: [
+    "Choose a preset under \"Start from a known term set\" (1.5% a month, UK statutory, EU Directive 2011/7/EU, MSMED) or enter \"Invoice amount outstanding\", \"Due date\" and \"Payment date (or today, if unpaid)\".",
+    "Set \"Interest rate (% a year)\", \"Grace period (days)\", \"Day-count basis\", \"Interest accrual\", plus any \"Fixed / statutory fee\" or \"One-off penalty (% of invoice)\".",
+    "Read \"Total now payable\" with the \"Effective annual cost of the charge\" and \"Days counted for interest\", then press \"Copy result\".",
+  ],
   intro:
     "This calculator works out what an overdue invoice actually costs: interest for the days it ran late, plus any fixed or percentage late fee your terms allow. It applies the day-count basis you specify — actual/365, actual/360 or 30/360 US bond basis — and either simple interest or monthly or daily compounding, then shows the effective annual cost of the charge so you can see whether it is compensatory or punitive. Presets cover the common 1.5% a month US invoice term, the UK statutory formula of base rate plus 8 percentage points with fixed compensation of £40 to £100, EU Directive 2011/7/EU, and the Indian MSMED Act's monthly-rest interest.",
   useCases: [

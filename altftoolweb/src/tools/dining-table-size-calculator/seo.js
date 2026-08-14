@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dining Table Size Calculator: Seats, Clearance & Fit",
+  metaDescription:
+    "Size a rectangular, round or square table from 60–70 cm of edge per diner, add 90 cm chair clearance, and check the whole footprint fits your room.",
+  steps: [
+    "Enter Seats needed (2–20), pick the Table shape, and set Table edge per diner (cm) using the '60 cm — standard' or '70 cm — generous' preset buttons.",
+    "Type Room length (cm) and Room width (cm), and tick 'People walk behind seated diners' to plan 120 cm of clearance instead of 90 cm.",
+    "Read the Recommended table dimensions, the footprint with chairs pulled out and the largest table this room takes, then use Copy result to copy the plan as text.",
+  ],
   intro:
     "This dining table size calculator sizes a rectangular, round or square table from the run of table edge each diner needs — 60 cm as a minimum, 70 cm for comfort — and then adds the 90 cm of floor a chair needs behind the table edge to be pulled out and sat on. It reports the table dimensions, the full dining footprint with chairs out, and the largest table your room can actually take. Round tables are checked against the 150 cm reach limit beyond which nobody can serve themselves from the middle.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Firewood Cord Calculator: Species, Stove Efficiency",
+  metaDescription:
+    "Cords needed for a season from your species (13 to 32.9 MMBtu a cord) and stove efficiency, plus face cords, seasoned weight and stack length.",
+  steps: [
+    "Under Work it out from choose Heat I need for the season and give the figure with a Heat unit of MMBtu, kWh or GJ - or choose How much I actually burn and give Burning hours per day, Heating season (days) and Burn rate (kg of wood per hour).",
+    "Pick Wood species and Burning appliance from the lists, which show MMBtu per cord and efficiency, then set Log length / stack depth (inches), Stack height (feet) and Delivered price per full cord.",
+    "Read Firewood needed in full cords with the Face cords, Stacked volume, Seasoned weight, Stack length and Cost per delivered MMBtu rows, then press Copy result.",
+  ],
   intro:
     "This calculator works out how many cords of firewood a heating season needs, dividing the heat you must deliver by the heat content of a cord of your chosen species and the efficiency of your stove or fireplace. A full cord is the legal 128 cubic feet — a stack 4 ft high, 4 ft deep and 8 ft long — and species heat values are the published extension-service figures for wood seasoned to 20% moisture, from about 13 MMBtu per cord for cedar to 32.9 for osage orange. It also returns face cords at your log length, seasoned weight, stack length and cost per delivered MMBtu.",
   useCases: [

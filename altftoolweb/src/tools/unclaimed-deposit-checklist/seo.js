@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unclaimed Deposit Checklist: DEAF, IEPF and SCWF",
+  metaDescription:
+    "Enter the asset and its last activity date to see if the money sits with the bank, DEAF, IEPF or SCWF, plus the claim steps and papers to gather.",
+  steps: [
+    "Choose the asset under 'What are you tracing?', then set 'Date of last activity or maturity', 'Measure up to' and 'Approximate amount, if you know it (INR)'.",
+    "Tick 'The holder has died and I am claiming as nominee or legal heir' if it applies; the elapsed years are then tested against the two-year inoperative, ten-year DEAF, seven-year IEPF and ten-year SCWF clocks.",
+    "Read 'Where the money is now', 'Rule that governs it' and 'Estimated amount recoverable', tick off 'Your claim steps' as you complete them, then press 'Copy checklist' to take the steps and 'Papers to gather' with you.",
+  ],
   intro:
     "This checklist works out where forgotten money has gone and how to get it back: it measures how long an account, deposit, share folio, insurance benefit, EPF balance or mutual fund folio has been untouched, then applies the statutory clocks that move it out of the institution — two years to inoperative and ten years to RBI's Depositor Education and Awareness Fund for bank deposits, seven years to the Investor Education and Protection Fund for unclaimed dividends and shares under section 124 of the Companies Act 2013, and ten years to the Senior Citizens' Welfare Fund for unclaimed insurance amounts. It then produces the ordered claim steps and the exact papers that institution will ask for. Transfer to a fund never extinguishes the claim; it only changes who reimburses the payer.",
   useCases: [

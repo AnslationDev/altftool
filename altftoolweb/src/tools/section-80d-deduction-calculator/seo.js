@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 80D Calculator: Rs 25,000 / 50,000 Limits",
+  metaDescription:
+    "Work out your 80D deduction for self, family and parents with the Rs 25,000/50,000 limits, the Rs 5,000 preventive check-up cap and tax saved.",
+  steps: [
+    "Enter Premium paid (Rs), Preventive health check-up (Rs) and any Medical expenditure under Self, spouse and dependent children.",
+    "Tick the senior-citizen box to lift a bucket to Rs 50,000, switch on Claiming for parents, and choose your income tax slab rate.",
+    "Read the Deduction allowed figure with each bucket's claim, unused headroom and approximate tax saved, then press Copy result.",
+  ],
   "intro": "Section 80D Health Insurance Deduction Calculator adds up the medical insurance deduction you can claim under the old tax regime for FY 2025-26: up to Rs 25,000 for yourself, your spouse and dependent children, rising to Rs 50,000 if you or your spouse is 60 or older, plus a separate Rs 25,000 or Rs 50,000 bucket for parents. It also applies the Rs 5,000 preventive health check-up cap, which sits inside those limits rather than on top of them, and the medical-expenditure route open to uninsured senior citizens.",
   "useCases": [
     "A 35-year-old paying Rs 22,000 for a family floater and Rs 38,000 for senior-citizen parents, checking the combined claim.",

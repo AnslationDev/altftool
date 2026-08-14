@@ -1,4 +1,12 @@
 const seo = {
+  title: "Play Snake Water Gun Online vs a Random Computer",
+  metaDescription:
+    "Snake drinks water, water defeats gun, gun defeats snake. Play against a random computer with win rate, current and best streak tracked.",
+  steps: [
+    "Pick Snake, Water or Gun on the game board when it says 'Make your move'.",
+    "See both picks and who took the round — the computer draws uniformly at random each time.",
+    "Track Wins, Win Rate and best streak in the stats panel, then click 'Restart Match' for the next round or 'Reset Score' to start over.",
+  ],
   intro:
     "Snake Water Gun is the three-way playground game — snake beats water, water beats gun, gun beats snake — played here against a computer that picks uniformly at random each round. You choose one of the three, see both picks and who took the round, and the page keeps a running tally of wins, losses, draws, win rate, current streak and best streak. It is the same cycle as rock paper scissors, so every round is a one-in-three win, one-in-three loss, one-in-three draw against a random opponent.",
   useCases: [

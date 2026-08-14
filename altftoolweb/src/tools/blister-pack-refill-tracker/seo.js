@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blister Pack Refill Tracker: Run-Out & Reorder Dates",
+  metaDescription:
+    "Count your strips once to get the run-out date, a reorder-by date from lead time plus safety buffer, and how many packs the next order needs.",
+  steps: [
+    "Enter the strip count — Unopened strips left, Tablets on a full strip and Tablets left on part-used strips — plus the Date you counted them, Tablets per dose and Doses per day.",
+    "Set Days from ordering to receiving, Safety buffer in days and the Days of cover the next order should give; the tracker recalculates as you type, with no submit button.",
+    "Read the 'Supply runs out on' date, the Reorder by date and the packs to order, then press Copy plan to put the full refill plan on your clipboard.",
+  ],
   intro:
     "This tracker turns a physical tablet count into dates: divide the tablets you have on hand by the tablets you take a day to get the full days of cover, add that to the day you counted for the run-out date, then subtract the delivery lead time and a safety buffer to get the day the order has to be placed. It also works out how many whole packs the next order needs for a chosen period of cover. Count the strips once and you know both dates instead of discovering an empty strip on a Sunday evening.",
   useCases: [

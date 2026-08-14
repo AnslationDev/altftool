@@ -1,4 +1,7 @@
 const seo = {
+  title: "ASCII Table: All 128 Codes in Decimal, Hex, Oct, Binary",
+  metaDescription:
+    "Searchable 7-bit ASCII reference: all 128 codes in decimal, hex, octal and binary, named control characters, and character-to-code lookup both ways.",
   intro:
     "The ASCII Explorer is a searchable reference for all 128 characters of the 7-bit ASCII table, showing each code in decimal, hexadecimal, octal and 8-bit binary alongside its character and full name. Type a character to get its code, or a code from 0 to 127 to get the character, and the matching row scrolls into view and highlights. It is built for students, embedded and protocol developers, and anyone debugging a byte stream who needs to know what 0x0D or 65 actually is.",
   useCases: [

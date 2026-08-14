@@ -1,4 +1,12 @@
 const seo = {
+  title: "Alternate Nostril Breathing (Nadi Shodhana) Timer",
+  metaDescription:
+    "Paces each step of nadi shodhana — which nostril, which finger — with 1:1 through classical 1:4:2 ratios, round counting and your breaths per minute.",
+  steps: [
+    "Choose a Breathing ratio (inhale : hold : exhale): Equal breath 1:0:1 and Extended exhale 1:0:2 are labelled Beginner, Even with hold 1:1:1 Intermediate, and Classical 1:4:2 Advanced.",
+    "Set Seconds per count between 2 and 8 and Rounds between 1 and 20, then press Start — Pause and Resume hold your place mid-session.",
+    "Follow the step name and countdown while the left nostril and right nostril tiles show which is open or closed, and read Time left, One round, Total breaths and Breathing rate; Copy plan saves the session.",
+  ],
   intro:
     "Alternate nostril breathing, or nadi shodhana, is a pranayama practice in which one round consists of two breaths — in through the left nostril and out through the right, then in through the right and out through the left — with the fingers of the right hand opening and closing each side. This guide paces every step, tells you which nostril and which finger, and holds whichever ratio you pick, from the beginner 1:1 equal breath through to the classical 1:4:2 inhale-hold-exhale described in the Hatha Yoga Pradipika. It counts rounds and shows the resulting breathing rate so you can see when the practice has slowed you below ten breaths a minute.",
   useCases: [

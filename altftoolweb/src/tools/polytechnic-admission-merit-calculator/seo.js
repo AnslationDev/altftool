@@ -1,4 +1,12 @@
 const seo = {
+  title: "Polytechnic Merit Calculator: Class 10 Plus Entrance",
+  metaDescription:
+    "Merit = Class 10 % x weight + entrance % x the rest, out of 100. Presets cover Maharashtra DTE Class-10-only, JEECUP/JEXPO/DCECE entrance-only and 50:50.",
+  steps: [
+    "Enter \"Class 10 marks obtained\" and \"Class 10 maximum marks\", then the \"Entrance exam score\" and \"Entrance exam maximum\".",
+    "Set \"Weight given to Class 10 marks (%)\" or tap a preset such as \"Class 10 marks only (e.g. Maharashtra Poly / DTE)\" or \"Entrance exam only (e.g. JEECUP, JEXPO, DCECE)\".",
+    "Read the Merit index out of 100 with the Class 10 percentage, Entrance percentage and each weighted contribution listed separately, then press Copy result.",
+  ],
   intro:
     "This tool computes a polytechnic (engineering diploma) admission merit index as a weighted average on a 100-point scale: Class 10 percentage times its weight plus entrance-exam percentage times the remaining weight. That single formula covers the two models Indian states actually publish — pure qualifying-marks merit (Maharashtra DTE ranks on SSC percentage alone) and pure entrance merit (JEECUP, JEXPO, DCECE rank on the exam score). It is for Class 10 pass-outs estimating where they stand before diploma counselling.",
   useCases: [

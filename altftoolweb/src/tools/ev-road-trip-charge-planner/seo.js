@@ -1,4 +1,12 @@
 const seo = {
+  title: "EV Road-Trip Charge Planner: Stops, kWh and Reserve",
+  metaDescription:
+    "Enter each leg's distance and your kWh/100 km. It carries state of charge forward, adds a stop below your 80% target and totals the kWh.",
+  steps: [
+    "Type the route into the 'Route legs' box, one line per leg as 'Leg | distance km' — it opens with 'Home to Stop 1 | 180' and two more legs.",
+    "Set 'Usable battery (kWh)', 'Consumption (kWh/100 km)', 'Start state of charge (%)', 'Arrival reserve (%)' and 'Charge-to target at stops (%)' — 60, 18, 90, 15 and 80 by default; the result recomputes as you type.",
+    "Read the total shown as 'kWh planned stop charging' above a table of Leg, km, Energy, Arrival SOC, Reserve and Charge before next, then Copy or Download it as ev-road-trip-charge-planner.txt.",
+  ],
   intro:
     "This planner walks a road trip leg by leg and tracks state of charge: each leg's energy is distance × consumption in kWh/100 km, that energy is subtracted from the pack as a percentage, and wherever you would arrive below your charge-to target a stop is added to bring the battery back up to it. Every leg is flagged against the arrival reserve you set, and the kWh you will need to buy across all stops is totalled. It is for EV drivers sizing up a long trip before they leave, to see how many charging stops the route really needs.",
   useCases: [

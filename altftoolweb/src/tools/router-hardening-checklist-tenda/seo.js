@@ -1,4 +1,5 @@
 const seo = {
+  title: "Tenda Router Hardening Checklist: 18 Scored Steps",
   intro:
     "An eighteen-step, severity-weighted hardening pass for Tenda AC, F and N series routers and Nova mesh kits, built around the two things that make budget hardware different. First, Tenda's setup wizard offers to reuse the Wi-Fi password as the router login password, so on a default install everyone with the Wi-Fi key is an administrator. Second, the web interface has a long published record of buffer-overflow and command-injection flaws, several of which need no login at all, which makes firmware currency and WAN exposure the highest-value fixes. WPS, UPnP, port forwards, the cloud app account and the guest network are all scored, and the result stays capped while any critical item is open.",
   useCases: [

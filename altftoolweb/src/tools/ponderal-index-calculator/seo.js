@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ponderal Index Calculator: Weight / Height Cubed",
+  metaDescription:
+    "Ponderal index in kg/m3 shown next to BMI, so tall and short adults are not misread, plus the newborn 100 x g / cm3 form and its 2.2-3.0 range.",
+  steps: [
+    "Switch between Adult (kg / m3) and Newborn (100 x g / cm3) mode.",
+    "For an adult enter Height (cm) and Weight (kg), or swap to ft-in / lb; for a newborn enter Birth weight (g) and Crown-heel length (cm).",
+    "Read the ponderal index with its band alongside BMI and the equivalent weight ranges, then press Copy result.",
+  ],
   intro:
     "The ponderal index, also called Rohrer's index or the corpulence index, is weight in kilograms divided by height in metres cubed. Because human mass scales closer to the cube of height than the square, BMI drifts upward for tall people and downward for short people, and dividing by height cubed corrects that drift. This calculator returns the adult index in kg/m³ alongside BMI so the difference is visible, and includes the newborn form used in neonatology, 100 × birth weight in grams ÷ crown-heel length in cm³.",
   useCases: [

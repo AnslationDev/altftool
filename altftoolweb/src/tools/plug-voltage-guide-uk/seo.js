@@ -1,4 +1,12 @@
 const seo = {
+  title: "UK Plug and Voltage Guide: Type G, 230V, Fuse Size",
+  metaDescription:
+    "The UK runs 230 V, 50 Hz on BS 1363 type G sockets. Enter your plug and label voltage to see if an adapter is enough, plus the BS 1362 fuse to fit.",
+  steps: [
+    "Choose 'Plug on your device' from the plug-type list, or tap a preset such as Laptop charger or US hair dryer.",
+    "Enter 'Label minimum voltage (V)', 'Label maximum voltage (V)', the Label frequency and Rated power (W) printed on the plate.",
+    "Read the verdict for the UK with the current drawn at 230 V, the BS 1362 plug fuse to fit and the shaver-socket check, then press Copy result.",
+  ],
   intro:
     "This guide decides whether your device needs a plug adapter, a voltage converter, or nothing at all in the United Kingdom, and which fuse belongs in the plug. The UK supplies 230 V at 50 Hz on the shuttered BS 1363 socket — the three rectangular-pin type G pattern — and is one of the few countries where the plug itself carries a BS 1362 cartridge fuse sized to the appliance rather than the circuit. Enter your plug type and the voltage range printed on the label to get the verdict, the current drawn and the correct fuse rating.",
   useCases: [

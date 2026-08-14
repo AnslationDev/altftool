@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dino Run — Play the Dinosaur Endless Runner Game Online",
+  metaDescription:
+    "Jump cacti with space, duck pterodactyls with the down arrow. Speed climbs from 480 to 1,200 px/s as your score grows — no account, no download.",
+  steps: [
+    "Press space or tap the canvas at the \"SPACE / TAP TO PLAY\" screen to start the run.",
+    "Jump cacti with space or the up arrow and hold the down arrow to duck low-flying birds — on a phone use the JUMP and DUCK buttons under the canvas.",
+    "Watch the Score, High Score and Speed multiplier cards update as the game accelerates; at GAME OVER, press space or tap to restart.",
+  ],
   intro:
     "Dino Run is a canvas endless runner in the style of the offline dinosaur game: you jump cacti and duck under pterodactyls while the world scrolls faster the longer you survive. Speed starts at 480 pixels per second and rises by 28 for every 180 points, capping at 1,200 — two and a half times the opening pace — with obstacles spawning as often as every 0.52 seconds at high scores. Space or the up arrow jumps, the down arrow ducks, and on-screen buttons do the same on a phone.",
   useCases: [

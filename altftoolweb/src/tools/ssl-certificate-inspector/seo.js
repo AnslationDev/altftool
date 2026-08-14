@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSL Certificate Inspector: Decode PEM in Browser",
+  metaDescription:
+    "Paste a PEM certificate or chain to read subject, issuer, SANs, key size and expiry, with RFC 6125 hostname matching and the 398-day lifetime check.",
+  steps: [
+    "Paste the PEM block into Certificate or chain (PEM) — obtain one with openssl s_client -connect example.com:443 -showcerts.",
+    "Type the Hostname to check, set Check against date, and set Renewal warning (days before expiry), which starts at 30.",
+    "Read Days until expiry with Subject alternative names, Hostname match and Certificate lifetime, plus warnings on the 398-day maximum or a sub-2048-bit RSA key, then use Copy report.",
+  ],
   intro:
     "The SSL Certificate Inspector decodes a PEM-encoded X.509 certificate or chain in your browser and reports its subject, issuer, validity window, subject alternative names, key size and signature algorithm, then flags anything that would fail a modern TLS client. Checks follow RFC 5280 for the certificate structure, RFC 6125 for hostname and wildcard matching, and the CA/Browser Forum Baseline Requirements for the 398-day maximum lifetime and 2048-bit minimum RSA key. It is for developers and sysadmins debugging a certificate before or after deployment.",
   useCases: [

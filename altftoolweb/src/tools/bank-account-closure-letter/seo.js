@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Account Closure Letter with Enclosure List",
+  metaDescription:
+    "Writes a signed closure request for a savings, current, salary or NRE/NRO account, with payout instructions and the 14-day and 12-month charge check.",
+  steps: [
+    "Pick an Account type — Savings, Current, Salary, NRE, NRO, Joint savings or Basic savings (BSBDA) — and a reason, then fill the Account opening date, Date of this request, Last customer transaction and Closing balance.",
+    "Set 'Pay the balance by' to NEFT to another account, Banker's cheque / demand draft or Cash at the counter with the destination bank, account number and IFSC, and tick the enclosures: unused cheque leaves, the debit card, passbook, self-attested KYC copies, the bank's own closure form and a cancelled cheque.",
+    "'Closure charge you should expect' places the account against the 14-day free window and the 12-month band and dates when it would turn inoperative or go to the DEA Fund; 'Your closure letter' renders below with a word count, and Copy letter puts it on the clipboard.",
+  ],
   intro:
     "A bank account closure letter is the signed instruction you give your branch manager to shut a savings, current, salary or NRE/NRO account and pay out the remaining balance. This builder assembles that letter with the account number, closing balance, how you want the money paid, and the list of enclosures branches insist on — unused cheque leaves, the debit card, the passbook and the bank's own closure form. It also places your account in the right closure-charge band, since most Indian banks waive the charge within 14 days of opening and again once the account has run 12 months.",
   useCases: [

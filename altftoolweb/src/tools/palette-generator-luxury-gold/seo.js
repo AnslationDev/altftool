@@ -1,4 +1,12 @@
 const seo = {
+  title: "Luxury Gold Palette Generator with CMYK Ink Limits",
+  metaDescription:
+    "Six-role gold and dark-neutral palettes, every text pair scored against WCAG 2.x, plus a CMYK build and a 300%/260% ink-coverage check.",
+  steps: [
+    "Choose a Metal tone such as Classic 24ct gold and a Dark ground such as Obsidian black, then set Hue rotation (degrees) if you want to shift it.",
+    "Set Paper stock (ink limit) to Coated — 300% limit or Uncoated — 260% limit, and press Next variation to step through the six deterministic variants.",
+    "Read Pairings meeting their WCAG threshold with the Contrast audit table and CMYK builds, then press Copy CSS for custom properties.",
+  ],
   intro:
     "The Luxury Gold Palette Generator builds a six-role colour system — page ground, card surface, gold, gold highlight, champagne and ink — from a chosen metal tone and dark neutral, then audits every text pairing with the WCAG 2.x relative-luminance contrast formula. Each swatch also gets a CMYK build and a total-area-coverage figure so you can see whether it prints inside the usual 300% coated or 260% uncoated ink limit. It is aimed at designers working on packaging, invitations, spirits labels and premium brand sites where the same gold has to survive both a screen and a foil-stamped press sheet.",
   useCases: [

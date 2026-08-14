@@ -4,6 +4,9 @@
 // utils/imageAnalysis.js's computeAllSimilarity() overall-score formula — keep them in sync
 // if that formula's weights ever change.
 const seo = {
+  title: "Logo Similarity Checker: 0-100 Score on 8 Signals",
+  metaDescription:
+    "Compare two logos on pixel, Sobel edge, histogram, symmetry and four more signals for a 0-100 score plus a k-means palette match, in your browser.",
   intro:
     "Logo Similarity Checker scores how closely two logo images resemble each other by comparing them on eight weighted visual signals — pixel-level RGB distance, Sobel edge structure, a 256-bin grayscale histogram, horizontal symmetry, aspect ratio, brightness, contrast and edge complexity — and rolls them into a single 0-100 similarity score. Both images are downscaled to 256px on a canvas and analysed in the page, so nothing about an unreleased mark leaves the device. Designers, founders and brand reviewers get a per-dimension breakdown (shape, colour, layout, symmetry) plus a k-means palette match instead of a gut-feel yes or no.",
   useCases: [

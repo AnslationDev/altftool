@@ -1,4 +1,12 @@
 const seo = {
+  title: "MCP Permission Diff Auditor for Manifest Upgrades",
+  metaDescription:
+    "Paste two MCP tool manifests as JSON and see added, removed and changed tools, scored against seven keyword risk rules. Nothing is uploaded or executed.",
+  steps: [
+    "Paste the installed JSON into Previous manifest and the upgrade into Proposed manifest, or press Load safe demo for the sample pair.",
+    "Press Swap versions if they are the wrong way round — the diff normalises names, descriptions, input schemas and annotations before comparing.",
+    "Read the Added, Removed, Changed, High risk and Unchanged counts with each tool's risk badge, then Copy report or Download report as mcp-permission-diff-audit.txt.",
+  ],
   intro:
     "The MCP Permission Diff Auditor compares two Model Context Protocol tool manifests side by side and reports which tools were added, removed or changed, then flags each addition and change against seven keyword risk rules covering destructive actions, code execution, external writes, filesystem writes, network access, sensitive-data access and broad reads. It is for anyone about to upgrade an MCP server and wanting to know what new capabilities the new version quietly grants. Both manifests are parsed and diffed in your browser — nothing is uploaded and no MCP server is contacted or executed.",
   useCases: [

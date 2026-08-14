@@ -1,4 +1,12 @@
 const seo = {
+  title: "Swimming Calorie Calculator: MET by Stroke and Pace",
+  metaDescription:
+    "Estimate swim calories with the ACSM MET formula: 11 stroke options, gross and net kcal, pace per 100 m and calories per length.",
+  steps: [
+    "Set Body weight with the kg or lb unit dropdown and Time in the water (minutes), or tap the 15, 30, 45 or 60 min preset, then add Lengths swum (optional) and Pool length (metres)",
+    "Pick from Stroke and effort, an 11-option list that prints each option's Compendium MET beside it, from Treading water, moderate effort at 3.5 MET to Butterfly, general at 13.8 MET; there is no calculate button, the figures recompute as you type",
+    "Calories burned shows the gross kcal, with Net calories (resting burn removed), Burn rate, Pace, Calories per 100 m and Calories per length beneath it plus a Same session, other strokes table; Copy result puts the summary on the clipboard and Reset restores the 70 kg defaults",
+  ],
   intro:
     "This calculator estimates the energy cost of a swim from the MET value of your stroke and effort, using the ACSM formula kcal/min = MET × 3.5 × body-mass-in-kg ÷ 200. Pick a stroke — the MET values come from the 2011 Compendium of Physical Activities, water-activity category 18, ranging from 3.5 for moderate treading to 13.8 for butterfly — enter your weight and minutes in the water, and optionally your lengths and pool length to get distance, pace per 100 m and calories per length. It reports both gross calories and net calories with the resting 1 MET removed, which is the figure to use when comparing a swim against food.",
   useCases: [

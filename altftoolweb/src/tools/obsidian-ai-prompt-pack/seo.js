@@ -1,4 +1,12 @@
 const seo = {
+  title: "Obsidian AI Prompt Pack: 12 Prompts + Syntax Checker",
+  metaDescription:
+    "Twelve Obsidian prompts for linking, splitting and weekly review, with a live checker for wikilinks, tags, forbidden filename characters and date tokens.",
+  steps: [
+    "Under \"Fill the slots\" enter a Vault name plus Topic, Note title, Date range, Frontmatter properties and Max flashcards — anything left blank is pasted through as a {{placeholder}}.",
+    "Under \"Choose your prompts\" tick the prompts you want from the Linking, Structure, Review and Research groups; the Pack size figure updates to show how many prompts and words are ready to paste.",
+    "\"Your pack\" shows the combined text and \"Copy pack\" copies it, while the \"Vault syntax checker\" previews the daily note file name from your Daily note format and Sample date, the Wikilink built from Link to note / Heading / Alias, and whether your Tag is valid.",
+  ],
   intro:
     "Obsidian AI Prompt Pack is a set of twelve ready prompts for the work a vault actually needs — surfacing links you have not made, splitting overgrown notes into atomic ones, consolidating duplicate tags, and reviewing a week of daily notes honestly. Each prompt carries its own constraints, and the page includes a live checker for Obsidian's real syntax rules: the characters forbidden in file names, wikilink forms such as [[Note#Heading]] and [[Note#^blockId|Alias]], tag rules, and daily note date tokens like YYYY-MM-DD. It is for people whose vault has quietly become a folder of orphaned notes.",
   useCases: [

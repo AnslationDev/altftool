@@ -1,4 +1,12 @@
 const seo = {
+  title: "Terraform required_providers Block Generator",
+  metaDescription:
+    "Builds the terraform block, required_providers map and provider blocks with registry source addresses, ~> or >= constraints and alias configurations.",
+  steps: [
+    "Pick a provider or \"Custom provider\", then set its local name, source address such as hashicorp/aws, and version.",
+    "Choose the constraint style, pessimistic ~> or minimum >=, and press \"Add aliased configuration\" for a second region.",
+    "Read the generated configuration, formatted the way terraform fmt leaves it, and press Copy HCL.",
+  ],
   intro:
     "The Terraform Provider Block Generator writes the terraform block, the required_providers map and every matching provider block for you, complete with registry source addresses, version constraints and alias configurations. It follows the Terraform language rules exactly: a source address is [hostname/]namespace/type and defaults to registry.terraform.io, one provider block per provider may omit alias and become the default, and reusable child modules declare configuration_aliases instead of writing their own provider blocks. Output is formatted the way terraform fmt would leave it, with the = signs of consecutive arguments aligned.",
   useCases: [

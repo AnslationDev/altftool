@@ -1,4 +1,12 @@
 const seo = {
+  title: "npm vs pnpm vs Yarn: Feature & Command Comparison",
+  metaDescription:
+    "Tick what your project needs — disk, monorepo scale, strictness — to rank npm, pnpm and Yarn Berry, with a fact table and command cheat sheet.",
+  steps: [
+    "Tick the checkboxes under 'What matters for your project?' — leaving nothing ticked makes all six criteria count equally.",
+    "Compare the 'Feature comparison' table across lockfile, install strategy, disk usage, workspaces, strictness and patching, plus the 'Command cheat sheet' of npm/pnpm/yarn equivalents.",
+    "Read 'Best fit for your criteria' with each manager's score and per-point reasons, then press 'Copy ranking'.",
+  ],
   intro:
     "This comparison puts npm, pnpm and Yarn (Berry) side by side on the things that actually differ: install strategy (flat copies vs a hard-linked content-addressable store vs Plug'n'Play zips), lockfile formats, disk usage, phantom-dependency strictness and workspace tooling. Tick the criteria that matter to your project — disk, speed, compatibility, monorepo scale, strictness or zero setup — and get a ranked recommendation with the mechanism behind each score, plus a command cheat sheet for switching.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Button Size Checker: WCAG 2.5.8, 44px AAA, 48dp",
+  metaDescription:
+    "Computes a button's real box from font size, line height, padding and border, checks it against 24px AA, 44px AAA, Apple 44pt and Material 48dp.",
+  steps: [
+    "Enter 'Label font size (px)', 'Line height (unitless)', 'Vertical padding (px)', 'Horizontal padding (px)', 'Border width (px)' and 'Label characters (0 for icon only)'.",
+    "Add 'Gap to the next target, across (px)' and the gap down to test the SC 2.5.8 spacing exception, and name the 'CSS selector' for the output rule.",
+    "Read the 'Rendered button box' against all four standards with the per-edge padding needed to clear the strictest, then press 'Copy CSS'.",
+  ],
   intro:
     "The Button Minimum Size Spec Generator computes the real rendered box of a button from its font size, line height, padding, border and icon, then checks that box against four target-size rules: WCAG 2.2 SC 2.5.8 (24 by 24 CSS pixels, Level AA), WCAG 2.1 SC 2.5.5 (44 by 44, Level AAA), the Apple Human Interface Guidelines 44 by 44 pt tap target, and Material Design's 48 by 48 dp touch target. It also models the SC 2.5.8 spacing exception, which lets an undersized target conform when adjacent targets are far enough apart, and reports the exact padding needed to clear whichever standard you are aiming at.",
   useCases: [

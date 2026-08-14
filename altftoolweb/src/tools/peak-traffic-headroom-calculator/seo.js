@@ -1,4 +1,12 @@
 const seo = {
+  title: "Peak Traffic Headroom Calculator: Size Servers for Spikes",
+  metaDescription:
+    "Project sale-day peak req/s from baseline x peak ratio x spike x growth, then get the instance count at your target utilization plus N+1 redundancy.",
+  steps: [
+    "Enter \"Baseline average traffic (req/s)\", the \"Daily peak-to-average ratio\", the \"Event spike multiplier\" and \"Growth until the event (%)\".",
+    "Set \"Capacity of one instance (req/s)\", \"Target peak utilization (%)\" and \"Redundancy instances (N+R)\", plus \"Instances running today\" for the gap analysis.",
+    "Read \"Instances to run for the event\", \"Current headroom at projected peak\" and \"Additional instances needed\", then click \"Copy result\".",
+  ],
   intro:
     "This calculator computes the peak request rate a sale day, campaign or viral spike will produce and the number of instances needed to serve it at a safe utilization. It uses the standard capacity-planning chain — baseline traffic x daily peak-to-average ratio x event spike multiplier x growth, divided by a target peak utilization such as 60% — plus N+1 redundancy. It is built for engineers and SREs sizing a fleet before Black Friday, a product launch or a marketing push.",
   useCases: [

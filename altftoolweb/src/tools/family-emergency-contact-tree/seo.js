@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Emergency Contact Tree With Call Priority",
+  metaDescription:
+    "Turn one pipe-separated line per contact into a printable seven-column tree — priority, backup number, responsibility — and count the unfinished rows.",
+  steps: [
+    "In Records (one per line), type one contact per line with the seven fields separated by a pipe: Priority | Person / service | Relationship / role | Primary contact | Backup contact | Responsibility | Offline note.",
+    "Leave Require complete rows ticked so Flag missing columns counts every line with a blank field, or load the Example records preset to see the layout first.",
+    "The Structured inventory panel reports Complete rows, Needs review and Columns above the table of the first 100 records; Copy puts it on the clipboard and Download saves family-emergency-contact-tree.txt.",
+  ],
   intro:
     "The Family Emergency Contact Tree turns one pipe-separated line per contact into a structured seven-column table — Priority, Person or service, Relationship or role, Primary contact, Backup contact, Responsibility and Offline note — and counts how many rows are complete versus how many are missing a column. Type or paste your household's call list, leave the completeness check on, and you get a printable tree plus a count of the rows that still need filling in. It is for families, carers and flat-shares who want one agreed order of who is called first and who does what, in a form that still works when the phone is dead.",
   useCases: [

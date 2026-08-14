@@ -1,4 +1,12 @@
 const seo = {
+  title: "Madhubani Motifs: 27 Meanings & Panel Grid Planner",
+  metaDescription:
+    "27 Mithila motifs with Maithili names, meanings and occasions, plus a planner turning sheet size, border and grid into exact cell sizes and a motif order.",
+  steps: [
+    "Enter Sheet width and height in cm, the Border band on each side, and the Rows and Columns of motifs, then choose an Occasion: Wedding kohbar, Festival panel, Household and threshold or Nature panel.",
+    "Read the size of each motif cell in cm, with the field inside the border, the cell aspect ratio, the border's share of the sheet and the running border length to draw.",
+    "Work down the motif order table — cell references from R1C1, each motif's name, its Maithili name and what it stands for — pressing Reshuffle for another order, or filter the 27-motif reference by theme and style.",
+  ],
   intro:
     "Madhubani, or Mithila painting, builds a picture from named motifs — the lotus, the bamboo, paired fish, the guardian eyes — each of which carries a fixed meaning in the region's ritual practice. This explorer lists 27 motifs with their Maithili names, what each stands for, the occasion it belongs to and how it is normally drawn, alongside the six recognised styles from Bharni and Kachni to Godna and Kohbar. It also plans a panel: enter a sheet size, border width and grid, and it returns the exact cell measurements, the border's share of the sheet and a motif order for your occasion.",
   useCases: [

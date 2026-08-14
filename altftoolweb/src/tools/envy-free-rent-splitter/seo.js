@@ -1,4 +1,12 @@
 const seo = {
+  title: "Envy-Free Rent Splitter by Room Preference Scores",
+  metaDescription:
+    "Enter total rent, housemates and each person's room scores: it tests every assignment, picks the max-min match and splits rent to sum to your total.",
+  steps: [
+    "Enter the Total rent, list housemates one per line under People, and fill 'Rooms and preference values' as 'Room | value by person 1 | person 2 | …', with each person's values totalling 100.",
+    "The result recomputes as you type: every permutation of people to rooms is scored, the assignment with the highest minimum score wins, and ties break on the highest combined score — press the 'Three people' chip under Examples to load a worked set.",
+    "Read the Person / Room / Preference / Suggested share table — shares run inversely to each person's score for their room and are rescaled to sum to the rent you entered — then Copy or Download it.",
+  ],
   intro:
     "This rent splitter takes a total rent, a list of housemates and each person's preference score for every room, then tests every possible room assignment and keeps the one with the highest minimum score — the max-min rule — breaking ties by the highest total score. Rent is then divided in inverse proportion to how strongly each person rated the room they were given, rescaled so the individual shares add back to exactly the rent you entered. It is for a group moving into a flat with unequal rooms who want the split argued from numbers rather than from who spoke loudest.",
   useCases: [

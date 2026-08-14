@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON to TOML Converter — Tables & Array-of-Tables Output",
+  metaDescription:
+    "Convert JSON to TOML v1.0.0 with [table] sections, [[array of tables]] and quoted keys. Choose to omit or fail on nulls, since TOML has no null.",
+  steps: [
+    "Paste your JSON into the JSON input box — the root must be an object, and an example config is loaded for you to replace.",
+    "Pick a policy under \"Null values (TOML has no null)\": \"Omit null keys (report them)\" or \"Fail on null values\". The TOML output updates as you type, with counts of keys converted, tables and array-of-table entries.",
+    "Press Copy TOML to copy the converted document, or Reset to restore the example JSON.",
+  ],
   intro:
     "This converter serializes JSON into idiomatic TOML v1.0.0 — nested objects become [table] headers, arrays of objects become [[array of tables]] blocks, and keys outside the bare-key alphabet are emitted as quoted keys with correct escaping. Because TOML has no null, the tool makes null handling explicit: omit the key with a report, or fail the conversion. It is built for developers moving app config from JSON into TOML files such as pyproject.toml, Cargo.toml or netlify.toml.",
   useCases: [

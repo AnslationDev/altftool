@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Vendor Due Diligence Checklist: Questions to Ask",
+  metaDescription:
+    "Generate must-ask and recommended questions on training data, retention, subprocessors, SOC 2 / ISO 27001 / ISO 42001 and GDPR exit terms.",
+  steps: [
+    "Choose from the Vendor type dropdown — Foundation model API provider, SaaS product with AI features or Custom AI development / consultancy — and set Data sensitivity anywhere from Public / non-sensitive data to Regulated data (health, financial, children's).",
+    "Tick EU personal data involved so the GDPR Article 28 processor-terms and transfer questions are promoted to must-ask, and Regulated industry (health, finance, insurance) if it applies.",
+    "The Questions generated count updates immediately, split into Must ask and Recommended badges under category headings, and Copy as Markdown puts the whole checklist on the clipboard.",
+  ],
   intro:
     "The AI Vendor Due Diligence Checklist generates the specific questions to ask an AI vendor before signing — covering data handling and retention, training on your data, subprocessors and model provenance, security certifications (SOC 2 Type II, ISO/IEC 27001, ISO/IEC 42001), GDPR processor terms and exit rights. Questions are tailored to your vendor type and data sensitivity, and split into must-ask and recommended. It is built for procurement leads, security reviewers and founders evaluating model APIs, AI-enabled SaaS or custom AI development partners.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quit Smoking Tracker: Days, Money and Milestones",
+  metaDescription:
+    "Set your quit date to count cigarettes not smoked, money saved and 11 recovery milestones from 20 minutes to 15 years, with a 3-minute craving timer.",
+  steps: [
+    "Set Quit date and time, or tap a preset such as \"1 week ago\", then enter Cigarettes per day, Cost per pack and Cigarettes per pack.",
+    "Watch the smoke-free clock and the \"Next up\" milestone bar while Cigarettes not smoked, Money saved and Life regained update live.",
+    "When an urge hits, press \"I'm craving right now\" to run the 3-minute timer, or press Copy progress to save your totals.",
+  ],
   intro:
     "The Quit Smoking Tracker counts the time since your quit moment to the second, then turns your usual habit into three running totals: cigarettes not smoked, money kept, and life-time regained at the widely cited estimate of about 11 minutes per cigarette. It also unlocks eleven recovery milestones as you pass them, from 20 minutes when heart rate and blood pressure start dropping through to 15 years, and includes a 3-minute craving timer for the moment an urge hits. Everything is saved in your own browser, and it is general health information rather than medical advice - talk to a doctor or a quitline about medication and support.",
   useCases: [

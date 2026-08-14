@@ -1,4 +1,12 @@
 const seo = {
+  title: "Running Feet to Sqft: Sq Ft = Running Feet x Height",
+  metaDescription:
+    "Running feet is only an area once you add the unit height. Convert each kitchen or wardrobe run, then compare a per-rft quote with a per-sqft one.",
+  steps: [
+    "Enter running feet and height (ft) for each run — Kitchen base unit, Kitchen wall unit, Tall / larder unit, Wardrobe, Loft storage, TV unit — leaving unused rows at 0.",
+    "Under The two quotes, enter the Rate per running foot and the Rate per square foot you were given.",
+    "Read Total area in sq ft with total running feet, both quote totals, the blended per-sq-ft and per-rft equivalents, and which quote is cheaper.",
+  ],
   intro:
     "Running feet is a length along the wall, not an area: square feet equals running feet multiplied by the height of the unit. This converter takes each run of a modular kitchen or wardrobe job, turns it into square feet and square metres, and then prices the same job twice — once at a rate per running foot and once at a rate per square foot — so two quotes written in different units can finally be compared. It also shows what a flat per-running-foot rate really charges per square foot on each run, which is where a 2.5 ft base unit and a 7 ft wardrobe differ sharply.",
   useCases: [

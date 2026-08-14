@@ -1,4 +1,12 @@
 const seo = {
+  title: "Clinical Weight Converter: kg, g, lb oz and st lb",
+  metaDescription:
+    "Convert body weight with the exact 0.45359237 kg pound, using newborn 5 g, infant 10 g or adult 0.1 kg recording steps, with the shift shown in grams.",
+  steps: [
+    "Set \"How the weight was recorded\" to Kilograms, Grams, Pounds (decimal), Pounds and ounces, or Stones and pounds.",
+    "Type the reading into the field or pair of fields that appears, then pick a Recording precision: No rounding — exact value, Newborn — nearest 5 g, Infant under 1 year — nearest 10 g, or Child or adult — nearest 0.1 kg.",
+    "Read all five formats side by side plus \"Exact value before rounding\" and \"Shift caused by rounding\" in grams, then press Copy result.",
+  ],
   intro:
     "The Clinical Weight Converter changes a body weight between kilograms, grams, decimal pounds, pounds-and-ounces and stones-and-pounds using the exact international pound of 0.45359237 kg and the 14-pound stone. It also applies the recording step that matches the age group — nearest 5 g for a newborn, nearest 10 g for an infant, nearest 0.1 kg for a child or adult — and shows how many grams that rounding moved the figure. It is aimed at anyone filling in a clinical form, a growth chart or a dosing calculation where the units on the scale and on the paperwork differ.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Password Sharing Plan: 19 Logins, 4 Routes",
+  metaDescription:
+    "Sort 19 household logins into joint account, shared vault, emergency access or individual only — and see which ones you're over-sharing today.",
+  steps: [
+    "Set Adults (1–12) and Teenagers with their own logins (0–12), then tick \"We use a password manager with shared collections\" and \"Emergency access or a legacy contact is already nominated\" if they apply.",
+    "Under \"How you handle each login today\", set each of the 19 credentials to how your household handles it now: Joint household account, Shared password-manager collection, Individual with emergency access, Individual only never shared, or Sent by message, email or written down.",
+    "Read the Plan alignment percentage alongside the \"Shared but should not be\" and \"Needed if someone is unavailable\" counts, work down the ranked \"Changes to make\" list, then press Copy plan.",
+  ],
   intro:
     "Shared Family Password Plan Builder sorts 19 common household logins into four handling routes — a joint account in both names, a shared password-manager collection, an individual login with emergency access, or individual only — and scores how closely your current habits match. The split follows one rule: personally-held credentials such as bank, tax and medical logins are never shared, because provider terms require non-disclosure and the correct route is the provider's own mechanism, a joint account, a third-party mandate or a power of attorney. Everything genuinely shared belongs in a vault collection you can revoke, not in a message thread.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "RRB Exam Countdown: NTPC, Group D, ALP and JE Dates",
+  metaDescription:
+    "Count down to your RRB stage date, get today's new learning, revision and mock split, and net scores after one-third negative marking.",
+  steps: [
+    "Choose your RRB recruitment (NTPC, Group D, ALP or JE), set Today's date and each stage date, then enter the Whole preparation window (days) and Study hours a day.",
+    "The countdown returns days to the next stage plus a Preparation phase, and splits the day into 'New learning today', 'Practice & revision today' and 'Mocks & analysis today' as percentages and hours.",
+    "Enter 'Questions you plan to attempt' and 'Accuracy in mocks (%)' to get the expected net score after the one-third negative marking deduction and the break-even accuracy, then press 'Copy result'.",
+  ],
   intro:
     "This countdown tracks RRB NTPC, Group D, ALP and JE stage dates and converts the days remaining into a preparation phase and a daily study split. As the window closes, the share of the day given to new chapters falls from 60 percent to nothing while mocks rise from 10 percent to half the day, following a straight line through your preparation window. It also applies the one third negative marking used in every RRB computer based test to show what a given attempt count and accuracy actually produce as a net score.",
   useCases: [

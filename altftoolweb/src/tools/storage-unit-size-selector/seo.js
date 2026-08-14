@@ -1,4 +1,12 @@
 const seo = {
+  title: "Storage Unit Size Calculator by Cubic Feet, Not Area",
+  metaDescription:
+    "Adds your furniture and cartons in cu ft, subtracts 18 in of sprinkler clearance and an access factor, then names the smallest unit that fits.",
+  steps: [
+    "Under What are you storing? enter counts for items like Double / queen bed with mattress (60 cu ft) and Refrigerator, plus Cartons (any size).",
+    "Set Ceiling height to 8, 9 or 10 ft, answer How much access do you need?, and enter your Quoted rent (₹ per sq ft per month).",
+    "Read the Recommended unit from a 5 x 5 ft locker up to 10 x 30 ft with its usable cu ft, fill percentage and monthly rent, then press Copy result.",
+  ],
   intro:
     "This selector sizes a self-storage unit by volume rather than by the floor area operators advertise. It adds the packed cube of your furniture, appliances and cartons, then compares it against each standard footprint — 5x5 through 10x30 — after subtracting the 18 inches of sprinkler clearance that must stay free above a stack and applying an access factor for how often you plan to open the door: about 90% of the stackable cube when packed solid, 75% with a narrow path, and 60% for a working store with a clear walkway. Enter your quoted rate per square foot and it prices every size for comparison.",
   useCases: [

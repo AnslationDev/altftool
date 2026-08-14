@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paraphrasing Tool: Rule-Based Rewrites in 4 Modes",
+  metaDescription:
+    "Rewrite text with a 39-word synonym dictionary and four modes - Standard, Formal, Simple, Creative. No language model, no network request.",
+  steps: [
+    "Paste your text into Original Text, or press Load Sample; the word count sits under the box.",
+    "Under Paraphrasing Mode pick Standard, Formal, Simple or Creative, then press Paraphrase.",
+    "Paraphrased Text fills the right-hand panel - press Paraphrase again for a fresh draw from each word's four alternatives, Copy to take it, or Clear to empty both boxes.",
+  ],
   intro:
     "This paraphrasing tool rewrites text by substituting synonyms from a built-in dictionary of 39 common words — each with four alternatives — and then applying a set of rules chosen by mode: Formal expands contractions, Simple swaps inflated words such as utilize and facilitate back to use and help, and Creative adds connectives between sentences. Everything runs as plain text rules in your browser, with no language model and no request to a server, so the same input can be rewritten again and again for different wording. It suits writers who want a fast first pass at varying repetitive phrasing, not a replacement for editing the sentence yourself.",
   useCases: [

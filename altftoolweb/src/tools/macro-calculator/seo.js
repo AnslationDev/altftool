@@ -1,4 +1,12 @@
 const seo = {
+  title: "Macro Calculator: Protein, Carb & Fat Grams a Day",
+  metaDescription:
+    "Mifflin-St Jeor BMR x an activity factor of 1.2-1.9, then ±250 or ±500 kcal, split into protein, carb and fat grams at 4/4/9 calories per gram.",
+  steps: [
+    "Enter Age, Gender, Weight (kg) and Height (cm), then pick the BMR Formula — Mifflin-St Jeor (Default), Harris-Benedict, or Katch-McArdle, which reveals a Body Fat % field and works from lean body mass.",
+    "Choose an Activity Level from Sedentary (Little or no exercise) to Athlete (Twice daily training), which multiplies BMR by 1.2 to 1.9; set a Primary Goal of -500, -250, Maintain Weight, +250 or +500 kcal and a Macro Split of Balanced (30P/40C/30F), High Protein (40P/30C/30F), Low Carb (35P/25C/40F) or High Carb (25P/50C/25F), then click Calculate Macros.",
+    "Read BMR, TDEE, Target Calories and Water Intake, then the Daily Macro Targets cards giving protein, carb and fat in grams — calories divided by 4, 4 and 9 — with each macro's percentage of the calorie target.",
+  ],
   intro:
     "The Macro Calculator turns your age, sex, height and weight into a daily protein, carbohydrate and fat target by estimating BMR with the Mifflin-St Jeor equation, multiplying it by an activity factor from 1.2 to 1.9 to get TDEE, then adjusting by 250 or 500 calories for a cut or a bulk. It converts the resulting calorie target into grams using 4 calories per gram for protein and carbs and 9 per gram for fat, across four preset splits. It is for anyone setting up a food-tracking app and needing starting numbers rather than a guess. The output is general information, not a clinical prescription — talk to a doctor or registered dietitian before changing your intake if you have a medical condition.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Child Screen Time Planner: WHO and AAP Daily Limits",
+  metaDescription:
+    "Turns WHO and AAP screen guidance into one daily minute limit for a child's age, then tests it against a 24-hour budget for sleep, school and daylight.",
+  steps: [
+    "Select the child's age in Child age (years), then enter Planned recreational screen time (minutes) alongside Sleep planned (hours) and School / nursery (hours).",
+    "Fill in Homework / study (hours), Meals, travel and routine (hours) and Outdoor daylight time (minutes) so the whole 24-hour day is accounted for.",
+    "Read the recommended recreational limit, the free day-budget time left and the count of 20-second eye breaks, then press Copy plan.",
+  ],
   intro:
     "The Child Screen Time Planner converts published paediatric screen guidance into one daily minute figure for a specific child, then tests it against a full 24-hour budget. It applies the WHO 2019 under-fives guideline (no sedentary screen time below age 2, no more than 60 minutes at ages 2 to 4) and the AAP position that from age 6 there is no fixed minute cap — screens simply must not displace sleep, physical activity, homework or daylight. Parents, teachers and childminders get a defensible number plus the sleep, activity, outdoor and eye-break targets that sit alongside it.",
   useCases: [

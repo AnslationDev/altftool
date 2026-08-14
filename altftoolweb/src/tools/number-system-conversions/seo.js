@@ -1,4 +1,12 @@
 const seo = {
+  title: "Binary, Octal, Hex & Base-36 Converter with BigInt",
+  metaDescription:
+    "Convert one whole number to binary, octal, decimal, hex and base-36 at once, with 0b/0o/0x prefixes, bit and byte width, and the Unicode character.",
+  steps: [
+    "Pick the Input format — Binary, Octal, Decimal, Hexadecimal or Base-36 — and type the value into the box below it; 0b, 0o and 0x prefixes and a leading minus are accepted.",
+    "All five base cards recompute as you type, using BigInt so a value past 2^53 keeps every digit.",
+    "Each card shows the value with its 0b/0o/0x prefix plus Bits, Bytes and the Unicode character, has its own Copy, and Copy all puts all five lines on the clipboard; binary beyond 64 characters reads \"Too large\".",
+  ],
   intro:
     "Number System Conversions shows one whole number simultaneously in binary (base 2), octal (base 8), decimal (base 10), hexadecimal (base 16) and base-36, with the 0b, 0o and 0x prefixes applied where they belong. Every card also reports the bit width, the byte count rounded up to the next whole byte, and the Unicode character at that code point when the value falls within the valid range up to U+10FFFF. Conversion runs on JavaScript BigInt rather than Number, so values past 2^53 keep every digit instead of silently losing precision.",
   useCases: [

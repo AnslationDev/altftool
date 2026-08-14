@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Scam Message Quiz: Recall & Balanced Accuracy",
+  metaDescription:
+    "Judge realistic texts, emails and transcripts as scam or genuine — real ones included — then get scored on recall, specificity and balanced accuracy.",
+  steps: [
+    "Choose \"Messages in this round\" — 6, 9 or all 12 — and set a Round number, or press Shuffle to deal a different mix.",
+    "Read each message with its channel and sender, then mark it Scam or Genuine; genuine notifications are mixed in, so flagging everything costs you specificity.",
+    "Press Reveal answers to freeze the round and see balanced accuracy against the 80% pass mark, scams caught (recall), genuine left alone (specificity), missed scams, false alarms and the red flags you walked past; Copy score saves the summary.",
+  ],
   intro:
     "The AI Scam Message Awareness Quiz shows you realistic texts, emails, chat messages and call transcripts — including genuine ones — and scores your verdicts using standard classification metrics: recall (the share of scams you caught), specificity (the genuine messages you left alone) and balanced accuracy, the average of the two. Because generative AI removed the broken-grammar tell, the quiz trains the signals that still hold: one-time-code requests, irreversible payment methods, lookalike domains, manufactured deadlines and contact arriving on an unexpected channel. Built for staff security training, older relatives and anyone who wants to test their instincts rather than assume them.",
   useCases: [

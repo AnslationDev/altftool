@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salary Tax Calculator: CTC to Take-Home, Slab by Slab",
+  metaDescription:
+    "Enter CTC, HRA, LTA, 80C and 80D to get taxable income, tax across the 5% to 30% slabs, 4% cess and monthly take-home. An estimate, not a filing.",
+  steps: [
+    "Fill Annual CTC (Cost to Company), HRA Exemption, LTA Exemption, Section 80C Deductions and Section 80D (Health Insurance) — the form loads with ₹12,00,000 CTC and ₹1,50,000 under 80C",
+    "Press Calculate; it subtracts a ₹50,000 standard deduction, your 80C and 80D amounts, half the HRA figure and LTA, then runs the balance through the ₹3L/₹6L/₹9L/₹12L/₹15L slab ladder and adds 4% health and education cess",
+    "Annual Take-Home Salary appears as the headline with Total Tax + Cess under it, and the cards below break out CTC, Taxable Income, Income Tax, Health & Edu Cess and Take-Home per Month; the refresh button beside Calculate clears the form",
+  ],
   intro:
     "Salary Tax Calculator estimates annual take-home pay from your CTC by subtracting exemptions and deductions, running the balance through a five-band Indian slab ladder — nil up to ₹3,00,000, then 5%, 10%, 15%, 20% and 30% at ₹3L/₹6L/₹9L/₹12L/₹15L — and adding 4% health and education cess. You enter CTC, HRA exemption, LTA, Section 80C and Section 80D amounts; it applies a ₹50,000 standard deduction, counts half your stated HRA figure, and returns taxable income, income tax, cess, annual take-home and a monthly figure. It is an informational estimate for salaried employees sizing up an offer or a payslip, not a tax filing.",
   useCases: [

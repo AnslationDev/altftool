@@ -1,4 +1,12 @@
 const seo = {
+  title: "CHA₂DS₂-VASc Stroke Risk Calculator with HAS-BLED",
+  metaDescription:
+    "Scores CHA₂DS₂-VASc out of 9 — age ≥75 and prior stroke count 2 — maps it to an annual stroke rate, and tallies HAS-BLED bleeding risk alongside.",
+  steps: [
+    "Choose the CHA₂DS₂-VASc or CHADS₂ tab, then tick the Risk Factors: Congestive Heart Failure, Hypertension, Age ≥ 75 years, Diabetes Mellitus and Prior Stroke / TIA / Thromboembolism, plus Vascular Disease, Age 65–74 years and Sex Category (Female) under VASc Additions.",
+    "Tick whatever applies under HAS-BLED (Bleeding Risk) — Uncontrolled Hypertension, Labile INR (if on warfarin), Antiplatelet / NSAID Use and the rest — then press Assess Risk.",
+    "Read the score with its risk band and annual rate, the Bleeding Score out of 9 and the Score Interpretation table, then press Copy Report, or Download to save Stroke_Risk_Report_<score>.txt.",
+  ],
   intro:
     "This stroke risk calculator scores the CHA₂DS₂-VASc model used in atrial fibrillation — congestive heart failure, hypertension, age 65–74, diabetes, vascular disease and female sex each add 1 point, while age ≥ 75 and a prior stroke, TIA or thromboembolism add 2 — for a total out of 9, then maps that total to an estimated annual stroke rate. You can also switch to the older CHADS₂ model and score HAS-BLED alongside it to see bleeding risk in the same view. It is an educational reference for patients and students, not a substitute for a clinician's assessment.",
   useCases: [

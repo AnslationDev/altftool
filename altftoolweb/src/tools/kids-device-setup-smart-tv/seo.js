@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smart TV Parental Controls Setup Guide for Kids",
+  metaDescription:
+    "Platform-specific checklist for Roku, Fire TV, Google TV, Samsung and LG: purchase PINs, app locks, per-app ratings, and how many PINs you'll need.",
+  steps: [
+    "Enter the youngest child using the TV (2–17 years), pick the TV or streaming device, and tick the streaming apps on this TV, such as Netflix and YouTube.",
+    "Work through the checklist grouped Essential, Recommended and Optional, ticking each setting off as you apply it on the TV — every step names where the setting lives.",
+    "Watch the Setup coverage percentage climb, check the TV and film rating ceilings for that age and the count of separate PINs, then use Copy plan to export what is still open.",
+  ],
   intro:
     "A family smart TV is protected by several independent control layers — the device profile, the store purchase PIN, the app-install lock, and a separate parental control inside each streaming app — and this guide lists the ones that apply to your specific platform and apps. It also works out the maturity ceiling for a child's age using the ratings that carry an explicit age (TV-Y7 at 7, TV-14 at 14, TV-MA at 17; PG-13 at 13, R at 17), and counts how many separate PINs the finished setup will need.",
   useCases: [

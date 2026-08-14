@@ -1,4 +1,12 @@
 const seo = {
+  title: "Demat Account Charges Calculator: AMC, DP, Brokerage",
+  metaDescription:
+    "Compare demat plans on real yearly cost — AMC, DP charge per scrip sold, brokerage, 18% GST, STT, stamp duty and exchange fees.",
+  steps: [
+    "Under How you trade (equity delivery), enter Buy orders per month, Sell orders per month, Scrips debited per selling day and Average holding value (INR).",
+    "For each plan set AMC per year (INR), DP charge per scrip sold (INR) and a Delivery brokerage model — Zero brokerage on delivery, Flat per executed order or Percentage of turnover — then Add a plan.",
+    "Read the Cheapest plan for this pattern and the Full cost breakdown table of brokerage, DP, AMC and statutory levies, then Copy result.",
+  ],
   intro:
     "This comparator adds up what a demat and trading account actually costs over a year — annual maintenance charge, the DP charge levied on every scrip you sell, brokerage under a zero, flat-fee or percentage model, 18% GST on all of those, and the statutory levies of STT, stamp duty, the SEBI turnover fee and exchange transaction charges. Enter how many buy and sell orders you place and how large they are, and it ranks the plans on total rupees, not headline brokerage. It is built for delivery investors deciding whether a 'zero brokerage' account is genuinely cheaper once DP charges are counted.",
   useCases: [

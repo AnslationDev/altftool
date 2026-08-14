@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wedding Card Print Size Guide India: Bleed & GSM",
+  metaDescription:
+    "Convert a folded Indian wedding card size into flat artwork, a 3 mm bleed document, envelope and insert sizes, and GSM weight per invitation.",
+  steps: [
+    "Pick a Trade size such as 6 x 9 in - most common folder, or type your own Finished (folded) width and height in millimetres, centimetres or inches.",
+    "Choose a Fold style of Bi-fold, Gate fold, Tri-fold or Four-panel / cross fold, set the fold direction, bleed and safe margin, then the card, insert and envelope GSM and the quantity.",
+    "Read the Flat artwork size to set up, the Document size with bleed, the Envelope internal size to order and the weight per invitation, then press Copy result for your printer.",
+  ],
   intro:
     "This guide converts an Indian wedding card's finished (folded) size into everything a press needs: the flat artwork size after the fold is opened out, the document size with 3 mm bleed on each edge, the safe margin, the envelope internal size, and stepped insert dimensions. It also computes weight from GSM, because grams per square metre times area in square metres is exactly the sheet weight, so you can price courier and postage before printing. Built for couples, wedding planners and designers working with Indian card printers who quote in inches and GSM.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Header Image Size: Export at 2x for Retina",
+  metaDescription:
+    "Enter the display size, get the 2x export dimensions, the width and height attributes Outlook's Word engine needs, and how it renders on phones.",
+  steps: [
+    "Set 'Display width in the template (px)' - the 600 px, 640 px, 680 px and 320 px chips fill it for you - along with 'Display height (px)', an Export multiplier of 1x, 2x retina or 3x, and 'Current file size (KB)'.",
+    "Add the Hosted image URL, Alt text and any Click-through URL so the generated img tag is complete.",
+    "Read 'Export the header at' plus the 'Attributes to put on the img tag' and 'Gmail clipping threshold' rows, check 'How it renders on phones', then press Copy markup for the img tag or Copy result for the summary.",
+  ],
   intro:
     "An email header image has two sizes: the width it occupies in the template and the larger size you actually export so it stays sharp on high-density screens. This guide takes the display size, applies the retina multiplier, and returns the export dimensions, the width and height attributes Outlook's Word rendering engine requires, the rendered size on 320, 375 and 414 px phone viewports, and the img markup ready to paste. It also flags a header taller than 60% of its width, which pushes your first line of copy out of the preview pane.",
   useCases: [

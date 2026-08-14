@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dwell-Click Keyboard: Type by Hovering, No Clicking",
+  metaDescription:
+    "On-screen QWERTY that types when the pointer rests on a key. Dwell time adjusts 400-3000 ms; Space, Delete, Clear and Speak keys included.",
+  steps: [
+    "Set the \"Dwell duration\" slider to suit your pointer — it spans 400 ms to 3000 ms in 100 ms steps and starts at 1000 ms.",
+    "Rest the pointer on a key in the QWERTY rows; the key highlights while the timer runs and the letter is entered when it completes, while moving away cancels it — Tab focus and an ordinary click select the same key too.",
+    "Watch the message build in the text box, using the Space, Delete and Clear keys to edit it and the Speak key to read it aloud through the browser's speech synthesis.",
+  ],
   intro:
     "Dwell-Click Keyboard is an on-screen QWERTY keyboard that types a letter when the pointer rests on a key for a set dwell time, with no click or button press needed. The dwell duration is adjustable from 400 ms to 3000 ms in 100 ms steps and starts at 1000 ms, and the key you are dwelling on is highlighted with a progress indicator so the pending selection is visible. It is intended for people who can move a pointer, head tracker or eye-gaze cursor accurately but find clicking painful, unreliable or impossible.",
   useCases: [

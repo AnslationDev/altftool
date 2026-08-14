@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPSC Negative Marking Calculator: One-Third Penalty",
+  metaDescription:
+    "Score a tiered UPSC prelims attempt plan under the one-third penalty. Break-even accuracy is 25% — see which guesses add marks in GS Paper I or CSAT.",
+  steps: [
+    "Pick the Paper — GS Paper I at 2 marks a question or the qualifying CSAT paper at 2.5 — then enter Questions solved with knowledge and your Accuracy on those (%).",
+    "Split the rest into Guesses with two options left, Guesses with three options left and Pure blind guesses, and set Your target or expected cutoff.",
+    "Read the Expected score out of the paper total with its best-and-worst range, then the Which guesses are worth taking table, where each tier is marked Attempt, Neutral or Skip alongside the attempt count that maximises expected marks.",
+  ],
   intro:
     "This UPSC negative marking calculator applies the Civil Services Preliminary Examination penalty — one-third of the marks assigned to a question, deducted for every wrong answer — to a tiered attempt plan and returns the expected score plus the attempt count that maximises it. Because the deduction is one-third, the break-even accuracy is exactly 25%, which is the same as the odds of a blind guess among four options, so a wild guess is mathematically neutral and only elimination makes attempting profitable. It covers both Paper I General Studies at 2 marks a question and the qualifying CSAT paper at 2.5 marks a question.",
   useCases: [

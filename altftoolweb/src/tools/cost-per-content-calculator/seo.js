@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cost Per Video Calculator: Hours, Gear, Overheads",
+  metaDescription:
+    "Add your hours at an hourly rate to gear depreciation, software and overheads split across the month's output. Get cost per finished minute and margin.",
+  steps: [
+    "Under 'Hours on one piece', log the hours for Research & scripting, Setup & filming, Editing, and Thumbnail, upload & promotion.",
+    "Under 'Money and output', set 'What your hour is worth (INR)', 'Pieces published per month', 'Total gear value (INR)' with 'Gear useful life (months)', the monthly software and studio figures, 'Direct spend on this piece (INR)', 'Finished runtime (minutes)' and 'Revenue expected per piece (INR)'.",
+    "Read 'True cost of one piece' with the 'Cost per finished minute' and 'Profit per piece' rows, check the 'Where the money goes' breakdown, then press Copy result.",
+  ],
   intro:
     "Cost per content is everything one video or post consumes, not just what you spent on the day: hours multiplied by your hourly rate, plus straight-line gear depreciation, software, overheads and direct cash, with each recurring cost divided by the pieces you publish that month. The result includes cost per finished minute, margin against expected revenue, and what you actually earn per working hour once cash costs are taken out. Built for creators and small studios pricing sponsorships or deciding whether a format is worth continuing.",
   useCases: [

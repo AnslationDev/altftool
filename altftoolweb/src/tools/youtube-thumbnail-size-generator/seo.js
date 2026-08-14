@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Thumbnail Size: Crop to 1280x720, Under 2 MB",
+  metaDescription:
+    "Crop any JPG, PNG or WebP to YouTube's 1280x720 16:9 frame in your browser. Measures the encoded file against the 640 px and 2 MB limits.",
+  steps: [
+    "Choose a JPG, PNG or WebP up to 25 MB under Source image, then pick '1280 x 720 — YouTube recommended' as the Export size.",
+    "Set 'How to fit the frame' to 'Fill the frame (centre crop)' or 'Fit the whole image (pad the edges)', and drag Quality for JPEG or WebP.",
+    "Check the pass/warn/fail list for minimum width 640 px, 16:9 and the 2 MB limit, then press Download for youtube-thumbnail-1280x720.jpg.",
+  ],
   intro:
     "YouTube Thumbnail Size Generator resizes any image to YouTube's thumbnail specification — 1280 x 720 pixels, 16:9, at least 640 pixels wide and under the 2 MB upload limit — and reports whether the result passes each of those rules. It centre-crops or letterboxes the source, shows how much of the original is lost at 16:9, measures the encoded JPEG, PNG or WebP size before you upload, and marks the bottom-right corner where the duration badge sits. All processing happens in the browser, so the image is never uploaded anywhere.",
   useCases: [

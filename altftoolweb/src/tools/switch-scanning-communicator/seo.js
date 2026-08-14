@@ -1,4 +1,7 @@
 const seo = {
+  title: "Switch-Scanning Communicator: One-Switch AAC Speech",
+  metaDescription:
+    "A highlight steps through your phrase list on a 600–4000 ms timer; Space, Enter or a large on-screen button speaks the highlighted phrase aloud.",
   intro:
     "This is a single-switch scanning communicator: a highlight moves down a list of phrases one at a time on a timer, and pressing Space, Enter or the large on-screen button speaks whichever phrase is highlighted through the browser's speech synthesis. Scan speed is adjustable from 600 ms to 4000 ms per item, and the phrase list is fully editable — one phrase per line — so it can be set up for one person's actual vocabulary in a couple of minutes. It suits anyone who can operate a single reliable switch or key press but cannot point accurately at a grid.",
   useCases: [

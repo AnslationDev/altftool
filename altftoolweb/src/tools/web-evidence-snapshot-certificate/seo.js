@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screenshot Hash Certificate: SHA-256 + Source URL",
+  metaDescription:
+    "Hash a PNG, JPEG or WebP screenshot up to 25 MB locally and bind the digest to the URL, title and time in a canonical JSON manifest. Not notarisation.",
+  steps: [
+    "Choose a local screenshot — PNG, JPEG or WebP up to 25 MB, checked by its file signature rather than its extension.",
+    "Add the source URL, page title (max 500 characters) and observation time, then press \"Create certificate\" to hash the bytes and the canonical JSON.",
+    "Use \"Copy digest\", \"Copy manifest\" or \"Download JSON\" to save web-snapshot-metadata-certificate.json and keep it beside the unmodified image.",
+  ],
   intro:
     "Web Evidence Snapshot Certificate takes a screenshot you already captured, computes its SHA-256 digest with the browser's Web Crypto API, and wraps that digest together with the source URL, page title, observation time and your notes into a canonical JSON manifest that is itself hashed. The result is a self-recorded record that ties a specific set of image bytes to what you say you saw and when — useful for anyone keeping a chain of custody over screenshots, such as a moderation log, a defamation file, or an internal incident record. It does not visit the URL, capture the page, or contact a timestamping authority, and it is not notarisation.",
   useCases: [

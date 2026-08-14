@@ -1,4 +1,12 @@
 const seo = {
+  title: "WCAG 2.2 Accessible Authentication Auditor (SC 3.3.8)",
+  metaDescription:
+    "Paste sign-in HTML to flag blocked paste, autocomplete=off and captcha wording, answer a 7-question flow checklist, and get findings citing WCAG 2.2.",
+  steps: [
+    "Paste your sign-in markup into the Optional HTML source box — up to 300,000 characters — or press Load review sample.",
+    "Set the seven Observed flow checklist selects for paste, password-manager autofill, verification-code entry, cognitive test, alternative method, time limit and error recovery, then press Review authentication flow.",
+    "Read each finding graded High priority, Needs attention or Manual review with its WCAG criterion, then press Download counts-only JSON for accessible-authentication-counts-only.json.",
+  ],
   intro:
     "This auditor reviews a pasted sign-in page against the WCAG 2.2 authentication criteria — SC 3.3.8 and 3.3.9 Accessible Authentication, SC 1.3.5 Identify Input Purpose, SC 2.2.1 Timing Adjustable, and SC 3.3.1/3.3.3 error handling — and returns findings graded high, medium or review. It reads the markup for the patterns that turn a login into a memory test: onpaste handlers calling preventDefault, autocomplete=off on credential fields, captcha and security-question wording, and missing alternative sign-in routes. A seven-question checklist then records what you observed in the live flow, because paste blocking, timeout controls and error recovery cannot be judged from static HTML alone.",
   useCases: [

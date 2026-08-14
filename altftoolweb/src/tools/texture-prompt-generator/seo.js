@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Texture Prompt Generator with Negative Prompts",
+  metaDescription:
+    "Build a texture prompt from material, finish, scale, lighting and wear, in subject-first order, with a matching negative prompt for seams and watermarks.",
+  steps: [
+    "Type the Base material, such as brushed stainless steel, or tap one of the material presets.",
+    "Set Surface finish, Physical scale from a 2 cm macro patch to a 2 m panel, Lighting, Wear and age, and the Output target of seamless tileable, PBR reference, hero render or plain photo.",
+    "Read the generated Prompt and its matching Negative prompt covering seams, watermarks and vignetting, then press Copy prompt.",
+  ],
   intro:
     "The Texture Prompt Generator assembles a precise, structured text prompt describing a surface — base material, finish, physical scale, lighting, wear state and output target — for AI image and texture generators. It follows the subject-first prompt ordering that CLIP-based text encoders weight most heavily, and adds a matching negative prompt covering the common failure modes of texture generation such as watermarks, seams and uneven lighting. It is built for 3D artists, game developers and designers who need seamless tiles, PBR reference captures or hero material renders.",
   useCases: [

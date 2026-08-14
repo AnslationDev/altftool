@@ -1,4 +1,12 @@
 const seo = {
+  title: "SBV to SRT Converter for YouTube Caption Downloads",
+  metaDescription:
+    "Convert a YouTube SBV caption file to numbered SubRip cues with zero-padded hh:mm:ss,mmm times, an optional millisecond offset — all in your browser.",
+  steps: [
+    "Click \"Load .sbv file\" (accepts .sbv or .txt) or paste your captions into the SBV input box.",
+    "Set a \"Timing offset (milliseconds)\" to shift every cue, and choose whether to keep \">>\" speaker-change markers or merge each cue onto a single line.",
+    "Check the cues-converted and overlapping-cues counts, then click \"Copy SRT\" or \"Download .srt\" to save the file.",
+  ],
   intro:
     "The SBV to SRT Converter rewrites a YouTube SBV caption export as a SubRip (.srt) file. SBV has no cue numbers, writes times as H:MM:SS.mmm separated by a comma, and marks a change of speaker with a leading \">>\"; SubRip numbers every cue from 1, zero-pads the hour to two digits, uses a comma for milliseconds and separates the two times with \" --> \". This tool applies all of those changes in one pass, can shift the whole file by a millisecond offset, and runs entirely in your browser.",
   useCases: [

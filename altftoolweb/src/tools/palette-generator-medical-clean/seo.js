@@ -1,4 +1,10 @@
 const seo = {
+  title: "Medical UI Palette: Contrast and Colour-Blind Audit",
+  steps: [
+    "Pick a Base hue — Clinical blue, Calm teal, Neutral slate or Sage green — and an Interface mode of Light interface or Dark interface.",
+    "Set 'Status intensity (-20 to 20)' and press Next variation to cycle Base variation 0 to 4; the palette and both audits regenerate on every change.",
+    "Read 'Status pairs still separable under red-green CVD' as a safe/total count, then Clinical statuses (Critical, Abnormal, Within range, Informational, Awaiting result) with each dot, text and soft hex, the Interface contrast table of ratios against their thresholds, and the Colour-blindness separation table of CIE76 deltas; Copy CSS exports the variables.",
+  ],
   intro:
     "The Medical Clean Palette Generator builds a low-noise interface palette for health software — surfaces, text, borders and a five-part clinical status set — and then audits it twice: WCAG 2.x contrast for every text and control pairing, and colour separation between the status colours under simulated red-green colour vision deficiency. The simulation uses the Viénot, Brettel and Mollon (1999) dichromat matrices on linear RGB, and separation is measured as CIE76 colour difference in CIELAB. It is built for teams designing EMR screens, lab result views, triage dashboards and patient apps, where a status chip being misread is a safety problem, not a style problem.",
   useCases: [

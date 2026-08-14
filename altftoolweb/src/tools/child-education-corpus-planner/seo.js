@@ -1,4 +1,12 @@
 const seo = {
+  title: "Child Education Corpus Planner - Monthly SIP Size",
+  metaDescription:
+    "Inflates each degree year separately, discounts to course start, subtracts existing savings and sizes the monthly SIP - flat or annual step-up.",
+  steps: [
+    "Enter \"Cost of one year today (₹)\", \"Years until the course starts\", \"Course duration (years)\", \"Fee inflation (% per year)\" and \"Expected return on savings (% per year)\".",
+    "Add anything under \"Already saved for this goal (₹)\" and an optional \"Annual SIP step-up (% per year)\".",
+    "Read \"Monthly SIP required\" with the corpus needed on day one and the fee-due-in-each-course-year table, then click \"Copy result\".",
+  ],
   intro:
     "This planner converts today's college fee into the corpus you must actually hold on the first day of the course, then works out the monthly SIP that gets you there. Each year of the degree is inflated separately at your chosen fee-inflation rate and discounted back to the course start date at your expected return, because money left in the fund keeps earning while the course runs. It also rolls forward what you have already set aside and supports an annual step-up in the SIP amount.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "TLS Config Auditor: Cipher Suites and Cert Dates",
+  metaDescription:
+    "Paste an openssl s_client, x509, nmap or nginx TLS block: every protocol and cipher suite is broken down and the certificate dates checked.",
+  steps: [
+    "Paste an openssl s_client transcript, an openssl x509 -text dump, an nmap ssl-enum-ciphers table or an nginx TLS block into the TLS output or configuration box.",
+    "Set the reference date for certificate expiry so days remaining are counted from the day the transcript was captured, not today.",
+    "Read the findings by severity, the protocol and cipher-suite tables with their forward secrecy and AEAD columns, then press Copy report.",
+  ],
   intro:
     "Paste an openssl s_client transcript, an openssl x509 -text certificate dump, an nmap ssl-enum-ciphers table or an nginx / Apache TLS block, and this auditor parses it. Every protocol version it finds is labelled with its actual standing — SSL 2.0 and 3.0 prohibited by RFC 6176 and RFC 7568, TLS 1.0 and 1.1 deprecated by RFC 8996, TLS 1.2 and 1.3 current — and every cipher suite is split into key exchange, authentication, bulk cipher, mode and MAC, so you can see for yourself whether it has forward secrecy and whether it is an AEAD. It then reads the certificate: signature algorithm, key size, validity dates against a reference date you control, nominal lifetime against the 398-day public limit, and the subject alternative names. It never opens a connection — the analysis is only ever of the text you paste.",
   useCases: [

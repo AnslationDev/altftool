@@ -1,4 +1,12 @@
 const seo = {
+  title: "IP Range Overlap Checker for CIDR Blocks and Ranges",
+  metaDescription:
+    "Paste IPv4 CIDR blocks, start-end ranges or single addresses; every pair is tested and each conflict shows the exact intersecting range and size.",
+  steps: [
+    "Paste your networks into Networks to compare (one per line) — 10.0.0.0/24 CIDR blocks, 10.0.0.1 - 10.0.0.99 ranges and single addresses like 10.0.0.5 can be mixed.",
+    "Every pair is compared as you type, and the Overlapping pairs headline counts the conflicts found across all pair comparisons.",
+    "Each conflict lists its Pair, Relationship, Overlapping range and Addresses, while Parsed networks shows every entry's First address, Last address and Size; Copy report saves it.",
+  ],
   intro:
     "This checker tests every pair of IPv4 networks you paste — CIDR blocks, start–end ranges or single addresses — for overlap using the interval-intersection rule (two ranges overlap when each starts at or before the other ends). Each conflict is reported with its exact intersecting range, its size in addresses, and whether the relationship is identical, containment or partial overlap. It is built for engineers validating address plans before VPC peering, site-to-site VPNs, mergers or new subnet allocations.",
   useCases: [

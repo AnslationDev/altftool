@@ -1,4 +1,7 @@
 const seo = {
+  title: "Data Breach Notification Timeline Planner (72 Hours)",
+  metaDescription:
+    "Turn the discovery date into milestones: containment +4h, scope review +12h, authority decision 72h, individuals 96h, post-incident review +168h.",
   intro:
     "The Breach Notification Timeline Planner turns a single incident-discovery date into a dated milestone schedule, counting forward in hours from the moment awareness is recorded: containment and evidence preservation at +4 hours, initial scope and risk review at +12, the authority-notification decision at your configured target (72 hours by default), the affected-person decision at yours (96 by default), and a post-incident review at +168 hours, one week out. It is for whoever is running the response and needs the internal clock written down while the incident is still unfolding. Both notification targets are editable so the schedule reflects the regime or internal policy you actually operate under, which you name on the output.",
   useCases: [

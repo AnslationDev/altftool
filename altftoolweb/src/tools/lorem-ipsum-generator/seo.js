@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lorem Ipsum Generator: Paragraphs, Sentences, Words",
+  metaDescription:
+    "Generate up to 50 deterministic paragraphs, sentences or words of placeholder Latin — identical settings always return identical text for stable mockups.",
+  steps: [
+    "Choose the Output type — Paragraphs, Sentences or Words — and set Count to any number from 1 to 50.",
+    "Toggle 'Start with classic lorem ipsum' on to open with the recognisable first line, or off for neutral filler.",
+    "The preview regenerates deterministically as you change settings; click 'Copy output' to paste the identical block into design and code.",
+  ],
   intro:
     "Lorem Ipsum Generator produces placeholder Latin copy in three shapes — paragraphs, sentences or bare words — up to 50 units at a time, with every paragraph built from 4 sentences running 10 to 17 words each. Output is deterministic: the same type and count always returns the same text, so a mockup regenerated tomorrow does not silently reflow. Designers, front-end developers and content modellers get realistic text volume for a layout without shipping real copy into a draft by accident.",
   useCases: [

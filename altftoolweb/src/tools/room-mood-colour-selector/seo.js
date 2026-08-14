@@ -1,4 +1,12 @@
 const seo = {
+  title: "Room Colour Palette by Mood and Window Direction",
+  metaDescription:
+    "Pick a mood and the way your window faces for a 60-30-10 wall, secondary, accent and trim palette, with the LRV of each and a 3:1 contrast check.",
+  steps: [
+    "Set the four selects: \"Mood you want\", \"Main window faces\", \"Hemisphere\" and \"Colour depth\".",
+    "The palette rebuilds with no button press — a 60-30-10 band of wall, secondary and accent plus a trim tone, each swatch card showing its hex value, its LRV and its HSL numbers.",
+    "Check \"Wall to trim contrast\" and \"Wall to accent contrast\" against the 3:1 ratio, read any caution about a colour too dark for cool indirect light, then press \"Copy result\" to copy every colour with its LRV.",
+  ],
   intro:
     "This selector builds a room palette from two inputs that actually decide how paint looks: the mood you are after and the direction the room's main window faces. It returns a 60-30-10 scheme — dominant wall, secondary, accent, plus a trim tone — and reports the Light Reflectance Value of each colour, computed as sRGB relative luminance (0.2126 red, 0.7152 green, 0.0722 blue after linearisation) on a 0-100 scale. It also checks the contrast between wall, trim and accent against the 3:1 ratio a shape needs to read clearly, and warns when a colour is too dark for a room that only gets cool indirect light.",
   useCases: [

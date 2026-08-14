@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to Slug: Turn a Title into a Clean URL Slug",
+  metaDescription:
+    "Paste a title and get a lowercase hyphenated slug: accents folded, & @ + spelled out, apostrophes dropped, no double or trailing hyphens.",
+  steps: [
+    "Paste a title into the Input box — it opens with the sample \"10 Best Tools for 2024!\", \"Café & Restaurant Guide\" and \"React.js @ Scale\", and \"Load sample\" brings that back.",
+    "The Result box rewrites as you type: NFKD normalisation folds accents, &, @ and + become and, at and plus, apostrophes vanish, and every other run of non-alphanumerics collapses to one hyphen.",
+    "Press Copy to take the lowercase slug — \"Café & Restaurant Guide\" gives cafe-and-restaurant-guide — or Clear to empty the box; the whole input counts as one string, so paste one title at a time.",
+  ],
   intro:
     "Text to Slug converts a title, heading or filename into a lowercase, hyphen-separated URL slug by applying Unicode NFKD normalisation, stripping the accent marks it exposes, spelling out &, @ and + as \"and\", \"at\" and \"plus\", dropping apostrophes, and collapsing every remaining non-alphanumeric run into a single hyphen. It is for anyone naming a page, a blog post, a docs anchor or an asset file and wanting the same clean result every time. \"Café & Restaurant Guide\" comes out as cafe-and-restaurant-guide.",
   useCases: [

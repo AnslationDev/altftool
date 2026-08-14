@@ -1,4 +1,7 @@
 const seo = {
+  title: "Dream Vacation Finder: 55 Destinations, 7 Questions",
+  metaDescription:
+    "Answer seven questions on budget, climate and trip type to rank 55 destinations by match percentage, with best months, daily costs and local dishes.",
   intro:
     "Dream Vacation Finder asks seven questions — budget, climate, trip type, travel style, season, duration and continent — then scores 55 curated destinations across six continents against your answers and ranks them by match percentage. Budget, climate, activity and continent each carry the heaviest weight, so the top pick reflects what you said matters most rather than a generic bucket-list order. Each result comes with the best months to visit, a daily cost estimate, highlights, local dishes and a fun fact.",
   useCases: [

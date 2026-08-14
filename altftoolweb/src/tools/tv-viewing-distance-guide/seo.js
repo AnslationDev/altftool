@@ -1,4 +1,12 @@
 const seo = {
+  title: "TV Viewing Distance: 4K, 1080p and FOV Calculator",
+  metaDescription:
+    "Get the ideal sofa distance from screen size and resolution — 1.25x diagonal for 4K, 2.0x for 1080p — blended with a 30-42° field-of-view target.",
+  steps: [
+    "Tap a screen preset from 32\" to 98\" or type Screen size (inches), then set Aspect ratio, Resolution (720p HD, 1080p Full HD, 4K UHD or 8K UHD) and Viewing style — Cinema / Movies, Mixed Streaming, Sports / TV Channels, Gaming or Bedroom Casual.",
+    "Under Room & Seating pick Feet or Meters as the Distance unit, then enter Current sofa distance, Room depth, Eye level (inches) and TV center height (inches).",
+    "Read the Ideal Distance, Comfort Range and Current FOV cards plus the Too close / Near edge / Ideal zone verdict, then press Copy Guide, or CSV to download tv-viewing-distance-guide.csv.",
+  ],
   intro:
     "The TV Viewing Distance Guide works out how far to sit from a screen by blending two calculations: the resolution rule, which multiplies the diagonal by 1.25 for 4K, 2.0 for 1080p, 2.8 for 720p and 1.0 for 8K, and a field-of-view target set by what you watch — 42° for gaming, 40° for movies, 36° for mixed streaming, 32° for sports and 30° for casual bedroom viewing. Enter the screen size, aspect ratio, resolution, room depth and where the sofa actually is, and you get an ideal distance, a comfort range, your current field of view in degrees and the screen size that would suit your seat. It is for anyone deciding between a 55-inch and a 65-inch, or wondering why the sofa feels wrong.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Country Quiz: Capitals, Flags, Borders and Currencies",
+  metaDescription:
+    "A geography quiz generated from live country data: pick capitals, flags, borders or a random mix, 10 to 50 questions, and a 15-60 second timer or none.",
+  steps: [
+    "On the setup screen pick a Question Type from the ten cards — Capitals, Continents, Regions, Currencies, Languages, Borders, Area, Domains, Flags or Random Mix — and a Difficulty of Easy, Medium, Hard or Mixed.",
+    "Set Number of Questions to 10, 15, 20, 30 or 50 and Time Per Question to No Limit, 15s, 20s, 30s, 45s or 60s, then press Start Quiz.",
+    "Answer each question to reveal its Explanation and move the Streak counter; the results screen shows your percentage with Correct, Wrong, Best Streak and Avg Time tiles, Category Performance bars and an Answer Review, then New Quiz or Play Again.",
+  ],
   intro:
     "This geography quiz generates multiple-choice questions on the fly from a live open dataset of the world's countries, so no two rounds are the same. You pick a topic — capitals, continents, subregions, currencies, languages, land borders, area, internet domains, flags, or a random mix — then a length of 10, 15, 20, 30 or 50 questions and a per-question time limit of 15 to 60 seconds or none at all. Every question comes with a one-line explanation after you answer, and a running streak counter tracks consecutive correct answers.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "State PSC Deadlines: Fee Date, Form Date, Correction",
+  metaDescription:
+    "Counts down registration, the fee date, form date, correction window and exam — and flags that an out-of-state SC/OBC certificate gives no reservation.",
+  steps: [
+    "Pick your Commission and \"Category claimed\", set \"Today's date\", and tick \"My certificate is from this same state\" only if the certificate was issued by that state.",
+    "Copy the dates out of the advertisement into \"Dates from the advertisement\" — \"Last date to deposit the fee\", \"Last date to submit the form\", \"Correction window opens\" and \"closes\", and \"Preliminary exam\".",
+    "Read \"Days to the next deadline\" with the binding-dates-passed count and the \"What trips people up at\" alerts, work the checklist to 100% ready, then press \"Copy plan\".",
+  ],
   intro:
     "This tracker counts down every dated stage of a state Public Service Commission cycle — registration opening, the last date to deposit the fee, the last date to submit the form, the correction window and the exam — and pairs it with the certificate list that particular commission will accept. It treats the fee date rather than the submission date as the binding deadline, because money paid after the fee window does not attach to the application and the form then cannot be submitted at all. It also flags the trap that catches out-of-state candidates: a category certificate issued by another state gives no reservation, no fee concession and no age relaxation at a state commission.",
   useCases: [

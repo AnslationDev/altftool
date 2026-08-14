@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dumbbell to Barbell Converter: Bench, Squat, Row",
+  metaDescription:
+    "Convert a barbell load to the dumbbell pair for bench, press, row, RDL, curl, lunge or squat. Gives a range and rounds to your dumbbell or plate steps.",
+  steps: [
+    "Choose Barbell to dumbbells or Dumbbells to barbell, pick the lift under Exercise, and enter the barbell total including the bar in kg.",
+    "Set Dumbbell increment available (kg), or the Bar you will use plus Smallest plate pair you own (kg), so the answer snaps to your rack.",
+    "Read Dumbbell weight per hand, with Exact figure per hand, the Conservative and Optimistic ends of the range, and Factor used.",
+  ],
   intro:
     "This converter estimates the dumbbell load equivalent to a barbell load on the same lift, using a conversion factor defined as the weight of the dumbbell pair divided by the total barbell load including the bar. A pair of dumbbells is always lighter than the barbell you handle on the same movement because each arm stabilises its own path and the range of motion is longer — on bench press the pair typically lands around 75 percent of the barbell total, on a back squat comparison closer to 60 percent. Every result comes with a range rather than a single figure, and rounds to the dumbbell or plate increments you actually own.",
   useCases: [

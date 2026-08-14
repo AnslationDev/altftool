@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bonafide Certificate Request Letter for Visa or Loan",
+  metaDescription:
+    "Choose visa, bank loan, passport or scholarship and get the request letter, the facts the certificate must state, the copy fee and the freshness dates.",
+  steps: [
+    "Choose what the certificate is for — passport, student visa, education loan, scholarship, travel concession, address proof, internship or employment.",
+    "Fill in the student, roll number, academic year and institution, then set the applying date, office processing days, copies needed and fee per copy.",
+    "Expected in hand shows the issue date, total fee and the date it stops being fresh, plus what the certificate must state; Copy letter takes the draft.",
+  ],
   intro:
     "A bonafide certificate is a signed statement from a school or college confirming that a named person is genuinely enrolled there, and each authority that asks for one wants different facts printed on it. This generator takes the purpose — passport, visa, education loan, scholarship, travel concession, address proof, internship or employment verification — and produces both the application letter and the list of details the certificate itself must carry, such as the medium of instruction for a visa or the full fee structure for a bank. It also totals the copy fee and checks that a certificate issued after the office's processing time will still be inside the receiving authority's freshness window, commonly 90 days.",
   useCases: [

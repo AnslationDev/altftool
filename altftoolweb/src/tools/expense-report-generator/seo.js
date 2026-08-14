@@ -1,4 +1,7 @@
 const seo = {
+  title: "Expense Report Generator with GST Input Credit",
+  metaDescription:
+    "Build a claim line by line: GST that Section 17(5) blocks separated from creditable GST, advance settled off, cash payments over Rs 10,000 flagged.",
   intro:
     "An expense report is the schedule of business bills an employee submits to be paid back, and this generator builds it line by line: bill total, the GST on it, the category it belongs to, and how it was paid. It separates the GST you can take input credit on from the GST that Section 17(5) of the CGST Act, 2017 blocks — food, outdoor catering, club membership and most vehicle hire — and settles the claim against any advance already drawn. Cash payments above ₹10,000 are flagged because Section 40A(3) of the Income-tax Act, 1961 can disallow them as a deduction.",
   useCases: [

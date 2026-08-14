@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Disclosure Guide: Do You Have to Tell the Client?",
+  metaDescription:
+    "Grades the disclosure a job needs — none, spoken, written or sign-off — from AI involvement, audience and aggravating factors, then writes the script.",
+  steps: [
+    "Say who you are telling, what the work is, how the AI was used — brainstorming through to a generated deliverable — and who receives it.",
+    "Tick anything else true: client data went into the tool, nobody checked the output, it informs the public, it imitates a real person; pick plain, warm or formal.",
+    "The tier and its action appear with the score, the obligations each factor triggers and a before-you-send checklist; Copy script takes the wording.",
+  ],
   intro:
     "The AI Consent Conversation Guide grades how much AI disclosure a specific piece of work needs — nothing formal, a spoken mention, a written note, or disclosure plus sign-off — by weighting how much of the output the AI shaped, who receives it, and whether confidential data, an unreviewed draft, a synthetic likeness or a contract restriction is involved. It then writes the message for you in a plain, warm or formal tone. The thresholds are anchored on real obligations: EU AI Act Article 50 transparency duties, which apply from 2 August 2026, the academic publishers' rule that AI cannot be an author and its use must be declared, and GDPR Article 28, which makes an AI vendor a processor once client data goes into it.",
   useCases: [

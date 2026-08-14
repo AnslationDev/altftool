@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chatbot Metric Planner: Containment, CSAT & Deflection",
+  metaDescription:
+    "Fix each chatbot metric's formula before launch — containment, escalation, deflection, CSAT, fallback — and project deflected contacts and annual savings.",
+  steps: [
+    "Enter Expected bot conversations per month, Target containment rate (%) and the Fully loaded cost of one human-handled contact (INR) — enter 0 to skip the savings projection.",
+    "Tick the definitions your analytics will capture from day one under Metrics to instrument before launch; each one shows its exact formula and a Watch out pitfall.",
+    "Read Contacts deflected each month with the implied escalation rate and the projected saving per month and per year, then press Copy plan for the summary.",
+  ],
   intro:
     "This planner fixes the definition of every chatbot success metric — containment, escalation, deflection, CSAT, goal completion and fallback rate — before the bot goes live, and projects deflected contact volume as monthly conversations multiplied by the target containment rate. It is for support leads and conversation designers who have to defend a bot's business case, and who need each metric's formula agreed with analytics before the first conversation is logged rather than argued about after launch.",
   useCases: [

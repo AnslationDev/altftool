@@ -1,4 +1,12 @@
 const seo = {
+  title: "Phishing URL X-Ray: Check a Link Without Opening It",
+  metaDescription:
+    "Paste a suspicious link and see it decoded, not opened: punycode via RFC 3492, mixed-script labels, the real registrable domain, and unwrapped redirects.",
+  steps: [
+    "Paste the address into \"The link\", or tap a sample such as \"Punycode homograph\" or \"Credentials before the host\".",
+    "Read \"Findings\" with its High / Medium / Low counts and \"How the address breaks down\" — the registrable domain shown apart from the subdomain, and any numeric host converted back to its dotted quad.",
+    "Check the \"Host labels\" table for each label as written, as displayed, its writing systems and its confusable skeleton, then press \"Copy findings\".",
+  ],
   intro:
     "Paste a link you were sent and this pulls the address apart character by character without ever loading it. Punycode labels — anything starting xn-- — are decoded with the actual RFC 3492 algorithm, so you see the Unicode name a browser would display. Each label is checked for mixed writing systems, the trick behind homograph attacks, where one Cyrillic letter inside a Latin word produces a completely different domain that looks identical. Confusable characters are folded to a skeleton and compared against well-known brand names, the registrable domain is separated from the subdomains anybody can invent, decimal, hexadecimal and octal IP notations are converted back to dotted quads, and redirect parameters are unwrapped through percent- and base64-encoding to show where the link actually ends up. It runs on the text alone: no request is made to the address, so reading a hostile link does not register as a click.",
   useCases: [

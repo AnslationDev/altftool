@@ -1,4 +1,12 @@
 const seo = {
+  title: "ACT Composite Score Calculator (Classic & Enhanced)",
+  metaDescription:
+    "Average your 1-36 section scores into the ACT Composite with ACT's half-up rounding — 31.5 becomes 32 — for classic and enhanced 2025 formats.",
+  steps: [
+    "Choose an 'ACT format' of 'Enhanced ACT (April 2025 onwards) — English, Math, Reading' or 'Classic ACT — English, Math, Reading, Science'.",
+    "Enter each scale score from 1 to 36 under English, Math, Reading and Science; on the enhanced format Science is optional and feeds only the STEM score.",
+    "Read the ACT Composite beside 'Sum of counted sections', 'Unrounded average', 'Sections in Composite' and 'STEM score (Math + Science)', then press Copy result.",
+  ],
   intro:
     "This calculator computes the ACT Composite score — the average of your section scale scores (each 1–36) rounded to the nearest whole number, with fractions of one-half or more rounding up, exactly as ACT, Inc. reports it. It supports both the classic four-section format (English, Math, Reading, Science) and the enhanced ACT introduced from April 2025, where the Composite averages English, Math and Reading and Science is an optional stand-alone score. Test-takers use it to convert practice-test section scores into the Composite that colleges see.",
   useCases: [

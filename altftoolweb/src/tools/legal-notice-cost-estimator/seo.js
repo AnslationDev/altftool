@@ -1,4 +1,12 @@
 const seo = {
+  title: "Legal Notice Cost Estimator: Fees, GST, Postage",
+  metaDescription:
+    "Totals the drafting fee and 18% GST, stamp paper, notarisation, per-addressee printing, postage and reminders, by registered post A/D or Speed Post.",
+  steps: [
+    "Pick a Dispatch mode: Registered Post with A/D, Speed Post (India Post), Private courier or Email / WhatsApp only.",
+    "Enter the Drafting / advocate fee (INR), Number of addressees, Pages in the notice and Reminder notices planned, and tick the 18% GST box unless reverse charge applies.",
+    "Read the Estimated total cost and the per-addressee figure, compare the four dispatch modes side by side, then press Copy result.",
+  ],
   intro:
     "The Legal Notice Cost Estimator adds up the total cash cost of sending a legal notice by summing five buckets: the advocate's drafting fee (plus 18% GST where the firm bills under forward charge), non-judicial stamp paper and notarisation, printing every addressee copy and the record copy, postage per addressee, and the reminder notices that usually follow. It is built for individuals and small businesses deciding whether a demand notice, cease-and-desist or s.138 cheque-bounce notice is worth sending before they engage counsel. Every rate is editable, because postal tariffs, stamp paper values and advocate fees differ by state and vendor.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Curtain Colour Matcher by LRV Gap and Fade Risk",
+  metaDescription:
+    "Enter wall and upholstery hex codes for eight curtain colours ranked by LRV gap: under 10 points the window recedes, over 30 it becomes the feature.",
+  steps: [
+    "Enter the wall colour hex and the upholstery colour hex, or set them with the two colour pickers.",
+    "Say what the curtains should do, disappear, frame the window quietly or be a feature, and set the sun on this window.",
+    "Read the eight suggested swatches with their LRV gap and fade risk in strong sun, then press Copy result.",
+  ],
   intro:
     "This matcher takes the hex value of your wall paint and your main upholstery and returns eight curtain colours, each scored by its Light Reflectance Value gap from the wall — the number that decides whether the window disappears, sits quietly, or becomes the focal point of the room. LRV is the CIE Y value as a percentage, the same figure printed on a paint chip and calculated here with the WCAG relative luminance formula. It also measures the hue distance between the wall and the sofa on the colour wheel, because two colours already sitting 45 to 100 degrees apart leave a curtain far less room to manoeuvre than a tonal pairing does.",
   useCases: [

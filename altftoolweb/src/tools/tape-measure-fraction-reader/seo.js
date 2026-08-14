@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tape Measure Fraction Reader: 3/8 in to mm and Back",
+  metaDescription:
+    "Type 5 3/8, 3/16 or 6 ft 2 1/2 in for decimal inches, mm, cm and metres, or snap a metric size to the nearest 1/16, 1/32 or 1/64 mark and see the error.",
+  steps: [
+    "Choose Tape reading, Millimetres, Centimetres or Decimal inches — the tape box accepts mixed numbers and foot marks such as 5 3/8 or 6' 2 1/2\".",
+    "Set Finest mark on your tape to 1/2, 1/4, 1/8, 1/16, 1/32 or 1/64 inch.",
+    "Read the headline conversion plus the Tape reading, Feet and inches, Decimal inches, Millimetres, Centimetres and Metres rows, with the mm the nearest mark is off by, then press Copy result.",
+  ],
   intro:
     "This reader converts a tape measure mark written as a fraction — 5 3/8, 3/16, 6' 2 1/2\" — into decimal inches, millimetres, centimetres and metres, and converts back the other way by snapping a metric size onto the nearest mark your tape actually carries. It uses the exact 1959 international definition of the inch, 25.4 mm, and the power-of-two divisions a tape is printed with: halves, quarters, eighths, sixteenths, thirty-seconds and sixty-fourths. It also shows how far each snapped mark sits from the true size, so you know whether the rounding matters for the joint you are cutting.",
   useCases: [

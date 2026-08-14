@@ -1,4 +1,7 @@
 const seo = {
+  title: "Random Picker: Lunch, Truth or Dare, Names & Teams",
+  metaDescription:
+    "Three fair pickers in one page: filter a lunch spot, draw Truth or Dare, or pick names and split even teams. Fisher-Yates shuffle, odds shown.",
   intro:
     "Random Fun Picker is three fair random pickers in one page: a lunch-spot chooser with cuisine, budget, meal-type and rating filters; a Truth or Dare deck at three difficulty levels; and a name drawer that also splits a group into even teams. Every draw runs a Fisher-Yates shuffle on a seeded mulberry32 generator — the only shuffle that gives all n! orderings equal probability — so no name or option is quietly favoured. It is for teams settling lunch, hosts running a party round, and teachers picking who goes next.",
   useCases: [

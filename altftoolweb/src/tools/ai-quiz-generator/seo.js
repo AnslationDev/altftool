@@ -1,4 +1,5 @@
 const seo = {
+  title: "AI Quiz Generator: Paste Text, Get 15 Questions",
   intro:
     "AI Quiz Generator turns any passage of text into a graded quiz using in-browser NLP: it splits the passage into sentences, ranks the key terms in each one, then blanks a term to build multiple-choice and fill-in-the-blank questions or swaps a term to build a false statement for true/false. Terms are prioritised by type — capitalised two-word phrases rank highest, then proper nouns, then numbers, then long words — so the questions target the content words rather than random filler. It produces up to 15 questions per run, grades instantly, and shows the original sentence as the explanation for every answer.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Bitrate and File Size Calculator by Codec",
+  metaDescription:
+    "Get raw and compressed Mbps plus MB from resolution, frame rate, bit depth and duration, with named ratios for ProRes, DNxHR, H.264, HEVC, VP9 and AV1.",
+  steps: [
+    "Pick a Resolution tile from 360p up to 4K UHD, a Frame Rate (FPS) between 23.976 and 60, and an 8-, 10- or 12-bit Bit Depth.",
+    "Enter Duration (seconds), then choose a Compression / Codec tile — Uncompressed, ProRes 4444, ProRes 422, DNxHR HQ, H.264, HEVC/H.265, VP9 or AV1.",
+    "Calculation Results shows Raw Bitrate and Compressed Bitrate in Mbps beside Raw Size and Compressed Size in MB, with a Copy button for the figures.",
+  ],
   intro:
     "The Video Bitrate Calculator works out the raw and compressed bitrate of a clip from width x height x bit depth x frame rate, then divides by a codec compression ratio to estimate the delivered stream and the finished file size. Pick a resolution from 360p to 4K UHD, a frame rate from 23.976 to 60 fps, an 8-, 10- or 12-bit depth, a codec, and a duration, and you get raw Mbps, compressed Mbps, raw MB and compressed MB side by side. It is built for editors, streamers and anyone sizing storage or an upload before committing to an export.",
   useCases: [

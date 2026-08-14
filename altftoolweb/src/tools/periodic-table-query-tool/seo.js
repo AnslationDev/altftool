@@ -1,4 +1,12 @@
 const seo = {
+  title: "Periodic Table Query Tool: Search & Sort 118 Elements",
+  metaDescription:
+    "Search all 118 elements by name, symbol or atomic number, filter by category, orbital block, period or state, sort by any property, export CSV.",
+  steps: [
+    "Type into \"Search by name, symbol or atomic number\" - the placeholder shows iron, Fe, 26.",
+    "Narrow the list with Category, \"Orbital block\", \"Standard state at 298 K\" and Period, then set \"Sort by\" to a property such as \"Electronegativity (Pauling)\" or \"First ionisation energy\" and choose Ascending or Descending.",
+    "\"Matching elements\" counts the hits out of 118 and the Results table lists them; \"Copy CSV\" puts the filtered set on the clipboard and \"Download\" saves elements.csv.",
+  ],
   intro:
     "This periodic table query tool lets you search all 118 confirmed elements by name, symbol, atomic number, or category, then explore each one in depth. Filter with category pills — alkali metal, noble gas, lanthanoid, and more — and review atomic mass, electron configuration, electronegativity, density, melting and boiling point, and other measured properties. Compare any two elements side by side, save favorites, and revisit recent searches from history. The Chemistry Section looks up predefined classroom reactions or builds a valence-balanced compound formula for pairs without one, an animated Atom Model Canvas and Atomic Structure Diagram visualize protons, neutrons, and electron shells, and a temperature slider simulates standard state across 0-6500K. Export the selected element's full profile as JSON or plain text, or copy a formatted report with one click.",
   useCases: [

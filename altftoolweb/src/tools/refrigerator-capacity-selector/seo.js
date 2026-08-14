@@ -1,4 +1,12 @@
 const seo = {
+  title: "Refrigerator Size Calculator: Litres for a Household",
+  metaDescription:
+    "Fridge litres from a 60 L base plus 55 L per adult and 30 L per child, adjusted for cooking, shopping and frozen use, then matched to real sizes.",
+  steps: [
+    "Enter Adults in the home and Children under 12, then pick a Cooking style — Mostly eat out or order in, Regular home cooking, or Heavy cooking, batch prep or frequent guests.",
+    "Set \"How often you shop for groceries\" (daily fresh through fortnightly or monthly bulk buy), your Diet and your Frozen food use.",
+    "Recommended capacity comes back in litres with the format that fits, freezer and fresh-food volumes and litres per person, and the \"How the number was built\" table lists every element and its effect; Copy result copies it.",
+  ],
   intro:
     "This selector converts household habits into a refrigerator capacity in litres using an explicit additive model: a 60 litre base for door bins and staples, 55 litres per adult and 30 litres per child, then multipliers for cooking style, shopping frequency, diet and frozen food use. The output is matched to the gross capacities actually sold — 190, 215, 240, 265, 292, 340, 407, 465 litres and up — and to the door format that fits. Every constant is shown in the breakdown so you can judge the assumptions rather than trust a black box.",
   useCases: [

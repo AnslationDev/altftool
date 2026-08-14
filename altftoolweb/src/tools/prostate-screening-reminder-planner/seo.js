@@ -1,4 +1,12 @@
 const seo = {
+  title: "PSA Screening Planner: ACS Start Age and Re-Test Date",
+  metaDescription:
+    "Enter age, family history and your last PSA for the ACS start age of 40, 45 or 50 and the next due date under the 2.5 ng/mL interval rule.",
+  steps: [
+    "Enter 'Age (years)', pick 'Family history', and give 'Most recent PSA (ng/mL, 0 if never tested)'.",
+    "Add 'Date of that test or discussion' with 'Today's date', and tick 'Black or African ancestry' or 'Known BRCA1, BRCA2 or Lynch syndrome' if they apply.",
+    "Read your start age and next due date under 'What the guidelines say for you', then press 'Copy result'.",
+  ],
   intro:
     "Prostate Screening Reminder Planner works out the age at which published guidance suggests starting the PSA conversation for your risk profile, and when the next discussion falls due. It applies the American Cancer Society risk tiers — age 50 at average risk, 45 for Black men or one first-degree relative diagnosed before 65, 40 for multiple affected relatives or a known BRCA variant — together with the ACS re-test rule of every two years below 2.5 ng/mL and yearly at or above it. It is a scheduling aid, not a recommendation for or against screening.",
   useCases: [

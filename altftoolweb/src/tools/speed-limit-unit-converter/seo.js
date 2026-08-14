@@ -1,4 +1,12 @@
 const seo = {
+  title: "Speed Limit Converter: km/h, mph, Knots, m/s and ft/s",
+  metaDescription:
+    "Convert posted limits with exact factors (1 mile = 1609.344 m), plus the nearest multiple of 5 and the time to cover one kilometre and one mile.",
+  steps: [
+    "Type the number on the sign into Posted speed limit, or tap one of the 30, 50, 60, 80, 100 and 120 preset chips.",
+    "Set Sign is posted in and Convert to from Kilometres per hour, Miles per hour, Knots, Metres per second and Feet per second; Swap units reverses the pair.",
+    "Read the converted figure with the nearest sign value in multiples of 5, all five units listed, Time to cover 1 km, Time to cover 1 mile and the wrong-unit misread warning, then press Copy result.",
+  ],
   intro:
     "This converter turns a posted speed limit from one unit into another — km/h, mph, knots, metres per second or feet per second — using the exact international definitions, where 1 mile is 1609.344 m and 1 nautical mile is 1852 m, so km/h and mph conversion is exact rather than approximated at 1.6. Alongside the precise figure it shows the nearest multiple of 5, because road authorities post limits in fives, and the time the limit takes to cover a kilometre and a mile. It is built for drivers crossing a unit border, riders reading a foreign sign, and anyone checking a rental car's speedometer against the roadside number.",
   useCases: [

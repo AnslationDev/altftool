@@ -1,4 +1,7 @@
 const seo = {
+  title: "Changelog Generator: Keep a Changelog Entry Builder",
+  metaDescription:
+    "Paste one-line changes and get a Keep a Changelog entry: ## [version] - YYYY-MM-DD with Added, Changed, Fixed and Removed sorted by verb.",
   intro:
     "The Changelog Generator turns a flat list of one-line changes into a Keep a Changelog release entry — a `## [version] - YYYY-MM-DD` heading followed by grouped `### Added`, `### Changed`, `### Fixed` and `### Removed` sections. It routes each line by its opening verb (fix goes to Fixed, change or update to Changed, remove or delete to Removed, everything else to Added), strips that verb from the text, and stamps today's date in ISO format. It is for developers writing a release note from the commits they just merged, without hand-formatting the markdown.",
   useCases: [

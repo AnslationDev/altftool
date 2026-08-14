@@ -1,4 +1,12 @@
 const seo = {
+  title: "Toiletry Quantity Estimator for the 100 ml Liquids Bag",
+  metaDescription:
+    "Turn trip length and daily habits into millilitres, then into travel bottles, and total the container sizes against the 1 litre cabin liquids bag.",
+  steps: [
+    "Pick a Hair length - Short at 10 ml a wash, Medium at 20 ml or Long at 30 ml - and enter Trip length (days), Hair washes per week, Showers per day, Teeth brushings per day, Sunscreen applications per day, Shaves per week and Hand sanitiser uses per day.",
+    "Under 'What else you use', tick Conditioner, Face moisturiser, 'Cleanser or micellar water', Roll-on deodorant, Body lotion and Contact lens solution.",
+    "'Bottles in the liquids bag' totals container capacity against the 1000 ml bag and reports the ml free or over, while the 'Item by item' table gives per-use dose, uses, ml needed and the bottle count, flagging anything over 100 ml; Copy list copies the checklist.",
+  ],
   intro:
     "This estimator turns trip length and daily habits into millilitres, then into the travel bottles you actually have to buy, using published dose figures rather than guesswork: about 20 ml of shampoo per wash for medium hair, 1 g of toothpaste per brushing, 15 ml of sunscreen to cover face, neck, arms and lower legs at the 2 mg/cm² dose, and roughly 20 ml of lotion for a whole adult body measured in fingertip units. It then totals the container sizes — not the contents — against the 1 litre cabin liquids bag, because that is what security actually assesses.",
   useCases: [

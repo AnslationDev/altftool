@@ -1,4 +1,12 @@
 const seo = {
+  title: "Canada Visa Cost Estimator: IRCC Fees in Rupees",
+  metaDescription:
+    "Totals the IRCC visitor, study or work permit fee plus biometrics, applying the CAD 500 and CAD 170 family caps and the 14-79 age rule, in rupees.",
+  steps: [
+    "Choose Application type — Visitor visa (TRV) or super visa, Study permit, Work permit or eTA — and enter how many applicants are aged 14 to 79, under 14, and 80 and over.",
+    "Tick 'Everyone applies at the same time and place' to apply the CAD 500 and CAD 170 family maximums, set Exchange rate (rupees per CAD 1), and fill the visa centre service fee, medical exam, photographs, courier and card markup fields.",
+    "Read Total application cost in rupees, then the Application fee, Biometrics fee, Charges paid in India, Per applicant and Saved by the family maximums rows and the Line by line table; Copy result takes the breakdown.",
+  ],
   intro:
     "A Canada visa cost estimator totals the IRCC government fees for a temporary residence application — the visitor visa, study permit or work permit fee plus biometrics — and applies the two family maximums that make a joint application cheaper per head: CAD 500 for a family of five or more applying for visitor visas at the same time and place, and CAD 170 for two or more family members giving biometrics together. It also respects the age rule, since biometrics are only collected from applicants aged 14 to 79. Visa centre service charges, medical exams, photographs and courier are added on top, and the whole thing is converted to rupees at a rate you set.",
   useCases: [

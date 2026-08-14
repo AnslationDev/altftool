@@ -1,4 +1,12 @@
 const seo = {
+  title: "Google Ads Description Writer: 5 Lines Under 90 Chars",
+  metaDescription:
+    "Paste up to 200 characters about your product and get 5 responsive search ad descriptions, each truncated to Google's 90-character limit.",
+  steps: [
+    "Type what you sell into 'Product or Service Description' — the counter reads Characters: n/200 and shows 'Too long!' once you pass 200.",
+    "Click 'Generate Descriptions'; the button stays disabled while the box is empty or over the 200-character limit.",
+    "Under 'Generated Descriptions' read the five lines with their own character counts and click the copy icon beside whichever one you want.",
+  ],
   intro:
     "The Google Ads Description Writer turns a short product or service summary into five ready-to-paste ad descriptions, every one trimmed to the 90-character limit Google enforces on responsive search ad descriptions. You type up to 200 characters describing what you sell, and the tool drops the opening words of that text into a bank of proven direct-response patterns — benefit-led, price-led, urgency-led and trust-led — then shows the exact character count next to each line and a copy button beside it. It is built for anyone drafting a search campaign who keeps running over the limit and having to rewrite by hand.",
   useCases: [

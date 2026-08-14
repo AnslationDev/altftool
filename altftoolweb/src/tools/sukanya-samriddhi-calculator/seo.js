@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sukanya Samriddhi Yojana Calculator with Maturity Date",
+  metaDescription:
+    "Project an SSY account: 15 years of deposits from ₹250 to ₹1.5 lakh, 8.2% compounded yearly, and the exact maturity date 21 years after opening.",
+  steps: [
+    "Enter your daughter's date of birth, then set Yearly deposit (₹) anywhere between the ₹250 minimum and the ₹1,50,000 maximum — or tap one of the ₹1,000 / month, ₹50,000 / year and Maximum ₹1.5L presets.",
+    "Choose a Deposit start year (only years before her 10th birthday are listed) and set Interest rate (% p.a.) to the notified 8.2 or a newer figure; the projection recalculates as you type, and Reset to defaults restores the starting values.",
+    "The Maturity after 21 years panel returns the amount and the date it is payable, plus Total deposited, Total interest, Effective multiple, Account opens, Last deposit due and Growth-only phase tiles, a 21-row Year-wise growth table (Year, Her age, Deposit, Interest earned, Closing balance), and a Copy summary button.",
+  ],
   intro:
     "This Sukanya Samriddhi Yojana calculator projects the maturity value of a girl child's SSY account under the scheme's actual rules: deposits in each of the first 15 years, interest compounded annually at the notified rate (8.2% p.a. by default), and maturity 21 years after the account is opened. Enter her date of birth, the yearly deposit between ₹250 and ₹1.5 lakh and the opening year, and you get the maturity amount, the exact maturity date, her age on that date and a year-by-year table of deposit, interest and closing balance. It is for parents deciding how much to commit each year and when to open the account.",
   useCases: [

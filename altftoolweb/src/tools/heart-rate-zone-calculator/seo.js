@@ -1,4 +1,12 @@
 const seo = {
+  title: "Heart Rate Zone Calculator with Karvonen Option",
+  metaDescription:
+    "Turns your age into five bpm zones — Warm Up to Maximum — via 220 minus age, or tick Use Karvonen Method to recompute from heart rate reserve.",
+  steps: [
+    "Type your Age (years) — 5 to 120 — and optionally tick Use Karvonen Method and enter a Resting Heart Rate (bpm) between 30 and 120.",
+    "Press Calculate Zones: max HR is computed as 220 − age, and in Karvonen mode each zone percentage is applied to heart rate reserve (max HR minus resting HR) instead.",
+    "Read the five zone cards — Warm Up 50-60% through Maximum 90-100% — each with its bpm range, plus the summary panel showing Max HR, Method and the 220 − age working; Reset clears the form.",
+  ],
   intro:
     "This calculator converts your age into five named training zones — Warm Up, Fat Burn, Cardio, Peak and Maximum — using the classic 220 minus age estimate of maximum heart rate. Tick the Karvonen option and add your resting pulse and the same five bands are recalculated from heart rate reserve instead, which raises every boundary to match your own fitness. It suits anyone whose watch or gym machine labels zones this way and who wants the underlying bpm numbers spelled out.",
   useCases: [

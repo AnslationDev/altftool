@@ -1,4 +1,12 @@
 const seo = {
+  title: "Internship Request Letter Builder: Email + Subject Line",
+  metaDescription:
+    "Turn your course, skills and free dates into an internship email with a subject line and availability window, scored on seven checks and 90-200 words.",
+  steps: [
+    "Fill Your full name, Company / organisation, Course or degree, Role you want and Skills and tools (comma separated, up to 6).",
+    "Set Available from and Duration (weeks), choose Work mode and Tone, and add the Recipient name, portfolio link and contact.",
+    "Read Letter strength out of the seven checks with the generated Subject line and availability window, then use Copy result or Copy body.",
+  ],
   intro:
     "The Internship Request Letter Builder composes a ready-to-send internship application email from your course, skills, free dates and the employer you are targeting. It follows the standard business-letter order — subject line, salutation, statement of purpose, evidence of fit, availability window, call to action, sign-off — and scores the draft against seven checks such as naming a real recipient and keeping the body between 90 and 200 words. Built for students and fresh graduates sending cold applications where nobody has posted a vacancy.",
   useCases: [

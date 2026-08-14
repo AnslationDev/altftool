@@ -1,4 +1,12 @@
 const seo = {
+  title: "Y2K Colour Palette Generator: Chrome and Bubblegum",
+  metaDescription:
+    "Build a Y2K palette from a seed word: bubblegum, cyber lilac, ice aqua, a five-step chrome ramp and holographic gradients, with WCAG contrast.",
+  steps: [
+    "Type a Seed word or phrase, pick a Base of \"Bright (white-lilac base)\" or \"Dark (deep violet base)\", and drag Accent intensity between 0 and 100.",
+    "Press Shuffle seed for a different set — the same seed, base and intensity always return identical hex values — and check the contrast table's Ratio and Safe for columns.",
+    "Under Export choose CSS variables, Tailwind @theme or JSON, then press Copy snippet (or Copy hex codes for the raw values).",
+  ],
   intro:
     "The Y2K Palette Generator builds a late-1990s / early-2000s colour system from a seed word: bubblegum magenta, cyber lilac, ice aqua and acid lime accents, a five-step brushed-chrome ramp, and three ready gradients including a holographic sweep. Hues are drawn from fixed windows that define the look (318-338° for bubblegum, 262-282° for lilac, 182-196° for aqua, 206-224° at 7-16% saturation for chrome), and every text pairing is measured with the WCAG 2.1 contrast formula so you know which colours can carry copy and which are decoration. Same seed, same palette — share the word and a teammate gets the identical set.",
   useCases: [

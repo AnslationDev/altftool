@@ -1,4 +1,12 @@
 const seo = {
+  title: "Helmet Size Finder: Head Circumference to S, M, L",
+  metaDescription:
+    "Converts a head circumference in cm or inches into a helmet size band, flags borderline fits within half a centimetre, and names your oval head shape.",
+  steps: [
+    "Choose Centimetres or Inches, then enter Head circumference measured at the widest point about 2.5 cm above the eyebrows.",
+    "Add Head length, front to back and Head breadth, side to side, then set How this brand sizes to Runs small, True to the chart or Runs large.",
+    "Read the helmet size and its centimetre band, any borderline neighbouring size worth trying, and the cephalic index naming a long, intermediate or round oval shape.",
+  ],
   intro:
     "A helmet size finder converts a head circumference measured about 2.5 cm above the eyebrows into a helmet size letter, using the two-centimetre bands most full-face helmets follow — 55–56 cm for S, 57–58 cm for M, 59–60 cm for L and so on. It flags measurements sitting within half a centimetre of a band edge, where two sizes should be tried side by side, and adjusts for brands that run a size small or large. Head length and breadth also give the cephalic index, the anthropometric ratio that tells you whether you need a long oval, intermediate oval or round oval internal shape.",
   useCases: [

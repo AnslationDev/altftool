@@ -1,4 +1,12 @@
 const seo = {
+  title: "Post Office MIS Calculator: Monthly Income & Limits",
+  metaDescription:
+    "Monthly POMIS income from deposit x rate / 1200, capped at Rs 9 lakh single or Rs 15 lakh joint, with 5-year interest and the 2%/1% exit penalty.",
+  steps: [
+    "Enter 'Deposit amount (INR)' and 'Interest rate (% per year)'.",
+    "Choose Account type — 'Single account — max ₹9,00,000' or 'Joint account (up to 3 adults) — max ₹15,00,000'.",
+    "Read the monthly income headline plus income per quarter and year, total interest over 5 years, principal returned at maturity and deposit headroom left.",
+  ],
   intro:
     "This Post Office MIS calculator shows the fixed monthly income a Post Office Monthly Income Scheme deposit will credit to your account for the full five-year term, using the standard formula deposit × annual rate ÷ 1200. It enforces the real deposit ceilings — ₹9 lakh for a single account and ₹15 lakh for a joint account since 1 April 2023 — and adds up the total interest, the principal returned at maturity and the penalty for closing early. It is aimed at retirees, homemakers and anyone converting a lump sum into a predictable monthly cash flow backed by the Government of India.",
   useCases: [

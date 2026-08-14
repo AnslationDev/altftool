@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dark Circle Detector: Score Under-Eye Darkness 0-100",
+  metaDescription:
+    "Upload a front-facing selfie: facial landmarks find the under-eye skin, then darkness and blue tint score 0-100 across five bands, in your browser.",
+  steps: [
+    "Drop a selfie onto Upload a clear front-facing photo, or click to browse for an image file.",
+    "Wait while face detection reads the facial landmarks — at least 48 points are needed — and samples the skin under each eye.",
+    "Read the Severity Score out of 100 with its band, plus Darkness Level, Bluishness Index and the Under-Eye Analysis Overlay marking the pixels counted.",
+  ],
   intro:
     "The Dark Circle Detector finds your eyes in a selfie with a 68-point facial landmark model, samples the skin in a half-disc under each eye, and scores it on two measurements: how dark those pixels are relative to normal skin luminance, and how blue they are compared with their own red and green channels. The result is a 0–100 score placed into one of five bands from Minimal to Severe, plus a highlighted overlay showing exactly which pixels triggered it. It is for anyone tracking whether a sleep change, a concealer or an eye cream is doing anything measurable, rather than judging it in a bathroom mirror.",
   useCases: [

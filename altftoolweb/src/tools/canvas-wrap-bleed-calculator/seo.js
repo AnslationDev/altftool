@@ -1,4 +1,12 @@
 const seo = {
+  title: "Canvas Wrap Bleed Calculator: Print Size & Safe Zone",
+  metaDescription:
+    "Face size plus twice the bar depth and back tuck gives the sheet to print — bleed per edge, safe zone, image lost at the sides, 300 DPI pixel count.",
+  steps: [
+    "Enter the finished size in Visible face width and Visible face height and pick Millimetres, Centimetres or Inches in Working unit — the form opens at 40 × 50 cm.",
+    "Set Stretcher bar depth (or tap the 0.75\" bar, 1.25\" bar, 1.5\" bar or 2\" bar chip), Back tuck (stapling allowance), Safe margin inside the face, and Source file width (pixels, optional) if you want a resolution check.",
+    "Total print size (with bleed) updates live above rows for Bleed per edge (depth + tuck), Safe zone on the face, Image area hidden by the wrap, Extra material vs a flat print, Pixels needed at 300 DPI and Resolution of your file at print size. Copy result copies the summary; Reset returns to 40 × 50 cm.",
+  ],
   intro:
     "Canvas Wrap Bleed Calculator works out the full print size a gallery-wrapped canvas needs: print width equals face width plus twice the stretcher bar depth plus twice the back tuck, and the same again for height. It reports the bleed on every edge, the safe zone your subject must stay inside on the front face, how much of the image disappears around the sides, and the pixel count needed to hit 300 DPI at that print size. Aimed at photographers and print buyers sizing a file before it goes to a canvas lab.",
   useCases: [

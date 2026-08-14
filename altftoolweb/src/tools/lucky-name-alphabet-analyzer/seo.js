@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lucky Name Analyzer: 5-Part 0-100 Score, Just for Fun",
+  metaDescription:
+    "Scores a spelling 0-100 from vowel balance, letter variety, consonant runs, English letter frequency and Chaldean vs Pythagorean roots. A novelty index.",
+  steps: [
+    "Type a spelling into \"Name to analyse\" — spaces and punctuation are ignored, and only A–Z letters count.",
+    "The score recomputes as you type from five components worth 20 points each: Vowel balance, Letter variety, Pronounceability, Everyday letters and Numerology agreement, with each one's raw measurement shown.",
+    "Novelty score gives the total out of 100 and its band (Very smooth, Smooth, Mixed or Unusual), above rows for Letters, Distinct letters, Longest consonant run, Mean English letter frequency and both numerology totals; paste into \"One name per line\" to rank a shortlist.",
+  ],
   intro:
     "The Lucky Name Alphabet Analyzer scores a spelling out of 100 by measuring five things about its letters: the share that are vowels, how many letters are distinct, the longest run of consonants, how common the letters are in ordinary English text, and whether the Chaldean and Pythagorean root numbers of the name agree. Each measure is worth 20 points and every weight and threshold is printed alongside the result, so the total can be reproduced by hand. It is a novelty index defined by this page for entertainment — not a traditional practice and not evidence of anything.",
   useCases: [

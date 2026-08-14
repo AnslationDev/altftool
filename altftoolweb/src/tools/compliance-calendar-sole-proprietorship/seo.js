@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sole Proprietorship Compliance Calendar (India)",
+  metaDescription:
+    "Build an Indian proprietor's GST, TDS, advance tax and ITR calendar from your registrations — GSTR-1 on the 11th, GSTR-3B on the 20th, QRMP on the 25th.",
+  steps: [
+    "Pick the Financial year starting (April of) and Today's date, then set GST registration to monthly, QRMP, composition or not registered.",
+    "Under 'What else applies to you' tick Taxed presumptively (44AD / 44ADA), I deduct TDS on payments, I have employees on EPF / ESI or A tax audit under 44AB applies.",
+    "Read Next filing due with its form and days away, plus Filings in the year, Still due and Due in the next 30 days, then press Copy result.",
+  ],
   intro:
     "This tool builds a dated filing calendar for an Indian sole proprietorship from the registrations you actually hold — GST scheme, TDS, EPF and ESI, tax audit and presumptive taxation. It applies the statutory dates in the CGST Rules and the Income-tax Act: GSTR-1 on the 11th, GSTR-3B on the 20th, QRMP payments on the 25th, advance tax on 15 June, 15 September, 15 December and 15 March, and the section 139(1) return date of 31 July or 31 October. A proprietor has no ROC filings, so the year is shorter than a company's — but missing a GST return still costs late fees per day.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Ad Topics Explained: Reset Checklist for 10 Platforms",
+  steps: [
+    "Tick the platforms you use under \"Where do your ad topics live?\" — each row is labelled Browser, Account or Device and says whether a full opt-out or mute-only is available.",
+    "Set \"How often will you redo this? (days)\", or press the 30d, 90d, 180d or 365d preset, to see the minutes per round and hours per year.",
+    "Work through Your reset checklist — the Go to path, the numbered steps, How long it lasts and The catch for each platform — then press Copy checklist.",
+  ],
   intro:
     "Ad Topic Profile Explainer describes what an interest-based ad topic is — a label a platform infers about you so advertisers can buy an audience without buying your identity — and builds a per-platform reset checklist across ten browsers, accounts and devices. For each one it gives the settings area to open, the steps in order, how long the reset lasts, and the catch that most people miss. It also totals the time the routine costs at whatever interval you choose, because the profile rebuilds itself from ongoing activity.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Redness Analyzer: Measure Facial Redness in CIELAB a*",
+  metaDescription:
+    "Reads skin-toned pixels from a photo in your browser, converts sRGB to CIELAB and reports Δa* for cheeks, nose, forehead and chin. Not a diagnosis.",
+  steps: [
+    "Press Choose photo and load a straight-on, evenly lit face photo; its long edge is scaled to 1600 px in the browser before any pixel is sampled.",
+    "Keep 'Show the areas that were sampled' ticked so the face box and the forehead, cheek, nose and chin windows are drawn over the canvas.",
+    "Read the headline Δa* against the calmest skin in the same photo, the region-by-region a* table with its Even to Strong bands, and the skin-share, clipping and colour-cast flags, then press Copy result.",
+  ],
   intro:
     "This analyzer measures facial redness as a colour difference: skin-toned pixels in the photo you load are converted from sRGB into CIELAB, and the a* channel — the green-to-red axis of that space — is averaged for the forehead, both cheeks, the nose and the chin. The number it leads with is Δa*, the gap between the reddest of those areas and the calmest one in the same frame, because comparing two areas of one photo cancels most of the skin tone, exposure and white balance that make a raw redness figure meaningless from one day to the next. It is a measurement of a photograph, made entirely inside your browser, and it is not a diagnosis.",
   useCases: [

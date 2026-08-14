@@ -1,4 +1,12 @@
 const seo = {
+  title: "Neck Circumference Check: Sleep Apnoea & BMI Cut-offs",
+  metaDescription:
+    "Check a neck measurement against Ben-Noun's 37/34 cm adiposity cut-offs and the 40 cm STOP-BANG apnoea criterion, with an optional BMI cross-check.",
+  steps: [
+    "Enter your \"Neck measurement\" and pick the unit — \"Centimetres (cm)\" or \"Inches (in)\" — plus the male or female cut-off set.",
+    "Optionally add height in cm and weight in kg to run the BMI cross-check alongside the neck cut-offs.",
+    "Read the screening level with each published cut-off marked \"Met\" or \"Not met\", then click \"Copy result\" to save the summary.",
+  ],
   intro:
     "The Neck Circumference Risk Checker compares a single tape measurement against the published screening cut-offs that use neck size as a proxy for upper-body fat: Ben-Noun's 37 cm (men) and 34 cm (women) thresholds for a BMI of 25 or more, and the neck criteria used inside sleep apnoea questionnaires. An optional height and weight entry runs a BMI cross-check so you can see when the two measures disagree. It is a screening prompt for a conversation with a clinician, never a diagnosis.",
   useCases: [

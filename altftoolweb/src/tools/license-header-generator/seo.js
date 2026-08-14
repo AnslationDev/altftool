@@ -1,4 +1,10 @@
 const seo = {
+  title: "License Header Generator: 9 Licenses, SPDX Line",
+  steps: [
+    "Pick a License from the nine SPDX options — MIT, Apache-2.0, GPL-3.0-or-later, AGPL-3.0-or-later, LGPL-3.0-or-later, MPL-2.0, BSD-3-Clause, ISC or Unlicense — and a 'Language / comment style' such as 'Python / Shell / Ruby / YAML / TOML (#)'.",
+    "Type the 'Copyright year or range' (2026 or 2020-2026) and the Copyright holder, and leave 'Include an SPDX-License-Identifier line (REUSE specification style)' ticked; the header regenerates on every keystroke.",
+    "The Generated header panel shows the wrapped comment above rows for License, SPDX identifier, Header lines and Header wording ('Official per-file header text' or 'REUSE-style copyright + SPDX line') — press 'Copy header' to paste it into your file.",
+  ],
   intro:
     "This generator produces the per-file license header comment for a chosen license, language and copyright holder, including the SPDX-License-Identifier line recommended by the REUSE specification. It covers nine common licenses — MIT, Apache-2.0, the GPL/LGPL/AGPL v3 family, MPL-2.0, BSD-3-Clause, ISC and the Unlicense — using each license's own official 'how to apply' header wording where one exists. It is built for developers who need consistent, correctly worded headers across JavaScript, Python, C, HTML, SQL and other comment syntaxes.",
   useCases: [

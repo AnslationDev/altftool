@@ -1,4 +1,12 @@
 const seo = {
+  title: "SIP Calculator with Annual Step-Up and Maturity Split",
+  metaDescription:
+    "Project monthly SIP maturity from ₹500 to ₹2,00,000 over 1-40 years with a 0-25% annual step-up, and see invested versus returns split.",
+  steps: [
+    "Drag the Monthly SIP, Expected annual return, Investment period and Annual SIP step-up sliders — ₹500 to ₹2,00,000, 1% to 30%, 1 to 40 years and 0% to 25% — or load the Balanced wealth preset.",
+    "Read the four cards the sliders update live: Total invested, Estimated returns, Maturity amount and Final monthly SIP, with the Portfolio split bar showing how much of the maturity is your own money.",
+    "Press Copy report, or Download to save sip-calculation-report.txt, which carries every input plus the maturity amount and the gain over the invested amount.",
+  ],
   intro:
     "The SIP Calculator projects what a monthly mutual fund SIP grows to, compounding each instalment monthly at your expected annual return and optionally raising the instalment by a fixed percentage every twelve months. It reports four figures — total invested, estimated returns, maturity amount and what your final monthly SIP will have grown to — so you can see how much of the corpus is your own money and how much is compounding. Inputs run from ₹500 to ₹2,00,000 a month, 1 to 40 years, returns of 1% to 30% and a step-up of 0% to 25%.",
   useCases: [

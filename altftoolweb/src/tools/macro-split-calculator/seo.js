@@ -1,4 +1,12 @@
 const seo = {
+  title: "Macro Split Calculator: Calories to Grams Per Meal",
+  metaDescription:
+    "Turn a calorie target into protein, carb and fat grams at 4/4/9 kcal per gram — balanced, high-protein, keto or custom splits, divided across 1-10 meals.",
+  steps: [
+    "Enter 'Daily calories (kcal)' (800-8,000) and 'Meals per day' (1-10), then pick a 'Diet split' preset — from Balanced (30P / 40C / 30F) to Ketogenic (25P / 5C / 70F) — or Custom split.",
+    "For a custom plan, press 'Fine-tune these percentages' and set Protein %, Carb % and Fat %; the tool flags any split that does not total 100%.",
+    "Read the 'Protein target' g/day headline, the grams-and-kcal table for all three macros and the per-meal cards, then press 'Copy result'.",
+  ],
   "intro": "Macro Split Calculator converts a daily calorie target into grams of protein, carbohydrate and fat using the standard Atwater values — 4 kcal per gram for protein and carbs, 9 kcal per gram for fat. Choose a preset such as balanced 30/40/30, high protein 40/35/25, low carb, ketogenic 25/5/70 or high-carb endurance, or type your own percentages and the tool checks they add to 100. It also divides each macro across your chosen number of meals so you know what a single plate should look like.",
   "useCases": [
     "Translate the calorie number from a TDEE calculation into macros you can actually log in a food-tracking app.",

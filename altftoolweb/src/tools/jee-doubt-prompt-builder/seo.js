@@ -1,4 +1,12 @@
 const seo = {
+  title: "JEE Doubt Prompt Builder for Step-by-Step AI Help",
+  metaDescription:
+    "Turn a JEE physics, chemistry or maths doubt into a step-by-step teaching prompt, with JEE Main's 2.4 min per question and +4/−1 guessing maths alongside.",
+  steps: [
+    "Pick Subject and Level, then paste the problem into \"The question / doubt\" and fill \"Your attempt so far (needed for answer-mismatch doubts)\".",
+    "Under \"What exactly is confusing?\" choose one of the five doubt types — the concept itself, which method to use, stuck mid-solution, my answer does not match, or too slow at this type.",
+    "The Generated prompt appears with a Copy prompt button, beside \"Time one question earns\" (2.4 min) and the +4/−1 expected-marks-per-guess table.",
+  ],
   intro:
     "This builder frames a JEE physics, chemistry or maths doubt as a step-by-step teaching prompt: it names your exact confusion (concept, method choice, stuck mid-solution, answer mismatch or speed), applies a subject-specific solving framework, and forbids skipped steps. Alongside, it shows the JEE Main arithmetic that shapes practice — 2.4 minutes per question and the +4/−1 marking scheme under which even a blind four-option guess carries +0.25 expected marks. Built for JEE Main and Advanced aspirants using AI as a doubt-solving tutor.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Restaurant Refund Policy Generator — 48h / 30-day Caps",
+  metaDescription:
+    "Draft a food order refund policy for missing, wrong, late or spoiled items, inside the 48-hour acknowledgement and one-month redressal limits.",
+  steps: [
+    "Enter the restaurant name, city, 'Effective from' date, 'Acknowledge within (hours, max 48)' and 'Close complaint within (days, max 30)'.",
+    "Tick 'Problems this policy covers' and tune each one's reporting window, refund scope and payout route under 'Tune each covered problem'.",
+    "Test one bill in 'Refund amount check' to see what the customer receives, then press 'Copy policy' to take the drafted wording.",
+  ],
   intro:
     "The Restaurant Refund Policy Generator turns your own service rules into a published refund policy for food orders, covering missing items, wrong items, late delivery, spoiled food and hygiene complaints. Each clause carries a reporting window, a refund scope and a payout route, and the drafted acknowledgement and resolution timelines stay inside Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020, which requires a complaint to be acknowledged within 48 hours and redressed within one month. A built-in calculator shows what a specific order would be refunded under the rule you are about to publish.",
   useCases: [

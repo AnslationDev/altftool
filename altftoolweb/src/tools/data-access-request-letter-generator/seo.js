@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subject Access Request Letter: GDPR, DPDP or CCPA",
+  metaDescription:
+    "Draft a subject access request citing Article 15(1)(a)-(h), DPDP Section 11 or the CCPA, with the reply date computed: one calendar month or 45 days.",
+  steps: [
+    "Choose the law you are relying on, the date you are sending the request, your full name and your reply-to email.",
+    "Tick the items under \"What to request\", each labelled with its Article 15 limb or CCPA equivalent, and choose how you want the copy delivered.",
+    "Read the \"Response due by\" date, the latest date if extended and the regulator to escalate to, then press Copy letter.",
+  ],
   intro:
     "A subject access request is a written demand that an organisation confirm whether it processes personal data about you and hand over a copy along with the supplementary information the law prescribes. This generator drafts that letter under the EU GDPR (Article 15), the UK GDPR, India's Digital Personal Data Protection Act 2023 (Section 11) or the California CCPA, citing the specific sub-articles for each item you tick. It also works out the date the reply is due — one calendar month under the GDPR family, 45 calendar days under the CCPA — so you know exactly when the organisation is late.",
   useCases: [

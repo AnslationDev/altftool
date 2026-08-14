@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn 2FA Setup: 15-Control Hardening Checklist",
+  metaDescription:
+    "Work through 15 weighted LinkedIn controls: authenticator 2FA, recovery codes, session cleanup. The score caps at 69% until all 4 critical ones pass.",
+  steps: [
+    "Set a Target score (%) and work down the grouped checklist of 15 LinkedIn controls, ticking each one as you set it in your account.",
+    "Clear the four Critical controls first — the Hardening score will not rise above 69% while any of them is still open.",
+    "Read the Hardening score with Weighted points and the Do these next list, then press Copy result to save where you got to.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for locking down a LinkedIn account: two-step verification with an authenticator app, saved recovery codes, a verified primary email, clean sessions, and the visibility settings that decide who can find you. Each control carries a score share based on how much it blocks a real takeover, and four of them are marked critical, so the score stays capped at 69% until all four are done. It is aimed at anyone whose job search, client work or professional reputation lives on LinkedIn and who wants a definite finish line rather than a vague sense of being secure.",
   "useCases": [
     "Working through the setup after LinkedIn emails you about a sign-in from a city you have never visited.",

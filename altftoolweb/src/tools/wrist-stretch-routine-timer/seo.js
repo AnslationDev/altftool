@@ -1,4 +1,10 @@
 const seo = {
+  title: "Wrist Stretch Timer: Guided Holds for Typing Breaks",
+  steps: [
+    "Choose a Routine — \"Quick reset\", \"Standard routine\" or \"Full session\" — each listed in the select with the stretches it covers.",
+    "Set \"Hold each stretch (seconds)\" between 10 and 60 (30 by default) and \"Changeover gap (seconds)\" up to 30, and tick \"Include median nerve glides (full session only)\" if you want them.",
+    "Press Start and the panel counts down \"Time left in this step\" beside the stretch name and its positioning cue; \"Next step\" skips ahead, Reset restarts the timer, and \"Copy routine\" copies the whole sequence.",
+  ],
   intro:
     "The Wrist Stretch Routine Timer runs a guided sequence of wrist, forearm and finger stretches with per-side holds and changeover gaps, counting each one down for you. Hold lengths follow the ACSM flexibility guidance of 10 to 30 seconds per static stretch, and the routine is sized to fit inside the short keyboard break that computer-workstation guidance suggests taking every 30 to 60 minutes. It is built for people who type or mouse for hours: developers, writers, designers, data entry staff and gamers.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Bookmark Organizer: Import bookmarks.html, Tag, Sort",
+  metaDescription:
+    "Import a Netscape bookmarks HTML export or a JSON backup, then file links in folders, tag and bulk-edit them, and sort by how often you open each.",
   intro:
     "The Bookmark Organization Assistant imports a browser's Netscape-format bookmarks HTML export or a JSON backup and turns it into a filed library with folders, tags, favourites, drag-and-drop sorting and bulk actions, all held in your browser. It is for people whose exported bookmarks file has thousands of unsorted links and who need to triage them in batches rather than one at a time. Counters at the top track total bookmarks, favourites, folders and distinct tags as you work, and you can sort the list by date added, title A–Z, or how often you have opened each link.",
   useCases: [

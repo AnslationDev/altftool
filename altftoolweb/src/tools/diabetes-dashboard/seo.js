@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blood Glucose Log with Estimated HbA1c (mg/dL, mmol/L)",
+  metaDescription:
+    "Log readings in mg/dL or mmol/L for average, time in target against your own range and an estimated HbA1c. Entries stay in your browser's storage.",
+  steps: [
+    "On the Log Reading tab enter the Blood Sugar Reading, pick mg/dL or mmol/L, and choose a Reading Type such as Fasting or Bedtime.",
+    "Add the optional Carbs (g), Water Intake (glasses) and Exercise (mins) fields, then press Save Log Entry.",
+    "Open the Dashboard tab for Average Reading, Time in Target against the Target Blood Sugar Range set in Profile, and Estimated HbA1c.",
+  ],
   intro:
     "The Diabetes Management Dashboard logs blood glucose readings in mg/dL or mmol/L and turns them into an average, a highest and lowest, a time-in-target percentage against your own range, and an estimated HbA1c using the ADAG relationship A1c = (average glucose + 46.7) ÷ 28.7. Each entry can also carry the reading type, carbs, water, exercise minutes and a note, so patterns show up next to the numbers that caused them. It is a self-monitoring and educational log for people tracking their own readings between appointments — it is not a medical device and does not replace your care team.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Time Blocking Planner with Clash & Focus-Run Checks",
+  metaDescription:
+    "Drag time blocks onto your day and see utilisation, overlaps in minutes, dead gaps under 15 minutes and your longest focus run. Autosaves locally.",
+  steps: [
+    "Set 'Day starts' and 'Day ends' (defaults 09:00-18:00), then press 'Add block' and give each block a Title, Start, End, Category (Deep work, Shallow / admin, Meeting, Break or Personal) and Priority.",
+    "Drag blocks on the Day timeline or nudge a focused block with the arrow keys - they snap to 5-minute steps - and watch the Day utilisation card update Focus time, Breaks, Longest focus run and dead gaps under 15 minutes.",
+    "Press 'Copy day plan' to put the summary on your clipboard - the button flashes 'Copied!' - or Reset to restore the default day; the plan autosaves to browser local storage.",
+  ],
   intro:
     "Time blocking is the practice of assigning every hour of the working day to a named task in advance, so the calendar — not the inbox — decides what happens next. This planner turns a list of blocks into the numbers that matter: booked minutes against the length of your day, overlapping appointments, gaps too short to use, and the longest stretch of uninterrupted focus you have actually protected. It is for anyone running a maker schedule who wants the plan checked before the day starts.",
   useCases: [

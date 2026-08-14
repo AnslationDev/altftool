@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sentence Correction Practice: 7 Grammar Error Types",
+  metaDescription:
+    "Pick the correct rewrite of a flawed sentence from four options and see the rule explained. Filter seven grammar categories and three difficulty levels.",
+  steps: [
+    "Choose a Category Focus and a Difficulty Level under Practice Settings — the counter shows how many questions match — then press Start Practice for a round of up to 10.",
+    "Select one of the four options labelled A to D; your first click locks in, the correct version highlights, and the Explanation panel states the rule before Next Question.",
+    "Press View Results after the last question to see your score and percentage with a Review Responses list, then Try Again or Change Settings.",
+  ],
   intro:
     "Sentence correction practice shows you a flawed English sentence and four rewritten versions, and asks you to pick the one that fixes it — then explains the rule that made the difference. Questions are drawn from seven error types (subject-verb agreement, tenses, pronouns, prepositions, modifiers, parallelism, and idioms and usage) at beginner, intermediate or advanced level. It suits anyone preparing for a competitive exam's verbal section or tightening up their written English.",
   useCases: [

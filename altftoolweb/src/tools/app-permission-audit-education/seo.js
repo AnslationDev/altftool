@@ -1,4 +1,12 @@
 const seo = {
+  title: "Education App Permission Audit - Camera, Mic, Proctoring",
+  metaDescription:
+    "Score a learning or proctoring app across 17 permissions. Camera, mic and screen capture are judged session-scoped; accessibility and overlay are not.",
+  steps: [
+    "Type the App name (for the report), then choose Checklist or Paste list — Paste list takes one permission per line copied from the Play Store listing or Settings > Apps > Permissions.",
+    "In Checklist mode start from Typical class app, Everything granted or Clear all, then tick what the app actually holds under \"Permissions and settings this app currently holds\"; each of the 17 items is marked Required for core features, Optional feature only or Not needed by a learning app.",
+    "A Privacy score out of 100 appears with a verdict band and rows for Permissions granted, Revoke now, Worth reviewing, Justified by a core feature, Restricted / special access granted and Exposure points, followed by the Revoke these first list and a table of every item with its Android / iOS manifest name; Copy result copies the report.",
+  ],
   intro:
     "The Education App Permission Audit scores a student learning, tuition or exam app across seventeen permissions, separating teaching from surveillance. Camera, microphone and MediaProjection screen capture are legitimate for a live class or an invigilated exam but should be scoped to the session, so they score as optional; accessibility control and overlay permissions have no teaching use and score as full exposure. It matters most when the user is a child: India's DPDP Act 2023 requires verifiable parental consent under 18 and bars behavioural advertising directed at children, and COPPA covers under-13s in the US.",
   useCases: [

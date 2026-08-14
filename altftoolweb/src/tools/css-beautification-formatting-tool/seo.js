@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Beautifier and Minifier with Syntax Validation",
+  metaDescription:
+    "Re-indent CSS at 2 spaces, 4 spaces or tabs, get the minified string and the byte saving, and see missing braces, semicolons and duplicate properties.",
   intro:
     "The CSS Beautification and Formatting Tool re-indents CSS with a real tokenizer that understands strings, comments and block at-rules, and at the same time returns a minified version and a validation report. It is for developers cleaning up inherited or minified stylesheets who want the formatted output, the byte savings, and a list of syntax problems in one pass. Indent width, bracket placement, line spacing and alphabetical property sorting are all switchable, and the validator flags missing braces, missing semicolons and duplicate properties.",
   useCases: [

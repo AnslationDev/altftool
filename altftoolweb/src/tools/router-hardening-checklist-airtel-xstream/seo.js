@@ -1,4 +1,12 @@
 const seo = {
+  title: "Airtel Xstream Router Hardening Checklist (16 Steps)",
+  metaDescription:
+    "A scored 16-step pass over the Airtel Xstream ONT at 192.168.1.1: admin login, WPA2/WPA3, WPS, UPnP, WAN management, port forwards and guest SSID.",
+  steps: [
+    "Sign in to the ONT admin page at http://192.168.1.1 using the credentials printed on the label under the unit, then change that password first.",
+    "Work down the Admin access, Wi-Fi, Remote access, Exposure and Maintenance groups, opening Why and how for the exact menu path, and ticking Not applicable where a step does not fit your model.",
+    "Watch the Hardening score out of 100 — it stays capped while any Critical steps open remain — then press Copy result to take the outstanding steps with you.",
+  ],
   intro:
     "A scored, sixteen-step hardening pass for the Nokia, ZTE, Syrotech or Tenda ONT that Airtel supplies with an Xstream Fibre connection. It covers the admin login at 192.168.1.1, the factory Wi-Fi key on the label, WPA2-AES versus WPA3, WPS, UPnP, WAN-side management, TR-069 provisioning on TCP 7547, stale port forwards and the guest SSID — each weighted by severity, so the score stays capped while any critical item is unfinished. Every item names the exact menu to open and a way to confirm the change took effect.",
   useCases: [

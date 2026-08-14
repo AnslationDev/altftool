@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lab Results History Tracker: Local, Exportable Log",
+  metaDescription:
+    "Log test names and results with dates in your browser's local storage, search every entry, and export or import the whole history as a JSON file.",
+  steps: [
+    "Fill the two fields — \"Test name\" and \"Result and date\" — and press \"Add record\"; the entry is appended to the list and written to this browser's local storage.",
+    "Use the \"Search records\" box to filter the \"Saved records\" list by the text you typed, and Delete on any record to remove it after the \"Delete this record? This cannot be undone.\" prompt.",
+    "\"Export JSON\" downloads the whole history as lab-results-history-tracker.json, and \"Import JSON\" loads a JSON file back after warning that import replaces every record currently saved here.",
+  ],
   intro:
     "The Lab Results History Tracker is a private local logbook for blood work and other lab measurements: you record a test name and its result with the date, and every entry is kept in your own browser's local storage rather than on a server. Records can be searched, deleted, exported to a JSON file and imported back, so a history built up over years of check-ups stays under your control. It stores and organises what you type — it does not interpret results or flag values, and reference ranges should come from your lab report and your clinician.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sit-Up Test Calculator - YMCA 60-Second Standards",
+  metaDescription:
+    "Score your sit-up count against YMCA age and sex norms. Any test length scales to a 60-second equivalent, with seven bands and reps to the next one.",
+  steps: [
+    "Enter Age (years), pick Male or Female under 'Sex (reference table)', and type your Sit-ups completed. [pages/index.jsx:104-149]",
+    "Set 'Test length (seconds)' or tap a preset - 30 s test, 60 s test or 120 s test; a non-60-second count is scaled to a one-minute equivalent. [pages/index.jsx:151-179, 257-263]",
+    "Read Your rating (Excellent down to Very poor), the 60-second equivalent and 'Reps to next band', then press Copy result. [pages/index.jsx:194-255]",
+  ],
   intro:
     "The Situp Standard Benchmark converts a bent-knee sit-up test into a rating from Excellent down to Very poor using the Golding/YMCA 60-second sit-up norms, split by age band and sex. If your test did not run for exactly 60 seconds, the count is scaled linearly to a one-minute equivalent first so it can be compared with the published table. You get the band you landed in, the rep range for every band in your age group, and the number of reps that would move you up one level.",
   useCases: [

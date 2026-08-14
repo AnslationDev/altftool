@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kitchen Multi-Timer with a Finish-Together Planner",
+  metaDescription:
+    "Run named, emoji-tagged timers for every dish and set a serve time — each staged dish gets its own start time so rice, dal and the roast finish together.",
+  steps: [
+    "Add each dish with a name, Minutes and Seconds — or tap one of 14 presets like Jammy eggs (9 min) or White rice (12 min) — using 'Add & start' to run it now or 'Stage for later'.",
+    "Set the 'Everything ready at' time in the Finish-together planner.",
+    "Follow the schedule: each staged dish shows 'Start at' its own computed time with a Start button, and dishes already cooking are flagged minutes early, late or on target.",
+  ],
   intro:
     "The Kitchen Multi-Timer runs as many named, emoji-tagged countdowns as a meal needs at once, and works backwards from a serve time you set to tell you when each dish has to go on. Give it a target — say 7:30 — and every paused timer gets a start time computed as the serve time minus its own cook length, while running timers show how many minutes early or late they will land. It is for anyone cooking three things at different speeds who wants them all ready together instead of one dish going cold.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Quiz Prompt Builder – Exact Difficulty Mix & Answer Key",
+  metaDescription:
+    "Turn a topic and an easy/medium/hard percentage mix into a paste-ready AI quiz prompt — exact question counts, 4 formats, MCQ options and an answer key.",
+  steps: [
+    "Enter a Quiz topic, an optional Audience and the Number of questions (1–100), then set the Easy %, Medium % and Hard % fields, which must total 100%.",
+    "Tick the question types — Multiple choice, True / false, Short answer, Fill in the blank — set Options per MCQ (2–6), and choose 'Include a separate answer key' or 'Add a one-line explanation per answer'.",
+    "The Generated prompt pane shows the exact easy/medium/hard question counts and the full text; press Copy prompt to paste it into any AI assistant, or Reset to restore defaults.",
+  ],
   intro:
     "The Quiz Prompt Builder turns a topic, a difficulty percentage mix and your allowed question formats into a structured, paste-ready quiz-generation prompt for any AI assistant. It converts percentages into exact whole-question counts using largest-remainder apportionment, so a 10-question quiz at 50/30/20 always yields exactly 5 easy, 3 medium and 2 hard questions. Teachers, trainers and course creators get consistent quizzes with a clean answer key instead of vague one-line requests.",
   useCases: [

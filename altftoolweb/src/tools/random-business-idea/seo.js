@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Business Idea Generator: Competitors Included",
+  metaDescription:
+    "Draws an industry, problem, technology, business model, audience and cost band at random, then names the company, competitors and challenges.",
+  steps: [
+    "Open the industry picker (it opens on \"Filter by industry (optional)...\") and leave it on Any industry or pin one of the 28 sectors, then set the count selector to 1, 3, 5 or 10.",
+    "Press Generate a Business Idea — the label reads Generate 3 Business Ideas and so on above a count of one — and each concept is drawn from the industry, problem, technology, business model, audience and startup-cost lists.",
+    "Every card shows the company name, tagline and a Feasibility percentage above Industry, Technology, Business Model, Target Audience, Startup Cost and Monetization; Show full analysis opens Why It Could Work, Challenges and Potential Competitors, and the copy button lifts the whole card as plain text.",
+  ],
   intro:
     "Random Business Idea builds a startup concept by drawing one item at random from each of six lists — 28 industries, 27 common problems, 25 technologies, 23 business models, 24 target audiences and four startup-cost bands — then writing them up as a named company with a tagline, monetisation route, two likely competitors and two challenges. It is a brainstorming prompt generator for founders, students and hackathon teams who are stuck on a blank page, not a market research report. You can generate 1, 3, 5 or 10 concepts at a time, lock the industry, save the ones worth keeping, and copy any card as plain text.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Egypt Tipping Calculator: Baksheesh by Service, EGP",
+  metaDescription:
+    "Percentage on restaurant subtotals and fixed EGP per bag, night, ride or guiding day, with the 12% service-charge case and a small-note plan.",
+  steps: [
+    "Under Your trip choose How generous — Modest, Customary or Generous — then set Travellers sharing the cost, Trip length in days and tick the box for bills that already show a service charge of about 12%",
+    "Under Bills you will settle enter the pre-VAT subtotals for Sit-down restaurant bill, Café, ahwa or bar tab and Spa, hammam or salon bill, then count units in the Hotels, Getting around, Guides and sites and Boats and excursions sections — bags carried, nights, rides, guiding days and favours",
+    "Baksheesh for the whole trip heads the result with Per traveller, Per day, From bills (percentage), Fixed baksheesh and Of that, in small notes below it, plus A day's cash, as notes listing how many notes of each EGP denomination to carry; Copy plan copies it and Reset restores the defaults",
+  ],
   intro:
     "This calculator turns an Egyptian itinerary into the customary baksheesh amounts for it, using two separate rules: a percentage of the food-and-drink subtotal on a restaurant, café or salon bill, and a fixed cash amount per bag, per night, per ride, per favour or per guiding day everywhere else. It also handles the service-charge trap — most tourist restaurants add around 12% plus 14% VAT, and that service charge usually stays with the establishment — so bills that already carry one are tipped at a lower cash percentage. Output is a trip total, a per-traveller share, a daily figure and a breakdown of which notes to carry.",
   useCases: [

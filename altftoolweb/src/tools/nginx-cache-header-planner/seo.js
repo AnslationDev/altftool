@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nginx Cache-Control Header Planner per Asset Type",
+  metaDescription:
+    "Set a caching policy per asset class — HTML revalidated, hashed bundles immutable for a year — and copy nginx location blocks with no duplicate headers.",
+  steps: [
+    "Enable the asset classes you serve — HTML pages, Hashed CSS / JS bundles, Images, Fonts, Audio / video — and edit each one's File extensions.",
+    "Pick a Cacheability (public, private, no-cache or no-store), set Max age with its unit, and toggle the immutable and must-revalidate flags.",
+    "Click Copy snippet for ready nginx location blocks that use expires or add_header — never both — so no duplicate Cache-Control is emitted.",
+  ],
   intro:
     "This planner turns a per-asset-type caching policy into ready nginx location blocks that set Cache-Control and expires correctly, using the response directives defined in RFC 9111 plus the immutable extension from RFC 8246. It ships the widely used default strategy — HTML always revalidated, hash-named CSS/JS and fonts cached for one year as immutable, images for 30 days — and knows that nginx's expires directive already emits a Cache-Control: max-age header, so it never generates duplicate headers.",
   useCases: [

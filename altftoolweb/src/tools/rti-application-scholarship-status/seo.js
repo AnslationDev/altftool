@@ -1,4 +1,12 @@
 const seo = {
+  title: "RTI for Scholarship Status: Verification, DBT, Reason",
+  metaDescription:
+    "Section 6(1) draft tracing institute, district and state verification, sanction and DBT payment, citing Section 4(1)(d) for the recorded rejection ground.",
+  steps: [
+    "Under \"Student and application details\" enter \"Student name\", \"Portal application number\", \"Scholarship scheme\", \"Academic year\", \"Institute name\", \"Scholarship applied on\" and \"RTI filed on\".",
+    "Name the \"Office you are writing to\", set \"Level that office sits at\" (institute, district, state or central ministry) and \"What has gone wrong\", then add items from \"Extra questions to add\".",
+    "Read \"Pending for\" with the Section 6(3) transfer, Section 7(1) reply, Section 19(1) and 19(3) appeal dates and the Rs 10 fee, then press \"Copy application\" for the full draft.",
+  ],
   intro:
     "This tool drafts an application under Section 6(1) of the Right to Information Act 2005 to trace a scholarship through every stage it passes — institute verification, district and state verification, sanction, and the Direct Benefit Transfer push into the bank account — and to obtain the recorded ground for a rejection. Section 4(1)(d) of the same Act requires a public authority to provide reasons for its administrative decisions to affected persons, which is what turns 'why was I rejected' into an answerable question. The draft also calculates the 30-day reply deadline under Section 7(1) and the appeal windows that follow, and states how long the application has been pending.",
   useCases: [

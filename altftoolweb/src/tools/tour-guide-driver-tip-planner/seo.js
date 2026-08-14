@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tour Guide and Driver Tip Calculator, Per Day",
+  metaDescription:
+    "Budget guide, driver, porter and camp-crew tips at per-person-per-day rates across a whole tour, then see how many notes of cash to withdraw.",
+  steps: [
+    "Pick a Style of trip — Escorted coach tour, Private guide and driver, Trekking crew, Safari and lodge or Day tours and transfers.",
+    "Set Length of tour (days), Travellers in your party, How generous and Show amounts in, then edit each role's rate under Who gets tipped.",
+    "Read the total with its per traveller per day figure, set Largest note you will draw for the cash count, and press Copy plan.",
+  ],
   intro:
     "This planner totals the cash a multi-day tour needs for tips, applying the per-person-per-day and per-group-per-day rates tour operators publish in their pre-departure notes to a trip of a given length and party size. Tour tipping is not a percentage of the fare — it is a daily rate per role, so a tour director at $8 per person per day and a coach driver at $5 come to $260 on a ten-day trip for two before local guides and porters. It covers escorted coach tours, private guide-and-driver arrangements, trekking crews, safari camps and independent day tours, and works out how many notes to withdraw.",
   useCases: [

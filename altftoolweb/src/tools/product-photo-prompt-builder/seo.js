@@ -1,4 +1,12 @@
 const seo = {
+  title: "Product Photo AI Prompt Builder: Amazon 85% Framing",
+  metaDescription:
+    "Compose an ecommerce product-shot prompt from surface, angle and lighting, with canvas size, coverage and margins for Amazon, Etsy or Instagram.",
+  steps: [
+    "Describe the product and its material, then choose Platform / format such as Amazon main image or Etsy listing.",
+    "Set Shot type, Surface, Camera angle, Lighting and Product coverage (% of frame) between 50 and 100.",
+    "Copy prompt takes the prompt, the negative prompt and the canvas, aspect-ratio and margin numbers.",
+  ],
   intro:
     "This builder composes an AI image prompt for an ecommerce product shot from your chosen surface, camera angle, lighting and shot type, then computes the framing numbers for the target platform — canvas size, aspect ratio, product coverage and margins. Marketplace rules are encoded directly: Amazon's main image needs a pure white background with the product filling 85% or more of the frame, and at least 1000 px on the longest side for zoom. It is built for sellers and marketers generating listing and social imagery.",
   useCases: [

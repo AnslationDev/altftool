@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dollar to Rupee Mental Math: Rounding Rules + Error %",
+  metaDescription:
+    "Enter today's rate for rounding rules you can run in your head, each with its error stated, plus what US sales tax and a tip add to a tag price.",
+  steps: [
+    "Enter Rupees per $1 (today's rate) and A price on the tag ($).",
+    "Set Sales tax added at the register (%) and Tip on the pre-tax bill (%), leaving the tip at 0 for shops and supermarkets.",
+    "Read the exact rupee figure, the till figure once tax and tip are on the bill, and each rounding rule's error, then press Copy sheet.",
+  ],
   intro:
     "This cheat sheet turns today's rupee-dollar rate into a multiplication you can actually do standing at a till. It writes the rate as a decimal shift plus a working multiplier between 1 and 10, then searches three families of approximation — rounding to the nearest quarter or half, adding an easy percentage nudge like 10% or an eighth, and the closest simple fraction — and reports each rule's error as a fixed percentage of the exact answer. It also handles the part American price tags leave out: sales tax is added at the register, not shown on the label, and table service is tipped on top.",
   useCases: [

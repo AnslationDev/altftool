@@ -1,4 +1,12 @@
 const seo = {
+  title: "Journaling Prompts Sized to the Minutes You Have",
+  metaDescription:
+    "Turns your minutes and writing pace into a word budget, split 15/70/15 across warm-up, main reflection and close, with mood-aware prompt framing.",
+  steps: [
+    "Enter Minutes you have and pick How you write — Handwriting, steady (15 wpm) up to Typing, fast (40 wpm) — plus a Theme such as Evening review.",
+    "Set How you are feeling; Low or heavy and Anxious or wired switch the wording to second-person, distanced prompts. Change Variation for a different set.",
+    "Read the Realistic word budget and Your session sheet, then press Copy session, or Copy prompt under Prompt for generating more.",
+  ],
   intro:
     "Journaling Prompt Builder converts the minutes you actually have into a word budget at your own writing pace, then splits it 15/70/15 across a warm-up, the main reflection and a close, and issues only as many prompts as fit at roughly 60 words each. Prompt framing shifts with mood: the low and anxious settings use self-distanced, second-person questions, which research on distanced self-reflection associates with less rumination than immersed why-do-I-feel-this-way questioning. It suits anyone who abandons journaling halfway because the prompt was bigger than the time available.",
   useCases: [

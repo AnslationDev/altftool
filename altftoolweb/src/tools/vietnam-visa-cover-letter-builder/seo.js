@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vietnam E-Visa Cover Letter Builder with Date Checks",
+  metaDescription:
+    "Drafts the e-visa letter and works out valid-from/valid-to dates, the 90-day maximum, the US$25 or US$50 fee and a three-working-day decision date.",
+  steps: [
+    "Complete the Applicant panel: Full name (as in passport), Passport expiry date, Blank passport pages and Home address.",
+    "Under E-visa and trip set E-visa type, Validity requested (days, max 90), Arrival (valid-from date), Departure from Vietnam, and both Checkpoint of entry and Checkpoint of exit.",
+    "Check the E-visa valid to date with the Decision expected by, Fee total and Passport must stay valid to tiles, then press Copy letter.",
+  ],
   intro:
     "The Vietnam Visa Cover Letter Builder produces the supporting letter for an e-visa application and checks the dates the portal will hold you to. Vietnam's electronic visa has been open to citizens of every country since 15 August 2023, is issued for a maximum stay of 90 days single or multiple entry, and costs US$25 or US$50 per applicant. The tool turns your requested validity into an exact valid-from and valid-to pair, counts the published three-working-day processing time forward skipping weekends, and flags a passport short of the six-month rule or a stay that runs past the visa.",
   useCases: [

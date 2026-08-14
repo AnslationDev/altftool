@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Citizen Income Tax Calculator FY 2025-26",
+  metaDescription:
+    "Tax for ages 60-79 (Rs 3,00,000 exemption) and 80+ (Rs 5,00,000): old regime with 80C, 80D, 80TTB against new, with 87A rebate and 4% cess.",
+  steps: [
+    "Pick Below 60, Senior (60-79) or Super senior (80+) under \"Age group on the last day of the year\", then fill in Salary / pension income (Rs), Interest income (Rs) and Other income — rent, dividends, etc. (Rs).",
+    "Tick the standard-deduction checkbox (Rs 50,000 old / Rs 75,000 new) and enter your Old-regime deductions: Section 80C (max Rs 1,50,000), Section 80D health insurance, Section 80TTB interest (max Rs 50,000) and Other deductions (80G, 80TTA, etc.).",
+    "Read Estimated tax for the lowest-cost regime and the rupee saving, compare the Old regime and New regime cards down through Section 87A rebate, Surcharge and Health & education cess 4%, then press Copy result or Reset.",
+  ],
   "intro": "Senior Citizen Income Tax Calculator works out income tax for FY 2025-26 (AY 2026-27) using the higher basic exemption limits that resident senior citizens get: Rs 3,00,000 for ages 60-79 and Rs 5,00,000 for ages 80 and above. It calculates the old regime with your 80C, 80D and 80TTB deductions alongside the new regime, applies the Section 87A rebate, surcharge with marginal relief and 4% cess, then shows which regime costs less. Built for pensioners, retirees and the families who file returns on their behalf.",
   "useCases": [
     "A 68-year-old pensioner checking whether the Rs 3,00,000 exemption plus 80TTB keeps the old regime cheaper than the new one.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roaming vs Travel eSIM vs Local SIM: Privacy Guide",
+  metaDescription:
+    "Score four connectivity options on identity exposure, OTP access, cost and coverage. Travel eSIMs are data-only, so bank OTPs will not arrive on them.",
+  steps: [
+    "Under \"1. The trip\" enter Days away, Countries on the itinerary and the Data you expect to use in total (GB).",
+    "In \"2. Your handset and your OTPs\" tick eSIM support, two lines at once, carrier-unlocked, and whether you need OTPs on your home number.",
+    "Rank each priority in \"3. What matters to you\", then read the Best fit percentage with each option's \"In its favour\" and \"What you give up\" lists and press Copy result.",
+  ],
   intro:
     "The International Roaming Privacy Guide compares the four ways to stay connected abroad — home SIM roaming, a prepaid travel eSIM, a local SIM bought on arrival, and cellular off with Wi-Fi and a VPN — and scores each against what you actually need: OTP access on your home number, minimum new identity exposure, capped spending, coverage and setup effort. It rules out options your handset cannot support, and lists what the network still sees regardless of which SIM is in the phone. Written for travellers who have been told a local SIM makes them anonymous, which in most countries it does not.",
   useCases: [

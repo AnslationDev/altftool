@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hero Bike Service Schedule Planner by KM & Date",
+  metaDescription:
+    "Date every Hero free and paid service at whichever comes first, 750 km or 1 month then 3,000 km, with parts, labour and consumables per visit.",
+  steps: [
+    "Enter the Purchase / registration date, Current odometer (km) and Average running (km per month).",
+    "Set Services to plan, Free services in your package, and the first, second and periodic due points in both km and months.",
+    "Read Next service due at, then the Service schedule table dating each free or paid visit with its parts and labour totals.",
+  ],
   intro:
     "This planner turns a Hero motorcycle's maintenance chart into a dated schedule: it works out the kilometre and month at which each free and paid service falls due, dates it at whichever comes first, and adds up the consumables that land at each visit. Hero two-wheelers follow a running-in service at roughly 750 km or 1 month, a second visit near 3,000 km or 3 months, and a repeating cycle after that. Every service milestone — km and months — is editable because Hero varies the chart by model and warranty package. Consumable replacement intervals shown (engine oil, filters, and so on) are typical published reference values.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grammar Quiz: 13 Topics, 30 Seconds a Question",
+  metaDescription:
+    "Timed multiple-choice grammar practice: up to 10 questions a round, 30 seconds each, 13 topics, a hint before you answer and the rule explained after.",
+  steps: [
+    "Under Select Topic choose All Topics or one of the thirteen — Tenses, Articles, Prepositions, Punctuation, Error Detection and the rest — and set Difficulty to All, easy, medium or hard; the bar shows how many questions are available.",
+    "Press Start Quiz and answer inside the 30-second timer bar; Show hint reveals a clue before you commit, and choosing an option reveals the correct answer with the grammar rule behind it.",
+    "After up to 10 questions the results screen gives your percentage with Correct, Wrong and Avg Time pills and a Topic Performance breakdown; Try Again reruns the same filters and Change Topic returns to the selector.",
+  ],
   intro:
     "This Grammar Quiz serves timed multiple-choice English grammar questions — up to 10 per round, 30 seconds each — drawn from a bank covering 13 topics from tenses and articles to error detection and reported speech. Every question carries an optional hint before you answer and a rule-based explanation after it, so a wrong pick tells you which grammar rule you missed rather than just marking you down. It is built for learners revising for a school exam or a competitive English paper who want short, repeatable practice with a record of their scores.",
   useCases: [

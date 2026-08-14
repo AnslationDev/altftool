@@ -1,4 +1,12 @@
 const seo = {
+  title: "JS Beautifier: Re-Indent Minified JavaScript Code",
+  metaDescription:
+    "Re-indents minified JavaScript by brace depth at 2, 4 or 8 spaces, optionally padding operators. A reading aid, not a parser-based printer.",
+  steps: [
+    "Paste minified or run-together code into the Input JS Code box, or press Load Sample JS to try it.",
+    "Set Indentation Size to 2, 4 or 8 Spaces, toggle \"Add spaces around operators\", then press Beautify JS Code.",
+    "Read the Beautified JS Code panel, then use Copy Code or Download (.js), which saves script.beautified.js.",
+  ],
   intro:
     "JS Beautifier re-indents minified or run-together JavaScript by tracking brace depth: it breaks the code onto one statement per semicolon, opens a new line after every `{`, and indents each level by 2, 4 or 8 spaces. An operator-padding switch adds single spaces around assignment, comparison and arithmetic operators, so `a=b+1` becomes `a = b + 1`. It is a fast textual re-formatter for making a minified bundle or a pasted snippet readable — not a parser-based printer like Prettier, so treat the output as a reading aid rather than a replacement for your source file.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vitamin Intake Tracker: Daily Supplement Checklist",
+  metaDescription:
+    "One-tap checklist for D3, B-complex, magnesium, omega-3 and vitamin C, with each target range and a progress bar that resets every day.",
+  steps: [
+    "Open the tracker to today's five cards - Vitamin D3, B-Complex (B6, B9, B12), Magnesium (Glycinate / L-Threonate), Omega-3 (EPA & DHA) and Vitamin C - each showing its target, such as \"Target: 1000 - 4000 IU\".",
+    "Tap a card as you take that supplement: the empty circle becomes a tick and the card fills with the item's colour.",
+    "\"Daily Stack Progress\" shows the percentage of the five ticked, 20% per item; the ticks are stored in your browser against today's date and start empty tomorrow.",
+  ],
   intro:
     "The Vitamin Intake Tracker is a one-tap daily checklist for a five-supplement stack — Vitamin D3, a B-complex, Magnesium, Omega-3 and Vitamin C — that shows each one's commonly cited target range and fills a progress bar as you tick them off. Your ticks are saved in your own browser against today's date and clear automatically when the date rolls over, so each morning starts empty. It is a habit aid for people already taking supplements, and it is informational only: dosage decisions belong with a doctor or pharmacist who knows your bloodwork and medications.",
   useCases: [

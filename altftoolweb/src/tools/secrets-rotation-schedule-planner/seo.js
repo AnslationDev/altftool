@@ -1,4 +1,12 @@
 const seo = {
+  title: "Secrets Rotation Planner: Key, Token and TLS Due Dates",
+  metaDescription:
+    "List secret names, owners and last-rotation dates and get a deadline-ordered calendar with overdue flags — 90-day API keys and 200-day TLS certificates.",
+  steps: [
+    "Set 'Plan as of date' and 'Flag as due soon within (days)', then name each entry — 'Payments API key' style names only, never the secret value.",
+    "Choose the Type, which carries a recommended interval such as 90 days for an API key or 200 days for a TLS certificate, add the Owner and Last rotated date, and press Add secret for the next one.",
+    "Read the Rotate by / Secret / Owner / Interval / Age / Status table sorted by soonest deadline, with Overdue and Due soon badges, then press Copy schedule.",
+  ],
   intro:
     "This planner builds a deadline-ordered rotation calendar for API keys, service tokens, database passwords, TLS certificates and signing keys from each secret's last-rotation date and interval. Recommended intervals follow published guidance — 90 days for cloud access keys under the CIS AWS Foundations Benchmark, a 200-day maximum lifetime for public TLS certificates issued from 15 March 2026 under CA/Browser Forum ballot SC-081, and NIST SP 800-57 cryptoperiods for keys. It is for platform, security and DevOps teams who track rotation in a spreadsheet today; everything runs in the browser and only secret names are entered, never values.",
   useCases: [

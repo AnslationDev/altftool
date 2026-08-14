@@ -1,4 +1,12 @@
 const seo = {
+  title: "Plan UPI AutoPay Debit Dates and Export an ICS",
+  metaDescription:
+    "Project recurring mandate dates across nine frequencies, add reminders 0-30 days ahead, and download a tentative ICS. It cannot change the mandate.",
+  steps: [
+    "Enter a Merchant or mandate label and the Planned amount in INR, then choose a Planner frequency and an Estimated debit day from 1 to 31.",
+    "Set the Planning start date and Planning end date, add Debit reminder lead days between 0 and 30 plus any pause-review or revoke-review dates, then press Build estimated calendar.",
+    "Press Download ICS calendar for upi-autopay-mandate-plan.ics, or Copy counts-only summary for a version carrying no merchant, amount or dates.",
+  ],
   intro:
     "The UPI AutoPay Mandate Calendar projects the dates a recurring UPI e-mandate is likely to debit — across nine recurrence patterns from daily and fortnightly through monthly, quarterly and yearly — and exports them as an ICS file you can import into any calendar app. It adds an optional advance reminder 0 to 30 days before each estimated debit, plus separate pause-review and revoke-review reminders so you decide about a subscription before the money moves rather than after. The plan is a private estimate built in your browser: it has no connection to your UPI app or bank and cannot create, pause or revoke anything.",
   useCases: [

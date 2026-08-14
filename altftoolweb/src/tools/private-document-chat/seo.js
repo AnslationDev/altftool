@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ask Your Own Documents: Cited Excerpts, No Cloud Model",
+  metaDescription:
+    "Index up to 8 local files (PDF, DOCX, TXT, MD, CSV, JSON) and get BM25-ranked excerpts with source and section cited. Nothing is generated or uploaded.",
+  steps: [
+    "Click \"Choose up to 8 local documents\" and pick TXT, Markdown, CSV, JSON, text-based PDF or DOCX files — 8 MB each and 20 MB in total; scanned image-only PDFs will not work because there is no OCR step.",
+    "Press \"Build private index\" to chunk and index the text inside the page, then type your question into \"Ask with document-specific words\" and press \"Find grounded excerpts\".",
+    "Each hit is a verbatim passage with its source document and section cited and a BM25 relevance score, with no answer generated; \"Export counts only\" saves a JSON report of document, chunk and search counts, and \"Reset index\" clears everything.",
+  ],
   intro:
     "This tool builds a searchable index of your own documents inside the browser and answers a question by returning the exact passages that match it, each labelled with its source file and section — it retrieves, it never generates. Text is split into roughly 1,200-character chunks with 160 characters of overlap at sentence and line boundaries, then ranked with BM25 (k1 = 1.2, b = 0.75) plus bonuses for covering more of your query terms and for containing the query as a literal phrase. It suits anyone who wants to search a contract, a policy pack or research notes without uploading them to a cloud model.",
   useCases: [

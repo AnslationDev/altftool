@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent vs Buy Calculator: EMI vs Rent + Opportunity Cost",
+  metaDescription:
+    "Compares net buying cost — EMI, registration, maintenance, tax and insurance minus future value — against rent minus your invested corpus.",
+  steps: [
+    "Press 'Start Calculating', then enter Property Price (₹), Down Payment (%), Interest Rate (%), Loan Tenure (Years), Monthly Rent (₹) and Rent Increase (%/yr).",
+    "Fill the rest — Maintenance/Month (₹), Property Tax/Year (₹), Insurance/Year (₹), Furnishing (₹), Registration (%), Investment Return (%/yr) and Security Deposit (₹) — then press 'Calculate'.",
+    "Read the 'Buying is Better!' or 'Renting is Better!' banner and the Cost Comparison table down to the NET COST row; 'Reset' clears every field.",
+  ],
   intro:
     "Rent vs Buy Calculator settles whether buying a property beats renting it over your loan tenure by comparing two net numbers: total ownership outflow minus the property's future value, against total rent paid minus the corpus you would have built by investing the down payment and every month you saved by renting. It uses the standard reducing-balance EMI formula, compounds property appreciation annually and investment returns monthly, and prices in registration charges, furnishing, maintenance, property tax, insurance, the security deposit and annual rent escalation. The output is a side-by-side cost breakdown and a plain verdict on which option leaves you better off.",
   useCases: [

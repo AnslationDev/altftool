@@ -1,4 +1,12 @@
 const seo = {
+  title: "Add Film Grain to Photos: Midtone-Weighted Noise",
+  metaDescription:
+    "Overlay seeded film grain weighted to the midtones, with 1-8 px grain size and mono or chromatic noise. Runs in the browser; exports PNG.",
+  steps: [
+    "Drop in Your photo (JPEG, PNG or WebP); anything over 2000 px on the long edge is scaled down first.",
+    "Pick a Look such as Classic black & white, ISO 400, then dial Intensity, Grain size (1-8 px), Midtone bias, Shadow lift and Grain seed.",
+    "Watch the grain preview canvas and the Pixels changed count, then hit Download PNG to save a file named after your photo, ending -grain.png.",
+  ],
   intro:
     "This tool adds synthetic film grain to a photo by overlaying seeded Gaussian noise whose amplitude is weighted by 4L(1 − L), a parabola that peaks at mid grey and falls to zero at clipped black and blown white — the same way density fluctuation behaves on real silver-halide film. Grain size is simulated by generating the noise on a coarser lattice, so a size of 3 gives 3 × 3 pixel clusters, and chromatic grain uses independent noise per channel the way colour negative dye layers do. It is for photographers and video editors who want a filmic texture on clean digital files, and everything runs in the browser with no upload.",
   useCases: [

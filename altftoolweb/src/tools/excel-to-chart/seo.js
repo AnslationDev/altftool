@@ -1,4 +1,12 @@
 const seo = {
+  title: "Excel to Chart: XLSX, XLS, CSV to PNG or SVG",
+  metaDescription:
+    "Drop an .xlsx, .xls or .csv file and get a bar, line, area, pie, radar or scatter chart with axes pre-picked, then export PNG or true vector SVG.",
+  steps: [
+    "Drop a spreadsheet on Drag & drop spreadsheet data here or press Browse Files; the picker accepts .xlsx, .xls and .csv up to 10MB.",
+    "In Chart Configuration switch Worksheet to another sheet in the workbook, change the X-Axis Column and the numeric series, and set the chart type, Title and Palette — Clear Data starts over with a different file.",
+    "Press PNG or SVG to export the chart under its slugged title, for example monthly-sales.svg, or JSON Data to copy the parsed rows.",
+  ],
   intro:
     "This converter reads an .xlsx, .xls or .csv file in your browser, inspects the first rows of each column to decide which are text and which are numeric, and plots the result as a bar, line, area, pie, radar or scatter chart with the axes pre-selected for you. Excel serial date numbers in date-named columns are converted back to readable dates, every sheet in a workbook is selectable, and the finished chart exports as a PNG raster or a true SVG vector. It is for anyone who has a spreadsheet and wants a presentable chart without opening Excel or a BI tool.",
   useCases: [

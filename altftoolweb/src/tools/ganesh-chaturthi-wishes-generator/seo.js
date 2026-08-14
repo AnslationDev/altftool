@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ganesh Chaturthi Wishes in 6 Languages, SMS-Length",
+  metaDescription:
+    "Ganesh Chaturthi greetings in Marathi, Hindi, English, Gujarati, Kannada or Telugu with the recipient's name, character and SMS part counts.",
+  steps: [
+    "Choose 'Language' — Marathi, Hindi, English, Gujarati, Kannada or Telugu — and 'Who is it for?'.",
+    "Fill 'Their name (optional)' and 'Sign off as (optional)', set 'How many messages (1-8)', then press 'Shuffle wording' for a different set.",
+    "Each greeting under 'Your greeting' shows its character count and SMS parts; press 'Copy all' to take the whole batch.",
+  ],
   intro:
     "The Ganesh Chaturthi Wishes Generator produces ready-to-send festival greetings in Marathi, Hindi, English, Gujarati, Kannada and Telugu, personalised with the recipient's name and your sign-off. Each wording is tagged for a specific audience — family and elders, friends, colleagues and clients, or a status caption — so the register matches who is reading it. Every greeting also shows its character count and how many SMS parts it will split into, since Indic scripts are sent as UCS-2 at 70 characters per part rather than the 160 of plain Latin text.",
   useCases: [

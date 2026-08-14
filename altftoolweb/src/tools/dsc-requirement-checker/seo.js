@@ -1,4 +1,12 @@
 const seo = {
+  title: "DSC Requirement Checker: Which Filings Need Class 3",
+  metaDescription:
+    "Says which of your MCA, income tax, GST, DGFT and e-tender filings need a Class 3 DSC and which accept EVC, citing the rule behind each answer.",
+  steps: [
+    "Choose Who is filing - Private or public limited company, Limited liability partnership, Proprietorship or individual and more - and How many people will sign.",
+    "Tick your filings under What do you file?, such as MCA / ROC e-forms or e-tenders on the CPP Portal, plus the section 44AB and EPFO or ESIC boxes.",
+    "Read the verdict with the Filing by filing breakdown naming the rule and flagging encryption, then press Copy result.",
+  ],
   intro:
     "This checker tells you which of your filings legally require a digital signature certificate and which accept an electronic verification code instead, naming the rule behind each answer. It applies rule 12(3) of the Income-tax Rules for returns, rule 26(1) of the CGST Rules for GST, rule 8 of the Companies (Registration Offices and Fees) Rules for MCA e-forms, and the e-procurement requirements that make an encryption certificate necessary alongside the signing one. Since the Controller of Certifying Authorities stopped Class 2 issuance on 1 January 2021, every answer here is a Class 3 certificate.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "CTA Generator: 5 Button Variants From 8 Patterns",
+  metaDescription:
+    "Type your offer and get five call-to-action lines from eight patterns - urgency, ownership, risk reversal, first-person. Regenerate for a new five.",
   intro:
     "A call-to-action generator turns the thing you are offering into ready-to-test button and headline copy, so you are never staring at an empty button label. Type what the visitor gets — \"free trial\", \"pricing guide\", \"demo call\" — and this tool drops it into eight proven CTA patterns (imperative start, price-free framing, ownership \"claim yours\", first-person \"Yes, I want…\", risk reversal, instant unlock, scarcity, and join-plus-reward), then shows five of them shuffled. Hit regenerate for a different five when you want a wider spread to A/B test.",
   useCases: [

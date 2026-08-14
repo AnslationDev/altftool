@@ -1,4 +1,7 @@
 const seo = {
+  title: "Room Rent Proportionate Deduction: Rupees You Pay",
+  metaDescription:
+    "Eligible room rent divided by the actual rate cuts nursing, OT and surgeon fees. See the rupees you pay, and the sum insured a room tariff needs.",
   intro:
     "A room rent proportionate deduction calculator works out how much of a hospital bill a health insurer will refuse when the room you occupied costs more per day than your policy's room rent limit — and states the answer in rupees you pay, not in a ratio. It applies the standard formula reproduced in IRDAI-standardised policy wordings: associated medical expenses (room rent, nursing, operation theatre, and the surgeon, anaesthetist or specialist fees inside the same hospital) are paid in the same proportion that the admissible rate per day bears to the actual rate per day. It is for anyone choosing a room at admission, checking a settlement letter after discharge, or working backwards from a room tariff to the sum insured that would clear it.",
   useCases: [

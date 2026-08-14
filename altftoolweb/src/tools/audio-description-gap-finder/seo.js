@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Description Gap Finder: Find Quiet Timing Gaps",
+  metaDescription:
+    "Decodes audio or video in your browser, measures RMS loudness, subtracts SRT/WebVTT cues, and ranks quiet gaps with in/out points and mean dBFS.",
+  steps: [
+    "Click Choose media to load a local audio or video file — maximum 30 MB, 10 minutes, 2 channels and 96 kHz — then paste SRT or WebVTT cues into the dialogue timing box, or use Open cues or Load sample.",
+    "Under 3. Planning settings adjust RMS window (ms), Quiet threshold (dBFS), Minimum gap (seconds), Bridge brief audio (ms), Dialogue padding (ms) and Media-edge guard (ms), then press Find timing candidates.",
+    "Read the ranked Candidate timing gaps, each with its in and out times, duration, mean RMS in dBFS and planning score, then press Download counts/timing only to save audio-description-gap-counts-timing-only.json.",
+  ],
   intro:
     "The Audio-Description Gap Finder decodes a local audio or video file, measures RMS loudness in 250 ms windows, and lists every stretch quieter than -42 dBFS that survives after your caption cues are subtracted — the timing candidates where an audio description could be spoken. It is for describers, accessibility leads and post-production editors who need a starting list of gaps instead of scrubbing a timeline by ear. Paste SRT or WebVTT cues (or plain start,end seconds), and each surviving gap comes back with in and out points, mean dBFS, and a planning score that rewards length and quiet while penalising gaps that butt against dialogue or the media edges.",
   useCases: [

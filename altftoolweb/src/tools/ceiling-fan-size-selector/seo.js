@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ceiling Fan Size Selector: Sweep, Downrod, Airflow",
+  metaDescription:
+    "Enter room length, width and ceiling height to get the fan sweep in mm, how many fans, the downrod to order and air changes per minute.",
+  steps: [
+    "Enter Room length (m), Room width (m) and Floor to ceiling height (m) — the height field accepts 2 to 6 m in 0.05 m steps.",
+    "The Recommended sweep panel recalculates as you type, giving the sweep in mm with its inch equivalent, the number of fans the floor area needs and the downrod length.",
+    "Read the detail rows — Downrod to order, Blade height above floor, Air changes per minute — plus any red warning that the blades would sit too low or the room is too narrow for that sweep, then press Copy result.",
+  ],
   intro:
     "This selector answers the two separate questions a ceiling fan poses: how wide the blades should be, chosen from floor area, and how far the fan should hang, chosen from ceiling height. Sweep follows the standard floor-area bands — 900 mm up to about 7 m², 1200 mm to 13.5 m², 1400 mm to 21 m² — and the downrod is sized so the blades land near 2.4 m above the floor with at least 450 mm of blade-to-wall clearance. It also reports the air changes per minute you get from the recommended fan's rated delivery.",
   useCases: [

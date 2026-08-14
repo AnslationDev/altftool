@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Battery TOU Simulator: Peak Shifting Savings",
+  metaDescription:
+    "Paste tariff rows as time | load kWh | price, set usable kWh, per-interval power and round-trip efficiency, and see the saving over an unshifted bill.",
+  steps: [
+    "Paste your tariff into Load and price intervals, one row per interval in the form Time | load kWh | price per kWh — it opens with 00:00 | 1.0 | 5 through 22:00 | 1.2 | 6.",
+    "Set Usable battery capacity (kWh), Charge/discharge per interval (kWh) and Round-trip efficiency (%), which default to 8, 3 and 90, or load the Four tariff intervals preset.",
+    "The headline reads N estimated savings with a Baseline … · simulated … caption and rows for Charge interval, Grid energy charged and Energy discharged, plus a Discharge time / Price / Battery kWh / Avoided cost table; Download saves home-battery-tou-simulator.txt.",
+  ],
   intro:
     "A time-of-use battery simulator estimates how much a home battery saves by charging when electricity is cheap and discharging when it is expensive. Paste your tariff intervals as time | load kWh | price per kWh, set usable capacity, per-interval charge power and round-trip efficiency, and this tool charges the battery in the cheapest interval, discharges it into the highest-priced intervals first, and reports the difference against your unshifted baseline bill. It is a price-arbitrage illustration for comparing scenarios, not a control system or a quote.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Interview NDA Generator: Scoped, Not a Non-Compete",
+  metaDescription:
+    "Builds a short candidate NDA from the materials you tick, sets the term and deletion deadline from the interview date, and is not a non-compete.",
+  steps: [
+    "Enter Company name, Company address, Candidate name, Role being interviewed for and the Interview or start-of-process date.",
+    "Tick the materials in scope — Source code or a private repository, System architecture or infrastructure diagrams, Product roadmap or unreleased features, Revenue, usage or growth metrics and more — then set Confidentiality lasts (years), Delete materials within (days), Take-home time limit (hours) and a Governing law of India, England and Wales, Delaware, USA, California, USA or Singapore.",
+    "Check the reported word count, clause count and reading time above the draft, read the Before you send it notes, then press Copy result to take the NDA text.",
+  ],
   intro:
     "A candidate NDA covers the narrow window in which someone outside the company is shown internal code, roadmaps, metrics or systems during a hiring process. It works best when it is short, scoped to what the candidate will genuinely see, and unmistakably not a non-compete. This generator builds that document from the materials you tick, sets the confidentiality period and deletion deadline from the interview date, keeps ownership of any take-home exercise with the candidate, and preserves the right to report unlawful conduct to a regulator.",
   useCases: [

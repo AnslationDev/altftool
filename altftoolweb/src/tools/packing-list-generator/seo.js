@@ -1,4 +1,12 @@
 const seo = {
+  title: "Packing List Generator With Quantities and Bag Weight",
+  metaDescription:
+    "Six trip templates scale each item by days, travellers and laundry stops, then total the estimated weight against a 7 kg cabin or 15 kg checked allowance.",
+  steps: [
+    "In Trip Setup pick a Trip type — Business Trip, Family Vacation, Weekend Getaway, Trek / Outdoor, International Travel or Beach / Resort — then enter Destination, Days, Travelers and a Climate of Warm, Cold, Rainy or Mixed.",
+    "Choose a Bag type (Cabin bag - 7 kg, Checked bag - 15 kg, Backpack - 9 kg or Flexible - 12 kg) and set \"Laundry after days\", using 0 when laundry is not planned; add anything the template misses under Custom Item.",
+    "Tick items off in the Packing Checklist, watching the running weight against your allowance and the Carry-on badges, then use Export Plan: Pending and Markdown copy the list, and CSV downloads packing-list.csv.",
+  ],
   intro:
     "The Packing List Generator builds a quantity-accurate checklist from six trip templates — business, family vacation, weekend, trek, international and beach — scaling each item by trip length, number of travellers and how often you plan to do laundry, then adding up the estimated weight against your bag's allowance. Clothing items scale per day or per half-day, so a five-day trip for two produces real counts rather than a generic list of nouns. The finished list exports as Markdown or CSV with packed status, carry-on flags and per-item weight.",
   useCases: [

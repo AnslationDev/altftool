@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cups to Grams Converter for 44 Baking Ingredients",
+  metaDescription:
+    "1 cup is 120 g of flour, 200 g of sugar, 227 g of butter. Convert both ways across 44 ingredients, in the 240 ml US or 250 ml metric cup.",
   intro:
     "The Cups to Grams Converter turns a volume measure into a weight for a specific ingredient by using that ingredient's own density rather than one blanket conversion — 1 US cup is 120 g of all-purpose flour, 200 g of granulated sugar and 227 g of butter. It covers 44 baking staples across flours, sugars, fats, dairy, mix-ins and leaveners, accepts cups, tablespoons, teaspoons, millilitres or fluid ounces, and converts in both directions so you can go from grams back to cups too. You choose the 240 ml US cup or the 250 ml metric cup, because the same recipe written in each means different amounts.",
   useCases: [

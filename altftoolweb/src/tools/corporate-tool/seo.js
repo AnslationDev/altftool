@@ -1,4 +1,7 @@
 const seo = {
+  title: "Business Software Directory: 39 Tools, 10 Categories",
+  metaDescription:
+    "Browse 39 business software products across 10 categories — Slack, Jira, Salesforce, QuickBooks — each labelled Subscription, Premium or Pay-as-you-go.",
   intro:
     "The Corporate Tool directory is a browsable catalogue of 39 business software products — Slack, Jira, Salesforce, QuickBooks, Notion and more — sorted into ten categories: Communication, Project Management, Productivity Suite, CRM, Finance, HR, Analytics, Customer Support, Development and File Storage. Each entry carries a one-line description and a pricing model label (Subscription, Premium or Pay-as-you-go), and you can search by name, category or description or filter to a single category. It is meant for anyone assembling or auditing a company software stack who wants the landscape on one page instead of ten vendor sites.",
   useCases: [

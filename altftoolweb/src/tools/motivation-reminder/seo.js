@@ -1,4 +1,10 @@
 const seo = {
+  title: "Daily Motivation Reminder – Browser Notifications",
+  steps: [
+    "Click Enable Notifications and accept the browser's permission prompt, then press Add Reminder to open the Create New Reminder form.",
+    "Pick a Time, write your own Motivation Message or click one of the ten quotes under 'Or Choose a Quote' to prefill it, and press Save Reminder.",
+    "While the tab stays open, a check runs every 60 seconds and fires a Web Notification when the clock matches; use the ON/OFF toggle to pause a reminder without deleting it, or Test to preview one.",
+  ],
   intro:
     "Motivation Reminder schedules daily browser notifications at times you choose: you set an HH:MM time and a message, and a timer checks the clock once every 60 seconds and fires a Web Notification when the current minute matches. Each reminder can be toggled on or off or deleted, and there are ten preset quotes to drop into the message field if you would rather not write your own. Reminders are saved in your browser's localStorage, so they persist between visits without an account.",
   useCases: [

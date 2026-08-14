@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quotation & Estimate Generator with Payment Schedule",
+  metaDescription:
+    "Price lines by quantity and rate, apply an overall discount before tax, add contingency, and split the total into milestones that sum exactly.",
+  steps: [
+    "Pick Quotation — a fixed price or Estimate — a range, then fill Your business, the client details and Valid for (days).",
+    "Press Add line for each item and set its Description, Type, Unit, Quantity, Rate, Line discount (%) and Tax (%).",
+    "Set Overall discount (%), Contingency / margin (%), Estimate variance (± %) and a Payment schedule, then press Copy document — the Payment schedule table lists each Milestone with its Share and Amount.",
+  ],
   intro:
     "This generator prices a job line by line — quantity times rate, less any line discount — then applies an overall discount pro rata before tax, adds a contingency percentage as its own visible line, and splits the result into a payment schedule whose milestones always sum exactly to the total. It produces either a quotation, which states one fixed price, or an estimate, which states a range around that figure using the variance you set. Materials and labour are totalled separately, which many trades have to show, and a validity date is calculated so the offer has a clear expiry.",
   useCases: [

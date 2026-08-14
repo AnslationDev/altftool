@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Escalation Calculator: Year-by-Year Schedule",
+  metaDescription:
+    "Project rent for every lease year from a % or flat-rupee clause: total outgo, average monthly rent and the effective compound annual rise.",
+  steps: [
+    "Choose the Escalation clause — \"Percentage of the previous rent (compounding)\" or \"Fixed amount added to the base rent\" — and enter Base monthly rent (INR) and Escalation per step.",
+    "Set Escalate every (years) and Lease term (months), or tap the 11 / 24 / 36 / 60 / 108 months presets, then add rent-free months, security deposit and Monthly maintenance / CAM (INR).",
+    "Read the year-by-year schedule table (Year, Monthly rent, Months, Rent paid, Cumulative) with the Effective compound annual rise, and press Copy schedule.",
+  ],
   intro:
     "The Rent Escalation Schedule Calculator projects the rent payable in every year of a lease from a base rent and an escalation clause, using rent = base x (1 + p/100)^step for a percentage clause and rent = base + (amount x step) for a fixed-amount clause, where step counts how many escalation intervals have elapsed. It returns a year-by-year schedule, the total rent over the term, the average monthly rent and the effective compound annual rise, so a 'Rs 3,000 every two years' clause can be compared like for like with '5% every year'. Useful to tenants and landlords sanity-checking a draft lease before signing.",
   useCases: [

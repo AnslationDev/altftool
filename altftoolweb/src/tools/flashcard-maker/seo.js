@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flashcard Maker with Review, Quiz and Rapid Modes",
+  metaDescription:
+    "Build decks in your browser and study three ways: review, typed quiz that checks your answer, or a 15-second rapid round. Export as a dated JSON file.",
+  steps: [
+    "Pick a deck in the sidebar, press Add Card, then fill Front Side, Back Side and a difficulty of easy, medium or hard and press Save Card.",
+    "Start Review, Quiz — which compares your typed answer to the card back — or Rapid, which allows 15 seconds per card before auto-advancing.",
+    "Under Data Backup press Export JSON to download flashcards_export_YYYY-MM-DD.json; the Import control restores a saved file.",
+  ],
   intro:
     "Paste your notes and this maker turns them into two-sided flashcards by pattern-matching four shapes of line: 'Term: definition', 'Question? answer', 'X is / means / refers to / is defined as Y' (which becomes 'What is X?'), and a fallback that turns any longer sentence into a prompt from its first three words. You can then edit the cards, tag each easy, medium or hard, and study the deck three ways — review, typed quiz, or a rapid round with a 15-second countdown per card. Decks live in your browser's local storage and export as a dated JSON file.",
   useCases: [

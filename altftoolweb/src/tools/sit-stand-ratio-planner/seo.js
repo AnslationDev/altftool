@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sit-Stand Desk Planner: Clock-Timed Rotation Blocks",
+  metaDescription:
+    "Turns your workday, seated meeting hours and standing target into timed blocks, against the BJSM 2-to-4-hour advice and the 60-minute posture rule.",
+  steps: [
+    "Enter Workday starts (24-hour clock), Workday length (hours at the desk) and Seated meeting hours.",
+    "Set your Standing target (hours per day), a Rotation cycle length (minutes) and When your meetings sit — Morning block, Around midday or Afternoon block.",
+    "Read the Standing per day total and the Your day, block by block table of Time, Posture and Length, then Copy plan.",
+  ],
   intro:
     "The Sit-Stand Ratio Planner converts a workday length, fixed seated meeting hours and a daily standing target into a clock-timed rotation of sit and stand blocks. It follows the 2015 British Journal of Sports Medicine expert statement on sedentary office work, which advises desk-based staff to accumulate at least 2 hours a day of standing and light activity, progressing towards 4 hours. The plan keeps each stretch of standing and sitting inside the usual 60-minute posture-change guidance and shows the extra energy cost using the 0.15 kcal per minute difference measured in a 2018 meta-analysis.",
   useCases: [

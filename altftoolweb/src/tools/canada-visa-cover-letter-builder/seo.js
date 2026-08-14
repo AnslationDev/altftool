@@ -1,4 +1,12 @@
 const seo = {
+  title: "Canada Visa Letter of Explanation Builder + Fee Total",
+  metaDescription:
+    "Draft an IMM 5257 letter of explanation and total the IRCC fees: CAD 100 per person capped at CAD 500, biometrics CAD 85 capped at CAD 170.",
+  steps: [
+    "Fill in your passport and occupation details, then set Visa type, Purpose of visit and People applying together.",
+    "Add Arrival in Canada and Departure from Canada, Funds available (CAD) and, for a super visa, Emergency medical cover (CAD).",
+    "Check the Government fees total, the \"Six-month stay would end\" date and \"Biometrics valid until\", then press Copy letter.",
+  ],
   intro:
     "The Canada Visa Cover Letter Builder produces the letter of explanation that accompanies an IMM 5257 temporary resident visa or a super visa application, and totals the government fees at the same time. It applies the published IRCC amounts — CAD 100 per person for the visitor visa with a CAD 500 family maximum from five applicants, CAD 85 per person for biometrics with a CAD 170 family maximum — and checks the trip against the six months a visitor is normally authorised from the day of entry. For super visa applicants it also tests the CAD 100,000 emergency medical insurance requirement.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: ".gitignore Generator – Combine Templates by Stack",
+  metaDescription:
+    "Tick languages, frameworks, IDEs and operating systems to merge community .gitignore templates into one sectioned, de-duplicated file plus your patterns.",
+  steps: [
+    "Tick your stack's checkboxes under Language, Framework, IDE / Editor and Operating system — the page starts with Node, Next.js, macOS and VS Code selected.",
+    "Add project-specific rules under 'Extra patterns (optional, one per line)'; they get their own section, de-duplicated against the templates.",
+    "Review the generated file with its Patterns, Sections and Duplicates removed counts, then press 'Copy .gitignore' to copy the whole file.",
+  ],
   intro:
     "This generator builds a complete .gitignore file by combining per-stack templates — nine languages, five frameworks, four editors and three operating systems — into one de-duplicated, sectioned file. The pattern sets track the community templates maintained at github.com/github/gitignore, the same collection GitHub offers at repository creation, and the output follows the gitignore syntax documented by git itself. Tick your stack, add any custom patterns, and copy the result.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "IP Address to Number: IPv4 to 32-bit Integer, Both Ways",
+  metaDescription:
+    "Convert a dotted-quad IPv4 address to its 32-bit integer and back, with binary and 8-digit hex. Valid range 0 to 4,294,967,295; IPv4 only.",
+  steps: [
+    "In Conversion Fields, type a dotted quad into IP Address (it starts on 192.168.1.1) or paste a whole number into Decimal Number — editing one field clears the other.",
+    "Conversion runs as you type: four octets of 0 to 255 become a x 16777216 + b x 65536 + c x 256 + d, and any integer from 0 to 4,294,967,295 becomes dotted-quad again.",
+    "Read the IP Address, Decimal, Hexadecimal and Binary cards, then the Binary Representation panel's By Octets rows, Full Binary (32-bit) string and 0x-prefixed 8-digit Hexadecimal, and press Copy beside either field.",
+  ],
   intro:
     "The IP Address to Number converter turns a dotted-quad IPv4 address into its single 32-bit integer form using a×16777216 + b×65536 + c×256 + d, and converts any integer from 0 to 4,294,967,295 back into dotted-quad notation. Type into either field and the other updates, with the 32-bit binary and 8-digit hexadecimal forms shown alongside. It is for developers and network engineers storing addresses in a database column, comparing ranges, or reading an address that a log or API returned as a plain number.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Food Delivery Complaint Letter and Refund Calculator",
+  metaDescription:
+    "Work out the refund you can claim after coupon and GST apportioning, then draft a letter to the platform's grievance officer with the 48-hour clock.",
+  steps: [
+    "Pick the Issue with the order and enter the invoice break-up: Food subtotal, Value of the affected items, Discount / coupon applied, GST on food (%), delivery fee, packaging fee, tip and Total amount actually paid.",
+    "Fill in the order and contact details — platform, restaurant, Order ID, order and letter dates, address, phone, email — and tick whether to also ask for compensation for the deficiency in service.",
+    "Read the refund with its food, GST and fees break-up and any Difference against what you paid, then press Copy letter for the grievance-officer draft and follow the Escalation timeline.",
+  ],
   intro:
     "This tool converts a food-delivery invoice into the exact refund you are entitled to claim, then drafts the complaint that goes with it. It apportions any coupon discount across the affected items, adds back the GST charged on that food, includes delivery, packaging and tip only when the whole order failed, and flags any gap between the line items and the amount actually debited. The letter is addressed to the grievance officer every e-commerce entity must appoint under rule 4(5) of the Consumer Protection (E-Commerce) Rules, 2020.",
   useCases: [

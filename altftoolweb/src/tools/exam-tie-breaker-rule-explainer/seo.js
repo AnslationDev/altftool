@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tie Breaker Rules: NEET, JEE Main, UPSC, SSC, IBPS",
+  metaDescription:
+    "Runs the published tie-breaking order on two candidates and shows which criterion decided the rank — and which were never reached.",
+  steps: [
+    "Pick the exam in the Examination list — NEET UG, JEE Main, UPSC Civil Services, SSC (CGL, CHSL, MTS) or IBPS / SBI recruitment — and its published criteria are numbered underneath in the order they are applied.",
+    "Enter the two candidates in the Candidate A and Candidate B panels using whatever fields that rule set needs (NEET UG asks for Biology marks (Botany + Zoology), Chemistry marks, Physics marks and the correct and incorrect answer counts), or press \"Load this example\" to use the worked pair.",
+    "\"Higher rank goes to\" names the winning candidate and the criterion number that settled it, and the table marks every criterion as Candidate A, Candidate B, identical, or \"not reached\" where the sequence stopped before it; Copy result copies the whole sequence as text.",
+  ],
   intro:
     "A tie-breaker rule is the ordered list of criteria an examining body applies when two candidates finish on identical marks, and it is applied strictly in sequence — the first criterion on which they differ fixes the rank and nothing after it is consulted. This explainer runs the published order for NEET UG, JEE Main, UPSC Civil Services, SSC and IBPS or SBI recruitment against two candidates and shows exactly which criterion decided the result. Each rule set is presented with the body that issued it, because these lists are revised: NEET dropped both the age criterion and the draw of lots within three years.",
   useCases: [

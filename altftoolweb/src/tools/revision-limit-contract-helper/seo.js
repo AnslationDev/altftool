@@ -1,4 +1,12 @@
 const seo = {
+  title: "Price Your Revision Rounds and Draft the Clause",
+  metaDescription:
+    "Divides your fee by base hours plus rounds x hours per round to show the effective hourly rate, prices an extra round, and drafts the scope clause.",
+  steps: [
+    "Enter the Project fee, Base hours (before revisions), your Target hourly rate, Included revision rounds and Hours allowed per round in the Currency you bill in.",
+    "Leave \"Extra round fee (blank = calculated)\" empty to price it as hours per round x rate, set Feedback due within (business days) and Deemed approval after (business days), and tick Include a cancellation clause.",
+    "Effective hourly rate is shown against your target, the \"If the client asks for more rounds\" table compares the rate if billed with the rate if absorbed, and Copy clause takes the draft wording.",
+  ],
   intro:
     "This helper prices a revision policy before it is written into a contract. It divides your fixed fee by the hours the project really takes when every included round is used — effective rate = fee / (base hours + rounds x hours per round) — so you can see what unlimited-feeling revisions cost you, then sets an extra-round fee from your hourly rate. It also drafts the scope language: what a round is, what counts as a revision rather than a change of brief, consolidated feedback, a feedback window and a deemed-approval date.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Frames to Seconds Converter with SMPTE Timecode",
+  metaDescription:
+    "Convert frames, seconds and SMPTE timecode at exact rates — 23.976, 29.97 and 59.94 included — with drop-frame and non-drop labels side by side.",
+  steps: [
+    "Choose From Frames, From Seconds or From Timecode, then enter the Frame count, the Duration (seconds) or a Timecode (HH:MM:SS:FF).",
+    "Pick the Frame rate — 23.976 through 120 fps, with the exact NTSC ratios used in the maths — and tick Drop-frame timecode, available only at 29.97 and 59.94 fps.",
+    "Read the frames, real-time duration, timecode and its drop-frame or non-drop equivalent, plus how long one frame lasts, then press Copy result.",
+  ],
   intro:
     "This converter turns a frame count into elapsed seconds and SMPTE ST 12-1 timecode by dividing frames by the exact frame rate, and reverses the calculation from a duration or a timecode string. It keeps the exact NTSC rates (24000/1001, 30000/1001, 60000/1001) separate from the integer rates that timecode labels count in, which is the source of most timing mistakes. Editors, animators and post supervisors use it to line up cut lengths, animation counts and delivery durations.",
   useCases: [

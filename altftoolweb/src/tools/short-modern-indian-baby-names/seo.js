@@ -1,4 +1,12 @@
 const seo = {
+  title: "Short Modern Indian Baby Names: 2-6 Letters Scored",
+  metaDescription:
+    "Two- to six-letter Sanskrit, Tamil, Punjabi, Arabic and Persian names with meanings and a spelling-ease score out of 100 for each one.",
+  steps: [
+    "Set \"Gender\", \"Origin\", \"Exact letter count\" and \"Minimum spelling-ease score\", then pick a \"Starting letter\" or leave it on Any.",
+    "Type a spelling into \"Name to check\" under \"Score any name for spelling ease\" to see its score out of 100 with every deduction itemised.",
+    "Read the matched Name / Meaning / Ease table and the \"Average spelling-ease score\", then press \"Copy list\" to take the shortlist.",
+  ],
   intro:
     "This tool lists modern Indian baby names of two to six letters — Sanskrit, Hindi, Tamil, Punjabi, Arabic and Persian in origin — each with its meaning and a spelling-ease score out of 100. The score starts at 100 and deducts 12 points per optional doubled vowel (Aarav / Arav), 8 per aspirated digraph whose h gets dropped (Bhavya / Bavya), 8 per doubled consonant, 6 for a y standing in for a vowel and 6 per letter beyond five. It is built for parents who want a name that survives forms, boarding passes and roll calls intact.",
   useCases: [

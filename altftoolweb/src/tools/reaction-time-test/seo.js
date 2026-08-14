@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reaction Time Test — 5-Round Average in Milliseconds",
+  metaDescription:
+    "Click when the screen turns green after a random 500–5000 ms wait. Five rounds, a seven-band grade from Inhuman to Very Slow, and a CSV of the run.",
+  steps: [
+    "Click the reaction panel or press Space or Enter to start — it turns amber and holds for a random 500 to 5000 ms.",
+    "Click, tap or press Space the instant the panel turns green; clicking during amber shows \"Too Early! Click to Try Again\" and restarts the set of 5.",
+    "After the fifth round read the Game Complete average with its grade, the per-round bar chart and the Current Best and All-Time Best cards, then press CSV to download reaction-time-test.csv.",
+  ],
   intro:
     "Reaction Time Test runs a fixed set of 5 rounds in which the screen turns green after a random 500 to 5000 ms wait, timing your click with the browser's high-resolution performance clock and reporting the result in milliseconds. Each round is graded on a seven-band scale — Inhuman under 150 ms, Excellent under 200, Good under 250, Average under 300, Below Average under 400, Slow under 500, Very Slow above that — and the game finishes with your 5-round average, a per-round bar chart and a CSV export. It is a simple visual-stimulus test for anyone curious how their reflexes compare to the typical 200-300 ms human range, not a clinical assessment.",
   useCases: [

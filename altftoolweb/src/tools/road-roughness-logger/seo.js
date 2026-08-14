@@ -1,4 +1,12 @@
 const seo = {
+  title: "Road Roughness Logger: Jolts Over 12 m/s² with GPS",
+  metaDescription:
+    "Logs a jolt whenever total acceleration passes 12 m/s², alongside GPS fixes with lat/long to six decimals, speed in km/h and accuracy in metres.",
+  steps: [
+    "Mount the phone so it moves with the vehicle rather than rattling loose, then press Start with permission to allow motion and location.",
+    "Drive the route: any device-motion sample whose acceleration including gravity exceeds 12 m/s² is appended as a Jolt row with its magnitude.",
+    "Watch Live local readings fill with timestamped GPS fixes — latitude and longitude to six decimals, speed in km/h, accuracy in metres — then press Stop sensor.",
+  ],
   intro:
     "Road Roughness Logger records road jolts from a phone's accelerometer alongside a live GPS track, timestamping every reading so bumps can be matched to a place and a speed. It flags a jolt whenever the total acceleration including gravity exceeds 12 m/s² — roughly 2 m/s² above the ~9.81 m/s² a stationary device reads — and logs each GPS fix with latitude and longitude to six decimals, speed converted to km/h, and the reported accuracy in metres. It is for anyone who wants evidence about a rough stretch of road rather than an impression of one.",
   useCases: [

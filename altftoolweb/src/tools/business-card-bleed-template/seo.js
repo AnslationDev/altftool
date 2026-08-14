@@ -1,4 +1,12 @@
 const seo = {
+  title: "Business Card Bleed, Trim and Safe Area Calculator",
+  metaDescription:
+    "Enter card width, height and bleed per side to get the trim size, the full artwork size with bleed and the safe text inset, in mm or inches.",
+  steps: [
+    "Enter Card width and Card height — 90 and 54 by default — plus Bleed each side, and set Unit to mm or inches.",
+    "The template rebuilds on every keystroke; press Reset to return to a 90 × 54 card with 3 mm bleed.",
+    "Read Business card template for the Trim size, Artwork size and Safe text area inset with its layer checklist, then press Copy output.",
+  ],
   intro:
     "This tool builds a press-ready business card template as a true-size SVG, drawing the three boxes a printer expects: the bleed box (trim + 2 × bleed), the magenta trim line where the guillotine cuts, and a dashed cyan safe box (trim − 2 × safe margin) that type must stay inside. Crop marks are placed outside the bleed box rather than over the artwork, which is what PDF/X requires, and the file is written with physical units (width=\"101mm\", 1 SVG unit = 1 mm) so it opens at real size in Illustrator, Affinity Designer or Inkscape. It is for anyone laying out a card for an actual print run instead of guessing margins in a screen-pixel document.",
   useCases: [

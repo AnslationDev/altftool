@@ -1,4 +1,12 @@
 const seo = {
+  title: "Azure Functions Consumption Plan Cost Calculator",
+  metaDescription:
+    "Monthly Azure Functions Consumption bill from executions and GB-seconds after the 1M/400K free grants, compared against one EP1 Premium instance.",
+  steps: [
+    "Enter Executions per month, Average duration (ms) and Peak memory per execution (MB) — the Consumption plan caps memory at 1,536 MB.",
+    "The calculator rounds memory up to the nearest 128 MB, bills at least 100 ms per run, and deducts the free monthly grants of 1,000,000 executions and 400,000 GB-seconds before charging.",
+    "Read the Consumption plan monthly cost beside the One EP1 Premium instance (1 vCPU, 3.5 GB) figure to see which plan is cheaper, then press Copy result.",
+  ],
   intro:
     "This calculator computes the monthly Azure Functions Consumption plan bill as executions × $0.20 per million plus GB-seconds × $0.000016, after the free monthly grants of 1 million executions and 400,000 GB-seconds (East US list prices). It applies Azure's real billing granularity — memory rounded up to 128 MB, a 100 ms minimum per execution — and compares the result against one always-on EP1 Premium instance so teams can see when the serverless plan stops being the cheap option.",
   useCases: [

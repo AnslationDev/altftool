@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Cost Per Document Calculator: Tokens, OCR, Chunks",
+  metaDescription:
+    "Price a document AI pipeline: pages and words become tokens at 0.75 words per token, plus chunk overlap, per-chunk prompts, passes, OCR and embedding.",
+  steps: [
+    "Enter Pages per document, Words per page, Chunk size in tokens, Overlap between chunks (tokens), Instruction tokens per chunk, Output tokens per pass and Passes over the document.",
+    "Set the rates in your chosen currency: Input price per 1M tokens, Output price per 1M tokens, OCR / parse cost per page and Embedding price per 1M tokens.",
+    "Read the cost per document, per page and per 1,000 documents, the monthly cost at that volume, and the share taken by model input, model output, OCR and embedding; press \"Copy result\".",
+  ],
   intro:
     "The Cost Per Document Processed Calculator turns pages and words per page into tokens using the standard English estimate of about 0.75 words per token (roughly four characters), then adds everything a real pipeline bills for: chunk overlap repeated between neighbouring chunks, instruction tokens sent with each chunk, extra verification passes, OCR per page and embedding for search. It reports cost per document, per page, per thousand documents and per month, with a breakdown showing which line dominates. Useful for anyone pricing invoice extraction, contract review, claims processing or a RAG ingest.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bodybuilder Protein Calculator: Daily and Per Meal",
+  metaDescription:
+    "Daily protein from 1.6-2.2 g/kg for a bulk or 2.3-3.1 g/kg fat-free mass on a cut, split into meals that each clear the 0.4 g/kg dose.",
+  steps: [
+    "Enter 'Bodyweight (kg)' and, for a cutting block, 'Body fat % (optional)' so the target can be based on fat-free mass.",
+    "Pick a 'Training phase', set 'Protein meals per day' and choose the 'Main protein source (for the leucine estimate)' — mixed animal, whey or a soy/pea plant blend.",
+    "Read the 'Daily protein target' in grams, the per-meal dose against the 0.4 g/kg threshold, and the Meal-by-meal plan's Protein and Leucine columns.",
+  ],
   intro:
     "This calculator turns your bodyweight, body-fat percentage and training phase into a daily protein target and a per-meal dose sized for muscle growth. It targets 1.6-2.2 g per kg bodyweight while bulking and 1.6-2.0 g per kg while maintaining muscle, switches to the 2.3-3.1 g per kg fat-free mass range used when dieting down, and then divides the total using the 0.4 g/kg per-meal dose that maximises muscle protein synthesis. It is aimed at lifters running a structured bulk, cut or maintenance block who want the distribution right, not just the daily number.",
   useCases: [

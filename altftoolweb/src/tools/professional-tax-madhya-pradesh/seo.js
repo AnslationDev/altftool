@@ -1,4 +1,12 @@
 const seo = {
+  title: "MP Professional Tax: Rs 2,500 Slab and Rs 208/Month",
+  metaDescription:
+    "Madhya Pradesh professional tax by annual gross slab — nil to Rs 2,25,000, then Rs 1,500/2,000/2,500 — with the Rs 208 x 11 + Rs 212 monthly split.",
+  steps: [
+    "Type your Monthly gross salary (INR) and the Months in the financial year (Apr-Mar).",
+    "Pick the marginal income-tax rate for relief, and whether the employer deducts from salary or an enrolled person pays directly.",
+    "Professional tax for the year gives your slab total with the payroll split — Rs 208 for eleven months and Rs 212 in the twelfth at the top band.",
+  ],
   intro:
     "Madhya Pradesh professional tax is charged on your annual gross salary in four bands under the MP Vritti Kar Adhiniyam, 1995: nil up to Rs 2,25,000, Rs 1,500 up to Rs 3,00,000, Rs 2,000 up to Rs 4,00,000 and Rs 2,500 above that. This calculator places your pay in the right band and splits the yearly figure into the monthly payroll deduction employers actually make, including the larger final-month instalment that squares off the rounding. It is written for salaried employees checking a payslip and for payroll teams and enrolled professionals planning the year's deposits.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Australia Visa Cost Estimator in AUD and Rupees",
+  metaDescription:
+    "Build the Visa Application Charge from base plus additional applicant charges, add the card surcharge and your Indian costs, and see the rupee total.",
+  steps: [
+    "Choose the 'Visa subclass' to fill in its published charges, then check 'Base Application Charge (AUD)', the two additional applicant charges and counts, and 'Exchange rate (rupees per AUD 1)'.",
+    "Pick a 'Payment method' so its surcharge percentage is applied to the visa application charge only, tick the subsequent-temporary or paper-lodgement boxes if they apply, and add your service, health exam, cover, photo and courier costs.",
+    "The total appears in rupees with 'Line by line' breaking out the Base Application Charge, additional applicants, card surcharge, Non-Internet Application Charge and per-applicant figure; press 'Copy result' to save it.",
+  ],
   intro:
     "An Australia visa cost estimator builds the Visa Application Charge the way the Department of Home Affairs does — a Base Application Charge for the primary applicant, a separate Additional Applicant Charge for every family member aged 18 and over and a lower one for each child under 18, plus the Subsequent Temporary Application Charge or Non-Internet Application Charge where they apply — and then adds the card surcharge that is levied on the charge at the moment of payment. Because these amounts are set in Australian dollars and indexed on 1 July each program year, every dollar figure here is editable rather than hard-coded. It is built for students, families and skilled applicants who need the rupee outlay including biometrics, health examinations and health cover.",
   useCases: [

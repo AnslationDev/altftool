@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marketing Opt-Out Letter: GDPR Art. 21(2) Objection",
+  metaDescription:
+    "Pick the channels and the applicable law; the letter cites GDPR Art. 21(2) and dates each stop — immediate under GDPR, 10 business days under CAN-SPAM.",
+  steps: [
+    "Enter your details and the sender's, set Applicable law to EU GDPR, UK GDPR + PECR, India DPDP Act + TRAI TCCCP or United States CAN-SPAM / TCPA, and the send date.",
+    "Tick the entries under Channels to stop such as Marketing email or SMS, and leave Add me to your suppression list (recommended) selected instead of erasure.",
+    "Deadline per channel dates each stop and the Objection letter is drafted below it; press Copy request.",
+  ],
   intro:
     "The Marketing Opt-Out Request Generator writes an objection to direct marketing under GDPR Article 21(2), which is an absolute right with no balancing test and no fee, and works out the date the sender must stop on each channel. It applies the real per-regime deadlines: immediate under GDPR Art. 21(3), 10 business days under CAN-SPAM 15 U.S.C. s.7704(a)(4), and 7 days for a TRAI preference registration in India. It also defaults to suppression rather than erasure, because a deleted record is what lets a company put you back on the list after the next data import.",
   useCases: [

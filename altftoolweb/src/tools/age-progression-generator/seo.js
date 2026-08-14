@@ -1,4 +1,7 @@
 const seo = {
+  title: "Age Progression Generator: See Yourself at 50-90",
+  metaDescription:
+    "Set a target age from 50 to 90; creases are drawn at your own face landmarks, with grey-hair and elasticity indexes. A novelty render, not a forecast.",
   intro:
     "The Age Progression Generator takes a photo you upload, finds the face with a 68-point landmark model, and draws an older version of it on canvas — desaturating the image, multiplying a fine procedural crease texture over the face region, and adding structural lines at the landmarks themselves: three forehead furrows above the brows, crow's feet at the outer eye corners, and nasolabial folds running from the nostrils to the mouth corners. A slider sets the target age anywhere from 50 to 90, and alongside the image you get simple index readouts for grey hair, skin elasticity and life experience derived from that number. It is a novelty visualisation for fun and curiosity, not a forensic or medical prediction, and the photo never leaves your browser.",
   useCases: [

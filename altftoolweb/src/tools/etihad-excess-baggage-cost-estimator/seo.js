@@ -1,4 +1,12 @@
 const seo = {
+  title: "Etihad Excess Baggage Calculator: Advance vs Airport",
+  metaDescription:
+    "Price your excess kilos through every advance weight block and against the airport desk rate, and see which route actually costs least.",
+  steps: [
+    "Pick your free checked allowance per passenger, then enter total checked weight and the heaviest single bag in kg.",
+    "Enter the advance rate per kg and the airport rate per kg shown on your own Etihad booking, in your chosen currency.",
+    "Read the Every option priced table for kilos bought, left for the desk and unused per block, then press Copy result.",
+  ],
   intro:
     "This estimator prices the kilograms above your Etihad checked allowance through every advance weight block and through the airport desk, then reports which costs least. Two rules drive the answer: advance weight is sold in fixed blocks per passenger, so a small overweight forces you up to the next block and part of what you buy goes unused, while the desk bills the actual kilos with a part kilogram rounded up. Anything a block does not cover is still settled at the airport rate, which is why the smallest block that fits is often not the cheapest choice.",
   useCases: [

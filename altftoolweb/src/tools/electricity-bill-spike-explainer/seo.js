@@ -1,4 +1,12 @@
 const seo = {
+  title: "Why Your Electricity Bill Jumped: Slab Creep Split",
+  metaDescription:
+    "Enter two months of units and rupees paid; the change splits into slab creep, extra units, fixed charge, fuel surcharge, duty and anything unexplained.",
+  steps: [
+    "Pick your State (indicative domestic LT-1 tariff), then enter Units consumed (kWh) and Amount paid (₹) under both Previous month and This month.",
+    "Open \"Charges printed on your bill\" to override the fixed / demand charge, the fuel surcharge in ₹ per unit and the electricity duty percentage — leave any field blank to use the state table value.",
+    "Read the rupee change split into slab creep, extra units, fixed charge, fuel surcharge, duty and \"Other charges on your bill\", plus the Effective rate per unit for each month, then press Copy breakdown.",
+  ],
   intro:
     "An electricity bill spike explainer takes two months of billing data — units consumed and the rupee amount actually paid for each — and splits the change in the bill into slab creep, genuine extra consumption, fixed charge, fuel surcharge, electricity duty and any other line on the bill. It is for anyone whose bill jumped far more than their usage did and who wants to know which rupees came from which cause. The split uses the telescopic slab rule that governs Indian domestic LT-1 supply: writing E(u) for the energy charge at u units and m for the rate on the first unit above the lower month's consumption, the extra units are valued at (u1 − u0) × m and everything left over in E(u1) − E(u0) is the cost of spilling into higher-priced blocks.",
   useCases: [

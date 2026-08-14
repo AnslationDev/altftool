@@ -1,4 +1,7 @@
 const seo = {
+  title: "60-Second Symbol-Digit Processing Speed Test",
+  metaDescription:
+    "Match nine symbols to the digits 1-9 for 60 seconds. Scores correct substitutions, errors and accuracy against bands at 30, 45 and 60.",
   intro:
     "This is a 60-second symbol-digit substitution task: nine symbols are paired with the digits 1 to 9 in a legend that stays on screen, symbols appear one at a time, and you press the matching number key as fast as you can. Your score is the number of correct substitutions in the minute, reported alongside error count and accuracy (correct presses ÷ total presses) and plotted against four bands — below 30, 30–44, 45–59 and 60 or more. It is a self-administered speed measure for curiosity, self-comparison and tracking your own day-to-day variation, not a clinical assessment.",
   useCases: [

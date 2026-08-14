@@ -1,4 +1,12 @@
 const seo = {
+  title: "When Do the Clocks Change? Exact DST Times by Zone",
+  metaDescription:
+    "The next clock change in any time zone to the exact UTC instant, plus the dates a weekly cross-border meeting's gap silently moves.",
+  steps: [
+    "Pick a zone in the Time zone dropdown and set Look forward from to a start date, or press Today; the panel returns the next change as an Exact UTC instant with the local wall clock either side and the UTC offset before and after.",
+    "For a recurring call, fill the Meeting safety check — Meeting time is written in, Local start time (24-hour), First occurrence, Weeks to scan (2–104) and up to three Compare with zone dropdowns — so only the dates a zone's gap actually moves are listed.",
+    "Press Copy to take the change details or the meeting scan as text, or read A full year of clock changes and Who has stopped changing their clocks for any year from 1970 to 2100, all from the bundled IANA tzdb.",
+  ],
   intro:
     "This tracker reads the IANA time zone database bundled with the page and reports, for any zone, the exact UTC instant of its next clock change, the local wall-clock reading before and after the jump, the size and direction of the shift and the resulting UTC offset — plus the dates on which a recurring meeting's gap between two or three zones silently moves. It is built for anyone running a standing call across borders, and for developers scheduling cron jobs and calendar invites, because the underlying rules do not line up: the United States switches on the second Sunday of March and the first Sunday of November under the Energy Policy Act of 2005 §110, while the European Union switches on the last Sundays of March and October at 01:00 UTC under Directive 2000/84/EC, leaving three weeks each spring and one week each autumn in which the usual offset between them is simply wrong.",
   useCases: [

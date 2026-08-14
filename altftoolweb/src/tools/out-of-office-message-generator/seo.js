@@ -1,4 +1,12 @@
 const seo = {
+  title: "Out of Office Message Generator with Return Date",
+  metaDescription:
+    "Build an auto-reply from your first and last day away. Weekends and the public holidays you list are excluded, and the return date is a working day.",
+  steps: [
+    "Enter First day away, Last day away, Your name, and any Public holidays inside the range (YYYY-MM-DD, space separated).",
+    "Choose the Tone, Email access while away and Reason shown in the reply, then add a Backup contact name and email — absences over three working days flag a missing delegate.",
+    "Read Working days away and the return date, check Message length against the 500-character guide, then press Copy result to take the Auto-reply text.",
+  ],
   intro:
     "This generator writes an out-of-office auto-reply from your absence dates and turns those dates into the numbers people actually need: how many working days you are away, and the first Monday-to-Friday date you are back. Weekends are excluded automatically and any public holidays you list are removed from the count and skipped when picking the return date. It covers the four things a good auto-reply must state — the exact range, whether you are reading email, who to contact instead, and when a reply will arrive.",
   useCases: [

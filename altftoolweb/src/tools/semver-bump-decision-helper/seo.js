@@ -1,4 +1,12 @@
 const seo = {
+  title: "Semver: Major, Minor or Patch for This Release?",
+  metaDescription:
+    "Tick what changed and get the major, minor or patch answer SemVer 2.0.0 requires, with the spec item cited and the next version number computed.",
+  steps: [
+    "Type the version you last published, such as 1.4.2 or 0.4.2, into Current released version.",
+    "Under What does this release contain? tick the lines that apply - Removed or renamed anything public, Deprecated public API (still works, now warns), Fixed a bug without changing the documented contract - and tick the stable box to go straight to 1.0.0.",
+    "Read the Next version headline with the Recommended bump, Spec rule and Major version zero (0.x) rows naming the SemVer 2.0.0 item behind it, then press Copy result.",
+  ],
   intro:
     "This helper answers the question 'is this release a major, minor or patch?' by mapping a short checklist about your change onto the Semantic Versioning 2.0.0 rules: major for incompatible API changes (item 8), minor for backwards-compatible features and deprecations (item 7), patch for compatible bug fixes (item 6). It also handles the 0.x special case, where the spec allows anything to change and the ecosystem signals breakage in the minor digit. Library maintainers get the exact next version number computed from their current one, including pre-release finalisation.",
   useCases: [

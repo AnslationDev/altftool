@@ -1,4 +1,12 @@
 const seo = {
+  title: "Security Headers Checker: Grade a Pasted curl -I Response",
+  metaDescription:
+    "Reads header values, not just names: HSTS max-age, CSP directives, cookie flags and COOP/CORP, scored on a printed rubric. No request to your site.",
+  steps: [
+    "Paste a response block into the box labelled Response headers — output from curl -I, or curl -v with its < prefix, or the Headers panel in devtools; folded continuation lines are handled.",
+    "The grade recomputes as you type: a letter and percentage, the earned of applicable rubric points, the count of header lines parsed, and the pass, partial, missing and to review totals.",
+    "Work down the Checks cards for each header's status and notes, then What the CSP permits and Cookies set by this response, and press Copy report — or Reset to sample to start again.",
+  ],
   intro:
     "Paste a block of HTTP response headers — from curl -I, curl -v or the Headers panel in devtools — and this checker parses every line and grades the response against the defensive headers browsers actually act on: Strict-Transport-Security, Content-Security-Policy, X-Content-Type-Options, frame-ancestors and X-Frame-Options, Referrer-Policy, Permissions-Policy and the Cross-Origin Opener, Resource and Embedder policies. It reads the values rather than just noting presence, so a max-age under a year, a script-src that still allows 'unsafe-inline', a cookie missing Secure or a Referrer-Policy of unsafe-url are each called out on their own. Scoring uses a fixed published rubric — the weight of every check is listed on the page — and the tool never contacts your server, so it reflects exactly the text you pasted and nothing else.",
   useCases: [

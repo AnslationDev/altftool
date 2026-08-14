@@ -1,4 +1,12 @@
 const seo = {
+  title: "Engine Displacement Calculator: Bore & Stroke to cc",
+  metaDescription:
+    "Get cc, litres and cubic inches from bore, stroke and cylinder count, plus bore/stroke ratio and the clearance volume a compression ratio implies.",
+  steps: [
+    "Pick the Bore and stroke unit (millimetres or inches) and enter Bore — cylinder diameter, Stroke — piston travel and the Number of cylinders.",
+    "Optionally add a Compression ratio (0 to skip) to solve clearance volume, or load a preset: 110 cc scooter, 350 cc single, 1.2 L 3-cyl petrol or 5.7 L V8 (in).",
+    "Read Total displacement in cc with litres and cubic inches, the Bore / stroke ratio and character, and clearance volume per cylinder, then press Copy result.",
+  ],
   intro:
     "Engine displacement is the total volume the pistons sweep in one full cycle, and this calculator derives it from the geometry: π ÷ 4 × bore² × stroke for one cylinder, multiplied by the number of cylinders. Enter bore and stroke in millimetres or inches and it returns cc, litres and cubic inches, along with the bore-to-stroke ratio that tells you whether the engine is oversquare or long-stroke. If you add a compression ratio it also solves the clearance volume from CR = (swept + clearance) ÷ clearance.",
   useCases: [

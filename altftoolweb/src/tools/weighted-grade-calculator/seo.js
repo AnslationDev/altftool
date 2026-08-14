@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weighted Grade Calculator: What You Need on the Final",
+  metaDescription:
+    "Weighted average from SUM(score x weight) / SUM(weight), with letter and 4.0 GPA. Leave a score blank and it works out the mark the final needs.",
+  steps: [
+    "Fill the Assessment, Weight and Score % columns, leaving Score % blank on anything not yet graded.",
+    "Press Add assessment for more rows, then pick a Grade scale and a Target final grade (%).",
+    "You get the grade so far as a letter and 4.0 GPA, plus the average score every ungraded item must earn.",
+  ],
   intro:
     "The Weighted Grade Calculator computes a course grade as SUM(score x weight) / SUM(weight), converts it to a letter and 4.0-scale GPA, and reverses the formula to tell you the score you still need on ungraded work. Leave an assessment blank and it is treated as not yet graded, so you get both your grade so far and the mark the final has to earn: needed = (target x total weight / 100 - points already earned) / remaining weight x 100. Weights do not have to add to 100, so a syllabus written in raw points works as-is.",
   useCases: [

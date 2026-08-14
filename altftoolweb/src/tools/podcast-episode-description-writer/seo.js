@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Description Writer with Chapter Validation",
+  metaDescription:
+    "Assembles summary, takeaways, chapters, links and CTA, then checks the 4,000-char Apple/Spotify limit, 5,000 on YouTube, and chapter rules.",
+  steps: [
+    "Fill What the episode is about, Guest name and Focus phrase, then paste Takeaways, one per line and Chapters, one per line as \"0:00 Label\".",
+    "Read the Description length counter and the Platform / Limit / Remaining table for Apple Podcasts, Spotify (4,000) and YouTube (5,000), plus Chapters parsed and Focus phrase in the preview.",
+    "Fix anything in the flagged list — a first chapter not at 0:00, fewer than three timestamps, a chapter under 10 seconds — then press Copy description to take the Draft description.",
+  ],
   intro:
     "A podcast episode description is the block of text that has to sell the episode in a list view and stay findable in search, and this writer assembles one from your notes in a fixed order: summary first, then takeaways, chapters, links and a call to action. It then checks the result against the 4,000-character description limit used by Apple Podcasts and Spotify, the 5,000-character limit on a YouTube description, the YouTube chapter rules, and whether your focus phrase lands in the opening text a listener actually sees. Aimed at independent podcasters publishing to several platforms from one set of show notes.",
   useCases: [

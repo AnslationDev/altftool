@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turkey e-Visa Cost in Rupees + 90/180 Stay Check",
+  metaDescription:
+    "Prices a conditional e-Visa or consulate sticker visa in rupees — fee, agent, insurance and card markup — and checks the 30-day and 90-in-180 limits.",
+  steps: [
+    "Choose Conditional e-Visa applied online or Sticker visa at a Turkish consulate, then set travellers, length of stay and days already spent in Turkey.",
+    "Tick whether every traveller holds a qualifying Schengen, US, UK or Ireland document, then enter the USD fee, the rupee exchange rate and Indian charges.",
+    "Total visa cost gives the rupee figure per traveller and per day plus days left in the 180-day window; Copy result takes the line-by-line breakdown.",
+  ],
   intro:
     "A Turkey visa cost estimator prices an e-Visa or a consulate sticker visa in rupees, but checks eligibility before it checks the wallet. For many nationalities, Indian passport holders included, the Turkish e-Visa is conditional: it is issued only to applicants who already hold a valid visa or residence permit from the Schengen area, the United States, the United Kingdom or Ireland, and it permits a single entry and a stay of up to 30 days within 180 days of issue. On top of that sits the rule that applies whatever visa you hold — no more than 90 days in Turkey in any rolling 180-day period — so the tool tests the itinerary against both limits and only then totals the fee, agent charges, insurance and card markup.",
   useCases: [

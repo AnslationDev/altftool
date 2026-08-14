@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sibling Name Match Finder: Names Scored out of 100",
+  metaDescription:
+    "Enter your older child's name and get sibling names scored on origin, syllables, ending and length, with confusable spellings removed.",
+  steps: [
+    "Type the name your older child already has into 'Older child's name' — the field opens with Aarav.",
+    "Choose 'New baby's gender', then a 'Match style' of same starting letter, different starting letter or same language of origin, and set 'How many suggestions'.",
+    "Read the ranked cards, each showing its score out of 100, meaning, origin, letters and syllables plus the factors it matched on, then press 'Copy shortlist'.",
+  ],
   intro:
     "The Sibling Name Match Finder ranks names against a child you have already named, scoring each candidate out of 100 on six factors: shared language of origin (25), matching syllable count (20), distinctness (20), same final letter (15), same starting letter (10) and similar length (10). Names whose spelling overlaps the existing name by more than 80 percent are dropped from the results instead of scoring highly, because a sibset should be matched, not confusable. Covers Sanskrit, Tamil, Arabic, Punjabi, Hebrew, English, Latin and Persian names with meanings.",
   useCases: [

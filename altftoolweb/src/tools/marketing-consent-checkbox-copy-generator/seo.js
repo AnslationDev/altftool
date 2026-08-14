@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marketing Consent Checkbox Copy: One Box Per Channel",
+  metaDescription:
+    "Generates unticked, per-channel consent labels for email, SMS, WhatsApp, push or post, states the messages-per-year, and flags bundled or required boxes.",
+  steps: [
+    "Enter your Brand name and Privacy policy URL, then choose a Regime and How often you will send.",
+    "Tick the Channels you want consent for — Email, SMS, WhatsApp, Phone call, App push or Postal mail — and set Form behaviour to test one box per channel, boxes start ticked, or required to submit.",
+    "Read Messages you are promising per year with the checkbox count, then press Copy copy for the labels, helper text and unsubscribe wording.",
+  ],
   intro:
     "The Marketing Consent Checkbox Copy Generator writes the checkbox labels, helper text and unsubscribe wording for a signup form, producing one unticked box per channel so consent stays specific as GDPR Art. 4(11) and Recital 32 require. It names the send frequency in the label, calculates how many messages a year that actually promises, and flags the three patterns that invalidate consent: pre-ticked boxes, bundled channels, and a marketing tick made mandatory contrary to Art. 7(4). Written for growth and product teams who need copy their legal reviewer will pass.",
   useCases: [

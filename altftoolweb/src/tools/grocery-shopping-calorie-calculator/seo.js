@@ -1,4 +1,10 @@
 const seo = {
+  title: "Grocery Shopping Calorie Calculator by MET Stage",
+  steps: [
+    "Enter Body weight with its kg or lb unit, pick a Walking pace to shop from strolling at 2.0 mph up to brisk at 3.5 mph, then give minutes for Walk to store, the shop aisles, walking home carrying the bags, the stairs and unpacking, plus Trips per week.",
+    "Each stage is priced at its own MET value — 2.3 browsing with a trolley, 5.0 walking home under load, 7.5 carrying shopping up the stairs, 2.5 putting it away — through kcal/min = MET × 3.5 × kg / 200.",
+    "The Trip calorie estimate panel reports trip minutes, gross and net kcal, average MET, weekly and yearly totals and a per-stage breakdown; Copy output copies the text and Reset restores the defaults.",
+  ],
   intro:
     "This calculator breaks a grocery trip into its four real activities — the walk to the shop, time in the aisles, the walk home under load and putting the shopping away — and prices each at its own published MET value using kcal/min = MET x 3.5 x kg / 200. Food shopping with or without a trolley is listed at 2.3 METs, walking while carrying about 7 kg is 5.0 METs, and carrying shopping upstairs is 7.5 METs, so the carrying stages dominate a trip that looks mostly sedentary. It also reports how many of those minutes reach the 3.0 MET moderate-intensity threshold.",
   useCases: [

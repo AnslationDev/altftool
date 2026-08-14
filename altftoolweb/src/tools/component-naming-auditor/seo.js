@@ -1,4 +1,7 @@
 const seo = {
+  title: "React Component Naming Auditor: PascalCase Check",
+  metaDescription:
+    "Paste file paths and React snippets to flag non-PascalCase components, kebab-case file names and duplicate declarations as you type.",
   intro:
     "The Component Naming Auditor scans pasted file paths and React snippets for three specific kinds of naming drift: declarations after function, const or class that are not PascalCase, file names whose basename contains a kebab-case hyphen, and the same component name declared more than once. It is aimed at reviewers and anyone tidying a codebase that grew through several hands, and it returns a count of files, a count of components and a labelled list of findings. It reads only the text you paste, so it is a convention check rather than a compiler or linter.",
   useCases: [

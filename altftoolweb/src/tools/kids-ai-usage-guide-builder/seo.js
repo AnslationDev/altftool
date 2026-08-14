@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids AI Rules Builder: A Family AI Use Agreement",
+  metaDescription:
+    "Turn an age and time allowance into a signable family agreement — 12 activities sorted into now, with an adult, or later, plus 8 house rules.",
+  steps: [
+    "Enter the Child's first name and Age (years), then press 'Use the suggested set-up for this age' to seed the daily minutes, supervision level and activity list for that band.",
+    "Tick items under 'What they may use AI for' — each shows the age it is usually fine from, 8 for explaining homework and 16 for chatting to the AI as a friend — then choose your House rules.",
+    "Read the Guardrail score out of 100 with Age band, Weekly AI time and Next review, then press Copy agreement to take the signable text.",
+  ],
   intro:
     "The Kids AI Usage Guide Builder turns an age, a time allowance and a set of house rules into a written family agreement covering which AI activities are allowed now, which need an adult present, and which wait a few years. Age thresholds follow COPPA (which covers children under 13 in the US), the GDPR Article 8 default digital-consent age of 16, and the 13+ minimum age stated in the consumer terms of the mainstream AI assistants. Parents and carers get a printable text they can edit, sign and revisit on a set review cycle.",
   useCases: [

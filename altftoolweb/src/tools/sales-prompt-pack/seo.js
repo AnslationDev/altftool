@@ -1,4 +1,10 @@
 const seo = {
+  title: "Sales Prompt Pack: 12 Fill-in-the-Blank AI Prompts",
+  steps: [
+    "Narrow the 12 prompts with Search prompts or the Category list — Prospecting, Outreach, Discovery, Follow-up, Objections, Closing — then pick a card.",
+    "Under Fill in the blanks type your account, buyer and deal details, or press Use example values; Clear fields empties every blank again.",
+    "Estimated prompt size shows the token count and how many blanks are filled; anything Still blank stays visible as a placeholder. Press Copy prompt.",
+  ],
   intro:
     "The Sales Prompt Pack is a library of 12 fill-in-the-blank AI prompts covering the full deal cycle: ideal customer profiles and trigger events, cold email and call openers, SPIN and MEDDIC discovery plans, tailored demo narratives, follow-up sequences, objection matrices, price pushback and a mutual action plan for closing. Each prompt carries hard constraints — under 125 words for a cold email, one ask per message, no 'just checking in', concede a genuine weakness rather than spinning it — so what comes back reads like a salesperson wrote it. Everything is assembled in your browser and copied into whichever assistant you use.",
   useCases: [

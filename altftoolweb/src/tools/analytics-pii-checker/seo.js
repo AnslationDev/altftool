@@ -1,4 +1,12 @@
 const seo = {
+  title: "Analytics PII Checker: Scan Event Payloads for Leaks",
+  metaDescription:
+    "Scans a pasted analytics payload for emails, phone numbers, IPv4 addresses, bearer tokens and keys like dob or user_id, showing masked examples only.",
+  steps: [
+    "Paste a JSON body or a captured request line into 'Analytics payload or request log', or press the 'JSON payload' example chip.",
+    "Keep 'Include masked examples in the report' ticked so each hit shows only its first two and last two characters.",
+    "Read the Type / Count / Masked example table for email, phone, IPv4, authorization token and sensitive-key hits, then Copy or Download analytics-pii-checker.txt.",
+  ],
   intro:
     "The Analytics PII Checker scans a pasted analytics payload or request log for five classes of personal data that commonly leak into event tracking: email addresses, phone numbers, IPv4 addresses, authorization tokens and API keys, and sensitive property names such as name, email, address, dob, aadhaar, pan, passport and user_id. It reports how many matches each detector found and shows a masked example — first two and last two characters only — so you can confirm the hit without copying the raw value anywhere. It is a pattern-matching first pass for engineers reviewing what their tag manager actually sends, not a compliance assessment.",
   useCases: [

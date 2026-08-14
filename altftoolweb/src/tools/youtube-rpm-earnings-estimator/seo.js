@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube RPM Earnings Estimator With CPM Cross-Check",
+  metaDescription:
+    "Views divided by 1,000 times RPM, run at conservative, expected and optimistic rates, with a CPM check using the 55% long-form or 45% Shorts share.",
+  steps: [
+    "Enter Monthly views and your Expected RPM (per 1,000 views), pick a Currency (INR, USD, GBP or EUR) and set the Period (months).",
+    "Set Conservative RPM and Optimistic RPM so the Scenario band recalculates all three cases side by side as you type.",
+    "Read Estimated monthly revenue with revenue over the chosen period, annualised revenue and revenue per single view, then use 'Cross-check from CPM' choosing 'Long-form watch page — creator keeps 55%' or 'Shorts creator pool — creator keeps 45%'; 'Copy result' copies the estimate.",
+  ],
   intro:
     "This estimator turns monthly views and RPM into expected YouTube revenue using YouTube's own definition: RPM is the revenue a creator keeps per 1,000 total views, so revenue equals views divided by 1,000 multiplied by RPM. It shows a conservative, expected and optimistic band side by side, and converts an advertiser-side CPM into the RPM it implies using the 55% long-form or 45% Shorts creator share. It is aimed at creators budgeting a channel, and at brands sizing a sponsorship against a channel's ad income.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "SCSS Calculator: Quarterly Payout, Interest and Maturity",
+  metaDescription:
+    "SCSS quarterly payout is deposit × rate ÷ 400. Get the payout schedule, total interest, 80C deduction and tax at your slab, up to the ₹30 lakh cap.",
+  steps: [
+    "Enter Deposit amount (INR) in multiples of ₹1,000 — the Max deposit chip fills the ₹30,00,000 cap — plus Interest rate (% per year) and Tenure (years); the 5 years and 8 years (with extension) chips set the term.",
+    "Pick Your income-tax slab (%) from 0, 5, 10, 15, 20 or 30 so the 80C and interest-tax lines are worked out at your rate.",
+    "Read Quarterly interest payout with Annual interest income, Total interest over the term, 80C deduction available on deposit and Net annual income after tax, plus the Quarterly payout schedule and Premature closure penalty tables, then press Copy result.",
+  ],
   intro:
     "This Senior Citizen Savings Scheme calculator turns an SCSS deposit into the numbers that actually matter: the quarterly interest credited to your bank account, the annual income it produces, the total interest over the five-year term, and the principal returned at maturity. SCSS pays simple interest quarterly rather than compounding it, so the tool also shows the 80C deduction on the deposit, the tax payable on the interest at your slab, and whether your interest crosses the senior-citizen TDS threshold. It is meant for retirees planning a predictable income stream from a lump sum such as gratuity, PF or a matured FD.",
   useCases: [

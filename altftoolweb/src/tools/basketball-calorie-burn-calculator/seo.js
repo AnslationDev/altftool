@@ -1,4 +1,12 @@
 const seo = {
+  title: "Basketball Calories Burned Calculator by Court Time",
+  metaDescription:
+    "Calories from body weight and court minutes via kcal/min = MET x 3.5 x kg / 200 — 8.0 game, 6.0 pick-up, 9.3 drills, 4.5 shooting, bench at 1.3.",
+  steps: [
+    "Enter your Body weight and set the unit to kg or lb, then pick 'What did you play?' — 'Full-court game (8 MET)', 'Half-court / pick-up, non-game (6 MET)', 'Drills and structured practice (9.3 MET)', 'Shooting baskets (4.5 MET)' or 'Wheelchair basketball (7.8 MET)'.",
+    "Type 'Minutes on court' or press the 'FIBA game (40 min)', 'NBA game (48 min)', 20 min, 60 min or 90 min chips, then enter 'Minutes on the bench', which is charged at the 1.3 MET standing rate instead of the playing rate.",
+    "Read 'Total calories burned' above Burned on court, Burned on the bench, 'Net of resting metabolism', Court burn rate, 'Per 10-minute quarter' and the MET value used, compare the 'Same court time, every style of play' table, then press 'Copy result'.",
+  ],
   intro:
     "The Basketball Calorie Burn Calculator estimates how many calories a game, pick-up run, practice or shooting session costs, from your body weight and minutes on the floor. It applies the MET equation kcal/min = MET x 3.5 x kg / 200 with published Compendium of Physical Activities values: 8.0 METs for a full-court game, 6.0 for non-game half-court play, 9.3 for structured drills, 4.5 for shooting baskets and 7.8 for wheelchair basketball. Bench time is priced separately at the 1.3 MET standing rate so a substitute's total is not inflated.",
   useCases: [

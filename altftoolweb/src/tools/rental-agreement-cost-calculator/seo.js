@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Agreement Cost: Stamp Duty, Registration, GST",
+  metaDescription:
+    "Totals stamp duty on your state's consideration formula, the registration fee, brokerage and 18% GST, then splits the bill between tenant and landlord.",
+  steps: [
+    "Choose a State stamp rule — Maharashtra (leave & licence), Delhi, Karnataka, Tamil Nadu, or 'Other state — enter my own rates' — then fill Monthly rent (INR), Agreement term (months), Refundable security deposit and Non-refundable deposit.",
+    "Tune Stamp duty rate (%), the registration fee (flat or percentage), Brokerage (months of rent) and Rent paid in advance (months), tick 'Register the agreement' and 'Agent charges GST on brokerage', and set 'Your share of stamp & registration (%)' and 'Your share of brokerage (%)'.",
+    "The 'Cash needed on signing day' headline and the stamp duty, registration, brokerage and 18% GST lines recompute as you type; Copy result copies the breakdown and Reset returns every field to the Maharashtra defaults.",
+  ],
   intro:
     "This calculator totals what a residential rent agreement costs to execute: stamp duty on the state's consideration formula, the sub-registrar's registration fee, brokerage, and 18% GST on the agent's commission. Maharashtra's Article 36A rule (0.25% of total rent plus non-refundable deposit plus 10% a year notional interest on the refundable deposit) and the percentage-of-rent rules used in Delhi, Karnataka and Tamil Nadu are built in, and every rate stays editable for other states. It also splits the bill by who pays what, so a tenant sees the cash actually needed on signing day.",
   useCases: [

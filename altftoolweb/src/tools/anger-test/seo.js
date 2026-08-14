@@ -1,4 +1,7 @@
 const seo = {
+  title: "Anger Test: 10 Scenarios Scored 10-50 With Your Band",
+  metaDescription:
+    "Answer 10 everyday situations, each scored 1 to 5, for a total of 10-50 that maps to one of five bands with matched immediate and long-term steps.",
   intro:
     "The Anger Test is a 10-question self-reflection quiz that puts you in ordinary provoking situations — being cut off in traffic, corrected by your boss in front of the team, a friend cancelling 30 minutes before — and scores each answer from 1 to 5 for a total between 10 and 50. That total places you in one of five bands (Minimal 10-15, Low 16-25, Moderate 26-35, Elevated 36-42, High 43-50), each with a named response style and matching immediate, long-term and lifestyle suggestions. It is an informational self-check for noticing patterns, not a diagnosis; a clinician is the only person who can assess anger clinically.",
   useCases: [

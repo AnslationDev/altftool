@@ -1,4 +1,12 @@
 const seo = {
+  title: "Battle Ropes Calorie Calculator: Rounds and Rest",
+  metaDescription:
+    "Cost a rope interval from rounds and work-to-rest seconds at 10 METs for waves and 2 METs for recovery, with a 6-15% EPOC range shown separately.",
+  steps: [
+    "Enter Body weight (kg), Rounds, Work per round (seconds) and Rest per round (seconds) for the interval you actually run.",
+    "Pick a Rope movement — Alternating waves, Double-arm waves and slams, Side-to-side snakes, Slams with a squat or Jump or burpee slams — and an Effort level.",
+    "Read Calories burned, Working intensity in METs and the Afterburn (EPOC) estimate, add a Calorie target for rounds needed, then press Copy result.",
+  ],
   intro:
     "This calculator estimates battle rope energy expenditure from the interval you actually run — rounds, seconds of work, seconds of rest — rather than a flat per-hour figure, because rope training is never continuous. Working intensity is anchored at 10 METs for standard double-arm waves, near the upper end of the roughly 8 to 11 MET range reported in published laboratory measurements of battling-rope bouts, then scaled by movement pattern and effort and converted with the ACSM equation kcal/min = METs x 3.5 x kg / 200. Recovery periods are costed at 2 METs and an EPOC range of 6 to 15 percent is reported separately.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Attendance Percentage Calculator for the 75% Rule",
+  metaDescription:
+    "Shows your current attendance, how many classes in a row you must attend to reach 75%, how many you can skip, and best/worst end-of-term projections.",
+  steps: [
+    "Enter Classes attended, Total classes held and your Required attendance (%) — or tap a 65% to 80% preset — plus the optional Classes left this term.",
+    "The result updates as you type: the current percentage shows green at or above target and red when short, and the 'What to do next' line states exactly how many classes to attend in a row or how many more you can miss.",
+    "With classes remaining entered, read the best case if you attend all of them, the worst case if you attend none, and 'Remaining classes you may still miss' — or 'Target no longer reachable' — then press Copy result.",
+  ],
   "intro": "Attendance Requirement Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
   "useCases": [
     "Find out how many lectures in a row you need to attend to get back above a 75% detention cut-off.",

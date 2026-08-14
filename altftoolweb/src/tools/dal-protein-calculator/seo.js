@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dal Protein Calculator: Protein Per Katori, 10 Dals",
+  metaDescription:
+    "Protein and calories per katori from the raw dal actually used — 15 g thin, 25 g everyday, 40 g thick — across 10 pulses, with tadka oil counted.",
+  steps: [
+    "Pick the pulse under 'Which dal?' — each option shows its protein per 100 g raw, from masoor at 25.1 g to kabuli chana at 17.1 g — or tick 'Mixed panchmel dal'.",
+    "Set 'Katoris eaten', choose Thin (15 g), Everyday (25 g) or Thick (40 g) under 'How thick is the dal?', then add 'Tadka oil or ghee in the pot (g)' and 'Your body weight (kg)'.",
+    "Read 'Protein in this serving' with energy per katori, fibre and the share of the 0.83 g/kg daily target, compare the per-katori table across all ten dals, then press 'Copy result'.",
+  ],
   intro:
     "This calculator works out the protein in a dal serving from the raw dal that actually goes into it, rather than from the cooked volume — because a thin pourable dal holds around 15 g of raw dal per katori while a thick dal holds closer to 40 g, and the protein differs by nearly three times. It covers ten pulses with their published composition per 100 g raw, from masoor at 25.1 g protein down to kabuli chana at 17.1 g, adds the tadka oil to the calorie total, and compares the result with a daily protein target of about 0.83 g per kg of body weight for a healthy adult.",
   useCases: [

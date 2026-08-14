@@ -1,4 +1,12 @@
 const seo = {
+  title: "British Airways Excess Baggage: Prepaid vs Airport",
+  metaDescription:
+    "Price extra, heavy (over 23 kg / 32 kg) and oversize bags per piece on a BA booking, compare prepaid against airport rates, and spot repacking savings.",
+  steps: [
+    "Pick your \"Cabin or fare\" — Euro Traveller / World Traveller 1 × 23 kg through First 3 × 32 kg — set \"Passengers on the booking\" and how many bags fall outside 90 × 75 × 43 cm, then weigh each case into its \"Bag N weight (kg)\" box, using \"Add bag\" for more.",
+    "Under \"Charges on your route\" choose the Currency and replace the placeholder figures with the amounts your own booking quotes: Extra bag, Heavy bag and Oversize bag, each prepaid and at the airport.",
+    "\"Cheapest total\" names the chargeable items, the \"Prepaid against airport\" table sets the two channels side by side, and the warnings flag bags over the 32 kg limit or weight you could shift between cases to drop a heavy-bag fee; \"Copy result\" copies the estimate.",
+  ],
   intro:
     "This estimator prices British Airways checked baggage the way the airline actually bills it — per bag, not per kilogram. It separates the three charges that can apply, each levied per piece: an extra bag beyond the number your fare includes, a heavy bag over its 23 kg ceiling in economy cabins or 32 kg in Club and First, and an oversize bag outside 90 × 75 × 43 cm. Each is priced both prepaid in Manage My Booking and paid at the airport desk, so the saving from booking ahead is a number rather than a guess.",
   useCases: [

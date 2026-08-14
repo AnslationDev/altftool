@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scholarship Checklist: NSP Income Limit & Documents",
+  metaDescription:
+    "Tests family income against each scheme's ceiling — ₹2.5L for SC/OBC post-matric, ₹4.5L Central Sector, ₹8L AICTE — then lists the documents it needs.",
+  steps: [
+    "Pick the Scheme — Central Sector Scheme for College and University Students, Post-Matric Scholarship for SC students, PM-YASASVI, NMMSS or AICTE Pragati / Saksham — plus Community on your certificate and Annual family income (INR).",
+    "Tick whichever of the four situations apply: a renewal rather than a fresh application, studying outside your home state, a disability component, or already drawing another scholarship.",
+    "Headroom under the income ceiling shows first with the verdict, then any blockers and the grouped document list — Aadhaar, a DBT-enabled bank account, the income certificate — tick what you hold and press Copy checklist.",
+  ],
   intro:
     "This checklist tests annual family income against the ceiling written into each scholarship scheme's guidelines, then lists the documents that particular scheme asks for on the National Scholarships Portal or a state portal. Ceilings differ sharply — ₹2.5 lakh for the SC and OBC post-matric schemes and PM-YASASVI, ₹3.5 lakh for the National Means-cum-Merit Scholarship, ₹4.5 lakh for the Central Sector Scheme, ₹8 lakh for AICTE Pragati and Saksham — so a student rejected under one scheme is often comfortably inside another.",
   useCases: [

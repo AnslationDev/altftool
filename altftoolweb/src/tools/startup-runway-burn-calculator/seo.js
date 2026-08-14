@@ -1,4 +1,12 @@
 const seo = {
+  title: "Startup Runway Calculator: Month-by-Month Net Burn",
+  metaDescription:
+    "Walks the cash balance month by month as revenue and costs compound, so you get runway, the break-even month, burn multiple and default alive or dead.",
+  steps: [
+    "Fill in Cash in the bank (INR), Monthly cash expenses / gross burn (INR) and Monthly revenue collected (INR).",
+    "Set Revenue growth (% a month), Expense growth (% a month) and Months to project, so both sides compound month by month.",
+    "Runway gives the months left and the cash-out date, with gross burn, net burn, the break-even month, the burn multiple and default alive or dead.",
+  ],
   intro:
     "Runway is the number of months a company can operate before its cash balance reaches zero, calculated as cash divided by net burn, where net burn is monthly cash expenses minus monthly cash revenue. This calculator walks the balance month by month so that revenue growth and cost growth both compound, which a single division cannot capture, and reports the break-even month, the burn multiple over the first twelve months and whether the company is default alive. Founders and finance leads use it to time a raise and to test whether a hiring plan still leaves enough cushion.",
   useCases: [

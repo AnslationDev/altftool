@@ -1,4 +1,12 @@
 const seo = {
+  title: "FIRE Number Calculator: Corpus, Date and Coast FIRE",
+  metaDescription:
+    "Annual expenses ÷ your withdrawal rate gives the target; a real return of (1+r)÷(1+i)−1 gives the date, the FIRE age and your Coast FIRE gap.",
+  steps: [
+    "Under Your numbers enter Annual expenses (today), then pick a Safe withdrawal rate preset — 4% rule, 3.5% or 3% — or type a Custom rate, and add Current invested corpus and Monthly investment.",
+    "Set Expected return and Inflation, which are combined into the real rate the whole projection runs on, then set Current age and Coast to age for the coasting check plus Annual take-home income for the savings-rate insight.",
+    "Read Your FIRE number at that rate with its multiple of annual expenses, then Time to FIRE, FIRE age, Still to build and Real return used, the Coast number with its Surplus or Shortfall, and press Copy summary.",
+  ],
   intro:
     "This calculator turns your annual spending into a financial-independence target — annual expenses divided by your safe withdrawal rate, so 4% means 25 times a year's expenses — and then projects how long your current corpus and monthly investing take to reach it. Growth is modelled in real terms: it converts your nominal return and inflation into a real rate with (1 + return) ÷ (1 + inflation) − 1, so every figure on the page stays in today's rupees. It also computes your Coast FIRE number — the smaller balance that would grow into the full target by your chosen retirement age with no further contributions — and tells you whether you have already passed it.",
   useCases: [

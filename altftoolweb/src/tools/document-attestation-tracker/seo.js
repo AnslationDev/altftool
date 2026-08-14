@@ -1,4 +1,7 @@
 const seo = {
+  title: "Document Attestation Tracker: Validity & Expiry Dates",
+  metaDescription:
+    "Add up to 20 documents with attestation date and validity in months; each gets an expiry date, a day count and a valid, expiring-soon or expired flag.",
   intro:
     "The Document Attestation Tracker records which documents have been attested, by which authority and on what date, then adds the validity period you set — six months by default — to give each one an expiry date and a live day count. It sorts every entry into pending, valid, expiring within 30 days, or expired, and surfaces the single most urgent item to deal with next. It is for anyone assembling an attested paperwork set for an embassy, employer or university, where one stale copy holds up the whole file.",
   useCases: [

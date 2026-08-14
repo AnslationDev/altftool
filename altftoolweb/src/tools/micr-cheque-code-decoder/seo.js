@@ -1,4 +1,12 @@
 const seo = {
+  title: "MICR Code Decoder: City, Bank & Branch from 9 Digits",
+  metaDescription:
+    "Paste a cheque's 9-digit MICR number and see the city (first 3), bank (middle 3) and branch (last 3) codes, with spaces stripped automatically.",
+  steps: [
+    "Paste the number from the cheque's MICR band into the \"9-digit MICR code\" field, or try the \"Mumbai example\" preset (400002001).",
+    "Leave the \"Normalize pasted code\" toggle on so spaces and non-digit characters are stripped before the exactly-9-digits check runs.",
+    "Read the \"City code\", \"Bank code\" and \"Branch code\" rows; anything else reports \"Invalid MICR structure\".",
+  ],
   intro:
     "The MICR Cheque Code Decoder splits the 9-digit MICR number printed along the bottom of an Indian cheque into its three standard parts: the first 3 digits are the city code, the next 3 the bank code and the last 3 the branch code. Paste the number with or without spaces and it normalises the input, checks that exactly 9 digits remain, and shows each field separately. It is for anyone filling a form, matching a cheque to a branch, or simply working out what the numbers under the signature line mean.",
   useCases: [

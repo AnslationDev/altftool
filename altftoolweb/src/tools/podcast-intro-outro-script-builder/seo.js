@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Intro and Outro Script Builder With Read Times",
+  metaDescription:
+    "Build a repeatable intro (hook, show ID, promise, sponsor) and outro, with word count and read time per section at 125, 145 or 165 wpm.",
+  steps: [
+    "Fill Show name, Host name, Episode topic, the Hook, One-line takeaway and Call to action, ticking This episode has a guest or Include a sponsor read.",
+    "Set Speaking rate (words per minute) directly, or tap Deliberate announcer read 125, Conversational host 145 or Brisk and energetic 165.",
+    "Every intro and outro section shows its word count and read time under the combined Intro plus outro read time; press Copy scripts.",
+  ],
   intro:
     "Podcast Intro Outro Script Builder assembles a repeatable opening and closing script from your show details and estimates how long each section takes to read, using the standard narration formula seconds = words ÷ words-per-minute × 60 plus a short pause allowance per section. It splits the intro into hook, show ID, host ID, guest ID, promise, optional sponsor read and transition, and the outro into recap, guest links, call to action, optional sponsor thanks and sign-off. Useful for hosts who want every episode to open the same way without rewriting it each time.",
   useCases: [

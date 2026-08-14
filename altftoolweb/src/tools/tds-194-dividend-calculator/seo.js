@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS on Dividend Under Section 194: 10% Calculator",
+  metaDescription:
+    "Work out Section 194 TDS on a resident's dividend: 10%, 20% without PAN, the ₹10,000 threshold from FY 2025-26, and Form 15G/15H checks.",
+  steps: [
+    "Enter \"Dividend for the year from this company (₹)\", the \"Financial year\", the \"Shareholder\" type and the \"Mode of payment\".",
+    "Tick \"Valid PAN on record with the company\", \"Form 15G / 15H filed with the company\" or \"Section 197 lower-deduction certificate held\", and set \"Shareholder age on 31 March\".",
+    "Read \"TDS to be deducted\" with the applied rate and the rule that decided it — declaration, threshold, certificate or the standard 10% — then press \"Copy result\".",
+  ],
   intro:
     "This calculator works out the TDS a domestic company must deduct on dividend paid to a resident shareholder under Section 194 of the Income-tax Act, 1961 — 10% of the dividend, or 20% under Section 206AA where no valid PAN is on record. It applies the proviso threshold that exempts an individual receiving up to ₹10,000 of dividend in a year by a non-cash mode (₹5,000 up to FY 2024-25, raised by the Finance Act 2025), and checks whether a Form 15G or 15H declaration under Section 197A would actually hold. It is for retail investors reading a dividend credit that came in short, and for company secretaries and accountants running the deduction.",
   useCases: [

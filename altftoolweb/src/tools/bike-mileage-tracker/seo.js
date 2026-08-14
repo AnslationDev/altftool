@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bike Mileage Tracker: Tank-to-Tank km/l and Cost/km",
+  metaDescription:
+    "Log brim-to-brim fill-ups for true distance-weighted km/l, cost per kilometre and a monthly fuel bill. Partial top-ups are carried forward, not dropped.",
+  steps: [
+    "Enter each fill-up oldest first with Odometer (km), Litres filled and Price (₹ per litre), ticking Filled to the brim.",
+    "Press Add a fill-up for up to 20 rows, then set Kilometres you ride in a month.",
+    "Read True average mileage in km/l with Cost per kilometre and the per-stretch table, then press Copy result.",
+  ],
   intro:
     "A bike mileage tracker measures real two-wheeler fuel economy by the tank-to-tank method: the distance between two brim-full fills, divided by every litre added in between. Partial top-ups are carried forward rather than discarded, so a mixed log stays accurate, and the overall figure is total distance over total litres — the distance-weighted average, not the arithmetic mean of the per-tank numbers that most spreadsheets report. It also turns the log into cost per kilometre and a projected monthly fuel bill.",
   useCases: [

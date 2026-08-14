@@ -1,4 +1,12 @@
 const seo = {
+  title: "First-Week Onboarding Doc Prompt Builder + Timetable",
+  metaDescription:
+    "A job title, seniority and access list become an AI prompt: the week's hours split across six sections in 15-minute blocks, plus 30/60/90-day checkpoints.",
+  steps: [
+    "Enter the Job title, then choose a Role family (Engineering through Operations / Finance / HR) and a Seniority from Junior / first role to Lead / Manager.",
+    "List the logins under \"Accounts, tools and access — one per line\", set Productive hours per day (1-12) and Onboarding days (1-10), and pick an Output format: Markdown runbook, Wiki page with collapsible sections or Pure checklist.",
+    "Read the Week timetable, which apportions the total across six sections in 15-minute blocks, then press Copy prompt — every link, person or policy you did not supply is written as TODO(fill).",
+  ],
   intro:
     "The Onboarding Doc Prompt Builder turns a job title, role family, seniority and access list into an AI prompt that produces a complete first-week onboarding document with an hour-by-hour timetable. It divides the week's available hours across six standard sections — access and tooling, team and mission, product primer, how the work gets done, a supervised first contribution, and rituals and feedback — using the largest-remainder method on quarter-hour blocks, so the allocations always add back to the exact total instead of drifting through rounding. It is built for hiring managers and people-ops teams who need the generated document to carry a real schedule, a named first deliverable and 30/60/90-day checkpoints rather than an open-ended reading list.",
   useCases: [

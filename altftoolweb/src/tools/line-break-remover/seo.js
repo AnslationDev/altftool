@@ -1,4 +1,7 @@
 const seo = {
+  title: "Line Break Remover: Join Lines into One Single Line",
+  metaDescription:
+    "Paste multi-line text and join it with a space, a comma, or nothing. Lines are trimmed, blank lines dropped, Windows and Unix endings both handled.",
   intro:
     "Line Break Remover collapses multi-line text into a single line by splitting on every newline (both \\n and Windows \\r\\n), trimming whitespace from each line, dropping empty lines, and rejoining what remains with a space, a comma-and-space, or nothing at all. It is for anyone holding a column of text that needs to become one string — a pasted list, a wrapped paragraph, a set of IDs. It also reports how many lines were joined and how long the result is, so you can check the count matches what you pasted.",
   useCases: [

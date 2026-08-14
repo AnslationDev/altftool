@@ -1,4 +1,12 @@
 const seo = {
+  title: "Personal Loan EMI Calculator with Fees, GST and APR",
+  metaDescription:
+    "EMI on a reducing-balance personal loan plus total interest, processing fee, 18% GST, the amount actually credited and effective annual cost.",
+  steps: [
+    "Enter Loan amount (INR), Interest rate (% per year) and Tenure (months).",
+    "Add the Processing fee (% of loan) and upfront insurance charges, and tick Add 18% GST on the processing fee.",
+    "Read Monthly EMI, Net amount credited to you, Effective annual cost of the loan and the year-by-year repayment table.",
+  ],
   intro:
     "This Personal Loan EMI Calculator works out your monthly instalment on a reducing-balance personal loan, the total interest across the tenure, and the amount that actually lands in your bank account after the processing fee and 18% GST are deducted. Because unsecured personal loans in India typically carry 10.5%–24% interest plus a 1%–3% processing fee, the headline rate rarely reflects the true cost. The tool also solves for the effective annual cost, so two offers with different fees can be compared honestly.",
   useCases: [

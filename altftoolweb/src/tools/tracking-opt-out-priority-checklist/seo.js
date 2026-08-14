@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ad Tracking Opt-Out Checklist, Ranked by Impact per Minute",
+  metaDescription:
+    "Tick your devices and accounts, set the minutes you have, and get opt-outs ordered by tracking removed per minute — flagging ones a cookie clear undoes.",
+  steps: [
+    "Tick the devices and accounts you use under 'What do you use?' — iPhone or iPad, Android, Google, Facebook or Instagram, Amazon, smart TV and more.",
+    "Set 'Minutes you have right now' (5 to 600) or tap a preset from 10 min to 120 min.",
+    "Work through the ranked plan, watch 'Tracking coverage after this sitting' rise, then click 'Copy plan'.",
+  ],
   intro:
     "Tracking Opt-Out Priority Checklist scores each available opt-out by how much tracking it actually removes divided by the minutes it takes, then fills the time you have with the highest-value ones first. It filters the list to the devices and accounts you genuinely use, flags which settings survive a cookie clear and which have to be redone, and calls out the opt-outs that no longer do anything. The result is an ordered list you can work through in one sitting rather than a wall of advice.",
   useCases: [

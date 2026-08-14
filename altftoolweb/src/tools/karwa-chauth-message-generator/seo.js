@@ -1,4 +1,12 @@
 const seo = {
+  title: "Karwa Chauth Wishes in Hindi, Punjabi & English",
+  metaDescription:
+    "Wishes and captions written separately for a wife, husband or friend, in Devanagari, Gurmukhi and English, plus the sargi-to-moonrise ritual order.",
+  steps: [
+    "Choose the Language (Hindi, Punjabi or English), What do you need (Wish message or Short caption) and Who is it for, and add a Recipient name if you want it woven in.",
+    "Set How many (1-8), tick Add hashtags for status captions, and press Shuffle wording to draw a different set of wordings.",
+    "Copy one message with its Copy button or everything with Copy all; the How the day runs table below lists the ritual order from sargi to breaking the fast.",
+  ],
   intro:
     "This generator writes Karwa Chauth wishes and short captions in Hindi, Punjabi and English, with separate wording for a wife, a husband and other family or friends. Karwa Chauth falls on Chaturthi of Krishna Paksha in the month of Kartik under the Purnimanta calendar — the fourth day after the full moon, usually about nine days before Diwali — and the fast runs from before sunrise until the moon is sighted. Alongside the messages, the page lays out the order of the day from sargi to breaking the fast.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fractal Generator: Mandelbrot, Julia, Koch, Barnsley",
+  metaDescription:
+    "Draw the Mandelbrot and Julia sets, Sierpinski triangle, Koch snowflake and Barnsley fern on a 480x360 canvas, with iteration depth 20 to 150.",
+  steps: [
+    "Choose one of the five buttons under Fractal Type — Mandelbrot Set, Julia Set, Sierpinski Triangle, Koch Snowflake or Barnsley Fern — and the card below names that fractal's formula, such as zₙ₊₁ = zₙ² + c.",
+    "Drag Iteration Depth anywhere between 20 and 150, pick Teal, Fire or Neon under Color Palette, and use Zoom In and Zoom Out to move the Zoom Depth readout between 0.5x and 100x.",
+    "The 480x360 canvas redraws immediately on every change, and its image label reports the fractal, zoom, palette and iteration depth; Reset in the header returns to the Mandelbrot Set at depth 60, 1x zoom and the Teal palette.",
+  ],
   intro:
     "The Fractal Generator draws five classic fractals in real time — the Mandelbrot set, a Julia set, the Sierpinski triangle, the Koch snowflake and the Barnsley fern — and shows the generating rule beside each one. It uses the method that actually defines each shape: escape-time iteration of z → z² + c for the Mandelbrot and Julia sets, the chaos game for Sierpinski, recursive middle-third replacement for Koch, and the four affine transformations of the Barnsley iterated function system. It is built for students and teachers who need to see how a single iteration depth changes the picture.",
   useCases: [

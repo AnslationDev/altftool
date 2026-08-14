@@ -1,4 +1,12 @@
 const seo = {
+  title: "80TTA vs 80TTB: Interest Deduction Calculator",
+  metaDescription:
+    "Compare Section 80TTA's Rs 10,000 savings-interest cap with 80TTB's Rs 50,000 senior-citizen limit and see the deduction, taxable balance and tax saved.",
+  steps: [
+    "Choose 'Below 60 (80TTA)' or 'Senior citizen 60+ (80TTB)', then enter your 'Savings account interest (Rs)' and 'Fixed / recurring deposit interest (Rs)'.",
+    "Add any 'Other interest — bonds, loans (Rs)' and pick 'Your income tax slab rate' from the 0% to 30% dropdown.",
+    "Read the 'Deduction you can claim' figure with side-by-side Section 80TTA and Section 80TTB cards marked 'Applies to you', then use 'Copy result'.",
+  ],
   "intro": "80TTA vs 80TTB Interest Deduction compares the two competing deductions on interest income under the old tax regime. Section 80TTA allows up to Rs 10,000 of savings-account interest for taxpayers below 60, while Section 80TTB allows resident senior citizens up to Rs 50,000 covering savings, fixed and recurring deposit interest. Enter your interest split and the calculator shows which section applies, the deduction allowed, the interest that stays taxable, and the tax saved at your slab rate.",
   "useCases": [
     "A 62-year-old with Rs 60,000 of FD interest checking how much of it Section 80TTB shelters.",

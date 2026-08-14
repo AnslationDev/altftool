@@ -1,4 +1,12 @@
 const seo = {
+  title: "Star Life Cycle Explorer: 0.1 to 40 Solar Masses",
+  metaDescription:
+    "Set initial mass from 0.1 to 40 solar masses; the track branches at 8. Six stages with temperature, radius, luminosity, lifetime and fusion process.",
+  steps: [
+    "Drag the Initial Solar Mass slider between 0.1 and 40, and the Evolutionary Branch label flips at 8 solar masses.",
+    "Step through the Evolutionary Stage buttons, from Stellar Nebula and Protostar to White Dwarf or Neutron Star / Black Hole.",
+    "Read Surface Temp, Radius, Luminosity and Lifetime for that stage, plus the Core Fusion Stage caption on the canvas.",
+  ],
   intro:
     "The Star Life Cycle Explorer is an interactive stellar evolution model: set a star's initial mass anywhere from 0.1 to 40 solar masses and it follows the corresponding six-stage evolutionary track, with 8 solar masses as the branch point between the low-mass path and the high-mass path. Each stage shows surface temperature, radius, luminosity, the fusion process running at that point and how long it lasts, drawn live on a canvas so a red giant at 100 R☉ and a white dwarf at 0.01 R☉ are visibly different objects. It is written for students and teachers covering stellar evolution, hydrostatic equilibrium and nucleosynthesis.",
   useCases: [

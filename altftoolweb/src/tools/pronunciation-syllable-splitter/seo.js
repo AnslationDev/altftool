@@ -1,4 +1,12 @@
 const seo = {
+  title: "Syllable Splitter with Stress Marks: in-for-MA-tion",
+  metaDescription:
+    "Splits an English word by phonics rules — VC-CV, V-CV, silent final e, C+le — and capitalises the stressed syllable, naming the suffix rule that fired.",
+  steps: [
+    "Type a word into Word to split and set Part of speech, which decides stress on two-syllable pairs like a REC-ord versus to re-CORD.",
+    "For a whole vocabulary set, paste into Split a list: words separated by spaces, commas or new lines.",
+    "Read the stressed syllable in capitals, the dot-and-mark form, the syllable count and the Rule applied, labelled rule-based or estimate.",
+  ],
   intro:
     "This tool breaks an English word into syllables and marks which one carries the primary stress, so a long word like in-for-MA-tion can be said in the right rhythm. Splitting follows the standard phonics rules — one vowel nucleus per syllable, a silent final e joins the syllable before it, VC-CV splits between two consonants while V-CV splits before one, and a final consonant plus le is its own syllable. Stress comes from the suffix rules taught in pronunciation courses, and every word is labelled as rule-based or an estimate so you know when to check a dictionary.",
   useCases: [

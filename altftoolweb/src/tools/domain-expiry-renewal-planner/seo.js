@@ -1,4 +1,12 @@
 const seo = {
+  title: "Domain Expiry Planner: Grace, Redemption & Drop Dates",
+  metaDescription:
+    "Turn one expiry date into a dated gTLD timeline: registrar grace, 30-day redemption, 5-day pending delete, drop date, ERRP reminders and transfer locks.",
+  steps: [
+    "Enter the domain, its \"Registry expiry date\", the registrar renewal grace days and your renewal and redemption fees.",
+    "Tick which safeguards are already true — auto-renew, the clientTransferProhibited lock, a monitored registrant email and two-factor on the account.",
+    "Read the days-until-drop figure, lifecycle timeline and risk score out of 100, then click \"Copy plan\" for a dated action list.",
+  ],
   intro:
     "Domain Expiry and Renewal Planner turns one expiry date into the full gTLD lifecycle: the registrar's renewal grace, the 30-day redemption grace period, the 5-day pending delete window, and the day the name drops to the public. It also dates the ERRP reminder emails your registrar is required to send, the 60-day inter-registrar transfer lock, and the last safe date to start a transfer. Built for anyone responsible for a domain that a business, its email or its certificates depend on.",
   useCases: [

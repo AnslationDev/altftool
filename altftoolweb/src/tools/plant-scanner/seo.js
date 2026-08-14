@@ -1,4 +1,12 @@
 const seo = {
+  title: "Plant Identifier From Photo – Top 3 Species + Taxonomy",
+  metaDescription:
+    "Upload a plant photo up to 4 MB and get the three likeliest species with match probability, family, genus, order and a Wikipedia link for each.",
+  steps: [
+    "Press Choose Image — or Take Photo on a phone — and select a plant picture up to 4 MB; larger or non-image files are rejected before anything is sent.",
+    "Hit Identify Plant to submit the photo; pictures that do not contain a plant are refused rather than force-matched.",
+    "Compare the three ranked results by % Match with Family, Genus and Order for each, and follow 'Learn More on Wikipedia' to verify the identification.",
+  ],
   intro:
     "Plant Scanner identifies a plant from a single photo and returns the three most likely species, each with a match probability and its botanical family, genus and order. Upload an image up to 4 MB or shoot one straight from a phone camera; the scanner first checks whether the picture contains a plant at all, then ranks the candidates and links each one to its Wikipedia entry. It suits gardeners, hikers and new plant owners who have a specimen in front of them and no name for it.",
   useCases: [

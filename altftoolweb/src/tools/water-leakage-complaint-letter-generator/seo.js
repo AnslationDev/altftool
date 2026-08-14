@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Leakage Complaint Letter to Housing Society",
+  metaDescription:
+    "Draft a seepage complaint that names the liable party under Model Bye-law 160 or 161, with a dated repair deadline and escalation matched to the stage.",
+  steps: [
+    "Pick \"Where the water comes from\" — terrace or roof slab, the bathroom of the flat above, a common drainage stack, the overhead tank — and the \"Stage of the complaint\".",
+    "Set \"Date of the letter\", \"Days allowed for the repair\" and \"Days the leak has been visible\", then tick the damage seen, such as damp patches, mould or water near wiring.",
+    "The letter puts liability on the society under Bye-law 160 or on the flat above under Bye-law 161 and states a dated compliance deadline; press \"Copy letter\".",
+  ],
   intro:
     "This generator drafts a water leakage or seepage complaint and, from the source of the leak, works out who is liable to repair it under the Model Bye-laws for Co-operative Housing Societies — Bye-law No. 160 for society property such as the terrace, external walls and common lines, and Bye-law No. 161 for plumbing and waterproofing inside a member's own flat. It produces a dated letter with a repair deadline, the damage described, and the escalation route that matches how far the complaint has already gone. Written for flat owners and tenants who need a record that stands up if the matter later reaches the Registrar or a consumer commission.",
   useCases: [

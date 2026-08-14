@@ -1,4 +1,12 @@
 const seo = {
+  title: "Google Inactive Account Manager Timeline Planner",
+  metaDescription:
+    "Turns a 3, 6, 12 or 18-month inactivity period into real warning, trigger and download-deadline dates, and checks the setup steps people miss.",
+  steps: [
+    "Set Assume last account activity on, pick 3, 6, 12 or 18 months under Inactivity period, enter Trusted contacts (0 to 10), and tick Delete the account afterwards if deletion is part of your plan.",
+    "The Data download deadline recalculates from those inputs, with Google warns you (email and SMS), Account treated as inactive, Trusted contacts notified, Download link stops working and Margin before Google's own 2-year policy listed beneath it.",
+    "Work down Setup progress and its Essential, Recommended and Optional checklist items, then press Copy plan to save the dates and outstanding steps, or Reset to start again.",
+  ],
   intro:
     "Google's Inactive Account Manager lets you decide in advance what happens to a Google Account that stops being used: it waits 3, 6, 12 or 18 months of inactivity, warns you by email and SMS one month before the period ends, then notifies up to 10 trusted contacts and gives them 3 months to download the data you chose for them. This builder turns those intervals into real dates from an assumed last-activity date, and checks off the setup steps that people usually miss — recovery details, per-contact data selection and telling the contacts they have been named.",
   useCases: [

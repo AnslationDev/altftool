@@ -1,4 +1,12 @@
 const seo = {
+  title: "Discord Banner Size Guide: 960 x 540 Banner Spec",
+  metaDescription:
+    "Get a Discord banner spec: a 960 x 540 px canvas at 16:9 with an 80 px edge safe zone, plus a layout brief for headline, brand and design notes.",
+  steps: [
+    "Choose Server banner, Profile banner or Event cover in the Banner type dropdown.",
+    "Fill in Headline/text, Server/brand name and Design notes, for example “Keep logo readable on mobile”.",
+    "Read the Discord banner spec panel — 960 × 540 px canvas, 16:9 aspect ratio, 80 px edge padding — then press Copy output.",
+  ],
   intro:
     "This tool resizes an image to Discord's exact asset dimensions — 960×540 server banner, 1920×1080 invite splash, 512×512 server icon and avatar, 600×240 profile banner, 800×320 event cover, 128×128 emoji and 320×320 sticker — and tells you before you export whether it will fit, crop, or go soft. It shows the crop percentage or letterbox bars for each fit mode, checks the exported file against Discord's 256 KB emoji and 512 KB sticker ceilings, and marks any enlargement past 125% as visibly soft. For circular assets it also draws the safe square, which is the diameter divided by √2.",
   useCases: [

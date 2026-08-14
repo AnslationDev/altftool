@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Lighting Calculator: Lumens, Lux & Layout",
+  metaDescription:
+    "Size study lighting by the lumen method: room index K, utilisation and maintenance factors, luminaire count, spacing grid and a 500 lux desk target.",
+  steps: [
+    "Switch between Feet and Metres, then give Room length, Room width, Height of the fittings above the floor and Task area on the desk (sqm).",
+    "Choose an illuminance target, 300 lx general or 500 lx for reading and writing, then Output of one luminaire (lm), Wattage, dust level and finish.",
+    "Read Ceiling luminaires needed alongside Room index K, utilisation factor, Illuminance delivered, Ceiling grid and Spacing between fittings.",
+  ],
   intro:
     "This calculator sizes study-room lighting with the lumen method: installed lumens = (target lux x floor area) / (utilisation factor x maintenance factor), where the utilisation factor is read against the room index K = (L x W) / (Hm x (L + W)) and Hm is measured from the 0.75 m desk plane, not the floor. It applies the maintained illuminance targets used in EN 12464-1 and IS 3646 Part 1 — 300 lux for general room lighting, 500 lux for reading and writing, 750 lux for drafting. Useful when you are wiring a child's study, converting a bedroom corner into a work desk, or checking whether one ceiling light is genuinely enough.",
   useCases: [

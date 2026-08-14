@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monitor PPI Calculator: Pixel Pitch & Retina Distance",
+  metaDescription:
+    "Work out PPI from resolution and screen diagonal, then get pixel pitch in mm, retina distance and pixels per degree at the distance you sit.",
+  steps: [
+    "Fill Diagonal size (inches), Width pixels and Height pixels, or tap a Quick Presets tile such as 27in QHD or 49in DQHD.",
+    "Choose a Viewing mode - Desk work, Design / code, Gaming or Laptop close - and set Viewing distance (inches).",
+    "Read PPI Result for pixel density, pixel pitch in mm, retina distance and pixels per degree, then Copy the summary or export monitor-ppi-calculator.csv.",
+  ],
   intro:
     "The Monitor PPI Calculator works out a display's pixel density from its native resolution and diagonal size using PPI = √(width² + height²) ÷ diagonal inches, then converts that into pixel pitch, retina distance and pixels per degree at your actual viewing distance. It is for anyone comparing two monitors on a spec sheet who needs to know which one will render text more sharply at the distance they really sit. Eight presets cover common panels from a 24-inch 1080p screen to a 49-inch super ultrawide, and the result is graded against a target density for desk work, design, gaming or close laptop use.",
   useCases: [

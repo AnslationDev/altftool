@@ -1,4 +1,7 @@
 const seo = {
+  title: "Life Productivity Score: 7 Weighted Pillars out of 100",
+  metaDescription:
+    "Score one logged day out of 100 across sleep (25), focused work (20), activity (15), tasks (15), screen time (10), learning (8) and social (7).",
   intro:
     "The Life Productivity Score turns one logged day into a single 100-point number built from seven weighted pillars: sleep (25 points), focused work (20), physical activity (15), task completion (15), discretionary screen time (10), learning (8) and social contact (7). Each target is a published guideline — the National Sleep Foundation's 7–9 hour adult range and the WHO's 150 minutes of moderate activity a week, for example — and the tool shows exactly how many points each pillar earned so the number is auditable rather than mysterious. It is for anyone who wants a repeatable weekly measure instead of a vague sense that the week went badly.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reverse GST Calculator: Remove GST From a Total",
+  metaDescription:
+    "Divides a tax-inclusive amount by (1 + rate/100) to give the taxable value, split as CGST + SGST or IGST, with cess and the section 170 rounding.",
+  steps: [
+    "Enter the Tax-inclusive amount (INR), set the GST rate (%) or tap one of the 5%, 12%, 18% and 28% slab chips, and add a Compensation cess (%), if any.",
+    "Choose Place of supply — Within the same state — CGST + SGST, or Across states — IGST — and Taxable value inside the bill recalculates as you type, dividing by 1 plus the rate.",
+    "Read the CGST and SGST / UTGST rows at half the rate, Total tax, GST rounded to the nearest rupee (s.170) and Tax as a share of the bill, then press Copy result or Reset.",
+  ],
   intro:
     "A reverse GST calculator recovers the taxable value hidden inside a tax-inclusive price by dividing the gross amount by (1 + rate ÷ 100), then reports the tax as CGST plus SGST for a supply within one state or as IGST for an inter-state supply. It follows section 15 of the CGST Act, 2017, under which GST is charged on the transaction value, and section 170, under which the tax payable is rounded to the nearest rupee. Handy for retailers quoting all-in prices, freelancers converting an agreed fee into an invoice, and anyone checking a restaurant or hotel bill.",
   useCases: [

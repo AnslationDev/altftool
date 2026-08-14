@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smart Lock Security Checklist and Code-Guess Timer",
+  metaDescription:
+    "Sixteen weighted controls across app account, keypad codes, door hardware and offline fallback, plus how long a code survives guessing under your lockout.",
+  steps: [
+    "Tick the controls you already have in the App account, Codes and keys, Physical security and Offline fallback groups, where Critical items carry the most weight.",
+    "Under \"How long your keypad code survives guessing\" set Code length (digits), Seconds to key one attempt and a Lockout preset such as \"5 wrong tries, then 60 seconds\", and tick the predictable-code box if it is a date, birth year, repeat or keypad run.",
+    "Read the Lock security score out of 100 with its band, the \"Controls completed\" count and \"Average time to guess the code\", then press Copy result.",
+  ],
   intro:
     "This checklist audits a smart lock across sixteen weighted controls — app account protection, keypad and guest codes, door hardware and the offline fallback — and estimates how long a keypad code survives guessing using a 10^n search with your lock's actual lockout rule. Controls that let someone else open the door, or leave you locked out, carry the most weight, and any missing critical control caps the score. It is written for anyone fitting a retrofit or replacement lock at a front door, a rental or a holiday let.",
   useCases: [

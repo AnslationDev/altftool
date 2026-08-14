@@ -1,4 +1,12 @@
 const seo = {
+  title: "FX Rate Alerter — ECB Reference Rate, Any Pair",
+  metaDescription:
+    "Type USD/INR or any pair for the ECB reference rate via Frankfurter, with the rate date attached. A benchmark, not a dealable quote.",
+  steps: [
+    "Type the currency pair into the Lookup box — it opens on USD/INR, and USD INR or USD-INR are parsed the same way.",
+    "Press Get current result to fetch the European Central Bank reference rate from the Frankfurter API for that pair.",
+    "The Current result panel shows '1 USD = … INR' with an Updated timestamp and rows for Base, Quote, Rate date and Rate, plus the note that this is a reference rate, not a tradable quote — banks and payment providers add spreads and fees.",
+  ],
   intro:
     "FX Rate Alerter looks up the current reference exchange rate for any currency pair you type — for example USD/INR or EUR/GBP — using the Frankfurter API, which serves the European Central Bank's published foreign-exchange reference rates. Each check returns the rate, the base and quote codes, and the rate date the ECB stamped it with, so you can see how fresh the number is before acting on it. These are reference rates rather than dealable quotes: banks, card networks and remittance services add their own spread on top.",
   useCases: [

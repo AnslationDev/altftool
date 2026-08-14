@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salary In-Hand Calculator: CTC to Take-Home FY 2025-26",
+  metaDescription:
+    "Turn CTC into monthly in-hand under the new regime: 12% EPF on basic, professional tax, the ₹75,000 standard deduction, 87A rebate and marginal relief.",
+  steps: [
+    "Enter Annual CTC (₹), drag the ₹3L–₹1Cr slider, or tap a 6 LPA, 12 LPA, 18 LPA or 30 LPA preset, then set Basic salary as a percentage of CTC anywhere from 20% to 60%.",
+    "Switch the toggles Employer PF included in CTC, Cap PF at statutory ₹1,800/mo and Metro city, and set Professional tax (₹ per month).",
+    "Read Monthly in-hand and Annual in-hand with the share of CTC you take home, the effective tax rate and the Where your CTC goes bar, then press Copy breakdown for the Full breakdown table.",
+  ],
   intro:
     "The Salary In-Hand Calculator converts an annual CTC into monthly take-home pay under India's new tax regime for FY 2025-26, deducting employee EPF at 12% of basic, professional tax, and slab tax after the ₹75,000 standard deduction with the Section 87A rebate, marginal relief and 4% cess applied. You set the basic as a percentage of CTC, choose metro or non-metro HRA, and decide whether the employer's PF contribution sits inside the CTC figure — the three assumptions that make two offers of the same CTC pay differently. It is for anyone comparing an offer letter against what will actually land in the bank each month.",
   useCases: [

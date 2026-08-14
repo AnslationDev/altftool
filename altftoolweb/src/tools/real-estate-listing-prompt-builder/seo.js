@@ -1,4 +1,12 @@
 const seo = {
+  title: "Property Listing Prompt Builder: Carpet Area Rate",
+  metaDescription:
+    "Turns flat facts into an AI listing prompt carrying the carpet-area rate, loading factor, sq m conversion and the RERA section 2(k) and 11(2) rules.",
+  steps: [
+    "Choose the Listing type and where it will be published, then fill Locality, Carpet area (sq ft), Built-up area (sq ft, 0 if unknown) and the asking price.",
+    "Add 'Owner notes and amenities (facts only)' and tick 'This is a RERA-registered project ad' to carry the RERA registration number into the prompt.",
+    "The carpet-area rate and loading factor appear above a ready prompt that forbids invented amenities, distances, approvals and discriminatory preferences.",
+  ],
   intro:
     "Real Estate Listing Prompt Builder converts property facts into a listing prompt that already contains the numbers and the advertising rules, so the generated copy cannot drift from what you can substantiate. It computes the carpet-area rate, the loading factor between built-up and carpet area, and the carpet area in square metres using the exact conversion of 0.09290304 square metres per square foot, and it writes in the requirement to lead with carpet area as defined in section 2(k) of the Real Estate (Regulation and Development) Act 2016.",
   useCases: [

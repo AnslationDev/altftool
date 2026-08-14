@@ -1,4 +1,12 @@
 const seo = {
+  title: "Portfolio Allocation Visualizer: Weights & Risk",
+  metaDescription:
+    "Enter each holding's amount, class, risk and expected return to get value-weighted return, an HHI diversification score and 45% concentration alerts.",
+  steps: [
+    "Hit Add Asset and fill Asset Name, Asset Category, Amount Invested ($), Expected Annual Return (%) and a Low, Medium or High Risk Level.",
+    "Repeat for every position you hold, or hit Load Sample to start from a filled example portfolio.",
+    "Read the Total Portfolio, Expected Return, Risk Profile and Diversification cards with their concentration flags, then hit Export CSV.",
+  ],
   intro:
     "The Portfolio Allocation Visualizer takes a list of holdings you enter — amount, asset class, risk level and expected return — and turns it into four value-weighted figures: total value, weighted average expected return, a risk score on a Low=1 / Medium=2 / High=3 scale, and a diversification score derived from the Herfindahl-Hirschman Index of your category weights. Charts break the portfolio down by class and by risk, and a rules panel flags concentration above 45% in any one class. It is a self-entered planning view for investors who want to see their weights, not a live price tracker. Nothing here is investment advice.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "camelCase Converter: Also PascalCase and CONSTANT_CASE",
+  metaDescription:
+    "Splits your phrase at spaces and punctuation, then returns camelCase, PascalCase and CONSTANT_CASE from the same word split.",
   intro:
     "A camel case converter turns an ordinary phrase into a valid identifier: it splits your text on every run of non-alphanumeric characters, lowercases the first word, capitalises the first letter of each word after it, and joins them with no separator — so \"my variable name here\" becomes \"myVariableNameHere\". The same split also produces PascalCase and CONSTANT_CASE in one pass, which are the two other conventions you usually need alongside it. Useful whenever you are naming a variable, JSON key, class or environment constant and want all three forms without retyping.",
   useCases: [

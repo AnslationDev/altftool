@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marriage Registration Documents Checklist for India",
+  metaDescription:
+    "Builds the proofs, photos and witness list for your Act, checks both ages against 21 and 18, and dates the 30-day Special Marriage Act notice window.",
+  steps: [
+    "Under Your situation set Registering under — Hindu Marriage Act, 1955, Special Marriage Act, 1954, Indian Christian Marriage Act, 1872, Parsi Marriage and Divorce Act, 1936 or Nikahnama with state registration rules — then each side's nationality (Indian citizen, OCI or PIO card holder, Foreign national) and whether they were Never married, Divorced or Widowed.",
+    "Enter Groom's date of birth, Bride's date of birth and Date of the marriage; for a civil marriage add Date the notice is given, and tick \"The ceremony took place outside India\" or \"Applying under a same-day / tatkal scheme\" where they apply.",
+    "You get a Documents to gather count with the number of witnesses who must attend in person, an Age eligibility panel measuring both parties against the minimums of 21 and 18 on the wedding date, a Special Marriage Act timeline (notice date, objection end, earliest and last solemnisation dates) and tickable document groups. Copy checklist copies the lot.",
+  ],
   intro:
     "The Marriage Registration Document Checklist assembles the exact proofs, photographs, affidavits and witnesses a registrar in India asks for, based on which Act you register under and the circumstances of the couple. It applies the statutory minimum ages — 21 for the groom and 18 for the bride under section 5(iii) of the Hindu Marriage Act, 1955 and section 4(c) of the Special Marriage Act, 1954 — and for a civil marriage it dates the 30-day objection window under section 7 and the three-month deadline in section 14 of the Special Marriage Act.",
   useCases: [

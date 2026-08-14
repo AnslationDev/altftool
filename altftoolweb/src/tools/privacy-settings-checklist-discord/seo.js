@@ -1,4 +1,12 @@
 const seo = {
+  title: "Discord Privacy Checklist: 26 Settings, Risk-Scored",
+  metaDescription:
+    "Scores 26 Discord privacy and security controls by weight — including the per-server DM override the global toggle never touches.",
+  steps: [
+    "Pick a risk profile under 'Who are you locking this down for?' and set a 'Target score (%)'.",
+    "Tick every control you have already applied across the five groups — Who can find you, Who can message you, What you broadcast, Data and personalisation, Account security — or press 'Mark all applied'.",
+    "Read the 'Protection score' percentage with 'Remaining exposure by area' and 'Shortest route to your target', which lists the next settings and their weights, then press 'Copy result'.",
+  ],
   "intro": "This checklist scores a Discord account against 26 real privacy and security controls — the safe direct-messaging filter, per-server DM overrides, friend-request sources, phone and email discovery, activity status, connections, authorised apps and two-factor authentication — weighting each by how much exposure it actually closes. It gives particular weight to the two settings Discord users most often get wrong: the DM default only applies to servers you join afterwards, and every server you already joined keeps its own override. Five risk profiles re-score the same list, and five controls are marked critical and cap the score at 69% while any of them is still open.",
   "useCases": [
     "Lock down a teenager's account so members of large public servers cannot DM or friend-request them.",

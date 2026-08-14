@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cooper Test VO2 Max Calculator (12-Minute Run)",
+  metaDescription:
+    "Turn a 12-minute run distance into VO2 max using Cooper's (metres - 504.9) / 44.73, with pace, METs, 400 m laps and your rating band for age and sex.",
+  steps: [
+    "Enter 'Distance covered in 12 minutes' and set Unit to metres, kilometres or miles, or tap one of the 1600 m, 2000 m, 2400 m and 2800 m shortcut buttons.",
+    "Set 'Age (years)' between 13 and 100 and 'Sex (for the rating table)' so the distance is scored against Cooper's published band for your group.",
+    "Read Estimated VO2 max in ml/kg/min alongside 'Laps of a 400 m track', Average speed, Pace, aerobic capacity in METs and your Cooper rating, with your band highlighted in the table; 'Copy result' copies the figures.",
+  ],
   intro:
     "The Cooper Test VO2 Max Calculator converts the distance you cover in a 12-minute run into an estimated maximal oxygen uptake using Kenneth Cooper's 1968 regression: VO2 max in ml/kg/min equals the distance in metres minus 504.9, divided by 44.73. Alongside the estimate it reports average speed, pace per kilometre, aerobic capacity in METs, and where the distance falls in Cooper's published rating bands for your age and sex. All you need is a flat measured course, a stopwatch and 12 minutes of honest effort.",
   useCases: [

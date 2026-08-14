@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dad Joke Machine – 30 Clean Puns With Hidden Punchlines",
+  metaDescription:
+    "Draw a random clean dad joke from a 30-pun library, keep the punchline hidden behind Reveal, and save up to 20 favourites with one-tap copy.",
+  steps: [
+    "Press 'Tell Me a Dad Joke' to draw a random one-liner from the 30-joke library — the same joke never repeats back-to-back.",
+    "Read the setup aloud, then hit Reveal to show the hidden punchline on question-format jokes.",
+    "Tap the heart to keep up to 20 favourites for this visit, or the copy button to put the joke on your clipboard.",
+  ],
   intro:
     "The Dad Joke Machine serves a random one-liner from a hand-picked library of 30 clean pun jokes, and — this is the part that matters — it hides the punchline behind a Reveal button so you get to ask the question out loud first. Tap for a new joke, keep the ones that land with a heart, and copy any of them to the clipboard. It is for the parent stalling at the dinner table, the teacher filling the last two minutes of class, and anyone who needs an icebreaker that offends nobody.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prose to Bullets: Set a Real Compression Target",
+  metaDescription:
+    "Measure words, sentences and Flesch score, then turn a compression % into a bullet count and words per bullet, plus a prompt that keeps every number.",
+  steps: [
+    "Paste your paragraphs into the Your prose box; word count, sentence count, Flesch Reading Ease and Flesch-Kincaid grade are measured in your browser as you type.",
+    "Choose a Bullet style (Noun phrases, Verb first, Claim then number or Question and answer) and an Ordering, then set 'Compress to (% of original)' from 5 to 90 and 'Words per bullet' from 3 to 40, plus the Audience and 'Must survive verbatim' fields.",
+    "Check the 'Bullets to aim for' figure and the Target list length row, then press Copy prompt to take the text shown under Your prompt, or Reset to restore the sample paragraph.",
+  ],
   intro:
     "Prose to Bullet Prompt measures the text you paste — words, sentences, paragraphs, Flesch Reading Ease and Flesch-Kincaid grade level, all computed from their published formulas — then turns a compression percentage into a concrete bullet budget: target word count, number of bullets and words per bullet. The prompt it produces tells the model exactly how many bullets to write, in which style, and forbids dropping any fact, number or date from the source. For anyone converting a dense document into something a reader will actually scan.",
   useCases: [

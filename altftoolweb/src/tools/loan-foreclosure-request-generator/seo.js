@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Foreclosure Amount Calculator + Request Letter",
+  metaDescription:
+    "Principal, accrued interest, foreclosure fee and 18% GST in one total, with the RBI floating-rate exemption applied and a request letter drafted.",
+  steps: [
+    "Fill The loan today: Principal outstanding (INR), Interest rate (% per year), Instalments still to run and Days since the last instalment — leave Your EMI blank to compute it.",
+    "Set Rate type and Borrower so the RBI floating-rate exemption test runs, then adjust Foreclosure charge (% of principal) and Other charges (INR).",
+    "Read Total to pay on foreclosure with the Net saving by foreclosing now and Closing cost equals this many EMIs rows, then press Copy letter to take the drafted foreclosure request.",
+  ],
   intro:
     "The Loan Foreclosure Request Generator estimates what pre-closing a loan actually costs — principal outstanding, simple interest accrued since the last instalment on a 365-day year, the foreclosure fee as a percentage of principal and 18% GST on that fee — and compares it against the interest you would still pay if the loan ran to term. It also applies the RBI direction that bars foreclosure and pre-payment charges on floating rate term loans sanctioned to individual borrowers for non-business purposes, and drafts the letter asking the lender for a formal foreclosure statement.",
   useCases: [

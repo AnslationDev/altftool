@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monitor Gamma Test Pattern — Measure Without a Colorimeter",
+  metaDescription:
+    "Match a solid grey to a one-pixel dither to measure your display's actual gamma, plus a step wedge, bit-depth banding ramp and clipping patches.",
+  steps: [
+    "Open the page at 100% browser zoom on the display's native resolution so the one-pixel black and white dither renders unscaled.",
+    "Step back and drag the 'Matching patch value (0-255)' slider until the solid grey half stops standing out from the striped block.",
+    "Read the estimated display gamma and its offset from sRGB and gamma 2.2, then check the step wedge, the 4/6/8/10-bit banding ramp and the near-black and near-white clipping patches.",
+  ],
   intro:
     "This test pattern measures a display's gamma by exploiting the fact that a one-pixel black and white dither emits exactly 50% of the panel's peak light. Match the striped block to a solid grey and the tool inverts V = 255 x 0.5^(1/gamma) to report the gamma you are actually looking at, alongside a step wedge, a bit-depth banding ramp and near-black and near-white clipping patches. It is a five-minute sanity check for anyone editing photos, video or UI without a colorimeter to hand.",
   useCases: [

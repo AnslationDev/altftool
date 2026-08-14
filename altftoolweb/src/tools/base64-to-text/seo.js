@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base64 to Text Decoder with URL-Safe and Padding Fix",
+  metaDescription:
+    "Decode Base64 to UTF-8 in the browser with atob: missing = padding restored, base64url - and _ handled, MIME line breaks and data: headers stripped.",
   intro:
     "Base64 to Text converts a Base64 string back into the characters it encodes, using the standard alphabet from RFC 4648 §4 and — once URL-safe Base64 support is ticked — the URL-safe variant from §5. It repairs missing `=` padding, strips the line breaks that MIME Base64 inserts every 76 characters, unwraps a leading data: URL header, decodes the bytes as UTF-8, and names the check that failed when a string is rejected. It is for developers reading a JWT payload, a webhook body, an HTTP Basic header or a config value that arrived encoded.",
   useCases: [

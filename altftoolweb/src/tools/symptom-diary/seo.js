@@ -1,4 +1,12 @@
 const seo = {
+  title: "Symptom Diary: Log Severity, Triggers and Sleep",
+  metaDescription:
+    "Rate each episode 1-10 with its trigger, medication, mood and sleep score, see the trend across your last 10 entries, then export a PDF or CSV.",
+  steps: [
+    "Fill \"Symptom Name\", pick a \"Category\", drag \"Severity Level\" between 1 and 10, then add \"Trigger\", \"Duration\", \"Medication\" and the Mood, Energy and Sleep scores.",
+    "Press \"Add Log Entry\" — the dashboard appears and charts your most recent 10 entries as a severity trend with sleep quality overlaid against severity.",
+    "Under \"Export Health Reports\", \"Save PDF\" and \"Save CSV\" download symptom_diary_<date>.pdf and symptom_diary_<date>.csv, and \"Print Log\" prints the timeline.",
+  ],
   intro:
     "This is a symptom diary that records each episode with a 0–10 severity rating alongside the date, time, duration, suspected trigger, medication taken, mood, energy and sleep quality, then charts those entries so patterns become visible. Severity is banded as mild at 3 or below, moderate from 4 to 7 and severe at 8 or above, and the dashboard plots your last 10 entries as a severity trend, breaks entries down by category and trigger, and overlays sleep quality against severity. Everything can be exported as CSV or as a PDF report with the charts and a dated table, which is what you hand to a clinician.",
   useCases: [

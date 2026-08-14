@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cyberpunk Palette Generator With WCAG Contrast Tuning",
+  metaDescription:
+    "Neon-on-dark palette from a seed word: elevation ramp, status colours and glow shadows, each accent lifted until it hits your 4.5:1 or 7:1 target.",
+  steps: [
+    "Enter a Seed word or phrase, pick a Neon pair, and set Text contrast target to \"AA — 4.5:1 body text\" or \"AAA — 7:1 body text\".",
+    "Move the Grit slider between 0 and 100, or press \"Shuffle seed\", and watch the Elevation ramp, status colours and Contrast table re-tune to that target.",
+    "Press \"Copy hex codes\", or open Export and use \"Copy snippet\" to take the palette as CSS variables, Tailwind @theme or JSON.",
+  ],
   intro:
     "The Cyberpunk Palette Generator builds a neon-on-dark interface palette and then makes it readable. From a seed it produces a tinted near-black base with four elevation steps, a paired neon lead and counter, semantic success, warning, danger and info colours, and glow shadows — then walks each colour's lightness up one point at a time until it meets the WCAG 2.1 target you choose (4.5:1 for AA body text or 7:1 for AAA), reporting exactly how much it had to move. Muted text goes the other way: the tool finds the dimmest value that still passes, so secondary copy stays quiet without dropping below the line.",
   useCases: [

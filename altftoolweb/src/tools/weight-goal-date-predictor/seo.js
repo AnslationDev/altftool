@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weight Goal Date Predictor: When You Hit Your Target",
+  metaDescription:
+    "Projects your goal date week by week, recalculating Mifflin-St Jeor maintenance as you lighten, and shows the weight your intake settles at.",
+  steps: [
+    "Choose Metric (kg / cm) or Imperial (lb / in), then fill in Sex, Age, Height, Current weight, Target weight and Start date.",
+    "Set Average daily intake (kcal) and Activity level; the projection re-simulates week by week, recomputing Mifflin-St Jeor maintenance as your weight falls.",
+    "Read the Projected goal date, the \"Weight this intake settles at\" row and the Checkpoints along the way table, then press Copy result.",
+  ],
   intro:
     "The Weight Goal Date Predictor estimates the calendar date you reach a target weight by simulating your energy balance one week at a time, recalculating maintenance calories from the Mifflin-St Jeor equation as your weight changes. It uses roughly 7,700 kcal per kilogram of tissue (3,500 kcal per pound), so the projected rate slows as you get lighter instead of assuming a flat weekly loss. It also reports the weight your current intake would eventually settle at, which is the honest answer to 'will this actually get me there?'",
   useCases: [

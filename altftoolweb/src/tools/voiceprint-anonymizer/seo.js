@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voiceprint Anonymizer: Pitch Shift, Same Duration",
+  metaDescription:
+    "Shift a voice by 1.08x or 1.18x up or down with the tempo restored and a 100 Hz-8.5 kHz band limit. FFmpeg runs in your browser and writes a WAV.",
+  steps: [
+    "Choose a recording with the \"Source file\" picker, which accepts any audio format; the clip is written to FFmpeg's in-memory filesystem in the page rather than uploaded.",
+    "Set \"Voice shift\" to subtle-up, subtle-down, strong-up or strong-down — a 1.08x or 1.18x asetrate factor undone by the reciprocal atempo so the duration is unchanged — and press \"Process locally\".",
+    "The FFmpeg WebAssembly engine loads on that press and the band-limited result (100 Hz highpass, 8.5 kHz lowpass) downloads as altftool-voiceprint-anonymizer.wav, with the Local processing report listing the file name, size, type and chosen profile.",
+  ],
   intro:
     "The Voiceprint Anonymizer shifts the pitch of a recorded voice while keeping the original speaking speed, so the words stay clear but the obvious speaker cues change. It runs FFmpeg in your browser and offers four shifts — subtle up, subtle down, strong up and strong down — implemented as a resample-and-retime chain (a 1.08x or 1.18x factor applied via asetrate, undone with atempo) plus a 100 Hz–8.5 kHz band limit, and it writes a WAV. It changes how a voice sounds; it cannot guarantee anonymity against determined speaker-recognition systems.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Ownership Cost Calculator: EMI, Fuel, Resale",
+  metaDescription:
+    "Adds EMI, fuel with inflation, insurance and depreciation into a monthly and per-km cost, then compares owning against Ola and Uber over 1-10 years.",
+  steps: [
+    "On the Basic tab enter Purchase Price, Down Payment, Interest Rate and Monthly Income — the Loan Amount field fills in on its own.",
+    "Use the Fuel and Expenses tabs to set Mileage, Fuel/Energy Price, Insurance/Year, Ownership Period (years) and Resale Value After Ownership as a percentage.",
+    "Read the 5-Year Cost of Ownership, Depreciation and Budget Compatibility bands, then the Buy vs Uber/Ola table; Reset Analyzer clears everything.",
+  ],
   intro:
     "Car Ownership Cost Analyzer works out what a car costs you per month, per kilometre and across 1, 3, 5 and 10 years by adding four blocks together: the loan EMI, running costs (fuel, insurance, maintenance, parking, tolls), one-off charges like registration and accessories, and depreciation — the purchase price minus what the car is worth when you sell it. It is built for Indian buyers deciding between a purchase and staying with cabs. The EMI uses the standard reducing-balance formula, EMI = P × r × (1+r)^n / ((1+r)^n − 1), and fuel is compounded forward each year at the inflation rate you enter.",
   useCases: [

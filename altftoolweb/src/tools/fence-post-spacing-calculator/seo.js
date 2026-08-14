@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fence Post Spacing Calculator: Depth and Concrete Bags",
+  metaDescription:
+    "Divides the run into even sections, buries a third of the post height (24 in minimum), digs 3× the post width and counts concrete bags per hole.",
+  steps: [
+    "Set Unit to Feet or Metres, enter the Total fence run, and pick a Fence type preset, which fills in the Maximum spacing for you.",
+    "Enter 'Fence height above ground', choose a Post size and Concrete bag size, and tick the box if the fence closes back on itself.",
+    "Read Posts needed, On-centre spacing, Burial depth, Hole diameter × depth and Total bags to buy; 'Copy result' copies the whole list.",
+  ],
   intro:
     "This calculator lays out a fence run: it divides the length into whole sections no longer than your maximum span, evens the spacing across them, then sizes the holes and the concrete. Post count is sections + 1 for a straight run and equals the section count for a closed enclosure, burial depth follows the standard rule of one third of the above-ground height subject to a 24 inch minimum, and hole diameter follows the three-times-post-width rule. Concrete per hole is the annulus between hole and post over the buried depth, converted into 80 lb, 60 lb, 50 lb or 25 kg bags at their published yields.",
   useCases: [

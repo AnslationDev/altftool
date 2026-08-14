@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unit Test Prompt Builder for Jest, pytest, JUnit 5",
+  metaDescription:
+    "Pick a framework, branch-coverage target and edge-case classes to get a test prompt that bans weak assertions and estimates the baseline test count.",
+  steps: [
+    "Choose a Language and Test framework — Vitest, pytest, JUnit 5, xUnit, RSpec, PHPUnit or Go's testing (stdlib) — then set Public functions under test (1-50) and a Branch coverage target (%).",
+    "Tick the edge-case classes to cover: Empty / null input, Boundary values, Invalid types & formats, Error paths, Large input, Unicode & locale, Async / ordering and Idempotency / repeat calls.",
+    "Read the Baseline test count — 1 happy path plus one test per class, per function — and the prompt's word and token count, then press Copy prompt to take the Generated prompt.",
+  ],
   intro:
     "The Unit Test Prompt Builder generates a test-writing prompt tailored to your language, test framework, branch-coverage target and chosen edge-case classes — empty input, boundary values, error paths, unicode, async ordering and more, following classic boundary-value analysis. It estimates a baseline test count (one happy path plus one test per edge-case class per public function) and writes framework-specific conventions — pytest fixtures, Jest matchers, Go table-driven tests, JUnit 5 parameterised tests — directly into the prompt.",
   useCases: [

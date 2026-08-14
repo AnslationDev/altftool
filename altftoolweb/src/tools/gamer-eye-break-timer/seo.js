@@ -1,4 +1,12 @@
 const seo = {
+  title: "20-20-20 Eye Break Timer That Runs Between Matches",
+  metaDescription:
+    "Schedules 20-20-20 eye breaks on match boundaries, not a blind 20-minute loop, counts lobby time as rest, and says when a 32-minute MOBA cannot meet it.",
+  steps: [
+    "Pick a Match format preset such as Team shooter round at 12 min or MOBA match at 32 min, or type your own Match length (minutes).",
+    "Set Session length (minutes) and Lobby and queue time (seconds), then press Start.",
+    "Follow the countdown, which puts each 20-second break in the lobby between matches, and press Copy plan for the schedule.",
+  ],
   intro:
     "This timer schedules 20-20-20 eye breaks on match boundaries instead of on a blind 20 minute loop, so a prompt never lands mid-round. It works out how many matches fit inside a 20 minute near-work window, whether your lobby and queue time is already long enough to serve as the break, and — for formats like MOBAs where a single match runs past 20 minutes — states plainly that the rule cannot be met without abandoning a live game. The underlying guidance is the standard one for digital eye strain: after at most 20 minutes of near work, look about 6.1 metres away for at least 20 seconds.",
   useCases: [

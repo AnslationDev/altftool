@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teen BMI Calculator With IOTF Age and Sex Cut-Offs",
+  metaDescription:
+    "BMI for ages 10 to 20 read against the IOTF curves that reach 25 and 30 at age 18, with the kilogram weight at each cut-off for that height.",
+  steps: [
+    "Choose centimetres and kilograms or feet, inches and pounds, then enter the height and weight.",
+    "Enter the age in years, decimals allowed, and the sex, so the IOTF cut-off is interpolated for that exact age.",
+    "Read the overweight and obesity lines for that age and sex, the kilogram weight at each, and what the adult 25/30 chart would say.",
+  ],
   intro:
     "The Teen BMI Calculator computes body mass index as weight in kilograms divided by height in metres squared, then reads it against age- and sex-specific cut-offs rather than the adult lines at 25 and 30. It uses the International Obesity Task Force curves published by Cole and colleagues in the BMJ in 2000, which are constructed to pass through exactly 25 and 30 at age 18 — so a 12-year-old boy crosses into overweight at about 21.2, not 25. It is aimed at parents and teenagers who want the reading interpreted for the right age instead of an adult chart.",
   useCases: [

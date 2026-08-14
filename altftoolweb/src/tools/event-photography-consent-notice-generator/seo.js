@@ -1,4 +1,12 @@
 const seo = {
+  title: "Event Photography Notice Generator with Sign Sizing",
+  metaDescription:
+    "Write filming notices for the entrance sign, ticket terms, registration form, PA script and web page, sized at 25 mm of cap height per 3 m of distance.",
+  steps: [
+    "Enter Event name, Organiser, Venue, Contact for objections and \"Keep footage for (years)\", then tick what is being captured: Still photography, Video recording, Live streaming or broadcast, Audio recording of the room or Drone or overhead camera.",
+    "Choose a Lawful basis and How attendees opt out, then size the board with \"Read from (metres)\", \"Board width (mm)\" and \"Seconds a passer-by looks at it\".",
+    "\"Headline capital height\" reports the sign lettering in mm; copy each block separately — Entrance sign headline and body, Ticket and booking terms, Registration form wording, PA / stage announcement and Event web page notice — or press Copy all.",
+  ],
   intro:
     "An event photography notice is the wording that tells attendees, before their picture is taken, who is filming, what the footage will be used for and how to stay out of shot. This generator writes that wording for all five surfaces people actually read (ticket terms, registration form, entrance sign, PA script and event web page) and sizes the entrance sign using the wayfinding rule of roughly 25 mm of capital height per 3 metres of viewing distance. Built for event organisers, conference producers and venue marketing teams who need the notice up before doors open.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shift Sleep Planner: Bedtime for a 4am or 5am Start",
+  metaDescription:
+    "Counts back from your shift start through commute and getting-ready time to lights-out, the caffeine cutoff, last meal and wind-down.",
+  steps: [
+    "Set the Shift start time or tap a 04:00, 05:00 or 06:00 start chip, then set your Sleep target (hours).",
+    "Enter Commute (minutes), Getting ready after the alarm, Time you take to fall asleep and your Wind-down routine.",
+    "Read the Lights out at time with the Alarm, Caffeine cutoff, Last full meal and Dim screens rows, then press Copy plan.",
+  ],
   intro:
     "This planner works backwards from an early shift start time to the exact minute you should be asleep, using shift start minus commute minus getting-ready time for the alarm, then subtracting your sleep target and your usual sleep-onset time for lights-out. It is built for people on 4am, 5am and 6am starts — bakers, warehouse and factory crews, hospital early shifts, delivery drivers and cabin crew. Defaults follow the AASM and Sleep Research Society consensus that adults need 7 or more hours a night, with an 8-hour caffeine cutoff and a 90-minute screen-dimming buffer.",
   useCases: [

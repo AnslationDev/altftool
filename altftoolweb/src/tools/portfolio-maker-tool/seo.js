@@ -1,4 +1,7 @@
 const seo = {
+  title: "Portfolio Maker: One-Page Layout From a Short Form",
+  metaDescription:
+    "Fill in name, bio, up to three projects and four skills, press Generate Portfolio, and preview a one-page layout with gradient hero and project cards.",
   intro:
     "Portfolio Maker turns a short form — name, professional title, bio, contact links, up to three projects and up to four skills — into a finished single-page portfolio layout with a gradient hero, project cards and skill badges. You fill the fields, press generate, and the rendered page appears immediately, with empty fields simply left out rather than showing blanks. It suits students, career changers and freelancers who need a presentable profile page today and do not want to start from a blank editor.",
   useCases: [

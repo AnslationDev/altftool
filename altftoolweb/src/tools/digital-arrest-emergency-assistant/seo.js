@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digital Arrest Scam: 7-Step Checklist & Notes File",
+  metaDescription:
+    "Indian law has no digital arrest. Work the seven immediate steps, log 11 incident fields and 8 evidence types, then download a local .txt notes file.",
+  steps: [
+    "Work the Do these first checklist: do not pay, do not share access or OTPs, leave the call, verify independently.",
+    "Fill the incident fields for the agency claimed, the demand and the transfer status, and mark which of the eight evidence types you hold.",
+    "Press Download local notes to save digital-arrest-incident-notes-YYYY-MM-DD.txt, then report at cybercrime.gov.in yourself.",
+  ],
   intro:
     "This page walks someone caught in a suspected \"digital arrest\" call through a seven-step immediate checklist — pause, do not pay, do not share access, leave the call, verify independently, preserve originals, prepare a report — and then collects the incident details into a plain-text notes file you download locally. It exists because Indian law has no concept of a digital arrest: official I4C and PMO guidance states that investigative agencies do not conduct enquiries by phone or video call and do not demand money that way. The tool places no calls, makes no payments, uploads nothing, and does not submit a report on your behalf.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gold Loan Eligibility Calculator – Per-Gram Value & LTV",
+  metaDescription:
+    "Convert each item's weight and karat into 24K-equivalent grams, deduct stones, apply your lender's LTV cap and compare EMI vs interest-only repayment.",
+  steps: [
+    "List each piece under Your gold with its Item name, Gross weight (grams), a Purity from 24K (99.9% pure) down to 14K and its Stones / beads weight (grams), using Add another item for more jewellery.",
+    "Enter the 24K gold rate today (INR per gram), Loan-to-value cap (%), Interest rate (% per year) and Tenure (months); a warning appears if your LTV exceeds the usual 75% cap.",
+    "Read the Eligible loan amount with Loan value per net gram and the item-wise valuation, compare the Regular EMI and Interest-only, principal at maturity cards, then use Copy result or Reset.",
+  ],
   "intro": "Gold Loan Eligibility Calculator works out how much a lender can advance against your jewellery. It converts each item's gross weight and karat purity into pure-gold equivalent, deducts stone and bead weight, values the lot at today's 24K per-gram rate, and applies the loan-to-value cap to give the eligible loan amount, the per-gram loan value and a repayment preview. Useful before you walk into a bank or NBFC branch and want a realistic number rather than a headline per-gram advert.",
   "useCases": [
     "Check how much you can raise against 40 grams of 22K bangles before visiting a gold loan branch.",

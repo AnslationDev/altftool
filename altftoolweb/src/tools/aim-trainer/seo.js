@@ -1,4 +1,12 @@
 const seo = {
+  title: "Aim Trainer — 30-Second Timed and Precision Modes",
+  metaDescription:
+    "Click-accuracy drill with a 30-second Timed mode and a sudden-death Precision mode; tracks hits, accuracy % and average reaction time in ms.",
+  steps: [
+    "Pick Timed · 30 seconds or Precision on the Choose a mode panel (keys 1 and 2 also switch).",
+    "Press Start — or Space — and click or tap the discs; shots on empty space count as misses, and in Precision one stray shot or three escaped targets ends the run.",
+    "When the run ends, read your hits, accuracy as a % of shots fired and mean reaction ms on the results card; your best score per mode is saved on this device.",
+  ],
   intro:
     "Aim Trainer is a click-accuracy drill with two modes: Timed gives you 30 seconds to pop as many targets as possible, and Precision spawns one target at a time that grows then shrinks away, ending the run on a single stray shot or three escaped targets. Every run reports hits, accuracy as a percentage of shots fired, and average reaction time in milliseconds, and your best score per mode is saved on the device. Targets are never smaller than 44 pixels, so it plays the same with a mouse or a thumb.",
   useCases: [

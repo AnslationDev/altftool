@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hindi Varnamala Chart: 13 Vowels, 36 Consonants",
+  metaDescription:
+    "Tap any of the 49 Devanagari letters to hear it in the hi-IN speech voice at 0.8x speed, with transliteration, English cues and a flashcard shuffle mode.",
+  steps: [
+    "Press the अ button for the 13 स्वर (Vowels), or the क button for the 36 व्यंजन (Consonants).",
+    "In Browse All Letters mode, click any card to hear the letter spoken through the hi-IN speech voice at 0.8 rate; each card carries the letter, its transliteration and a cue such as aa as in father.",
+    "Switch to Practice with Flashcards for one letter at a time, and use Pronounce, Shuffle and the left and right arrows to drill recall out of sequence.",
+  ],
   intro:
     "The Hindi Varnamala is the Devanagari alphabet used to write Hindi, and this tool presents it as 13 स्वर (vowels) and 36 व्यंजन (consonants) you can tap to hear spoken aloud. Each card shows the letter, its Roman transliteration and an English pronunciation cue such as \"aa as in father\", and audio is produced by your browser's Web Speech API set to the hi-IN voice at 0.8× speed so the sound is slow enough to copy. Learners and parents get a browse grid for the full chart plus a flashcard mode with next, previous and shuffle for drilling.",
   useCases: [

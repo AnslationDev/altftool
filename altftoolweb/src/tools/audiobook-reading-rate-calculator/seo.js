@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audiobook Length Calculator: Words to Finished Hours",
+  metaDescription:
+    "Converts manuscript word count into finished hours at your narration pace, plus prep, booth and edit time, session count and MP3 size at 192 kbps.",
+  steps: [
+    "Enter the manuscript word count and narration pace in words per minute, or tap a preset chip — 130, 155 or 175 wpm.",
+    "Adjust prep, booth and edit-and-master hours per finished hour, and the usable hours in one session, to match your workflow.",
+    "Read the finished listening time, total production hours, recording sessions needed and delivery size at 192 kbps MP3; \"Working backwards\" converts target hours to words.",
+  ],
   intro:
     "An audiobook reading rate calculator converts a manuscript word count into finished audio hours by dividing words by narration pace — at the standard 155 words per minute, one finished hour holds 9,300 words. It then applies production multipliers to show prep, booth and editing time, how many sessions that means, and the delivery size at the ACX spec of 192 kbps MP3. Useful for authors budgeting a self-published title, narrators quoting per finished hour, and producers scheduling studio days.",
   useCases: [

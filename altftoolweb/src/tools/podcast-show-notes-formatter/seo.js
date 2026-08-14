@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Show Notes & YouTube Chapter Formatter",
+  metaDescription:
+    "Sorts m:ss and h:mm:ss timestamps, pulls out links, checks YouTube's 00:00 and 10-second chapter rules, and exports Markdown or chapters JSON.",
+  steps: [
+    "Fill Episode title, Episode number, Show name, Guests (comma separated) and the One-paragraph summary.",
+    "Paste into 'Rough notes (timestamps, bullets and links, one per line)' so m:ss and h:mm:ss stamps are parsed, sorted and re-rendered and URLs are lifted into a links list.",
+    "Check the 'YouTube chapters' verdict and the Apple Podcasts, Spotify and YouTube description character counts, switch between Markdown, Plain text, YouTube description and Chapters JSON, then press Copy output.",
+  ],
   intro:
     "Podcast Show Notes Formatter turns the rough lines you type during an edit into publishable show notes: timestamps are parsed from m:ss or h:mm:ss, sorted and re-rendered consistently, URLs are lifted into a labelled links list, and the remaining bullets become the episode summary section. The chapter list is checked against YouTube's published requirements — the first timestamp must be 00:00, there must be at least three, and each chapter must run for at least 10 seconds — and the finished text is measured against the 4,000-character Apple Podcasts and Spotify limits and the 5,000-character YouTube limit. Output is available as Markdown, plain text, a YouTube description and Podcasting 2.0 chapters JSON.",
   useCases: [

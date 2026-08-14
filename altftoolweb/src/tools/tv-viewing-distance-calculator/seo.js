@@ -1,4 +1,12 @@
 const seo = {
+  title: "TV Size and Viewing Distance Calculator (SMPTE, THX)",
+  metaDescription:
+    "Enter screen size and seating distance for your viewing angle against SMPTE 30° and THX 36°, the pixel acuity limit and the mount height.",
+  steps: [
+    "Enter \"Screen diagonal (inches)\" or tap one of the 32\", 43\", 55\", 65\", 75\" and 85\" presets, then \"Seating distance from screen (cm)\", a Resolution from HD Ready (720p) to 8K UHD (4320p), the Aspect ratio, and \"Seated eye height from floor (cm)\".",
+    "Compare \"Viewing angle from your seat\" with the SMPTE 30° seating distance, THX 36° seating distance and \"Closest sensible seat (THX 40°)\" rows, and with \"Ideal screen size from\" your distance, to decide whether to move the sofa or change screen size.",
+    "The \"Sit within this to resolve every pixel\" row gives the acuity limit for your resolution, and the \"Wall-mount height\" card gives Screen centre above floor, Bottom edge, Top edge and the upward look to the top edge; \"Copy result\" copies the set.",
+  ],
   intro:
     "This TV viewing distance calculator works out the horizontal viewing angle your screen fills from where you actually sit, and compares it with the SMPTE minimum of 30° and the THX recommendation of 36°. It also applies the pixel acuity limit — the distance at which one pixel subtends one arcminute, the finest detail 20/20 vision can resolve — so you can see whether 4K or 8K is doing anything from your sofa. Finally it gives the wall-mount height that puts the centre of the screen level with your seated eyes.",
   useCases: [

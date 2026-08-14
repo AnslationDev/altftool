@@ -1,4 +1,12 @@
 const seo = {
+  title: ".env to .env.example Generator - Strip Secrets Safely",
+  metaDescription:
+    "Paste a real .env, get a commit-safe .env.example: keys, comments and order kept, credential-pattern keys always blanked. Runs entirely in your browser.",
+  steps: [
+    "Paste your file into the 'Your .env file' box - it opens with a sample containing NODE_ENV, DATABASE_URL and STRIPE_API_KEY lines. [pages/index.jsx:20-29, 108-117]",
+    "Choose a Placeholder style - KEY= (blank value), KEY=<KEY> (angle-bracket placeholder) or KEY=changeme - and tick Keep comment lines, Keep blank lines or Keep non-secret values (NODE_ENV, PORT, true/false...). [pages/index.jsx:122-169; lib.js:16-20]",
+    "Read the Generated .env.example panel with its Variables found, Values stripped and Values kept (non-secret) counts, then press Copy result. [pages/index.jsx:74-87, 182-237]",
+  ],
   intro:
     "This tool converts a real .env file into a commit-safe .env.example by stripping every value while preserving keys, comments, blank lines and ordering — the convention documented by dotenv and used across Laravel, Rails and Node starter templates. Keys that match common credential patterns (SECRET, TOKEN, API_KEY, PASSWORD, DSN and similar, drawn from secret-scanner rule sets) are always blanked, and you can optionally keep obviously non-secret values like NODE_ENV or PORT.",
   useCases: [

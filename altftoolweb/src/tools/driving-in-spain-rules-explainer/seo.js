@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in Spain: 20/30/50 Limits & Alcohol Rules",
+  metaDescription:
+    "Spain's 20/30/50 km/h town ladder, 120 km/h on autovias, the 0.5 or 0.3 g/l drink-drive limit for your licence, and whether you need an IDP.",
+  steps: [
+    "Set 'Where your licence was issued', 'Your age (years)', 'Licence held for (years)' and 'Length of stay (days)'.",
+    "Tick 'I drive professionally' or 'Towing a caravan or trailer' — towing drops the autovia limit from 120 to 90 km/h and conventional roads from 90 to 70.",
+    "Read your Spanish blood-alcohol limit in g/l and mg/l of breath, the speed table in km/h and mph, and whether an International Driving Permit is needed.",
+  ],
   intro:
     "This explainer sets out what a visitor needs before driving in Spain: you drive on the right in a left-hand-drive car, every sign is in km/h, and since Real Decreto 970/2020 took effect on 11 May 2021 towns run a 20 / 30 / 50 km/h ladder instead of a flat 50. It applies the Reglamento General de Circulación limits — 120 km/h on autovías and 90 km/h on conventional roads — together with the drink-driving thresholds of 0.5 g per litre of blood (0.25 mg/l of breath) for most drivers and 0.3 g/l (0.15 mg/l) for anyone whose licence is under two years old or who drives professionally.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "AAC Phrase Board — Tap Tiles to Speak Phrases Aloud",
+  metaDescription:
+    "Tap a tile to speak it with your browser's own voice. Starts with 8 core phrases — Yes, No, I need help — and takes typed custom phrases up to 24 tiles.",
+  steps: [
+    "Type into the \"Add a private phrase\" field and press Add phrase — the board starts with 8 phrases like \"I need help\" and holds up to 24 tiles.",
+    "Tap any large tile to have the browser's built-in speech synthesis speak that phrase aloud.",
+    "The last phrase is echoed on screen as \"Spoken: ...\" in a live region for screen readers; nothing you add is saved after reload.",
+  ],
   intro:
     "An augmentative and alternative communication board that speaks a phrase aloud when you tap its tile, using the browser's own SpeechSynthesis voice. It opens with eight everyday phrases — Yes, No, Please wait, I need help, I need water, I am uncomfortable, Please call my contact, Thank you — and you can type your own to fill the board out to 24 tiles. Tiles are large touch targets, the spoken phrase is echoed in a live region for screen readers, and nothing you type is uploaded or saved to a server.",
   useCases: [

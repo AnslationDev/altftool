@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gift Tax on Relatives: Section 56(2)(x) Checker",
+  metaDescription:
+    "Pick the relationship and see if a gift is exempt under section 56(2)(x), with the ₹50,000 aggregate cliff and 10% property safe harbour applied.",
+  steps: [
+    "Choose who received the gift, pick the giver from the \"The giver is my\" list, and set the occasion.",
+    "Enter the total money received from everyone in the year, or the stamp duty value and the price you paid for property.",
+    "Read the amount charged as income from other sources and the item of section 56(2)(x) it turns on, then press Copy result.",
+  ],
   intro:
     "This checker applies the definition of \"relative\" in section 56(2)(x) of the Income-tax Act, 1961 to work out whether a gift is exempt or taxable in the hands of the person who received it. The definition is deliberately one-directional: an uncle is the brother of the receiver's parent and so a relative, which makes a gift from uncle to nephew exempt, while a nephew fits no item of the definition, which makes the same gift from nephew to uncle fully taxable. It also applies the ₹50,000 aggregate threshold on money, which is a cliff rather than an allowance, and the 10% safe harbour on immovable property bought below stamp duty value.",
   useCases: [

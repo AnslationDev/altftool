@@ -1,4 +1,12 @@
 const seo = {
+  title: "Feng Shui by Room and Bagua Area: Elements, Colours",
+  metaDescription:
+    "Place a room in the bagua and see how the two elements meet, the mediating element for a clash, the colour split and the commanding-position rules.",
+  steps: [
+    "Choose the Room and the Bagua area it falls in, shown with its trigram — use the bagua grid lower on the page if you lay the areas from your front door.",
+    "Read the Element relationship line and the table beneath it: room element, area element, classical direction, Black Sect position, the mediating element when the two clash, and the element to keep to accents.",
+    "Use the Colour split for this room — Lead, Support and Accent only, each with its percentage — together with the layout rules for that room, then press Copy result.",
+  ],
   intro:
     "This guide places a room in the bagua — the nine-area map of a home — and works out how the element of that area stands to the element of the room, using the five-element cycle: Wood feeds Fire, Fire makes Earth, Earth yields Metal, Metal carries Water, Water grows Wood, while the controlling cycle runs two steps ahead so Wood breaks Earth and Water quenches Fire. When the two elements clash it names the mediating element, which is the one the controller feeds and which in turn feeds the controlled element, and it lists the layout rules for that room including the commanding position. Feng shui is a traditional Chinese practice rather than a measurable science, and this is offered as a clear record of what the tradition holds.",
   useCases: [

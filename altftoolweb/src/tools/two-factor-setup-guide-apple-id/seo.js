@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apple ID Two-Factor Setup: 15-Control Checklist",
+  metaDescription:
+    "Score your Apple Account on 15 weighted controls: 2FA, device passcode, two trusted numbers, recovery contact, Stolen Device Protection.",
+  steps: [
+    "Tick each control you have already set in the grouped checklist — every item shows its weight and four are badged 'Critical'.",
+    "Set 'Target score (%)', which starts at 90, to get the shortest route there with the highest-impact control first.",
+    "Read the 'Hardening score' percentage and band, 'Critical controls missing', and the 'Do these next' list, then press 'Copy result'.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for an Apple Account: two-factor authentication, a passcode strong enough to guard the device that receives the codes, two trusted phone numbers, a recovery contact, Stolen Device Protection and a deliberate decision on Advanced Data Protection. Apple locks out permanently when every recovery path is gone, so recovery controls are scored as heavily as sign-in ones, and four controls are marked critical: the score stays at 69% until all four are done. Apple ID and Apple Account are the same thing under two names.",
   "useCases": [
     "Setting up a new iPhone properly, including the trusted numbers and recovery contact people usually skip during the rush.",

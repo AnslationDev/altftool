@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gig Earnings and Mileage: Your Real Rate Per Hour",
+  metaDescription:
+    "Paste shifts as Date | gross | hours | km | expenses. Subtracts km x your cost per km and a tax reserve, then divides by hours worked.",
+  steps: [
+    "In Gig shifts type one shift per line as Date | gross earnings | total hours | business km | other expenses, e.g. 2026-07-20 | 4200 | 8 | 75 | 12.",
+    "Set Vehicle cost per km, which defaults to 8, and Tax / reserve (%), which defaults to 10.",
+    "Read the estimated net with its effective per hour caption and the per-shift table, then Copy or Download gig-earnings-mileage-analyzer.txt.",
+  ],
   intro:
     "The Gig Earnings & Mileage Analyzer turns a list of shifts into a real hourly rate using net = (gross + tips − business km × cost per km − other expenses) × (1 − tax reserve %), then divides that net by hours worked. You paste one line per shift as Date | gross | hours | business km | other expenses | tips, set your vehicle cost per kilometre and the share you hold back for tax, and it returns a per-shift table plus a blended effective rate across every shift. It is aimed at delivery riders, rideshare drivers and any gig worker whose payout screen shows gross earnings and says nothing about fuel, wear or tax.",
   useCases: [

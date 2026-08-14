@@ -1,4 +1,12 @@
 const seo = {
+  title: "UAE Plug and Voltage Guide: Type G, 230V, Fuse Size",
+  metaDescription:
+    "Enter your plug type and label voltage to see whether the UAE's 230 V type G socket needs an adapter, the current drawn and the BS 1362 fuse.",
+  steps: [
+    "Choose Plug on your device, then enter Label minimum voltage (V), Label maximum voltage (V), Label frequency and Rated power (W).",
+    "Or tap a preset such as Laptop charger, US hair dryer or Travel iron to fill in the label figures.",
+    "Read the Verdict for the UAE: adapter or converter needed, current drawn at 230 V, and the BS 1362 plug fuse to fit.",
+  ],
   intro:
     "This guide decides whether your device needs a plug adapter, a voltage converter, or nothing at all in the United Arab Emirates. The UAE supplies 230 V at 50 Hz and inherited the British wiring system, so the general-purpose outlet is the shuttered BS 1363 type G socket with its fused plug, while the IEC also lists legacy type C and type D round-pin fittings still found in older buildings. Enter your plug type and the voltage range on the label to get the verdict, the current drawn and the correct BS 1362 fuse.",
   useCases: [

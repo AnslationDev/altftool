@@ -1,4 +1,12 @@
 const seo = {
+  title: "Designer Eye Break Timer: 20-20-20 + Colour Reset",
+  metaDescription:
+    "Runs the 20-20-20 eye rule and a 60-second neutral grey reset before every colour decision, and shows what the breaks cost as a % of the session.",
+  steps: [
+    "Enter \"Session length (minutes)\", \"Time between colour decisions (minutes)\", \"Neutral reset (seconds)\" — 60 is the default — and \"Colour decision window (seconds)\".",
+    "Toggle the button between \"Reset on a distant neutral surface\", where a grey wall across the room also counts as the 20-second eye break, and \"Reset on a near neutral field\", which schedules eye breaks separately, then press Start.",
+    "Watch the phase clock count down through near work, neutral reset and eye break, and read \"What the session costs you\" — colour decisions, decisions per hour, neutral resets, eye breaks, total eye rest, time actually designing, the overhead percentage and the longest unbroken near-work run against the 20-minute limit; \"Copy plan\" copies the schedule.",
+  ],
   intro:
     "This timer runs two clocks at once for anyone doing colour-critical work: the 20-20-20 eye rule, which caps near work at 20 minutes before a 20 second look into the distance, and a chromatic adaptation reset before every colour judgement. The second one matters because the visual system adapts to whatever it has been looking at — a saturated hero image, a warm brand palette, a coloured wall behind the monitor — and most of that shift happens inside the first minute, which is exactly why a spell on a neutral grey field resets it. The same principle underpins ISO 3664, the standard for viewing conditions in graphic technology, which fixes a white point and demands a plain neutral grey surround.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Morse Code Translator with ITU Timing and WPM Speed",
+  metaDescription:
+    "Encodes and decodes International Morse to ITU-R M.1677-1, then times the message in dot units against PARIS at your words-per-minute speed.",
+  steps: [
+    "Choose 'Text → Morse' or 'Morse → Text', then type into 'Text to encode' or into 'Morse to decode (space between letters, / between words)'.",
+    "Set 'Sending speed (words per minute)', or press 'Swap sides' to carry the result across and translate it back.",
+    "Read the output with 'Dot units in the signal', 'Length of one dot at this speed' and 'Time to send the whole message', then press 'Copy result'.",
+  ],
   intro:
     "This Morse code translator encodes plain text into International Morse code and decodes Morse back into text, using the character set and timing defined in ITU-R Recommendation M.1677-1. It also reports transmission time: a dash is three dot units, gaps inside a character are one unit, between characters three and between words seven, and the standard word PARIS is exactly 50 units, which is what defines words per minute. Useful for amateur radio operators, scouts, escape-room designers and anyone decoding a signal from a puzzle.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Feedback Categorizer: Theme, Sentiment, Priority Tags",
+  metaDescription:
+    "Paste one comment per line and get a theme (Usability, Reliability, Feature request, Pricing, Praise or General) plus sentiment and priority.",
+  steps: [
+    "Paste your comments into the \"One feedback item per line\" box — it opens with five sample comments, and blank lines are skipped.",
+    "Tagging runs as you type with no button to press: each line is matched in order against the Usability, Reliability, Feature request, Pricing and Praise keyword patterns, falling through to General.",
+    "The Items, High priority and Themes counters and the Theme summary badges update live, and Categorized feedback lists every comment with its theme, its Positive/Negative/Mixed sentiment and a High or Normal priority badge.",
+  ],
   intro:
     "Feedback Categorizer takes one customer comment per line and tags each one with a theme, a sentiment and a priority using keyword matching — themes are Usability, Reliability, Feature request, Pricing and Praise, with anything unmatched falling to General. Sentiment is Positive, Negative or Mixed depending on which cue words appear, and a line is flagged High priority if it reads negative or mentions checkout, billing or pricing. It is for product managers, founders and support leads who need a first pass over a pile of raw comments before deciding what to read closely.",
   useCases: [

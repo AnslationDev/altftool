@@ -1,4 +1,10 @@
 const seo = {
+  title: "Housing Society NOC Request Letter: 15-Day Notice",
+  steps: [
+    "Choose the Purpose — sale/transfer, leave and licence, bank loan/mortgage, interior renovation or a new utility connection — and fill the society, flat, wing and share certificate fields.",
+    "Enter 'Outstanding society dues (INR)', 'Date of the letter', 'Proposed effective date' and the transferee / licensee / lender details.",
+    "Read the 'Letter readiness' percentage with 'Earliest date this notice supports' and 'Decision expected by', then press 'Copy letter'.",
+  ],
   intro:
     "A society NOC is the written statement from a co-operative housing society's managing committee that it has no objection to a member selling, letting, mortgaging or renovating their flat, and this generator drafts the member's request for it. The letter follows the structure the Maharashtra model bye-laws expect — member and share certificate details, purpose, effective date, a declaration on dues and a numbered enclosure list — and sets out the 15-day transfer notice and the 60-day decision window in section 22(2) of the Maharashtra Co-operative Societies Act 1960. Owners, tenants' agents and brokers can produce a complete, dated request instead of a one-line note.",
   useCases: [

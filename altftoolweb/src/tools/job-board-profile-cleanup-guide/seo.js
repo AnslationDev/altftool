@@ -1,4 +1,12 @@
 const seo = {
+  title: "Resume Privacy Scanner: Redact PAN, Aadhaar, Salary",
+  metaDescription:
+    "Paste résumé text to flag Aadhaar, PAN, passport, DOB and salary lines, score exposure and copy a redacted version. Nothing leaves your browser.",
+  steps: [
+    "Paste up to 50,000 characters of résumé text into the Paste résumé text box and set how many job portals hold a copy.",
+    "Read the exposure score and the flagged categories — Aadhaar verified by Verhoeff checksum, PAN, passport, phone, date of birth, salary lines.",
+    "Press Copy redacted text to take the rewritten résumé with every flagged field swapped for a plain placeholder.",
+  ],
   intro:
     "The Job Board Profile Cleanup Guide scans the plain text of a résumé for the personal data that a public job portal does not need — Aadhaar, PAN and passport numbers, phone numbers, email addresses, full postal addresses, date of birth, marital status and other protected characteristics, salary history, photo references and referee contact details. Each category is scored by how abusable it is if a recruiter account or a data breach exposes it, and the tool builds a redacted copy of the text with every flagged field replaced so you can compare before and after without retyping anything. The scan and the redaction both run in your browser tab; nothing you paste is uploaded.",
   useCases: [

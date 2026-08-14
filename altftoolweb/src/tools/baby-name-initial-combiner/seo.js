@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baby Name Initial Combiner: Blend Two Names, Scored",
+  metaDescription:
+    "Splits both names into syllables and splices them ten ways, scoring each out of 100 — 60% pronounceability, 40% how evenly the two names contributed.",
+  steps: [
+    "Type a First name and a Second name, up to 20 letters each — the defaults are Rohan and Priya.",
+    "Optionally choose an ending (Add -a, -i, -an, -ya, -ika, -esh or -ie) and raise Minimum score to drop the weaker blends.",
+    "Best blend shows the top result with its score out of 100, above Combinations tried, Initials and Syllables found, then one card per blend giving say-ability, balance and letter count; Copy ideas copies the scored list.",
+  ],
   intro:
     "The Baby Name Initial Combiner splices two names into new ones by splitting each into consonant-plus-vowel syllables and recombining the pieces ten different ways in both directions — first syllable of one with the last of the other, opening consonants on the other's vowel body, overlapping shared letters, and so on. Every result is scored out of 100: sixty percent for pronounceability (no three-consonant runs, no vowel pile-ups, four to eight letters) and forty percent for how evenly the two parents contributed. The same two names always produce the same list.",
   useCases: [

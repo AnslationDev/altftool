@@ -1,4 +1,12 @@
 const seo = {
+  title: "API Doc Prompt Builder: OpenAPI 3.1, Markdown, README",
+  metaDescription:
+    "Paste METHOD /path lines and get a doc prompt with every path parameter, RFC 9110 error cases and TODO(verify) markers instead of invented fields.",
+  steps: [
+    "Enter the API name and optional Base URL, then list your routes in 'Endpoints - one per line, METHOD /path with {param} or :param'.",
+    "Choose Authentication (None / public, Bearer token (JWT/OAuth2), API key, HTTP Basic or Session cookie) and an Output format - OpenAPI 3.1 (YAML), Markdown reference or README quickstart - and add any Extra instruction.",
+    "Check the 'Endpoints to document' count, then press Copy prompt to take the text under Generated prompt, which seeds RFC 9110 error statuses and TODO(verify) markers for anything the model cannot derive.",
+  ],
   intro:
     "The API Doc Prompt Builder parses a plain endpoint list — one 'METHOD /path' per line, with {curly} or :colon path parameters — validates every method against RFC 9110, and generates a documentation prompt for OpenAPI 3.1 YAML, a Markdown reference or a README quickstart. It is built for backend developers who want AI-drafted docs that cover every parameter, realistic request/response examples, an RFC-correct error table (400, 401, 403, 404, 409, 422, 429, 500) and TODO(verify) markers wherever the model would otherwise have to guess.",
   useCases: [

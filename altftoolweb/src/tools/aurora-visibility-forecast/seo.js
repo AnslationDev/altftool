@@ -1,4 +1,10 @@
 const seo = {
+  title: "Aurora Visibility Forecast: Kp Index vs Your Latitude",
+  steps: [
+    "Enter your latitude and longitude, or press Use device location to fill them from the browser.",
+    "Press Get current result to fetch the latest planetary K-index from NOAA's Space Weather Prediction Center.",
+    "Read the Latest UTC timestamp, the Kp value, your latitude and the simple latitude boundary to see whether you clear the screen.",
+  ],
   metaDescription:
     "Screen possible aurora visibility at your latitude using NOAA's latest Kp index and a simple boundary estimate, with source timing and limitations.",
   intro:

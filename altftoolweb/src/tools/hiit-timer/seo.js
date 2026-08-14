@@ -1,4 +1,7 @@
 const seo = {
+  title: "HIIT & Tabata Timer: 20/10 x 8, EMOM, Boxing Rounds",
+  metaDescription:
+    "Interval timer with Tabata 20/10 x 8, EMOM 60s and boxing presets, rounds and sets, and a 1245 Hz work tone. Phases run on absolute clock deadlines.",
   intro:
     "This interval timer runs prepare, work, rest, rounds, sets and between-set rest as one scheduled sequence, with Web Audio cues on every phase change and a countdown beep for the last three seconds. Each phase is scheduled against an absolute clock deadline rather than counted down tick by tick, so a 20-minute session ends on time instead of drifting seconds late. Four presets cover the common formats — Tabata 20/10 x 8, EMOM 60s x 10, boxing 3 min / 1 min x 5, and a beginner 30/30 x 6 — and every field is editable.",
   useCases: [

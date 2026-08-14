@@ -1,4 +1,12 @@
 const seo = {
+  title: "Carnivore Macro Calculator: Fat-to-Protein Ratio",
+  metaDescription:
+    "Protein in g/kg, fat taking the rest of your Mifflin-St Jeor calories, plus the fat-to-protein ratio, a 35% protein ceiling check and matching cuts.",
+  steps: [
+    "Enter Sex (for the BMR equation), Age (years), Weight (kg), Height (cm), Activity level and Goal.",
+    "Set Protein (g per kg of body weight), then Carbohydrate allowance (g), which starts at 0 g and accepts up to 20 g for the trace carbohydrate in liver, dairy or eggs.",
+    "Read the Fat to protein ratio by weight headline with the Protein, Fat and Carbohydrate cards, the Protein share of energy row against the 35% ceiling, and the Cuts against your targets table, then press Copy result.",
+  ],
   intro:
     "The Carnivore Diet Macro Calculator works out the two numbers that matter when carbohydrate is zero: a daily protein target in grams per kilogram of body weight, and the fat that must sit alongside it to reach your calorie goal. Calories come from the Mifflin-St Jeor equation multiplied by an activity factor and adjusted for your goal; protein is set first and fat takes every remaining calorie at 9 kcal per gram. It reports the resulting fat-to-protein ratio by weight, warns when protein passes 35% of energy, and shows which cuts naturally land closest to your ratio.",
   useCases: [

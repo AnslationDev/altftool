@@ -1,4 +1,12 @@
 const seo = {
+  title: "Punjabi Akhaan: 24 Proverbs in Gurmukhi with Meanings",
+  metaDescription:
+    "Search 24 Punjabi proverbs in Gurmukhi with Roman transliteration, the literal image, how each is really used, and the closest English saying.",
+  steps: [
+    "Type into \"Search proverbs\" — the placeholder suggests \"suspicion, chadar, ਅਕਲ\" — and every token has to match somewhere in the proverb, so Gurmukhi, Roman or an English idea all work.",
+    "Narrow with the Theme select, which lists \"All themes (24)\" plus the eight groups such as \"Money & scarcity\" and \"Caution & suspicion\", and set \"Akhaan of the day for\" to any date you like.",
+    "The featured akhaan appears in Gurmukhi above its Transliteration, Literal reading, How it is used, English equivalent and Theme rows; press \"Copy proverb\" to take it with you, or Reset to clear search, theme and date.",
+  ],
   intro:
     "Punjabi Akhaan Explorer is a searchable collection of 24 Punjabi proverbs written in Gurmukhi, each with a Roman transliteration, the literal image behind the words, the situation it is actually used in, and the closest English proverb. An akhaan is a complete sentence carrying village wisdom, which separates it from a muhavara — a fixed phrase that needs a sentence built around it. It is made for Punjabi language students, writers and speakers, and anyone who half-remembers a line an elder used to say.",
   useCases: [

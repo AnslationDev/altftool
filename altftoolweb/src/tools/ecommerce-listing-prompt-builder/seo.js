@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ecommerce Listing Prompt Builder with a Keyword Plan",
+  metaDescription:
+    "Build a listing prompt from verified attributes, spreading keywords across title and bullets inside Merchant Center's 150 and 5,000 character limits.",
+  steps: [
+    "Fill Product name, Category and Buyer, and pick a Tone for the copy.",
+    "List only verified facts under \"Attributes — one per line\", then \"Keywords — one per line, most important first\" — the first keyword is treated as primary and assigned to the title, and only the first 20 are used.",
+    "Set Bullet count, Title target (characters) and Description length (words), tick \"Ask for a meta description\" or \"Ask for three buyer FAQs\" if you want them, then press Copy prompt.",
+  ],
   intro:
     "This builder assembles a single structured prompt for writing a product listing, made up of a role line, your verified attributes, the benefits to lead with, a keyword placement plan and hard output limits. Keywords are allocated across title, bullets and description so no phrase is repeated in every field, and the length rules follow the Google Merchant Center product data specification — 150 characters for a title, 5,000 for a description. It is aimed at sellers and marketers who want listing copy grounded in real product facts instead of invented specifications.",
   useCases: [

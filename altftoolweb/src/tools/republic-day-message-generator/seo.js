@@ -1,4 +1,12 @@
 const seo = {
+  title: "Republic Day Messages, Captions and Speech Openers",
+  metaDescription:
+    "Greetings, social captions and speech openers for 26 January — up to 8 at a time, with the Republic Day number counted from 1950 (2026 is the 77th).",
+  steps: [
+    "Choose Greeting message, Social caption or Speech opener under 'What do you need', then a Patriotic, Formal or Warm & simple tone.",
+    "Set the Recipient name, the Year and how many (1-8), and tick Add hashtags for #RepublicDay #26January #JaiHind.",
+    "The Republic Day number shows above the results — press Shuffle wording for a different set, or Copy all to take them.",
+  ],
   intro:
     "This generator writes Republic Day greetings, social captions and school speech openers for 26 January, and works out which Republic Day a given year marks by counting from 1950, when the Constitution of India came into force. Pick a format, a patriotic, formal or warm tone, and a year, and you get several distinct wordings built from a library of openings, facts and sign-offs. Useful for students preparing an assembly speech, for offices sending internal greetings, and for anyone who wants something better than a forwarded image.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Thread Summarizer — Local, No-AI Extraction",
+  metaDescription:
+    "Paste up to 100,000 characters of email chain and get decisions, action items with owners and deadlines, and open questions — parsed locally, no upload.",
+  steps: [
+    "Paste your chain (up to 100,000 characters) into the \"Paste email thread\" box — From, Date and Subject headers improve results.",
+    "Pick a Summary length of Brief, Standard or Detailed, which keep the top 3, 6 or 10 scored sentences alongside decisions, action items and questions.",
+    "Click Copy for the analysis as Markdown, or download it as email-analysis.md or email-analysis.json.",
+  ],
   intro:
     "The Email Thread Summarizer splits a pasted email chain into its individual messages, then extracts decisions, action items with owners and deadlines, unanswered questions and a ranked set of highlights using keyword patterns rather than a language model. It is for anyone who has been added to a 30-message thread and needs to know what was agreed and what is now theirs to do. Because every rule is a local regex, the same thread always produces the same summary, and the text never leaves the browser.",
   useCases: [

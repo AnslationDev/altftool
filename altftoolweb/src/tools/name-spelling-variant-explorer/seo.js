@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Name Spelling Variants: Meera, Mira, Lakshmi",
+  metaDescription:
+    "Applies aa/a, ee/i, ksh/x, sh/s and the dropped final a one swap at a time, naming the rule behind each variant, and tells you if two spellings match.",
+  steps: [
+    "Type the Name to explore and choose How many substitutions deep the search should go.",
+    "Read Spelling variants found, with each row listing the Spelling, the Changes from your spelling and how many Steps away it is.",
+    "Check the Canonical key, or enter two spellings under \"Are two spellings the same name?\" for a yes or no, then press Copy variants.",
+  ],
   intro:
     "The Name Spelling Variant Explorer generates the Roman spellings an Indian name can legitimately take, by applying the real transliteration alternations one substitution at a time: aa and a, ee and i, oo and u, ksh and x, sh and s, the h that marks aspiration, the v/b of Bengali and Odia, and the final short a that Sanskritic spellings keep and Hindi ones drop. Each result names the rule that produced it. A second panel reduces any two spellings to a canonical key so you can tell whether Meera and Mira, or Lakshmi and Laxmi, are the same name.",
   useCases: [

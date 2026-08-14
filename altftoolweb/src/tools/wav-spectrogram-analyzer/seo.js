@@ -1,4 +1,12 @@
 const seo = {
+  title: "WAV Spectrogram Analyzer: FFmpeg in Your Browser",
+  metaDescription:
+    "Renders any audio file as a 1600x900 spectrogram PNG with a labelled legend, using FFmpeg's showspectrumpic filter compiled to WebAssembly in-browser.",
+  steps: [
+    "Pick an audio file — WAV, MP3, AAC, FLAC, OGG or M4A — in the Source file field.",
+    "Set Scale to log, sqrt or lin, then press Process locally; the FFmpeg WebAssembly engine loads only at that point.",
+    "The showspectrumpic render downloads as altftool-wav-spectrogram-analyzer.png, a 1600x900 image carrying its frequency and amplitude legend.",
+  ],
   intro:
     "WAV Spectrogram Analyzer renders an audio file as a single 1600×900 spectrogram image — time along one axis, frequency up to the Nyquist limit on the other, energy as colour — using FFmpeg's showspectrumpic filter compiled to WebAssembly and run inside your browser. You choose whether intensity is mapped on a log, sqrt or linear scale, and the labelled legend lets you read frequencies and levels straight off the picture. It is for anyone who needs to see a recording rather than just hear it: mains hum, clipping, a lossy encoder's cutoff, or a dead high end all show up as shapes.",
   useCases: [

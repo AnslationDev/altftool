@@ -1,4 +1,12 @@
 const seo = {
+  title: "Warm-Up Set Calculator – Loadable Weights & Percentages",
+  metaDescription:
+    "Build a warm-up ramp to your top set from four schemes — standard, heavy single, short or hypertrophy — with every rung rounded to plates you can load.",
+  steps: [
+    "Pick a Ramp style — Standard strength ramp, Heavy single / max attempt, Short ramp or Hypertrophy ramp — then enter your Top working weight, Reps in the work set, Bar weight and your Smallest jump in kg or lb.",
+    "Read The ramp table listing each set's % of top, rounded weight and reps up to the Work set row, with rungs that round to the same weight as the previous set dropped automatically.",
+    "Check Warm-up sets, reps, tonnage and Estimated time in the summary rows, then press Copy result for a gym-ready set list or Reset to restore defaults.",
+  ],
   intro:
     "A warm-up ramp is a short sequence of sets that climbs in percentages of your top working weight while the reps come down, so the movement is rehearsed under load without adding fatigue. This calculator applies four common ramp patterns — a standard strength ramp, a heavy-single ramp, a short ramp and a hypertrophy ramp — then rounds each rung to a weight your plates can actually make, since every disc goes on both sleeves. It also totals the warm-up reps, tonnage and rough time cost.",
   useCases: [

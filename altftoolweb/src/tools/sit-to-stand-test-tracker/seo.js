@@ -1,4 +1,12 @@
 const seo = {
+  title: "30-Second Chair Stand Test Score & Age Norms",
+  metaDescription:
+    "Score a 30-second chair stand against Rikli & Jones 25th-75th percentile ranges for your age and sex, with the CDC STEADI below-average flag.",
+  steps: [
+    "Enter Age (years), Sex (reference range) and the Full stands completed with arms folded across the chest.",
+    "Set Test length (seconds) to 30, or another length to normalise the count, and add a Previous 30-second score to see the change.",
+    "Read your score against the Rikli & Jones 25th-75th percentile range for that age band, the CDC STEADI below-average flag and the extra stands needed, then press Copy result.",
+  ],
   intro:
     "The Sit to Stand Test Tracker scores a 30-second chair stand — the number of times you can stand fully from a chair with arms folded in 30 seconds — against the Rikli & Jones Senior Fitness Test normal ranges used in the CDC STEADI fall-prevention toolkit. Each range is the 25th to 75th percentile for that age band and sex, so the tool tells you whether you sit inside it, above it, or below it, and how many extra stands would move you up. Entering a previous score also shows the change, which is the number that matters when you are tracking lower-body strength over months.",
   useCases: [

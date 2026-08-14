@@ -1,4 +1,12 @@
 const seo = {
+  title: "Beta Tester NDA Generator: Feedback, Telemetry, CFAA",
+  metaDescription:
+    "Build a closed-beta NDA with a perpetual feedback licence, a CFAA safe harbour for good-faith security testing and GDPR notice for crash telemetry.",
+  steps: [
+    "Enter the Company running the beta, the Programme or build name, Where bugs and questions go, the Governing law, and the Programme starts and Programme ends dates.",
+    "Tick the Programme profile boxes that apply — testers in the EU or UK, build sends crash logs or usage telemetry, testers may be under 18, physical prototype hardware is loaned out — and each one adds the clauses it makes necessary.",
+    "Set the Confidentiality tail (months after end), Vulnerability disclosure window (days) and Uninstall and delete within (days), clear anything under \"Required clauses missing\", then press Copy NDA.",
+  ],
   intro:
     "A beta tester NDA is the agreement that keeps a pre-release build confidential while settling three things a generic template misses: who owns the ideas testers send back, what the build reports home about them, and whether poking at its security is permitted. This generator assembles one from clauses tied to identifiable rules — a perpetual feedback licence, a Computer Fraud and Abuse Act safe harbour for good-faith research, GDPR Article 13 transparency for crash telemetry and the 18 U.S.C. section 1833(b) trade secret immunity notice. It is aimed at product and developer-relations teams running closed betas of software or prototype hardware.",
   useCases: [

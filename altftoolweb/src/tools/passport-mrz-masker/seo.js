@@ -1,4 +1,12 @@
 const seo = {
+  title: "Passport MRZ Masker: Redact and Export PNG/JPEG",
+  metaDescription:
+    "Cover the MRZ, passport number or face with opaque boxes, then export a re-encoded PNG or JPEG named filename-masked. Up to 25 MB, all in-browser.",
+  steps: [
+    "Press Choose image or drop a PNG, JPEG or WebP passport scan up to 25 MB and 20 million pixels; it stays in this browser tab.",
+    "Apply the MRZ bottom zone, Passport number or Face preset, then drag, resize or nudge each box with the arrow keys, with Undo to roll back.",
+    "Pick PNG or JPEG, tick the inspection confirmation, and press Download flattened image to get a re-encoded copy named filename-masked.",
+  ],
   intro:
     "The Passport & MRZ Masker paints solid opaque rectangles over the sensitive parts of a passport or ID scan and re-encodes the picture so the covered pixels are permanently gone from the exported file. One-click presets place a box over the machine-readable zone across the bottom 22% of the page, over the passport number in the upper right, or over the photo, and any box can be dragged, resized to the pixel or added freehand. The image is loaded and flattened in the browser and exported as a PNG or a JPEG at quality 0.92, named <file>-masked.",
   useCases: [

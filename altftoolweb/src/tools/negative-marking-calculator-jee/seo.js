@@ -1,4 +1,12 @@
 const seo = {
+  title: "JEE Main Negative Marking Calculator (+4 and -1)",
+  metaDescription:
+    "Project a JEE Main raw score out of 300 from Section A and Section B attempts, with marks lost to -1 and the best and worst guess outcomes.",
+  steps: [
+    "Under Section A — multiple choice enter MCQs in the paper, MCQs solved, Accuracy on solved MCQs (%), MCQs guessed and Options left standing on a guess.",
+    "Under Section B — numerical value enter Numerical questions in the paper, Numerical questions solved, Accuracy on those (%) and Numerical answers typed on a hunch.",
+    "Read the Expected raw score with its worst-to-best range, the What a guess is worth panel and the Break-even accuracy figure, then press Copy result.",
+  ],
   intro:
     "This JEE negative marking calculator turns an attempt plan into an expected JEE Main raw score using the official +4 for correct and -1 for incorrect scheme applied to both Section A multiple-choice questions and Section B numerical-value questions. It models the two sections separately because a four-option MCQ guess carries a small positive expected value while a typed numerical answer you have not solved is a certain -1. The output separates marks earned from marks handed back, and shows the best and worst case across the questions you guessed.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Airlines Excess Baggage: Prepaid vs Airport",
+  metaDescription:
+    "Works out excess kilos over your fare brand allowance plus KrisFlyer bonus, and prices them at the airport rate against 5-40 kg advance blocks.",
+  steps: [
+    "Pick your 'Fare brand / cabin' and 'KrisFlyer / PPS Club tier', then enter 'Passengers on the booking', 'Total checked baggage weight (kg)' and 'Heaviest single bag (kg)'.",
+    "Set the 'Currency of the quoted rates' and type the two per-kilogram figures from your own booking into 'Airport rate' and 'Advance purchase rate'.",
+    "Read 'Chargeable excess (rounded up)', 'Advance purchase total' and 'Saving by buying early', compare the 'Advance block price ladder', then press 'Copy result'.",
+  ],
   intro:
     "This estimator works out Singapore Airlines excess baggage under the weight concept: your checked allowance is a total number of kilograms set by the fare brand — 25 kg on Economy Lite up to 50 kg in Suites — with any KrisFlyer or PPS Club bonus added on top, and anything above that billed per kilogram rounded up to the next whole kilo. Enter your total checked weight, fare brand, tier and party size and it compares paying at the airport against buying weight in advance, which Singapore Airlines sells in fixed blocks of 5, 10, 15, 20, 25, 30 or 40 kg per passenger. The per-kilogram rates are yours to enter, because excess is priced by route band and currency of sale.",
   useCases: [

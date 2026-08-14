@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voiceover Script Duration Estimator with Pause Time",
+  metaDescription:
+    "Paste a script or a word count, pick a pace from 100 to 175 wpm, and get runtime including pauses plus the words to cut to hit a 30-second spot.",
+  steps: [
+    "Choose Paste a script or Enter a word count, then drop your copy into the Script box.",
+    "Pick a Delivery style from Meditation / relaxation at 100 wpm to Commercial / promo at 175 wpm, tick \"Add pause time for punctuation and paragraph breaks\", and set Target minutes and seconds or a 30s spot chip.",
+    "Read Estimated runtime with Reading time, Pause time and Effective pace with pauses, then \"Fit to a target length\" gives the word budget and the words to cut.",
+  ],
   intro:
     "Spoken runtime is word count divided by speaking pace, plus the time spent in pauses: seconds = words / wpm x 60, with roughly half a second added per sentence end, a fifth of a second per comma and a little under a second per paragraph break. This estimator applies that to a pasted script or a plain word count, then tells you the word budget and the pace you would need to land on a target length such as a 30-second spot. Written for voice artists, video editors and e-learning producers who have to fit a fixed slot.",
   useCases: [

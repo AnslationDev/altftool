@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTML Editor: Format, Minify, Escape and Unescape",
+  metaDescription:
+    "Reindent, minify, escape or decode an HTML fragment up to 500,000 characters. Void elements never indent; pre, textarea, script and style pass through.",
+  steps: [
+    "Paste your markup into the \"HTML in\" box, which accepts up to 500,000 characters.",
+    "Pick Format, Minify, Escape or Unescape, then set the indent size or tick \"Drop every space between tags\".",
+    "Check the bytes-in and bytes-out figures and the \"Tags never closed\" row, then press Copy output.",
+  ],
   intro:
     "This HTML editor does four jobs on a fragment of markup: pretty-prints it with real indentation, minifies it by collapsing the whitespace the browser would collapse anyway, escapes the five markup-special characters (& < > \" ') into entities, and decodes named and numeric character references back to plain text. It follows the HTML Living Standard's void-element list, so tags like img, br and input never open an indent level, and it copies pre, textarea, script and style content through byte for byte. It is for developers cleaning up scraped or generated markup, and for anyone who needs to paste HTML into a CMS field as visible text.",
   useCases: [

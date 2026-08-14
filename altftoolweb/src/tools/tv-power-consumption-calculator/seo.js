@@ -1,4 +1,12 @@
 const seo = {
+  title: "TV Power Consumption Calculator - kWh and Cost",
+  metaDescription:
+    "Estimate a TV's kWh and running cost from screen size, panel type and picture mode - or your label wattage - with standby hours billed separately.",
+  steps: [
+    "Set \"Screen size (inches, diagonal)\" with the 32-75 inch presets, plus \"Panel technology\" and \"Picture mode\", or type the \"Known on-mode wattage from the energy label\".",
+    "Enter \"Viewing hours per day\", \"Electricity tariff (INR per kWh)\" and \"Standby draw (watts)\".",
+    "Read the estimated monthly running cost with kWh per day, cost per year and standby cost per year, then click \"Copy result\".",
+  ],
   intro:
     "This calculator estimates how many kilowatt-hours a television uses and what that costs, from the kWh definition: power in watts multiplied by hours of use, divided by 1000, then multiplied by your tariff. When you do not know your set's wattage it models on-mode power from 16:9 screen area and panel technology, so a 55-inch edge-lit LED comes out near 90 W while an OLED of the same size lands higher. Standby hours are counted separately, because a TV that is 'off' still draws power.",
   useCases: [

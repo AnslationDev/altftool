@@ -1,4 +1,12 @@
 const seo = {
+  title: "CIDR Subnet Calculator: Netmask, Wildcard, Hosts",
+  metaDescription:
+    "Expand any IPv4 CIDR into network, broadcast, usable host range, subnet mask and wildcard mask, with /31 per RFC 3021 and /32 handled correctly.",
+  steps: [
+    "Type a block into the 'IPv4 CIDR block' field, for example 192.168.1.130/26.",
+    "Or press a preset — 10.0.0.0/8, 172.16.0.0/12, 192.168.1.0/24, 192.168.1.130/26 or 10.0.0.0/31 — and the Usable hosts figure recalculates as you type, using 2^(32-prefix) - 2 for /30 and larger.",
+    "Read Network address, Broadcast address, Subnet mask, Wildcard mask, First and Last usable host, Total addresses, Host bits and Address type, then press Copy result.",
+  ],
   intro:
     "This calculator expands any IPv4 CIDR block (RFC 4632) into its full subnet breakdown: network and broadcast addresses, first and last usable host, subnet mask, wildcard mask, and host count using 2^(32−prefix) − 2. It handles the special cases generic tools get wrong — /31 point-to-point links with two usable addresses per RFC 3021, /32 host routes, and /0 — and labels the block as RFC 1918 private, loopback, link-local, CGN, multicast or public. Built for network engineers, cloud architects and anyone carving up a VPC.",
   useCases: [

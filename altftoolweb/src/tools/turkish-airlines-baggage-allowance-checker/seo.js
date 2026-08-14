@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turkish Airlines Baggage Checker: 8 kg Cabin Rule",
+  metaDescription:
+    "Check bags against Turkish Airlines limits: 8 kg cabin at 55x40x23 cm, pooled 20-30 kg checked weight or 2x23 kg to the Americas, with excess cost.",
+  steps: [
+    "Under Your fare pick Cabin, fare or route — for example International Economy — 30 kg, or an Americas piece-concept option.",
+    "Enter the Weight (kg) and the three centimetre dimensions for the Cabin bag and Personal item, then use Add bag for each of your Checked bags.",
+    "Read Excess checked weight in kg with the within-allowance or things-to-fix line and the Bag-by-bag table, price it using Excess rate per kg or Fee per extra bag, then press Copy result.",
+  ],
   intro:
     "This checker tests your bags against Turkish Airlines' published cabin and check-in limits and reports how many kilograms or pieces you are over. Turkish uses a weight concept on most of its network — 15 kg on domestic Türkiye sectors, typically 20 kg to 30 kg on international Economy and 30 kg or 40 kg in Business, shared across every checked bag together — and switches to piece rules of 2 × 23 kg or 2 × 32 kg on journeys to and from the Americas. Cabin baggage is 8 kg at 55 × 40 × 23 cm, a kilogram more generous than most carriers, plus a small accessory bag of up to 40 × 30 × 15 cm.",
   useCases: [

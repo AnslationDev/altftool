@@ -1,4 +1,12 @@
 const seo = {
+  title: "Atal Pension Yojana Calculator: APY Contribution by Age",
+  metaDescription:
+    "Official PFRDA contribution for each ₹1,000–₹5,000 APY slab and joining age 18–40, plus total paid to 60 and the corpus your nominee receives.",
+  steps: [
+    "Enter Your age at joining (18–40) and choose a slab under Guaranteed monthly pension from 60, or tap one of the ₹1,000 to ₹5,000 chips beneath that field.",
+    "The Monthly contribution figure recalculates as you type — there is no calculate button — reading the official PFRDA chart for that entry age, with Contribution period, Total you will contribute and Corpus returned to nominee listed under it.",
+    "Compare every slab in the All five slabs if you join at table, then press Copy result to put the breakdown on the clipboard, or Reset to restore the defaults.",
+  ],
   intro:
     "This Atal Pension Yojana calculator returns the exact monthly contribution PFRDA will auto-debit from your bank account for the ₹1,000 to ₹5,000 guaranteed pension slabs, using the official APY contribution chart for every joining age from 18 to 40. It also totals what you will pay over the full accumulation period up to age 60 and shows the corpus your nominee receives after you and your spouse. It is built for unorganised-sector workers, gig workers and small business owners comparing slabs before filling the APY enrolment form at their bank or post office.",
   useCases: [

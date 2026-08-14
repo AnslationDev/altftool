@@ -1,4 +1,12 @@
 const seo = {
+  title: "Preset Pack README Generator for Lightroom & LUTs",
+  metaDescription:
+    "Writes the README that ships in a preset or LUT download: contents, the real install path for Lightroom, Photoshop or Resolve, licence and support.",
+  steps: [
+    "Fill in Pack name, Creator or studio, Version, Copyright year and Number of files, then set Product type to Lightroom Classic presets (.xmp), Photoshop actions (.atn) or another host.",
+    "Pick a Licence tier — Personal use only, Commercial use or Extended / team — add Support email and Website, and tick Include a changelog section.",
+    "Generated README.md renders below with its word count, suggested zip file name and a Before you publish list of gaps; press Copy Markdown or Copy plain text to drop it in the zip.",
+  ],
   intro:
     "Preset Pack Readme Generator produces the documentation file that ships inside a paid creative download: contents, requirements, the real install path for the host application, plain-language licence terms and a support section. Install steps follow each application's documented route — Lightroom Classic's Develop module, Photoshop's Actions panel, Capture One's Styles and Presets tool, the DaVinci Resolve LUT folder — rather than generic advice. Output is Markdown or plain text, ready to drop in the zip beside your files.",
   useCases: [

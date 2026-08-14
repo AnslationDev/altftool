@@ -1,4 +1,12 @@
 const seo = {
+  title: "Landlord Notice Letter: Vacate or Repair Request",
+  metaDescription:
+    "Write a notice to vacate or a repair request: it prices short notice at 30-day pro-rata daily rent, works out the deposit refund, and cites section 106.",
+  steps: [
+    "Under 'Which letter do you need?' pick 'Notice to vacate' or 'Repair request'.",
+    "For a vacate notice fill Date of this notice, Date you will vacate, 'Notice period in the agreement (days)', Monthly rent, Security deposit held and 'Deductions you agree to'; repair mode asks instead for 'First reported on' and 'Days you are allowing for the repair'.",
+    "Read the refund figure with Rent per day (30-day pro-rata), Shortfall in notice and the Model Tenancy Act deposit cap, then press Copy letter for the drafted letter or Copy summary for the figures.",
+  ],
   intro:
     "This builder writes the two letters tenants need most: a written notice to vacate that ends the tenancy on a stated date, and a repair request that puts a landlord's maintenance duty on record. The vacating notice compares the notice you are actually giving against the period in your agreement, prices any shortfall at a 30-day pro-rata daily rent, and sets out the deposit refund after agreed deductions. Where an agreement is silent, section 106 of the Transfer of Property Act, 1882 treats an ordinary lease as month to month, terminable by fifteen days' written notice counted from the date the other side receives it.",
   useCases: [

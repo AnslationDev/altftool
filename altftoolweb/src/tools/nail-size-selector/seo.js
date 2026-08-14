@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nail Size Selector: Penny Size by Penetration Rule",
+  metaDescription:
+    "Framing, sheathing or trim: enter both thicknesses in mm to get the first penny size clearing 10 shank diameters, checked for blow-through, with counts.",
+  steps: [
+    "Under \"What are you nailing?\" pick Framing, Sheathing or Trim, then enter the \"Thickness being fastened (mm)\" and the \"Thickness receiving the nail (mm)\".",
+    "Set \"Nail spacing (mm)\", \"Run length (m)\" and \"Rows or lines of nails\" for the job.",
+    "Read the recommended nail with its Nail length, Shank diameter, \"Penetration into the base\" in shank diameters, plus Nails per row and Total nails, then press Copy result.",
+  ],
   intro:
     "Chooses a nail by the rule that actually governs it: penetration into the member underneath. The National Design Specification for Wood Construction requires at least 6 shank diameters into the main member for any lateral design value and 10 for the full value, so this walks the standard penny table and returns the first size that clears 10 diameters, then checks the point will not come out the far side. Framing, sheathing and trim each get their own path, with the prescriptive IRC fastening schedule shown alongside.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "SOP Prompt Builder: RACI and ISO 9001 Doc Control",
+  metaDescription:
+    "Turn 'Role: action' steps into a prompt for a full SOP - RACI with one Accountable per step, control checks, escalation and a calculated review date.",
+  steps: [
+    "Give the Procedure title, the Process owner (accountable role), a Risk level, the Effective date and a Review cycle of Quarterly, Every 6 months, Annually or Every 2 years, then write the Steps one per line as \"Role: action\".",
+    "The builder counts the procedure steps, notes when a draft runs past twenty steps, and works the Next review due date out from the effective date and the chosen cycle.",
+    "The generated prompt asks for the ISO 9001 document-control header, a RACI table with a single Accountable role per step, control checks with measurable acceptance criteria, records and an escalation path; Copy prompt copies it and Reset restores the defaults.",
+  ],
   intro:
     "An SOP document prompt builder converts a title, an owning role and a list of \"Role: action\" steps into an AI prompt that produces a complete standard operating procedure. The prompt carries the document-control fields ISO 9001:2015 clause 7.5 expects — identification, version, effective date, review date and approval — plus a RACI responsibilities table with exactly one Accountable role per step, control checks with measurable acceptance criteria, and an escalation path. It also calculates the next review date from your effective date and chosen review cycle.",
   useCases: [

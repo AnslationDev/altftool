@@ -1,4 +1,12 @@
 const seo = {
+  title: "Drill Bit Size for Pilot, Clearance, Tap and Plug",
+  metaDescription:
+    "Pilot at 60% of the screw in softwood or 75% in hardwood, tap drill at D minus pitch, ISO 273 clearance and plug sizes, in millimetres and inches.",
+  steps: [
+    "Pick the job under \"What are you drilling for?\" — Wood screw — pilot and clearance, Metric thread — tap and clearance, or Wall plug or anchor.",
+    "For a wood screw enter Screw outer diameter (mm) and Screw length (mm) and choose the Material; for a thread pick an ISO metric coarse size such as M8 × 1.25 and a Clearance fit of close, medium or free.",
+    "Bit to use names the size with how deep to drill, and the table adds the calculated diameter, the nearest bits either side, the inch fraction, countersink and the ISO 273 clearance; Copy result saves them.",
+  ],
   intro:
     "Works out the drill diameter for the four jobs people confuse: a pilot hole for a wood screw, a clearance hole for its shank, a tap drill for a metric thread and the hole for a wall plug. Pilot sizes follow the published charts — about 60% of the screw's outer diameter in softwood and 75% in hardwood — tap drills use the standard D minus pitch rule that leaves roughly 77% thread engagement, and clearance holes come from the ISO 273 series. Each answer is rounded to a bit you can actually buy, in millimetres and in inches.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "PDF to Word Converter: Editable DOCX in Your Browser",
+  metaDescription:
+    "Rebuilds a text-based PDF as an editable .docx — paragraphs merged, headings detected, page range optional. Up to 80 MB, in your browser.",
+  steps: [
+    "Drop a file on the Drop PDF here panel or press Choose PDF; the input accepts application/pdf only and rejects anything over 80 MB.",
+    "In Conversion Settings pick Flowing Document or Page-by-Page, type a Page Range such as 1-3, 7 (leave it blank to convert all pages), and toggle Detect headings, Add page breaks, Add page headings or Include conversion report.",
+    "Press Download DOCX to save the Word file named after your PDF, or use Copy Text; pages with no text layer are counted as empty text pages and can be run through OCR first.",
+  ],
   intro:
     "PDF to Word Converter rebuilds a text-based PDF as an editable .docx by reading the PDF's text layer, grouping items into lines by their coordinates, joining lines into paragraphs across gaps and indents, and promoting lines whose font size is about 1.3x the page average into headings. Choose a flowing document for editable prose or page-by-page output to keep page boundaries, restrict the job to a page range, and preview the result before exporting. Pages that turn out to be scans with no text layer can be run through in-browser OCR first.",
   useCases: [

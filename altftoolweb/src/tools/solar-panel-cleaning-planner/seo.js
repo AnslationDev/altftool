@@ -1,4 +1,12 @@
 const seo = {
+  title: "Solar Panel Cleaning Calculator: Cost-Optimal Interval",
+  metaDescription:
+    "Models soiling by dust level and panel tilt, credits rain of 10 mm or more, and finds the wash interval where cleaning cost balances lost units in ₹.",
+  steps: [
+    "Enter 'Annual generation when clean (kWh)', the value of a unit in ₹/kWh, panel tilt, how dusty the area is, anything upwind, days between 10 mm rain and 'Cost of one cleaning (₹)'.",
+    "Add 'Your current cleaning interval (days)' and 'Days since the last wash' so your plan can be compared and dated.",
+    "Read 'Wash the panels every N days', the overdue or next-wash-due notice with ₹ lost per day, and the three-way table against the cost-optimal and rain-only plans; press 'Copy result'.",
+  ],
   intro:
     "A solar panel cleaning planner works out how fast dust eats your generation and how often washing is actually worth paying for. It models soiling as a daily loss rate — typically 0.1% of output per day on wet coastal sites up to about 1% per day near deserts and quarries — scaled for panel tilt and any dust source upwind, then finds the interval where the value of lost units and the cost of washing balance. That optimum follows the square-root rule T = √(2C ÷ (daily generation value × soiling rate)).",
   useCases: [

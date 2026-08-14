@@ -1,4 +1,12 @@
 const seo = {
+  title: "AKTU SGPA Calculator with Percentage and CGPA",
+  metaDescription:
+    "Credit-weighted SGPA on AKTU's 10-point scale, percentage via (CGPA - 0.75) x 10, credits lost to carry-overs, and your updated running CGPA.",
+  steps: [
+    "Enter each subject's \"Credits\" and pick its \"Grade\" from A++ (10 pt) down to F (0 pt), using \"Add subject\" for more rows.",
+    "Optionally fill \"CGPA so far\" and \"Credits completed so far\" to roll this semester into an updated CGPA.",
+    "Read the \"Semester SGPA\" with its equivalent percentage, credits earned versus registered and carry-over papers, then click \"Copy result\".",
+  ],
   intro:
     "SGPA at AKTU is the credit-weighted average of your grade points for one semester: multiply each subject's credits by its grade point, add them up, and divide by the total credits registered. This calculator does that on AKTU's 10-point scale (A++ = 10 down to F = 0), converts the result using the university's own equivalence of percentage = (CGPA − 0.75) × 10, and separates credits earned from credits lost to carry-over papers. It also rolls the new semester into your running CGPA.",
   useCases: [

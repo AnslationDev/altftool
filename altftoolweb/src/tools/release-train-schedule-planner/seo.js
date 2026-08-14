@@ -1,4 +1,12 @@
 const seo = {
+  title: "Release Train Planner: Code Freeze, RC and GA Dates",
+  metaDescription:
+    "Generate every code freeze, RC cut and GA date from one first GA date and a weekly cadence, with weekend milestones pulled back to Friday.",
+  steps: [
+    "Set the 'First GA date' and the 'Cadence (weeks between GAs)' from 1 to 26, then 'Releases to plan' from 1 to 24 and an optional Version prefix such as v7.",
+    "Enter 'Code freeze lead (days before GA)' and 'RC cut lead (days before GA)' up to 90 — the RC comes from the frozen branch so it cannot exceed the freeze lead — and tick 'Shift weekend milestones back to Friday'.",
+    "Read the Release / Code freeze / RC cut / GA table with each milestone's weekday and the stabilisation window in days, then press 'Copy schedule' for a Markdown pipe table to paste into a wiki.",
+  ],
   intro:
     "This planner generates a fixed-cadence release train schedule — the code freeze, release candidate (RC) and general availability (GA) date for every cycle — from one starting GA date and a cadence in weeks. It follows the train model used by Chromium's 4-week release cycle and SAFe's Agile Release Train: releases leave on schedule and unfinished features catch the next train. Release managers and engineering leads get a publishable milestone table, with weekend ship dates automatically pulled back to Friday.",
   useCases: [

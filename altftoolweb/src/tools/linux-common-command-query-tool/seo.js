@@ -1,4 +1,12 @@
 const seo = {
+  title: "Linux Command Search: 69 Commands with Examples",
+  metaDescription:
+    "Search 69 Linux commands by name, alias or what they do - exact names rank first. Each entry shows a man-page synopsis and copy-ready examples.",
+  steps: [
+    "Type into the Search box — 'compress, permissions, find files…' — or narrow the list with the Category dropdown.",
+    "Exact command names outrank description matches, so cp returns cp; press Star on the entries you keep forgetting.",
+    "Each result shows its usage synopsis and copy-ready examples with their own Copy buttons, and Copy cheat sheet copies every starred command with its category, usage, examples and see-also list.",
+  ],
   intro:
     "The Linux Common Command Query Tool is a searchable reference for 69 everyday Linux commands, ranked by how well they match what you typed: an exact command name always outranks a match buried in a description, so typing \"cp\" returns cp rather than every command that mentions copying. Each entry carries a one-line description, a usage synopsis in manual-page form (square brackets mark optional arguments), worked examples you can copy into a shell, and related commands. Star the ones you keep forgetting and copy them out as a plain-text cheat sheet.",
   useCases: [

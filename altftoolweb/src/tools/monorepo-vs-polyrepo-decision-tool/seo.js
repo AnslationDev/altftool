@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monorepo vs Polyrepo: 8-Question Decision Scorecard",
+  metaDescription:
+    "Answer eight questions on code sharing, CI investment, release coupling and access control for scored monorepo and polyrepo fit percentages.",
+  steps: [
+    "Answer all eight questions covering code sharing, cross-project changes, build tooling, release coupling and access control.",
+    "Every choice awards monorepo and polyrepo points, listed answer by answer in the Mono pts and Poly pts table.",
+    "Read the Recommendation with Monorepo fit and Polyrepo fit percentages — a gap under 15 points is borderline — then press Copy result.",
+  ],
   intro:
     "This tool scores your team on the eight factors that actually decide between a monorepo and a polyrepo — code sharing, frequency of cross-project changes, build-tooling investment, release coupling, access control, projected scale, dependency policy and team autonomy. Each answer awards points to one side and the result is two comparable fit percentages plus a recommendation, with a 15-point margin treated as a toss-up. Engineering leads get a defensible, written-down rationale instead of a whiteboard argument.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Husky v9 Config Generator with lint-staged Hooks",
+  metaDescription:
+    "Exact Husky v9 install commands, plain-shell hook files and package.json config for npm, pnpm, Yarn or bun - pre-commit, commit-msg and pre-push.",
+  steps: [
+    "Pick npm, pnpm, Yarn or bun in the Package manager select so every command matches your tooling.",
+    "Tick the hooks under Hooks to generate - pre-commit with lint-staged, commit-msg with commitlint, pre-push with your own command - and edit the lint-staged glob-to-command rows (Add rule appends one).",
+    "Click Copy setup to copy the whole output in one block: the Run these commands section, the package.json additions and each .husky hook file.",
+  ],
   intro:
     "This generator produces a complete Husky v9 and lint-staged setup: the exact install commands for npm, pnpm, Yarn or bun, the .husky hook files, and the package.json additions including the prepare script and lint-staged configuration. It follows the current Husky v9 format, where hook files are plain shell lines and the deprecated husky.sh sourcing boilerplate is gone. It is built for developers wiring up pre-commit linting, commitlint message checks or pre-push tests in a new or existing repository.",
   useCases: [

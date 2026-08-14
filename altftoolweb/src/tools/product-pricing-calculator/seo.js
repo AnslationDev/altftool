@@ -1,4 +1,12 @@
 const seo = {
+  title: "Product Pricing Calculator: Margin, Commission, Tax",
+  metaDescription:
+    "Solves price = cost / (1 - commission - margin), so a marketplace cut is priced in properly. Adds tax, rounds to a price point, rechecks the margin.",
+  steps: [
+    "Enter Materials, Labour, Packaging, Inbound shipping per unit, Fixed overhead a month and Units sold a month so the overhead is absorbed into the unit cost.",
+    "Set Target gross margin (% of price), Marketplace commission (%) and Sales tax / VAT / GST (%), then pick a Round the price to option such as End in .99.",
+    "Read the Shelf price including tax with the margin achieved after rounding and the Break-even volume a month, then press Copy pricing.",
+  ],
   intro:
     "This calculator sets a selling price from the bottom up: it builds the landed unit cost from materials, labour, packaging, inbound shipping and a share of monthly overhead, then solves for the price that leaves your target gross margin after a marketplace commission — price = cost ÷ (1 − commission − margin) — before adding sales tax and rounding to a price point. Because commission is a share of the selling price rather than of cost, adding it to the margin is not enough; the formula accounts for that, and refuses combinations where commission plus margin reach 100%. The margin actually achieved is recalculated after rounding, not assumed.",
   useCases: [

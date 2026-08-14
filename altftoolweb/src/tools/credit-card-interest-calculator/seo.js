@@ -1,4 +1,7 @@
 const seo = {
+  title: "Credit Card Minimum Payment Trap Calculator With GST",
+  metaDescription:
+    "Simulates a card balance month by month with 18% GST on interest, showing months to clear on the minimum due against a fixed or 3, 6 or 12-month payoff.",
   intro:
     "This calculator shows what paying only the minimum due on a credit card really costs, by simulating the balance month by month: interest at APR/12 on the outstanding amount, 18% GST charged on that interest, and a minimum payment of the greater of a set percentage of the total due or a floor amount. It reports how many months the card takes to clear, the total interest and GST paid, and compares that against a fixed monthly payment or a plan sized to clear the balance in 3, 6 or 12 months. Figures are in rupees, with the GST treatment used on Indian card statements.",
   useCases: [

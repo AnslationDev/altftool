@@ -1,4 +1,12 @@
 const seo = {
+  title: "Language Learning Flashcards with SM-2 Spaced Repetition",
+  metaDescription:
+    "Vocabulary flashcards scheduled by the SM-2 algorithm: rate 0-5, ease starts at 2.5 with a 1.3 floor. Bulk-import lists, export sets as JSON.",
+  steps: [
+    "Press New Set to name a deck, then open Bulk Import and paste one card per line as \"term | definition\" — a tab, pipe, comma or double space all work as the separator — and hit Import Cards.",
+    "Press Study, flip each card, and answer \"How well did you know this?\" on the six-point scale from Complete blackout to Perfect response; anything below Correct with serious difficulty resets that card to a 1-day interval.",
+    "Check Mastery Overview, where a card counts as mastered at 5 successful repetitions and a 21-day interval, then press Export to download flashcards-export-<timestamp>.json.",
+  ],
   intro:
     "Language Learning Flashcards is a vocabulary trainer that schedules your reviews with the SM-2 spaced-repetition algorithm — the same interval logic behind SuperMemo and Anki. You rate each card from 0 to 5 after flipping it, and the algorithm sets the next review date from that grade: 1 day, then 6 days, then the previous interval multiplied by the card's ease factor, which starts at 2.5 and never drops below 1.3. Cards are grouped into sets, imported in bulk from pasted lines, and stored in your browser, with a card counted as mastered once it has 5 successful repetitions and an interval of at least 21 days.",
   useCases: [

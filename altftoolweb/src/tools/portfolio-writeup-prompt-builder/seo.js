@@ -1,4 +1,12 @@
 const seo = {
+  title: "Portfolio Case Study Prompt Builder: STAR or CARE",
+  metaDescription:
+    "Turn a project's before and after numbers into an AI case-study prompt built on STAR, CARE, Problem-Process-Outcome or Double Diamond.",
+  steps: [
+    "Enter the Project name, Your role on it, the Headline metric and its Before and After values, then set 'Which way is good?' so a fall in bounce rate scores as an improvement.",
+    "Choose the Case-study structure — STAR, CARE, Problem → Process → Outcome or Double Diamond — and set Target length (words) between 150 and 3000; sections are sized against it and a reading time computed at 238 words per minute.",
+    "Check the percentage change and multiple shown above the results list, then press 'Copy prompt' to take the generated prompt from the 'Your prompt' panel.",
+  ],
   intro:
     "The Portfolio Writeup Prompt Builder takes a project's before and after numbers, works out the real percentage change and multiple in the direction that counts as success, then writes an AI prompt that turns them into a case study built on a named structure — STAR, CARE, Problem-Process-Outcome or the Design Council's Double Diamond. It sizes each section against your target word count and estimates reading time at 238 words per minute. For designers, engineers and marketers who have the work but not the writeup.",
   useCases: [

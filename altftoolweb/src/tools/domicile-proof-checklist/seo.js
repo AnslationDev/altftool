@@ -1,4 +1,10 @@
 const seo = {
+  title: "Domicile Certificate Documents & Residence Checker",
+  steps: [
+    "Pick your State or union territory, then set the Qualifying period the state asks for (years) and the Years you have actually lived there.",
+    "Tick what fits under Which of these apply to you? — born in this state, family owns property here, the applicant is a minor, a school or college admission, a married woman on her husband's domicile, or a government posting — plus the seven-years-and-a-board-exam route where the territory offers it.",
+    "Read the File readiness percentage and the Residence test verdict, tick each item under Required documents as you obtain it, then press Copy checklist.",
+  ],
   intro:
     "A domicile or residence certificate is issued by a state, not by the Union, so the qualifying period of continuous residence differs — but the structure of the file the revenue authority wants is the same everywhere: identity, current address, evidence that the address has held for the whole qualifying period, parentage, and a sworn declaration that no domicile is held in another state. This checklist tests your residence period against the one your state applies, then builds the document list for your circumstances and tracks how much of it you actually have. It also carries the alternate routes fixed by the Jammu and Kashmir Grant of Domicile Certificate (Procedure) Rules, 2020.",
   useCases: [

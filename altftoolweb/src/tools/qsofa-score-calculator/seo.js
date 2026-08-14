@@ -1,4 +1,12 @@
 const seo = {
+  title: "qSOFA Score Calculator - Sepsis-3 Bedside Criteria",
+  metaDescription:
+    "Scores the three Sepsis-3 criteria - RR 22+, systolic 100 mmHg or less, GCS under 15 - one point each, with a per-criterion breakdown. For revision use.",
+  steps: [
+    "Enter the Respiratory rate (breaths per minute), Systolic blood pressure (mmHg) and Glasgow Coma Scale total (3-15).",
+    "Read the qSOFA total out of 3 with each criterion's 1 point or 0 points line, and whether the 2-point Positive threshold is met.",
+    "Click Copy result to copy the scored breakdown with its educational-use note, or Reset to return to the RR 24 / SBP 96 / GCS 15 example.",
+  ],
   intro:
     "The qSOFA Score Calculator scores the three bedside criteria defined in the Sepsis-3 consensus (Singer et al., JAMA 2016): a respiratory rate of 22 breaths per minute or more, a systolic blood pressure of 100 mmHg or less, and altered mentation with a Glasgow Coma Scale below 15. Each criterion scores one point, and a total of 2 or more is called positive. It is built for students and clinicians revising the score; qSOFA flags risk of a poor outcome in suspected infection and does not diagnose sepsis.",
   useCases: [

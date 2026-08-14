@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gemini API Cost Calculator with Long-Context Tier",
+  metaDescription:
+    "Price a Gemini request per million tokens across text, cached, image and audio, with the long-context tier and hourly cache storage charge included.",
+  steps: [
+    "Choose a model in the Gemini model dropdown — the Input, Output, Cached input and Audio input rates (USD / 1M tokens) pre-fill from Google's list prices and stay editable.",
+    "Fill in Usage per request: Text prompt tokens, Output tokens, Cached context tokens, Images per request at 258 tokens per 768px tile, Audio seconds per request at 32 tokens per second, and Requests per month.",
+    "Read Estimated monthly cost with the Billing tier row showing Standard or Long context, plus Cost per request, Cost per 1,000 requests and Annual run rate, then press Copy result.",
+  ],
   intro:
     "This calculator converts a Gemini API request's token mix into a dollar figure using Google's per-million-token billing: cost = (input tokens ÷ 1,000,000) × input rate + (output tokens ÷ 1,000,000) × output rate. It also applies the two rules that trip up back-of-envelope estimates — the long-context tier that raises both the input and output rate for the whole request once a prompt crosses the threshold, and the context-cache discount that bills reused tokens at a quarter of the standard input rate plus an hourly storage charge. Images and audio are converted to tokens first, at 258 tokens per 768px image tile and 32 tokens per second of audio.",
   useCases: [

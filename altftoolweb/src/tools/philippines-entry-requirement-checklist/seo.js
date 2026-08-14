@@ -1,4 +1,12 @@
 const seo = {
+  title: "Philippines Entry Checklist: Visa-Free Stay & eTravel",
+  metaDescription:
+    "Turn Philippine entry rules into dates: when your visa-free admission expires, the 72-hour eTravel window, and the passport validity your trip needs.",
+  steps: [
+    "Pick 'Your admission band' — 30, 59, 14 or 7 days visa waiver, Balikbayan or embassy visa — plus purpose, arrival date, days you will stay and passport expiry.",
+    "Read the computed dates: the day your admission runs out, the day eTravel opens 72 hours before arrival, and the passport check six months past departure.",
+    "Tick each required document as you gather it — the readiness bar tracks x of y items — then click 'Copy checklist' to take the dated list with you.",
+  ],
   intro:
     "The Philippines admits nationals of around a hundred and fifty countries without a visa for 30 days under Executive Order 408, but the passport rule is measured six months beyond the period of stay rather than beyond arrival, and the free eTravel registration can only be filed in the 72 hours before you land. This checklist turns those rules into dates: the day your admission expires, the earliest day eTravel opens, and the exact validity your passport needs for the trip you have booked.",
   useCases: [

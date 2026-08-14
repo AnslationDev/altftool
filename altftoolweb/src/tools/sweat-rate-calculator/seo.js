@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sweat Rate Calculator: Litres Per Hour From Weight",
+  metaDescription:
+    "Enter weight before and after training, fluid drunk and session length for litres of sweat per hour, a 15-minute drinking target and sodium lost.",
+  steps: [
+    "Enter Weight before exercise (kg), Weight after exercise, towel-dried (kg), Fluid drunk during the session (ml) and Urine passed during the session (ml).",
+    "Set Exercise duration (minutes) directly or tap the 45 min, 60 min, 90 min or 120 min presets, then adjust Sweat sodium (mmol/L, typical 20-80).",
+    "Read Your sweat rate in L/h with the body-mass-loss band, plus Drink target to break even in ml/hour and Estimated sodium lost, then press Copy result.",
+  ],
   intro:
     "A sweat rate calculator turns a before-and-after weigh-in into litres of sweat lost per hour, using the standard field formula: body-mass change plus fluid drunk minus urine passed, divided by session time. It is aimed at runners, cyclists, footballers, gym-goers and anyone training in heat who wants a drinking plan based on their own body rather than a generic number. The tool also reports body-mass loss as a percentage — the marker ACSM uses, where losses beyond 2% start to hurt endurance and heat tolerance.",
   useCases: [

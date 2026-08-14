@@ -1,4 +1,12 @@
 const seo = {
+  title: "Florida Sales Tax Calculator with $5,000 Surtax Cap",
+  metaDescription:
+    "6% state tax on the full price, county surtax on only the first $5,000 per item. Pick a county or enter the DR-15DSS rate. Freight taxable by default.",
+  steps: [
+    "Pick your County of delivery from the preset list, which fills the rate, or type it into County surtax (% on top of 6%).",
+    "Enter Price of one item (USD) and Quantity, add any Other taxable amount, Exempt items or Delivery / freight, and untick Freight is taxable only when the charge is separately stated.",
+    "Read Total sales tax with the state base and the capped surtax base listed separately, then press Copy result for the full breakdown.",
+  ],
   intro:
     "This calculator applies Florida's 6% state sales tax under Fla. Stat. § 212.05 together with the county discretionary sales surtax under § 212.055, and — unlike a flat combined-rate calculator — it enforces the rule that trips most people up: the surtax applies only to the first $5,000 of the sales price of any single item of tangible personal property, per § 212.054(2)(b)1. The 6% state tax has no ceiling, so on a $20,000 machine you pay 6% on the whole price but surtax on just $5,000. Retailers, equipment dealers and buyers comparing quotes get the state and surtax bases separated.",
   useCases: [

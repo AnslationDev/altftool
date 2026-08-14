@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Pull Request Template Generator (Markdown)",
+  metaDescription:
+    "Build a .github/pull_request_template.md with summary, linked issues, testing and screenshot sections, tickable checklists and Closes # auto-linking.",
+  steps: [
+    "Tick the Sections to include, from Summary and Linked issues through How this was tested, Screenshots / recordings and Author checklist.",
+    "Pick a Checklist preset — General, Frontend / UI, Backend / API or Library / package — add Extra checklist items (one per line), and tick Named template in PULL_REQUEST_TEMPLATE/ if the repo needs more than one.",
+    "Press Copy template and save the Markdown at the path shown under Save as, which is .github/pull_request_template.md by default, on your default branch.",
+  ],
   intro:
     "This tool generates a ready-to-commit GitHub pull request template — a Markdown file saved as .github/pull_request_template.md that pre-fills every new PR description with summary, linked-issue, testing, screenshot and checklist sections. It follows GitHub's documented template locations and closing-keyword syntax, so issues linked with \"Closes #123\" are closed automatically on merge. It is built for maintainers and team leads who want consistent, reviewable pull requests without writing the boilerplate by hand.",
   useCases: [

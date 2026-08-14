@@ -1,4 +1,12 @@
 const seo = {
+  title: "Saddle Height Calculator: LeMond 0.883 and Hamley",
+  metaDescription:
+    "Set saddle height from your cycling inseam by the LeMond 0.883 and Hamley 109% methods, with the 0.875-0.892 working window and setback guidance.",
+  steps: [
+    "Enter your measurement in 'Cycling inseam (cm)' and choose a 'Crank length (mm)' from the standard sizes.",
+    "Pick a 'Riding position' to set the setback range, and optionally type into 'Current saddle height (mm, optional)' to have your existing setup checked.",
+    "Read the recommended height with its 0.875-0.892 x inseam working range, the saddle-to-pedal figure and the setback guidance, then press 'Copy result'.",
+  ],
   intro:
     "Saddle height is the single setting that most affects comfort and power on a bicycle, and two published methods pin it down from one measurement. The LeMond method places the saddle top at 0.883 × cycling inseam above the bottom-bracket centre; Hamley and Thomas (1967) found peak efficiency at 109% of inseam measured from the pedal spindle at bottom dead centre, which is the same thing minus crank length. This calculator runs both, shows the working window fitters use (0.875-0.892 × inseam), converts the figure to a saddle-to-pedal measurement, and adds setback and crank-length guidance for your riding position.",
   useCases: [

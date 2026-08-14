@@ -1,4 +1,12 @@
 const seo = {
+  title: "Split PDF in Your Browser — Pages, Batches & Ranges",
+  metaDescription:
+    "Cut a PDF into one file per page, fixed batches or ranges like 1-3, 5, 9-, or extract/remove pages — pdf-lib in your browser, nothing uploaded.",
+  steps: [
+    "Upload your file under 'PDF file' (unlock password-protected PDFs first) and pick a 'Split mode' — One PDF per page, Fixed batches of N pages, Custom ranges, Extract or Remove selected pages.",
+    "For range modes type the pages into 'Pages / ranges' using 3, 2-7, 9- or last, and set the 'Output file name prefix'.",
+    "The Output files table names each part like document-page-01.pdf — press PDF for a single part or 'Download ZIP' for all of them (limit 500 output files).",
+  ],
   intro:
     "Split PDF cuts one PDF into several smaller PDFs — one file per page, fixed batches of N pages, custom ranges such as 1-3, 5, 9-, or a single file with chosen pages extracted or removed. Page numbers are 1-based exactly as your reader shows them, and the split is done with pdf-lib inside the browser, so the document is never uploaded. It is for anyone who needs to hand over part of a document — a single invoice from a batch, one chapter from a report — without sharing the rest.",
   useCases: [

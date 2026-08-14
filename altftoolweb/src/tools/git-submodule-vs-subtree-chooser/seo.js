@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Submodule vs Subtree vs Package: Scored Chooser",
+  metaDescription:
+    "Answer six questions — registry, change rate, consumer edits, git expertise, consumers, pinning — to rank submodule, subtree and package with reasons.",
+  steps: [
+    "Answer the workflow questions: How often does the shared code change?, Team git expertise, and Repositories consuming the shared code.",
+    "Tick the checkboxes that apply — a package registry is available, developers edit the shared code from inside consumer repos, consumers must pin an exact commit — and the scoring updates instantly.",
+    "Read the 'Best fit for your answers' verdict and each option's score bar with reasons and cautions, then press Copy result to paste the ranked list into an RFC or ticket.",
+  ],
   intro:
     "This chooser scores the three standard ways to share code across git repositories — git submodules, git subtree and a published package dependency — against six facts about your situation: registry availability, change frequency, whether consumers edit the shared code, team git expertise, consumer count and exact-commit pinning. The trade-offs encoded come from the Pro Git submodules chapter, git's contrib/subtree documentation and standard registry practice, and every point scored is explained.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kubernetes Label Selector Tester - Clause Verdicts",
+  metaDescription:
+    "Test matchLabels and matchExpressions (In, NotIn, Exists, DoesNotExist) against pod labels with per-clause PASS/FAIL and API-exact semantics.",
+  steps: [
+    "Paste the pod's labels into \"Pod labels (key=value per line)\" and the selector's \"matchLabels (key=value per line)\".",
+    "Click \"Add expression\" for each matchExpressions clause, setting its Key, Operator (In, NotIn, Exists, DoesNotExist) and comma-separated Values.",
+    "Read the MATCHES / NO MATCH verdict with a PASS or FAIL reason on every clause, then click \"Copy result\".",
+  ],
   intro:
     "This tester evaluates a Kubernetes label selector — matchLabels plus matchExpressions with In, NotIn, Exists and DoesNotExist — against a sample set of pod labels, clause by clause, using the same semantics as k8s.io/apimachinery. It shows exactly which clause fails and why, including the frequently missed rule that NotIn also matches objects that lack the key entirely. Useful for anyone debugging Deployments, Services, NetworkPolicies or affinity rules that silently select nothing.",
   useCases: [

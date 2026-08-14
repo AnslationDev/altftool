@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lecture Recording Checklist: Audio, Light, Capture",
+  metaDescription:
+    "Pre-flight check for audio, framing, screen capture and power, weighted 3/2/1 by severity. It holds the shoot while any critical item is still open.",
+  steps: [
+    "Work down the Audio, Framing and lighting, Screen capture, and Power, storage and continuity sections, ticking each item you have confirmed.",
+    "Clear the critical items first — test peaks between −12 and −6 dBFS, recording at 48 kHz, capture at 1920×1080 — because any unticked one holds the shoot.",
+    "Read 'Recording readiness' as a percentage with 'Critical items cleared' and the weighted score in points, then press 'Copy summary'.",
+  ],
   intro:
     "This lecture recording checklist scores your pre-flight setup across audio, framing and lighting, screen capture, and power and storage, weighting each item by severity (3 points critical, 2 important, 1 optional). It is aimed at lecturers, course creators and trainers who record themselves without a crew, and it holds the shoot while any critical item is still open — faults such as clipped audio above 0 dBFS or a scaled screen capture that no amount of editing can repair. Targets follow standard practice: dialogue peaking between −12 and −6 dBFS, 48 kHz sampling, and capture at the delivery resolution.",
   useCases: [

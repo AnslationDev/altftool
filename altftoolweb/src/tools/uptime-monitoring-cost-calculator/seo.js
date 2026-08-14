@@ -1,4 +1,12 @@
 const seo = {
+  title: "Uptime Monitoring Cost Calculator: Checks & Detection",
+  metaDescription:
+    "Turn endpoints, check interval and probe locations into check runs per month, cost under metered or per-monitor pricing, and time to detect.",
+  steps: [
+    "Enter 'Endpoints monitored' and 'Probe locations', and pick a 'Check interval' from Every 10 seconds up to Every 1 hour.",
+    "Choose the 'Pricing model' - 'Metered - price per 1,000 check runs' or flat per-monitor pricing - then fill in the price fields and your 'Availability target (%)'.",
+    "Read 'Monthly monitoring cost' with check runs per month, mean and worst-case time to detect and the monthly downtime budget, then press 'Copy result' for the breakdown.",
+  ],
   intro:
     "An uptime monitoring cost calculator converts a synthetic monitoring setup — endpoint count, check interval and number of probe locations — into check runs per month and the bill that follows, under either metered per-check-run pricing or flat per-monitor pricing. It also reports mean and worst-case time to detect, because a cheap 30-minute interval buys you a slow outage. Calculations use an average month of 30.4375 days (365.25 / 12), so annual figures are exactly twelve monthly ones.",
   useCases: [

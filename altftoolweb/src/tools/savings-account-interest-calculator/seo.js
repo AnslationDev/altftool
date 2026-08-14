@@ -1,4 +1,12 @@
 const seo = {
+  title: "Savings Account Interest Calculator – Daily Balance",
+  metaDescription:
+    "Simulates every day's closing balance with monthly deposits, credits interest each calendar quarter, and shows the 80TTA/80TTB tax-free portion.",
+  steps: [
+    "Enter Opening balance (INR), Net monthly deposit (negative for a withdrawal), Interest rate, Period (months), Start date and Monthly deposit day (1-28).",
+    "Pick the Account holder option — Below 60 (Section 80TTA, ₹10,000 exempt) or Senior citizen (80TTB, ₹50,000 exempt) — or tap a preset rate chip like 2.7% or 7%.",
+    "Read Interest earned with the average and lowest balances, the Quarterly interest credits table and the taxable portion; press Copy result.",
+  ],
   intro:
     "Since 2010 Indian banks have been required to calculate savings account interest on the daily closing balance rather than the old minimum-balance rule, and to credit it at least once a quarter. This calculator runs a real day-by-day simulation from your opening balance and monthly savings, applies the actual/365 accrual banks use, and credits the interest at each calendar quarter end so the compounding is right. It also flags how much of the interest stays tax free under Section 80TTA or 80TTB.",
   useCases: [

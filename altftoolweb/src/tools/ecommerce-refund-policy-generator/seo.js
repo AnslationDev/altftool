@@ -1,4 +1,12 @@
 const seo = {
+  title: "Refund Policy Generator With EU, UK and India Checks",
+  metaDescription:
+    "Set return window, restocking fee and shipping split to generate a 12-section refund policy, checked against EU 14-day, UK, India and FTC rules.",
+  steps: [
+    "Enter your store name and address, pick the Market you sell into, and set the Effective from date.",
+    "Set Return window (days from delivery), Refund issued within (days), Restocking fee (%) and Who pays return shipping.",
+    "Read \"Check these before you publish\" for any setting short of that market's statutory minimum, then press Copy policy.",
+  ],
   intro:
     "Ecommerce Refund Policy Generator turns your return window, condition requirements, restocking fee and shipping split into a twelve-section return and refund policy you can publish. It checks the numbers you choose against the market you sell into — the EU's 14-day right of withdrawal under Directive 2011/83/EU, the UK Consumer Contracts Regulations 2013, India's Consumer Protection (E-Commerce) Rules 2020, and the FTC's Mail, Internet, or Telephone Order Merchandise Rule in the US — and flags any setting that falls short. Everything is generated in your browser; nothing is sent anywhere.",
   useCases: [

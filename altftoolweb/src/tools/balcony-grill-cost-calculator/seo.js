@@ -1,4 +1,12 @@
 const seo = {
+  title: "Balcony Grill Cost: Per Sq Ft vs Per Kg of Steel",
+  metaDescription:
+    "Prices a grill both ways fabricators quote it, with bar weight from section and density (12 mm MS square = 1.13 kg/m) and a 100 mm clear-gap check.",
+  steps: [
+    "Enter each opening's width (ft), Height (ft) and How many, using 'Add an opening' for every extra window or balcony.",
+    "Under 'Section and spacing' set Material — Mild steel (MS), Stainless steel 304 or Aluminium — Bar shape (Square bar or Round bar), Bar size (mm), 'Bar spacing, centre to centre (mm)', horizontal members per opening and frame section weight (kg per m).",
+    "Under 'How it is quoted' choose 'By fabricated weight (₹ per kg)' or 'By grill area (₹ per sq ft)', add primer and paint, installation and openable-panel charges, and read Total grill cost with the sq ft, kilos of metal and cost per sq ft beneath it.",
+  ],
   intro:
     "This calculator prices balcony and window grills both ways fabricators quote them — per square foot of grill and per kilogram of fabricated steel — and works out the weight from the actual section rather than a rule of thumb. Mass per metre is cross-section area times density, so a 12 mm square mild steel bar comes to 1.13 kg per metre and a 12 mm round bar to 0.89 kg, which is the familiar d²/162 shortcut derived properly. It also counts the vertical bars your spacing produces and reports the clear gap between them against the 100 mm maximum normally required for balcony infill.",
   useCases: [

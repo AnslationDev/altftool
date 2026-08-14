@@ -1,4 +1,7 @@
 const seo = {
+  title: "Fake Customer Care Number Check & Refund Scam Maths",
+  metaDescription:
+    "Rate where a helpline number came from, flag requests no support line makes — OTP, PIN, remote access — and price the excess-refund trick.",
   intro:
     "Fake customer care fraud starts before the call: the number is planted on a surface an outsider can write to — a search result, a sponsored ad, a map listing, a reply to your public complaint — and you dial it yourself. This explainer rates each of those sources, marks the requests no genuine support line ever makes (an OTP, a PIN or CVV, a remote-access app, a payment to release a refund), and computes the arithmetic of the overpayment trick where a doctored credit screenshot is used to make you return an excess that never arrived. The safe channels are the ones you already control: the company's own app, the back of your card, a statement you hold.",
   useCases: [

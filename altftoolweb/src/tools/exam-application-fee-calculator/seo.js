@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Application Fee Calculator - SSC, UPSC, RRB, IBPS",
+  metaDescription:
+    "Total fees for SSC, UPSC, RRB, IBPS, SBI and CTET with each exam's own concession rules, bank charges and the refundable RRB portion netted out.",
+  steps: [
+    "Set your candidate profile: choose a Category (Unreserved / General, EWS, OBC, SC or ST) and tick Status flags like Woman candidate or Person with benchmark disability. [pages/index.jsx:151-190; lib.js:41-55]",
+    "Click Add exam for each application (up to 30 rows), pick the exam - from SSC - CGL, CHSL, MTS, CPO, GD through CTET - and optionally type the exact fee under 'Fee per application (optional override, INR)'. [pages/index.jsx:196-263; lib.js:38, 65-164]",
+    "Read the Net cost after refunds headline, with Fees paid at application, Bank charges, Total outlay and Refundable after appearing itemised below, then press Copy result. [pages/index.jsx:325-390]",
+  ],
   intro:
     "This calculator totals the application fees for India's major competitive exams — SSC, UPSC Civil Services, NDA/CDS, RRB, IBPS, SBI and CTET — applying each notification's own concession rule to your category and status. It nets out the refundable RRB portion (Rs 400 of the Rs 500 fee, or the full Rs 250 concession fee, refunded on appearing in CBT-1) and adds bank charges, so a serious multi-exam aspirant sees the real cash cost of an application season before spending it.",
   useCases: [

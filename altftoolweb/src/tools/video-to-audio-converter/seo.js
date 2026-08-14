@@ -1,4 +1,12 @@
 const seo = {
+  title: "Extract Audio from Video to WAV or Opus, with a Timeline",
+  metaDescription:
+    "Pull audio from video in your browser, trim, split and reorder clips on a timeline, then export 16-bit WAV or Opus at 64-256 kbps. No upload.",
+  steps: [
+    "Drop video or audio files into the media pool (accepts video/* and audio/*, multiple files at once).",
+    "Trim clip edges, Split at the playhead, reorder and set fade in, fade out and gain, then pick 'Export as' WAV, WEBM or OGG and click 'Render mix'.",
+    "Click 'Download' to save the finished mix as splice-deck-mix.wav, .webm or .ogg.",
+  ],
   intro:
     "The Video to Audio Converter pulls the audio track out of video files in your browser using the Web Audio API, then gives you a real timeline where each clip can be trimmed, split, reordered, faded and gain-adjusted before export. Finished audio downloads as 16-bit PCM WAV rendered at the source sample rate, or as Opus in a WebM or Ogg container at 64, 128, 192 or 256 kbps. It is for podcasters, editors and students who need the sound from a recording as a usable file, not just a raw dump.",
   useCases: [

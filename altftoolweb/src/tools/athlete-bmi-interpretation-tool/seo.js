@@ -1,4 +1,12 @@
 const seo = {
+  title: "Athlete BMI: Muscle or Fat? FFMI and Waist Check",
+  metaDescription:
+    "Put BMI beside Navy-tape body fat, height-normalised FFMI and waist-to-height against 0.5 to see whether a high reading is muscle or genuine fat.",
+  steps: [
+    "Pick Centimetres and kilograms or Feet, inches and pounds, then enter sex, height, weight and waist at the navel.",
+    "Set Body fat figure to estimate it from tape measurements, or enter a DEXA or skinfold percentage you already have.",
+    "Read BMI with its band beside body fat, lean mass, height-normalised FFMI against the drug-free ceiling and waist-to-height against the 0.5 limit.",
+  ],
   intro:
     "The Athlete BMI Interpretation Tool tests whether a high BMI reflects fat or muscle by putting it beside three measures that can tell them apart: body fat percentage from the US Navy circumference equations, fat-free mass index with the Kouri height normalisation, and waist-to-height ratio against the 0.5 limit. BMI itself is weight divided by height squared and treats every kilogram identically, which is why a lean rugby player and a sedentary person of the same weight and height get the same number. The output states which reading the measurements actually support rather than leaving you to guess.",
   useCases: [

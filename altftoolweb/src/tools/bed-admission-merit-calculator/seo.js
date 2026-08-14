@@ -1,4 +1,12 @@
 const seo = {
+  title: "B.Ed Merit Calculator: Graduation + Entrance Index",
+  metaDescription:
+    "Weight graduation percentage against entrance score to get a B.Ed merit index out of 100, with the NCTE 50% (55% B.Tech) eligibility floor checked.",
+  steps: [
+    "Enter Graduation marks obtained and Graduation maximum marks, then the Entrance exam score and Entrance exam maximum.",
+    "Set Weight given to graduation marks (%) or pick the Entrance exam only, Graduation marks only, or Combined 30 : 70 preset.",
+    "Read the Merit index out of 100 with the NCTE eligibility floor row, then press Copy result.",
+  ],
   intro:
     "This calculator produces a B.Ed admission merit index as a weighted average of graduation percentage and entrance-exam percentage on a 100-point scale — the formula behind entrance-ranked lists (UP B.Ed JEE, Bihar CET-B.Ed, MAH B.Ed CET), graduation-ranked university lists, and mixed formulas. It also checks the NCTE Regulations, 2014 eligibility floor of 50% graduation marks (55% for B.E./B.Tech candidates). It is for graduates planning a two-year B.Ed and wanting to know where they stand before counselling.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Photo Editor App Permission Audit: 0-100 Privacy Score",
+  metaDescription:
+    "Score a photo editor's permissions against the system photo picker baseline: 0-100 privacy score, ranked revoke list and each grant's manifest name.",
   intro:
     "The Photo Editor App Permission Audit scores an image-editing app against the system photo picker baseline: since Android 13 and iOS 14 an app can receive the one file you chose with no permission at all. Anything beyond that — full-library access, All files access, ACCESS_MEDIA_LOCATION for the GPS tags inside your photos, and cloud upload of originals for AI filters — is scored as an extra the app has to justify. You get a 0-100 privacy score, a ranked revoke list and the manifest name of each grant.",
   useCases: [

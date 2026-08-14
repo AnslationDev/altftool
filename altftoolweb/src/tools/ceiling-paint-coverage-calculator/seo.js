@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ceiling Paint Calculator: Litres, Tins and Cove Area",
+  metaDescription:
+    "Litres = area × coats ÷ spreading rate, from 140 sq ft per litre per coat, with the cove band added and a tin-by-tin buy list at your paint price.",
+  steps: [
+    "Enter room length and width in feet, the cove or cornice drop in inches, how many identical ceilings you are painting, and the number of coats (1 to 6).",
+    "Pick the Ceiling surface — gypsum board or POP false ceiling, repaint over sound existing paint, smooth plastered RCC slab, bare plaster, or textured — which corrects the 140 sq ft per litre per coat base rate, then set the wastage allowance (8% by default) and your paint price per litre.",
+    "You get the litres needed, flat and cove area, effective coverage, and two buy lists — \"Least paint bought\" and \"Fewest tins to carry\" — built from 20, 10, 4 and 1 litre tins with the material cost and cost per sq ft.",
+  ],
   intro:
     "The Ceiling Paint Coverage Calculator turns room length and width into the litres of emulsion a ceiling needs, using litres = area x coats / spreading rate with the 130-160 sq ft per litre per coat that interior emulsion data sheets quote for smooth primed surfaces. It adds the cove or cornice band, which is measured as perimeter x drop and is routinely left out of hand estimates, and corrects coverage for gypsum board, bare plaster or a textured finish. The output is a litre figure, a tin-by-tin shopping list and a material cost.",
   useCases: [

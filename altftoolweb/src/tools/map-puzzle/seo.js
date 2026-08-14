@@ -1,4 +1,12 @@
 const seo = {
+  title: "Map Puzzle: Timed Capital City & Country Quiz Game",
+  metaDescription:
+    "Guess the country from its capital, continent and a fact — 78 countries, four difficulties from 10 questions at 45 s to 50 at 12 s, streaks score double.",
+  steps: [
+    "Pick a tile under Select Difficulty — Easy is 10 questions at 45 s each, Medium 20 at 30 s, Hard 30 at 20 s, Expert 50 at 12 s.",
+    "Each clue card shows the capital, the continent and one fact; click the matching country from four options before the timer reaches zero — a timeout counts as wrong.",
+    "At Puzzle Complete!, review the Score, Accuracy and Best Streak cards and the answer list, then Copy the report or Download it as Map_Puzzle_<Difficulty>.txt.",
+  ],
   intro:
     "Map Puzzle is a timed geography quiz that names a capital city, a continent and one distinguishing fact, then asks you to pick the matching country from four options drawn at random out of a pool of 78. Four difficulty settings control how many questions you face and how long you get: 10 questions at 45 seconds each up to 50 questions at 12 seconds each. It suits students revising world geography, teachers running a quick class round, and anyone wanting to test how many capitals they really know.",
   useCases: [

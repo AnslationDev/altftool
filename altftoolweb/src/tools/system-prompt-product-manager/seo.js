@@ -1,4 +1,12 @@
 const seo = {
+  title: "PM System Prompt Builder: PRDs, Stories, RICE",
+  metaDescription:
+    "Build a PM assistant prompt with non-goals, INVEST stories in Given/When/Then, and RICE, ICE, WSJF or MoSCoW — plus rules banning invented metrics.",
+  steps: [
+    "Fill \"Product (required)\", then \"Users\", \"Metrics that matter\" and \"Business context\" so the prompt argues from your facts.",
+    "Tick the Deliverables you want, choose a \"Prioritisation framework\" — RICE (Intercom), ICE (Sean Ellis), MoSCoW (DSDM) or WSJF (SAFe) — and set a \"Token budget for the system prompt\".",
+    "Check the token count, completeness percentage and the \"Gaps worth closing\" warnings, then press \"Copy prompt\" to take the assembled system prompt.",
+  ],
   intro:
     "This builder assembles a system prompt for a product-management assistant that writes PRDs with explicit non-goals, user stories in the Connextra format meeting the INVEST checklist with Given/When/Then acceptance criteria, and a backlog run through a real prioritisation framework — RICE, ICE and WSJF with the scoring arithmetic shown, or MoSCoW's Must/Should/Could/Won't categories — instead of vague priority labels. It is for product managers and founders who want AI drafting help that argues from evidence instead of inventing metrics.",
   useCases: [

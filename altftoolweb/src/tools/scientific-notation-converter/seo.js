@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scientific Notation Converter: Mantissa and Exponent",
+  metaDescription:
+    "Turn 0.00042 into 4.2 x 10^-4 and see the E notation, the engineering form with an exponent that is a multiple of 3, mantissa and order of magnitude.",
+  steps: [
+    "Type a value into the Number field — 0.00042, a plain decimal, or something already in E notation such as 1.2e+11.",
+    "The Result panel recomputes on every keystroke with no submit step; Reset restores the 0.00042 default.",
+    "Copy takes the Decimal, Scientific, E Notation, Engineering, Mantissa, Exponent, Order of Magnitude and Sign rows.",
+  ],
   intro:
     "The Scientific Notation Converter rewrites any decimal number as a mantissa between 1 and 10 times a power of ten, using exponent = floor(log10(|n|)) and mantissa = n ÷ 10^exponent. Enter a value such as 0.00042 and you get the scientific form, the E-notation form, the engineering form whose exponent is always a multiple of 3, plus the mantissa, exponent, order of magnitude and sign listed separately. It is built for students, lab workers and engineers who need the exponent itself, not just a shorter-looking number.",
   useCases: [

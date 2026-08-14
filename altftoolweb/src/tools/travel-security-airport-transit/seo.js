@@ -1,4 +1,12 @@
 const seo = {
+  title: "Airport and Border Security Checklist for Devices",
+  metaDescription:
+    "Score device readiness across home, security, cabin and immigration; leaving encryption, a 6-digit passcode or a border power-off undone caps you at 49%.",
+  steps: [
+    "Tick Crossing an international border and Carrying a work-owned device under This trip to reveal the At immigration and work-device phases.",
+    "Work through Before you leave home, At the security queue, Lounge, gate and cabin and At immigration, ticking each item, including the four marked critical.",
+    "Read the Transit readiness percentage with its band, Critical items open and Highest-value gap, then press Copy result for the phase-by-phase list.",
+  ],
   intro:
     "The Airport and Transit Security Checklist scores how well your devices, documents and screens are protected across the four moments that actually matter: leaving home, the security tray, the lounge and cabin, and the immigration queue. Items are weighted by severity, and four are treated as hard rules — full-disk encryption, a six-digit-or-longer passcode, powering devices fully off before a border, and disabling biometric unlock there — because leaving any of them undone cannot be offset by the rest of the list. Aimed at ordinary travellers and at anyone carrying a work laptop through an unfamiliar border.",
   useCases: [

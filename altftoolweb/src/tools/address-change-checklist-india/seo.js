@@ -1,4 +1,12 @@
 const seo = {
+  title: "Address Change Checklist India: RC, Aadhaar, GST",
+  metaDescription:
+    "Every record to update after moving within India, filtered to your situation, with the 30-day RC and 15-day GST windows dated from the day you moved.",
+  steps: [
+    "Set 'Date the address changed' and 'Today', then tick everything that applies under 'Which of these apply?' — 'I own a registered vehicle', 'I am renting the new place', 'I have a GST registration' and the rest.",
+    "'Statutory deadlines' dates the 30-day vehicle RC intimation under Section 49 and the 15-day GST REG-14 amendment from the day you moved, and shows the days left on each.",
+    "Work down the grouped checklist, ticking each record as you update it, then press 'Copy checklist' to take the remaining items with you.",
+  ],
   intro:
     "This checklist lists every record that has to carry your new address after a move within India, grouped from identity documents through banking, utilities, work and everyday accounts, and filtered by whether you own a vehicle, rent, invest, or run a business. Three entries carry a hard statutory window and are dated from the day you moved: the vehicle RC intimation within 30 days under Section 49 of the Motor Vehicles Act, 1988, the GST amendment in Form GST REG-14 within 15 days under Rule 19(1) of the CGST Rules, 2017, and a company's registered-office notice in e-Form INC-22 within 30 days under Section 12(4) of the Companies Act, 2013. Everything else is ordered by practical priority, starting with Aadhaar because most other updates accept it as proof of address.",
   useCases: [

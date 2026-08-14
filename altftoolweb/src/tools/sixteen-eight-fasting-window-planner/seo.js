@@ -1,4 +1,12 @@
 const seo = {
+  title: "16:8 Fasting Window Planner with Sleep Overlap",
+  metaDescription:
+    "Anchor an 8-hour eating window to your first meal or last bite, and get meal times, the 16-hour fast, sleep overlap and a training-vs-meal check.",
+  steps: [
+    "Set 'Anchor the window to' — My first meal (window opens) or My last bite (window closes) — with that clock time and the Eating window length (hours).",
+    "Add Meals inside the window, Usual bedtime, Usual wake time and Training time (optional).",
+    "Read the Eating window clock range with Fasting hours you are asleep, Last meal to bedtime and the Meal times list, then press Copy result.",
+  ],
   intro:
     "The 16:8 Fasting Window Planner places an 8-hour eating window and its matching 16-hour fast on a real clock, anchored either to when you want your first meal or to the time you need to stop eating. Because eating hours and fasting hours always sum to 24, fixing one end fixes everything else — so the planner works out meal times inside the window, how many of the 16 fasting hours you are actually asleep for, and whether your training session lands fed or fasted. It also flags a last meal too close to bedtime, using the usual guidance of finishing about 3 hours before sleep.",
   useCases: [

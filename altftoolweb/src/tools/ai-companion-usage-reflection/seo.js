@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Companion Usage Reflection: 12 Statements, 4 Themes",
+  metaDescription:
+    "Twelve statements across four themes score how AI chat sits in your week, and daily minutes become weekly hours. A worksheet, not a diagnostic test.",
+  steps: [
+    "Enter \"Typical AI chat minutes per day\", then rate all 12 statements Never, Rarely, Sometimes, Often or Almost always.",
+    "The four fieldsets — Time and routine, Emotional reliance, Social substitution, Boundaries and control — each average their three answers, and the themes are averaged equally.",
+    "Read Overall as a percentage with its band, the Top signal theme, and Weekly time in hours with the share of a 16-hour waking day; Copy result saves the summary.",
+  ],
   intro:
     "AI Companion Usage Reflection scores twelve self-rated statements across four themes — time and routine, emotional reliance, social substitution, and boundaries and control — into a single 0-100 picture of how AI chat sits in your week. Each statement uses a standard five-point frequency scale from Never to Almost always, each theme is averaged equally, and your daily chat time is converted into weekly hours and a share of a 16-hour waking day. It is a private worksheet for noticing patterns, not a diagnostic test.",
   useCases: [

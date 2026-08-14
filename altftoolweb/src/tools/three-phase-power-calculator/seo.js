@@ -1,4 +1,12 @@
 const seo = {
+  title: "Three-Phase Power Calculator - kW, kVA and kVAr",
+  metaDescription:
+    "Convert line-to-line voltage, line current, power factor and efficiency into kVA, kW, kVAr and shaft output using S = √3 x V x I.",
+  steps: [
+    "Enter \"Line-to-line voltage (V)\", \"Line current (A)\", \"Power factor\" and \"Efficiency (%)\", or click the \"400 V · 50 A\" example preset.",
+    "Watch the Result panel recompute live: kW input plus rows for apparent power (kVA), reactive power (kVAr) and estimated output (kW).",
+    "Use the Copy button for the summary or Download to save it as three-phase-power-calculator.txt.",
+  ],
   intro:
     "Three-Phase Power Calculator turns line-to-line voltage, line current, power factor and efficiency into apparent power, real power, reactive power and shaft output, using the balanced three-phase relationships S = √3 × V × I, P = S × pf and Q = √(S² − P²). It is aimed at electricians, panel builders and plant engineers sizing a feeder or checking a nameplate. At the default 400 V, 50 A, pf 0.9 and 95% efficiency it returns 34.64 kVA apparent, 31.18 kW input and about 29.62 kW output.",
   useCases: [

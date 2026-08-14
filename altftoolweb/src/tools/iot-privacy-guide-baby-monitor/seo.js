@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baby Monitor Security: 15-Point Hardening Check",
+  metaDescription:
+    "Score your baby camera on 15 weighted controls — default password, port forwarding, remote viewing — and see who can actually reach the feed.",
+  steps: [
+    "Tick the controls you already have across the Credentials, Network exposure, Device settings and Placement and habits groups — 15 in all.",
+    "Answer What kind of monitor is it? — DECT audio, analogue 2.4 GHz, local-only Wi-Fi, vendor cloud or port-forwarded — and tick the exposure factors that apply.",
+    "Read the Hardening score percentage and the Do these next queue of highest-weight gaps, then press Copy result to keep the plan.",
+  ],
   intro:
     "This checklist hardens a baby monitor against the two failures behind almost every reported takeover — an unchanged factory password and a camera left reachable from the internet — using fifteen weighted controls across credentials, network exposure, device settings and placement. It also scores exposure from the connection type you actually own, from a DECT audio unit that never touches your network to a port-forwarded Wi-Fi camera that scanners index within hours, adjusted by the settings you have in place. Written for parents and carers setting up a monitor, or auditing one bought second-hand.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Bike Maintenance Schedule Calculator by Mileage",
+  metaDescription:
+    "Turns weekly km and riding conditions into odometer due points for every job: re-lube every 250 km, chain near 3,000 km, wet riding cuts that to 45%.",
   intro:
     "A bicycle maintenance planner converts your weekly riding distance into the odometer reading at which each service job falls due. It takes the distance-based intervals bicycle service literature agrees on — re-lube every 250 km, brake pads around 2,000 km, chain around 3,000 km, cassette every third chain — and scales the contamination-driven ones by whether you ride dry roads, mixed weather or wet and gritty ground. The result is a dated list rather than a vague reminder to service the bike sometime.",
   useCases: [

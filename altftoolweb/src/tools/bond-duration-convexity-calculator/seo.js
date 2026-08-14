@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bond Duration & Convexity Calculator with Cash Flows",
+  metaDescription:
+    "Get Macaulay and modified duration, convexity and the approximate 1% yield price move, with the discounted cash flow schedule behind every number.",
+  steps: [
+    "In the Inputs panel enter \"Face value\", \"Annual coupon rate (%)\", \"Yield to maturity (%)\" and \"Years to maturity\", then set \"Payments per year\" to Annual, Semiannual or Quarterly.",
+    "The Result panel recalculates as you type — there is no submit button — or load the \"8-year bond\" chip from the Examples row to start from 1000 face, 6% coupon, 7% yield over 8 years.",
+    "Read modified duration as the headline with the price in the caption, the \"Macaulay duration\", \"Convexity\" and \"Approx. 1% yield price change\" rows, and the Period / Years / Cash flow / Present value schedule; Copy or Download saves bond-duration-convexity-calculator.txt.",
+  ],
   intro:
     "The Bond Duration & Convexity Calculator discounts every coupon and the final principal at the yield to maturity to produce a bond's price, then derives Macaulay duration as the present-value-weighted average time to cash flow, modified duration as Macaulay divided by (1 + yield per period), and convexity as the second-order term. It is for anyone judging how far a bond's price will move when yields shift — a portfolio manager sizing interest-rate risk, or a student checking a fixed-income exercise. It also prints the discounted cash flow schedule so the numbers can be traced rather than trusted.",
   useCases: [

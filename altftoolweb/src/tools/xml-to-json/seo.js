@@ -1,4 +1,12 @@
 const seo = {
+  title: "XML to JSON Converter: Arrays, @_ Attribute Prefix",
+  metaDescription:
+    "Convert XML to JSON in the browser: repeated tags become arrays, attributes take an @_ prefix, mixed text sits under #text. CDATA and entities decoded.",
+  steps: [
+    "Paste your XML into the XML input box, or use Upload .xml for a file up to the 8 MB limit — the box opens with a sample document already in it.",
+    "Set Indentation (Minified, 2 spaces or 4 spaces), the Attribute prefix (@_ by default) and the Text key for mixed content (#text), and untick Keep attributes, Parse numbers and true/false or Keep the root element as a key as needed.",
+    "The JSON output panel updates live alongside Elements converted, Root element, Attributes, Deepest nesting and JSON size; press Copy JSON, or Download .json to save a file named after the uploaded document or the root element.",
+  ],
   intro:
     "This XML to JSON converter parses an XML 1.0 document — elements, attributes, CDATA, comments and character entities — and rewrites it as JSON using the conventions every mainstream library shares: repeated sibling tags become arrays, attributes are prefixed with @_ so they cannot collide with a child of the same name, and mixed text sits under a #text key. It is aimed at developers moving a legacy SOAP or RSS payload into a JavaScript codebase, and it runs entirely in the page, so payloads with customer data never leave the machine.",
   useCases: [

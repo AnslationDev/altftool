@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Airlines Baggage: 115 cm Cabin, 25-50 kg",
+  metaDescription:
+    "Checks your bags against SQ's 7 kg 115 cm cabin rule and either the 25-50 kg weight allowance or the 2 x 23 kg Americas piece concept.",
+  steps: [
+    "Pick Cabin, fare or route — from \"Economy Lite — 25 kg\" through \"First / Suites — 50 kg\", or an Americas option such as \"Economy to/from the Americas — 2 × 23 kg\".",
+    "Tick \"I am carrying one\" for Cabin bag and Personal item, enter Weight (kg) and the three dimensions in cm, and use Add bag for each checked piece, up to 8.",
+    "Read the bag-by-bag verdict against the 115 cm cabin rule and the 32 kg single-piece ceiling, with the excess cost, then press Copy result.",
+  ],
   intro:
     "This checker measures your bags against Singapore Airlines' published cabin and check-in limits and reports how many kilograms or pieces you are over. Two systems run in parallel on SQ: most of the network uses a weight concept, where one total figure — 25 kg on Economy Lite up to 50 kg in First and Suites — covers every checked piece together, while journeys to and from the Americas switch to a piece concept of 2 × 23 kg in Economy and 2 × 32 kg in Business and above. Cabin baggage is judged on linear dimension: one 7 kg piece whose three sides add up to no more than 115 cm.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Feet to Metres Altitude: Air Pressure and Oxygen",
+  metaDescription:
+    "Convert altitude at exactly 0.3048 m per foot, then see standard-atmosphere pressure, effective oxygen against 20.95%, boiling point and altitude band.",
+  steps: [
+    "Type a figure into the Altitude box and set “Given in” to Feet or Metres, or tap a reference button such as 2,438 m.",
+    "Read the headline conversion and the altitude band — moderate, high, very high or extreme.",
+    "Scan the detail rows for standard air pressure in hPa, effective oxygen against 20.95%, boiling point, and the 8,000 ft cabin comparison.",
+  ],
   intro:
     "This converter changes an altitude between feet and metres at the exact rate of 1 foot = 0.3048 m, then reports the air pressure, effective oxygen and altitude band that go with it. Pressure comes from the International Standard Atmosphere (ISO 2533) using the troposphere formula p = p₀(1 − Lh/T₀)^(gM/RL) below 11 km and the isothermal formula above it, and effective oxygen is 20.95% scaled by the pressure ratio. It is built for trekkers reading a permit in metres, pilots and passengers reading a cabin altitude in feet, and anyone who wants to know what the thin air actually means.",
   useCases: [

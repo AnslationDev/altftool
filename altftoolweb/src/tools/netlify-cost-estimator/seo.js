@@ -1,4 +1,12 @@
 const seo = {
+  title: "Netlify Cost Estimator: Credits, Plans & Recharge Packs",
+  metaDescription:
+    "Convert bandwidth, function compute, deploys and requests into Netlify credits - Free 300, Personal $9/1,000, Pro from $20/3,000 - with recharge packs.",
+  steps: [
+    "Pick a \"Plan\" (Free, Personal or Pro) and, on Pro, a \"Pro credit tier\" from 3,000 up to 20,000 credits.",
+    "Enter your monthly \"Bandwidth (GB/month)\", \"Function compute (GB-hours/month)\", \"Production deploys per month\" and \"Web requests per month\".",
+    "Read the \"Estimated monthly Netlify bill\" with each meter's credit cost and recharge packs - or the Free-plan pause warning - and use \"Copy result\".",
+  ],
   intro:
     "This estimator computes a monthly Netlify bill from bandwidth, function compute, production deploys and web requests, using Netlify's current credit-based pricing — Free at 300 credits/month, Personal at $9 for 1,000 credits, and Pro starting at $20 for 3,000 credits with unlimited team members. Usage beyond the plan's included credits tops up in $10 (Pro) or $5 (Personal) recharge packs, or pauses the project on Free. It shows Jamstack teams exactly which meter tips them from Free into real spend.",
   useCases: [

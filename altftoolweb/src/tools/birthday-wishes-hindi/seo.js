@@ -1,4 +1,12 @@
 const seo = {
+  title: "Birthday Wishes in Hindi: Generator with आप/तुम Forms",
+  metaDescription:
+    "Complete Hindi birthday messages written separately for आप and तुम, with romanised Hindi, English meaning and the SMS part count for each wish.",
+  steps: [
+    "Type their name, pick the relationship under \"Who is it for?\", and set Politeness (Automatic, or a fixed आप/तुम register) and Tone.",
+    "Choose how many messages (1 to 6), optionally fill \"Sign it from\", and press \"Other wordings\" to shuffle in alternatives.",
+    "Each message shows Devanagari, romanised Hindi, an English meaning and its SMS segment count; \"Copy all\" copies every generated message.",
+  ],
   intro:
     "Hindi Birthday Wishes Generator writes a complete Hindi birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Hindi distinguishes आप from तुम, and that choice changes the possessive (आपका versus तुम्हारा) and the verb ending, so each wording here is stored twice rather than patched, and the register is set automatically from the relationship. Every message comes with romanised Hindi, an English meaning, and the number of SMS parts it needs.",
   useCases: [

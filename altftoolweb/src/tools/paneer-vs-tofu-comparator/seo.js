@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paneer vs Tofu: Protein, Calories and Calcium Compared",
+  metaDescription:
+    "Scale five varieties to the portion you cook and see kcal, protein, saturated fat, calcium and iron — plus the tofu grams matching paneer's protein.",
+  steps: [
+    "Choose the 'First food' and 'Second food' from the five varieties — Paneer (whole milk), Paneer (toned / low-fat milk), Tofu firm (calcium-set), Tofu extra firm and Tofu silken / soft.",
+    "Set 'Portion of each (grams)' or tap the 50 g, 100 g, 150 g and 200 g chips, then give your 'Body weight (kg)' and pick an 'Iron reference' of Adult woman (29 mg/day) or Adult man (19 mg/day).",
+    "Read the calorie gap for that portion, the line giving how many grams of the second food match the first's protein, and the nutrient table with the difference column; 'Copy comparison' saves it and 'Reset' returns to 100 g of paneer against firm tofu.",
+  ],
   intro:
     "The Paneer vs Tofu Comparator puts the two side by side for whatever portion you cook, scaling per-100 g composition figures to grams and showing energy, protein, saturated fat, calcium, iron, sodium and cholesterol together. It also answers the question that matters when swapping one for the other: how many grams of the second food deliver the same protein, and what that costs in calories. Percentages are measured against 0.83 g of protein per kg body weight and the ICMR-NIN adult RDAs of 1,000 mg calcium and 19 or 29 mg iron.",
   useCases: [

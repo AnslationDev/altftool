@@ -1,4 +1,12 @@
 const seo = {
+  title: "Market Session Clock: NSE, London, New York, Tokyo",
+  metaDescription:
+    "See whether NSE 09:15-15:30, London 08:00-16:30, New York 09:30-16:00, Tokyo and Hong Kong are inside regular hours right now.",
+  steps: [
+    "Open the clock — there is no lookup box to fill, because NSE, London, New York, Tokyo and Hong Kong are already configured.",
+    "Press Get current result to read each exchange in its own IANA zone at request time.",
+    "Every row gives the exchange's local weekday and 24-hour time, Open or Closed, and its session window such as 9:15–15:30.",
+  ],
   intro:
     "The Global Market Session Clock shows whether five major stock exchanges are inside their regular trading hours right now — NSE 09:15-15:30, London 08:00-16:30, New York 09:30-16:00, Tokyo 09:00-15:00 and Hong Kong 09:30-16:00, each in its own local time. It reads the current time in the exchange's IANA time zone, marks it Open only on a weekday between the session start and end, and lists the local weekday, clock time and session window side by side. It is for traders, analysts and anyone scheduling calls across markets who needs one screen instead of five world clocks.",
   useCases: [

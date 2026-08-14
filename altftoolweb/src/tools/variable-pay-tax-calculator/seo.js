@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bonus & Variable Pay Tax Calculator India (FY 2025-26)",
+  metaDescription:
+    "Shows the extra FY 2025-26 tax a bonus adds on top of salary - slabs, 87A rebate, surcharge and cess - plus in-hand value and the TDS hit per month.",
+  steps: [
+    "Enter 'Fixed annual salary, before bonus (INR)' and 'Bonus / variable pay (INR)', then pick a 'Tax regime' — choosing the old regime adds Chapter VI-A deduction and exempt-allowance fields.",
+    "Set 'Payroll months left in the year' (1-12) so the extra tax is spread across the months payroll will actually recover it in.",
+    "Read 'Extra tax caused by the bonus', 'Bonus in hand after tax' and 'Extra TDS per remaining payroll month'; 'Copy result' copies the whole summary.",
+  ],
   intro:
     "This calculator shows the incremental income tax a bonus or variable payout adds to your salary — the difference between tax on salary plus bonus and tax on salary alone. It applies the FY 2025-26 slabs, the Section 16(ia) standard deduction, the Section 87A rebate with marginal relief, surcharge with marginal relief and 4% health and education cess. It is built for salaried employees who want to know what a performance payout is really worth in hand before payroll deducts the TDS.",
   useCases: [

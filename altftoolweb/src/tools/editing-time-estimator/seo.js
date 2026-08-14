@@ -1,4 +1,12 @@
 const seo = {
+  title: "Editing Time Estimator: Post Hours by Task, Not Ratio",
+  metaDescription:
+    "Adds up ingest, review, assembly, grade, graphics, mix and export from raw and finished runtime, then adds 15% of the base edit per revision round.",
+  steps: [
+    "Enter Raw footage minutes and Finished runtime minutes — they open at 180 and 8, and raw footage cannot be shorter than the finished runtime.",
+    "Set Motion graphics count, Revision rounds and Hourly rate (4, 2 and 50 by default); the estimate recalculates on every keystroke, with each revision round adding 15% of the base edit.",
+    "Read Total, Working days, Edit ratio and Cost across the top, then the per-task rows Ingest & transcode, Review & logging, Assembly & fine cut, Colour grade, Motion graphics, Audio clean-up & mix and Export, QC & delivery. Reset restores 180 / 8 / 4 / 2 / 50.",
+  ],
   intro:
     "An editing time estimator predicts how many hours a video edit will take by adding up individual post-production tasks rather than applying one blanket edit ratio. It splits the work into ingest and transcode, reviewing rushes, assembly driven by cut density, colour grade, motion graphics, audio mix, export and QC, then adds a percentage of the base edit for each client revision round. Editors, agencies and in-house content teams use it to turn a vague brief into a schedule and a quotable number of hours.",
   useCases: [

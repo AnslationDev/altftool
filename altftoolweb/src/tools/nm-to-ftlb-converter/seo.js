@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nm to ft-lb Converter with Crowfoot Wrench Correction",
+  metaDescription:
+    "Convert torque between N-m, lbf-ft, lbf-in and kgf-m — 1 lbf-ft is 1.3558 N-m, 1 kgf-m is 9.80665 — plus the wrench setting for a crowfoot.",
+  steps: [
+    "Type the Torque figure and pick its Unit, or tap a chip such as 'Wheel nut 110 N-m' or '10 kgf-m'.",
+    "Enter 'Wrench effective length (mm)' and 'In-line extension / crowfoot (mm)' when an adapter moves the socket away from the handle.",
+    "Read the figure in lbf-ft with N-m, lbf-in and kgf-m beneath it, plus 'Set the wrench to' under Extension correction, then press Copy result.",
+  ],
   intro:
     "This converter restates a torque specification across newton metres, foot-pounds, inch-pounds and kilogram-force metres using exact definitions: 1 lbf-ft is 1.3558179483 N-m because pound-force is 4.4482216152605 N and the foot is 0.3048 m, while 1 kgf-m is 9.80665 N-m from standard gravity. It also solves the moment balance T_setting = T_target x L / (L + E) so a crowfoot or in-line adapter does not silently over-tighten a fastener. Aimed at anyone working from a manual written in one unit with a wrench calibrated in another.",
   useCases: [

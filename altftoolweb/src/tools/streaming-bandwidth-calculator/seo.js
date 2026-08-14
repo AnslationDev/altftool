@@ -1,4 +1,12 @@
 const seo = {
+  title: "Streaming Bandwidth Calculator: Upload Mbps & GB",
+  metaDescription:
+    "Adds video and audio bitrate, 5% protocol overhead and a 2x headroom multiplier to give the upload Mbps a stream needs, plus GB per hour and session.",
+  steps: [
+    "Pick Stream quality (360p 30 fps through 2160p (4K) 60 fps) and Position in the range — Low end of range, Typical or High end of range — which fills Video bitrate (kbps).",
+    "Set Audio bitrate (kbps), Protocol overhead (%) and the Headroom multiplier, then enter Your measured upload speed (Mbps) and Stream length (hours).",
+    "Read Recommended upload speed with the Actual upload with overhead, Data per hour and Data for the whole session rows and the comfortable, tight or insufficient verdict, then press Copy result.",
+  ],
   intro:
     "The Streaming Bandwidth Calculator works out the upload speed a live stream actually needs, adding video and audio bitrate, inflating the total by TCP/IP and RTMP protocol overhead (5% by default), then multiplying by a safety headroom factor — the common advice being twice the stream bitrate. It also converts the on-the-wire rate into gigabytes per hour and for the whole session, so you can check a stream against a data cap as well as against a line speed. It is for streamers and event technicians who need to know whether a given connection can carry 1080p60 before they go live on it.",
   useCases: [

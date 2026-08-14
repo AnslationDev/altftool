@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bonafide Certificate Application Letter Generator",
+  metaDescription:
+    "Draft the request to your Principal, Registrar or Dean in Indian formal-letter format, with the purpose — passport, loan, visa — in the body.",
+  steps: [
+    "Fill in Student's full name, Roll / enrolment number, Class / course and branch, Year / semester / section, Institution name and Institution city.",
+    "Set Addressed to — The Principal, The Registrar, The Dean (Academics), The Headmaster/Headmistress or The Director — and a Purpose of the certificate such as Passport application, Education loan, Scholarship application, Bus / railway concession or Visa / study abroad.",
+    "Your application letter appears with its subject line, to-block, body and signature block plus a Tip for this purpose; press Copy letter to paste it into a document, email or handwritten application.",
+  ],
   intro:
     "This tool drafts a formal bonafide certificate request letter — the written application an Indian school or college requires before certifying that you are a genuine student of the institution. It follows the standard formal-letter layout (to-block, date, subject, salutation, body and signature block) and inserts your name, roll number, course and the exact purpose, since institutions print the purpose on the certificate itself. It is built for students who need the certificate for a passport, scholarship, education loan, travel concession or visa file.",
   useCases: [

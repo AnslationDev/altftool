@@ -1,4 +1,12 @@
 const seo = {
+  title: "Invoice Fraud Change Inspector - Compare 13 Fields",
+  metaDescription:
+    "Diff two invoices across 13 fields and see bank account, IBAN and UPI changes flagged on their own. Runs locally; the export holds counts, not values.",
+  steps: [
+    "Paste invoice text or a JSON invoice object into \"Earlier or trusted invoice\" and \"New invoice to inspect\", or press Choose text PDF to read a local PDF's text layer, then press Extract fields on each side.",
+    "Correct every value under Confirm earlier invoice fields and Confirm new invoice fields, tick \"I reviewed these extracted fields against the original invoice\" on both, and press Compare confirmed fields.",
+    "Metric cards report Fields reviewed, Observable changes, Routing changes, Unchanged and Unavailable; a changed bank account, IBAN or UPI ID raises a \"Payment-routing details changed\" panel, and Download change counts saves altftool-invoice-change-counts.json with counts only.",
+  ],
   intro:
     "The Invoice Fraud Change Inspector compares two versions of an invoice across 13 extracted fields — invoice number, date, vendor, tax ID/GSTIN/VAT, bank account, IBAN, UPI ID, currency, subtotal, tax amount, total, line-item count and line summary — and marks each one added, changed, removed, unchanged or unavailable. Anything in the payment-routing group (bank account, IBAN, UPI ID) is flagged separately, because that is where a redirected payment shows up. It is for accounts-payable staff and finance teams doing a manual second look, and it deliberately reports observable differences only, never a fraud verdict.",
   useCases: [

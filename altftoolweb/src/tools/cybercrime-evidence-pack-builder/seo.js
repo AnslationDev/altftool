@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cybercrime Evidence Pack Builder: SHA-256 Manifest",
+  metaDescription:
+    "Hash evidence copies with SHA-256 in your browser and build a numbered incident timeline into a JSON manifest, plus a counts-only summary.",
+  steps: [
+    "Fill Short incident title, the Factual narrative box and Timeline — one event per line, as date/time | observed event | optional evidence reference, with a vertical bar or tab separator.",
+    "Press Choose copies to add up to 100 evidence files, 25 MB each and 100 MB total; each one is fingerprinted with SHA-256 by the browser's Web Crypto, then press Build evidence manifest.",
+    "Download private manifest saves cybercrime-evidence-manifest.json with every filename, media type, size, last-modified date and digest; Download counts-only summary saves cybercrime-evidence-summary.json holding totals alone.",
+  ],
   intro:
     "The Cybercrime Evidence Pack Builder turns a scam or fraud incident into a structured JSON manifest: it records a numbered timeline, your factual narrative, and a SHA-256 digest of every evidence copy you add, computed locally with the browser's Web Crypto API. It is for someone who has been targeted online and needs their screenshots, chat exports and payment records organised before they talk to a bank, an employer or the police. Nothing is submitted anywhere — you get a downloadable manifest and a separate counts-only summary you can share when you do not want to reveal the contents.",
   useCases: [

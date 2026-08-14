@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Tank Cleaning Schedule, Cost & Bleach Dose",
+  metaDescription:
+    "Set the cleaning interval for an overhead tank or sump, cost it with 18% GST, and get the bleaching-powder grams for a 50 mg/L chlorine dose.",
+  steps: [
+    "Enter Tank capacity (litres) and People served, then pick Tank type, Water source, Lid condition and City tier — the page opens on a 2,000 litre overhead plastic tank on treated municipal supply for four people.",
+    "Set Last cleaned on and leave 'Add 18% GST (SAC 998533)' ticked; the six-month municipal baseline shortens for borewell or tanker water, RCC tanks, underground sumps and loose lids, and is held at a three-month floor.",
+    "You get 'Clean the tank every N months' with the next due date, Cost per clean and per year, Rinse water used per clean, and a Disinfection dose card giving the bleaching powder in grams for 50 mg/L plus the contact hours — Copy plan saves it.",
+  ],
   intro:
     "The Water Tank Cleaning Planner sets how often your overhead tank or sump should be cleaned, what a clean should cost, and exactly how much bleaching powder the disinfection step needs. It starts from the standard guidance that domestic storage tanks be cleaned at least twice a year on treated municipal supply, then shortens the cycle for borewell or tanker water, concrete tanks, underground sumps and lids that do not seal. Doses are computed for a 50 mg/L chlorine target with six hours of contact, using bleaching powder at 33% available chlorine.",
   useCases: [

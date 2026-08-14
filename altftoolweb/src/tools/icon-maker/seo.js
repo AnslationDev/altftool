@@ -1,4 +1,12 @@
 const seo = {
+  title: "Icon Maker: App Icons, favicon.ico, PWA & Android",
+  metaDescription:
+    "Build an icon from text, a glyph or your own PNG/SVG, then export PNG, SVG, a real 16/32/48 px favicon.ico, or Android and PWA ZIP packs.",
+  steps: [
+    "Under Icon type & source pick Text (4 characters maximum), Library, or drop a PNG, JPG, SVG or WEBP file.",
+    "In Style controls choose the Shape, Size, solid or gradient Background, plus border, shadow and glow while the preview redraws.",
+    "In the Export panel hit PNG, SVG, favicon.ico (16, 32 and 48 px), Android ZIP or PWA ZIP, which adds manifest-icons.json.",
+  ],
   intro:
     "This icon studio builds an app icon from a letter or two, a built-in glyph or an uploaded image, styles it with a shape, gradient or solid background, border, shadow and glow, and exports the finished mark as PNG, SVG, a real multi-resolution favicon.ico, or a ZIP pack sized for Android, PWA or general use. The Android pack covers 48, 72, 96, 144, 192 and 512 px, the PWA pack ships 192 and 512 px with a matching manifest-icons.json, and favicon.ico is assembled with 16, 32 and 48 px images inside one file. It is for developers and indie makers who need a complete icon set before a release rather than a single square image.",
   useCases: [

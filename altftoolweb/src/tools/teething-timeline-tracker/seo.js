@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teething Timeline Tracker: 20 Baby Teeth, Real Dates",
+  metaDescription:
+    "Turn a date of birth into calendar dates for all 20 primary teeth in eruption order, from lower central incisors at 6-10 months to second molars.",
+  steps: [
+    "Enter the child's Date of birth, and adjust \"Check the chart as at\" if you want the chart read for a different day.",
+    "Tick the Through? box for each pair in \"Every tooth pair, in the order they usually arrive\" as it comes in.",
+    "Read the count of baby teeth through plus each pair's Expected window, Falls out age and Status, then press Copy timeline.",
+  ],
   intro:
     "Teething Timeline Tracker converts a child's date of birth into calendar dates for each of the 20 primary teeth, using the eruption windows on the standard primary tooth chart published by the American Dental Association. It orders the ten tooth pairs the way they normally arrive — lower central incisors first at 6-10 months, upper second molars last at 25-33 months — and marks each pair as upcoming, due now or past its usual window. Parents can tick teeth off as they appear and see when the first dental check-up is due.",
   useCases: [

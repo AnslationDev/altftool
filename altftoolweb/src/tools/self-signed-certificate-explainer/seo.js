@@ -1,4 +1,12 @@
 const seo = {
+  title: "Self-Signed Certificate Risk: Scored by Where It Runs",
+  metaDescription:
+    "Scores a self-signed or private-CA TLS setup out of 100 by context and trust model, with a yes/no table for machine-in-the-middle and browser trust.",
+  steps: [
+    "Answer \"Where is the certificate used?\" — localhost, CI or test fixture, a device on your own LAN, an internal service, staging, or a public production site.",
+    "Answer \"How are clients meant to trust it?\" — a bare self-signed leaf, a pinned certificate, or a private CA in the trust stores — and tick everything under \"Which of these are true?\".",
+    "Read the Risk score out of 100, the yes/no list under \"What this certificate actually gives you\", and each Finding's fix; Copy assessment saves the write-up.",
+  ],
   intro:
     "Self Signed Certificate Risk Explainer scores a TLS setup on where it runs and how clients are meant to trust it, then lists what the certificate actually guarantees. TLS provides confidentiality and authentication; a self-signed certificate provides the first and none of the second, so an on-path attacker can substitute its own certificate undetected. The output separates the cases where that genuinely does not matter — a CI fixture, a localhost server — from the cases where it teaches a habit that costs you later.",
   useCases: [

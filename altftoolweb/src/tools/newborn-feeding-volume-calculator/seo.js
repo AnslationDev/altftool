@@ -1,4 +1,12 @@
 const seo = {
+  title: "Newborn Feeding Volume Calculator: mL Per Feed",
+  metaDescription:
+    "Weight, day of life and feeds per day give mL per feed and per 24 hours on the standard mL/kg/day ramp, checked against newborn stomach capacity.",
+  steps: [
+    "Enter the baby's current weight in kg, the day of life (1 = day of birth) and the feeds in 24 hours — the 6, 7, 8, 10 and 12 feeds buttons set the count in one tap.",
+    "Leave \"Prescribed intake (mL/kg/day, optional)\" blank to use the standard first-week ramp, or type the mL/kg/day figure your paediatrician gave you.",
+    "Read the estimated volume per feed in mL and fl oz, the total in 24 hours, the typical daily and per-feed ranges, the feed interval, and the stomach-capacity check for that day of life.",
+  ],
   intro:
     "This calculator estimates how much milk a term newborn takes in 24 hours and at each feed, using the standard paediatric rule of weight in kilograms multiplied by a daily intake in mL/kg/day, then divided by the number of feeds. It follows the usual first-week ramp — about 60 mL/kg on day 1 rising to 150 mL/kg by day 7 — and settles at roughly 150 mL/kg/day (working range 120-180) for a term infant under six months. It is a planning and sanity-check figure for bottle or expressed feeds, not a prescription.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exposure Triangle Calculator: Aperture, Shutter, ISO",
+  metaDescription:
+    "Get the EV for any aperture, shutter and ISO from log2(N²/t), plus handheld-shake risk against your focal length and a subject-freeze verdict.",
+  steps: [
+    "Choose a \"Scene Preset\" such as Bright Sun or Indoor Portrait, then set \"Aperture (f)\", \"Shutter Speed\" and \"ISO\".",
+    "Enter \"Focal Length (mm)\", \"Stabilization\", \"Meter Bias (EV)\" and \"Subject Speed\" so the reciprocal-rule and freeze checks apply to your shot.",
+    "Read the Exposure Status, Adjusted EV, Handheld Risk and Noise Profile cards, then use \"Copy Camera Setup\" for text or \"Export JSON\" for the full analysis.",
+  ],
   intro:
     "The Exposure Triangle Guide computes the exposure value of any aperture, shutter and ISO combination using the standard formula EV100 = log2(N² ÷ t), then subtracts log2(ISO ÷ 100) and adds your metering bias to give the adjusted EV. Alongside the number it reads out what each setting is doing to the picture — depth of field, motion rendering, noise, handheld blur risk and whether your shutter is fast enough for the subject — so you can see why a change to one leg of the triangle forces a change in another. Five scene presets, from Bright Sun at f/8, 1/500, ISO 100 to Indoor Portrait at f/2, 1/125, ISO 800, give you a working starting point.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "MongoDB Connection String Builder (URI Generator)",
+  metaDescription:
+    "Build a mongodb:// or mongodb+srv:// URI with replicaSet, authSource, readPreference, w, tls and maxPoolSize — passwords percent-encoded per the spec.",
+  steps: [
+    "Enter Hosts (comma separated host:port) or tick 'Use mongodb+srv://' for an Atlas-style DNS seed list — one host, no port — then add the optional User, Password and default auth database.",
+    "Set replicaSet, authSource, Read preference, Write concern (w), TLS, maxPoolSize and appName; the URI rebuilds live with credentials percent-encoded per the connection string spec.",
+    "Review the option-by-option list under the Connection URI panel and press Copy URI to copy the finished string — everything is generated locally in your browser.",
+  ],
   intro:
     "This builder assembles a MongoDB connection URI in the official Connection String format — mongodb://user:password@host1:27017,host2:27017/db?options or the DNS seed list form mongodb+srv://cluster.example.mongodb.net/db — with credentials percent-encoded as the spec requires. It covers replicaSet, authSource, readPreference, write concern (w), tls, retryWrites, maxPoolSize and appName, and enforces the +srv rules: one host, no port. Everything is generated locally in the browser.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "DNS Propagation Checker: Google vs Cloudflare",
+  metaDescription:
+    "Query a domain's A record through Google Public DNS and Cloudflare over DNS-over-HTTPS at once, so a stale local or ISP cache cannot mislead you.",
+  steps: [
+    "Type the domain into the Lookup field, which is prefilled with altftool.com.",
+    "Press Get current result to query Google Public DNS and Cloudflare over DNS-over-HTTPS at the same time.",
+    "Compare the two rows under Current result - each resolver's response status and the A-record answers it returned - with the fetch timestamp above them.",
+  ],
   intro:
     "The DNS Propagation Checker queries a domain through two independent public resolvers — Google Public DNS and Cloudflare — over DNS-over-HTTPS and puts their answers side by side, along with each resolver's response status and the remaining TTL on the record. Because it asks resolvers that are separate from the one your own machine uses, it shows whether a record change has reached the wider internet or is still cached somewhere. It defaults to the A record and is aimed at anyone who has just edited DNS and is waiting for it to take effect.",
   useCases: [

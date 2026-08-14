@@ -1,4 +1,7 @@
 const seo = {
+  title: "Hindi New Year Wishes: 1 January & Nav Varsh Messages",
+  metaDescription:
+    "Devanagari greetings for 1 January and Chaitra Nav Varsh, worded for family, elders, bosses or clients, with Vikram Samvat years and SMS segment counts.",
   intro:
     "This Hindi new year wishes generator writes ready-to-send Devanagari greetings for both new years a Hindi-speaking household keeps — 1 January on the Gregorian calendar and Hindu Nav Varsh on Chaitra shukla pratipada — and works out the matching era years, since Vikram Samvat runs 57 years ahead of the Common Era and Shaka Samvat 78 years behind, both counted from that Chaitra date. Pick the occasion and who the message is for (family, friends, an elder or boss, clients, a status caption, or shayari style), add the recipient's and your own name, and you get correctly worded messages with the प्रिय {नाम} salutation already in place. Because Devanagari text is sent as UCS-2, each message also reports its character count and how many SMS segments it will actually cost.",
   useCases: [

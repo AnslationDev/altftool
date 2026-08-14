@@ -1,4 +1,10 @@
 const seo = {
+  title: "Flag Quiz: 9 Modes, 200+ Countries, Timed Rounds",
+  steps: [
+    "Choose a \"Question Type\", a \"Difficulty\", a \"Number of Questions\" from 10 to 50 and a \"Time Per Question\" (no limit, 10, 15, 20, 30 or 45 seconds).",
+    "Press \"Start Flag Quiz\" and answer each item — wrong options are drawn from the answer's own world region, and every question ends with an explanation.",
+    "Finish the round for your percentage score, best streak and average answer time, then press \"Play Again\".",
+  ],
   intro:
     "A flag quiz that builds every round from a live country dataset rather than a fixed question list: pick a question type, a length of 10 to 50 questions and a per-question timer, and each item is generated with the correct answer plus three distractors. Nine question types are available — identify the flag, pick the flag from a country name, and flag-to-capital, continent, currency, language, subregion or land-area questions — and wrong options are drawn from the same world region as the answer wherever possible, so the choices are genuinely hard to tell apart. Every question ends with an explanation naming the country and the fact behind it.",
   useCases: [

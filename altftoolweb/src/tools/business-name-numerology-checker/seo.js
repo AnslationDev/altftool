@@ -1,4 +1,12 @@
 const seo = {
+  title: "Business Name Numerology: Chaldean Plus Domain Tests",
+  metaDescription:
+    "Score names on Chaldean and Pythagorean numbers, then test them against the 63-character DNS label, 15-character X and 30-character Instagram limits.",
+  steps: [
+    "Type a name into Name to check in detail, or paste a shortlist into Candidate names, one per line, to compare several at once.",
+    "Read the Chaldean compound number and the root it reduces to, beside the Pythagorean number, where 11, 22 and 33 stay unreduced.",
+    "Check the Domain label and Handle form lengths against the 63, 15 and 30 character limits, and the Practical checks passed count.",
+  ],
   intro:
     "The Business Name Numerology Checker scores each shortlisted company name on both numerology systems people ask about — Chaldean, where letters take values 1 to 8 and the unreduced compound total carries a classical reading, and Pythagorean, where the alphabet cycles 1 to 9 and 11, 22 and 33 stay unreduced. Alongside those it runs the practical tests that actually decide whether a name works online: the 63-character DNS label limit from RFC 1035, the 15-character X username limit, the 30-character Instagram limit, and whether the name needs hyphens, digits or non-ASCII characters to be written down.",
   useCases: [

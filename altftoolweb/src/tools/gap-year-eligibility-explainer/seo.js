@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gap Year After 12th: NEET, JEE Main and Advanced",
+  metaDescription:
+    "NEET (UG) sets no gap cap, JEE Main allows two years, JEE Advanced one. Enter your passing year and attempt year for the verdict and the proof asked for.",
+  steps: [
+    "Pick your exam from the list — \"NEET (UG) — MBBS/BDS\", \"JEE (Main) — NITs, IIITs, GFTIs\", \"JEE (Advanced) — IITs\", \"CUET (UG) — central universities\", \"UPSC Civil Services\" or \"SSC CGL and similar staff recruitment\".",
+    "Type the \"Year you passed Class 12\" — for JEE Advanced, the year you FIRST appeared — and your \"Intended attempt / admission year\".",
+    "The \"Gap-year verdict\" turns green or red and lists your gap, the gap limit for that exam and the last eligible attempt year, with \"Proof you may be asked for\" beneath it; \"Copy result\" copies the verdict.",
+  ],
   intro:
     "This explainer tells you whether a gap year after Class 12 keeps you eligible for a given exam, by applying each exam's own clause: NEET (UG) and CUET (UG) set no gap limit, JEE (Main) allows attempts in the passing year plus two more, and JEE (Advanced) restricts you to first-time Class 12 appearance in the exam year or the year before. Enter your passing year and intended attempt year to get the verdict, the last year you remain eligible, and the proof — usually just a marksheet, sometimes a gap affidavit — that counselling bodies ask for.",
   useCases: [

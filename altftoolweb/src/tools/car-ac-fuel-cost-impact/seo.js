@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car AC Fuel Cost Calculator: Real Mileage Penalty",
+  metaDescription:
+    "Prices the compressor load using your engine's fuel per kWh — 300 g/kWh petrol, 220 diesel — for the km/l penalty and the extra cost per month.",
+  steps: [
+    "Under The car, choose Car size and Fuel, then enter Mileage without AC and Fuel price.",
+    "Under Conditions set Outside temperature (°C), Cabin setpoint (°C), Sun exposure, People in the car and Average moving speed (km/h), then AC hours per driving day and Driving days per month.",
+    "Read Extra cost per month with the mileage penalty, plus Average compressor shaft power and Engine fuel per kWh of shaft work in the breakdown; Copy result saves it.",
+  ],
   intro:
     "Car air conditioning costs fuel because the compressor is a mechanical load on the engine, and this calculator prices that load properly: average compressor shaft power multiplied by the engine's brake specific fuel consumption — about 300 g/kWh for a petrol engine at part load and 220 g/kWh for a diesel — then converted to litres at the fuel's density. Compressor power itself scales with how far the cabin is being pulled below outside temperature, sun exposure and how many people are adding body heat, so the answer changes with conditions instead of being a fixed percentage.",
   useCases: [

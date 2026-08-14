@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Revaluation Application: Fee, Deadline, New %",
+  metaDescription:
+    "Draft a verification, photocopy or re-evaluation application, total the per-unit fee, count the days left to apply and see the corrected percentage.",
+  steps: [
+    "Pick the stage — Step 1: Verification of marks, Step 2: Photocopy of the evaluated answer book, or Step 3: Re-evaluation of specific questions, which also asks for the question numbers.",
+    "Add each subject with its Maximum marks and Marks obtained, tick \"Disputing this subject\" to enter Marks you expected, then set Result declared on, Applying on, Application window (days from result) and the fee per subject, answer book or question in INR.",
+    "Read \"Percentage if corrected\" against your current aggregate, with Units applied for, Total fee and Last date to apply, then press Copy application to take the drafted letter from the preview.",
+  ],
   intro:
     "Post-result challenges run in a fixed order — verification of marks, then a photocopy of the evaluated answer book, then re-evaluation of named questions — and this generator builds the application for whichever stage you are at. It totals the prescribed fee by the number of subjects, answer books or questions, counts the days left in the board's application window from the result declaration date, and calculates what your aggregate percentage would become if the disputed marks were corrected. That last figure is usually the deciding factor: if the projected gain does not change your admission position, the fee and the wait may not be worth it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET Exam Day Checklist: Dress Code & Entry Time",
+  metaDescription:
+    "Tick off the NEET admit card, dress code and allowed items, then count back from entry closing 30 minutes before the paper to a leave time.",
+  steps: [
+    "Enter \"Paper start time (24-hour)\", which defaults to 2:00 pm, plus \"Travel time to the centre (minutes)\", \"Buffer before entry closes (minutes)\" and \"Time to get ready at home (minutes)\"; tick the customary-dress box to pull arrival to 90 minutes before.",
+    "Tick your way through \"Documents, dress code and bag\": the admit card printed on A4 with a passport photograph pasted on it, a spare photograph, an original photo ID, half sleeves, no jewellery, low-heeled slippers.",
+    "The \"Leave home by\" time is built backwards from entry closing 30 minutes before the paper; \"Copy result\" or \"Print\" saves the plan, and \"Marks from your attempt plan\" turns questions attempted and accuracy into projected marks at +4 and -1 across 180 questions.",
+  ],
   intro:
     "This checklist collects the NEET (UG) rules that decide whether you get into the hall: the printed admit card with a pasted photograph and self-declaration, a spare photograph, an original photo ID, and the NTA dress code of light half-sleeved clothes, no jewellery or metallic items, and low-heeled slippers rather than shoes. It works the clock backwards from entry closing 30 minutes before the paper, pulls arrival forward by 90 minutes for candidates in customary dress, and converts an attempt plan into marks under the +4 and −1 scheme across 180 questions.",
   useCases: [

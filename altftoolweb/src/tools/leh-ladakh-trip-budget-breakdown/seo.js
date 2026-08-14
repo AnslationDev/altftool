@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leh Ladakh Trip Budget: Per Person and Per Day Cost",
+  metaDescription:
+    "Costs the taxi per vehicle, not per head, separates rest days from touring days, and adds the Inner Line Permit levies. Splits by person and by day.",
+  steps: [
+    "Pick 'Travel style (sets the starting rates)' — Backpacker, Comfort or Premium — plus 'How you get around' and 'Season (moves the room rate)'.",
+    "Enter 'Travellers', 'Nights in Ladakh' and 'Of those days, rest days in Leh'; taxis are charged per vehicle by seat count and rest days carry no vehicle.",
+    "Read the Group, Per person and Share columns with 'Vehicle cost per head per touring day' and 'Permits and levies', then press 'Copy result'.",
+  ],
   intro:
     "This planner costs a Leh Ladakh trip the way Ladakh actually bills it: the taxi is charged per vehicle at ceil(travellers ÷ seats) × touring days × day rate rather than per head, acclimatisation days are separated from touring days so a rest day is not charged a vehicle, and the Inner Line Permit levies appear as their own line. Rooms are billed for nights while food is billed for nights + 1 days, and the season factor moves only the room rate, which is the line Ladakh reprices between the June-to-August peak and the shoulder months.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sales Tax Calculator: Add Tax or Remove It From a Total",
+  metaDescription:
+    "Add sales tax to a price or back it out of a tax-inclusive total by dividing by 1 + rate — see subtotal, tax, total and effective tax share at any rate.",
+  steps: [
+    "Enter the Amount and Sales Tax Rate (%) — 8.25 is prefilled — and set Calculation to Add Sales Tax or Price Already Includes Tax",
+    "The calculator multiplies by (1 + rate ÷ 100) to add tax, or divides by it to back tax out of a tax-inclusive price",
+    "Read the Subtotal, Sales Tax, Total, Tax Rate and Effective Tax rows, then press Copy to copy the breakdown",
+  ],
   intro:
     "Sales Tax Calculator works in both directions: it adds tax to a pre-tax price with total = amount × (1 + rate ÷ 100), or backs the tax out of a tax-inclusive price with subtotal = amount ÷ (1 + rate ÷ 100). Enter any amount and any rate — 8.25% is the starting example — and it returns the subtotal, the tax in currency, the total, and the tax as a percentage of the total. It is built for shoppers checking a receipt and for anyone splitting an invoice into net and tax lines.",
   useCases: [

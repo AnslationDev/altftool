@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inflation Impact Calculator: Real Value of Your SIP",
+  metaDescription:
+    "Compound costs and salary at separate rates, deflate SIP and savings to today's rupees, and re-run it all at 3.5%, 6%, 8.5% and 12% inflation.",
+  steps: [
+    "Under Inflation Inputs enter Current monthly cost, Current savings, Inflation rate, Planning years, Income growth, Investment return, Monthly investment and Target real monthly value.",
+    "Switch the Inflation scenario buttons between Low 3.5%, Normal 6%, High 8.5% and Stress 12%, or press Sample to load a worked example.",
+    "Read the Purchasing Power Timeline, Scenario Stress Test and Savings Erosion panels, then Copy the summary or press CSV for inflation-impact-plan.csv.",
+  ],
   intro:
     "Inflation Impact Calculator models a household's whole position against inflation: it compounds your monthly living cost forward at FV = P x (1 + i)^n, compounds your salary forward at its own growth rate, and reports the gap between the two, alongside the real value of your savings and SIP after inflation. Your portfolio is projected with a monthly SIP annuity plus lump-sum growth, then deflated to today's rupees, and the real return is taken from the Fisher relation (1 + return) / (1 + inflation) - 1 rather than by simply subtracting. The same numbers are re-run at four inflation scenarios — 3.5%, 6%, 8.5% and a 12% stress case.",
   useCases: [

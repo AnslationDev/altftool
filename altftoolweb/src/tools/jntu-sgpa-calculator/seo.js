@@ -1,4 +1,12 @@
 const seo = {
+  title: "JNTU SGPA Calculator (R13 & R16 Credits to CGPA)",
+  metaDescription:
+    "Credit-weighted SGPA from JNTU letter grades or marks on the R13 or R16+ scale, with the (CGPA − 0.75) × 10 percentage and the class awarded.",
+  steps: [
+    "Pick your 'Regulation' (R13 or R16+) and set 'What do you have?' to 'Letter grades from the memo' or 'Marks out of 100'.",
+    "Fill each subject row's 'Credits' with its 'Grade' or 'Marks /100' from the memo, using 'Add subject' for more rows.",
+    "Read the 'Semester SGPA' with 'Equivalent percentage', 'Credits earned' and 'Class on this average', then press 'Copy result'.",
+  ],
   intro:
     "JNTU calculates SGPA as the sum of each subject's credits multiplied by its grade point, divided by the total credits registered that semester, on an absolute 10-point scale where 90 marks and above earn 10 points and anything below 40 earns none. This calculator applies that formula from either your letter grades or your raw marks, converts the result with JNTU's published equivalence of percentage = (CGPA − 0.75) × 10, and shows the class the average falls in. It covers JNTU Hyderabad, Kakinada and Anantapur, including the R13 letter set (S, A, B, C, D, E) and the R16 onwards set (O, A+, A, B+, B, C).",
   useCases: [

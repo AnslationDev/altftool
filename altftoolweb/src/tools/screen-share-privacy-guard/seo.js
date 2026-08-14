@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screen Share Privacy Guard: Rehearse Before You Share",
+  metaDescription:
+    "Previews the screen, window or tab you would share via getDisplayMedia, lets you mark leaky areas, and runs a six-point check. Covers are preview-only.",
+  steps: [
+    "Press Start private preview and choose a screen, window or tab in your browser's own picker; the capture asks for video only and audio is never requested.",
+    "Drag across the live preview to draw a solid cover, or add the Browser tabs, Notification corner and Taskbar or dock presets, then place them exactly with the Left, Top, Width and Height sliders.",
+    "Work the Privacy checklist until it reads Manual checks complete, then hide or move every covered item in the source app — the covers are drawn in this preview only and never change what Zoom, Meet or Teams transmits.",
+  ],
   intro:
     "This is a pre-flight rehearsal for screen sharing: it opens a private preview of a screen, window or tab through the browser's getDisplayMedia picker, lets you drag solid covers over anything that should not be visible, and walks you through a six-point privacy checklist before you share for real. The preview never leaves the tab, is not recorded, and no content analysis or OCR is performed on it. The covers are rehearsal marks that show you what to close or move — they do not alter the feed that Zoom, Meet or Teams sends.",
   useCases: [

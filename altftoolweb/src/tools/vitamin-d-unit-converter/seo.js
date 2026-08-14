@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vitamin D Converter: ng/mL to nmol/L With Bands",
+  metaDescription:
+    "Converts 25(OH)D between ng/mL and nmol/L with the exact 2.496 factor, and marks the level against Endocrine Society and IOM cut-points.",
+  steps: [
+    "Type the 25(OH)D reading into the field and pick ng/mL or nmol/L under 'Unit on the report'.",
+    "The Converted level appears with its deficiency, insufficiency or sufficiency band, using the exact 2.496 factor.",
+    "The rows below give the Endocrine Society 30 ng/mL target, the IOM 20 ng/mL adequacy cut-point and the rounded 2.5-factor figure.",
+  ],
   intro:
     "The Vitamin D Unit Converter changes a serum 25-hydroxyvitamin D result between the conventional unit ng/mL and the SI unit nmol/L using the exact molar-mass factor of 2.496, derived from the 400.64 g/mol molar mass of calcifediol. It then places the level against the Endocrine Society bands (deficiency below 20 ng/mL, insufficiency 20-29 ng/mL, sufficiency 30-100 ng/mL) and the Institute of Medicine cut-points. It is for anyone comparing a lab report against a guideline, a study or an earlier test that used the other unit system.",
   useCases: [

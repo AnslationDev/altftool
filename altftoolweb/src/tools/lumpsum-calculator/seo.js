@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lumpsum Calculator: Future Value of a One-Time Investment",
+  metaDescription:
+    "Compounds a one-time investment with FV = P × (1 + r)^n and shows a year-by-year table splitting invested capital from accumulated interest.",
+  steps: [
+    "Enter the Lumpsum Investment Amount in ₹, the Expected Return Rate (% p.a.) and the Investment Period (Years), up to 100 whole years.",
+    "Press Calculate to compound the principal annually — the panel returns Future Value and Total Interest Earned.",
+    "Open Year-by-Year Breakdown for the Year, Invested, Interest and Balance columns and find the year gains overtake the capital.",
+  ],
   intro:
     "Lumpsum Investment Calculator projects what a single one-time investment grows to using the annual compounding formula FV = P × (1 + r)^n, where P is the amount invested, r the expected annual return and n the number of years. It returns the maturity value alongside a year-by-year table separating your original capital from accumulated gains, so you can see the year the returns overtake the principal. It is for anyone deciding what to do with a bonus, a maturing deposit or sale proceeds and wanting the arithmetic before the pitch.",
   useCases: [

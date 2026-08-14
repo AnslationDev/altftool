@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unicode Symbol Copy and Paste: 548 Signs in 9 Sets",
+  metaDescription:
+    "Click a tile to copy the literal character, not an HTML entity. 548 symbols in 9 sets, including 76 box-drawing pieces and 49 Greek letters.",
+  steps: [
+    "Pick a category tab — Arrows 52, Box Drawing 76, Greek 49 or Miscellaneous 169 — or type into the search box.",
+    "Hover a tile to see its U+XXXX code point in the tooltip above it.",
+    "Click the tile to copy the literal character to your clipboard; it joins the Recently Copied strip of the last 20.",
+  ],
   intro:
     "The Unicode Symbol Generator is a click-to-copy library of more than 500 Unicode characters sorted into nine categories — arrows, stars, hearts, mathematical operators, currency, music, box drawing, Greek letters and miscellaneous signs. Hovering any tile shows its official code point in U+XXXX form, and clicking copies the character itself to your clipboard, not an HTML entity or an escape sequence. Recently copied symbols are kept in a strip of the last 20 so the ones you actually use stay one click away.",
   useCases: [

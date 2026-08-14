@@ -1,4 +1,12 @@
 const seo = {
+  title: "Which webpack devtool? Source Map Strategy Picker",
+  metaDescription:
+    "Rank all 13 webpack devtool values by build speed, rebuild speed and mapping quality, and get the matching Vite, esbuild and Next.js config.",
+  steps: [
+    "Set Which build is this? to Development / local dev server or Production build, then set What matters most? to Fast feedback loop, Balanced or Most accurate stack traces.",
+    "Tick I upload maps to an error tracker, and on a production build also My source can be public and Shipped bundle size matters.",
+    "Read the Recommended devtool with its fit score out of 100, copy the webpack.config.js, vite.config.js, esbuild and next.config.js snippets, and scan Every candidate, ranked.",
+  ],
   intro:
     "A source map strategy is the choice of how much of your original code a bundler records alongside the built output, and every level of fidelity costs build time. This chooser ranks all thirteen webpack devtool values using webpack's own documented matrix of build speed, rebuild speed, production safety and mapping quality, filtered by whether your source may be public and whether you upload maps to an error tracker. It returns one devtool value plus the nearest equivalent setting for Vite, esbuild and Next.js.",
   useCases: [

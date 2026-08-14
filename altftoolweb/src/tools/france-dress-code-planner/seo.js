@@ -1,4 +1,12 @@
 const seo = {
+  title: "France Packing & Dress Code Planner by Month",
+  metaDescription:
+    "Pick a month and venues to see church cover-up rules, restaurant codes and the pool swim-brief rule, plus a counted packing list with weight.",
+  steps: [
+    "Set Month of travel, Trip length (days) and Laundry every (days) at the top of the planner.",
+    "Under Where are you going?, tick the venues you will visit — cathedrals and basilicas, Michelin-starred restaurants, public swimming pools, Riviera beaches or the Alps.",
+    "Read the item count and estimated kilograms, the Rules your itinerary triggers list and the Packing list table, then press Copy plan.",
+  ],
   intro:
     "This planner turns France's venue rules and Météo-France climate normals into a counted packing list. France binds very little clothing in law — the exception is Law n° 2010-1192, which makes concealing the face in a public space an offence carrying a fine of up to €150 — so what actually matters are house rules: covered shoulders and no beachwear in working churches, jackets and leather shoes at the top restaurant tier, and the ban on loose swim shorts in municipal pools. Pick a month and an itinerary to see which of those apply and what to pack for the weather around them.",
   useCases: [

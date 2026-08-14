@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pregnancy Protein Calculator: IOM Trimester Targets",
+  metaDescription:
+    "Protein target from the IOM intakes: 1.1 g/kg from the second trimester or +25 g a day, whichever is higher, with extra kcal and the weight-gain band.",
+  steps: [
+    "Enter your Pre-pregnancy weight in kg and Height in cm, then choose the Stage — First trimester (weeks 1-13), Second trimester (weeks 14-27), Third trimester (week 28 to birth), or Breastfeeding for the first 6 months or 6-12 months — and tick Twin pregnancy if it applies.",
+    "Set \"Meals and snacks with protein\" between 3 and 6 so the daily target can be divided per meal.",
+    "Read the daily protein figure and which basis set it, both the g/kg and the +25 g/day forms, the non-pregnant 0.8 g/kg baseline, the additional kcal for the stage and the IOM weight-gain range for your pre-pregnancy BMI; \"Copy result\" saves the lot.",
+  ],
   intro:
     "This calculator gives a daily protein target for pregnancy or breastfeeding from the Institute of Medicine Dietary Reference Intakes: 0.8 g per kg in the first trimester, 1.1 g/kg from the second trimester onward, and 1.3 g/kg while breastfeeding — all based on pre-pregnancy weight. The same DRI also states the increase as an extra 25 g a day, and because those two forms do not agree for every body size the tool computes both and reports the higher, naming which basis it used. Alongside the protein figure it shows the IOM's additional energy allowance for the stage and the 2009 gestational weight-gain range for your pre-pregnancy BMI.",
   useCases: [

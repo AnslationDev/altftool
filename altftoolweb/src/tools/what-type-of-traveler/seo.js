@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Type of Traveler Are You? 10-Question Quiz",
+  metaDescription:
+    "Ten questions on booking, packing and plans score six traveler types. Get your persona with four traits and four matching destinations.",
+  steps: [
+    "Answer the question on screen by tapping one of its four options; the Question 1/10 counter and progress bar advance on their own.",
+    "Keep answering — every option adds weighted points to several of the six traveler types at once, so no single tap decides the outcome.",
+    "Your Travel Persona names the winning type with a summary, Traits chips, four Top Destinations and a quote; Retake Quiz clears the answers and starts again.",
+  ],
   intro:
     "What Type of Traveler Are You? is a 10-question quiz that matches your travel style to one of six types — the Adventurer, the Relaxer, the Explorer, the Socialite, the Culturalist or the Planner. Questions cover how you book, what you pack, where you sleep and how you react when a trip goes sideways, with each answer adding weighted points to several types at once. Your result comes with four defining traits and four destinations that suit that style, from Patagonia for Adventurers to Kyoto for Explorers.",
   useCases: [

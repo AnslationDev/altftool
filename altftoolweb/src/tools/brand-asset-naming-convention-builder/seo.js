@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brand Asset Naming Convention Builder and Validator",
+  metaDescription:
+    "Build a filename pattern from brand, campaign, asset, date and version tokens, then check it against the POSIX character set, 255 bytes and MAX_PATH 260.",
+  steps: [
+    "Under Tokens and order, tick the tokens you want — Brand, Project or campaign, Asset type, Descriptor, Variant, Colour mode, Dimensions, Locale, Date, Version — and use the arrow buttons to reorder them.",
+    "Set Separator, Case, Date format, Version number and Version digits under Style rules, then enter the Sample values and the Folder path (for the 260-character check).",
+    "Example filename shows the result and its pattern above Filename length (limit 255 bytes), Bytes (UTF-8), Full path length (Windows MAX_PATH 260) and POSIX portable, with any reserved-name issues listed; Copy rules copies the convention as Markdown.",
+  ],
   intro:
     "Brand Asset Naming Convention Builder turns a chosen set of tokens — brand, campaign, asset type, variant, dimensions, date and version — into a single filename pattern, then validates the result against the limits that actually break files: the POSIX portable filename character set, the Windows reserved device names, the 255-byte path component limit shared by NTFS, ext4 and APFS, the 260-character legacy MAX_PATH, and the 1024-byte Amazon S3 object key cap. Design and marketing teams get a copyable rules document plus worked examples across a real export set.",
   useCases: [

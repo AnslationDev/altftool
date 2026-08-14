@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brass to CFT Converter: Cubic Feet, m3, Tonnes, Trips",
+  metaDescription:
+    "1 brass = 100 cubic feet. Enter brass, cft, m3 or tonnes with a loose bulk density to get the rest, plus tipper trips for sand or aggregate.",
+  steps: [
+    "Enter the Quantity and set Unit of that quantity to Brass, Cubic feet (cft), Cubic metres (m3) or Tonnes.",
+    "Pick a Material such as River sand (dry, loose) to fill Loose bulk density (kg/m3), which stays editable, then set Truck capacity (brass per trip) or tap a preset like Tipper (10-wheel).",
+    "In cubic feet leads the result with the brass figure and tonnes underneath, plus trip counts and an optional cost from Delivered rate per brass; Copy result saves it.",
+  ],
   intro:
     "A brass is 100 cubic feet of loose construction material, so this converter multiplies or divides by 100 to move between brass and cft, then applies the exact foot definition (1 ft = 0.3048 m, so 1 cft = 0.028316846592 m3) to reach cubic metres. Weight comes from the loose bulk density you pick — river sand near 1,600 kg/m3, 20 mm aggregate near 1,500 kg/m3 — which makes one brass of sand roughly 4.53 tonnes. It is built for site engineers, contractors and homeowners checking a sand or aggregate invoice.",
   useCases: [

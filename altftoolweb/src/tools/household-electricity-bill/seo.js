@@ -1,4 +1,12 @@
 const seo = {
+  title: "Household Electricity Bill Calculator with State Slabs",
+  metaDescription:
+    "Price your appliances at watts x hours / 1000, through telescopic domestic slabs plus fixed charge and duty — or your own flat rate per unit.",
+  steps: [
+    "List what you run: pick each appliance from the preset list, then set Power rating (watts), How many and Hours used per day — Add appliance adds a row and Remove drops one.",
+    "Under Tariff choose State slab tariff and your state, or \"Flat rate from my bill\" plus the rate per unit in INR/kWh; set Days in the billing cycle (up to 62) and tick \"Add electricity duty / tax\".",
+    "Read the estimated bill with units per day, period and year, energy charge, fixed charge, duty and effective cost per unit, plus the \"Where the units go\" table ranking appliances by share and the slab-by-slab energy charge; Copy result takes the summary.",
+  ],
   intro:
     "The household electricity bill calculator turns a list of appliances into a rupee figure by computing units as watts x quantity x hours per day / 1000, then pricing those units through your state's telescopic domestic slab tariff and adding the fixed charge and electricity duty. It is built for anyone who wants to know which appliance is actually driving the bill before the meter reader arrives. One unit on the bill is one kilowatt-hour, so a 1,000 W geyser running for one hour costs exactly one unit.",
   useCases: [

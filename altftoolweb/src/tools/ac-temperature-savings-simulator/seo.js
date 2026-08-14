@@ -1,4 +1,12 @@
 const seo = {
+  title: "AC Temperature Savings Simulator: Cost per Degree",
+  metaDescription:
+    "Raising the setpoint shrinks the load as (outdoor − new) ÷ (outdoor − old). See the units, rupees and per-degree cut, with BEE's 6% rule alongside.",
+  steps: [
+    "Enter the AC capacity in tons and the ISEER from the BEE label, then the outdoor temperature, the setpoint you use today, and the setpoint you are considering — or tap the 24 °C (BEE default), 25, 26 or 27 °C shortcut.",
+    "Set your electricity tariff per unit, hours run per day and days per month; the energy ratio (outdoor minus new setpoint) divided by (outdoor minus old setpoint) recomputes as you type, with no calculate button.",
+    "Read the rupees saved per month, the saving per degree raised with BEE's 6%-per-degree rule of thumb beside it, the four-month summer total and CO2 saved, plus a table of every setpoint from 16 to 30 °C; \"Copy result\" saves the lot.",
+  ],
   intro:
     "This simulator shows the electricity and money a higher AC setpoint saves, using the fact that heat leaks into a room in proportion to the temperature difference across its envelope: the energy ratio is (outdoor − new setpoint) ÷ (outdoor − old setpoint). On a 38 °C day, moving from 22 °C to 24 °C gives 14/16, a 12.5% cut — about 6.25% per degree, which is why BEE's 24 °C default-setting advisory quotes roughly 6% saved per degree. Both the model figure and the published rule of thumb are shown, with a full table from 16 to 30 °C.",
   useCases: [

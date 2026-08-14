@@ -1,4 +1,12 @@
 const seo = {
+  title: "India Hosting Cost Comparison: VPS vs Cloud in Rupees",
+  metaDescription:
+    "Price one workload as VPS, hourly cloud and managed hosting in rupees, with the 730-hour month, egress above free allowance and 18% GST included.",
+  steps: [
+    "Describe the workload: vCPU, RAM (GB), Storage (GB), 'Monthly outbound transfer (GB)', 'Running hours per month (max 730)' and a USD-to-INR rate for USD-priced plans.",
+    "Replace the seeded 'Rate cards' with your real quotes — flat monthly or hourly rate, free egress (GB), egress per extra GB, backup, management and commitment discount.",
+    "Read the cheapest option per month including 18% GST, the 3-year total, the 'Where the money goes' breakdown and the egress volume where the top two swap places; 'Copy comparison' exports it.",
+  ],
   intro:
     "This calculator prices the same workload as a self-managed VPS, as hourly cloud compute and as managed hosting, then ranks them in rupees per month, per year and over three years. It uses the 730-hour billing month that cloud providers apply (365 × 24 ÷ 12), charges outbound transfer only above each plan's free allowance, and adds 18% GST on top, which is the rate for IT infrastructure and hosting services in India. It also reports the egress volume at which the top two options swap places.",
   useCases: [

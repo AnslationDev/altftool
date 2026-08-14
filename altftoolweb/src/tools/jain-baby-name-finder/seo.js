@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jain Baby Name Finder: Tirthankaras, Das Lakshana",
+  metaDescription:
+    "Every name traces to its source — a Tirthankara, a Paryushan dharma, a doctrinal term or an Agama figure. Filter by gender, letter and syllable count.",
+  steps: [
+    "Set Gender, Source in the tradition, Language of origin and Syllables, or type a sense such as forgiveness or lotus into Search name or meaning.",
+    "Pick a Starting letter from the letter buttons and set Names to show (up to 60); Shuffle brings up a different slice of the same matches.",
+    "The table lists each Name with its Meaning, Origin and Where it comes from, above the counts for Names matching your filters and Boys / girls in the match; Copy list copies every name and meaning.",
+  ],
   intro:
     "This finder searches a curated list of Jain baby names where every entry is anchored to a source in the tradition rather than to a generic meaning list — the 24 Tirthankaras from Rishabhdev to Mahavir, the ten virtues of the Das Lakshana Dharma observed at Paryushan, Jain doctrinal terms such as anekant and nirjara, and named figures from the Agamas like Trishala, Gautam Swami and Chandanbala. Each name shows its Sanskrit or Prakrit origin, its meaning and the specific association it carries, and you can filter by gender, first letter, syllable count and source.",
   useCases: [

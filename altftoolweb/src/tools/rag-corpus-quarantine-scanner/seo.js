@@ -1,4 +1,12 @@
 const seo = {
+  title: "RAG Corpus Quarantine Scanner: Injection & Hidden Text",
+  metaDescription:
+    "Scan up to 30 .txt, .md, .html, .csv or .json files for prompt-injection phrasing, zero-width characters, risky links and duplicates before you index.",
+  steps: [
+    "Press Choose files for up to 30 .txt, .md, .html, .csv or .json documents, 2 MB each and 10 MB per batch.",
+    "Press Scan corpus locally to classify each file as quarantine suggested, review suggested or no configured signals.",
+    "Read the duplicate groups and severity totals, then press Download report for rag-corpus-quarantine-counts-only.txt.",
+  ],
   intro:
     "The RAG Corpus Quarantine Scanner reads .txt, .md, .html, .csv and .json files as inert text in your browser and flags deterministic review signals before you index them: prompt-injection phrasing, hidden Unicode and hidden or active HTML, suspicious links, and duplicate documents. Each file is classified as quarantine suggested when a high-severity signal fires, review suggested when only lower-severity or ambiguous signals appear, or no configured signals. It is a triage step for anyone loading third-party or scraped documents into a retrieval index - the output is a review queue, not a verdict on whether a file is malicious.",
   useCases: [

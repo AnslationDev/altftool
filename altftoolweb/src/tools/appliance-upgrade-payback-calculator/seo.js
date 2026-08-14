@@ -1,4 +1,12 @@
 const seo = {
+  title: "Appliance Upgrade Payback: Simple, Discounted & NPV Years",
+  metaDescription:
+    "Enter old and new kWh per year, price, trade-in and tariff to get simple and discounted payback plus lifetime NPV, and CO2 avoided at 0.71 kg per kWh.",
+  steps: [
+    "Enter 'Current appliance uses (kWh a year)', 'Replacement uses (kWh a year)', the new price, trade-in value and your electricity tariff per kWh.",
+    "Set the expected tariff rise, discount rate and appliance life — or convert 'Rated power (watts)' and 'Hours used per day' if you lack an annual kWh figure.",
+    "Read 'Simple payback' alongside the discounted payback and NPV, then click 'Copy result'.",
+  ],
   intro:
     "Appliance upgrade payback is the number of years the energy saving takes to repay the cost of buying the more efficient model. This calculator works it out three ways: simple payback (net cost divided by first-year saving), discounted payback that accounts for a rising electricity tariff and the return the same money could earn elsewhere, and net present value across the appliance's full life. It also converts the units saved into CO2 avoided at roughly 0.71 kg per kWh on the Indian grid.",
   useCases: [

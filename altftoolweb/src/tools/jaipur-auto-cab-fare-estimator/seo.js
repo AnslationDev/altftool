@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jaipur Auto and Cab Fare Estimator: Fair Rate per Km",
+  metaDescription:
+    "Price a Jaipur auto, e-rickshaw or cab from distance, waiting time, round trips and a night premium, with an opening offer and a walk-away figure.",
+  steps: [
+    "Pick the vehicle — auto rickshaw, e-rickshaw or app cab — then set the one-way distance, or tap a common run such as Jaipur Jn to Hawa Mahal at 4.5 km.",
+    "Set the pickup time, tick 'Round trip', add waiting minutes, and open 'Adjust the rate card' to overwrite the base fare, per-km rate or night premium.",
+    "Read the fair fare with its opening offer and walk-away price and the night-premium flag, then press Copy result.",
+  ],
   intro:
     "This estimator works out what a Jaipur auto, e-rickshaw or cab trip is actually worth, using the same two-part structure every Indian city tariff uses: a base amount covering the first couple of kilometres, a per-kilometre rate beyond it, waiting time billed by the minute, and a percentage premium for late-night pickups. Jaipur autos are negotiated rather than metered, so instead of pretending to read a meter it gives you a defensible figure plus an opening offer and a walk-away price. App cab quotes are modelled the aggregator way — base plus distance plus ride minutes plus a demand multiplier — so you can see what a surge quote implies per kilometre.",
   useCases: [

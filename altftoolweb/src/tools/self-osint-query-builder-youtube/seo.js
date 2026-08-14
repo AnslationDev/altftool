@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Self-Exposure Query Builder: site:, inurl:",
+  metaDescription:
+    "Turn your name, handle, channel ID or email into ready-to-run site:, inurl: and quoted queries, grouped by exposure area. Built in your browser only.",
+  steps: [
+    "Fill in only what is already public: Real name, YouTube handle, Channel ID, Email you have used publicly, City or area, Employer or School or college.",
+    "Leave any field blank to skip that query group, or press Clear every field to start from nothing.",
+    "Copy an individual query, or Copy plan for the whole set, and use Open in Google / Open in Bing — anything tagged Over 32 words needs trimming first.",
+  ],
   intro:
     "This query builder converts identifiers you already own — your name, YouTube handle, channel ID, email, city, employer — into ready-to-run search-engine queries using real operators such as site:, inurl: and quoted exact-match phrases, so you can see what a stranger finds when they look you up. It groups the queries by exposure area (channel pages, videos about you, comments, location hints, contact details, handle reuse elsewhere) and flags any query that crosses Google's roughly 32-word cutoff. Everything is generated locally in your browser; no identifier is transmitted or stored.",
   useCases: [

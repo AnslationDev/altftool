@@ -1,4 +1,12 @@
 const seo = {
+  title: "Add or Strip the UTF-8 BOM in SRT and VTT Files",
+  metaDescription:
+    "Adds or removes the three-byte UTF-8 BOM (EF BB BF) on SRT, WebVTT and SBV subtitles, fixes CRLF/LF endings and flags mojibake. Runs in your browser.",
+  steps: [
+    "Paste the cues into the Subtitle file contents box, or use \"Or open a .srt / .vtt / .sbv file\" to load one from disk.",
+    "Set Byte order mark to Strip BOM, Add BOM or Keep as is, pick CRLF (SRT) or LF (WebVTT) under Line endings, and tick \"Also delete stray U+FEFF characters found inside the file\".",
+    "The report gives Detected format, Cues found, Stray U+FEFF inside file and Recommended for this file alongside bytes in versus bytes out; Copy output copies the converted text.",
+  ],
   intro:
     "The Subtitle UTF8 BOM Fixer adds or removes the three-byte UTF-8 byte order mark (EF BB BF, code point U+FEFF) at the start of an SRT, WebVTT or SBV file, and reports what else is wrong with the file's encoding. It detects the subtitle format from its timing lines, counts cues, flags mixed CRLF and LF line endings, finds stray U+FEFF characters buried inside cue text, and recognises mojibake left behind when UTF-8 bytes were read as Windows-1252. Everything runs locally in the browser, so the file never leaves the machine.",
   useCases: [

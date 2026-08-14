@@ -1,4 +1,12 @@
 const seo = {
+  title: "CORS Configuration Linter: Fetch-Spec Preflight Checks",
+  metaDescription:
+    "Paste response headers and see which Fetch check fails: wildcard with credentials, a missing Vary: Origin, or Authorization not covered by *.",
+  steps: [
+    "Paste your Response headers straight from curl -i -X OPTIONS or the Network panel - the status line is optional.",
+    "Under The request to check, set Request Origin, Method, Request headers the script sets and Request Content-Type, and tick Request includes credentials.",
+    "A verdict plus a Pass/Fail line per Fetch check, Findings ranked by severity and Headers as parsed appear below; press Copy report to take the write-up.",
+  ],
   intro:
     "Cross-Origin Resource Sharing is decided entirely by a handful of response headers, and the rules that govern them are stricter and stranger than most configurations assume. `Access-Control-Allow-Origin: *` silently stops working the moment credentials are involved. A wildcard in `Access-Control-Allow-Headers` does not cover `Authorization`. An origin with a trailing slash never matches anything. This linter parses the headers you paste, applies the WHATWG Fetch standard's CORS checks to a request you describe, and tells you both what the browser will do and which combinations are unsafe. Nothing is sent anywhere — it reads the text you give it.",
   useCases: [

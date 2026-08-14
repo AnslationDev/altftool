@@ -1,4 +1,12 @@
 const seo = {
+  title: "Interior Design AI Prompt Generator + Lumen Targets",
+  metaDescription:
+    "Builds an AI render prompt from room type, style, palette and budget, plus lumen targets, rug size and walkway clearance from your real room dimensions.",
+  steps: [
+    "Pick a Room type, Design style, Colour palette, Budget feel and Light / time of day, then enter Room length (m), Room width (m) and Ceiling height (m), plus optional Must-have pieces.",
+    "As you edit, the tool recomputes the spec rows from those dimensions: Floor area, Ambient light target in lumens and lux, Suggested rug size and Main walkway clearance.",
+    "Read the Generated prompt and Negative prompt, then press Copy prompt to copy both together with the room-plan bullet list; Reset restores the Japandi living-room defaults.",
+  ],
   intro:
     "This generator turns a room type, design style, palette and budget feel into a ready-to-paste AI image prompt, and computes the planning numbers behind it from your real room dimensions: floor area, an ambient lighting target in lumens (lux x area, using published residential illuminance guidance), a rug size that keeps the standard 50 cm exposed-floor border, and walkway clearance. It is for homeowners, renters and designers who want renders that could actually be built.",
   useCases: [

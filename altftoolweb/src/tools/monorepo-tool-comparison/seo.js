@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nx vs Turborepo vs Bazel vs Lerna: Weighted Ranking",
+  metaDescription:
+    "Set 0-5 weights on seven criteria to rank Nx, Turborepo, Bazel, Lerna and pnpm workspaces — weighted scores plus a full 35-cell ratings matrix.",
+  steps: [
+    "Drag the seven 0-5 sliders under 'How much does each criterion matter?' to weight caching, orchestration, languages, setup, publishing and ecosystem for your team.",
+    "Hover any cell of the 'Feature ratings (0-5)' table to read the documented reasoning behind each of the 35 tool-criterion scores.",
+    "Read 'Best match for your weights' and each tool's percentage bar, then press 'Copy ranking' for the ordered list with points.",
+  ],
   intro:
     "This tool compares the five major monorepo build tools — Nx, Turborepo, Bazel, Lerna and pnpm workspaces — across seven criteria and ranks them with a weighted score you control. Each tool is rated 0-5 on local caching, remote caching, task orchestration, multi-language support, ease of setup, publishing workflow and ecosystem health, based on the tools' own documentation. Engineering leads get a ranked shortlist that reflects their team's priorities instead of a generic 'best monorepo tool' verdict.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fake Scholarship Scam: Red Flags and Fee Check",
+  metaDescription:
+    "Score an offer on 12 weighted red flags, tally every fee against the award, and parse the portal link offline to see if the host is really gov.in.",
+  steps: [
+    "Under What is true of this offer? tick every statement that matches; weights run from 2 to 4 and four items rule out a genuine scheme on their own.",
+    "Enter Scholarship promised (INR) and Fees demanded so far, one per line, then put the portal address into Paste the scholarship link.",
+    "Read the Red-flag score, Correct amount a student pays and Host you would actually reach, then press Copy result.",
+  ],
   intro:
     "The fake scholarship scam is an advance-fee fraud in which a student is told they have won an award they never applied for, then asked for a registration, verification or tax payment before the money is released. This explainer maps the eight stages of the script, scores the offer against a weighted twelve-point checklist, tallies every fee demanded against the promised award, and parses the portal link offline to show whether it is a gov.in domain or a lookalike. The reference point throughout is simple: a centrally funded scholarship is paid by Direct Benefit Transfer into the student's own account and costs the student nothing at any stage.",
   useCases: [

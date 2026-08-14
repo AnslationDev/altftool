@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fiscal Quarter Converter: FY 2025-26 vs FY2026",
+  metaDescription:
+    "Maps any date to its fiscal quarter for any start month, both ways, and handles start-year naming (FY 2025-26) and end-year naming (US federal FY2026).",
+  steps: [
+    "Choose Date → quarter and set Date to convert, or switch to Quarter → dates and enter the fiscal year as written in the label plus the quarter.",
+    "Set Fiscal year starts in and Year naming, or press a preset such as India / UK govt (Apr–Mar) or US federal (Oct–Sep) to set both at once.",
+    "Read the fiscal period or date range with the day of quarter and percentage progress, then press Copy result.",
+  ],
   intro:
     "This converter maps any calendar date to its fiscal quarter — and any fiscal quarter back to exact start and end dates — for a fiscal year beginning in any month. It handles both year-naming conventions: the India/UK style that names the year after its starting calendar year (FY 2025-26, per the April–March year in the Income-tax Act) and the US federal style that names it after its ending year (FY2026 for the year starting 1 October 2025 under 31 USC 1102). Analysts, accountants and anyone reconciling reports across countries get the quarter label, date range and progress through the period.",
   useCases: [

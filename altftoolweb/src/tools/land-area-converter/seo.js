@@ -1,4 +1,12 @@
 const seo = {
+  title: "Land Area Converter: Bigha, Katha, Biswa by State",
+  metaDescription:
+    "Convert bigha, katha, biswa, kanal, guntha and cent using the value your state actually uses — a bigha is 27,000 sq ft in UP, 12,000 in MP.",
+  steps: [
+    "Set 'Which state is the land in?' — the Regional units panel reloads with that state's own bigha, katha, biswa or kanal values.",
+    "Type a figure into any Universal units box (Square Feet, Square Yard (Gaj), Square Metre, Acre, Hectare) or a Regional units box, or enter Length and Width under Plot dimensions and press 'Use this area'.",
+    "Read Current area in sq ft with its gaj, sq m, acre and hectare equivalents, check 'Same unit, different state' for the spread on the unit you picked, then press Copy results.",
+  ],
   intro:
     "The Land Area Converter converts Indian land units — bigha, katha, biswa, kanal, marla, guntha, cent, decimal, ground, ankanam and more — using the value that the state you select actually uses, not one national average. Everything is normalised through square feet, so a bigha entered under Uttar Pradesh (27,000 sq ft) and one entered under Madhya Pradesh (12,000 sq ft) give different answers, as they should. It covers 22 states, shows the arithmetic behind each unit, converts plot dimensions in feet to area, and compares the same unit side by side across every state that uses it.",
   useCases: [

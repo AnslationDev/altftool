@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brick Calculator: Bricks, Cement and Sand for a Wall",
+  metaDescription:
+    "Wall size, brick size and joint thickness give the brick count, wet and dry mortar, 50 kg cement bags, sand in m³ and cft, and mixing water.",
+  steps: [
+    "In the Wall panel give Wall length (m), Wall height (m), Wall thickness (mm) — 230 mm (one brick, 9\") is a preset chip — and Doors and windows to deduct (m²).",
+    "Pick a Brick size such as Indian modular 190 x 90 x 90 mm or AAC block 600 x 200 x 100 mm, then Mortar joint (mm), Mortar mix (cement : sand) and Breakage / wastage (%).",
+    "Read Bricks to buy over rows for Wet mortar volume, Dry mortar volume, Cement bags (50 kg), Sand and Water for the mortar, then press Copy result.",
+  ],
   intro:
     "A brick quantity calculator turns wall length, height and thickness into the number of bricks, the mortar volume and the cement and sand inside that mortar. It counts bricks by the nominal cell each one fills — brick size plus one mortar joint in all three directions, so a 190 × 90 × 90 mm brick with a 10 mm joint occupies exactly 0.002 m³ and gives the familiar 500 bricks per cubic metre — then takes the leftover volume as mortar and bulks it by 1.33 before splitting it by the cement : sand ratio. It is aimed at masons, contractors and homeowners pricing a wall before ordering.",
   useCases: [

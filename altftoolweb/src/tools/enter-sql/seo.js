@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL Formatter: Beautify, Compress or Escape a Query",
+  metaDescription:
+    "Beautify SQL onto clause lines, compress it to one line, or escape it as a string literal — quoted text and -- or /* */ comments stay untouched.",
+  steps: [
+    "Paste into the source.sql box ('Paste or type SQL here...'), or press Sample to load the example query and Clear to empty it.",
+    "Choose Beautify, Compress or Escape, drag the Indent slider between 2 and 8 spaces, and toggle 'Uppercase SQL keywords'.",
+    "Compare the Input Characters, Output Lines, Statements and Character Delta cards, then Copy the output or Download it as formatted.sql (compressed.sql in Compress mode).",
+  ],
   intro:
     "Enter SQL reformats a SQL statement three ways — beautify it onto indented clause lines, compress it to a single line, or escape it into a quoted string literal — using a keyword list of 25 clause starters such as SELECT, LEFT JOIN, GROUP BY and INSERT INTO plus 16 inline keywords. Before any transformation runs, string literals, quoted identifiers, `--` line comments and `/* */` block comments are swapped out for placeholder tokens and restored afterwards, so nothing inside them is re-cased or re-spaced. It is for developers cleaning up a query pulled out of a log, an ORM dump or a one-line application string.",
   useCases: [

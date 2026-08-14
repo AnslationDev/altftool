@@ -1,4 +1,12 @@
 const seo = {
+  title: "Counselling Reporting Day Document and Fee Checklist",
+  metaDescription:
+    "Documents the institute keeps, the money due on reporting day, and how much is refundable or adjusted later — for JoSAA, MCC and state counselling.",
+  steps: [
+    "Pick your Counselling (JoSAA — IITs, NITs, IIITs and GFTIs, MCC NEET UG, state engineering or medical) and the Category allotted under, then enter the seat acceptance or registration fee, Refundable security deposit (INR) and Institute fee due at reporting (INR).",
+    "Add the travel, stay and photocopy costs, set the Reporting window — Allotment date, Last date to report and Today — and tick the boxes under 'Which of these apply?'.",
+    "Read 'Arrange on reporting day' with Refundable deposit, Adjusted against institute fee, Net cost after refunds and 'Deposit at risk on a no-show', tick off The reporting folder items marked 'institute keeps it', then press Copy checklist.",
+  ],
   intro:
     "This checklist covers both halves of a counselling reporting day: the originals the institute will keep, and the money that has to be in the account before the window shuts. It separates what you pay from what comes back — a JoSAA seat acceptance fee, notified in recent cycles at ₹35,000 for OPEN, OBC-NCL and EWS candidates and ₹17,500 for SC, ST and PwD candidates, is adjusted against the institute's own fee later, while an MCC security deposit is refundable but forfeited outright if you are allotted a seat and do not report. It also counts the days left in your reporting window.",
   useCases: [

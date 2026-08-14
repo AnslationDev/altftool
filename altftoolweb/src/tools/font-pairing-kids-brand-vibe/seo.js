@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Font Pairing: Minimum Readable Size in px",
+  metaDescription:
+    "Pair playful display and body faces for children, and get the minimum body size in px from viewing distance, reading age and each face's x-height.",
+  steps: [
+    "Pick a Font pair, then set Where it is read (each option shows its viewing distance in mm), Reader age (years) from 1 to 18, Body size you plan to use (px) and the Heading multiplier.",
+    "Minimum readable body size updates immediately in px and pt, with rows for Required x-height in mm, the Legibility ratio used (1:150 under age eight, otherwise 1:200) and the line, letter and word spacing.",
+    "Check the Live preview and the Minimum size by reading distance table, then press Copy CSS for the ready-made block or Copy URL for the Google Fonts request.",
+  ],
   intro:
     "Kids Brand Font Pairing matches playful rounded display faces with body fonts that stay readable, and calculates the smallest body size that still works at the distance the material is actually read from. It applies the signage legibility ratio — character height of at least 1/200 of the viewing distance, tightened to 1/150 for readers under eight — then divides by each body face's x-height to convert that into a font size. Useful for children's packaging, worksheets, learning apps and classroom posters.",
   useCases: [

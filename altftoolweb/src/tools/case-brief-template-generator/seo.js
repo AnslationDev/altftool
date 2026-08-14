@@ -1,4 +1,12 @@
 const seo = {
+  title: "Case Brief Generator: IRAC, FIRAC & CREAC Formats",
+  metaDescription:
+    "Build a one-page case brief in IRAC, FIRAC or CREAC order with a Bluebook, SCC or neutral citation, a completeness check and a word-count length check.",
+  steps: [
+    "Choose the Analytical framework (IRAC, FIRAC or CREAC) and Citation style, then enter the case name, year, court, volume and first page for the citation.",
+    "Fill the brief sections — Procedural history, Material facts, Issue presented (phrase it as a question), Rule of law, Holding, Reasoning / application and Disposition.",
+    "Check the Required sections complete percentage and the one-page word range, review the assembled brief text, and press Copy brief.",
+  ],
   intro:
     "A case brief is a one-page summary of a judicial decision that records the material facts, the legal issue, the rule applied, the court's holding, its reasoning and the final order. This generator lays those components out in IRAC, FIRAC or CREAC order, formats the citation in Bluebook, SCC or neutral-citation form, and flags any required component you have left blank. Built for law students, paralegals and moot participants who need consistent briefs across a whole reading list.",
   useCases: [

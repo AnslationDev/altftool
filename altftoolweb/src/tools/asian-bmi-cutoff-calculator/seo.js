@@ -1,4 +1,12 @@
 const seo = {
+  title: "Asian BMI Calculator: WHO Asia-Pacific 23 and 25 Cutoffs",
+  metaDescription:
+    "Read your BMI against the WHO Asia-Pacific cutoffs, overweight 23 and obese 25, beside the international bands, with 90/80 cm waist thresholds.",
+  steps: [
+    "Choose cm / kg or ft-in / lb, then enter your height, weight, Age (years) and Sex (for the waist threshold).",
+    "Add a Waist circumference (cm, optional) to test it against the South Asian cutoffs of 90 cm for men and 80 cm for women.",
+    "Read the BMI with its WHO Asia-Pacific band beside the WHO international one, the Asia-Pacific healthy weight range in kg for your height, and the waist-to-height ratio.",
+  ],
   intro:
     "This calculator works out BMI as weight in kilograms divided by height in metres squared, then reads it against the WHO Asia-Pacific thresholds — overweight from 23 and obesity from 25 — instead of the international 25 and 30. It is for people of South and East Asian ancestry, whose risk of type 2 diabetes and cardiovascular disease rises at a lower BMI and a lower waist circumference than the standard bands imply. Both classifications are shown side by side, along with the South Asian waist cutoffs of 90 cm for men and 80 cm for women.",
   useCases: [

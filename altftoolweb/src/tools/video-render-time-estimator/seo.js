@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Render Time Estimator by Codec and Machine",
+  metaDescription:
+    "Estimate export time from width x height x fps x length, scaled by codec, effects and source, against a 3x real-time 1080p30 H.264 baseline.",
+  steps: [
+    "Enter Timeline length (minutes) and Frame rate, then pick a Resolution such as 3840 x 2160 (4K UHD).",
+    "Set Machine class, Export codec — H.264 hardware encoder through H.265 CPU encoder (x265) — Effects load, Source media and Encoding passes.",
+    "Read Estimated render time, Realtime factor and Frames/sec export, compare the same timeline across machine classes, then press Copy estimate.",
+  ],
   intro:
     "The Video Render Time Estimator predicts how long an export will run by counting the work involved — width x height x frame rate x timeline seconds gives the pixels the machine must process — and dividing it by a throughput figure for your machine class, then scaling by codec, effects and source-format cost. The baseline is calibrated so a mid-range desktop with a modern GPU exports a plain 1080p30 H.264 timeline at about three times real time, which is where most editing benchmarks sit. It is for editors and producers who need to know whether a delivery will make a deadline before committing to the render.",
   useCases: [

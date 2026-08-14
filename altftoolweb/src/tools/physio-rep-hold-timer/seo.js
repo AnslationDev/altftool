@@ -1,4 +1,12 @@
 const seo = {
+  title: "Physio Rep and Isometric Hold Timer with Tempo Cues",
+  metaDescription:
+    "Turn a prescribed set into phase countdowns for lift, hold, lower and rest, with Alfredson and 45-second isometric presets and time-under-tension totals.",
+  steps: [
+    "Use \"Start from a known protocol\" to load Isometric tendinopathy holds or Eccentric heel drops (Alfredson), or type your own Sets and Reps per set.",
+    "Set the tempo in \"Lift / concentric (seconds)\", \"Hold / isometric (seconds)\" and \"Lower / eccentric (seconds)\", plus \"Rest between sets (seconds)\", Sessions per day and Days per week, then press Start.",
+    "The countdown calls each phase while Session length totals \"Time under tension per set\", the session TUT and Weekly volume; Copy prescription saves the plan.",
+  ],
   intro:
     "A physio rep and hold timer turns a written rehab prescription — sets, reps and a tempo such as 2 seconds up, 5 seconds hold, 3 seconds down — into a guided countdown that calls each phase and each rest period. It also totals the numbers that matter for tendon and muscle loading: time under tension per set, total working time and weekly volume. Presets cover published protocols including the Alfredson eccentric heel drop programme, heavy slow resistance at a 3-second lift and 3-second lower, and 45-second isometric tendinopathy holds.",
   useCases: [

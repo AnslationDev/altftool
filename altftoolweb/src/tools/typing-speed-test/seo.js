@@ -1,4 +1,12 @@
 const seo = {
+  title: "Typing Speed Test: Net WPM & Accuracy in 30, 60, 120s",
+  metaDescription:
+    "Net WPM counts correct characters ÷ 5 over a 30, 60 or 120 second run. The timer starts on your first keystroke; results add raw WPM and accuracy.",
+  steps: [
+    "Pick 30s, 60s or 120s, then click the word area — the timer starts on your first keystroke.",
+    "Press Space to commit each word; Esc pauses and Resume restarts the countdown, and pasting is blocked.",
+    "The results card gives Net WPM with Raw WPM, Accuracy, Correct and Incorrect counts, plus Try again and New words.",
+  ],
   intro:
     "This typing speed test measures net words per minute — correctly typed characters divided by five, normalised to a minute — over a 30, 60 or 120 second run against a random stream of common English words. The clock starts on your first keystroke, Space commits each word, and the results card breaks the run into net WPM, raw WPM, accuracy and the exact correct and incorrect character counts. It is for anyone who needs a defensible number rather than a vague sense of being fast, and it keeps your best net WPM so later runs have something to beat.",
   useCases: [

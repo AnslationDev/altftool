@@ -1,4 +1,12 @@
 const seo = {
+  title: "Twitter Card Image Generator: PNG Plus Meta Tags",
+  metaDescription:
+    "Draw a summary (1:1) or large-image (2:1) card at the size X accepts, download the PNG, and copy twitter:card tags trimmed to 70 and 200 characters.",
+  steps: [
+    "Choose Card type — 'Summary card — 1:1, 800x800' or 'Summary card with large image — 2:1, 1200x600' — then fill Title, Description, Site handle, 'Image URL that will go in twitter:image' and Image alt text; the counters turn red at 70, 200 and 420 characters.",
+    "Set Background colour, Text colour and Accent colour, and the canvas redraws live at the exact export size shown above it as 'Card image to export'.",
+    "Press Download PNG to save x-card-summary_large_image-1200x600.png, and use Copy result in the Meta tags panel to copy the twitter:card and Open Graph block.",
+  ],
   intro:
     "A Twitter (X) card image generator draws the preview image a link needs at exactly the dimensions the platform accepts, and writes the matching twitter:card meta tags. X supports two card types that still render a preview: the summary card, which takes a 1:1 image of at least 144 x 144 px, and summary_large_image, which takes a 2:1 image of at least 300 x 157 px; both cap at 4096 px per edge and 5 MB. Titles are cut at 70 characters and descriptions at 200, so the tool trims them for you and shows the count as you type.",
   useCases: [

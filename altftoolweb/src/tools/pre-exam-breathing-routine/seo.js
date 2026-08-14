@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pre-Exam Breathing Timer: Box, 4-7-8 & 4-6 Patterns",
+  metaDescription:
+    "Paced timer for box breathing 4-4-4-4, 4-7-8 or a 4-6 extended exhale — pick a pattern, press Start, and follow the count for two to three minutes.",
+  steps: [
+    "Choose a Breathing pattern — Box breathing (4-4-4-4), 4-7-8 breathing or Extended exhale (4-6) — and set Rounds (1–20); each pattern loads its own default round count.",
+    "Press Start and follow the circle — it grows on Inhale and shrinks on Exhale — while the timer counts each phase and shows the round number and time left; Pause and Resume any time.",
+    "When the display reads Done the routine is complete; Copy routine copies the pattern, rounds, total time and per-step timings, and Reset returns to the box-breathing default.",
+  ],
   intro:
     "This tool runs a paced breathing session — box breathing (4-4-4-4), Dr Andrew Weil's 4-7-8 pattern, or a simple 4-in 6-out extended exhale — with a visual timer that tells you exactly when to inhale, hold and exhale. Slow breathing at around six breaths per minute with a lengthened exhale shifts the nervous system toward its calmer parasympathetic state. It is built for the minutes before an exam: pick a pattern, press start and follow the circle for two to three minutes.",
   useCases: [

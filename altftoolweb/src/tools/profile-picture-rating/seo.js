@@ -1,4 +1,12 @@
 const seo = {
+  title: "Profile Picture Rating: Brightness, Contrast Score",
+  metaDescription:
+    "Measures brightness, edge contrast and background colour variety from your photo's pixels in the browser, with a checklist for the platform you pick.",
+  steps: [
+    "Drop a photo onto \"Drag & Drop your picture here\" or use Browse Files, then set \"Select Target Platform Context\" to Professional / LinkedIn / Job Search, Social Media, Technical Profile / GitHub / Dev or Casual Profile / Dating.",
+    "Press Rating Scan: the picture is drawn into a hidden canvas in your browser at 150x150 and scored on average brightness using the BT.601 weights (0.299 red, 0.587 green, 0.114 blue), on edge contrast and on background colour variety.",
+    "The PFP Rating Report shows an Overall Score on a scale of 100 with a bar and a written note per category, then \"What Is Working Well\" and \"Actionable Improvements\" lists; Reset clears the photo and the report.",
+  ],
   intro:
     "This tool measures the technical qualities of a profile photo — average brightness, edge contrast and background colour variety — and scores them against what a headshot usually needs, then pairs the numbers with a checklist for the platform you picked. It samples the image down to 150x150 and computes perceptual brightness with the BT.601 luma weights (0.299 red, 0.587 green, 0.114 blue), treating a mid-tone average near 120 of 255 as well exposed. It is for anyone deciding whether the photo they are about to use is too dark, too flat or too busy behind them.",
   useCases: [

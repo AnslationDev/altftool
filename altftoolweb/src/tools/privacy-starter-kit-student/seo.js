@@ -1,4 +1,12 @@
 const seo = {
+  title: "Student Privacy Starter Kit: 16 Weighted Controls",
+  metaDescription:
+    "Score 16 campus security controls — accounts, lab machines, Wi-Fi, portal, backups — then get a plan sized to the minutes you actually have today.",
+  steps: [
+    "Under The full kit, tick every control already done across Accounts, Devices, Campus network, Student portal, Social and Coursework — each row shows its protection points, rough minutes and whether it is critical.",
+    "Enter Minutes you can spend today or tap the 15, 30, 45 or 90 min presets; the plan takes the open items with the best protection per minute, criticals first, within that budget.",
+    "Read the Protection score percentage and band, Controls completed, Critical controls still open and Score after today's plan, then press Copy plan to take the numbered Do these next list with you.",
+  ],
   intro:
     "The Student Privacy Starter Kit scores a student's real security setup across 16 controls — accounts, personal and shared lab devices, campus Wi-Fi, the student portal, social profiles and coursework backups — and returns a plan sized to the minutes you have free. Each control carries a protection weight of 1 to 5, ordered the way public baselines such as CISA's core advice rank them: multi-factor authentication and unique passwords first, device lock and encryption next, then network and exposure controls. Built for undergraduates and postgraduates who share lab machines, join campus Wi-Fi daily and are about to lose their college mailbox at graduation.",
   useCases: [

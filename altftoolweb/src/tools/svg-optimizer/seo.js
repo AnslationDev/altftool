@@ -1,4 +1,12 @@
 const seo = {
+  title: "SVG Optimizer: Strip Metadata, Round Path Precision",
+  metaDescription:
+    "Removes comments, metadata blocks, sodipodi and inkscape:* leftovers plus SVG 1.1 default attributes, rounds coordinates, and keeps every referenced id.",
+  steps: [
+    "Paste your markup into the SVG source box, replacing the loaded sample export with its comment and metadata block.",
+    "Set Coordinate precision (0 to 8 decimals, 3 by default) and tick what to remove — comments, editor namespace attributes, spec-default attributes, unreferenced ids.",
+    "Read Size saved with the original and optimized byte counts and the comments, elements and attributes removed, then Copy result or Download optimized.svg.",
+  ],
   intro:
     "An SVG optimizer rewrites an SVG file to be smaller while drawing exactly the same picture. This one deletes editor leftovers that the SVG 1.1 rendering model ignores — comments, <metadata>, Inkscape's <sodipodi:namedview>, inkscape:* and sketch:* attributes — drops presentation attributes that merely restate their spec default such as fill-opacity=\"1\" and stroke-linejoin=\"miter\", and rounds path coordinates to a precision you choose. It is for designers exporting icons from Figma, Illustrator or Inkscape, and for developers inlining SVG into a bundle where every byte ships to every visitor.",
   useCases: [

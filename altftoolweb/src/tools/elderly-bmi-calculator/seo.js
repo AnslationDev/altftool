@@ -1,4 +1,12 @@
 const seo = {
+  title: "Elderly BMI Calculator: 24-29 Range, MUST, Knee Height",
+  metaDescription:
+    "BMI for adults 65+ read against the 24-29 desirable band, with Chumlea knee-height stature estimation and a MUST malnutrition screening score.",
+  steps: [
+    "Enter Age (years) and Sex, then choose Measured standing height or Estimate from knee height.",
+    "Add Current weight (kg), optionally Weight 3 to 6 months ago (kg), and tick the box if the person is acutely ill with little food for over 5 days.",
+    "Read the BMI, the Age-adjusted category (65+) and the MUST malnutrition screening score, then press Copy result.",
+  ],
   intro:
     "This calculator gives BMI as weight in kilograms divided by height in metres squared, then reads it against the 24 to 29 desirable range that Lipschitz proposed for adults over 65 rather than the 18.5 to 24.9 band used for younger adults. It also estimates standing height from knee height using the Chumlea equations, for people whose spine has compressed or who cannot stand for a measurement, and scores malnutrition risk with the BAPEN MUST screening tool. In later life the bigger danger is usually being too thin, so the output leads with how far the weight sits below the desirable range.",
   useCases: [

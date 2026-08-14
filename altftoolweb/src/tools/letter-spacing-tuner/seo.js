@@ -1,4 +1,12 @@
 const seo = {
+  title: "Letter Spacing Calculator: em, px and 1/1000 em",
+  metaDescription:
+    "Letter-spacing from font size, weight and case via the tracking curve A + B·e^(C·size), corrected for caps and reversed text. Copy the CSS rule.",
+  steps: [
+    "Set Font size (px), Font weight from 100 to 900, Text case (Sentence / title case, ALL CAPS or Small caps) and Contrast (Dark text on light or Light text on dark).",
+    "Add a Manual nudge (1/1000 em) if you want to override the curve, and type your own Preview text with Preview family set to Sans-serif, Serif or Monospace.",
+    "Recommended letter-spacing shows in em with the /1000 em figure, and the rows break out the optical base, case, weight, reversed-text and nudge corrections plus the pixel value; Copy CSS takes the rule.",
+  ],
   intro:
     "The Letter Spacing Tuner calculates the letter-spacing value a given font size, weight and case should use, expressed in em, pixels and the 1/1000 em unit design apps expect. It applies the optical tracking curve tracking = A + B·e^(C·size) — the exponential fit that makes small text open up and display text tighten — then adds documented corrections for heavy weights, all-caps settings and light-on-dark text. Designers and front-end developers get a defensible starting value plus a live preview instead of guessing at round numbers.",
   useCases: [

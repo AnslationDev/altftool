@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timber Weight Calculator by Species and Moisture",
+  metaDescription:
+    "Weight of teak, sal, sheesham, plywood or MDF from thickness, width, length and moisture — USDA density model, in kg, lb and cubic feet.",
+  steps: [
+    "Pick the wood from \"Species or board type\" — each option shows its kg/m³, and Custom reveals a \"Custom density at 12% moisture (kg/m³)\" box — then enter Thickness, Width and Length with their unit menus plus \"Number of pieces\".",
+    "Set \"Moisture content (% of oven-dry weight)\" by typing it or tapping a preset: Kiln dried, Seasoned (12%), Air dry (18%), Fibre saturation or Green / freshly felled.",
+    "\"Total weight\" reports the kilograms, with rows for Density at this moisture, Basic specific gravity (Gb), Volume in cubic feet, Weight per piece, Weight per metre run and Total weight in pounds; \"Copy result\" copies them.",
+  ],
   intro:
     "This calculator gives the weight of a piece of wood as volume multiplied by density, and adjusts that density for moisture using the USDA Wood Handbook relation density(M) = 1000 x Gb x (1 + M/100) / (1 - 0.265 x a x Gb), where Gb is the basic specific gravity and a tapers to zero at the 30% fibre saturation point. It covers Indian species such as teak, sal and sheesham alongside engineered boards like plywood and MDF. Carpenters, shippers and site engineers use it to plan lifting, transport and shelf loads.",
   useCases: [

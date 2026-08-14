@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sit and Reach Test Score: CSEP Norms by Age & Sex",
+  metaDescription:
+    "Score a sit-and-reach reading against CSEP trunk flexion norms for your age and sex. Inches and 23 cm boxes convert to the 26 cm scale.",
+  steps: [
+    "Enter Age (years), pick Sex (reference table), type your Best reading (this test) and set Units to Centimetres or Inches.",
+    "Set Box footline to '26 cm at the feet (standard)' or '23 cm at the feet' so the reading is normalised onto the 26 cm scale, and add a Previous reading (optional) to track change.",
+    "Read the band under Your rating — Excellent, Very good, Good, Fair or Needs improvement — with the standardised cm/in score, distance to the next band and change vs previous test, then press Copy result.",
+  ],
   intro:
     "The Sit and Reach Flexibility Test scores a sit-and-reach box reading against the CSEP trunk forward flexion norms for your age band and sex, rating you from Excellent down to Needs improvement. Readings in inches, or from a box whose footline is marked 23 cm rather than the standard 26 cm, are converted onto the 26 cm scale first so every test is compared on the same basis. Entering a previous reading also shows the centimetre change between tests, which is what actually tells you whether a stretching routine is working.",
   useCases: [

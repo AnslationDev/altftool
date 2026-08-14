@@ -1,4 +1,12 @@
 const seo = {
+  title: "Would You Rather Generator - 55 Seeded Dilemmas",
+  metaDescription:
+    "Draw from 55 dilemmas in eight categories and three difficulty bands. A seeded shuffle deals every question once - share the seed to replay a deck.",
+  steps: [
+    "Pick a Category and 'How hard should the choice be?' (Easy, Medium or Hard), or type a Deck seed - the same seed deals the same order of questions. [pages/index.jsx:121-181]",
+    "Click either answer button to vote, then Next question - every question in the deck appears once before any repeats. [pages/index.jsx:196-215, 248-257, 277-281]",
+    "Watch 'Your tally so far' split left against right, press Copy question to share one, or New deck to reshuffle from a random seed. [pages/index.jsx:75-78, 238-243, 258-270]",
+  ],
   intro:
     "A would-you-rather generator serves up forced-choice dilemmas — two options, no opt-out — to break the ice at a party, fill a car journey or warm up a team call. This one holds 55 hand-written dilemmas across eight categories and three difficulty bands, shuffled with a seeded Fisher–Yates deck so every question in a run appears exactly once before any repeats. Type the same seed again and you get the same deck in the same order, which makes a round replayable and shareable.",
   useCases: [

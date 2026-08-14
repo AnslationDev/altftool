@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Adoption Readiness Quiz — 12 Questions, Scored",
+  metaDescription:
+    "Twelve questions scored 0-3 across data, skills, process and governance. Returns a banded verdict out of 36 and names your weakest dimension first.",
+  steps: [
+    "Answer the twelve questions grouped under Data readiness, Skills & people, Process fit and Governance & risk — every radio option is labelled with the maturity points it carries, from (0 pts) to (3 pts).",
+    "Read the Readiness score percentage and its band — Ready to scale, Ready to pilot, Early stage or Not ready yet — with that band's recommended next step printed beside it.",
+    "Check the breakdown for each dimension's score out of its maximum, the Total out of 36 and the 'Weakest area — fix first' row, then press Copy result to copy the summary or Reset to return every answer to level 1.",
+  ],
   intro:
     "The AI Adoption Readiness Quiz scores an organisation's preparedness for rolling out AI across the four dimensions maturity frameworks consistently test: data readiness, skills and people, process fit, and governance and risk. Twelve questions each carry 0–3 maturity points (36 total), and the percentage score maps to one of four bands from 'not ready yet' to 'ready to scale', with the weakest dimension called out first. It is designed for operations leads and executives sizing up an AI rollout before committing budget.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Restaurant Phrasebook: 8 Languages, Script & Romanisation",
+  metaDescription:
+    "Builds a restaurant phrasebook in Hindi, Tamil, Japanese and five more — native script plus read-aloud romanisation — as a card, Markdown or CSV.",
+  steps: [
+    "Pick the Language and the 'Dietary profile' — Vegetarian, Vegan, 'Jain / no onion or garlic', 'No pork' or 'Peanut allergy'.",
+    "Tick the 'Situations to include': 'Getting a table', 'Ordering', 'Dietary needs and allergies', 'Paying' and 'Courtesy and leaving'.",
+    "Read each phrase with its script and its 'say:' romanisation, then choose 'Printable card', 'Markdown table' or 'CSV spreadsheet' under Export.",
+  ],
   intro:
     "This generator assembles a short restaurant phrasebook in Hindi, Bengali, Tamil, Spanish, French, German, Italian or Japanese, covering getting a table, ordering, stating a dietary restriction, paying and thanking the staff. Each phrase is given in the native script with a plain romanisation written for an English speaker to read aloud, and a dietary profile — vegetarian, vegan, Jain, no pork or peanut allergy — narrows the list to the lines you will actually need. Output copies out as a printable card, a Markdown table or a CSV.",
   useCases: [

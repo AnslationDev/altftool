@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delete PDF Pages Online — Reorder & Rebuild the File",
+  metaDescription:
+    "Preview thumbnails, delete and drag-reorder PDF pages (up to 80 MB), then download a rebuilt file ending -cleaned.pdf — removed pages are truly gone.",
+  steps: [
+    "Click \"Choose a PDF file\" to load a PDF up to 80 MB; every page renders as a thumbnail you can enlarge in a preview before deciding.",
+    "Delete unwanted pages with the trash button and drag thumbnails — or use the move arrows — to put the kept pages in order.",
+    "Click Download PDF for a rebuilt file named <original>-cleaned.pdf, and Copy Summary for a record of the final order and removed page numbers.",
+  ],
   intro:
     "PDF Purifier lets you drop pages you do not want to share out of a PDF and reorder the ones you keep, then rebuilds the file from only the retained pages and downloads it as <name>-cleaned.pdf. Every page is shown as a thumbnail you can enlarge before deciding, and the tool writes a plain-text plan listing the original page count, the output order and exactly which pages were removed. Because the output is assembled by copying only the kept pages, the discarded content is not in the new file at all.",
   useCases: [

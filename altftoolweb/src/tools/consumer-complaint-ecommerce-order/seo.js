@@ -1,4 +1,12 @@
 const seo = {
+  title: "Consumer Complaint Letter for an Online Order (India)",
+  metaDescription:
+    "Drafts the notice to the platform and seller, then the complaint outline — picking District, State or National Commission from the consideration paid.",
+  steps: [
+    "Enter the platform or store, seller of record, order number, order date and \"Problem arose on (cause of action)\", then pick what went wrong.",
+    "Add the amount paid for the goods, shipping, out-of-pocket costs and compensation claimed, and tick the heads of claim to plead.",
+    "Read the commission to approach, the Section 69(1) last date to file and the comply-by date, then press Copy notice or Copy outline.",
+  ],
   intro:
     "This tool drafts the two documents an online shopper actually needs when an order goes wrong: the notice that has to reach the platform and seller first, and the outline of a complaint under the Consumer Protection Act 2019 if that notice is ignored. It picks the right consumer commission from the consideration paid — the District Commission up to Rs 50 lakh, the State Commission up to Rs 2 crore and the National Commission above that, as Section 34(1) and the Jurisdiction Rules 2021 provide — and checks the two-year limitation in Section 69(1). It covers parcels marked delivered but never received, short or damaged deliveries, wrong or counterfeit items, and refunds that never arrive.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Font Licence Checker: Desktop vs Webfont vs App Use",
+  metaDescription:
+    "Check 14 uses — @font-face, logos, app embedding, EPUB, server rendering — against a desktop, webfont, app, server, OFL 1.1 or Apache 2.0 licence.",
+  steps: [
+    "Pick Licence you hold — Desktop licence, Webfont licence, App licence, ePub / eBook licence, Server licence, Broadcast / OTT licence, SIL Open Font Licence 1.1 or Apache License 2.0.",
+    "Under What do you want to do with it? tick the uses that apply, such as Use @font-face on a public website or Embed it in a mobile or desktop app.",
+    "Enter the units licensed and the units you actually need, then read the Use by use verdicts and Copy result.",
+  ],
   intro:
     "The Font Licence Usage Explainer maps a set of intended uses against the licence family you actually bought — desktop, webfont, app, ePub, server, broadcast, SIL Open Font Licence 1.1 or Apache 2.0 — and marks each use as covered, dependent on the exact EULA wording, or needing a separate licence. Commercial type is licensed per channel, so a desktop seat that lets a designer set a poster does not let you serve the same file with @font-face or ship it inside an app binary. It is aimed at designers, marketers and developers who need to know what to buy before a font file leaves the design team.",
   useCases: [

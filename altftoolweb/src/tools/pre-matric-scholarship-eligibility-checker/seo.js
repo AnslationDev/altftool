@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pre Matric Scholarship Eligibility Checker for NSP",
+  metaDescription:
+    "Check class, category and family income against all five central pre-matric schemes — SC, ST, PM-YASASVI, minority and hazardous occupations.",
+  steps: [
+    "Type the Class currently studying in, choose the Category and enter the Annual family income (INR) — the defaults start at class 9, SC and Rs 2,00,000.",
+    "Add a Previous exam percentage where the minority scheme's 50% condition matters, and tick the box if a parent is in a notified hazardous occupation such as manual scavenging, tanning, flaying or waste picking.",
+    "'Schemes you may qualify for' counts the eligible ones out of five and tags each scheme Likely eligible or Not eligible with a 'Why not' line naming the condition that failed; Copy result takes the whole list.",
+  ],
   intro:
     "This checker tests a school student's details against the five central pre-matric scholarship schemes: SC (income up to Rs 2.5 lakh), ST (Rs 2.5 lakh), OBC/EBC/DNT under PM-YASASVI (Rs 2.5 lakh), minority students (Rs 1 lakh plus 50% in the previous exam), and the no-income-ceiling component for children of parents in hazardous occupations. Since the 2022-23 revision the main schemes cover classes 9 and 10 only, while the hazardous-occupations component runs from class 1 to 10. It is for parents and students checking National Scholarship Portal eligibility before the application window.",
   useCases: [

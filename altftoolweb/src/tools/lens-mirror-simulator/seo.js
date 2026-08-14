@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lens & Mirror Ray Diagram Simulator: v, m, Image",
+  metaDescription:
+    "Drag object distance, focal length and height for a convex or concave lens or mirror; the two principal rays redraw and v, m and the image type follow.",
+  steps: [
+    "Under \"Optical Element Setup\" pick the optic — Convex Lens, Concave Lens, Concave Mirror or Convex Mirror.",
+    "Drag the three sliders — Object Distance (u) from 30 to 300 mm, Focal Length (f) from 30 to 150 mm and Object Height (h_o) from 20 to 100 mm — and the canvas redraws the axis, F and 2F points and the two rays: one parallel to the axis through the focus, one through the optical centre or pole.",
+    "Read \"Image Character & Metrics\" for Image Distance (v) in mm, Magnification (m), Real Image or Virtual Image and Inverted or Upright, solved from 1/f = 1/v - 1/u for lenses and 1/f = 1/v + 1/u for mirrors; Reset returns the convex lens at u = 150 mm, f = 80 mm.",
+  ],
   intro:
     "The Lens & Mirror Simulator draws a live principal-ray diagram for a convex lens, concave lens, convex mirror or concave mirror and solves the image position from the standard formulas — 1/f = 1/v − 1/u for lenses and 1/f = 1/v + 1/u for mirrors — under the Cartesian sign convention. Drag the object distance (30–300 mm), focal length (30–150 mm) and object height (20–100 mm) and the two construction rays redraw, one parallel to the axis and refracted or reflected through the focus, the other straight through the optical centre or pole. Alongside the diagram it reports the image distance, the magnification m = v/u, the image height, and whether the image is real or virtual and erect or inverted.",
   useCases: [

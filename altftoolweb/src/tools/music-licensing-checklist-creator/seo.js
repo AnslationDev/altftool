@@ -1,4 +1,7 @@
 const seo = {
+  title: "Music Licensing Checklist: Sync, Master & PRO Clearance",
+  metaDescription:
+    "Four answers build an itemised clearance list - sync, master, mechanical, performance - naming who grants each right, plus hard Stop flags.",
   intro:
     "The Music Licensing Checklist Creator turns four answers — what you are making, where the music came from, which territory you are releasing in and whether the project is monetised — into an itemised clearance list covering synchronisation, master use, mechanical, public performance, interactive and attribution rights, naming who grants each one. It follows the standard two-copyright structure of a released track: the composition sits with the songwriter and publisher, the sound recording sits with the label, and clearing one never clears the other. Every item is marked Stop, Required, Likely required, Worth doing or Not needed here, so you can see what actually blocks release. This is informational only, not legal advice — clearance is contract-heavy and jurisdiction-specific, so take advice before you publish.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Express Router Generator: CRUD, Zod, Error Handler",
+  metaDescription:
+    "Generates list, read, create, update and delete routes for Express 4 or 5, with Zod or express-validator, asyncHandler and RFC 9110 status codes.",
+  steps: [
+    "Type a singular Resource name and a Base path such as /api/v1, then set Express version, Module system and Validation layer.",
+    "Under \"Routes to generate\" tick List (GET collection), Create (POST) or Delete (DELETE /:id), and optionally \"Paginate the list route (limit / offset)\".",
+    "Check the Mounted at path and the Method / Path / Success status table, then press Copy all files for the routes/, middleware/error-handler and validators/ output.",
+  ],
   intro:
     "This generator produces a ready-to-paste Express router — list, read, create, update and delete routes with validation, an async error wrapper and four-argument error middleware — from nothing but a resource name. It targets Express 4 or Express 5 in ES modules or CommonJS, emits Zod or express-validator schemas, and applies the status codes RFC 9110 prescribes: 201 with a Location header on create and 204 with no body on delete. It is built for Node.js developers who want a correct CRUD skeleton instead of retyping the same boilerplate for every resource.",
   useCases: [

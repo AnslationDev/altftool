@@ -1,4 +1,12 @@
 const seo = {
+  title: "Speed Converter: km/h, mph, Knots + Stopping Distance",
+  metaDescription:
+    "Convert a speed between km/h, mph, knots, m/s, ft/s and Mach, and see the reaction and braking distance it needs on dry, wet, gravel, snow or ice.",
+  steps: [
+    "Enter the figure in Speed and choose its Unit — Kilometres per hour (km/h), Miles per hour (mph), Knots (kn), Metres per second (m/s), Feet per second (ft/s) or Mach.",
+    "Pick a Road surface with its mu value (Dry asphalt / concrete 0.7 down to Ice 0.1), set 'Driver reaction time (seconds)' or press the 'Alert driver (1s)' / 'Design value (2.5s)' preset, and add a Road grade (%) for a slope.",
+    "Total stopping distance shows in metres with Reaction distance, Braking distance, Deceleration and Time spent braking, beside a 'Same speed in every unit' table; Copy result copies both.",
+  ],
   intro:
     "This converter turns one vehicle speed into km/h, mph, knots, metres per second, feet per second and Mach at once, using the exact SI definitions — 1 mile is 1609.344 m, 1 nautical mile is 1852 m and 1 foot is 0.3048 m. It then applies the standard road-design stopping model to the same speed: reaction distance is speed multiplied by reaction time, and braking distance is v² ÷ (2 × 9.80665 × (µ + grade)). Drivers, riders, fleet trainers and students get both the unit answer and the real-world distance that speed needs.",
   useCases: [

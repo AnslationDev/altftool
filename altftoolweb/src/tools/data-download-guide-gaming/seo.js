@@ -1,4 +1,12 @@
 const seo = {
+  title: "Steam, PlayStation, Xbox & Discord Data Export Guide",
+  metaDescription:
+    "Get the exact export route for Steam, PlayStation, Xbox, Nintendo, Epic or Discord, plus the GDPR one-month or CCPA 45-day deadline and a 12-step audit.",
+  steps: [
+    "Choose your Platform — Steam (Valve), PlayStation, Xbox, Nintendo Account, Epic Games or Discord — set \"Where you are requesting from\" (GDPR, UK GDPR, CCPA / CPRA or LGPD), and enter the date you sent the request.",
+    "Read the export route printed for that platform, then work through the 12-item post-export audit, ticking the sign-in and IP history, linked accounts and purchase records first.",
+    "Read \"Days left to respond\" against the statutory deadline and the audit percentage, then press \"Copy result\" to save the plan and the steps still outstanding.",
+  ],
   intro:
     "This guide turns a gaming data-access request into a dated plan: it gives the exact export route for Steam, PlayStation, Xbox, Nintendo, Epic Games and Discord, then counts down the statutory deadline the platform must answer by under GDPR Article 12(3), the CCPA as amended by the CPRA, or Brazil's LGPD Article 19. A weighted 12-step audit covers what the archive reveals once it arrives — sign-in records, linked accounts, purchase history, friends lists and retained chat. It is for players who want to see what a platform holds, spot an account takeover, or clean up before selling or closing an account.",
   useCases: [

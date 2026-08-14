@@ -1,4 +1,7 @@
 const seo = {
+  title: "RTO Learner's Licence Mock Test: 20 Questions, 20 Min",
+  metaDescription:
+    "A timed 20-question paper drawn from 141 Indian learner's-licence questions — 20 minutes, 12 correct to pass, an explanation on every answer.",
   intro:
     "The RTO Driving Licence Mock Test sets a timed 20-question paper drawn at random from a bank of 141 Indian learner's-licence questions, with 20 minutes on the clock and 12 correct needed to pass. Questions are pulled across all eight categories — mandatory, cautionary and informatory signs, road rules and markings, right of way, documents, penalties under the Motor Vehicles Act as amended in 2019, and safe driving — with the answer options reshuffled every attempt so you cannot memorise positions. Every question carries an explanation, and the ones you get wrong are collected into a revision set you can re-sit on their own.",
   useCases: [

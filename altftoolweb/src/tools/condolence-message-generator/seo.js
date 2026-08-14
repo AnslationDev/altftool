@@ -1,4 +1,12 @@
 const seo = {
+  title: "Condolence Message Generator in 6 Indian Languages",
+  metaDescription:
+    "Sympathy drafts by relationship, kinship and customary closing, in English, Hinglish, Hindi, Marathi, Bengali or Tamil, at SMS, medium or letter length.",
+  steps: [
+    "Enter 'Writing to (name)' and the 'Name of the departed', then pick 'They lost their' (Father, Mother, Husband, Wife and six more) and 'You are their' (Close friend or family through to Neighbour or acquaintance).",
+    "Choose the 'Closing / faith tradition' — No faith reference, Hindu, Muslim, Christian, Sikh, Jain, Buddhist or Parsi / Zoroastrian — set the Language, pick Short (SMS), Medium or Letter, and set 'Drafts to show'.",
+    "Each draft appears with its character and word count, plus the SMS encoding and SMS parts if sent as a text; press Shuffle for different wording or Copy on any draft.",
+  ],
   intro:
     "Condolence Message Generator writes a complete sympathy message from four choices: who you are writing to, which family member they lost, how close you are to them, and which closing their community would recognise. It covers English, Hinglish, Hindi, Marathi, Bengali and Tamil, and offers the customary closings used by Hindu, Muslim, Christian, Sikh, Jain, Buddhist and Parsi families, plus a neutral option for when you do not know. Each draft comes in short, medium or letter length with its character and SMS part count.",
   useCases: [

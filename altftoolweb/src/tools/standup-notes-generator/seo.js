@@ -1,4 +1,12 @@
 const seo = {
+  title: "Standup Notes Generator for Slack, Markdown and Jira",
+  metaDescription:
+    "Paste rough bullets for yesterday, today and blockers and get a daily scrum update in Slack mrkdwn, Markdown, Jira wiki markup or plain text.",
+  steps: [
+    "Fill the Yesterday, Today and Blockers boxes one item per line — leading -, *, • and 1. markers are stripped automatically.",
+    "Pick an Output format: Slack (mrkdwn), Markdown, Plain text or Jira wiki markup, and optionally include the date in the heading.",
+    "Press Copy result to take the formatted update from the preview; the Characters count warns before a paste would exceed Slack's 40,000-character limit.",
+  ],
   intro:
     "The Standup Notes Generator formats a daily scrum update around the three standard questions — what I did, what I will do next, and what is blocking me — and outputs it in Slack mrkdwn, Markdown, Jira wiki markup or plain text. Bullet characters, hyphens and 1. numbering are stripped from whatever you paste, so a messy scratchpad becomes a consistent update in one step. It suits developers, designers and project managers on distributed teams who post a written standup instead of attending a call.",
   useCases: [

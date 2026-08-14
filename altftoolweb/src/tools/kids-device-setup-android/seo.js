@@ -1,4 +1,7 @@
 const seo = {
+  title: "Android Kids Setup: Family Link Plan by Child Age",
+  metaDescription:
+    "Age-gated Family Link setup steps for a child's Android phone, plus a daily screen-time budget from AASM sleep ranges and the WHO under-5 cap.",
   intro:
     "The Android Kids Device Setup Guide builds a setup plan for a child's Android phone or tablet from the child's age, covering the Family Link supervised account, screen time and bedtime limits, Google Play content ratings, install approval and purchase authentication. Steps appear or disappear with age — creating a supervised account under 13 is a different job from inviting a fifteen-year-old to accept supervision — and the score counts only the steps that apply. It also works out what the day actually has room for, using the AASM sleep ranges endorsed by the American Academy of Pediatrics and the WHO one-hour cap for ages 2 to 4.",
   useCases: [

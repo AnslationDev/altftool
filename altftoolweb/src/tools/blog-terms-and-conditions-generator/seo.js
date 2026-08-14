@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blog Terms & Conditions Generator with DMCA Dates",
+  metaDescription:
+    "Assemble blog terms with a comment moderation policy and content licence, plus dated 10-14 business day DMCA restoration and grievance deadlines.",
+  steps: [
+    "Fill in Site name, Run by, Contact for reports and appeals and Governing law, then choose the Licence on your own posts and describe How comments are moderated.",
+    "Tick the boxes under \"What the site does\" to pull in the clauses each one makes necessary, add the Designated DMCA agent contact and Grievance officer (India), and set Terms last updated, First publication of the post, Counter-notice received and Grievance complaint received.",
+    "Required coverage shows a percentage with the clause and word counts, above the dated statutory damages cut-off, the \"Restore removed material between\" pair of business-day dates and the grievance deadlines; press Copy terms to take the assembled text.",
+  ],
   intro:
     "Blog terms and conditions do two jobs: state what a reader may do with your writing, and describe how the comment section is moderated. The second job carries the legal weight, because the shields that protect a site from what its commenters post — the DMCA safe harbour in 17 U.S.C. section 512, section 230 of the Communications Decency Act, and section 79 of India's Information Technology Act 2000 — are all conditional on published procedures and fixed deadlines. This generator assembles those clauses and computes the dates: the 10 to 14 business day restoration window after a DMCA counter-notice, the three-month statutory damages cut-off, and the 24-hour and 15-day grievance timelines.",
   useCases: [

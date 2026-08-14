@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Invoice Series Generator - Rule 46(b) Length Check",
+  metaDescription:
+    "Design a financial-year invoice series and check every number against Rule 46(b): sixteen characters max, allowed characters, e-invoice-safe start.",
+  steps: [
+    "Type a Prefix (letters, digits, hyphen and slash only, up to 12 characters) and the 'Financial year starting in' year - the defaults build INV/2025-26/0001. [pages/index.jsx:29-38, 116-147]",
+    "Set 'How the year is written', 'Order of the parts', the Separator, 'Digits in the running number' (1-10) and 'Start numbering at'. [pages/index.jsx:148-246]",
+    "Check the preview table's Length and Rule 46(b) columns and the 'Accepted by the e-invoice schema' row, then press Copy series to take every number. [pages/index.jsx:296, 310-334, 343-377]",
+  ],
   intro:
     "This generator builds a tax invoice numbering series for an Indian financial year and checks it against Rule 46(b) of the CGST Rules, 2017, which requires a consecutive serial number of not more than sixteen characters made up only of letters, digits, hyphen and slash, unique for the financial year. It also flags numbers the e-invoice schema would reject, such as one beginning with 0, / or -. Aimed at business owners and accountants setting up a numbering scheme on 1 April.",
   useCases: [

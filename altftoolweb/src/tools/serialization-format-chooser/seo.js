@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON vs Protobuf vs Avro vs MessagePack vs CBOR Picker",
+  metaDescription:
+    "Weight nine requirements — wire size, schema evolution, binary payloads, IoT — and rank five formats, with each one's weak spots shown, not just wins.",
+  steps: [
+    "Under \"Your requirements\", work through the nine criteria — \"Humans read or edit payloads\", \"Smallest possible wire size\", \"Safe schema evolution\", \"Raw binary payloads\", \"Constrained / IoT devices\" and the rest.",
+    "Set each one to \"Not needed\", \"Nice to have\" or \"Critical\"; there is no submit button, the weighted matrix recomputes on every change.",
+    "\"Best fit for your requirements\" names the winner with its score out of the maximum and a percentage, each of the five formats gets a bar with \"Strong on\" and \"Weak on\" lines, and \"Copy result\" or Reset finishes the job.",
+  ],
   intro:
     "The Serialization Format Chooser ranks JSON, Protocol Buffers, Apache Avro, MessagePack and CBOR against your own weighted requirements using a decision matrix, where every fitness score is grounded in the format's specification — RFC 8259 for JSON, the protobuf language guide, the Avro 1.11 spec, the msgpack spec and RFC 8949 for CBOR. It is built for backend and platform engineers choosing a wire or storage format who want the trade-offs made explicit instead of picking whatever the last project used.",
   useCases: [

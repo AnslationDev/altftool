@@ -1,4 +1,12 @@
 const seo = {
+  title: "Illinois Sales Tax Calculator: 6.25% Plus Local",
+  metaDescription:
+    "Add Illinois' 6.25% rate to home rule, county and RTA local tax, price reduced-rate food and drugs, and see the 5.00/1.00/0.25 statutory split.",
+  steps: [
+    "Pick a Location preset such as \"Chicago — 10.25%\", or type your own Local rate (% on top of 6.25%).",
+    "Enter General merchandise (USD), the Food, drugs and medical appliances (USD) basket with its Rate on those items (%), and any Delivery charge (USD).",
+    "Read Total sales tax with the State share of the 6.25% (5.00%), Municipal share (1.00%) and County share (0.25%) rows, then press Copy result.",
+  ],
   intro:
     "This calculator combines the 6.25% Illinois general merchandise rate under the Retailers' Occupation Tax Act (35 ILCS 120) with the local home rule, county, transit and business district taxes that stack on top, and prices qualifying drugs, medical appliances and food at their reduced rate on the same receipt. It also shows how the 6.25% is split by statute — 5.00% to the state, 1.00% to municipalities and 0.25% to counties — which is why the 'state' rate already contains a local element. Retailers, remote sellers shipping into Illinois and shoppers checking a Chicago receipt all get the same layered breakdown.",
   useCases: [

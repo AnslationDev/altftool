@@ -1,4 +1,12 @@
 const seo = {
+  title: "LED Equivalent Wattage Chart — Incandescent, Halogen, CFL",
+  metaDescription:
+    "Converts incandescent, halogen, CFL or tube wattage to lumens, then to the LED watts that match — 60 W = 800 lm — with yearly bill savings.",
+  steps: [
+    "Choose the old bulb under \"What are you replacing?\", enter the \"Old bulb wattage (W)\" and set \"LED efficacy (lumens per watt)\" — or tap an efficacy preset button.",
+    "Add \"How many bulbs\", \"Hours lit per day\" and your \"Electricity tariff (INR per kWh)\" so the yearly saving can be costed.",
+    "Read \"Buy an LED of about\" with the lumen figure to look for on the box, the kWh and bill saved a year, and the full Filament to LED table, then press \"Copy result\".",
+  ],
   intro:
     "This converter turns an old incandescent, halogen, CFL or fluorescent-tube wattage into the LED wattage that produces the same amount of light. It works in two steps — old watts to lumens, then lumens divided by the LED's efficacy in lumens per watt — because bulbs are equivalent when their light output matches, not their power draw. Incandescent lumen values come from the FTC Lighting Facts and ENERGY STAR replacement guidance, the source of the familiar 60 W equals 800 lumens pairing.",
   useCases: [

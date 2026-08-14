@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Engagement Rate Calculator by Views or Reach",
+  metaDescription:
+    "Divide likes, comments, shares and saves by views, impressions or followers, plus view-through rate, average percentage viewed and watch time.",
+  steps: [
+    "Paste Views, Impressions (optional), Subscribers / followers (optional), Likes, Comments, Shares and Saves / bookmarks from your analytics export.",
+    "Under Retention, enter the Video length and Average view duration in minutes and seconds.",
+    "Read engagement rate by views, impressions and followers, plus view-through rate, average percentage viewed and total watch time, then Copy result.",
+  ],
   intro:
     "The Video Engagement Rate Calculator divides your total engagements — likes plus comments plus shares plus saves — by views, by impressions and by follower count, so you get all three definitions of engagement rate from one set of numbers. It also returns view-through rate (views ÷ impressions), average percentage viewed (average view duration ÷ video length) and estimated total watch time (views × average view duration). Every figure is plain arithmetic on counts you paste from your own analytics export, so nothing is estimated or modelled.",
   useCases: [

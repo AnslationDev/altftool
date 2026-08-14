@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelancer Prompt Pack: 9 Fill-in-the-Blank Prompts",
+  metaDescription:
+    "Nine fill-in-the-blank AI prompts for proposals, three-tier pricing, scope-creep replies, invoice chasing and rate rises. Built in your browser.",
+  steps: [
+    "Narrow the 9 prompts with the Search prompts box (placeholder 'proposal, scope, invoice') or the Category menu — Proposals & Pricing, Scope & Boundaries, Getting Paid, Client Relationships, Finding Work — and click the prompt card you want.",
+    "Under Fill in the blanks, type your own scope, prices and dates into each labelled field. Use example values loads the sample text for every blank and Clear fields empties them again.",
+    "Check Estimated prompt size in tokens and the 'blanks filled' count, then press Copy prompt. Anything left empty is flagged under 'Still blank' and stays visible as a {{placeholder}} in the copied text.",
+  ],
   intro:
     "The Freelancer Prompt Pack is a library of 9 fill-in-the-blank AI prompts for the business side of solo work: proposals, three-tier pricing, scope-creep replies, kickoff questions, invoice chasing, payment terms, difficult feedback, rate rises and cold outreach. Each prompt encodes the negotiation posture that keeps freelancers solvent — state the rate as fact, never apologise for charging, quote the agreement casually before quoting it formally — so the drafts come back firm and warm at the same time. You fill the blanks with your real scope, prices and dates in your browser, then copy the finished prompt into any assistant.",
   useCases: [

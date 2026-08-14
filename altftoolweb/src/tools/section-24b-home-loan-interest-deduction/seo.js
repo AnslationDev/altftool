@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 24(b) Calculator: Rs 2 Lakh Interest Cap",
+  metaDescription:
+    "Deductible home loan interest for a self-occupied or let-out house, the Rs 2,00,000 set-off limit, loss carried forward for 8 years and tax saved.",
+  steps: [
+    "Choose the tax regime (Old regime or New regime (115BAC)) and the property status (Self-occupied or Let-out / deemed let-out).",
+    "Enter the home loan interest paid this year and the total pre-construction interest, claimed in 5 equal instalments — plus annual rent received and municipal taxes for a let-out house, or the loan purpose and whether construction finished within 5 years for a self-occupied one — then your marginal tax rate.",
+    "Read the interest deductible under Section 24(b), the income or loss from house property, the amount set off against salary or other income, the loss carried forward for up to 8 years, and the approximate tax saved.",
+  ],
   intro:
     "This calculator works out how much of your home loan interest is actually deductible under Section 24(b) of the Income-tax Act, 1961. It applies the ₹2,00,000 ceiling for a self-occupied house, the ₹30,000 ceiling for repair loans and delayed construction, and the uncapped deduction available on a let-out property after the 30% standard deduction. It is built for salaried borrowers and landlords who want to know their real house-property loss, how much can be set off this year and how much carries forward.",
   useCases: [

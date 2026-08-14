@@ -1,4 +1,7 @@
 const seo = {
+  title: "AI Prompt Library: Save, Tag, Search and Score",
+  metaDescription:
+    "Saves prompts with category, model and tags, searches title, content and tags at once, and scores a draft out of 5 for role, task and output format.",
   intro:
     "AI Prompt Organizer is a local prompt library: save each prompt with a title, description, category, target model and tags, then search across titles, descriptions, content and tags, and copy any one to the clipboard in a click. While you write, it scores the draft out of 5 against the structural checks that separate a working prompt from a wish — does it assign a role, give context, state the task, use a [VARIABLE], and define an output format. Everything lives in your browser's localStorage, with Markdown, CSV, JSON and PDF export so the library is portable.",
   useCases: [

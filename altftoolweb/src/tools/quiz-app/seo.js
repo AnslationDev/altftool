@@ -1,4 +1,12 @@
 const seo = {
+  title: "Quiz App: 12-Question Rounds in Five Categories",
+  metaDescription:
+    "Twelve multiple-choice questions in Web Development, General Knowledge, Science, Aptitude or Digital Marketing. Answers stay hidden until you finish.",
+  steps: [
+    "Under 'Choose category' pick one of the five 12-question decks: Web Development, General Knowledge, Science, Aptitude or Digital Marketing.",
+    "Answer with the lettered A to D options and move using 'Previous', 'Skip Question' and 'Next', ending on 'Finish Quiz'.",
+    "The final panel shows your % Score with Total questions, Correct answers, Wrong answers and Skipped; press 'Review Answers' for each explanation or 'Restart Quiz'.",
+  ],
   intro:
     "Quiz App runs a 12-question multiple-choice round in one of five ready-made categories - Web Development, General Knowledge, Science, Aptitude and Digital Marketing - scoring you at the end as correct, wrong and skipped, plus a percentage. Nothing is revealed mid-quiz: you can move back and forth, change an answer or skip, and only after finishing does the review list every question with the right option and a one-line explanation of why. It suits anyone doing quick self-testing before an interview, a class test or an aptitude round.",
   useCases: [

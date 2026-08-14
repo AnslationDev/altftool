@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Name Picker with Elimination Mode & Winner Log",
+  metaDescription:
+    "Paste comma or line-separated names and Pick Winner; elimination mode removes each winner and a timestamped history keeps the last 50 draws.",
+  steps: [
+    "Type a name into \"Enter name or paste list...\" and press Add — or paste a comma- or newline-separated list and hit Enter; duplicates are skipped case-insensitively, and Remove Duplicates cleans an imported list.",
+    "Tick \"Elimination mode (remove winner from list)\" if each winner should leave the pool so repeated draws never repeat a name.",
+    "Press \"Pick Winner\" for the animated shuffle; the winner card offers \"Copy Name\" and \"Pick Again\", and the Winner History panel logs the last 50 winners with timestamps.",
+  ],
   intro:
     "Random Name Picker draws one name at random from a list you paste in, with an animated shuffle of 12 to 19 flickers before it settles on the winner. Names can be added one at a time or pasted in bulk separated by commas or line breaks, duplicates are rejected case-insensitively as you add them, and elimination mode removes each winner from the pool so a repeated draw works through the list without repeats. Every pick is logged to a winner history of the last 50 results with a timestamp.",
   useCases: [

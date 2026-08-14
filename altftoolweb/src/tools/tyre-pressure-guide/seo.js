@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tyre Pressure Guide: Cold psi, bar and kPa by Load",
+  metaDescription:
+    "Cold tyre pressure by vehicle class and load in psi, bar and kPa, with the drop to expect on a cold morning and a check against sidewall MAX PRESS.",
+  steps: [
+    "Choose Vehicle type and 'How is it loaded?', then enter Temperature when you inflate (°C), Coldest ambient before your next check (°C) and the Sidewall MAX PRESS (psi, optional).",
+    "Tick 'Sustained high-speed run planned' to apply the high-speed adder, or type Your placard front and Your placard rear in psi to override the class defaults.",
+    "Read the cold front / rear psi headline with bar and kPa, the load and high-speed adders, the gauge reading at your coldest temperature, drift per 10 °C fall, the warm-tyre reading and the space-saver spare, then press Copy result.",
+  ],
   intro:
     "This guide converts a vehicle class, load and ambient temperature into a recommended cold tyre inflation pressure in psi, bar and kPa. Cold means the tyre has been parked at least three hours or driven under about three kilometres — the state every placard and every tyre standard (ETRTO, TRA, JATMA) refers to. Temperature drift is computed from Gay-Lussac's law on absolute pressure, so you can see how far the gauge will fall on a cold morning and whether the load adders would breach the MAX PRESS figure moulded on your sidewall.",
   useCases: [

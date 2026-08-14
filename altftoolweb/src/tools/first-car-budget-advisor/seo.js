@@ -1,4 +1,12 @@
 const seo = {
+  title: "First Car Budget Calculator — the 20/4/10 Rule",
+  metaDescription:
+    "Enter income, savings and running costs to get the on-road price, down payment, loan and EMI the 20/4/10 rule allows — running costs come out first.",
+  steps: [
+    "Enter 'Gross monthly income (₹)', 'Savings available (₹)' and the running costs — km per month, mileage, fuel price, insurance and service per year.",
+    "Choose a 'Loan tenure' — 36, 48 (the 20/4/10 limit), 60 or 72 months — and adjust the 20% minimum down payment or the 10% income cap.",
+    "Read 'On-road price you can afford' with its down payment, loan and EMI, then press 'Copy result' for the full cost breakdown.",
+  ],
   intro:
     "This advisor works out the highest on-road price a first-time buyer can safely pay, using the 20/4/10 rule: at least 20% down in cash, a loan of no more than 4 years, and total monthly car cost — EMI plus fuel, insurance, maintenance and parking — capped at 10% of gross monthly income. It starts from that 10% ceiling, subtracts your real running costs to find the EMI you can carry, converts that EMI into a loan principal with the reducing-balance annuity formula, and adds the cash you can spare. The result is a price ceiling and the down payment, loan and EMI that go with it, not a dealership pre-approval.",
   useCases: [

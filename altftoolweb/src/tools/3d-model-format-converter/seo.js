@@ -1,4 +1,10 @@
 const seo = {
+  title: "3D Model Format Converter: OBJ In, Clean OBJ Out",
+  steps: [
+    "Choose an ASCII OBJ mesh under Local file(s); only the first selection is used, and the mesh is read in the page rather than uploaded.",
+    "Press Run local workbench to parse every v vertex and f face line and strip the v/vt/vn index groups down to bare vertex indices.",
+    "The rebuilt mesh downloads as altftool-normalized.obj, and the Verified result panel reports vertices, faces, duplicate vertices and degenerate faces.",
+  ],
   metaDescription:
     "Normalize text OBJ face indices locally, download a clean geometry-only OBJ, and review vertex, face, duplicate, and degenerate counts.",
   intro:

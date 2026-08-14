@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mortgage Calculator: EMI, Loan Amount and Total Interest",
+  metaDescription:
+    "Home price, down payment %, rate and term into a monthly EMI by the amortised formula, plus the loan amount after deposit and total interest.",
+  steps: [
+    "Enter Home Price, Down Payment (%), Interest Rate (% p.a.) and Loan Term (Years) — the placeholders show 5000000, 20, 8.5 and 20.",
+    "Press Calculate; the tool runs EMI = P x r x (1+r)^n / ((1+r)^n - 1), with P the price less the down payment, r the annual rate divided by 12 and n the term in months.",
+    "The panel shows Monthly Mortgage Payment with Total Interest Paid beneath it, plus tiles for Loan Amount, Down Payment, Monthly EMI and Total Interest; the refresh button next to Calculate clears the form.",
+  ],
   intro:
     "The Mortgage Calculator works out your monthly home-loan payment from the home price, down payment percentage, annual interest rate and loan term using the standard amortised EMI formula, EMI = P x r x (1+r)^n / ((1+r)^n - 1), where r is the annual rate divided by 12 and n is the term in months. Enter a price of 50,00,000 with 20% down at 8.5% over 20 years and it returns the monthly payment, the loan amount after down payment, and the total interest paid across the full term. It is built for buyers comparing offers and anyone testing whether a bigger down payment or a shorter term is worth it.",
   useCases: [

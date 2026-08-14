@@ -1,4 +1,12 @@
 const seo = {
+  title: "Yarn Workspaces Config: nohoist and nodeLinker",
+  metaDescription:
+    "Generate a private root package.json with workspace globs, Yarn 1 nohoist rules, or a Berry .yarnrc.yml with nodeLinker plus a Yarn 4 constraints file.",
+  steps: [
+    "Pick a Yarn version — Yarn 1 (Classic) or Yarn Berry (2+ / 4.x) — then set the root package name and list your workspace globs one per line, such as apps/* and packages/*.",
+    "On Yarn 1 add nohoist patterns like **/react-native; on Berry choose a nodeLinker (pnp, pnpm or node-modules), set nmHoistingLimits and tick the Yarn 4 constraints file.",
+    "Read the emitted package.json, .yarnrc.yml and yarn.config.cjs under Files generated, then press Copy all files.",
+  ],
   intro:
     "This tool generates the files that set up Yarn workspaces: a root package.json with private: true and workspace globs, the object-form nohoist rules Yarn 1 requires, or a .yarnrc.yml with nodeLinker and nmHoistingLimits plus a Yarn 4 constraints file for Berry. It encodes the documented differences between Yarn Classic and Yarn Berry so you get config that your Yarn version actually understands. Monorepo maintainers get a correct starting point instead of piecing rules together from two generations of docs.",
   useCases: [

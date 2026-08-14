@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smart Speaker Privacy Checklist: 16 Alexa & Nest Steps",
+  metaDescription:
+    "Harden an Alexa, Google or Siri speaker across 16 weighted controls, then see how many voice recordings your account holds at its retention setting.",
+  steps: [
+    "Tick the sixteen controls grouped under Microphone & camera control, Voice recordings & retention, Skills, actions & purchases and Account & sharing; each shows its point weight and the ones tagged Critical cap the score while they are missing.",
+    "Under 'How much history you're actually building up' set Current retention setting — from 'Keep every recording until I delete it myself' to the 3-month window — plus 'Voice requests per day, roughly' and 'Months since setup, or since you last fully cleared the history'.",
+    "Read the Hardening score with Controls completed, Weighted points and Critical controls missing, then Recordings stored right now, the Effective retention window and what switching to 3 months would remove, and press Copy result.",
+  ],
   intro:
     "This checklist hardens an Alexa, Google or Siri speaker across sixteen weighted controls — microphone and camera muting, voice recording retention, skill and action permissions, and account protection — and any missing critical control caps the score. A second calculator turns your daily voice-request count and how long it has been since the account was last cleared into the actual number of recordings sitting in it under your current auto-delete setting, and what switching to the shortest window would remove. Written for anyone setting up a new smart speaker or auditing one that has been running unattended for years.",
   useCases: [

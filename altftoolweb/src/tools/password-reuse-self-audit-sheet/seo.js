@@ -1,4 +1,12 @@
 const seo = {
+  title: "Password Reuse Audit: Which One to Change First",
+  metaDescription:
+    "Group accounts by password-family nickname — never the password — to see what share of your account value sits behind reuse and which to break first.",
+  steps: [
+    "Name each account in the Account 1 field, give it a Password family nickname such as 'the 2019 one', and set What it protects to Primary email / password manager, Banking, payments, government, tax, Work login, cloud storage, social, or Shopping, forums, newsletters. Never type a real password.",
+    "Press Add account for every other login, up to 100 rows; accounts sharing a nickname become one reuse cluster, weighted by tier, and the sheet rescores itself with each keystroke.",
+    "Read the Account value behind a shared password percentage and its exposure band, the Reuse clusters table of family, accounts and share of value, and the numbered Change them in this order queue; Copy audit puts the whole sheet on the clipboard.",
+  ],
   intro:
     "Password Reuse Self Audit Sheet groups your accounts into reuse clusters from nicknames you give each shared password — it never asks for the password itself. Each account is weighted by what an attacker would actually reach, with your primary email and password manager ranked highest because nearly every other reset link is delivered through them. The output is the percentage of your account value sitting behind a shared password, the clusters that create it, and the order in which to change them. The attack being modelled is credential stuffing: a username and password pair leaked from one breached site, replayed automatically across hundreds of others.",
   useCases: [

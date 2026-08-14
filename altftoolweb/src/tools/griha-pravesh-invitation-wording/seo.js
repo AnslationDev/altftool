@@ -1,4 +1,12 @@
 const seo = {
+  title: "Griha Pravesh Invitation Wording in 4 Languages",
+  metaDescription:
+    "English, Hindi, Marathi or Gujarati wording with the muhurat printed as a window, the puja named, the weekday derived and the address kept as a block.",
+  steps: [
+    "Enter the \"Inviting family name\" and \"Address of the new home\", set the \"Date\", and pick the \"Puja being performed\" such as Vastu Shanti Puja.",
+    "Set \"Muhurat starts\" and, for a window rather than a single moment, \"Muhurat ends (optional)\", then choose \"Language\" (English, Hindi, Marathi or Gujarati), a \"Wording style\" of Traditional, Religious, Modern or Short (WhatsApp), the \"Meal\" and an RSVP contact.",
+    "\"Griha pravesh day\" shows the weekday worked out from your date, with \"Muhurat as printed\" and the window length in minutes above the finished invitation; \"Copy wording\" puts the text on the clipboard.",
+  ],
   intro:
     "The Griha Pravesh Invitation Wording tool builds complete housewarming invitation text from the family name, the new address, the muhurat window and the puja being performed, in English, Hindi, Marathi or Gujarati. Because a griha pravesh muhurat is usually quoted as a window rather than a single moment, the tool takes an optional end time and prints the range the way each language writes it — 10:42 AM to 12:06 PM in English, सकाळी 10:42 ते दुपारी 12:06 वाजता in Marathi. Dates are checked against the Gregorian calendar including the leap-year rule, and the weekday is derived with Zeller's congruence.",
   useCases: [

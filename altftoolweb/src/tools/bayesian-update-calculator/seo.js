@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bayes' Theorem Calculator: Prior to Posterior",
+  metaDescription:
+    "Enter a prior, P(evidence | hypothesis) and P(evidence | not hypothesis) as percentages to get the posterior with prior odds and likelihood ratio.",
+  steps: [
+    "Type Prior probability (%), P(evidence | hypothesis) (%) and P(evidence | not hypothesis) (%), or press the \"10% prior, strong evidence\" example.",
+    "Change any of the three percentages — each is clamped to the 0 to 100 range — and the posterior recomputes with no submit step; Reset in the Inputs header restores 10, 90 and 5.",
+    "The Result panel gives the posterior percentage with rows for Prior, Evidence probability, Prior odds, Likelihood ratio and Posterior odds; Copy or Download saves it as bayesian-update-calculator.txt.",
+  ],
   intro:
     "The Bayesian Update Calculator applies Bayes' theorem to turn a starting belief and one piece of evidence into a revised probability, using posterior = P(E|H)·P(H) divided by P(E|H)·P(H) + P(E|¬H)·P(1−H). Enter three percentages — your prior, how likely the evidence is if the hypothesis is true, and how likely it is if the hypothesis is false — and it returns the posterior along with prior odds, the likelihood ratio and posterior odds. It is for anyone who has to reason about a positive test, a warning signal or a noisy indicator and wants the base rate accounted for properly.",
   useCases: [

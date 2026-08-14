@@ -1,4 +1,12 @@
 const seo = {
+  title: "Image Usage Rights: Six Questions, One Clearance List",
+  metaDescription:
+    "Answer six questions about an image and get a ranked checklist separating copyright, licence scope, model release and trademark. Not legal advice.",
+  steps: [
+    "Answer Where did the image come from? — from Royalty-free stock licence or Creative Commons BY or BY-SA through to Found online with no licence — and What will you use it for?, from Editorial to Merchandise or print on demand for resale.",
+    "Set Who appears in it? and What else is in the frame?, then tick 'I will crop, edit or composite the image' and 'I hold written permission from the rights holder' where they apply.",
+    "Read the Verdict — Not permitted as described, Permitted once you clear the conditions, or No blockers found for this use — with its Blockers and Must clear in writing counts, then press Copy result to take the Clearance checklist as plain text.",
+  ],
   intro:
     "The Image Usage Rights Explainer turns six questions about a picture — where it came from, what you plan to do with it, who and what is in the frame, and whether you will edit it — into an ordered checklist of the permissions that use actually needs. It separates the four rights that get confused with each other: copyright in the photograph, the terms of whatever licence you hold, the personality rights of anyone recognisable, and trademark rights in any visible brand. It is written for marketers, designers, publishers and small business owners who have to decide today whether an image is safe to publish. It is informational only and is not legal advice.",
   useCases: [

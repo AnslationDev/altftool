@@ -1,4 +1,12 @@
 const seo = {
+  title: "Christian Baby Names: 116 with Origin and Meaning",
+  metaDescription:
+    "Filter 116 biblical names (46 Old Testament, 37 New Testament, 29 saints, 4 virtue) by letter, gender, origin language or what the root means.",
+  steps: [
+    "Tap a Starting letter, then set Gender, Where the name comes from and Origin language.",
+    "Type into Meaning or figure contains — light, gift, prophet, apostle — to search the root gloss and the scriptural figure together.",
+    "Read the matched count out of 116 names with its Old Testament, New Testament, saints and virtue split, then press Copy list.",
+  ],
   intro:
     "The Christian Baby Name Finder searches a curated list of 116 biblical and Christian names, each recorded with its origin language, the literal sense of its root word, the scriptural or historical figure who carries it, and whether it comes from the Old Testament, the New Testament, the saints and church tradition, or the virtue-name tradition. Parents can filter by starting letter, gender, origin language and source, or type a word like \"light\" or \"grace\" to match against meanings and figures. Names with contested etymologies list the main scholarly readings rather than presenting one gloss as settled.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Trip Budget: the ++, 10% Service, 9% GST",
+  metaDescription:
+    "Price a Singapore trip with the ++ applied in the right order: 10% service charge first, then 9% GST on top, so a quoted rate becomes 1.199x.",
+  steps: [
+    "Set Travel style, Travellers and Nights in Singapore, then adjust the quoted room, food, transport and attraction rates.",
+    "Tick My room rate is a nett price or My food figure is a ++ menu price so the 10% service charge and 9% GST land in the right order.",
+    "Read the per-person totals, the Nett cost of one room-night, and whether shopping Qualifies for the tourist GST refund (min S$100).",
+  ],
   intro:
     "This planner breaks a Singapore trip into flights, room, food, transport, attractions, shopping and a contingency buffer, then reports the cost per person and per person per day. Singapore charges no per-night tourist tax, but it does have the \"++\": a quoted hotel or restaurant price is before a 10% service charge and before GST, and GST is charged on the service-inclusive amount, so the multiplier is 1.10 x 1.09 = 1.199 at the current 9% rate. The tool applies that stack correctly, handles nett prices in reverse, and shows the GST sitting inside a shopping figure that a visitor can reclaim on departure.",
   useCases: [

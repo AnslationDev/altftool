@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Loan EMI Calculator with Amortisation & Total Cost",
+  metaDescription:
+    "Reducing-balance EMI from on-road price, down payment, rate and tenure - with total interest, year-wise amortisation and full cash outgo including fees.",
+  steps: [
+    "Enter 'On-road price (INR)', 'Down payment (INR)', 'Interest rate (% per year)' and 'Tenure (years)' (1-10), plus the processing fee and any upfront insurance.",
+    "Use the '10% down' to '25% down' quick buttons to set the down payment as a share of price — the EMI recalculates instantly.",
+    "Read the Monthly EMI, 'Total cash outgo for the car' and the 'Year-by-year amortisation' table (Show/Hide toggle); 'Copy result' copies the summary.",
+  ],
   "intro": "Car Loan EMI Calculator turns an on-road price, down payment, interest rate and tenure into the exact monthly EMI banks would charge, using the standard reducing-balance formula. It also shows total interest, the split between principal and interest, and a year-by-year amortisation schedule, plus one-time costs like the processing fee and upfront insurance so you see the real cash outgo. Useful for anyone comparing dealer finance quotes against a bank or NBFC offer before signing.",
   "useCases": [
     "Compare a 5-year loan at 9.5% from your bank with the dealer's in-house finance offer at a different rate and tenure.",

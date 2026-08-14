@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to ASCII Art: 5x7 Block Letter Banner Maker",
+  metaDescription:
+    "Type a word and get big block letters from a 5 x 7 bitmap font. Pick the ink character (#, block, shade), outline or drop shadow, then copy.",
+  steps: [
+    "Type up to 200 characters into the \"Text\" field, which starts on HELLO - letters, digits and 26 punctuation marks have glyphs.",
+    "Choose an \"Ink character\" (Hash #, Solid block █, Medium shade ▓, Star *, At @, Dollar $, Letter O or a custom one), a Style of Solid, Outline or Drop shadow, and the \"Space between letters\" and \"Wrap after\" values.",
+    "The banner redraws from the 5 × 7 bitmap font as you type; check the \"Output size\" readout in characters, then press \"Copy result\" to put the art on the clipboard.",
+  ],
   intro:
     "This tool converts typed text into big ASCII banner letters — the block lettering you see at the top of a README, in a terminal login message or in an old BBS signature. Each character is drawn from a 5 by 7 bitmap font, the same glyph-cell proportion used by classic character LCD modules, which is why the letters stay readable at banner size. Because the letters come from a bitmap rather than fixed pre-drawn art, one font produces every style: change the ink character, or overlay an offset copy for a drop shadow.",
   useCases: [

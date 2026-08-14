@@ -1,4 +1,12 @@
 const seo = {
+  title: "package.json Generator with Real npm Name Validation",
+  metaDescription:
+    "Builds a package.json validated by npm's actual rules — lowercase names ≤214 chars, SemVer 2.0.0 — with type, exports map, engines and trap warnings.",
+  steps: [
+    "Fill 'Package name' and 'Version (SemVer)' — checked against npm's rules (lowercase, URL-safe, ≤214 chars) — plus 'Module type', 'Entry point (main)' and 'License (SPDX)'.",
+    "Add scripts one per line as name = command, and tick '\"private\": true', 'Add \"exports\" map' or '\"sideEffects\": false (tree-shaking)' as needed.",
+    "The generated file previews with its field count and trap warnings (UNLICENSED, 0.x carets); press 'Copy JSON' to take it.",
+  ],
   intro:
     "This generator builds a complete package.json validated against npm's real rules: names must be lowercase, URL-safe and at most 214 characters including the scope, and versions must satisfy Semantic Versioning 2.0.0. It assembles metadata, scripts, the \"type\" field, an exports map, engines and license for developers starting a new Node.js package or tidying an existing manifest — and warns about traps like UNLICENSED public packages and how caret ranges behave on 0.x versions.",
   useCases: [

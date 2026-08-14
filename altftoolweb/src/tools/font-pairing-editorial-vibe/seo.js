@@ -1,4 +1,12 @@
 const seo = {
+  title: "Editorial Font Pairing: Type Scale, Measure, CSS",
+  metaDescription:
+    "Pick a magazine Google Font pairing and get a modular scale, the characters-per-line measure against the 45-75 guideline, and copy-ready CSS.",
+  steps: [
+    "Choose a pairing in '1. Pick a pairing' — Masthead classic, Long-read serif, Fashion feature, News desk, Culture section or Essay.",
+    "Under '2. Set the page' set Body size (px), Scale ratio (minor third to golden ratio), Content width (px), Columns, Gutter between columns (px) and Headline step on the scale.",
+    "Read Measure (characters per line) against the 45-75 guideline, then press Copy CSS for the Google Fonts import, custom properties and h1-h4 rules.",
+  ],
   intro:
     "Editorial Vibe Font Pairing turns a magazine-style Google Font combination into concrete numbers: a modular type scale, an estimated line length in characters, and a leading value for each size. Sizes come from the musical-interval scale system described in Bringhurst's The Elements of Typographic Style — each step multiplies the previous size by the chosen ratio — and the measure is checked against the 45–75 characters-per-line guideline for continuous text. It is for designers, editors and front-end developers who need a defensible starting point rather than a mood board.",
   useCases: [

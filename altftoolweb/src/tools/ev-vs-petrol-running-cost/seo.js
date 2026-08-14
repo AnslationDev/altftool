@@ -1,4 +1,12 @@
 const seo = {
+  title: "EV vs Petrol Cost per Km, With Charging Losses",
+  metaDescription:
+    "Blends home and public tariffs, grosses up for 85–90% charging efficiency, and reports the km at which the EV's higher price pays back.",
+  steps: [
+    "Under The electric car, enter Usable battery (kWh), Real-world range (km), the home and public charger tariffs, Charging done at home (%) and Charging efficiency (%).",
+    "Fill The petrol car with Mileage (km per litre) and Petrol price (INR per litre), then Your usage with Kilometres per year and How much more the EV costs to buy (INR).",
+    "Read the Running cost gap in rupees per km alongside Break-even distance and Break-even time; Copy result copies both cars' cost breakdowns.",
+  ],
   intro:
     "Running cost per kilometre is the only fair way to compare an electric car with a petrol one, because a kWh and a litre are not comparable units. This calculator divides usable battery capacity by real-world range to get consumption at the wheels, grosses it up by charging efficiency to get the energy actually drawn from the socket, blends your home and public charging tariffs, and sets the result against petrol price divided by mileage — then adds each car's own maintenance and works out the distance at which the EV's higher purchase price pays back.",
   useCases: [

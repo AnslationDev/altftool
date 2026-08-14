@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blog Post Idea Generator: 5 Angles from 8 Formats",
+  metaDescription:
+    "Enter one topic and get five headline angles from eight article formats: beginner's guide, mistakes, budget, myths, 30-day, tools and comparison.",
+  steps: [
+    "Type your subject into the 'Topic / niche' field, which starts on the sample value 'home fitness'.",
+    "Press 'Generate' to draw five of the eight angle templates — beginner's guide, common mistakes, budget version, day in the life, myths, a 30-day improvement, best tools of the year and an honest comparison — and press it again for a fresh five.",
+    "Take the five working titles from the Result panel with Copy, or use Download to save them as blog-post-ideas.txt.",
+  ],
   intro:
     "The Blog Post Idea Generator takes one topic or niche and returns five headline angles drawn from eight proven article formats — beginner's guide, common mistakes, budget version, day in the life, myths, 30-day experiment, tools roundup, and honest comparison. Regenerate draws a fresh random five from the eight, so you will often get a different mix — keep clicking to work through the rest. It is for bloggers, newsletter writers and marketers who have a subject but need an angle before they can commit to a post.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ahmedabad Airport (AMD): When to Leave for a Flight",
+  metaDescription:
+    "Hansol is 9 km from Kalupur, so the 2-hour reporting advice usually binds, not the drive. Works back through bag-drop and gate close too.",
+  steps: [
+    "Set \"Scheduled departure (24-hour)\" and \"Distance to the terminal (km)\", or tap a \"Starting from\" chip such as \"Ahmedabad Jn (Kalupur) · 9 km\" or \"Gandhinagar · 20 km\".",
+    "Choose Domestic or International under \"Flight type\", then open \"Adjust the airline and airport lead times\" to replace the defaults for \"Bag drop closes\", \"Boarding gate closes\" and \"Airport reporting advice\" with the figures on your booking.",
+    "Read the \"Leave by\" clock time and the \"Deadline set by\" chip — on a short AMD transfer it usually names the reporting advice rather than the drive — then press \"Copy plan\".",
+  ],
   intro:
     "This planner gives the clock time to walk out of your door for a flight from Sardar Vallabhbhai Patel International Airport (AMD) at Hansol, by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you actually travel. Ahmedabad is a short-transfer city — under 10 km from Kalupur to the terminal — so the useful answer here is usually which terminal-side deadline governs, rather than how bad the traffic is.",
   useCases: [

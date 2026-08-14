@@ -1,4 +1,12 @@
 const seo = {
+  title: "Concert Ear Protection: Real dB After NIOSH Derating",
+  metaDescription:
+    "Turn the NRR, SNR or flat filter figure on the packet into the dB(A) reaching your ear, derated the NIOSH way, and the safe time against 85 dB for 8 h.",
+  steps: [
+    "Enter \"Venue level, dB(A)\" — or tap one of the 85, 95, 100, 105 and 110 dB chips — and \"Time at the venue (minutes)\".",
+    "Set \"Rating system on the packet\" to NRR (US label), SNR (EU label) or Flat musician filter and type the packet figure; NRR then asks for \"Protector type (sets the NIOSH derating)\" — Earmuffs 25%, Foam / formable earplugs 50%, Pre-moulded, custom or banded plugs 70% — and SNR for the \"Assumed C minus A offset (dB)\".",
+    "Read \"Level reaching your ear\" in dB(A) with the real-world reduction, plus rows for the label reduction, the NIOSH derated rating, safe time with and without protection and the noise dose percentages against the 85 dB(A) limit; \"Copy result\" copies the lot.",
+  ],
   intro:
     "Hearing protectors are labelled with a Noise Reduction Rating (NRR) in the United States, a Single Number Rating (SNR) in Europe, or a flat attenuation figure for musician filters — and the three are applied to a noise level in different ways. This guide converts whichever number is on your packet into the level actually reaching your ear: it subtracts the 7 dB A-weighting correction from an NRR and then applies the NIOSH real-world derating (25% for earmuffs, 50% for foam plugs, 70% for other plugs), subtracts SNR from the C-weighted level, and subtracts a flat filter figure directly. It then compares the protected level against the NIOSH limit of 85 dB(A) for 8 hours with a 3 dB exchange rate.",
   useCases: [

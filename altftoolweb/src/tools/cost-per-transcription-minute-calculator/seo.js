@@ -1,4 +1,12 @@
 const seo = {
+  title: "Transcription Cost Calculator: Per Minute + AI Summary",
+  metaDescription:
+    "Combine speech-to-text billed per audio minute with per-token summarisation and optional proofing to get cost per minute, per hour and per file.",
+  steps: [
+    "Set Number of recordings, Minutes per recording, Speech-to-text price per audio minute and Speaking rate, or tap the Conversation 150 wpm preset.",
+    "Tick Summarise the transcript to add Instruction tokens per file, Summary length (% of transcript) and the input and output token prices per 1M.",
+    "Read Cost per audio minute with the estimated transcript words and tokens, speech-to-text, summarisation and proofing costs, then Copy result.",
+  ],
   intro:
     "This calculator works out what one minute of recorded audio costs to process end to end, combining speech-to-text billed per audio minute with language-model summarisation billed per token. It converts audio duration into an estimated transcript using your speaking rate, then applies the standard English approximation of roughly three-quarters of a word per token to size the input and output token bills. Useful for podcast teams, support and sales-call analysts, researchers and anyone budgeting a transcription pipeline before turning it on.",
   useCases: [

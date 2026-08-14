@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prescription Refill Reminder and Fill Date Builder",
+  metaDescription:
+    "Turn quantity dispensed, daily dose and repeats into every fill date plus a reminder 5 days early, with fills past the expiry flagged.",
+  steps: [
+    "Enter Quantity dispensed each fill, Amount taken per day, the First fill date and Repeats authorised after the first fill.",
+    "Set Remind me this many days early and a Prescription expires on date, or pick a validity rule to fill that date for you.",
+    "Read every fill date with its reminder date and the leftover units, check any fills flagged past the expiry, then press Copy schedule.",
+  ],
   intro:
     "The Prescription Refill Reminder Builder converts the three numbers on a dispensing label — quantity dispensed, amount taken per day, and repeats authorised — into every fill date and a reminder date a set number of days before each one, using days supply = floor(quantity ÷ daily dose) and fill n = first fill + (n − 1) x days supply. It is for anyone managing a repeat prescription, or a carer running several, who wants the calendar dates rather than a vague sense that the pack is running low. Enter the prescription's expiry and any fill that would fall after it is flagged before you plan around it.",
   useCases: [

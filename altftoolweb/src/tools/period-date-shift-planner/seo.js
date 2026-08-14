@@ -1,4 +1,12 @@
 const seo = {
+  title: "Period Date Planner — Will Your Period Hit Your Trip?",
+  metaDescription:
+    "Projects up to 12 cycles from your last period and counts the days that overlap a trip or exam — plus how far the clash would have to shift either way.",
+  steps: [
+    "Enter 'First day of your last period', 'Average cycle length (days)', 'Days of bleeding' and 'Cycles to project' (up to 12).",
+    "Set 'Event starts' and 'Event ends' for the trip, exam block or event you are checking.",
+    "The headline counts the overlap days, rows show how much earlier or later the period would need to start, and the 'Projected periods' table marks each cycle clash or clear — press 'Copy result'.",
+  ],
   intro:
     "The Period Date Shift Planner projects your next period start dates from your last day 1 and your average cycle length, then measures exactly how many days they overlap a trip, exam block or event you have coming up. It uses plain calendar arithmetic — period n starts on your last period start plus n times your cycle length, and bleeds for the number of days you enter — and reports the overlap along with how many days the clash would need to move to clear the event either way.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Moving Checklist Generator: Dated 8-Week Countdown",
+  metaDescription:
+    "Turns your moving date into dated tasks at 56, 42, 28, 21, 14 and 7 days out, moving day, and 3 and 14 days after — filtered to renting, pets, kids.",
+  steps: [
+    "Set Moving day and Planning from (today) in the two date fields, then tick what applies under Your situation: renting, hiring professional packers/movers, pets, school-age children or an international move.",
+    "The checklist rebuilds as dated phases 56, 42, 28, 21, 14 and 7 days before the move, moving day itself, and 3 and 14 days after, each labelled Should already be done, Do this now or Coming up; tick tasks as you finish them.",
+    "Watch Days until moving day, Tasks done, Progress and Open tasks already past their date, then press Copy checklist to take the whole dated list as text.",
+  ],
   intro:
     "This generator turns a moving date into a dated countdown checklist, anchoring every task to moving day at fixed offsets of 56, 42, 28, 21, 14 and 7 days before, plus the day itself and follow-ups at 3 and 14 days after. Each phase is placed by a real deadline rather than preference — the lease-notice check sits eight weeks out because residential notice periods commonly run one to two months, and the fridge defrost sits in the final week because a fridge needs at least 24 hours to drain before it can be moved. Tick the boxes that match your situation and the list filters itself for renting, hired movers, pets, school-age children and cross-border moves.",
   useCases: [

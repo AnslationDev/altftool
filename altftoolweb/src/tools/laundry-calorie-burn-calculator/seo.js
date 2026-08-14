@@ -1,4 +1,12 @@
 const seo = {
+  title: "Laundry Calorie Burn Calculator (MET-Based Estimate)",
+  metaDescription:
+    "Prices seven laundry stages at published MET values — hand washing 4.0, folding 2.0, stairs with a basket 7.5 — and totals kcal per day, week and year.",
+  steps: [
+    "Enter your Body weight in kilograms or pounds and your Laundry days per week (1–7).",
+    "Fill in Minutes per laundry day for each of the seven stages — each field shows its MET value and Compendium code underneath.",
+    "Read the one-laundry-day kcal total, the net-above-resting figure, week, month and year projections and the stage-by-stage breakdown table; Copy result exports it all as text.",
+  ],
   intro:
     "This calculator prices each part of a laundry day at its own published MET value and converts it to calories with the formula kcal/min = MET x 3.5 x kg / 200. Hand washing and hanging wash are listed at 4.0 METs, folding and loading a machine at 2.0, ironing at 1.8 and carrying a basket upstairs at 7.5, so a machine-only routine and a hand-wash routine give very different totals. It is aimed at anyone auditing household movement, and it projects a single laundry day out to a week, month and year.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Client Video Revision Tracker — Timecoded Feedback",
+  metaDescription:
+    "Log each client note with a timecode, round and status, then see the resolution rate, remaining edit time and the price of rounds beyond your contract.",
+  steps: [
+    "Set your Cut length, the revision rounds included in the contract, the fee per extra round (INR) and edit minutes budgeted per note.",
+    "Click Add note for each piece of feedback and give it a Round, a Timecode (M:SS) and a status; notes past the end of the cut are refused.",
+    "Read the Notes resolved percentage with outstanding and overage figures, then click Copy result for a list sorted by round and timecode.",
+  ],
   intro:
     "The Client Video Revision Tracker turns scattered client feedback into a timecoded, status-tracked list grouped by revision round. Each note carries a timecode, a round number and one of four states — open, in progress, done or won't fix — and the tracker returns a resolution rate, the outstanding edit time at your own minutes-per-note estimate, and the value of any rounds beyond the allowance in your contract. Made for editors and studios who need one defensible list instead of three email threads.",
   useCases: [

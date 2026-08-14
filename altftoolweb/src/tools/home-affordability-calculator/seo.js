@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Affordability Calculator: FOIR, LTV, Stamp Duty",
+  metaDescription:
+    "Works back from net salary to the top property price: FOIR after existing EMIs, the bank's LTV cap, and stamp duty paid from your own savings.",
+  steps: [
+    "Enter 'Monthly net income (INR)' and 'Existing monthly EMIs (INR)', then set 'FOIR — income share lenders allow (%)' by typing it or tapping the FOIR 40%, 50%, 55% and 60% buttons underneath.",
+    "Add the loan and cash side: 'Home loan interest rate (% per year)' and 'Tenure (years)', which start at 8.5 and 20, 'Cash available for down payment (INR)', 'Maximum loan-to-value the bank allows (%)' — refused above 90 under RBI norms — and 'Stamp duty, registration & other costs (% of price)'.",
+    "'Property price you can afford' appears with whether it is limited by your income and EMI capacity or by the down payment / LTV cap, alongside the monthly EMI, cash needed on day one, total interest and total outgo. 'Copy result' puts that summary on the clipboard.",
+  ],
   intro:
     "The Home Affordability Calculator works backwards from your salary to the highest property price you can realistically buy. It applies the FOIR rule lenders use (a fixed share of net income available for all EMIs), converts that EMI capacity into a loan amount with the reducing-balance formula, then checks it against your down payment, the bank's loan-to-value cap and the stamp duty and registration you must pay from your own pocket. It is built for first-time buyers and upgraders who want a budget before they start site visits.",
   useCases: [

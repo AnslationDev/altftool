@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screen-Reader Landmark Map: ARIA Roles + Headings",
+  metaDescription:
+    "Paste HTML and get the eight ARIA landmark roles with their accessible names, headings nested under each, and cues for missing main or skipped levels.",
+  steps: [
+    "Paste markup into the HTML source box, or press Open file for an HTML or TXT file up to 500 KB; \"Load safe example\" fills the box with a sample document.",
+    "Press \"Build landmark map\" — the source is tokenised as text with script, style and template contents stripped, never rendered or executed.",
+    "Read the Nodes parsed, Landmarks, Headings, Main landmarks and Review cues counts alongside the landmark list and heading outline, then press \"Download counts-only summary\" to save screen-reader-landmark-summary.json.",
+  ],
   intro:
     "The Screen-Reader Landmark Map parses pasted HTML as inert text and returns the ARIA landmark and heading outline a screen-reader user would navigate, covering the eight landmark roles — banner, complementary, contentinfo, form, main, navigation, region and search — resolved from both explicit role attributes and implicit HTML elements. It reports each landmark's accessible name and where that name came from (aria-label, aria-labelledby or title), nests headings under the landmark that contains them, and raises review cues for a missing or duplicated main, skipped heading levels, empty headings and repeated unlabelled landmarks. It is for developers and accessibility reviewers who want to check document structure without opening a screen reader.",
   useCases: [

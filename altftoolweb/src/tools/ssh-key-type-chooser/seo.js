@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSH Key Type Chooser: Ed25519 vs ECDSA vs RSA",
+  metaDescription:
+    "Rule out algorithms your oldest OpenSSH server or policy forbids, compare NIST SP 800-57 strengths, then copy the ssh-keygen command with -t, -b and -a.",
+  steps: [
+    "Answer \"Which servers must accept this key?\", pick a required security strength such as 128-bit, and set the KDF rounds for the private key (-a).",
+    "Tick \"Key must live on a FIDO2 security key\" or \"A FIPS-validated module is mandated\" when either constraint applies.",
+    "Read the recommended key type with its security strength, public key size and minimum OpenSSH version, then press Copy command for the ssh-keygen line.",
+  ],
   intro:
     "This chooser compares the SSH key algorithms OpenSSH still supports — Ed25519, ECDSA on the NIST curves, RSA, and the FIDO2 hardware variants — against the constraints you actually have: the oldest server that must accept the key, any mandated security strength, and whether the private key has to live on a security token. Strengths are the comparable-security figures from NIST SP 800-57 Part 1 Rev. 5, so RSA-2048 is treated as 112-bit and RSA-3072 as 128-bit, the same level as Ed25519. It ends with the exact ssh-keygen line plus the fingerprint, permission and agent commands that follow it.",
   useCases: [

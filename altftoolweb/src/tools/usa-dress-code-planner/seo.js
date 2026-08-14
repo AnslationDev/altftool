@@ -1,4 +1,12 @@
 const seo = {
+  title: "USA Dress Code Planner: Courthouse, Club, Packing List",
+  metaDescription:
+    "Pick a US region and month for NOAA 1991-2020 climate normals, posted courthouse and Las Vegas club dress rules, and a counted packing list.",
+  steps: [
+    "Choose Which part of the country? from the six NOAA-station regions, then set Month of travel, Trip length (days) and Laundry every (days).",
+    "Tick the stops on your itinerary under Where are you going? - courthouses, Las Vegas nightclubs, national parks, beaches and fine dining.",
+    "Read the Packing list table (Item, Qty, Why) alongside the weather station, average daytime high and estimated clothing weight, then Copy plan.",
+  ],
   intro:
     "This planner builds a US packing list from the region you are visiting, the month, and the specific places with posted dress rules. The United States has almost no clothing law, so what actually catches travellers out is local: courthouse security turning away shorts and hats, Las Vegas club doors refusing athletic wear and trainers, a handful of dining rooms still asking men for a jacket, and six regional climates that share nothing but a calendar. Climate figures come from NOAA 1991–2020 normals for a representative station in each region.",
   useCases: [

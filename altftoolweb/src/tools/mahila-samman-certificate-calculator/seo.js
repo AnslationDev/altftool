@@ -1,4 +1,12 @@
 const seo = {
+  title: "MSSC Calculator: 7.5% Quarterly Maturity in 2 Years",
+  metaDescription:
+    "Values a Mahila Samman certificate with P x (1 + r/400)^(4t) - Rs 2,00,000 matures at Rs 2,32,044 - plus the 40% withdrawal cap and premature closure.",
+  steps: [
+    "Enter the \"Deposit amount (INR)\" or tap the ₹50,000, ₹1,00,000 or ₹2,00,000 preset, and confirm the \"Rate (% per year, compounded quarterly)\", which defaults to 7.5.",
+    "Set the \"Share of the balance withdrawn (%)\" up to the 40% cap, and for an early exit enter Months held (1-23) and the Ground for closure.",
+    "Read the \"Maturity value after 2 years\" with its quarter-by-quarter balance table, the maximum 40% withdrawal and the closure payout, then press Copy result.",
+  ],
   intro:
     "This calculator values a Mahila Samman Savings Certificate using the scheme's own formula, P x (1 + r/400)^(4t), since MSSC compounds interest quarterly at a fixed 7.5% and pays the whole amount after two years. It is for women and guardians of girls who already hold a certificate and want the exact maturity figure, the money available under the 40% partial withdrawal rule, or the payout if the account is closed early. The deposit window closed on 31 March 2025, so it values running certificates rather than new ones.",
   useCases: [

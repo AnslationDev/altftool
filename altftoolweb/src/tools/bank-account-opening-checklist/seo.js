@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Account KYC Document Checklist for India (RBI)",
+  metaDescription:
+    "Pick the account type and KYC route and get the papers the RBI Master Direction requires — savings, BSBDA, Small Account, salary, minor, NRE and NRO.",
+  steps: [
+    "Choose an 'Account type' — Savings account (resident), Basic Savings Bank Deposit Account (BSBDA), Small Account (no OVD available), Salary account, Senior citizen savings account, a minor, joint, proprietorship current or NRE/NRO/FCNR(B) account.",
+    "Set 'How KYC will be done' — In person at the branch, Video KYC (V-CIP) or From overseas, by post — and tick whether the applicant holds a PAN, whether the OVD shows the current address, and whether it is their first account with the bank.",
+    "Tick each paper under 'What to take with you' and the 'Documents ready' percentage moves; the page also lists the officially valid documents, the address substitutes accepted when the OVD is out of date, and the Small Account limits. 'Copy result' saves the whole list.",
+  ],
   intro:
     "This checklist lists the exact KYC papers each Indian bank account type needs, following the RBI Master Direction on Know Your Customer and the Prevention of Money-laundering (Maintenance of Records) Rules. It covers resident savings, BSBDA, Small Accounts, salary, senior citizen, minor accounts operated by a guardian or by the minor, joint accounts, sole proprietorship current accounts, and the non-resident set of NRE, NRO and FCNR(B). Tick off what you already have and it scores how ready you are before you go to the branch.",
   useCases: [

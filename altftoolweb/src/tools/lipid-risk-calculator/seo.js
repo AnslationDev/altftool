@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cholesterol Ratio Calculator: TC/HDL and Non-HDL",
+  metaDescription:
+    "Enter total cholesterol, LDL, HDL and triglycerides in mg/dL for TC/HDL and LDL/HDL ratios, non-HDL, ATP III bands and a 0-10 score. Educational only.",
+  steps: [
+    "Enter Total Cholesterol, LDL Cholesterol (Bad), HDL Cholesterol (Good) and Triglycerides in mg/dL - each field prints its cut-off, such as 'Desirable: < 200 mg/dL'.",
+    "Press Analyze Lipids; the run is blocked with a warning if HDL is entered higher than total cholesterol.",
+    "Read the Overall Lipid Risk score out of 10, the TC/HDL and LDL/HDL gauges, non-HDL and the NCEP ATP III Classifications band for each value, then press Copy Report or Download for a Lipid_Report_<TC>TC.txt file.",
+  ],
   intro:
     "Lipid Risk Calculator converts four lab values — total cholesterol, LDL, HDL and triglycerides in mg/dL — into the derived figures a lipid panel is usually judged on: the TC/HDL ratio (desirable under 5.0), the LDL/HDL ratio (desirable under 3.0), non-HDL cholesterol, and a 0–10 composite score that adds points for each value outside its NCEP ATP III band. It is for anyone holding a printout of numbers with no interpretation attached and wanting to see where each one falls. The output is educational; what to do about it is a conversation with your doctor.",
   useCases: [

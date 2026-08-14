@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelancer NDA Generator: IP, Portfolio & Deletion",
+  metaDescription:
+    "Draft a contractor NDA covering deliverable ownership, portfolio rights and data handling — deletion and confidentiality dates computed for you.",
+  steps: [
+    "Fill in the client and freelancer names and addresses, the Project name, \"What the project covers\" and the Start date and Expected end date.",
+    "Set the Terms — Portfolio and publicity, confidentiality survival years, the delete-everything deadline in days, data breach notice hours and Governing law — and tick clauses such as \"Assign deliverable IP to the client\".",
+    "Review the clause-by-clause draft with its computed \"Delete everything by\" and \"Confidentiality runs until\" dates, then press Copy result for the full text.",
+  ],
   intro:
     "A freelancer NDA has to do more than keep a secret: on a short contractor engagement the same document usually has to say who owns the deliverables, whether the work can appear in a portfolio, how credentials and personal data are handled, and what gets deleted at the end. This generator assembles all of that around your actual project dates, computing the deletion deadline and the confidentiality end date from the project end rather than leaving blanks. It is a template and not legal advice.",
   useCases: [

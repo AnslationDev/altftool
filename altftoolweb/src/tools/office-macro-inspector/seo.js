@@ -1,4 +1,12 @@
 const seo = {
+  title: "Office Macro Inspector: Check .docm/.xlsm for VBA",
+  metaDescription:
+    "Check a .docm or .xlsm locally for vbaProject parts, macro content types and relationships — three evidence levels, 20 MB cap, no upload.",
+  steps: [
+    "Click \"Choose file\" under Office document and pick a local file — .docx, .docm, .xlsx, .xlsm, .pptx, .pptm and the legacy .doc, .xls and .ppt are all accepted, up to 20 MB.",
+    "Click \"Run local inspection\". The package is read in this browser tab and counted for vbaProject.bin part paths, the application/vnd.ms-office.vbaproject content type, vbaProject relationships and macro-sheet parts — no document is opened and no VBA is executed.",
+    "Read the status badge — \"Macro-related package cues observed\", \"Macro-capable container cue only\" or \"No selected direct macro cue observed\" — with the Package entries, Direct/string cues, Relationship cues and Warnings tiles, then \"Download report\" to save office-macro-cue-counts-only.json, which carries no filenames or document values.",
+  ],
   intro:
     "The Office Macro Inspector reads an Office file's package structure locally and reports whether it carries macro-related cues — a vbaProject.bin part path, the application/vnd.ms-office.vbaproject content type, a vbaProject relationship, or legacy macro-sheet parts — without ever opening the document or executing VBA. Results land in one of three evidence levels: direct package cues observed, macro-capable container only (the extension or a macroEnabled content type says it could hold macros), or no selected cue observed. It is for anyone who has been sent a .docm or .xlsm and wants a structural read before deciding what to do with it — a clear result is not proof the file is macro-free or safe.",
   useCases: [

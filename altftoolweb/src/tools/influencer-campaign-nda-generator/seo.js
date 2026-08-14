@@ -1,4 +1,12 @@
 const seo = {
+  title: "Influencer Campaign NDA Generator with Embargo Dates",
+  metaDescription:
+    "Assemble a creator embargo NDA carrying the DTSA 1833(b) immunity notice, an FTC 16 CFR 255 carve-out and a Consumer Review Fairness Act clause.",
+  steps: [
+    "Enter Brand or company name, Creator name or handle, Product or campaign codename, Governing law (state or country), Effective date and Embargo lifts (launch date).",
+    "Set Confidentiality term (years) and Return or delete within (days), then tick the Campaign profile boxes — gifted product, paid fee, agency involved, prototype shipped.",
+    "Read Required coverage, the embargo window in days and the date Confidentiality runs to, then press Copy NDA.",
+  ],
   intro:
     "An influencer campaign NDA is a short confidentiality agreement that keeps an unreleased product secret between the day a creator is briefed and the moment the embargo lifts. This generator assembles one from clauses tied to identifiable rules — the Defend Trade Secrets Act immunity notice at 18 U.S.C. section 1833(b), the FTC Endorsement Guides carve-out at 16 CFR Part 255 and the Consumer Review Fairness Act at 15 U.S.C. section 45b — and computes the embargo window and the date the duty of confidence ends. It is built for brand and PR teams seeding hardware, beauty launches or software betas to creators.",
   useCases: [

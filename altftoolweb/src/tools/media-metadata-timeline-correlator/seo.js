@@ -1,4 +1,12 @@
 const seo = {
+  title: "Correlate EXIF, MP4 and WAV Timestamps on a Timeline",
+  metaDescription:
+    "Line up EXIF, PNG tIME, MP4/MOV and WAV dates from up to 20 local files on one timeline. Missing timezones stay unresolved, never guessed.",
+  steps: [
+    "Click Add media and pick up to 20 local JPG, PNG, WebP, MP4, MOV, M4V or WAV files — 64 MB per file, 128 MB per batch.",
+    "Drag the Proximity window slider (5 minutes by default) and, only with external evidence, type a fallback like +05:30 into 'Optional offset for timezone-free fields'.",
+    "Read the clustered timeline with its unresolved wall-clock flags, then click 'Download counts-only report' to save media-metadata-timeline-counts.json.",
+  ],
   intro:
     "The Media Metadata Timeline Correlator reads the date fields embedded in local JPEG, PNG, WebP, MP4/MOV and WAV files — EXIF DateTimeOriginal, DateTimeDigitized and DateTime with their matching offset tags, PNG tIME, QuickTime/MP4 movie creation and modification times, and WAV INFO ICRD — and lines them up on one timeline alongside each file's browser lastModified property. Timestamps that carry no timezone are kept as unresolved wall-clock values rather than being silently assumed to be local or UTC, and you can apply a fallback offset yourself. It clusters events that fall within a chosen window and flags exact matches across files, without making any claim about whether a file is authentic or edited.",
   useCases: [

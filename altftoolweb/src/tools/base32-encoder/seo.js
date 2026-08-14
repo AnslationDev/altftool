@@ -1,4 +1,5 @@
 const seo = {
+  title: "Base32 Encoder — RFC 4648 A-Z 2-7, UTF-8 Input",
   intro:
     "This Base32 encoder converts text to RFC 4648 Base32 using the standard A-Z and 2-7 alphabet, reading your input as UTF-8 so accented characters and emoji encode correctly. It packs the byte stream five bits at a time, pads the result with = to a multiple of 8 characters, and lets you switch to the lowercase alphabet or wrap the output at a fixed line length. It is for developers who need a case-insensitive, transcription-safe encoding of a value and want to see the byte count, padding count and size overhead alongside the result.",
   useCases: [

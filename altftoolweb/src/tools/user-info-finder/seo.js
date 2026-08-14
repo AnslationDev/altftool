@@ -1,4 +1,12 @@
 const seo = {
+  title: "User Info Finder: Search Your Own CSV or JSON List",
+  metaDescription:
+    "Not a people-search. Paste your own CSV, TSV or JSON export and query it with field:value, quoted phrases and -exclusions, all inside the browser.",
+  steps: [
+    "Paste CSV, TSV or a JSON array into Your records, or press Load a file to open a .csv, .tsv, .txt or .json export from your CRM or admin panel.",
+    "Type a query such as city:Berlin plan:Team -role:Viewer, then narrow it with the filter chips built from the real distinct values in your columns.",
+    "Read the ranked rows with the matching field highlighted and the What is in each field profile, then press Copy this page as CSV.",
+  ],
   intro:
     "This is a search engine for a user list you already have, not a people-search service. Paste a CSV export from a CRM, an admin panel, a billing system or a support desk — or a JSON array of records — and it parses the file properly (quoted fields, embedded commas and newlines, tab, semicolon and pipe separators all handled), works out what each column holds, then lets you query it with field terms, quoted phrases, exclusions and one-click filters built from the real distinct values in your data. Results are ranked by a fixed published rule: an exact field match scores 100, a field that starts with your term 60, a word inside the field 40, and a match anywhere 20. Nothing is looked up online, nothing is inferred and no detail about a person is ever generated — if it is not in your file, it does not appear.",
   useCases: [

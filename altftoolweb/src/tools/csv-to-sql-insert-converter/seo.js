@@ -1,4 +1,12 @@
 const seo = {
+  title: "CSV to SQL INSERT Converter: RFC 4180, 4 Dialects",
+  metaDescription:
+    "Turns CSV into batched multi-row INSERTs — up to 1,000 rows each, 20,000 per run — with RFC 4180 parsing, type inference and per-dialect quoting.",
+  steps: [
+    "Paste your rows into CSV data, set Table name, and tick \"First row is a header with column names\" if the first line holds the headers.",
+    "Choose SQL dialect — PostgreSQL, MySQL / MariaDB, SQLite or SQL Server — and set Rows per INSERT anywhere from 1 to 1,000.",
+    "Rows converted updates as you type, up to the 20,000-row cap; press Copy SQL to take the batched multi-row INSERT statements.",
+  ],
   intro:
     "This converter turns CSV rows into ready-to-run SQL INSERT statements, parsing the input per RFC 4180 (quoted fields, doubled-quote escapes, embedded commas and newlines) and inferring integer, decimal, boolean or text for each column from its values. It emits dialect-correct output for PostgreSQL, MySQL, SQLite and SQL Server — backtick vs double-quote vs bracket identifiers, '' quote escaping, doubled backslashes for MySQL, and 1/0 instead of TRUE/FALSE where the engine lacks boolean literals. Batching groups up to 1,000 rows per multi-row INSERT, and everything runs locally in the browser.",
   useCases: [

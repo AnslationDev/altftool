@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maternity Leave Date Calculator (India, 26 Weeks)",
+  metaDescription:
+    "Turn the expected due date into leave start, last paid day and rejoining date under the Maternity Benefit Act, with the 8-week pre-delivery cap.",
+  steps: [
+    "Pick a 'Type of leave' — pregnancy/childbirth, adoption or commissioning, miscarriage or MTP, or tubectomy — and enter the matching anchor date.",
+    "For childbirth, set 'Surviving children before this birth' and 'Weeks taken before the due date'; anything over the 8- or 6-week statutory maximum is trimmed.",
+    "Read 'Leave begins', 'Last day of paid leave', 'Report back to work' and nursing breaks in the Timeline table, then press 'Copy result'.",
+  ],
   intro:
     "This calculator converts an expected date of delivery into the three dates an employee and an HR team actually need: the day maternity leave starts, the last day of paid leave, and the day the employee is due back at work. It applies the entitlement rules in the Maternity Benefit Act, 1961 as amended in 2017 — 26 weeks with a maximum of 8 weeks before delivery for a woman with fewer than two surviving children, 12 weeks (6 before) from the third child onwards, and the separate periods for adoption, miscarriage and tubectomy. It also flags the 80-day qualifying-service test and the date nursing breaks stop.",
   useCases: [

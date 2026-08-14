@@ -1,4 +1,12 @@
 const seo = {
+  title: "Term Insurance Cover Calculator: Needs-Based, India",
+  metaDescription:
+    "Sizes cover from income replacement, loans and children's goals, minus liquid assets and existing cover, rounded up to the ₹5 lakh slabs insurers sell.",
+  steps: [
+    "Enter 'Annual income (INR)' and the share of income the family needs, with your age and the years to support them.",
+    "Add 'Outstanding loans (INR)', the children's education & marriage corpus, existing investments and 'Life cover you already hold (INR)'.",
+    "Read 'Additional term cover needed', rounded to ₹5 lakh slabs, and click 'Copy result'.",
+  ],
   intro:
     "This term insurance cover calculator sizes the life cover your family would actually need, rather than defaulting to a rule of thumb like ten times salary. It discounts the income your dependants would lose over the years you plan to support them, adds outstanding loans and your children's education and marriage corpus, then subtracts your liquid investments and any policy you already hold. The result is the additional term cover to buy, rounded to the ₹5 lakh slabs insurers actually sell.",
   useCases: [

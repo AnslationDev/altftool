@@ -1,4 +1,10 @@
 const seo = {
+  title: "Balcony Solar Kit Estimator: Vertical Tilt Yield Loss",
+  steps: [
+    "Under 'The kit' enter Number of panels, 'Panel rating (Wp)', 'Micro-inverter AC limit (W)' and 'Installed kit cost (INR)'.",
+    "Under 'Where it hangs' tap a mounting preset — 'Flat against the railing (90°)', 'Angled out on a bracket (45°)', 'Well-angled bracket (30°)' or 'Laid nearly flat on the floor (10°)' — then set 'Which way the balcony faces', 'Latitude, degrees (drop the N or S)', 'Peak sun hours a day', 'Extra shading loss (%)', 'Used in the home immediately (%)' and 'Your tariff (INR per unit)'.",
+    "Read 'Estimated output a year' in kWh with the daily figure and monthly saving underneath, then 'Yield vs a well-aimed array' alongside the best tilt for your latitude, Specific yield, 'Saving a year' and 'Simple payback'. 'Copy result' copies the estimate.",
+  ],
   intro:
     "This estimator models what a small plug-in balcony solar kit produces once its panels hang vertically off a railing instead of sitting on a well-aimed roof. The yield penalty is geometry, not guesswork: beam radiation scales with the cosine of the angle between the panel and the sun's noon position, so a vertical panel at 19° latitude collects only cos(71°) of the beam, while diffuse sky light scales with the sky view factor (1 + cos tilt) ÷ 2. The result is annual kWh, self-consumption savings and a simple payback.",
   useCases: [

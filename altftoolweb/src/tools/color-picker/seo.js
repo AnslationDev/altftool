@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Picker with HEX, RGB, HSL, CMYK & WCAG AA Check",
+  metaDescription:
+    "Pick a color and get HEX, RGB, RGBA, HSL and CMYK codes, four palettes from one hue, plus live WCAG AA contrast checks at 4.5:1.",
   intro:
     "This color picker lets you choose a colour by swatch, hex field, or hue, saturation, lightness and RGB sliders, and returns it as HEX, RGB, RGBA, HSL and CMYK simultaneously. Alongside the codes it generates four palettes from the same hue — complementary, analogous, triadic and a five-step monochromatic ramp — and checks the colour's contrast against white and against near-black to the WCAG AA threshold of 4.5:1. Your last ten colours stay in a history strip so you can step back to one you liked.",
   useCases: [

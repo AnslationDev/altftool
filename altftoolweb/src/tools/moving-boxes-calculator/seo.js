@@ -1,4 +1,12 @@
 const seo = {
+  title: "Moving Boxes Calculator: How Many Cartons to Buy",
+  metaDescription:
+    "Rooms, people, bookshelf feet and rail feet become small to wardrobe carton counts, plus tape rolls, packing paper and bubble wrap.",
+  steps: [
+    "Enter Bedrooms, Living / dining rooms, People living there, Kitchen size, Shelved books & media (linear feet) and Hanging clothes (linear feet of rail).",
+    "Set How heavily is the home packed? and tick There is a home office or study to pack when one applies.",
+    "Read Cartons needed and the Carton breakdown table, with Packing tape (50 m rolls), Packing paper and Bubble wrap, then press Copy result.",
+  ],
   intro:
     "This calculator estimates how many moving cartons of each standard size a home needs, converting rooms, occupants, shelved books and hanging clothes into a count of small (1.5 cu ft), medium (3 cu ft), large (4.5 cu ft), extra-large (6 cu ft), dish barrel (5.25 cu ft) and wardrobe (14 cu ft) boxes. It uses the packing allowances removal firms apply at a home survey, plus two measured capacities — one small carton per 2 linear feet of books, one wardrobe carton per 2 linear feet of hanging rail. It also returns the tape, packing paper and bubble wrap that quantity of cartons consumes, and the total packed volume in cubic feet and cubic metres.",
   useCases: [

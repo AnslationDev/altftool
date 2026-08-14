@@ -1,4 +1,12 @@
 const seo = {
+  title: "Friend Elo Ladder Calculator for Casual Matches",
+  metaDescription:
+    "Paste matches in order and get a ranked Elo ladder. Players start at 1200 with a K-factor of 32, and every game's updated ratings are shown.",
+  steps: [
+    "Enter Starting ratings as \"Name | rating\", one per line, then Matches in order as \"Player A | Player B | A score (1 win, 0.5 draw, 0 loss)\", and set the K-factor, which defaults to 32.",
+    "Matches are processed in the order listed using E = 1 / (1 + 10^((Rb − Ra) / 400)) and R' = R + K × (S − E); anyone named in a match but absent from the ratings list joins the ladder at 1200.",
+    "A Rank / Player / Elo table gives the final standings, with one line per match showing both updated ratings and a note for any skipped line; Copy and Download take the ladder away.",
+  ],
   intro:
     "Friend ELO Ladder runs the standard Elo rating formula over a list of casual matches and returns a ranked ladder plus the rating after every game. It uses the textbook maths — expected score E = 1 / (1 + 10^((Rb − Ra) / 400)) and the update R' = R + K × (S − E), with players starting at 1200 and a K-factor of 32 by default — so beating someone stronger moves you further than beating someone weaker. It is for friend groups, office leagues and club nights who want a fair running order for chess, table tennis, pool or FIFA without signing up to a league platform.",
   useCases: [

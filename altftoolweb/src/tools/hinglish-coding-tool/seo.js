@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hinglish Coding Dictionary — 40 Terms, 3 Ways Each",
+  metaDescription:
+    "40 programming terms explained three ways: precise English, everyday Hinglish and an analogy, with code examples and a quiz drawn from your filters.",
+  steps: [
+    "Type into the \"Search a term, definition or analogy\" box — it suggests closure, git rebase, recursion — or narrow the 40 terms with the Topic and Level selects.",
+    "Read each result card's English definition, Hinglish explanation and analogy, and press Copy on the card to take one away.",
+    "Test yourself under \"Quiz: which term is this Hinglish line describing?\", pick one of four options and press Next question; Reset clears the filters and the score.",
+  ],
   intro:
     "The Hinglish Coding Dictionary explains 40 core programming concepts three ways at once: the precise English definition, the same idea in everyday Hinglish, and a familiar analogy, with a short code example for each. It is for beginners in India who follow tutorials in English but think in Hindi, and it covers programming basics, JavaScript, Python, the browser, data structures, Git and backend terms across beginner, intermediate and advanced levels. A built-in quiz shows a Hinglish line and asks which term it describes.",
   useCases: [

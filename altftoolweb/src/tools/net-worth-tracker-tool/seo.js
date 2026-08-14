@@ -1,4 +1,12 @@
 const seo = {
+  title: "Net Worth Tracker: Liquidity & Debt-to-Asset Ratio",
+  metaDescription:
+    "Itemise assets and liabilities to get net worth plus the ratios: liquid share, financial vs property and gold, debt-to-asset. Computed in your browser.",
+  steps: [
+    "Under Assets, name each holding, choose its category and type the rupee amount; Add an asset appends a row and the Remove button deletes one.",
+    "Do the same under Liabilities at outstanding principal, then fill Context (optional) — Monthly household expenses (₹), Your age and Annual pre-tax income (₹).",
+    "The Net worth figure updates with rows for liquid assets, debt-to-asset ratio and liquidity in months of expenses, plus the Where your assets sit and What you owe tables; Copy result copies the statement and Reset restores the demo values after a confirmation prompt.",
+  ],
   intro:
     "Net worth is everything you own at today's realisable value minus everything you owe at outstanding principal — one number that a bank balance or a salary slip cannot give you. This tracker builds that statement from itemised assets and liabilities and then reports the three ratios it exists to expose: the share of assets that is genuinely liquid, the split between financial assets and everything else — property, gold, vehicles, business holdings and other assets that cannot be sold in slices — and the debt-to-asset ratio. Everything is computed in the browser and nothing is stored.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Running Shoe Mileage Tracker with 500-800 km Wear Limits",
+  metaDescription:
+    "Log kilometres per pair against its rated midsole life, get a warning at 80% used, and see a projected retirement date from your weekly volume.",
+  steps: [
+    "For each pair, set 'Shoe type' (Daily trainer 640 km, Carbon-plated racer 320 km and more), 'Kilometres logged', 'Rated life (km)' and 'First run in them'; press 'Add another pair' to build a rotation.",
+    "After each run, tap +5 km, +10 km, +21 km or +42 km on that pair — the progress bar and status badge update, warning once 80% of rated life is used.",
+    "Read 'Left before retirement' and the 'Projected retirement' date per pair, then press 'Copy result' for a text summary; the rotation is saved in this browser's local storage.",
+  ],
   intro:
     "This tracker keeps a running total of kilometres on each pair of shoes and compares it with that shoe's rated midsole life, so you replace a pair on evidence rather than on a hunch. Defaults follow the long-standing 500–800 km (roughly 300–500 mile) guidance, with shorter figures for carbon-plated racers and longer ones for max-cushion trainers, and every figure is editable. It also projects a retirement date from your own weekly volume since the first run in that pair.",
   useCases: [

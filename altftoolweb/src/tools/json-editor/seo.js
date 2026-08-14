@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON Editor: Validate, Format, Minify & CSV Export",
+  metaDescription:
+    "Validate JSON to RFC 8259 with the line and column of the first fault and any duplicate keys, then pretty-print, minify, flatten or export RFC 4180 CSV.",
+  steps: [
+    "Paste your document into the \"JSON document\" textarea — it accepts up to 2,000,000 characters and nothing is uploaded.",
+    "Choose an \"Output\" mode — \"Format (pretty-print)\", \"Minify\", \"Flatten to dot paths\" or \"Export array to CSV\" — set \"Indent\" to 2 spaces, 4 spaces or Tab, and tick \"Sort keys alphabetically\" if you want them ordered.",
+    "An invalid document shows a \"Line N, column N\" error naming the fault; a valid one fills the \"Root type\", \"Nesting depth\", \"Duplicate keys\" and \"Input size (UTF-8)\" rows, and \"Copy result\" takes the output.",
+  ],
   intro:
     "The JSON Editor validates a document against RFC 8259, reports the exact line and column of the first fault, and then reformats it — pretty-printed at 2 spaces, 4 spaces or tabs, minified, key-sorted, flattened to dot paths, or exported as RFC 4180 CSV. It uses a hand-written scanner alongside the browser's own parser, which is how it can also flag duplicate object keys that JSON.parse silently collapses to the last value. Built for developers debugging an API response, a config file or a webhook payload without pasting it into someone else's server.",
   useCases: [

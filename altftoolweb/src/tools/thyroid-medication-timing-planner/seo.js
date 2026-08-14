@@ -1,4 +1,12 @@
 const seo = {
+  title: "Levothyroxine Timing: Food, Coffee & Calcium Gaps",
+  metaDescription:
+    "Check your levothyroxine gaps: 30-60 minutes before food, 60 from coffee, 4 hours from calcium, iron and antacids, and get a fixed tablet time.",
+  steps: [
+    "Choose Morning, before breakfast or Bedtime, set the Levothyroxine tablet at time, then enter clock times for Breakfast / first food, Coffee or espresso, Calcium supplement or antacid and Iron / multivitamin with iron — leave blank anything that does not apply.",
+    "Each row under Gap by gap shows the real gap against the one it needs — 30 minutes before food (60 preferred), 60 minutes from coffee, 4 hours from calcium, iron, antacids and fibre — and names the clock time to shift to when it falls short.",
+    "The Routine check headline reads All gaps clear or how many gaps are too short, with Suggested tablet time and Biggest shortfall listed below and Your day in order marking each event Dose, Clear or Too close; Copy result copies the whole check.",
+  ],
   intro:
     "The Thyroid Medication Timing Planner measures the gap between your levothyroxine tablet and everything that blocks its absorption, then tells you which gaps are long enough. It applies the separations in the product labelling and the trials behind them: at least 30 minutes before food (60 is better), 60 minutes from coffee, 4 hours from calcium, iron, antacids, proton-pump inhibitors, soy and high-fibre meals, and 3 hours after the last meal if you dose at bedtime. Useful for anyone whose TSH keeps drifting despite taking the same dose every day.",
   useCases: [

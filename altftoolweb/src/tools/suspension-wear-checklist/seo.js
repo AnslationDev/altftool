@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Suspension Noise Diagnosis: Ranked Wear Checklist",
+  metaDescription:
+    "Tick the knocks, handling changes and tyre wear you notice; a weighted matrix ranks 12 suspension components and gives the check that confirms each.",
+  steps: [
+    "Tick every noise, handling change and tyre wear pattern under What is the car doing, from the sixteen symptoms listed.",
+    "Add or remove symptoms to sharpen the ranking, or press Clear all to start again from a single symptom.",
+    "Read the most likely cause with its confidence share, the hands-on Check that confirms it, the Fix, and the safety flag.",
+  ],
   intro:
     "The Suspension Wear Checklist maps the noises, handling changes and tyre wear patterns you can observe onto the components that cause them, using a weighted symptom-to-cause matrix rather than a single guess. Each symptom points at several parts with different strengths — a wet, oily damper body is close to diagnostic on its own, while a low-speed knock could be any of five components — and the ranking shows which to inspect first. Every candidate comes with the physical check that confirms or rules it out.",
   useCases: [

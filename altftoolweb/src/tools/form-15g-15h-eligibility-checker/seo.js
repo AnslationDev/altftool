@@ -1,4 +1,12 @@
 const seo = {
+  title: "Form 15G or 15H? Check Eligibility and TDS at Stake",
+  metaDescription:
+    "Applies the section 197A nil-tax test and the 15G interest ceiling, then shows the section 194A TDS at 10% (20% without PAN) you would lose.",
+  steps: [
+    "Enter your Age during the financial year, Residential status, Who is declaring, and the Tax regime you will use (new or old).",
+    "Add your Estimated total income for the year (INR) and the Interest expected from this bank (INR), and tick PAN has been given to the bank.",
+    "Read the verdict and TDS at stake this year, with the Form that applies to you, Basic exemption limit used, Section 194A TDS threshold and TDS rate applied.",
+  ],
   intro:
     "This checker tells you whether you may file Form 15G or Form 15H — the self-declarations that stop a bank deducting TDS on your interest — by applying the actual tests in sections 197A(1), 197A(1A) and 197A(1C) of the Income-tax Act. It works out tax on your estimated total income under the new or old regime, compares your interest against the basic exemption limit, and shows the section 194A TDS you stand to lose if you do not file. It is aimed at depositors, pensioners and anyone whose fixed-deposit interest crosses the bank's TDS threshold.",
   useCases: [

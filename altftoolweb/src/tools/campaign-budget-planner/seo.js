@@ -1,4 +1,7 @@
 const seo = {
+  title: "Campaign Budget Planner: Channel CPA, ROAS, 30 Days",
+  metaDescription:
+    "Split a budget across six channels, each with its own CPC and conversion rate, for per-channel and blended CPA, ROAS from your LTV, and a 30-day plan.",
   intro:
     "This planner splits a marketing budget across channels and projects what that split should buy: for each channel it divides budget by cost-per-click to get clicks, applies the conversion rate to get conversions, then rolls the lot up into a blended CPA (total spend ÷ total conversions) and a ROAS of projected revenue ÷ spend using your average customer LTV. It ships with six editable channels — paid search, paid social, influencer, email, SEO and content, and offline events — a target CPA you set, and a 30-day phase timeline with a task list. Channels whose projected CPA lands under your target are highlighted, so the reallocation decision is visible rather than buried in a spreadsheet.",
   useCases: [

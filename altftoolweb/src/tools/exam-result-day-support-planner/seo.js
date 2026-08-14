@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Result Day Plan: Support, Checking, First Moves",
+  metaDescription:
+    "Decide before results land: your support people, how you will check the score, and one first move for better, as-expected and below-hoped outcomes.",
+  steps: [
+    "Set the 'Result date (leave blank if unknown)' and pick 'How will you check it?' — check it together with someone you trust, check it alone then call someone straight after, or someone else checks and tells you.",
+    "List your 'Support people (first name is your first call)' with 'Add person', then write one line in each of the three first-move fields: better than expected, roughly as expected, and below what I hoped.",
+    "Read the 'Days to result day' countdown with the phased timeline and the 'Result-day ground rules' (including no big decisions within 24 hours of the result), then press 'Copy plan' to paste it into your notes.",
+  ],
   intro:
     "This planner turns exam result day into a written plan made in advance: who your support people are, exactly how you will check the score, and one pre-decided first move for each outcome — better than expected, as expected, or below what you hoped. The structure uses implementation intentions (deciding 'if X happens, I will do Y' beforehand), a technique shown by Gollwitzer's research to make intended actions far more likely under stress. Everything stays on your device; copy the finished plan to your notes.",
   useCases: [

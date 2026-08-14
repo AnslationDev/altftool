@@ -1,4 +1,12 @@
 const seo = {
+  title: "Door Frame Timber Calculator: Running Feet and Cft",
+  metaDescription:
+    "Running length, cft, clear opening, shutter size, hinges and holdfasts from the opening size and frame section — 100x65 to 150x75 mm.",
+  steps: [
+    "Enter the Frame outer height (mm) and Frame outer width (mm) — they open at 2100 and 900 — then pick a Frame section from 100 × 65 mm through 150 × 75 mm, or choose Custom section and type your own Section width (mm) and Section thickness (mm).",
+    "Set the Rebate depth (mm), Number of identical frames, Timber species and \"Cutting and planing wastage (%)\", tick \"Include a bottom sill (four-sided frame)\" for a four-member frame, and add the optional timber and shutter rates in INR.",
+    "\"Timber to order\" gives the cft to buy, and the table below lists running length per frame in metres and feet, timber per frame, approximate weight, clear opening, shutter size and area, butt hinges (three up to a 2100 mm shutter and four above), holdfasts and architrave length before Copy result copies the take-off.",
+  ],
   intro:
     "A door frame material calculator converts an opening size and a timber section into the running length of frame timber, its volume in cubic feet, the clear opening left inside and the shutter size once the rebate is allowed for. The running length is simply 2 × frame height + frame width for a three-sided frame, or plus a second width when a bottom sill is fitted; multiplying that by the section area gives the timber volume, and the clear opening is the outer size less one section width per side. It is written for carpenters, contractors and homeowners who need to order timber and hardware rather than guess.",
   useCases: [

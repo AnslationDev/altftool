@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Leave Application in Hindi — Prarthna Patra",
+  metaDescription:
+    "Formal prarthna patra with सेवा में, विषय and signature block, छात्र/छात्रा verb agreement, an inclusive day count and optional Devanagari numerals.",
+  steps: [
+    "Fill छात्र/छात्रा का नाम, कक्षा and विद्यालय का नाम, then set लिंग (क्रिया रूप के लिए) so the letter uses रहूँगा or रहूँगी throughout.",
+    "Choose अवकाश का कारण with the अवकाश की पहली तारीख़ and अंतिम तारीख़, and tick प्रमाण पत्र संलग्न है or देवनागरी अंक (०-९) if you need them.",
+    "Check कुल अवकाश दिवस, then read आपका प्रार्थना पत्र — सेवा में, विषय, सविनय निवेदन and the signature block — and press पत्र कॉपी करें.",
+  ],
   intro:
     "Hindi School Leave Application generates a prarthna patra in the aupcharik (formal) letter format taught in Hindi school syllabuses: the सेवा में block, a विषय line, the संबोधन, a body that opens with सविनय निवेदन है कि, and a signature block giving नाम, कक्षा, अनुक्रमांक and दिनांक. Because Hindi verbs and nouns agree with the writer's gender, one setting switches the whole letter between छात्र/छात्रा, रहूँगा/रहूँगी and आज्ञाकारी शिष्य/शिष्या. Leave days are counted inclusively and can be printed in Devanagari numerals.",
   useCases: [

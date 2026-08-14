@@ -1,4 +1,12 @@
 const seo = {
+  title: "D-Link Router Hardening Checklist: 22 Weighted Steps",
+  metaDescription:
+    "Score a DIR router on the blank admin password, WPS, remote management, UPnP and end-of-support firmware, with a WPS PIN attack timer.",
+  steps: [
+    "Choose What is this router carrying?, then tick each of the 22 checklist steps you have already applied at http://dlinkrouter.local or 192.168.0.1.",
+    "Set PIN attempts per minute, Lockout after this many failures (0 = none) and Lockout length (seconds) to time the WPS PIN attack.",
+    "Read the Hardening score, Critical steps still open and Worst case to recover the PIN, then press Copy result.",
+  ],
   intro:
     "This D-Link hardening checklist runs a weighted 22-point pass over a DIR-series router — the admin password that many models ship blank, WPA2/WPA3 mode, WPS, remote management, UPnP, port forwards, SharePort USB sharing and firmware — and scores what is still open rather than counting ticks. It also asks the question that decides everything else on D-Link hardware: whether the model has been declared end-of-support, since the vendor states it will not patch reported flaws in those devices. A built-in WPS timer applies the split-half PIN flaw — 11,000 attempts instead of 10 million — to show how quickly the Wi-Fi key falls while WPS is enabled.",
   useCases: [

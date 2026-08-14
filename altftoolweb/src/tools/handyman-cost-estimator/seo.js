@@ -1,4 +1,12 @@
 const seo = {
+  title: "Handyman Cost Estimator: Hours, Visit Fee and GST",
+  metaDescription:
+    "Price home repairs at Rs 300-400 an hour trade rates with a one-hour minimum per job, visit charge, material handling, urgency loading and 18% GST.",
+  steps: [
+    "Under Jobs to be done enter a quantity against each task, such as Ceiling fan install or replace, Tap or mixer replacement or Flat-pack furniture assembly.",
+    "Set City tier, How urgent (Standard, Same day, or Night, Sunday or public holiday) and Cost of parts and materials (₹), then tick whether the tradesperson buys the materials and whether the provider is GST-registered.",
+    "Read the itemised labour, urgency loading, visit charge, materials, handling and 18% GST alongside the Job-by-job breakdown and Who you need to call tables, then press Copy quote.",
+  ],
   intro:
     "The Handyman Cost Estimator prices small home repairs the way a tradesperson bills them: hands-on hours at a trade hourly rate, a one-hour minimum on each job line, one visit charge per trip, materials at cost plus a handling markup, an urgency loading for same-day or out-of-hours work, and 18% GST on household repair and maintenance services. Reference rates run around ₹350 an hour for an electrician or plumber and ₹400 for a carpenter at tier-1 city levels. Use it before you call, so a quote can be checked line by line instead of accepted whole.",
   useCases: [

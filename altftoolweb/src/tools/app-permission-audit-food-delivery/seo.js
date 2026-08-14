@@ -1,4 +1,12 @@
 const seo = {
+  title: "Food Delivery App Permission Audit: 15 Permissions",
+  metaDescription:
+    "Score a food or grocery app across 15 weighted permissions. Background location counts as optional, and SMS or contacts access is flagged to revoke.",
+  steps: [
+    "Name the app in 'App name (for the report)', then choose Checklist or Paste list entry.",
+    "Tick the permissions the app holds from the 15 listed, or paste one per line from the Play Store 'About this app > App permissions' screen.",
+    "Read the privacy score out of 100, the ranked 'Revoke these first' list, and every item with its Android / iOS manifest name and sensitivity.",
+  ],
   intro:
     "The Food Delivery App Permission Audit scores a food or grocery app against the three things it must do: locate the delivery address, take payment and track one live order. Fifteen permissions are weighted by sensitivity, with background location treated as optional rather than core — live order tracking runs through a foreground service with a visible notification, so 'Allow all the time' buys the app a movement history it does not need. The audit is written India-first, where masked in-app calling already connects you to the delivery partner without any call log or SMS access.",
   useCases: [

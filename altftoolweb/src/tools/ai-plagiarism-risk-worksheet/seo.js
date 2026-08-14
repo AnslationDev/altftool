@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Plagiarism Risk Worksheet: Score Your Draft 0-100",
+  metaDescription:
+    "Six questions on verbatim text, paraphrase depth, sourcing, reference checks, disclosure and originality give a weighted 0-100 risk score.",
+  steps: [
+    "Answer the six radio questions in turn: how much AI-drafted text you kept close to verbatim, how deep your paraphrase went, whether the AI's facts are cited to sources you located, whether every reference was verified to exist, whether you disclosed the assistance, and how much of the argument is genuinely yours.",
+    "The Risk score updates to a figure out of 100 and the breakdown lists each answer with its points against that factor's weight — verbatim retention carries 30 and reference verification 20.",
+    "Read the band — Low risk up to 20, Moderate risk to 50, High risk above it — work through the \"What to fix before submitting\" list, then press Copy result to keep the score, verdict and fixes.",
+  ],
   intro:
     "The AI Plagiarism Risk Worksheet computes a weighted 0-100 risk score for an AI-assisted draft from six factors integrity offices actually examine: verbatim retention of AI text, paraphrase depth, citation of borrowed facts, verification of references, disclosure, and original contribution. Verbatim unattributed text (30 points) and unverified references (20 points) carry the heaviest weights, matching how misconduct cases are assessed. It is built for students and writers who want to find and fix the derivative parts of a draft before anyone else does.",
   useCases: [

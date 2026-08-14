@@ -1,4 +1,12 @@
 const seo = {
+  title: "SIP Top-Up Calculator: Step-Up vs Flat SIP Corpus",
+  metaDescription:
+    "Raise your SIP by a set % every 12 months from the 13th instalment and compare the corpus, extra invested and goal date against a flat SIP.",
+  steps: [
+    "Enter 'Starting monthly SIP (INR)', 'Expected return (% a year)' and 'Investment period (years)' — the defaults are 10,000, 12% and 10 years.",
+    "Set 'Annual top-up (%)' or tap a 5%, 10% or 15% top-up chip; the increase applies from the 13th instalment, then every 12 months.",
+    "Compare 'Corpus with the top-up' against 'Corpus without any top-up', then open 'Year-by-year build-up' for the Year, Monthly SIP, Invested, Gain and Closing columns.",
+  ],
   intro:
     "A SIP top-up raises your monthly instalment by a fixed percentage every twelve months, and this calculator projects what that yearly increase does to the final corpus, the total invested and the date you reach a goal. It compounds each instalment at a nominal monthly rate of the expected annual return divided by twelve, debiting at the start of the month, which is the annuity-due convention used by the standard AMFI and fund-house SIP calculators. Useful when your salary rises each year and you want to size the increase against a target rather than guess it.",
   useCases: [

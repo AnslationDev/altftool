@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tax Bracket Calculator: 2025 and 2026 IRS Brackets",
+  metaDescription:
+    "See how many dollars each federal rate taxes — 10% through 37% — for 2025 or 2026, plus your marginal rate, effective rate and bracket headroom.",
+  steps: [
+    "Type your Total income (before deductions), choose a Filing status and the Tax year 2025 or 2026, and enter any Pre-tax contributions such as a traditional 401(k) or HSA.",
+    "Pick Standard deduction — adding People aged 65 or older — or Itemized deduction with your Schedule A total; the bracket table recalculates as you type.",
+    "Read your top marginal bracket, Taxable income, Federal income tax, Effective rate on total income and Room left in this bracket, then press Copy result for the bracket-by-bracket breakdown.",
+  ],
   intro:
     "A tax bracket calculator slices your taxable income across the seven US federal rates — 10%, 12%, 22%, 24%, 32%, 35% and 37% — and shows how many dollars each bracket actually taxes. It is for anyone who wants to know their marginal bracket before a raise, a bonus or a Roth conversion, and who has been told a bracket applies to their whole salary. The schedules used are the IRS inflation-adjusted brackets from Rev. Proc. 2024-40 for tax year 2025 and Rev. Proc. 2025-32 for 2026, with the standard deduction as amended by P.L. 119-21.",
   useCases: [

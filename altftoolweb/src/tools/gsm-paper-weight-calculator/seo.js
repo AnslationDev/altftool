@@ -1,4 +1,12 @@
 const seo = {
+  title: "GSM Paper Weight Calculator: Sheet, Ream and Parcel",
+  metaDescription:
+    "Sheet size x GSM gives exact weight: A4 at 80 GSM is 4.99 g and a 500-sheet ream 2.49 kg. Also stack height and lb Bond, Text, Cover to GSM.",
+  steps: [
+    "Tap a sheet chip such as A4 or Letter, or type 'Sheet width', 'Sheet height' and 'Size unit' (Millimetres, Centimetres or Inches).",
+    "Set 'Paper weight (GSM)', 'Number of sheets', 'Paper type (sets caliper)' and 'Packaging weight (g)' for the run you are pricing.",
+    "Read 'Weight of one sheet', 'Weight of a 500-sheet ream', 'Stack height of the run' and 'Courier billable weight', then press 'Copy result'.",
+  ],
   intro:
     "GSM stands for grams per square metre, so the weight of any sheet is exactly its area in square metres multiplied by its GSM — an A4 sheet is 0.0624 sq m, which at 80 GSM comes to 4.99 g. This calculator applies that definition to give sheet weight, 500-sheet ream weight, the paper weight of a full print run, caliper and stack height, and the parcel weight a courier will bill including volumetric weight. It also converts US pound basis weights (Bond, Text, Cover, Index, Bristol and Tag) to GSM using each grade's own basis sheet size.",
   useCases: [

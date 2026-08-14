@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Receipt Generator: PAN, Revenue Stamp, 194-IB",
+  metaDescription:
+    "Builds monthly HRA rent receipts with the amount in words, and flags the Re 1 stamp above ₹5,000 cash, landlord PAN above ₹1 lakh and 194-IB TDS.",
+  steps: [
+    "Fill Monthly rent (INR), First month of rent, Number of receipts (1 to 60) and How the rent was paid — Cash, or Bank transfer, UPI or cheque — plus the tenant, landlord, PAN, prefix and address fields.",
+    "Tick \"I am an individual or HUF not subject to a tax audit\" to apply section 194-IB, and read the rows for Landlord PAN needed, Revenue stamp on each receipt and Section 194-IB TDS.",
+    "Each receipt appears under Your receipts with the amount in figures and words, the rent period, a dashed \"Affix Re 1 revenue stamp\" box where cash rent needs one and a Landlord signature line; Print outputs them without the controls and Copy result copies them as text.",
+  ],
   intro:
     "This generator builds a month-by-month set of Indian rent receipts, each with the rent period, the amount in words using the lakh and crore system, and a signature block, then applies the three rules that decide whether a receipt will actually hold up: the landlord PAN requirement above Rs 1,00,000 of annual rent under CBDT Circular 8/2013, the Re 1 revenue stamp on cash receipts above Rs 5,000 under Article 53 of the Indian Stamp Act, and section 194-IB TDS once monthly rent exceeds Rs 50,000. It is meant for salaried tenants assembling HRA proof and for landlords issuing receipts.",
   useCases: [

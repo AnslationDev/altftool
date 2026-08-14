@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tournament Bracket Generator with Seeded Byes",
+  metaDescription:
+    "Paste entrants in seed order for a full single-elimination draw: field padded to the next power of two, byes opposite the top seeds, every round labelled.",
+  steps: [
+    "Type your entrants one per line into Entrants in seed order, strongest seed first.",
+    "Choose Single elimination or Double elimination outline; the field is padded to the next power of two and byes land opposite the top seeds.",
+    "Read the Round, Match, Side A, Side B and Advances table, where later matches read as Winner R1M3, then use Download to save tournament-bracket-builder.txt.",
+  ],
   intro:
     "The Tournament Bracket Builder turns a seed-ordered list of entrants into a full elimination draw: it rounds the field up to the next power of two, fills the gap with byes, and pairs seeds using the standard highest-versus-lowest rule so seed 1 meets the bottom seed, seed 2 meets the next lowest, and so on. You get every round and match laid out in a table, with byes already advanced and later matches labelled by the winner they feed from. It is for anyone running a knockout — a club ladder, an office table-tennis day, a school quiz — who needs a defensible draw in seconds.",
   useCases: [

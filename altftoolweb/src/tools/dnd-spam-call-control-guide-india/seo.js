@@ -1,4 +1,12 @@
 const seo = {
+  title: "DND India: Build Your 1909 Command, Check the Caller",
+  metaDescription:
+    "Pick from the 7 TRAI categories to build the exact SMS for 1909, read a 140-series number, and check the 3-day complaint window.",
+  steps: [
+    "Under 'What do you want to do?' choose 'Block everything (fully blocked)', 'Block only the categories I choose', or 'Remove my preference entirely'.",
+    "For a partial preference tick categories 1-7, from banking and insurance through to tourism and leisure, and enter the 'Number the call or message came from' with 'Date it arrived'.",
+    "Read the command shown under 'Send this to 1909' plus 'Days left to complain', then press 'Copy result'.",
+  ],
   intro:
     "This guide turns the TRAI Telecom Commercial Communications Customer Preference Regulations, 2018 into three things you can act on: the exact command to send to 1909 for a full or category-wise Do Not Disturb preference, a reading of what number series a nuisance call came from, and a check on whether you are still inside the three-day window for complaining about an unsolicited communication. The seven preference categories run from banking and insurance through to tourism and leisure, and a registered preference must take effect within seven days.",
   useCases: [

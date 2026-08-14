@@ -1,4 +1,12 @@
 const seo = {
+  title: "Electricity Meter Update Scam: SMS Red-Flag Checker",
+  metaDescription:
+    "Scores the disconnection SMS on 12 red flags and tests its deadline against the 15 clear days' notice Section 56(1) of the Electricity Act requires.",
+  steps: [
+    "Tick what the message asks for from the twelve weighted red flags, four of which are marked decisive on their own.",
+    "Enter the date the notice reached you and the date supply is said to be cut, and tick whether it arrived in writing.",
+    "Read the red-flag score, the clear days of notice against the 15 that Section 56(1) requires, and what the UPI PIN really authorises.",
+  ],
   intro:
     "The electricity meter update scam is a smishing script in which an SMS warns that supply will be cut the same evening over an unpaid bill, and the follow-up call ends with a remote-access app install or a UPI collect request. This explainer walks the seven stages, scores the message on a weighted twelve-point checklist, and tests the claimed deadline against Section 56(1) of the Electricity Act, 2003, which permits disconnection for non-payment only after not less than fifteen clear days' notice in writing.",
   useCases: [

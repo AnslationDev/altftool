@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inflation Calculator: Future Cost & Real Return",
+  metaDescription:
+    "Compound a rupee amount at 6-12% with FV = P x (1 + r)^n, reverse it for purchasing power, and the pre-tax return needed to beat inflation at your slab.",
+  steps: [
+    "Pick a mode — Future cost, Purchasing power or Required return — then enter Today's cost (₹) and Years ahead, or in Required return mode your income-tax slab and current FD rate.",
+    "Set the Inflation rate (% per year), or tap a preset: India CPI ~6%, Lifestyle 8%, Education 10% or Healthcare 12%.",
+    "Read the headline figure with the Year / Projected cost / Rise vs today table, then use Copy summary or Download to save inflation-impact-summary.txt.",
+  ],
   intro:
     "Inflation Purchasing Power Calculator compounds a rupee amount forward at your chosen inflation rate using FV = P x (1 + r)^n, and runs the same formula in reverse to show what today's cash will actually buy after n years. It also answers the return question: the pre-tax return you need to stay level is your inflation rate divided by (1 minus your tax rate), and it applies the Fisher relation to tell you whether a fixed deposit is really gaining ground once tax and inflation are both taken out. Rate presets cover India CPI at 6%, lifestyle at 8%, education at 10% and healthcare at 12%.",
   useCases: [

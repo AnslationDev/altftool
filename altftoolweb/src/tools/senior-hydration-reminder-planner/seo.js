@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Hydration Planner: ESPEN Target, Timed Drinks",
+  metaDescription:
+    "Set an older adult's target from the ESPEN 1.6/2.0 L minimum or 30 ml per kg, then split it into 80-300 ml prompts that stop two hours before bed.",
+  steps: [
+    "Choose How to set the target — ESPEN / EFSA minimum for older adults or Body weight (30 ml per kg per day) — and enter the wake-up time and bedtime.",
+    "Set Conditions today for a warm spell or heatwave, pick a comfortable serving size between 80 and 300 ml, and add any prescribed daily fluid limit.",
+    "Read the ml target and the Prompt times table of time, amount and meal anchor, then press Copy schedule.",
+  ],
   intro:
     "This planner turns an older adult's daily drink target into a timed list of small prompted servings, because thirst and the kidney's ability to concentrate urine both decline with age and an older person can be dehydrated before feeling thirsty. It uses the ESPEN 2019 geriatric guideline, which adopts the EFSA Adequate Intake for water from beverages — 1.6 litres a day for women and 2.0 litres for men — or the clinical alternative of 30 ml per kg of body weight with a 1.5 litre floor. It is written for family carers, care-home staff and older adults building a drinking routine they can actually keep.",
   useCases: [

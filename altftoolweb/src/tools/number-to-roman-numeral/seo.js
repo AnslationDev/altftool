@@ -1,4 +1,12 @@
 const seo = {
+  title: "Number to Roman Numeral Converter (1 to 3999)",
+  metaDescription:
+    "Convert 1–3999 into standard Roman numerals: 2024 gives MMXXIV, with the symbol composition, character length and thousands/hundreds/tens/ones split.",
+  steps: [
+    "Type a whole number into the \"Number (1–3999)\" field — it starts on 2024, and anything outside the range returns \"Enter a whole number between 1 and 3999.\"",
+    "There is no calculate button: the Result panel rewrites itself as you type, showing the numeral in large type above a caption naming the decimal you entered.",
+    "Read the \"Roman Numeral\", \"Length\" and \"Composition\" rows — 2024 composes as M + M + X + X + IV — alongside the Thousands, Hundreds, Tens and Ones split, then press \"Copy\".",
+  ],
   intro:
     "This converter turns any whole number from 1 to 3999 into standard Roman numerals using the greedy subtractive method — repeatedly taking the largest available value from M, CM, D, CD, C, XC, L, XL, X, IX, V, IV and I until nothing is left. Alongside the answer it shows the composition symbol by symbol, the character length, and the number split into thousands, hundreds, tens and ones, so you can see how each place value became its own group of letters. It is the form used on clock faces, book prefaces, film copyright lines and monument inscriptions.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Subject Line Preview: Gmail, Outlook, Apple Mail",
+  metaDescription:
+    "See where your subject and preview text cut off at 38, 46, 54 and 68 characters, and score the line out of 100 as you type.",
+  steps: [
+    "In the Subject Builder, type into Subject line (counter reads 'ideal: 30-55') and Preview text (reads 'ideal: 40-95'), and set Sender name and Recipient inbox.",
+    "Watch the four inbox previews cut the subject at Gmail Mobile 38, Apple Mail 46, Outlook 54 and Gmail Desktop 68 characters, with preview text capped between 72 and 96.",
+    "Read the score out of 100 with the Readiness, Mobile Fit, Preheader and Risk Level tiles, then take an A/B option from Variant Lab using its 'Use variant' or 'Copy variant' button.",
+  ],
   intro:
     "The Email Subject Line Previewer shows exactly where your subject line and preview text get cut off in four inboxes — Gmail Mobile at 38 characters, Apple Mail at 46, Outlook at 54 and Gmail Desktop at 68 — and scores the line out of 100 as you type. It is built for anyone about to press send on a campaign who wants to know whether the important half of the sentence survives truncation. The score starts at 100 and moves on measurable traits: length, word count, missing preview text, spam-trigger words, numbers, questions, personalisation tokens and emoji.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Live Caption Overlay: 18-54px Captions from Your Mic",
+  metaDescription:
+    "Turns mic speech into large captions via the browser's own Web Speech Recognition API — English (India, US, UK) or Hindi, 18-54px, nothing saved.",
+  steps: [
+    "Choose a Recognition language — English (India), Hindi (India), English (US) or English (UK) — and set the \"Caption size\" slider anywhere from 18px to 54px in 2px steps; the language selector locks once recognition is running.",
+    "Press \"Start captions\" and grant the browser's microphone permission; recognition runs continuously with interim results, so words appear before the sentence is finished.",
+    "Captions fill the high-contrast panel, which is an aria-live polite region so screen readers announce new text; \"Stop captions\" ends the session and Clear wipes the transcript, which is never saved or exported.",
+  ],
   intro:
     "Live Caption Overlay turns speech picked up by your microphone into large on-screen captions using the browser's own Web Speech Recognition API, in continuous mode with interim results so words appear while the sentence is still being spoken. Caption text sizes from 18px to 54px on a high-contrast panel, and you can set the recognition language to English (India, US or UK) or Hindi before starting. It is a quick accessibility aid for a room or a call — not a transcription service, and it works only in browsers that expose the speech-recognition API, which today mainly means Chromium-based ones.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Programming Terms Dictionary — 53 Plain Definitions",
+  metaDescription:
+    "53 core programming terms — closure, Big O, CRUD, polymorphism, webpack — one plain sentence each, 12 category filters, search matches definitions.",
+  steps: [
+    "Type into the 'Search terms or definitions...' box — it matches the term name and the definition text, so typing index surfaces Array — or leave it empty to browse all 53 entries.",
+    "Narrow with the category chips: All, AI, CS Basics, Data, Data Structures, DevOps, General, JavaScript, Methodology, OOP, Tools, UI and Web. The 'terms found' counter under the chips updates as you filter.",
+    "Click a term row to expand its one-sentence definition, with the category tag shown beside the name. When nothing matches, the list is replaced by 'No terms found matching your search.'",
+  ],
   intro:
     "This is a searchable glossary of 53 core programming terms — from Abstraction and Big O Notation through Closure, CRUD, Polymorphism and Webpack — each with a one-sentence plain-English definition and a category tag. Search matches the term name and the definition text, so you can find an entry by what it does even when you cannot remember what it is called, and the twelve category filters (CS Basics, OOP, Web, JavaScript, Data Structures, DevOps, UI, Data, Tools, AI, Methodology, General) narrow the list to one area at a time. It is aimed at people early in learning to code, or coming into a dev team from another discipline.",
   useCases: [

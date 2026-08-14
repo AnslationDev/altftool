@@ -1,4 +1,12 @@
 const seo = {
+  title: "Per Diem Calculator: Part Days, Nights and Meals Off",
+  metaDescription:
+    "Totals a trip the way a travel policy reads it: full days at the city rate, first and last at 75%, lodging per night, provided meals deducted.",
+  steps: [
+    "Enter the 'Departure date' and 'Return date', then pick a 'City tier' — Metro, Tier 1, Tier 2, Tier 3 or Custom rates — which fills 'Meals & incidentals per day (₹)' and 'Lodging per night (₹)'.",
+    "Adjust 'First and last day rate (%)' from its 75 default, count the 'Breakfasts provided', 'Lunches provided' and 'Dinners provided' at their 20/30/50 percent shares, and enter any 'Advance already paid (₹)'.",
+    "Read the 'Total allowance' with days and nights split apart, the Full days, Part days, Lodging and 'Provided meals deducted' tiles, and the line stating what is payable to or recoverable from the traveller; 'Copy result' saves the claim.",
+  ],
   intro:
     "A per diem is the flat daily amount an employer pays to cover meals, incidentals and lodging while an employee is away on work, and this calculator totals a trip the way a travel policy actually reads it: full days at the city-tier rate, the departure and return days at a reduced rate (75% is the US GSA convention and the most common corporate default), lodging counted per night rather than per day, and any meal already provided deducted at its share of the daily rate. It then settles the total against any advance already paid.",
   useCases: [

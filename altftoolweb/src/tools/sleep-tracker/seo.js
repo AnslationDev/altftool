@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Tracker: Sleep Score, Efficiency and Sleep Debt",
+  metaDescription:
+    "Log bedtime, wake time and awakenings for a score out of 100: 50 for duration, 30 for efficiency, 20 for continuity. Logs stay in your browser.",
+  steps: [
+    "On the Log Sleep tab, enter Bedtime, Wake-up Time, Time Taken to Fall Asleep (mins), Night Awakenings and Total Minutes Awake in Night.",
+    "Add Caffeine Intake (cups), Alcohol Drinks, Screen Time Before Bed (mins) and your Sleep Goal (hours), then press Save Sleep Log.",
+    "The Dashboard tab returns a Sleep Score out of 100 with sleep efficiency and sleep debt; logs are kept in your browser's local storage.",
+  ],
   intro:
     "The Sleep Tracking & Sleep Quality Analyzer turns a nightly log — bedtime, wake time, how long you took to fall asleep, minutes spent awake and how many times you woke — into a sleep score out of 100, built from 50 points for duration against your goal, 30 for sleep efficiency and 20 for going uninterrupted, minus 4 points per awakening. It also reports your sleep efficiency as a percentage, the debt against your nightly goal, and a 7-night duration trend. Logs stay in your browser, so you can build up a picture over weeks without handing your sleep data to anyone.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPSC Prelims & Mains Countdown with Study-Hour Budget",
+  metaDescription:
+    "A live countdown to UPSC Prelims or Mains, total study hours at your daily target, and the dates when 25/50/75/90% of prep time will be gone.",
+  steps: [
+    "Pick the 'Exam stage' - Civil Services Prelims or Mains - and edit the 'Exam date' to the notified date from upsc.gov.in (the preset uses the customary last Sunday of May).",
+    "Set 'Study hours per day' (0.5 to 18 in half-hour steps) to turn the days left into a total study-hour budget.",
+    "Watch the live Days/Hours/Minutes/Seconds clock, read hours per week and the 25/50/75/90% prep-time milestone dates, then press 'Copy result' for the summary.",
+  ],
   intro:
     "This countdown shows the live days, hours, minutes and seconds remaining to the UPSC Civil Services Prelims or Mains, then turns that time into a study budget: total study hours at your daily target, hours per week, and the dates by which 25%, 50%, 75% and 90% of your prep time will have elapsed. UPSC customarily holds Prelims on the last Sunday of May with Mains about three months later, and the date field stays editable so aspirants can enter the exact notified date from upsc.gov.in.",
   useCases: [

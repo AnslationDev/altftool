@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wong-Baker Faces Pain Scale: 0-10 Tracker & Log",
+  metaDescription:
+    "Record pain on the six Wong-Baker faces (0, 2, 4, 6, 8, 10), then log readings with times to see the average, highest, lowest and severity band.",
+  steps: [
+    "Pick one of the six faces under \"How much does it hurt right now?\" — they sit at 0, 2, 4, 6, 8 and 10, labelled \"No pain\" through \"Hurts as much as you can imagine\".",
+    "In the \"Save this reading\" card set the \"Date and time\" field, add an optional note of up to 80 characters, then press \"Add to log\".",
+    "Read \"Readings logged\", \"Average pain\", \"Highest\", \"Lowest\" and \"Readings at 6 or above\" in the summary, then press \"Copy result\" to put the current reading and the whole log on the clipboard.",
+  ],
   intro:
     "The Wong-Baker Pain Scale Tracker records pain on the six-face 0-10 scale that Donna Wong and Connie Baker introduced in 1988 for children old enough to point but too young to reason about a number line, and adds a dated log so single readings become a trend. Each reading is mapped to the standard numeric rating scale bands — 0 none, 1-3 mild, 4-6 moderate, 7-10 severe — and the summary reports the average, the highest and lowest readings and how many sat at 6 or above. The person in pain chooses the face; the log is only a record of what they report.",
   useCases: [

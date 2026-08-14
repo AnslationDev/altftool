@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gaming Chair Setup Calculator: Seat, Armrest, Lumbar",
+  metaDescription:
+    "Turn your height into seat height, seat depth, armrest and lumbar positions in cm, plus recline ranges and breaks rounded up to whole matches.",
+  steps: [
+    "Enter \"Your height (cm)\" and \"Desk height, floor to surface (cm)\".",
+    "Set \"Session length (hours)\", \"Typical match or round (minutes)\" and \"How you play\" — Competitive / fast aim, or Casual / single player.",
+    "Read Seat height, Usable seat depth, Armrest top above the floor, Lumbar pillow centre above the seat and both recline ranges, plus the Session blocks table.",
+  ],
   intro:
     "This planner converts your body height into the four settings a gaming chair actually has — seat height, usable seat depth, armrest height and lumbar support position — plus the recline range and monitor height that suit how you play. Seat and elbow figures come from 50th-percentile adult proportions (popliteal height, buttock-to-popliteal length and sitting elbow height), and the monitor target follows the ANSI/HFES 100 rule of putting the top of the screen at or slightly below eye height. The break schedule rounds the 60-minute stand-up target up to a whole number of matches, so a break never falls in the middle of a live round.",
   useCases: [

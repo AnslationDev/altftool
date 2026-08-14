@@ -1,4 +1,12 @@
 const seo = {
+  title: "Desert Safari Packing List: Water Litres & Night Low",
+  metaDescription:
+    "Sizes water at ~0.75 L per hour of heat plus a 1.5 L baseline, works out the night low from the diurnal swing, and lists the layers and kit to match.",
+  steps: [
+    "Enter 'Trip length (days)', Travellers, 'Daytime high (°C)', 'Day-to-night drop (°C)', 'Hours outdoors per day' and 'Nights camping in the desert', then tick 'Dune bashing by 4x4' or 'Walking on dunes'.",
+    "Read the 'Water to carry' litres headline with the per-person-per-day figure and its weight in kg, plus the 'Night low after sunset', 'Layers needed' advice and the sleeping bag comfort rating.",
+    "Tick items off the grouped packing checklist as you pack, then press 'Copy list' for a text version or Reset to clear the ticks.",
+  ],
   intro:
     "This builder turns a desert trip into three numbers that matter — litres of water, the night-time low, and the sleeping bag rating that low demands — and then lists the kit around them. Water is sized from hours of exposure at roughly 0.75 litres an hour on top of a 1.5 litre baseline, capped at a safety ceiling, and weighed at 1 kg per litre. Layers are chosen from the night minimum, calculated as the daytime high minus the clear-sky diurnal swing, which in deserts commonly runs 15-25 °C.",
   useCases: [

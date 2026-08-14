@@ -1,4 +1,7 @@
 const seo = {
+  title: "Conventional Commit Builder: type(scope): subject",
+  metaDescription:
+    "Assemble a type(scope): subject commit message from four fields — ten types including feat, fix and perf, with the blank line before the body added.",
   intro:
     "Conventional Commit Builder assembles a commit message in the Conventional Commits format — `type(scope): subject`, followed by a blank line and an optional body — from four separate fields so the punctuation and spacing are correct every time. It offers the ten standard types (feat, fix, docs, style, refactor, perf, test, build, ci and chore) and drops the parentheses automatically when you leave the scope empty. It is for developers on a repo where commitlint, semantic-release or a changelog generator expects that exact shape.",
   useCases: [

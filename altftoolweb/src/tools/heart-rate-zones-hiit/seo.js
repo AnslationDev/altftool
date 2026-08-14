@@ -1,4 +1,12 @@
 const seo = {
+  title: "HIIT Heart Rate Zones for 4x4, Tabata and 30/30",
+  metaDescription:
+    "Work and recovery bpm for 4 x 4 at 90-95% of max, Tabata 20/10, Billat 30/30 and sprint intervals, plus time at intensity and session length.",
+  steps: [
+    "Enter Age (years) and Resting heart rate (bpm), or fill Measured max heart rate (bpm) to override the Tanaka, Fox or Gulati formula.",
+    "Pick an Interval format — 4 × 4 minutes (Norwegian), Tabata 20/10 × 8, 30/30 (Billat) or Sprint intervals 30 s / 4 min — and set Warm-up (min) and Cool-down (min).",
+    "Read the Work interval target in bpm, the recovery band, Time at intensity and Whole session, then press Copy result.",
+  ],
   intro:
     "Interval training is defined by two heart rate numbers — how hard the work interval is and how far your heart rate is allowed to fall before the next one — and this calculator produces both from your age or a measured maximum heart rate. It carries the published formats sessions are copied from: 4 × 4 minutes at 90–95% of maximum with 3 minutes of active recovery, Tabata's 20 seconds on and 10 seconds off for 8 rounds, Billat's 30/30, and 30-second sprint intervals with 4-minute recoveries. It also totals the block, the time actually spent at intensity, and the whole session including warm-up and cool-down.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in the USA: State Speed Limits and BAC Rules",
+  metaDescription:
+    "Pick your state for the speed maximum in mph and km/h, the blood-alcohol limit that applies to you (0.08%, Utah 0.05%) and whether you need an IDP.",
+  steps: [
+    "Choose the State you are driving in, then set Your age (years), Length of stay (days) and Where your licence was issued.",
+    "Tick \"Towing a trailer or RV\" or \"Driving a commercial vehicle\" — the commercial box applies the federal 0.04% limit from 49 CFR 383.51 instead of 0.08%.",
+    "Read your legal blood-alcohol limit, the mph/km-h speed-limit table for that state and the International Driving Permit row, then press Copy result.",
+  ],
   intro:
     "This explainer sets out what a visitor needs to know before driving in the United States: you drive on the right in a left-hand-drive car, every sign is in miles per hour, and traffic law is set state by state rather than nationally. It applies the rules that are uniform — the 0.08 % per se blood-alcohol limit adopted by 49 states, Utah's stricter 0.05 %, the federal 0.04 % for commercial drivers and zero tolerance under 21 — alongside the state maximum speed limit, converted to km/h so European and Asian drivers can read it.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "HTML Email Checker: Gmail and Outlook Compatibility",
+  metaDescription:
+    "Audit email HTML against Gmail's ~102KB clipping limit, Outlook CSS gaps, alt text and inline CSS coverage. Six weighted categories, graded A+ to D.",
   intro:
     "This checker parses your email HTML and runs a fixed set of rules against the actual markup — DOCTYPE and table structure, inline CSS coverage, alt text and lang attributes, HTTPS images and links, message size against Gmail's clipping limit, and CSS features that Outlook, Gmail, Apple Mail or Yahoo silently drop — then scores six weighted categories into one grade from A+ to D. Every issue comes with why it matters, how to fix it and an example snippet, alongside a live preview and a 15-point pre-send checklist. Email developers and marketers get a deterministic audit: the same HTML always produces the same result, with no sending or account required.",
   useCases: [

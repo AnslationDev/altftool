@@ -1,4 +1,7 @@
 const seo = {
+  title: "Which Movie Genre Is Your Life? 10-Question Quiz",
+  metaDescription:
+    "Answer 10 questions about your weekends and conflicts. Points split across Action, Comedy, Drama, Sci-Fi, Romance and Thriller; you get 3 films.",
   intro:
     "Which Movie Genre Matches Your Life? is a 10-question quiz that scores your answers across six genres — Action, Comedy, Drama, Sci-Fi, Romance and Thriller — and names the highest scorer as the genre your life would be filmed in. Questions cover how you spend a weekend, how you handle conflict and what you want from a story, with each answer adding weighted points to a main genre and one or two related genres. The result gives a summary, a one-line vibe, four traits, three example films for that genre and a matching quote.",
   useCases: [

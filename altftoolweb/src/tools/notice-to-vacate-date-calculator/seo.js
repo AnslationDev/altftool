@@ -1,4 +1,12 @@
 const seo = {
+  title: "Notice to Vacate Date Calculator: TPA s.106 in India",
+  metaDescription:
+    "Counts the notice period from receipt, not posting, under TPA s.106(2) — adds deemed postal days and checks the 15-day or 6-month statutory floor.",
+  steps: [
+    "Enter 'Date the notice was sent or handed over' and choose 'How it was served' — registered post with acknowledgement due and speed post each add 3 days to reach deemed receipt, a private courier adds 2, and hand delivery, email with a delivery receipt or affixation add none. Pick 'Known receipt date (enter it below)' if you hold the acknowledgement.",
+    "Set 'Notice length' and 'Counted in' (Days or Calendar months), or tap a preset such as '15 days (TPA s.106 default)' or '6 months (TPA s.106 farming/manufacturing)'. Choose 'What the premises are used for', and tick the rent-month box if the agreement makes the notice expire at the end of a rent month.",
+    "The 'Vacate by end of' date appears with the possession date and total notice days from receipt, a row-by-row trail from dispatch through to 'Days still to run', and a 'Statutory minimum check' saying whether you clear the 15-day or six-month floor and by how many days you fall short. 'Copy result' takes the date summary.",
+  ],
   intro:
     "The Notice to Vacate Date Calculator converts a notice dispatch date, a mode of service and a notice length into the exact date a tenant must hand over and the date possession falls due. It follows section 106(2) of the Transfer of Property Act, 1882, under which the notice period commences from the date the notice is received, and section 9 of the General Clauses Act, 1897, under which the day of receipt itself is excluded. It also flags whether the notice clears the fifteen-day (or six-month) statutory floor in section 106(1).",
   useCases: [

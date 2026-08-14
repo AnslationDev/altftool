@@ -1,4 +1,12 @@
 const seo = {
+  title: "LLM Terms Dictionary: Definition Briefs by Audience",
+  metaDescription:
+    "List the LLM terms your team keeps hitting — temperature, top-p, RAG, embeddings — pick an audience and depth, and copy a definition brief.",
+  steps: [
+    "Enter the terms one per line in the \"LLM terms\" box — temperature, context window, RAG and embeddings are prefilled.",
+    "Set \"Audience\" to who is reading, then pick a \"Depth\": Plain beginner, Practical operator or Technical concise.",
+    "Read the \"Dictionary brief\" panel — one bullet per term covering the one-sentence definition, why it matters and a \"when to change it\" example — then press \"Copy output\".",
+  ],
   intro:
     "LLM Terms Dictionary is an A–Z reference of 52 large-language-model terms — token, context window, temperature, top-p, RAG, LoRA, quantisation, hallucination and the rest — where each entry gives a standalone definition, a concrete example, and a practical tip with a typical value where one exists. Entries are tagged by kind (core concept, sampling setting, technique, training method, serving, failure mode, metric) and are searchable by headword or by the API parameter name you actually see in the docs, so looking up \"top_p\" or \"BPE\" finds the right page. It also includes a context-budget check that estimates prompt size at roughly one token per four characters and tells you whether prompt plus reserved answer fits your model's window.",
   useCases: [

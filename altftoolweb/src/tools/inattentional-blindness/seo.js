@@ -1,4 +1,12 @@
 const seo = {
+  title: "Invisible Gorilla Test: Count Passes, Spot the Gorilla",
+  metaDescription:
+    "The Simons and Chabris selective-attention task: count only the white team's passes across 45, 30 or 20 seconds, then say what you saw.",
+  steps: [
+    "Pick Easy, Normal or Hard — a 45, 30 or 20 second run, with a pass every 2, 1.5 or 1 second.",
+    "Press Start the Experiment, then I'm Ready — Start!, and count only the WHITE team's passes in your head with no writing.",
+    "Answer How many passes did WHITE team make? and Did you see anything unusual?, then hit See Results & Share to compare your count with the real total.",
+  ],
   intro:
     "The Inattentional Blindness Test recreates the selective-attention task from Simons and Chabris's 1999 \"invisible gorilla\" study: six animated players, three in white and three in black, pass two balls around while you silently count only the white team's passes. Partway through, a gorilla walks across the screen, and afterwards you are asked both for your pass count and whether you saw anything unusual. About half the observers in the original experiment missed the gorilla entirely, which is the point of the demonstration rather than a trick.",
   useCases: [

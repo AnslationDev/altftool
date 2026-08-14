@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wedding Budget Planner India: Per-Plate Rate & Shares",
+  metaDescription:
+    "Split a budget across venue, catering, jewellery and travel, hold back a contingency, and get the per-plate rate your catering share supports.",
+  steps: [
+    "Enter Total wedding budget (₹), Contingency held back (%), Number of guests and Per-plate rate quoted (₹).",
+    "Choose the Tax and service charge on catering, edit each head's Share % and Quoted (₹), and press \"Rebalance to 100%\" if the shares stop adding up.",
+    "Read \"Per-plate rate you can afford\", Contingency held back, Committed by quotes and Left to commit, then press Copy budget.",
+  ],
   intro:
     "This planner divides a wedding budget into spending heads, holds back a contingency before anything is allocated, and tracks each vendor quote against its allocation. Catering is the one head it computes rather than allocates: guests multiplied by the per-plate rate plus tax, inverted to give the per-plate ceiling your catering allocation can actually support. The default shares are a conventional planning split that you are meant to edit, and the tool enforces that they add to 100% so no rupee is lost or double-counted.",
   useCases: [

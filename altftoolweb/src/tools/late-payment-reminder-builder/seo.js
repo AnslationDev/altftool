@@ -1,4 +1,12 @@
 const seo = {
+  title: "Late Payment Reminder Letter Builder - 5 Chase Levels",
+  metaDescription:
+    "Draft an overdue-invoice chase letter at the right rung — courtesy to final notice — with UK 1998 Act, EU Directive 2011/7 or MSMED Act 2006 wording.",
+  steps: [
+    "Fill in Invoice number, Outstanding amount, Currency, Invoice date, Due date and \"Date you are sending this\", then Client company, Contact person, Your name and Your company.",
+    "Leave Escalation level on \"Auto — match the days overdue\" or pick Courtesy reminder, First reminder (0-6 days late), Second reminder (7-29 days late), Firm demand (30-59 days late) or Final notice (60+ days late); choose a Statutory reference — United Kingdom (B2B), European Union (B2B), India — registered MSME supplier, or the contract clause — and tick \"Quote accrued interest in the letter\".",
+    "Invoice age shows the days overdue and the level chosen, with rows for Interest accrued, Amount plus interest and the Payment deadline set in the letter; the Subject line and Letter sections hold the draft, and Copy letter copies both.",
+  ],
   intro:
     "This builder writes the chase letter for an unpaid invoice at the right point on the collections escalation ladder — courtesy reminder, first chase, second chase, firm demand, final notice — choosing the rung from the whole days between the due date and the day you send it. It fills in the invoice reference, the amount, a dated payment deadline and, if you want it, simple interest on the overdue balance at actual/365. Optional paragraphs cite the actual statutory footing: the UK Late Payment of Commercial Debts (Interest) Act 1998, EU Directive 2011/7/EU, or the MSMED Act 2006 for registered Indian MSME suppliers.",
   useCases: [

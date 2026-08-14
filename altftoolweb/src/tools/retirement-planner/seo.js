@@ -1,4 +1,12 @@
 const seo = {
+  title: "Retirement Planner: Corpus & Safe Withdrawal by Age",
+  metaDescription:
+    "Compound a monthly investment to your retirement age, then convert the corpus into an inflation-adjusted withdrawal with a year-by-year table.",
+  steps: [
+    "Enter Your Current Age, Retirement Age and Life Expectancy in years, then Monthly Investment in rupees.",
+    "Set Expected Return (% p.a.) and Inflation Rate (% p.a.) — 10 and 6 by default — and press Calculate.",
+    "The result panel shows Retirement Corpus Needed with Safe Monthly Withdrawal (Infl. Adj.) beneath it; open Year-by-Year Breakdown for the Year, Invested, Interest and Balance columns.",
+  ],
   intro:
     "The Retirement Planner takes the amount you invest every month and compounds it forward to your retirement age at your expected return, then converts the resulting corpus into a sustainable withdrawal figure using the real return — (1 + return) ÷ (1 + inflation) − 1 — spread across the years between retirement and life expectancy. It answers the contribution-first question: given what I can actually save each month, how big does the pot get and how much can it pay out? Alongside the headline numbers you get a year-by-year table separating what you put in from what growth added.",
   useCases: [

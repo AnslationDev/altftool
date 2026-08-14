@@ -1,4 +1,12 @@
 const seo = {
+  title: "Color Name Finder: Nearest CSS Name by CIEDE2000",
+  metaDescription:
+    "Enter a hex value for the closest CSS colour keywords ranked by CIEDE2000 in Lab, a plain-English description, and contrast against black and white.",
+  steps: [
+    "Type a hex value such as #14B8A6 into the 'Hex colour' box.",
+    "Set Matches (1 to 20) to choose how many CSS colour keywords are ranked by CIEDE2000 distance in Lab space.",
+    "Read the Best description and Basic term above the swatch, the RGB values and the white and black contrast ratios, then each match with its hex and its ΔE; press Copy result.",
+  ],
   intro:
     "Colour Name Finder identifies the closest human-readable name for any hex value by converting it to CIE L*a*b* and ranking every CSS colour keyword with the CIEDE2000 difference formula. Because CIEDE2000 weights lightness, chroma and hue the way the eye does, the top match is the one a person would actually call the colour — not just the one with the smallest RGB gap. It also returns a plain-English description such as 'deep vivid teal', the nearest basic colour term, and the WCAG contrast ratio against black and white.",
   useCases: [

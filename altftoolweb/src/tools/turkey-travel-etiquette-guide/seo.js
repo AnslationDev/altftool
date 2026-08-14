@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turkey Etiquette Guide: Mosques, Bazaars, Hammams",
+  metaDescription:
+    "Tick the places on your itinerary for a briefing ranked by consequence, with Law No. 5816, military photos and antiquities shown whatever you pick.",
+  steps: [
+    "Under Where will you actually be? tick Mosques and religious sites, Bazaars and shopping, Tea houses and cafés, Hammams and spas or any of the nine places listed.",
+    "Pick What kind of trip — First time in Turkey, Shopping and bazaars, Business trip and the rest — and set How many rules to show, from 3 to 60.",
+    "Work down Fix these first and The briefing, ticking rules you already know so Etiquette readiness updates, then press Copy briefing.",
+  ],
   intro:
     "This guide turns Turkish etiquette into a ranked briefing for the places on your itinerary, from mosques and bazaars to tea houses and hammams. Tick where you will be and it returns the rules that apply, weighted by severity and by the kind of trip you are on, with a readiness score for the ones you already know. The country's genuine legal red lines — insulting the memory of Atatürk under Law No. 5816, photographing military installations, and removing antiquities — are shown whatever you tick, because the consequence there is a court rather than an awkward silence.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Link-in-Bio Page Builder with Live Phone Preview",
+  metaDescription:
+    "Lay out a link-in-bio profile with drag-to-reorder buttons, a QR share card and a 180-character bio; autosaves locally and exports as JSON.",
   intro:
     "The Bio Link Page Builder lays out a link-in-bio profile — photo, name, handle, tagline, contact line and a bio capped at 180 characters — and renders that profile card live in a phone-shaped preview, together with a share card and QR code. The buttons themselves are built in a separate drag-to-reorder list, each link validated against http, https, mailto and tel schemes and tagged with one of eleven platform icons, and the whole project autosaves locally and exports as JSON. It is for creators planning the layout and copy of a link page before committing to a hosting service.",
   useCases: [

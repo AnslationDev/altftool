@@ -1,4 +1,12 @@
 const seo = {
+  title: "DSAR Request Tracker: Deadlines & Overdue Day Counts",
+  metaDescription:
+    "Paste one DSAR per line as ID, received date, deadline days, status, owner — get each due date plus days left or days overdue at your review date.",
+  steps: [
+    "Paste your queue into the Requests box, one line per request as ID | received date | deadline days | status | owner.",
+    "Set the Review date the countdown is measured from, or load the 'Example queue' preset to see the expected format.",
+    "Read the ID, Received, Due, Status, Owner and Clock table, where every open row shows days left or days overdue.",
+  ],
   intro:
     "DSAR Request Tracker takes a plain list of data subject access requests — one per line as ID, date received, deadline in days, status and owner — and calculates each due date and how many days are left or overdue against a review date you set. Requests marked completed or closed stop the clock; everything else is counted as open and, if the due date has passed, flagged as overdue with the number of days. Privacy teams get a queue view with the countdown already done instead of a spreadsheet of dates they have to subtract by hand.",
   useCases: [

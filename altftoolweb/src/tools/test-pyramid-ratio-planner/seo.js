@@ -1,4 +1,12 @@
 const seo = {
+  title: "Test Pyramid Ratio Planner: Runtime, CI Cost, Flakes",
+  metaDescription:
+    "Split a suite across unit, integration and E2E to see wall-clock per run, billed CI minutes, monthly spend and the odds a run fails on flakes.",
+  steps: [
+    "Set Total tests in the suite and Parallel CI workers, or start from a shape preset such as Classic pyramid — 70 / 20 / 10 (Cohn).",
+    "Give the Unit, Integration and End-to-end rows a Share (%), Avg seconds / test and Flake rate (%), then set CI cost per billed minute (USD) and CI runs per day.",
+    "Wall-clock per CI run leads the result with the shape it diagnoses, over a Layer table of Tests, Serial runtime and Expected flakes / run; Copy plan copies the lot.",
+  ],
   intro:
     "This planner splits a test suite across unit, integration and end-to-end layers — the test pyramid popularised by Mike Cohn and Martin Fowler — and computes what each mix actually costs: serial and wall-clock runtime, billed CI minutes, monthly spend, and the probability a run fails on flaky tests alone (modelled as independent failures, 1 − Π(1 − p)^n). It is for tech leads and QA engineers deciding how many tests of each kind a suite should carry before the feedback loop or the CI bill gets out of hand.",
   useCases: [

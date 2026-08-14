@@ -1,4 +1,7 @@
 const seo = {
+  title: "Domain Name Ideas Generator — 6 Names per Keyword",
+  metaDescription:
+    "Turn one keyword into six brandable name ideas with suffixes like -ly, -ify, -hub and -labs — or leave it blank for coined names from 18 prefixes.",
   intro:
     "The Domain Name Ideas Generator turns a single keyword into six brandable name candidates by stripping it to letters and digits, capitalising it, and pairing it with startup-style suffixes such as -ly, -ify, -hub, -labs, -forge and -flow. Leave the keyword blank and it instead combines an evocative prefix like Nova, Cobalt or Zephyr with the same suffix set. It is for founders and side-project builders who are stuck staring at a blank registrar search box and want a batch of starting points.",
   useCases: [

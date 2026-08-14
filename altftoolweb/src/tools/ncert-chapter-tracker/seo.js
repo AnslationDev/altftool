@@ -1,4 +1,12 @@
 const seo = {
+  title: "NCERT Chapter Tracker: Read vs Revised Progress",
+  metaDescription:
+    "Mark each NCERT chapter Not started, Reading, Read once or Revised. Presets use rationalised counts (Class 10 Science 13) and stay editable.",
+  steps: [
+    "Choose a book under \"Add a preset NCERT book\", such as \"Class 10 Science (rationalised) - 13 ch\", and press \"Add preset\"; \"Custom book\" lets you name your own and set its Chapters count from 1 to 40.",
+    "Tap a chapter square to cycle its status through Not started, Reading, Read once and Revised.",
+    "\"Overall read\" weights each book by its chapter count and reports the % revised alongside; \"Copy summary\" copies the per-book breakdown, and progress stays in this browser's local storage until you press Reset.",
+  ],
   intro:
     "This tracker records the reading and revision status of every chapter in your NCERT textbooks — Not started, Reading, Read once or Revised — and computes weighted progress across all books. Preset chapter counts follow the rationalised NCERT editions in print since academic year 2023-24 (for example, 13 chapters in Class 10 Science and 10 in Class 12 Chemistry), and every count stays editable for older prints. It is built for board-exam students and UPSC/NEET/JEE aspirants who study several NCERTs in parallel and lose track of what has actually been revised.",
   useCases: [

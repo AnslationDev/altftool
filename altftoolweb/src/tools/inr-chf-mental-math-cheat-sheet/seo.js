@@ -1,4 +1,12 @@
 const seo = {
+  title: "CHF to INR Mental Math: Add Two Zeros, Then Nudge",
+  metaDescription:
+    "Turn today's rupees-per-franc rate into head arithmetic: a simple multiplier, an easy percentage nudge and the nearest fraction, each with its error.",
+  steps: [
+    "Type Today's rate (₹ per 1 CHF) and A price to check (CHF), or tap one of the Common prices chips to load a typical Swiss price.",
+    "The sheet works the exact size of the nudge out from that rate: \"The rule to memorise\" gives the steps to say in your head, and \"All three rules compared\" lists each shortcut with how far out it is.",
+    "The headline shows the exact rupee value against the figure you would reach mentally and the percentage error, followed by \"Price ladder to learn by heart\", \"What each note is worth\" and the reverse \"Rupees back into francs\" rule; Copy sheet copies the lot.",
+  ],
   intro:
     "This cheat sheet turns a rupees-per-franc exchange rate into arithmetic you can do on a Swiss platform without unlocking a phone. It splits the rate into a decimal shift — for the franc that is simply adding two zeros — and a working multiplier, then searches a whole-or-half multiplier, the same multiplier with an easy percentage nudge such as 5% or 10%, and the nearest simple fraction, reporting the fixed percentage error of each. It is aimed at Indian travellers, students and business visitors dealing with one of the most expensive currencies they will meet.",
   useCases: [

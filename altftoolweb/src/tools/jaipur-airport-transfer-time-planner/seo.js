@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jaipur Airport (JAI): What Time Should I Leave?",
+  metaDescription:
+    "Works back from your departure through the check-in close, gate close and 2h/3h arrival advice, with the drive simulated across Jaipur's peaks.",
+  steps: [
+    "Enter 'Scheduled departure (24-hour)' as printed on the ticket and choose domestic or international.",
+    "Pick 'Starting from' (each pickup zone shows its km to JAI), 'Getting there by', 'Road conditions' and your own buffer, then tick the checked-bag and web check-in boxes.",
+    "'Leave at' gives the departure time, alongside Binding cutoff, Drive time and 'Latest you could possibly leave', plus a minute-by-minute timeline.",
+  ],
   intro:
     "This planner works backwards from a flight's scheduled departure at Jaipur International Airport (JAI) to the minute you should leave home, allowing for how Jaipur traffic changes by hour of day. It applies three separate cutoffs — the check-in and bag-drop close, the boarding gate close, and the airline's 2-hour domestic or 3-hour international arrival advice — and then adds the terminal-side queue for entry, bag drop, security, emigration and the walk to the gate. The drive itself is simulated minute by minute across the city's morning and evening peaks rather than being taken as a flat average.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Top-up vs Super Top-up: Per-Claim vs Aggregate Deductible",
+  metaDescription:
+    "Run one policy year of claims through the same deductible measured per claim and on the year's aggregate, and see claim by claim who pays what.",
+  steps: [
+    "Enter the base sum insured, the top-up / super top-up sum insured and the single deductible on the upper layer, all in rupees.",
+    "List the year's hospitalisations as admissible amounts in Claim 1, Claim 2 and so on — Add claim goes up to 24, the bin button removes one — and the comparison recalculates as you type.",
+    "Read the difference in what the upper layer pays, the two structure cards for a per-claim and a policy-year-aggregate deductible, and the claim-by-claim table with Base pays, Top-up pays, Super top-up pays and both You pay columns; Copy result takes the whole waterfall.",
+  ],
   intro:
     "A top-up vs super top-up deductible simulator runs one policy year of hospital claims through the same rupee deductible measured two different ways, and shows claim by claim who pays what. The only structural difference between the products is the basis of measurement: a top-up applies the deductible to EACH claim separately, so a claim smaller than the deductible pays nothing no matter how many such claims occur, while a super top-up applies it to the AGGREGATE of all admissible claims in the policy year, so everything above the deductible line is payable once cumulative claims cross it. Both readings come from the same standard clause — IRDAI's standard definition of Deductible (Guidelines on Standardisation in Health Insurance, Ref. IRDA/HLT/REG/CIR/146/07/2016, 29 July 2016) says the insurer is not liable for a specified rupee amount before benefits are payable, and that the deductible does not reduce the sum insured; whether that amount is per claim or per year is stated on your policy schedule. It is for anyone holding a base policy plus an upper layer who wants to see, in rupees, what a year of mid-sized hospitalisations does under each basis.",
   useCases: [

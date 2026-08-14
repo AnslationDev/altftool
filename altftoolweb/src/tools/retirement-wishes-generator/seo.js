@@ -1,4 +1,12 @@
 const seo = {
+  title: "Retirement Wishes with FR 56(a) Date & Service Years",
+  metaDescription:
+    "Farewell messages in English, Hinglish, Hindi, Marathi, Bengali or Tamil with exact years of service and the FR 56(a) end-of-month superannuation date.",
+  steps: [
+    "Enter Who is retiring, Date of joining and Last working day, then pick They are your — Colleague, Manager or senior, Teacher or mentor, Parent — and the Language.",
+    "Choose a Tone (Heartfelt, Formal, Light-hearted or Poetic), set Messages to show, and add Date of birth plus a Superannuation age to reveal the \"Use FR 56(a) date\" button.",
+    "Read Completed years of service with the FR 56(a) superannuation date and Attains that age on rows, then Copy the lead message or press Shuffle for different wording.",
+  ],
   intro:
     "Retirement Wishes Generator writes farewell messages for a colleague, manager, teacher or parent and fills in the exact length of service from the date of joining and the last working day. It also derives the superannuation date from the date of birth using the Fundamental Rule 56(a) pattern: retirement falls on the last day of the month in which the person attains the retirement age, and on the last day of the preceding month if they were born on the first. Wording is available in English, Hinglish, Hindi, Marathi, Bengali and Tamil in heartfelt, formal, light-hearted or poetic tones.",
   useCases: [

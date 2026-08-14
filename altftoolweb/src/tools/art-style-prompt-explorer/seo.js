@@ -1,4 +1,12 @@
 const seo = {
+  title: "Art Style Prompt Explorer: 16 Movements, CLIP Budget",
+  metaDescription:
+    "Pick up to 3 of 16 art movements and get a prompt plus a negative prompt built from what each style structurally avoids, with a 75-token CLIP estimate.",
+  steps: [
+    "Describe the picture in the 'Subject' box — it opens with 'a lighthouse on a rocky headland at dawn'.",
+    "Tap up to three of the sixteen movement chips (Bauhaus, Ukiyo-e, Art Nouveau, Impressionism, Suprematism and the rest), then set 'Medium', 'Lighting', 'Composition', 'Colour treatment' and 'Detail density'.",
+    "Check the estimated token count against the 75-token CLIP window, then use 'Copy prompt', 'Copy negatives' — assembled from each movement's 'Never' list — or 'Copy trimmed' when the prompt runs over.",
+  ],
   intro:
     "The Art Style Prompt Explorer is a reference table of 16 art movements — their period, documented visual hallmarks, characteristic palette and the things they never do — wired to a prompt composer that turns your choices into an image-generation prompt plus a matching negative prompt. It flags movement pairs that pull against each other, caps blending at three, and estimates whether the result fits the 75 usable tokens in CLIP's text window. For anyone who keeps typing 'make it artistic' and getting the same beige render back.",
   useCases: [

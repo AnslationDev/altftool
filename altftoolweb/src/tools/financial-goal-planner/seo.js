@@ -1,4 +1,12 @@
 const seo = {
+  title: "Financial Goal Planner: Monthly Contribution Needed",
+  metaDescription:
+    "Enter goal amount, years, expected return and current savings in rupees; get the monthly contribution needed after existing savings are compounded in.",
+  steps: [
+    "Enter 'Goal Amount' (₹), 'Time Horizon (Years)', 'Expected Return (% p.a.)' and 'Current Savings for Goal'.",
+    "Click Calculate — the planner compounds your current savings to the goal date and funds only the remaining shortfall with the sinking-fund formula.",
+    "Read 'Monthly Contribution Needed' as the headline result, with 'Future Value of Current Savings' shown beneath it.",
+  ],
   intro:
     "This planner works out the monthly contribution you need to reach a money goal by a chosen date, using the sinking-fund formula PMT = shortfall × i ÷ ((1 + i)^n − 1) where i is the annual return divided by 12 and n is the number of months. It first grows what you have already saved at the annual rate you enter — current savings × (1 + r)^years — and only asks you to fund the gap that is left. Amounts are shown in Indian rupees, and the result is a planning estimate, not a guaranteed return.",
   useCases: [

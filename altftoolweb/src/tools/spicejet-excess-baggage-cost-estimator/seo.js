@@ -1,4 +1,12 @@
 const seo = {
+  title: "SpiceJet Excess Baggage Calculator: Counter vs Prepaid",
+  metaDescription:
+    "Prices extra kilos at the per-kg counter rate against a pre-booked 3, 5, 10, 15, 20 or 30 kg block, and adds cabin weight over 7 kg moved to the hold.",
+  steps: [
+    "Pick your ticket's free allowance — Domestic economy (15 kg), Domestic SpiceMax (20 kg), an international 20 kg or 30 kg sector, a hand-baggage-only fare, or Custom — then enter passengers, total checked weight, cabin bag weight and the heaviest single bag.",
+    "Overwrite \"Counter rate (INR per kg)\" and \"Pre-booked rate (INR per kg)\" with the figures from your own booking page (they start at 500 and 400), and leave \"Pool the allowance across everyone on the booking\" ticked for a family PNR.",
+    "The headline names the cheaper of \"Cheapest: pre-book online\" and \"Cheapest: pay at the counter\", with cabin overage moved to the hold, excess rounded up to whole kilos, unused pre-booked weight, and a price ladder for the 3, 5, 10, 15, 20 and 30 kg blocks.",
+  ],
   intro:
     "This estimator prices the extra kilograms on a SpiceJet booking twice — at the per-kilogram counter rate and as a pre-booked baggage block bought before travel — and reports which is cheaper. It applies the rules that actually decide the bill: the counter rounds a part kilogram up to a whole kilogram, pre-booked weight is only sold in fixed blocks per passenger, and a cabin bag over the 7 kg limit is sent to the hold where it is charged as checked weight. Every rate is editable so you can use the figures from your own booking page.",
   useCases: [

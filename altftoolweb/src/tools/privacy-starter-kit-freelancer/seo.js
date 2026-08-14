@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelancer Privacy Checklist and Blast-Radius Score",
+  metaDescription:
+    "Seventeen weighted controls across accounts, devices, file sharing, contracts and invoicing, plus how many client datasets one stolen login reaches.",
+  steps: [
+    "Enter your Active clients and 'Past clients whose files you still hold', counting archives you could still open today, up to 500 each.",
+    "Tick off the seventeen controls grouped by area, from multi-factor authentication and per-client access down to the cosmetic ones.",
+    "Read the Separation score, 'Blast radius of one compromised login', 'Critical controls still open' and 'Weakest area'; 'Copy report' copies them.",
+  ],
   intro:
     "The Freelancer Privacy Starter Kit scores how well a solo professional keeps three things apart — personal identity, business identity and each client's data — across seventeen weighted controls covering accounts, devices, file sharing, contracts and invoicing. It also estimates blast radius: the number of client datasets a single compromised login could still reach, calculated from the datasets you admit to holding and the controls you have completed. Aimed at designers, developers, writers, consultants and anyone who is the processor for several clients at once with no IT department behind them.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Symptom Checker: Match Symptoms to 10 Common Conditions",
+  metaDescription:
+    "Tick symptoms across eight body systems and see the top five of ten conditions, each scored as matched symptoms over that condition's full list.",
+  steps: [
+    "Fill Personal Information — Full Name, Age and Gender, with Email Address (Optional) — then press Next: Select Symptoms.",
+    "Under Select Your Symptoms tick everything that applies across the eight groups, from General Symptoms, Neurological and Respiratory through to Mental & Emotional and Digestive, then press Analyze Symptoms.",
+    "Health Analysis Results lists Potential Conditions with an X% Match badge on each and your Selected Symptoms alongside; New Analysis clears the form for a fresh run.",
+  ],
   intro:
     "Health Pre is an informational symptom checker that compares the symptoms you tick off against a built-in reference list of ten common conditions and scores each one by the share of its listed symptoms you matched. You pick symptoms from eight body-system groups — general, neurological, respiratory, cardiovascular, skin and allergy, vision and hearing, mental and emotional, and digestive — and it returns the top five conditions with a percentage match. The score is a simple overlap calculation, not a diagnosis; anything worrying belongs with a clinician.",
   useCases: [

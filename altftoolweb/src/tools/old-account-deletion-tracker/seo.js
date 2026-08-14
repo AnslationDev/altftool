@@ -1,4 +1,12 @@
 const seo = {
+  title: "Account Deletion Tracker with GDPR and CCPA Deadlines",
+  metaDescription:
+    "Track dormant accounts you are closing — one calendar month under GDPR, 45 days under CCPA — with overdue flags and a proof reference required.",
+  steps: [
+    "Set Today's date, press Add account, and for each row fill Service, 'Law that applies' (GDPR / UK GDPR, CCPA / CPRA, DPDP Act or 'No specific privacy law'), Data held and 'Request sent on'.",
+    "Move Status from 'Found, not yet requested' through 'Deletion requested', 'Acknowledged by the company' or 'Refused or ignored' to 'Deletion confirmed', pasting the ticket into 'Proof note (ticket or reference from their reply)'.",
+    "Read Deletions confirmed with 'Confirmed deleted with proof' and 'Past the response deadline', check the Reply due column in the Tracker table, then press Copy tracker.",
+  ],
   intro:
     "The Old Account Deletion Tracker keeps an inventory of dormant accounts you are closing and calculates the reply deadline for each one from the date you sent the request: one calendar month under the GDPR (Article 12(3), extendable by two further months for complex requests) and 45 days under California's consumer privacy rules (extendable by another 45). Rows are sorted into overdue, escalate, waiting and to-send, and a row only counts as complete once you have recorded the confirmation reference the company gave you. Everything is calculated in your browser; nothing is uploaded.",
   useCases: [

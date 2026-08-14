@@ -1,4 +1,12 @@
 const seo = {
+  title: "Name Change Record Tracker: Gazette to Aadhaar to PAN",
+  metaDescription:
+    "Sequences a name change by dependency — affidavit, newspaper ads, Gazette, Aadhaar, PAN — and shows what is ready to file today and what is blocked.",
+  steps: [
+    "Tick the optional groups that apply under \"Which of these apply to you\" — Banking and investments, Tax and employment, Property and utilities, Education certificates; the legal basis and core identity groups always apply.",
+    "Work down \"Every record, in dependency order\" and tick each record you have already updated; anything whose prerequisite is still unticked stays labelled Blocked with the document it is waiting on named beside it.",
+    "The panel reports the percentage of records updated, done out of total, how many are \"Ready to file now\" and how many rounds are still needed, above a ranked \"Do these next\" list; \"Copy list\" exports the outstanding records.",
+  ],
   intro:
     "This tracker sequences a legal name change across every record that carries your name, treating them as a dependency graph rather than a flat list: affidavit, then newspaper advertisements, then the Gazette notification, then Aadhaar, then PAN, then everything that is verified against those two. It shows what is ready to file today, what is blocked and by which document, and how many rounds of applications are still ahead. It is aimed at anyone mid-way through a name change who has lost track of which office still has the old name.",
   useCases: [

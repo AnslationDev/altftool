@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shutter Angle to Shutter Speed Calculator (180° Rule)",
+  metaDescription:
+    "Convert shutter angle to speed at any frame rate (180° at 24 fps = 1/48 s), see the stops from the 180° rule, and get flicker-safe angles for 50/60 Hz.",
+  steps: [
+    "Choose 'I know the angle' or 'I know the shutter speed', enter that value and your frame rate — or tap a preset chip like 24 fps or 180°.",
+    "Select your mains frequency (50 or 60 Hz) and, for speed ramps, a target under 'Ramp to this frame rate'.",
+    "Read the converted shutter value, the exposure difference from 180° in stops, the nearest dial setting and the flicker-free angle table, then click 'Copy result'.",
+  ],
   intro:
     "Motion Blur Shutter Angle Calculator converts between shutter angle and shutter speed using shutter seconds = angle ÷ (360 × fps), so 180° at 24 fps is 1/48 second and 180° at 60 fps is 1/120. It reports the exposure as a share of the frame, the difference from the 180-degree rule in photographic stops, the nearest setting on a camera dial, and the angles that expose for a whole number of mains cycles — 172.8° at 24 fps under 50 Hz, 144° under 60 Hz — so artificial lighting does not band.",
   useCases: [

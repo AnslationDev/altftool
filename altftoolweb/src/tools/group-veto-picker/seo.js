@@ -1,4 +1,7 @@
 const seo = {
+  title: "Group Veto Picker: Fewest Vetoes Wins the Choice",
+  metaDescription:
+    "Each member names what they will not accept and the option with the fewest vetoes survives. Full ranking, enforced veto budget, alphabetical ties.",
   intro:
     "The Group Veto Picker settles a group choice by elimination rather than by voting for a favourite: each member names the options they will not accept, and whatever collects the fewest vetoes survives as the finalist. You paste one option per line, then one line per member in the form 'Name | option, option', set how many vetoes each person is allowed, and it returns a full ranking with a veto count and a Finalist or Narrowed-out status against every option. It suits groups where the goal is something nobody objects to rather than something one loud person loves.",
   useCases: [

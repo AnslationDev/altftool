@@ -1,4 +1,7 @@
 const seo = {
+  title: "Child Height Predictor: Mid-Parental Height Formula",
+  metaDescription:
+    "Estimates a child's adult height from both parents: (mother + father ± 13 cm) ÷ 2, with the ±8.5 cm likely range and a feet-and-inches conversion.",
   intro:
     "The mid-parental height method estimates how tall a child will end up as an adult by averaging both parents' heights after adjusting for the child's sex: for a boy, (mother + father + 13) / 2 in centimetres, and for a girl, (mother + father - 13) / 2. This calculator applies that formula and reports the result with its usual confidence band of about plus or minus 8.5 cm, plus a feet-and-inches conversion. It is an informational estimate of genetic potential, not a diagnosis or a measurement of your child.",
   useCases: [

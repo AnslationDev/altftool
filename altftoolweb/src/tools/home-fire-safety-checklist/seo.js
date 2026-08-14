@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Fire Safety Checklist: Score and Alarms Needed",
+  metaDescription:
+    "Score seven areas — detection, escape, cooking, LPG, electrical, heating, equipment — and size smoke alarms, CO alarms and extinguishers for your home.",
+  steps: [
+    "Enter Bedrooms and \"Levels, including a basement\", then tick what applies: LPG or piped gas, a fuel-burning appliance or attached garage, a fireplace, a tumble dryer, children living here.",
+    "Work through the seven sections — detection and alarms, escape planning, cooking, LPG and gas, electrical, heating and flammables, equipment and readiness — ticking each item already in place.",
+    "Read the fire safety score, the critical gaps that cap the verdict, and how many smoke alarms, CO alarms, ABC extinguishers and fire blankets the home needs; press \"Copy audit\".",
+  ],
   intro:
     "This audit scores a home against established residential fire-safety practice across seven areas — detection, escape planning, cooking, LPG, electrical, heating and flammables, and equipment — and sizes the alarms and extinguishers the home needs. Detection follows the NFPA rule of a smoke alarm inside every bedroom, outside each separate sleeping area and on every level including a basement, tested monthly and replaced ten years after the manufacture date. Items are weighted critical, important or recommended, and any critical item left unchecked caps the verdict regardless of the overall percentage.",
   useCases: [

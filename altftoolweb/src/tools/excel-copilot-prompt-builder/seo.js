@@ -1,4 +1,12 @@
 const seo = {
+  title: "Excel Copilot Prompt Builder With A1 Range Checks",
+  metaDescription:
+    "Builds a Copilot prompt naming the worksheet, A1 range, header row and each column letter. Rejects ranges past column XFD or row 1,048,576.",
+  steps: [
+    "Enter the Sheet name, A1 range, Header row and Column headers, and tick 'Range is an Excel table' if you formatted it with Ctrl+T.",
+    "Pick a Task and Output target; a range past column XFD or row 1,048,576 is rejected with an error instead of a prompt.",
+    "Check the normalised range, the data-row count and the header count above the Copilot-ready prompt, then press Copy prompt.",
+  ],
   intro:
     "Excel Copilot Prompt Builder assembles a spreadsheet-assistant prompt that names the exact worksheet, the A1 range, the header row and every column letter, so Copilot works on the cells you meant rather than guessing. The range you type is validated against the .xlsx worksheet grid — 1,048,576 rows and 16,384 columns ending at XFD — and the tool counts rows, data rows and total cells before it writes the prompt. It is for anyone whose Copilot answers keep referencing columns that do not exist or silently skipping part of the data.",
   useCases: [

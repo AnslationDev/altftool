@@ -1,4 +1,12 @@
 const seo = {
+  title: "GPX Privacy Scrubber: Trim Route Start and End",
+  metaDescription:
+    "Paste a GPX and drop the first and last trkpt elements, then round lat/lon to 2-7 decimals. Runs in your browser; every other tag passes through.",
+  steps: [
+    "Paste your route into the GPX text box, or press the Trim first/last chip under Examples to load the sample track.",
+    "Set Start points to remove and End points to remove, then set Coordinate decimal places anywhere from 2 to 7; dropping from 6 decimals to 3 blurs each point to about 110 metres.",
+    "The Scrubbed GPX panel shows the rewritten file with a track-points-retained caption plus Start removed, End removed, Coordinate decimals and Output characters rows; press Copy, or Download to save gpx-home-zone-privacy-scrubber.txt.",
+  ],
   intro:
     "The GPX Home-Zone Privacy Scrubber strips the opening and closing track points from a GPX file so a shared ride or run no longer starts and ends at your front door, and rounds the remaining latitude and longitude values to a decimal precision you choose. You paste the GPX text, say how many points to cut from each end and how many decimal places to keep (2 to 7), and it rewrites the file in place while leaving every other tag untouched. It is for cyclists, runners and hikers who want to publish a route without publishing where they live.",
   useCases: [

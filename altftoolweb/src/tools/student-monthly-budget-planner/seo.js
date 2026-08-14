@@ -1,4 +1,12 @@
 const seo = {
+  title: "Student Monthly Budget Planner with a 50/30/20 Check",
+  metaDescription:
+    "Enter your allowance or stipend and eight spends from mess to subscriptions; get surplus or deficit, each category's share and a 50/30/20 check.",
+  steps: [
+    "Enter \"Monthly money in — allowance, stipend, part-time (INR)\", then the eight category fields from Mess / food and Rent / hostel fee to Subscriptions / OTT.",
+    "Every rupee you type re-splits the budget into Needs (mess, rent, travel, books, phone) and Wants (personal, subscriptions, other).",
+    "Read Left over each month or Monthly deficit, the Share of spend table, and the 50/30/20 check flagging Needs, Wants and Kept aside; Copy result saves it.",
+  ],
   intro:
     "This planner computes a student's monthly surplus or deficit — money in from allowance, stipend or part-time work minus spending on mess, rent, travel, books, phone, outings and subscriptions. Each category is shown as a share of total spending, and the whole budget is checked against the 50/30/20 rule (at most 50% of income on needs, 30% on wants, at least 20% kept aside) popularised in Elizabeth Warren's \"All Your Worth\". It is built for hostel and PG students who want to know exactly where the month's money goes.",
   useCases: [

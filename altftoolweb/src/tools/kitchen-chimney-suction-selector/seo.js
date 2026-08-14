@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kitchen Chimney Suction Calculator in m³/h With Duct Loss",
+  metaDescription:
+    "Kitchen volume x 10-15 air changes, plus burner and layout allowances, divided by duct efficiency: the m³/h to shop for and the chimney width.",
+  steps: [
+    "Enter Kitchen length (m), Kitchen width (m) and Ceiling height (m), then pick How heavily you cook.",
+    "Set Burners on the hob, Kitchen layout and Venting, and for a ducted hood add Duct length (m) and 90° bends in the duct.",
+    "Read Suction to shop for in m³/h, the Duct efficiency percentage lost to the pipe run, and the Chimney width, then press Copy result.",
+  ],
   intro:
     "Chimney suction is sized from air changes: airflow in cubic metres per hour equals kitchen volume multiplied by the air changes per hour it needs, which is 10 for light cooking and 15 for daily frying and tempering. This tool applies that, adds capture allowances for the number of burners and for an open-plan layout, then divides by duct efficiency — because the m3/h printed on a chimney is free-air delivery measured with no duct attached, and every metre of pipe and every 90 degree bend takes a slice of it. The output is the rating to shop for and the chimney width that matches your hob.",
   useCases: [

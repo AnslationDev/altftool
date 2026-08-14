@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grade-1 Braille Draft Maker with BRF File Download",
+  metaDescription:
+    "Convert basic Latin text to uncontracted Grade-1 Braille cells, wrap at 20 to 42 cells per line, and download braille-draft.brf for a transcriber.",
+  steps: [
+    "Type or paste into Latin source text: a-z plus space, full stop, comma, question mark, exclamation mark, hyphen and apostrophe.",
+    "Drag Cells per line anywhere from 20 to 42 (32 by default) to match your embosser's line width.",
+    "Check the Unicode Braille preview for placeholder cells where a character was not supported, then press Download BRF draft to save braille-draft.brf.",
+  ],
   intro:
     "The Braille Embosser Sheet Maker transliterates basic Latin text into uncontracted Grade-1 Braille one character at a time, showing it as Unicode Braille cells and exporting a BRF-style ASCII draft wrapped to a chosen line length. You set cells per line anywhere from 20 to 42 — 32 is the default and a common embosser width — and download the result as braille-draft.brf. It is a first-pass drafting aid for sighted staff preparing material for review, not a certified transcription: contractions, capital and number indicators and embosser page setup all still need a competent Braille reader or transcriber.",
   useCases: [

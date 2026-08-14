@@ -1,4 +1,12 @@
 const seo = {
+  title: "Social Battery Tracker: Week on a 100-Unit Budget",
+  metaDescription:
+    "Costs each social entry by type, hours, how much you want to be there and your introversion, against 100 units a week — and the quiet hours you owe.",
+  steps: [
+    "Set \"Where you sit on the introversion-extraversion scale\", then under Add an entry choose \"What kind of time is it?\", a Day, the Hours and \"How do you feel about it?\".",
+    "Press \"Add to week\" to charge that entry against the 100-unit weekly budget; alone-time entries are costed as recovery and put units back instead of taking them.",
+    "\"Battery left at the end of the week\" shows the percentage remaining with Drain from social time, Restored by alone time, \"Quiet hours still owed\", the Heaviest day and a Day by day bar for each day; Copy week copies the summary.",
+  ],
   intro:
     "The Social Battery Tracker turns a week of social commitments into a single number you can plan against. Each entry is costed by the kind of contact (a one-to-one with someone close is far cheaper per hour than a party or a presentation), how long it lasts, how much you actually want to be there, and where you sit on the introversion-extraversion scale, all charged against a 100-unit weekly budget. Alone time and low-key contact put units back, so the tool also shows how many quiet hours the week still owes you. The units are an explicit budgeting scheme for comparing one week with another — not a physiological measurement.",
   useCases: [

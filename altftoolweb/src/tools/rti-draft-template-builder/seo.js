@@ -1,4 +1,12 @@
 const seo = {
+  title: "RTI Application Format Builder: 4 Ready Templates",
+  metaDescription:
+    "Builds a PIO-addressed RTI application with numbered information points, period, fee mode and the transfer clause; 8-point checklist, copy or TXT.",
+  steps: [
+    "Pick an RTI template, then write the Subject and one Information point per line, with the Period concerned.",
+    "Fill Applicant name, Applicant address, PIO / department and Office address, and choose Delivery mode, Language, Fee mode or tick BPL fee exemption.",
+    "Clear the 8-item Readiness Checklist, then use Copy or the TXT button to save the Generated RTI Draft as rti-draft.txt.",
+  ],
   intro:
     "The RTI Draft Template Builder assembles a filing-ready application under the Right to Information Act, 2005 — addressed to the Public Information Officer, with your details, numbered information points, the period concerned, preferred delivery mode and fee mode — and exports it as text you can copy or download. It offers four starting templates (general information, certified document copies, application status, and scheme or funds details), outputs in English, Hindi or plain English, and includes the standard request to transfer the application if another public authority holds the records. A readiness checklist scores the draft across eight required elements so nothing obvious is missing before you file.",
   useCases: [

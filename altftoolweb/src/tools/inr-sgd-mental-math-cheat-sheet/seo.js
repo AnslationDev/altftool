@@ -1,4 +1,12 @@
 const seo = {
+  title: "SGD to INR Mental Math: Rounding Rules and ++ Bills",
+  metaDescription:
+    "Turns today's rate into a round multiplier you can run at a till, states each rule's error, and compounds a ++ menu price through service charge then GST.",
+  steps: [
+    "Enter Rupees per S$1 (today's rate) and a menu or tag price in Singapore dollars, then set the Service charge (%) and GST (%) that apply.",
+    "The sheet rewrites the rate as a decimal shift plus a working multiplier and tests a Quick rule, a Tuned rule and a Fraction rule, stating how far each lands from the exact answer.",
+    "Read Best rule to memorise, How far off that rule is, Bill total after ++ and Add-ons broken down, then press Copy sheet to keep the ladder on your phone.",
+  ],
   intro:
     "This cheat sheet turns today's rupee to Singapore dollar rate into a multiplication you can run at a till. It rewrites the rate as a decimal shift plus a working multiplier between 1 and 10, then tests rounding to the nearest quarter or half, an easy percentage nudge, and the closest simple fraction, reporting each rule's error as a fixed percentage of the exact answer. It also converts a \"++\" menu price, where a 10% service charge goes on first and GST is then charged on the total including it — a compounding that adds a fifth, not 19%.",
   useCases: [

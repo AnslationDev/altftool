@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paternity Leave Planner: Split Blocks in the Window",
+  metaDescription:
+    "Checks leave blocks against the allowance, window from the birth date, minimum block and block count. UK, India Rule 43-A and Singapore presets.",
+  steps: [
+    "Choose a Policy preset — UK — Statutory Paternity Leave, India — Central Government (CCS Leave Rules, Rule 43-A), Singapore or Custom company policy — and enter the Birth or expected delivery date.",
+    "Adjust Total allowance (days), Window after birth, Days allowed before the birth, Minimum block length (days) and Separate blocks allowed, then use Add block to enter each block's start and length.",
+    "Read Days still available with Earliest permitted start and Window closes, plus any overlap or window-breach warnings, then press Copy plan.",
+  ],
   intro:
     "This planner checks a set of paternity leave blocks against the four limits every paternity policy is built from: the total day allowance, the window that runs from the birth date, the smallest block you are allowed to take, and how many separate blocks are permitted. Enter the birth or due date and the leave you want to book, and it returns each block's end date, days still available, and a plain warning for any block that starts too early, finishes after the window closes, overlaps another, or breaks the minimum block rule. Presets cover UK statutory paternity leave, India's Rule 43-A for central government staff and Singapore's government-paid scheme, and every field stays editable for a company policy.",
   useCases: [

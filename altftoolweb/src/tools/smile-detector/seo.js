@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smile Detector: 68-Point Landmark Smile Score & Report",
+  metaDescription:
+    "Upload a photo to get a smile score from the model's happy probability, plus mouth curve, teeth, eye squint, cheek raise and symmetry — all in-browser.",
+  steps: [
+    "Drop a JPG, PNG, WEBP or HEIC photo up to 20MB on the uploader, or use the Paste or Camera option.",
+    "The face model places its 68 landmarks and returns an expression label with a confidence figure and the Overall Score, Happiness and Natural Smile gauges.",
+    "Read the Mouth Curve, Teeth Visibility, Eye Squint, Cheek Raise, Lip Symmetry and Face Symmetry bars, then press Download Report for smile-report.txt.",
+  ],
   intro:
     "The Smile Detector runs a face-detection model with 68-point landmarks and a seven-emotion expression classifier on a photo you supply, then turns the results into a smile score, an expression label and a breakdown of mouth curve, teeth visibility, eye squint, cheek raise, lip symmetry and face symmetry. The smile score is simply the model's happy probability expressed as a percentage, and the headline overall score is a weighted blend that gives 30% to that smile score, 20% to a natural-smile figure, 15% to mouth curve, 10% each to teeth visibility, eye squint and lip symmetry, and 5% to face symmetry. It is a light, for-fun read on a portrait, not a clinical or diagnostic assessment.",
   useCases: [

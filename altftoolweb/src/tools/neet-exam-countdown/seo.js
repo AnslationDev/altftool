@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET Countdown: Chapters-per-Day Pace & 45-45-90 Split",
+  metaDescription:
+    "Days left to NEET, the chapter pace each subject needs before your revision buffer, question targets in the 45-45-90 split and projected marks.",
+  steps: [
+    "Set the 'NEET exam date (from the NTA notice)', a 'Revision buffer before the exam (days)' and your daily practice-question count, plus an optional prep start date for the pace check.",
+    "Fill the Chapter tracker with 'Total chapters' and 'Chapters completed' for Physics, Chemistry and Biology (Botany + Zoology).",
+    "Read 'Days to NEET', the chapters per day each subject needs, questions per day in the paper's 45-45-90 split and projected marks at +4/-1; press 'Copy result' for the plan.",
+  ],
   intro:
     "This countdown works out how many days remain until NEET UG and converts your unfinished chapters into the pace you need — chapters per day per subject, after setting aside a revision buffer. It is built for NEET aspirants and droppers who track preparation chapter-wise, and it also splits a daily practice-question target in the paper's own 45-45-90 proportion (Physics, Chemistry, Biology) under the NTA scheme of 180 questions, 720 marks, +4 for a correct answer and −1 for a wrong one.",
   useCases: [

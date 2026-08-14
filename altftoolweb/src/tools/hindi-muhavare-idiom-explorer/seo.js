@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hindi Muhavare Explorer: 32 Idioms with Meaning & Quiz",
+  metaDescription:
+    "32 Hindi muhavare with literal sense, meaning in Hindi and English, usage sentences and exam-level tags, plus a four-option meaning quiz.",
+  steps: [
+    "Filter the collection by Theme and Exam level, or use the \"Search idiom, transliteration or meaning\" box (e.g. regret, नाक or hāth).",
+    "Browse each muhavara's literal sense, Hindi and English meanings and वाक्य प्रयोग usage sentence, or press Copy on the Muhavara of the day.",
+    "Answer the four-option Meaning quiz, press Next idiom for a fresh question, and watch the correct / attempted accuracy tally update.",
+  ],
   intro:
     "Hindi Muhavare Explorer is a searchable collection of 32 widely taught Hindi idioms, each shown with its literal word-for-word sense, its actual meaning in Hindi and English, a usage sentence and the exam band it usually appears in. A muhavara is a phrase whose meaning cannot be worked out from its words and which bends to fit the sentence around it — unlike a lokokti, which is a complete saying used unchanged. A built-in four-option quiz draws its questions and distractors from the same set.",
   useCases: [

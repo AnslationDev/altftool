@@ -1,4 +1,12 @@
 const seo = {
+  title: "SpiceJet Baggage Allowance Checker & Excess Cost",
+  metaDescription:
+    "Check bags against SpiceJet's 7 kg / 55×35×25 cm cabin rule and pooled 15 kg check-in allowance, then price excess per kg the way the counter rounds.",
+  steps: [
+    "Enter Passengers on this PNR, the Free check-in allowance per passenger (kg) — or tap a fare preset — and the Excess baggage rate quoted (INR per kg).",
+    "Add each piece with the Cabin bag and Check-in bag buttons and fill in its Weight (kg), Length, Width and Height (cm); every bag is judged live against the 55 × 35 × 25 cm gauge and per-piece limits.",
+    "Read the Excess baggage to pay figure and the pooled-allowance breakdown, then use Copy result to save the summary.",
+  ],
   intro:
     "This checker measures your packed bags against the baggage limits a SpiceJet domestic passenger normally travels under, and prices any excess per kilogram. It applies the two rules separately, because they behave differently: hand baggage is one piece per passenger of up to 7 kg and 55 × 35 × 25 cm and never pools, while free check-in weight — 15 kg per passenger on a standard fare — does pool across everyone on the same booking. No single hold piece may exceed 32 kg or 158 cm in total dimensions.",
   useCases: [

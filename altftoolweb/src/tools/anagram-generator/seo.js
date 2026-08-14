@@ -1,4 +1,7 @@
 const seo = {
+  title: "Anagram Generator: Up to 100 Letter Rearrangements",
+  metaDescription:
+    "Shuffles every letter of your word into up to 100 unique orderings, filtered by prefix, suffix or substring, and exports as TXT, CSV or JSON.",
   intro:
     "The Anagram Generator rearranges the letters of any word or phrase into random distinct orderings using a Fisher-Yates shuffle, returning up to 100 unique results per run with the original spelling kept as the first entry. It shows how many arrangements exist in total (n factorial for the letters you typed — 720 for a six-letter word), and lets you narrow the output by starting letters, ending letters, a required substring or letters to exclude. Results can be sorted alphabetically or by length and exported as TXT, CSV or JSON. It shuffles letters rather than checking a dictionary, so the output is raw material for wordplay, not a list of confirmed words.",
   useCases: [

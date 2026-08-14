@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brand Colour Palette Locker: 50-900 Tints & Contrast",
+  metaDescription:
+    "Lock brand hex values and get a 50-900 tint and shade ramp with RGB, HSL, CMYK, WCAG contrast, ink coverage checks and CSS tokens.",
+  steps: [
+    "Type each brand Hex with its Role, using Add colour for up to 8 locked colours.",
+    "Choose the Print stock — coated at 300% or uncoated at 260% — to set the total ink coverage limit.",
+    "Read the 50-900 ramp, per-stop contrast ratios and ink flags, then press Copy tokens for the CSS custom properties.",
+  ],
   intro:
     "Brand Colour Palette Locker takes the small set of hex values a brand actually owns and generates everything downstream: a 50-900 tint and shade ramp, hex, RGB, HSL and CMYK for every stop, WCAG 2.2 contrast ratios so you know which stops can carry text, and a total ink coverage figure checked against the 300% coated and 260% uncoated press limits. Tints are produced by mixing toward white and shades by mixing toward black, so the ramp stays perceptually connected to the locked base rather than drifting in hue.",
   useCases: [

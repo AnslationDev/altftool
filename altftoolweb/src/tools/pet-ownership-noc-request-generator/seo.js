@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pet NOC Request Letter for Housing Society (AWBI 2015)",
+  metaDescription:
+    "Draft a society NOC request for keeping a pet, citing the AWBI circular of 26 February 2015, with anti-rabies booster status and a readiness score.",
+  steps: [
+    "Choose the Kind of pet and Situation, then fill your name, flat number, society name and the date of the last anti-rabies vaccination.",
+    "Tick the commitments you can honestly make — municipal pet licence, leash or carrier in common areas, waste picked up immediately — and the reply window.",
+    "Check the readiness score and any lapsed-booster warning, then press Copy letter to take the drafted request to the managing committee.",
+  ],
   intro:
     "This generator drafts a no-objection request to a housing society's managing committee for keeping a pet, and scores how well documented the request is before you send it. It combines the position taken in the Animal Welfare Board of India's circular of 26 February 2015 — that society bye-laws and general body resolutions cannot prohibit residents from keeping pet dogs — with the practical commitments committees actually ask for: municipal registration, a current anti-rabies certificate, leashing in common areas and immediate waste clean-up. The anti-rabies status is worked out from the annual booster interval so a lapsed certificate is caught before the letter goes out.",
   useCases: [

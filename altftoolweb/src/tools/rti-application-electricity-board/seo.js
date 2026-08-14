@@ -1,4 +1,12 @@
 const seo = {
+  title: "RTI Application to an Electricity Board, Drafted",
+  metaDescription:
+    "Draft a Section 6(1) RTI over a connection delay, disputed bill or meter record, framed on the Electricity Act, with reply and appeal dates calculated.",
+  steps: [
+    "Enter your full name, consumer or application number, the distribution company or board and its section, sub-division or circle, plus the Records from and Records to dates and the date the RTI is filed on.",
+    "Pick what the dispute is about, tick any extra questions to add, and flag a BPL card (fee exempt), a privately owned licensee, or a request to inspect the records first.",
+    "Read the reply due date under Section 7(1) with the Section 6(3) transfer and Section 19(1) and 19(3) appeal deadlines, then press Copy application.",
+  ],
   intro:
     "This tool drafts an application under Section 6(1) of the Right to Information Act 2005 to an electricity distribution licensee, asking for the specific records behind a delayed new connection, a disputed bill, a suspect meter or an assessment notice. The questions are framed against the Electricity Act 2003 — Section 43(1) for the one-month supply obligation, Section 55(1) for metered supply, Section 56(2) for the two-year bar on recovering arrears and Section 57 for standards of performance — so each one names a document the office is required to hold. It also calculates the Section 7(1) reply date, the appeal windows, the days of default on a pending connection and the age of a disputed arrear.",
   useCases: [

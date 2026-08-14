@@ -1,4 +1,12 @@
 const seo = {
+  title: "Password Reuse Breach Checklist: 18 Steps by Window",
+  metaDescription:
+    "Tick which account types share the leaked password to see the blast radius, then work 18 weighted steps in order — 24 hours, week, month, ongoing.",
+  steps: [
+    "Under \"Which other accounts use the same password?\", tick the categories that share it — primary email, banking, work or SSO, cloud storage, shopping, social — never the password itself.",
+    "Set \"Date you learned about the breach\", then tick what you have done across the four groups: Contain it right now, Rotate the accounts that matter most, Add a 2FA backstop, Stop reusing passwords for good.",
+    "Read the Response score, the Blast radius tier and \"Steps past their window\" for that date, then press Copy result to take the remaining list away.",
+  ],
   intro:
     "The Password Reuse Breach Checklist scores your response to a breach involving a password you also used elsewhere, across 18 weighted steps grouped by the window each one belongs in — first 24 hours, first week, first month, and ongoing. Because a reused password is only as dangerous as the number of other accounts it also unlocks, the tool starts by asking which account categories share it — primary email, banking, work, shopping, social — and turns that into a blast-radius score. The checklist itself is weighted the same way: closing the email and financial rotation path and turning on 2FA as a backstop count for far more than rotating a forum login. Enter the date you found out and the tool flags which steps have already slipped past their window.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Powerlifting Total Tracker – Meet vs Gym Total Log",
+  metaDescription:
+    "Log dated squat, bench and deadlift sessions to see your best single-day total vs the all-time gym total, lift-balance flags and bodyweight multiples.",
+  steps: [
+    "Press 'Add a session' and fill the Date, 'Bodyweight (kg)', 'Squat (kg)', 'Bench press (kg)' and 'Deadlift (kg)' fields for that day.",
+    "Edit any field in place or press 'Remove' on a session; the log autosaves to this browser's local storage.",
+    "Read 'Best single-day total' against the all-time gym total and their gap, the Strong point/Balanced/Lagging flags per lift, and press 'Copy result'.",
+  ],
   intro:
     "A powerlifting total is the sum of your best squat, bench press and deadlift performed on the same day, which is the only version a federation records. This tracker logs dated sessions, keeps that single-day total separate from the all-time gym total built from bests set on different days, and shows the gap between them. It also breaks the latest session into lift shares against the typical raw split of roughly 35% squat, 25% bench and 40% deadlift, and converts every lift into a bodyweight multiple.",
   useCases: [

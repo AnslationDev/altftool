@@ -1,4 +1,12 @@
 const seo = {
+  title: "Akasa Air Baggage Allowance and Excess Checker",
+  metaDescription:
+    "Test each bag against the 15 kg Akasa domestic total, a 7 kg 55x35x25 cm cabin bag and the 32 kg per-piece cap, then price excess at your rate.",
+  steps: [
+    "Choose your fare under Cabin, fare or route — Domestic — standard fare (15 kg check-in), a 20, 25 or 30 kg international sector, or the cabin-baggage-only fare.",
+    "Enter Weight (kg) with Length, Width and Height (cm) for the Cabin bag, the Personal item and each Bag under Checked bags, using Add bag for up to 8 pieces.",
+    "Enter the quoted Excess rate per kg, then read Excess checked weight and Estimated excess charge and press Copy result.",
+  ],
   intro:
     "This checker tests each bag's weight and its three dimensions against Akasa Air's published cabin and check-in limits and reports the shortfall in kilograms. Akasa works on a weight concept rather than a piece concept: the free check-in allowance is one total figure — 15 kg on a standard domestic fare — that the sum of every checked piece must stay under, alongside one 7 kg cabin bag of 55 × 35 × 25 cm and one 3 kg personal article of 40 × 30 × 15 cm. Enter what your luggage scale and tape measure say and you get a bag-by-bag verdict plus an excess estimate at whatever per-kilogram rate your booking quotes.",
   useCases: [

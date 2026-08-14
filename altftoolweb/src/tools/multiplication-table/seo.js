@@ -1,4 +1,12 @@
 const seo = {
+  title: "Multiplication Table Generator: Any Number, 1 to 100",
+  metaDescription:
+    "Single table, full grid or up to six tables compared, with perfect squares flagged, the last-digit cycle spelled out and a CSV export.",
+  steps: [
+    "Set Number, Start and End, or tap a range preset such as 1–12, 1–20 or 20–30 and a Quick Select Number.",
+    "Switch between the Single Table, Grid View and Compare tabs — Compare holds up to six tables on one chart.",
+    "Read the Digit Pattern, Sum Check and perfect-square count, then press CSV to download multiplication-table-<number>.csv.",
+  ],
   intro:
     "Multiplication Table generates the table of any number over a multiplier range you choose, up to 1 to 100, in three views: a single table with a bar chart, a full grid where every cell is row x column, and a compare mode that plots up to six tables against each other. Alongside the products it marks perfect squares, shows the last-digit cycle for the chosen number, and checks the total against the sum formula n(n+1)/2 multiplied by the table number. Any single table can be exported as CSV with the multiplier, product and a perfect-square flag.",
   useCases: [

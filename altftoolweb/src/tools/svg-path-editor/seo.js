@@ -1,4 +1,12 @@
 const seo = {
+  title: "SVG Path Editor: Edit d Commands, True Bounding Box",
+  metaDescription:
+    "Parses all ten SVG path commands, converts absolute to relative, minifies, moves and scales, and solves Bezier extrema for a box that hugs the curve.",
+  steps: [
+    "Paste a d attribute into the 'Path data (d attribute)' textarea — every SVG 1.1 command, M L H V C S Q T A and Z, in absolute or relative form — and set the Precision slider anywhere from 0 to 8 decimals.",
+    "Press 'To absolute' or 'To relative' to rewrite every command, Minify for the shortest legal form, or edit any single parameter in the command list; the Move X, Move Y and Scale fields shift the whole path without a transform attribute.",
+    "The Bounding box panel reports width by height, Top-left, Bottom-right, Commands, Sub-paths and minified length alongside a live Preview with the on-path points marked; Copy result puts the path data on the clipboard and Reset restores the sample path.",
+  ],
   intro:
     "An SVG path editor breaks a path's d attribute into its individual commands so you can read and change them one number at a time. This one follows SVG 1.1 §8.3 exactly — all ten commands (M, L, H, V, C, S, Q, T, A, Z), implicit command repetition, and the single-character arc flags that trip up most parsers — and it measures the true bounding box by solving each Bézier's derivative for its extrema rather than guessing from the control points. It is for icon designers cleaning up an export, developers hand-tuning an inline SVG, and anyone who needs to know how big a path really is.",
   useCases: [

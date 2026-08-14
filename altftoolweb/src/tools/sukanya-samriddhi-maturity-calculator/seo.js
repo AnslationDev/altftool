@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sukanya Samriddhi Calculator: 21-Year Maturity",
+  metaDescription:
+    "Project the SSY corpus at 8.2% compounded yearly: Rs 250 to Rs 1,50,000 a year for 15 years, six more years of growth, and the 50% withdrawal at 18.",
+  steps: [
+    "Enter the deposit for each financial year, between Rs 250 and Rs 1,50,000, and the girl's age at opening, which must be under 10.",
+    "Set the interest rate, notified at 8.2 percent, the years you will actually deposit up to 15, and whether you pay in April or in March.",
+    "Read the maturity value paid 21 years after opening, with total interest, the balance when deposits stop and the 50 percent withdrawal at 18.",
+  ],
   intro:
     "The Sukanya Samriddhi Account is a small savings scheme for a girl child under 10, and this calculator projects what it will be worth at maturity. It follows the Sukanya Samriddhi Account Scheme, 2019: deposits of Rs 250 to Rs 1,50,000 a financial year for up to 15 years, annual compounding at the quarterly notified rate, and maturity 21 years after the account is opened, with the balance continuing to earn interest for the six years after the last deposit. It also shows the 50% partial withdrawal available once she turns 18 and the deduction the deposit attracts under section 80C.",
   useCases: [

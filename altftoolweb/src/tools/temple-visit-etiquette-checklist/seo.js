@@ -1,4 +1,12 @@
 const seo = {
+  title: "Temple Visit Etiquette Checklist for 6 Traditions",
+  metaDescription:
+    "Tick what you have covered for a Buddhist, Hindu, Sikh, Jain or Shinto visit. Entry-blocking rules count five times a courtesy and hold the verdict.",
+  steps: [
+    "Choose your site under 'Which tradition are you visiting?' — Theravada or East Asian Buddhist, Hindu, Sikh gurdwara, Jain derasar or Shinto shrine.",
+    "Tick each rule you have met under 'Will get you turned away', 'Worshippers will notice' and 'Small courtesies'.",
+    "Read the weighted readiness percentage and 'Entry-blocking rules outstanding', then press Copy result for the list of what is still open.",
+  ],
   intro:
     "This checklist scores how ready you are for a temple visit by weighting each rule against what happens if you break it. Rules that get you refused at the door — covered shoulders and knees, shoes off, no leather in a Jain derasar, head covered in a gurdwara — carry five times the weight of a small courtesy, and any one of them left unmet holds the verdict at 'not ready' regardless of the percentage. Separate lists cover Theravada and East Asian Buddhist temples, Hindu temples, Sikh gurdwaras, Jain derasars and Shinto shrines.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Periodic Table Game: 118 Elements, 10-Question Quiz",
+  metaDescription:
+    "Ten questions on a clickable 118-element table: find the cell, name the symbol, name the atomic number. Easy to hard, optional 30/60/120s timer.",
+  steps: [
+    "In \"Quiz Settings\" choose a Quiz Mode of Find Element, Symbol Challenge or Atomic Number, a Difficulty of Easy (common elements), Medium (main group) or Hard (all 118 elements), and a Timer of No timer, 30s, 60s or 120s.",
+    "Press \"Start Quiz\" and answer 10 questions: click the right cell on the 118-element grid in Find Element mode, or pick one of four element buttons otherwise. \"Hint\" spends one of your three hints, and \"End Quiz\" stops the round early.",
+    "The finish screen reports Score, Correct, Accuracy and Best Streak — each right answer adds 10 points plus 2 per current streak — then \"Play Again\" reruns the same setup or \"New Settings\" reopens Quiz Settings.",
+  ],
   intro:
     "Periodic Table Game is a 10-question chemistry quiz played on a full 118-element table, with three question types: find an element's cell by name, name the element from its symbol, and name the element from its atomic number. Easy draws from 20 everyday elements such as carbon, iron and gold, medium covers the eight main families, and hard opens the whole table including lanthanides and actinides. An optional 30, 60 or 120-second timer turns it into a speed round, and your best streak is remembered between visits.",
   useCases: [

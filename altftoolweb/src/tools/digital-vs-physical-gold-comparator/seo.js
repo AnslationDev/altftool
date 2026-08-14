@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digital Gold vs Jewellery, Coins and ETFs: Real Cost",
+  metaDescription:
+    "Prices the friction on the same metal: making charge or spread, 3% GST, annual storage or expense ratio and the exit deduction, ranked by total cost.",
+  steps: [
+    "Set Spot gold price (₹ per gram), Quantity (grams), Holding period (years), Assumed price change (% per year) and Tax on the gain (%).",
+    "For each format overwrite Entry charge (%), Flat charge (₹), GST on the purchase (%), Annual cost (% of value), Annual flat fee (₹) and Exit deduction (%) with the numbers on your own invoice.",
+    "Lowest total cost names the winner and how much less friction it carries, and the \"Format by format, cheapest first\" table gives cost per gram, premium over spot, net proceeds and annualised return.",
+  ],
   intro:
     "Jewellery, coins, digital gold and gold ETFs all hold the same metal, so the only thing that separates them is friction. This comparator prices that friction in four places — the entry charge (making charge, minting premium, platform spread or brokerage), the 3% GST charged on gold, the annual cost of carry such as an expense ratio or storage fee, and the deduction taken on the way out — then reports the effective cost per gram, the total charges paid across the holding period, and the annualised return actually realised.",
   useCases: [

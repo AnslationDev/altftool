@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Caption Detector: 9 Style Signals, 0-100 Score",
+  metaDescription:
+    "Scores a caption 0-100 on nine tells — em dashes, stock hooks, emoji bullets, hashtag padding, even sentence rhythm — with the matched text shown.",
+  steps: [
+    "Paste the caption into the Caption box and pick a Platform — Any platform, Instagram, LinkedIn or X / Twitter.",
+    "Open Signal breakdown to read each of the nine signals with its points out of its maximum and the exact matched text shown as evidence chips.",
+    "The AI signal score card gives the 0-100 total with its band, the rows count words, characters, sentences, em dashes, emoji, hashtags (and how many are generic) and sentence-length variation, and Copy report puts the whole scan on the clipboard.",
+  ],
   intro:
     "The AI Social Caption Detector scores a social media caption on nine measurable stylistic tells found in unedited language-model output: em dashes, over-used vocabulary such as delve and tapestry, stock hooks like \"stop scrolling\", the \"not just X, it's Y\" construction, emoji bullet layouts, emoji density, hashtag padding, repeated rule-of-three lists and machine-even sentence rhythm. Each signal carries a fixed weight and the total is normalised to a 0-100 score you can see broken down line by line. It is a style check for editors and social managers, not an authorship classifier.",
   useCases: [

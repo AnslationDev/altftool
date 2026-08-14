@@ -1,4 +1,12 @@
 const seo = {
+  title: "Argentina Plug Adapter & Voltage Checker (220 V, Type I)",
+  metaDescription:
+    "Argentina runs 220 V 50 Hz on IRAM 2073 type I sockets. Enter your plug and label voltage to see if you need an adapter, a converter, or nothing.",
+  steps: [
+    "Choose the \"Plug on your device\" from the type list, or tap a preset such as \"Laptop charger\" or \"US hair dryer\".",
+    "Enter the \"Label minimum voltage (V)\" and \"Label maximum voltage (V)\" printed on the device, its \"Label frequency\" (50/60 Hz) and \"Rated power (W)\".",
+    "Read the \"Verdict for Argentina\" — adapter, converter, polarity and 10 A socket-fit rows — then click \"Copy result\".",
+  ],
   intro:
     "This guide decides whether your device needs a plug adapter, a voltage converter, or nothing at all in Argentina. Argentina supplies 220 V at 50 Hz, and its earthed socket is IRAM 2073 — the flat angled-pin type I shape, physically identical to the Australian plug but wired with line and neutral on the opposite pins. Enter your plug type and the voltage range printed on the label to get the verdict, the current the device will draw and whether it fits a 10 A wall socket.",
   useCases: [

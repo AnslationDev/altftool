@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fridge Running Cost Calculator from the BEE Label",
+  metaDescription:
+    "Turns a fridge's BEE-label kWh/year into cost per day, month and year at your tariff, adjusted for a kitchen warmer than the 32 °C test ambient.",
+  steps: [
+    "Press I have the BEE label and type the Annual energy consumption on the label (kWh/year), or press Estimate from litres and stars and give Refrigerator type, Gross capacity (litres) and BEE star rating.",
+    "Set Average kitchen temperature (°C), the Extra consumption per °C above 32 °C (%) sensitivity, How the fridge is used, and Electricity tariff (₹ per unit).",
+    "Running cost per year updates live, above rows for cost per day and month, average power draw in watts, CO2 per year and what a 5-star equivalent would cost; Copy result saves the breakdown.",
+  ],
   intro:
     "This calculator turns a refrigerator's annual energy consumption — the kWh/year printed on its BEE label — into cost per day, per month and per year at your tariff, then adjusts for a kitchen warmer than the laboratory test condition of 32 °C. If the label is not to hand, it reconstructs the rated figure from gross litres and star rating, using specific consumption calibrated against published label values and roughly a 20% step between star bands. It also prices what a 5-star equivalent of the same size would cost to run.",
   useCases: [

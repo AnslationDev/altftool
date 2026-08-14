@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creative Brief Generator: 13-Section Agency Format",
+  metaDescription:
+    "Fill thirteen sections of a one-page agency brief, get a weighted completeness score, a single-minded proposition check, and copy as text or Markdown.",
+  steps: [
+    "Fill the Project block — Project name, Client or brand, Brief owner and Date — then the thirteen sections under \"The brief\", from Background and Objective through Mandatories, Timing and Budget.",
+    "Keep \"Single-minded proposition\" to one sentence: the brief is flagged when the proposition runs past 25 words or joins two ideas with an \"and\", and Proposition length is reported in words.",
+    "\"Brief completeness\" shows a weighted percentage with \"Sections filled\" and a \"Still to complete\" list, the Formatted brief renders below, and \"Copy brief\" or \"Markdown\" copies it out.",
+  ],
   intro:
     "A creative brief is the one-page document that tells a designer, writer or agency what the work has to achieve, for whom, and what it must say — and this generator builds one section by section. It follows the standard account-planning structure: background, objective, success measure, audience and insight, a single-minded proposition, reasons to believe, tone, deliverables, channels, mandatories, timing and budget. It also scores how complete the brief is and flags a proposition that has quietly become two ideas.",
   useCases: [

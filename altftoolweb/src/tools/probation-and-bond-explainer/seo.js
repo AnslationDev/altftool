@@ -1,4 +1,12 @@
 const seo = {
+  title: "Service Bond Calculator: Pro-Rata Exit Cost & Probation",
+  metaDescription:
+    "What leaving a bank or government job early costs: pro-rata bond = amount x months remaining / bond period, or full recovery. Plus DoPT probation rules.",
+  steps: [
+    "Enter Bond amount (INR), Bond period (months) and Months already served from your appointment letter.",
+    "Choose the recovery model in your bond clause: full amount, or pro-rata that shrinks as service is served.",
+    "Payable if you leave now gives the rupee figure; press Copy result to keep the estimate.",
+  ],
   intro:
     "This explainer sets out what probation periods and service bonds commit a new government or bank recruit to, and includes a calculator that estimates the amount payable on leaving before the bond period ends — using the pro-rata formula (bond amount × months remaining ÷ bond period) or the full-recovery model, whichever your bond clause specifies. It is written for candidates weighing job offers or planning a switch, against the backdrop of the DoPT norm of 2 years' probation for central government direct recruits.",
   useCases: [

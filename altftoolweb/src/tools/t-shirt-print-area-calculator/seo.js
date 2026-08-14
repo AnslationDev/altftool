@@ -1,4 +1,12 @@
 const seo = {
+  title: "T-Shirt Print Area Calculator: Garment vs Platen",
+  metaDescription:
+    "Takes the smaller of garment and platen (14 x 16 or 16 x 20 in), fits your artwork ratio inside without distortion, and gives the pixels for 300 DPI.",
+  steps: [
+    "Choose Garment size and Platen / press area, from \"10 x 12 in (youth / small platen)\" up to \"16 x 24 in (jumbo)\".",
+    "Set Clearance from each side seam (in), Clearance above the hem (in), Top edge below the collar seam (in), Export resolution (DPI) and the Artwork width and height ratios.",
+    "Read the fitted print size in inches and pixels and press Copy result; \"Is your file sharp enough?\" checks the effective DPI of a file you already have.",
+  ],
   intro:
     "The printable area on a t-shirt is the smaller of two limits: the garment, whose usable width is the flat chest measurement minus a seam clearance on each side and whose usable height is body length minus the collar drop and hem clearance, and the press platen, which caps everything at sizes like 14 x 16 or 16 x 20 inches. This calculator works out both for every size in a run, fits your artwork ratio inside without distortion, and converts the result to the pixel dimensions you need at 300 DPI. Written for print-on-demand sellers and anyone preparing artwork for a decorator.",
   useCases: [

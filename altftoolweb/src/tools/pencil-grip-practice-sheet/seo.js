@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pencil Grip Practice Sheet: 9 Pre-Writing Strokes",
+  metaDescription:
+    "Print the nine pre-writing strokes in developmental order as traceable boxes at your chosen size in mm, plus the grasp stage typical for that age.",
+  steps: [
+    "Enter the child's age in months and the Practice box size (mm) — 30 mm by default — then tick the strokes you want, or press \"Use the strokes typical for this age\" to select the ones the tool marks as current.",
+    "Set Repeats per stroke, Page margin (mm) and Paper size; the Sheet preview rebuilds with the first box in each band drawn solid as the model and the rest dotted for tracing.",
+    "Press Print and print at 100% scale so the boxes come out at the millimetre size you set — the panel also reports Boxes per row, Pen strokes to complete and Pages to print, and Copy result copies that specification as text.",
+  ],
   intro:
     "Pre-writing strokes are the nine shapes children learn to copy before letters — vertical line, horizontal line, circle, plus cross, right and left diagonals, square, oblique cross and triangle — in that developmental order. This sheet builder prints those strokes as traceable boxes at a size you set in millimetres, adds continuous patterns such as zigzags, waves and loops for pencil control, and shows the pencil grasp stage typically seen at the age you enter. It is written for preschool teachers, parents and anyone supporting handwriting readiness; it is informational and does not replace an occupational therapy assessment.",
   useCases: [

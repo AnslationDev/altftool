@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creator Tax Deductions India: Section 32 Depreciation",
+  metaDescription:
+    "Sorts creator spending into section 37(1) revenue expenses and section 32 capital assets at 40%, 15% or 10%, with business-use share and GST/audit flags.",
+  steps: [
+    "Enter Gross receipts, Cash receipts % and Cash payments %, and tick Specified profession or Special-category state if either applies.",
+    "For every expense row set Amount and Business %, and tick Under 180d for gear put to use late in the financial year.",
+    "Read Year-one deduction, Revenue expense, Depreciation and Carried block with the audit and GST threshold flags, then press Copy summary.",
+  ],
   intro:
     "This checklist sorts the money a creator spends into the categories Indian tax law treats differently: revenue expenses allowable under section 37(1) when incurred wholly and exclusively for the business, and capital assets that instead attract depreciation under section 32 at the Appendix I rates — 40% for computers, 15% for cameras and other plant, 10% for furniture. It applies a business-use share to mixed-use items and flags the published thresholds your gross receipts cross, from the 20 lakh GST services limit to the section 44AB audit limits. It is informational, not tax advice.",
   useCases: [

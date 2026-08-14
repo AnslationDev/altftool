@@ -1,4 +1,12 @@
 const seo = {
+  title: "DPIA Starter Wizard: Score Privacy Risk out of 11",
+  metaDescription:
+    "Score a feature’s privacy risk out of 11 from scale, sensitivity and data category, minus up to 3 safeguards, and get the DPIA sections you still owe.",
+  steps: [
+    "Fill Feature or project, Personal data involved and Affected people, then set Scale to Small / limited, Medium or Large / systematic — the Location feature example chip fills all four.",
+    "Tick 'Includes sensitive data or vulnerable people' where it applies and list your controls in Existing safeguards, separated by commas, semicolons or new lines; each one subtracts a point, to a maximum of three.",
+    "The Result panel returns Lower, Medium or High initial privacy risk with a Risk score row out of 11 and the five DPIA sections still to write; Copy takes the summary, Download saves dpia-starter-wizard.txt.",
+  ],
   intro:
     "The DPIA Starter Wizard turns a short description of a new feature into a first-pass privacy risk rating out of 11 and the outline of a data protection impact assessment. It scores processing scale, whether sensitive data or vulnerable people are involved, and whether the data touches high-risk categories such as location, biometrics, health, children, financial data or profiling, then subtracts credit for up to three safeguards you list. Privacy, product and engineering teams get a structured starting point and a Lower, Medium or High initial rating before the formal assessment begins.",
   useCases: [

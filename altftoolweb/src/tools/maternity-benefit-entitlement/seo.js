@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maternity Benefit Act Calculator: 80 Days & 26 Weeks",
+  metaDescription:
+    "Dates the section 5(2) eighty-day condition, then the 26 or 12 week leave, earliest start, leave end, rejoining date and nursing breaks.",
+  steps: [
+    "Enter Date of joining this employer, Expected date of delivery, Days actually worked for this employer and the date Those days are counted up to, then pick Surviving children before this birth from 0 to 4 or more.",
+    "Set Maternity leave start date, choose Working days per week (roster) as 5, 6 or 7 days, and enter Employees in the establishment — the section 11A creche line turns on at 50.",
+    "Read the headline Eightieth day of actual work falls on, the Entitlement under section 5(3) in weeks, and the Dated timeline whose Rule column cites s.5(2), s.5(3), s.4(2), s.10 and s.11, then press Copy result.",
+  ],
   intro:
     "This calculator answers the question the Maternity Benefit Act, 1961 asks first: on what date will a woman have actually worked eighty days for her employer inside the twelve months immediately preceding her expected date of delivery, which is the section 5(2) condition without which no maternity benefit is payable at all. From there it dates the whole entitlement — 26 weeks under section 5(3), of which not more than eight may precede the expected date of delivery, or 12 weeks with not more than six preceding it for a woman who already has two or more surviving children — and prints the earliest permissible leave start, the leave end and the rejoining date. It is built for HR and payroll teams applying the Act as amended by the Maternity Benefit (Amendment) Act, 2017, and for women who need to see whether the eighty-day clock lands before or after their leave begins.",
   useCases: [

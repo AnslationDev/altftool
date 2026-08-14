@@ -1,4 +1,10 @@
 const seo = {
+  title: "When to Leave for Hyderabad Airport (RGIA, Shamshabad)",
+  steps: [
+    "Set the scheduled departure and distance, or tap a Starting from chip — Hitec City / Madhapur 34 km, Secunderabad 35 km, Shamshabad 5 km.",
+    "Choose Domestic or International, the mode (app cab, own car, Pushpak airport bus), a traffic assumption, and tick if you have a bag to check in.",
+    "Leave by gives the clock time, Deadline set by names which of bag drop, gate or reporting advice binds, and Copy plan takes the whole breakdown.",
+  ],
   intro:
     "This planner gives the clock time to walk out of your door for a flight from Rajiv Gandhi International Airport (HYD) at Shamshabad, by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you actually travel. Hyderabad transfers are more predictable than most because the Outer Ring Road carries airport traffic on an access-controlled expressway rather than through the city grid, so the congestion you meet is mostly at your own end of the trip.",
   useCases: [

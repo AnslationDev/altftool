@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bicycle Chain Wear Checker: Ruler to % Elongation",
+  metaDescription:
+    "Turn a ruler reading over 24 rivet pitches into chain elongation percent, checked against the 0.5% and 0.75% replacement thresholds, plus projected life.",
+  steps: [
+    "Enter the ruler reading in 'Measured length' and choose Inches or Millimetres under 'Measurement unit' — 24 pitches measure 12.000 in on a new chain.",
+    "Pick your 'Drivetrain' (each option shows its replace-at threshold) and optionally add 'Distance ridden on this chain (km, optional)'.",
+    "Read the elongation percentage with its verdict — from 'Within spec' to 'Chain + cassette' — then click 'Copy result'.",
+  ],
   intro:
     "Chain wear is the percentage a chain has grown longer than its factory 1/2-inch rivet pitch, and this checker converts a ruler reading into that percentage. Measure across 24 rivet pitches — exactly 12.000 inches on a new chain — enter the number, and you get the elongation figure plus whether your drivetrain has crossed the 0.5% or 0.75% replacement point published by Park Tool and Shimano. Riders who track their kilometres also get a projected chain life and how far they can ride before the swap.",
   useCases: [

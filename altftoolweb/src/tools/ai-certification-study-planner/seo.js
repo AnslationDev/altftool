@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Certification Study Planner by Exam Domain Weight",
+  metaDescription:
+    "Split study hours by published domain weights for AIF-C01, MLA-C01, MLS-C01, AI-900, AI-102 and Google's PMLE, with 20% held back for revision.",
+  steps: [
+    "Pick a Certification — AIF-C01, MLA-C01, MLS-C01, AI-900, AI-102 or the Google Cloud PMLE exam — and set Your background.",
+    "Enter Study hours per week, a Start date, and the Exam date if you have already booked it.",
+    "Read the Preparation time in weeks, the Hours per exam domain table, and the on-track or hours-short readiness line, then press Copy result.",
+  ],
   intro:
     "AI Certification Study Planner divides a preparation-hours budget across an exam's published domain weights, so the topic worth 36% of the score gets 36% of your study time instead of an equal share. It covers the AWS AI Practitioner (AIF-C01), AWS Machine Learning Engineer Associate (MLA-C01) and Machine Learning Specialty (MLS-C01), Microsoft AI-900 and AI-102, and the Google Cloud Professional Machine Learning Engineer exam, reserving a fifth of the total for practice exams and revision. Enter your booked exam date and it reports whether your weekly hours actually reach the plan in time.",
   useCases: [

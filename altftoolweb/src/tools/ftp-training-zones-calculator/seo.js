@@ -1,4 +1,12 @@
 const seo = {
+  title: "FTP Cycling Power Zones Calculator: 7 Coggan Bands",
+  metaDescription:
+    "Turn your FTP into watts for all seven Coggan zones, estimate FTP from a 20-minute test at 95%, and split a training week 80/20.",
+  steps: [
+    "Enter your FTP in watts in the FTP (watts) field, and optionally Body mass (kg) for W/kg plus your Weekly riding hours.",
+    "If you only have a test result, open Estimate FTP from a shorter test, choose the 20-minute test (95% of average) or 8-minute test (90% of average), and press Use this FTP.",
+    "Read the wattage for all seven Coggan zones in the Full zone table and press Copy zones to paste them into a head unit or smart trainer.",
+  ],
   intro:
     "FTP training zones divide cycling intensity into seven bands defined as percentages of functional threshold power, following the model published by Andrew Coggan: active recovery up to 55 percent, endurance 56-75, tempo 76-90, lactate threshold 91-105, VO2max 106-120, anaerobic capacity 121-150 and neuromuscular power above 150. This calculator converts your FTP into watts for each band, optionally adds W/kg, estimates FTP from a 20-minute or 8-minute test, and splits a training week using the 80/20 polarised model. The output is ready to enter into a head unit, a smart trainer or a training diary.",
   useCases: [

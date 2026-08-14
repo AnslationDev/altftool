@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Frame Continuity Inspector — Local, up to 80 MB",
+  metaDescription:
+    "Sample up to 60 frames from a local MP4, WebM, MOV or M4V and compare pixel and 16-bin luminance differences — nothing is uploaded, JSON export.",
+  steps: [
+    "Press 'Choose a local video' and pick an MP4, WebM, Ogg, MOV or M4V up to 80 MB and 10 minutes; duration and dimensions are checked before sampling.",
+    "Set the 'Sampling interval' slider between 0.25 and 30 seconds, then press 'Run continuity screen' — the plan is capped at 60 sampled frames.",
+    "Review the near-duplicate and high-change cue counts on the sample-to-sample timeline and press 'Download JSON' for video-continuity-counts-and-timing.json.",
+  ],
   intro:
     "The Video Frame Continuity Inspector samples up to 60 frames from a local video at an interval you choose, compares each adjacent pair by mean RGB pixel difference and 16-bin luminance histogram distance, and flags the runs that read as near-duplicate or high-change. It is a sparse visual-change screen for editors, reviewers and researchers who want a defensible starting point for where to look in a clip — not edit detection, deepfake detection or an authenticity claim, and the exported report says so in its own limitations list. Everything decodes and compares in your browser; the video is never uploaded.",
   useCases: [

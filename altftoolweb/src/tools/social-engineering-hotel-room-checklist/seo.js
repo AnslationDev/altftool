@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hotel Room Tech Safety Checklist: 18 Check-In Actions",
+  metaDescription:
+    "Eighteen ranked actions across door hardware, the smart TV, the room network and the safe, scaled by nights stayed and how sensitive your laptop is.",
+  steps: [
+    "Set 'Nights in this room' and choose from 'What are you travelling with?', then tick what you have already done across the four sections: Door and physical access, Smart TV and casting, Network kit in the room, and Devices, safe and valuables.",
+    "Use 'Mark everything done' or 'Start a fresh check-in' to set all eighteen items at once, then untick anything you have not actually completed — every toggle recomputes the score immediately.",
+    "Read the Room exposure index out of 100 with coverage by weight, the stay multiplier and 'First-ten-minutes items left', then work down the 'Still to do, highest impact first' table; Copy result copies the summary.",
+  ],
   intro:
     "The Hotel Room Tech Safety Checklist turns check-in into eighteen concrete actions across four areas — door hardware, the smart TV, the room network, and the safe and devices — and ranks whatever you have not done by how much it changes the outcome. It is weighted around three facts hotels do not advertise: a key card cannot move the deadbolt, an in-room safe always has a property override, and a smart TV keeps whatever account you sign into for the next guest. The score also scales with how many nights housekeeping will enter the room and how sensitive the data on your laptop is.",
   useCases: [

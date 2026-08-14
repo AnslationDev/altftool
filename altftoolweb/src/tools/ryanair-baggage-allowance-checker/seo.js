@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ryanair Baggage Checker: 40x20x25 cm Free Bag Size",
+  metaDescription:
+    "Test each bag against Ryanair's limits: 40 x 20 x 25 cm free under-seat, 55 x 40 x 20 cm Priority cabin bag, and 10 kg or 20 kg hold bags.",
+  steps: [
+    "Pick your booking under Cabin, fare or route — from Basic fare (small under-seat bag only) to Priority + 20 kg hold bag.",
+    "Tick I am carrying one under Cabin bag and Personal item, type each Weight (kg) and the three cm dimensions, and use Add another checked bag for hold bags.",
+    "Read the Bag-by-bag verdict table and the Excess baggage pricing estimate, then Copy result or Reset.",
+  ],
   intro:
     "This checker tests your bags against Ryanair's published size and weight limits, which work differently from a full-service airline: no fare includes a free checked bag, and what you may take into the cabin depends on the add-ons you bought rather than the seat you booked. Every fare includes one small under-seat bag of 40 × 20 × 25 cm; Priority & 2 Cabin Bags adds a 10 kg cabin bag of 55 × 40 × 20 cm; and hold bags are purchased in a 10 kg size limited to 55 × 40 × 20 cm or a 20 kg size limited to 119 × 119 × 81 cm. Enter what your scale and tape measure say and each item gets its own verdict.",
   useCases: [

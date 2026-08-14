@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wizard Name Generator: Full Fantasy Mage Profiles",
+  metaDescription:
+    "Draw a complete spellcaster from 20 hand-written profiles — name, school, staff, spell, level, familiar and a quote — then copy it as text.",
+  steps: [
+    "Press Summon Wizard to draw one of the 20 hand-authored profiles at random — schools range from Evocation and Pyromancy to Necromancy, Geomancy and Blood Magic.",
+    "The card shows the wizard's name and school with its Staff, Level shown as 5–10 filled dots, Spell Specialty, Familiar and a spoken quote; press Summon Wizard again to redraw.",
+    "Press Copy Wizard to put the whole profile on the clipboard as labelled lines — Name, School, Staff, Spell, Level, Familiar, Quote — ready to paste into a character sheet.",
+  ],
   intro:
     "The Wizard Name Generator draws a complete fantasy spellcaster identity at random — name, school of magic, staff, signature spell, familiar, power level and a spoken line — from a hand-written set of 20 profiles. Each draw gives you something like Theron Voidgaze, a level 10 necromancer with a Bone Staff of Souls and a raven familiar, rather than a bare name with nothing attached to it. One button copies the whole profile as text you can paste into a character sheet or a document.",
   useCases: [

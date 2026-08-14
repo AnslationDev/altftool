@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dice Roller: d4 to d100 with Modifiers, Drop Lowest",
+  metaDescription:
+    "Roll 1–10 dice from d4 to d100 with a −99 to +99 modifier and drop lowest. Fair crypto randomness, every die shown, last 20 rolls kept.",
+  steps: [
+    "Pick a Die type from d4 to d100, set Number of dice (1-10) and the Modifier (+/-), and tick Drop the lowest die if you want the 4d6 ability-score roll.",
+    "Press the Roll button, which is labelled with the notation you built, or use a Quick rolls preset: 2d6, 3d6, 1d20 or 4d6 drop lowest.",
+    "Read the Total with every die face shown and the dropped die greyed out, then use Copy history to take the last 20 rolls in standard notation.",
+  ],
   intro:
     "The Dice Roller rolls up to 10 dice of d4, d6, d8, d10, d12, d20 or d100 with a modifier from −99 to +99 and an optional drop-lowest rule, drawing each result from the browser's crypto.getRandomValues with rejection sampling so no face is even slightly favoured. It shows every individual die, marks natural maximums and natural 1s, and keeps a running average, highest and lowest alongside the last 20 rolls. It is for tabletop players without their dice bag, and for anyone who wants a roll they can show the table.",
   useCases: [

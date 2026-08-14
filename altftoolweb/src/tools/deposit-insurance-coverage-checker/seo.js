@@ -1,4 +1,12 @@
 const seo = {
+  title: "DICGC Cover Checker: ₹5 Lakh per Depositor per Bank",
+  metaDescription:
+    "List each bank, balance with interest and the capacity it is held in. Accounts in the same capacity are added up, then the ₹5,00,000 DICGC limit applied.",
+  steps: [
+    "For each row give the Bank, the Balance including interest (INR), the Capacity in which it is held and the Account type, adding rows with Add an account.",
+    "Balances at one bank in the same capacity are pooled first, and the DICGC limit of ₹5,00,000 is applied to each pooled group rather than to each account.",
+    "Read Not covered by deposit insurance, Unused cover across your groups and the Cover group by group table of Bank, Capacity, Insured and Uninsured, then Copy result.",
+  ],
   intro:
     "This checker applies the Deposit Insurance and Credit Guarantee Corporation cover of ₹5,00,000 per depositor per bank to the accounts you list, aggregating them the way DICGC does: all deposits held at one bank in the same capacity and the same right are added together, principal and interest, before the limit is applied. Accounts held in a different right — a joint account with the names in a different order, or one held as guardian, karta or trustee — carry their own separate limit. The result is the rupee amount of your savings that sits outside the guarantee.",
   useCases: [

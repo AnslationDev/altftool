@@ -1,4 +1,12 @@
 const seo = {
+  title: "SOP Prompt Builder: Section Word Budget and Anchors",
+  metaDescription:
+    "Turn a 4,000-character or 650-word cap into a six-section word budget, count your named faculty, modules and labs, and flag stock openings.",
+  steps: [
+    "Pick the Application type — Common App personal essay, UCAS personal statement, Graduate taught (MS or MA), PhD or research programme, MBA essay, Scholarship statement or Custom limit — then set whether the limit is counted in Words or Characters (including spaces) and type the figure printed on the form.",
+    "Fill in the Programme, Institution, Field, your background and your evidence one line at a time, plus the faculty, named courses or modules and the labs, centres or datasets you need; fewer than 2 named anchors across those three boxes raises a warning.",
+    "Read the Section word budget across the six sections, from the opening through academic preparation, evidence, fit and goals to the closing, check the \"Stock phrases to cut\" table, then press \"Copy prompt\" — it leaves bracketed placeholders instead of inventing a lab or a grade.",
+  ],
   intro:
     "The SOP Prompt Builder turns an application's word or character cap into a section-by-section writing plan and an AI prompt that will not invent credentials. It converts between the two limit systems at six characters per word — the convention used in typing-speed measurement, where a word is five characters plus a space — so a 4,000-character UCAS cap and a 650-word Common App cap can be planned identically. It then splits the limit across the six sections of a statement of purpose using the largest-remainder method, counts your programme-specific anchors, and flags the stock openings admissions readers see hundreds of times a cycle.",
   useCases: [

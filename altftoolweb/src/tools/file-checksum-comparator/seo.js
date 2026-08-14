@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compare a File's SHA-256 Checksum in Your Browser",
+  metaDescription:
+    "Hash a local file up to 512 MB with SHA-256, 384 or 512 and match it to the publisher's hex digest. Read via Web Crypto in the tab, never uploaded.",
+  steps: [
+    "Under \"1. Choose the file\", select any local file up to 512 MB — it is read and hashed inside this browser tab, not uploaded.",
+    "In \"2. Paste and compare\", paste the publisher's value into Expected checksum, leave Algorithm on \"Detect from checksum length\", and press Compare checksum.",
+    "The page returns \"Checksums match\" or \"Checksums do not match\" and shows the Calculated SHA-256/384/512 digest with a Copy calculated hash button.",
+  ],
   intro:
     "File Checksum Comparator hashes a file you choose with SHA-256, SHA-384 or SHA-512 using the browser's Web Crypto API and compares the resulting hex digest against the checksum a publisher gave you, in a constant-time character comparison. Paste the expected value and the algorithm is inferred from its length — 64 hex characters for SHA-256, 96 for SHA-384, 128 for SHA-512 — with the file read locally and never uploaded. It is for anyone verifying an installer, ISO, firmware image or archive actually matches what the vendor published.",
   useCases: [

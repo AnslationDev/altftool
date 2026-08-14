@@ -1,4 +1,12 @@
 const seo = {
+  title: "Keyboard & Mouse Position Guide: Height, Tilt, Reach",
+  metaDescription:
+    "Measures key-surface height against your seated elbow height, keyboard tilt from the front and back key heights, and how far the board pushes the mouse.",
+  steps: [
+    "Enter your height in cm, seat height floor to cushion and desk height floor to surface; elbow height, forearm reach and shoulder width are derived from those.",
+    "Pick a Keyboard layout — Full-size 104 key at 44 cm, Tenkeyless 87 key at 36 cm, 75%, 65%, 60% or laptop — then give the mouse width, the gap to the mouse, the key heights at the front and back edges and the keyboard depth.",
+    "Read the mouse offset from your shoulder line, the keyboard tilt in degrees with a warning when it passes the neutral-wrist limit, and the table of where each layout would put the mouse.",
+  ],
   intro:
     "This guide measures three things that decide whether typing is neutral: the height of the key surface against your seated elbow height, the tilt of the key plane calculated from its front and back heights, and how far your keyboard's width pushes the mouse outside your shoulder line. Elbow height, forearm reach and shoulder width are derived from your body height using 50th-percentile adult proportions, and the mouse offset is compared against the reach the forearm covers on its own. It is aimed at anyone who has fixed the chair and the monitor and still has an aching mouse shoulder.",
   useCases: [

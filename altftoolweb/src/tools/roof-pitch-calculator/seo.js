@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roof Pitch Calculator: Rise in 12, Degrees, Percent",
+  metaDescription:
+    "Convert roof pitch between rise-in-12, degrees, percent and 1-in-n, with slope factor, hip factor, rafter lengths and a minimum-pitch check.",
+  steps: [
+    "Under 'How is your pitch written?' choose Rise in 12, Degrees, Percent, 'Ratio 1 : n' or 'Measured rise & run', then enter the value — in rise-in-12 mode the 2 in 12 to 12 in 12 chips fill it for you.",
+    "Optionally add 'Full span wall to wall (ft)' and 'Horizontal overhang at the eaves (ft)'; the conversion recomputes as you type, with no calculate button.",
+    "Read the Pitch angle headline and the table of Rise per 12 of run, Grade as a percentage, Ratio 1 : n, Slope factor, Hip and valley factor and 'Rafter to cut in total', check 'Coverings this pitch can take' for Suitable or Too shallow, then press 'Copy result'.",
+  ],
   intro:
     "Roof pitch is a single quantity — the tangent of the slope, rise divided by run — written four different ways, and this calculator converts between all of them: rise per 12 of run, degrees (atan of rise/run), percentage grade and 1-in-n ratio. It also returns the slope factor sqrt(1 + (rise/run)²) that turns plan area into roof area, the hip and valley factor sqrt(2 + (rise/run)²), and the rafter lengths for a given span. Useful when a drawing gives degrees, the roofer talks in twelfths and the sheet datasheet quotes a minimum in percent.",
   useCases: [

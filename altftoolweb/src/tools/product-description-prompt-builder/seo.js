@@ -1,4 +1,12 @@
 const seo = {
+  title: "Product Description Prompt Builder for Amazon & Etsy",
+  metaDescription:
+    "Turn a feature list into a listing-copy prompt: feature-to-benefit bullets, a word budget that sums exactly, and Amazon, Etsy or eBay title limits.",
+  steps: [
+    "Type the product name and paste your features, one per line, into the Features box.",
+    "Pick Where it will be listed (Amazon, Etsy or eBay), a Tone, and the Description length (words).",
+    "The Copy budget panel splits those words across five sections; press Copy prompt for the finished brief.",
+  ],
   intro:
     "Product Description Prompt Builder converts a raw feature list into a listing-copy prompt that pairs every feature with the benefit it creates, splits a word budget across the five parts of a listing, and carries the destination marketplace's real title, bullet and description limits. The split uses the largest-remainder method so the section word counts always add back to the total you asked for. Aimed at sellers and copywriters who want listings that read like a spec sheet a human wrote, not a wall of adjectives.",
   useCases: [

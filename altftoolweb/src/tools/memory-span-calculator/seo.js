@@ -1,4 +1,12 @@
 const seo = {
+  title: "Memory Span Test: Adaptive Digit & Letter Recall",
+  metaDescription:
+    "Adaptive digit span test: sequences grow after each correct recall, each item shown for 800ms. Forward, reverse, letters or colours, graded against 7±2.",
+  steps: [
+    "Pick one of the four Test Mode cards — Digits Forward, Digits Reverse, Letters or Visual Colours — then click Start Test to watch the sequence, one item every 800 ms.",
+    "When the panel switches to \"Your Turn — Recall the Sequence\", type the items separated by commas or spaces and press Submit Answer; a correct recall adds one item to the next sequence and repeated misses take one away.",
+    "Read the Current Span, Best Span, Accuracy and Streak cards with the Span Over Time and Accuracy by Length charts, then use the CSV button in Attempt History to download memory-span-test.csv.",
+  ],
   intro:
     "The Memory Span Calculator measures your short-term memory span with an adaptive sequence test: it shows a sequence one item at a time, asks you to type it back, then lengthens the sequence by one item after a correct answer and shortens it after repeated errors. Four modes are available — digits forward, digits reverse, random letters and coloured squares — and your span is reported against Miller's classic 7±2 range. Students, cognitive-psychology learners and anyone curious about their working memory get a running span chart, per-length accuracy and a CSV export of every attempt.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subscript Generator: Type H₂O and CO₂ Anywhere",
+  metaDescription:
+    "Turns typed digits into real Unicode subscripts, U+2080 to U+2089, plus the + − = ( ) operators, so H₂SO₄ pastes as plain text anywhere.",
+  steps: [
+    "Type or paste your formula into the Input Text box — the character count updates beneath it.",
+    "Open the info button for the Supported Characters list, and watch the amber 'Unsupported characters' warning for anything with no subscript form.",
+    "Press Copy to take the Subscript Output as plain Unicode text, or Reset to clear the input.",
+  ],
   intro:
     "The Subscript Generator rewrites typed text using Unicode subscript characters — digits 0–9 become the real subscript code points U+2080 to U+2089 and the operators + − = ( ) become U+208A to U+208E — so the result is plain text you can paste anywhere without formatting. It is for anyone who needs H₂O or CO₂ in a field that has no formatting toolbar: chemistry notes, social bios, spreadsheet headers, filenames. Characters with no subscript form are passed through unchanged and listed so you know exactly what did not convert.",
   useCases: [

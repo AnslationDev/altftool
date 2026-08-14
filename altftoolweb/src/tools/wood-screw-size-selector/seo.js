@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wood Screw Size Selector: Gauge, Length, Pilot Hole",
+  metaDescription:
+    "Two board thicknesses give the screw gauge and length, pilot and clearance hole, countersink diameter and minimum end and edge distances.",
+  steps: [
+    "Enter Top board thickness (mm) and Base board thickness (mm), then pick Base material, Joint type and Load on the joint.",
+    "Tick I will drill a pilot hole and The tip may break through the far face wherever either applies to the joint you are making.",
+    "Read the gauge and length call-out with Pilot hole in the base board, Clearance hole in the top board and Countersink diameter, then press Copy result.",
+  ],
   intro:
     "This selector turns two board thicknesses and a joint type into a specific screw call-out: gauge, length, pilot hole, clearance hole, countersink diameter and the minimum distance to keep from an end or edge. It applies the standard workshop rules — gauge from the thickness of the board being screwed into, length from the rule that a screw should bury about twice the top board's thickness while stopping 3 mm short of the far face, and pilot holes at roughly 60% of the screw's major diameter in softwood and 70% in hardwood. Those two pilot factors reproduce the published drill charts, so a #8 screw comes out at 2.5 mm in pine and 2.9 mm in oak.",
   useCases: [

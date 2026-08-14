@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chennai Airport MAA: When to Leave Home Calculator",
+  metaDescription:
+    "Work back from your MAA departure through gate close, security, bag drop and the drive to one time to leave home, and see which deadline binds.",
+  steps: [
+    "Set 'Scheduled departure time' from the ticket, then 'Flight type' and 'Baggage' — a checked bag to drop, or cabin bag only, checked in online.",
+    "Choose 'Starting from' for your suburb, then 'Road conditions', 'Terminal queues', the parking-and-walk minutes and your personal buffer.",
+    "Read 'Leave home by', the 'Driven by' row naming the binding deadline, and the minute-by-minute timeline through gate close.",
+  ],
   intro:
     "This calculator turns a Chennai MAA departure time into the single time you need to leave home, working backwards through the boarding-gate close, security, emigration, bag drop and the drive down GST Road. It applies the larger of three deadlines - the advised reporting time (2 hours domestic, 3 hours international at Chennai International), the airline bag-drop cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Handy for the heavy late-night bank of Gulf and South-East Asia departures.",
   useCases: [

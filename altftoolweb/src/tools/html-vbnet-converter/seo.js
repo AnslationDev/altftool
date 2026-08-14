@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTML to ASP.NET VB Converter (and Back to HTML)",
+  metaDescription:
+    "Turn {{ placeholders }} into Server.HtmlEncode expressions with a Page directive and Protected fields — or strip the server blocks back to plain HTML.",
+  steps: [
+    "Pick a direction — HTML to VB.NET or VB.NET to HTML — then paste into the Source code box, press Upload code to load a .html, .htm, .aspx, .ascx, .vb or .txt file, or press Load sample.",
+    "Toggle the options for that direction: Page directive, Server block, Base-path assets and Safe expressions going to VB.NET; Strip server code, Expression placeholders, Logic as comments and Decode strings coming back to HTML.",
+    "Read Generated VB.NET or Generated HTML in the output pane, then press Copy, or Download to save converted.aspx or converted.html; Swap feeds the output back in as the new input.",
+  ],
   intro:
     "This converter moves markup between plain HTML and ASP.NET Web Forms with VB: HTML to VB.NET rewrites every {{ placeholder }} as <%= Server.HtmlEncode(name) %>, adds a <%@ Page Language=\"VB\" AutoEventWireup=\"false\" %> directive and a <script runat=\"server\"> block declaring each value as Protected name As String, and prefixes root-relative src/href/action paths with <%= basePath %>. VB.NET to HTML runs the same mapping backwards, stripping directives and server blocks, decoding Response.Write string literals, and turning encoded expressions back into {{ }} placeholders. It is for developers maintaining .aspx pages who want to edit the markup as ordinary HTML.",
   useCases: [

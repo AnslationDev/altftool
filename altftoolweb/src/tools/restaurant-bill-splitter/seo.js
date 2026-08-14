@@ -1,4 +1,12 @@
 const seo = {
+  title: "Restaurant Bill Splitter With Proportional GST and Tip",
+  metaDescription:
+    "Assign each dish to who ordered it and GST plus tip follow their share — per-person totals that add back to the exact bill, with the check shown.",
+  steps: [
+    "Type a name into \"Add person\" and press Add for everyone at the table, then under \"Add item\" enter the Item name and Price (₹).",
+    "Under \"Who shares it?\" tap Everyone or just the diners who shared that dish and press \"Add item\"; then set \"GST / tax (%)\" and \"Tip / service (%)\" — they start at 5 and 10 — or flip \"Split everything evenly\".",
+    "\"Per-person breakdown\" gives each diner their Items, Share of GST, Share of tip and Total, the line under \"Bill summary\" adds those totals and confirms they match the grand total, and \"Copy split\" copies the result.",
+  ],
   intro:
     "The Restaurant Bill Splitter assigns each dish to the people who actually ordered it, then charges GST and tip in proportion to what each person ate rather than dividing them equally. Every diner's total is their item share multiplied by (1 + tax rate + tip rate), so the individual amounts always add back to the exact grand total — the tool shows that reconciliation check on screen. It is for groups where one person ordered drinks and dessert and another only had a starter, and an even split would be unfair.",
   useCases: [

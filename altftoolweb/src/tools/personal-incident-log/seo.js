@@ -1,4 +1,12 @@
 const seo = {
+  title: "Personal Incident Log Kept in Your Own Browser",
+  metaDescription:
+    "Keep a dated incident record in this browser's localStorage: one entry per event, searchable by any word in it, exportable as a JSON file you keep.",
+  steps: [
+    "Put a short label in the Incident field and the date, what happened and where the supporting evidence sits in \"Date, details, and evidence\".",
+    "Press Add record to append it to the log in this browser's localStorage; Export JSON downloads personal-incident-log.json and Import JSON replaces every saved record after a confirm prompt.",
+    "\"Saved records\" lists every entry with a running count, the Search records box filters on any text an entry contains, and each record carries its own Delete button behind a confirmation.",
+  ],
   intro:
     "Personal Incident Log is a private record keeper for documenting incidents one at a time: each entry pairs a short incident title with a free-text field for the date, what happened, and where the supporting evidence sits. Entries are written to this browser's own localStorage rather than to an account, and the whole log can be searched by any word in it or exported as a single JSON file. It is built for anyone keeping a contemporaneous written record — of harassment, a dispute, or a run of service failures — before the details blur.",
   useCases: [

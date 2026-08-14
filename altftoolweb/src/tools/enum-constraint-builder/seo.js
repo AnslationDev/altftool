@@ -1,4 +1,12 @@
 const seo = {
+  title: "Enum Constraint Builder: One List to Prompt, Schema, SQL",
+  metaDescription:
+    "Turn one list of allowed values into an LLM prompt rule, JSON Schema enum, TypeScript union, Zod, Pydantic Literal and SQL CHECK — de-duplicated once.",
+  steps: [
+    "Enter the Field name and paste your Allowed values (comma or newline separated), optionally setting a 'Fallback value when unsure' and ticking 'Collapse values that differ only by case'.",
+    "Check the Allowed values count of distinct members after de-duplication and any Consistency warnings, which flag values differing only by case.",
+    "Read the generated Prompt rule, JSON Schema, TypeScript union, Zod, Pydantic / typing.Literal and SQL CHECK constraint blocks, then press Copy all to take every artefact at once.",
+  ],
   intro:
     "This builder turns one list of allowed values into every artefact that must agree with it: an LLM prompt rule ordering the model to answer with exactly one value verbatim, a JSON Schema enum (draft 2020-12, where matching is exact and case-sensitive), a TypeScript string union, a Zod enum, a Python typing.Literal and a SQL CHECK constraint. It is for developers building structured LLM outputs who are tired of the prompt, the validator and the database silently drifting apart.",
   useCases: [

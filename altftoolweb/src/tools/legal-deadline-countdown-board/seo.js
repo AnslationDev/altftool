@@ -1,4 +1,12 @@
 const seo = {
+  title: "Legal Deadline Tracker: Working Days & Start-By Dates",
+  metaDescription:
+    "Ranks every filing and limitation date by urgency with calendar days, working days net of weekends and registry holidays, and the date to start drafting.",
+  steps: [
+    "Press 'Add deadline' and fill each row's title, 'Matter / reference', 'Due date' and 'Start drafting (days before)'; list registry holidays as YYYY-MM-DD, comma separated, in the holidays field.",
+    "Read the 'Next deadline' countdown and the summary counts — already overdue, due today, falling inside 7 days and 'Should be in drafting now'.",
+    "Scan 'The board' table for each matter's days, working days, start-by date and colour-coded status band, then press 'Copy board' for a text copy.",
+  ],
   intro:
     "This board turns a list of filing dates, limitation dates and reply dates into a single ranked countdown, showing calendar days left, working days left and the date drafting should begin. Working days are counted as every day after today up to and including the due date that is not a Saturday, Sunday or a registry holiday you enter, which is how a docketing clerk counts time. It is built for advocates, in-house counsel, paralegals and compliance officers who juggle several matters at once.",
   useCases: [

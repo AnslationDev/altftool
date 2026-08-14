@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Calculator for Small Traders: Composition or Not",
+  metaDescription:
+    "Checks your state's Rs 40/20/10 lakh registration threshold, whether the composition scheme is still open, and which leaves more margin at one price.",
+  steps: [
+    "Pick your Kind of business - Trader / retailer of goods, Manufacturer, Restaurant or Service provider - and your State or union territory.",
+    "Enter Annual turnover / receipts (INR), Annual purchases, GST inclusive (INR) and both GST rates, then tick I sell to customers in other states if you do.",
+    "Read the Better scheme for you, your state's registration threshold, the composition ceiling and levy rate, and any eligibility blockers listed.",
+  ],
   intro:
     "This calculator answers three questions for a small Indian business at once: whether turnover has crossed the GST registration threshold in its own state under section 22 read with Notification 10/2019-CT, whether the composition scheme in section 10 of the CGST Act is still open, and which of the two schemes leaves more margin at the same selling price. It compares the 1% composition levy for traders and manufacturers, 5% for restaurants and 6% for service providers against the regular scheme's output tax less input tax credit. Built for kirana stores, small manufacturers, eateries and single-state service firms deciding how to register.",
   useCases: [

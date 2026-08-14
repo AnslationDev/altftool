@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scan Line Overlay Generator: CRT SVG, PNG and CSS",
+  metaDescription:
+    "Build CRT scan lines, aperture grille or an RGB shadow mask, see the exact brightness loss, and export transparent SVG, PNG or repeating-gradient CSS.",
+  steps: [
+    "Set Width (px) and Height (px), pick a Pattern style of Horizontal scan lines, Aperture grille (vertical), RGB shadow mask triads or Interlaced field lines, then set Line period (px), Line thickness (px), Opacity (0-1) and a Line tone of dark or light lines.",
+    "Tap a \"Match a CRT standard at this height\" chip — NTSC 525i (486 active lines), PAL 625i (576 active lines), VGA 640×480 or CGA 320×200 — to set the period from your output height; a period under 4 px is flagged as a moiré risk.",
+    "\"Perceived brightness change\" reports the light removed, with Surface coverage, Average alpha and Line density listed. \"SVG\" and \"PNG\" download the transparent overlay as scanlines-horizontal-4px.svg or .png, and \"Copy CSS\" copies the repeating-gradient block shown under \"CSS-only version\".",
+  ],
   intro:
     "Scan Line Overlay Generator builds CRT-style stripe overlays — horizontal scan lines, a vertical aperture grille, an RGB shadow mask or interlaced field lines — and exports them as a transparent SVG, PNG or pure CSS. The pattern is described by a period (start of one line to the start of the next) and a thickness, so surface coverage is thickness ÷ period and the average light removed is coverage × opacity. It also matches real display standards: 486 active lines for NTSC, 576 for PAL, 480 for VGA and 200 for CGA.",
   useCases: [

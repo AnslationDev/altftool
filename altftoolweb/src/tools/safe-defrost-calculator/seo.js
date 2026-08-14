@@ -1,4 +1,12 @@
 const seo = {
+  title: "Safe Defrost Time Calculator: Fridge, Water, Microwave",
+  metaDescription:
+    "Thawing times for nine foods by fridge, cold water or microwave, plus the exact clock time to move it out of the freezer for your cooking hour.",
+  steps: [
+    "Pick the food — whole chicken, mince, fish fillets, prawns, bread or cooked leftovers — and set the weight anywhere from 0.25 to 6 kg.",
+    "Compare the fridge, cold water and microwave panels: 12 hr per kg for a whole chicken, or 30 min per 500 g submerged in cold tap water.",
+    "Set the cooking date and time in Today's planner, then press Copy plan for the freezer-out time, water-change times and safe internal temperature.",
+  ],
   intro:
     "The Safe Defrost Time Calculator estimates how long frozen food takes to thaw by each of the three safe methods — in the fridge at a per-kilogram rate for that food, in cold water at 30 minutes per 500 g with the water changed every 30 minutes, or on a microwave defrost setting — and then works backwards from your cooking time to the exact moment the food has to leave the freezer. Pick from nine food types, from whole chicken and roasting joints to fish, prawns, mince, bread and cooked leftovers, and it also gives the safe internal cooking temperature for what you selected. It exists because the countertop method that most people default to is the one that makes them ill.",
   useCases: [

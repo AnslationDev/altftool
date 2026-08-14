@@ -1,4 +1,12 @@
 const seo = {
+  title: "Zoom Virtual Background Maker With a Face-Safe Zone",
+  metaDescription:
+    "Builds a 1920x1080 16:9 Zoom background, marks the face-safe zone your head covers, scores WCAG text contrast and exports a PNG under Zoom's 15 MB cap.",
+  steps: [
+    "Fill in Name, Role or company and Handle or website, then set Export size to 1920 x 1080 (Zoom recommended) or 1280 x 720 (Zoom minimum).",
+    "Choose a Theme, a Brand panel position such as Top left, Your camera framing (Close-up, Medium or Wide) and Where you sit, then toggle Show face-safe zone and Mirror preview (self view).",
+    "The panel reports Brand panel covered by you as a percentage, the gallery-legible floor for a 320 px tile and Text contrast (WCAG 2.1); Download PNG saves a file named like priya-raman-zoom-background-1920x1080.png.",
+  ],
   intro:
     "Zoom Virtual Background Maker builds a 16:9 branded background at Zoom's own specs — 1920x1080 recommended, 1280x720 minimum, under the 15 MB image cap — and marks the face-safe zone where your head and shoulders will cover the artwork. It measures how much of your name panel you would sit on top of, scores text contrast with the WCAG 2.1 formula, and sets a minimum type size that still reads when Zoom shrinks you into a gallery tile. Aimed at anyone who wants a name-and-role lower third on calls without hiring a designer.",
   useCases: [

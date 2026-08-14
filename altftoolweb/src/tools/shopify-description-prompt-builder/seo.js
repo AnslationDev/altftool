@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shopify Product Description Prompt Builder & Handle",
+  metaDescription:
+    "Builds one prompt for description, SEO title, meta description and alt text, checks the 320-char meta field, and generates the Shopify URL handle.",
+  steps: [
+    "Enter Product title, Brand, Collection and Buyer, then fill \"Features and specifications — one per line\" and \"Keywords — one per line, primary first\".",
+    "Pick Voice traits and Words to never use, choose a Description structure and word length, and paste any Current meta description to test it against 320 and 155 characters.",
+    "Copy prompt takes the generated brief; Copy handle takes the URL handle, and the SEO page title panel counts your title against 70 characters.",
+  ],
   intro:
     "This builder produces a single prompt covering everything on a Shopify product page: the description, the SEO page title, the meta description and image alt text, with each field's limit stated in the brief. It generates the URL handle from your title using Shopify's own slug rules, and checks an existing meta description against both the 320-character field maximum and the roughly 155 characters a desktop search result actually shows. It suits store owners and agencies writing many products in one consistent voice.",
   useCases: [

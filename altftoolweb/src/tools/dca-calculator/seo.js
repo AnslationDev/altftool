@@ -1,4 +1,12 @@
 const seo = {
+  title: "DCA Calculator: Weekly to Yearly Investment Growth",
+  metaDescription:
+    "Compound a lump sum plus recurring contributions weekly to yearly. Returns projected value, total invested, ROI, CAGR, inflation-adjusted and ±2% cases.",
+  steps: [
+    "Under \"Investment Details\" enter \"Initial Investment\" and \"Recurring Investment\", then pick \"Investment Frequency\" — Weekly, Bi-Weekly, Monthly, Quarterly or Yearly — and a Currency (INR ₹, USD $, EUR € or GBP £).",
+    "Set \"Expected Annual Return\", \"Duration (Years)\", \"Inflation Rate\" and the \"Compounding\" basis; the per-period rate is derived from the compounding frequency and the contribution frequency together.",
+    "Read \"Estimated portfolio\" with the Total Invested, Estimated Profit, CAGR and Inflation Adjusted cards and the Scenario Comparison at ±2%, then press \"Export CSV\" to download dca-calculator-schedule.csv.",
+  ],
   intro:
     "The DCA Calculator projects what a dollar-cost-averaging plan could grow to by compounding a lump sum plus a fixed recurring contribution period by period, using a per-period rate of (1 + annual return / compounding frequency)^(compounding frequency / contributions per year) − 1. You set the contribution rhythm — weekly (52), bi-weekly (26), monthly (12), quarterly (4) or yearly (1) — the expected annual return, the horizon and an inflation rate, and it returns the projected value, total invested, profit, ROI and an inflation-adjusted figure, plus best and worst cases at ±2% on the return. It is a projection model for planning, not a forecast of what any real investment will do.",
   useCases: [

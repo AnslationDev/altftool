@@ -1,4 +1,12 @@
 const seo = {
+  title: "Link Anatomy Highlighter: See a URL's Real Domain",
+  metaDescription:
+    "Colour-codes a URL's scheme, userinfo, subdomain, registered domain, path and query, and flags @ tricks, xn-- punycode and redirect params. Never fetched.",
+  steps: [
+    "Type a link into 'Link to inspect', or load one of the Genuine, Userinfo trick, Punycode and Shortened samples.",
+    "The link is only read as text and never fetched; each part is coloured and the row 'Registered domain — the part that matters' names the real destination.",
+    "Read the Attention score out of 100 with findings for userinfo before @, xn-- punycode hosts and redirect parameters, then press Copy result.",
+  ],
   intro:
     "Link Anatomy Highlighter splits a URL into its RFC 3986 parts — scheme, user info, subdomain, registered domain, port, path, query and fragment — and colours each one so you can see which piece actually decides where the click goes. It then flags the structures used in phishing: text before an @ sign, punycode (xn--) hosts, brand names parked in a subdomain, redirect parameters carrying a second URL, and paths ending in an executable. The whole analysis happens in the browser, so the link is read as text and never opened or sent to a server.",
   useCases: [

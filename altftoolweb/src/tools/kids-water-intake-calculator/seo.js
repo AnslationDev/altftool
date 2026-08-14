@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Water Intake Calculator: Holliday-Segar + EFSA",
+  metaDescription:
+    "Takes the higher of the 100/50/20 ml Holliday-Segar rule and the EFSA age intake, subtracts water from food, and adds an AAP sport top-up.",
+  steps: [
+    "Enter Age (years) and Extra months, Weight (kg), Sex (used from age 9 onwards) and Vigorous activity today (minutes).",
+    "Tick \"Hot or humid conditions\" for the top of the AAP per-20-minute range; at 6 to 12 months the tool switches to the 120–240 ml plain-water band instead.",
+    "Read the ml-per-day headline and cup count beside the EFSA guideline, Holliday-Segar figure, water from food and sport top-up rows, then press Copy result.",
+  ],
   intro:
     "The Kids Water Intake Calculator gives a daily drinking target for a child by taking the higher of two published references: the Holliday-Segar maintenance rule of 100 ml/kg for the first 10 kg, 50 ml/kg for the next 10 kg and 20 ml/kg beyond that, and the EFSA adequate intake for total water at the child's age and sex. Because both figures describe total water including what food supplies, the tool subtracts the food share before reporting what a child should actually drink, then adds a sport top-up from American Academy of Pediatrics activity guidance. It is aimed at parents, carers and coaches who want a number grounded in a real rule rather than the vague 'eight glasses' advice.",
   useCases: [

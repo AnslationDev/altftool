@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPI QR Tamper Check: Compare Merchant QR Payloads",
+  metaDescription:
+    "Put a trusted upi:// payload beside the current one and compare pa, pn, mid, am, cu, tr and tid field by field. Decoded locally, never opened.",
+  steps: [
+    "Paste the trusted reference upi:// payload on one side and the current displayed QR on the other, or press Upload QR image for a JPEG, PNG or WebP file.",
+    "Tick the independently-trusted reference confirmation, then press 'Compare selected UPI fields'.",
+    "Read the matching, mismatching and not-checkable counts and the per-field table, then press Download counts-only report for merchant-qr-comparison-counts.csv.",
+  ],
   intro:
     "The Merchant QR Tamper Comparator puts a trusted UPI QR payload side by side with a current one and reports, field by field, whether they still agree. It parses each upi:// URI and compares eight fields — payment action, payee VPA (pa), payee name (pn), merchant ID (mid), fixed amount (am), currency (cu), transaction reference (tr) and transaction ID (tid) — under documented normalisation, and flags payloads carrying duplicate parameters or invisible Unicode controls as not checkable rather than guessing. Shop owners, auditors and anyone who maintains a printed QR at a counter get a deterministic difference report without any payment app being opened.",
   useCases: [

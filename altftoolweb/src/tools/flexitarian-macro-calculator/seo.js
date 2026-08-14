@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flexitarian Macro Calculator with Weekly Meat Cap",
+  metaDescription:
+    "Daily calories and macros for plant-first eating, with the Beginner 26 oz, Advanced 18 oz and Expert 9 oz weekly meat caps and a 10% plant-protein uplift.",
+  steps: [
+    "Enter Sex (for the BMR equation), Age (years), Weight (kg) and Height (cm), then pick your Activity level and Goal.",
+    "Choose a Flexitarian level — Beginner (2 days a week, 26 oz), Advanced (3-4 days, 18 oz) or Expert (5 or more days, 9 oz) — which fills 'Meat, poultry and fish (oz per week)' with that cap, then set 'One serving (oz)' and 'Usable protein target (g per kg)'.",
+    "Read the Daily protein target with its split into '…from the meat allowance' and '…from plants (10% uplift applied)', the 'Fibre target (14 g per 1,000 kcal)' row and the Weekly meat plan naming the level your intake actually matches; Copy result copies the summary.",
+  ],
   intro:
     "Flexitarian eating is plant-first with a capped weekly meat allowance rather than full vegetarianism, and its three published levels are defined by exactly that cap: Beginner allows up to 26 oz of meat a week over two meatless days, Advanced 18 oz over three to four, Expert 9 oz over five or more. This calculator turns your body size and activity into daily calories and macros, then splits the protein between that weekly allowance (1 oz of cooked meat ≈ 7 g protein) and plant sources, adding about 10% to the plant share to allow for lower protein digestibility. It also sets a fibre target of 14 g per 1,000 kcal, which is the Institute of Medicine adequate intake.",
   useCases: [

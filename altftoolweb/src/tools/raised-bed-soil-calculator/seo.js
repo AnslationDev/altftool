@@ -1,4 +1,12 @@
 const seo = {
+  title: "Raised Bed Soil Calculator: Litres, Blocks and Weight",
+  metaDescription:
+    "Soil, compost, cocopeat and perlite for any bed size, after headspace, bottom filler and settling. Cocopeat comes out as 5 kg blocks at 75 L each.",
+  steps: [
+    "Choose the Measurement unit, then enter How many beds, Length, Width and Bed height for the bed you are filling.",
+    "Set 'Headspace at the rim', 'Bottom filler depth' and the Settling allowance (%), then pick a Mix recipe or type your own percentages.",
+    "Read the total mix to buy in litres, cubic feet and kilograms, with cocopeat listed as 5 kg blocks in the Shopping list table.",
+  ],
   intro:
     "This calculator turns raised bed dimensions into the litres of soil, compost, cocopeat and perlite you actually have to buy. It works from length × width × fill depth, then applies the three corrections that catch people out: headspace left at the rim, any coarse bottom filler such as logs and dry leaves, and the 10-20% a fresh mix loses as it settles in its first season. Quantities come out in litres, cubic feet and kilograms, with cocopeat converted into 5 kg compressed blocks, since one block expands to roughly 75 litres.",
   useCases: [

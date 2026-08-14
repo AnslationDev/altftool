@@ -1,4 +1,12 @@
 const seo = {
+  title: "What's Your Hidden Talent? Free 10-Question Quiz",
+  metaDescription:
+    "A 10-question quiz that scores six talents — Artistic Vision to Creative Inventor — and names your top one with five strengths and four famous examples.",
+  steps: [
+    "Click Start the Quiz and answer 10 multiple-choice questions; picking an option moves you straight to the next screen.",
+    "Each answer adds weighted points (typically 2-3 to its primary talent, 1 to a related one) across all six talents, and the highest total wins.",
+    "Read your result — the talent name, five component strengths, four famous examples and a quote — or click Retake the Quiz to start over.",
+  ],
   intro:
     "What's Your Hidden Talent? is a 10-question quiz that identifies which of six natural abilities you lean on most — Artistic Vision, Musical Genius, Wordsmith, Natural Leader, Empathic Healer or Creative Inventor. Questions run from what absorbed you as a child to how you solve problems now, and every answer adds weighted points to more than one talent before the highest total is named. Each result lists five specific strengths behind that talent, four well-known people who share it and a short quote.",
   useCases: [

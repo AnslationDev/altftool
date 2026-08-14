@@ -1,4 +1,12 @@
 const seo = {
+  title: "Find Match: 40/30/30 Compatibility Scoring Demo",
+  metaDescription:
+    "A scoring demo: interests are worth 40 points, personality 30 and lifestyle 30, ranking five fictional sample profiles against your answers.",
+  steps: [
+    "Fill Name * and Age *, add a Location, then select at least one interest from Music, Reading, Food & Dining, Travel, Sports and Art & Culture.",
+    "Choose a Personality Type of Introvert, Extrovert or Ambivert and a Lifestyle of Active, Relaxed or Balanced, then press 'Find My Matches'.",
+    "Read the ranked cards under 'Your Matches' — each shows a Compatibility % and a band from Perfect Match down to Potential Match, with shared interests highlighted; '← Edit Profile' goes back.",
+  ],
   intro:
     "This is a compatibility-score demo: you fill in a short profile — name, age, location, interests, personality type and lifestyle — and it ranks five built-in sample profiles against you with a 40/30/30 weighted score. Shared interests are worth up to 40 points (shared interests ÷ the number you picked, times 40), personality contributes 30 for an exact match, 20 if either side is an ambivert and 10 otherwise, and lifestyle scores the same way with 'balanced' as the flexible middle. It is a demonstration of how a matching algorithm weighs its inputs, not a dating service — the profiles it scores against are fictional examples, and nothing you type is sent anywhere.",
   useCases: [

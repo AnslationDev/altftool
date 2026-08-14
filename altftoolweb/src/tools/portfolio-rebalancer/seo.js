@@ -1,4 +1,12 @@
 const seo = {
+  title: "Portfolio Rebalancer: Exact Buys, Sells or New Money",
+  metaDescription:
+    "Compare each holding against its target, see the drift in percentage points, and get exact buys and sells - or fix it with fresh money, no selling.",
+  steps: [
+    "Fill each row of Your holdings with Asset, Class, Current value and Target %, using Add asset for more rows and Scale to 100 if the targets do not add to 100%.",
+    "Pick Sell and buy for exact targets today, or Fresh money only and enter a figure in New money to invest; the Exactly enough chip fills in the sum that closes the drift with nothing sold.",
+    "Read the Drift column in pp against the 5-point band, work down Your action plan for the Asset, Action and Amount of every trade, then press Copy plan.",
+  ],
   intro:
     "The Portfolio Drift Rebalancer compares each holding's current weight against its target, reports the drift in percentage points against a ±5 point band, and produces the exact buy and sell amounts to bring the portfolio back to plan. A second mode allocates only fresh money — filling the underweight assets first, selling nothing — and tells you how much new money it would take to fix the drift without a single redemption. It is aimed at Indian investors weighing a rebalance against the capital gains it would trigger. It is informational, not tax or investment advice.",
   useCases: [

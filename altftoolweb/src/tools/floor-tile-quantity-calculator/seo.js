@@ -1,4 +1,12 @@
 const seo = {
+  title: "Floor Tile Calculator: Boxes, Adhesive & Grout Needed",
+  metaDescription:
+    "Turn room size in feet into tile boxes to order — wastage 0-40% built in — plus adhesive kg at 1.5 kg/sqm/mm and grout weight, priced per box in INR.",
+  steps: [
+    "Enter room length and width in feet plus any additional area in sqft, then set the tile size in mm or tap a preset like 600 x 600 mm.",
+    "Set 'Tiles per box', 'Price per box (INR)' and the 'Wastage allowance (%)' — anywhere from 0 to 40% for cuts and breakage.",
+    "Read 'Boxes to order' with adhesive in 20 kg bags and grout kilos, then click 'Copy result' for the full take-off.",
+  ],
   intro:
     "This calculator converts a room's floor area into the number of tile boxes to order by dividing floor area by the area of a single tile, adding a wastage percentage for cuts and breakage, then rounding up to whole boxes. It also sizes the tile adhesive from the standard 1.5 kg per square metre per millimetre of bed thickness, and the grout from the joint-volume formula printed on grout packs. It is aimed at homeowners placing a tile order and at contractors preparing a material take-off.",
   useCases: [

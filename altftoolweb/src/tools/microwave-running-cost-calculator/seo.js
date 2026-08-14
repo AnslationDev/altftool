@@ -1,4 +1,12 @@
 const seo = {
+  title: "Microwave Running Cost: an 800 W Oven Draws 1230 W",
+  metaDescription:
+    "Cost per reheat, month and year for solo, grill and convection — the door rating is output, so an 800 W oven pulls about 1230 W. Standby counted.",
+  steps: [
+    "Pick 'Cooking mode' — Solo microwave, Grill (quartz element) or Convection (baking). The power field relabels to match: 'Rated microwave output power (W)' starts at 800, the grill element at 1100 and convection at 1400.",
+    "Set 'Power level used (%)', 'Minutes per run' and 'Runs per day', which start at 100%, 5 and 3, plus 'Standby draw (W)' for the clock, typically 1-5 W, 'Days used per month' and 'Electricity tariff (₹ per unit)'. Convection adds a 'Preheat minutes' field that runs the element at full power.",
+    "'Cost per run' appears with the power actually drawn from the socket, the energy per run in kWh, standby's share of the daily total, and cost per month and per year. The 'What common jobs cost' table prices standard jobs at your own wattages, and 'Copy result' takes the summary.",
+  ],
   intro:
     "This calculator turns a microwave's rated wattage into the rupees it adds to your bill per meal, per month and per year. The key correction it makes is that the figure on the door — 700 W, 800 W, 900 W — is cooking output, not socket draw: a magnetron and its transformer run at roughly 65% efficiency, so an 800 W oven actually pulls about 1230 W. Grill and convection modes use resistive elements where the rated wattage is the draw, and convection cycles on a thermostat once the cavity is hot, so all three are handled separately.",
   useCases: [

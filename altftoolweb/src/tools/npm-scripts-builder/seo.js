@@ -1,4 +1,12 @@
 const seo = {
+  title: "npm Scripts Builder: Pre/Post Hooks & Windows Audit",
+  metaDescription:
+    "Compose a package.json scripts block with automatic pre/post hooks, run-s/run-p or concurrently combos, and an audit for commands cmd.exe breaks.",
+  steps: [
+    "List scripts one per line as 'name = command' in the Scripts box — any pre<name> or post<name> entry is detected as a hook npm runs automatically.",
+    "Name a combined script, list its member scripts comma separated, choose sequential or parallel execution and pick a Runner: 'npm-run-all (run-s / run-p)', concurrently or plain shell.",
+    "Read the generated scripts JSON with its 'Dev dependencies needed' row and Windows cmd.exe warnings, then press 'Copy JSON' to paste into package.json.",
+  ],
   intro:
     "This builder composes an npm scripts block with automatic pre/post hooks, combined sequential (run-s, &&) or parallel (run-p, concurrently) runners, and a cross-platform audit based on how npm executes scripts through cmd.exe on Windows. It is for JavaScript developers who want lint-test-build pipelines in package.json that behave identically on macOS, Linux and Windows, and it tells you exactly which devDependencies (npm-run-all, concurrently, cross-env, rimraf) the generated block needs.",
   useCases: [

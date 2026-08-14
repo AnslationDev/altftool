@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Life Challenge Generator with XP and Badges",
+  metaDescription:
+    "Rolls one of 19 self-improvement tasks across five categories, worth 10-40 XP each, with countdowns for timed ones and a level every 100 XP.",
+  steps: [
+    "Set the Category filter and the Difficulty filter — All Difficulty Levels, Easy (10-15 XP), Medium (20-30 XP) or Hard (35-50 XP) — then press 'Spin / Roll Challenge'.",
+    "Press 'Accept Challenge' to move the rolled card into 'Active accepted challenges'; a timed task gets a 'Start 90s Timer' style button that counts down in place and shows 'Timer Complete!' when it ends.",
+    "Press the card's Complete button, which names the XP it pays (+15 XP for the 90-second plank), and Lifetime XP, Streak Count, Completed and Current Level update; 'Reset' clears all progress after a confirm.",
+  ],
   intro:
     "Random Life Challenge rolls a self-improvement task at random from a 19-challenge deck spanning fitness, mindfulness, learning, kindness and adventure, then tracks it to completion with XP, levels and badges. Each challenge carries a difficulty of easy, medium or hard and a fixed XP value from 10 to 40, and timed ones — a 90-second plank, a 2-minute cold shower, a 5-minute meditation — come with a built-in countdown. Your XP, streak, completed log and level (one level per 100 XP) are stored in your own browser, so progress survives a refresh without an account.",
   useCases: [

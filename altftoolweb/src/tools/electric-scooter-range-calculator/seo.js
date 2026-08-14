@@ -1,4 +1,12 @@
 const seo = {
+  title: "Electric Scooter Range Calculator: Real Wh per km",
+  metaDescription:
+    "Estimates real range from battery Wh, weight, speed, gradient and traffic using the road-load equation — with Wh/km, each loss line and cost per km.",
+  steps: [
+    "Enter Battery energy (Wh) — the hint notes a 3 kWh pack is 3000 Wh — then Kerb weight (kg), Rider weight (kg) and Pillion + luggage (kg), or pick a Vehicle type preset that fills the kerb weight for you.",
+    "Set Average cruising speed (km/h), a Terrain preset or Average gradient (%), the Traffic menu in stops/km, Braking energy recovered (%), Battery state of health (%) and Share of pack you actually use (%).",
+    "Estimated range in km updates as you type, over rows for Rolling resistance, Aerodynamic drag, Gradient force, Energy to cruise, Energy lost to stop-start, Total consumption and Cost per km; Copy result copies the whole summary.",
+  ],
   intro:
     "Real e-scooter range is battery energy divided by watt-hours per kilometre, and this calculator derives that consumption from physics rather than a single averaged number. It applies the standard road-load equation — rolling resistance (Crr × m × g × cos θ), aerodynamic drag (½ × ρ × CdA × v²) and gradient force (m × g × sin θ) — then adds the kinetic energy of ½ m v² thrown away at each stop, minus whatever regenerative braking returns, so weight, speed, hills and traffic each move the answer for a reason you can see.",
   useCases: [

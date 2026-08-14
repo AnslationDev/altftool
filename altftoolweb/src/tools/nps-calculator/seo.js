@@ -1,4 +1,12 @@
 const seo = {
+  title: "NPS Calculator: Corpus, Pension and 80CCD Savings",
+  metaDescription:
+    "Project your NPS corpus at retirement with monthly compounding, split it at the 40% annuity minimum for the pension, and price 80CCD(1), (1B) and (2).",
+  steps: [
+    "Set Current age, Retirement age and Monthly contribution, then either switch on the Asset-mix helper to blend E at 12%, C at 8% and G at 7%, or type a figure into Expected return %.",
+    "Set Annuity rate % (real quotes today sit around 6-7%) and drag Annuity purchase %, whose 40% floor is the legal minimum at 60, then choose Old regime or New regime and Your tax slab.",
+    "Read Corpus at age 60 with the formula P × [((1+i)^n − 1) ÷ i] × (1+i) spelled out, plus Annuity portion, Estimated monthly pension, Lump sum and Total invested, and What you save in tax, every year; press Copy summary.",
+  ],
   intro:
     "The NPS Calculator projects your National Pension System corpus at retirement using the monthly-compounded annuity-due formula P × [((1+i)^n − 1) ÷ i] × (1+i), then splits that corpus into the annuity portion you must buy and the lump sum you can take. It is built for salaried Indians deciding how much to put into NPS: you set your age, monthly contribution and expected return — or build the return from an E/C/G asset mix at 12%, 8% and 7% — and see the corpus, the monthly pension it buys, and the tax deduction it earns. Deductions are worked out separately under 80CCD(1), 80CCD(1B) and 80CCD(2) for the old and new regimes, with 4% cess added to the saving.",
   useCases: [

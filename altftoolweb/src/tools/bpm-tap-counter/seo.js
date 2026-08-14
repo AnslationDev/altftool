@@ -1,4 +1,7 @@
 const seo = {
+  title: "BPM Tap Counter: Tap Tempo with Steadiness Score",
+  metaDescription:
+    "Tap the pad or any key: BPM is 60000 divided by your average gap over the last 8 taps, with the tempo marking, steadiness score and nearest common tempo.",
   intro:
     "A tap tempo counter works out a song's beats per minute from the timing of your own taps: BPM = 60000 divided by the average number of milliseconds between your last 8 taps, timed with the browser's high-resolution clock. Tap the pad or press any key along with the music and you get the live tempo to one decimal, the classical tempo marking for that speed, a steadiness score, and the nearest common set tempo. It is for DJs matching tracks, musicians setting a metronome, and anyone who needs a number for a track that does not list one.",
   useCases: [

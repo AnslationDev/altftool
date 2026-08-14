@@ -1,4 +1,12 @@
 const seo = {
+  title: "HSA Contribution Calculator: 2025 and 2026 IRS Limits",
+  metaDescription:
+    "Work out your HSA limit for self-only or family HDHP coverage with the $1,000 age-55 catch-up, month-by-month proration and the last-month rule.",
+  steps: [
+    "Under Eligibility set Tax year, HDHP coverage, Your age at the end of the year and Months eligible (on the 1st of the month), or tick \"Use the last-month rule (eligible on 1 December, claim the full year)\".",
+    "Under Contributions enter Your own contribution ($) and Employer contribution ($) and tick \"Contributed by payroll deduction (also avoids FICA)\", then set Federal marginal rate (%), State marginal rate (%), Years invested and Expected return (% a year).",
+    "Your contribution limit shows the cap and the room left, with IRS annual limit for this coverage, the prorated Base limit, Age 55+ catch-up, Room left before the limit, FICA saved via payroll deduction and First-year tax saving below; press Copy result.",
+  ],
   intro:
     "This calculator works out how much you may put into a Health Savings Account for a given tax year, applying the IRS annual limit for self-only or family HDHP coverage, the $1,000 catch-up from age 55 under IRC §223(b)(3), and month-by-month proration when you were only eligible for part of the year. It then estimates the triple tax benefit: the income and FICA tax saved on the way in, the untaxed growth, and tax-free withdrawals for qualified medical costs. It is for anyone on a high deductible health plan deciding how much to put through payroll before the year closes.",
   useCases: [

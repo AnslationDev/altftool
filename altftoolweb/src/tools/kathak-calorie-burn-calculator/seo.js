@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kathak Calorie Calculator: MET by Riyaz Segment",
+  metaDescription:
+    "Cost each riyaz segment separately, from abhinaya at 2.5 MET to chakkars at 7.8, with ghungroo ankle load counted on the footwork minutes.",
+  steps: [
+    "Enter Body weight with the kg or lb unit selector, then Ghungroo per ankle (kg) — up to 3 kg, with a 100-bell set noted as roughly 0.5-0.8 kg.",
+    "Under Minutes in each segment, put the time against Abhinaya and hasta practice (2.5 MET), Warm-up and tatkar at vilambit laya (3.5), Tatkar at madhya laya (5.5), Drut laya tatkar, tukras and paran (7.3) and Chakkar sequences (7.8).",
+    "Calories for this riyaz appears with the practice length, above rows for Extra cost of the ghungroo, Average intensity in MET, Effective load during footwork and the Segment breakdown table of kcal/min per segment; press Copy result.",
+  ],
   intro:
     "The Kathak Calorie Burn Calculator prices a riyaz segment by segment — abhinaya, tatkar at vilambit, madhya and drut laya, and chakkar sequences — instead of averaging the whole practice at one intensity. Each segment uses the closest published MET value from the Compendium of Physical Activities converted with kcal/min = MET x 3.5 x kg / 200, and footwork segments also account for the ghungroo on your ankles, since load carried on the feet costs several times more energy than the same load on the torso.",
   useCases: [

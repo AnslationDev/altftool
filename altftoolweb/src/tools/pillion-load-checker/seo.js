@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pillion Load Checker: Two-Up Payload and Tyre Limit",
+  metaDescription:
+    "Weigh rider, pillion and luggage against your bike's RC payload (GVW minus kerb) and the rear tyre load index, with the front-rear axle split.",
+  steps: [
+    "Enter 'Kerb / unladen weight (kg)' and 'Gross vehicle weight from RC (kg)' from your registration certificate, then 'Rider weight (kg)' and 'Pillion weight (kg)'.",
+    "Add 'Soft luggage / saddlebags (kg)' and 'Rear container / top box contents (kg)', choose a 'Rear tyre load index' (each option shows its rated load, e.g. 55 — 218 kg) or leave it on 'Not sure / skip', and set 'Front share of kerb weight (%)'.",
+    "Read the 'Payload used' percentage above the bar, then 'Payload capacity (GVW - kerb)', 'Headroom left', 'Front axle load', 'Rear axle load' and 'Rear tyre capacity used', plus any 'What to fix' warnings, and press 'Copy result'.",
+  ],
   intro:
     "This checker compares the weight you actually put on a two-wheeler — rider, pillion, saddlebags and top-box contents — against two separate limits: the payload the vehicle is registered for (gross vehicle weight minus kerb weight, both printed on the Indian RC) and the rear tyre's rated capacity read from the ISO/ETRTO load index table. It also splits the laden weight across the two axles and flags the point where too little weight is left on the front wheel. Use it before a two-up trip to see which limit binds first.",
   useCases: [

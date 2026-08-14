@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Border Radius Generator with 8-Value Blob Mode",
+  metaDescription:
+    "Sliders for the four-corner shorthand and the eight-value slash syntax that makes blobs, previewed on four backdrops - copy or download the .css.",
   intro:
     "The CSS Border Radius Generator builds a `border-radius` value from sliders in two modes: a simple four-corner shorthand in px or %, and an advanced eight-value form written as four horizontal radii, a slash, then four vertical radii — the syntax that produces organic blob shapes. It is for designers and front-end developers who want to see the corner curvature on a live preview before committing the rule. The output is a ready-to-paste declaration, copyable in one click or downloadable as a .css file.",
   useCases: [

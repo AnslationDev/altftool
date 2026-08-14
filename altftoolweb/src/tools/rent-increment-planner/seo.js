@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Increment Planner: Compound Escalation Cost",
+  metaDescription:
+    "Compounds your rent escalation across renewal cycles, totals the outgo in nominal and today's money, and prices a second scenario alongside.",
+  steps: [
+    "Enter Current monthly rent (INR), Agreed escalation per renewal (%), the Renewal cycle in months and Years to project.",
+    "Fill the Comparison scenario with the landlord's ask or the escalation percentage you are negotiating towards.",
+    "Read Total rent over the horizon, the cycle-by-cycle rent table and the difference between scenarios, then use Copy result.",
+  ],
   intro:
     "This planner compounds an agreed rent escalation across every renewal cycle, so the rent in cycle k is the starting rent multiplied by (1 + escalation)^k, and totals the outgo across a horizon you choose. It also discounts that total back to today's money using a present-value deflator, and runs a second scenario alongside so a negotiated percentage point can be priced in rupees. It suits tenants reviewing an escalation clause and landlords modelling revenue from a property.",
   useCases: [

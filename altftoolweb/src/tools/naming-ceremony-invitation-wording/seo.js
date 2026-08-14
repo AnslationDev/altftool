@@ -1,4 +1,12 @@
 const seo = {
+  title: "Namkaran, Aqiqah & Christening Invitation Wording",
+  metaDescription:
+    "Write namkaran, cradle, aqiqah or christening invitation text in English, Hindi or Hinglish, with the day-after-birth count (birth day is day 1).",
+  steps: [
+    "Enter the Parents' names, the Baby's name (leave blank to keep it a surprise) and the Baby's date of birth.",
+    "Choose the Ceremony, Ceremony date, Start time, Venue, Meal, Language (English, Hindi or Hinglish) and Wording style.",
+    "The ceremony weekday, the 'Day after birth' count and the traditional days for that ceremony appear above the full invitation text; press Copy wording.",
+  ],
   intro:
     "The Naming Ceremony Invitation Wording tool produces complete invitation text for a namkaran sanskar, cradle ceremony, aqiqah or christening, in English, Hindi or Hinglish, and works out which day after birth the chosen date falls on. That day count matters because the traditional timings are fixed: namkaran is prescribed for the 11th or 12th day after birth, aqiqah is Sunnah on the 7th day, and in all of these counts the day of birth itself is day 1. Date arithmetic uses exact integer day numbers, so a February in a leap year is handled correctly.",
   useCases: [

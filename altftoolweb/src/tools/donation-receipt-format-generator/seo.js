@@ -1,4 +1,12 @@
 const seo = {
+  title: "80G Donation Receipt Format with Deduction Worked Out",
+  metaDescription:
+    "Build a donation receipt carrying 12A/12AB, 80G approval, both PANs and the amount in words, and see the deduction after the 10% qualifying limit.",
+  steps: [
+    "Under Donation enter the amount received in INR, mode of payment, transaction reference and purpose, then pick the 80G category, the donor's adjusted gross total income and their tax regime.",
+    "Fill the Donor block — name, PAN, address, receipt number and receipt date — and the Institution block with its PAN, 12A/12AB registration, 80G approval number and validity, URN and FCRA number.",
+    "Check the deduction after the 10% qualifying limit and the Receipt preview with the amount in Indian words, then press Copy receipt.",
+  ],
   intro:
     "A donation receipt is only useful to the donor if it carries the institution's 12A/12AB registration, its 80G approval number and validity, the PAN of both sides, the amount in words and the mode of payment — this generator assembles all of that in the standard Indian format. It also computes the deduction the donor can actually claim under section 80G of the Income-tax Act, 1961, applying the 10% of adjusted gross total income qualifying limit where the category carries one, and blocking the deduction for cash donations above Rs 2,000 under section 80G(5D) or for anyone taxed under the new regime. The receipt closes with the Form 10BD and Form 10BE commitment that every donee institution now has.",
   useCases: [

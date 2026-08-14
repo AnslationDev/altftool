@@ -1,4 +1,12 @@
 const seo = {
+  title: "Renter Security Checklist: 25 Weighted Move-In Checks",
+  metaDescription:
+    "Score a rental on 25 checks weighted 5 to 1, citing NFPA 72 alarm rules, the 1-inch deadbolt throw and NEC 210.8 GFCI, then copy the repair list.",
+  steps: [
+    "Tick items across the six sections — Doors and entry, Fire and gas safety, Windows and outdoor, Utilities and electrics, Digital and privacy, Paperwork and proof — each labelled Critical (5 pts) down to Good practice (1 pt) with the standard it comes from.",
+    "Under Smoke alarm age check enter Date of manufacture and Check against date to get Alarm age, Replace by, and whether the unit is past its NFPA 72 10-year service life.",
+    "Read the Weighted security score with Items complete, Weighted points earned, Open critical items and Rating, then press Copy report; Reset restores the checklist defaults.",
+  ],
   intro:
     "The Renter Security Checklist scores a rental property against 25 move-in safety checks and returns a weighted percentage, where each item carries 5 points if it is life-safety or entry critical, 3 for high risk, 2 for medium and 1 for good practice. The items come from published rules — NFPA 72 for smoke and CO alarm placement and the 10-year replacement life, ANSI/BHMA A156.5 for the 1-inch minimum deadbolt throw, and NEC 210.8 for GFCI protection at bathroom, kitchen, laundry and outdoor sockets. It is built for tenants doing a handover inspection, and for anyone who wants a written list to send a landlord or agent.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thesis Outline Prompt Builder: 6-Chapter Word Plan",
+  metaDescription:
+    "Split a thesis word count across six chapters (10/25/20/20/15/10%) and build an AI outline prompt that traces every research question through them.",
+  steps: [
+    "Enter the thesis topic or working title, the field / discipline, and a methodology: quantitative, qualitative, mixed methods, systematic review or design project.",
+    "Pick a degree preset to fill the word count, adjust 'Total length (words)', set research questions (1-6) and the scope — population, place, period.",
+    "Read the per-chapter word budget table, then press 'Copy prompt' to take the generated outline prompt to your AI assistant.",
+  ],
   intro:
     "The Thesis Outline Prompt Builder allocates a thesis word count across the conventional six-chapter dissertation structure — introduction, literature review, methodology, results, discussion, conclusion — and writes an AI outline prompt that embeds the budget, numbered research questions and an explicit scope statement. It is built for undergraduate, master's and doctoral students who want a chapter plan that traces every research question through all six chapters, using the common 10% introduction / 25% literature review share guidance found in university dissertation handbooks.",
   useCases: [

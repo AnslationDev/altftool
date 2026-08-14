@@ -1,4 +1,7 @@
 const seo = {
+  title: "PDF Reading-Order Preview: Stored vs Visual Text Order",
+  metaDescription:
+    "Compares a PDF's stored text sequence with a Y-then-X visual estimate and flags where they disagree — the WCAG 1.3.2 risk. Up to 100 MB and 100 pages.",
   intro:
     "PDF Reading-Order Preview extracts a PDF's text layer in the sequence the file actually stores it, then builds a separate Y-then-X visual estimate — grouping items into lines by vertical position, reading top to bottom and left to right — and shows you where the two disagree. Those divergences are where a screen reader is most likely to read a page out of the order a sighted reader sees, the concern behind WCAG Success Criterion 1.3.2 Meaningful Sequence. It is a manual review aid: it reads coordinates, not the PDF tag tree, and does not predict what any particular assistive technology will do.",
   useCases: [

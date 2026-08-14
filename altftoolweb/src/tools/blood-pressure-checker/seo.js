@@ -1,4 +1,7 @@
 const seo = {
+  title: "Blood Pressure Checker – ACC/AHA Categories & Trends",
+  metaDescription:
+    "Log systolic and diastolic readings, see each labelled Normal, Elevated, Stage 1 or Stage 2, and plot both on one trend chart. Data stays in the page.",
   intro:
     "The Blood Pressure Checker logs systolic and diastolic readings, labels each one against the ACC/AHA categories — Normal, Elevated, Stage 1 and Stage 2 hypertension — and plots both numbers as a trend line so you can see the pattern rather than a single measurement. Every reading is timestamped as you add it and the two series are charted together in mmHg. It is for people who take readings at home and want the numbers organised before a doctor's appointment, not a diagnosis.",
   useCases: [

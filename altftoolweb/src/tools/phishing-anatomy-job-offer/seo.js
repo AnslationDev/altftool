@@ -1,4 +1,12 @@
 const seo = {
+  title: "Job Offer Scam Check: Fee Demands & Fake HR Domains",
+  metaDescription:
+    "Scores a recruiter message against 13 weighted markers and checks every link’s registrable domain. No real employer charges a candidate a fee.",
+  steps: [
+    "Paste the SMS, email or WhatsApp message into the scan box; defanged forms like bad[.]online and hxxp:// are read as written.",
+    "The scanner weighs 13 markers — a registration, training or security fee scores 14 points on its own — and inspects each link's registrable domain.",
+    "Read the Risk score, the Markers matched count and the Strongest link problem row, then press Copy result.",
+  ],
   intro:
     "This explainer takes a fraudulent job offer apart line by line — the selection with no interview, the salary that does not match the work, the \"refundable\" registration fee, the careers page on a domain the company does not own — and explains why each part is there. A scanner scores any recruiter message you paste against 13 weighted markers, including the task-based work-from-home pitch that leads into an investment scam, and inspects every link's registrable domain. The rule underneath all of it is simple: a genuine employer never charges a candidate to be hired.",
   useCases: [

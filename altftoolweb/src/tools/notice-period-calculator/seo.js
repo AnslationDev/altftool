@@ -1,4 +1,12 @@
 const seo = {
+  title: "Notice Period & Severance Calculator by Employment Type",
+  metaDescription:
+    "A planning model: notice months and severance from years worked and monthly salary, with separate rates for full-time, part-time, contract and executive.",
+  steps: [
+    "Under \"Employment Details\", pick the employment type: Full Time, Part Time, Contract or Executive.",
+    "Enter \"Years Worked\" (decimals accepted, e.g. 3.5) and \"Monthly Salary\", then press \"Calculate Notice Period & Severance\".",
+    "Read \"Calculation Results\": notice period in months, annual salary, severance pay with its share of annual salary, and any Compliance Notes for the service tiers crossed.",
+  ],
   intro:
     "The Notice Period Calculator models how notice and severance scale with length of service for four employment types — full-time, part-time, contract and executive — from your years worked and monthly salary. Full-time service accrues one month of notice per year served (up to a 24-month ceiling) and severance of two months' pay per year served (also capped at 24 months), part-time accrues notice at 60% of the full-time rate and severance at 75% of the full-time rate, both capped at 12 months, and contract and executive engagements are capped at six months' notice, with executive severance running to three months per year and a 36-month ceiling. These are the tool's own planning multipliers for comparing scenarios side by side, not a statement of any country's employment law: your actual entitlement comes from your signed contract and local statute, so read the contract and take advice from an employment lawyer before acting on a number here.",
   useCases: [

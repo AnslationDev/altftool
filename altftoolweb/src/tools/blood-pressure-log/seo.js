@@ -1,4 +1,7 @@
 const seo = {
+  title: "Blood Pressure Log: AHA Categories and 7-Day Averages",
+  metaDescription:
+    "Log each cuff reading with time, arm and posture, see the 2017 AHA/ACC category, and print 7-day, 30-day, morning and evening averages.",
   intro:
     "The Blood Pressure Log records each cuff reading with its date, time, pulse, arm and posture, labels it against the 2017 AHA/ACC categories, and averages your readings over the last 7 and 30 days plus a separate morning and evening average. It is meant for anyone whose doctor asked them to monitor at home for a couple of weeks: instead of a paper slip of loose numbers you get a trend chart, a category breakdown, and a printable sheet. Readings live in your browser only, and the log records rather than diagnoses — hypertension is a diagnosis a clinician makes.",
   useCases: [

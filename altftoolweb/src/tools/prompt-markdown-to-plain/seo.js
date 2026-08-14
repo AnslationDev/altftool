@@ -1,4 +1,12 @@
 const seo = {
+  title: "Remove Markdown Formatting, Keep Code Blocks Intact",
+  metaDescription:
+    "Strip CommonMark and GFM markup — headings, emphasis, links, tables, fences — while code spans and fenced blocks keep their contents unchanged.",
+  steps: [
+    "Paste your Markdown into the “Markdown prompt” box; the line underneath counts how many of the 200,000 allowed characters you have used.",
+    "Choose how list markers come out under Bullet markers — “Keep as -”, “Convert to •” or “Remove the marker” — and set the five switches: Keep the text inside code, Keep link URLs in brackets, Keep image alt text, Keep numbers on ordered lists, Collapse runs of blank lines.",
+    "The Plain text panel updates live beside “Markup removed” as a percentage, with Markdown length, Plain length, Characters removed, Words and Lines and a “What was found” table counting each construct; “Copy plain text” copies the result.",
+  ],
   intro:
     "Prompt Markdown to Plain removes Markdown markup from a prompt while keeping the words, handling the CommonMark block and inline constructs — ATX and setext headings, fenced code, blockquotes, lists, tables, thematic breaks, emphasis, links, images, autolinks and backslash escapes — plus the GitHub extensions for strikethrough and tables. Code fences and code spans are lifted out before anything else runs, so markup that only exists inside an example is never stripped by mistake. It is for anyone pasting a prompt into a field that shows raw asterisks and hashes instead of rendering them.",
   useCases: [

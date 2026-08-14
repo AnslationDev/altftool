@@ -1,4 +1,12 @@
 const seo = {
+  title: "Net Worth Calculator: Assets Minus Liabilities in ₹",
+  metaDescription:
+    "Add cash, investments, property and vehicles against home loan, car loan and credit card debt for net worth plus both subtotals, in rupees.",
+  steps: [
+    "Fill the asset fields in ₹ — Cash & Bank Balance, Investments (Stocks, MF, etc.), Property Value, Vehicles & Other Assets and Other Assets.",
+    "Enter Home Loan Outstanding, Car Loan Outstanding and Credit Card Debt, then press Calculate.",
+    "Read Your Net Worth against the Total Assets, Total Liabilities and Net Worth tiles, all formatted in Indian rupees.",
+  ],
   intro:
     "The Net Worth Calculator applies the standard balance-sheet identity — total assets minus total liabilities — across five asset lines (cash and bank balance, investments, property, vehicles and other assets) and four debt lines (home loan, car loan, credit card and other outstanding debt). It returns your net worth alongside the two subtotals, formatted in Indian rupees, so you can see whether a large number in the assets column is actually being cancelled out by what you owe. It is an informational snapshot, not financial advice — talk to a qualified adviser before making decisions based on it.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Churn Rate Calculator: Churn, Retention, Remaining",
+  metaDescription:
+    "Customers lost ÷ customers at the start × 100, to 0.01%. Shows churn, the matching retention rate and customers remaining from the same two numbers.",
   intro:
     "The Churn Rate Calculator divides the customers you lost during a period by the customers you had at the start of it, giving customer churn as a percentage along with the matching retention rate and the headcount left. It is for subscription and SaaS teams, membership operators and account managers who need one defensible number for a monthly or quarterly review. Retention is reported as 100% minus churn, and remaining customers as start minus lost, so every figure on screen traces back to the two numbers you entered.",
   useCases: [

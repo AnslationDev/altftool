@@ -1,4 +1,12 @@
 const seo = {
+  title: "Interview Document Checklist with Photocopy Costs",
+  metaDescription:
+    "Build the originals-and-copies list for a UPSC or SSB interview, then get pages per set, total copies, self-attestation signatures and cost.",
+  steps: [
+    "Choose Interview or verification (UPSC Personality Test, Services Selection Board and others) and Category applied under, then set Photocopy sets the call letter asks for and Photocopy rate per page (INR).",
+    "Under Which of these apply?, tick items such as Already in government service, My name differs from the Class 10 certificate or There is a gap between two qualifications so the NOC and extra certificates join the list.",
+    "Read Photocopies to make with Pages in one set, Originals to carry, Signatures needed and Photocopy cost, then press Copy checklist.",
+  ],
   intro:
     "This checklist builds the exact set of originals and photocopies to carry to an interview or document verification, then works out what that means in practice: pages per set, total copies, the number of signatures self-attestation demands, and the photocopy bill. It follows the rules the panels actually apply — the date of birth is taken only from the Matriculation certificate, a central post needs the category certificate in the central format rather than the state's, an OBC non-creamy-layer certificate must be current as on the closing date in the notice, and a serving government employee has to produce a No Objection Certificate at the interview.",
   useCases: [

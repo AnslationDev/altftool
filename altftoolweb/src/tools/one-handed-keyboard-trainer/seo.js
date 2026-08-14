@@ -1,4 +1,12 @@
 const seo = {
+  title: "One-Handed Typing Practice for Left or Right Hand",
+  metaDescription:
+    "Type short prompts using one hand's QWERTY key group. Accuracy is scored character by character against the prompt, alongside approximate WPM.",
+  steps: [
+    "Choose Left hand or Right hand in the 'Practice hand' select; the 'Suggested key group' panel shows Q W E R T · A S D F G · Z X C V B or Y U I O P · H J K L · N M.",
+    "Type the sentence shown into the box labelled 'Type the prompt here…' — timing starts on your first keystroke, and 'New prompt' loads the next sentence and clears the box.",
+    "Watch the Accuracy, Approx. WPM and Characters tiles update as you type; 'Prompt complete' appears once your text matches the prompt exactly.",
+  ],
   intro:
     "The One-Handed Keyboard Trainer gives you short typing prompts to practise with a single hand, showing the key group that hand covers on a standard QWERTY board — Q W E R T · A S D F G · Z X C V B for the left, Y U I O P · H J K L · N M for the right — and scoring each attempt for accuracy and approximate words per minute. Accuracy is measured character by character against the prompt, so a mistyped letter shows up immediately rather than at the end. It is for people typing one-handed after an injury, with a limb difference, or while the other hand is occupied.",
   useCases: [

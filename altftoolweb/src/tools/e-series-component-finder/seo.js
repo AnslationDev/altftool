@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nearest E-Series Value Finder: E6 to E96 + Error %",
+  metaDescription:
+    "Enter a calculated target and get the nearest E6, E12, E24, E48 or E96 preferred value per IEC 60063, with the six closest and signed % error.",
+  steps: [
+    "Type your calculated value into 'Target value (Ω, F, or H)' in the Inputs panel, or click the '4.72 kΩ in E24' example chip to load it.",
+    "Pick the 'Preferred-number series' — E6, E12, E24, E48 or E96 — to match the tolerance of the parts you can actually order.",
+    "Read the 'nearest E<n> value' with its % error, the Target / Nearest below / Nearest above rows and the Candidate / Error % table of six, then Copy or Download.",
+  ],
   intro:
     "E-Series Component Finder takes a calculated target value for a resistor, capacitor or inductor and returns the nearest value that actually exists in the E6, E12, E24, E48 or E96 preferred-number series, along with the percentage error you incur by using it. It generates the series the way the IEC 60063 standard defines it — using the standard's own published per-decade mantissa tables (two significant figures for E6, E12 and E24; three for E48 and E96), not an approximated geometric-progression formula — then ranks the six closest candidates and shows the nearest value below and above your target. It is for anyone who has just solved a divider or filter equation and needs a part they can genuinely order.",
   useCases: [

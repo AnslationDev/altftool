@@ -1,4 +1,12 @@
 const seo = {
+  title: "NRE vs NRO Account Calculator: Post-Tax Maturity & TDS",
+  metaDescription:
+    "Compare the same deposit as NRE vs NRO: NRE interest is tax-exempt, NRO faces 31.2% TDS (or a DTAA rate), plus the USD 1 million repatriation cap.",
+  steps: [
+    "Enter the Deposit amount (INR), Interest rate (% per year), Tenure (years) and Compounding, plus Rupees per US dollar for the repatriation cap.",
+    "Optionally tick \"Claim a treaty rate on the NRO interest\" and set the DTAA rate on interest (%) to replace the default withholding.",
+    "Read \"Extra you keep by holding it as NRE\" and the NRE vs NRO table of maturity, tax withheld and post-tax yield, then press Copy result.",
+  ],
   intro:
     "This comparator shows what the same deposit at the same interest rate is worth in an NRE account versus an NRO account, once Indian tax is applied. NRE interest is exempt under Section 10(4)(ii) of the Income-tax Act and carries no TDS, while NRO interest is taxable and withheld under Section 195 at 30% plus surcharge and 4% cess, so an NRO balance compounds net of tax. It also sets out the repatriation difference: NRE funds move out freely, NRO balances up to USD 1 million per financial year.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Binary, Hex & Decimal Converter with BigInt Precision",
+  metaDescription:
+    "Type a number in any base and see decimal, binary, 0x hex, the Unicode character and bit length at once — BigInt-exact beyond 64 bits.",
   intro:
     "The Binary / Hex / Decimal Converter takes one number typed in any of those three bases and shows all of them at once, plus the matching Unicode character and the bit length. It parses with JavaScript BigInt, so values far beyond the 32-bit or 64-bit range convert exactly instead of drifting into floating-point rounding. It is built for developers reading register dumps, byte values, colour codes and protocol fields who want a single copy-ready answer rather than three separate lookups.",
   useCases: [

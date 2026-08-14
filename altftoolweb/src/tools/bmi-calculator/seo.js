@@ -1,4 +1,12 @@
 const seo = {
+  title: "BMI Calculator with WHO Bands and Healthy Weight Range",
+  metaDescription:
+    "Weight in kg divided by height in metres squared, on the WHO bands, plus the kg range for a BMI of 18.5-24.9 at your height and 33 ml/kg of water.",
+  steps: [
+    "Enter Height with the CM or FT/IN toggle and Weight with KG or LBS — the two systems can be mixed, since imperial entries are converted before the formula runs.",
+    "Add Age and Gender if you want maintenance calories from the Mifflin-St Jeor equation, then press Calculate Now.",
+    "Read the BMI Analysis Result with its WHO category, Protein Goal and Water Intake, then press Copy Report or Download Report for a BMI_Report file.",
+  ],
   intro:
     "This BMI Calculator divides your weight in kilograms by your height in metres squared and places the result on the WHO scale — under 18.5 Underweight, 18.5 to 24.9 Normal, 25 to 29.9 Overweight, 30 and above Obese. Enter height in centimetres or feet and inches and weight in kilograms or pounds, and it also returns the weight range that would put you inside the normal band, a daily water figure of 33 ml per kilogram, and a protein target scaled to your category. Add age and sex and it estimates maintenance calories from the Mifflin-St Jeor equation; it is a screening number, not a diagnosis.",
   useCases: [

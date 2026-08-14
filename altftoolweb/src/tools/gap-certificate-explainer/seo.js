@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gap Certificate India: Affidavit Rules and Draft",
+  metaDescription:
+    "No authority issues a gap certificate — it is a notarised affidavit on stamp paper. Enter your gap months to see whether it is expected, and copy a draft.",
+  steps: [
+    "Set \"Gap started (last course ended)\" and \"Gap ends (new admission month)\" as month values, then pick Reason for the gap.",
+    "Optionally add your full name, parent/guardian name and last qualification passed so the draft carries them.",
+    "Read the gap-length verdict and \"What a gap affidavit must contain\", then press Copy draft affidavit to take it to the notary.",
+  ],
   intro:
     "This tool works out the length of your study gap and tells you whether Indian admissions practice will expect a gap certificate — which is really a notarised gap affidavit self-declared on non-judicial stamp paper, since no authority issues it. Enter the month your last course ended and the month your new admission begins, and it classifies the gap (under 6 months, 6–12 months, 1–2 years, longer), lists what the affidavit must contain, and produces a draft ready for the notary. It is built for students returning to study after exam preparation, illness, work or family breaks.",
   useCases: [

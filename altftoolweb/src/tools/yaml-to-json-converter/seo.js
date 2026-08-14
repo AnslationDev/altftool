@@ -1,4 +1,12 @@
 const seo = {
+  title: "YAML to JSON Converter – Anchors & Merge Keys Resolved",
+  metaDescription:
+    "Convert YAML 1.2 to JSON in your browser — anchors, aliases and merge keys resolved, multi-document streams become an array, output 2-space to minified.",
+  steps: [
+    "Paste your YAML into the YAML input box — & anchors, * aliases and << merge keys are resolved during parsing.",
+    "Choose the JSON formatting: 2 spaces, 4 spaces, Tabs or Minified.",
+    "Review the JSON output with its document count and any conversion warnings, then press Copy JSON.",
+  ],
   intro:
     "This converter turns YAML 1.2 into RFC 8259 JSON entirely in your browser, resolving anchors, aliases and merge keys the way a YAML loader does rather than by text substitution. Multi-document streams separated by --- become a JSON array, duplicate keys are rejected as the spec requires, and you choose 2-space, 4-space, tab or minified output. It is built for developers converting Kubernetes manifests, CI pipelines and app config into JSON for APIs, scripts or schema validation.",
   useCases: [

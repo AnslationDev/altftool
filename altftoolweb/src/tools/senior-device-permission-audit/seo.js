@@ -1,4 +1,10 @@
 const seo = {
+  title: "Senior Phone App Permission Audit: Rank Apps to Review",
+  steps: [
+    "In 'Apps and permissions', type one app per line as App | permissions | usage note, or load the 'Example phone' preset to see the format.",
+    "Keep the 'Use plain-language guidance' toggle on to add senior-friendly action wording to each row's suggested conversation.",
+    "Read the 'app(s) to review' result and the table's 'Suggested conversation' column — apps scoring 5 or more are marked 'Review now'; Copy or Download saves the table.",
+  ],
   intro:
     "This audit turns a list of the apps on a phone into a ranked shortlist of which ones to question first, by counting how many of nine sensitive permissions each app holds and adding weight when the app is barely used. You type one line per app — name, the permissions it has, and how often it gets opened — and get a table telling you which entries deserve a conversation. It is written for adult children and carers sitting down with a parent or grandparent to tidy up a phone together.",
   useCases: [

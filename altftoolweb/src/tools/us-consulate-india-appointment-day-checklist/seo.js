@@ -1,4 +1,12 @@
 const seo = {
+  title: "US Visa Appointment India: What to Carry Checklist",
+  metaDescription:
+    "OFC, interview or dropbox: separate carry, wear and leave-behind lists, plus the 15-minute arrival ceiling and a leave-home time.",
+  steps: [
+    "Choose the appointment — OFC / VAC biometrics, consular interview or Interview Waiver drop-off — then your visa category, the post you are attending and the applicant's age.",
+    "Enter the appointment time in 24h, the travel time to the post in minutes, and a contingency buffer for traffic, parking and reaching the gate.",
+    "Read the arrive-between window and leave-home time, tick the Carry with you, Wear and prepare and Leave behind items, then press Copy checklist.",
+  ],
   intro:
     "This checklist covers what to carry, wear and leave behind for a US visa appointment in India, and it separates the three visits that get confused with each other: the OFC biometrics appointment, the consular interview at the Embassy in New Delhi or a Consulate General in Mumbai, Chennai, Kolkata, Hyderabad or Bengaluru, and an Interview Waiver drop-off. It applies the rules that actually decide whether you get through the gate — no electronic devices and no storage facility at a US post, arrival no more than 15 minutes before your appointment, fingerprints collected only from applicants aged 14 to 79, and no eyeglasses in the visa photograph. For F, M and J applicants it also works out the earliest date you may be admitted to the United States: 30 days before the programme start date on your I-20 or DS-2019.",
   useCases: [

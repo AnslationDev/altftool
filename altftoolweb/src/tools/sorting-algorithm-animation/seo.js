@@ -1,4 +1,5 @@
 const seo = {
+  title: "Sorting Algorithm Visualizer: Bubble, Selection, Insertion",
   intro:
     "Sorting Algorithm Animation replays Bubble Sort, Selection Sort and Insertion Sort as a bar chart, recording every comparison and swap as a discrete step you can play, pause or walk through one at a time. It is built for students meeting O(n²) sorting for the first time, and for anyone teaching why insertion sort finishes early on nearly-ordered data while bubble sort keeps scanning. Bars being compared turn amber and the settled tail turns green, so the shape of each algorithm's progress is visible rather than described.",
   useCases: [

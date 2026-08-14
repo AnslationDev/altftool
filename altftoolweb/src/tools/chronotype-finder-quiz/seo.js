@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chronotype Quiz (rMEQ): Morning or Evening Type",
+  metaDescription:
+    "Five real rMEQ items scored 5–25: evening type at 11 or below, morning at 18 or above, plus your natural sleep window and caffeine cutoff.",
+  steps: [
+    "Answer all five rMEQ items under The five questions, from the free-choice wake time to the morning-or-evening self-rating.",
+    "Optionally enter your Work or school wake time so the social jet lag figure and days-to-shift estimate are worked out.",
+    "Your chronotype and rMEQ score out of 25 appear with Natural sleep window, Mid-sleep point, Peak alertness and Last caffeine; Copy result copies the lot.",
+  ],
   intro:
     "The Chronotype Finder Quiz scores your body clock using the reduced Morningness–Eveningness Questionnaire (rMEQ), the five-item short form Adan and Almirall drew in 1991 from Horne and Östberg's original 19-item MEQ. The five answers add up to a score of 5 to 25, and the published cut-offs place you as an evening type at 11 or below, intermediate from 12 to 17, and a morning type at 18 or above. Your own answers about free wake time and evening sleepiness then set the natural sleep window, caffeine cutoff and light-timing advice shown with the result.",
   useCases: [

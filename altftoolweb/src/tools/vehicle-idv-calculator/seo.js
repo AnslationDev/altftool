@@ -1,4 +1,12 @@
 const seo = {
+  title: "IDV Calculator for Car and Bike: GR.8 Tariff Slabs",
+  metaDescription:
+    "IDV from ex-showroom price on India Motor Tariff GR.8 slabs: 5% depreciation under six months rising to 50% in year five, plus accessories and OD premium.",
+  steps: [
+    "Enter \"Ex-showroom price (INR)\", any \"Extra fitted accessories (INR)\", the \"First registration date\" and the \"Policy start date\".",
+    "Add the \"Own-damage rate from your quote (%)\"; for a vehicle past five years, set \"Agreed depreciation (%, over 5 years)\" yourself.",
+    "Read \"Insured Declared Value\" with the depreciation slab applied, the accessories IDV line and the own-damage premium, then press Copy result.",
+  ],
   intro:
     "The Insured Declared Value (IDV) of a vehicle is its manufacturer-listed ex-showroom price less depreciation, and it is the maximum your motor insurer pays if the vehicle is stolen or written off. This calculator applies the depreciation schedule in GR.8 of the India Motor Tariff — 5% under six months, 15% up to a year, then 20%, 30%, 40% and 50% through year five — and values separately-fitted accessories on the same scale. Registration charges, road tax and the premium itself are excluded from IDV by the tariff.",
   useCases: [

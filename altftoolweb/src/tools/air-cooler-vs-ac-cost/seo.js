@@ -1,4 +1,12 @@
 const seo = {
+  title: "Air Cooler vs AC: Running Cost and Wet-Bulb Limit",
+  metaDescription:
+    "Enter air temperature and humidity to see the coldest air a cooler can deliver, the litres it evaporates per hour, and each machine's monthly cost.",
+  steps: [
+    "Enter Air temperature (°C) and Relative humidity (%) under Your climate right now.",
+    "Under The two machines pick a Cooler pad type — Rigid honeycomb / cellulose pad, Aspen (wood wool) pad or Old or partly clogged pad — and set Cooler power draw (W), Cooler airflow (m³/h), AC capacity (tons), AC ISEER and AC setpoint (°C).",
+    "With Electricity tariff (₹ per unit), Water price (₹ per 1,000 L), Hours run per day and Days per month set, the comparison table lists the air temperature each delivers, water per hour and total cost per month; Copy result saves the comparison.",
+  ],
   intro:
     "This comparison shows what an evaporative desert cooler and an air conditioner each cost to run, and — more usefully — what temperature each can actually deliver in your air. A cooler cannot go below the wet-bulb temperature: its outlet is dry-bulb minus the pad's saturation effectiveness times the wet-bulb depression, so at 40 °C and 25% humidity an 85% honeycomb pad reaches about 27 °C, while at 33 °C and 85% humidity it manages under 2 °C of cooling. Wet bulb is computed with Stull's 2011 approximation and the water evaporated from a constant-enthalpy psychrometric balance.",
   useCases: [

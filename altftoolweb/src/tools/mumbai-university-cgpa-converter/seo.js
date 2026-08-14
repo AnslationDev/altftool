@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mumbai University CGPA to Percentage: 7.1 x CGPA + 11",
+  metaDescription:
+    "Reproduces Mumbai University's CBCGS map, 7.1 x CGPA + 11, and computes the aggregate percentage from raw semester marks for the post-repeal route.",
+  steps: [
+    "Type Your CGPA (0 to 10) and pick a Conversion rule: the CBCGS formula 7.1 x CGPA + 11, Plain multiply CGPA x 10, or UGC equivalence CGPA x 9.5.",
+    "For the post-repeal route, fill Semester marks obtained and Semester marks out of under Percentage from raw semester marks.",
+    "Read the Percentage with Class on this percentage and Range this formula can produce, then press Copy result.",
+  ],
   intro:
     "Mumbai University's Choice Based Credit and Grading System converts CGPA to percentage with an affine map — Percentage = 7.1 × CGPA + 11 — rather than the plain multiply most universities use, because CBCGS awards grade point 10 from 80 marks upward. This converter reproduces that figure for grade cards that carry it, computes the aggregate percentage straight from raw semester marks for the post-repeal route, and builds CGPA from course credits and grade points. The formula was repealed with effect from 1 January 2026, so the marks-based path matters as much as the formula now.",
   useCases: [

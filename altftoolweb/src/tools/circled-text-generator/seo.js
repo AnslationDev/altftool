@@ -1,4 +1,7 @@
 const seo = {
+  title: "Circled Text Generator - 4 Enclosed Unicode Styles",
+  metaDescription:
+    "Convert letters to enclosed Unicode in four styles: Circled, Filled Circle, Filled Square and Parenthesized. Real Unicode characters, not a font.",
   intro:
     "The Circled Text Generator swaps supported letters for enclosed Unicode equivalents — ⓐ for a — in four styles: Circled, Filled Circle, Filled Square and Parenthesized. Filled Square uses Unicode's Negative Squared Latin Capital Letter characters. Circled and Filled Circle map digits 0 through 9, Parenthesized maps 1 through 9, and Filled Square has no digit mapping. It is real text rather than an image or font; characters with no mapping, including spaces, punctuation and unsupported digits, pass through untouched.",
   useCases: [

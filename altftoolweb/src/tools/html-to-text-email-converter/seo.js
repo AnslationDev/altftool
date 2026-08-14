@@ -1,4 +1,10 @@
 const seo = {
+  title: "HTML to Plain-Text Email Converter for Multipart",
+  steps: [
+    "Paste your campaign markup into the HTML input panel, or use Upload .html to load a .html or .htm file.",
+    "Watch the Plain-text output panel convert as you type: anchors become Text (URL), H1 gains an = underline, and 1x1 tracking pixels are skipped.",
+    "Check the chars, words and lines counters, then use Copy text or Download .txt to save email-plain-text.txt.",
+  ],
   intro:
     "This converter turns an HTML email into the plain-text alternative half of a multipart/alternative send, parsing the markup with the browser's own DOMParser and walking the tree with fixed rules: links become \"anchor text (https://url)\", H1 and H2 get = and - underlines, lists become bulleted or numbered lines with two-space indents per nesting level, and blockquotes are prefixed with >. Tracking pixels, display:none preheaders, scripts, styles and hidden elements are dropped rather than rendered as stray text. It is for anyone sending marketing or transactional mail who needs a text part that reads properly instead of a tag-stripped mess.",
   useCases: [

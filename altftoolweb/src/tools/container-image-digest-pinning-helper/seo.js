@@ -1,4 +1,12 @@
 const seo = {
+  title: "Docker Image Digest Pinning: Tag to sha256 Reference",
+  metaDescription:
+    "Convert a mutable image tag into a pinned name:tag@sha256 reference and scan Dockerfile FROM lines and compose or Kubernetes image keys for unpinned tags.",
+  steps: [
+    "Enter the image under 'Image reference (with or without tag)' and paste its 'Manifest digest (sha256:...)' — the sha256: prefix and 64 hex characters are validated.",
+    "Paste a file into 'Scan a Dockerfile / compose file / Kubernetes manifest' to classify every reference as pinned, mutable tag or :latest.",
+    "Click 'Copy result' to copy the pinned name:tag@sha256 reference with the tag kept as a human-readable label.",
+  ],
   intro:
     "This helper converts a mutable container image tag like nginx:1.27 into an immutable digest reference like nginx:1.27@sha256:..., following the OCI distribution spec rule that a sha256 digest identifies exactly one manifest forever. It also scans Dockerfile FROM lines and image: keys in compose or Kubernetes manifests and reports which references are pinned, which ride mutable tags and which fall back to :latest. Built for DevOps and supply-chain-security work where reproducible deployments matter.",
   useCases: [

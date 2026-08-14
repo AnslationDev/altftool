@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teleprompter Speed Calculator: px/s and WPM Pace",
+  metaDescription:
+    "Paste a script and a target runtime to get scroll speed in pixels per second, lines per minute, and the words-per-minute pace that implies.",
+  steps: [
+    "Paste the script into the Script box — blank lines are treated as paragraph breaks where the presenter breathes — and set Target runtime (seconds), or tap one of the six presets from 30 seconds to 5 minutes.",
+    "Set Prompter font size (px), Text column width (px) and Line height (× font size), and untick \"Allow a breath at each paragraph break\" for a continuous read.",
+    "Read Scroll speed in px/s with the words-per-minute pace band under it, plus Lines per minute, Seconds per line and Total scroll distance, then press Copy result.",
+  ],
   intro:
     "Teleprompter scroll speed is derived, not guessed: the script's word count divided by the runtime gives the delivery pace in words per minute, the text width and font size give the number of wrapped lines, and lines × line height ÷ speaking seconds gives the scroll in pixels per second. This calculator does all three and reports the pace against the working bands used in broadcast — around 120 to 150 wpm for conversational presenting, 150 to 170 for scripted news, and above roughly 190 the audience stops absorbing new information. It also subtracts a breath at each paragraph break, because the prompter has to be still while the presenter pauses.",
   useCases: [

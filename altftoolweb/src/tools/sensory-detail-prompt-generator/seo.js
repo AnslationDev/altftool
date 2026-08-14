@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sensory Detail Prompt Generator + Sense Balance Scan",
+  metaDescription:
+    "One craft question per sense — sight, sound, smell, taste, touch and body — built around your chosen setting, plus a draft scan for missing senses.",
+  steps: [
+    "Choose a Setting (Street market at midday, City street in heavy rain and the rest), type a Prompt set number, and tick which of the six Senses to prompt — Sight, Sound, Smell, Taste, Touch and Body.",
+    "Press New set to step the prompt-set number to a different reproducible set; Your prompts rebuilds instantly with one setting-specific question per ticked sense.",
+    "Press Copy prompts to take them into your draft, then paste a paragraph into Your draft under 'Scan a paragraph for sense balance' to see senses in play out of 6, the word hits behind each bar, a sight-dominance flag and any sense missing entirely.",
+  ],
   intro:
     "A sensory detail prompt generator asks one specific question per sense about a scene you are writing — sight, sound, smell, taste, touch, and the body's own sense of balance, breath and effort. Prompts are built by combining a craft question with a concrete object from the setting you choose, so they point at something in your scene rather than asking a generic \"what can you smell?\". A companion scan reads a paragraph against a fixed sense lexicon and reports which channels are missing and whether sight is crowding out the rest.",
   useCases: [

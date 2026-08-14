@@ -1,4 +1,12 @@
 const seo = {
+  title: "Changelog Prompt Builder: SemVer Bump from Commits",
+  metaDescription:
+    "Classifies merged commit titles by Conventional Commits, maps them to Keep a Changelog sections, and computes the SemVer bump the set implies.",
+  steps: [
+    "Paste your merged titles into 'Commit or merged PR titles — one per line' and set 'Current version (MAJOR.MINOR.PATCH)'.",
+    "Pick the 'Written for' audience and 'Tone', and add anything extra under 'Extra instruction (optional)'.",
+    "Check the Next version and the 'Bump implied by the commits' row, then press 'Copy prompt' to take the generated prompt.",
+  ],
   intro:
     "A changelog prompt builder reads your merged commit titles, classifies each one under Conventional Commits 1.0.0, maps it to a Keep a Changelog 1.1.0 section, and works out the Semantic Versioning 2.0.0 bump the set implies before writing the prompt. Breaking changes marked with an exclamation mark or a BREAKING CHANGE footer force a major bump and get pulled to the top with a migration note. The result is a prompt that turns commit shorthand into release notes a user can act on, without inventing changes that were never shipped.",
   useCases: [

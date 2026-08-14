@@ -1,4 +1,12 @@
 const seo = {
+  title: "Capital City Quiz: Timed, Graded, 195+ Countries",
+  metaDescription:
+    "Name the capital of a country drawn at random from four options against a clock, then get a graded report you can copy or download as a .txt.",
+  steps: [
+    "Pick a difficulty under Select Difficulty: Easy is 10 questions at 30 seconds each, Expert is 50 at 8 seconds with no hint.",
+    "Answer each country's capital from the four options before the timer hits zero — after two correct in a row, each further correct answer scores 2 points instead of 1.",
+    "At Quiz Complete, read the Answer Review and Best Streak, then use Copy or Download to save the graded report as Capital_Quiz_Expert.txt.",
+  ],
   intro:
     "This capital city quiz asks you to name the capital of a randomly drawn country from a list of nearly 200, choosing from four options against a per-question countdown, with a streak bonus that doubles your points once you are three correct answers deep. Four difficulty settings change both the length and the pressure: Easy is 10 questions at 30 seconds each with hints, Medium 20 at 20 seconds, Hard 30 at 12 seconds and Expert 50 at 8 seconds. At the end you get a graded report with every question reviewed, which you can copy or download as a text file.",
   useCases: [

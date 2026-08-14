@@ -1,4 +1,12 @@
 const seo = {
+  title: "Font Legibility Comparator: WCAG 1.4.12 Spacing Test",
+  metaDescription:
+    "Set the same text under two local font stacks, sizes and measures, apply the WCAG 1.4.12 spacing values to view B, and export a settings-only JSON.",
+  steps: [
+    "Paste your own passage into \"Private reading sample\", capped at 20,000 characters, with the counter below reporting words, paragraphs, detected script groups and characters used.",
+    "Adjust View A settings and View B settings independently: Local font stack (System UI sans, Humanist sans fallback, Neutral sans fallback, Reading serif fallback or Monospace fallback), Font size in px, Line height, Letter spacing and Word spacing in em, Line measure in ch, Font weight from 400 Regular to 700 Bold, and Paragraph spacing.",
+    "Press \"Apply spacing stress to B\" to push that view to the WCAG test values, \"Swap views\" to compare the other way round, then \"Download settings-only report\" to save font-legibility-comparison.json, which excludes your sample text and your preference.",
+  ],
   intro:
     "This comparator renders your own text twice, side by side, under two independent typography settings — font stack, size, weight, line-height, letter-spacing, word-spacing and measure — so you can judge legibility on real content instead of a specimen sheet. A one-click 'Apply spacing stress to B' button pushes View B to the WCAG 2.1 Text Spacing (1.4.12) test values: line-height at least 1.5, letter-spacing at least 0.12em, word-spacing at least 0.16em and paragraph spacing at least 2em, so you can compare it directly against View A's normal spacing. It deliberately never declares a winner or a pass — the exported JSON records the two settings and their deltas, and leaves the judgement to you and your readers.",
   useCases: [

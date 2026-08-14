@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Sleep Routine Planner: Bedtime from Wake Time",
+  metaDescription:
+    "Works backwards from a fixed wake time to set lights out, the wind-down hour, an 8-hour caffeine cut-off and a nap capped at 30 minutes, done by 3 pm.",
+  steps: [
+    "Enter the fixed wake-up time held seven days a week, plus age in years, the nightly sleep target in hours and the usual minutes taken to fall asleep.",
+    "Add the usual daytime nap in minutes, and optionally a week of sleep diary averages: hours actually asleep and hours in bed.",
+    "Read lights out, the timed cut-offs for caffeine, alcohol, meals and light, the nap window and sleep efficiency against the 85% target, then press Copy routine.",
+  ],
   intro:
     "The Senior Sleep Routine Planner builds a full evening and morning schedule backwards from a fixed wake time, the anchor sleep medicine asks people to hold steady seven days a week. It sets lights out from your sleep target plus the minutes you usually take to fall asleep, then places the wind-down hour, the caffeine cut-off eight hours before bed, the last alcohol and heavy meal three hours before, and a nap window capped at 30 minutes and finished by 3 pm. Add a week of sleep diary averages and it also reports sleep efficiency against the 85% target used in CBT for insomnia.",
   useCases: [

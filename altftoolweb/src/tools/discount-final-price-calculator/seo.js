@@ -1,4 +1,12 @@
 const seo = {
+  title: "Discount Calculator: Stacked Offers, GST, Final Price",
+  metaDescription:
+    "20% then 10% is 28% off, not 30%. Stack percentage and flat discounts in order, add GST on the discounted value, see the equivalent single discount.",
+  steps: [
+    "Enter List price before discount (INR) and set GST added on the discounted price (%), using the 0%, 5%, 12%, 18% and 28% slab buttons if one matches.",
+    "Under Discounts, in the order they apply press Add discount for each step and set it to % off or Flat amount off, in the sequence the seller applies them — a flat amount and a percentage do not commute.",
+    "Final payable updates live, with rows for You save, Equivalent single discount and If the percentages were simply added — overstates by …, and Copy result copies the whole breakdown.",
+  ],
   intro:
     "Successive discounts multiply rather than add: a price cut of 20% followed by a further 10% leaves 0.8 × 0.9 = 0.72 of the original, an equivalent single discount of 28% and not 30%. This calculator applies percentage and flat-rupee discounts in the order a checkout actually applies them, adds GST on the discounted value as section 15(3)(a) of the CGST Act requires, and reports the true saving, the final payable amount and the equivalent single discount. It also works backwards from a marked price and a price paid to the discount percentage that implies.",
   useCases: [

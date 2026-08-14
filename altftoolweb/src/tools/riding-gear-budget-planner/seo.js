@@ -1,4 +1,12 @@
 const seo = {
+  title: "Riding Gear Budget Planner: Helmet-First Allocation",
+  metaDescription:
+    "Spends your budget in protection order — helmet, gloves, jacket, boots — tags each with its IS 4151 or EN standard, and scores honest coverage.",
+  steps: [
+    "Enter Budget available now (₹) and Saving each month (₹), and tick the touring option to add rain gear, liners, luggage and an intercom.",
+    "For each item in priority order choose Tier (Entry, Mid-range or Premium) or type Your own price (₹, optional), and mark Already own or untick In the plan.",
+    "Read the Protection coverage percentage with the biggest remaining gap, then press Copy result.",
+  ],
   intro:
     "A riding gear budget planner allocates the money you have in protection priority order — helmet, gloves, jacket, boots, trousers, back protector — and reports how much of that priority weight your budget actually buys, rather than how many items you ticked off. Each item is labelled with the standard it should carry: IS 4151 for helmets sold in India, EN 17092 for garments, EN 1621-1 and EN 1621-2 for armour and back protectors, EN 13594 for gloves and EN 13634 for boots. Touring extras are costed separately and score zero for protection, so they can never flatter the number.",
   useCases: [

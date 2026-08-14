@@ -1,4 +1,7 @@
 const seo = {
+  title: "Flow Chart Maker: 8 Standard Symbols in Your Browser",
+  metaDescription:
+    "Start/End, Process, Decision, Input/Output, Database, Document, Subprocess and Comment — the eight standard flowchart symbols, shown on a worked example.",
   intro:
     "This is a drag-and-drop flowchart canvas that builds diagrams from the eight standard flowchart symbols — terminator, process, decision, input/output, database, document, subprocess and comment — and connects them with directional arrows. Drag a shape from the palette onto the canvas, double-click any node to rename it, then drag from one node's handle to another to draw a smoothstep arrow between them. It is for anyone who needs to map a process visually without learning diagramming software: the canvas ships with a worked example you can study before you start your own.",
   useCases: [

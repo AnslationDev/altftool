@@ -1,4 +1,12 @@
 const seo = {
+  title: "Patch Test Timer: 48 and 96 Hour Reading Dates",
+  metaDescription:
+    "Turn the time you applied a patch into real reading dates: 48 and 96 hours for ICDRG clinical tests, 1, 24 and 48 for a hair dye allergy alert test.",
+  steps: [
+    "Enter Date and time applied, then set Type of test to Clinical patch testing (ICDRG readings) or Home cosmetic / hair dye allergy alert test.",
+    "Tick the day 7 late reading for metals, neomycin and corticosteroids, or the 72 hour delayed-reaction check on the home test.",
+    "Read each real date under Schedule and reading log, grade every reading on the ICDRG scale, then press Copy result.",
+  ],
   intro:
     "The Patch Test Timer converts the moment you applied a patch into the exact calendar dates and times of every reading, using the two published schedules that matter: the ICDRG clinical sequence of application, removal and first reading at 48 hours, a second reading at 72–96 hours and an optional day 7 late reading, and the home cosmetic sequence of checks at 1, 24 and 48 hours used for hair colourant allergy alert tests. Each reading can be logged on the standard ICDRG scale from negative through doubtful, irritant and weak, strong or extreme positive. It is an informational planner, not a diagnosis.",
   useCases: [

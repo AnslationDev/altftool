@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teachers Day Message Generator in Eight Languages",
+  metaDescription:
+    "Write Teachers Day notes, card messages, speech openers and posts in eight languages, with character count and SMS segments for each one.",
+  steps: [
+    "Choose a Language — English, Hindi (हिन्दी), Marathi (मराठी), Bengali (বাংলা), Tamil (தமிழ்), Telugu (తెలుగు), Kannada (ಕನ್ನಡ) or Gujarati (ગુજરાતી) — and a 'Message type' of Short note, Card message, Speech opener or Social post.",
+    "Set the Occasion to \"Teachers' Day in India (5 September)\" or \"World Teachers' Day (5 October)\", add the optional Teacher's name, 'Sign off as' and 'Subject taught' (used in the social post only), and set 'How many messages' up to 6.",
+    "Check the 'Greeting used' headline and the Longest message row, then read each message's character count, SMS segments (Unicode at 70 per segment, GSM-7 at 160) and whether it fits a 700-character WhatsApp status, and press Copy on one, 'Copy all', or Shuffle for different wording.",
+  ],
   intro:
     "This generator writes Teachers Day messages in four formats — a short note, a card message, a speech opener and a social post — across English, Hindi, Marathi, Bengali, Tamil, Telugu, Kannada and Gujarati. It uses the correct greeting for the occasion you pick: 5 September, Dr Sarvepalli Radhakrishnan's birthday, observed as Teachers' Day in India since 1962, or 5 October, World Teachers' Day, declared by UNESCO in 1994. Each message shows its character count and how many SMS segments it needs, since Indic script is sent as Unicode and fits only 70 characters per segment.",
   useCases: [

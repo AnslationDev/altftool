@@ -1,4 +1,12 @@
 const seo = {
+  title: "Asset File Naming Generator: ISO Dates, Padded Runs",
+  metaDescription:
+    "Build sortable file names from tokens with hyphen, underscore or dot separators, ISO 8601 or year-quarter dates and zero-padded sequence numbers.",
+  steps: [
+    "Type your tokens into 'Name parts, one per line', then pick a Separator (Hyphen — my-file, Underscore — my_file, Dot — my.file or None) and a Case style (lowercase, UPPERCASE, Title Case, camelCase or PascalCase).",
+    "Set the Date, its Date format (No date, ISO 8601, compact, year-month or year-quarter) and Date position — 'Start of the name (sorts by date)' or 'End of the name (sorts by project)' — plus Extension, Sequence start, Sequence padding (1-10) and Batch count (up to 200).",
+    "Read the whole run under 'Generated names', which reports how many characters are in the first file name and warns about illegal Windows characters, reserved device names or a trailing period. Copy puts the list on your clipboard and Reset restores the defaults.",
+  ],
   intro:
     "An asset file naming generator assembles a file name from ordered tokens — client, asset, variant, date and sequence number — under a chosen separator and case convention. It enforces the rules that actually break files in the wild: Windows rejects the characters \\ / : * ? \" < > | and reserves device names like CON and NUL, no name may end in a space or period, and NTFS, APFS and ext4 all cap one path component at 255 characters. ISO 8601 dates are used because YYYY-MM-DD sorts alphabetically in chronological order.",
   useCases: [

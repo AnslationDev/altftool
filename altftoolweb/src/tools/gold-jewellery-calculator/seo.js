@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gold Jewellery Price Calculator - Making, GST, Resale",
+  metaDescription:
+    "Split a jeweller's quote into 22K/18K metal value, wastage, making charges, 3% GST and the ₹45 hallmark fee — then see what a buyback pays back today.",
+  steps: [
+    "Enter the 24K gold rate (per 10 g) your jeweller is quoting today, pick a Purity of 24K, 22K, 18K or 14K, and give the Gross weight (g) and Stone / gem weight (g) so stones come off the gold weight.",
+    "Set making charges as \"% of gold value\" or \"Flat per gram\", add Wastage % and Stone / gem charges, and tick \"Add BIS hallmark charge (₹45 per article)\" — or load a Quick preset such as \"22K chain, 10 g\" or \"18K diamond ring, 5 g\".",
+    "The Itemised bill lists the derived rate per gram, Net gold weight, Gold value, wastage, making charges, Taxable value, GST @ 3% and the hallmark line, while \"What you would get back today\" shows You pay, You get back and Immediate loss at your Buyback deduction; Copy bill copies the breakdown.",
+  ],
   intro:
     "The Gold Jewellery Price Calculator rebuilds a jeweller's bill line by line: it converts the 24K rate per 10 g into a per-gram rate for your purity using the fineness ratio (0.916 for 22K, 0.750 for 18K, 0.585 for 14K), prices only the net gold weight after stones are deducted, then adds wastage, making charges, stone charges, 3% GST and the BIS hallmarking fee. It also estimates what the same piece fetches on resale after a buyback deduction, and how far the gold rate must rise before you break even. It is for anyone standing at a counter in India trying to work out how much of the quoted price is actually gold.",
   useCases: [

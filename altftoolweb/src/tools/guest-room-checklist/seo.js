@@ -1,4 +1,12 @@
 const seo = {
+  title: "Guest Room Checklist With Towel and Linen Counts",
+  metaDescription:
+    "Enter adults, children and nights: towels are counted on a three-night change, linen on four nights, water at 2.5 litres per person per day.",
+  steps: [
+    "Set Adults, Children, Nights they stay and Season, then tick the ones that apply — Private bathroom, An elderly guest, Bringing a pet.",
+    "Read the quantities it derives: Bath towels to set out, Hand towels, Bed linen sets, Toilet rolls, Drinking water in litres and Hangers.",
+    "Tick each item off as you prepare the room, then press Copy result to paste the whole checklist as text.",
+  ],
   intro:
     "This generator builds a guest room checklist with real quantities rather than a generic list of nouns. Towels are counted on a three-night change interval and bed linen on a four-night one, the intervals used in ordinary housekeeping, so towels come out as guests × ceil(nights ÷ 3) and linen sets as beds × ceil(nights ÷ 4). Toilet rolls assume one roll per person per four days and drinking water 2.5 litres per person per day. Season, a shared bathroom, an infant, an elderly guest, a working guest or a pet each add their own items.",
   useCases: [

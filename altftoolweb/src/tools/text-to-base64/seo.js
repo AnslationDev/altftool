@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to Base64 Encoder and Decoder (RFC 4648)",
+  metaDescription:
+    "UTF-8 text to standard Base64, padded on one unbroken line, and back again. Text to Hex and Text Stats too. Runs in the browser, nothing uploaded.",
+  steps: [
+    "Type or paste into the Tool input box, or press the 'Short note' or 'URL token' example chip to load a sample.",
+    "Press 'Text -> Base64' to encode, 'Base64 -> Text' to decode, or 'Text -> Hex' / 'Text Stats' for the other two conversions — the Output panel reruns with a live character count.",
+    "Press Copy for the clipboard, Download to save text-to-base64-textToBase64.txt, 'Use output' to push the result back into the input, or 'Save run' to keep it in the six-entry history tray.",
+  ],
   intro:
     "Base64 is the RFC 4648 encoding that rewrites arbitrary bytes as 64 printable characters so they survive channels that only accept text — email bodies, JSON fields, data URIs and HTTP headers. This tool UTF-8 encodes what you type and converts it with the standard alphabet (A–Z a–z 0–9 + /), always = padded and emitted as one unbroken line, while Base64 -> Text decodes in the other direction. Two more one-click actions sit beside them, Text -> Hex and Text Stats, and everything runs in the browser, so nothing is uploaded.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Markup to Margin Converter and Discount Break-Even",
+  metaDescription:
+    "Convert markup to margin with margin = markup ÷ (1 + markup), solve cost, price and profit from any two, and see the margin a discount leaves.",
+  steps: [
+    "Under 'I know' choose Cost and markup %, Cost and margin %, Cost and selling price, Selling price and margin % or Selling price and markup %, enter the two figures and pick a Currency.",
+    "Put a figure in 'Discount off the selling price (%)' to see what a promotion leaves of the margin, or whether it wipes the margin out entirely.",
+    "Read Unit cost, Selling price, Gross profit per unit, Markup on cost, Margin on price and Price as a multiple of cost, check the 'Markup and margin side by side' table, then press Copy result.",
+  ],
   intro:
     "Markup measures profit against cost — (price − cost) ÷ cost — while gross margin measures the same profit against the selling price — (price − cost) ÷ price. Because the denominators differ, markup is always the larger figure on a profitable sale, and confusing the two systematically underprices stock. This converter solves the whole picture from any two of cost, price, margin and markup using the exact identities margin = markup ÷ (1 + markup) and markup = margin ÷ (1 − margin), and also shows what a discount does to the margin you started with.",
   useCases: [

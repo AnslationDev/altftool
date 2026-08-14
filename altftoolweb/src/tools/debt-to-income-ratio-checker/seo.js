@@ -1,4 +1,12 @@
 const seo = {
+  title: "Debt to Income Ratio Checker: FOIR & EMI Headroom",
+  metaDescription:
+    "Compute FOIR on take-home pay and DTI on gross pay from your EMIs, test them against lender caps and the 28/36 rule, and see the EMI room left in rupees.",
+  steps: [
+    "Enter 'Gross monthly income (INR)' and 'Net take-home income (INR)', then each EMI including 'Credit card minimum due (INR)'.",
+    "Optionally tick 'Count rent as an obligation' and set the 'Lender FOIR to test against (%)' — the default is 50%.",
+    "Read FOIR on take-home pay with its zone, the 28/36 benchmarks and your EMI headroom in rupees, then click 'Copy result'.",
+  ],
   intro:
     "Your debt to income ratio is total monthly debt payments divided by income, and Indian lenders underwrite the version called FOIR, which uses net take-home pay as the denominator. This checker computes FOIR on take-home pay, the debt-to-income ratio on gross pay, and the housing share separately, then reads them against common lender caps of roughly 40% to 55% and against the 28/36 benchmark used in mortgage underwriting. It also shows how much EMI room is left at whatever FOIR your lender applies.",
   useCases: [

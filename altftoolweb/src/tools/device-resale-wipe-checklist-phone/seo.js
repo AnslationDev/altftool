@@ -1,4 +1,12 @@
 const seo = {
+  title: "Phone Wipe Checklist for Resale, in the Right Order",
+  metaDescription:
+    "Orders every step as a dependency chain and warns when you tick one early — Activation Lock, Factory Reset Protection, eSIM, passkeys and 2FA seeds.",
+  steps: [
+    "Choose iPhone or Android under \"Which phone?\", then tick the options that apply under \"Which of these apply?\": the phone has an eSIM I still need, there is a memory card in it, an Apple Watch is paired to it, and it has a work profile, MDM enrolment or supervision.",
+    "Work down the six phases in order — 1. Before you touch anything, 2. Move what cannot be re-created, 3. Detach the device from your accounts, 4. Erase — the point of no return, 5. Prove the wipe worked, 6. Handover — ticking each step as you finish it.",
+    "\"Ready to sell\" tracks the percentage done, critical steps outstanding and the next step; tick a step before its prerequisite and it is listed under \"Done out of order\" with what the mistake would cost, and Copy checklist exports the whole plan as text.",
+  ],
   intro:
     "Old Phone Resale Wipe Checklist orders the steps of preparing a phone for sale as a dependency chain and flags it when you mark one complete before its prerequisite. The order is what matters: on iPhone, Erase All Content and Settings from within Settings is the only route that clears Activation Lock as part of the erase, and on Android the Google account has to be removed before the factory reset or Factory Reset Protection leaves the buyer locked out. It also covers the things a wipe destroys that no backup restores — authenticator seeds, device-bound passkeys and transit passes held in the secure element.",
   useCases: [

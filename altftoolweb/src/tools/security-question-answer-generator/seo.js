@@ -1,4 +1,12 @@
 const seo = {
+  title: "Security Question Answer Generator with Entropy Bits",
+  metaDescription:
+    "Builds false but recordable answers as a passphrase, short story or random string, and reports each one's entropy in bits and possible-answer count.",
+  steps: [
+    "Pick a style — 'Memorable passphrase', 'Short false story' or 'High-entropy string' — and set 'Words per answer' or 'Characters per answer' plus 'How many answers'.",
+    "Press 'New answers' to reseed the generator, and choose the real prompt under 'Question you are being asked' to compare its bits with an honest answer.",
+    "Read 'Strength of each answer' in bits alongside 'Possible answers', then press 'Copy all' and paste them into your password manager's notes field.",
+  ],
   intro:
     "Security Question Answer Generator produces false but recordable answers — hyphenated passphrases, short invented stories, or high-entropy strings — for questions like 'mother's maiden name' that are matters of public record rather than secrets. It reports the exact strength of each answer in bits of entropy, calculated as log2 of the number of equally likely outcomes, and compares that with how guessable an honest answer would be. NIST SP 800-63B tells verifiers not to use knowledge-based authentication at all; where a service still insists, the accepted fix is to treat the answer as a second password.",
   useCases: [

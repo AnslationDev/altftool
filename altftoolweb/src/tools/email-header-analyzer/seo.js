@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Header Analyzer: SPF, DKIM and DMARC Alignment",
+  metaDescription:
+    "Paste raw headers to read the Received hop chain and delays, every DKIM-Signature tag, and DMARC alignment recomputed here against the From domain.",
+  steps: [
+    "Press Clear, then paste the full header block into the \"Raw headers\" box — Gmail: Show original, Outlook: View message source, Apple Mail: Raw source.",
+    "The page reparses as you type: read the Verdict line with its fail/warn/pass/info counts, then the Sender authentication cards for SPF, DKIM and DMARC and each one's alignment with the From domain.",
+    "Check Findings, Identity fields, the \"Route, oldest hop first\" table with its per-hop Delay column and the DKIM-Signature tags, then press Copy report; \"Reset to sample\" restores the example headers.",
+  ],
   intro:
     "Paste a full email header block and this page parses it the way a receiving mail server writes it: the Received trace chain in RFC 5321 order, the Authentication-Results field defined in RFC 8601, Received-SPF from RFC 7208, and every tag of every DKIM-Signature from RFC 6376. It then recomputes DMARC identifier alignment (RFC 7489 section 3.1) locally, comparing the From domain against the SPF envelope domain and the DKIM d= domain, so a forged Authentication-Results line claiming a pass on an unrelated domain does not slip through. Hop delays are the real differences between the timestamps in the headers, and RFC 2047 encoded subjects are decoded so you can read what was actually sent. Everything happens in the browser — no header is uploaded.",
   useCases: [

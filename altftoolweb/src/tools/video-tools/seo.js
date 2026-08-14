@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Bitrate, Timecode and Target-Size Calculator",
+  metaDescription:
+    "Drop a clip in and get bitrate, bits per pixel, aspect ratio, frame count and HH:MM:SS:FF timecode — plus the kbit/s needed to hit a target file size.",
+  steps: [
+    "Use \"Read specs from a video file (optional)\" to load a clip (the input accepts video/*) — Duration, Frame width, Frame height and File size (MB) fill in from the file locally — or type those numbers in yourself.",
+    "Set the Frame rate (fps), Audio bitrate (kbit/s), Target file size (MB) and \"Fit into aspect ratio\".",
+    "Average bitrate reports Mbit/s, kbit/s and bits per pixel alongside aspect ratio, total frames and HH:MM:SS:FF timecode; \"Hit a target file size\" gives the video kbit/s, \"Quality check vs H.264 reference\" compares it to the YouTube tier, and Copy result copies the sheet.",
+  ],
   intro:
     "Video Tools is a browser-side video spec calculator: drop in a clip (or type its numbers) and it returns bitrate, aspect ratio, megapixels, frame count, SMPTE timecode, letterbox bars and the exact video bitrate needed to hit a target file size. Every figure comes from the definitions themselves — bitrate = file size in bits / duration in seconds, bits per pixel = bitrate / (width x height x fps) — and the quality check compares your bitrate against YouTube's published H.264 upload recommendation for that resolution. It is built for editors, social media managers and developers who need to size an export before they run it.",
   useCases: [

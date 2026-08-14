@@ -1,4 +1,12 @@
 const seo = {
+  title: "Makeup Shade Finder: Undertone and Depth from a Selfie",
+  metaDescription:
+    "Averages the skin pixels in a selfie to read your undertone and depth, then names a shade with its hex across six categories, from foundation to bronzer.",
+  steps: [
+    "Drop a bare-faced, front-facing photo onto Upload a clear front-facing photo, or click to browse — the picker takes any image/* file and the image is drawn to a canvas in your own browser.",
+    "The tool loads its TinyFaceDetector and 68-point landmark models, then runs Detecting face, Sampling skin regions and Finding your shades, stopping with an error if no face is found or fewer than 10 usable skin pixels can be sampled.",
+    "The header states your undertone and skin depth with an Undertone Match bar; open Foundation, Concealer, Blush, Lipstick, Eyeshadow or Bronzer to read each named shade with its hex code, and Analyze Another clears the photo for a new one.",
+  ],
   intro:
     "Makeup Shade Finder reads a selfie in the browser, locates your face with a TinyFaceDetector and a 68-point facial landmark model, samples the skin pixels from the centre of the face and the cheeks, and averages them into a single skin RGB value. From that average it estimates an undertone by comparing the red and blue channel balance and a depth score from perceived luminance, then suggests shades across six categories: foundation, concealer, blush, lipstick, eyeshadow and bronzer. The photo is analysed on your device and never leaves it.",
   useCases: [

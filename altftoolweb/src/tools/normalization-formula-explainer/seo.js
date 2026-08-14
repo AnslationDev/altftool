@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Normalization Calculator: SSC, NTA and Z-Score",
+  metaDescription:
+    "Put your own marks through SSC linear equating, Z-score equating, the NTA percentile or min-max scaling, with every substitution shown as a step.",
+  steps: [
+    "Pick a Normalization method: SSC linear equating, Z-score equating, NTA percentile or Min-max scaling.",
+    "Fill the fields that method needs — for SSC, 'Your raw marks (X)', your shift's mean, standard deviation and top 0.1% average, and the same three for all shifts.",
+    "Every substitution appears as a numbered step, from the shift anchor and stretch factor to the normalized mark; 'Copy result' copies the worked steps.",
+  ],
   intro:
     "Normalization is the arithmetic that makes marks from different exam shifts comparable, because no two question papers are exactly equally hard. This explainer runs your own figures through the four formulas that Indian exams actually use: the SSC two-point linear equating that maps a shift's mean-plus-standard-deviation point and top-0.1% average onto the all-shift equivalents, Z-score equating, the NTA percentile used by JEE Main and CUET, and plain min-max scaling. Every substitution is shown as a numbered step, so you can see where each figure lands rather than trusting a single output number.",
   useCases: [

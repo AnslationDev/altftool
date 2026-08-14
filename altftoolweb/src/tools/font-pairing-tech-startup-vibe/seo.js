@@ -1,4 +1,10 @@
 const seo = {
+  title: "Tech Startup Font Pairing & Grid-Snapped Type Scale",
+  steps: [
+    "Under 1. Pick a trio, choose one of the eight pairings such as Developer platform, Clean SaaS or Fintech-adjacent, each naming a display, UI text and monospace family.",
+    "In 2. Scale and grid, set UI body size (px), Scale ratio such as Minor third or Perfect fourth, Baseline grid (px), Hero step on the scale and Text container width (px).",
+    "Read Hero size on the grid and the Characters per line verdict, answer 3. Will it read from the back of the room with your slide width, viewing distance and screen height, then press Copy CSS.",
+  ],
   intro:
     "Tech Startup Font Pairing builds a complete product type system from a geometric or neo-grotesque Google Font trio: a display face, a UI text face and a monospace for numbers and code. Sizes come from a modular scale (size = base × ratio^step) and are then snapped to your 4px or 8px baseline grid, with line boxes rounded to the same grid so cards, tables and buttons stack cleanly. It also converts the same type onto a 16:9 slide and checks it against the 20-arcminute character height that ISO 9241-303 associates with comfortable reading.",
   useCases: [

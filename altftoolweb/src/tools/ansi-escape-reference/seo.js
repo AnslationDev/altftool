@@ -1,4 +1,7 @@
 const seo = {
+  title: "ANSI Escape Code Decoder and SGR / CSI Reference",
+  metaDescription:
+    "Paste a log full of ESC[0;32m and see it rendered, every sequence named with its ECMA-48 mnemonic and support level, plus a stripped plain-text copy.",
   intro:
     "An ANSI escape code decoder reads terminal output that has been captured to a file — the kind that arrives as ESC[0;32m, \\033[1;31m or ^[[2K instead of colour — and shows three things at once: the text rendered the way the terminal would have drawn it, a named breakdown of every escape sequence in the paste, and a stripped plain-text copy with the codes gone. The parser follows the escape-sequence grammar in ECMA-48 (5th edition, 1991), the same standard published as ISO/IEC 6429 and ANSI X3.64: ESC [ starts a Control Sequence, parameter bytes 0x30-0x3F run until a final byte in 0x40-0x7E, and ESC ] starts an Operating System Command that ends at BEL or ST. The 256-colour and 24-bit selectors 38;5;n and 38;2;r;g;b come from ITU-T T.416 (ISO/IEC 8613-6) by way of xterm. It is for anyone reading a CI job log, a Docker build output, a captured SSH session or a test runner's stdout that was piped into a file, and for anyone writing the codes in the first place: the builder emits the sequence in \\x1b, \\033, \\e and \\u001b form with Bash, Python, Node and Go snippets. Everything runs in your browser; the log is never uploaded.",
   useCases: [

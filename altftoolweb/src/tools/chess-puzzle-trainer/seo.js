@@ -1,4 +1,7 @@
 const seo = {
+  title: "Chess Puzzle Trainer: 18 Tactics Puzzles with Hints",
+  metaDescription:
+    "Solve 18 fork, pin, skewer, discovered attack, checkmate and endgame puzzles with three attempts, square hints, explanations and a local streak score.",
   intro:
     "This trainer sets you 18 hand-built tactical positions, three each of forks, pins, skewers, discovered attacks, checkmates and endgames, and asks you to find the one winning move from a real FEN position. You get three attempts per puzzle, a hint that highlights the key square, and a written explanation of why the move works once you solve it or run out of tries. A local scoreboard tracks solved count, current and best streak and total points, awarding 10 for easy, 20 for medium and 30 for hard.",
   useCases: [

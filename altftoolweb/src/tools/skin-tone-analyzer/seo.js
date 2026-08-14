@@ -1,4 +1,7 @@
 const seo = {
+  title: "Skin Tone Analyzer: HEX, Undertone & Fitzpatrick",
+  metaDescription:
+    "Samples a 50x50 patch on your cheek from a webcam shot or photo and reports the HEX, RGB and HSL, plus undertone and Fitzpatrick type.",
   intro:
     "The Skin Tone Analyzer reads a webcam frame or uploaded photo, locates your face with a TinyFaceDetector model, samples a 50x50 pixel patch on the cheek, and averages it into a single skin colour it reports as HEX, RGB and HSL. It then converts that colour into two labels: an undertone taken from the hue angle (roughly 14-36 degrees reads warm, below 14 or above 320 reads cool, anything else neutral) and a Fitzpatrick type from I to VI taken from the lightness value. It is for anyone matching foundation, choosing wardrobe colours or picking a jewellery metal who wants a measured starting point instead of a guess in a shop mirror.",
   useCases: [

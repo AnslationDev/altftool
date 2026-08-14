@@ -1,4 +1,12 @@
 const seo = {
+  title: "ASCVD & Framingham 10-Year Coronary Risk Calculator",
+  metaDescription:
+    "Run one profile through the 2013 ACC/AHA Pooled Cohort Equations and the Framingham point score. Ages 20-79. Educational, not a diagnosis.",
+  steps: [
+    "Under Patient Parameters enter an Age (20–79 years), then set Sex, Race / Ethnicity, Smoking Status and Diabetes.",
+    "Pick Total Cholesterol, HDL Cholesterol and Blood Pressure Category as bands, answer On BP Medication, then press Calculate Risk.",
+    "Compare the ASCVD 10-Year and Framingham CHD gauges with the statin-eligibility note, then Download the CAD_Risk_Report_<risk>%_ASCVD.txt file.",
+  ],
   intro:
     "Coronary Artery Disease Risk Calculator estimates two well-known 10-year cardiovascular risk figures side by side: ASCVD risk from a simplified approximation of the 2013 ACC/AHA Pooled Cohort Equations, and coronary heart disease risk from the Framingham point score. It takes age (20–79), sex, race, smoking status, diabetes, blood pressure category and whether it is treated, plus HDL and total cholesterol bands, and returns each risk as a percentage with its standard category. It is an educational illustration of how these published models weight risk factors — not a diagnosis, not a substitute for the official ACC/AHA calculator, and not a substitute for a clinician's assessment.",
   useCases: [

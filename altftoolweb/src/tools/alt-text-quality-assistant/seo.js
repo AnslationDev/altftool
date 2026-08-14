@@ -1,4 +1,12 @@
 const seo = {
+  title: "Alt-Text Checker: Purpose-First, W3C-Aligned Rules",
+  metaDescription:
+    "Classify the image as decorative, informative, functional or complex, then W3C-aligned rules flag empty alt, 'image of', filenames and duplicated text.",
+  steps: [
+    "Choose the image's purpose in this context — decorative, informative, functional, complex, text-image or unclear — and the current alt state.",
+    "Paste the exact alt value, the essential information users need and any nearby visible text or caption, then press Review entered alt.",
+    "Read the outcome with its error and review-cue counts and each finding, copy the draft built from your own notes, or download the counts-only report.",
+  ],
   intro:
     "The Alt-Text Quality Assistant checks alt text against the thing that actually decides whether it is right — the image's purpose in this exact context — by asking you to classify it as decorative, informative, functional, complex, text-in-image or undecided, record the current alt state (missing, empty or present), and enter the essential information or the control's action. It then runs W3C-aligned rules over what you entered: empty alt on a meaningful image, a generic value like \"image of\", a filename used as alt, alt that duplicates nearby text, a complex image with no longer equivalent, and a word-overlap check against the information you said the image carries. It reviews text and context only — it never looks at the pixels, and a clean result is not a claim of WCAG conformance.",
   useCases: [

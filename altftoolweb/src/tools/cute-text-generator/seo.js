@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cute Text Generator: 8 Styles, Kaomoji & Symbols",
+  metaDescription:
+    "Type once and see all eight ornament styles — Kawaii, Sparkle, Hearts, Stars, Moons and more — plus 10 kaomoji and 18 symbols, letters left plain.",
   intro:
     "The Cute Text Generator decorates your text with Unicode ornaments rather than altering the letters themselves — wrapping it in symbols like ✨, ☆, ✿ or ☾ and, in several styles, threading a heart, star, dot or moon between every character. All eight styles render at once from whatever you type, each with its own copy button, alongside a one-click palette of 10 kaomoji faces and 18 decorative symbols. Because the letters stay ordinary Latin characters, the result reads normally and stays searchable wherever you paste it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maldives Entry Checklist: IMUGA, Visa, Green Tax Cost",
+  metaDescription:
+    "Test passport validity against the Maldivian one-month and airline six-month rules, price Green Tax at USD 12 or 6 a night, and the funds test.",
+  steps: [
+    "Enter Arrival date, Passport expiry date, Nights of stay, Where you are staying, and the travellers aged 2 and over plus children under 2.",
+    "Tick Confirmed booking at a registered facility, or leave it clear and enter Funds you can evidence in USD instead.",
+    "Read the visa-on-arrival days, both passport rules, the funds test and the Green Tax and departure charges, then Copy checklist.",
+  ],
   intro:
     "The Maldives issues a free 30-day visa on arrival to every nationality with no prior application, which means the things that actually stop people are the compulsory IMUGA Traveller Declaration, passport validity and the sufficient-funds rule. This checklist tests your passport against the Maldivian one-month rule and the six-month rule airlines apply, applies the USD 100 plus USD 50 per day funds test when you have no confirmed booking, and totals the Green Tax at USD 12 per person per night at resorts or USD 6 at local-island guesthouses.",
   useCases: [

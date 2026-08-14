@@ -1,4 +1,12 @@
 const seo = {
+  title: "Health Insurance Cover Calculator: Sum Insured Needed",
+  metaDescription:
+    "Sizes a family floater from city tier, family size, eldest age and chronic conditions, then shows the gap against the cover you already hold.",
+  steps: [
+    "Pick your band under \"Where you would be treated\" — Metro, Tier 1, Tier 2 or Tier 3 / smaller towns — then enter adults (1-4), children (0-6), the age of the eldest member and the cover you already hold in rupees.",
+    "Tick \"Senior parents on the same policy\" or \"Someone has a chronic condition\" (a 30% loading), and set medical inflation and the plan horizon in years; the figure recalculates as you type and rounds to a sum-insured slab insurers actually sell.",
+    "Read \"Recommended cover today\", the shortfall against your existing policy, and the suggested base policy plus super top-up split; \"Copy result\" puts the whole breakdown on the clipboard and Reset restores the defaults.",
+  ],
   intro:
     "This health insurance cover calculator estimates the family floater sum insured you should be carrying, based on what a serious hospitalisation costs in your city band, how many people are on the policy, the age of the eldest member and any chronic condition in the household. It compares that figure against the cover you already hold, shows the gap, and suggests a cheaper base-policy-plus-super-top-up structure. It also projects the number forward at medical inflation, which in India has been running well ahead of retail inflation.",
   useCases: [

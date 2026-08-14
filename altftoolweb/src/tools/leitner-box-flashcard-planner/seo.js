@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leitner Box Flashcard Planner: Daily Load Calendar",
+  metaDescription:
+    "Set boxes, spacing (doubling, expanding or gentle) and cards per box to get a dated review calendar, per-box load and a cards-per-day figure.",
+  steps: [
+    "Pick a \"Box schedule\" — Doubling (1, 2, 4, 8, 16), Expanding (1, 3, 7, 14, 30) or Gentle (1, 2, 3, 5, 8, 13) — then set \"Number of boxes\" and \"Start date\".",
+    "Type how many cards sit in each box under \"Cards currently in each box\", set \"Cards you check per minute\", and tick \"Stagger box start days\".",
+    "Read \"Cards to review per day\" with its minutes estimate and the Per-box load table, expand the Review calendar with the \"Show all … days\" toggle, then press \"Copy result\".",
+  ],
   intro:
     "The Leitner system files paper flashcards in numbered boxes: a card you answer correctly moves up one box, a card you miss goes back to box 1, and each box is reviewed on its own fixed interval. This planner turns your box count, spacing schedule and cards-per-box into a dated review calendar, a per-box load table and the long-run daily figure, which is the sum of cards in each box divided by that box's interval. Built for anyone running physical flashcards for language vocabulary, medical terms or competitive-exam facts without an app.",
   useCases: [

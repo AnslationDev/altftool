@@ -1,4 +1,12 @@
 const seo = {
+  title: "Upload Consistency Score: Rate Your Posting Cadence",
+  metaDescription:
+    "Paste your publish dates for a 0-100 score built from gap adherence, coefficient of variation and pace, plus every silence over 2.5x your target.",
+  steps: [
+    "Paste your publish dates into the Upload dates field, one YYYY-MM-DD date per line.",
+    "Set Target gap between uploads (days) and Tolerance either side (days); the score recomputes from adherence at weight 0.5, regularity 0.3 and pace 0.2.",
+    "Read the score out of 100 with the average gap, standard deviation and coefficient of variation, then check the Gap by gap table where each row reads on schedule, off schedule or silence.",
+  ],
   intro:
     "Upload Consistency Score turns a list of publish dates into a 0-100 index built from three measurable parts: the share of gaps that land inside your target cadence, the evenness of those gaps measured as one minus the coefficient of variation, and how the average gap compares with the schedule you set. It also names every silence longer than two and a half times your target, which is where audience habit usually breaks. For creators and newsletter writers who suspect their schedule is slipping but want the number rather than the feeling.",
   useCases: [

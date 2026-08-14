@@ -1,4 +1,7 @@
 const seo = {
+  title: "Body Fat Calculator: US Navy Tape and BMI Methods",
+  metaDescription:
+    "Estimate body fat from neck, waist and hip with the US Navy formula or from BMI, then see fat mass, lean mass and the weight at your target percentage.",
   intro:
     "The Body Fat Percentage Calculator estimates body fat two ways: the US Navy tape method, which feeds neck, waist and — for women — hip circumference plus height into a log-based regression, and the Deurenberg equation, which derives fat from BMI, age and sex when you have no tape. It then splits your weight into fat mass and lean mass, places the result on the standard essential/athlete/fitness/average/obese bands, and works out the goal weight and rough timeline to reach a target percentage. Tape estimates typically carry a few percentage points of error, so treat the number as a trend line rather than a lab result.",
   useCases: [

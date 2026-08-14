@@ -1,4 +1,7 @@
 const seo = {
+  title: "Citation Generator: APA 7, MLA 9, Chicago, IEEE",
+  metaDescription:
+    "Formats books, journal articles, websites, theses and videos in APA 7, MLA 9, Chicago, Harvard, IEEE or Vancouver — author-name rules per style.",
   intro:
     "The Citation Generator turns the details of a source — authors, title, year, publisher, journal, volume, pages, DOI or URL — into a formatted reference in APA 7, MLA 9, Chicago, Harvard, IEEE or Vancouver, across nine source types from books and journal articles to websites, theses, podcasts and YouTube videos. It handles the part students most often get wrong: inverting and abbreviating author names the way each style demands, so APA gives Smith, J. A. while IEEE gives J. A. Smith. Your last 50 citations are kept in the browser so you can rebuild a reference list without retyping.",
   useCases: [

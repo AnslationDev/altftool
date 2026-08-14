@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marketing Consent Withdrawal Letter, SMS or Call Script",
+  metaDescription:
+    "Write an opt-out for email, SMS, phone or letter, citing GDPR Article 7(3), DPDP section 6(6) or CAN-SPAM, plus the date they should have acted by.",
+  steps: [
+    "Choose \"Sending it by\" — Email, SMS / text reply, Phone call script or Written letter — and \"Rules that apply to you\": EU / EEA (GDPR), United Kingdom (UK GDPR / PECR), India (DPDP Act / TRAI), United States (CAN-SPAM / FCC) or Elsewhere / not sure.",
+    "Fill in \"Your name as they hold it\", \"Email or number they contact you on\", Company, an optional Account or customer reference and \"Date you are sending it\", then tick the options you want: tell partners they shared your details with, ask for written confirmation, and delete your details from marketing lists.",
+    "\"They should have acted by\" shows the calculated deadline next to rows for Channel, Message length and Escalate to — and, for an SMS, the segment count with its GSM-7 or UCS-2 encoding — while Your message holds the subject and body that Copy message copies.",
+  ],
   intro:
     "The Marketing Consent Withdrawal Builder writes the message that stops a company marketing to you, in the form you are actually sending it — email, an SMS reply, a phone script or a letter — and cites the provision that applies where you live: Article 7(3) and Article 21(2) of the GDPR, section 6(6) of India's DPDP Act, or the CAN-SPAM and FCC opt-out rules in the United States. It then calculates the date by which the company should have acted, counting one calendar month for the GDPR and ten business days for a US opt-out, and counts SMS segments so a text reply does not silently split into three billable parts.",
   useCases: [

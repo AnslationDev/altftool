@@ -1,4 +1,12 @@
 const seo = {
+  title: "Anxiety Check Questionnaire: 7 Items Scored 0-21",
+  metaDescription:
+    "Rate seven anxiety symptoms over the last 14 days for a 0-21 total, banded at 5, 10 and 15. Informational self-check, not a diagnosis.",
+  steps: [
+    "Answer all seven statements about the last 14 days, rating each 0 Not at all, 1 Several days, 2 More than half the days or 3 Nearly every day.",
+    "Read the Total score out of 21 and its band, banded Minimal, Mild, Moderate or Severe at the 5, 10 and 15 cut-points.",
+    "Set a Date for this entry and press Save score to log to build the average, change and range; the log clears when you close the page.",
+  ],
   intro:
     "The Anxiety Check Questionnaire is a seven-item self-check that asks how often, over the last 14 days, each of seven common anxiety symptoms applied — nervousness, uncontrollable worry, worry spreading across topics, trouble relaxing, restlessness, irritability and a sense of dread. Each is rated 0 (not at all) to 3 (nearly every day) for a total of 0 to 21, banded at 5, 10 and 15, the cut-points used by the standard seven-item anxiety screeners in primary care. A dated log lets you save totals and see the direction of travel rather than a single snapshot.",
   useCases: [

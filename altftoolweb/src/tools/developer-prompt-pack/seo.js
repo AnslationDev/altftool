@@ -1,4 +1,12 @@
 const seo = {
+  title: "Developer Prompt Pack: 10 Fill-in-the-Blank Prompts",
+  metaDescription:
+    "Templates for ranked-hypothesis debugging, senior diff review, security passes, test design, READMEs, ADRs and incremental refactor plans.",
+  steps: [
+    "Narrow the list with Search prompts or the Category select, then pick a prompt such as \"Review this diff like a senior engineer\".",
+    "Fill in the blanks for that prompt's variables, or press Use example values to populate them all at once.",
+    "Press Copy prompt to take the assembled text — any field left blank stays visible as a {{placeholder}} in what you copied.",
+  ],
   intro:
     "The Developer Prompt Pack is a library of 10 fill-in-the-blank AI prompts for everyday engineering work: debugging by ranked hypotheses, stack-trace explanation, senior-level diff review, security passes, test design, flaky-test reproduction, READMEs, architecture decision records, incremental refactor plans and API design review. Each prompt encodes the working method — enumerate causes before guessing, list test cases before writing them, record rejected options in an ADR — so the model's answer arrives in a form you can act on. Fill the blanks in your browser and copy the finished prompt into any assistant.",
   useCases: [

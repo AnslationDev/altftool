@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Your CV Metadata Reveals to Recruiters & ATS",
+  metaDescription:
+    "See what the Author field, revision count, total editing time, tracked changes, hidden text and filename tell a recruiter, by how you send the file.",
+  steps: [
+    "Choose How are you sending it? - emailing the Word file, exporting a PDF, uploading to an employer's ATS portal, one-click apply, or handing over paper.",
+    "Tick what describes your CV: an Author field naming someone else, revision number and total editing time, tracked changes, invisible keyword stuffing or another employer's name in the filename.",
+    "Read the Visible to the reviewer score out of 100 and the specific fix listed for each flagged item, then press Copy result.",
+  ],
   intro:
     "Resume Metadata Risk Explainer sets out what a recruiter or applicant tracking system reads from your CV besides the words: the Author and Company properties, revision count and total editing time, the creation date, tracked changes and comments, hidden keyword text, the filename, and the candidate record the platform keeps. Each item is tied to the submission route you choose, because emailing a Word file, exporting a PDF, uploading to a portal and handing over paper expose very different amounts. Written for job seekers who want their file to say only what they intended.",
   useCases: [

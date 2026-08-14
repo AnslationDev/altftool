@@ -1,4 +1,12 @@
 const seo = {
+  title: "iPad Study Setup: Guided Access and Homework Blocks",
+  metaDescription:
+    "iPadOS has no home multi-user profiles, so shared and personal iPads differ. Get the right steps plus a block schedule with 20-20-20 eye breaks.",
+  steps: [
+    "Answer \"Whose iPad is this?\" — The child's own iPad or A shared family iPad — and enter the child's age (4 to 17).",
+    "Work through the generated steps; Guided Access is a critical one, and the Setup score stays capped while any critical step is still open.",
+    "Under Plan the homework blocks set Start time, Number of study blocks, block length and break length to get Finishes at and the 20-20-20 eye break count, then Copy result.",
+  ],
   intro:
     "The iPad Study Device Setup Guide builds a setup plan for a homework iPad around the one question that changes everything: is the iPad the child's own, or shared? iPadOS has no ordinary multi-user profiles outside Apple School Manager, so a shared family iPad is one Apple Account everyone signs into, and the work becomes getting the parent's mail, messages and photo library off it. The guide covers Guided Access, a Study Focus, Content & Privacy Restrictions and AirDrop, and lays out a homework schedule of study blocks and breaks that counts the 20-20-20 eye breaks falling inside each block.",
   useCases: [

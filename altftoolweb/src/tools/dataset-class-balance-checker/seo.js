@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dataset Class Balance Checker: Imbalance Ratio & Weights",
+  metaDescription:
+    "Paste labels as lines, a CSV column or JSONL to get the imbalance ratio, entropy, baseline accuracy and scikit-learn balanced class weights.",
+  steps: [
+    "Pick the 'Input format' - One label per line, CSV column or JSONL property - and paste your labels into the Labels box (CSV needs the label column plus the 'First row is a header' checkbox).",
+    "Set 'Cross-validation folds' (default 5) and the 'Case sensitive' toggle that decides whether 'Spam' and 'spam' are different classes.",
+    "Read the imbalance ratio with its severity label, majority-class baseline accuracy, entropy, Gini and per-class balanced weights, then press 'Copy report' for the tab-separated summary.",
+  ],
   intro:
     "The Dataset Class Balance Checker reads a list of classification labels and reports the imbalance ratio, normalised Shannon entropy, Gini impurity and the majority-class baseline accuracy for the dataset. It also prints scikit-learn's balanced class weights, n_samples / (n_classes x n_class_rows), and the row counts you would end up with after oversampling or undersampling. Labels are parsed in your browser from plain lines, a CSV column or a JSONL property, so no data leaves the page.",
   useCases: [

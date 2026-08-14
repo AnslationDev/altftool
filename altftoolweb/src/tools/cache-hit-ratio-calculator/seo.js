@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cache Hit Ratio Calculator with AMAT Latency Model",
+  metaDescription:
+    "Turn cache hits and misses into hit ratio, AMAT effective latency, speedup and the requests per second that still reach your backend.",
+  steps: [
+    "Enter Cache hits and Cache misses (for Redis, the keyspace_hits and keyspace_misses counters from INFO), plus Cache lookup latency (ms) and Backend fetch latency (ms).",
+    "Optionally fill the Traffic rate (requests/second) field to size how much load still reaches the origin at your hit ratio.",
+    "Read the Hit ratio headline with the Effective latency (AMAT), Speedup and Backend requests/second rows, then press Copy result or Reset.",
+  ],
   intro:
     "This calculator computes a cache's hit ratio — hits ÷ (hits + misses) — and turns it into the numbers that matter for capacity planning: effective request latency via the AMAT formula (hit time + miss rate × miss penalty, from Hennessy & Patterson), the speedup versus running uncached, and the share of traffic that still reaches the backend. Feed it counters from Redis INFO, Memcached stats, a CDN dashboard or an application cache and it shows what the cache is really buying you.",
   useCases: [

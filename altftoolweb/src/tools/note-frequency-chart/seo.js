@@ -1,4 +1,10 @@
 const seo = {
+  title: "Note Frequency Chart: MIDI, Hz and Cents Lookup",
+  steps: [
+    "Set Tuning reference A4 (Hz), or tap a preset chip such as A4 = 432 Hz or A4 = 442 Hz, and pick a Selected note (MIDI number) from 0 to 127.",
+    "Bound the table with Chart from (MIDI) and Chart to (MIDI), and tick Show flats instead of sharps for flat spellings.",
+    "Read the note's frequency with its period and Wavelength in air at 20 °C, or type a pitch into Reverse lookup — measured frequency (Hz) for the nearest note and its error in cents.",
+  ],
   intro:
     "The Note Frequency Chart lists the exact frequency of every musical note in twelve-tone equal temperament, using f = A4 x 2^((n - 69) / 12) where n is the MIDI note number and A4 is the tuning reference. It covers the full MIDI range from C-1 at 8.18 Hz to G9 at 12,543.85 Hz, shows each note's octave, MIDI number, period and wavelength in air, and works backwards from a measured frequency to the nearest note and its error in cents. The A4 reference is adjustable, so it also serves Baroque pitch at 415 Hz and the 442 Hz used by many European orchestras.",
   useCases: [

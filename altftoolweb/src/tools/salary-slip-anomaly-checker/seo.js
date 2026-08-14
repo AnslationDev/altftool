@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salary Slip Checker: Do Gross, Deductions and Net Add Up?",
+  metaDescription:
+    "Paste Month | gross | deductions | net for each payslip to flag any totals mismatch over 0.01 or a net swing past your threshold.",
+  steps: [
+    "Paste one month per line into Monthly salary figures as Month | gross | deductions | net, e.g. 2026-07 | 80000 | 18000 | 62000.",
+    "Set the Change alert threshold (%), 5 by default, for how far net pay may move against the previous month.",
+    "Read the Month, Gross, Deductions, Net, Math gap and Review columns with the count of flagged months.",
+  ],
   intro:
     "Salary Slip Anomaly Checker re-does the arithmetic on your payslips and flags any month where net pay does not equal gross minus deductions, or where net pay moved more than your chosen percentage against the previous month. You paste one line per month as Month | gross | deductions | net, set a change threshold (5% by default), and get a table showing the exact math gap in currency and a review note for every row. It is an arithmetic cross-check for salaried employees and freelancers reconciling their own slips — not a payroll, tax, or employment-rights determination.",
   useCases: [

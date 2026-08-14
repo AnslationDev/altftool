@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bill of Supply Generator: Rule 49 Format, GSTIN Check",
+  metaDescription:
+    "Print a Rule 49 bill of supply for exempt, nil-rated and composition sales, with GSTIN check-digit validation and the total in words.",
+  steps: [
+    "Choose Why no GST is charged, then fill Serial number (max 16 characters), Date of issue, and the Supplier and Recipient blocks with Trade name, Address and GSTIN.",
+    "Press Add line for each row and enter Description of goods or services, HSN / SAC code, Unit, Quantity, Rate per unit (INR) and Discount (%).",
+    "The total and its amount in words update live; use Copy bill for plain text, Print for the Printable bill of supply, or Reset to clear the form.",
+  ],
   intro:
     "A bill of supply is the document a registered person issues instead of a tax invoice when no GST can be charged on the supply — exempt, nil-rated and non-GST goods or services, and every outward supply by a composition taxable person under Section 10. This generator lays out all eight particulars listed in Rule 49 of the CGST Rules, 2017, validates the supplier and recipient GSTIN against the base-36 check digit, enforces the 16-character serial number limit and prints the total in Indian-numbering words. It is built for composition dealers, exempt-goods traders and small service providers who need a compliant document without accounting software.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Browser Tab Session Analyzer: Duplicates and Domains",
+  metaDescription:
+    "Paste a tab list, CSV or JSON export: duplicate URLs matched past ?utm_ and #anchors, 14 domain categories, and health, focus and clutter scores.",
   intro:
     "Browser Session Analyzer takes a list of open tab URLs — pasted, or exported as JSON or CSV from a session manager — and reports how many are duplicates, which domains dominate, what the tabs are actually for, and roughly how much memory they cost. It is for people who habitually run 80 tabs and want a defensible list of what to close. Duplicates are matched on the normalised URL (lower-cased, with the hash, query string and trailing slash stripped), so twenty copies of the same article arriving via different UTM links collapse into one.",
   useCases: [

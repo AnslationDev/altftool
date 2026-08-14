@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paleo Macro Calculator: Protein, Fat, Carbs from BMR",
+  metaDescription:
+    "Mifflin-St Jeor BMR and activity to calories, protein set per kg, fat as a share of energy, carbs as the remainder — then converted to grams of food.",
+  steps: [
+    "Under \"About you\" set \"Sex (for the BMR equation)\", Age (years), Weight (kg), Height (cm), an Activity level from Sedentary (×1.2) to Extra active (×1.9), and a Goal from \"Lose weight quickly (-750 kcal)\" to \"Gain weight (+500 kcal)\".",
+    "Set \"Protein (g per kg of body weight)\" — 1.8 by default — and \"Fat (% of energy)\", which starts at 40 with 35-45% flagged as the usual paleo range; carbohydrate takes whatever calories are left.",
+    "Read the Daily calorie target with BMR and TDEE beneath it, the Protein, Fat and Carbohydrate tiles in grams and % of energy, the \"Fibre target (14 g per 1,000 kcal)\" row, and the \"What the targets look like in food\" tables of protein and carb sources; Copy result copies the targets.",
+  ],
   intro:
     "The Paleo Macro Calculator produces daily protein, fat and carbohydrate targets for a paleo template, using the Mifflin-St Jeor equation for resting metabolic rate, a standard activity multiplier for maintenance calories, and your goal to set the deficit or surplus. Protein is set from grams per kilogram of body weight, fat as a share of total energy, and carbohydrate takes whatever remains — because paleo is defined by which foods are included, not by a fixed ratio. It then converts both targets into grams of the foods a paleo diet actually uses: meat, fish, eggs, tubers, fruit and vegetables.",
   useCases: [

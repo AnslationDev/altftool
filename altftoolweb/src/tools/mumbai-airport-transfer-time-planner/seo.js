@@ -1,4 +1,12 @@
 const seo = {
+  title: "When to Leave for BOM: Mumbai Airport Time Planner",
+  metaDescription:
+    "Work back from your BOM departure through bag-drop close, gate close and the 2h/3h reporting advice; Metro Line 3 skips the congestion factor.",
+  steps: [
+    "Enter the scheduled departure in 24-hour time and the distance to T1 Santacruz or T2 Sahar, or tap an origin chip such as Colaba / Churchgate - 26 km.",
+    "Pick Domestic or International, the mode — app cab, own car, Metro Line 3 (Aqua Line) or bus — and the traffic assumption.",
+    "Read the Leave by time, which of bag drop, gate or airport advice set it, and the hour-by-hour journey table, then press Copy plan.",
+  ],
   intro:
     "This planner gives the clock time to walk out of your door for a flight from Mumbai's Chhatrapati Shivaji Maharaj International Airport (BOM), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you are actually travelling, which matters more in Mumbai than almost anywhere else — the island city funnels northbound traffic onto a few arterials, so the same 26 km from Colaba can swing by well over half an hour between 03:00 and 18:30. Metro Line 3, which has stations at both terminals, skips the congestion factor entirely.",
   useCases: [

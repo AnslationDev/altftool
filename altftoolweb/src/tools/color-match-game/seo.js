@@ -1,4 +1,12 @@
 const seo = {
+  title: "Color Match Game — 10 Rounds, Shades Get Closer",
+  metaDescription:
+    "Ten rounds, four swatches each: pick the exact match as the decoys close in. Correct answers pay 10 plus 2 per streak, so a perfect game scores 190.",
+  steps: [
+    "The Round tile opens at 1/10 and a target swatch appears under \"Match this color:\" with its hex code printed across it.",
+    "Tap whichever of the four colour tiles matches the target: the true swatch is outlined green with a tick, a wrong pick is outlined red with a cross, and the next round loads on its own with the decoys sitting closer to the target.",
+    "Score and Streak update after every pick — 10 points plus 2 for each answer already banked in the run — and after round 10 the \"Game Over!\" card gives your Final Score and Best Streak, with \"Play Again\" to restart.",
+  ],
   intro:
     "The Color Match Game is a ten-round perception test: each round shows a target swatch and four candidate colours, and you pick the one that matches it exactly. The distractors are filtered by Euclidean distance in RGB space, and that minimum distance shrinks as the rounds go on — so by round ten the wrong answers sit much closer to the target than they did at the start. A correct pick scores 10 points plus 2 for each answer in your current run, so an unbroken streak is worth far more than ten lucky guesses.",
   useCases: [

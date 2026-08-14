@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Script Timer: Words to Minutes at 130-250 WPM",
+  metaDescription:
+    "Paste a script to see its read-aloud time at five speaking rates from 130 to 250 WPM, with a 2-second pause added per 45 seconds of speech.",
+  steps: [
+    "Paste your script into the 'Paste or type your script here...' box — the word and character count updates below it as you type.",
+    "Pick a 'Speaking Speed' button from 130 to 250 WPM and tick 'Include pauses for punctuation and paragraph breaks (~2s per 45s of speech)' if you want breathing room counted.",
+    "Read the 'Estimated Duration' panel — Total Duration, Speaking Time, Pauses and Speaking Rate tiles — and press Copy to grab the summary.",
+  ],
   intro:
     "The Video Script Timer estimates how long a script will take to read aloud by dividing its word count by a speaking rate of 130 to 250 words per minute, then adding a 2-second pause allowance for every 45 seconds of speech. Paste a script and you get total duration, pure speaking time, the number of pauses added and the rate used, all recalculating as you type. It is for voiceover artists, YouTubers, presenters and course creators who need to hit a slot before they step to the mic.",
   useCases: [

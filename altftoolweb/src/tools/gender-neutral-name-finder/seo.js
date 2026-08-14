@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gender Neutral Name Finder: 31 Naming Traditions",
+  metaDescription:
+    "Unisex names scored out of 100 for how well they cross languages, with a flag on names like Andrea, Jean and Sasha whose gender flips by country.",
+  steps: [
+    "Set Tradition to All traditions or one of the 31 listed, type a word such as light or peace into \"Search name or meaning\", and cap the length with \"Maximum letters\".",
+    "Raise \"Minimum portability score\" to filter on the 100-point score — 5 per tradition the name is used in, 20 for six letters or fewer, 20 for no aspirated digraph, 20 for no three-consonant run, 15 for ending in a vowel or n, r, l or y — and tick \"Only names with a cross-culture usage note\" to keep the gender-flip cases.",
+    "Each card gives the name, its score out of 100, its meaning and the traditions using it; \"Copy list\" puts the whole shortlist with scores and meanings on the clipboard, and Reset clears every filter.",
+  ],
   intro:
     "The Gender Neutral Name Finder lists names already used for more than one gender across 31 naming traditions, and scores each out of 100 for how well it travels between languages. The score awards 5 points per tradition the name is used in (up to 25), 20 for staying within six letters, 20 for containing no aspirated digraph, 20 for no run of three or more consonants, and 15 for ending in a vowel or in n, r, l or y. Names whose gender flips between languages — Andrea, Jean, Sasha, Nikita, Ariel — carry a note saying which way round.",
   useCases: [

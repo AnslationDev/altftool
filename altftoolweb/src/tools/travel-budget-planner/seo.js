@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Budget Planner — Rooms, Daily Spend & Contingency",
+  metaDescription:
+    "Total a trip from per-person one-offs, per-room nights and daily spending, add a contingency buffer, and get a monthly saving target before departure.",
+  steps: [
+    "Pick a Currency (INR, USD, EUR, GBP, AED or SGD), then set Travellers, 'Nights away' and 'People per room' — rooms are costed as ceil(travellers ÷ occupancy).",
+    "Fill in flights and visa per person, 'Room rate per night', food, local transport and activities per person per day, plus 'Contingency buffer (%)', 'Already saved' and 'Months until departure'.",
+    "Read the 'Total trip cost' with per-person, per-day and 'Save each month' figures and the category share table, then press 'Copy budget' to copy the breakdown.",
+  ],
   intro:
     "The Travel Budget Planner totals a trip by splitting it into three cost types: per-person one-offs (flights, visa, insurance), per-room per-night accommodation, and per-person per-day spending on food, local transport and activities. It counts a trip of N nights as N + 1 spending days, adds a contingency buffer you set, and converts the result into a monthly saving target. It is for anyone costing a holiday before booking, from a weekend away to a two-week family trip.",
   useCases: [

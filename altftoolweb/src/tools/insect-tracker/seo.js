@@ -1,4 +1,12 @@
 const seo = {
+  title: "Insect Tracker: Bug-Catching Game With 8x Combos",
+  metaDescription:
+    "Tap butterflies, bees and dragonflies before they escape. Catches within 2.5 seconds chain a combo up to 8x across five levels; high score saved locally.",
+  steps: [
+    "Pick Easy, Medium or Hard under Difficulty, then choose your bug from the seven insects for a cosmetic skin and one extra life.",
+    "Press Start Hunt and tap each butterfly, bee, ladybug, dragonfly, firefly, beetle or ant before it leaves the play area.",
+    "The HUD tracks Level, Lives and Combo, which multiplies up to 8x while catches land within 2.5 seconds; Game Over shows your score and high score.",
+  ],
   intro:
     "Insect Tracker is a timed reflex arcade game where you tap butterflies, bees, ladybugs, dragonflies, fireflies, beetles and ants before they fly off the edge of the play area. Each type is worth a different score — 6 points for an ant up to 18 for a fast dragonfly — and catches within 2.5 seconds of each other build a combo multiplier that rises to 8x. Clearing 200, 500, 900 and 1,400 cumulative points moves you up through five levels, and every level makes insects 12% faster, spawns them more often and shortens how long they stay on screen.",
   useCases: [

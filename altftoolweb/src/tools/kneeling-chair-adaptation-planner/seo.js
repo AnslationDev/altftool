@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kneeling Chair Adaptation Planner: 10% Weekly Ramp",
+  metaDescription:
+    "Build a week-by-week ramp from your current daily minutes to your target at 10% a week, with the single sit capped at 20 minutes rising to 45.",
+  steps: [
+    "Enter \"Comfortable now (minutes a day)\" and \"Target (minutes a day)\" — for example 20 minutes rising to 120.",
+    "Set \"Weekly increase (%)\", where 10 is the load guideline and anything above it is flagged, and \"Weeks you want to spend\".",
+    "Read the weeks to reach your target and the week-by-week ramp table of per-day minutes, bouts and max single sit — 20 minutes in week one, 45 minutes at the ceiling — then press \"Copy result\".",
+  ],
   intro:
     "This planner builds a week-by-week ramp from the time you can currently spend on a kneeling chair to the time you want to reach, increasing the daily total by a fixed percentage each week. The default 10% follows the loading guideline used widely in rehabilitation and endurance training for adding an unfamiliar load, and the tool flags any rate above it. It also caps the longest single sit — 20 minutes in week one, rising 5 minutes a week to a 45-minute ceiling — and pairs the ramp with mobility work for the shins, ankles, quadriceps and glutes, which are the tissues a kneeling chair loads differently.",
   useCases: [

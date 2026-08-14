@@ -1,4 +1,12 @@
 const seo = {
+  title: "Room Humidity Checker: Dew Point, Mould & Comfort Band",
+  metaDescription:
+    "Magnus dew point, NWS heat index and absolute humidity from your room reading, against the ASHRAE 55 band, plus litres a dehumidifier must remove.",
+  steps: [
+    "Under Readings enter Room temperature (°C) and Relative humidity (%).",
+    "Tick Include a cold surface (window glass, external wall) and give Temperature of that surface (°C), then set Humidity you want (%) and Room volume (m³).",
+    "Read the Dew point figure and comfort verdict, the condensation and mould warnings, and the litres of water to remove, then Copy result.",
+  ],
   intro:
     "This checker turns a thermo-hygrometer reading into the numbers that actually matter: dew point from the WMO Magnus formula Td = 243.12γ / (17.62 − γ), absolute humidity from the ideal gas law, humidity ratio in grams per kilogram of dry air, and apparent temperature from the US National Weather Service heat index regression. It then compares the room against the ASHRAE 55 comfort band — roughly 23 to 26 °C and 30 to 60% relative humidity — and flags mould and condensation risk. For anyone trying to work out why a room feels clammy, why the window keeps misting, or where to set a dehumidifier.",
   useCases: [

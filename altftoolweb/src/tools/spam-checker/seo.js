@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Spam Checker — Score Your Draft 1–10 Before Sending",
+  metaDescription:
+    "Paste subject and body to get a 1–10 spam score with the exact keyword, link, ALL-CAPS and punctuation counts behind it, plus specific fixes.",
+  steps: [
+    "Fill in the Sender Email, Recipient Email, Subject Line and Email Body fields of the draft.",
+    "Click Check for Spam to score the text against 17 spam keywords, URL count, punctuation runs, ALL CAPS words and the sender's domain.",
+    "Read the 1–10 score with its Looks Good, Needs Improvement or High Risk band, the Analysis Breakdown counts and the numbered Improvement Tips.",
+  ],
   intro:
     "This spam checker scores a draft email from 1 to 10 by scanning the subject and body for the signals bulk filters react to, then tells you which ones to fix. It weighs promotional keywords, link count, punctuation runs like !! and $$, ALL CAPS words, and whether the sender address is a valid mailbox on a business domain. It is aimed at anyone about to send a cold outreach, newsletter or job-application email who wants to know the copy will not read as bulk mail before they hit send.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Late Fee Calculator with Interest under Section 50",
+  metaDescription:
+    "Per-day late fee for GSTR-1, GSTR-3B and GSTR-9 with turnover-linked caps, plus 18% Section 50 interest on tax paid late in cash.",
+  steps: [
+    "Pick GSTR-3B, GSTR-1 or GSTR-9 under Return, set the Due date and Actual filing date, and tick \"This is a nil return\" if no tax was payable.",
+    "Choose the Turnover slab that sets the late fee cap — or enter Annual turnover (INR) for GSTR-9 — plus the Tax paid late, in cash (INR) for GSTR-3B interest.",
+    "Read the Total payable split into the capped late fee and Interest @ 18% p.a., then press Copy summary for the day count and breakdown.",
+  ],
   intro:
     "This calculator works out what a late GST return actually costs: the per-day late fee for GSTR-1, GSTR-3B or GSTR-9 up to the turnover-linked cap, plus interest under section 50(1) of the CGST Act at 18% a year on the tax you paid late in cash. It counts the whole days between the due date and the actual filing date, applies the combined CGST + SGST rate, and stops the fee at the cap for your turnover slab. It is meant for taxpayers and accountants reconciling a delayed filing before they pay.",
   useCases: [

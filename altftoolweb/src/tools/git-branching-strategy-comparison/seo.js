@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Branching Strategy Comparison — Scored Best Fit",
+  metaDescription:
+    "Answer five questions on team size, release cadence and CI maturity to score git flow, GitHub flow, trunk-based and release branching — reasoning shown.",
+  steps: [
+    "Pick your Team size, \"How often do you release?\" and CI / automation maturity, and tick the parallel-versions or compliance sign-off boxes if they apply.",
+    "Git flow, GitHub flow, trunk-based development and release branching are each scored against your answers, with the sentence behind every point shown.",
+    "Read the \"Best fit for your answers\" verdict and per-strategy reasoning, then click Copy result for your written recommendation.",
+  ],
   intro:
     "This tool compares the four mainstream git branching strategies — git flow, GitHub flow, trunk-based development and release branching (GitLab flow) — by scoring each against your team size, release cadence, CI maturity, multi-version needs and compliance gates. The scoring encodes the guidance from each strategy's own documentation, including Vincent Driessen's 2020 advice that git flow is a poor fit for continuously delivered web apps. It is for tech leads choosing or revisiting a branching model.",
   useCases: [

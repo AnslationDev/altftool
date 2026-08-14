@@ -1,4 +1,12 @@
 const seo = {
+  title: "Microwave Size Selector: Litres and Turntable Fit",
+  metaDescription:
+    "Sizes the cavity from a 12/14/18 L base by type plus 3 L per person, then checks your widest dish clears the turntable with 20 mm to spare.",
+  steps: [
+    "Enter People it will serve and Widest dish you will use (cm), then pick What you will use it for — reheating only, grilling and kebabs, or full cooking and baking.",
+    "Tick \"I will bake full-size cakes or roast a whole chicken\" to add the baking allowance on top of the 3 L per person and the base cavity for that type.",
+    "Read Recommended microwave in litres and its type, then check Turntable your dish needs against Clearance around the dish; Copy result saves the summary.",
+  ],
   intro:
     "Microwave litres is cavity volume, and this selector sizes it two ways at once: a food-volume model (a base allowance for the type — 12 L solo, 14 L grill, 18 L convection — plus 3 L per person and 6 L if you bake full cakes) and a physical check that your widest dish clears the turntable with 20 mm to spare. Whichever demands more wins, which is why a 32 cm thali can force a bigger microwave than a family of four otherwise needs. It also picks the type: solo for reheating, grill for browning, convection for baking.",
   useCases: [

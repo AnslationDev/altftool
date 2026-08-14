@@ -1,4 +1,10 @@
 const seo = {
+  title: "Audio Video Sync Meter: Lip-Sync Offset in Milliseconds",
+  steps: [
+    "Enter the Frame rate (fps), the Frame of the flash / clap, the Audio spike time (seconds or HH:MM:SS.mmm), and whether the first frame is numbered 1 or 0.",
+    "Press \"Add to average\" to fold in a second or third slate, since reading one flash is only accurate to about half a frame.",
+    "Read the Audio offset in ms, the Offset in frames and the pass/fail row for ATSC IS-191, EBU R37 and ITU-R BT.1359-1, then press Copy report.",
+  ],
   metaDescription:
     "Calculate signed audio lead or lag from a flash frame, frame rate, and audio spike time, then compare the offset with cited sync limits.",
   intro:

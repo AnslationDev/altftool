@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trademark Name Check: Distinctiveness Score + Steps",
+  metaDescription:
+    "Score a brand name out of 100 on the distinctiveness spectrum, see its likely Nice classes, and get the USPTO, EUIPO, UKIPO, IP India or WIPO steps.",
+  steps: [
+    "Type your candidate into 'Brand name you are considering', set 'Where do you want protection?' to United States, European Union, United Kingdom, India or Multiple countries / international, and answer 'What do you sell?'.",
+    "Read the Indicative distinctiveness score out of 100 and its band, then the Office, Likely Nice classes, Opposition window and Registration term rows, plus any 'What weakens this name' flags.",
+    "Work down the Clearance checklist, ticking each item so Checklist progress updates, then press Copy result to keep the checklist or Reset to try another name.",
+  ],
   intro:
     "This checklist scores a candidate brand name against the trademark distinctiveness spectrum — generic, descriptive, suggestive, arbitrary, fanciful — and then walks through the clearance steps for the office you plan to file with. It flags descriptive wording, geographic terms and corporate suffixes, suggests the Nice classes your goods or services fall in, and states the real opposition window and renewal term for the USPTO, EUIPO, UKIPO, IP India or a Madrid filing. It is a self-service knock-out check, not a legal clearance opinion.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base Converter: Any Base 2 to 36, Exact With BigInt",
+  metaDescription:
+    "Convert between base 2 and 36 with BigInt integers and exact fractions, no floating point. Shows bit length, byte count and the fixed-width types it fits.",
   intro:
     "This base converter rewrites a number in any positional base from 2 to 36 — binary, octal, decimal, hexadecimal, base 36 and everything between — using repeated division for the integer part and repeated multiplication for the fraction. Integers are handled as BigInt, so a 200-digit value converts exactly, and fractions are carried as exact rationals instead of being rounded through a 64-bit float. It is built for developers reading hex dumps and bit masks, and for students checking base-conversion homework.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Crop Factor Calculator: Equivalent Focal Length, f-Stop",
+  metaDescription:
+    "Pick a sensor to get its crop factor from the 43.27 mm full-frame diagonal, plus equivalent focal length, f-number, ISO and angle of view.",
+  steps: [
+    "Choose your Sensor from the preset list and enter Focal length (mm), or tap one of the focal-length presets.",
+    "Enter the f-number and ISO the lens is actually set to.",
+    "Read the crop factor against the 43.27 mm diagonal and the full-frame equivalent focal length and aperture, then press Copy result.",
+  ],
   intro:
     "Crop Factor Calculator works out a sensor's crop factor as 43.27 mm — the diagonal of a 36 × 24 mm full-frame frame — divided by the sensor's own diagonal, then applies it to focal length, f-number and ISO. Multiplying focal length by the crop factor gives the same framing, multiplying the f-number by it gives the same depth of field and total light, and multiplying ISO by the crop factor squared completes the equivalence. It also reports horizontal, vertical and diagonal angle of view from the sensor geometry.",
   useCases: [

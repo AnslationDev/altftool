@@ -1,4 +1,12 @@
 const seo = {
+  title: "Semester to Quarter Credit Converter (1 = 1.5)",
+  metaDescription:
+    "Converts college credits both ways at the registrar's 1 semester = 1.5 quarter ratio, and shows the share of a 120-semester / 180-quarter bachelor's.",
+  steps: [
+    "Type the figure into 'Credits to convert' — the field steps in 0.5 — and set Direction to 'Semester → quarter' or 'Quarter → semester'.",
+    "Press 'Swap direction' to flip the conversion and carry the converted number back into the input as the new starting figure.",
+    "The equivalent credits appear immediately with 'Ratio used' (1 semester credit = 1.5 quarter credits) and 'Share of a typical US bachelor's', above a 'Common equivalents' table; Copy result copies the conversion.",
+  ],
   intro:
     "This converter translates college credits between the semester and quarter systems using the standard US registrar ratio of 1 semester credit = 1.5 quarter credits, which follows from the ~15-week semester versus ~10-week quarter term length. It works in both directions and shows what share of a typical bachelor's degree (120 semester or 180 quarter credits) your credits represent. It is built for transfer students moving between quarter-system schools (like many UC and Washington campuses) and semester-system schools.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Neck and Shoulder Stretch Timer for Desk Breaks",
+  steps: [
+    "Choose a Routine — Micro break, Standard release or Full upper-body reset — then set 'Hold length (seconds)' between 10 and 45, Changeover (seconds), Workday (hours) and 'Focus block length (minutes)'.",
+    "Press Start to run the sequence: the Current step heading names the stretch (chin tuck, upper trapezius, levator scapulae, scapular squeeze, doorway chest) with its positioning cue while the bar counts up, and Pause or Restart interrupts it.",
+    "Read Routine length, Stretch steps, Daily breaks and Stretch share of the workday, scroll the Routine steps list for each cue and caution, then press 'Copy routine' or 'Reset settings'.",
+  ],
   intro:
     "The Neck and Shoulder Stretch Timer runs a timed sequence of cervical, chest and upper-back stretches — chin tucks, upper trapezius and levator scapulae holds, scapular squeezes and a doorway chest stretch — and then works out how many of those breaks fit between your focus blocks. Static holds follow the ACSM flexibility guidance of 10 to 30 seconds each, applied separately to the left and right side. Deliberately, no step rolls the head backwards through a full circle, since full neck circles compress the joints at the back of the neck.",
   useCases: [

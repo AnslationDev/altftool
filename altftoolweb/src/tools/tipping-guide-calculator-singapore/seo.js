@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Tipping Guide & ++ Bill Calculator (GST 9%)",
+  metaDescription:
+    "Where tipping applies in Singapore — mostly nowhere — and what '++' does to a bill: 10% service charge then 9% GST, a 19.9% uplift on the menu price.",
+  steps: [
+    "Pick the Service — Restaurant, table service through Hawker centre or food court, Taxi or private hire, and Changi Airport staff — and enter the Bill as printed (SGD).",
+    "Rate How was the service? (Nothing (the norm), Round up, or Exceptional service) and tick 'A service charge is already printed on my bill' if it is.",
+    "Read the Customary tip with the usual range and the Total to hand over, then press Copy result or Reset.",
+  ],
   "intro": "This guide sets out where tipping is and is not customary in Singapore and works the '++' pricing out of your bill: a 10% service charge, then 9% GST on top, a combined uplift of about 19.9% on the menu price. The short answer is that tipping is not part of the culture — the service charge is the gratuity, hawker centres add nothing to the price on the sign, and tipping is not permitted at Changi Airport. The narrow exceptions are private tour guides and porters at luxury hotels.",
   "useCases": [
     "Check what a menu price actually becomes once '++' is applied before booking a restaurant.",

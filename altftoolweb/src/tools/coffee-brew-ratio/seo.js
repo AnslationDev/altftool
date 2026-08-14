@@ -1,4 +1,7 @@
 const seo = {
+  title: "Coffee Brew Ratio Calculator: Grams and Water",
+  metaDescription:
+    "Exact coffee and water for pour-over 1:16, French press 1:15, AeroPress 1:14, moka 1:10, cold brew 1:5 and espresso 1:2, with absorption allowed for.",
   intro:
     "The Coffee Brew Ratio Calculator turns a brew method and a strength setting into an exact coffee dose in grams and a water weight in millilitres, using each method's own ratio band — 1:16 for pour-over, 1:15 for French press, 1:14 for AeroPress, 1:10 for moka, 1:5 for cold brew concentrate and 1:2 dose-to-yield for espresso. It also subtracts the water the grounds absorb, so it tells you how much coffee actually lands in the cup, not just how much you poured. Work forward from a dose you have already weighed, or backward from the number of cups you want to fill.",
   useCases: [

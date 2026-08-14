@@ -1,4 +1,12 @@
 const seo = {
+  title: "go.mod Generator: Module Path, require and replace",
+  metaDescription:
+    "Set the module path, go and toolchain directives, add require and replace rows, and copy a go.mod checked against the /vN suffix and semver rules.",
+  steps: [
+    "Enter the Module path, choose a go directive version, and fill \"toolchain (optional, Go 1.21+)\" with a build such as go1.24.2 if you need one.",
+    "Press \"Add module\" under Requirements for each dependency path and Version like v1.2.3, tick \"// indirect\" where it applies, and use \"Add replace\" to point one at a local directory.",
+    "Check the Direct requirements and Indirect requirements counts plus any warnings, then press \"Copy go.mod\".",
+  ],
   intro:
     "A go.mod generator builds the module definition file that the go command reads to resolve dependencies: the module path, the go language version, an optional toolchain line, and the require, replace, exclude and retract directives. It validates your input against the rules in the Go Modules Reference — canonical semantic versions of the form vMAJOR.MINOR.PATCH, and the major version suffix rule that forces any module at v2 or above to end its path with /vN. Useful when you are starting a module by hand, vendoring a fork through a replace, or reviewing a go.mod in a code review.",
   useCases: [

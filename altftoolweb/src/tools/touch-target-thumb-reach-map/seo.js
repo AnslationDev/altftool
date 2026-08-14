@@ -1,4 +1,12 @@
 const seo = {
+  title: "WCAG 2.2 Touch Target Size & Thumb Reach Checker",
+  metaDescription:
+    "Check tap-target rectangles against the WCAG 2.2 24×24 px minimum and 44×44 px enhanced sizes, test the spacing exception, and map thumb reach zones.",
+  steps: [
+    "Paste your tap targets into Target JSON or CSV using the label, x, y, width, height and optional exception fields, or press Load safe example.",
+    "Set Width (CSS px), Height (CSS px) and Thumb origin to the right or left hand, then press Analyze geometry.",
+    "Read each target's 44 px enhanced, 24 px minimum, spacing-candidate or below-minimum status and its near, middle or far reach zone, then choose Download counts-only summary for touch-target-summary.json.",
+  ],
   intro:
     "The Touch-Target Thumb-Reach Map checks a list of tap-target rectangles against the WCAG 2.2 target-size geometry — 24 × 24 CSS px for Target Size (Minimum, AA) and 44 × 44 CSS px for Target Size (Enhanced, AAA) — and plots each one into a near, middle or far one-handed reach zone. You paste targets as JSON or CSV with x, y, width, height and an optional exception, set the viewport size and thumb hand, and get a per-target status plus a visual map. It is built for designers and front-end engineers who want the geometry settled before an accessibility audit does it for them.",
   useCases: [

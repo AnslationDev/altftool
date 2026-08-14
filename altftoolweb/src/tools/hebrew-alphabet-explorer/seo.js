@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hebrew Alphabet: 22 Letters, Gematria & Numerals",
+  metaDescription:
+    "All 22 Hebrew letters with names, sounds, the five final forms and values — plus gematria (hechrachi and gadol) and a Hebrew numeral converter.",
+  steps: [
+    "Type into the Hebrew word box, which opens on שלום, and pick a Counting method — standard mispar hechrachi or the expanded mispar gadol.",
+    "The Gematria value recalculates as you type, above a Letter / Name / Value table that breaks the word down and marks any sofit as final form.",
+    "Convert both ways under Hebrew numerals — 248 gives רמח and רמח reads back as 248 — search all 22 letters by name, sound or value, then press Copy result or Reset.",
+  ],
   intro:
     "The Hebrew alphabet is an abjad of 22 consonant letters written right to left, five of which take a different shape at the end of a word — kaf, mem, nun, pe and tsadi become ך, ם, ן, ף and ץ. This explorer lists every letter with its name, sound, final form and numeric value, shows the niqqud vowel points that are added in scripture and children's books, and includes working converters for gematria and for Hebrew numerals. Gematria and numerals are presented as features of the writing system, not as a method of divination.",
   useCases: [

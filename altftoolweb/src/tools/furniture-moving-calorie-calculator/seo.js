@@ -1,4 +1,12 @@
 const seo = {
+  title: "Furniture Moving Calorie Calculator for a Moving Day",
+  metaDescription:
+    "Packing is 3.5 METs, level carries 5.8, heavy pushing 7.5 and stair carries 9.0. Get the day's total, vigorous minutes and a jogging equivalent.",
+  steps: [
+    "Enter your Body weight and set Weight unit to kg or lb.",
+    "Fill the minutes against each task: \"Packing and taping boxes, standing (minutes)\", \"Loading and unloading the van or car (minutes)\", \"Carrying boxes and furniture on the level (minutes)\", \"Pushing or dragging heavy items over about 35 kg (minutes)\" and \"Carrying boxes or furniture up and down stairs (minutes)\".",
+    "The \"Moving-day calorie estimate\" panel lists gross and net kcal, average MET, moderate versus vigorous minutes, the jogging equivalent and a per-task breakdown; press Copy output.",
+  ],
   intro:
     "This calculator estimates the energy cost of a moving day by pricing each job at its published MET value and applying kcal/min = MET x 3.5 x kg / 200. Packing boxes and loading a van are 3.5 METs, carrying furniture on the level is 5.8, pushing objects over about 35 kg is 7.5, and carrying boxes or furniture upstairs is 9.0 METs — higher than general jogging at 7.0. It reports the day's total, the minutes spent in the vigorous band at 6.0 METs and above, and the equivalent jogging time, so you can see why moving house leaves you as tired as a long training session.",
   useCases: [

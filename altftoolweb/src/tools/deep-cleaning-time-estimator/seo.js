@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deep Cleaning Time Estimator: Person-Hours & Crew",
+  metaDescription:
+    "Turns room counts, carpet area, soil level, clutter and pets into person-hours, then splits them across your crew for an elapsed finish time.",
+  steps: [
+    "Enter Carpet area (sq ft), Shedding pets, Cleaners available and Longest day you will work (hours), then set How dirty is it now? and Furnishing density.",
+    "Fill in Rooms to clean — Kitchens are costed at 120 min each, Bathrooms and Living / dining rooms at 60, Bedrooms at 45 — and tick any Deep-clean extras such as Oven / microwave degreased inside (+25 min).",
+    "Read Time on site with your crew alongside the person-hour total, the Condition and clutter multiplier, Crew needed to finish in your window and the Coverage rate in sq ft per person-hour, then press Copy result.",
+  ],
   intro:
     "The Deep Cleaning Time Estimator converts a home's room count, carpet area and condition into person-hours, then divides that work across the crew you have to give an elapsed finish time. It builds the estimate the way professional cleaners quote: fixed per-room deep-clean times (about 120 minutes for a kitchen, 60 for a bathroom, 45 for a bedroom) plus a surface allowance of 18 minutes per 100 sq ft, scaled for soil level, clutter and pets. Use it to decide whether a job is a Saturday or a two-day project, and how many hands it needs.",
   useCases: [

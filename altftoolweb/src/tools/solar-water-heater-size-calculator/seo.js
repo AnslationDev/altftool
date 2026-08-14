@@ -1,4 +1,12 @@
 const seo = {
+  title: "Solar Water Heater Size Calculator: LPD for a Family",
+  metaDescription:
+    "Size a solar water heater in LPD from your household, bathing temperature and mains inlet temp, with collector area, roof space and savings.",
+  steps: [
+    "Enter Adults and Children, how the family bathes, Baths per person per day and Kitchen & laundry hot water (L/day).",
+    "Set Bathing temperature, Mains inlet temperature and Tank storage temperature in degrees C, then choose the Collector type.",
+    "Read the Recommended system in LPD with litres stored, Collector area, Roof space to allow and money saved per year.",
+  ],
   intro:
     "A solar water heater size calculator converts a household's real hot water usage into the litres-per-day (LPD) rating to buy. Systems are rated at roughly 60 °C storage while people bathe at about 40 °C, so the tool applies the mixing equation — stored litres = used litres × (bath temp − inlet temp) ÷ (storage temp − inlet temp) — and then sizes collector area against the MNRE benchmark of about 2 m² of flat plate collector per 100 LPD. Thermal output uses Q = m·c·ΔT with water's specific heat of 4.186 kJ/kg·K.",
   useCases: [

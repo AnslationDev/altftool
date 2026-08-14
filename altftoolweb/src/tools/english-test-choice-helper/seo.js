@@ -1,4 +1,12 @@
 const seo = {
+  title: "IELTS vs TOEFL vs PTE vs Duolingo: Which Test to Book",
+  metaDescription:
+    "Ranks IELTS, TOEFL iBT, PTE Academic and Duolingo for your route by cost, speed and home testing. Tests not valid for your visa route are excluded.",
+  steps: [
+    "Choose your route under 'What are you applying for?' and set 'How much does exam cost matter?', 'How urgently do you need results?' and 'How important is testing from home?' to Low, Medium or High.",
+    "The helper re-ranks the four tests live, scoring each out of 100 and excluding any marked 'Not accepted for this route' rather than merely down-ranking it.",
+    "Read the best match with its fit score /100, approximate fee and result days, compare the 'Side-by-side facts' table, and click 'Copy result'.",
+  ],
   intro:
     "This helper ranks the four major English proficiency exams — IELTS Academic, TOEFL iBT, PTE Academic and the Duolingo English Test — for your destination using a weighted score across cost, result speed, home-testing convenience and route acceptance. Acceptance acts as a hard gate: tests that are not valid for your visa route, such as TOEFL or Duolingo for a UK SELT requirement, are excluded rather than merely down-ranked. It is built for study-abroad applicants choosing which exam to book.",
   useCases: [

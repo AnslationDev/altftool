@@ -1,4 +1,12 @@
 const seo = {
+  title: "Breaking Change Checklist & API Risk Score Generator",
+  metaDescription:
+    "Plan an API or library breaking change: phased before/release/after checklist, a 0-100 risk score and the SemVer major bump rule, as copyable Markdown.",
+  steps: [
+    "Tick the change under \"What kind of change is it?\" and \"Which surfaces does it touch?\", then pick the audience in the \"Who consumes this surface?\" dropdown.",
+    "Check any \"Mitigations already in place\" — each one subtracts a fixed credit, such as 15 points for a deprecation period, from the 0-100 risk score.",
+    "Read the risk level with its score out of 100, the Required version bump (SemVer item 8) and the Before, Release and After items, then press \"Copy Markdown\" for a \"- [ ]\" task list.",
+  ],
   intro:
     "This tool generates a phased consumer-impact checklist — before, release and after — for an API or library breaking change, along with a 0-100 risk score built from the change type, affected surfaces, audience and mitigations you select. It encodes the SemVer 2.0.0 rule that any incompatible public API change requires a major version bump, and the deprecate-warn-remove lifecycle that mature platforms use. Maintainers get a copyable Markdown checklist ready to paste into an issue or RFC.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC Form Checklist: OTR Details, Signature, Age Check",
+  metaDescription:
+    "Every SSC application item — Aadhaar, matric roll number, OTP-verified mobile, the 10-20 KB JPEG signature — plus an age check on the notice cutoff date.",
+  steps: [
+    "Work through Documents and details, ticking the OTR entries, uploads, certificates and fee items; Tick everything and Clear act on the whole list.",
+    "Under Age check against the notice, give your date of birth as in the matric certificate, the cutoff date, the age band and your relaxation category.",
+    "Age on the cutoff date gives the verdict against the band after relaxation, alongside how many must-have items remain unticked.",
+  ],
   intro:
     "This checklist lists every document and detail needed before filling a Staff Selection Commission application — the Aadhaar or alternative ID, Class 10 board, roll number and year for One-Time Registration, the OTP-verified mobile and email, the 10-20 KB JPEG signature, and the category certificates — and checks age eligibility the way SSC notices state it: attained the lower limit and not exceeded the upper limit (plus relaxation) on the cutoff date. It is for CGL, CHSL, MTS and other SSC applicants who want the form done in one sitting, without a paid correction later.",
   useCases: [

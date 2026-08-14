@@ -1,4 +1,12 @@
 const seo = {
+  title: "5K Race Time Predictor Using the Riegel Formula & Splits",
+  metaDescription:
+    "Convert a recent race into a predicted 5K finish with Riegel's T2 = T1 × (D2/D1)^1.06, plus per-km target pace, even splits and equivalent times.",
+  steps: [
+    "Enter your 'Recent race distance (km)' with its Hours, Minutes and Seconds, or tap a preset from 1500 m up to Marathon.",
+    "The prediction recalculates instantly with Riegel's 1.06 exponent, and a warning appears when the source race is more than about four times the 5K distance.",
+    "Read the 'Predicted 5K time' with pace per km and per mile, the 'Even-pace splits for 5 km' table and 'Equivalent times at other distances'; press 'Copy result' to copy the summary.",
+  ],
   intro:
     "The 5K Race Time Predictor converts a recent race or time trial into a projected 5K finish time using Pete Riegel's endurance formula, T2 = T1 x (D2/D1)^1.06. The 1.06 exponent encodes the roughly 6% slowdown per doubling of distance seen in real race results, so a 50:00 10K projects to about 23:59 for 5 km. Alongside the prediction you get target pace per kilometre and per mile, even-pace kilometre splits to run to, and equivalent times from 1500 m up to the marathon.",
   useCases: [

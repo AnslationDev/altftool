@@ -1,4 +1,12 @@
 const seo = {
+  title: "Idiom Explorer: 59 English Idioms, Origins and Quiz",
+  metaDescription:
+    "Each of 59 idioms carries a meaning, literal reading, usage, origin and two examples. Filter by letter, difficulty or 45 categories, then quiz yourself.",
+  steps: [
+    "On the Explore tab, type into \"Search idioms, meanings, or categories...\" or open Filter to narrow by Category, Difficulty and Starts With.",
+    "Open an idiom card to read Meaning, Literal Meaning, Usage, Origin, Example Sentences, Synonyms and Related Idioms, and star it so it lands on the Favorites tab.",
+    "Switch to the Quiz tab for 10 idioms shown with four candidate meanings each; Score updates as you answer and Quiz Complete! reports your total out of 10 with a percentage.",
+  ],
   intro:
     "Idiom Explorer is a searchable reference of 59 curated English idioms, each with its figurative meaning, literal reading, usage note, origin story, two example sentences, synonyms and related phrases. You can filter by first letter, by difficulty (beginner, intermediate, advanced) or across 45 themed categories such as Social, Courage, Finance and Timing, then test recall in a 10-question multiple-choice quiz. Learners, ESL teachers and writers get the explanation and the example sentence in one card, with favorites and view history saved locally in the browser.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Slope Converter: Percent, Degrees, 1-in-X, in/ft, mm/m",
+  metaDescription:
+    "Percent grade is rise ÷ run x 100 and degrees is its arctangent, so 100% is 45°. Converts to 1-in-X, inches per foot, mm/m and roof pitch in twelfths.",
+  steps: [
+    "Under 'What do you have?' pick Percent grade (%), Degrees (°), Ratio 1 in X, Inches per foot, Millimetres per metre, Per mille or Rise and run.",
+    "Type the value, or tap a preset such as 'ADA ramp 1:12' or 'Drain 1/4 in per ft', then set 'Run length (any unit)' under Fall over a run.",
+    "Read the percent grade with the angle, the 1 in X ratio, in/ft, mm/m, roof pitch in 12 and the ADA 1:12 check, then press Copy result.",
+  ],
   intro:
     "This converter takes a slope written in any one notation and gives you all the others: percent grade, angle in degrees, the 1-in-X ratio used in building codes, inches per foot, millimetres per metre and roof pitch in twelfths. It works from the single underlying ratio — percent grade is rise divided by run times 100, and the angle is the arctangent of that same ratio — which is why 100% grade is 45 degrees rather than vertical. It also gives the actual fall over a run you enter, the number you mark on a wall or set a pipe to.",
   useCases: [

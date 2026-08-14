@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP in Germany? Section 29 FeV Check",
+  metaDescription:
+    "Answers from Section 29 FeV: EU and EEA licences need nothing, others need an IDP or sworn translation — and dates the six-month residence clock.",
+  steps: [
+    "Choose \"Where was your driving licence issued?\" — EU or EEA state, Switzerland, United Kingdom, United States, Canada, Australia, India, Japan, or a 1968 Vienna, 1949 Geneva or non-convention state.",
+    "Answer \"What do you already hold?\" (No IDP, a 1949 Geneva permit, a 1968 Vienna permit, both, or a sworn German translation), \"Why are you in Germany?\", your arrival and departure dates, and Your age (years).",
+    "The Verdict for Germany reads IDP required, Sworn translation required or No IDP needed, with How long your licence works here, the Last day it is valid, IDP formats accepted here and a Carry in the car checklist that names the FeV section it rests on.",
+  ],
   intro:
     "This checker tells you whether Germany expects an International Driving Permit alongside your national licence, based on the country that issued the licence, how long you are staying and your age. It applies Section 29 of the Fahrerlaubnis-Verordnung, which requires a foreign national licence to carry a translation unless it was issued in the EU or EEA, is an IDP, or follows the Annex 6 layout of the 1968 Vienna Convention. It is aimed at visitors hiring a car and at people moving to Germany who need to know when the six-month clock in Section 29(1) FeV starts.",
   useCases: [

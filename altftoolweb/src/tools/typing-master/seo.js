@@ -1,4 +1,12 @@
 const seo = {
+  title: "Typing Master: 15, 30 or 60 Second WPM Speed Test",
+  metaDescription:
+    "A timed typing drill scored on correct characters ÷ 5 ÷ minutes. Pick 15, 30 or 60 seconds and get WPM, accuracy, errors, with wrong keys marked red.",
+  steps: [
+    "Press 15s, 30s or 60s to choose the run length — each duration carries its own set of paragraphs.",
+    "Type the paragraph shown; characters that do not match turn red as you go, and the Timer counts up against your chosen limit.",
+    "When the run ends, read the WPM, Accuracy, Errors and Typed cards, then press Reset to run it again or Change Paragraph for a different text.",
+  ],
   intro:
     "Typing Master is a timed typing drill that scores you on the standard words-per-minute formula — correctly typed characters divided by five, divided by the minutes elapsed — over a 15, 30 or 60 second run. You pick a duration, type the shown paragraph, and get WPM, accuracy percentage, error count and characters typed, with every wrong character turned red as you go. It is built for people who want a short, repeatable drill rather than a course, so you can run the same 60 seconds daily and watch the number move.",
   useCases: [

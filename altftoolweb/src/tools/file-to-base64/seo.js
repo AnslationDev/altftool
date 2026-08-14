@@ -1,4 +1,12 @@
 const seo = {
+  title: "File to Base64 Converter with Data URL & CSS Snippets",
+  metaDescription:
+    "Encode a local file (up to 32 MB) to Base64 or a full data: URL in your browser — nothing uploads — with HTML, CSS, Markdown and JSON snippets.",
+  steps: [
+    "Drag a file into the drop zone or pick one under \"Choose a file to encode\" — up to 32 MB, read in this tab with the browser File API.",
+    "Toggle \"Include the data: URL prefix\", \"URL-safe alphabet (- and _)\", \"Keep = padding\" and \"Wrap at 76 characters\" to shape the encoding.",
+    "Switch the Output tab between Data URL, HTML, CSS, Markdown and JSON, then press Copy output — it always copies the whole string, not just the 4,000-character preview.",
+  ],
   intro:
     "File to Base64 converts any local file into a Base64 string or a complete data: URL, using the RFC 4648 alphabet where every 3 bytes become 4 characters. It is for developers embedding small assets — icons, fonts, test fixtures — directly into HTML, CSS, JSON or an API payload without a separate file request. The file is read in your browser with the File API, so nothing is uploaded, and the tool also reports the exact size increase (a constant 4/3, about 33.3%) before you commit to inlining.",
   useCases: [

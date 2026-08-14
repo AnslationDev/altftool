@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cost Inflation Index Calculator FY 2001-02 to 2025-26",
+  metaDescription:
+    "Convert a purchase price to indexed cost with the CBDT's CII (100 to 376), index each improvement from its own year, and see the LTCG before and after.",
+  steps: [
+    "Pick 'Financial year of purchase' and 'Financial year of transfer' — each dropdown option shows its notified CII — then enter 'Cost of acquisition (INR)' and 'Sale consideration (INR)'.",
+    "Press 'Add improvement' for each capital addition and set its 'Year of improvement' and 'Amount spent (INR)'; each row is indexed from its own year.",
+    "Read the 'Total indexed cost' with the indexation factor, gain before and after indexation and tax saved at 20%, then press 'Copy result'.",
+  ],
   intro:
     "This Cost Inflation Index calculator converts an old purchase price into its indexed cost of acquisition using the CII notified by the CBDT under Section 48, from the base year 2001-02 (index 100) through FY 2025-26 (index 376). It indexes each capital improvement separately from the year it was incurred, then shows the long-term capital gain before and after indexation. It is meant for sellers of property, gold, unlisted shares and other long-term assets who need the indexed figure for their return.",
   useCases: [

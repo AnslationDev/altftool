@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hex to CMYK Converter With Total Ink Coverage",
+  metaDescription:
+    "Converts a hex colour to C, M, Y, K percentages and sums total ink coverage against press limits: 320% GRACoL, 300% SWOP, 240% newsprint.",
+  steps: [
+    "Type a value into the Hex colour box, which starts at #14B8A6 and accepts 3, 4, 6 and 8 digit hex with any alpha flagged and left out of the ink maths.",
+    "Choose an Ink limit profile: Coated sheetfed offset (GRACoL 2006 #1) at 320%, Coated web offset (SWOP #3), Uncoated offset (PSO / FOGRA47) or Newsprint (ISOnewspaper26v4) at 240%.",
+    "The swatch panel lists RGB, HSL and CMYK values plus Total ink as a percentage with the headroom left or the amount over the limit; Copy result copies the conversion.",
+  ],
   intro:
     "Hex To CMYK Converter turns a web hex value into cyan, magenta, yellow and black plate percentages and adds up the total ink coverage. It uses the standard arithmetic conversion — K = 1 − max(R, G, B) scaled to 0-1, then C, M and Y taken as the shortfall of each channel below that maximum — and compares the C+M+Y+K sum against published press limits such as 320% for GRACoL coated sheetfed and 240% for newsprint. Aimed at designers moving a screen palette into a print job and needing a sanity check before artwork goes out.",
   useCases: [

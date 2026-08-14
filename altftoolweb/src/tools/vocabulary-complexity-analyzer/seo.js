@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vocabulary Complexity Analyzer: Flesch, Fog & LIX",
+  metaDescription:
+    "Paste text for Flesch Reading Ease, Flesch-Kincaid grade, Gunning Fog, LIX, type-token ratio and the heaviest 3+ syllable words.",
+  steps: [
+    "Paste at least 10 words into the Text to analyse box, or load the Plain guidance, Corporate policy or Narrative sample.",
+    "Scores recompute as you type: Flesch Reading Ease with its audience label, then Flesch-Kincaid grade, Gunning Fog index and LIX.",
+    "Read the heaviest three-syllable words and the type-token ratio, then press Copy report for the whole breakdown.",
+  ],
   intro:
     "This analyser measures how demanding a piece of English writing is by counting words, sentences and syllables and feeding them into four published readability formulas: Flesch Reading Ease (1948), Flesch-Kincaid Grade Level (1975), the Gunning Fog Index (1952) and LIX (1968). It also reports lexical diversity through the type-token ratio and Guiraud's root TTR, and lists the heaviest words in the passage. It is for editors, teachers, technical writers and anyone rewriting a document for a specific reading level.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Measurement Uncertainty Budget Calculator (GUM, k=2)",
+  metaDescription:
+    "Enter one source per line as name | uncertainty | distribution | sensitivity. Rectangular ÷√3, triangular ÷√6, normal-k2 ÷2, then RSS to expanded U.",
+  steps: [
+    "Fill the Uncertainty sources box with one line per source in the form `Repeatability | 0.12 | normal | 1` — name, stated uncertainty, distribution, sensitivity coefficient — or press the Three sources example chip to load a worked set.",
+    "Set Output coverage factor k (default 2, minimum 0.1), and leave \"Treat sources as independent\" ticked to combine components by root-sum-square, or untick it for a straight absolute sum.",
+    "The Result panel prints the expanded uncertainty with the combined standard uncertainty and k beneath it, over a table of Stated u, Distribution, Sensitivity, Standard u and Contribution per source; Download saves it as measurement-error-budget-builder.txt.",
+  ],
   intro:
     "The Measurement Error-Budget Builder turns a list of uncertainty sources into a GUM-style budget: each stated uncertainty is converted to a standard uncertainty by its distribution divisor (rectangular divided by root 3, triangular by root 6, an already-expanded normal-k2 value by 2), multiplied by its sensitivity coefficient, and combined into one figure that is then multiplied by your coverage factor k. You enter one source per line as `name | stated uncertainty | distribution | sensitivity`, and get back a full contribution table plus the combined standard and expanded uncertainty. It is a first-order organiser for metrology work, not a substitute for an accredited uncertainty evaluation.",
   useCases: [

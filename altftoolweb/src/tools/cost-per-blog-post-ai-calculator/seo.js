@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Blog Post Cost Calculator: Tool Fee + Edit Time",
+  metaDescription:
+    "Cost per post = (monthly AI spend + posts x editing minutes x hourly rate / 60) / posts. Four inputs give the monthly total and the per-post figure.",
+  steps: [
+    "Fill Posts per month, Monthly AI/tool cost, Editing minutes/post and Editor hourly rate — the defaults are 20 posts, 99, 45 minutes and 25.",
+    "The Blog cost breakdown panel recalculates as you type, working editing cost as posts x editing minutes x hourly rate / 60.",
+    "Read Total monthly content cost and Cost per post from the breakdown, then press Copy output.",
+  ],
   intro:
     "This calculator works out what one AI-assisted blog post actually costs by adding your monthly AI subscription to the human editing time behind it: editing cost = posts x minutes per post x hourly rate / 60, and cost per post = (AI cost + editing cost) / posts. You enter four numbers — posts per month, monthly AI or tool spend, editing minutes per post, and the editor's hourly rate — and get the monthly total plus the per-post figure. It is aimed at content leads and freelancers who are quoting or budgeting and need the editing hours counted, not just the tool bill.",
   useCases: [

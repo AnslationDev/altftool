@@ -1,4 +1,12 @@
 const seo = {
+  title: "Etsy Tag Checker and Listing Prompt Builder",
+  metaDescription:
+    "Validates 13 tag slots of 20 characters each, shortens over-long tags and drops duplicates, then builds a listing prompt with your 140-character title.",
+  steps: [
+    "Fill in Item name, Shop name, Craft or technique and Buyer, then paste \"Item details — one per line\", \"Materials — one per line\" and \"Tags — one per line\".",
+    "Choose a Story angle and set the \"Title target (characters)\" (30 to 140) and \"Description length (words)\".",
+    "Read \"Tag slots used\" out of 13 with any entry in the \"Tags over 20 characters\" table shown with a shortened version, then press Copy tags or Copy prompt.",
+  ],
   intro:
     "This builder validates an Etsy tag set against the platform's hard limits — 13 tags of at most 20 characters each — and then assembles a listing prompt around your verified item details, materials and a chosen maker story angle. Tags that are too long are shown with a shortened version that fits, duplicates are removed, and any unused slot is turned into a request for the model to suggest a replacement. It is aimed at handmade and vintage sellers who want a title and description grounded in what the item actually is.",
   useCases: [

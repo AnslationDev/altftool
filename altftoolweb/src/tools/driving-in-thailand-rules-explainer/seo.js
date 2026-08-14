@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in Thailand: Speed, Alcohol and Licence Rules",
+  metaDescription:
+    "Thai rules for visitors: 80/90/120 km/h by road type, a 50 mg or 20 mg blood-alcohol limit by licence type, and whether yours covers a scooter.",
+  steps: [
+    "Under Your details, pick What you plan to drive — Car or pickup, or Motorbike or scooter — tick whether your licence covers motorcycles, and choose the documents you will carry.",
+    "Set the Type of licence you hold, Your age (years) and Length of stay (days).",
+    "Read your legal blood-alcohol limit of 50 mg or 20 mg per 100 ml, the Speed limits for cars table in km/h and mph, and the Morning-after estimate from the Widmark equation.",
+  ],
   intro:
     "This explainer sets out what a visitor needs before driving in Thailand: you drive on the left in a right-hand-drive car, signs are in km/h, and the licence must cover the class of vehicle you are actually using. It applies the 2021 speed regulation — 80 km/h inside municipal areas, 90 km/h outside them and up to 120 km/h on designated four-lane sections — together with the 2017 alcohol regulation, which sets 50 mg per 100 ml of blood for an ordinary licence holder and 20 mg for anyone under 20, on a probationary licence, or unlicensed.",
   useCases: [

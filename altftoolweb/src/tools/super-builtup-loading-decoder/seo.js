@@ -1,4 +1,7 @@
 const seo = {
+  title: "Super Built-Up vs Carpet Area: Real Price per Sq Ft",
+  metaDescription:
+    "Restate two flats on one RERA carpet-area basis and get the real rate per sq ft of carpet, with the loading each quote implies on all three denominators.",
   intro:
     "A super built-up loading decoder converts two differently-quoted flats onto one common carpet-area basis and returns the true price per square foot of carpet for each. It is for buyers comparing listings where one project advertises super built-up area and another advertises carpet area, so the headline rates are not measuring the same thing. Carpet area follows section 2(k) of the Real Estate (Regulation and Development) Act, 2016 — the net usable floor area within the apartment, excluding external walls, service shafts, exclusive balcony or verandah and exclusive open terrace, but including internal partition walls — and loading is computed as (super built-up − carpet) ÷ carpet, with the built-up and super built-up denominators supported as well.",
   useCases: [

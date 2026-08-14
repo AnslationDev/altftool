@@ -1,4 +1,12 @@
 const seo = {
+  title: "Food Shelf Life Guide: 99 Foods, Fridge, Freezer, Pantry",
+  metaDescription:
+    "Keeping times for 99 foods in the pantry, fridge at 4 C and freezer at -18 C, plus a verdict on leftovers from the time you stored them.",
+  steps: [
+    "Under 'Is it still good?' choose the Food from the grouped list, then pick pantry, fridge or freezer — dashed tiles are not recommended for that food.",
+    "Set 'Cooked or stored at' to when it went in, or tap a chip such as This morning, Yesterday or A week ago.",
+    "Read the verdict — Fresh below 60% of the window, Use today at 60-100%, then Risky or Past its best — with that food's spoilage signs, and press Copy verdict.",
+  ],
   intro:
     "This guide gives the keeping time for 99 everyday foods in three places — pantry or counter, fridge at 4 C or below, and freezer at -18 C — and turns 'when did I store this?' into a verdict. Enter when the food went in and it compares the elapsed hours against that food's window: under 60% used it reads Fresh, 60 to 100% it reads Use today, and past the window it reads Risky for high-risk foods like dairy, eggs, meat, fish and cooked leftovers or Past its best for quality-driven items like bread and produce. Every entry also lists the spoilage signs to check, because bacteria that cause illness do not reliably change the smell or taste.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vietnam Etiquette: Pagodas, Street Food, Helmet Law",
+  metaDescription:
+    "Builds a ranked etiquette briefing for pagodas, street food, markets and traffic. Helmet and licence rules show whatever you tick.",
+  steps: [
+    "Tick the places on your itinerary under \"Where will you actually be?\" — Pagodas and temples, Restaurants and street food, Markets and shops, Traffic, motorbikes and taxis, Visiting a Vietnamese home, Northern highlands and minority villages, Business meetings or Streets and public spaces.",
+    "Set \"What kind of trip\" (Sightseeing holiday, Motorbike or road trip, Food-led trip, Business trip, Visiting family or friends, First time in Vietnam) and \"How many rules to show\", which takes 3 to 60 rules and opens at 18.",
+    "The Etiquette readiness percentage, the \"Fix these first\" list and the full briefing update as you tick rules you already know, anything carrying a legal penalty stays under \"Where the consequence is legal, not social\" whatever you selected, and Copy briefing puts the whole thing on the clipboard.",
+  ],
   intro:
     "This guide turns Vietnamese etiquette into a ranked briefing for the places on your itinerary — pagodas, street-food stalls, markets, traffic, homes, the northern highlands — weighted by how much trouble getting each rule wrong actually causes. It is organised around the two ideas that explain most of it: relative age decides how people address each other, because Vietnamese uses kinship terms rather than a neutral word for you, and nobody should be made to lose face in public. Rules with legal consequences, including the compulsory motorbike helmet and the licence needed to ride, are shown whatever you tick.",
   useCases: [

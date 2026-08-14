@@ -1,4 +1,12 @@
 const seo = {
+  title: "SPPU CGPA to Percentage: (CGPA − 0.75) × 10 Formula",
+  metaDescription:
+    "Convert an SPPU CGPA under circular 322, plain × 10 or UGC × 9.5 — 8.2 CGPA is 74.5%. Also marks to grade points and percentage back to CGPA.",
+  steps: [
+    "Enter Your CGPA (0 to 10) in the first field.",
+    "Pick Rule your faculty applies — credit system (CGPA − 0.75) × 10, plain CGPA × 10, or UGC equivalence CGPA × 9.5.",
+    "Read the Percentage with Formula applied and Class awarded, then Copy result; Marks to grade points to CGPA builds a credit-weighted CGPA.",
+  ],
   intro:
     "This converter turns a Savitribai Phule Pune University (SPPU) CGPA into an equivalent percentage using the linear rule your faculty applies — the credit-system equivalence percentage = (CGPA − 0.75) × 10 stated in SPPU circular 322 of 2020, the plain CGPA × 10 quoted by several non-engineering faculties, or the UGC's CGPA × 9.5. It also works backwards from a percentage, converts course marks into SPPU letter grades and grade points, and builds a credit-weighted CGPA from semester SGPAs — everything a placement or higher-studies form asks for.",
   useCases: [

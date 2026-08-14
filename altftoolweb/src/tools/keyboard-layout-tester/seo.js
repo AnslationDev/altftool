@@ -1,4 +1,12 @@
 const seo = {
+  title: "Keyboard Tester: Rollover, Key Log and WPM Counter",
+  metaDescription:
+    "Keys stay lit while physically held, so rollover limits show. Logs the last 100 keystrokes, counts each key, and reports elapsed time and estimated WPM.",
+  steps: [
+    "Press any key — the Visual Keyboard highlights it from keydown to keyup, so holding four or five at once shows how many your board can report together.",
+    "Keep typing or hold combinations; 'Key Log (last 100)' records each keystroke and Key Frequency ranks the 15 most-pressed keys with their counts.",
+    "Session Stats reports Keys Pressed, Unique Keys, Elapsed (s) and Est. WPM — keystrokes divided by five per elapsed minute — and Reset clears the log, the counts and the timer.",
+  ],
   intro:
     "The Keyboard Layout Tester lights up an on-screen ANSI keyboard as you press keys, holding a key highlighted for as long as it is physically down so you can see which presses actually register and how many register at once. It logs the last 100 keystrokes, counts how often each key fired, and reports elapsed time plus an estimated WPM using the standard five-characters-per-word convention. It is for anyone diagnosing a suspect keyboard — a key that misses, a key that repeats itself, or a combination the board cannot report.",
   useCases: [

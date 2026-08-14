@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gig Platform Fee Calculator: Real Pay Per Hour",
+  metaDescription:
+    "Compare gig offers on effective pay per hour after the platform fee %, travel and expenses, a tax reserve, and your unpaid admin hours.",
+  steps: [
+    "In the 'Gig offers' box put one offer per line as Platform | gross | fee % | travel/expenses | paid hours | unpaid admin hours — for example Platform A | 5000 | 15 | 300 | 6 | 2.",
+    "Set 'Estimated withholding / tax reserve (%)', which defaults to 10, or press the 'Two platforms' example chip to load a worked pair of offers.",
+    "Read the headline naming the platform with the highest effective rate, the reserve-assumption caption and the table columns Platform, Gross, Fee, Expenses, Total hours, Net after reserve and Effective/hour sorted best first; Download saves it as gig-platform-fee-normalizer.txt.",
+  ],
   intro:
     "The Gig Platform Fee Normalizer compares competing gig offers on one honest number — effective pay per hour, calculated as (gross − platform fee % of gross − travel and expenses) × (1 − tax reserve), divided by paid hours plus unpaid admin hours. You enter one line per platform as Platform | gross | fee % | travel/expenses | paid hours | unpaid admin hours, and it ranks every offer from the highest effective rate down. It is for freelancers and gig workers choosing between marketplaces whose headline rates look similar until commission, travel and unpaid prep are counted.",
   useCases: [

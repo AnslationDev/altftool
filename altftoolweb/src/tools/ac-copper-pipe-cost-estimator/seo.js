@@ -1,4 +1,12 @@
 const seo = {
+  title: "AC Copper Pipe Cost Estimator: Beyond the Free 3 m",
+  metaDescription:
+    "Prices the extra copper pair, drain, cable, core holes and refrigerant top-up past the free 3 m, using the manual's chargeless length and g/m rate.",
+  steps: [
+    "Pick the Copper pair size for your capacity — 1/4\" + 3/8\" up to 1.5 ton, 1/4\" + 1/2\" for 1.8 to 2.5 ton, or 3/8\" + 5/8\" for 3 ton and above.",
+    "Enter Copper run indoor to outdoor (m) and Length included free (m), your per-metre rates, Core-drilled wall holes, Height difference between units (m), plus Chargeless pipe length from the manual (m) and Top-up refrigerant (g per extra m).",
+    "Read Total installation cost broken into Extra copper pair, Extra drain pipe, Core drilling, Refrigerant top-up and Installation labour, with warnings on runs past 15 m or a rise past 5 m, then press Copy result.",
+  ],
   intro:
     "This estimator itemises what a split AC installation costs once the outdoor unit sits away from the indoor unit: extra copper pair, drain pipe and interconnecting cable beyond the free length, core-drilled wall holes, the outdoor stand, and the refrigerant top-up a long line needs. Brands typically bundle about 3 m of copper into a standard installation and charge per metre after that, while installation manuals specify a chargeless pipe length and a top-up rate in grams per additional metre. Every rate is editable so you can put your installer's actual quote against the quantities.",
   useCases: [

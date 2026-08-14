@@ -1,4 +1,12 @@
 const seo = {
+  title: "Certificate Transparency Watchlist and Lookalikes",
+  metaDescription:
+    "Build crt.sh queries and squatting variants for domains you own, then classify pasted certificate names with punycode decoding and skeleton folding.",
+  steps: [
+    "Enter the domains you own, one per line, into 'Domains you own (one per line)' and tick 'Include TLD swaps' to add the same label under .net, .co, .app and other common suffixes.",
+    "Run the crt.sh strings listed under 'Queries to run', then paste the results into 'Certificate names from your CT search (one per line)' — a CN= prefix, a *. wildcard, a URL, a trailing dot or a tab-separated crt.sh row are all handled.",
+    "'Findings' sorts each name into suspicious, review, invalid, unrelated or owned and names the rule that fired; press 'Copy findings' for the text, or 'Copy names' for the generated lookalike list.",
+  ],
   intro:
     "This tool does the two halves of certificate transparency monitoring that can honestly be done in a browser. First it turns the domains you own into a watchlist: the crt.sh search strings for the exact name, every subdomain and the label anywhere, plus the lookalike names worth watching for, generated with the documented squatting techniques — omission, duplication, transposition, QWERTY slip, ASCII homoglyph, hyphenation, TLD swap and combosquat. Second, it classifies the certificate names you paste back from that search: xn-- labels are decoded with the RFC 3492 punycode algorithm, labels are folded to a confusable skeleton, and edit distance is measured against a fixed budget. It does not query a CT log, because that needs a live index — and it says so rather than pretending.",
   useCases: [

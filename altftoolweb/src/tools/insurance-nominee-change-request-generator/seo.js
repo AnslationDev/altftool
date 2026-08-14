@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nominee Change Request Letter for Insurance Policy",
+  metaDescription:
+    "Drafts a section 39 nomination change letter, refuses shares that do not total 100%, and demands an appointee when a nominee is under 18.",
+  steps: [
+    "Enter Policyholder name, Policy number, Insurer, Branch or servicing office, Sum assured (INR) and the Nominee currently on record.",
+    "Add each new nominee's Full name, Relationship, Date of birth and Share (%), pressing Add nominee for extra rows, and name an Appointee if any is a minor.",
+    "Once \"Shares allocated\" reads 100%, press Copy letter to take the finished section 39 request.",
+  ],
   intro:
     "A nomination change request is the written instruction that asks an insurer to cancel the nominee currently on a policy and register new ones, with each nominee's share stated as a percentage. This generator writes that letter under section 39 of the Insurance Act, 1938, checks the shares add to exactly 100%, converts each share into a rupee amount from the sum assured, works out each nominee's age on the letter date, and flags where section 39(2) requires an appointee because a nominee is under 18. For policyholders updating a nomination after marriage, a birth, a divorce or the death of the existing nominee.",
   useCases: [

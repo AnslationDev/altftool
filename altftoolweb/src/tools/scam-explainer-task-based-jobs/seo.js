@@ -1,4 +1,12 @@
 const seo = {
+  title: "Task-Based Job Scam: What the Deposit Ladder Costs",
+  metaDescription:
+    "Model the like-and-review job scam as a geometric deposit ladder, and see the balance the app displays beside the cash that left your bank.",
+  steps: [
+    "Under 'Model the ladder', enter 'Paid per starter task (INR)', 'Starter tasks that really paid' and 'First deposit asked for (INR)' — the seed payouts that genuinely withdrew, and the first round you would fund yourself.",
+    "Set 'Each deposit is this many times the last' (1 to 10), 'Deposit rounds' (1 to 20) and 'Commission promised on each deposit (%)'. There is no calculate button: the ladder recomputes as you type.",
+    "Read 'What your bank account actually did' against the balance the app displays, work down the Round / Deposit / App balance / Real position table, tick what applies under 'What has happened to you?' for a red-flag score with its money-mule warning, then press 'Copy briefing'.",
+  ],
   intro:
     "Task-based work-from-home scams pay you first. A few trivial tasks — liking videos, rating hotels — earn a small commission that really does withdraw, and then the tasks become 'prepaid': you deposit your own money to unlock a higher commission, and each round is a multiple of the one before. This explainer models that ladder as the geometric series it is, showing the balance the app displays against the cash that actually left your bank, and scores the offer against the red flags that define it, including the account-lending request that turns a victim into a money mule.",
   useCases: [

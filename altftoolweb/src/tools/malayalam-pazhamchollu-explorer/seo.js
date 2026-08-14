@@ -1,4 +1,12 @@
 const seo = {
+  title: "Malayalam Pazhamchollu: 23 Proverbs With Meanings",
+  metaDescription:
+    "Search 23 Malayalam proverbs by script, transliteration or English idea, with the literal image, everyday use and closest English proverb.",
+  steps: [
+    "Type into Search proverbs — Malayalam script, Roman transliteration, meaning and English equivalent are all searched — or tap a theme chip such as wisdom or folly.",
+    "Set a date in Pazhamchollu of the day for to pin the featured proverb shown for that day.",
+    "Read the Transliteration, Literal reading, How it is used and English equivalent rows, then press Copy proverb.",
+  ],
   intro:
     "Malayalam Pazhamchollu Explorer is a searchable collection of 23 Malayalam proverbs, each given in Malayalam script with a Roman transliteration, the literal image behind it, how speakers actually use it, and the nearest English proverb. A pazhamchollu is an inherited saying compressed into one sentence — Malayalam even has a proverb about proverbs, പതിരില്ലാത്ത പഴഞ്ചൊല്ലില്ല, 'there is no proverb that is entirely chaff'. It suits students answering Malayalam language questions, writers hunting for the right saying, and anyone who wants the picture inside the proverb rather than a flat translation.",
   useCases: [

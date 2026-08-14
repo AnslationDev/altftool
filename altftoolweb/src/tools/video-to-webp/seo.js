@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video to Animated WebP Converter — In Your Browser",
+  metaDescription:
+    "Converts a video segment to a looping animated WebP in the browser — pick start/end, 5–30 fps and width up to 800 px; max 60 s and 600 frames per file.",
+  steps: [
+    "Choose a Video file, then set the Start time and End time in seconds — a clip can span at most 60 seconds.",
+    "Pick Frames per second (5 to 30), an Output width preset from 240 to 800 px and the WebP quality, then press 'Convert to WebP'; one animation holds at most 600 frames.",
+    "Press the Download button to save the result, named after your source file with a .webp extension.",
+  ],
   intro:
     "Video to WebP turns a short section of a video clip into a single animated WebP file, entirely inside your browser. It samples the clip at your chosen frame rate, encodes each frame as a WebP still through the canvas encoder, and then assembles them into one file using the RIFF-based WebP container — a VP8X header with the animation flag, an ANIM chunk carrying the loop count, and one ANMF chunk per frame. It is for anyone who wants a looping animation that is far smaller than the equivalent GIF.",
   useCases: [

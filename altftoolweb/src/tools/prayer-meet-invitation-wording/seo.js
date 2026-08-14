@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prayer Meet Invitation Wording, With the Day Counted",
+  metaDescription:
+    "Write shok sabha, uthala, tehravin, chehlum or barsi notices in English, Hinglish, Hindi, Marathi or Gujarati. The observance date is counted for you.",
+  steps: [
+    "Enter 'Name of the departed', choose an Honorific (Late, Late Shri, Late Smt., Late Sardar, Marhoom or '(no honorific)'), pick the Observance — from 'Prayer Meet (Shok Sabha)' and 'Uthala / Rasam Pagri (4th day)' to 'Tehravin (13th day)', 'Chehlum / Chaliswan (40th day)' and 'Barsi / First Death Anniversary' — and set the 'Date of passing'.",
+    "Press 'Use suggested date' to fill 'Date of the gathering' with the counted day, add 'Start time', 'Venue / address' and the optional Contact and Family name, then choose a Language (English, Hinglish (Roman), हिन्दी, मराठी or ગુજરાતી), a Tone of Solemn, Traditional or Brief notice, and up to 6 'Wording options'.",
+    "Check the 'Days after the passing' headline with the 'Observance day number' and 'Date on the invitation' rows, then press Copy on the Option you want, Shuffle for different wording, or Reset to clear every field.",
+  ],
   intro:
     "Prayer Meet Invitation Wording writes the notice families send for a shok sabha, soyem, uthala, chautha, antim ardas, tehravin, chehlum, uthamna, memorial service or barsi — and works out which calendar day the observance falls on. It uses the counting rule most Indian communities follow, where the day of passing is day one, so the thirteenth-day tehravin lands twelve days after the date of passing and the fortieth-day chehlum lands thirty-nine days after. Wording is available in English, Hinglish, Hindi, Marathi and Gujarati, in solemn, traditional or brief-notice tones.",
   useCases: [

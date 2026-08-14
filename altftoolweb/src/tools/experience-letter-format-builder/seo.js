@@ -1,4 +1,12 @@
 const seo = {
+  title: "Experience Letter Format Builder with Exact Tenure",
+  metaDescription:
+    "Draft an experience certificate, relieving letter or service certificate with service stated to the day, plus a validity checklist for signature.",
+  steps: [
+    "Pick Document to issue — Experience certificate, Relieving letter or Service certificate — then fill Company name, Registered address (letterhead line), Reference number, Date of issue, Employee name, Employee ID, Designation at the time of leaving, Date of joining and Last working day.",
+    "Set Conduct wording to No conduct comment, Neutral, Positive or Strong endorsement, choose the Pronouns used in the letter, and tick Dues settled and Company property returned where the document type needs them.",
+    "Read Total period of service in years / months / days beside Total days inclusive and Word count, press Copy letter to take the drafted text or Print for a letterhead copy, and clear the Validity checklist items — Printed on company letterhead, Reference number for the HR file and Authorised signatory named.",
+  ],
   intro:
     "Experience Letter Format Builder produces three HR documents that are routinely confused with each other: an experience certificate (what a future employer asks for), a relieving letter (which confirms the employee was relieved on a stated date and dues are settled), and a service certificate (a bare factual record of employment). It calculates the exact period of service as a calendar difference in years, months and days, borrowing from the real length of the preceding month rather than assuming 30. A validity checklist flags the letterhead, reference number, employee ID and authorised signatory that a usable document needs.",
   useCases: [

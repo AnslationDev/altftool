@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wheel Spinner: Equal Odds on Every Name You Add",
+  metaDescription:
+    "Type any list and spin a wheel split into equal 360/n segments: five to seven turns over five seconds before the fixed pointer picks a winner.",
+  steps: [
+    "Under Manage Options, type each entry in the Enter option... box and press Enter or the Add button; the four starter entries can be removed one at a time or with Clear All, and the wheel resegments and recolours instantly.",
+    "Press SPIN THE WHEEL — the wheel turns five to seven full rotations plus a random extra angle between 0 and 359 degrees over a five-second animation.",
+    "The fixed pointer lands on one of the equal 360/n slices and that entry appears under Winner; it stays on the wheel, so delete it before spinning again if you need a draw without replacement.",
+  ],
   intro:
     "The Ultimate Wheel Spinner turns any list you type into an equally divided spinning wheel and picks one entry at random — each spin runs five to seven full rotations plus a random offset over a five-second animation before the fixed top pointer lands on a winner. Because the wheel is split into identical 360/n segments and the stopping angle is uniformly random, every option has exactly the same chance. Add, remove or clear entries at any time and the wheel redraws instantly with a colour for each slice.",
   useCases: [

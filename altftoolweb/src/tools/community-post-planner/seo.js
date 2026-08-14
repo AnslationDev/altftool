@@ -1,4 +1,12 @@
 const seo = {
+  title: "Community Post Planner - Dated Schedule Between Uploads",
+  metaDescription:
+    "Turn an upload cadence into dated community posts - polls, images, text, questions, clips - evenly spaced, with the longest silent gap and weekly minutes.",
+  steps: [
+    "Set the 'Start date (first upload day)', 'Plan length (days)', 'Days between uploads' and 'Community posts per week'. [pages/index.jsx:112-173]",
+    "Weight the Content mix - Poll (5 min each), Image (10), Text update (8), Open question (4) and Clip or teaser (15). [pages/index.jsx:176-200; lib.js:33-83]",
+    "Read the Schedule table of dated posts with Format, Role and Prompt columns, plus 'Longest silent gap' and 'Writing time per week', then press Copy plan. [pages/index.jsx:227-259, 286-315]",
+  ],
   intro:
     "The Community Post Planner turns an upload cadence into a dated schedule of community posts, spacing each one evenly across the gap between videos. It apportions the post types you choose — polls, images, text updates, open questions and teaser clips — using the largest-remainder method, so the counts always add up to the total you asked for. You get the schedule, the format split, the longest silence in the window and the writing time the plan will actually cost per week.",
   useCases: [

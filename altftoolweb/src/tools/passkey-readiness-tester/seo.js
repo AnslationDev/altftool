@@ -1,4 +1,12 @@
 const seo = {
+  title: "Passkey Readiness Tester: Audit WebAuthn Options JSON",
+  metaDescription:
+    "Paste your PublicKeyCredential options and check residentKey, RP ID, user handle PII, attachment and conditional mediation against WebAuthn Level 3.",
+  steps: [
+    "Enter the \"Origin the ceremony runs on\", pick the \"Ceremony\", and for an authentication ceremony set the \"Mediation passed to navigator.credentials.get()\".",
+    "Paste your PublicKeyCredentialCreationOptions or PublicKeyCredentialRequestOptions into \"Credential options JSON\" (challenge and user.id in base64url), or load the \"Registration example\" or \"Authentication example\".",
+    "Read the findings on RP ID, challenge length, user handle, algorithms, resident key, user verification, attachment, attestation and extensions, tick the \"Fallback and recovery\" boxes your sign-in page actually does, then press \"Copy review\".",
+  ],
   intro:
     "Most passkey rollouts that \"do not work\" are not broken code — they are a options object that quietly asks for the wrong thing. residentKey left at its default produces a second-factor credential, not a passkey. authenticatorAttachment set to platform blocks the phone-and-QR route. Conditional autofill with a non-empty allowCredentials does nothing at all, silently. Paste the PublicKeyCredentialCreationOptions or PublicKeyCredentialRequestOptions object you pass to navigator.credentials and this checks every member against the WebAuthn Level 3 rules for discoverable credentials, then asks the handful of fallback questions no options object can answer. It runs entirely in the page: no credential is created, nothing is sent anywhere.",
   useCases: [

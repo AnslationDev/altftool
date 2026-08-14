@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Your Supermarket Loyalty Card Actually Knows",
+  metaDescription:
+    "Maps 23 supermarket and airline record patterns to what they infer, marks which are GDPR Article 9 special-category, and sizes your item-line count.",
+  steps: [
+    "Under 'What is in your record?' tick the buying patterns that match you across the supermarket and airline groups.",
+    "Enter Card-scanned shops per week (1–21), Years you have held the card (1–40) and Items in a typical basket (1–200).",
+    "Read Profile depth with 'Patterns that apply', 'Special-category inferences' and 'Individual item lines', then work through 'What can be inferred' and 'What you can actually do' and press Copy summary.",
+  ],
   intro:
     "Loyalty Program Data Explainer maps 23 real supermarket and airline record patterns to the inferences they support — a due date from a change in period-product buying, coeliac disease from a standing gluten-free line, religious observance from an IATA meal code such as KSML or MOML, a house move from a change of usual store. Each inference is classified against Article 9 of the GDPR, which covers health, religion or belief, ethnicity, politics, trade union membership, genetics, biometrics and sex life, and treats data from which those can be inferred as in scope. You also get an estimate of how many itemised transactions and item lines the operator holds, and the specific rights you can use to see or stop it.",
   useCases: [

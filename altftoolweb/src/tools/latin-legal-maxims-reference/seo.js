@@ -1,4 +1,12 @@
 const seo = {
+  title: "Latin Legal Maxims: Search by Phrase or by Meaning",
+  metaDescription:
+    "Type the Latin or the idea — hear the other side finds audi alteram partem. Each entry gives the literal translation, what it does and an example.",
+  steps: [
+    "Type into Search — either the Latin phrase or the idea you half-remember, such as res judicata, burden of proof or hear the other side — or tap one of the suggestion chips beneath it.",
+    "Narrow the list with Area of law (Natural justice, Criminal law, Constitutional law, Contract, Tort, Procedure, Interpretation, Evidence, Property or General, each showing its entry count) and set Results to show, from 1 to 100.",
+    "Maxims matched reports the count, and every result card prints the maxim in italics with its area badge and Literally, What it means and Example sections; Copy result copies the matching entries as plain text.",
+  ],
   intro:
     "A searchable reference of the Latin maxims that appear in common-law judgments, statutes and law-school syllabi, each with its literal translation, what the principle actually does in practice, and a worked example. Search works both ways: type the Latin, or type the idea you half-remember — 'hear the other side' finds audi alteram partem, 'burden of proof' finds actori incumbit onus probandi. Entries are grouped by area, from natural justice and criminal law to the rules of statutory interpretation such as ejusdem generis and noscitur a sociis.",
   useCases: [

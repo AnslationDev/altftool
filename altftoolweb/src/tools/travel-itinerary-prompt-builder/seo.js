@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Itinerary Prompt Builder: Day-by-Day AI Plans",
+  metaDescription:
+    "Enter destination, trip length, travellers and preferences to build a prompt asking for morning/afternoon/evening days, rest breaks and a rainy-day plan.",
+  steps: [
+    "Fill the Destination, Trip length, Travellers and Preferences/budget fields — the defaults show Tokyo, 5 days, couple.",
+    "Watch the Itinerary prompt panel rebuild as you type: it asks for a day-by-day route with morning, afternoon and evening, travel time assumptions, rest breaks and a rainy-day backup.",
+    "Press Copy output and paste the itinerary prompt into your AI assistant; Reset restores the Tokyo example.",
+  ],
   intro:
     "The Travel Itinerary Prompt Builder writes an AI trip-planning prompt that carries its own reality check: it charges half a day for every change of base, multiplies the usable days that remain by the activities your chosen pace allows, and tells the model exactly how many main activities the trip can hold. It also converts your total on-the-ground budget into a per-person-per-day figure and splits it 35 percent accommodation, 25 percent food, 15 percent activities, 10 percent local transport, 10 percent intercity travel and 5 percent buffer. It is for travellers who keep getting back impossibly packed AI itineraries and want the constraints stated before the model starts inventing days.",
   useCases: [

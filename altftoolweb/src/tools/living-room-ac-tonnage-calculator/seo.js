@@ -1,4 +1,12 @@
 const seo = {
+  title: "Living Room AC Tonnage by Component Heat Gain",
+  metaDescription:
+    "Size a living room AC by adding walls, roof, glass, people, lights and infiltration separately, then converting at 3,516.85 W per ton of refrigeration.",
+  steps: [
+    "Under Room, enter Length (ft), Width (ft), Ceiling height (ft) and 'Walls exposed to outside air (0-4)', then pick the Wall construction and 'Roof above the room'.",
+    "Fill the Glazing block — 'Total window / glass door area (sq ft)', 'Which way the glass faces', Glass type and Shading — then the internal gains: 'People in the room at peak', 'Lighting load (W)', 'TV, set-top box, router and so on (W)', Air tightness, Outdoor humidity, 'Outdoor design (C)' and 'Setpoint (C)'.",
+    "Read 'Recommended AC size' in tons with the same load shown in W and BTU/hr, the per-component watt rows plus 'Design margin (10%)' and 'Load intensity', and 'Where the heat comes from' naming the biggest single gain; Copy result copies the breakdown.",
+  ],
   intro:
     "This calculator sizes an air conditioner for a living room by adding up each heat gain separately instead of using a flat per-square-foot rule: wall and roof conduction as U x A x deltaT with a sol-air uplift of 15 K for a sunlit roof, solar gain through glass as area x solar heat gain factor x shading coefficient, 130 W per seated adult from ASHRAE, installed lighting and equipment watts, and infiltration at 0.335 W per cubic metre per kelvin. A 10% design margin is added and the total is converted at 3,516.85 W per ton of refrigeration. It is built for open halls where a double-height ceiling or a wall of west-facing glass makes the rule of thumb badly wrong.",
   useCases: [

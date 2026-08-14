@@ -1,4 +1,12 @@
 const seo = {
+  title: "ITR-1 Sahaj Eligibility Checker: Can You File It?",
+  metaDescription:
+    "Checks the ITR-1 Sahaj conditions — resident status, income up to ₹50 lakh, one house property, ₹5,000 agri cap — and names the form to use instead.",
+  steps: [
+    "Set Residential status, Total income for the year (₹), Agricultural income (₹), House property income and Listed LTCG u/s 112A (₹).",
+    "Tick anything that applies — business or F&O income, directorship, unlisted shares, foreign assets, section 194N TDS, brought-forward losses.",
+    "The Verdict says whether ITR-1 Sahaj can be filed, lists why it is blocked and points to ITR-2, ITR-3 or ITR-4 Sugam; press Copy result.",
+  ],
   "intro": "ITR-1 Sahaj Eligibility Checker walks through the conditions the Income Tax Department attaches to the one-page Sahaj return — ordinarily resident status, total income up to Rs 50 lakh, a single house property, agricultural income under Rs 5,000 and no business income — and tells you whether you qualify. If any answer rules Sahaj out, it names the exact reason and points you to ITR-2, ITR-3 or ITR-4 Sugam instead. It is built for salaried filers and pensioners who want to confirm the right form before opening the e-filing portal.",
   "useCases": [
     "A salaried filer with one flat and some FD interest confirming Sahaj is still the right form.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Animated WebP / APNG Builder – Loop Two Images",
+  metaDescription:
+    "Turn two stills into a looping animated WebP or APNG in your browser with FFmpeg WebAssembly — 800px wide, 12fps, one second per frame, no upload.",
+  steps: [
+    "Choose the first frame under Source file and the second frame under Secondary file — any image the browser opens works.",
+    "Pick webp or apng in the Output dropdown and press Process locally; the FFmpeg WebAssembly engine loads and encodes in the browser.",
+    "The finished loop downloads as altftool-animated-webp-apng-builder.webp or .png — 800 px wide, 12 fps, one second per frame, looping forever.",
+  ],
   intro:
     "The Animated WebP/APNG Builder turns two still images into a single looping animation, encoded in the browser by FFmpeg compiled to WebAssembly. Each source frame is held for one second, the pair is concatenated and scaled to 800 pixels wide with the height kept proportional and even, and the result is written at 12 fps with an infinite loop flag — as an animated WebP, or as an APNG saved with a .png extension. The finished file downloads straight to your machine; the images are never uploaded.",
   useCases: [

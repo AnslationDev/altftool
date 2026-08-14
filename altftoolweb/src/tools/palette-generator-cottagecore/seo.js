@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cottagecore Palette: Cream, Sage, Moss and Berry",
+  metaDescription:
+    "Build a muted botanical palette from a seed word and a season, held under a saturation ceiling, with WCAG-checked button pairs and UI-safe variants.",
+  steps: [
+    "Type a Seed word or phrase, pick a Season — Spring young green, Summer meadow, Autumn dried grass or Winter bare stem — and drag Softness, where a higher value means a lower saturation ceiling.",
+    "Check the read-out: Saturation ceiling, Mean saturation of the colour roles, Softness score and Contrast checks passing, then use Shuffle seed for a different seed word.",
+    "Copy hex codes takes the whole set, the Palette list copies a single swatch, and the Export block writes the palette as CSS variables, Tailwind @theme or JSON — with the Sage tint ramp, Button pairings and UI-safe variants tables underneath.",
+  ],
   intro:
     "The Cottagecore Palette Generator produces a soft botanical colour set — cream paper, linen, sage, moss, wild berry, clay rose and honey — from a seed word and a season. What makes it read as cottagecore rather than pastel candy is the saturation ceiling: a softness slider moves a shared saturation ceiling between 22% and 52%, and each colour then takes its own fraction of that ceiling, so the tool reports the resulting mean saturation so the muting is measurable. It also picks the readable label colour for each fill and darkens each accent — where it needs it — until it clears the WCAG 3:1 minimum for borders and icons.",
   useCases: [

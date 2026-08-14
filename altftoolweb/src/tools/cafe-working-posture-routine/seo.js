@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cafe Table Height for Laptop Work: 75, 89 or 104 cm",
+  metaDescription:
+    "Rank the 75 cm dining, 89 cm counter and 104 cm bar table against your seated elbow height, then size the cushion, footrest and laptop riser in cm.",
+  steps: [
+    "Enter Your height (cm) between 120 and 220, pick Where you are sitting from Dining-height table with a normal chair (75 cm), Counter-height table with a mid stool (89 cm) or Bar-height table with a tall stool (104 cm), and set How long you will stay (minutes).",
+    "Add Laptop screen size (inches) and Eye-to-screen distance (cm), then tick 'I have a separate keyboard with me' if you carry one — without it the riser figure is marked usable only with a separate keyboard.",
+    "Read Best seat in the house for you, then the rows for 'Sit on something this thick', Footrest height, 'Raise the laptop by', Downward gaze angle and the eye breaks (every 20 min) and posture breaks (every 30 min) counts. Copy result takes the set-up with you.",
+  ],
   intro:
     "This tool ranks the three standard commercial seating heights — dining (about 75 cm with a 45 cm chair), counter (about 89 cm with a 64 cm stool) and bar (about 104 cm with a 75 cm stool) — against your own seated elbow height, then sizes the cushion, footrest and laptop riser needed to close whatever gap remains. Elbow, eye and popliteal heights are derived from your body height using 50th-percentile adult proportions, and screen height comes from the laptop diagonal, so the riser figure is real rather than generic. Break counts follow the 20-20-20 eye rule and the general advice to change posture at least every 30 minutes.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Document Checklist in Checkpoint Order",
+  metaDescription:
+    "Orders your printed papers by the first checkpoint that asks for them, from terminal entry to hotel check-in, and checks passport validity dates.",
+  steps: [
+    "Set Trip type to International or Domestic, the number of Travellers, your Outbound date and the date you leave the destination.",
+    "For an international trip add Passport expiry date and Passport issue date, then pick the six-month, Schengen or duration-of-stay validity rule.",
+    "The running order numbers every document by checkpoint from Terminal entry to Hotel check-in, with originals, photocopies and what to keep on your person.",
+  ],
   intro:
     "Sorts your printed travel papers into the order the journey actually demands them, by mapping each document to the first checkpoint that asks for it — terminal entry, check-in, emigration, security, gate, in flight, arrival immigration, customs, car hire, hotel. It also runs the two passport rules that cause most boarding refusals: the six-month validity rule used across Asia, the Gulf and much of Africa, and the Schengen Borders Code requirement that a passport be valid three months beyond departure and issued within the previous ten years.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "AQI Exercise Safety: Is It Safe to Run Outside Today?",
+  metaDescription:
+    "Turns a US EPA or India CPCB AQI into PM2.5, the micrograms your session would inhale, and the EPA activity verdict for your risk group.",
+  steps: [
+    "Enter the AQI reading right now, choose the US EPA or India CPCB scale, and set your planned session and session length in minutes.",
+    "Tick any risk group that applies — Asthma or COPD, Heart disease, Child or teenager, Aged 65 or over, Pregnant.",
+    "Read the estimated PM2.5 in µg/m³, the verdict, the PM2.5 you would breathe in and the length that matches a clean-air dose.",
+  ],
   intro:
     "The AQI Exercise Safety Advisor turns an air quality index reading into an outdoor training decision. It inverts the official AQI formula to recover the underlying PM2.5 concentration — using the US EPA breakpoints revised in 2024 or the India CPCB National AQI sub-index — then multiplies that by the EPA Exposure Factors Handbook inhalation rate for your session intensity to estimate the micrograms of fine particulate you would actually breathe in. The verdict follows the EPA Air Quality Guide for Particle Pollution, which is written around prolonged or heavy exertion.",
   useCases: [

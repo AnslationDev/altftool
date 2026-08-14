@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spotify Playlist Cover Maker - 640 to 3000 px PNG",
+  metaDescription:
+    "Design square playlist covers in the browser: auto-fitted titles, WCAG-scored contrast, PNG or JPEG export at 640-3000 px under Spotify's 4 MB cap.",
+  steps: [
+    "Type the Playlist title (60-character limit) and optional Subtitle, then pick a Palette, Layout, Background texture (Waveform lines, Concentric rings or Flat gradient) and drag the Accent hue slider.",
+    "Choose 640, 1000, 1500 or 3000 in Export size (px, square) and check the Title contrast (WCAG 2.1) ratio and 8% safe-margin readout in the panel.",
+    "Click Download PNG or Download JPEG - the file saves as your-title-cover-640.png style and is then checked against Spotify's square, 300 px minimum and 4 MB limits.",
+  ],
   intro:
     "Spotify Playlist Cover Maker builds a square cover image at Spotify's own artwork specs — 1:1 aspect, 640 px or larger, under the 4 MB upload cap — and renders it entirely in your browser. Type is fitted automatically: the title shrinks and wraps until it fits an 8% margin, and the colour pairing is scored with the WCAG 2.1 contrast formula so the text still reads at sidebar thumbnail size. Useful for playlist curators, small labels and podcasters who need clean cover art without opening a design app.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Colombo Trip Budget: Service Charge, SSCL and VAT Added",
+  metaDescription:
+    "Prices a Colombo trip in LKR and rupees, compounding 10% service charge, 2.5% SSCL and 18% VAT (1.3305x) onto quoted room and restaurant prices.",
+  steps: [
+    "Pick Travel style (Backpacker, Comfort or Premium), Season, how you pay in Sri Lanka, Travellers and Nights in Colombo.",
+    "Leave \"My room and food prices are quoted before service charge and taxes\" ticked so 10%, 2.5% and 18% compound, and edit any per-night or per-day LKR rate.",
+    "Read the line-by-line table in LKR and rupees with the per-person-per-day figure and the cost of one extra night, then press Copy result.",
+  ],
   intro:
     "This planner splits a Colombo trip into rupee costs booked in India — return airfare, ETA and insurance — and Sri Lankan rupee costs spent on the ground, then applies the one adjustment most trip budgets get wrong: hotel and restaurant prices in Sri Lanka are usually quoted before the service charge, the Social Security Contribution Levy and VAT, and those three compound rather than add. At the common 10% service charge, 2.5% SSCL and the 18% VAT in force since January 2024 the multiplier is 1.10 × 1.025 × 1.18 = 1.3305, so a quoted price lands about 33% higher on the bill. Rooms are charged for nights, daily spends for nights + 1 days, and the season factor moves the room rate alone.",
   useCases: [

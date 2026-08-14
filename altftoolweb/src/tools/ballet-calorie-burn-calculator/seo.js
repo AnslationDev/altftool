@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ballet Class Calorie Burn Calculator (MET by Segment)",
+  metaDescription:
+    "Split a ballet class into barre, centre, allegro and pointe minutes and get kcal per segment, class total and weekly vigorous minutes from real METs.",
+  steps: [
+    "Enter your Body weight (kg or lb) and Classes per week, or start from a preset such as 60-minute open class, 90-minute technique class, Class plus pointe or Repertoire rehearsal.",
+    "Set the Minutes in each part of class — Barre work (4.0 MET) through Grand allegro and across the floor (6.8 MET) — each segment priced at its own MET value.",
+    "Read Calories for this class with the per-segment kcal table, weekly calories and Vigorous minutes (6 MET or above), then press Copy result or Reset.",
+  ],
   intro:
     "The Ballet Calorie Burn Calculator splits a class into barre, centre, petit allegro, pointe and grand allegro, prices each part at its own MET value and adds them up with the ACSM equation kcal/min = MET x 3.5 x kg / 200. The Compendium of Physical Activities rates ballet class or rehearsal at 5.0 MET and vigorous ballet performance at 6.8 MET, and the segments here sit around those two published anchors so a barre-heavy class and a jump-heavy rehearsal produce different answers.",
   useCases: [

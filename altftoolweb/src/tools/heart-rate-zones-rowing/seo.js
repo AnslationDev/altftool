@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rowing Heart Rate Zones: UT2, UT1, AT, TR and AN",
+  metaDescription:
+    "UT2, UT1, AT, TR and AN bands in bpm from your age or measured max HR, each with its stroke rate window and 500 m split off 2 km pace.",
+  steps: [
+    "Enter Age (years), Resting heart rate (bpm) and your 2 km split in minutes and seconds; a Measured max heart rate overrides the formula.",
+    "Choose a Max heart rate formula and a Band method — Karvonen (heart rate reserve) or % of maximum heart rate.",
+    "Read Your rowing training bands for the bpm, Rate and Split /500 m of UT2, UT1, AT, TR and AN, then press Copy result.",
+  ],
   intro:
     "Rowing programmes do not use the generic five-zone model; they use named bands — UT2, UT1, AT, TR and AN — and this calculator turns your age or measured maximum heart rate into those bands in beats per minute, then attaches the stroke rate window and the 500 m split that belongs with each one. Split guidance comes from the standard coaching offsets against 2 km test pace: UT2 about 20–24 seconds slower per 500 m, UT1 12–16 slower, AT 8–10, TR 4–6, and AN at or inside 2 km pace. It suits erg training and on-water sessions where you need heart rate, rate and split to line up.",
   useCases: [

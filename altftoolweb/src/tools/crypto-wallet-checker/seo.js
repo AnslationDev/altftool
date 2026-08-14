@@ -1,4 +1,7 @@
 const seo = {
+  title: "Crypto Wallet Address Validator for 10 Blockchains",
+  metaDescription:
+    "Check an address against 10 chains' formats and see which it matches - Taproot bc1p, SegWit bc1q, P2SH, or a 40-hex 0x address. No chain lookup.",
   intro:
     "Crypto Wallet Checker tests a wallet address against the address-format rules of ten blockchains — Bitcoin, Ethereum, Solana, Litecoin, Dogecoin, XRP, TRON, Cardano, Polkadot and BNB Smart Chain — and reports every chain and address type it validly matches. It is for anyone about to send funds who wants to confirm an address is well-formed and belongs to the network they think it does. Results name the specific format, such as Taproot (bc1p), SegWit (bc1q), P2SH (starts with 3), or an EVM 0x address with 40 hex characters.",
   useCases: [

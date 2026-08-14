@@ -1,4 +1,12 @@
 const seo = {
+  title: "kubectl Command Builder with Flag Conflict Validation",
+  metaDescription:
+    "Build get, logs, exec, delete and scale commands with -n, -l, -o and --dry-run in the right places — invalid pairs like -A with -n are rejected.",
+  steps: [
+    "Pick a Verb — get, describe, delete, logs, exec, apply, scale, port-forward or rollout restart — and a Resource type such as pods or deployments where it applies.",
+    "Fill the verb-aware fields: Resource name (blank = all), Namespace (-n), Label selector (-l), Output format (-o), --dry-run, or the logs toggles Follow log stream (-f) and Previous container instance (--previous).",
+    "Read the Assembled command, shell-quoted with conflicting flags rejected and the reason shown, then press Copy command.",
+  ],
   intro:
     "This builder assembles syntactically correct kubectl commands — get, describe, delete, logs, exec, apply, scale, port-forward and rollout restart — with the namespace, label selector, output format and dry-run flags in the right places, shell-quoted where needed. It enforces the same flag rules kubectl does, rejecting -A combined with -n, a resource name combined with -l, and the removed boolean --dry-run form. Handy for engineers who touch clusters occasionally and forget flag order and compatibility.",
   useCases: [

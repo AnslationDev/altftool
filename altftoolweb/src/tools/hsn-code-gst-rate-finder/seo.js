@@ -1,4 +1,12 @@
 const seo = {
+  title: "HSN and SAC Code GST Rate Finder with Tax Split",
+  metaDescription:
+    "Search goods or services by name or HSN/SAC code for the Nil, 5%, 18% or 40% slab, then split any amount into CGST and SGST, or IGST across states.",
+  steps: [
+    "Search an item, service or HSN/SAC code, such as cement, 8517 or hotel, and filter to Goods (HSN) or Services (SAC).",
+    "Enter the amount in INR and set the toggles to GST inclusive or exclusive, and intra-state (CGST+SGST) or inter-state (IGST).",
+    "Read the taxable value with its CGST and SGST split, or the IGST figure, then press Copy result.",
+  ],
   intro:
     "The HSN Code GST Rate Finder lets you search common Indian goods and services by name or by HSN/SAC code and instantly see which GST slab they fall into — Nil, 5%, 18% or the 40% demerit rate, plus the special 0.25%, 1.5% and 3% rates for stones and precious metals. Pick an item, enter an invoice amount, and the tool splits it into taxable value, CGST and SGST for an intra-state supply or IGST for an inter-state one, working forwards from a base price or backwards from a GST-inclusive figure. It is built for small business owners, freelancers, accountants and e-commerce sellers who need a fast sanity check before raising an invoice.",
   useCases: [

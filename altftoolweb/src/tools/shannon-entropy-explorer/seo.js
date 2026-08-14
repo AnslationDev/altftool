@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shannon Entropy Calculator: Bits, Nats, Hartleys",
+  metaDescription:
+    "Compute H = -sum(p log p) for text or a probability list in bits, nats or hartleys, with maximum entropy, normalised H and a per-outcome table.",
+  steps: [
+    "Switch between the 'Text symbols' and Probabilities tabs, then type into 'Text or comma-separated probabilities' — the Examples row loads abracadabra or 'Fair four outcomes' (0.25, 0.25, 0.25, 0.25).",
+    "Set 'Logarithm base' to '2 · bits', 'e · nats' or '10 · hartleys'; the entropy recomputes on every keystroke, and counts or percentages are divided by their total so your list need not sum to 1.",
+    "Read the entropy in the Result panel with Maximum entropy, Normalized entropy and 'Perplexity (base 2)' below it and an Outcome / Probability / Information table, then use Copy or Download, which saves shannon-entropy-explorer.txt.",
+  ],
   intro:
     "Shannon Entropy Explorer computes H = -sum(p * log_b p) for either a string of text or a list of probabilities, and reports the result in bits, nats or hartleys depending on the logarithm base you pick. Alongside the entropy it gives the maximum possible entropy for that number of outcomes, the normalised ratio between the two, the perplexity, and a per-outcome table of probability and self-information. It is for students and engineers who want to see where a distribution's uncertainty actually comes from rather than just a single number.",
   useCases: [

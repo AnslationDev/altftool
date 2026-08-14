@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chennai Airport (MAA): When to Leave Home for a Flight",
+  metaDescription:
+    "Works back from your departure time through bag-drop close, gate close and the 2-hour reporting advice. Metro and Tirusulam rail skip the traffic factor.",
+  steps: [
+    "Set \"Scheduled departure (24-hour)\" and \"Distance to the terminal (km)\", or tap a \"Starting from\" chip such as \"Chennai Central · 20 km\" or \"T Nagar · 14 km\".",
+    "Choose Domestic or International under \"Flight type\", pick a mode in \"How are you getting there?\" — the \"Chennai Metro (Blue Line to the airport terminus)\" and \"Suburban rail to Tirusulam station\" options drop the congestion factor — and tick \"I have a bag to check in\" if you are checking one.",
+    "Read the \"Leave by\" clock time and the \"Deadline set by\" chip naming bag drop, gate close or reporting advice, then press \"Copy plan\" for the full door-to-departure breakdown.",
+  ],
   intro:
     "This planner gives the clock time to walk out of your door for a flight from Chennai International Airport (MAA), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you actually travel. Chennai is one of the few Indian cities where that factor can be sidestepped entirely: both the metro Blue Line and the suburban railway reach the airport at Tirusulam, and neither is affected by what the roads are doing.",
   useCases: [

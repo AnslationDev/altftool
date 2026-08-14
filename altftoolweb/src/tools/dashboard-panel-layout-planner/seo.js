@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grafana Dashboard Layout Planner: RED, USE, Golden Signals",
+  metaDescription:
+    "Plans service dashboard panels from RED, USE or the Four Golden Signals, sized to Grafana's 24-column grid, with an SLO row and starter PromQL per panel.",
+  steps: [
+    "Enter a Service name, pick a Method — RED (Rate, Errors, Duration), USE (Utilisation, Saturation, Errors) or Four Golden Signals — set Panels per row (2, 3 or 4) and toggle the USE resources: CPU, Memory, Disk I/O, Network, Connection pool.",
+    "Set Panel height (grid units), a Refresh interval from 10 seconds to 5 minutes and the SLO target (%), with checkboxes to add the SLO / error-budget row and the logs / deploys drill-down row; the plan recomputes live.",
+    "Read the panel count, rows, panel size on the 24-column grid and queries per minute, then review 'Panel order, top to bottom' with a starter PromQL query per panel; Copy plan puts the numbered plan on the clipboard.",
+  ],
   intro:
     "A dashboard panel layout planner decides which panels a service dashboard needs and what order they appear in, using the RED method (Rate, Errors, Duration), the USE method (Utilisation, Saturation, Errors) or Google's Four Golden Signals. It sizes each panel against Grafana's 24-column grid, adds an SLO and error-budget row on top, and gives a starter PromQL query per panel. The output is a plan you can build against rather than a dashboard that grew one panel at a time.",
   useCases: [

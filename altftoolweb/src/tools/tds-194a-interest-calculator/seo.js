@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 194A TDS Calculator: FD Interest Thresholds",
+  metaDescription:
+    "Check 194A TDS on interest with the Rs 50,000 bank, Rs 1,00,000 senior citizen and Rs 10,000 non-bank limits, the 10% rate and 20% without PAN.",
+  steps: [
+    "Choose Who pays the interest, the Type of account for a bank, and the Financial year.",
+    "Enter Interest for the financial year (INR), or work it out from Deposit amount (INR) and Interest rate (% per year).",
+    "Tick senior citizen, PAN is on record or Form 15G/15H, then read TDS on this year's interest with the reason given.",
+  ],
   intro:
     "This calculator works out the tax deductible at source on interest under section 194A of the Income-tax Act — the 10% cut a bank, post office, company or NBFC makes when yearly interest crosses the statutory limit. From 1 April 2025 those limits are Rs 1,00,000 for a senior citizen depositor, Rs 50,000 for other bank and post office depositors, and Rs 10,000 for any other payer. It also shows what happens without a PAN, where a Form 15G or 15H stops the deduction, and why savings account interest is left alone.",
   useCases: [

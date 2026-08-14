@@ -1,4 +1,12 @@
 const seo = {
+  title: "Batch Image Workflow Runner: Resize, Crop, Watermark",
+  metaDescription:
+    "Four FFmpeg WebAssembly presets — resize to 1200px, 1080×1080 centre crop, grayscale, corner watermark — run in the tab and output PNG.",
+  steps: [
+    "Pick your photo with the \"Source file\" picker, which accepts any image/* file.",
+    "Choose resize-1200, square-crop, grayscale or watermark from the Pipeline menu and press \"Process locally\" — the FFmpeg WebAssembly core is only fetched at that point, and your file is written to its in-memory filesystem rather than uploaded.",
+    "The finished image downloads as altftool-batch-image-workflow-runner.png while the \"Local processing report\" panel shows the File, Size, Type and Profile rows and the tail of the FFmpeg log.",
+  ],
   intro:
     "The Batch Image Workflow Runner applies one of four fixed image pipeline presets — resize to 1200px, centre square crop to 1080×1080, grayscale, or a corner watermark — to a source image using an FFmpeg WebAssembly engine that runs inside the page. It suits anyone standardising images to a house format who does not want to relearn crop maths or filter syntax for every file. The engine only downloads after you press Process, and your image is written to its in-memory filesystem rather than uploaded to a server.",
   useCases: [

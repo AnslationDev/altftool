@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voice to Text with Translation into 9 Languages",
+  metaDescription:
+    "Dictate with the browser's Web Speech Recognition API, watch the words appear live, and translate the transcript into one of nine languages.",
+  steps: [
+    "Pick a target from the Translate to dropdown — Hindi, English, Spanish, French, Bengali, Arabic, Russian, Japanese or German.",
+    "Tap the mic and start speaking; the mic turns into a square you click to stop.",
+    "Watch the words build up under Original Text, then read Translated Output and press the copy button on that panel.",
+  ],
   intro:
     "Voice to Text turns speech into written text using the browser's built-in Web Speech Recognition API, showing the words live as you talk and then translating the finished transcript into one of nine target languages — Hindi, English, Spanish, French, Bengali, Arabic, Russian, Japanese or German. It is for anyone who would rather dictate than type: students capturing a thought, support staff drafting a reply, or someone speaking one language and needing the message in another. Recognition starts and stops on a single mic button, and the translated output has a one-click copy.",
   useCases: [

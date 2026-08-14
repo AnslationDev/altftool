@@ -1,4 +1,5 @@
 const seo = {
+  title: "Beauty Score Calculator: Symmetry & Golden Ratio",
   intro:
     "The Beauty Score Calculator is an entertainment tool that measures two geometric properties of a face — left/right symmetry and how close its proportions sit to the golden ratio of 1.618 — using 68 facial landmark points detected in your browser. It combines them as 60 percent symmetry and 40 percent proportion into a single novelty score. It measures distances between landmarks, nothing more: attractiveness is cultural, personal and not something a ratio can decide, so treat the number as a party trick rather than a verdict.",
   useCases: [

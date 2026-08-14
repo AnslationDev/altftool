@@ -1,4 +1,7 @@
 const seo = {
+  title: "Change Freeze Calendar Planner for Release Windows",
+  metaDescription:
+    "Turn protected dates into dated freeze windows: overlaps merge, and you see total days, Mon–Fri days frozen, and the release gaps between blocks.",
   intro:
     "A change freeze planner that converts a list of protected dates into dated freeze windows, merges the ones that overlap, and totals how many days and working days of the year end up frozen. Each event gets its own lead and trail padding, so a five-day pre-sale freeze and a two-day post-close freeze are modelled separately rather than averaged. Built around the Indian financial year ending 31 March and the festive sale calendar, with moving dates such as Diwali and Black Friday entered by hand instead of guessed.",
   useCases: [

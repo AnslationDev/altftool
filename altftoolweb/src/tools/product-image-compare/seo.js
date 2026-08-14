@@ -1,4 +1,12 @@
 const seo = {
+  title: "Before & After Image Slider – Compare Two Product Photos",
+  metaDescription:
+    "Load two images and wipe between them with a draggable divider. Show A, 50/50 and Show B buttons snap the split; photos never leave your browser.",
+  steps: [
+    "Drop or click to add photos into the Upload Image A (Before / Variant 1) and Upload Image B (After / Variant 2) zones — any image file the browser accepts works.",
+    "Drag the white divider handle across the frame by mouse or touch to wipe between the labelled Image A and Image B views, which stay locked to Image A's aspect ratio.",
+    "Use the Show A, 50 / 50 and Show B buttons under Slider Position to snap the split to either extreme or the middle, and Start Over to clear both images.",
+  ],
   intro:
     "This tool stacks two images in the same frame and wipes between them with a draggable vertical divider, so a retouch, a colour variant or a quality change shows up as a single continuous edit rather than two pictures you have to look at in turn. Image B is clipped by a CSS inset from the divider position and Image A shows through behind it, with the frame locked to Image A's aspect ratio. It is for anyone presenting a before-and-after where side-by-side thumbnails hide the difference.",
   useCases: [

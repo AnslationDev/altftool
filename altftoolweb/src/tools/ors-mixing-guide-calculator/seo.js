@@ -1,4 +1,12 @@
 const seo = {
+  title: "ORS Mixing Calculator: Sachet Ratio & WHO Dosing",
+  metaDescription:
+    "Work out how many ORS sachets your water volume needs, the WHO 6 tsp sugar and half tsp salt homemade recipe, and Plan A or Plan B volumes by weight.",
+  steps: [
+    "Enter \"Clean water you are mixing (ml)\" and pick the sachet size on the packet: Makes 1 litre (WHO standard sachet), Makes 500 ml or Makes 200 ml.",
+    "Under \"2. How much to give\", enter Age (years), Extra months, Weight (kg), Loose stools so far today, and the Level of dehydration.",
+    "Read \"Sachets to add\", the homemade level-teaspoon sugar and salt amounts and the 24-hour discard row, then the per-stool Plan A volume or the Plan B 75 ml/kg loading dose; Copy result saves both.",
+  ],
   intro:
     "The ORS Mixing Guide Calculator works out how many oral rehydration salt sachets a given volume of clean water needs, the WHO/UNICEF homemade sugar-salt proportions when no sachet is available, and how much solution to give under WHO diarrhoea treatment Plans A and B. The reference formulation is WHO low-osmolarity ORS at 245 mOsm/L — 75 mmol/L sodium, 75 mmol/L glucose, 20 mmol/L potassium, 65 mmol/L chloride and 10 mmol/L citrate. It is informational only: oral rehydration works because glucose and sodium are co-transported across the gut wall in a fixed ratio, and getting that ratio wrong makes the solution less effective or actively harmful.",
   useCases: [

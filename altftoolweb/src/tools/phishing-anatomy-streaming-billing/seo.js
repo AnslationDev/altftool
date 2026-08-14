@@ -1,4 +1,12 @@
 const seo = {
+  title: "Netflix or Prime Payment-Failed Email: Real or Fake",
+  metaDescription:
+    "Paste the sender and button link from a streaming payment-failed email; it checks them against netflix.com, primevideo.com, disneyplus.com and more.",
+  steps: [
+    "Pick the brand under Service it claims to be from — Netflix, Amazon Prime Video, Disney+, JioHotstar / Hotstar, Spotify, YouTube Premium or Apple TV+.",
+    "Fill in Sender address and Where the update payment button goes, paste the visible Message text, and tick the attached invoice or receipt box if one came.",
+    "Read the Red-flag score out of 100 with its band and the Red flag and Caution findings, then follow the Check it the safe way instead route.",
+  ],
   intro:
     "A payment-failed streaming email is judged on the registrable domain its button leads to, not on how closely the page copies the brand. This page compares the sender and link against the domains each service actually uses — netflix.com, primevideo.com and the regional amazon sites, disneyplus.com, hotstar.com, spotify.com, youtube.com — flags card-detail requests, deadline pressure and template reuse where a kit mentions two brands at once, and points you to the in-app route that answers the question for good.",
   useCases: [

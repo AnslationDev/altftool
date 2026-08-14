@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baby First Year Cost Calculator: Diapers to Childcare",
+  metaDescription:
+    "Build a first-year baby budget from quantities: about 2,460 diapers, formula by feeding pattern, five immunisation visits and a saving plan.",
+  steps: [
+    "Fill the One-off costs block: Delivery & hospital package, Pre-natal scans, tests & visits, Cot, pram, car seat & gear and Reimbursed by maternity insurance, all in rupees.",
+    "Set the running lines - Price of one diaper, Feeding pattern, Formula tins a month at full feeding, Immunisation visits in year one and Creche or nanny a month.",
+    "First twelve months shows the total, the average a month and Diapers used; Saving for the one-off costs turns Months until the birth into a monthly target. Press Copy result.",
+  ],
   intro:
     "This calculator estimates what a baby costs in its first twelve months by building the figure from quantities rather than a single guessed lump sum. Diapers are counted stage by stage as daily use falls from about nine a day in the newborn months to five by the end of the year — roughly 2,460 diapers in total — formula spend is scaled to whether feeding is exclusive, mixed or breast only, solids are counted from month six in line with WHO and MoHFW guidance, and immunisation uses the five routine contacts of India's National Immunisation Schedule. One-off costs are separated from running costs so you can see what has to be saved before the birth.",
   useCases: [

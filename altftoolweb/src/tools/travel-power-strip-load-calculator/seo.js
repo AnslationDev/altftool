@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Power Strip Load Calculator: Amps and 80% Rule",
+  metaDescription:
+    "Add up device watts to see the amps your travel strip draws at 120 V or 230 V, against the lower of the socket and strip rating and the 80% margin.",
+  steps: [
+    "Pick a Destination preset to fill Supply voltage (V) and Wall socket rating (A), then choose your Power strip rating (A).",
+    "Use Add a device to put each charger, kettle or dryer on the strip, and edit its Watts and Quantity to match your own label.",
+    "Read Total load on the strip: the amps at that voltage, the binding limit, the 80% continuous-load ceiling and the hard ceiling, then Copy result.",
+  ],
   intro:
     "This calculator adds up the wattage of everything you plan to run from one travel power strip and converts it to the current that strip and wall socket must carry, using I = P / V at your destination's voltage. It compares the total against the lower of the two ratings — the strip's or the socket's — and against the 80% margin used for loads that run for hours, which is the US National Electrical Code's 125% continuous-load rule stated the other way round. The result is a plain answer on whether the kit fits one socket or needs splitting up.",
   useCases: [

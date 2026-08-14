@@ -1,4 +1,12 @@
 const seo = {
+  title: "Resting Heart Rate Tracker: 7-Day Average & Baseline",
+  metaDescription:
+    "Log morning pulse readings to see a 7-day rolling average, a 28-day personal baseline, deviation in bpm and a least-squares trend per week.",
+  steps: [
+    "Under 'Add a morning reading', pick the date and enter your resting heart rate in bpm (25 to 130), then press 'Add reading'.",
+    "Watch the 7-day rolling average, 28-day personal baseline and deviation update — a rise of 5 bpm or more above baseline is flagged as elevated.",
+    "Read the least-squares trend in bpm per week and click 'Copy result' for a plain-text summary of latest, baseline, deviation and extremes.",
+  ],
   intro:
     "This tracker turns a log of morning resting heart rate readings into a 7-day rolling average, a 28-day personal baseline, and the deviation between the two — the three numbers that actually reveal a trend, rather than a single noisy morning figure. It also fits a least-squares trend line to show whether your pulse is drifting up or down in beats per minute per week. A sustained rise of about 5 bpm above your own baseline is the point most recovery guidance treats as a signal to ease off.",
   useCases: [

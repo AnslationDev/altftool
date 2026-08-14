@@ -1,4 +1,10 @@
 const seo = {
+  title: "Carpet Roll Calculator: Running Metres, Drops & Seams",
+  steps: [
+    "Enter \"Room length (m)\" and \"Room width (m)\", pick the carpet roll width from the dropdown — 2 m, 3.66 m (12 ft), 4 m or 5 m — and set any pattern repeat.",
+    "Adjust the trim allowance per drop, total doorway width, and the carpet and underlay prices per m².",
+    "Read \"Carpet to order\" in running metres with the best layout direction, drops, seams and offcut wastage percentage; \"Copy result\" exports the list.",
+  ],
   intro:
     "This calculator converts a room's length and width into the running metres of broadloom carpet you have to buy off a fixed-width roll, along with the seam count and the offcut you will pay for. Because carpet is sold by the running metre from a roll of set width, the quantity depends on which way the drops run, so it evaluates both orientations and reports the cheaper one. It is built for anyone pricing a wall-to-wall installation before the roll gets cut, since cut lengths are not returnable.",
   useCases: [

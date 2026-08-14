@@ -1,4 +1,12 @@
 const seo = {
+  title: "TP-Link Router Hardening: 21-Step Archer and Deco Audit",
+  metaDescription:
+    "21 weighted steps for Archer and Deco routers, each with its exact tplinkwifi.net menu path, plus a WPA2 passphrase crack-time estimate.",
+  steps: [
+    "Choose what the router is carrying - ordinary home broadband, work from home, a shared flat or a small shop - to weight the 21 steps for that profile.",
+    "Tick every hardening step already done across Admin account, Wi-Fi, Facing the internet, Devices on your LAN and Firmware and lifecycle.",
+    "The score reports steps done, critical items still open - it is held at 60% while any remain - and remaining exposure by area; press Copy result for the to-do list.",
+  ],
   intro:
     "This TP-Link hardening checklist walks a 21-point security pass over an Archer or Deco router — admin account, WPA2/WPA3 encryption, WPS, remote WAN management, UPnP, port forwards and firmware — and scores what is still open, weighted by how much exposure each step actually removes. It gives the exact menu path under tplinkwifi.net for every step, so you are not hunting through Advanced > System Tools. A built-in WPA2 crack-time estimator applies the PBKDF2-HMAC-SHA1 4096-iteration handshake maths to show how long your current Wi-Fi passphrase would survive an offline attack.",
   useCases: [

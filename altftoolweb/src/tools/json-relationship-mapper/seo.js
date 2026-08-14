@@ -1,4 +1,10 @@
 const seo = {
+  title: "JSON Relationship Mapper: Paths and Inferred Foreign Keys",
+  steps: [
+    "Paste a document into the JSON input box, or press Load sample for the built-in project, teams and tasks payload.",
+    "The mapper walks the parsed tree, addressing every node as $.teams[1].id and indexing each field named id by its value.",
+    "Read the Paths, ID-like fields and Links counters, the Inferred relationships list of from-path to to-path, and the Structure paths table.",
+  ],
   intro:
     "The JSON Relationship Mapper walks a document, lists every node as a `$.path[0].like.this` address with its type, and then infers the foreign keys: any scalar field whose name ends in `id` is collected, and a field such as `projectId` or `ownerId` is linked to the `id` field that holds the same value. You get three counts — total paths, ID-like fields and resolved links — plus the from-path and to-path for each link, which is what turns a flat export into a picture of how its records reference each other. The whole walk runs in your browser on the JSON you paste.",
   useCases: [

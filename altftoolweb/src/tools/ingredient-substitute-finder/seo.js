@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ingredient Substitute Finder: Ratios and Amounts",
+  metaDescription:
+    "Scales the swap ratio to your quantity — 1 cup butter becomes 3/4 cup oil — with vegan, dairy-free, egg-free, gluten-free and nut-free filters.",
+  steps: [
+    "Use \"Search ingredients\" to narrow the list, then set \"I need to replace\" and the \"Amount the recipe calls for\" in that ingredient's own unit.",
+    "Pick a Dietary filter — Vegan, Dairy free, Egg free, Gluten free or Nut free — so only compatible swaps stay on the list.",
+    "Read Closest replacement with its Ratio used and Best for rows, then press \"Copy list\" to take every option with you.",
+  ],
   intro:
     "This finder gives you the replacement for a missing ingredient together with the exact amount, by scaling a published substitution ratio to the quantity your recipe asks for and rounding it to a fraction a measuring cup can show. Ratios are matched on the property that actually matters — fat content, acidity, thickening power or salt crystal density — which is why 1 cup of butter becomes 3/4 cup of oil and 1 tbsp of fresh herbs becomes 1 tsp of dried. It is for anyone mid-recipe who has just found an empty jar, and for cooks working around a vegan, dairy-free, egg-free, gluten-free or nut-free constraint.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mountain Quiz: 31 Peaks, Timed, 5 Question Types",
+  metaDescription:
+    "Match 31 real peaks to height, range, continent or country against a countdown: 10 questions at 25s on easy, up to 40 at 8s on expert.",
+  steps: [
+    "Pick a Question Type chip — How Tall?, Which Range?, Which Continent?, Which Country? or Name the Peak — which then applies to every question in the round.",
+    "Start by tapping a difficulty card: Easy is 10 questions at 25s each, Medium 20 at 18s, Hard 30 at 12s, Expert 40 at 8s. Answer one of four options before the clock runs out, with Show Hint available until you pick.",
+    "The end screen shows Score, Accuracy, Best Streak and an Answer Review of every question; press Download to save Mountain_Quiz_Easy.txt (named for the difficulty), Copy for the same report, or Play Again.",
+  ],
   intro:
     "Mountain Quiz is a timed multiple-choice test built from a set of 31 real peaks, from Everest at 8,849 m down to Rio's Sugarloaf at 396 m, that asks you to match each mountain to its height band, range, continent, country, or to name the peak from a fact about it. You pick one of those five question types and one of four difficulties, then answer against a per-question countdown with four options each. It suits geography students, pub-quiz regulars and anyone drilling the eight-thousanders before a trek.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub 2FA Setup Guide: 15 Weighted Security Controls",
+  metaDescription:
+    "Checklist of 15 weighted GitHub controls: recovery codes, passkeys, token and SSH key hygiene, push protection, with four of them marked critical.",
+  steps: [
+    "Work through the four groups — Sign in and second factor, Tokens and keys, Sessions and apps, Exposure — ticking whichever of the 15 controls you already have in place; each row shows the points it carries, from +14 for registering an authenticator app down to +3.",
+    "Set Target score (%), which starts at 90, and the panel lists the shortest route there with the highest-impact control first; anything above 69% needs all four Critical controls ticked, because the score is held at 69% while one is still open.",
+    "Hardening score gives the percentage and its band, from At risk to Hardened, alongside Controls completed, Weighted points and Critical controls missing; Do these next names the highest-weight items left, and Copy result copies the score with the outstanding list.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist covering GitHub two-factor authentication and the developer-specific controls around it: recovery codes, passkeys, personal access token hygiene, SSH key cleanup, commit signing and secret-scanning push protection. GitHub already requires 2FA from accounts that contribute code on github.com, so the value here is in the rest: the tokens, keys and app grants that quietly keep push access to your repositories. Four controls are marked critical and the score is held at 69% until all four are done.",
   "useCases": [
     "Setting up a new GitHub account properly on day one instead of hitting the mandatory-2FA prompt later.",

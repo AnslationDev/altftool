@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Emoji Combiner — Lock Slots, Mix 3-Emoji Combos",
+  metaDescription:
+    "Roll three random emoji from a 100-emoji pool — up to a million combos. Lock any slot, re-roll the rest, and copy the trio as plain text.",
+  steps: [
+    "Press Generate to fill the three slots with random emoji drawn from the 100-entry pool of creatures, food and symbols.",
+    "Hover a slot and click its padlock to lock it, then press Generate again to re-roll only the unlocked slots; press Favorite to keep a combination in the Favorites list.",
+    "Press Copy to put the three emoji on your clipboard as space-separated text, ready to paste anywhere emoji render.",
+  ],
   intro:
     "Random Emoji Combiner fills three slots by drawing at random from a 100-entry emoji pool of animals, mythical creatures, food and symbols, giving up to a million ordered combinations. You can padlock any slot you like and re-roll only the other two, favourite the ones that land, and copy the trio as space-separated text ready to paste anywhere emoji render. It is for naming things, decorating usernames and finding a three-emoji punchline you would never have typed on purpose.",
   useCases: [

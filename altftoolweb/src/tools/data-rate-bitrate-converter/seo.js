@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bitrate Converter: Mbps, MB/s, GB per Hour, File Size",
+  metaDescription:
+    "Convert a data rate between kbps, Mbps, Gbps, MB/s, GB per hour and TB per day, then see the file size it makes over a set duration.",
+  steps: [
+    "Type a Rate value and choose its From unit, then set Duration (minutes) and Target file size (MB) — the fields open at 25 Mbps over 10 minutes with a 500 MB target.",
+    "Everything recalculates as you type: the headline reads Megabits per second and states the gigabytes that rate produces over the duration you entered.",
+    "Read the kbps, Mbps, Gbps, MB/s, GB per hour and TB per day cards plus the line giving the Mbps your target size needs, then press Copy for the summary or Reset.",
+  ],
   intro:
     "The Data Rate Bitrate Converter normalises any data rate to bits per second and converts it into every unit a delivery spec might use — kbps, Mbps, Gbps, MB/s, MiB/s, MB per minute and GB per hour — then shows the file size that rate produces over a given running time. It keeps the two prefix systems apart: bit-rate prefixes are decimal by definition, so 1 Mbps is exactly 1,000,000 bit/s, while byte sizes appear in both decimal MB and binary MiB. Aimed at editors, streamers and developers reconciling an encoder setting against a platform requirement or a storage budget.",
   useCases: [

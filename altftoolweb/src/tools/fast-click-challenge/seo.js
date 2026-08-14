@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fast Click Challenge: 10-Second CPS Click Speed Test",
+  metaDescription:
+    "Click for 10 seconds and get clicks per second to one decimal, a named speed band, your best CPS and your last 10 runs - nothing saved between visits.",
+  steps: [
+    "Press the 'Start Challenge' button — the run lasts exactly 10 seconds.",
+    "Click the big target area as fast as you can; your click total and the seconds left display on it while the timer runs.",
+    "See your CPS (clicks divided by 10), a rating band, and the 'Recent Scores' list of your last 10 runs; press 'Try Again' to go again.",
+  ],
   intro:
     "Fast Click Challenge is a 10-second clicking test: it counts every click on the target area, divides the total by 10 to give your clicks per second, and rates the result on a scale from under 2 CPS up to 10 CPS or more. Your best CPS and the last 10 attempts are kept on screen so you can see whether you are actually improving or just warmed up. It is for anyone comparing click speed with friends, warming up before a game session, or checking that a new mouse registers every press.",
   useCases: [

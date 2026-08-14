@@ -1,4 +1,12 @@
 const seo = {
+  title: "Course Caption Coverage by Runtime, Not Lesson Count",
+  metaDescription:
+    "Tick captions and transcripts per lesson and see coverage by runtime as well as lesson count, plus hours left at your x-runtime editing pace. WCAG 1.2.2.",
+  steps: [
+    "Fill the Lessons table with a title and Minutes per row, ticking the Captions and Transcript boxes, and use Add lesson for anything missing.",
+    "Set Captioning effort (x runtime) and Transcript effort (x runtime), or tap a preset such as Full ASR edit and timing (3x runtime).",
+    "The Captioned runtime headline, Total runtime, Media still to caption and Total work remaining update live; press Copy summary to take them away.",
+  ],
   intro:
     "A caption coverage tracker reports what share of an online course has captions and transcripts, measured both by lesson count and by runtime, and converts the unfinished media into an hours estimate using a multiple-of-runtime effort figure. Course creators and instructional designers use it because runtime coverage is the number that actually reflects learner experience — ten captioned two-minute intros do not offset one uncaptioned ninety-minute masterclass. It maps progress against WCAG 2.2 Success Criterion 1.2.2 Captions (Prerecorded), a Level A requirement.",
   useCases: [

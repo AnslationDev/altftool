@@ -1,4 +1,12 @@
 const seo = {
+  title: "Guntha to Square Feet Converter — 1 Guntha = 1,089 Sq Ft",
+  metaDescription:
+    "Convert guntha to sq ft, acre, are and hectare (1 guntha = 1,089 sq ft, 40 per acre), read a 7/12 or RTC H-R-P entry, and cross-check per-guntha rates.",
+  steps: [
+    "Choose Start from: One unit, entering an Area and its Unit, or 7/12 entry (H-R-P) with the Hectare (H), Are (R) and Square metre (P) fields as printed on the extract.",
+    "Optionally enter a Rate (₹, leave blank to skip pricing) and set Rate is quoted per — guntha, acre or another unit — to value the parcel.",
+    "Read the square-feet figure with its acre-and-guntha phrasing, the full unit table, the H - R - sq m land record entry and the per-unit rate table, then press Copy result.",
+  ],
   intro:
     "A guntha is one fortieth of an acre — exactly 1,089 square feet, the area of a 33 ft by 33 ft square, or 101.17 square metres. This converter moves land between guntha, acre, are, hectare, square feet, square yards and cent, and reads the hectare-are-square metre entry printed on a Maharashtra 7/12 extract or a Karnataka RTC, since revenue records are kept in metric units even where deals are still spoken in guntha. It also states the area the way it is negotiated: whole acres plus the leftover guntha.",
   useCases: [

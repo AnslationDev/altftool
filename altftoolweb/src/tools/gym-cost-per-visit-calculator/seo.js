@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gym Cost Per Visit Calculator with Break-Even Visits",
+  metaDescription:
+    "Divide plan fee, joining fee, add-ons and travel by real attendance for true cost per gym visit, plus break-even sessions vs a day pass.",
+  steps: [
+    "Pick a Membership term and enter the Price for that term, One-off joining fee, Monthly add-ons and per-visit travel spend in INR.",
+    "Set Visits per week — or tap a quick button like \"3x a week\" — and a Day pass price for comparison (set it to 0 to skip that comparison).",
+    "Read the True cost per visit, the break-even visits vs a day pass and the \"What attendance does to the price\" table, then press Copy result.",
+  ],
   intro:
     "Cost per gym visit is the total cost of a membership term — plan fee, one-off joining fee, recurring add-ons and per-session travel — divided by the sessions you actually attend. This calculator applies that formula across a monthly, quarterly, half-yearly or annual term, and solves the break-even point against a day-pass price using fixed cost divided by drop-in price. The result usually differs sharply from the advertised monthly figure, because attendance, not price, is what decides value.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chatbot Escalation Rules: When to Hand Off to a Human",
+  metaDescription:
+    "Build a first-match-wins handoff rule set: two failed attempts, a 0.7 intent-confidence floor, explicit human requests and always-on safety triggers.",
+  steps: [
+    "Set Failed attempts before escalating and Intent confidence floor — they default to 2 and 0.7 — plus a High-value threshold (0 disables) for refunds a human must approve.",
+    "Choose Human agent availability, then under Sensitive topics that always escalate tick the ones you want; Self-harm, threats or abuse is marked (always on) and cannot be unticked, and you can add Escalate on frustration / negative sentiment.",
+    "The Escalation rules count and a numbered list appear straight away, each rule spelling out its When and Then line in evaluation order, and Copy as Markdown exports the whole ordered set.",
+  ],
   intro:
     "The Chatbot Escalation Rules Planner generates an ordered, first-match-wins rule set defining exactly when a chatbot must hand a conversation to a human agent. It builds on established conversation-design conventions — the two-strikes repair rule for repeated misunderstanding, an NLU intent-confidence floor (commonly around 0.7), unconditional handoff when a user asks for a human, and safety-first ordering for sensitive topics. It is built for support leads and conversation designers preparing a bot for launch or tightening one that traps users in loops.",
   useCases: [

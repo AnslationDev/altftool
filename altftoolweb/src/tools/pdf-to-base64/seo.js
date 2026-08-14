@@ -1,4 +1,12 @@
 const seo = {
+  title: "PDF to Base64 Data URL Converter — 25 MiB In-Browser",
+  metaDescription:
+    "Encode a PDF (up to 25 MiB) into a data:application/pdf;base64 URL in your browser. The %PDF- header is checked first and the exact size shown.",
+  steps: [
+    "Select a file with 'Choose a PDF (up to 25.0 MiB)' — the %PDF- header is verified before encoding, so a renamed non-PDF is rejected early.",
+    "Press 'Convert to Base64' to encode the file locally; the report lists the PDF version, the %%EOF marker check and the exact Base64 character count.",
+    "Press 'Copy data URL' for the full data:application/pdf;base64 string, or 'Download .txt' to save it as <filename>.base64.txt.",
+  ],
   intro:
     "This converter turns a local PDF into a Base64 data URL — the data:application/pdf;base64,… string defined by RFC 2397, with the payload encoded per RFC 4648. Because Base64 writes every three bytes as four characters, the output is exactly one third larger than the file. It is built for developers wiring PDFs into email APIs, JSON request bodies and database columns that only accept text, and it checks the %PDF- header before encoding so a renamed file is caught early.",
   useCases: [

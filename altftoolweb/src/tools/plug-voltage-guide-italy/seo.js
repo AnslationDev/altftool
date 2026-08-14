@@ -1,4 +1,12 @@
 const seo = {
+  title: "Italy Plug & Voltage Guide: Adapter or Converter at 230V?",
+  metaDescription:
+    "Check your device label against Italy's 230 V, 50 Hz mains and type C, F and L sockets — get an adapter-or-converter verdict plus the amps it will draw.",
+  steps: [
+    "Choose the Plug on your device, then copy the label's minimum and maximum voltage, Label frequency and Rated power (W) — or tap a Common devices preset like US hair dryer or Laptop charger.",
+    "Read the Verdict for Italy: whether a travel adapter or a voltage converter is needed, whether the device is 50 Hz compatible, and the current drawn at 230 V.",
+    "Check whether it fits a 10 A type L or 16 A Schuko socket and the headroom left on a 3,000 W domestic contract, then press Copy result for the packing note.",
+  ],
   intro:
     "This guide answers one question about Italian mains power: does your device need a shape adapter, a voltage converter, or nothing at all. Italy supplies 230 V at 50 Hz under the harmonised CENELEC HD 60038 standard, and its sockets are the Italian type L (CEI 23-50, in 10 A and 16 A patterns), the German Schuko type F, and the two-pin type C Europlug that mates with both. Enter your plug shape and the voltage range printed on the label and you get the verdict plus the current the device will pull.",
   useCases: [

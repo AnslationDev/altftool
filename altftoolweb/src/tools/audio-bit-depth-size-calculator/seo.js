@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Bit Depth Size Calculator for WAV & PCM Files",
+  metaDescription:
+    "Get the exact size of uncompressed PCM audio from sample rate, bit depth, channels and duration — plus bitrate, size per hour and the 4 GiB WAV limit.",
+  steps: [
+    "Pick 'Sample rate', 'Bit depth' and 'Channels' from the preset dropdowns and enter the duration in the Minutes and Seconds fields.",
+    "Tick 'Include the 44-byte canonical WAV header' to count the container, or enter card space under 'Free space (GB, decimal)'.",
+    "Read the exact file size, bitrate and the 'Longest classic .wav (4 GiB RIFF cap)' row, then click 'Copy result'.",
+  ],
   intro:
     "Audio Bit Depth Size Calculator returns the exact size of an uncompressed linear PCM recording from sample rate × bit depth × channels × duration, divided by eight bits per byte. Because PCM stores every sample frame in the same number of bits, the answer is exact rather than an estimate — unlike lossy or lossless codecs whose size depends on the material. It also reports the bitrate, size per minute and hour, and how long a recording can run before hitting the 4 GiB RIFF ceiling of a classic .wav.",
   useCases: [

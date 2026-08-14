@@ -1,4 +1,12 @@
 const seo = {
+  title: "ROI Calculator - Percentage, Multiple, Profit Margin",
+  metaDescription:
+    "Enter amount invested and amount returned to get ROI %, net profit or loss, the return multiple (1.50x for a half gain) and profit margin.",
+  steps: [
+    "Type the Amount Invested in the Inputs panel - it starts at 5000. [pages/index.jsx:6-11; _shared/batch/CalcTool.jsx:66-82]",
+    "Type the Amount Returned; the Result panel recomputes as you type, with no Calculate button to press. [pages/index.jsx:12-17; _shared/batch/CalcTool.jsx:25-32]",
+    "Read the headline such as '50.00% ROI' captioned Profit, Loss or Break-even, plus the Net Profit / Loss, Return Multiple and Profit Margin cards - the Copy button takes the whole breakdown. [pages/index.jsx:44-65; _shared/batch/CalcTool.jsx:125-149]",
+  ],
   intro:
     "The ROI Calculator works out return on investment as a percentage using ROI = ((amount returned − amount invested) ÷ amount invested) × 100. Enter what you put in and what came back, and it reports the ROI percentage, the net profit or loss, the return multiple (returned ÷ invested) and the profit margin measured against the amount returned. It is built for anyone settling whether a spend actually paid for itself — a campaign, a side project, a resale, a piece of equipment.",
   useCases: [

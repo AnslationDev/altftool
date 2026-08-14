@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jump Code Generator: Anchor, Smooth Scroll, React Ref",
+  metaDescription:
+    "Generate anchor, offset smooth-scroll, button, React Router and scrollIntoView jump code, with your sticky-header offset built into the maths.",
+  steps: [
+    "Pick a code type: HTML Anchor Jump, Smooth Scroll, Button Jump, React Router Navigation, Scroll-to-Section, Snippet Generator or Custom Jump Logic.",
+    "Fill the fields that type needs, such as Section ID, Link Text and Offset (px), which starts at 80.",
+    "Press Copy on the Generated Code Output, or Download to save it as html-anchor.html, react-router.jsx or snippet.js.",
+  ],
   intro:
     "The Jump Code Generator writes ready-to-paste navigation code for seven patterns — plain HTML anchor, offset smooth scroll, button jump, React Router link, React scrollIntoView section, a reusable delegated snippet, and a custom animated jump — from a short form of IDs, labels and offsets. Every scroll variant computes its destination as getBoundingClientRect().top + window.scrollY minus your sticky-header offset in pixels, which is the part people usually get wrong. It is for front-end developers who want the correct version of an on-page jump rather than the first Stack Overflow answer.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cardiac Output and Cardiac Index Calculator (BSA)",
+  metaDescription:
+    "CO = HR x SV / 1000 in L/min, plus cardiac index from Mosteller BSA, banded against 4.0-8.0 L/min and 2.5-4.0 L/min/m² reference ranges.",
+  steps: [
+    "Enter Heart Rate (bpm) and Stroke Volume (mL); switch Calculation Method to 'CO + CI (with BSA)' to add Height (cm) and Weight (kg).",
+    "Press 'Calculate CO' — the gauge shows CO = HR × SV / 1000 in L/min, with minute volume in mL/min and, in CI mode, cardiac index from Mosteller BSA.",
+    "Compare the figure against Cardiac Output Ranges (4.0 – 8.0 L/min normal) and Cardiac Index Ranges (2.5 – 4.0 L/min/m² normal), then use 'Copy Report' or Download to save a CO_Report_<value>Lmin.txt file.",
+  ],
   intro:
     "The Cardiac Output Calculator computes cardiac output as CO = heart rate x stroke volume / 1000, giving litres per minute from a bpm value and a stroke volume in millilitres. Add height and weight and it also returns body surface area by the Mosteller formula, BSA = the square root of (height in cm x weight in kg / 3600), and divides CO by BSA to give cardiac index in L/min/m2. Results are placed against reference bands and can be copied or downloaded as a plain-text report. It is an educational aid for students and clinicians, not a substitute for clinical judgement.",
   useCases: [

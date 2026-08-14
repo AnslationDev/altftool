@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spacing Scale Generator: Modular Steps on a 4px Grid",
+  metaDescription:
+    "Multiply a base step by a typographic ratio, snap every value to a 1, 2, 4 or 8px grid, and copy the px and rem tokens as CSS custom properties.",
+  steps: [
+    "Set Base px — 16 by default — with how many steps Below and Above it.",
+    "Choose the alignment Grid of 1px, 2px, 4px or 8px, and a Ratio from Minor second (1.067) up to Golden ratio (1.618).",
+    "Read every token as a name with its px and rem values, then press Copy CSS for a :root block of --space-* custom properties.",
+  ],
   intro:
     "The Spacing Scale Generator builds a spacing token set from one base step, either linear (the base repeated) or modular (the base multiplied by a typographic ratio such as 1.25 or 1.5), then snaps every value to a 1, 2, 4 or 8 pixel alignment grid. Each step is output in pixels and in rem against a configurable root font size, named with t-shirt, numeric or hundreds tokens, and exported as CSS custom properties, a Tailwind v4 theme block or JSON design tokens. It also flags the two failure modes of modular scales: steps that collapse onto the same value after snapping, and steps pushed so far off the grid that the ratio no longer holds.",
   useCases: [

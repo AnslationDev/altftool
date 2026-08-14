@@ -1,4 +1,7 @@
 const seo = {
+  title: "Bank Statement Redactor: Flattened PDF, In-Browser",
+  metaDescription:
+    "Masks are baked into rasterised pages, so covered text is gone, not hidden. Flags account numbers, IBAN, IFSC and card numbers. Runs in your browser.",
   intro:
     "The Bank Statement Redactor rasterises every page of a PDF or image statement to a canvas, paints opaque masks over the regions you mark, and rebuilds the file from those flattened pixels — so the covered text is gone from the output, not just hidden under a black rectangle. It scans the PDF text layer for account numbers, IBAN, IFSC, SWIFT, card numbers, UPI IDs and transaction references and offers each as a one-click mask, alongside eight statement presets and free-hand boxes. It is for anyone who has to hand a statement to a landlord, lender, employer or accountant without handing over the whole account.",
   useCases: [

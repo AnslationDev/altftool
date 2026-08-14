@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coder Eye Break Timer: 20-20-20 Around Your Builds",
+  metaDescription:
+    "Counts every build or test wait of 20 seconds or more as an eye break, then schedules only the extra 20-20-20 breaks your cycle misses.",
+  steps: [
+    "Set Session length (minutes), Editing between builds (minutes) and Build or test wait (seconds), or tap a preset chip such as Unit test run 15s, Full build 180s or CI pipeline or deploy 600s.",
+    "Press Start and the countdown runs the schedule, while 'Does a build wait count as a break?' answers yes or no against the 20-second minimum and 'Build waits cover' reports what percentage of the requirement they supply.",
+    "Use Copy plan to take the schedule and the Extra prompted breaks scheduled figure, Restart to rerun the same session, or Reset all to return every field to its default.",
+  ],
   intro:
     "This timer fits the 20-20-20 eye break rule around a programmer's real rhythm of editing and waiting for builds. It treats any build, test or deploy wait of at least 20 seconds as a usable eye break, works out how many of the required breaks that already covers, and prompts only for the ones that fall inside long uninterrupted stretches of editing. The rule itself — after at most 20 minutes of near work, look about 6.1 metres away for 20 seconds — is the standard advice from the American Academy of Ophthalmology for digital eye strain.",
   useCases: [

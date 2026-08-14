@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monthly Budget Planner: Surplus, Deficit, Savings",
+  metaDescription:
+    "Enter one month's income and seven spending categories to see total expenses, a labelled Monthly Surplus or Deficit, and your savings rate.",
+  steps: [
+    "Enter Monthly Income in rupees, then Housing (Rent/Mortgage), Food & Groceries, Transportation, Utilities, Insurance, Entertainment and Savings & Investments.",
+    "Press Calculate, which adds the seven category amounts into Total Monthly Expenses and subtracts them from your income.",
+    "Read the headline labelled Monthly Surplus or Monthly Deficit, and check the Savings Rate tile for the share of income left over.",
+  ],
   intro:
     "The Budget Planner adds up a month of spending across fixed categories — housing, food, transport, utilities, insurance, entertainment and money set aside for savings — subtracts the total from your monthly income, and tells you whether you finished the month in surplus or deficit. It also reports total expenses and the leftover as a percentage of income, so you can measure your budget against a rule like 50/30/20 instead of guessing. Everything is entered as monthly rupee amounts, so the result reflects one real month rather than an annualised projection.",
   useCases: [

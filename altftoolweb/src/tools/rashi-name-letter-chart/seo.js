@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rashi Name Letter Chart: 9 Naming Syllables per Sign",
+  metaDescription:
+    "All 9 naming syllables for each of the 12 rashis, with the nakshatra and pada behind each. Enter a name to see which rashi its first syllable falls in.",
+  steps: [
+    "Pick one of the twelve signs in the 'Choose a rashi' grid — each button shows the Sanskrit name with its English equivalent underneath.",
+    "To go the other way, type into 'Name to look up' under 'Which rashi does a name belong to?'; it reports the opening syllable with its nakshatra and pada, then lists Exact syllable match, 'Close match, glide dropped' and 'Same consonant, different vowel' as buttons that jump to that sign's chart.",
+    "Read the nine syllables under 'Naming syllables' and the Syllable / Nakshatra / Pada table beneath them. 'Copy chart' puts the sign's chart on your clipboard; Reset returns to Mesha and the name Rohan.",
+  ],
   intro:
     "The Rashi Name Letter Chart lists the nine naming syllables traditionally linked to each of the twelve rashis, together with the nakshatra and pada each syllable comes from. The system is arithmetic: 27 nakshatras divided into 4 padas each give 108 syllables, and every rashi spans exactly 9 of them, so Mesha runs from Chu to A and Meena from Di to Chi. A lookup panel also tells you which rashi a name's opening syllable falls in. This is cultural reference material about a naming custom, not a prediction about anyone.",
   useCases: [

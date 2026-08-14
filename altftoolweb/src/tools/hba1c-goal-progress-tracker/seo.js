@@ -1,4 +1,12 @@
 const seo = {
+  title: "HbA1c Goal Tracker: % to mmol/mol, eAG and Trend",
+  metaDescription:
+    "Plot HbA1c results against your agreed target: each converts to mmol/mol and estimated average glucose, with a trend line and a projected target date.",
+  steps: [
+    "Pick the Unit — '% (NGSP/DCCT)' or 'mmol/mol (IFCC)' — enter 'Your agreed target', then fill in each 'Test date' and 'Result'.",
+    "Press 'Add a result' for every extra lab report; the line chart, points-per-month trend and progress bar redraw as you type.",
+    "Press 'Copy summary' for the latest result in both units, estimated average glucose, the trend and the suggested next test date.",
+  ],
   intro:
     "An HbA1c goal progress tracker plots a series of HbA1c results against the target you agreed with your clinician, and converts each one between NGSP percent and IFCC mmol/mol using the master equation mmol/mol = (percent − 2.15) × 10.929. Each result is also translated into estimated average glucose with the ADAG regression from Nathan et al. 2008, where eAG in mg/dL equals 28.7 × A1c − 46.7, so 7.0% works out to 53 mmol/mol and roughly 154 mg/dL or 8.6 mmol/L. A least-squares trend line across your results shows the change per month and, when the trend is downward, roughly when it would reach your target.",
   useCases: [

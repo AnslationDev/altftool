@@ -1,4 +1,12 @@
 const seo = {
+  title: "Step Goal by Age: Evidence Bands, Not 10,000 Steps",
+  metaDescription:
+    "Targets from the age bands where benefit levels off — 8,000-10,000 a day under 60, 6,000-8,000 at 60 and over — plus a 10%-a-week ramp.",
+  steps: [
+    "Enter Age (years) and Steps you average now, choose What you are aiming for, and tick the box if pain, breathlessness or a condition limits how far you can walk.",
+    "The target is read off your age band — 8,000-10,000 steps a day under 60, 6,000-8,000 at 60 and over — and shifted for the goal you picked; there is no submit button, the figures update as you type.",
+    "Daily step target gives the number and the gap from today, with rows for Age band, Brisk steps within the total and Weeks to get there at 10% a week, plus a Week-by-week ramp table; Copy result copies the target and the ramp.",
+  ],
   intro:
     "The Step Goal By Age Calculator sets a daily step target from the ranges where the health benefit of extra steps starts to level off: roughly 8,000 to 10,000 a day for adults under 60, and roughly 6,000 to 8,000 for adults aged 60 and over. It adjusts that band for your goal, compares it with the steps you take now, and builds a week-by-week ramp that increases volume by about 10% at a time. It also converts the WHO guideline of 150 to 300 minutes of moderate activity a week into the number of brisk steps that should sit inside your daily total.",
   useCases: [

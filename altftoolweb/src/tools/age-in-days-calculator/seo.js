@@ -1,4 +1,7 @@
 const seo = {
+  title: "Age in Days Calculator – Exact Days, Weeks & Hours",
+  metaDescription:
+    "Enter a birth date to count exact days lived — leap days included — plus weeks, whole months, hours and the days left until your next birthday.",
   intro:
     "The Age in Days Calculator counts the exact number of days elapsed between your date of birth and today, then restates the same span as weeks, whole months, hours, and calendar years-and-months, and tells you how many days remain until your next birthday. It counts real elapsed time rather than assuming a 365-day year, so every leap day you have lived through is already included. Enter one date; everything is computed in your device's local time zone and nothing is sent anywhere.",
   useCases: [

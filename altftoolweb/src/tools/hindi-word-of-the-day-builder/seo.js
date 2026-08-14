@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hindi Word of the Day — 30-Word Deck with Devanagari",
+  metaDescription:
+    "A daily Hindi word fixed by the calendar date — Devanagari spelling, romanisation, example sentence and usage note — with a local streak counter.",
+  steps: [
+    "Open the tool for today's card, or use the Date field and the 'Previous day' and 'Next day' buttons to see any date's word from the 30-card deck; Today jumps back.",
+    "Read the Devanagari word with its romanisation, part of speech, meaning, usage note and the 'In a sentence' example, then press 'Copy card' to copy it as text.",
+    "Press 'Mark studied' to update the streak stored only in this browser, search by word, romanisation or meaning under 'Search the deck', and preview 'The next 7 days'.",
+  ],
   "intro": "A Hindi word-of-the-day deck of 30 curated words, each shown with its Devanagari spelling, a romanised reading, the part of speech, a full example sentence and a note on where the word comes from or how it differs from a near-synonym. The word is chosen by the calendar date rather than at random, so everyone studying on the same day sees the same word and you can look ahead or back to any date. A streak counter, stored only in your own browser, tracks consecutive days.",
   "useCases": [
     "Build a daily Hindi habit with one word and one sentence rather than a long vocabulary list.",

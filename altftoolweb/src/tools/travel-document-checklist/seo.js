@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Document Checklist with Deadlines by Priority",
+  metaDescription:
+    "Six trip profiles, per-document due dates 21/14/7/3 days before departure, a readiness percentage and a passport flag under 180 days. Exports CSV.",
+  steps: [
+    "Choose a Checklist type — International Trip, Domestic Trip, Visa File, Family Travel, Business Travel or Student Travel — then fill Destination, Departure, Return, Travelers and Passport expiry.",
+    "Press Rebuild Dates to give each document its own deadline: 21 days before departure for Critical, 14 for High, 7 for Medium and 3 for Low.",
+    "Watch the Readiness, Critical Pending and Departure In tiles as you mark rows ready, then press CSV to save travel-document-checklist.csv.",
+  ],
   intro:
     "The Travel Document Checklist builds a dated, priority-ranked list of everything you have to carry — passport, visa, tickets, stay proof, insurance, IDs, forex and emergency copies — and works backwards from your departure date to give each item its own deadline: Critical documents are due 21 days before you fly, High 14 days, Medium 7 and Low 3. Pick one of six trip profiles (international, domestic, visa file, family, business or student), enter your departure date and passport expiry, and you get a readiness percentage, a count of critical items still pending, and a warning if your passport has under six months of validity left. It is for the traveller who wants the paperwork finished weeks early instead of the night before.",
   useCases: [

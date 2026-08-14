@@ -1,4 +1,12 @@
 const seo = {
+  title: "Garba Calorie Calculator by Tempo and Night Count",
+  metaDescription:
+    "Estimate garba and dandiya calories by tempo band at 3.0, 5.0 and 7.8 METs, with standing time at 1.3 METs and a total across all nine Navratri nights.",
+  steps: [
+    "Enter Body weight, set the Weight unit to Kilograms (kg) or Pounds (lb), and set 'Nights you dance' — the field notes that Navratri runs for 9 nights.",
+    "Under 'Minutes in one night' split the evening across the four tempo bands: slow opening rounds and simple two-clap taali at 3.0 METs, steady mid-tempo garba at 5.0, full-tempo garba and dandiya raas at 7.8, and standing in the circle at 1.3.",
+    "Read 'Calories in one night' with the dancing-share bar, then the rows for Average intensity in METs, Burn rate in kcal/min, moderate and vigorous minutes and 'Across all nights entered', plus the Tempo breakdown table; Copy result copies the whole breakdown.",
+  ],
   intro:
     "This calculator estimates the calories burned on a garba or dandiya raas night by splitting the evening into tempo bands and pricing each with a published dance MET value through the formula kcal/min = MET x 3.5 x kg / 200. Full-tempo garba maps onto the general dancing entry that explicitly covers folk dancing at 7.8 METs — comfortably in the vigorous band — while slow opening rounds sit near 3.0 METs and standing in the circle is credited at just 1.3 METs. Because a garba night is mostly not dancing, standing time is entered separately, and the tool reports what share of the evening was genuinely active as well as the total across all nine nights of Navratri.",
   useCases: [

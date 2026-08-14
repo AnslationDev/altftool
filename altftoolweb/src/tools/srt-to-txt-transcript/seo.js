@@ -1,4 +1,12 @@
 const seo = {
+  title: "SRT to TXT Converter: Captions to Plain Transcript",
+  metaDescription:
+    "Strip timecodes and [MUSIC] tags from an .srt file and re-flow it into paragraphs at each pause, with word count, reading time and speaking rate.",
+  steps: [
+    "Paste your captions into the 'SubRip (.srt) input' box or press 'Load .srt file', which accepts .srt and .txt; a sample caption file is loaded to begin with.",
+    "Set 'New paragraph after a pause of (ms)' or press the Tight, Natural and Loose presets (1000, 2000 and 4000 ms), then tick the Clean-up options: remove [MUSIC] and ♪ captions, collapse repeated roll-up lines, keep >> speaker-change markers, prefix each paragraph with [hh:mm:ss].",
+    "Read 'Words in the transcript' with Characters, Speaking rate and 'Reading time at 238 wpm', then press 'Copy text' or 'Download .txt', which saves under the 'Download file name' you set.",
+  ],
   intro:
     "The SRT to Plain Transcript tool strips cue numbers, timecodes and caption markup from a SubRip file and re-flows the remaining words into paragraphs. It starts a new paragraph wherever the silence between two cues is longer than the gap you set — 2 seconds by default — so the breaks fall where the speaker actually paused, and it can drop non-speech captions such as [MUSIC] or ♪ and collapse the repeated lines that roll-up captioning produces. Word count, reading time and words-per-minute speaking rate are calculated from the file itself.",
   useCases: [

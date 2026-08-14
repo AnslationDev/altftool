@@ -1,4 +1,12 @@
 const seo = {
+  title: "Big-Button Emergency Medical Info Card, Large Print",
+  metaDescription:
+    "Name, conditions, medicines, allergies, contact and clinician become a heavy-bordered large-text card you can print or copy. Nothing is stored.",
+  steps: [
+    "Type into the Name, Conditions, Medicines, Allergies, Contact and Clinician boxes; the card redraws beside them as you type.",
+    "Check the large-print preview under the \"Medical information\" heading, where any field left blank shows an em dash instead.",
+    "Press Copy for the labelled MEDICAL INFORMATION text block, or press Print and pick Save as PDF in the browser print dialog.",
+  ],
   intro:
     "The Big-Button Medical Info Card builds a large-print emergency information card from six fields — name, conditions, medicines, allergies, emergency contact and clinician — and renders it live in a heavy-bordered, high-contrast layout you can print or copy as plain text. It is for anyone who wants their essentials legible to a paramedic, a carer or a pharmacist without squinting at a folded note. Nothing you type is saved or transmitted; it exists only in the page until you print or copy it. This is a way to write information down, not medical advice — what belongs on it is a conversation for your doctor.",
   useCases: [

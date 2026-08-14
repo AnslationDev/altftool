@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trip Itinerary Builder With Clash and Cost Checks",
+  metaDescription:
+    "Plan up to 21 days: overlapping activities are flagged, days past the 5, 7 or 9 hour pace cap are marked, and costs split per person. Copy or export CSV.",
+  steps: [
+    "Set Destination, Start date, Days (1–21), Travelers, Currency and a Pace of Relaxed, Balanced or Packed.",
+    "In Add Activity give a title, place, category, start time, Duration min and Estimated cost, then press the Add To Day button.",
+    "Watch the Day Timeline for Overlap badges and heavy days, then press Copy for a Markdown plan or CSV for itinerary-builder.csv.",
+  ],
   intro:
     "The Itinerary Builder turns a list of trip activities into a day-by-day schedule with start times and durations, then flags every overlap where one activity's end time runs past the next one's start. Each entry carries a place, a category (Travel, Stay, Food, Sightseeing, Transport, Break or Shopping), a cost and a booked flag, so the plan doubles as a budget: totals are split per person and per day in INR, USD, EUR or GBP. A pace setting caps how many planned hours a day should hold — 5 for relaxed, 7 for balanced, 9 for packed — and any day above that cap is marked as overloaded.",
   useCases: [

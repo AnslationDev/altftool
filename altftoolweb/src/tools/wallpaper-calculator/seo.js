@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wallpaper Calculator: Rolls from Drops & Pattern Repeat",
+  metaDescription:
+    "Counts drops, not area: drops per roll rounded down, rolls rounded up, with free, straight or half-drop match on a 10.05 m x 53 cm roll, plus waste.",
+  steps: [
+    "Pick a Measurement unit, choose whether to Measure the walls as a whole room or one wall run, then enter Wall height and Full-height openings, total width.",
+    "Choose the Roll size, such as European standard 10.05 m x 53 cm, and the Pattern match: free, straight, or offset half-drop with its Pattern repeat (cm) and Trim allowance per drop (cm).",
+    "Read Rolls to buy, split into rolls covering the walls plus spares, with Drop length, Full drops per roll, Offcut left on each roll and Waste.",
+  ],
   intro:
     "The Wallpaper Calculator tells you how many rolls to buy for a room by working in drops, the way decorators actually do it: drops needed = wall run / roll width, drops per roll = roll length / drop length rounded down, rolls = drops needed / drops per roll rounded up. It handles the three trade pattern-match types — free, straight and half-drop offset — because a pattern repeat forces each drop to be cut to a whole number of repeats and can add several rolls to the same room. Use it before you order, when a discontinued batch means a second order is not an option.",
   useCases: [

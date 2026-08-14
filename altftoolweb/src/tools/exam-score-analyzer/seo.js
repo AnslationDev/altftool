@@ -1,4 +1,7 @@
 const seo = {
+  title: "Exam Score Analyzer: Percentage, Grade & Weak Subject",
+  metaDescription:
+    "Total marks ÷ total maximum × 100, graded on the 90/80/70/60/40 scale, with your strongest and weakest subject by percentage, charts and a PDF export.",
   intro:
     "This exam score analyzer takes your marks subject by subject and returns the aggregate percentage — total obtained ÷ total maximum × 100 — along with a letter grade on the standard 90/80/70/60/40 scale, your strongest and weakest subject by individual percentage, and a pass flag at the 40% mark. Bar and pie charts show where the marks sit across subjects, and the whole analysis can be exported as a PDF. It is for students and parents who have a marksheet and want the totals, the grade and the weak spot identified without doing the arithmetic by hand.",
   useCases: [

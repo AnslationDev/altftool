@@ -1,4 +1,12 @@
 const seo = {
+  title: "Professional Bio Writer: 50, 100 and 250 Words",
+  metaDescription:
+    "One set of facts becomes a 50, 100 and 250 word bio in first or third person, checked against the X, Instagram, Facebook, YouTube and LinkedIn limits.",
+  steps: [
+    "Fill in Your name, Role or title, What you specialise in, Who you work with, and Achievements separated with semicolons.",
+    "Set Voice to first or third person and pick a Pronoun for third person, including they/them, so verb agreement follows.",
+    "Read the 50, 100 and 250 word versions with the Bio checks passed score and the platform character-limit table, then press Copy result.",
+  ],
   intro:
     "The Multi Length Bio Writer takes one set of facts — role, specialism, audience, achievements, credentials and a call to action — and assembles them into the three bio lengths people are actually asked for: 50 words for a speaker blurb or directory listing, 100 words for an about paragraph, and 250 words for a press kit or long profile. Each version can be written in first or third person with your chosen pronoun, and the short version is checked against the character limits of X (160), Instagram (150), Facebook (255), YouTube (1,000) and the LinkedIn About section (2,600).",
   useCases: [

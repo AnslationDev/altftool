@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do I Need an IEC Code? DGFT FTP 2023 Para 2.05 Check",
+  metaDescription:
+    "Answer a few questions and see whether DGFT requires an IEC — with the personal-use, government and Rs 25,000 border-trade exemptions applied.",
+  steps: [
+    "Choose from 'What will you import or export' — Goods, Services or Technology transfer — and for goods pick a 'Trade route' such as Trade with Nepal or Trade with China through Nathula port.",
+    "Tick whatever applies under 'Tick whatever applies' (personal use only, a Central or State Government department, FTP benefits claimed, a SCOMET dual-use item), and on a border route enter the 'CIF value of one consignment (INR)'.",
+    "Read the Verdict — 'IEC required' or 'IEC not required' — with the Why and Next steps lists, the Rs 500 ANF-2A fee and the April-to-June update window; 'Copy result' puts all of it on the clipboard.",
+  ],
   intro:
     "This checker tells you whether your activity needs an Importer-Exporter Code (IEC) from DGFT under section 7 of the Foreign Trade (Development and Regulation) Act, 1992 and Para 2.05 of the Foreign Trade Policy 2023. It applies the full exemption list — personal-use imports, government departments, small border-trade consignments and service exports that claim no FTP benefit — and flags SCOMET items, which are never exempt. It is meant for first-time exporters, freelancers and small traders deciding whether to file form ANF-2A.",
   useCases: [

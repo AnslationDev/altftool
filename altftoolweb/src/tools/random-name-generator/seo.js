@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Name Generator: Up to 50 Realistic Full Names",
+  metaDescription:
+    "Pairs a given name with a surname from 130 first names and 50 surnames. Pick Any, Male, Female or Neutral, set 1 to 50, and Copy All one name per line.",
+  steps: [
+    "Under Name Options pick a Gender filter — Any, Male, Female or Neutral.",
+    "Drag the \"How Many?\" slider anywhere from 1 to 50, then click \"Generate Names\".",
+    "Under Generated Names, copy a single name with its row button or press \"Copy All\" to put the whole batch on the clipboard, one name per line.",
+  ],
   intro:
     "Random Name Generator pairs a randomly drawn first name with a randomly drawn surname to produce up to 50 full names at once, using lists of 50 common masculine, 50 feminine and 30 gender-neutral given names plus 50 widely used English-language surnames. Choose Any, Male, Female or Neutral, drag the slider to the number you need, and copy a single name or the whole batch as newline-separated text. It is aimed at writers, game masters and developers who need plausible, ordinary-sounding names rather than fantasy ones.",
   useCases: [

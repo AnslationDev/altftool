@@ -1,4 +1,12 @@
 const seo = {
+  title: "Period Tracker: Next 3 Periods, Fertile Window Dates",
+  metaDescription:
+    "Predict your next three periods, the 7-day fertile window and ovulation (14 days before the next period). Logs stay in your browser; not contraception.",
+  steps: [
+    "Set First day of your last period on the date field, which will not accept a date after today, then enter Average cycle length (days) between 21 and 40 and Period length (days) between 2 and 10.",
+    "Press Log this period to save that start date on this device — the button then reads Already logged, and once two or more entries exist a Personal average line reports your shortest, longest and mean cycle and overrides the length you typed.",
+    "Read Where you are today, which shows Day N of your N-day cycle, then the Next 3 predicted periods cards and the two-month calendar colour-coded for period days, fertile window and the estimated ovulation day. Copy summary puts those dates on the clipboard.",
+  ],
   intro:
     "This period tracker predicts your next three periods, fertile windows and ovulation dates from your last period start date, your typical cycle length and how many days you bleed. It uses the standard luteal-phase rule — ovulation is estimated 14 days before the next period starts, with a fertile window running from 5 days before ovulation to 1 day after — and once you log two or more period start dates it switches to your own average cycle length instead of the number you typed. Everything is stored in your browser only, and the output is informational: it is not contraception and not a substitute for advice from a clinician.",
   useCases: [

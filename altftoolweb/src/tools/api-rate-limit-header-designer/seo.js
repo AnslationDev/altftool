@@ -1,4 +1,12 @@
 const seo = {
+  title: "API Rate Limit Header Designer – IETF & X-RateLimit-*",
+  metaDescription:
+    "Design RateLimit and RateLimit-Policy or legacy X-RateLimit headers, plus a 429 with Retry-After and an RFC 9457 problem+json body, ready to copy.",
+  steps: [
+    "Choose a Header style — IETF draft RateLimit headers, Legacy X-RateLimit-* headers, or Both — and enter the Limit and Window length in seconds.",
+    "Set the example Remaining and Seconds-until-reset values, a Quota policy name and an optional docs URL for the problem type.",
+    "Press Copy spec to grab the '200 OK — send on every response' header block and the full 429 Too Many Requests response with its problem+json body.",
+  ],
   intro:
     "This tool designs a complete, standards-based rate limiting contract for an HTTP API: the headers sent on every response, the 429 Too Many Requests response, and the machine-readable error body. It emits the IETF httpapi draft's structured RateLimit and RateLimit-Policy fields or the legacy X-RateLimit-* trio, a Retry-After header per RFC 9110, and an RFC 9457 application/problem+json body. API designers get a copy-paste spec that clients can actually implement backoff against.",
   useCases: [

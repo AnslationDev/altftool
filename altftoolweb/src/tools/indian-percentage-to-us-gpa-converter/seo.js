@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Percentage to US GPA: WES Division Method",
+  metaDescription:
+    "Convert an Indian percentage or 10-point CGPA to a US 4.0 GPA. First Division (60%+) = A/4.0, plus the linear estimate. CGPA uses the CBSE x 9.5.",
+  steps: [
+    "Choose Percentage (0-100) or CGPA on the 10-point scale, then type your marks into the field beside it.",
+    "A CGPA is multiplied by the CBSE factor of 9.5 first, then the percentage is matched to its division band.",
+    "Read the Division-based GPA (WES-style) figure and the Linear-scale GPA row, then press Copy result.",
+  ],
   intro:
     "This converter turns an Indian percentage or 10-point CGPA into a US 4.0 GPA using the division-based method credential evaluators like WES apply — First Division (60%+) maps to an A/4.0, Second Division (50-59%) to a B/3.0 and Third Division (40-49%) to a C/2.0 — alongside a simple linear estimate. CGPA input is first converted to a percentage with the CBSE 9.5 multiplication factor. It is built for Indian students preparing US university applications who need a defensible GPA figure before an official evaluation.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Basic Calculator That Respects Order of Operations",
+  metaDescription:
+    "Type a whole expression like 12 + 7 * 3: it evaluates with correct precedence, rounds to 8 decimal places, and keeps your last 20 results in a log.",
   intro:
     "This Basic Calculator lets you type a whole expression across the display — for example 12 + 7 * 3 — and evaluates it with standard operator precedence, so multiplication and division resolve before addition and subtraction rather than left to right the way a cheap pocket calculator does. Results are rounded to 8 decimal places to suppress binary floating-point noise, and the last 20 calculations stay in a log you can click to reload. It is for anyone doing quick arithmetic in a browser tab who wants to see the full expression, correct it, and check what they entered.",
   useCases: [

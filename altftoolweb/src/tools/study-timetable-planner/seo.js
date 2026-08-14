@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Timetable Planner: 60-Min Blocks, Hardest First",
+  metaDescription:
+    "Turn subjects with difficulty, priority and exam dates into 7 days of dated 60-minute study blocks with 15-minute breaks. Saves locally, exports JSON.",
+  steps: [
+    "On the Subjects tab press Add Subject, then give chapters, Difficulty (Easy/Medium/Hard), Priority and an Exam Date.",
+    "Press Generate Schedule on the Timetable tab: 7 days of 60-minute blocks from 08:00 to 20:00, hardest subject first.",
+    "Mark sessions complete to move the Done rate, then Export as JSON for a study-plan-<date>.json backup.",
+  ],
   intro:
     "The Study Timetable Planner turns a list of subjects — each with a difficulty, a priority, chapters and an exam date — into a week of dated study blocks, rotating subjects hardest-first and dropping a break in after every session. The default plan runs 08:00 to 20:00 for 7 days in 60-minute sessions with 15-minute breaks, and tags about one block in five as revision. It is built for students juggling several exams who want a schedule that spaces the heavy subjects out instead of a blank calendar to fill in by hand.",
   useCases: [

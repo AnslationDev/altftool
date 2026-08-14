@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prompt Painter: Live HTML Preview with Tailwind CDN",
+  metaDescription:
+    "Paste HTML in the Monaco editor and a sandboxed iframe renders it instantly with Tailwind preloaded. Mobile 375×667, tablet 768×1024, 50–200% zoom.",
+  steps: [
+    "Type or paste your markup into the Monaco editor on the left — the preview wrapper already injects the Tailwind CDN, so utility classes work on a bare snippet.",
+    "Switch the preview between Desktop View (Full Width), Tablet View (768px) and Mobile View (375px), and use Zoom In / Zoom Out between 50% and 200%.",
+    "Press Format (or Cmd/Ctrl+S) to reindent with js-beautify at 2 spaces, then Copy to take the code away; Clear empties the buffer.",
+  ],
   intro:
     "Prompt Painter is a split-screen HTML playground: you type markup in a Monaco code editor on the left and a sandboxed iframe on the right re-renders it instantly with the Tailwind CSS CDN already loaded, so utility classes like bg-blue-500 and hover:scale-105 work without any build step. It is built for developers and designers checking a snippet of AI-generated or hand-written HTML, and it includes device presets, zoom, and a js-beautify formatter. Nothing is compiled or uploaded — the preview runs from a srcdoc iframe in your own tab.",
   useCases: [

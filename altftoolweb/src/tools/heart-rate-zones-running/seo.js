@@ -1,4 +1,12 @@
 const seo = {
+  title: "Running Heart Rate Zones in bpm With Matching Paces",
+  metaDescription:
+    "Five running zones in bpm from Tanaka, Fox or Gulati max HR, by flat percentage or Karvonen reserve, each with the Friel pace band that matches it.",
+  steps: [
+    "Enter \"Age (years)\" and \"Resting heart rate (bpm)\", or paste a figure into \"Measured max heart rate (bpm) — optional\".",
+    "Pick the \"Max heart rate formula\" (Tanaka, Fox or Gulati (women)) and a \"Zone method\" of % of maximum heart rate or Karvonen (heart rate reserve), then set \"Threshold pace — minutes\" and seconds.",
+    "Read \"Estimated maximum heart rate\" and the \"Your five running zones\" table of Zone, Heart rate, Pace and Typical session, plus the Zone 2 and Zone 4 target rows.",
+  ],
   intro:
     "This calculator converts your age, resting heart rate and threshold pace into five running heart rate zones expressed in beats per minute, alongside the pace band that belongs with each zone. Maximum heart rate comes from Tanaka (208 − 0.7 × age), Fox (220 − age) or Gulati (206 − 0.88 × age for women), and zones are laid out either as a flat percentage of maximum or with the Karvonen heart rate reserve method. Pace bands follow Joe Friel's run pace zones, which are set as percentages of functional threshold pace.",
   useCases: [

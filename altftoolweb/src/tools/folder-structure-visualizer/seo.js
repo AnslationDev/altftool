@@ -1,4 +1,12 @@
 const seo = {
+  title: "Folder Structure Visualizer: Tree, Sizes and Stats",
+  metaDescription:
+    "Turn a picked folder or a pasted ASCII, indented or JSON tree into a searchable tree with rolled-up folder sizes, max depth and top extensions.",
+  steps: [
+    "Under Option 1 pick a directory with the folder picker, or paste a box-drawing tree, indented list or JSON under Option 2.",
+    "Press Load structure, then search, filter to Files or Folders, and expand, collapse, zoom or pan the resulting tree.",
+    "Read the stats panel for Files, Folders, Total size, Max depth and the eight most common extensions by count.",
+  ],
   intro:
     "This visualizer turns a directory into a navigable tree, either from a folder you pick with the browser's directory picker or from a structure you paste as an ASCII box-drawing tree, an indented list or JSON. It rebuilds the hierarchy from the paths, sorts folders before files alphabetically, rolls file sizes up into their parent folders, and reports totals for files, folders, combined size, deepest nesting level and the eight most common extensions. Nothing is uploaded — the file picker reads names, paths and sizes locally and never opens the contents.",
   useCases: [

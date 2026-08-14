@@ -1,4 +1,12 @@
 const seo = {
+  title: "Math Speed Challenge: Timed Mental Arithmetic Drill",
+  metaDescription:
+    "Pick operations and a 30, 60, 90 or 120-second round; numbers grow from 20 to 1000 as your streak reaches 5, 15, 30, 50 and 80 correct in a row.",
+  steps: [
+    "Under Select Operations choose any of Addition, Subtraction, Multiplication and Division, then pick 30s, 60s, 90s or 120s under Time Limit.",
+    "Press Start Challenge and type each result into the Answer box, submitting with Enter or the Submit button while the Time, Score, Streak and Accuracy tiles update.",
+    "At the buzzer read Final Score with Correct, Accuracy, Best Streak and Avg Speed, then choose Play Again or New Setup — your best rounds stay in the High Scores panel.",
+  ],
   intro:
     "Math Speed Challenge is a timed mental arithmetic drill that raises the size of the numbers automatically as your correct-answer streak grows, moving you from Beginner (numbers up to 20) through Intermediate, Advanced, Expert and Master to Legend (numbers up to 1000). You pick which of addition, subtraction, multiplication and division to practise and a 30, 60, 90 or 120 second round, then answer as many problems as you can. Each correct answer scores 10 points plus a speed bonus for answering inside 3 seconds and a streak bonus, so the tool rewards fluency rather than raw volume.",
   useCases: [

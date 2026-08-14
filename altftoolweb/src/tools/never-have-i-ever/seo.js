@@ -1,4 +1,12 @@
 const seo = {
+  title: "Never Have I Ever: 240 Prompts, 8 Themes, 3 Levels",
+  metaDescription:
+    "240 written prompts across 8 themes with separate easy, medium and hard lists. Nothing repeats in a session; skip a card or star the ones that landed.",
+  steps: [
+    "Pick a category chip — Party, Travel, School, Work, Relationships, Drinking, Childhood or Embarrassing — and an easy, medium or hard tier, or tick \"Random mode (all categories)\" to pool every theme at that difficulty.",
+    "Press \"Pick a Prompt\" to spin and deal a statement, then answer with \"I Have\" or \"Never Have\"; the star keeps the card in Favorites and Skip draws the next one.",
+    "Used Prompts counts what has already been dealt and the panel shows how many prompts remain, saying \"You've seen all prompts! Reset to continue.\" when the set runs out; \"Reset All Prompts\" restores the full set.",
+  ],
   intro:
     "This Never Have I Ever generator draws from 240 written prompts — eight themes (party, travel, school, work, relationships, drinking, childhood, embarrassing) each with 10 easy, 10 medium and 10 hard statements — and deals them one at a time with a spin animation. It tracks which prompts you have already seen so the same statement does not come back inside a session, lets you skip a card you would rather not read out, and star the ones that got the biggest reaction. Random mode ignores the theme and pulls from every category at your chosen difficulty, which is what you want once a group has burned through its favourite one.",
   useCases: [

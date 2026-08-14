@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stock Photo Attribution Generator: TASL Credit Lines",
+  metaDescription:
+    "Build a credit line for a Creative Commons, Unsplash, Pexels, Getty or Shutterstock image in plain text, HTML or Markdown, with licence terms flagged.",
+  steps: [
+    "Choose where the image came from and the licence on it, then fill in the author, title, source and year fields.",
+    "Add a modification note if you cropped or recoloured it, then switch the credit between Plain text, HTML and Markdown.",
+    "Check the Attribution status and Licence rows for ShareAlike or NonCommercial terms, then press Copy result.",
+  ],
   intro:
     "This generator turns the details of a photo — creator, title, source and licence — into a credit line formatted the way that licence expects, in plain text, HTML or Markdown. Creative Commons images follow the TASL pattern (Title, Author, Source, Licence) that Creative Commons itself recommends, while Unsplash, Pexels, Pixabay, Adobe Stock, Shutterstock and Getty images use each library's own published wording. It also flags licence conditions you have to honour, such as ShareAlike, NonCommercial and the CC 4.0 rule that modifications must be disclosed.",
   useCases: [

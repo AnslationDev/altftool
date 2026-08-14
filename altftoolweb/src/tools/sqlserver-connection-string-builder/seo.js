@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL Server Connection String Builder: ADO.NET + JDBC",
+  metaDescription:
+    "Generate matching SqlClient and JDBC strings with named instances, port 1433, Encrypt, TrustServerCertificate and passwords escaped for each format.",
+  steps: [
+    "Enter Host, \"Instance name (optional, e.g. SQLEXPRESS)\", \"Port (blank = default 1433 / SQL Browser)\" and Database name.",
+    "Choose Authentication, add \"User (login)\" and \"Password (escaped for you)\" for SQL auth, then tick \"Encrypt=True\" or \"TrustServerCertificate=True (skips certificate validation — dev/test only)\".",
+    "Both formats appear together — \"ADO.NET (SqlClient)\" and \"JDBC (Microsoft JDBC Driver)\" — each in its own code box with a Copy button.",
+  ],
   intro:
     "This builder produces matched SQL Server connection strings in the two dominant formats: ADO.NET SqlClient (Server=host\\INSTANCE,1433;Database=...;Encrypt=True;...) and the Microsoft JDBC driver URL (jdbc:sqlserver://host:1433;databaseName=...;encrypt=true;...). It handles named instances, SQL versus Windows/Integrated authentication, encryption and TrustServerCertificate flags, timeouts and application names — and applies each format's escaping rules, double-quoting ADO.NET values containing semicolons and brace-escaping JDBC values.",
   useCases: [

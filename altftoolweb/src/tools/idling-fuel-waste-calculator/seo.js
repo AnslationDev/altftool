@@ -1,4 +1,12 @@
 const seo = {
+  title: "Idling Fuel Waste Calculator: Yearly Cost and CO2",
+  metaDescription:
+    "Engine size, signals a day and wait time give the litres, rupees and CO2 lost idling in a year, and what switching off past 10 seconds recovers.",
+  steps: [
+    "Under The vehicle set Engine size (litres), choose Petrol, Diesel or CNG, enter the fuel price and Mileage, and tick 'Air conditioning running while stopped' if the AC stays on at halts.",
+    "Under How much you idle enter Signals and halts per day, Average wait at each halt (seconds), Other engine-on waiting (minutes a day) and Driving days per month.",
+    "Wasted idling per year gives the rupee figure, the litres burnt and the kilometres that fuel would have driven, with the CO2 a year and the share recoverable by switching off at halts longer than 10 seconds; Copy result saves it.",
+  ],
   intro:
     "An idling engine achieves zero kilometres per litre, and this calculator prices that directly. Idle fuel flow is friction plus accessory load rather than anything to do with speed, so it scales with engine displacement — about 0.5 litres per hour per litre of a petrol engine and 0.35 for a diesel, roughly 30% higher again with the AC on. Multiply by the seconds you actually spend stationary with the engine running and you get the litres, rupees and CO2 a year, plus how much of it switching off would recover once each restart's fuel is netted off.",
   useCases: [

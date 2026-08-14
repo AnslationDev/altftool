@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Image Cost Calculator: DALL·E 3, GPT-image-1",
+  metaDescription:
+    "Cost a batch at OpenAI's published rates, $0.040 for a standard DALL·E 3 1024×1024 up to $0.120 HD, with a retry allowance for discards.",
+  steps: [
+    "Choose from \"Model, quality and resolution\" — presets run from DALL·E 2 — 256×256 at $0.016 through DALL·E 3 — HD, 1024×1792 / 1792×1024 at $0.120, plus GPT-image-1 approximations — or pick Custom price per image and type your own USD rate.",
+    "Enter \"Images per prompt (variants)\" and \"Number of prompts\", then set the \"Retry allowance (%)\" for generations you expect to discard; it accepts 0 to 500 in steps of 5.",
+    "Read Estimated total cost with the Planned images, Retry generations, Billed images, Cost per kept image and Cost per 100 kept images rows, then press Copy result or Reset.",
+  ],
   intro:
     "This calculator estimates the total cost of an AI image generation run: billed images × price per image, where billed images include a retry allowance for generations you discard. It ships with OpenAI's published per-image prices — DALL·E 3 from $0.040 (standard 1024×1024) to $0.120 (HD 1792×1024), DALL·E 2 from $0.016, and GPT-image-1's published per-image approximations — plus a custom rate for any other service. It is built for designers, marketers and developers budgeting image batches before running them.",
   useCases: [

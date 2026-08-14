@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bharatanatyam Calorie Calculator by Session Segment",
+  metaDescription:
+    "Price adavu drill, nritta, item run-throughs, abhinaya and rest at 5.0, 6.8, 3.0 and 1.3 METs, with the published dance entry named on every row.",
+  steps: [
+    "Enter Body weight, set the Weight unit to Kilograms (kg) or Pounds (lb), and give 'Practice sessions per week'.",
+    "Under 'Minutes in one session' split the class across warm-up and basic adavu drill at 5.0 METs, sustained nritta in araimandi and full item run-throughs at 6.8, abhinaya and expressive passages at 3.0, and corrections and rest at 1.3 — each field naming the published dance entry it borrows.",
+    "Read 'Calories per session' with dancing minutes out of the session total, the rows for Average intensity, Burn rate and MET-minutes per week, the 'Against the WHO weekly target' bar showing your moderate-equivalent minutes of 150, and the Segment breakdown table; Copy result copies it.",
+  ],
   intro:
     "This calculator estimates the energy cost of a Bharatanatyam practice session by splitting it into adavu drill, sustained nritta, item run-throughs, abhinaya and rest, then pricing each part with the closest published dance MET value and the formula kcal/min = MET x 3.5 x kg / 200. No compendium of physical activities lists Bharatanatyam by name, so the tool uses the classical-dance entries — 5.0 METs for a technique class, 6.8 METs for performance-intensity work and 3.0 METs for slow, largely stationary passages — and names the source on every row rather than inventing a figure. It also reports how much of the WHO weekly activity target your practice covers.",
   useCases: [

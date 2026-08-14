@@ -1,4 +1,12 @@
 const seo = {
+  title: "Docker Network Modes: bridge, host, macvlan Compared",
+  metaDescription:
+    "Pick bridge, user-defined bridge, host, none, container:<name> or macvlan and see the exact address the host, LAN and other containers use for your app.",
+  steps: [
+    "Choose a Network mode — Default bridge, User-defined bridge, Host, None, container:<name> (shared namespace) or Macvlan.",
+    "Enter the port the app listens on inside the container, then tick \"I pass a publish flag\" and set the published host port (the left side of -p).",
+    "Read the From the Docker host, From the LAN, From another container, DNS by container name and \"-p publish flag effective\" rows, then press Copy result.",
+  ],
   intro:
     "This tool explains what each Docker network mode — bridge, user-defined bridge, host, none, container:<name> and macvlan — actually does to a container's reachability, DNS and port publishing. Pick a mode and your app's port, and it shows exactly how the container is reached from the host, from the LAN and from other containers, following the semantics documented for the Docker Engine network drivers. It is built for developers debugging 'connection refused' between containers or wondering why -p seems to do nothing.",
   useCases: [

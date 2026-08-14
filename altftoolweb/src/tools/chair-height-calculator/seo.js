@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chair Height Calculator from Popliteal Knee Height",
+  metaDescription:
+    "Floor-to-knee-crease height plus your heel thickness gives seat height, seat depth, the matching desk height and the footrest a fixed desk forces on you.",
+  steps: [
+    "Set \"What you can measure\" to \"I measured floor to the back of my knee\" and enter Popliteal height (cm), or switch to \"Estimate it from my body height\"; then add Heel thickness of your usual shoes (cm).",
+    "Enter Desk height, floor to surface (cm) and Desk top plus under-frame thickness (cm), and tick \"My desk height can be adjusted\" if the desk moves.",
+    "\"Set your seat to\" gives the seat height, with Usable seat depth, Desk height that matches your seat, Footrest height, Clear space above your thighs and the knee space to keep clear at 51 cm wide by 38 cm deep; Copy result copies them.",
+  ],
   intro:
     "Seat height is set by one measurement — popliteal height, the distance from the floor to the crease behind your knee while you sit with your feet flat — plus the heel thickness of the shoes you wear. This calculator turns that into a seat height, a usable seat depth, the desk height that matches it, and the footrest you need when the desk is fixed and the chair has to come up to meet it. It also checks whether your thighs clear the underside of the desk, and states the knee space OSHA's computer-workstation guidance asks for: at least 51 cm wide and 38 cm deep.",
   useCases: [

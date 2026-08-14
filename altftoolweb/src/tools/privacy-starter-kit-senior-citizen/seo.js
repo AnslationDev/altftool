@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Scam-Safety Checklist: 16 Steps, Large Type",
+  metaDescription:
+    "Tick off sixteen large-type steps against OTP, screen-sharing and UPI scams, and see how much your daily transfer limit still puts at risk.",
+  steps: [
+    "Enter Daily transfer limit (rupees), or tap one of the ₹5,000 to ₹50,000 preset buttons beside it.",
+    "Tick the steps already done in The sixteen steps — each shows the action with a Why line, and the ones tagged Most important carry the most weight.",
+    "The Protection score card reports steps completed, important steps still open and Money still at risk in one day; Copy list saves the score with everything still to do.",
+  ],
   intro:
     "The Senior Citizen Privacy Starter Kit is a sixteen-step, large-type safety checklist for phone and banking scams — OTP requests, spoofed 'bank' calls, apps sent over WhatsApp, remote screen-sharing requests and UPI collect requests — scored by how much of the fraud path each step removes. Alongside the score it shows the money still at risk in a single day, taken from the daily transfer limit set in the banking or UPI app, since that limit is the hard ceiling on what one successful scam can move. Written for older adults and for the family members who help them set up a phone.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Matrimonial & Dating Fraud Checker: 13 Warning Signs",
+  metaDescription:
+    "Score profile, story and money warning signs separately, weigh them against what you verified independently, and total every transfer already sent.",
+  steps: [
+    "Under \"What has actually happened?\", tick the warning signs that apply in the profile, story and money groups; each tick expands why that sign matters.",
+    "In \"What have you verified independently?\", tick only the checks you actually completed — a live video call, meeting in person more than once, a clean reverse image search — then log each payment under Money already sent using Add another transfer.",
+    "The Verdict panel names the outcome with the warning-sign score, per-layer totals, verification coverage and the reasoning; Copy assessment saves the briefing, and Safer practice lists the helpline 1930 and cybercrime.gov.in.",
+  ],
   intro:
     "Matrimonial and dating fraud is not one lie but a shape: a profile that resists checking, a story engineered to explain why it resists checking, and then a reason for money to move. This checker scores those three layers separately across thirteen weighted warning signs — because an unverifiable profile alone means little, while an unverifiable profile plus a money request is the defining combination of the fraud. It also tracks the other half of the picture most checkers skip: how much you have actually verified independently, such as a live video call, an in-person meeting or a reverse image search, and totals anything already sent so the real exposure is a number rather than a feeling.",
   useCases: [

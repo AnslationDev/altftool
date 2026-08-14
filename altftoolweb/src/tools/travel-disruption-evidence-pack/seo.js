@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Disruption Evidence Pack for Delay Claims",
+  metaDescription:
+    "Turns pipe-separated lines into a seven-column claim index: item, date, provider, reference, amount, file and why it matters. Gaps are flagged.",
+  steps: [
+    "Type one record per line into \"Records (one per line)\", separating Evidence item, Date / time, Provider, Booking / claim ref, Amount, File / message reference and Why it matters with |.",
+    "Leave \"Require complete rows\" switched on so \"Flag missing columns\" counts every line with an empty field.",
+    "Read the Structured inventory table (the first 100 records) with its Complete rows and Needs review counts, then Copy it or Download travel-disruption-evidence-pack.txt.",
+  ],
   intro:
     "The Travel Disruption Evidence Pack turns scattered delay notices, receipts and booking references into one structured claim index, mapping every record to seven fixed columns: evidence item, date and time, provider, booking or claim reference, amount, file or message reference, and why it matters. You type one record per line with pipe separators and it counts complete rows, flags any row with a missing field, and lays the whole set out as a table you can work from. It is for a traveller assembling a delay, cancellation or baggage claim who needs the paperwork ordered before they open the airline's form.",
   useCases: [

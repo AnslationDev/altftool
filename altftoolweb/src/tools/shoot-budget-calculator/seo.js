@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shoot Budget Calculator: Crew, Gear, Contingency & Tax",
+  metaDescription:
+    "Build an AICP-style shoot budget from crew day rates, gear and location fees, travel and post hours — contingency on the subtotal, then tax on top.",
+  steps: [
+    "Set the head count and day rate for each crew role, then fill in shoot days, gear rental days and rate, location, travel, lodging, meals and post hours.",
+    "Set the \"Contingency (%)\" and \"GST / sales tax (%)\" fields — contingency applies to the direct subtotal, tax to the contingency-inclusive figure.",
+    "Read the total with cost per shoot day and per finished minute, then click \"Copy result\" for the line-item breakdown.",
+  ],
   intro:
     "A shoot budget calculator turns crew day rates, equipment rental, location fees, travel and living, and post-production hours into a single line-item production budget. It follows the structure of a standard AICP-style bid form: direct costs are totalled first, a contingency percentage is applied to that subtotal, and tax is added last on the contingency-inclusive figure. Useful for freelancers, agencies and in-house content teams who need a defensible number before quoting a client.",
   useCases: [

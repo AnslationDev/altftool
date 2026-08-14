@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baby Size by Week: Length, Weight & Fruit Comparison",
+  metaDescription:
+    "Average fetal length and weight for weeks 8-40 with a fruit-size comparison — crown-rump to week 19, crown-heel from week 20 — in metric and imperial.",
+  steps: [
+    "Type a 'Gestational week' from 8 to 40 or drag the 'Slide through the weeks' slider.",
+    "Read 'About the size of' with the matching fruit or vegetable, plus length labelled crown-rump or crown-heel and weight in metric and imperial.",
+    "Click Show on the 'Week by week table' to browse every week, or 'Copy result' for the current one.",
+  ],
   intro:
     "This visualizer shows the average length and weight of a fetus at any gestational week from 8 to 40, alongside the fruit or vegetable that matches that size. It reports crown-rump length (head to bottom) up to week 19 and crown-heel length (head to heel) from week 20, because those are the two different measurements pregnancy tables actually use, and mixing them is why published figures often disagree. Every number is a 50th-centile population average, not a target for your own pregnancy.",
   useCases: [

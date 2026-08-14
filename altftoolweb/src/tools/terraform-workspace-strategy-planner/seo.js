@@ -1,4 +1,12 @@
 const seo = {
+  title: "Terraform Workspaces vs Directories: Strategy Planner",
+  metaDescription:
+    "Score CLI workspaces, a directory per environment and separate backends against your isolation, divergence and team answers. Each gets 0-10.",
+  steps: [
+    "Enter Number of environments (opens at 3) and answer the How much do environments differ?, Isolation requirement and Team shape dropdowns.",
+    "Tick 'Each environment lives in its own cloud account / subscription' and 'Changes are promoted through a CI pipeline' where they apply — scores rerun on every change, with no submit button.",
+    "Read the Recommended strategy and the 0-10 score for CLI workspaces, Directory per environment and Separate backend / account per environment, open 'Why this score, and a layout sketch' for the directory tree, then press Copy result.",
+  ],
   intro:
     "This planner scores the three standard ways of separating Terraform environments — CLI workspaces, a directory per environment, and fully separate state backends — against your answers about divergence, isolation, team shape and account layout. The heuristics follow HashiCorp's published guidance that workspaces suit multiple states of the same configuration behind one backend, while strong isolation calls for separate backends. It is for DevOps engineers deciding a repo layout before the codebase grows around the wrong one.",
   useCases: [

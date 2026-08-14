@@ -1,4 +1,12 @@
 const seo = {
+  title: "Twitch Offline Banner Layout: 1920x1080 Block Grid",
+  metaDescription:
+    "Plan a 1920x1080 offline screen: control-bar strip reserved, block grid sized, type checked at the player's 940px width, against Twitch's 10 MB cap.",
+  steps: [
+    "Click the \"Offline screen — 1920 × 1080\" preset chip, or type your own \"Canvas width (px)\" and \"Canvas height (px)\".",
+    "Set Information blocks and Columns for the grid, the \"Gutter between blocks (px)\", the \"Control bar (× canvas height)\" allowance, and \"Heading size in the artwork (px)\" and \"Body size in the artwork (px)\" against \"Player width on screen (px)\", which defaults to 940.",
+    "The SVG preview shades the control-bar strip and outlines every block, and the list gives each block's cell size, the usable area's coordinates, on-screen heading and body sizes and your \"Exported file size (MB)\" against the 10 MB limit; \"Copy guide\" takes the SVG guide layer.",
+  ],
   intro:
     "Twitch Offline Banner Maker plans the 1920 × 1080 video player banner viewers see when a channel is offline. It reserves the strip the player's control bar covers along the bottom plus a letterbox margin, then divides the remaining area into an even grid of information blocks — schedule, socials, next stream — returning the exact cell size and position for each. It also converts your artwork type sizes into the pixel size a viewer actually sees once the player renders at roughly 940 pixels wide, which is where most offline screens fall apart.",
   useCases: [

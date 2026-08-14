@@ -1,4 +1,12 @@
 const seo = {
+  title: "Social Media Post Preview for Seven Feeds and Counts",
+  metaDescription:
+    "Preview one draft as an X, Bluesky, Mastodon, Threads, Instagram, LinkedIn and Facebook card, with each platform's own count and where the feed crops.",
+  steps: [
+    "Type the draft into 'Post body' and fill 'Display name', 'Handle' and, for LinkedIn, 'Headline or subtitle'.",
+    "Pick a network under 'Preview as' — X, Bluesky, Mastodon, Threads, Instagram, LinkedIn or Facebook — and the meter recounts using that platform's own rule, charging a flat 23 units for any link on X and Mastodon.",
+    "The mock card marks what sits behind 'see more', 'What is in the post' lists Graphemes, Code points, UTF-8 bytes, Links, Hashtags, Mentions and Emoji, and 'The same post everywhere' tables all seven; press 'Copy report' to save it.",
+  ],
   intro:
     "Write a post once and see what seven networks will actually do to it. This renders your draft as a mock feed card for X, Bluesky, Mastodon, Threads, Instagram, LinkedIn and Facebook, and counts it the way each one genuinely counts: X through the twitter-text weighted-length algorithm, where most Latin characters cost one unit, CJK and emoji cost two, and any link is charged a flat 23 whatever its length; Bluesky against both a 300-grapheme and a 3000-byte cap; Mastodon charging 23 per link and ignoring the server half of a remote mention. It also marks where the feed crops the body, so you can see which sentence — or which link — ends up hidden behind 'see more'. Everything runs in the browser on the text you typed. No account, no API call, nothing uploaded.",
   useCases: [

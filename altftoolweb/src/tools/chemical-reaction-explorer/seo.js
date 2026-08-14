@@ -1,4 +1,7 @@
 const seo = {
+  title: "5 Types of Chemical Reactions: Animated Explorer",
+  metaDescription:
+    "Animate combination, decomposition, single and double replacement and combustion, each with its balanced equation and enthalpy in kJ/mol.",
   intro:
     "This explorer animates one worked example of each of the five main reaction classes — combination, decomposition, single replacement, double replacement and combustion — showing reactant particles fade out as products form, with the balanced equation and its standard enthalpy change alongside. You can play the transformation, pause it, or drag a slider to sit at any point between reactants and products. It is built for chemistry students learning to recognise reaction types and read a balanced equation, not for balancing arbitrary equations you type in.",
   useCases: [

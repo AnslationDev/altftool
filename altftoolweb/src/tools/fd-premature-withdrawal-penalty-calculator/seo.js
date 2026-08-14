@@ -1,4 +1,12 @@
 const seo = {
+  title: "FD Premature Withdrawal Penalty Calculator (India)",
+  metaDescription:
+    "See your FD's net payout on early closure: the rate reset to the card rate, the 0.5-1% penalty cut, quarterly compounding, and break-or-wait compared.",
+  steps: [
+    "Enter the Deposit amount (INR), booked rate, Original tenure (months) and the card rate for the completed period.",
+    "Set Completed months held and Extra days held (0-30), pick a penalty with the 0% / 0.5% / 1% penalty buttons, and choose Cumulative (quarterly compounding) or simple interest.",
+    "Read Net payout on premature closure with the rate-reset and penalty losses split out, compare \"Break now or wait for maturity?\", and press Copy result.",
+  ],
   intro:
     "Breaking a fixed deposit before maturity costs you twice: the bank re-prices the deposit at the card rate for the period it actually ran, and then deducts a premature-withdrawal penalty (usually 0.5%–1% per annum) from that rate. This calculator applies both steps the way banks do — quarterly compounding for cumulative deposits, simple interest on the broken period — and shows the exact net payout you will receive. It is built for savers deciding whether to break an FD now or wait for maturity.",
   useCases: [

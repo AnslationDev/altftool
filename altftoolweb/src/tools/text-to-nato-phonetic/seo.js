@@ -1,4 +1,10 @@
 const seo = {
+  title: "Text to NATO Phonetic Alphabet with Spoken Playback",
+  steps: [
+    "Type or paste into English Input Text — the counter caps the field at 500 chars — and the NATO Phonetic Output panel fills in as you type, with a slash at every word break.",
+    "Set the Reading Speed and Voice Pitch sliders, then press LISTEN PHONETIC to hear each code word spoken one at a time while the sequencer highlights the character it is on.",
+    "Press Copy to take the phonetic string, or Download to save it as nato-phonetics.txt.",
+  ],
   intro:
     "This spells text out in the NATO phonetic alphabet, replacing each letter with its code word — A becomes Alpha, B Bravo, C Charlie — and each digit with its spoken form, covering all 26 letters and the numbers 0 to 9. Spaces are marked with a slash so word boundaries survive when the string is read aloud, and a playback engine speaks the code words one at a time while highlighting the character it is currently on. It is for anyone who has to give a reference number, a postcode or a surname over a bad phone line and be understood first time.",
   useCases: [

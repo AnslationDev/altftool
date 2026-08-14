@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gujarati Birthday Wishes: Formal and Informal Forms",
+  metaDescription:
+    "Gujarati birthday messages written separately for તમે and તું, each with romanisation, an English meaning and the SMS part count.",
+  steps: [
+    "Enter “Their name (optional)”, choose “Who is it for?”, set Politeness to “Automatic (match the relationship)” or a fixed register, pick a Tone, choose how many messages, and optionally “Sign it from”.",
+    "Leave “Show romanised Gujarati” ticked for a transliteration under every message, and press “Other wordings” to draw a different set from the matching pool; Reset restores the defaults.",
+    "Each card carries the Gujarati wish, its romanisation, an English meaning and “Same wish in the other register”, tagged with its tone and SMS segment count, while the summary lists Pronoun used, Greeting line, Sign-off, Wordings available and SMS length; “Copy all” copies every message.",
+  ],
   intro:
     "Gujarati Birthday Wishes Generator writes a complete Gujarati birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Gujarati distinguishes તું from તમે, and that choice changes the possessive (તારું versus તમારું) and the verb ending, so each of the twelve wordings here is written out twice rather than word-swapped, and the register is set automatically from the relationship you choose. Every message is shown with romanised Gujarati, an English meaning, the same wish in the opposite register, and the number of SMS parts it will cost.",
   useCases: [

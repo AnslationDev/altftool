@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stand Up India Loan Eligibility & Margin Money Check",
+  metaDescription:
+    "Test every Stand Up India criterion — category, age, greenfield, sector, 51% shareholding — then size the loan at 85% of cost against the 10% margin.",
+  steps: [
+    "Fill the Applicant panel: Age (completed years), Gender of the promoter, Social category, Borrower type and Sector of the enterprise, then tick First venture in this activity (greenfield).",
+    "Enter Total project cost (INR) and Margin money you can bring (INR); Indicative composite loan sizes bank finance at 85% against the 10% margin floor and the 1 crore ceiling.",
+    "Read Criterion by criterion for each pass or fail, then set Interest rate, Total tenure (max 7 years) and Moratorium (max 18 months) and press Copy result.",
+  ],
   intro:
     "Stand Up India is a bank-lending mandate: every scheduled commercial bank branch is asked to sanction a composite loan of ₹10 lakh to ₹1 crore to at least one Scheduled Caste or Scheduled Tribe borrower and at least one woman borrower, for a greenfield enterprise. This checker runs an applicant against each published criterion — borrower category, age, greenfield status, sector, default history, shareholding for non-individual entities — and then sizes the loan at up to 85% of project cost against the 10% minimum margin money. It also gives an indicative EMI over the maximum seven-year tenure with up to an 18-month moratorium.",
   useCases: [

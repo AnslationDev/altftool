@@ -1,4 +1,12 @@
 const seo = {
+  title: "Performance Review Prompt Builder: STAR or SBI",
+  metaDescription:
+    "Scores each review note out of 100 for a measurable result, timeframe and action verb, then builds a STAR or SBI prompt that marks unevidenced claims.",
+  steps: [
+    "Set Role being reviewed, Review type, Cycle, Period dates, Framework and Rating scale, then add Context the reader needs (optional).",
+    "Paste one note per line into 'What went well', 'Where growth is needed' and 'Goals for next cycle'.",
+    "Read the Evidence score out of 100 with the count of Notes with a measurable result, then press Copy prompt for the STAR or SBI prompt and its [NEEDS EVIDENCE] rule.",
+  ],
   intro:
     "The Performance Review Prompt Builder scores your rough review notes for evidence quality and assembles them into a single prompt an AI assistant can write from without inventing anything. Each note is checked for three things every feedback framework asks for — a measurable result, a timeframe and a concrete action verb — and weighted 50/30/20 into a score out of 100. The finished prompt follows either STAR (Situation, Task, Action, Result) or SBI (Situation, Behaviour, Impact) and instructs the model to mark any claim it cannot evidence rather than smoothing over the gap.",
   useCases: [

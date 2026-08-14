@@ -1,4 +1,12 @@
 const seo = {
+  title: "Construction Waste Removal Cost: Bulking and Truck Trips",
+  metaDescription:
+    "Price debris removal from measured volume: about 1.5x bulking for concrete, trips set by body volume or payload, plus hire, tipping, labour and permits.",
+  steps: [
+    "Choose Debris type and How you measured it, then enter Area being broken out (m²) with Thickness or depth (mm), or Debris volume in place (m³).",
+    "Under Truck and haul fill Tipper body volume (m³), Tipper payload (tonnes), Hire per trip (₹), Distance to the facility, one way (km), Running rate (₹ per km) and Tipping fee (₹ per tonne); Labour and charges takes Loaders, Days of loading, Wage per person per day (₹) and Permit or society charge (₹).",
+    "Read Total debris removal cost with Loose volume after bulking, Estimated weight, Truckloads by body volume, Truckloads by payload and Trips needed, then press Copy result.",
+  ],
   intro:
     "This estimator prices the removal of construction and demolition debris from the volume you measured on site, applying the two things that decide the bill: bulking and truck capacity. Broken material takes more space than it did in place — a bulking factor of about 1.5 for concrete and 1.25 for excavated soil — and the number of tipper trips is set by whichever limit is reached first, the body volume or the payload in tonnes. Trip hire, round-trip distance, tipping fees charged per tonne at the processing facility, loading labour and permit charges are then itemised so a contractor's quote can be checked line by line.",
   useCases: [

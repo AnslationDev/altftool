@@ -1,4 +1,12 @@
 const seo = {
+  title: "Magnetic Field Visualizer: Bar Magnets & Solenoid",
+  metaDescription:
+    "Trace field lines for one or two bar magnets or a solenoid, then drop a compass probe to read flux density, vector angle and x/y components.",
+  steps: [
+    "Pick Bar, Two Magnets or Solenoid under Magnet System, and for two magnets choose Attracting (N - S) or Repelling (N - N).",
+    "Sweep Field Lines Density from 12 to 48 and Field Strength from 10% to 100%, and tick Reverse Polarity to swap the poles.",
+    "Click or drag on the canvas to place the compass probe, then read Flux Density, Vector Angle, Bx Component and By Component in mT; Reset restores the defaults.",
+  ],
   intro:
     "Magnetic Field Visualizer draws the field of bar magnets and a solenoid on an interactive canvas by treating each magnet as a north and a south point pole whose contribution falls off as an inverse square of distance, then summing those vectors and tracing field lines by streamline integration outward from the north pole. You can switch between a single magnet, two magnets set to attract or repel, and an electromagnet, and drop a compass probe anywhere on the canvas to read the flux density magnitude, its vector angle and its x and y components. It is a teaching visual for physics students and teachers covering dipoles, poles and lines of force.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Periodic Table Explorer: 25 Element Reference Cards",
+  metaDescription:
+    "Browse 25 elements with atomic mass, noble-gas electron configuration, melting and boiling points in °C, density, discovery year and uses.",
+  steps: [
+    "Search by element name, symbol or atomic number, or narrow the grid with the category dropdown (Alkali Metal, Halogen, Noble Gas and six more).",
+    "Click an element tile in the grid, such as Fe or Au, to load its detail card.",
+    "Read Atomic Mass, Electron Config in noble-gas shorthand like [Ar] 3d⁶ 4s², Melting Point, Boiling Point, Density, Year Discovered and Common Uses & Applications.",
+  ],
   intro:
     "Periodic Table Explorer is a browsable reference card set for all 118 IUPAC-recognized chemical elements, from hydrogen to oganesson, showing atomic number, atomic mass in unified mass units, electron configuration in noble-gas shorthand, melting and boiling points in °C, density, year of discovery and real industrial uses. Search by name, symbol or atomic number, or filter to one of ten families such as alkali metals, lanthanides, halogens or noble gases. Built for students meeting periodic trends for the first time and anyone who needs one element's numbers quickly.",
   useCases: [

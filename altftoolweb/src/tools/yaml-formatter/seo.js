@@ -1,4 +1,12 @@
 const seo = {
+  title: "YAML Formatter: Re-indent, Key Paths, JSON Output",
+  metaDescription:
+    "Re-indent YAML at 2 or 4 spaces, list every key as a dotted path, and convert to JSON. YAML 1.2 core schema keeps enabled: no a string.",
+  steps: [
+    "Paste a Kubernetes manifest, GitHub Actions workflow or docker-compose file into the YAML input box.",
+    "Pick an Indent width of 2 or 4 spaces, set \"Fold long scalars at\" to 80 columns, 120 columns or Never fold, and optionally tick \"Sort mapping keys A–Z\".",
+    "Switch between Formatted YAML, JSON and Key list — which shows each dotted Key path with its Type — then press Copy result.",
+  ],
   intro:
     "A YAML formatter re-indents a YAML document to a consistent structure, reports every mapping key as a dotted path, and converts the same data to JSON. This one parses with the YAML 1.2 core schema — the tag-resolution rules in §10.2 of the spec, which recognise null, bool, int, float and str and nothing else — so `enabled: no` and `2024-01-01` stay strings instead of silently becoming a boolean or a date. It is for engineers cleaning up Kubernetes manifests, GitHub Actions workflows, Ansible playbooks and docker-compose files.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Festival & Gifting Budget Planner with Gift-Tax Flag",
+  metaDescription:
+    "Multiply people by amount for each gift group, add food, travel, decor and clothing, compare against your cap, and flag gifts over ₹50,000.",
+  steps: [
+    "Fill each card under Gift groups — Who, How many people, Spend on each (₹) and Relationship — using Add gift group or Remove until the list matches your season.",
+    "Under Everything else enter Food, sweets & entertaining (₹), Travel (₹), Decor & lights (₹), Clothing (₹), Puja & donations (₹) and Outings & extras (₹), then set Contingency buffer (%), Budget cap you set (₹), Monthly take-home pay (₹), Months until the festival and Already saved (₹).",
+    "The Festival budget total updates live, with rows for Against your cap, Share of a month's pay and Save each month, a Worth checking list flagging gifts over ₹50,000, and a Where the money goes table; Copy result copies the summary.",
+  ],
   intro:
     "A festival budget planner multiplies out the two numbers that make gift spending overshoot — how many people and how much each — and adds them to food, travel, decor, clothing and donations, with a contingency buffer on top. The total is compared against a cap you set and against a month's take-home pay, then converted into the monthly saving needed before the festival. It also flags any gift above ₹50,000 per recipient, the threshold at which section 56(2)(x) of the Income-tax Act makes gifts from non-relatives taxable in the recipient's hands.",
   useCases: [

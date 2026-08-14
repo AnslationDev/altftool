@@ -1,4 +1,12 @@
 const seo = {
+  title: "Callback Verification Number Builder for India",
+  metaDescription:
+    "Check each helpline number against India's numbering plan — 10-digit mobiles, STD landlines, 1800 toll-free, 1930 — and rate where you got it from.",
+  steps: [
+    "For each row type the Organisation and the Number, then answer \"Where did you get this number?\" — printed on your card, passbook or statement; the official domain you typed yourself; the signed-in app; a branch; a search result or sponsored link; an SMS or WhatsApp forward; or the caller.",
+    "Press \"Add another organisation\" for further entries; each row shows the number type and how it dials once valid, and spells out the reason an entry is being held back.",
+    "Read \"Numbers safe to call back on\" with the source trust score out of 100 and the verified table of organisation, number and type, then press \"Copy card\" to take it as plain text you can print.",
+  ],
   intro:
     "A callback card is the short list of numbers you trust enough to dial after hanging up on a caller who claims to be your bank, a delivery company or the police. This builder checks each number against India's numbering plan — 10-digit mobiles starting 6 to 9, landlines with an STD code, 1800 toll-free lines and 1xxx service short codes — and then rates where you got it from, because that is what actually decides trust. Numbers taken from your own card, statement, a signed-in app or a branch qualify; numbers from search results, sponsored ads, SMS forwards or the caller themselves do not, and are kept off the card with the reason shown.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Atrial Fibrillation Risk Score: 14 Points, 4 Bands",
+  metaDescription:
+    "Tick age, BMI, hypertension, diabetes, heart failure, LVH and more for a score out of 14 in four bands — Low to Very High — with a text report to export.",
+  steps: [
+    "Tick the Clinical Risk Factors that apply — Age 65–74 (+2) or Age ≥ 75 (+4), Male Sex (+1) or Female Sex (−1), BMI ≥ 30 kg/m², Hypertension, Diabetes Mellitus, Heart Failure, LVH on ECG, Vascular Disease, Current Smoking — age, sex and race allow only one choice each.",
+    "Tick any of the six Modifiable Risk Factors you intend to manage, such as Blood Pressure Control or Sleep Apnea Treatment, then press Assess AF Risk.",
+    "The gauge shows the score out of 14 with its band — Low 0–2, Moderate 3–4, High 5–7, Very High 8–14 — beside the factors present with their points, a Prevention Action Plan and Screening Recommendations; Download saves AF_Risk_Report_<score>.txt and Copy Report copies the same text.",
+  ],
   intro:
     "The Atrial Fibrillation Risk Calculator turns the risk factors used in CHARGE-AF style community models — age, sex, race, BMI, height, hypertension, diabetes, heart failure, ECG left ventricular hypertrophy, vascular disease and current smoking — into a simplified score out of 14 and places it in one of four bands. Age carries the most weight (+2 for 65-74 and +4 for 75 and over), most other factors add 1 point, and female sex subtracts 1. It also lets you tick the modifiable factors you intend to work on and exports the whole assessment as a text report to bring to an appointment.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Printable Handwriting Slant Guide: 55°, 52° or Custom",
+  metaDescription:
+    "Generate an A4 or US Letter slant underlay at Copperplate 55°, Spencerian 52°, italic 85° or any angle, with baseline, waist and ascender ruling in mm.",
+  steps: [
+    "Choose a Script preset — Copperplate / Engrosser's script 55°, Spencerian 52°, Chancery italic 85° or Upright print / manuscript 90° — or type your own Slant angle from baseline (degrees).",
+    "Set x-height (mm), Ascender space, Gap between slant lines and Page margin, pick A4 (210 x 297 mm) or US Letter under Paper size, and tick Show waist and ascender lines.",
+    "The Underlay preview prints at true size when the dialog is set to 100%; the readout gives the angle off vertical, the number of writing rows and the Sideways travel per x-height.",
+  ],
   intro:
     "A slant guide is a sheet of evenly spaced parallel lines set at one fixed angle that you slip under your writing paper so every downstroke leans the same way. This generator draws that sheet to millimetre accuracy on A4 or US Letter, combining the slant lines with baseline, waist and ascender ruling, and reports the sideways travel a stroke makes over one x-height. Presets follow the angles quoted in penmanship manuals — 55° from the baseline for Copperplate, 52° for Spencerian, about 85° for chancery italic and 90° for upright print.",
   useCases: [

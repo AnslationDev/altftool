@@ -1,4 +1,12 @@
 const seo = {
+  title: "Slow Motion FPS Calculator: Speed %, Shutter Angle",
+  metaDescription:
+    "Enter capture and timeline fps for the slow-motion factor, editor speed %, shutter speed from your shutter angle, and the stops of light it costs.",
+  steps: [
+    "Set Project fps, which opens on 24, and Capture fps, which opens on 120, then the Shutter angle field at 180 degrees.",
+    "Choose 50 Hz (India, Europe, Australia), 60 Hz (North America, Japan east) or Flicker-free / daylight only in Mains Hz, and enter Real seconds; every readout recalculates as you type.",
+    "Read Slow factor, Speed, Shutter, Screen duration and Light cost in stops, plus the flicker advice line, then press Copy plan or Reset.",
+  ],
   intro:
     "This planner converts between capture frame rate and slow-motion factor, because slow motion is nothing more than the ratio of the two: factor = capture fps ÷ timeline fps, and the speed percentage you type into an editor is 100 ÷ that factor. It then works out the two things that actually decide whether the shot is achievable — the shutter speed implied by your shutter angle (angle ÷ 360 ÷ fps, so 1/480 s at 240 fps with a 180° shutter), the stops of light that costs against the 1/48 s of 24 fps, and whether the capture rate will band under mains lighting, which pulses at 100 Hz on a 50 Hz supply and 120 Hz on 60 Hz.",
   useCases: [

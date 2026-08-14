@@ -1,4 +1,7 @@
 const seo = {
+  title: "Ad Copy A/B Test Sample Size and Run-Time Planner",
+  metaDescription:
+    "Sizes a two-variant ad test with the pooled two-proportion formula: sample per variant, whole-week schedule, media cost and platform character limits.",
   intro:
     "The Ad Copy A/B Planner works out how many impressions or clicks a two-variant copy test needs before its winner is trustworthy, using the standard two-proportion sample-size formula with a pooled null variance. Give it your current click-through or conversion rate, the smallest lift worth acting on, and your daily traffic, and it returns the sample per variant, the run time in days and whole weeks, and the media cost at your CPM or CPC. It also checks both variants against the published character limits for Google responsive search ads, Meta, LinkedIn and X.",
   useCases: [

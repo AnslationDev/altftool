@@ -1,4 +1,12 @@
 const seo = {
+  title: "Raksha Bandhan Wishes in 6 Languages, by Relation",
+  metaDescription:
+    "Rakhi messages for a brother, sister, cousin or sibling abroad in Hindi, English, Marathi, Gujarati, Punjabi or Bengali, with SMS part counts.",
+  steps: [
+    "Pick a \"Language\" — Hindi, English, Marathi, Gujarati, Punjabi or Bengali — and answer \"Who are you writing to?\" with the relationship.",
+    "Add \"Their name (optional)\" and \"Sign off as (optional)\", set how many messages you want, and press \"Shuffle wording\" for a different set.",
+    "Read the featured message with its \"Characters in this message\" and \"SMS parts\" rows, then press \"Copy all\" or copy a single wording from More wordings.",
+  ],
   intro:
     "The Raksha Bandhan Wishes Generator writes rakhi messages sorted by the exact tie you are writing across — sister to brother, brother to sister, between sisters, cousins, or a sibling living abroad — in Hindi, English, Marathi, Gujarati, Punjabi and Bengali. Each message can carry the recipient's name and your sign-off, and shows how many SMS parts it will use, since Indic scripts send as UCS-2 at 70 characters per part instead of 160. Raksha Bandhan falls on Shravana Purnima, the full moon of the Shravana month, in late July or August.",
   useCases: [

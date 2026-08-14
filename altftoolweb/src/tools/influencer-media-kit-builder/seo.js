@@ -1,4 +1,12 @@
 const seo = {
+  title: "Influencer Media Kit Builder — One-Page PDF Export",
+  metaDescription:
+    "Type your reach, average views, engagement rate and contact lines, then Build PDF media kit for a one-page file made in your browser, not uploaded.",
+  steps: [
+    "Type your creator lines into 'Content and review notes' — audience, average views, engagement rate, topics and contact, one per line.",
+    "Press 'Build PDF media kit'; jsPDF lays the text out in your browser with no upload step.",
+    "The file saves as altftool-media-kit.pdf under a 'Creator media kit' heading, and the panel confirms 'Media-kit PDF downloaded.'",
+  ],
   intro:
     "Influencer Media Kit Builder turns a plain list of creator metrics — audience size, average views, engagement rate, topics and contact details — into a downloadable one-page PDF media kit you can attach to a brand pitch. You type or paste the lines, the text is laid out on an A4 page with a 'Creator media kit' heading and wrapped to the page width, and the PDF is generated in your browser and saved locally, so unpublished rate cards and audience figures never leave your machine. It is a formatting tool, not an analytics one: the numbers you enter are the numbers that print.",
   useCases: [

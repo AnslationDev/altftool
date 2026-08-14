@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blog Privacy Policy Generator with GDPR & CCPA Checks",
+  metaDescription:
+    "Build a blog privacy policy from what your site runs — logs, analytics, comments, ads — with a lawful basis per purpose, cookie-banner and CCPA checks.",
+  steps: [
+    "Fill in \"Blog name\", \"Who runs it\", \"Contact for privacy requests\" and \"Last updated\", then tick everything that applies under \"What the blog does\" — from \"Web host keeps server access logs\" to \"Display advertising\", \"Affiliate links\" and \"Readers in the EU or UK\".",
+    "Set the retention months for \"Server logs\", \"Analytics\", \"Comments\", \"Contact form messages\" and \"Suppression list after unsubscribe\", then enter \"Annual gross revenue (USD)\" and the two other figures under \"CCPA threshold check\".",
+    "Read \"Policy completeness\", \"Cookie consent banner needed\" and \"CCPA applies to you\", clear any highlighted gaps, then press \"Copy policy\" to take the assembled text.",
+  ],
   intro:
     "A blog privacy policy is the notice required by GDPR Article 13 and comparable laws: it tells a reader what a site collects, why, on what lawful basis, who receives it and for how long it is kept. This generator builds one from what your blog actually runs — server logs, analytics, comments, a mailing list, ads or embeds — assigns a lawful basis to each purpose, decides whether Article 5(3) of the ePrivacy Directive requires a consent banner before those scripts load, and tests you against the three CCPA thresholds at Cal. Civ. Code section 1798.140.",
   useCases: [

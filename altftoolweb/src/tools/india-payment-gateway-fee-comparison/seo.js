@@ -1,4 +1,12 @@
 const seo = {
+  title: "India Payment Gateway Fees: UPI, Cards and 18% GST",
+  metaDescription:
+    "Applies each rail's rate to your own payment mix, adds 18% GST and reports an effective percentage and cost per transaction, with UPI and RuPay at zero.",
+  steps: [
+    "Enter Monthly processed volume (INR) and Average ticket size (INR), then split the payment mix across UPI, RuPay debit, cards, netbanking, wallets and international to total 100%.",
+    "Under Rate cards, overwrite the seeded standard-plan percentages, Flat fee per transaction (INR) and Monthly platform fee (INR) with the numbers on your own agreement.",
+    "The ranked table gives fee ex GST, the 18% GST, total per month and per year and the effective rate for each gateway; press Copy comparison.",
+  ],
   intro:
     "This calculator works out what an Indian payment gateway actually costs you by applying each rail's rate to your own payment mix, adding 18% GST on the fee, and reporting an effective percentage and a cost per transaction. UPI and RuPay debit are charged at zero because section 10A of the Payment and Settlement Systems Act 2007, read with section 269SU of the Income-tax Act 1961, prohibits any merchant discount rate on them. It is aimed at founders and finance teams comparing quotes, where a 0.1% difference on the card rate can be worth less than a 10-point shift in UPI share.",
   useCases: [

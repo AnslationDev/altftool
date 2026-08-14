@@ -1,4 +1,12 @@
 const seo = {
+  title: "Menstrual Cup Size Finder: Diameter, Length, Firmness",
+  metaDescription:
+    "Age and birth history set the diameter, your measured cervix height sets the length, pelvic floor sets firmness. Brand-neutral, no product picks.",
+  steps: [
+    "Enter Your age and Cervix height (mm), or use 'Not measured? Pick the knuckle that matches' to turn a first- or second-knuckle cue into a millimetre figure.",
+    "Choose your Pelvic floor strength and tick 'I have given birth vaginally', 'My flow is heavy' or 'I have an IUD fitted' wherever they apply.",
+    "Read the Suggested cup size along with 'Why this size', the Cervix height band, 'Length to look for', 'Longest cup that should still fit' in mm, Firmness, the typical capacity in mL and 'Empty at least every' hours, then press Copy result.",
+  ],
   intro:
     "The Menstrual Cup Size Finder turns three separate fit decisions — diameter, length and firmness — into one starting recommendation. Diameter follows the sizing convention almost every brand publishes: the smaller size under 30 with no vaginal birth, the larger size from 30 onwards or after a vaginal birth. Length follows your measured cervix height, where under about 45 mm is a low cervix, 45 to 55 mm is average and over 55 mm is high. Firmness follows your pelvic floor, because a strong one can compress a soft cup and break its seal.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Greek Alphabet Explorer: 24 Letters, Sounds, Numerals",
+  metaDescription:
+    "All 24 Greek letters with names, classical and modern sounds, Latin transliteration and Milesian numeral values — plus a two-way numeral converter.",
+  steps: [
+    "Type a figure into Number to convert (1-9,999) or paste a numeral such as ρκγ into 'Greek numeral to read back', and the thousands, hundreds, tens and units parts are listed separately.",
+    "Paste Greek into the Greek text box to get Latin letters: gamma is written n before γ, κ, ξ or χ, upsilon is written u inside αυ, ευ, ηυ and ου, and accents and breathings are dropped.",
+    "Filter with 'Search a letter, sound or use', flip the Sounds select between Classical and Modern Greek, and open any of the 24 letters for its sound, numeral value and what it stands for in maths and physics; Copy result takes the numeral and transliteration.",
+  ],
   intro:
     "The Greek alphabet has 24 letters, from alpha to omega, and this explorer gives each one its name, its reconstructed classical sound, its modern Greek sound, its Latin transliteration and its value in the Milesian numeral system where α is 1 and ω is 800. It also transliterates Greek text into Latin letters using the classical rules — gamma written n before γ, κ, ξ or χ, and upsilon written u inside a diphthong — and converts numbers to and from Greek numerals. Built for students meeting Greek symbols in maths, physics and statistics as well as anyone starting to read the script itself.",
   useCases: [

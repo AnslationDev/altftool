@@ -1,4 +1,7 @@
 const seo = {
+  title: "Blog Outline Generator: Markdown H1, Sections, FAQ",
+  metaDescription:
+    "Turns a topic into 6-12 markdown headings: an H1, an intro, 2 to 8 body sections from a fixed angle order, then a conclusion and an FAQ. No AI.",
   intro:
     "The Blog Outline Generator turns a topic into a ready-to-fill markdown skeleton: an H1 title, an introduction, between two and eight numbered body sections drawn from a fixed set of proven article angles, then a conclusion and an FAQ heading. The angles run in order — why it matters, getting started, key steps, common mistakes, best tools, tips for beginners, advanced strategies, real examples — so the structure follows a reader from motivation to detail. It is for writers who know their subject but stall on how to arrange it.",
   useCases: [

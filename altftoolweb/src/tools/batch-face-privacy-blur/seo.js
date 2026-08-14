@@ -1,4 +1,12 @@
 const seo = {
+  title: "Face Blur Tool: Blur Faces and Drop EXIF In-Browser",
+  metaDescription:
+    "Paints an 18px blur over each face the browser's FaceDetector finds, re-encodes to PNG without the original EXIF block, and reports the face count.",
+  steps: [
+    "Choose the photo you own with the 'Local file(s)' picker; if you select several, the panel names the one being processed — only the first file is used.",
+    "Press 'Run local workbench' and the browser's FaceDetector locates faces, with an 18px blur filter drawn over each detected bounding box on a canvas in your tab.",
+    "The canvas is re-encoded and downloaded as altftool-batch-face-privacy-blur.png, and the 'Verified result' panel reports width, height, 'PNG without original EXIF block' and how many faces were blurred — or that no face was found.",
+  ],
   intro:
     "Batch Face Privacy Blur uses the browser's built-in FaceDetector API to locate faces in a photo you own, paints an 18-pixel Gaussian blur over each detected bounding box on a canvas, and re-encodes the result as a PNG — which also drops the original EXIF block, including any GPS coordinates. It reports how many faces it blurred, so you can see whether detection found what you expected before you share the file. It is for anyone posting a photo where bystanders, children, or colleagues should not be identifiable.",
   useCases: [

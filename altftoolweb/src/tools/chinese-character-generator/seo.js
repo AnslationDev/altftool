@@ -1,4 +1,7 @@
 const seo = {
+  title: "Chinese Character Generator: 180 Glyphs with Pinyin",
+  metaDescription:
+    "Browse 180 verified characters across 15 themes with tone-marked pinyin, meaning, stroke count and Unicode. Copy, or export as PNG or SVG.",
   intro:
     "This generator draws from a curated set of 180 Chinese characters organised into 15 themes — luck, love, peace, strength, wisdom, nature, zodiac, family, success, business and more — and shows each one with its pinyin including tone marks, English meaning, stroke count and Unicode codepoint. You can pull a random character, search by meaning or pinyin, browse a category, and save what you like to favourites. Any card can be copied as text or downloaded as a high-resolution PNG or a standalone SVG that carries the glyph and its metadata.",
   useCases: [

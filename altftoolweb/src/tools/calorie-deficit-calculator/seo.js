@@ -1,4 +1,7 @@
 const seo = {
+  title: "Calorie Deficit Calculator: Goal Weight by a Deadline",
+  metaDescription:
+    "Turns kg to lose and weeks into a daily deficit using 7,700 kcal per kg, and shows the weekly loss rate that deficit implies.",
   intro:
     "This calculator converts a weight-loss goal and a deadline into the daily calorie deficit it implies, using the standard approximation that one kilogram of body fat stores about 7,700 kcal: daily deficit = kg to lose × 7,700 ÷ (weeks × 7). Enter your current weight, target weight and the number of weeks, and it returns the deficit per day alongside the weekly loss rate that deficit represents. Seeing both together is the point — a target that needs 1,200 kcal a day off is telling you the deadline is wrong, not that you need more willpower.",
   useCases: [

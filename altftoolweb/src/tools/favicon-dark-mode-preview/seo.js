@@ -1,4 +1,12 @@
 const seo = {
+  title: "Favicon Dark Mode Preview: Tab Contrast Checker",
+  metaDescription:
+    "Renders your favicon on light and dark tab strips and measures WCAG contrast against each, flagging pixels under the 3:1 minimum. Nothing is uploaded.",
+  steps: [
+    "Upload under \"Favicon file (PNG, SVG, WebP or ICO)\" — or start from the built-in sample icon — and drag the zoom slider from 2x to 12x.",
+    "The icon renders on a light and a dark tab strip at its true 16, 24 and 32 px sizes while the pixels are analysed in your browser.",
+    "Read the contrast ratio per tab strip against the 3:1 WCAG minimum, the \"Ready to ship\" or \"Needs a look\" verdict and the \"What to fix\" list; \"Copy report\" exports it.",
+  ],
   intro:
     "Favicon Dark Mode Preview renders your icon on a simulated light and dark browser tab strip and measures the WCAG 2.x contrast ratio of the artwork against each background, including per-pixel coverage below the 3:1 threshold set by SC 1.4.11 Non-text Contrast. It also reports transparency, edge padding, saturation and brightness spread — the four things that decide whether a mark survives being drawn at 16 pixels. Everything is decoded in your own browser, so the file never leaves the device.",
   useCases: [

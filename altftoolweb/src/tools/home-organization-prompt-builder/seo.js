@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Organization Prompt Builder: Time-Boxed Plan",
+  metaDescription:
+    "Estimates declutter time from floor area, clutter level and a minutes-per-m² rate, then splits it into sessions, weeks and 25-minute Pomodoro blocks.",
+  steps: [
+    "Pick the Room and a Method — Four-Box method, KonMari, 20/20 rule, OHIO (Only Handle It Once) or the 12-12-12 challenge — then enter Floor area with its Area unit and a Clutter level.",
+    "Set 'Minutes per m² at normal clutter' (6 by default), Session length (minutes) and Sessions per week; the workload rescales as you type.",
+    "Read Sessions needed alongside Estimated total work, Finishes in and Pomodoro blocks per session, then press Copy prompt to take the generated plan prompt.",
+  ],
   intro:
     "The Home Organization Prompt Builder estimates how long a room will actually take to declutter — floor area in square metres multiplied by a minutes-per-square-metre rate and a clutter multiplier — then divides that workload into sessions, calendar weeks and 25-minute Pomodoro blocks. It hands those numbers to an AI along with a named method (Four-Box, KonMari, the 20/20 rule, OHIO or the 12-12-12 challenge) so the plan you get back fits the time you really have. Useful for anyone who stalls because the job feels unbounded.",
   useCases: [

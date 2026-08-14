@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calories Burned Washing a Car — MET-Based Calculator",
+  metaDescription:
+    "Prices six wash stages at published MET values — scrubbing and waxing at 4.5 METs — with editable vehicle presets from hatchback to full detail.",
+  steps: [
+    "Enter Body weight and Washes per month, then tap a Vehicle size preset — Hatchback / small car, Sedan / saloon, SUV / large estate, Van / pickup or Full detail with wax — to load typical timings.",
+    "Edit the six \"Minutes per stage\" fields; each shows its MET value and compendium code, from Hosing and rinsing down at 2.5 METs to Soaping and scrubbing the bodywork at 4.5.",
+    "Read Calories per wash with the net-above-resting, per-month and per-year rows and the stage-by-stage breakdown table, then press \"Copy result\".",
+  ],
   intro:
     "This calculator estimates the calories a hand car wash costs by pricing each stage at its published MET value and applying the formula kcal/min = MET x 3.5 x kg / 200. Washing and waxing a vehicle has its own compendium entry at 4.5 METs, which puts it firmly in the moderate-intensity band, while rinsing sits nearer 2.5 METs and interior vacuuming at 3.3. Vehicle-size presets fill in typical timings for a hatchback, sedan, SUV, van or full detail, and every minute figure stays editable.",
   useCases: [

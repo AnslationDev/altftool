@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Tank Size Calculator - 135 lpcd Sump & Overhead",
+  metaDescription:
+    "Size an overhead tank and sump from 135 lpcd (IS 1172), split 1/3 to 2/3, with a per-head breakdown, market sizes and pump filling time.",
+  steps: [
+    "Enter Adults, Children, Domestic help and Bathrooms / taps, plus garden area in sq m and cars if they apply.",
+    "Pick Reserve days — 1, 2, 3, 5 or 7 — and adjust the child factor and wastage buffer (%).",
+    "Read the daily requirement breakdown, total storage, overhead tank (1/3) and underground sump (2/3), then use the dimension helper and pump filling time.",
+  ],
   intro:
     "The Water Tank Size Calculator works out a household's daily water requirement from the IS 1172:1993 / CPHEEO norm of 135 litres per capita per day, then converts it into storage — total capacity for your chosen reserve period, split one-third overhead tank and two-thirds underground sump. It is built for Indian homes being planned or retrofitted, and it shows every litre traced back to the head it came from: 5 lpcd drinking, 5 cooking, 55 bathing, 25 washing, 45 flushing. It also converts capacity to internal tank dimensions and tells you how long your pump will take to fill it.",
   useCases: [

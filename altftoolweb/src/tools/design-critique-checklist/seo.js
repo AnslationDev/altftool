@@ -1,4 +1,12 @@
 const seo = {
+  title: "Design Critique Checklist: 4 Frameworks, Timed Plan",
+  metaDescription:
+    "Pick objective-based, I like / I wish / What if, Rose-Thorn-Bud or Plus/Delta; get a timed agenda, stage-matched prompts and a vague-feedback score.",
+  steps: [
+    "Pick a Framework — Objective-based critique, I like / I wish / What if, Rose / Thorn / Bud or Plus / Delta — plus What is being reviewed? and Stage of the work.",
+    "Set Session length (minutes) and People in the room; the Agenda splits that time across the framework's rounds and pairs Ground rules with Prompts to ask for that artefact and stage.",
+    "Paste a stakeholder comment under Is this feedback specific enough? to get a score out of 100, the vague wording it found, and what the comment is missing; Copy result saves the plan.",
+  ],
   intro:
     "This planner turns a design review into a structured critique: pick a framework — objective-based, I like / I wish / What if, Rose-Thorn-Bud or Plus/Delta — and it splits your session length across the rounds, sets ground rules, and lists prompts matched to the artefact and the stage the work is at. A second panel scores a written comment for specificity, flagging filler words like 'clean', 'modern', 'busy' or 'make it pop' and telling you what to add. The underlying principle is the one from Discussing Design: a critique analyses work against its stated objectives, which is what separates it from a reaction.",
   useCases: [

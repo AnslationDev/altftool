@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS Calculator by Section: 194C, 194J, 194Q Rates",
+  metaDescription:
+    "Pick 194C, 194H, 194-I, 194J or 194Q and get the TDS on a payment — with the threshold tested, the rate applied and the 20% no-PAN floor under 206AA.",
+  steps: [
+    "Choose the payment in the \"Section / payment type\" menu — 194C contractor at 1% (individual/HUF) or 2%, 194H commission at 5%, 194-I rent at 10% or 2%, 194J at 10% or 2%, or 194Q purchase of goods at 0.1%.",
+    "Type the sum into \"Payment / aggregate amount (₹)\", untick \"Deductee has furnished a valid PAN\" if no PAN was given so the rate is lifted to the 20% section 206AA floor, and use \"Override rate (%) — 0 keeps section rate\" for a lower-deduction certificate.",
+    "Read the estimated TDS with its Section, Amount, Threshold used, Rate and Net after TDS rows — a sum under the threshold reads \"Simplified threshold not crossed\" — then Copy the summary or Download it as tds-calculator-by-section.txt.",
+  ],
   intro:
     "This calculator works out the tax deducted at source on an Indian payment by applying the rate for the section you select to the amount, once that amount crosses the section's threshold. It covers eight common cases — 194C contractor payments at 1% for individuals/HUF and 2% otherwise, 194H commission at 5%, 194-I rent at 10% for land and building or 2% for plant and equipment, 194J at 10% for professional fees and 2% for technical fees, and 194Q purchase of goods at 0.1% — and raises the rate to at least 20% when the deductee has no valid PAN, as section 206AA requires. It shows the threshold used, the rate applied, the TDS amount and the net payable, so you can see which figure drove the result.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Funny Nickname Generator - 117 Names, 8 Themes",
+  metaDescription:
+    "Pick food, animal, superhero, nerdy, royal, silly, savage or wholesome, add your first name and an optional Sir/Captain prefix, and copy the result.",
+  steps: [
+    "Pick one of the eight theme chips — Food, Animals, Superhero, Nerdy, Royal, Silly, Savage or Wholesome — and type into Your name (optional).",
+    "Tick Add a fancy prefix (Sir, Lady, Captain, etc.) if you want a title, then press Generate Nickname.",
+    "Press Copy to take the nickname, Another to redraw, and compare the last ten under Recent Nicknames.",
+  ],
   intro:
     "Funny Nickname Generator picks a random nickname from a hand-written list of 117 options spread across eight themes — food, animals, superhero, nerdy, royal, silly, savage and wholesome. Add your name and it is appended to the nickname (first word only, so \"Alexander James\" becomes \"Alex\"), and an optional fancy prefix pulls from twelve titles such as Sir, Lady, Captain and Professor. Every result is instantly copyable and the last ten you generated stay listed underneath so you can compare before committing.",
   useCases: [

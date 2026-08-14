@@ -1,4 +1,12 @@
 const seo = {
+  title: "WhatsApp Group Admin Scam: Score the Tells 0-100",
+  metaDescription:
+    "Tick what you can see in the chat and get a weighted risk score out of 100 plus the fraud pattern it matches. An OTP or UPI PIN request forces a stop.",
+  steps: [
+    "Enter How old is the group (days)? and Amount being asked for (INR, 0 if none) at the top of the checker.",
+    "Tick every tell you can actually see under Who is messaging you, What they are asking for and How the message is framed — or use Select all and Clear all tells to start from either end; tells marked decisive force a stop verdict on their own.",
+    "Read the Scam risk score out of 100, the Closest fraud pattern and the numbered What to do next list, then press Copy result.",
+  ],
   intro:
     "The WhatsApp Group Admin Scam Explainer scores a suspicious group message against the tells that define four known frauds: a fake or hijacked admin, a forged payment or refund, an investment or task exit scam, and outright credential theft. You tick what you can see in the chat — a private DM from the 'admin', a new number behind a familiar photo, a payment screenshot, a fee demanded before withdrawal — and it returns a weighted risk score, the pattern the message best matches, and the verification step for each tell. It is written around one rule that has no exceptions in India: no bank, payment app, platform or admin ever needs your OTP, UPI PIN, CVV or WhatsApp registration code.",
   useCases: [
