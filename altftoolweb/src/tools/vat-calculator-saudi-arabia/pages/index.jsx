@@ -333,7 +333,7 @@ export default function ToolHome() {
           <div className="mt-3" aria-live="polite" role="status">
             <p
               className={`text-sm font-semibold ${
-                registration.status === "mandatory" ? "text-[var(--danger)]" : "text-[var(--success)]"
+                registration.status === "mandatory" ? "text-[var(--danger-text)]" : "text-[var(--success-text)]"
               }`}
             >
               {registration.label}
