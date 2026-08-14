@@ -7,6 +7,8 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   PERMISSIONS,
+  SENSITIVITY_TIERS,
+  NECESSITY_LABEL,
   auditPermissions,
   parsePermissionText,
   resultToText,
@@ -417,12 +419,12 @@ export default function ToolHome() {
                     {permission.ios}
                   </td>
                   <td className="py-2 pr-3 text-xs text-[var(--muted-foreground)]">
-                    {permission.tier}
+                    {SENSITIVITY_TIERS[permission.tier]?.label ?? permission.tier}
                   </td>
                   <td
                     className={`py-2 text-xs font-semibold ${NECESSITY_STYLE[permission.necessity]}`}
                   >
-                    {permission.necessity}
+                    {NECESSITY_LABEL[permission.necessity] ?? permission.necessity}
                   </td>
                 </tr>
               ))}
