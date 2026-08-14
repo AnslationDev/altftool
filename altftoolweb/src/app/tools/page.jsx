@@ -42,6 +42,9 @@ export const dynamic = "force-static";
 export const revalidate = 86400;
 
 
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
 export async function generateMetadata() {
   const total = getRoundedCatalogTotal();
 

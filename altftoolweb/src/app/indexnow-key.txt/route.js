@@ -1,9 +1,10 @@
 // Serves the IndexNow key file. IndexNow verifies ownership by fetching the
 // keyLocation URL declared in the submission and checking it contains the key.
 //
-// Served from a route rather than public/ so the key stays an environment
-// variable and can be rotated without a commit. Returns 404 when unconfigured,
-// which is the correct answer — there is no key to verify.
+// Served from a route rather than public/ so an ALTFT_INDEXNOW_KEY override can
+// rotate the key without a deploy. getIndexNowKey() falls back to the committed
+// default, so this normally returns 200; the 404 branch survives only as a
+// guard for the impossible case of no usable key at all.
 
 import { getIndexNowKey } from "@/platform/seo/indexNow";
 

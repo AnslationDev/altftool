@@ -15,6 +15,9 @@ export async function generateMetadata() {
     description: "Discover what is trending today in technology, software, and general interests on AltFTool News.",
     path: "/news/trending",
     keywords: ["trending news", "viral news", "buzzing topics"],
+    // Syndicated wire-service headlines the original publishers own — kept out
+    // of the index (follow stays on so internal links still pass through).
+    noindex: true,
   });
 }
 

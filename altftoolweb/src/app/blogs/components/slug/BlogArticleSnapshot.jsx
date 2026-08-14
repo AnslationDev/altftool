@@ -69,14 +69,19 @@ export default function BlogArticleSnapshot({
     ? blog.sources.filter((source) => source?.title || source?.url).length
     : 0;
   const freshness = getBlogFreshness(blog);
-  const reviewDate = formatDate(blog.reviewedAt || blog.updatedAt || blog.date || blog.createdAt);
+  // Only claim a review when the post stores a real review/update timestamp.
+  // Otherwise the line states the publication date, which is the only date
+  // this post actually has.
+  const revisionDate = blog.reviewedAt || blog.updatedAt;
+  const reviewDate = formatDate(revisionDate || blog.date || blog.createdAt);
   const categoryHref = `/blogs/category/${blogTaxonomySlug(blog.category || "guides")}`;
 
   if (!items.length && !primaryTool && !nextPost && !sourceCount && !faqItems.length) return null;
 
   return (
     <section
-      id="article-summary"
+      id="article-overview"
+      aria-labelledby="article-overview-heading"
       className="mt-5 scroll-mt-24 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5"
     >
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
@@ -89,7 +94,10 @@ export default function BlogArticleSnapshot({
               <p className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
                 Article overview
               </p>
-              <h2 className="text-lg font-semibold tracking-normal text-(--foreground)">
+              <h2
+                id="article-overview-heading"
+                className="text-lg font-semibold tracking-normal text-(--foreground)"
+              >
                 What this guide covers
               </h2>
             </div>
@@ -163,8 +171,14 @@ export default function BlogArticleSnapshot({
           </div>
 
           <div className="mt-3 rounded-[6px] bg-(--muted) px-3 py-2 text-xs leading-5 text-(--muted-foreground)">
-            {freshness.label} on {reviewDate}
-            {blog.reviewedBy ? ` by ${blog.reviewedBy}` : ""}.
+            {revisionDate ? (
+              <>
+                {freshness.label} on {reviewDate}
+                {blog.reviewedBy ? ` by ${blog.reviewedBy}` : ""}.
+              </>
+            ) : (
+              <>Published on {reviewDate}.</>
+            )}
           </div>
         </aside>
       </div>

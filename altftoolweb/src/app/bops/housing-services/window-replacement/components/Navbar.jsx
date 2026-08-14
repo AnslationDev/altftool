@@ -98,8 +98,8 @@ export default function Navbar() {
                   : "bg-white/10 text-white backdrop-blur-sm ring-1 ring-white/20 hover:bg-white/20"
               )}
             >
-              <Icon name="phone" className="h-4 w-4" />
-              {company.phone}
+              <Icon name="mail" className="h-4 w-4" />
+              {company.contactLabel}
             </button>
 
 
@@ -148,8 +148,8 @@ export default function Navbar() {
 
           <div className="mt-3 flex items-center gap-4 px-1 text-sm text-stone-500">
             <button onClick={trigger} className="flex items-center gap-2 hover:text-bronze-600 transition-colors">
-              <Icon name="phone" className="h-4 w-4 text-bronze-600" />
-              {company.phone}
+              <Icon name="mail" className="h-4 w-4 text-bronze-600" />
+              {company.contactLabel}
             </button>
           </div>
         </Container>

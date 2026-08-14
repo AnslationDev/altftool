@@ -49,7 +49,10 @@ export default function ToolShell({ slug, children }) {
             )}
             <div>
               <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{tool?.name}</h1>
-              <p className="mt-1 max-w-2xl text-sm sm:text-base" style={{ color: "var(--ali-muted)" }}>{tool?.description}</p>
+              {/* Answer-first: a self-contained sentence naming the tool, what
+                  it does and where the processing happens, so it can be quoted
+                  without any surrounding context. */}
+              <p className="mt-1 max-w-2xl text-sm sm:text-base" style={{ color: "var(--ali-muted)" }}>{tool?.answer || tool?.description}</p>
             </div>
           </div>
           <Link href={BASE} className="ali-btn ali-btn-ghost shrink-0 self-start">

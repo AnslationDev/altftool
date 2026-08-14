@@ -8,8 +8,6 @@
  *
  * Wired into /api/revalidate, which is the single choke point every publish
  * already flows through, so a submission costs nothing extra operationally.
- *
- * Inert unless ALTFT_INDEXNOW_KEY is set, so behaviour is unchanged by default.
  */
 
 // Extension included to match the sibling modules in this folder and to keep
@@ -23,12 +21,32 @@ const SUBMIT_TIMEOUT_MS = 4000;
 // malformed env value is ignored rather than sent and rejected on every publish.
 const KEY_PATTERN = /^[A-Za-z0-9-]{8,128}$/;
 
-/** The configured key, or null when IndexNow is not set up. */
+// The key is committed on purpose. An IndexNow key is NOT a secret: the whole
+// verification model is that the key is published at a public URL
+// (/indexnow-key.txt) so the search engine can fetch it and confirm whoever
+// submitted the URLs controls the host. Anyone can already read it with one
+// GET. Its only power is "submit URLs on this host for recrawl", which is
+// worthless to an attacker — they can only ask Bing to re-read our own pages.
+//
+// It lives here rather than in an environment variable because an env-only key
+// meant the feature shipped switched off: the variable was never set anywhere
+// (not in .env.example, not in amplify.yml), so /indexnow-key.txt served a 404
+// and every publish silently skipped submission. A constant cannot regress that
+// way. ALTFT_INDEXNOW_KEY still overrides it, so the key can be rotated from
+// the Amplify console without a deploy.
+const DEFAULT_INDEXNOW_KEY = "c8f4f134a042e8cfa5a31139a610b007";
+
+/**
+ * The active key. The env override wins when it is well-formed; a malformed
+ * override falls back to the committed key rather than disabling IndexNow.
+ * Both the key file route and the submitter call this, so the key served and
+ * the key sent can never disagree.
+ */
 export function getIndexNowKey() {
   const raw = process.env.ALTFT_INDEXNOW_KEY;
-  if (typeof raw !== "string") return null;
-  const key = raw.trim();
-  return KEY_PATTERN.test(key) ? key : null;
+  const override = typeof raw === "string" ? raw.trim() : "";
+  if (override && KEY_PATTERN.test(override)) return override;
+  return KEY_PATTERN.test(DEFAULT_INDEXNOW_KEY) ? DEFAULT_INDEXNOW_KEY : null;
 }
 
 /**

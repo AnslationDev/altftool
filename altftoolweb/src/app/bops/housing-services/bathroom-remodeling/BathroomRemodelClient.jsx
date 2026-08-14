@@ -2,29 +2,12 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import {
-  ArrowRight,
-  Bath,
-  BadgeCheck,
-  Check,
-  Droplets,
-  FileText,
-  Home,
-  ImageIcon,
-  Lightbulb,
-  MessageSquare,
-  Palette,
-  Phone,
-  RefreshCw,
-  ShieldCheck,
-  Sparkles,
-  Star,
-  Users,
-  Wrench,
-} from "lucide-react";
+import { ArrowRight, BadgeCheck, Bath, Check, Droplets, FileText, Home, ImageIcon, Lightbulb, MessageSquare, Palette, RefreshCw, ShieldCheck, Sparkles, Star, Users, Wrench } from "lucide-react";
 
-const phoneDisplay = "(833) 400-6110";
-const phoneHref = "tel:8334006110";
+// No phone line is live for this page, so every contact CTA points at the
+// site's real contact route.
+const contactUrl = "/policypages/contact";
+const contactLabel = "Contact us";
 const formSrc = "https://api.leadconnectorhq.com/widget/form/YZr1FGoPxQjSdeBdbOjL";
 const bathroomGallery = [
   "https://images.unsplash.com/photo-1756079664354-34944e001f6d?auto=format&fit=crop&w=1200&q=82",
@@ -247,7 +230,7 @@ const faqItems = [
   {
     question: "What areas near Austin do you serve?",
     answer:
-      "We serve all of Austin and the surrounding areas: Cedar Park, Round Rock, Georgetown, Pflugerville, Leander, Westlake Hills, Dripping Springs, Buda, Kyle, Lakeway, and more. Call us to confirm your specific location.",
+      "We serve all of Austin and the surrounding areas: Cedar Park, Round Rock, Georgetown, Pflugerville, Leander, Westlake Hills, Dripping Springs, Buda, Kyle, Lakeway, and more. Contact us to confirm your specific location.",
   },
 ];
 
@@ -385,9 +368,9 @@ export default function BathroomRemodelClient() {
           </span>
         </a>
 
-        <a className="bathroom-remodel-headerCall" href={phoneHref}>
-          <Phone size={16} aria-hidden="true" />
-          <span>{phoneDisplay}</span>
+        <a className="bathroom-remodel-headerCall" href={contactUrl}>
+          <MessageSquare size={16} aria-hidden="true" />
+          <span>{contactLabel}</span>
         </a>
       </header>
 
@@ -436,9 +419,9 @@ export default function BathroomRemodelClient() {
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
 
-              <a className="bathroom-remodel-secondaryButton" href={phoneHref}>
-                <Phone size={16} aria-hidden="true" />
-                <span>{phoneDisplay}</span>
+              <a className="bathroom-remodel-secondaryButton" href={contactUrl}>
+                <MessageSquare size={16} aria-hidden="true" />
+                <span>{contactLabel}</span>
               </a>
             </div>
           </div>
@@ -748,13 +731,13 @@ export default function BathroomRemodelClient() {
               the form does not send anything.
             </p>
 
-            <a className="bathroom-remodel-sidebarCall" href={phoneHref}>
+            <a className="bathroom-remodel-sidebarCall" href={contactUrl}>
               <span className="bathroom-remodel-sidebarCallIcon" aria-hidden="true">
-                <Phone size={18} />
+                <MessageSquare size={18} />
               </span>
               <span>
-                <small>Call Now — 7 Days a Week</small>
-                <strong>{phoneDisplay}</strong>
+                <small>Tell us about your project</small>
+                <strong>{contactLabel}</strong>
               </span>
             </a>
 
@@ -789,13 +772,13 @@ export default function BathroomRemodelClient() {
               <li>A layout demonstration, with no company behind it</li>
             </ul>
 
-            <a className="bathroom-remodel-finalCall" href={phoneHref}>
+            <a className="bathroom-remodel-finalCall" href={contactUrl}>
               <span className="bathroom-remodel-finalCallIcon" aria-hidden="true">
-                <Phone size={18} />
+                <MessageSquare size={18} />
               </span>
               <span>
-                <small>Call or Text Anytime</small>
-                <strong>{phoneDisplay}</strong>
+                <small>Tell us about your project</small>
+                <strong>{contactLabel}</strong>
               </span>
             </a>
           </div>
@@ -851,7 +834,7 @@ export default function BathroomRemodelClient() {
             <h3>Contact</h3>
             <ul className="bathroom-remodel-contactList">
               <li>
-                <a href={phoneHref}>{phoneDisplay}</a>
+                <a href={contactUrl}>{contactLabel}</a>
               </li>
               <li>Austin and Dallas service areas</li>
               <li>A layout demonstration, with no company behind it</li>
@@ -861,9 +844,9 @@ export default function BathroomRemodelClient() {
       </footer>
 
       <div className="bathroom-remodel-mobileBar">
-        <a className="bathroom-remodel-mobileCall" href={phoneHref}>
-          <Phone size={16} aria-hidden="true" />
-          <span>Call Now</span>
+        <a className="bathroom-remodel-mobileCall" href={contactUrl}>
+          <MessageSquare size={16} aria-hidden="true" />
+          <span>Contact us</span>
         </a>
         <a className="bathroom-remodel-mobileQuote" href="#final-cta">
           <span>Free Quote</span>

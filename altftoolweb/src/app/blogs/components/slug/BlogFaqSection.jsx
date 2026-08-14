@@ -1,7 +1,8 @@
 import { HelpCircle, MessageCircleQuestion, Sparkles } from "lucide-react";
+import { VISIBLE_FAQ_LIMIT } from "./blogAnswerFirst";
 
 export default function BlogFaqSection({ items = [] }) {
-  const visibleItems = items.slice(0, 6);
+  const visibleItems = items.slice(0, VISIBLE_FAQ_LIMIT);
   if (!visibleItems.length) return null;
 
   return (

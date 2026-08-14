@@ -15,6 +15,9 @@ export async function generateMetadata() {
     description: "Follow local headlines, community updates, and city news from AltFTool News.",
     path: "/news/local",
     keywords: ["local news", "city updates", "community news"],
+    // Syndicated wire-service headlines the original publishers own — kept out
+    // of the index (follow stays on so internal links still pass through).
+    noindex: true,
   });
 }
 

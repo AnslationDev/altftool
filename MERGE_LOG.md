@@ -54,3 +54,7 @@ Full membership lists are at the bottom of this file.
 - codex/fix-route-quality-sitemap-20260806: merged, resolved 3 conflicts (package.json, scripts/generate-route-quality-report.mjs, scripts/lib/rendered-sitemap.mjs — all kept ours; theirs' version of generate-route-quality-report.mjs was byte-identical to the merge base, i.e. it made no changes to that file at all, and ours' modular 4-lib-module architecture — rendered-route-policies/route-quality-policy/sitemap-coverage-policy, all already present from the reconcile-all-branches merge — is a clear superset)
 - codex/seo-strict-checker-fix-20260806: merged clean
 - codex/route-quality-memory-20260806: merged clean
+- seo/homepage-faq-schema: skipped, already ancestor
+- origin/claude/silly-shirley-5282cc: skipped, already ancestor
+- perf/embed-picker-payload: skipped, already ancestor
+- seo/aeo-integrity-and-answer-first: skipped, already ancestor

@@ -56,12 +56,18 @@ export default function BlogTableOfContents({
 
   if (!headings.length) return null;
 
-  const handleClick = (id) => {
+  // Entries are real in-page anchors so the server-rendered HTML carries a
+  // crawlable outline of the article. The handler only upgrades the jump to a
+  // smooth, offset scroll — anchors keep working without JavaScript.
+  const handleClick = (event, id) => {
     const el = document.getElementById(id);
     if (!el) return;
+
+    event.preventDefault();
     const offset = 88; // adjust for sticky nav if any
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: "smooth" });
+    window.history.replaceState(null, "", `#${id}`);
   };
 
   return (
@@ -126,11 +132,10 @@ export default function BlogTableOfContents({
 
             return (
               <li key={id}>
-                <button
-                  type="button"
-                  onClick={() => handleClick(id)}
+                <a
+                  href={`#${id}`}
+                  onClick={(event) => handleClick(event, id)}
                   aria-current={isActive ? "location" : undefined}
-                  aria-label={`Jump to ${text}`}
                   title={text}
                   className={cx(
                     "line-clamp-2 w-full rounded-[6px] border-l-2 py-1.5 pr-2 text-left leading-snug transition",
@@ -142,7 +147,7 @@ export default function BlogTableOfContents({
                   )}
                 >
                   {text}
-                </button>
+                </a>
               </li>
             );
           })}

@@ -30,6 +30,7 @@ const solar = {
   "headline": "Turn your roof into a working power plant",
   "headlineAccent": "a working power plant",
   "subheadline": "A solar array converts daylight into electricity used on site, cutting what a home draws from the grid and, with storage, keeping essential circuits alive when the grid goes down. Good systems start with a shade study and twelve months of actual kWh consumption, not a panel count pulled from a brochure.",
+  "answer": "A residential solar array converts daylight into electricity used on site, cutting what the home draws from the grid; adding battery storage is what keeps selected circuits running during an outage, because a grid-tied system without storage shuts down when the grid does. Sizing should start from a shade study and twelve months of actual kWh use — panels commonly carry 25-30 year output warranties, string inverters last 10-15 years, microinverters 20-25 and lithium batteries 10-15.",
   "heroPoints": [
     "Shade and orientation modeled first",
     "Flashed, engineered roof penetrations",

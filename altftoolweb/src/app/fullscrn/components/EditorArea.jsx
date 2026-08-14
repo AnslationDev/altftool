@@ -238,12 +238,17 @@ const EditorArea = forwardRef(({
           )}
           
           {activeTab === "Clock" && (
-            <h1 
+            /* Not a heading: this is a readout. As an <h1> it competed with the
+               page's real <h1> in components/Header.jsx and told crawlers the
+               page was titled "10:00". */
+            <div
+              role="timer"
+              aria-live="off"
               style={{ color: textColor }}
               className="text-[150px] font-bold font-mono tracking-tighter"
             >
               {activeSub === "Time" ? formatTime(time).toUpperCase() : (activeSub === "Stopwatch" ? formatStopwatch(stopwatchTime) : formatCountdown(countdownSeconds))}
-            </h1>
+            </div>
           )}
         </div>
       </div>

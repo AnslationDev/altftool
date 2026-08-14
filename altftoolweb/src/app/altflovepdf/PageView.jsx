@@ -176,7 +176,13 @@ export default function AltfPdfHomepage() {
               </span>
               <h1>Online PDF Converter</h1>
             </div>
-            <p className="altf-reference-sub">Easily convert to and from PDF in seconds.</p>
+            {/* Answer-first: a self-contained sentence stating what this hub is
+                and where the processing happens. */}
+            <p className="altf-reference-sub">
+              Altf❤️PDF is a free set of {TOOLS.length} PDF and image tools that run inside
+              your browser — merge, split, compress, convert, protect and edit PDFs
+              without uploading a file or creating an account.
+            </p>
             <button
               type="button"
               className="altf-choose-file-btn"

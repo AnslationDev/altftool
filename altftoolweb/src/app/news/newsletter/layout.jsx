@@ -2,8 +2,8 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-  title: "News Newsletter | AltFTool News",
-  description: "Subscribe to AltFTool News briefings for local updates, breaking alerts, and topic-based news digests.",
+  title: "News Newsletter – Coming Soon | AltFTool News",
+  description: "The AltFTool News email briefing has not launched. Sign-ups are not open yet.",
   path: "/news/newsletter",
   keywords: ["news newsletter", "daily briefing", "breaking alerts"],
 });

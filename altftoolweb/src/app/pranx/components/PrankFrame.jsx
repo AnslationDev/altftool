@@ -7,7 +7,7 @@ import { secondaryButton } from "./uiClasses";
 import AdSidebar from "@/ads/layouts/shared/AdSidebar";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 
-export default function PrankFrame({ prank, children, wide = false }) {
+export default function PrankFrame({ prank, children, wide = false, answer, explainer = null }) {
   const Icon = prank.icon;
   const image = getPrankImage(prank);
   return (
@@ -36,7 +36,7 @@ export default function PrankFrame({ prank, children, wide = false }) {
             <div className="min-w-0">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-indigo-200">{prank.category}</p>
               <h1 className="mt-2 break-words text-3xl font-black leading-tight sm:text-5xl">{prank.title}</h1>
-              <p className="mt-3 max-w-4xl break-words text-sm leading-6 text-slate-300 sm:text-base">{prank.description}</p>
+              <p className="mt-3 max-w-4xl break-words text-sm leading-6 text-slate-300 sm:text-base">{answer || prank.description}</p>
             </div>
           </div>
           <div className="relative min-h-[210px] border-t border-white/10 bg-slate-900 lg:border-l lg:border-t-0">
@@ -51,6 +51,7 @@ export default function PrankFrame({ prank, children, wide = false }) {
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 min-w-0">
           {children}
+          {explainer}
           <div className="mt-8">
             <AdBottomBanner ad={{ bannerUrl: "/banners/rectangle-long.png", redirect: "#" }} />
           </div>
