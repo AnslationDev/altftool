@@ -1,4 +1,12 @@
 const seo = {
+  title: "View to Subscriber Ratio Calculator (Per 1,000 Views)",
+  metaDescription:
+    "Turn views and new subscribers into a per-1,000-views rate, see the views needed for a subscriber goal, and compare with your previous period.",
+  steps: [
+    "Enter Views and Subscribers gained for the period, plus the optional previous-period views and subscribers to enable the trend comparison.",
+    "Set your Subscriber goal, Current subscriber count and the Planned views to project from.",
+    "Read the Subscribers per 1,000 views figure with conversion rate, views still needed for the goal and change vs the previous period, then press Copy result.",
+  ],
   intro:
     "View To Subscriber Ratio Calculator converts a period's views and new subscribers into a single rate — subscribers gained per 1,000 views — using the same per-thousand base as CPM and RPM. It also inverts that rate into views per subscriber, projects how many views your current conversion needs to reach a subscriber goal, and compares the period with the one before it. Useful for creators deciding whether a traffic spike actually grew the channel or just inflated the view count.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Regex Library: 5 Patterns from HTML5 to RFC 5322",
+  metaDescription:
+    "Five copy-ready email validation regexes ranked by strictness — including the WHATWG HTML5 browser pattern — each with a live tester and honest limits.",
+  steps: [
+    "Pick one of the five patterns from the 'Strictness level' dropdown — from a minimal sanity check up to the WHATWG HTML5 browser regex and an RFC 5322-flavoured pattern.",
+    "Type an address into 'Test an email address' — the verdict flips between 'Match' and 'No match' live, with the pattern's accept and reject examples listed underneath.",
+    "Click 'Copy regex' to copy the selected pattern as /source/flags, and check 'Known limitations of this pattern' before shipping it.",
+  ],
   intro:
     "This library gives you five copy-ready regular expressions for email validation, ordered by strictness — from a minimal one-@ sanity check to the exact WHATWG HTML5 browser regex and an RFC 5322-flavoured pattern with quoted local parts and IPv4 domain literals. Each pattern comes with a live tester, example accept/reject strings, and an honest list of what it cannot catch, so developers can pick the right strictness for a signup form, an API validator or a data-cleaning script.",
   useCases: [

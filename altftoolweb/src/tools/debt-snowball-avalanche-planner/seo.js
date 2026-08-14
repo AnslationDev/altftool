@@ -1,4 +1,12 @@
 const seo = {
+  title: "Debt Snowball vs Avalanche Planner — See the Interest Gap",
+  metaDescription:
+    "Runs both payoff orders month by month with rolled-over minimums — months to debt-free, total interest and the exact rupee gap between the two.",
+  steps: [
+    "Fill each debt's 'Debt name', 'Outstanding balance (INR)', 'Interest rate (% per year)' and 'Minimum monthly payment (INR)', adding rows with 'Add another debt'.",
+    "Enter 'Total you can put towards debt each month (INR)' — the planner simulates both orders month by month, rolling every cleared minimum into the next target.",
+    "Compare the Avalanche and Snowball cards (time to debt-free, interest, total paid) and the two payoff-order lists, then press 'Copy result'.",
+  ],
   "intro": "Debt Snowball vs Avalanche Planner runs a month-by-month simulation of every loan and card you owe under two payoff orders: smallest balance first (snowball) and highest interest rate first (avalanche). Minimum payments go out on all debts, the leftover budget attacks one target, and each cleared minimum rolls into the next debt. You get months to debt-free, total interest and the exact payoff sequence for both strategies, so the choice is made on numbers rather than folklore.",
   "useCases": [
     "Decide whether to clear a 42% credit card first or the small consumer-durable EMI that would be gone in four months.",

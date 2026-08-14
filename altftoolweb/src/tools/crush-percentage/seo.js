@@ -1,4 +1,7 @@
 const seo = {
+  title: "Crush Percentage Quiz – Names + How They Act Around You",
+  metaDescription:
+    "A fun crush test scoring 15–99% from your two names plus four questions about how they act — who texts first, one-on-one plans — with a copyable report.",
   intro:
     "Crush Percentage is an entertainment quiz that combines a deterministic hash of the two names with a four-question read on how your crush actually behaves around you, producing a single score between 15% and 99%. It is for anyone trying to make sense of mixed signals — who texts first, whether they remember small things, whether one-on-one plans ever get suggested. The result comes with a verdict band and a short list of suggested next steps you can copy or download as a text report.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ratio Calculator: Simplify, Solve & Split Ratios",
+  metaDescription:
+    "Simplify a ratio by GCD (1920:1080 → 16:9), solve 3:4 = 12:? for the missing term, or split a total like 2:3:5 — with shares and percentages shown.",
+  steps: [
+    "Pick a mode — 'Simplify a ratio', 'Find a missing term' or 'Split a total' — and fill its fields: First/Second/optional Third term, the known ratio plus new first term, or a Total to divide and a ratio like 2:3:5.",
+    "The result updates live: simplify divides every term by the GCD after scaling decimals to whole numbers (1.5:2 becomes 3:4), missing-term mode shows the scale factor and cross product check, split shows the value of one part.",
+    "Read each share with its percentage bar under 'Breakdown by part', then press Copy result to copy the full working as text.",
+  ],
   "intro": "Ratio Calculator handles the three things people actually need from ratios: reducing one to its simplest whole-number form, solving a proportion like 3 : 4 = 12 : ? for the missing term, and dividing a total in a given ratio such as 2 : 3 : 5. It reduces using the greatest common divisor and scales decimal terms to whole numbers first, so 1.5 : 2 correctly becomes 3 : 4. Every mode shows the working — scale factor, sum of parts, value of one part and each term's percentage share.",
   "useCases": [
     "Reduce a screen or image ratio like 1920 : 1080 down to 16 : 9 before setting a canvas size.",

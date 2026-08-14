@@ -1,4 +1,7 @@
 const seo = {
+  title: "Batch Generation Tool – Make 10,000 SKUs or Codes",
+  metaDescription:
+    "Expand one pattern like ALT-{00000} into up to 10,000 sequential or random values, then export as batch-data.txt, .csv or .json — all in your browser.",
   intro:
     "The Batch Generation Tool expands one pattern into up to 10,000 finished values at once, filling tokens like {00000}, {N}, {A}, {a}, {R} and {YYYY} on every row. Pick Sequential, Text Pattern, Random or Custom List, set the range, and the output recomputes live as you type — the Generate Data button exists to re-roll the random tokens, not to start a job. It is built for people who keep hand-typing near-identical strings: asset tags, usernames, SKUs, voucher codes, filenames.",
   useCases: [

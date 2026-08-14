@@ -1,4 +1,12 @@
 const seo = {
+  title: "SHA-256 Hash Generator — 64-Hex Digest, Computed Locally",
+  metaDescription:
+    "Paste text and get its SHA-256 digest as 64 hex characters, computed with the browser's native Web Crypto — matches sha256sum and OpenSSL output.",
+  steps: [
+    "Type or paste your text into the Input box — it is UTF-8 encoded before hashing, and 'Load sample' fills in the example 'hello world'.",
+    "The Result box updates live as you edit, with no convert button: the digest comes from the browser's own crypto.subtle.digest('SHA-256') call.",
+    "Press Copy next to Result to copy the 64-character lowercase hex hash, or Clear above the Input box to start over.",
+  ],
   intro:
     "This tool computes the SHA-256 digest of any text you paste — a 256-bit value shown as 64 lowercase hexadecimal characters — using the browser's native Web Crypto engine. Your text is encoded as UTF-8 before hashing, so the result matches what sha256sum, OpenSSL, Python's hashlib or a Node crypto call would return for the same bytes. It is built for developers verifying a checksum, an API signature or a stored digest without pasting the value into someone else's server.",
   useCases: [

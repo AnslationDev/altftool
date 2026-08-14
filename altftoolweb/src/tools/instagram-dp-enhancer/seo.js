@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram DP Maker — Circle Crop, Filters & Story Ring",
+  metaDescription:
+    "Crop any photo to Instagram's circle at 1080x1080, add the orange-to-purple ring plus 8 filters, and export a PNG — all in your browser.",
+  steps: [
+    "Drop your photo on the upload area or click to upload (JPG, PNG, WebP) — it is drawn into a circle on the 1080 x 1080 canvas.",
+    "Frame it with the Zoom (50-250%), X Offset and Y Offset sliders, pick one of the eight Filters (Normal through Clarendon, Moon and Crema), adjust Brightness, Contrast and Saturation, and choose a Story Ring such as IG Classic.",
+    "Press Download to save the finished picture as instagram-dp-enhanced.png; Reset restores the default settings.",
+  ],
   intro:
     "Instagram DP Enhancer crops any photo to a circle on a 1080 x 1080 canvas, applies a filter and manual brightness, contrast and saturation adjustments, then rings it with a gradient border — including the orange-to-purple Instagram ring — and exports a PNG. You control zoom and horizontal and vertical position so your face lands inside the circle instead of being cut by an automatic centre crop. Everything is drawn on a canvas in your browser, so the photo is never uploaded.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Time Zone Meeting Planner: Working-Hours Overlap",
+  metaDescription:
+    "Grades every slot on a chosen day green, amber or red per participant, using the IANA time zone database for DST and 30- and 45-minute offsets.",
+  steps: [
+    "Pick the Meeting date, length and working hours, then add up to 8 zones from 'Add a participant's time zone'.",
+    "Scan the Every workable slot table — green inside working hours, amber up to an hour outside, red unworkable, with +1d and -1d date shifts marked.",
+    "Read the Best slot with each zone's local time and its score, then press Copy result to share it.",
+  ],
   intro:
     "A time zone meeting planner lines up a single day across every participant's zone and shows which start times fall inside working hours for all of them. It grades each slot per zone — inside working hours, spilling up to an hour either side, or unworkable — and ranks the day by the total. Conversions use the IANA time zone database built into your browser, so daylight saving changes, India's UTC+05:30 and Nepal's UTC+05:45 come out right without any manual offset arithmetic.",
   useCases: [

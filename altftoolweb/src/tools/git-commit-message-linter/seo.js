@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Commit Message Linter: Conventional Commits Check",
+  metaDescription:
+    "Lint a commit message against Conventional Commits v1.0.0 and commitlint config-conventional rules, with each violation named and a fixed message to copy.",
+  steps: [
+    "Paste your message into the \"Commit message\" box and pick a header length limit — the commitlint default of 100 characters or the classic 50.",
+    "Tick \"Require a scope, e.g. feat(api): …\" if your team mandates scopes.",
+    "Read the Passes/Fails verdict with each violation cited by rule name, then click \"Copy fixed message\" to take the corrected commit.",
+  ],
   intro:
     "This linter checks a git commit message against the Conventional Commits v1.0.0 specification and the default rules of commitlint's config-conventional preset: header shape (type(scope)!: description), allowed types, subject case and punctuation, header length, the blank line before the body, body line length and BREAKING CHANGE footers. It reports each violation with the rule name and produces a suggested corrected message, so you can fix a commit before commitlint or CI rejects it.",
   useCases: [

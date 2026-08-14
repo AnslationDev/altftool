@@ -1,4 +1,12 @@
 const seo = {
+  title: "Treadmill Pace Converter: Speed & Incline to Min/Km Pace",
+  metaDescription:
+    "Convert belt speed and incline to min/km and min/mile pace, the flat and outdoor equivalents, plus METs and calories from the ACSM equations.",
+  steps: [
+    "Enter the \"Belt speed\" and pick km/h or mph under \"Speed unit\".",
+    "Set the \"Incline (% grade)\" — type it or tap the 0/1/2/5/10% preset buttons — plus \"Body weight (kg)\" and \"Session length (minutes)\".",
+    "Read the belt pace per km and per mile, the same-effort flat and outdoor speeds, METs and session calories, then click \"Copy result\".",
+  ],
   intro:
     "The Treadmill Pace Converter turns a belt speed and incline into running pace per kilometre and per mile, and into the flat-belt and outdoor speeds that cost the same oxygen. It uses the ACSM metabolic equations for walking and running to estimate VO2, METs and calories, and applies the Jones and Doust finding that a 1% treadmill grade matches the energy cost of level outdoor running. Built for runners who train indoors but race outside and need the two paces to line up.",
   useCases: [

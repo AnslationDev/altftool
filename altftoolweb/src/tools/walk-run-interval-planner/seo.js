@@ -1,4 +1,12 @@
 const seo = {
+  title: "Run-Walk Interval Calculator: Finish Time & True Pace",
+  metaDescription:
+    "Enter run and walk intervals, both paces and a distance to get cycle count, finish time, true average pace and what the walk breaks cost you.",
+  steps: [
+    "Set the \"Target distance (km)\" and pick a level preset under \"Where you are right now\", or type custom \"Run interval (seconds)\" and \"Walk interval (seconds)\".",
+    "Enter your \"Running pace (per km)\" and \"Walking pace (per km)\" in minutes and seconds.",
+    "Read the \"Estimated finish time\", the cycle sheet and the \"Walk breaks cost\" versus running straight through, then click \"Copy plan\".",
+  ],
   intro:
     "The Walk Run Interval Planner takes a run-walk ratio, your running and walking paces and a target distance, and returns the exact number of cycles, the finish time and the true average pace. It works by computing the distance covered in one run interval plus one walk interval, dividing the target distance by that cycle, and timing the leftover stretch. Useful for anyone following a run-walk-run programme, coming back from injury, or using timed walk breaks in a long run.",
   useCases: [

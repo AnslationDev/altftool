@@ -1,4 +1,12 @@
 const seo = {
+  title: "FD Maturity Calculator with TDS (Quarterly Compounding)",
+  metaDescription:
+    "Maturity value with quarterly compounding, year-wise section 194A TDS at the ₹50,000/₹1 lakh limits, and the post-tax return at your slab rate.",
+  steps: [
+    "Enter Deposit amount (INR), Interest rate (% per year) and the Term in years and extra months, then set Your marginal slab rate and the TDS status checkboxes (senior, PAN given to the bank, Form 15G / 15H filed)",
+    "The calculator compounds quarterly and tests each year's credited interest against your TDS threshold, filling the Year / Opening / Interest / TDS / Closing schedule",
+    "Read the Maturity value, Value after tax and Post-tax annual return rows, then press Copy result to copy the summary",
+  ],
   intro:
     "This calculator returns the maturity value of a cumulative bank fixed deposit using the quarterly compounding Indian banks actually apply — P x (1 + r/4)^(4n) — and then shows the interest credited in each year, the tax deducted at source under section 194A, and what the deposit is worth after tax at your slab rate. It is for depositors who want the post-tax number rather than the headline rate, because a 7% deposit yields 7.19% effective before tax and much less after it.",
   useCases: [

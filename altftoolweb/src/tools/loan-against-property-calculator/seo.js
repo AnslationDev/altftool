@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Against Property Calculator: LTV & FOIR Eligibility",
+  metaDescription:
+    "Tests both lender limits — the LTV cap on your property and the EMI your FOIR allows — shows which binds, plus EMI, total interest and post-loan FOIR.",
+  steps: [
+    "Pick a 'Property type' — each option shows its typical LTV, from Residential 70% to Vacant land 50% — then enter 'Market value of property (INR)' and any 'Existing loan outstanding on this property (INR)'.",
+    "Fill 'Net monthly income (INR)', 'Monthly rental income (INR)' (only 75% of rent is counted), 'Existing monthly EMIs (INR)', 'FOIR limit (%)', 'Interest rate (% per year)' and 'Tenure (years)' — the result recomputes as you type, with no Calculate button.",
+    "Read the 'Eligible loan amount' headline, the Property-based and Income-based limit cards with the binding one highlighted, the EMI, total interest and 'FOIR after this loan'; 'Copy result' copies the summary.",
+  ],
   "intro": "Loan Against Property Calculator estimates how large a LAP you can get by testing the two limits every lender applies: the loan-to-value cap on the mortgaged property and the EMI your income can service inside the lender's FOIR ceiling. It reports both limits, tells you which one is binding, and then shows the EMI, total interest and your resulting FOIR. Built for salaried and self-employed borrowers weighing a mortgage loan for business capital, education or debt consolidation.",
   "useCases": [
     "Find out whether a 1 crore residential property can support the 50 lakh you need for business working capital.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sprint Goal Generator with Velocity Sanity Check",
+  metaDescription:
+    "Draft a one-sentence Sprint Goal, compute focused capacity via a focus factor, and check committed points against 0.8-1.1x of average velocity.",
+  steps: [
+    "Fill in 'The goal' — Sprint name, Who benefits, 'The one outcome', the Metric that proves it, and its Baseline and Target values.",
+    "Enter 'Capacity and commitment': Sprint length (weeks) from 1 to 4, Developers on the team, Nominal hours per day, Focus factor (0-1), Average velocity (points) and Committed points, plus the in-scope, not-this-Sprint and risks lists.",
+    "Read the Sprint goal focus score out of 100, the Pass/Fix results under Goal checks, and the commitment ratio band, then press Copy sheet to copy the full markdown sheet.",
+  ],
   intro:
     "A Sprint Goal is the single objective for one Sprint — the 2020 Scrum Guide's words — and this generator drafts it as one sentence, attaches a baseline-to-target measure, and checks the commitment against the team's average velocity. Focused capacity is computed as developers × working days × hours per day × focus factor, and a commitment between 0.8x and 1.1x of average velocity is treated as healthy. It is for Scrum teams who want the goal on a card, not buried in a backlog.",
   useCases: [

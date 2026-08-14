@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vertical Video Reframer: Crop 16:9 to 9:16 (1080x1920)",
+  metaDescription:
+    "Crop landscape video to 9:16 with a left, centre or right anchor and export a 1080x1920 H.264/AAC MP4 — processed in your browser, nothing uploaded.",
+  steps: [
+    "Choose your landscape clip under Source file and set the Horizontal anchor to center, left or right",
+    "Press Process locally — an in-browser FFmpeg build crops a height × 9/16 window at your anchor and scales it to 1080x1920",
+    "The finished H.264/AAC MP4 downloads automatically as altftool-smart-vertical-video-reframer.mp4",
+  ],
   intro:
     "The Smart Vertical Video Reframer crops landscape footage to a 9:16 vertical frame using an anchor you choose — left, centre or right — then scales the result to 1080x1920 and re-encodes it as H.264 video with AAC audio in an MP4. It is for editors and creators who need a Reels, Shorts or TikTok cut of a wide clip without opening a full NLE. The crop keeps the full original height and takes a window of height x 9/16 across the width, so nothing is stretched or letterboxed.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "BTU to Ton Converter - AC Cooling Capacity and COP",
+  metaDescription:
+    "Convert cooling capacity between BTU/h, tons (12,000 BTU/h each), kW and kcal/h, with the wattage drawn at your COP and the matching EER.",
+  steps: [
+    "Enter the Cooling capacity and its Unit - Tons of refrigeration (TR), BTU per hour, Thousand BTU/h (MBH), Watts, Kilowatts or Kilocalories per hour - or tap a size chip such as 1.5 TR. [pages/index.jsx:96-153; lib.js:39-49]",
+    "Set the 'COP (cooling watts per watt of input)' anywhere from 1 to 10. [pages/index.jsx:125-139]",
+    "Read the tons headline with the closest standard split AC size, every unit's equivalent, and the Electrical input in watts at that COP, then press Copy result. [pages/index.jsx:166-241]",
+  ],
   intro:
     "A ton of refrigeration is defined as 12,000 BTU per hour — the rate needed to melt one short ton of ice in 24 hours — which this converter uses to move a cooling capacity between tons, BTU/h, watts, kilowatts and kcal/h. Because the International Table BTU is exactly 1,055.05585262 J, one ton works out to 3,516.85 W or 3,024 kcal/h. It also divides capacity by COP to show the electrical input the same machine would draw, since capacity is heat moved and not power consumed.",
   useCases: [

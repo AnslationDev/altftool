@@ -1,4 +1,7 @@
 const seo = {
+  title: "Kebab Case Converter — Slugs, snake_case & dot.case",
+  metaDescription:
+    "Turn any phrase into kebab-case, snake_case and dot.case at once — splits on non-alphanumerics, lowercases and collapses separators for clean URL slugs.",
   intro:
     "The Kebab Case Converter rewrites a phrase as kebab-case by splitting it on every run of characters outside ASCII A-Z, a-z and 0-9, lowercasing each surviving piece and joining them with single hyphens. The same word list is also shown as snake_case and dot.case, so one paste covers the three naming conventions most projects switch between. It is for developers naming CSS classes, URL slugs, branch names and config keys who want a consistent result instead of hand-hyphenating.",
   useCases: [

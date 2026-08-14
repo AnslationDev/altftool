@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Headline Prompt Builder (220-Character Budget)",
+  metaDescription:
+    "Split LinkedIn's 220-character headline into role, niche and proof segments, measure your draft against the limit and get an AI prompt plus About prompt.",
+  steps: [
+    "Fill in what you do today, what you want to be found for, one proof point with a number and your comma-separated search terms.",
+    "Choose the segment count, separator and front-load length, and paste a \"Draft headline to measure (optional)\" against the 220-character limit.",
+    "Check the characters-left counter and which keywords land in the visible opening, then click \"Copy prompt\" for the headline and About-section prompt.",
+  ],
   intro:
     "This builder divides LinkedIn's 220-character headline field into the positioning segments you choose — role, niche, proof, call to action — and writes an AI prompt that carries that exact character budget, your search keywords and your goal into the instruction. It also measures a draft headline against the limit and shows the opening characters that survive truncation in search results and comment threads. The same run produces a second prompt for the 2,600-character About section.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Crop to Aspect Ratio Calculator with ffmpeg Crop Filter",
+  metaDescription:
+    "Get the largest crop that fits a target ratio — width, height and offsets snapped to even pixels for 4:2:0 video, plus a ready ffmpeg crop string.",
+  steps: [
+    "Enter 'Source width (px)' and 'Source height (px)' — or tap a preset like 3840 x 2160 — and set the target ratio parts or a chip such as 9:16 vertical or 2.39:1 scope.",
+    "Choose 'Crop position' (Centre, Top / left, Bottom / right) and keep 'Snap to even pixels (4:2:0 video)' ticked for encoder-safe values.",
+    "Read the Crop rectangle size and offsets, the pixels-kept percentage, and copy the ffmpeg -vf crop line with 'Copy result'.",
+  ],
   intro:
     "This calculator returns the largest rectangle inside a source frame that already matches a target aspect ratio, so the picture is reframed by cutting rather than stretching. If the source is wider than the target it keeps full height and sets crop width to height times the target ratio; if it is taller it keeps full width and sets crop height to width divided by the ratio. It also snaps the rectangle to even pixels for 4:2:0 encoding and prints the matching ffmpeg crop filter.",
   useCases: [

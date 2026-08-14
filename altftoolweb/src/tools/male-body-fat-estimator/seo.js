@@ -1,4 +1,12 @@
 const seo = {
+  title: "Male Body Fat Calculator: Navy Tape & 3-Site Skinfold",
+  metaDescription:
+    "Estimate men's body fat three ways — US Navy tape, Jackson-Pollock 3-site skinfold and Deurenberg BMI — with fat mass, lean mass and your ACE category.",
+  steps: [
+    "Pick the Method to headline, then enter Age, Height (cm), Weight (kg), Neck circumference (cm), Waist at the navel (cm) and the Chest, Abdominal and Thigh skinfolds (mm)",
+    "All three published equations are computed side by side — US Navy circumference, Jackson-Pollock 3-site with the Siri conversion, and Deurenberg BMI",
+    "Read the body fat percentage with its Category, Fat mass and Lean mass rows, then press Copy result to save the estimate",
+  ],
   intro:
     "Male Body Fat Estimator converts tape measurements or caliper skinfolds into a body-fat percentage using three published equations: the US Navy circumference method, the Jackson-Pollock 3-site skinfold equation with the Siri density conversion, and the Deurenberg BMI formula as a cross-check. It reports fat mass, lean mass and the American Council on Exercise category for men. All three are estimates — expect three to four percentage points of disagreement with a DXA scan.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Percentage to UK Degree Class (First, 2:1, 2:2)",
+  metaDescription:
+    "Convert an Indian degree percentage to a UK First, 2:1, 2:2 or Third using published equivalency thresholds, with lower cut-offs for IIT/NIT graduates.",
+  steps: [
+    "Enter your \"Overall degree percentage\" (0-100, decimals allowed).",
+    "Pick the institution type — \"Recognised Indian university (standard list)\" or \"Premier institution (IIT / NIT / IIM / top NIRF-ranked)\".",
+    "Read the UK class equivalent with the marks you need to reach the next band, then click \"Copy result\".",
+  ],
   intro:
     "This converter maps an Indian degree percentage onto the UK honours classes — First, 2:1 (Upper Second), 2:2 (Lower Second) and Third — using the equivalency thresholds UK universities publish for Indian qualifications, most commonly 60% for a 2:1 and 70% for a First, with a roughly 5-point concession for premier institutions like IITs and NITs. It is built for Indian graduates checking whether they meet a UK master's programme's '2:1 or equivalent' entry requirement before applying.",
   useCases: [

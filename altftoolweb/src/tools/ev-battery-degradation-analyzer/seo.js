@@ -1,4 +1,12 @@
 const seo = {
+  title: "EV Battery Degradation Analyzer: kWh Lost per 10,000 km",
+  metaDescription:
+    "Paste dated capacity readings (date | usable kWh | range | odometer) and track state of health as % of new, with kWh lost per 10,000 km driven.",
+  steps: [
+    "Paste one reading per line into Battery observations as date | estimated usable kWh | displayed range km | odometer km, and set New usable capacity (kWh)",
+    "The analyzer converts every row to a percentage of the new capacity and tabulates Date, Usable kWh, % of new, Range km and Odometer",
+    "Read the latest capacity percentage plus the Capacity change, Odometer span and Change per 10,000 km rows, then use Copy or Download to save the summary",
+  ],
   intro:
     "This analyzer turns a log of your own EV battery observations — date, usable kWh, displayed range and odometer reading — into a state-of-health trend: each entry is expressed as a percentage of the pack's new usable capacity, and the first and last entries give the total kWh lost and the loss normalised per 10,000 km driven. It is for owners tracking whether their pack is fading faster than expected, using their own repeated readings rather than a one-off dashboard number.",
   useCases: [

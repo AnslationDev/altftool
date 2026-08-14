@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelance Hourly Rate Calculator – From Take-Home Pay",
+  metaDescription:
+    "Work backwards from target take-home pay: add tax, expenses and a profit buffer, divide by real billable hours, and get hourly, day and monthly targets.",
+  steps: [
+    "Enter your Target take-home pay (INR / year), Business expenses and 'Tax and contributions (%)', then Hours worked per week, Holiday weeks off and 'Sick / admin weeks off'.",
+    "Set 'Billable share of your time (%)' — most solo freelancers land between 50% and 70% — and an optional Profit buffer (%); the rate recalculates as you type.",
+    "Read 'Charge at least' as your hourly rate with the matching day rate, Monthly invoicing target and a 'Where the money goes' breakdown, then press Copy result.",
+  ],
   "intro": "Freelance Hourly Rate Calculator works backwards from the income you want to keep to the rate you must charge. It grosses your target take-home up for tax and contributions, adds annual business expenses and an optional profit buffer, then divides by the hours you can genuinely bill after holidays, sick days and unpaid admin. The output is an hourly rate, a matching day rate and a monthly invoicing target — the numbers freelancers, consultants and contractors need before quoting.",
   "useCases": [
     "Set an opening rate when moving from a salaried job to full-time freelancing.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paint Cost per Sq Ft Calculator India: Material + Labour",
+  metaDescription:
+    "Splits a painter's per-sq-ft quote into paint, primer, putty and labour, compares three emulsion tiers and finds the cheapest 1-20 L pack mix.",
+  steps: [
+    "Enter 'Paintable area (sq ft)', 'Coats of finish paint', 'Primer coats' and your 'Labour rate (per sq ft)', and tick 'Include wall putty' if it is in scope.",
+    "Set the per-litre rates under 'Paint price per litre by tier' for Economy, Premium and Luxury, then pick one in 'Tier to break down below' — everything recalculates as you type.",
+    "Read the 'All-in cost per square foot' figure, the 'Tier comparison' table and the cheapest 1 L/4 L/10 L/20 L pack combination; 'Copy result' copies the full breakdown.",
+  ],
   intro:
     "This calculator works out the all-in painting cost per square foot as (paint + primer + putty + labour) divided by the paintable area, and shows it side by side for economy, premium and luxury interior emulsion. Paint volume comes from the spreading rate on the tin — litres = area x coats / spreading rate — and the paint is then bought in the cheapest combination of 1 L, 4 L, 10 L and 20 L packs. It is aimed at homeowners checking a painter's quote and at contractors pricing a job.",
   useCases: [

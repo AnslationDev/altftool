@@ -1,4 +1,12 @@
 const seo = {
+  title: "Testosterone Lifestyle Checklist: 17 Habits Scored",
+  metaDescription:
+    "Score 17 evidence-weighted habits — sleep, waist, training, diet, alcohol, stress — into a percent with category breakdown and top gaps. Not a blood test.",
+  steps: [
+    "Answer the seventeen habit questions grouped under Sleep, Body composition, Training, Nutrition, Substances and Stress, choosing 'Yes, consistently', 'Some of the time' or 'No / rarely' for each.",
+    "Watch the Habit score recompute as you answer — a percentage of evidence-weighted points with a band label and per-category scores.",
+    "Read 'Where the biggest gains are' for the habits costing you the most points and 'Worth raising with a clinician' for medical flags, then press Copy result for a text summary.",
+  ],
   intro:
     "Testosterone Lifestyle Checklist scores seventeen daily habits that published research links to androgen status — sleep duration, waist size, resistance training, dietary fat, alcohol, medication and stress — weighting each by how consistent the evidence is. It returns a percentage, a breakdown by category and the two or three gaps worth fixing first. It measures habits, not hormones: only a morning blood test ordered by a clinician can tell you your actual testosterone level.",
   useCases: [

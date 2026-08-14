@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Eligibility Calculator: FOIR-Based Estimate",
+  metaDescription:
+    "Applies the FOIR test lenders run: assessed income minus EMIs, converted into a loan with the reducing-balance formula, plus tenure and FOIR tables.",
+  steps: [
+    "Enter Monthly net salary, other income and the share the lender counts, Existing EMIs and card dues, the FOIR limit (%), interest rate and tenure.",
+    "Tap a tenure chip from 5y to 30y or change the FOIR limit; the eligible EMI and loan recalculate instantly.",
+    "Read 'Loan you are eligible for' with the Eligibility-by-tenure and FOIR tables, then use Copy result for the text summary.",
+  ],
   intro:
     "The Loan Eligibility Calculator estimates how much a bank or NBFC would lend you before you apply. It takes your net salary and other counted income, subtracts every running EMI, applies the FOIR ceiling underwriters use, and converts the leftover EMI room into a loan amount using the reducing-balance present-value formula. Side tables show how the same EMI capacity translates across tenures and across different FOIR bands, so you can see exactly where the number comes from.",
   useCases: [

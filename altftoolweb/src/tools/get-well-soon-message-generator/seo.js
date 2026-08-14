@@ -1,4 +1,12 @@
 const seo = {
+  title: "Get Well Soon Message Generator in 6 Languages",
+  metaDescription:
+    "Get well messages by situation, relationship and tone in English, Hinglish, Hindi, Marathi, Bengali and Tamil, with character and SMS-part counts.",
+  steps: [
+    "Enter the name under Writing to, then pick They are your (Friend through Client) and What happened (Fever, flu or viral through Long-term or serious illness).",
+    "Choose the Language, a Tone and a Length, and set Messages to show (up to 6); press Shuffle for different wording of the same brief.",
+    "Copy any message card — each shows its character count, and the stats list the SMS encoding and SMS parts if sent as a text.",
+  ],
   intro:
     "Get Well Soon Message Generator builds a recovery message from four inputs: what happened, who the person is to you, the tone you want and the language. It covers fever and viral, general illness, accidents and fractures, surgery, hospital admission and long-term illness, in English, Hinglish, Hindi, Marathi, Bengali and Tamil. The light-hearted tone is deliberately refused for surgery, hospital stays and serious illness, because humour rarely reads the way it was intended there.",
   useCases: [

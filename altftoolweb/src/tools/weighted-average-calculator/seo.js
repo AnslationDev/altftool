@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weighted Average Calculator with Per-Item Contribution",
+  metaDescription:
+    "Enter value and weight pairs to get the weighted mean — weights need not total 100 — with each item's contribution and the plain average alongside.",
+  steps: [
+    "Type a Value and Weight into each item row — grade components, holdings or ratings; weights need not total 100.",
+    "Click Add item for more rows or Remove to drop one; the result recalculates as you type.",
+    "Read the weighted average with each item's contribution and share of total weight, plus the unweighted mean, then click Copy result.",
+  ],
   "intro": "Weighted Average Calculator computes the weighted mean of any set of value and weight pairs: it multiplies each value by its weight, adds those products, and divides by the total weight. Weights do not have to add up to 100 or 1 — they are normalised automatically — and each row shows how much it contributes to the final number. Handy for course grades with different component weights, portfolio returns, survey scores and any average where some items simply matter more than others.",
   "useCases": [
     "Combine assignment, mid-term and final exam scores that carry 20%, 30% and 50% of a course grade.",

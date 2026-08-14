@@ -1,4 +1,12 @@
 const seo = {
+  title: "ZIP Archive Surgeon: Remove Files Without Unzipping",
+  metaDescription:
+    "Lists every ZIP entry with size and CRC32 status, drops the entries you name, and downloads altftool-rebuilt.zip — rebuilt in your browser.",
+  steps: [
+    "Choose your ZIP under Local file(s) — it is parsed in the browser with JSZip and every entry is CRC32-checked as it is read.",
+    "Paste the exact entry paths to drop into 'Archive entry names to remove', comma- or newline-separated, then press Run local workbench.",
+    "Review the entry table of name, byte size, Readable or Encrypted-or-unreadable status and Keep/Remove; the rebuilt archive downloads as altftool-rebuilt.zip at DEFLATE level 6.",
+  ],
   intro:
     "The ZIP/TAR Archive Surgeon opens a ZIP file in your browser, lists every entry with its uncompressed size and readability status, and rebuilds the archive without the entries you name — recompressed with DEFLATE at level 6 and downloaded as altftool-rebuilt.zip. Entries are verified with a CRC32 check as they are read, so anything encrypted or corrupt is flagged rather than silently dropped. Note that the current build reads ZIP containers only; TAR archives are not parsed.",
   useCases: [

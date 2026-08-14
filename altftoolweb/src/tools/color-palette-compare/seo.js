@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Palette Compare – Two Palettes in One UI Mockup",
+  metaDescription:
+    "Render two five-role palettes into the same dashboard mockup and grade background/text contrast — AAA 7:1, AA 4.5:1, large-text 3:1.",
   intro:
     "Color Palette Compare puts two five-role palettes — primary, secondary, background, surface and text — side by side and renders each one into the same dashboard mockup, complete with cards, buttons and body copy. Under each mockup it reports the WCAG contrast ratio between that palette's background and text, graded AAA at 7:1, AA at 4.5:1 and large-text AA at 3:1. It is for designers deciding between two directions who want to judge them in a real layout instead of as loose swatches.",
   useCases: [

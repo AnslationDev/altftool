@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPSC, SSC & Banking Exams Mapped to Posts and Pay Levels",
+  metaDescription:
+    "See the posts behind UPSC CSE, SSC CGL, RRB NTPC, IBPS and RBI exams with 7th CPC pay level, entry basic pay and a one-line job profile for each.",
+  steps: [
+    "Type a post, exam or keyword into \"Search exams and posts\" — e.g. income tax, station master, PO.",
+    "Narrow the results with the \"Sector\" dropdown, or leave it on All sectors to compare across exams.",
+    "Compare each exam's post table — pay level, entry basic pay and one-line profile — and click \"Copy list\" to save the matches.",
+  ],
   intro:
     "This explorer maps India's major recruitment exams — UPSC CSE, SSC CGL and CHSL, RRB NTPC and Group D, IBPS PO and Clerk, RBI Grade B, UPSC CAPF and NDA — to the actual posts they lead to, showing each post's 7th Central Pay Commission pay level, entry basic pay and a one-line job profile. It is built for aspirants choosing which exam to prepare for, or filling post-preference forms, who want to compare what the jobs actually are before committing a year of preparation.",
   useCases: [

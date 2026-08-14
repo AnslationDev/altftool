@@ -1,4 +1,12 @@
 const seo = {
+  title: "Remove Silence from Audio – In-Browser FFmpeg Cutter",
+  metaDescription:
+    "Cuts pauses longer than 0.65 s below a -35, -40 or -45 dB threshold with FFmpeg WebAssembly in your browser. Audio never uploads; output is WAV.",
+  steps: [
+    "Choose your recording with the Source file picker — any audio file type is accepted.",
+    "Pick a Silence threshold of -35dB, -40dB or -45dB and press Process locally; the FFmpeg WebAssembly engine loads only then and deletes stretches quieter than the threshold for longer than 0.65 seconds.",
+    "The trimmed audio downloads automatically as altftool-silence-filler-word-cutter.wav, and the Local processing report panel shows the file details and FFmpeg log.",
+  ],
   intro:
     "The Silence & Filler-Word Cutter runs FFmpeg's silenceremove filter over an audio file in your browser, deleting any stretch that stays below your chosen loudness threshold for longer than 0.65 seconds. You pick the threshold — -35 dB, -40 dB or -45 dB — upload the recording, and get back a WAV with the dead air taken out and the speech left untouched. It is aimed at podcasters, course recorders and anyone whose raw take is padded with pauses they would otherwise trim by hand.",
   useCases: [

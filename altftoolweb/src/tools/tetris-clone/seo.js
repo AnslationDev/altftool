@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tetris Clone – Browser Game with SRS & 7-Bag Randomiser",
+  metaDescription:
+    "Playable browser Tetris: SRS wall kicks, 7-bag randomiser, hold, ghost piece and guideline scoring, plus a piece seed to replay identical runs.",
+  steps: [
+    "Set a numeric Piece seed and pick a Starting level from Level 1 — 1000 ms per row down to Level 15, then press New game to deal the seeded 7-bag piece order onto the 10 × 20 playfield.",
+    "Play with the arrow keys, Z/X or Up to rotate, Space to hard drop and C or Shift to hold — or the on-screen ←, ⟳, →, ↓, Drop and Hold pad on touch — and press P or Escape to pause.",
+    "Watch Score, Lines, Level, Pieces, Stack height and Drop every in the side panel, then press Copy result to copy your score, lines, level, pieces and seed for the run.",
+  ],
   intro:
     "This is a playable Tetris clone that runs entirely in the browser: seven tetrominoes fall onto a 10-column by 20-row matrix and you clear rows by filling them completely. It implements the behaviours competitive players expect — the Super Rotation System with wall kicks, a 7-bag randomiser that deals one of each piece every seven drops, a hold slot and a ghost outline. Scoring follows the Tetris Guideline: 100, 300, 500 and 800 points times the level for one, two, three and four rows.",
   useCases: [

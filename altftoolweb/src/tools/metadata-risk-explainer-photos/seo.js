@@ -1,4 +1,12 @@
 const seo = {
+  title: "Photo EXIF Metadata Risk Explainer: What Each Tag Reveals",
+  metaDescription:
+    "Tick the EXIF, GPS, IPTC and XMP fields a photo carries for a 0–100 exposure score, risky combinations and what to strip first. Nothing is uploaded.",
+  steps: [
+    "Choose the sharing context in 'Where is this photo going?' and optionally start from a preset — 'Straight off a phone', 'DSLR with owner details', 'Edited and exported' or 'Fully stripped'.",
+    "Tick the checkboxes under 'Which fields does the file carry?' — each field shows a risk weight out of 10, its real tag such as GPSLatitude 0x0002, and an example value.",
+    "Read the 'Exposure score' out of 100 with its band and advice, the 'Dangerous combinations' warnings, and the numbered 'What to do about it' removal plan; 'Copy result' copies the summary.",
+  ],
   intro:
     "This explainer maps every common photo metadata field — the EXIF tags in IFD0, the separate GPS IFD, IPTC blocks and Adobe XMP — to the specific thing it tells a stranger who downloads your picture. Tick the fields a file carries and it scores the exposure, flags combinations such as GPS coordinates beside a to-the-second capture time, and lists what to remove first. Nothing is uploaded: it is a reference model built from the Exif specification (CIPA DC-008), not a file scanner.",
   useCases: [

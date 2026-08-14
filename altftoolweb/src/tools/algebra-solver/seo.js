@@ -1,4 +1,7 @@
 const seo = {
+  title: "Algebra Solver with Steps: Linear, Quadratic, Systems",
+  metaDescription:
+    "Solve linear equations, quadratics via the discriminant and 2x2 systems by Cramer's rule - every step shown, with exact fractions beside decimals.",
   intro:
     "The Algebra Solver works out three kinds of equation and shows every line of the working: single-variable linear equations by isolating x, quadratics with the discriminant Δ = b² − 4ac and the quadratic formula, and two-equation systems in x and y by Cramer's rule. It reports the numeric answer alongside the exact fraction whenever the two differ, so 3x = 5 comes back as both 1.666667 and 5/3. It is aimed at students checking homework, where the steps matter more than the final number.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marks Needed Calculator – Hit Your Target Percentage",
+  metaDescription:
+    "Enter marks scored, papers remaining and a target percent to get the exact marks still needed, rounded up, plus whether the target is still reachable.",
+  steps: [
+    "Enter your Marks scored so far, the Maximum marks of exams already taken, the Maximum marks still to be examined and your Target overall percentage.",
+    "Read 'Marks still needed', which recomputes as you type and is rounded up to the next whole mark the way real mark sheets score.",
+    "Check 'Required in remaining exams', 'Best possible overall percentage' and 'Target reachable?' — Yes or No — then press Copy result for a text summary.",
+  ],
   intro:
     "This calculator computes the exact marks you still need in remaining exams to finish at a target overall percentage, using the standard weighted formula: marks needed = target% × (marks so far + remaining maximum) − marks already scored, rounded up to the next whole mark. It also reports what percentage of the remaining papers that represents and flags targets that are no longer mathematically reachable. It is built for students mid-way through a term, semester or board year.",
   useCases: [

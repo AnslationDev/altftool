@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ideal Body Weight Calculator: 4 Formulas + BMI Range",
+  metaDescription:
+    "Runs your height through Devine, Robinson, Miller and Hamwi, sets them beside the 18.5-24.9 BMI band, and adjusts for small or large frame.",
+  steps: [
+    "Choose Metric (cm / kg) or Imperial (ft / lb), set Sex at birth and Body frame (Small, Medium or Large frame), and enter a height between 120 cm and 250 cm.",
+    "Optionally add Current weight (kg, optional) — the results recompute instantly, applying the frame factor (x 0.9 small, x 1.1 large) to Devine (1974), Robinson (1983), Miller (1983) and Hamwi (1964).",
+    "Read the Ideal weight range band with each formula's figure and the Healthy BMI 18.5 - 24.9 row, then press Copy result for a text summary; Reset restores the defaults.",
+  ],
   "intro": "Ideal Body Weight Calculator runs your height through the four formulas clinicians actually use — Devine (1974), Robinson (1983), Miller (1983) and Hamwi (1964) — and sets them beside the weight range that corresponds to a healthy BMI of 18.5 to 24.9. Because the formulas disagree by several kilograms, the tool reports a band rather than a single figure, applies an optional small/medium/large frame adjustment, and can compare your current weight and BMI against that band.",
   "useCases": [
     "See how far a goal weight sits from the clinical ideal range before setting a target.",

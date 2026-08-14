@@ -1,4 +1,12 @@
 const seo = {
+  title: "Asana Hold Timer – Yoga Poses in Breaths & Seconds",
+  metaDescription:
+    "Build a pose sequence, set seconds per breath, and get holds, breath counts and total practice time — two-sided poses expand into right and left holds.",
+  steps: [
+    "Pick a preset under 'Start from a sequence' — such as Morning wake-up or Hip openers — then set Seconds per full breath, Seconds between poses and Rounds of the whole sequence.",
+    "Edit 'Poses in this sequence': change any hold's seconds, tick Both sides for poses that need a right and left hold, or add your own pose, then press Start to run the timer.",
+    "Follow the Running order showing each hold in seconds and breaths with the practice total, and press Copy sequence for a text summary.",
+  ],
   intro:
     "This sequence timer converts a list of asanas into a running order with a hold length and a breath count for each one, automatically expanding two-sided poses into a right and a left hold. Breath counts come from a single setting for how long one full inhale-plus-exhale takes, typically 4 to 6 seconds in a steady practice, so a 30-second hold at 5 seconds per breath is 6 breaths. It totals hold time, transition time and the whole practice, and calls out each change as you go.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Induction vs LPG Cost Calculator – Break-Even Tariff",
+  metaDescription:
+    "Compare monthly cooking cost of an induction hob vs an LPG cylinder on useful heat — 85% vs 68% efficiency — and get the break-even electricity tariff.",
+  steps: [
+    "Enter Gas in one cylinder (kg), Price you pay per cylinder (₹), Days one cylinder lasts and your Electricity tariff (₹ per unit); the 68% LPG burner and 85% induction efficiencies are prefilled and editable.",
+    "Read the Monthly difference headline saying which fuel is cheaper and by how much, with LPG cylinder and Induction hob monthly bills and the cost per useful kWh of each in the breakdown.",
+    "Check the Break-even electricity tariff row and the 'Where the crossover sits' table of tariffs, then press Copy result for the summary or Reset to restore defaults.",
+  ],
   intro:
     "This calculator compares an induction hob and an LPG cylinder on the only basis that is fair — the cost of one kilowatt-hour of heat that actually reaches the pot. LPG carries about 12.64 kWh of energy per kilogram (45.5 MJ/kg net), of which a domestic open burner delivers roughly 68% under IS 4246, while an induction coil delivers about 85% of every unit it draws. It works out both bills from your own gas consumption, and gives the electricity tariff at which induction overtakes gas.",
   useCases: [

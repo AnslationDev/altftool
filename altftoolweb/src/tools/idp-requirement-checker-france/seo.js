@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP to Drive in France? Licence Checker",
+  metaDescription:
+    "Six questions tell you if France expects an IDP with your licence, citing the arrete du 12 janvier 2012, plus the date a resident's licence expires.",
+  steps: [
+    "Answer the six questions — where your licence was issued, what you already hold, why you are in France, Date you arrive, Date you leave (optional) and Your age (years)",
+    "The checker applies Article R222-1 of the Code de la route and the arrete du 12 janvier 2012 to produce a verdict, the IDP formats accepted and the last day your licence is valid",
+    "Review the Watch out for warnings and the Carry in the car checklist, then press Copy result to save the verdict with its legal basis",
+  ],
   intro:
     "This checker tells you whether France expects an International Driving Permit alongside your national licence, based on where the licence was issued, how long you are staying and your age. It applies the arrete du 12 janvier 2012, which lets a non-EU licence be used in France only if it is written in French or accompanied by an official French translation, with an IDP accepted as that translation. It also dates the one-year limit that starts once you are normally resident.",
   useCases: [

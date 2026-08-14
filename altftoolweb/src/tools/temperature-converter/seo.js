@@ -1,4 +1,12 @@
 const seo = {
+  title: "Celsius, Fahrenheit & Kelvin Converter — Exact Formulas",
+  metaDescription:
+    "Type one temperature and read Celsius, Fahrenheit and Kelvin together, using °F = °C×9/5+32 and K = °C+273.15, rounded to two decimal places.",
+  steps: [
+    "Enter a value in the Temperature field and pick Celsius (°C), Fahrenheit (°F) or Kelvin (K) from the 'Convert From' menu.",
+    "The Result updates as you type: the input is first normalised to Celsius, then °F = °C × 9/5 + 32 and K = °C + 273.15 are applied.",
+    "Read all three scales side by side, each rounded to two decimal places; press Copy to copy inputs and results, or Reset to restore the defaults.",
+  ],
   intro:
     "Enter one temperature and this converter shows the equivalent in Celsius, Fahrenheit and Kelvin at the same time, using the exact definitions °F = °C x 9/5 + 32 and K = °C + 273.15. Whichever unit you pick as the source, the value is first normalised to Celsius and then expressed in all three scales, each rounded to two decimal places. It is aimed at anyone reading a foreign weather forecast, an oven recipe or a lab value and needing the number in a scale they think in.",
   useCases: [

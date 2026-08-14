@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weighted vs Unweighted GPA Calculator (4.0 & 5.0 Scale)",
+  metaDescription:
+    "Enter each course's grade, credits and rigor to get both GPAs at once - unweighted on 4.0, weighted with +0.5 Honors and +1.0 AP/IB up to 5.0.",
+  steps: [
+    "For each course pick a Grade, enter Credits (in 0.25 steps) and choose the 'Course type' with its rigor bonus shown in the option label.",
+    "Press 'Add course' to append rows or the Remove button to drop one — both GPAs recalculate instantly, credit-weighted.",
+    "Read the Weighted GPA headline with the unweighted figure and rigor boost beneath it; 'Copy result' copies all four numbers.",
+  ],
   intro:
     "This calculator computes a high-school GPA both ways at once: unweighted on the standard 4.0 letter scale, and weighted using the most common US convention of +0.5 for Honors and +1.0 for AP, IB and dual-enrollment courses on a 5.0 ceiling. Both figures are credit-weighted (Σ grade points × credits ÷ Σ credits), and failing grades earn no rigor bonus. It is built for students tracking class rank eligibility and for applicants who must report whichever GPA a college's form asks for.",
   useCases: [

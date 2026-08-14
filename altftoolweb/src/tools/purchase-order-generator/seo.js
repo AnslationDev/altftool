@@ -1,4 +1,12 @@
 const seo = {
+  title: "Purchase Order Generator with GST Split & Amount in Words",
+  metaDescription:
+    "Build a printable purchase order with line items, IGST or CGST+SGST split, freight, round-off and the total in words (Indian crore-lakh system).",
+  steps: [
+    "Enter the PO number, buyer and vendor details with GSTINs, then add line items with quantity, rate and a GST rate from 0% to 28% using \"Add item\".",
+    "Tick \"Inter-state supply\" to charge IGST instead of CGST + SGST, and set the \"Freight / packing charge (INR)\" field.",
+    "Review the grand total with its amount in words, then click \"Copy PO\" for a text summary or \"Print\" for a one-page order.",
+  ],
   "intro": "Purchase Order Generator builds a complete, printable PO from your buyer and vendor details, line items and terms. It calculates taxable value per line, applies the GST slab you choose, splits the tax into IGST or CGST + SGST depending on whether the supply is inter-state, adds freight, rounds off the total and spells the amount in words using the Indian crore-lakh system. Made for small businesses, procurement teams and store managers who need a clean PO without accounting software.",
   "useCases": [
     "Raise a formal PO to a supplier before goods are dispatched, so the invoice can be matched line by line.",

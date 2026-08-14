@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Production Checklist Generator with Time Estimates",
+  metaDescription:
+    "Builds pre-production, shoot-day and post checklists from your shooting and editing ratios, with a call-sheet timeline and contingency buffer.",
+  steps: [
+    "Pick a Video type — Talking head, Interview, Tutorial, Event coverage, Product review or Vlog — then set Finished runtime (minutes), Crew on the day, Call time and the Contingency buffer (%).",
+    "Adjust the \"Shooting ratio (footage min per finished min)\" and \"Editing ratio (edit min per footage min)\" fields, and tick On location, More than one camera or Titles and graphics as they apply.",
+    "Read Total time to deliver and the Shoot-day timeline table from call to wrap, tick tasks off phase by phase, and press \"Copy checklist\" to copy the plan with times attached.",
+  ],
   intro:
     "This generator builds a pre-production, shoot-day and post-production checklist for a specific video and attaches a time estimate to every task. It works from two ratios you can measure — the shooting ratio (minutes of footage per finished minute) and the editing ratio (minutes of editing per minute of footage) — then adds fixed setup costs, a contingency buffer and a sequential call-sheet timeline from your call time. Aimed at solo creators and small crews who keep underestimating post.",
   useCases: [

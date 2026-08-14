@@ -1,4 +1,12 @@
 const seo = {
+  title: "Date Regex Library: ISO 8601, DD/MM/YYYY, Log Times",
+  metaDescription:
+    "Seven copy-ready date/time regexes — ISO 8601, RFC 3339, DD/MM and MM/DD, clock times, syslog and Apache CLF — with live testing and range checks.",
+  steps: [
+    "Choose one of the seven patterns from the 'Date / time format' dropdown — ISO 8601 date, ISO 8601 date-time (RFC 3339), DD/MM/YYYY, MM/DD/YYYY, clock time, syslog (RFC 3164) or Apache access log %t.",
+    "Type a value into 'Test a date, time or log line'; the verdict flips live between Match and No match, next to Accepts and Rejects example chips for the selected pattern.",
+    "Press Copy regex to copy the pattern as /source/flags, and read 'Known limitations of this pattern' for what regex cannot check — month lengths and leap years need a date parser.",
+  ],
   intro:
     "This library provides seven copy-ready regular expressions for dates and times: ISO 8601 / RFC 3339 dates and timestamps, day-first DD/MM/YYYY and US MM/DD/YYYY slash dates, 24-hour and 12-hour clock times, the RFC 3164 syslog prefix and the Apache Common Log Format %t field. Digit ranges — months 01–12, days 01–31, hours 00–23, minutes and seconds 00–59 — are enforced by alternation, and every pattern documents exactly what a regex cannot check, like month lengths and leap years.",
   useCases: [

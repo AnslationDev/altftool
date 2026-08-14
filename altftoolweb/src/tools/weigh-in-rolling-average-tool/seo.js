@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weigh-In Rolling Average & Weight Trend Calculator",
+  metaDescription:
+    "Smooths daily weigh-ins with a moving average and 0.1 exponential trend, then reports your weekly rate and the calorie balance it implies.",
+  steps: [
+    "Log each morning in the Date and Weight rows, using \"Add reading\" for more days, then pick Kilograms or Pounds and an \"Averaging window (readings)\" of 3, 5, 7, 10 or 14.",
+    "Read \"Weekly rate on the trend line\" with the Latest trend weight, Daily noise (1 std dev), Trend fit R squared and \"Implied energy balance\" rows — everything recomputes as you type.",
+    "Check the \"Raw readings against the trend\" chart and \"Reading by reading\" table, then press \"Copy result\" for the summary including the 30-day projection.",
+  ],
   intro:
     "A rolling weigh-in average replaces a single noisy scale reading with the average of your last several days, which is the only way to see a change of 0.5 kg a week through daily swings of 1-2 kg. This tool computes a simple moving average over a window you choose, an exponentially weighted trend using the Hacker's Diet smoothing factor of 0.1, and a least-squares weekly rate with an R-squared fit. It then converts that rate into an implied energy balance at about 7,700 kcal per kilogram.",
   useCases: [

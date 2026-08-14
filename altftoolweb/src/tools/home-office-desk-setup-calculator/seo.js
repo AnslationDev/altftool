@@ -1,4 +1,12 @@
 const seo = {
+  title: "Desk, Chair & Monitor Height Calculator for Home Office",
+  metaDescription:
+    "Enter your standing height and get seat, seated desk, standing desk and monitor heights from anthropometric ratios, plus footrest size for fixed desks.",
+  steps: [
+    "Enter \"Your standing height (cm)\" (120-220), \"Indoor heel height (cm)\" and your \"Monitor diagonal (inches, 16:9)\".",
+    "Tick \"My desk height cannot be adjusted\" and give the \"Actual desk height (cm)\" if your desk is fixed — the tool then works out the chair height and any footrest needed.",
+    "Read the Seated desk height with its chair seat height, the standing desk height and the Monitor position table (screen centre, top and bottom edge above the floor), then press \"Copy result\".",
+  ],
   intro:
     "This home office desk setup calculator derives every workstation height from one measurement — your standing height — using the anthropometric ratios workstation designers rely on: seat height at about 0.26 of stature, seated elbow height 0.145 above the seat, and standing elbow height at 0.63 of stature. It then places the monitor so the top edge is no higher than eye level and the centre sits 15° below your horizontal line of sight, and tells you whether a fixed desk needs a footrest.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rubric Prompt Builder — Weighted Criteria, Exact Points",
+  metaDescription:
+    "Generate an AI prompt for an analytic grading rubric: weights become whole point maxima that sum exactly to your total, with 3-5 performance levels.",
+  steps: [
+    "Describe the 'Assignment being graded', set 'Total points' and pick 3, 4 or 5 Levels, then list 2 to 10 criteria whose 'Weight %' values must total exactly 100%.",
+    "The tool converts the weights into whole point maxima by largest-remainder apportionment — the per-criterion points shown always sum exactly to the rubric total.",
+    "Review the 'Generated prompt', optionally ticking 'Ask for a feedback sentence stem per criterion', then press 'Copy prompt' to paste it into your AI assistant.",
+  ],
   intro:
     "The Rubric Prompt Builder generates an AI prompt that produces an analytic grading rubric: weighted criteria as rows, performance levels as columns, and observable descriptors in every cell. Criterion weights are converted into whole point maxima with largest-remainder apportionment, so a 100-point rubric weighted 30/30/25/15 always allocates exactly 30, 30, 25 and 15 points. Teachers and course designers get a rubric prompt with fixed numbers the AI cannot drift from.",
   useCases: [

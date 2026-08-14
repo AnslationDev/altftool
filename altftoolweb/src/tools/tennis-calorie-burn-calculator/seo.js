@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tennis Calorie Burn Calculator: Per Set and Match",
+  metaDescription:
+    "Calories per set and per match from body weight, sets and minutes per set, using Compendium METs: singles 8.0, doubles 6.0, general 7.3, drills 5.0.",
+  steps: [
+    "Enter your Body weight (kg or lb) and pick the Format played — Singles match (8 MET), Doubles match (6 MET), general play (7.3) or hitting drills (5).",
+    "Set Sets played (up to 7) and Average minutes per set — the totals recalculate as you type, with no submit button.",
+    "Read the total calories with the Calories per set row and the side-by-side cost of every other tennis format for the same court time, then press Copy result.",
+  ],
   intro:
     "The Tennis Calorie Burn Calculator estimates the energy cost of a set and of a full match from your body weight and time on court, using the MET equation kcal/min = MET x 3.5 x kg / 200. Every intensity it offers is a published entry in the Compendium of Physical Activities: singles at 8.0 METs, doubles at 6.0, general play at 7.3 and non-game hitting drills at 5.0. It is aimed at club players, coaches and anyone matching post-match refuelling to the actual workload of the match.",
   useCases: [

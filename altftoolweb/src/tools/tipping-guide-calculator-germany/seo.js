@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tipping in Germany Calculator - Trinkgeld Round-Ups",
+  metaDescription:
+    "German Trinkgeld for your actual bill: 5-10% in restaurants, round-ups in cafes and taxis, EUR 1 a bag - and what to say when you hand it over.",
+  steps: [
+    "Choose a Service - from 'Restaurant, table service' to Taxi, 'Porter, per bag' or 'Public toilet attendant, per visit' - and enter the 'Bill as printed (EUR)'. [pages/index.jsx:151-184; lib.js:17, 52-150]",
+    "Answer 'How was the service?' - Just round up, As expected (8%) or Excellent (10%) - and set 'People splitting it'. [pages/index.jsx:205-236; lib.js:36-38]",
+    "Read the Customary tip with its usual range, 'Total to hand over' and Per person, then press Copy result. [pages/index.jsx:290-337]",
+  ],
   "intro": "This calculator applies customary German Trinkgeld ranges — roughly 5-10% in a restaurant, rounding up to the next euro in a café or taxi, €1 a bag for a porter — to your actual bill. It is built for visitors who are used to American percentages and want to avoid over-tipping. German menu prices must include VAT and service under the Preisangabenverordnung and hospitality staff are covered by the statutory minimum wage, so a tip is a genuine extra rather than a wage top-up.",
   "useCases": [
     "Work out what to say when the server brings a €37.20 bill and you want to hand over a round figure.",

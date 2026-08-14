@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stair Climbing Calculator: Floors, Calories and METs",
+  metaDescription:
+    "Convert stair steps into elevation gain, Fitbit-style 10-ft floors, physics-based calories at 23% efficiency, and a MET intensity rating.",
+  steps: [
+    "Enter Stair steps climbed (or tap a 60, 120, 180 or 340 step preset), the Height of one step in cm and your Body weight in kg.",
+    "Add Active minutes for METs and cadence, set a Daily floor goal, and tick 'I walked back down too' to count the descent.",
+    "Read floors climbed, elevation gain, net kcal and daily-goal progress, then click Copy result.",
+  ],
   intro:
     "Stair Climbing Tracker converts the stair steps you climbed into vertical elevation gain, Fitbit-style floors and an energy cost, using the definition every major tracker shares: one floor equals 10 feet (3.048 m) of climb. Calories come from physics rather than a black-box algorithm — body mass times gravity times height, divided by the roughly 23% mechanical efficiency of stair ascent. It suits anyone using stairs as deliberate exercise and wanting a figure they can check by hand.",
   useCases: [

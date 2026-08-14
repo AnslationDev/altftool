@@ -1,4 +1,12 @@
 const seo = {
+  title: "Twin Baby Name Pair Finder — Score Any Pair Out of 100",
+  metaDescription:
+    "Score two names out of 100 on shared initial, rhyme, syllables, length and distinctness, and browse curated twin pairs matched by sound or meaning.",
+  steps: [
+    "Type both names into \"First twin's name\" and \"Second twin's name\" — Vihaan and Vivaan load as the worked example.",
+    "Read the Pairing score out of 100 with points attributed to Same starting letter, Rhyming ending, Syllable balance, Length balance and Distinctness, plus the spelling-overlap percentage and a warning when the names are nearly identical.",
+    "Press \"Copy result\" for the factor-by-factor breakdown, or filter the curated library by Twin combination, Pairing style and Origin and click any listed pair to score it above.",
+  ],
   intro:
     "The Twin Baby Name Pair Finder scores any two names out of 100 against a five-factor rubric — shared starting letter (20), rhyming final sound (20), matching syllable count (20), similar length (15) and distinctness from each other (25). It also lists curated twin sets grouped by how they pair: by sound, by complementary meaning, or by a shared story such as Luv and Kush or Riddhi and Siddhi. Built for parents who want matched names that still sound like two different people.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "DIY vs Garage Car Service Cost Calculator (India, GST)",
+  metaDescription:
+    "Price a car service twice — DIY parts vs a garage bill with parts markup, labour and 18% GST — and see when a tool kit pays for itself.",
+  steps: [
+    "Enter each part's Qty and Unit price (INR) under Parts and consumables (price excluding GST), using Add part for extra rows",
+    "Fill the Workshop quote — Parts markup at the garage (%), Labour rate (INR per hour, ex-GST) and Labour hours billed — and the comparison recalculates with 18% GST on parts and labour as you type",
+    "Read the You save per service figure and the Tool kit payback row (counted in services), then press Copy result to copy the line-by-line breakdown",
+  ],
   intro:
     "This calculator prices a routine car service twice — once with parts you buy yourself and once as a workshop invoice with parts markup, billed labour hours and 18% GST — and reports the cash difference per service. It also amortises a one-time tool kit over the services it will cover, so you can see how many oil changes it takes before the spanners pay for themselves. Useful for owners of out-of-warranty cars deciding whether a minor service is worth doing in the driveway.",
   useCases: [

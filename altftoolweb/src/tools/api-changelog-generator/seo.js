@@ -1,4 +1,12 @@
 const seo = {
+  title: "API Changelog Generator – Keep a Changelog + SemVer Bump",
+  metaDescription:
+    "List API changes and get a Keep a Changelog 1.1.0 release section with the Semantic Versioning bump derived from them — removals force a major.",
+  steps: [
+    "Fill in the API name, Current version (SemVer) and Release date, plus an optional repository URL for the compare link.",
+    "Press Add change for each item, pick its Type — Added, Changed, Deprecated, Removed, Fixed or Security — and tick 'Not backwards compatible' where true.",
+    "Read the derived bump under 'New version' and press Copy markdown to paste the finished section into CHANGELOG.md.",
+  ],
   intro:
     "An API changelog generator turns a list of changes into a release section formatted to the Keep a Changelog 1.1.0 convention, and works out the Semantic Versioning 2.0.0 bump those changes require. It is aimed at teams who publish a versioned HTTP API and need consumers to see exactly what broke, what was added and what is being sunset. Removals and any change you mark as incompatible force a major bump; new functionality gives a minor bump; bug and security fixes give a patch.",
   useCases: [

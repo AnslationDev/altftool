@@ -1,4 +1,12 @@
 const seo = {
+  title: "Essay Feedback Prompt Builder for Quote-Anchored AI Review",
+  metaDescription:
+    "Builds an AI reviewer prompt with a comment budget of one per 150 words (3-15), quote-anchored feedback and an optional no-rewriting rule.",
+  steps: [
+    "Fill in \"Type of essay\" and \"Approximate length in words\" (50-10,000), tick the Feedback dimensions to review, and optionally add the assignment brief and writer's level.",
+    "Keep \"Forbid the AI from rewriting passages itself\" ticked and choose whether to \"End with a top-3 'next draft priorities' list\".",
+    "Check the Comment budget — one quote-anchored comment per 150 words of essay — read the Generated prompt panel, and press \"Copy prompt\" to paste it into any AI chat before your essay.",
+  ],
   intro:
     "The Essay Feedback Prompt Builder generates an AI reviewer prompt that gives formative, quote-anchored feedback on the dimensions you choose — structure, evidence, clarity, argument and mechanics. It budgets roughly one substantive comment per 150 words (clamped between 3 and 15), and every comment must follow the observation-why-action pattern under kind-specific-helpful critique norms. Students and teachers get revision-focused feedback instead of a vague grade or an unwanted rewrite.",
   useCases: [

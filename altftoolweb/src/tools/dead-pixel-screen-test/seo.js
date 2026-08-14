@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dead Pixel Test — Full-Screen Red, Green & Blue Check",
+  metaDescription:
+    "Cycles five full-screen fields — dark, red, green, blue, light — with one click per pattern, so stuck or dead pixels stand out. Press Exit test to leave.",
+  steps: [
+    "Press Start test — the tool requests no camera, location or motion permission and records nothing — and the first colour field fills the entire screen.",
+    "Click, tap, or press Enter or Space anywhere to advance through the five patterns — dark, red, green, blue, then light — scanning the whole panel including the corners on each field.",
+    "Note any pixel that stays black, stays lit or holds the wrong colour through every field — that identifies the faulty sub-pixel — then press the Exit test button or Escape to return.",
+  ],
   intro:
     "The Dead-Pixel Screen Test fills your entire display with a sequence of five solid colour fields — dark, red, green, blue and light — so any pixel that stays black, stays lit, or shows the wrong colour becomes obvious against a uniform background. You click or tap anywhere to advance to the next pattern and press Exit test to return. It is the standard check to run on a new monitor, laptop or phone during the return window, and on a used screen before you hand over money.",
   useCases: [

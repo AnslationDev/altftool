@@ -1,4 +1,12 @@
 const seo = {
+  title: "Semver Range Explainer: Caret, Tilde and Hyphen",
+  metaDescription:
+    "Desugars ^1.2.3 to >=1.2.3 <2.0.0 in exact node-semver comparators with a plain-English sentence, and tests any version against the range.",
+  steps: [
+    "Type any npm-style range in the Version range box, or tap a preset chip such as ^1.2.3, ~1.2.3 or 1.2.x.",
+    "Read the plain-English meaning and the desugared comparators — ^1.2.3 becomes >=1.2.3 <2.0.0 — with allowed and blocked example versions.",
+    "Enter a version under 'Test a version against it' for an instant SATISFIES or does-NOT-satisfy verdict, then use Copy result.",
+  ],
   intro:
     "This tool desugars any npm-style semver range — caret, tilde, hyphen, x-range, comparators or || unions — into its exact comparator form and a plain-English sentence describing which versions it allows. It implements the node-semver range grammar that npm, pnpm and yarn share, so ^1.2.3 becomes >=1.2.3 <2.0.0 and ^0.2.3 becomes >=0.2.3 <0.3.0. Developers reviewing package.json entries can also test a specific version against the range and see worked allowed/blocked examples.",
   useCases: [

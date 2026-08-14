@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Document Regex: PAN, GSTIN, IFSC, Aadhaar",
+  metaDescription:
+    "Structure-checked regex for PAN, GSTIN, IFSC, UPI, PIN codes, vehicle numbers and Aadhaar, with a live tester and notes on what regex cannot verify.",
+  steps: [
+    "Choose a 'Document type' - PAN, GSTIN, IFSC, UPI ID / VPA, PIN code, vehicle number or Aadhaar - to load its structure-checked pattern.",
+    "Type a sample value in 'Test a value' (avoid real identity numbers) for an instant 'Valid format' or 'Invalid format' verdict against that pattern.",
+    "Press 'Copy regex' to copy the /pattern/flags string, and read 'What this pattern cannot check' - checksums and issuance need the issuer's verification service.",
+  ],
   intro:
     "This library provides structure-checked regular expressions for the identifiers Indian applications validate every day: PAN (with the 4th-character holder-status rule), 15-character GSTIN with the 01–38 state-code range, RBI's 11-character IFSC, NPCI UPI IDs, 6-digit India Post PIN codes, standard and Bharat-series vehicle registrations, and the 12-digit Aadhaar shape. Every pattern has a live tester and states exactly what a regex cannot verify — checksums, issuance and active status.",
   useCases: [

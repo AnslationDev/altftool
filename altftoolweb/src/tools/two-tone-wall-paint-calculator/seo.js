@@ -1,4 +1,12 @@
 const seo = {
+  title: "Two-Tone Wall Paint Calculator — Litres Per Dado Band",
+  metaDescription:
+    "Work out litres and cost for each colour above and below a dado line, with doors and windows deducted from the band they actually sit in.",
+  steps: [
+    "Enter the room length, width and wall height in feet and the Dado height (ft from floor) where the two colours meet.",
+    "Add door and window counts, sizes and the Window sill height, then set coats, spreading rate and price per litre for the Lower and Upper band colours.",
+    "Read litres to buy and cost per band with the cheapest mix of 1, 4, 10 and 20 L packs and the masking-tape run, then click Copy result.",
+  ],
   intro:
     "This calculator splits a room's wall area into an upper and a lower band at whatever dado height you choose, then works out the litres of each colour separately. It handles the part most estimates get wrong: a door or window is deducted from the band it physically occupies, and an opening that crosses the dado line is divided between the two using the overlap of the opening's vertical span with each band. It suits anyone painting a dado, wainscot line or accent skirt band in a room.",
   useCases: [

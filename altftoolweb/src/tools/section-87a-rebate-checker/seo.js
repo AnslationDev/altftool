@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 87A Rebate Checker – FY 2025-26 Zero Tax Limit",
+  metaDescription:
+    "Check your FY 2025-26 Section 87A rebate: Rs 60,000 up to Rs 12 lakh new regime, Rs 12,500 up to Rs 5 lakh old, with marginal relief.",
+  steps: [
+    "Pick New regime (default) or Old regime, then enter your Total taxable income after deductions (Rs), putting 111A short-term and 112A long-term equity gains in their own two fields since they are not rebatable.",
+    "The Rebate result panel updates as you type with a Rebate applies, Marginal relief applies or No rebate badge, the rebate amount, and the breakdown from Tax before rebate down to Total tax payable with 4% cess.",
+    "Compare the note showing the same income under the other regime, then press Copy result for the full breakdown or Reset to restore the defaults.",
+  ],
   "intro": "Section 87A Rebate Checker tells you whether your taxable income qualifies for the rebate that makes income tax zero for smaller incomes. For FY 2025-26 (AY 2026-27) it applies the new-regime rebate of up to Rs 60,000 for taxable income up to Rs 12,00,000, the old-regime rebate of up to Rs 12,500 for income up to Rs 5,00,000, and the marginal relief that softens the cliff just above the new-regime threshold. It also excludes special-rate capital gains, which the rebate does not cover.",
   "useCases": [
     "A salaried employee checking whether a Rs 12.75 lakh package still ends in zero tax after the Rs 75,000 standard deduction.",

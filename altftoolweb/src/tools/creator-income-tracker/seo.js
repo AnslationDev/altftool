@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creator Income Tracker: Gross, Fees & Withholding Log",
+  metaDescription:
+    "Turns pipe-separated payment lines into an 8-column income table and counts rows missing a field - sponsorships, affiliate and ad revenue together.",
+  steps: [
+    "In 'Records, one per line', enter each payment as Date | Client / platform | Income stream | Gross | Fees | Withholding | Net received | Invoice / payout ref, or load the 'Example records' preset.",
+    "Keep the 'Completeness review' toggle on to flag rows with missing columns.",
+    "Read the 'structured record(s)' result with its incomplete-row count and the 8-column table (first 200 rows shown); Copy or Download exports it.",
+  ],
   intro:
     "This tracker takes one pipe-separated line per payment and lays your creator income out in eight fixed columns: date, client or platform, income stream, gross, fees, withholding, net received, and the invoice or payout reference. It then counts how many rows are complete and how many have a blank or missing field, so the gaps in your records are visible before an accountant finds them. It handles sponsorships, affiliate payouts and platform ad revenue in one table, up to 200 rows.",
   useCases: [

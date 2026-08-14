@@ -1,4 +1,12 @@
 const seo = {
+  title: "Direct vs Regular Plan Calculator – Mutual Fund TER Cost",
+  metaDescription:
+    "See what the TER gap between a direct and regular mutual fund plan costs in rupees: commission paid plus compounding lost, for a lumpsum or SIP.",
+  steps: [
+    "Choose Lumpsum or Monthly SIP under Investment mode, then enter the amount, Holding period (years), Gross return before expenses (% a year), and the Direct plan TER (%) and Regular plan TER (%) from the scheme document.",
+    "Read the Commission drag over the period headline and the breakdown that separates Distributor commission inside the TER from Compounding lost on that commission.",
+    "Open the Gap year by year table to watch the direct and regular balances diverge, then press Copy result for the summary or Reset to restore defaults.",
+  ],
   intro:
     "A regular mutual fund plan pays distributor commission out of its total expense ratio, and this calculator converts that expense ratio gap into rupees you can see. It compounds the same investment twice — once at the gross return minus the direct plan TER and once minus the regular plan TER — then separates the commission actually paid from the compounding lost on it. Direct plans have been mandatory in every scheme since SEBI circular CIR/IMD/DF/21/2012 took effect on 1 January 2013.",
   useCases: [

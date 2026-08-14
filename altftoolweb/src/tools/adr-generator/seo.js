@@ -1,4 +1,12 @@
 const seo = {
+  title: "ADR Generator: Nygard & MADR 4.0 Markdown Templates",
+  metaDescription:
+    "Generate an architecture decision record in Nygard or MADR 4.0 markdown, named the adr-tools way (0007-short-title.md), with consequences included.",
+  steps: [
+    "Fill in the \"ADR number\", \"Title (a noun phrase, not a question)\" and \"Status\", and pick Nygard or MADR 4.0 under \"Record format\".",
+    "Write the Context, \"Decision drivers (one per line)\", the one-sentence Decision and the positive and negative consequences, adding alternatives with \"Add option\" and marking \"This is the option we chose\".",
+    "Check the generated file name in the 0012-slugified-title.md convention and click \"Copy ADR\" to grab the markdown.",
+  ],
   intro:
     "An architecture decision record (ADR) is a short, numbered markdown file that captures one architecturally significant decision along with its context, the alternatives weighed, the choice made and the consequences accepted. This generator produces that file in either Michael Nygard's original 2011 template or MADR 4.0, and names it with the conventional `0007-short-title.md` pattern. It is for engineers who keep decisions in the repository next to the code they govern.",
   useCases: [

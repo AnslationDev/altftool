@@ -1,4 +1,12 @@
 const seo = {
+  title: "Slow Down Audio Without Changing Pitch — 0.35× to 1.25×",
+  metaDescription:
+    "Play a local audio file at 0.35×–1.25× speed in 0.05 steps with pitch preserved. Loop and seek to repeat hard phrases when learning or transcribing.",
+  steps: [
+    "Pick a recording with the Local audio file chooser (any audio/* file your browser can play).",
+    "Drag the Playback speed slider between 0.35× and 1.25× in 0.05 steps and switch on Loop the file.",
+    "Play the audio and use the player's seek control to return to a difficult phrase; pitch preservation keeps the voice at its natural register.",
+  ],
   intro:
     "The Slow Speech Playback Trainer plays an audio file you already have at 0.35× to 1.25× speed with pitch preservation switched on, so slowed speech stays at its normal voice instead of dropping into a growl. It adds a loop toggle and uses the player's own seek control, which lets you sit on one difficult phrase and hear it repeatedly until it resolves. It is built for language learners, people with auditory processing difficulty, and anyone transcribing a fast or accented recording.",
   useCases: [

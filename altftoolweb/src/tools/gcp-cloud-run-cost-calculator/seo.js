@@ -1,4 +1,12 @@
 const seo = {
+  title: "GCP Cloud Run Cost Calculator (Free Tier & Concurrency)",
+  metaDescription:
+    "Estimate a Cloud Run monthly bill at Tier 1 rates after the 180k vCPU-s, 360k GiB-s and 2M request free tier, modelling concurrency and warm instances.",
+  steps: [
+    "Enter Requests per month, Average request duration (ms), vCPU per instance, Memory per instance (GiB), Average concurrency per instance and Minimum (warm) instances",
+    "The calculator deducts the free tier — 180,000 vCPU-seconds, 360,000 GiB-seconds and 2 million requests — then prices the rest at Tier 1 request-based rates in 100 ms increments",
+    "Read the Estimated monthly Cloud Run cost with its vCPU, memory, request and Idle min-instance cost lines, then press Copy result",
+  ],
   intro:
     "This calculator estimates a Google Cloud Run service's monthly bill under request-based billing: vCPU-seconds at $0.000024, GiB-seconds at $0.0000025 and requests at $0.40 per million (Tier 1 regions), after the monthly free tier of 180,000 vCPU-seconds, 360,000 GiB-seconds and 2 million requests. It models the details that change the answer — 100 ms billing increments, request concurrency sharing one instance, and warm min instances billing at idle rates around the clock.",
   useCases: [

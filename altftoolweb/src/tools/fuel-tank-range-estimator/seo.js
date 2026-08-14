@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fuel Tank Range Estimator: Km Left from Gauge Reading",
+  metaDescription:
+    "Convert tank size and gauge percentage into km of range with a reserve held back, a real-mileage condition factor and a can-you-make-the-trip verdict.",
+  steps: [
+    "Enter \"Tank capacity (litres)\" and the \"Gauge reading (% of tank)\" — or use the gauge shortcut chips — plus your rated km per litre.",
+    "Set the condition factor for city or loaded driving, the reserve litres to keep and the trip distance in km.",
+    "Read the range before you touch the reserve and the litres and rupees you are short for the trip, then click \"Copy result\".",
+  ],
   intro:
     "This estimator turns a fuel gauge reading into kilometres: fuel on board is tank capacity multiplied by the gauge fraction, and range is that fuel — minus the reserve you want to keep — multiplied by your real mileage. A condition factor scales rated mileage down for city traffic or a full load, and a trip distance field tells you straight away whether you can make it or how many litres you are short. Useful whenever the warning light comes on and the next pump is some distance away.",
   useCases: [

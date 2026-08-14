@@ -1,4 +1,12 @@
 const seo = {
+  title: "CODEOWNERS File Generator with Last-Match Rule Preview",
+  metaDescription:
+    "Build a CODEOWNERS file from path patterns and validated @user, @org/team or email owners, then test any path to see which rule wins under last-match.",
+  steps: [
+    "Set the 'Default owner for everything (optional)' field — written first as * so every later rule overrides it — and add rows under 'Rules (pattern → owners) — order matters', using the 'Add rule' button for more.",
+    "Type any file path into 'Match preview — who owns this path?' to see the winning rule under GitHub's last-match precedence, shown as 'Owned by … — winning rule: …'.",
+    "Read the generated file in the CODEOWNERS pane and click 'Copy file' to copy it; owners that are not @username, @org/team or an email are rejected before you export.",
+  ],
   intro:
     "This generator builds a CODEOWNERS file — the file GitHub, GitLab and Bitbucket use to auto-request reviewers when matching files change — from path patterns and owner handles. It validates each owner as @username, @org/team or an email, applies the gitignore-style pattern rules from GitHub's documentation (minus the unsupported ! negation and [..] ranges), and includes a live match preview showing which rule wins for any file path, since the last matching rule takes precedence.",
   useCases: [

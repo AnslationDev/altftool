@@ -1,4 +1,12 @@
 const seo = {
+  title: "Crypto Tax Calculator India: 30% Tax + 1% TDS (115BBH)",
+  metaDescription:
+    "Work out India's flat 30% crypto tax under Section 115BBH plus surcharge, 4% cess and 1% TDS under 194S — with losses excluded as the law requires.",
+  steps: [
+    "Click \"Add trade\" and enter each asset with its \"Cost of acquisition (INR)\" and \"Sale consideration (INR)\".",
+    "Set the Section 194S threshold that applies to you (₹50,000, ₹10,000 or none), your surcharge band, and any TDS already deducted or gifted crypto.",
+    "Read the total tax at 30% plus surcharge and 4% cess, the 1% TDS and the balance to pay, then click \"Copy result\".",
+  ],
   intro:
     "This calculator applies India's virtual digital asset rules to your trades: a flat 30% tax on every profitable transfer under Section 115BBH, plus surcharge and 4% health and education cess, and the separate 1% TDS under Section 194S on the sale consideration. Because losses on one coin cannot be set off against gains on another, it lists each trade separately and shows how much of your real profit is taxed anyway. It is aimed at Indian residents trading on exchanges or peer-to-peer.",
   useCases: [

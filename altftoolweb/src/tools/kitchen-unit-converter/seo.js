@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kitchen Unit Converter: Cups, Grams, ml, °F to °C",
+  metaDescription:
+    "Convert recipe weights, volumes and oven temperatures — US cups (236.588 ml), oz to grams, °F to °C — plus cup-to-gram ingredient equivalents.",
+  steps: [
+    "Pick the Weight, Volume or Temperature tab and type a number into 'Amount to Convert'.",
+    "Choose the 'From' and 'To' units — such as Grams (g) to Ounces (oz), or Cups (US) to Milliliters (ml) — or hit the swap arrow between them; the Result recomputes on every change, rounded to 4 decimal places.",
+    "Read the Result panel, click 'Copy' to copy the number, or 'Save to History' to keep it in the Recent Conversions list.",
+  ],
   intro:
     "The Kitchen Unit Converter handles the three conversions recipes actually need — weight, volume and oven temperature — using US customary measures, where one cup is 236.588 ml, one tablespoon is 14.79 ml and one teaspoon is 4.93 ml. Weight moves through grams (1 oz = 28.3495 g, 1 lb = 453.592 g) and temperature uses the exact Celsius-to-Fahrenheit formula, °F = °C × 9/5 + 32. It is for anyone cooking from a recipe written in units their kitchen scale, jug or oven does not speak.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "NDJSON to JSON Array Converter — Both Directions",
+  metaDescription:
+    "Convert JSON Lines to a JSON array or unwrap an array to one minified record per line. Malformed lines are reported by exact line number; CRLF handled.",
+  steps: [
+    "Pick a Direction — NDJSON → JSON array or JSON array → NDJSON — and paste your data into the input box (one JSON value per line for NDJSON).",
+    "For array output, choose the JSON formatting: 2 spaces, 4 spaces or Minified; conversion runs as you type, and a malformed record stops with its exact line number.",
+    "Read the records count with input and output sizes, then press Copy output, or Reset to restore the example data.",
+  ],
   intro:
     "This converter transforms NDJSON — newline-delimited JSON, also known as JSON Lines — into a single JSON array, and unwraps a JSON array back into one minified record per line. It applies the format's core rule that every line must be one complete RFC 8259 JSON value, reports the exact line number of any malformed record, and handles CRLF endings and blank lines. It is built for developers wrangling log exports, Elasticsearch bulk files, BigQuery exports and streaming API output.",
   useCases: [

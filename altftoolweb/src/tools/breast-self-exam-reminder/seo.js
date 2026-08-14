@@ -1,4 +1,12 @@
 const seo = {
+  title: "Breast Self-Exam Reminder — Best Day to Check Each Month",
+  metaDescription:
+    "Finds the least tender day to check — three days after bleeding stops, or a fixed date without a cycle — and lists your next 12 check dates to copy.",
+  steps: [
+    "Choose \"From my cycle\" or \"Same day each month\", then fill in \"First day of your last period\", \"Cycle length (days)\" and \"Days of bleeding\" — or just a \"Day of the month (1-28)\".",
+    "Read the Next self-check date with how many days away it is and the window it stays good through, timed for after bleeding stops.",
+    "Review the \"Next 12 check dates\" table and \"The five-step check\" routine, then press \"Copy dates\" to paste the year's schedule into a calendar.",
+  ],
   intro:
     "This reminder works out which day of each month is the easiest one to check your breasts, and lists the next twelve. If you have periods it lands the check three days after bleeding stops, when oestrogen and progesterone are at their monthly low and breast tissue is at its least tender and lumpy; if you no longer have a monthly cycle it fixes one calendar day instead. It pairs the dates with the five-step look-and-feel routine used in NHS and Breast Cancer Now breast-awareness material.",
   useCases: [

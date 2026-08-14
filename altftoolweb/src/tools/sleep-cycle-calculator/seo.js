@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Cycle Calculator — Best Bedtime & Wake-Up Times",
+  metaDescription:
+    "Turn an alarm time into bedtimes, or a bedtime into wake-up times, counting 90-minute cycles plus the minutes you take to fall asleep.",
+  steps: [
+    "Choose \"I must wake at…\" or \"I go to bed at…\" and set that time — or press \"Use the time right now\".",
+    "Enter your Time to fall asleep (0-120 min, 15 by default) and Cycle length (60-120 min, 90 by default).",
+    "Read the headline best time plus a table of 6, 5, 4 and 3-cycle options rated from Ideal to Bare minimum, then press \"Copy schedule\" to copy the plan as text.",
+  ],
   "intro": "The Sleep Cycle Calculator turns a single alarm time into a short list of sensible bedtimes — or turns tonight's bedtime into the wake-up times that land between cycles rather than in the middle of one. It counts sleep in roughly 90-minute cycles and adds the time you personally take to drift off, so the schedule reflects lights-out, not just time in bed. Useful for shift workers, students planning an early start, and anyone who wakes up groggy despite sleeping enough hours.",
   "useCases": [
     "You have a 6:30 am flight and want to know the latest bedtime that still gives you five complete cycles.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maharashtra Professional Tax Calculator — Monthly Slabs",
+  metaDescription:
+    "Enter a monthly salary to get the slab, the Rs 200 monthly and Rs 300 February deductions, and the Rs 2,500 yearly total. Women exempt up to Rs 25,000.",
+  steps: [
+    "Enter the monthly salary or wage in INR and pick Male or Female in the Employee dropdown.",
+    "Tick the notified exemption checkbox if a 40%+ disability, parent of a child with disability, ex-serviceman or senior citizen above 65 applies.",
+    "Read the year's professional tax with the normal-month and February deductions against the Maharashtra slab table, then click Copy result.",
+  ],
   intro:
     "This calculator returns the professional tax an employer must deduct in Maharashtra for a given monthly salary, using Schedule I of the Maharashtra State Tax on Professions, Trades, Callings and Employments Act, 1975 as amended from 1 April 2023. It handles the three salary slabs, the higher February deduction that brings the year to Rs 2,500, and the exemption for women earning up to Rs 25,000 a month. Payroll teams and salaried employees can use it to check a PT line on a payslip.",
   useCases: [

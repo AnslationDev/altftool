@@ -1,4 +1,12 @@
 const seo = {
+  title: "Camera Gear Depreciation Calculator – Cost per Shoot",
+  metaDescription:
+    "Run straight line, declining balance and sum-of-years depreciation on camera gear, floored at resale value, and get a true cost per shoot.",
+  steps: [
+    "Enter the Purchase price (INR), Resale value at the end and Useful life (years), then pick a Method: Straight line, Declining balance or Sum of the years' digits.",
+    "Add Shoots a year plus your annual Servicing & repairs and Insurance figures.",
+    "Read the year-one depreciation, the Year-by-year schedule table and the Cost per shoot line, then press Copy result.",
+  ],
   intro:
     "Depreciation spreads the fall in value of a camera, lens or computer across the years you actually use it, and this calculator runs all three standard methods on your numbers: straight line, declining balance and sum of the years' digits. All three write off exactly the purchase price minus resale value; they differ only in how fast, which matters because gear loses most of its value early. It then divides one year's charge by the shoots you do to give a genuine cost per shoot.",
   useCases: [

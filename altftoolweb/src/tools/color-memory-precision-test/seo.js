@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Memory Precision Test with RGB & HSL Scoring",
+  metaDescription:
+    "Memorise a colour for 8, 5 or 3 seconds by difficulty, rebuild it with RGB sliders, and get a score blending RGB distance and hue-weighted HSL.",
   intro:
     "Color Memory Precision Test shows you a colour for a few seconds, hides it, and asks you to rebuild it from memory with RGB and HSL sliders — then scores how close you got. The score blends two measures: euclidean distance in RGB space (40% of the result) and a hue, saturation and lightness comparison (60%), because raw RGB distance does not match what the eye actually notices. It is a visual-memory exercise for designers, artists and anyone curious about how badly colour memory drifts.",
   useCases: [

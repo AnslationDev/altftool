@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apply a .cube LUT to Video or Photos Online — FFmpeg WASM",
+  metaDescription:
+    "Bake a .cube LUT into video or images with FFmpeg's lut3d filter in your browser — pick tetrahedral, trilinear or nearest; nothing is uploaded.",
+  steps: [
+    "Choose the image or video to grade as the Source file and your .cube LUT as the Secondary file.",
+    "Pick an Interpolation mode — tetrahedral, trilinear or nearest — and press \"Process locally\"; the FFmpeg WebAssembly engine loads and runs the lut3d filter in your browser.",
+    "The graded result downloads automatically as altftool-color-grade-lut-applier.mp4, with H.264 video and the original audio stream copied untouched.",
+  ],
   intro:
     "The Color-Grade LUT Applier bakes a 3D lookup table from a .cube file into an image or video using FFmpeg's lut3d filter, running as WebAssembly inside your browser so the footage is never uploaded. You choose the interpolation mode — tetrahedral, trilinear or nearest — and the graded result is encoded back out with H.264 video and the original audio stream copied untouched. It is for editors and photographers who want to apply a look they already own without opening an NLE.",
   useCases: [

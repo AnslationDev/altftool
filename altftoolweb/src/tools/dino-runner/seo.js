@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dino Dash Runner: Free Endless Jump-and-Duck Game",
+  metaDescription:
+    "Endless browser runner: jump pillars, duck drones, hold duck mid-air for a 2.2x fast fall. Speed ramps 330 to 800 px/s; your best score is saved locally.",
+  steps: [
+    "Press Start run, or hit Space, W or the up arrow to begin — on touch devices the Jump and Duck buttons sit under the track.",
+    "Jump the pillar clusters and duck under the drones with S or the down arrow; holding duck in mid-air multiplies gravity 2.2x for a fast fall, and P pauses.",
+    "When you crash, the Run over card shows your Score and Best — the best score persists in this browser's local storage — and Restart begins a new run.",
+  ],
   intro:
     "Dino Dash Runner is an endless runner where you jump pillar clusters and duck under hovering drones while the world accelerates from 330 to 800 pixels per second over your first 3,200 points. Holding the duck key in mid-air multiplies gravity by 2.2 for a fast fall, which is the move that saves you when a low drone appears right after a jump. The palette flips between day and night every 500 points, sound is off until you switch it on, and your best score is kept in this browser.",
   useCases: [

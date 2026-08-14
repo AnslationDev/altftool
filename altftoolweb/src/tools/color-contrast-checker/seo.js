@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Contrast Checker: WCAG AA & AAA Ratio Test",
+  metaDescription:
+    "Paste two hex colours to get the exact WCAG contrast ratio, pass/fail at AA 4.5:1, AA large 3:1 and AAA 7:1, a live preview and copyable CSS.",
   intro:
     "The Color Contrast Checker measures the contrast ratio between a text colour and a background colour using the WCAG 2 relative luminance formula, then shows whether the pair passes AA normal (4.5:1), AA large (3:1) and AAA normal (7:1). Pick or paste two hex values and you get the exact ratio, a live preview of real heading and body text in those colours, and a copyable CSS declaration. It is for designers and developers checking a palette before it becomes an accessibility bug report.",
   useCases: [

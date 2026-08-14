@@ -1,4 +1,12 @@
 const seo = {
+  title: "Litre to Gallon Converter: US, Imperial & Fuel Price",
+  metaDescription:
+    "Converts litres to both gallons by their exact definitions — US 3.785411784 L, imperial 4.54609 L — and turns a price per litre into price per gallon.",
+  steps: [
+    "Enter the quantity in 'Volume' and pick its 'Unit' from the 12-unit list (litres, both gallons, quarts, pints, fluid ounces, cubic metres, cubic feet), or tap a preset like '35 L tank' or '1 imperial gallon'.",
+    "Optionally type a fuel price into the 'Price per … (optional)' field — it reads 'Price per L (optional)' when converting from litres.",
+    "Read the 'In US gallons' headline with its imperial-gallon equivalent, the full per-unit table, and the 'Price comparison' rows (per litre, per US gallon, per imperial gallon, total); 'Copy result' copies everything.",
+  ],
   intro:
     "This converter moves a volume between litres and both gallons using their exact legal definitions: the US liquid gallon is 231 cubic inches, which is 3.785411784 litres, and the imperial gallon is 4.54609 litres under the UK Weights and Measures Act 1985. Because the two differ by about 20%, a figure quoted in \"gallons\" means very different amounts in the US and the UK. It also converts a fuel price per litre into a price per gallon so cross-market comparisons are like for like.",
   useCases: [

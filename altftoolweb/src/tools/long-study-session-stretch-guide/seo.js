@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Break Stretch Plan: Desk Stretches Every 50 Minutes",
+  metaDescription:
+    "Enter your study day length and get rotating three-stretch desk breaks every 50 minutes, with 15-20 s holds inside the ACSM 10-30 second guideline.",
+  steps: [
+    "Enter your day in the \"Study day length (minutes)\" field (45-720; the default 360 is a six-hour day).",
+    "Set \"Stretch break every (minutes)\" between 20 and 120 — it defaults to the ergonomic 50-minute interval.",
+    "Read each numbered break's three stretches with their hold seconds and reps, then click \"Copy plan\" to save the schedule.",
+  ],
   intro:
     "This guide schedules short desk-stretch breaks across a long study day — three stretches per break, rotating through neck, shoulders, chest, back, wrists, hips and hamstrings so a six-hour session covers the whole body. Holds follow the American College of Sports Medicine flexibility guideline of 10-30 seconds per stretch, and breaks default to every 50 minutes in line with ergonomics advice on seated work. No equipment is needed; every stretch works at or beside a desk.",
   useCases: [

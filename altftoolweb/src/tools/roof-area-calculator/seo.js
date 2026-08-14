@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roof Area Calculator — Pitch, Slope Factor and Rafters",
+  metaDescription:
+    "Convert a building footprint and pitch into the true sloped roof area via the slope factor, plus rafter, ridge, hip and gutter lengths and sheet count.",
+  steps: [
+    "Enter the footprint length and width in feet, the overhang beyond the wall on every side, and pick the roof type.",
+    "Set the pitch as Rise in 12, Degrees or Percent, then choose a material preset or type the area one unit covers and a wastage allowance.",
+    "Read the true roof area, common and hip rafter, ridge and gutter lengths, and the sheets, tiles or bundles to order, then click Copy result.",
+  ],
   intro:
     "This calculator converts a building footprint into the true sloped roof area using the slope factor sqrt(run² + rise²) / run, which is sqrt(144 + rise²) / 12 when pitch is written the trade way as rise per 12 of run. It adds the eaves and rake overhang before applying the factor, then returns common rafter length, ridge, hip rafter, gutter run and the sheet or tile count with a wastage allowance. Built for anyone ordering roofing material who has measured the plan but not the slope.",
   useCases: [

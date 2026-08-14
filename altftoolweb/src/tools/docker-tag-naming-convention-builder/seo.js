@@ -1,4 +1,12 @@
 const seo = {
+  title: "Docker Tag Naming Convention Builder (OCI-Valid Tags)",
+  metaDescription:
+    "Compose Docker image tags from SemVer, branch, SHA, date and environment parts, validated against the OCI 128-character grammar with branches sanitised.",
+  steps: [
+    "Enter the registry host, namespace and repository name, and pick the separator between tag parts — hyphen, dot or underscore.",
+    "Tick tag components — \"SemVer version (e.g. 1.4.2)\", \"Git branch (sanitised)\", \"Git commit SHA (short)\", build date or environment — and fill each value.",
+    "Check the full image reference and the tag-length count out of 128 characters, then click \"Copy result\".",
+  ],
   intro:
     "This tool builds a Docker image tagging convention from the parts teams actually use — SemVer version, git branch, short commit SHA, build date and environment — and validates the result against the OCI reference grammar used by Docker (tags of at most 128 characters from letters, digits, '_', '.' and '-', never starting with '.' or '-'). It is for platform and CI engineers standardising how images are named across pipelines, so every tag is legal, sortable and traceable to a commit.",
   useCases: [

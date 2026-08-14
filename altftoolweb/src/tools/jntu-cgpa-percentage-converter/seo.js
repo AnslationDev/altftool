@@ -1,4 +1,12 @@
 const seo = {
+  title: "JNTU CGPA to Percentage Converter — (CGPA − 0.75) × 10",
+  metaDescription:
+    "Convert JNTUH, JNTUK or JNTUA CGPA using the notified (CGPA − 0.75) × 10 rule — 8.5 becomes 77.5% — with class bands and an SGPA-to-CGPA combiner.",
+  steps: [
+    "Choose a mode — CGPA to %, % to CGPA or SGPA to CGPA — pick University and regulations, and enter Your CGPA (0 to 10) or percentage",
+    "The converter applies the notified equivalence shown in its Formula row: percentage = (CGPA − 0.75) × 10, or the inverse CGPA = % ÷ 10 + 0.75",
+    "Read the converted figure with its Class band — Distinction, First, Second or Pass — then press Copy result to copy the conversion",
+  ],
   intro:
     "This converter turns a JNTU CGPA into an equivalent percentage using the rule the credit regulations of JNTU Hyderabad, Kakinada and Anantapur notify: percentage = (CGPA − 0.75) × 10, so a CGPA of 8.5 reads as 77.5%. It also inverts the formula for forms that ask for a CGPA, combines semester SGPAs credit-weighted into a CGPA, and maps the result to the class bands the regulations award — Distinction at 7.75, First Class at 6.75, Second Class at 5.75 and Pass Class at 5.0.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "30-Day Habit Tracker with Streaks and Day Notes",
+  metaDescription:
+    "Mark each of 30 days done or skipped, note what got in the way, and track completion rate, current and longest streak. Exports a text report.",
   intro:
     "A 30-day habit tracker that gives one habit a fixed 30-square grid and marks each day completed, skipped or still pending, then derives a completion rate, a current streak and a longest streak from those marks. Every day can carry a short note, so you record not just whether you kept the habit but what got in the way. Each habit also stores a start date and a reward you have promised yourself for finishing the run, and the whole board can be exported as a plain-text progress report.",
   useCases: [

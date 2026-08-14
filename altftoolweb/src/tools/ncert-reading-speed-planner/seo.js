@@ -1,4 +1,12 @@
 const seo = {
+  title: "NCERT Reading Planner: Daily Pages to Meet a Deadline",
+  metaDescription:
+    "Enter pages left, deadline, weekly days off and a revision buffer — get the daily NCERT page quota and minutes per day at your own reading speed.",
+  steps: [
+    "Enter 'Total pages' and 'Pages already read', then set the 'Start date' and 'Target finish date'.",
+    "Set 'Days off per week' (0–6), the 'Revision buffer (% of study days)' and 'Minutes one page takes you' — the plan recomputes as you type, with no button to press.",
+    "Read the 'Required pace' in pages/day plus the study days, revision buffer days, actual reading days and 'Estimated minutes per day' rows; 'Copy plan' copies the breakdown.",
+  ],
   intro:
     "This planner computes the exact daily page quota needed to finish an NCERT book — or a whole stack of them — before a target date. The formula is stated openly: study days are calendar days scaled by (7 − days off)/7 and rounded down, a chosen percentage of those days is reserved as a revision buffer, and pages left are divided by the remaining reading days and rounded up. It is built for board students and UPSC/NEET aspirants who know their deadline but not the pace it implies.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calicut University CGPA to Percentage Converter (CBCSS)",
+  metaDescription:
+    "Convert Calicut University CBCSS CGPA to percentage by the straight ×10 rule — no offset — or rebuild SGPA from letter grades and credits.",
+  steps: [
+    "Choose 'CGPA to percentage' or 'Percentage to CGPA' and enter your CGPA or SGPA (out of 10) from the grade card.",
+    "Or rebuild the average without a printed SGPA: pick each course's letter grade and Credits, using Add course for more rows — grade points are credit-weighted.",
+    "Read the equivalent percentage (CGPA × 10) with the CBCSS letter grade and grade band table, then press Copy result.",
+  ],
   intro:
     "This converter turns a University of Calicut CBCSS grade point average into an equivalent percentage of marks by scaling it directly: percentage = CGPA x 10. That works without an offset because the CBCSS scale is constructed so each grade point is one tenth of the mid-point of its marks band, so grade point 8 stands for the 75 to 85 band whose centre is 80. It also rebuilds a semester average from course letter grades and credits when you have a grade card but no printed SGPA.",
   useCases: [

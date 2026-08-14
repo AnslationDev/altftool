@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shoe Size Converter: UK, US, EU, India & Japan",
+  metaDescription:
+    "Convert UK, Indian, US men's, US women's, EU and Japanese shoe sizes via foot length, with exact and rounded sizes plus a ladder of nearby sizes.",
+  steps: [
+    "Pick the system you know under 'I know my size in' — UK / India, US men's, US women's, EU (Paris point), Japan / Mondopoint (cm) or Foot length (cm) — and type your Size, or your Measurement in Centimetres or Inches.",
+    "Choose the country you are buying in under 'I am shopping in'; every conversion recomputes from foot length as you type, with no submit button.",
+    "Read the big 'Ask for' size, the full table of exact and rounded sizes for all six systems, and the 'Sizes around yours' ladder, then press Copy result for a text summary.",
+  ],
   intro:
     "This converter translates a shoe size between UK, Indian, US men's, US women's, EU and Japanese sizing by working back to foot length, the one quantity all the systems are built on. UK and Indian sizes use the barleycorn scale of 1/3 inch per size (UK = 3 × foot inches − 23), US men's run one size above UK and US women's two and a half above, EU uses the Paris point of 2/3 cm over a last 1.5 cm longer than the foot, and Japanese sizing is the foot length in centimetres itself.",
   useCases: [

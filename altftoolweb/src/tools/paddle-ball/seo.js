@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paddle Ball Arcade: Two-Paddle Rally Game, First to 7",
+  metaDescription:
+    "Play a two-paddle rally game in your browser — W/S vs arrow keys or touch, three computer difficulties, speed rising every hit, first to 7 points wins.",
+  steps: [
+    "Pick Vs Computer or 2 Players, choose Easy, Medium or Hard, and press Start match",
+    "Move your paddle with W/S or the arrow keys, or drag on your half of the court — every return speeds the ball up and edge hits angle it sharply",
+    "First side to 7 points wins; the Rally and Best rally counters track your streak, and Play again restarts the match",
+  ],
   intro:
     "Paddle Ball Arcade is a browser remake of the classic two-paddle rally game, where the first side to reach 7 points wins the match. You steer your paddle with W/S, the arrow keys, or a finger drag on the court, and the ball leaves your paddle at an angle set by how far from the paddle's centre you hit it — up to roughly 53 degrees off the horizontal at the very edge. Play alone against a three-level computer opponent or hand the other half of the screen to a second player.",
   useCases: [

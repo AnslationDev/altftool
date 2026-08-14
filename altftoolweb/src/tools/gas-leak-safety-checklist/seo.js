@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gas Leak Time-to-LEL Calculator & Safety Checklist",
+  metaDescription:
+    "Model how long an LPG or PNG leak takes to reach the explosive limit in your room and ventilation, with detector placement and shut-down order.",
+  steps: [
+    "Pick Which gas, then enter Room length, width and Ceiling height (m), Air changes per hour, Leak rate (grams per hour) and Cylinder contents (kg)",
+    "The single-zone room balance computes the Time to the lower explosive limit headline, the Steady-state concentration and what a full cylinder would give in this room",
+    "Follow the numbered 'If you smell gas, in this order' sequence and the detector placement advice, then press Copy result to save the assessment",
+  ],
   intro:
     "A gas leak is only dangerous once the room reaches the fuel's lower explosive limit — 1.9% by volume for a typical LPG blend, 5% for the methane in piped natural gas. This tool applies the standard single-zone room mass balance, C(t) = C_ss × (1 − e^(−ACH·t)), to work out how long a leak of a given size takes to get there in a room of your size and ventilation, and pairs it with the shut-down sequence and detector placement that follow from whether your gas sinks or rises.",
   useCases: [

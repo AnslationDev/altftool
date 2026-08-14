@@ -1,4 +1,12 @@
 const seo = {
+  title: "Word Scramble Game: Timed Rounds, Shareable Seeds",
+  metaDescription:
+    "Unscramble words against 45-90 second timers: 10 points a letter plus a speed bonus, minus 25 per hint. Share a seed to race identical puzzles.",
+  steps: [
+    "Pick a Difficulty — Easy 4 to 5 letters at 45s, Medium 6 to 7 at 60s, Hard 8 or more at 90s — plus the Rounds count and a Puzzle seed.",
+    "Type the unscrambled word and press Submit before the countdown ends; each Hint (3 maximum) reveals more but costs 25 points.",
+    "Finish every round to see total points, accuracy and best streak, then use Copy result to compare scores on the same seed.",
+  ],
   intro:
     "Word Scramble Game gives you a jumbled word and a countdown, and you type the word it came from. Puzzles are drawn from a bank of common English words at three lengths — 4-5, 6-7 and 8-plus letters — and every scramble is a true Fisher-Yates shuffle driven by a seeded generator, so the same seed always rebuilds the same game and you can share a puzzle by sharing its number. Scoring is 10 points per letter, plus a time bonus worth up to half of that, minus 25 points per hint.",
   useCases: [

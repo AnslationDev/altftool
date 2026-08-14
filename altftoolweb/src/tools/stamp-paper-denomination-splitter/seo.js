@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stamp Paper Denomination Splitter - Fewest Sheets",
+  metaDescription:
+    "Enter the stamp duty payable and get the minimum non-judicial stamp papers (Re.1 to Rs.25,000) that cover it, with the unavoidable excess shown.",
+  steps: [
+    "Enter the \"Stamp duty payable (INR)\" and, if your vendor charges one, the \"Vendor writing / service fee per sheet (INR)\".",
+    "Under \"Denominations your vendor stocks\", untick any face value from Re.1 to Rs.25,000 the counter has run out of - the split recalculates around it.",
+    "Read \"Stamp papers to buy\" with the sheet-by-sheet breakdown, excess over duty and cash to carry, then click \"Copy result\".",
+  ],
   intro:
     "The Stamp Paper Denomination Splitter turns a stamp duty figure into the exact set of non-judicial stamp papers you should ask the vendor for, using the fewest sheets and the smallest unavoidable overshoot. It solves the ladder of printed face values (Re.1 up to Rs.25,000) as an unbounded coin-change problem rather than a greedy split, so the answer is genuinely the minimum. It is built for buyers, tenants, advocates' clerks and anyone about to execute an agreement on physical paper.",
   useCases: [

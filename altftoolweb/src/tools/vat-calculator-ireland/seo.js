@@ -1,4 +1,12 @@
 const seo = {
+  title: "VAT Calculator Ireland – 23%, 13.5%, 9% & 4.8% Rates",
+  metaDescription:
+    "Add or remove Irish VAT at 23%, 13.5%, 9%, 4.8% or zero, see net, VAT and gross, and check the €85,000/€42,500 registration thresholds.",
+  steps: [
+    "Choose Add VAT or Remove VAT, type the figure into the Net amount (excluding VAT) or Gross amount (including VAT) field, and pick a band from the VAT rate dropdown — 23%, 13.5%, 9%, 4.8%, zero or Custom rate.",
+    "Read the Total including VAT (or Price excluding VAT) headline with the net, VAT and gross breakdown, plus the table showing the same net price at every Irish rate.",
+    "Answer 'Do I have to register with Revenue?' by picking what you supply and entering Turnover, any 12-month period, to get a Registration required or Below the threshold verdict, then use Copy result or Reset.",
+  ],
   intro:
     "This calculator adds Irish VAT to a net price or strips it out of a VAT-inclusive one at the 23% standard rate, the 13.5% reduced rate, the 9% second reduced rate, the 4.8% livestock rate or zero. Adding VAT multiplies the net figure by 1.23 at the standard rate; removing it divides the gross by 1.23, so the tax inside a standard-rated price is 23/123, roughly 18.7%. It also checks turnover against the Revenue registration thresholds of 85,000 EUR for goods and 42,500 EUR for services.",
   useCases: [

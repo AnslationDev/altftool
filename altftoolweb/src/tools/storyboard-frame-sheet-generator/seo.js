@@ -1,4 +1,12 @@
 const seo = {
+  title: "Storyboard Template Generator — 16:9, 2.39:1, 9:16 Frames",
+  metaDescription:
+    "Lay out printable storyboard frames at 16:9, 1.85:1, 2.39:1, 4:3 or 9:16 on your paper size, check they fit, and download the sheet as an SVG.",
+  steps: [
+    "Choose the Paper size, Orientation and Shooting ratio — 16:9, 1.85:1, 2.39:1 scope, 4:3, 9:16 or a custom ratio.",
+    "Set Frames across, Frames down, the Notes area position, page margin and gutter, and the Total frames in the board.",
+    "Check the frame size, sheets needed and the 'Fits the page' row, then click SVG to download storyboard-<paper>-<orientation>-<cols>x<rows>.svg.",
+  ],
   intro:
     "Storyboard Frame Sheet Generator lays out a printable board where every frame is drawn at your actual shooting ratio — 16:9, 1.85:1, 2.39:1 anamorphic scope, 4:3 Academy or 9:16 vertical — rather than a generic rectangle. It sizes the frames from the paper, margin, gutter and grid you choose, adds a notes area beside or beneath each frame, and tells you whether the rows fit the printable height, how many sheets the whole board needs and how many blank cells are left on the last one.",
   useCases: [

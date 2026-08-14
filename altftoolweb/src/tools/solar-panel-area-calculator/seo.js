@@ -1,4 +1,12 @@
 const seo = {
+  title: "Solar Panel Area Calculator: Roof Space for Your kW",
+  metaDescription:
+    "Turns a target kW into panel count and roof area, deriving efficiency from the panel's spec sheet and adding row-spacing factors — with a roof fit check.",
+  steps: [
+    "Enter 'Target capacity (kW)', the 'Panel rating (Wp)' with its 'Panel length (mm)' and 'Panel width (mm)', and pick a 'Mounting' option.",
+    "Set 'Peak sun hours per day' and 'Performance ratio', and optionally enter 'Roof area you actually have (0 to skip)' in sq ft or sq m.",
+    "Read the 'Roof area required' headline with panel count, module efficiency from the spec, the spacing allowance and expected generation, plus the 'Does it fit your roof?' verdict; 'Copy result' copies the sizing.",
+  ],
   intro:
     "A solar panel area calculator turns a target kilowatt capacity into the number of panels and the square feet of roof they will occupy. It derives module efficiency straight from the panel's own spec sheet using the Standard Test Conditions definition — rated watts divided by module area times 1000 W/m² — then multiplies the glass area by a mounting factor for row spacing, walkways and edge setbacks. Daily and annual output come from peak sun hours and a system performance ratio.",
   useCases: [

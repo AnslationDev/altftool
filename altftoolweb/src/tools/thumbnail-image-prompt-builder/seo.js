@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Thumbnail Prompt Builder with Text-Size Maths",
+  metaDescription:
+    "Builds a text-free AI thumbnail prompt with a reserved headline zone and computes cap height and character budget from each platform's smallest render.",
+  steps: [
+    "Describe the video, add your Planned headline text (optional), and pick a Platform — YouTube video, YouTube Shorts / Reels cover, Blog / link preview (Open Graph) or Podcast episode art — plus Subject treatment, Emotion, Background and Text zone position.",
+    "The prompt rebuilds live with spec rows computed from that platform: Canvas size, Smallest render width, Minimum text cap height, and a Headline budget of chars/line x 2 lines — your headline is marked 'fits' or 'too long'.",
+    "Press Copy prompt to copy the Generated prompt, Negative prompt and typography notes together, generate the text-free plate with your AI tool, and typeset the headline in an editor; Reset restores the defaults.",
+  ],
   intro:
     "This builder composes a high-contrast AI thumbnail prompt that reserves a clean, text-free zone for your headline, then computes the typography maths from where the thumbnail actually renders: on a 1280 x 720 YouTube canvas shown at 168 px in the suggested rail, text needs a cap height of roughly 92 px to stay above the 12 px legibility floor, leaving room for about 24 characters. It is for YouTubers, bloggers and podcasters who want thumbnails that survive at real sizes.",
   useCases: [

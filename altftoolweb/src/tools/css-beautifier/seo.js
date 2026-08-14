@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Beautifier - Format Minified CSS at 2/4/8 Spaces",
+  metaDescription:
+    "Re-indent minified CSS with 2, 4 or 8 spaces, comments kept and blank lines between rules optional. Copy it or download styles.beautified.css.",
   intro:
     "CSS Beautifier re-indents minified or messy stylesheets by normalising the spacing around braces, semicolons, colons and commas, then re-indenting each nesting level with 2, 4 or 8 spaces. It is for anyone who has a stylesheet collapsed onto one line — from a build output, a CMS field, or a copied snippet — and needs it readable again. Blank lines between top-level rules can be switched on or off, and the result copies to the clipboard or downloads as styles.beautified.css.",
   useCases: [

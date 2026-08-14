@@ -1,4 +1,12 @@
 const seo = {
+  title: "SCSS Calculator: Quarterly Interest Payout and TDS",
+  metaDescription:
+    "Works out the SCSS quarterly cheque as deposit x rate / 4, plus five-year interest, Section 194A TDS position and Rule 9 premature-closure cost.",
+  steps: [
+    "Enter the Deposit amount up to the Rs 30 lakh ceiling or tap a preset chip, then set the notified rate and the 5-year or 8-year tenure.",
+    "Set Age at account opening and Entry route to check eligibility, and Held for (years) to price a premature closure under Rule 9.",
+    "Read the quarterly payout credited on 31 March, 30 June, 30 September and 31 December plus the TDS position, then use Copy result.",
+  ],
   intro:
     "The Senior Citizen Savings Scheme calculator works out the quarterly interest cheque on an SCSS deposit as deposit x annual rate / 4, because SCSS pays simple interest each quarter rather than compounding it. It is built for retirees planning a predictable income stream and for families comparing SCSS against a bank fixed deposit. Alongside the payout it shows the five-year interest total, the Section 194A TDS position and the Rule 9 deduction if the account is closed early.",
   useCases: [

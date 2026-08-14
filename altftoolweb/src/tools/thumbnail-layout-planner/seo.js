@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Thumbnail Layout Planner — 1280x720 Safe Zones",
+  metaDescription:
+    "Drag face, text and logo blocks on a 1280x720 frame; check the 5% margin, duration-badge corner and 168 px legibility, then copy a pixel brief.",
+  steps: [
+    "Enter the Video title and Thumbnail headline (6 words max), then arrange the starter blocks — Presenter cut-out, Headline and Channel logo — on the 16:9 canvas, or press \"Add element\" for more.",
+    "Drag a block or focus it and use the arrow keys, or type exact X %, Y %, Width % and Height % values; blocks turn red when they break the 5% safe margin or sit under the shaded duration-badge corner.",
+    "Read the Layout score out of 100 with every flagged issue listed, then press \"Copy brief\" to copy a markdown brief with per-element pixel positions.",
+  ],
   intro:
     "A thumbnail layout planner blocks out where the face, headline, product and logo sit on the 1280×720 frame YouTube asks for, then checks that arrangement against the rules that break thumbnails in the wild: the 5% edge margin, the duration badge in the bottom-right corner, and whether the text is still readable when the image is scaled to the 168 px strip on a phone. It is for creators and thumbnail designers who want the composition settled before opening Photoshop or Figma.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Encrypted Local File Vault – Passphrase Hint Index",
+  metaDescription:
+    "A browser-local index of your encrypted archives: file name plus passphrase hint per record, saved to localStorage with JSON export — no files stored.",
+  steps: [
+    "Type a record's File name and Passphrase hint — write a memory jog, never the real passphrase, since records are plain text in this browser's localStorage.",
+    "Press Add record to save it locally; the Search records box then filters across every field of the list.",
+    "Use Export JSON to download encrypted-local-file-vault.json as a backup, and Import JSON on another machine to replace the list there.",
+  ],
   intro:
     "The Encrypted Local File Vault is a browser-local index for the encrypted files you already keep elsewhere: each record holds a file name and a passphrase hint, saved to this browser's localStorage and never sent anywhere. It is for people who encrypt archives, disk images or document bundles with other software and then lose track of which passphrase belongs to which file. It is a catalogue, not an encryption engine — it does not encrypt, decrypt or store the files themselves.",
   useCases: [

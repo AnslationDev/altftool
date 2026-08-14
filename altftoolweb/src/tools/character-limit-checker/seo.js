@@ -1,4 +1,12 @@
 const seo = {
+  title: "Character Limit Checker – 23 Platform Limits, Live Count",
+  metaDescription:
+    "Count text against 23 real limits — X 280, Instagram 2,200, meta description 160 — with links weighted as 23 chars and SMS segment billing.",
+  steps: [
+    "Type or paste into the 'Your text' box and pick one of the 23 presets from the Platform limit menu, or set a Custom limit of your own.",
+    "For X posts, leave 'Count every link as 23 characters' ticked so URLs are billed the way t.co shortening bills them.",
+    "Watch the characters-remaining figure and SMS segment breakdown; if you are over, press 'Trim to limit' and then Copy text.",
+  ],
   "intro": "Character Limit Checker counts your text against 23 real platform limits — X posts at 280, Instagram captions at 2,200, LinkedIn posts at 3,000, YouTube titles at 100, meta descriptions at 160 and more — and shows exactly how many characters you have left as you type. It also weights links the way X does (every URL counts as 23 characters) and works out SMS segment billing in GSM-7 or UCS-2. Useful for social media managers, SEO writers and anyone drafting copy that has to fit.",
   "useCases": [
     "Trim a meta description to 160 characters so Google does not cut it off mid-sentence.",

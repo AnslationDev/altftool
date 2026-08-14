@@ -1,4 +1,12 @@
 const seo = {
+  title: "Regex Replace Preview with $1, $&, $<name> Expansion",
+  metaDescription:
+    "Preview a JavaScript regex find-and-replace before running it: full output plus each match's expansion — $1–$99, $&, $<name> handled per ECMA-262.",
+  steps: [
+    "Paste your text into 'Text to search', put the pattern in 'Find (regex pattern)' and the replacement in 'Replace with' — $1–$99, $&, $`, $', $<name> and $$ are supported.",
+    "Tick the 'Flags' checkboxes you need — g (all matches), i (ignore case), m, s, u or y; g is on by default and the preview recomputes on every keystroke.",
+    "Read 'Result after replace' and the per-match table's Index, Matched and Becomes columns (first 100 rows shown), then press 'Copy output'.",
+  ],
   intro:
     "The Regex Replace Preview Tool shows the exact result of a regular-expression find and replace before you apply it to real data, expanding $1–$99, $&, $`, $', $<name> and $$ references per the ECMA-262 GetSubstitution algorithm that JavaScript's String.replace implements. Alongside the full output it lists every match with its position and what it becomes — the per-occurrence detail a one-shot replace never shows. Everything runs locally in the browser; no text leaves the page.",
   useCases: [

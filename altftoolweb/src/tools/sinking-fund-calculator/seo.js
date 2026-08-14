@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sinking Fund Calculator – Monthly Reserve Planner",
+  metaDescription:
+    "List irregular bills with amount, months until due and money already saved — get each fund's catch-up and steady-state monthly deposit in one number.",
+  steps: [
+    "Add each irregular bill with its Expense name, 'How often it repeats' (One-off up to Every 5 years), Amount due (₹), Months until due and Already reserved (₹) — press 'Add an expense' for more rows.",
+    "Enter your Monthly take-home income (₹) and optionally a 'Return on the reserve (% per year)'; the calculator warns when the combined reserves cross 25% of take-home.",
+    "Read 'Set aside each month' — the catch-up rate until approaching bills are funded — beside the smaller steady-state figure, review the 'Every fund, soonest first' table, then press Copy plan.",
+  ],
   intro:
     "A sinking fund converts a lumpy bill you can see coming — an insurance renewal, a school term, a service, a holiday — into a level monthly reserve. This calculator returns two separate figures for each expense: the catch-up deposit, which is the sinking-fund annuity payment that closes the gap before the next due date, and the steady-state deposit, which is the amount per month once you have a full cycle to rebuild the fund. Confusing the two is why budgets break in renewal month.",
   useCases: [

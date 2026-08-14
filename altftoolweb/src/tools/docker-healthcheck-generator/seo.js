@@ -1,4 +1,12 @@
 const seo = {
+  title: "Docker HEALTHCHECK Generator — Dockerfile & Compose",
+  metaDescription:
+    "Generate matching Dockerfile HEALTHCHECK and compose blocks — curl, wget or nc probes — plus worst-case time to unhealthy: (retries−1)×interval+timeout.",
+  steps: [
+    "Pick a 'Probe type' — HTTP via curl, HTTP via wget (busybox/alpine images), TCP port open via nc, or Custom command — and set 'Container port' and 'Health endpoint path'.",
+    "Tune 'Interval (s)', 'Timeout (s)', 'Retries' and 'Start period (s)', optionally ticking 'Add --start-interval (Engine 25.0+)'.",
+    "Read 'Worst-case time to unhealthy' and take the Dockerfile HEALTHCHECK line plus the docker-compose block together with 'Copy both'.",
+  ],
   intro:
     "This generator writes a Dockerfile HEALTHCHECK instruction and the matching Compose healthcheck block — probe command, --interval, --timeout, --retries, --start-period and the newer --start-interval — using the real defaults from the Dockerfile reference (30s interval, 30s timeout, 3 retries, 0s start period). It also computes the worst-case time before Docker marks a failing container unhealthy, (retries − 1) × interval + timeout, so you can tune detection speed deliberately.",
   useCases: [

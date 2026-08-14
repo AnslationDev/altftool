@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base64 to URL-Safe Base64 Converter with Auto Padding",
+  metaDescription:
+    "Convert between plain text, standard Base64 and URL-safe base64url (RFC 4648). Missing = padding is restored automatically, so JWT segments decode.",
   intro:
     "Base64 URL Converter moves a payload between plain UTF-8 text, standard Base64 and URL-safe base64url, the two alphabets defined in RFC 4648 §4 and §5. They differ in exactly two characters — standard uses `+` and `/` at positions 62 and 63, URL-safe uses `-` and `_` — and base64url normally omits the `=` padding, which is what makes JWT segments fail in ordinary decoders. It is for developers debugging tokens, signed URLs, webhook signatures and query-string payloads.",
   useCases: [

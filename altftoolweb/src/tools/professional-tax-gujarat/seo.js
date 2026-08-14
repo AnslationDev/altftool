@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gujarat Professional Tax Calculator: Rs 200 Flat Slab",
+  metaDescription:
+    "Nil up to Rs 12,000 a month, flat Rs 200 above - Rs 2,400 a year max. Prorates part years and shows the Section 16(iii) old-regime saving.",
+  steps: [
+    "Enter 'Monthly salary or wage (INR)' and 'Months employed in Gujarat this year' (1-12) - part years are prorated.",
+    "Pick 'Your old-regime slab rate' (or 'No tax / new regime') and tick 'Notified exemption applies' if one covers you.",
+    "Read 'Professional tax payable' with the slab, the Rs 200 monthly deduction, the Section 16(iii) saving and net cost - your row is highlighted in the Gujarat slab table; press 'Copy result'.",
+  ],
   intro:
     "This calculator returns the professional tax deductible in Gujarat for a monthly salary under the Gujarat Panchayats, Municipal Corporations and State Tax on Professions, Trades, Callings and Employments Act, 1976, as notified with effect from 1 April 2022. The state now has two bands only: nil up to Rs 12,000 a month and a flat Rs 200 a month above it, a maximum of Rs 2,400 a year. It also shows the income tax the payment saves under Section 16(iii) for anyone taxed on the old regime.",
   useCases: [

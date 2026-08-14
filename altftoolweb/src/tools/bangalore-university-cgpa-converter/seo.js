@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bangalore University CGPA to Percentage Converter",
+  metaDescription:
+    "Convert Bangalore University CGPA with percentage = (CGPA - 0.75) x 10, reverse it for cut-offs, and compare the 0.75, 0.5 and zero-offset rules.",
+  steps: [
+    "Pick a direction — \"CGPA to percentage\" or \"Percentage to CGPA\" — and enter your value in \"CGPA or SGPA (out of 10)\" or \"Percentage of marks\".",
+    "Read the Equivalent percentage (or Equivalent CGPA) with its \"Calculated as\" formula line and the class under the common convention, based on the (CGPA - 0.75) x 10 rule Bangalore University uses.",
+    "Press \"Copy result\" to copy the conversion summary, or roll semester SGPAs and credits into a credit-weighted CGPA via the semester SGPA table.",
+  ],
   intro:
     "This converter applies the equivalence Bangalore University prints alongside its CBCS grade cards, percentage = (CGPA - 0.75) x 10, and reverses it so you can see the CGPA a stated cut-off requires. Because three different offsets are used across Indian universities, it also shows the same CGPA read under 0.75, 0.5 and no offset at all, which is the quickest way to identify the rule your own marks card followed. Semester SGPAs can be rolled into a credit weighted CGPA first.",
   useCases: [

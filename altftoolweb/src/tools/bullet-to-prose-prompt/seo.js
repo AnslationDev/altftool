@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bullet Points to Prose: AI Prompt with a Word Budget",
+  metaDescription:
+    "Paste bullet notes and get an AI prompt with a computed word, sentence and paragraph budget — and a hard rule against inventing facts.",
+  steps: [
+    "Paste your notes into \"Your bullet points\" (one idea per line, two-space indent for sub-points) and describe the audience.",
+    "Set the \"Expansion factor (×)\", average sentence words and sentences per paragraph — or fix an exact word count instead.",
+    "Review the target prose length and the bullets-over-30-words count, then click \"Copy prompt\" to take the no-invention prompt.",
+  ],
   intro:
     "Bullet to Prose Prompt measures the notes you paste — bullet count, words per bullet, nesting depth — and converts them into a length budget: source words multiplied by an expansion factor gives a target word count, which divides by your average sentence length into sentences and then into paragraphs. The prompt it writes carries those numbers plus a hard rule against inventing any fact not present in the notes. For anyone whose draft exists as a list and needs to become a paragraph.",
   useCases: [

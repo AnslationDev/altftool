@@ -1,4 +1,7 @@
 const seo = {
+  title: "Code Complexity Analyzer: Cyclomatic & Cognitive Scores",
+  metaDescription:
+    "Scores pasted code on cyclomatic and cognitive complexity, Halstead volume and the maintainability index, then names the functions to refactor first.",
   intro:
     "Code Complexity Analyzer measures a pasted function or file on four established metrics — McCabe cyclomatic complexity, nesting-weighted cognitive complexity, Halstead volume and the maintainability index — then names the specific functions that are too long, too nested or take too many parameters. It is for developers deciding what to refactor first and for reviewers who want a number behind \"this is hard to follow\". Everything runs in your browser; no code is uploaded.",
   useCases: [

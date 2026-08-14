@@ -1,4 +1,12 @@
 const seo = {
+  title: "Amazon Listing Prompt Builder — 250-Byte Search Terms",
+  metaDescription:
+    "Build one AI brief for Amazon title, bullets and description with policy rules included, plus a backend search-term string packed into 250 bytes.",
+  steps: [
+    "Enter the product name, brand, category and shopper, then list \"Verified attributes — one per line\" and \"Keywords — one per line, primary first\".",
+    "Set the bullet count, title target, characters per bullet and description length, and tick \"Also ask for an A+ content module outline\" if you need it.",
+    "Check the backend search-terms byte counter against the 250 B limit, then click \"Copy prompt\" for the brief or \"Copy terms\" for the string.",
+  ],
   intro:
     "This builder produces a single Amazon listing brief — title, bullets, description and optional A+ outline — with the platform's field limits and content policies stated inside the prompt itself. It also assembles the backend search-term string, stripping words that already appear in your title and packing the rest into the 250-byte limit Amazon measures that field in. It is for sellers and agencies who want listing copy tied to verified attributes rather than invented specifications.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coaching Fee vs Self-Study Cost Calculator (INR)",
+  metaDescription:
+    "Puts the full coaching bill — fee, travel, extras — against books, test series and subscriptions over the same months, with totals and per-month costs.",
+  steps: [
+    "Set the Preparation duration (months), then fill the Coaching plan fieldset: Total programme fee (INR), extra monthly cost such as travel or hostel premium, and one-time extras like kit and books.",
+    "Fill the Self-study plan fieldset — one-time costs for books and test series, and monthly costs for subscriptions, internet and library — and the comparison recomputes live over the same window.",
+    "Read the Cost difference headline and its verdict — 'Coaching works out cheaper' or 'Self-study works out cheaper' — with totals and per-month figures for both plans; Copy result copies the summary.",
+  ],
   intro:
     "This calculator compares the total cost of a coaching programme — fee, one-time extras and coaching-driven monthly costs like travel — against a self-study plan built from books, test series and monthly subscriptions, over the same preparation window. Both plans are reduced to a total and an effective per-month figure, so students and parents weighing JEE, NEET, UPSC or board-exam preparation can see the real financial gap, not just the sticker price of the coaching fee.",
   useCases: [

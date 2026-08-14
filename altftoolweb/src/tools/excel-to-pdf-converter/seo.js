@@ -1,4 +1,12 @@
 const seo = {
+  title: "Excel to PDF Converter: A4 Sheets, No Watermark",
+  metaDescription:
+    "Renders an .xlsx, .xls or .csv sheet onto an A4 page with 10 mm margins and no watermark, parsed in your browser; each sheet exports as name-sheet.pdf.",
+  steps: [
+    "Drag and drop your spreadsheet or click 'Browse Files' — the picker accepts .xlsx, .xls and .csv files.",
+    "Pick a worksheet under 'Available Sheets'; the 'Preview Document' pane lays it out on a 793 × 1056 px A4 page headed with the file name and 'Sheet:' name.",
+    "Click 'Download PDF' — the page is captured at 2× scale into an A4 portrait PDF with 10 mm margins and saved as <filename>-<sheetname>.pdf.",
+  ],
   intro:
     "The Excel to PDF Converter renders a worksheet from an .xlsx, .xls or .csv file onto an A4 portrait page and saves it as a PDF with 10 mm margins and no watermark. The workbook is parsed in your browser, laid out on a 793 x 1056 px preview page — the pixel size of A4 at 96 dpi — and captured at 2x scale, so the table you see is exactly the table you get. Every sheet in the file is listed, and each export is named after the source file and the sheet, for example inventory-Q3.pdf.",
   useCases: [

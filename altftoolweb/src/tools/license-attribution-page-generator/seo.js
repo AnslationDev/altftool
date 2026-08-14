@@ -1,4 +1,12 @@
 const seo = {
+  title: "Third-Party License Attribution Page Generator",
+  metaDescription:
+    "Paste dependency lines like react@19.0.0 MIT and get a third-party licenses page grouped by SPDX license, as Markdown, an HTML fragment or plain text.",
+  steps: [
+    "Paste your dependency list into the 'Dependency manifest — one per line' box as name@version license, name version license or pipe-separated lines (lines starting with # are ignored), and set the Project / product name.",
+    "Pick Markdown, HTML fragment or Plain text under Output format; the page regenerates live, grouping components by SPDX license and classifying each as permissive, weak copyleft or strong copyleft.",
+    "Check the Components, Distinct licenses, Copyleft components and Unrecognised licenses counts, then press Copy page to copy the finished third-party licenses page.",
+  ],
   intro:
     "This generator converts a dependency manifest into a ready-to-publish third-party licenses page, grouping components by SPDX license and labelling each license as permissive, weak copyleft, strong copyleft or public-domain equivalent. It exists because MIT, BSD, ISC and Apache-2.0 all require the copyright and permission notices of bundled components to be preserved in distributions. Paste lines like react@19.0.0 MIT and export the page as Markdown, an HTML fragment or plain text.",
   useCases: [

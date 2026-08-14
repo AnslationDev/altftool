@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pregnancy Weight Gain Calculator by BMI (IOM Ranges)",
+  metaDescription:
+    "IOM weight-gain ranges from pre-pregnancy BMI — 11.5–16 kg at a healthy BMI — plus weekly rate, gain-by-week check and twin ranges.",
+  steps: [
+    "Choose Units — Metric (kg, cm) or Imperial (lb, ft/in) — then enter 'Pre-pregnancy weight', height and 'Gestational week now' (1–42), ticking 'Twin pregnancy' if it applies.",
+    "Optionally fill 'Current weight' so the tool can compare your gain so far against the expected band for your week.",
+    "Read 'Recommended total gain' with your IOM BMI category, the expected-gain-by-week row and 'Weekly rate after week 13', then press 'Copy result'.",
+  ],
   intro:
     "Recommended pregnancy weight gain is set by the BMI you had before conceiving, and this calculator applies the Institute of Medicine (2009) bands that ACOG and most antenatal services still use: 12.5–18 kg for underweight, 11.5–16 kg for a healthy BMI, 7–11.5 kg for overweight and 5–9 kg for obese. It also gives the weekly rate for the second and third trimesters and shows where your gain should be by the week you are in now. Twin ranges are included where the IOM issued them.",
   useCases: [

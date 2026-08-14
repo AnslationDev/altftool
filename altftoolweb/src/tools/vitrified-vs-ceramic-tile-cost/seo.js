@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vitrified vs Ceramic Tile Cost: Whole-Life Compare",
+  metaDescription:
+    "Compares laid cost — tile, labour, bedding — then spreads installation over your horizon with upkeep and shows when vitrified pays back its premium.",
+  steps: [
+    "Enter Floor area (sqft) and the years you plan to keep the floor, then fill each side's tile price, laying labour, adhesive, service life and upkeep.",
+    "Read 'Cheaper over your horizon' and the item-by-item table from laid cost per sqft down to cost per sqft per year.",
+    "Check how many years vitrified takes to pay back its premium, then use Copy result to export the comparison.",
+  ],
   intro:
     "This comparison prices vitrified and ceramic floors on laid cost — tile plus laying labour plus bedding material — and then spreads that installation across the years you plan to keep the floor, adding annual upkeep, so two tiles with different service lives can be compared fairly. That equivalent-annual-cost method is the standard way to compare assets that do not last the same number of years. It also shows how long a vitrified floor takes to pay back its higher laid cost.",
   useCases: [

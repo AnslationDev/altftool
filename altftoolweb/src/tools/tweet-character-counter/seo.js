@@ -1,4 +1,7 @@
 const seo = {
+  title: "Tweet Character Counter — 280 Limit and Posts Needed",
+  metaDescription:
+    "Live count against the 280-character post limit: how many characters remain or overshoot, plus words, lines and how many posts a long draft needs.",
   intro:
     "The Tweet Character Counter counts your text against the standard 280-character post limit and tells you how many characters are left or how many you are over, alongside the word count, line count, and how many posts the text would need if split at 280 characters each. Paste or type a draft and the numbers update as you write, so you can trim before you hit the composer. It is for anyone writing a post, a thread or an ad line where the cut-off matters more than the prose.",
   useCases: [

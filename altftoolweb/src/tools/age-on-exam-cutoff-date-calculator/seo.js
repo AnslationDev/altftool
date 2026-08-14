@@ -1,4 +1,12 @@
 const seo = {
+  title: "Age on Cutoff Date Calculator for Exam Eligibility",
+  metaDescription:
+    "Get your exact age in years, months and days on any exam's crucial date and test it against minimum and maximum limits with the day margin shown.",
+  steps: [
+    "Enter your \"Date of birth\" and the notification's \"Cutoff (\\\"as on\\\") date\".",
+    "Optionally add the \"Minimum age in years\" and \"Maximum age in years\" from the eligibility clause, including any relaxation yourself.",
+    "Read your completed age in years, months and days, the day margin on each limit and the age-window verdict, then click \"Copy result\".",
+  ],
   intro:
     "This calculator computes your exact completed age — years, months and days — on any exam notification's cutoff or \"crucial\" date, using the calendar convention recruitment bodies apply: a year of age completes on the birthday anniversary. It can also test that age against a minimum limit (\"must have attained\") and a maximum limit (\"must not have attained\"), showing the precise day margin on either side, which is where borderline candidates usually get eligibility wrong.",
   useCases: [

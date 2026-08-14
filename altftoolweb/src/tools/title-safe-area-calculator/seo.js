@@ -1,4 +1,12 @@
 const seo = {
+  title: "Title Safe Area Calculator – EBU R 95 & SMPTE Margins",
+  metaDescription:
+    "Convert safe area percentages into pixel margins for any frame size — EBU R 95 93/90 or SMPTE RP 218 90/80 — plus box corners to type into guides.",
+  steps: [
+    "Enter Frame width (px) and Frame height (px) or tap a preset like 1920 x 1080 (HD) or 3840 x 2160 (UHD), then pick a Safe area standard — EBU R 95, SMPTE RP 218 (legacy SD), Conservative 90 / 85 or Custom percentages.",
+    "Read the Title safe margin headline and the rows for action and title safe sizes, per-edge margins and the Title safe box (left, top) and (right, bottom) corners, drawn on a live frame preview.",
+    "Press Copy result to copy the margins and box corners for your NLE guides, or Reset to return to the 1920x1080 EBU R 95 defaults.",
+  ],
   intro:
     "This calculator converts safe area percentages into pixel margins for any frame size: a safe rectangle of P percent leaves a margin of (100 - P) / 2 percent on each edge. It defaults to the EBU R 95 and SMPTE ST 2046-1 practice of a 93% action safe and 90% graphics safe area for 16:9 HD, and also offers the older SMPTE RP 218 90/80 margins used in standard definition. Editors, designers and broadcast QC operators use it to keep captions, lower thirds and logos clear of the frame edge.",
   useCases: [

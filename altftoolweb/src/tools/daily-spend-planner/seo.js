@@ -1,4 +1,12 @@
 const seo = {
+  title: "Daily Spending Calculator — Your Safe-to-Spend Number",
+  metaDescription:
+    "One safe-to-spend number for today: (income − bills − savings − spent) ÷ days left this month, with pace warnings and food, transport and fun envelopes.",
+  steps: [
+    "Enter Monthly take-home income, list Fixed commitments with Add row, and set the Savings goal as a 0–60% of income slider or a Fixed amount.",
+    "Log Discretionary spent so far this month — day-to-day food, travel and going out, not the bills already listed.",
+    "Read the Safe to spend per day figure with the Rest of this week and Next 7 days allowances and the pace verdict, then click Copy plan.",
+  ],
   intro:
     "The Safe-to-Spend Daily Planner answers one question — how much can I spend today — using the formula (income − fixed commitments − savings goal − already spent) ÷ days left in this month. Because savings is subtracted before the daily number is worked out, you save by default rather than saving whatever survives to month end. It suits salaried people on a monthly cycle who keep overshooting in the first fortnight and running dry in the last one; amounts are shown in Indian rupees.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "ASL Fingerspelling Name Generator — Printable Hand Chart",
+  metaDescription:
+    "Type a name (up to 40 characters) and get an ASL manual-alphabet strip with handshape diagrams, palm directions and written descriptions to print.",
+  steps: [
+    "Type into \"Name to spell\" (40 characters max) and pick a Practice pace — Beginner, Steady or Fluent at 1, 2 or 4 letters per second.",
+    "Keep \"Show handshape descriptions\" ticked so each letter's schematic hand diagram carries its finger, thumb and palm wording.",
+    "Read the Fingerspelling strip with \"Letters that move\" flagged (only J and Z travel), then use \"Print strip\" for a one-sheet card or \"Copy instructions\" for the text.",
+  ],
   intro:
     "Name to Fingerspelling Graphic converts a typed name into a letter-by-letter strip in the one-handed American Sign Language manual alphabet, showing a schematic handshape, the palm direction and a written description for each letter. Twenty-four of the 26 ASL letters are static handshapes; only J and Z involve movement, and those are flagged separately. It is built for classroom name cards, introductions and personal practice rather than as a substitute for learning from a Deaf teacher.",
   useCases: [

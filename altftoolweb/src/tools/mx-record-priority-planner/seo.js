@@ -1,4 +1,12 @@
 const seo = {
+  title: "MX Record Priority Planner: Backup and Migration",
+  metaDescription:
+    "Assigns RFC 5321 preference values for single-provider, backup-MX and three-phase migration setups, and rejects IP-address MX targets.",
+  steps: [
+    "Choose a Scenario — single provider, primary plus backup, or migration — then paste mail server hostnames one per line and set the TTL in seconds.",
+    "The planner validates every target as a hostname (IP-address MX targets are rejected per RFC 5321) and assigns preference tiers spaced by 10.",
+    "Review the record table of Name, TTL, Type, Preference and Target, or the three migration phases, then press Copy plan for zone-file lines.",
+  ],
   intro:
     "This planner assigns MX record preference values using the RFC 5321 rule that sending servers try the lowest preference first and load-balance across equal values. It covers three real setups — a single provider, a primary with a backup MX, and a three-phase provider migration — and validates that every target is a well-formed hostname rather than an IP address literal, as RFC 5321 requires. It is for admins moving mail providers or adding failover without bouncing messages.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Weight Fluctuation Explainer: Sodium, Carbs, Alcohol",
+  metaDescription:
+    "Split an overnight scale swing into sodium, glycogen and alcohol effects — plus the calorie imbalance the same number would need if it were fat.",
+  steps: [
+    "Enter Body weight (kg), Sodium yesterday (mg), Carbohydrate yesterday (g), Alcoholic drinks and the optional Scale change this morning (kg).",
+    "Tick anything else that applies — hard training, a long flight, sauna or a low-fluid day — and set the Creatine and Menstrual cycle phase selectors.",
+    "Read the Estimated fluid swing in kg, its fat-equivalent kcal and the 'Where the swing came from' driver table, then press Copy result.",
+  ],
   intro:
     "Water weight is the fluid your body holds or sheds from day to day, and it moves far faster than fat ever can. This tool splits an overnight scale swing into measurable parts: extra sodium must be carried in isotonic fluid at about 0.31 litres per gram of sodium, each gram of new glycogen binds roughly 3 g of water, and ethanol drives about 10 mL of extra urine per gram. It then converts the total into the calorie imbalance the same figure would require if it were genuinely fat.",
   useCases: [

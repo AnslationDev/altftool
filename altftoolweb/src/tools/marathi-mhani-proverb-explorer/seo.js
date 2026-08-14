@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marathi Mhani Explorer – 30 Proverbs, Meanings & Quiz",
+  metaDescription:
+    "Browse 30 Marathi mhani with transliteration, literal and real meanings, a Marathi gloss and honest English equivalents — plus a four-option quiz.",
+  steps: [
+    "Filter the 30-proverb collection with the Theme selector, or type Devanagari, transliteration or an English word into the 'Search proverb, transliteration or meaning' box.",
+    "Read each mhan's literal translation, figurative meaning, Marathi gloss and English equivalent in the Browse proverbs list.",
+    "Test yourself in the Meaning quiz: pick one of the four options, see the correct answer with its gloss, and press Next proverb — your accuracy score updates as you go.",
+  ],
   intro:
     "Marathi Mhani Explorer is a browsable collection of 30 Marathi proverbs, each shown with a transliteration, a strictly literal translation, the everyday meaning it actually carries, a Marathi gloss and the closest English proverb where one honestly exists. A mhan is a complete saying quoted unchanged, unlike a vakprachar, which is a phrase-level idiom that has to be inflected into its sentence. A seeded four-option quiz builds questions and distractors from the same collection.",
   useCases: [

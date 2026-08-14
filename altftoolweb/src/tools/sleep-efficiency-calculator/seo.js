@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Efficiency Calculator with CBT-I 85% Benchmark",
+  metaDescription:
+    "Scores one sleep-diary night: total sleep time over time in bed against the 85% benchmark, plus the time-in-bed window sleep restriction targets.",
+  steps: [
+    "Enter your night's window in 'Got into bed at' and 'Got out of bed at'.",
+    "Add 'Minutes to fall asleep', 'Minutes awake during the night', 'Minutes awake in bed before getting up' and 'Number of awakenings' — the score updates as you type.",
+    "Read the 'Sleep efficiency' percentage against the 85% healthy and 90% well-consolidated benchmarks, plus time in bed, total sleep time and the 'Suggested time-in-bed window'; 'Copy result' copies the night.",
+  ],
   intro:
     "Sleep efficiency is total sleep time divided by time in bed, expressed as a percentage — this calculator derives both from a single night of your sleep diary. It subtracts the time you spent falling asleep, the minutes awake during the night and any time lying awake before getting up, then reports the percentage alongside the 85% benchmark used in adult sleep research and CBT-I. It also shows the time-in-bed window sleep restriction therapy would target for that amount of sleep.",
   useCases: [

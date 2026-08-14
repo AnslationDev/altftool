@@ -1,4 +1,7 @@
 const seo = {
+  title: "Factorial Calculator: Exact n! for 0–2000, Every Digit",
+  metaDescription:
+    "Compute n! exactly with big integers — all 158 digits of 100!, up to the 5,736-digit 2000! — plus a digit count and the full value to copy.",
   intro:
     "The Factorial Calculator computes n! — the product of every whole number from 1 to n — exactly, for any n from 0 to 2000, using arbitrary-precision big integers rather than floating-point arithmetic. That matters because a standard 64-bit double stops representing factorials exactly at 23!, while this returns every digit: 100! comes back as its full 158-digit value, and 2000! as all 5,736 digits. Alongside the number you get its digit count, so you can see the scale at a glance.",
   useCases: [

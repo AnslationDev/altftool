@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unit Price Calculator: Compare Price Per Kg, Litre, Piece",
+  metaDescription:
+    "Compare pack sizes by price per kg, per litre or per piece — multipack aware, mixed units normalised, cheapest option ranked with the % gap shown.",
+  steps: [
+    "Pick the Weight, Volume or Count mode, then enter each option's \"Price (₹)\", \"Size of one pack\" and unit (g, kg, oz, lb; ml, L, fl oz, gallon; or pieces, dozen).",
+    "Set \"Packs in the deal\" for combos like 6 x 250 ml, and use \"Add option\" to compare more shelf choices.",
+    "Read the \"Best value option\" ranking — every other option shows its % more per unit — then click \"Copy result\".",
+  ],
   "intro": "Unit Price Comparison Calculator converts competing pack sizes to a single common unit — price per kg, per litre or per piece — so you can tell instantly which shelf option is actually cheaper. Enter price, pack size and how many packs a combo deal contains, and it ranks every option and shows how much more you pay per unit for the others. Built for grocery runs, online-store combos and bulk-buying decisions where the label maths is deliberately hard to do in your head.",
   "useCases": [
     "Decide between a 500 g pack and a 1 kg pack when the larger one is not proportionally cheaper.",

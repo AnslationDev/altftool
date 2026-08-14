@@ -1,4 +1,12 @@
 const seo = {
+  title: "UGC Brief Generator — Timed Shot Lists & Delivery Specs",
+  metaDescription:
+    "Build a creator brief with scene timings that sum exactly to the runtime, word budgets at 150 wpm, platform delivery specs, and dos and don'ts.",
+  steps: [
+    "Enter the Product, 'Who the ad is for', 'One key message' and 'Call to action', then pick an 'Ad structure' (problem/solution, unboxing, testimonial, before/after or listicle) and a Placement.",
+    "Set 'Runtime (seconds)' between 5 and 180 plus 'Hook variants' and 'CTA variants' — the brief, the 'Cuts to deliver' count and the timed shot list recalculate as you type.",
+    "Review the shot list with per-scene word budgets, the delivery spec and the do/do-not lists, then press 'Copy brief' to copy the full text shown under 'Brief to send'.",
+  ],
   intro:
     "UGC Brief Generator produces the document a creator actually needs to shoot a paid ad: a shot list where scene durations are allocated from the runtime and always sum to it exactly, a spoken word budget per scene at 150 words per minute, the delivery spec for the placement you are buying, and explicit dos and don'ts. Pick a structure — problem/solution, unboxing, testimonial, before/after or listicle — and the beats, timings and on-screen text cues are laid out for you.",
   useCases: [

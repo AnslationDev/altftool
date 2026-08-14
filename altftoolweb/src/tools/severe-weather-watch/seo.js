@@ -1,4 +1,12 @@
 const seo = {
+  title: "Severe Weather Watch — Active NWS Alerts by Zone",
+  metaDescription:
+    "Enter or auto-fill your coordinates and get the active National Weather Service alerts for your forecast zone — severity, headline and expiry times.",
+  steps: [
+    "Type your coordinates into the Latitude and Longitude boxes, or press 'Use device location' to fill them from the browser.",
+    "Press 'Get current result' — the tool resolves the point to its NWS forecast zone and fetches that zone's active alerts with caching disabled.",
+    "The 'Current result' panel headlines 'N active official alert(s)' and lists each alert's severity, event, headline and expiry, with the U.S. National Weather Service named as source.",
+  ],
   intro:
     "Severe Weather Watch pulls the active official weather alerts for a set of coordinates straight from the U.S. National Weather Service and lists each one with its severity, event type, headline and expiry time. You either let the browser supply your latitude and longitude or type them in, and the tool resolves them to an NWS forecast zone before fetching that zone's live alerts. It is for anyone who wants the government warning text itself rather than an app's paraphrase of it.",
   useCases: [

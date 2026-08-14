@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS clamp() Generator for Fluid Typography and Spacing",
+  metaDescription:
+    "Enter a min px, preferred vw and max px and get a valid clamp() value like clamp(16px, 4vw, 48px), ready to paste into font-size or padding.",
   intro:
     "The CSS Clamp Generator assembles a `clamp(min, preferred, max)` declaration from three numbers you supply: a minimum size in px, a preferred size in viewport width units, and a maximum size in px. It is for anyone writing fluid typography or spacing who wants the value to scale with the viewport but never fall below a readable floor or grow past a sensible ceiling. The defaults — 16px, 4vw, 48px — produce `clamp(16px, 4vw, 48px)`, ready to paste into a font-size or padding declaration.",
   useCases: [

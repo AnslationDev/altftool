@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text to Voice Reader — Free Browser Text-to-Speech",
+  metaDescription:
+    "Read any pasted text aloud with your system's own voices. Adjust speed from 0.1 to 3.0 plus pitch and volume, with real pause and resume controls.",
+  steps: [
+    "Paste or type into the Text Input box (\"Enter text to convert to speech...\").",
+    "In Voice Settings, choose a voice from the dropdown — each option shows its name and language tag — and set the Speed slider (0.1 to 3.0 in 0.1 steps) plus the separate Pitch and Volume sliders.",
+    "Press Speak to hear the text through your device's speech engine; Pause holds the current position, Resume continues from there, and Stop cancels playback.",
+  ],
   intro:
     "Text to Voice reads pasted text aloud through the Web Speech API's SpeechSynthesis engine, using the voices your own operating system and browser already provide, with speak, pause, resume and stop controls. It suits anyone proofreading a draft by ear, rehearsing a script, or making written material listenable. Speed is adjustable from 0.1 to 3.0 in 0.1 steps, with separate pitch and volume sliders, and the voice list shows each voice's language tag so you can match the text.",
   useCases: [

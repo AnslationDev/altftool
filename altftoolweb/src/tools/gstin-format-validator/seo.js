@@ -1,4 +1,12 @@
 const seo = {
+  title: "GSTIN Validator — Check Format, Checksum & State Code",
+  metaDescription:
+    "Validate 15-character GSTINs against the mod-36 checksum, decode the state and PAN, and see which rule failed. Bulk lists run locally with CSV export.",
+  steps: [
+    "Type a 15-character GSTIN into the \"GSTIN number\" field (formatted like 29 ABCDE1234F 1Z 5), or switch to Bulk List and paste GSTINs one per line.",
+    "The breakdown updates as you type: decoded state, embedded PAN, entity code, checksum status and the expected check character when the 15th character is wrong, with a masked version safe to share.",
+    "Press \"Copy Masked\" to copy share-safe values, or CSV to download gstin-format-validation.csv with the full per-GSTIN breakdown and issues.",
+  ],
   intro:
     "This validator checks a 15-character GSTIN against its published structure — 2-digit state code, 10-character PAN, entity code, the fixed letter Z, and a mod-36 check character — and tells you which part failed. It decodes the state, extracts the embedded PAN, recomputes the checksum with the alternating 2/1 weighting used by the GST system, and produces a masked version safe to share. Single GSTINs and pasted bulk lists both run locally, and the list can be exported as CSV.",
   useCases: [

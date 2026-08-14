@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram Teen Account Setup Checklist for Parents",
+  metaDescription:
+    "Verify Teen Account defaults, add the controls Instagram leaves off, and get a Sleep mode window worked back from your teen's school wake time.",
+  steps: [
+    "Enter the teen's Age (13-17), School-day wake-up time (HH:MM), Account style and Parental supervision status.",
+    "Tick off each Essential, Recommended and Optional checklist item as you apply it in the Instagram app; the Setup coverage percentage updates live.",
+    "Read the Suggested Sleep mode window worked back from the wake time, then use Copy plan to export the remaining steps as text.",
+  ],
   intro:
     "This guide checks the Instagram Teen Account defaults that already apply to an under-18 account — private by default, restricted DMs, tag limits, the most restrictive sensitive-content setting, nudity protection in DMs — and adds the controls Instagram does not set for you. It also works out a Sleep mode window from the school wake time, using the American Academy of Sleep Medicine recommendation of 8 to 10 hours a night for 13 to 18 year olds. Instagram's minimum age is 13.",
   useCases: [

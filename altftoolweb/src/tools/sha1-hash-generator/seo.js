@@ -1,4 +1,7 @@
 const seo = {
+  title: "SHA-1 Hash Generator — 40-Char Hex Digest of Any Text",
+  metaDescription:
+    "Computes the SHA-1 digest of pasted text as 40 lowercase hex characters, live as you type, using the browser's Web Crypto with UTF-8 encoding.",
   intro:
     "This generator computes the SHA-1 digest of any text you paste — a 160-bit value shown as 40 lowercase hexadecimal characters — using the browser's built-in Web Crypto implementation. The input is encoded as UTF-8 before hashing, which is what makes the output match what git, OpenSSL or a server-side library would produce for the same bytes. It is aimed at developers checking a checksum, a legacy signature or a stored digest rather than anyone choosing a hash for new security work.",
   useCases: [

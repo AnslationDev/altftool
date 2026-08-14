@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mental Rotation Test — 15-Trial Spatial Reasoning Online",
+  metaDescription:
+    "Judge rotated vs mirrored block figures in 15 keyboard trials. Get accuracy, average reaction time and a spatial grade in the Shepard-Metzler style.",
+  steps: [
+    "Press \"Start Test (15 Trials)\" and study each pair: a Target Shape shown beside a Comparison figure that is either rotated or mirrored.",
+    "Answer with the right arrow (or the \"Same (Rotated)\" button) if the figures match after rotation, or the left arrow (\"Different (Mirrored)\") if the comparison is a mirror image — each response is timed from the moment the pair appears.",
+    "After trial 15, read your Spatial Grade with accuracy out of 15 and average reaction time in milliseconds, then press \"Retake Test\" to run again.",
+  ],
   intro:
     "The Mental Rotation Test presents 15 same-or-different trials in which a target block figure is shown beside a comparison figure that has either been rotated by 90, 180 or 270 degrees, or mirrored and then rotated. You answer with the right arrow for same and the left arrow for different, and the test records accuracy plus reaction time on every trial. It is a browser version of the classic Shepard-Metzler paradigm for anyone curious about their spatial visualisation ability.",
   useCases: [

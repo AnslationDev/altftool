@@ -1,4 +1,12 @@
 const seo = {
+  title: "KMPL Mileage Calculator – Tank-to-Tank km/l & mpg",
+  metaDescription:
+    "Log brim-to-brim fill-ups (odometer + litres) to measure true km/l, l/100 km, US/UK mpg and fuel cost per km — averaged across tanks, not estimated.",
+  steps: [
+    "In the Fill-up log, enter the Baseline odometer (km), then each brim-to-brim refill's odometer and Litres filled — press Add fill for more tanks and set the Fuel price (per litre).",
+    "The calculator divides the distance between fills by the litres dispensed — the baseline fill's litres are not counted — and averages every tank into one True mileage figure.",
+    "Read the km/l result with Consumption in litres / 100 km, US and UK mpg, Fuel cost per km and Best tank / Worst tank rows, then press Copy result to copy the summary.",
+  ],
   intro:
     "This calculator measures real fuel efficiency with the tank-to-tank (brim-to-brim) method: mileage in km/l is the distance between two full-to-the-brim fills divided by the litres it took to refill. It ignores the litres in the first fill, because those replaced fuel burnt before the measurement began, and it averages several tanks so one generous or stingy fill does not skew the answer. Results are also shown as litres per 100 km, US mpg, imperial mpg and fuel cost per kilometre.",
   useCases: [

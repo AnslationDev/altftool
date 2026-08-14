@@ -1,4 +1,12 @@
 const seo = {
+  title: "Engagement Rate Calculator — Followers, Reach, Impressions",
+  metaDescription:
+    "Compute engagement rate three ways — by followers, reach and impressions — from one batch of post totals, plus creator tier and comment/save share.",
+  steps: [
+    "Enter your \"Followers\", \"Posts these totals cover\" and the batch totals for likes, comments, \"Total shares / sends\" and \"Total saves / bookmarks\".",
+    "Add \"Total reach (optional)\" and \"Total impressions (optional)\" to unlock ER by reach, ER by impressions and reach rate vs followers.",
+    "Read ER by followers with its band and creator tier, check \"What a target rate needs\" in engagements per post, then click \"Copy result\".",
+  ],
   intro:
     "Engagement rate is total engagements divided by an audience denominator, and this calculator runs all three standard denominators from one set of post totals: followers, reach and impressions. It also reports the creator tier by follower count, reach rate against followers, and how much of the engagement came from comments and saves rather than passive likes. Useful for creators building a media kit and for brands sanity-checking one before they pay for a collaboration.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "LED vs CFL Bulb Savings Calculator: Lumen-Matched",
+  metaDescription:
+    "Matches LED wattage on lumens rather than watts, then totals electricity and replacement-bulb savings with payback in months over your horizon.",
+  steps: [
+    "Pick 'What is fitted now' (each option lists lm/W and rated hours), the bulb count, burn hours per day and your tariff in INR per kWh.",
+    "Press Match brightness to fill Watts per replacement LED with the lumen-equivalent wattage, or type your own figure.",
+    "Read the yearly electricity saving, the payback in months and the Now vs With LEDs table, then use Copy result to export the summary.",
+  ],
   intro:
     "This calculator works out what switching a home's bulbs to LED saves, across both electricity and replacement bulbs. Replacement wattage is matched on light output rather than watts — new watts equal old watts times old luminous efficacy divided by LED efficacy — so a 60 W incandescent at about 14 lumens per watt is replaced by roughly an 8 W LED at 100 lumens per watt, not by a 60 W LED. It also prorates how many bulbs each technology burns through over your chosen horizon.",
   useCases: [

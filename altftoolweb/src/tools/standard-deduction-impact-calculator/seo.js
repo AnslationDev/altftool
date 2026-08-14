@@ -1,4 +1,12 @@
 const seo = {
+  title: "Standard Deduction Impact: Tax Saved Old vs New Regime",
+  metaDescription:
+    "See the actual tax the Rs 75,000 (new regime) or Rs 50,000 (old) standard deduction saves for FY 2025-26, with the 87A rebate and 4% cess applied.",
+  steps: [
+    "Pick \"Salary or pension\" or \"Family pension\", the regime to analyse and your age band, then enter your annual salary or pension in rupees.",
+    "Add other income and old-regime deductions (80C, 80D) so the slab tax, Section 87A rebate and 4% cess are computed with and without the deduction.",
+    "Read the tax-saved figure with the old and new regime cards side by side, then click \"Copy result\" for the full breakdown.",
+  ],
   "intro": "Standard Deduction Impact Calculator shows the rupee value of the flat deduction every salaried employee and pensioner gets — Rs 75,000 under the new regime and Rs 50,000 under the old regime for FY 2025-26. It recomputes your slab tax with and without the deduction, applies the Section 87A rebate and 4% cess to both, and reports the real tax saved rather than the headline deduction amount. Family pension, taxed under Section 57(iia) with its own one-third cap, is handled separately.",
   "useCases": [
     "A salaried employee seeing whether the extra Rs 25,000 of standard deduction in the new regime is worth more than old-regime deductions.",

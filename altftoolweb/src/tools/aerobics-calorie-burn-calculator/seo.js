@@ -1,4 +1,12 @@
 const seo = {
+  title: "Aerobics Calorie Burn Calculator - MET by Class Type",
+  metaDescription:
+    "Calories for low impact (4.8 MET), high impact (8.0), aqua and step classes at three riser heights, plus the walking or running distance that matches.",
+  steps: [
+    "Enter your Body weight (kg or lb) and Class length (minutes), or tap a preset chip - 30 min, 45 min, 60 min or 75 min. [pages/index.jsx:138-179, 202-211]",
+    "Pick a Class type - the dropdown lists each option with its MET value, from Low impact aerobics (4.8 MET) to Step aerobics, 10-12 inch step (9 MET). [pages/index.jsx:183-197; lib.js:35-71]",
+    "Read the Calories burned figure with its WHO intensity band and the matching brisk-walk and running distances, then press Copy result - Reset restores the defaults. [pages/index.jsx:102-117, 232-261]",
+  ],
   intro:
     "The Aerobics Calorie Burn Calculator converts a class type and length into calories with the ACSM equation kcal/min = MET x 3.5 x kg / 200. Aerobics is one of the best-covered activities in the Compendium of Physical Activities, which lists separate values for low impact (4.8 MET), water aerobics (5.3), high impact (8.0) and step classes at three riser heights (5.5, 7.3 and 9.0 MET) — and the tool also reports the walking or running distance that would cost the same energy.",
   useCases: [

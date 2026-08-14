@@ -1,4 +1,12 @@
 const seo = {
+  title: "Truth or Dare Generator — Family, Party & Couples Levels",
+  metaDescription:
+    "Draw from 72 truths and dares across family, party and couples levels, build a full turn order for up to 20 players, and replay any game by its number.",
+  steps: [
+    "Pick a \"Level\" (Family friendly, Party or Couples) and a \"Draw\" type — Truth or dare (random), Truth only or Dare only.",
+    "List \"Players (one per line, up to 20)\", set \"Rounds per player (1-10)\" and a \"Game number\" — the same number always rebuilds the same game.",
+    "Click \"Next prompt\" for one-at-a-time draws, or \"Copy round list\" to share the numbered turn order; \"New game\" advances the game number.",
+  ],
   intro:
     "The Truth Or Dare Generator draws truth questions and dare challenges for a group and can lay out a full turn order so every player knows what they are doing and when. Prompts are grouped into three levels — family friendly, party and couples — with 12 truths and 12 dares in each, and every draw is tied to a game number so the same number always rebuilds the same game. It is for game nights, sleepovers, road trips and ice-breakers where someone needs prompts on the spot.",
   useCases: [

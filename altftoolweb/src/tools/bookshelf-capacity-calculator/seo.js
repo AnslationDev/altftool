@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bookshelf Capacity Calculator - Books, Load, Sag",
+  metaDescription:
+    "Turn shelf span into a book count and load in kg, then predict sag from board thickness and material against the span/180 shelving limit.",
+  steps: [
+    "Enter \"Clear span between supports (cm)\", \"Shelf depth (cm)\", \"Board thickness (mm)\" and \"Number of shelves\".",
+    "Pick the \"Shelf material\" and \"What is going on it\", and set \"Allowable sag: span divided by\" (180 is the accepted shelving limit).",
+    "Read \"Books per shelf\", the load in kg and the \"Will it sag?\" verdict with predicted mid-span sag, then click \"Copy result\".",
+  ],
   intro:
     "This bookshelf capacity calculator turns a shelf's span into a book count, a load in kilograms, and a sag prediction. Capacity comes from average spine thickness — around 2 cm for a mass-market paperback and 3.5 cm for a hardback — while sag uses the standard simply-supported beam formula, delta = 5qL⁴ / (32Et³), with long-term creep-adjusted stiffness for particleboard, plywood, softwood and hardwood. The verdict is measured against the span/180 sag limit used in shelving practice.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "ND Filter Exposure Calculator — 10-Stop & Stacked NDs",
+  metaDescription:
+    "Turns a metered shutter speed into the time needed behind ND — 1/125 s becomes 8.2 s at 10 stops — plus filter factor, density and stacked stops.",
+  steps: [
+    "Pick your 'Metered shutter speed (no filter)' and 'ND filter' strength, optionally adding a 'Stacked second filter' or 'Extra stops (polariser, grad, bellows)'.",
+    "The 'Filtered exposure' recomputes instantly, listing total stops, filter factor, optical density, transmittance and whether you need bulb mode (over 30 s).",
+    "Use 'How much ND do I need?' by entering 'Exposure time I want (seconds)' to see the stops required and the closest filter, then press 'Copy result'.",
+  ],
   intro:
     "ND Filter Exposure Calculator converts a shutter speed metered without a filter into the exposure needed behind neutral density, using the rule that each stop halves the light so the shutter must double: filtered time = metered time × 2^stops. It also reports the filter factor, the optical density (stops × log10 2, so 10 stops is density 3.0) and the transmittance, and adds the stops when you stack filters. Aimed at long-exposure landscape, architecture and daytime video work.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scientific Calculator with DEG/RAD Toggle & History",
+  metaDescription:
+    "Type whole expressions like sin(30) + 2^5 / sqrt(16) and evaluate with precedence. DEG/RAD toggle, log and ln, 8-decimal results, 20-entry history.",
+  steps: [
+    "Type the whole expression with the keypad or your keyboard - sin, cos, tan, log, ln, sqrt, pi, e, x^y and brackets - the way it is written.",
+    "Set the angle mode with the DEG/RAD button; the active mode shows on the display, so sin(30) returns 0.5 in degrees.",
+    "Press '= Evaluate Expression' (or Enter) for the result rounded to 8 decimal places; the Calculation Log keeps your last 20 entries and reloads one on click.",
+  ],
   intro:
     "This is an algebraic-entry scientific calculator: you type the whole expression the way it is written — sin(30) + 2^5 / sqrt(16) — and it evaluates the line with standard operator precedence rather than one step at a time. It covers sine, cosine and tangent with a DEG/RAD toggle, base-10 log and natural ln, square root, powers via ^, brackets, and the constants pi and e. Results are rounded to eight decimal places and the last 20 expressions stay on screen so you can check the working.",
   useCases: [

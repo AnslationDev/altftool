@@ -1,4 +1,7 @@
 const seo = {
+  title: "Before/After Image Comparator: Slider, Fade & PNG Export",
+  metaDescription:
+    "Compare two images with a draggable split slider, side-by-side grid or 0–100 fade, then export a labelled before/after PNG. Nothing is uploaded.",
   intro:
     "The Before vs After Comparator puts two images against each other in three viewing modes — a draggable split slider, a side-by-side grid, and a fade overlay with a 0-100 opacity control — and exports the pair as a single labelled PNG. It also reports each image's pixel resolution and flags whether the two match, which is the usual reason a comparison looks misaligned. It is for anyone showing an edit, a repair or a restoration and needing the difference to be obvious at a glance.",
   useCases: [

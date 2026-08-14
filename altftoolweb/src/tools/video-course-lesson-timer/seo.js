@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Course Lesson Timer - Runtime, Script, Edit",
+  metaDescription:
+    "Plan every lesson's length, get total runtime, script words at your wpm and editing hours, with lessons graded against 6-minute engagement bands.",
+  steps: [
+    "Under \"Course settings\", set \"Target lesson length (minutes)\", \"Speaking pace (words per minute)\" and \"Editing hours per finished minute\".",
+    "Click \"Add lesson\" and give each row a \"Module\", a title and its \"Length (minutes)\" - every lesson is graded into an engagement length band as you type.",
+    "Read \"Total course runtime\" with script length, editing estimate and the balance-across-modules table, then click \"Copy plan\".",
+  ],
   intro:
     "A video course lesson timer lays out every planned lesson with its length and returns the total runtime, the split across modules, the script word count at your speaking pace and an editing estimate. Lessons are graded against the engagement bands reported by Guo, Kim and Rubin at ACM Learning at Scale in 2014, where videos of six minutes or less were watched almost to the end and engagement fell steadily beyond that. For course creators deciding what to record before they record it.",
   useCases: [

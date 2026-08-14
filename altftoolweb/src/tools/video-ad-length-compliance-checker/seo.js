@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Ad Length Checker: YouTube, Reels, TikTok Specs",
+  metaDescription:
+    "Test one cut against the accepted min–max and recommended length of every placement you tick, find a single master-cut window, and convert to frames.",
+  steps: [
+    "Enter the clip length in the 'Clip length (seconds or mm:ss)' field, or switch 'How do you know the length?' to Frame count and pick a 'Frame rate (fps)' from 23.976 to 60 fps.",
+    "Tick the placements under 'Placements to check' — each checkbox shows its accepted length range — or add a whole platform at once with the '+ all YouTube'-style buttons.",
+    "Read the 'Placements cleared' count, the per-placement Pass/Warning/Reject table with its Trim/extend column, and the 'One cut clears everything between' window; 'Copy report' copies the full report.",
+  ],
   intro:
     "This checker takes one video ad duration and tests it against the accepted minimum and maximum length of each placement you plan to buy, plus the shorter band each platform recommends in its own creative guidance. It also works out whether a single master cut could clear every placement at once, converts the length to frames at your delivery frame rate, and shows the nearest standard broadcast slot. It is aimed at media buyers and editors doing a pre-flight check before delivery.",
   useCases: [

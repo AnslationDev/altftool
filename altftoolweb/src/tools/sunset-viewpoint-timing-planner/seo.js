@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sunset & Golden Hour Planner with Hike Departure Time",
+  metaDescription:
+    "NOAA solar equations give sunset, golden hour and civil twilight for any coordinates and date; Naismith's rule works back to when you must leave home.",
+  steps: [
+    "Enter 'Latitude (north positive)', 'Longitude (east positive)', the Date and 'UTC offset on that date (hours)', or tap a preset such as Box Hill, UK or Nandi Hills, India.",
+    "Fill in 'Travel to the trailhead (min)', 'Walking distance one way (km)', 'Total ascent (m)' and a Pace factor, then choose 'The start of golden hour (sun at +6°)' or 'Sunset itself' under 'Be in position for'.",
+    "Read the 'Leave home at' time, the sunset, golden hour and civil twilight rows, and 'The evening, in order' timeline; press 'Copy plan' to copy the whole plan.",
+  ],
   intro:
     "Calculates sunset, golden hour and the end of civil twilight for any latitude, longitude and date using the NOAA solar position equations, then works backwards through the climb with Naismith's rule — one hour per 5 km plus one hour per 600 m of ascent — to give the time you have to leave home. Sunset is solved at a zenith of 90.833 degrees, the standard allowance for refraction and the solar disc, and golden hour is taken as the sun between +6 and −4 degrees elevation.",
   useCases: [

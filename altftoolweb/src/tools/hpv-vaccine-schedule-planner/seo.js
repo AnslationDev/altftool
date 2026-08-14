@@ -1,4 +1,12 @@
 const seo = {
+  title: "HPV Vaccine Schedule Planner: 2 or 3 Dose Dates",
+  metaDescription:
+    "Enter a birth date and first-dose date to get ACIP-based HPV appointment dates — 2-dose before 15, 3-dose after — with each dose's earliest valid date.",
+  steps: [
+    "Enter the Date of birth and the First dose date (planned or given); optionally add 'Second dose date, if already given' and tick the immunocompromising-condition checkbox, which forces a 3-dose series at any age.",
+    "The planner applies the age-15 rule automatically: Doses needed shows 2 or 3 with why that schedule applies, and the dose table lists each Date, its Not before column and days After dose 1.",
+    "Press Copy schedule to copy the whole plan — each dose's date, the earliest it may validly be given and the series-complete date — as text for the clinic visit.",
+  ],
   intro:
     "The number of HPV vaccine doses depends on one thing: whether the series was started before the 15th birthday. Started earlier, it is a 2-dose schedule at 0 and 6-12 months with a minimum 5-month gap; started at 15 or later, or in anyone immunocompromised, it is a 3-dose schedule at 0, 1-2 and 6 months. This planner applies the ACIP interval rules to a date of birth and a first-dose date, and returns each appointment date alongside the earliest date that dose can validly be given.",
   useCases: [

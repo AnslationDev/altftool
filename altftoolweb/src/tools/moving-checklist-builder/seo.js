@@ -1,4 +1,12 @@
 const seo = {
+  title: "Moving Checklist Builder - 56 Tasks, 7 Phases",
+  metaDescription:
+    "56 relocation tasks from 8+ weeks out to after moving day, with a days-until-move countdown, per-phase progress charts and CSV export.",
+  steps: [
+    "Under \"Move Setup\", set your \"Move Date\", \"Move Type\" (Local, Interstate or International), \"Home Size\" and the \"Has Pets\" / \"Has Children\" checkboxes.",
+    "Work through the seven phase tabs from \"8+ Weeks Before\" to \"After Moving Day\", ticking tasks off or typing your own into \"Add a custom task\".",
+    "Watch the \"Days Until Move\" and completion charts update, then click \"Copy Summary\" or \"CSV\" to download moving-checklist.csv.",
+  ],
   intro:
     "Moving Checklist Builder lays out 56 relocation tasks across seven countdown phases, 8+ weeks, 6 weeks, 4 weeks, 2 weeks, 1 week, moving day and after moving day, and tracks completion against your actual move date with a days-remaining counter. You record the move type, home size and whether pets or children are involved, tick tasks off, attach a note to any of them, and see per-phase progress as charts. The finished plan exports as a CSV with phase, task, status and notes columns.",
   useCases: [

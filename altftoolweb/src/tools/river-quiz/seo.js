@@ -1,4 +1,12 @@
 const seo = {
+  title: "River Quiz: 50 World Rivers, 4 Modes, Timed Rounds",
+  metaDescription:
+    "Timed quiz on 50+ major rivers: name the continent, country, length range or river. Easy is 10 questions at 25s, Expert 40 at 8s, with streak scoring.",
+  steps: [
+    "Pick a Question Type — Which continent?, Which country?, Name the river or How long? — then a difficulty card from Easy (10 questions, 25s each) to Expert (40 questions, 8s each).",
+    "Answer each timed multiple-choice question; a correct answer scores 1 point, rising to 2 once your streak reaches 3, and a timeout marks the question wrong and resets the streak.",
+    "At the Quiz Complete! screen, review Score, Accuracy and Best Streak with the answer breakdown, then Copy the report or Download it as River_Quiz_<difficulty>.txt.",
+  ],
   intro:
     "A timed multiple-choice quiz on more than 50 of the world's major rivers, with four question modes: name the continent, name the main country, identify the river from a fact, or place its length in a range. Four difficulty levels set both the question count and the clock — Easy is 10 questions at 25 seconds each, Expert is 40 questions at 8 seconds each. Answers score 1 point, rising to 2 once you are on a streak of three or more, and every question carries a hint you can reveal.",
   useCases: [

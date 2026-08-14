@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rule of 72 Calculator with Exact Doubling Time",
+  metaDescription:
+    "Sets the 72 ÷ rate shortcut beside the exact ln(2) ÷ ln(1+r) answer for any compounding, plus tripling time, 10x growth and inflation-adjusted doubling.",
+  steps: [
+    "Enter the Annual rate of return (%) — or tap a preset from 4% to 15% — pick a Compounding frequency up to Continuous, and optionally add a Starting amount and Inflation (% per year).",
+    "The result updates live: the exact time to double appears beside the Rule of 72 shortcut (72 ÷ rate), Rule of 70, Rule of 69.3 and the Eckart-McHale adjusted rule, with the shortcut's error in years and percent.",
+    "Read the 'Every doubling from here' table out to 32x, the after-inflation real return, and the Work backwards box that turns a target doubling period into a Required annual return; Copy result copies the summary.",
+  ],
   intro:
     "The Rule of 72 estimates how many years an investment takes to double by dividing 72 by the annual compound rate of return — 72 ÷ 8% gives 9 years. This tool runs that shortcut alongside the exact logarithmic answer, ln(2) ÷ ln(1 + r), for annual, quarterly, monthly, daily or continuous compounding, so you can see exactly how much the mental-maths version is off. It also shows tripling time (Rule of 114), quadrupling time (Rule of 144) and what inflation does to the wait.",
   useCases: [

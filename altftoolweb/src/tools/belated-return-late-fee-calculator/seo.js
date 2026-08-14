@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 234F Late Fee & 234A Interest Calculator (ITR)",
+  metaDescription:
+    "Work out the Rs 5,000 or Rs 1,000 Section 234F fee plus 1% per month 234A interest on unpaid tax — and the 25-70% extra tax if only an ITR-U is left.",
+  steps: [
+    "Set the \"Original due date u/s 139(1)\" — or tap a preset like \"31 Jul — no audit\" — and the \"Date the return is / was filed\"; the assessment year is derived from the due date automatically.",
+    "Fill \"Total income for the year (₹)\", \"Total tax liability incl. cess (₹)\" and \"TDS + advance tax already paid (₹)\", and tick the checkbox if filing was not compulsory for you.",
+    "Read the \"Extra cost of filing late\": the 234F fee, 234A interest at 1% per counted month, any 139(8A) additional tax, and the total payable before filing — then press \"Copy result\".",
+  ],
   intro:
     "This calculator tells you what filing your income tax return late actually costs: the Section 234F fee of ₹5,000, or ₹1,000 where total income is up to ₹5,00,000, plus Section 234A interest at 1% per month on any tax still unpaid. If your filing date is past 31 December of the assessment year it also works out the additional tax on an updated return under Section 139(8A). It is built for salaried filers, freelancers and small business owners catching up on a missed deadline.",
   useCases: [

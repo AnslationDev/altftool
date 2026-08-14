@@ -1,4 +1,12 @@
 const seo = {
+  title: "SLA Uptime to Downtime Calculator — Day, Month & Year",
+  metaDescription:
+    "Convert an uptime percentage into allowed downtime per day, week, month, quarter and year — 99.9% allows about 44 minutes a month — or work backwards.",
+  steps: [
+    "Enter your availability in 'Uptime target (%)' or tap a nines preset chip — 99%, 99.5%, 99.9%, 99.95%, 99.99% or 99.999%.",
+    "There is no calculate button — the budget recomputes as you type; for the reverse check fill 'Actual downtime (minutes)' and 'Over which period'.",
+    "'Allowed downtime per month' headlines the result with per-day, week, quarter and year rows below; press 'Copy result' to copy all five figures.",
+  ],
   intro:
     "This calculator converts an SLA availability percentage into the exact downtime it permits — allowed downtime = (1 − uptime% ÷ 100) × period length — reported per day, week, month, quarter and year. It is built for SREs, platform engineers and anyone negotiating or monitoring a service-level agreement, and it also works in reverse: enter real downtime to get the uptime percentage achieved. Periods use the Gregorian mean year of 365.2425 days so all five figures stay consistent.",
   useCases: [

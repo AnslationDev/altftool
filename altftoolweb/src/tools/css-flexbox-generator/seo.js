@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Flexbox Generator with Live Preview & Export",
+  metaDescription:
+    "Tune six container properties and per-item grow, shrink, basis, align-self and order on up to 10 items, then copy the CSS or download flexbox-layout.css.",
   intro:
     "The CSS Flexbox Generator is a visual editor that builds a working flex layout from the six container properties — flex-direction, flex-wrap, justify-content, align-items, align-content and gap — and emits the matching CSS. You add up to 10 flex items, tune flex-grow, flex-shrink, flex-basis, align-self and order on any one of them, and watch the preview rearrange as you change each value. When the layout looks right you copy the rule set or download it as flexbox-layout.css.",
   useCases: [

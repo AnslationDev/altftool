@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Break Timer – 20-20-20 Eye & Posture Reminders",
+  metaDescription:
+    "Plan 20-20-20 eye breaks, posture resets and hourly stand-up breaks across a study session, merged into one timeline with a live next-break countdown.",
+  steps: [
+    "Set the Session length (minutes) and the three intervals — Eye break every, Posture reset every and Stand and move every (minutes) — which default to 20, 30 and 60.",
+    "Review the Break timeline, where breaks landing on the same minute are merged into one pause, along with the counts of eye, posture and stand breaks and Total pause time.",
+    "Press Start when you sit down — the timer counts up and shows which break is next and in how long — and use Copy schedule to export the timeline or Reset to start over.",
+  ],
   intro:
     "This tool builds a break schedule for a long study session — 20-20-20 eye breaks every 20 minutes, a posture reset roughly every 30 minutes and a stand-and-move break each hour — and runs a live timer that tells you when each one is due. It follows the American Academy of Ophthalmology's 20-20-20 rule and standard ergonomics guidance on breaking up seated work. It is built for students facing multi-hour study days who want the breaks decided in advance instead of relying on willpower.",
   useCases: [

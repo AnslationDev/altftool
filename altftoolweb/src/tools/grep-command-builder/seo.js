@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grep & Ripgrep Command Builder with Safe Shell Quoting",
+  metaDescription:
+    "Build a grep or ripgrep command from checkboxes — case, whole word, -A/-B context, include/exclude globs — with POSIX single-quote escaping done for you.",
+  steps: [
+    "Pick GNU grep or ripgrep (rg) from the Engine dropdown, type your Search pattern and the File or directory to search, and set Context lines before (-B), Context lines after (-A) and comma-separated Include and Exclude globs.",
+    "Tick the Matching and output flags checkboxes; grep-only options like Recurse into directories (-r) and Extended regex (-E) swap for ripgrep's Search hidden files (--hidden) and Smart case (-S) when you switch engine.",
+    "The quoted command appears under Your command with plain-language notes on conflicting flags; press Copy command to put it on the clipboard or Reset to restore the defaults.",
+  ],
   intro:
     "This builder assembles a ready-to-paste grep or ripgrep command from checkboxes for case handling, whole-word matching, context lines (-A/-B/-C), include and exclude globs, and output modes like -l and -c. Every pattern and glob is quoted with POSIX single-quote rules, so patterns containing spaces, apostrophes or shell metacharacters run exactly as written. It is built for developers and sysadmins who know what they want to find but not which flag spelling GNU grep or rg uses for it.",
   useCases: [

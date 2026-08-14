@@ -1,4 +1,10 @@
 const seo = {
+  title: "Random Team Generator – Split Names into Even Teams",
+  steps: [
+    "Type or paste names into the 'Add name or paste list...' box — line- or comma-separated lists are split in one go and duplicates are dropped case-insensitively.",
+    "In Settings pick Number of Teams (slider 2-20) or Team Size (slider 1-20), then press Generate Teams to run a Fisher-Yates shuffle over the whole list.",
+    "Review the Results cards, press Reshuffle to redeal while keeping each team's size, Copy for one-team-per-block text, or CSV to download teams.csv with Team and Members columns.",
+  ],
   intro:
     "This is a random team splitter: paste or type a list of names and it shuffles them with a Fisher-Yates pass, then divides them either into a fixed number of teams or into teams of a fixed size. When the list does not divide evenly, the remainder is spread one person at a time across the first teams, so group sizes never differ by more than one. Names are deduplicated case-insensitively as you add them, and finished teams can be copied as text or downloaded as a two-column CSV.",
   useCases: [

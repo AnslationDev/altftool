@@ -1,4 +1,7 @@
 const seo = {
+  title: "Convert Chat Logs to OpenAI, Anthropic, Gemini or Llama",
+  metaDescription:
+    "Paste a messages array or Markdown transcript and re-emit it as OpenAI, Anthropic, Gemini, Cohere, Llama prompt or Markdown — live as you type.",
   intro:
     "Codex Chat Transfer emits a conversation in six target formats used by today's chat models: OpenAI JSON, Anthropic JSON, Google Gemini, Cohere, the Llama 2/3 prompt string, and plain Markdown. Paste an array of role/content objects, a payload with a messages array, a headed Markdown transcript, or one unheaded plain-text user turn, and the selected output appears as you type. It is built for developers reshaping prompts, evaluations or saved chat logs for another target API.",
   useCases: [

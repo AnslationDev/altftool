@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wood Polish Quantity Calculator: Melamine, PU, NC",
+  metaDescription:
+    "Convert doors and furniture area into ready-to-spray litres of melamine, 2K PU or NC lacquer, split into base, hardener and thinner in ratio.",
+  steps: [
+    "Choose the 'Finish' - Melamine, PU (2K polyurethane) or NC lacquer - and set 'Sealer coats' and 'Topcoats' (default 1 + 2).",
+    "Enter 'Furniture / panelling area (sq ft)', 'Number of doors' with height, width and faces polished, plus 'Wastage allowance (%)' - door area gets a 5% edge allowance automatically.",
+    "Read 'Ready-to-spray polish needed' in litres, the sealer, topcoat, hardener and thinner to buy, and the material cost per sq ft; 'Copy result' captures the list.",
+  ],
   intro:
     "This calculator converts the surface area of doors and furniture into the litres of melamine, 2K PU or NC lacquer a job needs, using the ready-to-spray spreading rate rather than the rate on the tin. It then splits that volume back into base, hardener and thinner in the system's mixing ratio — 2 parts base to 1 part hardener for PU, roughly 1:1 for melamine — so you know what to actually buy. Carpenters, polishers and homeowners supervising interior work use it before placing the order.",
   useCases: [
