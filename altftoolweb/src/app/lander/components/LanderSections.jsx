@@ -334,7 +334,7 @@ function Cta({ props, width }) {
 }
 
 function LinkList({ props, width }) {
-  const items = (props.items || []).filter((it) => it.title);
+  const items = (props.items || []).filter((it) => it.title && it.url);
   if (!items.length) return null;
   return (
     <Container width={width} className="py-12">

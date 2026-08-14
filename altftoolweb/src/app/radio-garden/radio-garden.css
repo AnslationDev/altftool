@@ -12,6 +12,23 @@
   --rg-text: #f7f7ef;
   --rg-muted: rgba(247, 247, 239, 0.68);
   --rg-blue: #1939ff;
+  /* Chrome tokens for the drawer/nav/player/modal UI. The globe's Earth-from-space
+     visual (blue wash, marble texture, focus rings) stays a fixed "space" render in
+     both themes, same treatment flightradar gives its always-light map tiles; only
+     the interactive UI chrome around it needs to answer the site theme. */
+  --rg-chip-bg: rgba(19, 20, 23, 0.52);
+  --rg-chip-border: rgba(255, 255, 255, 0.22);
+  --rg-border-soft: rgba(255, 255, 255, 0.18);
+  --rg-border-strong: rgba(255, 255, 255, 0.72);
+  --rg-surface-soft: rgba(255, 255, 255, 0.08);
+  --rg-surface-medium: rgba(255, 255, 255, 0.12);
+  --rg-card-bg: rgba(255, 255, 255, 0.05);
+  --rg-control-bg: rgba(255, 255, 255, 0.13);
+  --rg-chrome-bg: rgba(17, 17, 17, 0.95);
+  --rg-input-bg: #1d1d1d;
+  --rg-scrollbar: rgba(255, 255, 255, 0.22);
+  --rg-banner-bg: rgba(22, 26, 27, 0.34);
+  --rg-banner-sheen: rgba(255, 255, 255, 0.07);
   position: fixed;
   inset: 0;
   z-index: 2147483000;
@@ -187,9 +204,9 @@
   gap: 9px;
   min-height: 44px;
   padding: 0 16px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid var(--rg-chip-border);
   border-radius: 999px;
-  background: rgba(19, 20, 23, 0.52);
+  background: var(--rg-chip-bg);
   backdrop-filter: blur(18px);
   transform: translateX(-50%);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
@@ -243,7 +260,7 @@
   place-items: center;
   border: 0;
   border-radius: 999px;
-  background: rgba(18, 20, 22, 0.48);
+  background: var(--rg-chip-bg);
   cursor: pointer;
 }
 
@@ -272,7 +289,7 @@
   place-items: center;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--rg-surface-soft);
   cursor: pointer;
 }
 
@@ -296,8 +313,8 @@
   border: 0;
   border-radius: 7px 7px 0 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent),
-    rgba(22, 26, 27, 0.34);
+    linear-gradient(180deg, var(--rg-banner-sheen), transparent),
+    var(--rg-banner-bg);
   text-align: left;
   cursor: pointer;
 }
@@ -350,7 +367,7 @@
   flex: 1;
   overflow-y: auto;
   padding-bottom: 76px;
-  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  scrollbar-color: var(--rg-scrollbar) transparent;
   scrollbar-width: thin;
 }
 
@@ -442,7 +459,7 @@
   height: 34px;
   place-items: center;
   border-radius: 999px;
-  color: white;
+  color: var(--rg-text);
 }
 
 .rg-row-heart.is-saved,
@@ -505,7 +522,7 @@
   min-height: 46px;
   padding: 0 11px;
   border-radius: 7px;
-  background: #1d1d1d;
+  background: var(--rg-input-bg);
 }
 
 .rg-search-box input {
@@ -513,12 +530,12 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: white;
+  color: var(--rg-text);
   font-size: 16px;
 }
 
 .rg-search-box input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--rg-muted);
 }
 
 .rg-search-box button {
@@ -548,10 +565,10 @@
   flex: 0 0 auto;
   min-height: 33px;
   padding: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--rg-border-soft);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.86);
+  background: var(--rg-surface-soft);
+  color: var(--rg-text);
   font-size: 13px;
   cursor: pointer;
 }
@@ -576,7 +593,7 @@
 .rg-favorites-empty {
   margin: 0 15px 14px;
   border-radius: 7px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--rg-card-bg);
 }
 
 .rg-feature-block {
@@ -654,7 +671,7 @@
 
 .rg-balloon-card p {
   margin: 14px 0;
-  color: white;
+  color: var(--rg-text);
   line-height: 1.28;
 }
 
@@ -667,7 +684,7 @@
   border: 2px solid var(--rg-green);
   border-radius: 7px;
   background: transparent;
-  color: white;
+  color: var(--rg-text);
   cursor: pointer;
 }
 
@@ -690,7 +707,7 @@
 
 .rg-playlist-card p {
   margin: 0 0 16px;
-  color: white;
+  color: var(--rg-text);
   font-size: 14px;
   line-height: 1.26;
 }
@@ -739,7 +756,7 @@
   grid-template-columns: 62px 1fr;
   gap: 12px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--rg-surface-medium);
 }
 
 .rg-app-card img {
@@ -765,7 +782,7 @@
   justify-content: center;
   gap: 8px;
   min-height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--rg-border-strong);
   border-radius: 7px;
   background: transparent;
   cursor: pointer;
@@ -794,7 +811,7 @@
   grid-template-columns: repeat(5, 1fr);
   min-height: 72px;
   border-radius: 0 0 7px 7px;
-  background: rgba(17, 17, 17, 0.96);
+  background: var(--rg-chrome-bg);
 }
 
 .rg-nav-item {
@@ -826,7 +843,7 @@
   gap: 11px;
   padding: 14px 14px 12px;
   border-radius: 7px;
-  background: rgba(17, 17, 17, 0.94);
+  background: var(--rg-chrome-bg);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
 }
 
@@ -934,7 +951,7 @@
   place-items: center;
   border: 0;
   border-radius: 7px;
-  background: rgba(255, 255, 255, 0.13);
+  background: var(--rg-control-bg);
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
@@ -972,6 +989,8 @@
 }
 
 .rg-modal-close {
+  /* Sits on the modal's fixed dark space-wash backdrop (not the chrome), so it keeps
+     a permanent light icon/background regardless of theme, same as the globe visual. */
   position: fixed;
   top: 50%;
   right: max(32px, calc(50vw - 270px));
@@ -982,13 +1001,14 @@
   border: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
+  color: #f7f7ef;
   cursor: pointer;
 }
 
 .rg-modal-card {
   width: min(430px, calc(100vw - 46px));
   border-radius: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--rg-line);
   background: var(--rg-panel-solid);
   box-shadow: 0 25px 90px rgba(0, 0, 0, 0.38);
   overflow: hidden;
@@ -1022,7 +1042,7 @@
   border: 0;
   border-bottom: 1px solid var(--rg-line);
   background: transparent;
-  color: white;
+  color: var(--rg-text);
   text-decoration: none;
   cursor: pointer;
 }
@@ -1043,6 +1063,32 @@
 .rg-shell.is-contrast .rg-drawer,
 .rg-shell.is-contrast .rg-player {
   background: rgba(0, 0, 0, 0.96);
+}
+
+/* Light theme: the drawer/nav/player/modal/search UI chrome flips to a light surface
+   with dark text via the tokens above. The globe's Earth-from-space visual (blue
+   wash, marble texture, focus rings, balloon-ride modal backdrop) intentionally stays
+   a fixed dark "space" render in both themes — the same treatment flightradar gives
+   its always-light map tiles, since it's rendered content, not UI chrome. */
+.rg-shell[data-theme="light"] {
+  --rg-panel: rgba(255, 255, 255, 0.96);
+  --rg-panel-solid: #ffffff;
+  --rg-line: rgba(15, 23, 42, 0.12);
+  --rg-text: #101827;
+  --rg-muted: rgba(16, 24, 39, 0.62);
+  --rg-chip-bg: rgba(255, 255, 255, 0.82);
+  --rg-chip-border: rgba(15, 23, 42, 0.14);
+  --rg-border-soft: rgba(15, 23, 42, 0.14);
+  --rg-border-strong: rgba(15, 23, 42, 0.55);
+  --rg-surface-soft: rgba(15, 23, 42, 0.06);
+  --rg-surface-medium: rgba(15, 23, 42, 0.08);
+  --rg-card-bg: rgba(15, 23, 42, 0.04);
+  --rg-control-bg: rgba(255, 255, 255, 0.86);
+  --rg-chrome-bg: rgba(255, 255, 255, 0.94);
+  --rg-input-bg: #eef1f4;
+  --rg-scrollbar: rgba(15, 23, 42, 0.22);
+  --rg-banner-bg: rgba(15, 23, 42, 0.05);
+  --rg-banner-sheen: rgba(255, 255, 255, 0.6);
 }
 
 @media (min-width: 900px) {

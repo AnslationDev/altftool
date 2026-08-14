@@ -394,7 +394,7 @@
 .extra-content-section {
   position: relative;
   z-index: 10;
-  background: #030708;
+  background: var(--background);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 

@@ -137,7 +137,7 @@ function StoryImagesSection() {
         toggle={toggleAboutStoryImageStatus}
         onItems={setImages}
         fields={[
-          { key: "image", label: "Image", type: "image", upload: uploadAboutStoryImage },
+          { key: "image", label: "Image", type: "image", upload: uploadAboutStoryImage, required: true },
           { key: "alt", label: "Alt Text", type: "text", required: true },
         ]}
         columns={[

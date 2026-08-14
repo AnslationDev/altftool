@@ -130,6 +130,28 @@ export default async function Page(props) {
           ]}
         />
       ) : null}
+      {/*
+        Server-rendered H1. ExtensionHero renders the visible title, but it is a
+        client component fed by PageView's post-hydration Firestore read, so all
+        57 /extensions/<slug> URLs shipped server HTML with zero <h1> — the
+        skeleton only. The name comes from the same cached record the layout's
+        metadata and the JSON-LD above already use, so this costs no extra read.
+        The hero's own heading is now an <h2>, keeping exactly one H1 in the
+        document; sr-only because the hero shows the same words as soon as it
+        loads and a second visible copy would just be a duplicate.
+      */}
+      {/*
+          Unconditional: the record read above swallows a Firestore throw into
+          `extension = null`, so gating the H1 on the name meant a failed read
+          shipped a document with no top-level heading at all — the very defect
+          this block exists to fix, reappearing exactly when the page is already
+          degraded. The fallback names the route rather than the extension.
+        */}
+        <h1 className="sr-only">
+          {extension?.name
+            ? `${extension.name} — Chrome extension`
+            : "Chrome extension — AltFTool"}
+        </h1>
       <PageView {...props} />
     </>
   );

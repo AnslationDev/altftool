@@ -122,7 +122,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {(result.ranking ?? []).map((entry, index) => (
             <div key={entry.id} className="py-2.5">
               <div className="flex items-center justify-between gap-4">

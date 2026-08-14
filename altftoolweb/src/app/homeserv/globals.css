@@ -15,6 +15,7 @@
   --hs-border-strong: #CBD5E1;
   --hs-foreground: #111827;
   --hs-muted: #607083;
+  --hs-danger-text: #b63b29;
 
   /* Shadows — from master.md */
   --hs-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
@@ -51,6 +52,7 @@
   --hs-border-strong: #334155;
   --hs-foreground: #F8FAFC;
   --hs-muted: #94A3B8;
+  --hs-danger-text: #f87171;
   --hs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
   --hs-shadow-md: 0 10px 28px rgba(0, 0, 0, 0.36);
   --hs-shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.46);
@@ -293,14 +295,6 @@
   text-align: left;
 }
 
-.hs-availability-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: #30b466;
-  box-shadow: 0 0 0 5px rgba(48, 180, 102, 0.13);
-}
-
 .hs-mobile-menu-btn {
   display: none;
 }
@@ -468,6 +462,13 @@
 .hs-hero-stat svg {
   color: var(--hs-primary);
   stroke-width: 2.4;
+}
+
+.hs-hero-stats-note {
+  margin: 10px 0 0;
+  color: var(--hs-muted);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 /* =============================================
@@ -959,7 +960,7 @@
 .hs-zip-error {
   margin: 0;
   padding-top: 4px;
-  color: #b63b29;
+  color: var(--hs-danger-text);
   font-size: 13px;
   font-weight: 900;
 }

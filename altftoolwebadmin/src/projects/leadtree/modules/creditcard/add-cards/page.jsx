@@ -362,71 +362,71 @@ export default function AddCard() {
     };
 
     /* ── Validation ── */
-    // const validate = () => {
-    //     const e = {};
-    //     // if (!formData.heading.trim()) e.heading = VALIDATION_MESSAGES.heading;
+    const validate = () => {
+        const e = {};
+        if (!formData.heading.trim()) e.heading = VALIDATION_MESSAGES.heading;
 
-    //     if (!formData.annualFee.trim()) e.annualFee = VALIDATION_MESSAGES.annualFee;
-    //     if (!formData.rewardRate.trim()) e.rewardRate = VALIDATION_MESSAGES.rewardRate;
-    //     if (!formData.applyLink.trim()) e.applyLink = VALIDATION_MESSAGES.applyLink;
-    //     if (!formData.ourTake.trim()) e.ourTake = VALIDATION_MESSAGES.ourTake;
-    //     if (!formData.cardDetails.trim()) e.cardDetails = VALIDATION_MESSAGES.cardDetails;
-    //     if (!formData.regularApr.trim()) e.regularApr = VALIDATION_MESSAGES.regularApr;
-    //     if (!formData.cardBenefit.trim()) e.cardBenefit = VALIDATION_MESSAGES.cardBenefita;
-    //     if (!formData.applyLink.trim()) e.applyLink = VALIDATION_MESSAGES.applyLink;
-    //     if (!formData.bottomLine.trim()) e.bottomLine = VALIDATION_MESSAGES.bottomLine;
-    //     if (!formData.seoDescription.trim()) e.seoDescription = VALIDATION_MESSAGES.seoDescription;
-    //     if (!formData.signupBonus.trim()) e.signupBonus = VALIDATION_MESSAGES.signupBonus;
-    //     if (!cardHighlights.some(h => h.trim() !== "")) {
-    //         e.cardHighlight = "Please add at least one highlight";
-    //     }
+        if (!formData.annualFee.trim()) e.annualFee = VALIDATION_MESSAGES.annualFee;
+        if (!formData.rewardRate.trim()) e.rewardRate = VALIDATION_MESSAGES.rewardRate;
+        if (!formData.applyLink.trim()) e.applyLink = VALIDATION_MESSAGES.applyLink;
+        if (!formData.ourTake.trim()) e.ourTake = VALIDATION_MESSAGES.ourTake;
+        if (!formData.cardDetails.trim()) e.cardDetails = VALIDATION_MESSAGES.cardDetails;
+        if (!formData.regularApr.trim()) e.regularApr = VALIDATION_MESSAGES.regularApr;
+        if (!formData.cardBenefit.trim()) e.cardBenefit = VALIDATION_MESSAGES.cardBenefit;
+        if (!formData.applyLink.trim()) e.applyLink = VALIDATION_MESSAGES.applyLink;
+        if (!formData.bottomLine.trim()) e.bottomLine = VALIDATION_MESSAGES.bottomLine;
+        if (!formData.seoDescription.trim()) e.seoDescription = VALIDATION_MESSAGES.seoDescription;
+        if (!formData.signupBonus.trim()) e.signupBonus = VALIDATION_MESSAGES.signupBonus;
+        if (!cardHighlights.some(h => h.trim() !== "")) {
+            e.cardHighlight = "Please add at least one highlight";
+        }
 
-    //     if (!formData.detailRewardRate.trim()) e.detailRewardRate = VALIDATION_MESSAGES.detailRewardRate;
-    //     if (!formData.expertReview.trim()) e.expertReview = VALIDATION_MESSAGES.expertReview
-    //     if (!formData.goodFeature.trim()) e.goodFeature = VALIDATION_MESSAGES.goodFeature;
-    //     if (!formData.badFeature.trim()) e.badFeature = VALIDATION_MESSAGES.badFeature;
-    //     if (!formData.editorialNote.trim()) e.editorialNote = VALIDATION_MESSAGES.editorialNote;
-    //     if (!formData.welcomeOffer.trim()) e.welcomeOffer = VALIDATION_MESSAGES.welcomeOffer;
-    //     if (!formData.firstYearReward.trim()) e.firstYearReward = VALIDATION_MESSAGES.firstYearReward;
-    //     if (!formData.introPurchase.trim()) e.introPurchase = VALIDATION_MESSAGES.introPurchase;
-    //     if (!formData.ongoingPurchase.trim()) e.ongoingPurchase = VALIDATION_MESSAGES.ongoingPurchase;
-    //     if (!formData.introBalanceTransfer.trim()) e.introBalanceTransfer = VALIDATION_MESSAGES.introBalanceTransfer;
-    //     if (!formData.ongoingBalanceTransfer.trim()) e.ongoingBalanceTransfer = VALIDATION_MESSAGES.ongoingBalanceTransfer;
-    //     if (!formData.foreignTranscationFees.trim()) e.foreignTranscationFees = VALIDATION_MESSAGES.foreignTranscationFees;
-    //     if (!formData.balanceTransferFees.trim()) e.balanceTransferFees= VALIDATION_MESSAGES.balanceTransferFees;
-    //     if (!imageFile && !imagePreview) e.image = VALIDATION_MESSAGES.image;
-    //     if ((imageFile || imagePreview) && !imageAlt.trim()) e.imageAlt = VALIDATION_MESSAGES.imageAlt;
+        if (!formData.detailRewardRate.trim()) e.detailRewardRate = VALIDATION_MESSAGES.detailRewardRate;
+        if (!formData.expertReview.trim()) e.expertReview = VALIDATION_MESSAGES.expertReview
+        if (!formData.goodFeature.trim()) e.goodFeature = VALIDATION_MESSAGES.goodFeature;
+        if (!formData.badFeature.trim()) e.badFeature = VALIDATION_MESSAGES.badFeature;
+        if (!formData.editorialNote.trim()) e.editorialNote = VALIDATION_MESSAGES.editorialNote;
+        if (!formData.welcomeOffer.trim()) e.welcomeOffer = VALIDATION_MESSAGES.welcomeOffer;
+        if (!formData.firstYearReward.trim()) e.firstYearReward = VALIDATION_MESSAGES.firstYearReward;
+        if (!formData.introPurchase.trim()) e.introPurchase = VALIDATION_MESSAGES.introPurchase;
+        if (!formData.ongoingPurchase.trim()) e.ongoingPurchase = VALIDATION_MESSAGES.ongoingPurchase;
+        if (!formData.introBalanceTransfer.trim()) e.introBalanceTransfer = VALIDATION_MESSAGES.introBalanceTransfer;
+        if (!formData.ongoingBalanceTransfer.trim()) e.ongoingBalanceTransfer = VALIDATION_MESSAGES.ongoingBalanceTransfer;
+        if (!formData.foreignTranscationFees.trim()) e.foreignTranscationFees = VALIDATION_MESSAGES.foreignTranscationFees;
+        if (!formData.balanceTransferFees.trim()) e.balanceTransferFees= VALIDATION_MESSAGES.balanceTransferFees;
+        if (!imageFile && !imagePreview) e.image = VALIDATION_MESSAGES.image;
+        if ((imageFile || imagePreview) && !imageAlt.trim()) e.imageAlt = VALIDATION_MESSAGES.imageAlt;
 
-    //     if (!formData.category.trim()) {
-    //         e.category = VALIDATION_MESSAGES.category;
-    //     } else if (categories.length > 0 && !categories.includes(formData.category.trim())) {
-    //         e.category = "That category doesn't exist. Please choose one from the list.";
-    //     }
-
-
+        if (!formData.category.trim()) {
+            e.category = VALIDATION_MESSAGES.category;
+        } else if (categories.length > 0 && !categories.includes(formData.category.trim())) {
+            e.category = "That category doesn't exist. Please choose one from the list.";
+        }
 
 
-    //     const seoTitleLen = formData.seoTitle.trim().length;
-    //     if (!formData.seoTitle.trim()) e.seoTitle = VALIDATION_MESSAGES.seoTitleEmpty;
-    //     else if (seoTitleLen < SEO_TITLE_MIN) e.seoTitle = VALIDATION_MESSAGES.seoTitleShort(seoTitleLen);
-    //     else if (seoTitleLen > SEO_TITLE_HARD_MAX) e.seoTitle = VALIDATION_MESSAGES.seoTitleLong(seoTitleLen);
 
-    //     setErrors(e);
-    //     if (e.seoTitle || e.seoDescription) setSeoExpanded(true);
 
-    //     const errorCount = Object.keys(e).length;
-    //     if (errorCount > 0) {
-    //         const noun = errorCount === 1 ? "1 field needs" : `${errorCount} fields need`;
-    //         emitAlert({ type: "error", message: `${noun} your attention before publishing. Please scroll up to check the highlighted fields.` });
-    //     }
-    //     return errorCount === 0;
-    // };
+        const seoTitleLen = formData.seoTitle.trim().length;
+        if (!formData.seoTitle.trim()) e.seoTitle = VALIDATION_MESSAGES.seoTitleEmpty;
+        else if (seoTitleLen < SEO_TITLE_MIN) e.seoTitle = VALIDATION_MESSAGES.seoTitleShort(seoTitleLen);
+        else if (seoTitleLen > SEO_TITLE_HARD_MAX) e.seoTitle = VALIDATION_MESSAGES.seoTitleLong(seoTitleLen);
+
+        setErrors(e);
+        if (e.seoTitle || e.seoDescription) setSeoExpanded(true);
+
+        const errorCount = Object.keys(e).length;
+        if (errorCount > 0) {
+            const noun = errorCount === 1 ? "1 field needs" : `${errorCount} fields need`;
+            emitAlert({ type: "error", message: `${noun} your attention before publishing. Please scroll up to check the highlighted fields.` });
+        }
+        return errorCount === 0;
+    };
 
     /* ── Publish ── */
     const handleSubmit = async (e) => {
         e.preventDefault();
         setBannerError(null);
-        // if (submitting || !validate()) return;
+        if (submitting || !validate()) return;
 
         if (!navigator.onLine) {
             const msg = "You're offline. Please reconnect before publishing.";

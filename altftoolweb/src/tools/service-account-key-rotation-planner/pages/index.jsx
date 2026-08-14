@@ -231,7 +231,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -275,7 +279,7 @@ export default function ToolHome() {
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -297,7 +301,11 @@ export default function ToolHome() {
       </section>
 
       {hasError ? null : (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">Cutover schedule</h2>
           <ol className="mt-3 space-y-3">
             {result.steps.map((step, index) => (

@@ -17,7 +17,7 @@ import {
   getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, serverTimestamp,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 const envConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -60,14 +60,6 @@ const ensure = () => {
 const PROJECT_ROOT = ["projects", "myluckydeal"];
 const colRef = (name) => collection(db, ...PROJECT_ROOT, name);
 const docRef = (name, id) => doc(db, ...PROJECT_ROOT, name, id);
-
-/* ------------------------------ Auth helpers ------------------------------ */
-export const watchAuth = (cb) => {
-  if (!auth) { cb(null); return () => {}; }
-  return onAuthStateChanged(auth, cb);
-};
-export const login = (email, password) => { ensure(); return signInWithEmailAndPassword(auth, email, password); };
-export const logout = () => { ensure(); return signOut(auth); };
 
 /* ------------------------------ CRUD helpers ------------------------------ */
 export async function listDocs(colName) {

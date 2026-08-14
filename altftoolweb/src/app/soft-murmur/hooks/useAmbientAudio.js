@@ -302,7 +302,11 @@ export function useAmbientAudio() {
     setMasterVolume(presetMasterVol);
     setFlowMode(presetFlow);
     setFlowIntensity(presetFlowIntensity);
-    setIsPlaying(true);
+    // Only report "playing" if the preset actually left at least one sound
+    // active — presets built entirely from unavailable sounds (e.g. "Cozy
+    // Night") would otherwise show a Pause icon while nothing plays.
+    const anySoundActive = Object.values(nextState).some((s) => s.active);
+    setIsPlaying(anySoundActive);
 
     // Fade in active sounds
     Object.entries(nextState).forEach(([id, state]) => {

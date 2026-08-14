@@ -1075,7 +1075,7 @@ export default function EditVideo() {
             {formData.status === "published" && (
               <button
                 type="button"
-                onClick={() => router.push(`/leadtree/expert-videos/view/${id}`)}
+                onClick={() => router.push(`/leadtree/expert-videos/view-video/${id}`)}
                 className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 transition cursor-pointer"
               >
                 <Eye className="h-5 w-5" />

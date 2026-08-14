@@ -2,19 +2,8 @@
 import Image from "next/image";
 import howWork from "../(assets)/Howitworks-banner.webp";
 import howWork1 from "../(assets)/Howitworks-banner-mobile.webp";
-import { HowItWorksSkeleton } from "../DealsPageSkeleton";
-import { useState, useEffect } from "react";
 
 export default function HowItWorks() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) return <HowItWorksSkeleton />;
-
   return (
     <>
       <div className="section hidden sm:block animate-slide-right">

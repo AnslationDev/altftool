@@ -94,18 +94,12 @@ function ImagePairField({ label, hint, url, path, upload, remove, onChange, onUp
     setProgress(0);
     try {
       const uploaded = await upload({ file, onProgress: setProgress });
-      const previousPath = path;
+      // Do not delete the previous blob here: the form may still be
+      // discarded (unsaved-changes back navigation, etc.) before the outer
+      // Save runs, and the Firestore document still points at it until
+      // then. Only an explicit "Remove" click (handleRemove below) or
+      // deleting the parent record should ever delete Storage blobs.
       onChange({ url: uploaded.url, path: uploaded.path });
-      if (previousPath) {
-        try {
-          await remove(previousPath);
-        } catch {
-          emitAlert({
-            type: "warning",
-            message: "New image uploaded, but the old image could not be cleaned up.",
-          });
-        }
-      }
       emitAlert({ type: "success", message: "Image uploaded." });
     } catch (error) {
       emitAlert({ type: "error", message: error?.message || "Image upload failed." });

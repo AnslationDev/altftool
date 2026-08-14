@@ -438,7 +438,16 @@
     font-weight: var(--font-weight-black);
     /* 900 */
     letter-spacing: var(--tracking-tight);
+    /* margin-top:0 because .hero-headline is an <h1>; the UA stylesheet would
+       otherwise add 0.67em above it and shift the hero down. */
+    margin-top: 0;
     margin-bottom: 2rem;
+}
+
+/* Each headline line is its own span so it can live inside the <h1>; block
+   display reproduces the original stacked <div> lines exactly. */
+.hero-headline>span {
+    display: block;
 }
 
 @media (min-width: 768px) {
@@ -2229,5 +2238,5 @@
 
 /* Min height wrapper */
 .min-h-screen {
-    min-height: 100vh;
+    min-height: 100dvh;
 }

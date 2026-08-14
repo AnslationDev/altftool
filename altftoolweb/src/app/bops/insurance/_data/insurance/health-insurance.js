@@ -200,7 +200,7 @@ export const healthInsurance = {
   },
 
   seo: {
-    title: "Health Insurance — Compare Plans & Subsidies | AltFTool",
+    title: "Health Insurance — Compare Plans | AltFTool",
     description:
       "Compare health insurance plans in minutes — marketplace, employer and metal-tier options. See doctors and meds covered and any subsidies you may qualify for.",
   },

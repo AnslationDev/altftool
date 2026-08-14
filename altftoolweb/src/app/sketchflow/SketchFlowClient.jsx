@@ -555,6 +555,11 @@ export default function SketchFlow({ config: configProp }) {
         return;
       }
       const hit = findHit(point);
+      if (hit?.hyperlink && (event.metaKey || event.ctrlKey)) {
+        const url = /^[a-z][a-z0-9+.-]*:/i.test(hit.hyperlink) ? hit.hyperlink : `https://${hit.hyperlink}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+        return;
+      }
       if (hit) {
         const rawIds = event.shiftKey ? (selectedIds.includes(hit.id) ? selectedIds.filter((id) => id !== hit.id) : [...selectedIds, hit.id]) : selectedIds.includes(hit.id) ? selectedIds : [hit.id];
         const ids = expandSelectionWithGroups(rawIds, elements);

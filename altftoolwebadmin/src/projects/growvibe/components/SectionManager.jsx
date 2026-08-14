@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Loader2, RefreshCw, Save } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 import { SECTIONS, DEFAULTS } from "../lib/schema";
 import { resetSection, saveSection, subscribeSection } from "../lib/content.service";
 import { ContentField } from "./ContentFields";
@@ -19,6 +20,7 @@ export default function SectionManager({ title, description, sectionKeys }) {
   const [dirty, setDirty] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
 
   useEffect(() => {
     const ready = new Set();
@@ -41,10 +43,12 @@ export default function SectionManager({ title, description, sectionKeys }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const activeSectionData = sections[activeKey];
+
   useEffect(() => {
-    setDraft(sections[activeKey] || DEFAULTS[activeKey] || {});
+    setDraft(activeSectionData || DEFAULTS[activeKey] || {});
     setDirty(false);
-  }, [activeKey, sections]);
+  }, [activeKey, activeSectionData]);
 
   const schema = SECTIONS[activeKey];
   const activeLabel = useMemo(() => schema?.label || activeKey, [schema, activeKey]);
@@ -73,6 +77,7 @@ export default function SectionManager({ title, description, sectionKeys }) {
     try {
       await resetSection(activeKey);
       emitAlert({ type: "success", message: `${activeLabel} reset to defaults.` });
+      setConfirmReset(false);
     } catch (error) {
       emitAlert({ type: "error", message: `Could not reset ${activeLabel}.` });
     } finally {
@@ -91,7 +96,7 @@ export default function SectionManager({ title, description, sectionKeys }) {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={handleReset}
+            onClick={() => setConfirmReset(true)}
             disabled={saving || loading}
             className="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-600 transition hover:border-gray-300 disabled:opacity-50"
           >
@@ -163,6 +168,17 @@ export default function SectionManager({ title, description, sectionKeys }) {
           </div>
         </div>
       )}
+
+      {confirmReset ? (
+        <DeleteConfirmModal
+          title="Confirm reset"
+          message={`Reset "${activeLabel}" to shipped defaults? This overwrites the live section on the public site and cannot be undone.`}
+          confirmText="Reset"
+          loading={saving}
+          onConfirm={handleReset}
+          onCancel={() => setConfirmReset(false)}
+        />
+      ) : null}
     </div>
   );
 }

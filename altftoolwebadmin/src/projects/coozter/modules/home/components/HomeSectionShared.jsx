@@ -1,7 +1,6 @@
 "use client";
 
-import { Eye, Image as ImageIcon, Plus, Trash2, Upload } from "lucide-react";
-import { HOME_SECTION_TABS } from "../service/home.service";
+import { Image as ImageIcon, Plus, Trash2, Upload } from "lucide-react";
 
 export const SECTION_FIELDS = {
   heroSection: [
@@ -34,6 +33,20 @@ export const SECTION_FIELDS = {
     ["descriptionText", "Description", "textarea"],
     ["buttonLabel", "Button label"],
     ["buttonUrl", "Button URL"],
+  ],
+  blogPreviewSection: [
+    ["eyebrowText", "Eyebrow text"],
+    ["headingText", "Heading text", "textarea"],
+    ["buttonLabel", "Button label"],
+    ["buttonUrl", "Button URL"],
+  ],
+  contactCtaSection: [
+    ["headingText", "Heading text", "textarea"],
+    ["descriptionText", "Description", "textarea"],
+    ["primaryButtonLabel", "Primary button label"],
+    ["primaryButtonUrl", "Primary button URL"],
+    ["secondaryButtonLabel", "Secondary button label"],
+    ["secondaryButtonUrl", "Secondary button URL"],
   ],
 };
 
@@ -107,6 +120,12 @@ export const ARRAY_FIELDS = {
     selectedServices: {
       label: "Selected Services",
       fields: [["serviceSlug", "Service slug"]],
+    },
+  },
+  blogPreviewSection: {
+    selectedBlogs: {
+      label: "Selected Blogs",
+      fields: [["blogSlug", "Blog slug"]],
     },
   },
 };
@@ -303,44 +322,8 @@ export function Field({ label, error, children, wide = false }) {
   );
 }
 
-export function PreviewPanel({ label, section, errorCount, content }) {
-  const activeSections = HOME_SECTION_TABS.filter((item) => content?.[item.key]?.isActive !== false).length;
-  const repeatedCount = Object.values(section || {}).reduce((count, value) => (Array.isArray(value) ? count + value.length : count), 0);
-
-  return (
-    <aside className="space-y-4">
-      {/* <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
-        <div className="flex items-center gap-2">
-          <Eye className="h-4 w-4 text-[var(--primary)]" />
-          <p className="text-sm font-bold text-[var(--foreground)]">Backend Summary</p>
-        </div>
-        <div className="mt-4 grid gap-3">
-          <SummaryRow label="Current section" value={label} />
-          <SummaryRow label="Section status" value={section?.isActive === false ? "Hidden" : "Active"} />
-          <SummaryRow label="Repeated items" value={repeatedCount} />
-          <SummaryRow label="Active sections" value={`${activeSections} / ${HOME_SECTION_TABS.length}`} />
-          <SummaryRow label="Validation issues" value={errorCount} tone={errorCount ? "danger" : "success"} />
-        </div>
-      </section> */}
-
-     
-    </aside>
-  );
-}
-
-export function SummaryRow({ label, value, tone = "default" }) {
-  const toneClass =
-    tone === "danger"
-      ? "text-[var(--danger)]"
-      : tone === "success"
-        ? "text-[var(--success)]"
-        : "text-[var(--foreground)]";
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-md border border-[var(--border)] px-3 py-2">
-      <span className="text-xs font-semibold text-[var(--muted)]">{label}</span>
-      <span className={`text-sm font-bold ${toneClass}`}>{value}</span>
-    </div>
-  );
+export function PreviewPanel() {
+  return <aside className="space-y-4" />;
 }
 
 export function LoadingFields() {

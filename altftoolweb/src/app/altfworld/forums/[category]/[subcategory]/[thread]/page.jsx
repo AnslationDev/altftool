@@ -11,6 +11,9 @@ export async function generateMetadata({ params }) {
     description: `Read the AltfWorld discussion thread about ${threadLabel.toLowerCase()} in ${subcategoryLabel.toLowerCase()}.`,
     path: `/altfworld/forums/${category}/${subcategory}/${thread}`,
     keywords: [threadLabel, subcategoryLabel, "AltfWorld discussion"],
+    // One of ~30,000 procedurally generated mock threads with deterministic
+    // filler content — must not be indexed as if it were real discussion.
+    noindex: true,
   });
 }
 

@@ -4,8 +4,6 @@
     "title": "2048",
     "emoji": "🔢",
     "category": "Puzzle",
-    "rating": 4.7,
-    "plays": 982000,
     "colors": [
       "#f7b733",
       "#fc4a1a"
@@ -22,8 +20,6 @@
     "title": "Aim Trainer Pro",
     "emoji": "🎯",
     "category": "Action",
-    "rating": 4.7,
-    "plays": 623000,
     "colors": [
       "#ff416c",
       "#ff4b2b"
@@ -40,8 +36,6 @@
     "title": "Air Shot",
     "emoji": "🎈",
     "category": "Action",
-    "rating": 4.3,
-    "plays": 398000,
     "colors": [
       "#56ccf2",
       "#2f80ed"
@@ -58,8 +52,6 @@
     "title": "Breakout",
     "emoji": "🧱",
     "category": "Arcade",
-    "rating": 4.5,
-    "plays": 690000,
     "colors": [
       "#ff512f",
       "#dd2476"
@@ -76,8 +68,6 @@
     "title": "Bubble Shooter",
     "emoji": "🫧",
     "category": "Puzzle",
-    "rating": 4.6,
-    "plays": 940000,
     "colors": [
       "#2193b0",
       "#6dd5ed"
@@ -94,8 +84,6 @@
     "title": "Carrom",
     "emoji": "⚪",
     "category": "Sports",
-    "rating": 4.3,
-    "plays": 512000,
     "colors": [
       "#c79081",
       "#dfa579"
@@ -112,8 +100,6 @@
     "title": "Chess",
     "emoji": "♟️",
     "category": "Strategy",
-    "rating": 4.8,
-    "plays": 1240000,
     "colors": [
       "#434343",
       "#000000"
@@ -130,8 +116,6 @@
     "title": "Connect Four",
     "emoji": "🔴",
     "category": "Strategy",
-    "rating": 4.4,
-    "plays": 833000,
     "colors": [
       "#ee0979",
       "#ff6a00"
@@ -148,8 +132,6 @@
     "title": "Cricket",
     "emoji": "🏏",
     "category": "Sports",
-    "rating": 4.5,
-    "plays": 754000,
     "colors": [
       "#11998e",
       "#38ef7d"
@@ -166,8 +148,6 @@
     "title": "Dots and Boxes",
     "emoji": "🔷",
     "category": "Multiplayer",
-    "rating": 4.2,
-    "plays": 405000,
     "colors": [
       "#396afc",
       "#2948ff"
@@ -184,8 +164,6 @@
     "title": "Flappy Bird",
     "emoji": "🐤",
     "category": "Arcade",
-    "rating": 4.4,
-    "plays": 1520000,
     "colors": [
       "#f2994a",
       "#f2c94c"
@@ -202,8 +180,6 @@
     "title": "Hangman",
     "emoji": "🔤",
     "category": "Kids",
-    "rating": 4.3,
-    "plays": 588000,
     "colors": [
       "#8360c3",
       "#2ebf91"
@@ -220,8 +196,6 @@
     "title": "Helix Jump",
     "emoji": "🌀",
     "category": "Adventure",
-    "rating": 4.6,
-    "plays": 1103000,
     "colors": [
       "#fc5c7d",
       "#6a82fb"
@@ -238,8 +212,6 @@
     "title": "Knife Hit",
     "emoji": "🔪",
     "category": "Action",
-    "rating": 4.4,
-    "plays": 867000,
     "colors": [
       "#e53935",
       "#e35d5b"
@@ -256,8 +228,6 @@
     "title": "Ludo",
     "emoji": "🎲",
     "category": "Multiplayer",
-    "rating": 4.4,
-    "plays": 1188000,
     "colors": [
       "#f953c6",
       "#b91d73"
@@ -274,8 +244,6 @@
     "title": "Memory Match",
     "emoji": "🧠",
     "category": "Kids",
-    "rating": 4.5,
-    "plays": 712000,
     "colors": [
       "#00b09b",
       "#96c93d"
@@ -292,8 +260,6 @@
     "title": "Minesweeper",
     "emoji": "💣",
     "category": "Puzzle",
-    "rating": 4.6,
-    "plays": 1015000,
     "colors": [
       "#485563",
       "#29323c"
@@ -310,8 +276,6 @@
     "title": "Neon Racer",
     "emoji": "🏁",
     "category": "Racing",
-    "rating": 4.6,
-    "plays": 876000,
     "colors": [
       "#8E2DE2",
       "#4A00E0"
@@ -328,8 +292,6 @@
     "title": "Crossword",
     "emoji": "📝",
     "category": "Puzzle",
-    "rating": 4.5,
-    "plays": 412000,
     "colors": [
       "#c026d3",
       "#7c3aed"
@@ -346,8 +308,6 @@
     "title": "Find 10",
     "emoji": "🔟",
     "category": "Puzzle",
-    "rating": 4.3,
-    "plays": 268000,
     "colors": [
       "#fbbf24",
       "#f97316"
@@ -364,8 +324,6 @@
     "title": "Arrows Out",
     "emoji": "➡️",
     "category": "Arcade",
-    "rating": 4.4,
-    "plays": 335000,
     "colors": [
       "#ec4899",
       "#8b5cf6"
@@ -382,8 +340,6 @@
     "title": "Escape Puzzle",
     "emoji": "🚪",
     "category": "Puzzle",
-    "rating": 4.6,
-    "plays": 389000,
     "colors": [
       "#f97316",
       "#dc2626"
@@ -400,8 +356,6 @@
     "title": "Level Devil",
     "emoji": "😈",
     "category": "Action",
-    "rating": 4.5,
-    "plays": 455000,
     "colors": [
       "#ff5e3a",
       "#ffb347"
@@ -418,8 +372,6 @@
     "title": "Who Is?",
     "emoji": "🕵️",
     "category": "Puzzle",
-    "rating": 4.4,
-    "plays": 310000,
     "colors": [
       "#c9a06a",
       "#ff8a3d"
@@ -436,8 +388,6 @@
     "title": "Number Guess",
     "emoji": "🎯",
     "category": "Puzzle",
-    "rating": 4.3,
-    "plays": 275000,
     "colors": [
       "#ff9f5a",
       "#b06aff"

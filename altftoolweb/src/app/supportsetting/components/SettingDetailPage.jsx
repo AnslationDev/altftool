@@ -118,7 +118,7 @@ const SettingDetailPage = ({
             <Icon className="h-7 w-7" />
           </span>
           <div className="support-detail-hero-title-col">
-            <h1 className="support-detail-title">{setting.title}</h1>
+            <h2 className="support-detail-title">{setting.title}</h2>
             <p className="support-detail-heading">{setting.heading}</p>
           </div>
           {onToggleBookmark && (

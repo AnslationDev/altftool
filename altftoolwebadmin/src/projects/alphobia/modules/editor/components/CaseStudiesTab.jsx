@@ -154,7 +154,7 @@ export default function CaseStudiesTab() {
                 type="button"
                 onClick={() => setPreviewImg(item.image || "https://images.pexels.com/photos/3182765/pexels-photo-3182765.jpeg")}
                 title="Click to view full image"
-                className="h-40 w-full bg-slate-200 overflow-hidden relative block hover:opacity-90 transition cursor-pointer"
+                className="h-40 w-full bg-[var(--surface-soft)] overflow-hidden relative block hover:opacity-90 transition cursor-pointer"
               >
                 <img
                   src={item.image || "https://images.pexels.com/photos/3182765/pexels-photo-3182765.jpeg"}

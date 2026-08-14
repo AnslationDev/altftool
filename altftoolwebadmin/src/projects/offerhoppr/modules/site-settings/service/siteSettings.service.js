@@ -33,7 +33,10 @@ export function saveSiteSettings(payload) {
 }
 
 function normalizeSiteSettings(payload = {}) {
-  const founded = Number(payload.founded);
+  const founded =
+    payload.founded === null || payload.founded === undefined || payload.founded === ""
+      ? NaN
+      : Number(payload.founded);
   return {
     name: String(payload.name || "").trim(),
     tagline: String(payload.tagline || "").trim(),

@@ -28,7 +28,7 @@ export const CALCULATORS = [
   { name: "Salary Calculator", slug: "salary-calculator", desc: "Convert between hourly, monthly and annual pay.", icon: "Wallet", category: "Finance", sidebarCategory: "Finance" },
   { name: "Take-Home Salary Calculator", slug: "take-home-salary-calculator", desc: "Net in-hand salary after deductions.", icon: "HandCoins", category: "Finance", sidebarCategory: "Finance" },
   { name: "Discount Calculator", slug: "discount-calculator", desc: "Sale price and how much you save.", icon: "BadgePercent", category: "Finance", sidebarCategory: "Finance" },
-  { name: "Currency Converter", slug: "currency-converter", desc: "Convert currencies with editable rates.", icon: "ArrowLeftRight", category: "Finance", sidebarCategory: "Finance" },
+  { name: "Currency Converter", slug: "currency-converter", desc: "Convert currencies with bundled offline rates.", icon: "ArrowLeftRight", category: "Finance", sidebarCategory: "Finance" },
   { name: "Budget Calculator", slug: "budget-calculator", desc: "Split income with the 50/30/20 rule.", icon: "PieChart", category: "Finance", sidebarCategory: "Finance" },
   { name: "Tip Calculator", slug: "tip-calculator", desc: "Split the bill and tip across people.", icon: "Coins", category: "Finance", sidebarCategory: "Finance" },
   { name: "Unit Price Calculator", slug: "unit-price-calculator", desc: "Compare products by price per unit.", icon: "ShoppingCart", category: "Finance", sidebarCategory: "Finance" },

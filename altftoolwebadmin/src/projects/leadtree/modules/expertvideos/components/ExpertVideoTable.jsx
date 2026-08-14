@@ -159,7 +159,7 @@ export default function ExpertVideoTable({
     const newStatus = video.status === "published" ? "draft" : "published";
     setVideos((prev) => prev.map((b) => b.id === video.id ? { ...b, status: newStatus } : b));
     try {
-      await updateVideo(video.id, newStatus);
+      await updateVideo(video.id, { status: newStatus });
       emitAlert({ type: "success", message: newStatus === "published" ? "Video published" : "Video unpublished" });
       logAuditEvent({
         module: "expertvideos",

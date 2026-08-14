@@ -136,6 +136,8 @@ const NeonRacerGame = () => {
             <canvas
                 ref={canvasRef}
                 className="block w-full h-full focus:outline-none"
+                role="application"
+                aria-label="Neon Racer game canvas. Steer with the arrow keys or A and D. Dodge traffic, grab boosts, and chase your top speed."
                 style={{ touchAction: 'none' }}
             />
 

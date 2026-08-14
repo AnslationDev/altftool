@@ -4,7 +4,6 @@ import GamePlayer from "@/app/altfgame/_components/GamePlayer";
 import RelatedGames from "@/app/altfgame/_components/RelatedGames";
 import GameGrid from "@/app/altfgame/_components/GameGrid";
 import GameThumb from "@/app/altfgame/_components/GameThumb";
-import StarRating from "@/app/altfgame/_components/StarRating";
 import { GAMES, getGame, getRelated, getRecommended } from "@/app/altfgame/_data/games";
 import { GAME_COMPONENTS } from "../registry";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
@@ -120,7 +119,6 @@ export default async function GamePage({ params }) {
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">{g.title}</p>
                   <div className="mt-0.5 flex items-center gap-2 text-xs text-foreground/60">
-                    <StarRating value={g.rating} />
                     <span>{g.category}</span>
                   </div>
                 </div>

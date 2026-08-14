@@ -14,7 +14,7 @@
   font-family: Georgia, "Times New Roman", Cambria, serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .shielddef-page *,

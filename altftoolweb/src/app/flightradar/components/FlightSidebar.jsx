@@ -3,6 +3,17 @@
 
 import { X, Settings, Info, Lock } from 'lucide-react';
 
+// Reconstructs each flight's own departure time from its simulated progress/ETA
+// instead of a single value shared by every flight.
+function getScheduledDeparture(flight) {
+  const totalMinutes = flight.progress < 1
+    ? flight.etaMinutes / (1 - flight.progress)
+    : flight.etaMinutes;
+  const elapsedMinutes = Number.isFinite(totalMinutes) ? totalMinutes * flight.progress : 0;
+  const scheduled = new Date(Date.now() - elapsedMinutes * 60000);
+  return scheduled.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
 export default function FlightSidebar({ selectedFlight, onSelectFlight }) {
 
   if (!selectedFlight) {
@@ -84,7 +95,7 @@ export default function FlightSidebar({ selectedFlight, onSelectFlight }) {
           <div className="flex justify-between mt-6 bg-muted/20 p-4 rounded-[2rem] border border-border/30 shadow-sm">
             <div>
               <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">Scheduled</div>
-              <div className="text-sm text-foreground font-bold">10:00 AM</div>
+              <div className="text-sm text-foreground font-bold">{getScheduledDeparture(selectedFlight)}</div>
             </div>
             <div className="text-right">
               <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">Arrival</div>

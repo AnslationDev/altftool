@@ -100,6 +100,7 @@ export default function SequenceMemory({ onComplete, beep }) {
           <div className="grid gap-3 mx-auto" style={{ gridTemplateColumns:"repeat(3,1fr)", maxWidth:260 }}>
             {Array.from({ length: GRID }).map((_, i) => (
               <button key={i} onClick={() => handleCellClick(i)}
+                aria-label={`Cell ${i + 1} of ${GRID}`}
                 className={`aspect-square rounded-xl border flex items-center justify-center ${
                   flashIdx === i ? "bg-[var(--primary)] border-[var(--primary)] shadow-lg"
                   : userInput[userInput.length-1] === i && state==="input" ? "bg-[var(--primary)]/40 border-[var(--primary)]/40"

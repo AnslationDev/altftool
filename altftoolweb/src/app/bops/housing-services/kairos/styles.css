@@ -36,7 +36,7 @@
   --kairos-section-y: clamp(64px, 7vw, 92px);
   --kairos-section-x: clamp(18px, 4vw, 32px);
 
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   background: var(--kairos-bg);
   color: var(--kairos-text);

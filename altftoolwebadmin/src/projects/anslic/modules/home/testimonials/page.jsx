@@ -459,8 +459,16 @@ function TestimonialModal({ item, nextOrder, saving, onClose, onSave }) {
     setUploadProgress(0);
     try {
       const uploaded = await uploadTestimonialImage({ file, onProgress: setUploadProgress });
+      const oldPath = form.imagePath;
       updateField("imageUrl", uploaded.url);
       setForm((prev) => ({ ...prev, imagePath: uploaded.path }));
+      if (oldPath) {
+        try {
+          await deleteTestimonialImage(oldPath);
+        } catch {
+          emitAlert({ type: "warning", message: "New photo uploaded, but old photo cleanup failed." });
+        }
+      }
       emitAlert({ type: "success", message: "Testimonial photo uploaded." });
     } catch (error) {
       emitAlert({ type: "error", message: error?.message || "Photo upload failed." });

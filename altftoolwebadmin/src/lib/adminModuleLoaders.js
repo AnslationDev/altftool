@@ -202,6 +202,12 @@ const routeLoaders = {
     insights: {
       "": () => import("@/projects/alphobia/modules/insights/page.jsx"),
     },
+    industries: {
+      "": () => import("@/projects/alphobia/modules/industries/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/alphobia/modules/stats/page.jsx"),
+    },
     assets: {
       "": () => import("@/projects/alphobia/modules/assets/page.jsx"),
     },
@@ -337,6 +343,8 @@ const routeLoaders = {
       "process-section": () => import("@/projects/coozter/modules/home/process-section/page.jsx"),
       "services-preview": () => import("@/projects/coozter/modules/home/services-preview/page.jsx"),
       "trust-section": () => import("@/projects/coozter/modules/home/trust-section/page.jsx"),
+      "blog-preview": () => import("@/projects/coozter/modules/home/blog-preview/page.jsx"),
+      "contact-cta": () => import("@/projects/coozter/modules/home/contact-cta/page.jsx"),
     },
     about: {
       "": () => import("@/projects/coozter/modules/about/page.jsx"),
@@ -563,17 +571,58 @@ const routeLoaders = {
     bonusladdertiers: { "": () => import("@/projects/anternet/modules/bonusladdertiers/page.jsx") },
     khokho: { "": () => import("@/projects/anternet/modules/khokho/page.jsx") },
   },
-  campaignastra: createSinglePageLoaders({
-    navbar: () => import("@/projects/campaignastra/modules/navbar/page.jsx"),
-    footer: () => import("@/projects/campaignastra/modules/footer/page.jsx"),
-    home: () => import("@/projects/campaignastra/modules/home/page.jsx"),
-    about: () => import("@/projects/campaignastra/modules/about/page.jsx"),
-    stats: () => import("@/projects/campaignastra/modules/stats/page.jsx"),
-    services: () => import("@/projects/campaignastra/modules/services/page.jsx"),
-    team: () => import("@/projects/campaignastra/modules/team/page.jsx"),
-    blog: () => import("@/projects/campaignastra/modules/blog/page.jsx"),
-    contact: () => import("@/projects/campaignastra/modules/contact/page.jsx"),
-  }),
+  campaignastra: {
+    navbar: {
+      "": () => import("@/projects/campaignastra/modules/navbar/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/campaignastra/modules/footer/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/campaignastra/modules/home/page.jsx"),
+      hero: () => import("@/projects/campaignastra/modules/home/hero/page.jsx"),
+      "about-preview": () =>
+        import("@/projects/campaignastra/modules/home/about-preview/page.jsx"),
+      "services-preview": () =>
+        import("@/projects/campaignastra/modules/home/services-preview/page.jsx"),
+      testimonials: () =>
+        import("@/projects/campaignastra/modules/home/testimonials/page.jsx"),
+      "team-preview": () =>
+        import("@/projects/campaignastra/modules/home/team-preview/page.jsx"),
+      cta: () => import("@/projects/campaignastra/modules/home/cta/page.jsx"),
+      "blog-preview": () =>
+        import("@/projects/campaignastra/modules/home/blog-preview/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/campaignastra/modules/about/page.jsx"),
+      hero: () => import("@/projects/campaignastra/modules/about/hero/page.jsx"),
+      "mission-vision": () =>
+        import("@/projects/campaignastra/modules/about/mission-vision/page.jsx"),
+      values: () => import("@/projects/campaignastra/modules/about/values/page.jsx"),
+      "team-preview": () =>
+        import("@/projects/campaignastra/modules/about/team-preview/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/campaignastra/modules/stats/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/campaignastra/modules/services/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/campaignastra/modules/team/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/campaignastra/modules/blog/page.jsx"),
+      "add-article": () =>
+        import("@/projects/campaignastra/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () =>
+        import("@/projects/campaignastra/modules/blog/edit-article/[id]/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/campaignastra/modules/contact/page.jsx"),
+      leads: () => import("@/projects/campaignastra/modules/contact/leads/page.jsx"),
+    },
+  },
   dailyhnt: createSinglePageLoaders({
     navbar: () => import("@/projects/dailyhnt/modules/navbar/page.jsx"),
     home: () => import("@/projects/dailyhnt/modules/home/page.jsx"),

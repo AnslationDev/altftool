@@ -391,6 +391,7 @@ const LWChart = forwardRef(function LWChart(
 
       const pal = palette(theme);
       const base = {
+        // attributionLogo hidden here; lightweight-charts (Apache-2.0) does not require on-chart attribution.
         layout: { background: { type: LWC.ColorType.Solid, color: "transparent" }, textColor: pal.text, fontFamily: "ui-sans-serif, system-ui", attributionLogo: false },
         grid: { vertLines: { color: pal.grid }, horzLines: { color: pal.grid } },
         rightPriceScale: { borderColor: pal.border },
@@ -478,8 +479,18 @@ const LWChart = forwardRef(function LWChart(
         for (const spec of lowerSpecs) {
           const scaleId = spec.range ? (leftUsed ? "right" : "left") : "right";
           if (spec.range) leftUsed = true;
-          for (const s of spec.series) { const ls = lower.addLineSeries({ color: s.color, lineWidth: 1.5, priceScaleId: scaleId, lastValueVisible: true }); ls.setData(s.data); }
+          let firstSeries = null;
+          for (const s of spec.series) {
+            const ls = lower.addLineSeries({ color: s.color, lineWidth: 1.5, priceScaleId: scaleId, lastValueVisible: true });
+            ls.setData(s.data);
+            if (!firstSeries) firstSeries = ls;
+          }
           if (spec.hist) { const h = lower.addHistogramSeries({ priceScaleId: scaleId }); h.setData(spec.hist); }
+          if (spec.guides && firstSeries) {
+            for (const g of spec.guides) {
+              firstSeries.createPriceLine({ price: g, color: pal.guide, lineWidth: 1, lineStyle: LWC.LineStyle.Dashed, axisLabelVisible: true, title: String(g) });
+            }
+          }
         }
         lowerCharts.push(lower);
       }

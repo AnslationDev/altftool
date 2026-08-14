@@ -14,7 +14,7 @@
   color: var(--ev-ink);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 .ecovolt-page * { box-sizing: border-box; }

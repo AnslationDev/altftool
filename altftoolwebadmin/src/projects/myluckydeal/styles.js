@@ -138,16 +138,6 @@ const css = `
 .mla-toast-ok{background:linear-gradient(120deg,#059669,#10b981)}
 .mla-toast-err{background:linear-gradient(120deg,#e11d48,#f43f5e)}
 
-/* -------------------------------- Login --------------------------------- */
-.mla-login{margin:auto;width:100%;max-width:390px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow);animation:mlaPop .3s ease both}
-.mla-login h2{margin:14px 0 4px;font-size:18px;font-weight:800}
-.mla-login p{margin:0 0 18px;font-size:12.5px;color:var(--mut);line-height:1.6}
-.mla-login form{display:flex;flex-direction:column;gap:10px}
-.mla-login input{border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;font-size:13px;background:var(--card);color:var(--txt)}
-.mla-login input:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 16%,transparent)}
-.mla-logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(120deg,var(--p),var(--p2));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 8px 18px -6px color-mix(in srgb,var(--p) 65%,transparent)}
-.mla-skip{margin-top:14px;text-align:center}
-
 @media(max-width:900px){.mla-form{grid-template-columns:1fr}.mla-cards{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.mla-embed{padding:12px 12px 40px}}
 `;
 export default css;

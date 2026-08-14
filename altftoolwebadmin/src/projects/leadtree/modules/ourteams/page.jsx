@@ -133,7 +133,17 @@ function MemberCard({ member, onEdit, onDelete, onToggleStatus }) {
               className="absolute right-0 top-9 z-20 bg-white border border-gray-200 rounded-xl shadow-xl py-1 w-44 text-sm"
               onMouseLeave={() => setMenuOpen(false)}
             >
-             
+
+              <button
+                onClick={() => {
+                  onEdit(member);
+                  setMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <Pencil size={13} className="text-gray-400" /> Edit
+              </button>
+              <div className="border-t border-gray-100 my-1" />
               <button
                 onClick={() => {
                   onToggleStatus(member);

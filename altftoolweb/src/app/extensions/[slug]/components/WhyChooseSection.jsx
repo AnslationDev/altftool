@@ -6,13 +6,13 @@ export default function WhyChooseSection({ benefitsData }) {
   const defaultBenefits = [
     {
       icon: Zap,
-      title: "Lightning Fast Speed",
-      description: "Optimized algorithm guarantees near-zero RAM footprint and sub-millisecond execution times.",
+      title: "Built for Speed",
+      description: "Designed to stay lightweight and responsive so it won't bog down your browsing session.",
     },
     {
       icon: ShieldCheck,
-      title: "100% Privacy Focused",
-      description: "Processes data entirely on your device. Zero telemetry, zero ad tracking, and no external calls.",
+      title: "Privacy Focused",
+      description: "Built with user privacy in mind — review the extension's own privacy policy for full details on its data practices.",
     },
     {
       icon: Feather,
@@ -32,7 +32,7 @@ export default function WhyChooseSection({ benefitsData }) {
     <section className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#0D9488] px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary)] px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
             Engineered For Quality
           </span>
           <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--foreground)] tracking-tight">

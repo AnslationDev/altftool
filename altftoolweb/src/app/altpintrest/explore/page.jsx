@@ -11,5 +11,12 @@ export async function generateMetadata() {
 }
 
 export default function ExplorePage(props) {
-  return <PageView {...props} defaultView="explore" />;
+  return (
+    <>
+      {/* Same gap as /altpintrest: the explore feed renders no heading of its
+          own, so the route supplies the document's single H1 server-side. */}
+      <h1 className="sr-only">Explore pins — visual ideas, tools and designs</h1>
+      <PageView {...props} defaultView="explore" />
+    </>
+  );
 }

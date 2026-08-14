@@ -178,7 +178,7 @@ export default function HomeTab() {
                   type="button"
                   onClick={() => setPreviewImg(data.hero.heroImage)}
                   title="Click to view full image"
-                  className="h-10 w-16 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                  className="h-10 w-16 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                 >
                   <img src={data.hero.heroImage} alt="Hero Preview" className="w-full h-full object-cover" />
                 </button>
@@ -265,7 +265,7 @@ export default function HomeTab() {
                   <button
                     type="button"
                     onClick={() => removeCompany(idx)}
-                    className="text-red-500 hover:text-red-700 transition"
+                    className="text-[var(--danger)] hover:opacity-80 transition"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -395,7 +395,7 @@ export default function HomeTab() {
                     type="button"
                     onClick={() => setPreviewImg(data.whyChooseUs.row1.img)}
                     title="Click to view full image"
-                    className="h-10 w-16 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                    className="h-10 w-16 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                   >
                     <img src={data.whyChooseUs.row1.img} alt="Row 1 Preview" className="w-full h-full object-cover" />
                   </button>
@@ -455,7 +455,7 @@ export default function HomeTab() {
                     type="button"
                     onClick={() => setPreviewImg(data.whyChooseUs.row2.img)}
                     title="Click to view full image"
-                    className="h-10 w-16 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                    className="h-10 w-16 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                   >
                     <img src={data.whyChooseUs.row2.img} alt="Row 2 Preview" className="w-full h-full object-cover" />
                   </button>

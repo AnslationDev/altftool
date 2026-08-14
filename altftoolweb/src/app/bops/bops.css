@@ -11,7 +11,7 @@
 /* Standalone shell — used by product pages under /bops/<slug>/ that
    render without the global AltFTool header/footer. */
 .bizops-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-primary);

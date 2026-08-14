@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { useRef, useEffect } from "react";
+import { FeaturedAcademiesSkeleton } from "@/components/ui/skeleton";
 
-export default function FeaturedAcademies({ items }) {
+export default function FeaturedAcademies({ items, loading = false }) {
   const trackRef = useRef(null);
   const animRef = useRef(null);
   const posRef = useRef(0);
@@ -11,7 +12,13 @@ export default function FeaturedAcademies({ items }) {
 
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
+    if (!track) return undefined;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return undefined;
+    }
 
     const raf = requestAnimationFrame(() => {
       const halfWidth = track.scrollWidth / 2;
@@ -37,6 +44,10 @@ export default function FeaturedAcademies({ items }) {
     };
   }, [items]);
 
+  if (loading) {
+    return <FeaturedAcademiesSkeleton />;
+  }
+
   const list = [...items, ...items];
 
   return (
@@ -47,6 +58,8 @@ export default function FeaturedAcademies({ items }) {
         onMouseLeave={() => (pausedRef.current = false)}
         onTouchStart={() => (pausedRef.current = true)}
         onTouchEnd={() => (pausedRef.current = false)}
+        onFocus={() => (pausedRef.current = true)}
+        onBlur={() => (pausedRef.current = false)}
       >
         {/* Fade edges */}
         <div className="academy-fade-left pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 lg:w-24 z-10" />

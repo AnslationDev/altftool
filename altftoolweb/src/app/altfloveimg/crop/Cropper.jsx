@@ -72,6 +72,46 @@ export default function Cropper({ src, naturalW, naturalH, ratio, onChange }) {
     [disp, ratio]
   );
 
+  // Keyboard equivalent of the pointer-drag move/resize above: each arrow-key
+  // press nudges the box (or the given handle) by STEP px, Shift for a
+  // larger step, so the crop region is fully operable without a pointer.
+  const nudge = useCallback(
+    (mode, dx, dy) => {
+      setRect((prev) => {
+        if (!prev) return prev;
+        let r = { ...prev };
+        if (mode === "move") {
+          r.x = Math.max(0, Math.min(prev.x + dx, disp.w - r.w));
+          r.y = Math.max(0, Math.min(prev.y + dy, disp.h - r.h));
+          return r;
+        }
+        if (mode.includes("e")) r.w = prev.w + dx;
+        if (mode.includes("s")) r.h = prev.h + dy;
+        if (mode.includes("w")) { r.w = prev.w - dx; r.x = prev.x + dx; }
+        if (mode.includes("n")) { r.h = prev.h - dy; r.y = prev.y + dy; }
+        if (ratio) {
+          r.h = r.w / ratio;
+          if (mode.includes("n")) r.y = prev.y + (prev.h - r.h);
+        }
+        return clampRect(r);
+      });
+    },
+    [disp, ratio, clampRect]
+  );
+
+  const onKeyDownMode = (e, mode) => {
+    const step = e.shiftKey ? 24 : 8;
+    let dx = 0;
+    let dy = 0;
+    if (e.key === "ArrowLeft") dx = -step;
+    else if (e.key === "ArrowRight") dx = step;
+    else if (e.key === "ArrowUp") dy = -step;
+    else if (e.key === "ArrowDown") dy = step;
+    else return;
+    e.preventDefault();
+    nudge(mode, dx, dy);
+  };
+
   const onPointerDown = (e, mode) => {
     e.preventDefault();
     e.stopPropagation();
@@ -151,6 +191,10 @@ export default function Cropper({ src, naturalW, naturalH, ratio, onChange }) {
               cursor: "move",
             }}
             onPointerDown={(e) => onPointerDown(e, "move")}
+            tabIndex={0}
+            role="button"
+            aria-label="Crop area. Drag to move, or use arrow keys (hold Shift for larger steps)."
+            onKeyDown={(e) => onKeyDownMode(e, "move")}
           >
             <div className="absolute inset-0 border-2" style={{ borderColor: "var(--ali-teal)" }}>
               {/* rule-of-thirds */}
@@ -167,6 +211,10 @@ export default function Cropper({ src, naturalW, naturalH, ratio, onChange }) {
                 onPointerDown={(e) => onPointerDown(e, pos)}
                 className="absolute h-3 w-3 rounded-full border-2 bg-white"
                 style={{ borderColor: "var(--ali-teal)", ...handleStyle(pos) }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Resize crop area from the ${pos} handle. Use arrow keys (hold Shift for larger steps).`}
+                onKeyDown={(e) => onKeyDownMode(e, pos)}
               />
             ))}
           </div>

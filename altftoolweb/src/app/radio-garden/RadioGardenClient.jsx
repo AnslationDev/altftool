@@ -35,6 +35,7 @@ import {
   Volume2,
   X,
 } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import "./radio-garden.css";
 
 const ASSET_BASE = "/radio-garden-assets";
@@ -976,6 +977,7 @@ function IconNavButton({ active, label, icon: Icon, onClick }) {
 }
 
 export default function RadioGardenClient() {
+  const { resolvedTheme, setThemeMode } = useTheme();
   const [stations, setStations] = useState(() => SEED_STATIONS.map(normalizeStation));
   const [activeTab, setActiveTab] = useState("explore");
   const [activePlace, setActivePlace] = useState(null);
@@ -1016,13 +1018,16 @@ export default function RadioGardenClient() {
     [places]
   );
 
+  // Deep-links live on the real /radio-garden route as a query string (there is no
+  // /radio-garden/visit/... or /radio-garden/listen/... page, so pushing those paths
+  // 404s on reload or share). Station/place ids are stable, so they round-trip cleanly.
   const pushRoute = useCallback((type, payload) => {
     if (typeof window === "undefined") return;
-    const path =
-      type === "listen"
-        ? `/radio-garden/listen/${slugify(payload.name)}/${payload.id}`
-        : `/radio-garden/visit/${slugify(payload.city)}/${payload.id}`;
-    window.history.pushState({ radioGarden: true }, "", path);
+    const params = new URLSearchParams();
+    params.set(type === "listen" ? "station" : "place", payload.id);
+    const path = `/radio-garden?${params.toString()}`;
+    if (`${window.location.pathname}${window.location.search}` === path) return;
+    window.history.pushState({ radioGarden: true, type, id: payload.id }, "", path);
   }, []);
 
   const playStation = useCallback(
@@ -1125,22 +1130,12 @@ export default function RadioGardenClient() {
   useEffect(() => {
     if (!places.length || activePlace) return;
 
-    const path = typeof window !== "undefined" ? window.location.pathname : "";
-    const chunks = path.split("/").filter(Boolean);
-    const visitIndex = chunks.indexOf("visit");
-    const listenIndex = chunks.indexOf("listen");
+    const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    const stationId = params?.get("station");
+    const placeId = params?.get("place");
 
-    if (visitIndex !== -1 && chunks[visitIndex + 1]) {
-      const place = findPlaceByName(chunks[visitIndex + 1]);
-      if (place) {
-        window.setTimeout(() => selectPlace(place, { openDrawer: true }), 0);
-        return;
-      }
-    }
-
-    if (listenIndex !== -1 && chunks[listenIndex + 1]) {
-      const slug = chunks[listenIndex + 1];
-      const station = stations.find((candidate) => slugify(candidate.name) === slug);
+    if (stationId) {
+      const station = stations.find((candidate) => candidate.id === stationId);
       if (station) {
         const place = places.find(
           (candidate) => candidate.city === station.city && candidate.country === station.country
@@ -1153,8 +1148,51 @@ export default function RadioGardenClient() {
       }
     }
 
+    if (placeId) {
+      const place = places.find((candidate) => candidate.id === placeId);
+      if (place) {
+        window.setTimeout(() => selectPlace(place, { openDrawer: true }), 0);
+        return;
+      }
+    }
+
     window.setTimeout(() => selectPlace(findPlaceByName("Bardiya") || places[0], { openDrawer: true }), 0);
   }, [activePlace, findPlaceByName, places, selectPlace, stations]);
+
+  // Keep the UI in sync when the user presses Back/Forward: pushRoute() creates real
+  // history entries (station/place query params on /radio-garden), but without this
+  // listener the address bar changed while the displayed station/place did not.
+  useEffect(() => {
+    function handlePopState() {
+      const params = new URLSearchParams(window.location.search);
+      const stationId = params.get("station");
+      const placeId = params.get("place");
+
+      if (stationId) {
+        const station = stations.find((candidate) => candidate.id === stationId);
+        if (station) {
+          const place = places.find(
+            (candidate) => candidate.city === station.city && candidate.country === station.country
+          );
+          if (place) setActivePlace(place);
+          setCurrentStation(station);
+          return;
+        }
+      }
+
+      if (placeId) {
+        const place = places.find((candidate) => candidate.id === placeId);
+        if (place) {
+          setActivePlace(place);
+          setDrawerOpen(true);
+          setExpandedStations(false);
+        }
+      }
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [places, stations]);
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume;
@@ -1306,7 +1344,12 @@ export default function RadioGardenClient() {
           <Share2 size={20} />
         </button>
         {activePlace && (
-          <button type="button" aria-label={`Add ${activePlace.city} page to favorites`}>
+          <button
+            type="button"
+            aria-label={`Add ${activePlace.city} page to favorites`}
+            disabled
+            title="Coming soon"
+          >
             <Heart size={20} />
           </button>
         )}
@@ -1675,10 +1718,15 @@ export default function RadioGardenClient() {
             <span>Language</span>
             <small>English</small>
           </button>
-          <button type="button" className="rg-setting-row" disabled title="Coming soon">
+          <button
+            type="button"
+            className="rg-setting-row"
+            onClick={() => setThemeMode(resolvedTheme === "dark" ? "light" : "dark")}
+            aria-pressed={resolvedTheme === "dark"}
+          >
             <Moon size={20} />
             <span>Dark Mode</span>
-            <small>On</small>
+            <small>{resolvedTheme === "dark" ? "On" : "Off"}</small>
           </button>
           <button type="button" className="rg-setting-row" onClick={() => setContrast((value) => !value)}>
             <Contrast size={20} />
@@ -1732,7 +1780,7 @@ export default function RadioGardenClient() {
             : "Choose a station";
 
   return (
-    <main className={`rg-shell ${contrast ? "is-contrast" : ""}`}>
+    <main className={`rg-shell ${contrast ? "is-contrast" : ""}`} data-theme={resolvedTheme}>
       <GlobeScene
         places={places}
         activePlace={activePlace}
@@ -1841,7 +1889,7 @@ export default function RadioGardenClient() {
         <button type="button" aria-label="Zoom out" onClick={() => setZoomLevel((value) => Math.max(0, value - 1))}>
           <Minus size={25} />
         </button>
-        <button type="button" aria-label="imagery credits">
+        <button type="button" aria-label="imagery credits" disabled title="Coming soon">
           <Navigation size={18} />
         </button>
       </nav>
@@ -1877,7 +1925,6 @@ export default function RadioGardenClient() {
       <audio
         ref={audioRef}
         preload="none"
-        crossOrigin="anonymous"
         onCanPlay={() => setStatus((value) => (value === "loading" ? "playing" : value))}
         onPlaying={() => setStatus("playing")}
         onError={() => setStatus("error")}

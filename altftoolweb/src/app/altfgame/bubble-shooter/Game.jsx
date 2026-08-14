@@ -135,6 +135,8 @@ export default function BubbleShooterGame({ isPreview = false }) {
                         width={600}
                         height={800}
                         className="block w-full h-full touch-none object-contain bg-transparent cursor-crosshair"
+                        role="application"
+                        aria-label="Bubble Shooter game canvas. Aim with the mouse and click to fire. Connect three or more bubbles of the same color to pop them."
                         style={{ width: '100%', height: '100%' }}
                     />
                 </div>

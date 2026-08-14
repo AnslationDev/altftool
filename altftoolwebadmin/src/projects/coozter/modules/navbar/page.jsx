@@ -43,14 +43,14 @@ const EMPTY_ITEM = {
 
 function StatCard({ label, value, tone = "gray" }) {
   const toneClass = {
-    gray: "bg-gray-100 text-gray-700",
-    green: "bg-emerald-50 text-emerald-700",
-    amber: "bg-amber-50 text-amber-700",
+    gray: "bg-[var(--surface-soft)] text-[var(--foreground)]",
+    green: "bg-[color-mix(in_srgb,var(--success)_12%,var(--surface))] text-[var(--success)]",
+    amber: "bg-[color-mix(in_srgb,var(--warning)_14%,var(--surface))] text-[var(--warning)]",
   }[tone];
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</p>
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
+      <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)]">{label}</p>
       <p className={`mt-2 inline-flex rounded-lg px-2.5 py-1 text-xl font-bold ${toneClass}`}>{value}</p>
     </div>
   );
@@ -61,11 +61,11 @@ function StatusBadge({ active }) {
     <span
       className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
         active
-          ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
-          : "bg-gray-100 text-gray-500 ring-1 ring-gray-200"
+          ? "bg-[color-mix(in_srgb,var(--success)_12%,var(--surface))] text-[var(--success)] ring-1 ring-[color-mix(in_srgb,var(--success)_35%,var(--border))]"
+          : "bg-[var(--surface-soft)] text-[var(--muted)] ring-1 ring-[var(--border)]"
       }`}
     >
-      <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-emerald-500" : "bg-gray-400"}`} />
+      <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-[var(--success)]" : "bg-[var(--muted)]"}`} />
       {active ? "Visible" : "Hidden"}
     </span>
   );
@@ -76,7 +76,7 @@ function NavbarPreview({ settings, items }) {
   const baseSettings = settings || {};
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-slate-950 shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-slate-950 shadow-[var(--shadow-sm)]">
       <div className="flex min-h-20 items-center gap-5 bg-[linear-gradient(110deg,#0f172a,#1d4ed8_45%,#0f172a)] px-5 py-4 text-white">
         <div className="flex min-w-0 flex-1 items-center gap-3">
           {baseSettings.logoType === "image" && baseSettings.logoImageUrl ? (
@@ -130,19 +130,19 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl"
+        className="w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-lg)]"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Navbar item</p>
-            <h2 className="mt-1 text-lg font-bold text-gray-900">
+            <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Navbar item</p>
+            <h2 className="mt-1 text-lg font-bold text-[var(--foreground)]">
               {isEdit ? "Edit menu item" : "Add menu item"}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-500 hover:bg-gray-50"
+            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] hover:bg-[var(--surface-soft)]"
           >
             Close
           </button>
@@ -153,7 +153,7 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
             <input
               value={form.label || ""}
               onChange={(event) => updateField("label", event.target.value)}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
               placeholder="Home"
             />
           </Field>
@@ -162,7 +162,7 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
             <input
               value={form.url || ""}
               onChange={(event) => updateField("url", event.target.value)}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
               placeholder="/about"
             />
           </Field>
@@ -174,7 +174,7 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
                 min="0"
                 value={form.order || 1}
                 onChange={(event) => updateField("order", event.target.value)}
-                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
               />
             </Field>
 
@@ -184,12 +184,12 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
                 onClick={() => updateField("visible", !form.visible)}
                 className={`flex h-11 w-full items-center justify-between rounded-xl border px-3 text-sm font-semibold transition ${
                   form.visible !== false
-                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                    : "border-gray-200 bg-gray-50 text-gray-500"
+                    ? "border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[color-mix(in_srgb,var(--success)_10%,var(--surface))] text-[var(--success)]"
+                    : "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]"
                 }`}
               >
                 <span>{form.visible !== false ? "Visible" : "Hidden"}</span>
-                <span className={`h-2.5 w-2.5 rounded-full ${form.visible !== false ? "bg-emerald-500" : "bg-gray-400"}`} />
+                <span className={`h-2.5 w-2.5 rounded-full ${form.visible !== false ? "bg-[var(--success)]" : "bg-[var(--muted)]"}`} />
               </button>
             </Field>
           </div>
@@ -199,7 +199,7 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
               <input
                 value={form.badge || ""}
                 onChange={(event) => updateField("badge", event.target.value)}
-                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
                 placeholder="New"
               />
             </Field>
@@ -208,7 +208,7 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
               <input
                 value={form.icon || ""}
                 onChange={(event) => updateField("icon", event.target.value)}
-                className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
                 placeholder="home"
               />
             </Field>
@@ -220,12 +220,12 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
               onClick={() => updateField("openInNewTab", !form.openInNewTab)}
               className={`flex h-11 w-full items-center justify-between rounded-xl border px-3 text-sm font-semibold transition ${
                 form.openInNewTab
-                  ? "border-sky-200 bg-sky-50 text-sky-700"
-                  : "border-gray-200 bg-gray-50 text-gray-500"
+                  ? "border-[color-mix(in_srgb,var(--info)_35%,var(--border))] bg-[color-mix(in_srgb,var(--info)_10%,var(--surface))] text-[var(--info)]"
+                  : "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]"
               }`}
             >
               <span>{form.openInNewTab ? "Yes" : "No"}</span>
-              <span className={`h-2.5 w-2.5 rounded-full ${form.openInNewTab ? "bg-sky-500" : "bg-gray-400"}`} />
+              <span className={`h-2.5 w-2.5 rounded-full ${form.openInNewTab ? "bg-[var(--info)]" : "bg-[var(--muted)]"}`} />
             </button>
           </Field>
         </div>
@@ -234,14 +234,14 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+            className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--foreground)] hover:bg-[var(--surface-soft)]"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover,var(--primary))] disabled:opacity-60"
           >
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
             {isEdit ? "Update item" : "Add item"}
@@ -255,9 +255,9 @@ function MenuItemModal({ item, nextOrder, saving, onClose, onSave }) {
 function Field({ label, error, children }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-gray-500">{label}</span>
+      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--muted)]">{label}</span>
       {children}
-      {error ? <span className="mt-1 block text-xs font-medium text-red-500">{error}</span> : null}
+      {error ? <span className="mt-1 block text-xs font-medium text-[var(--danger)]">{error}</span> : null}
     </label>
   );
 }
@@ -481,22 +481,22 @@ export default function CoozterNavbarAdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-[var(--background)] p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-900 text-white shadow-sm">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-sm)]">
               <Menu className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Coozter Navbar</h1>
-              <p className="text-sm text-gray-500">Manage logo, navigation links, order, visibility, and CTA styling.</p>
+              <h1 className="text-xl font-bold text-[var(--foreground)]">Coozter Navbar</h1>
+              <p className="text-sm text-[var(--muted)]">Manage logo, navigation links, order, visibility, and CTA styling.</p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setModalItem({ ...EMPTY_ITEM, order: nextOrder })}
-            className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-sm)] transition hover:bg-[var(--primary-hover,var(--primary))]"
           >
             <Plus className="h-4 w-4" />
             Add Menu Item
@@ -510,16 +510,16 @@ export default function CoozterNavbarAdminPage() {
         </div>
 
         <div className="grid gap-5 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-          <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)]">
             <div className="mb-5 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Logo settings</p>
-                <h2 className="mt-1 text-base font-bold text-gray-900">Brand control</h2>
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Logo settings</p>
+                <h2 className="mt-1 text-base font-bold text-[var(--foreground)]">Brand control</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setSettingsDraft(settings)}
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-500 hover:bg-gray-50"
+                className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] hover:bg-[var(--surface-soft)]"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
                 Reset
@@ -527,7 +527,7 @@ export default function CoozterNavbarAdminPage() {
             </div>
 
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-2 rounded-xl bg-gray-100 p-1">
+              <div className="grid grid-cols-2 gap-2 rounded-xl bg-[var(--surface-soft)] p-1">
                 {[
                   { key: "text", label: "Text logo", icon: Text },
                   { key: "image", label: "Image logo", icon: ImageIcon },
@@ -538,8 +538,8 @@ export default function CoozterNavbarAdminPage() {
                     onClick={() => updateSettingsDraft("logoType", key)}
                     className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition ${
                       settingsDraft.logoType === key
-                        ? "bg-white text-gray-900 shadow-sm"
-                        : "text-gray-500 hover:text-gray-700"
+                        ? "bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow-sm)]"
+                        : "text-[var(--muted)] hover:text-[var(--foreground)]"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -552,7 +552,7 @@ export default function CoozterNavbarAdminPage() {
                 <input
                   value={settingsDraft.logoText || ""}
                   onChange={(event) => updateSettingsDraft("logoText", event.target.value)}
-                  className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
                   placeholder="Coozter"
                 />
               </Field>
@@ -561,15 +561,15 @@ export default function CoozterNavbarAdminPage() {
                 <input
                   value={settingsDraft.logoAlt || ""}
                   onChange={(event) => updateSettingsDraft("logoAlt", event.target.value)}
-                  className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
                   placeholder="Coozter logo"
                 />
               </Field>
 
               <Field label="Logo image" error={settingsErrors.logoImageUrl}>
-                <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-4">
+                <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-4">
                   <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex h-16 w-28 items-center justify-center rounded-lg border border-gray-200 bg-white">
+                    <div className="flex h-16 w-28 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)]">
                       {settingsDraft.logoImageUrl ? (
                         <img
                           src={settingsDraft.logoImageUrl}
@@ -577,22 +577,22 @@ export default function CoozterNavbarAdminPage() {
                           className="max-h-12 max-w-24 object-contain"
                         />
                       ) : (
-                        <ImageIcon className="h-6 w-6 text-gray-300" />
+                        <ImageIcon className="h-6 w-6 text-[var(--muted)]" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold text-gray-800">Upload a PNG, JPG, or WebP logo</p>
-                      <p className="mt-0.5 text-xs text-gray-400">Recommended transparent image, max 5MB.</p>
+                      <p className="text-sm font-semibold text-[var(--foreground)]">Upload a PNG, JPG, or WebP logo</p>
+                      <p className="mt-0.5 text-xs text-[var(--muted)]">Recommended transparent image, max 5MB.</p>
                       {uploading ? (
-                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-gray-200">
+                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--border)]">
                           <div
-                            className="h-full rounded-full bg-gray-900 transition-all"
+                            className="h-full rounded-full bg-[var(--primary)] transition-all"
                             style={{ width: `${uploadProgress}%` }}
                           />
                         </div>
                       ) : null}
                     </div>
-                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--primary-foreground)] hover:bg-[var(--primary-hover,var(--primary))]">
                       <Upload className="h-4 w-4" />
                       Upload
                       <input
@@ -607,7 +607,7 @@ export default function CoozterNavbarAdminPage() {
                       <button
                         type="button"
                         onClick={handleRemoveLogo}
-                        className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+                        className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--foreground)] hover:bg-[var(--surface-soft)]"
                       >
                         Remove
                       </button>
@@ -621,44 +621,44 @@ export default function CoozterNavbarAdminPage() {
                 type="button"
                 onClick={handleSaveSettings}
                 disabled={settingsSaving || uploading}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover,var(--primary))] disabled:opacity-60"
               >
                 {settingsSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                Save 
+                Save
               </button>
             </div>
           </section>
 
           <section className="space-y-5">
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)]">
               <div className="mb-4 flex items-center gap-2">
-                <Eye className="h-4 w-4 text-gray-400" />
-                <h2 className="text-base font-bold text-gray-900">Live preview</h2>
+                <Eye className="h-4 w-4 text-[var(--muted)]" />
+                <h2 className="text-base font-bold text-[var(--foreground)]">Live preview</h2>
               </div>
               <NavbarPreview settings={settingsDraft} items={sortedItems} />
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
-              <div className="flex flex-wrap items-center gap-3 border-b border-gray-100 p-4">
-                <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
-                  <Search className="h-4 w-4 text-gray-400" />
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]">
+              <div className="flex flex-wrap items-center gap-3 border-b border-[var(--border)] p-4">
+                <div className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2">
+                  <Search className="h-4 w-4 text-[var(--muted)]" />
                   <input
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder="Search nav items"
-                    className="w-48 bg-transparent text-sm outline-none placeholder:text-gray-400"
+                    className="w-48 bg-transparent text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted)]"
                   />
                 </div>
                 <select
                   value={statusFilter}
                   onChange={(event) => setStatusFilter(event.target.value)}
-                  className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 outline-none"
+                  className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-medium text-[var(--foreground)] outline-none"
                 >
                   <option value="all">All status</option>
                   <option value="visible">Visible</option>
                   <option value="hidden">Hidden</option>
                 </select>
-                <span className="ml-auto text-xs font-medium text-gray-400">
+                <span className="ml-auto text-xs font-medium text-[var(--muted)]">
                   {filteredItems.length} of {items.length} items
                 </span>
               </div>
@@ -666,7 +666,7 @@ export default function CoozterNavbarAdminPage() {
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[760px] text-sm">
                   <thead>
-                    <tr className="border-b border-gray-100 bg-gray-50 text-left text-xs font-bold uppercase tracking-wider text-gray-400">
+                    <tr className="border-b border-[var(--border)] bg-[var(--surface-soft)] text-left text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
                       <th className="px-4 py-3">Order</th>
                       <th className="px-4 py-3">Label</th>
                       <th className="px-4 py-3">URL</th>
@@ -674,22 +674,22 @@ export default function CoozterNavbarAdminPage() {
                       <th className="px-4 py-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100">
+                  <tbody className="divide-y divide-[var(--border)]">
                     {loading ? (
                       Array.from({ length: 4 }).map((_, index) => (
                         <tr key={index}>
                           <td colSpan={5} className="px-4 py-3">
-                            <div className="h-9 animate-pulse rounded-lg bg-gray-100" />
+                            <div className="h-9 animate-pulse rounded-lg bg-[var(--surface-soft)]" />
                           </td>
                         </tr>
                       ))
                     ) : filteredItems.length ? (
                       filteredItems.map((item) => (
-                        <tr key={item.id} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 font-semibold text-gray-700">{item.order}</td>
-                          <td className="px-4 py-3 font-semibold text-gray-900">{item.label || item.title}</td>
-                          <td className="px-4 py-3 text-gray-500">
-                            <span className="rounded-lg bg-gray-100 px-2 py-1 text-xs font-medium">{item.url}</span>
+                        <tr key={item.id} className="hover:bg-[var(--surface-soft)]">
+                          <td className="px-4 py-3 font-semibold text-[var(--foreground)]">{item.order}</td>
+                          <td className="px-4 py-3 font-semibold text-[var(--foreground)]">{item.label || item.title}</td>
+                          <td className="px-4 py-3 text-[var(--muted)]">
+                            <span className="rounded-lg bg-[var(--surface-soft)] px-2 py-1 text-xs font-medium">{item.url}</span>
                           </td>
                           <td className="px-4 py-3">
                             <button type="button" onClick={() => handleToggleStatus(item)}>
@@ -701,7 +701,7 @@ export default function CoozterNavbarAdminPage() {
                               <button
                                 type="button"
                                 onClick={() => setModalItem(item)}
-                                className="rounded-lg p-2 text-blue-500 hover:bg-blue-50"
+                                className="rounded-lg p-2 text-[var(--primary)] hover:bg-[color-mix(in_srgb,var(--primary)_10%,var(--surface))]"
                                 aria-label={`Edit ${item.label || item.title}`}
                               >
                                 <Pencil className="h-4 w-4" />
@@ -709,7 +709,7 @@ export default function CoozterNavbarAdminPage() {
                               <button
                                 type="button"
                                 onClick={() => setDeleteTarget(item)}
-                                className="rounded-lg p-2 text-red-500 hover:bg-red-50"
+                                className="rounded-lg p-2 text-[var(--danger)] hover:bg-[color-mix(in_srgb,var(--danger)_10%,var(--surface))]"
                                 aria-label={`Delete ${item.label || item.title}`}
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -721,9 +721,9 @@ export default function CoozterNavbarAdminPage() {
                     ) : (
                       <tr>
                         <td colSpan={5} className="px-4 py-14 text-center">
-                          <Menu className="mx-auto h-8 w-8 text-gray-200" />
-                          <p className="mt-3 text-sm font-semibold text-gray-500">No nav items found</p>
-                          <p className="mt-1 text-xs text-gray-400">Add the first navigation item for Coozter.</p>
+                          <Menu className="mx-auto h-8 w-8 text-[var(--muted)]" />
+                          <p className="mt-3 text-sm font-semibold text-[var(--foreground)]">No nav items found</p>
+                          <p className="mt-1 text-xs text-[var(--muted)]">Add the first navigation item for Coozter.</p>
                         </td>
                       </tr>
                     )}

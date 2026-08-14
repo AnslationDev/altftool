@@ -89,6 +89,8 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     services: [""],
     casestudies: [""],
     insights: [""],
+    industries: [""],
+    stats: [""],
     assets: [""],
     contacts: [""],
   },
@@ -144,6 +146,8 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "process-section",
       "services-preview",
       "trust-section",
+      "blog-preview",
+      "contact-cta",
     ],
     about: [
       "",
@@ -266,9 +270,17 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     "term-condition": [""],
     footer: [""],
   },
-  campaignastra: singlePageRouteKeys([
-    "navbar", "footer", "home", "about", "stats", "services", "team", "blog", "contact",
-  ]),
+  campaignastra: {
+    navbar: [""],
+    footer: [""],
+    home: ["", "hero", "about-preview", "services-preview", "testimonials", "team-preview", "cta", "blog-preview"],
+    about: ["", "hero", "mission-vision", "values", "team-preview"],
+    stats: [""],
+    services: [""],
+    team: [""],
+    blog: ["", "add-article", "edit-article/[id]"],
+    contact: ["", "leads"],
+  },
   dailyhnt: singlePageRouteKeys([
     "navbar", "home", "services", "team", "blog", "testimonials", "faq", "about-us",
     "contact-us", "policy", "term-condition", "footer", "site-settings",

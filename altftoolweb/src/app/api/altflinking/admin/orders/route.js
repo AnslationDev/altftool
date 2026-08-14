@@ -5,7 +5,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { enforceRateLimit } from "@altftool/core/http";
+import { enforceRateLimit, requireHttpUrl } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
@@ -114,7 +114,9 @@ export async function PATCH(request) {
       update.adminApprovedBy = user.uid;
       update.adminApprovedAt = now;
     }
-    if (liveLinkUrl) update.liveLinkUrl = liveLinkUrl;
+    if (liveLinkUrl) {
+      update.liveLinkUrl = requireHttpUrl(liveLinkUrl, "liveLinkUrl must be a valid http(s) URL");
+    }
     if (status === "VERIFIED_LIVE") {
       update.isDofollow = isDofollow ?? true;
       update.isIndexed  = isIndexed  ?? true;
@@ -124,6 +126,7 @@ export async function PATCH(request) {
     await docRef.update(update);
     return ok({ id, status, adminNotes });
   } catch (e) {
+    if (e?.status === 400) return err(e.message, 400);
     console.error("[PATCH /admin/orders]", e);
     return err("Failed to update order", 500);
   }

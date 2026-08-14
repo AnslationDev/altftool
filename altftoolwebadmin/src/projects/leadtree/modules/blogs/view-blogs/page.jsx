@@ -220,7 +220,7 @@ const categoryData = useMemo(() => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filtered.map((blog) => {
-              const preview = blogs.seoDescription || stripHtml(blog.description).slice(0, 120);
+              const preview = blog.seoDescription || stripHtml(blog.description).slice(0, 120);
               return (
                 <div key={blog.id} onClick={() => router.push(`/leadtree/blogs/view-blogs/${blog.id}`)}
                   className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col">
@@ -242,7 +242,7 @@ const categoryData = useMemo(() => {
                       <span className="font-medium"></span>
                       {blog.date && <><span className="text-gray-300">·</span><span>{blog.date}</span></>}
                       {blog.category && (
-                        <span className="bg-indigo-50 text-indigo-600 font-semibold px-2 py-0.5 rounded-full">{blogs.category}</span>
+                        <span className="bg-indigo-50 text-indigo-600 font-semibold px-2 py-0.5 rounded-full">{blog.category}</span>
                       )}
                     </div>
                     {preview && <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed flex-1">{preview}</p>}

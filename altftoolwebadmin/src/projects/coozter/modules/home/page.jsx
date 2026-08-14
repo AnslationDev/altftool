@@ -20,6 +20,8 @@ import TrustSectionTab from "./trust-section/page";
 import MarketingChannelsTab from "./marketing-channels/page";
 import ProcessSectionTab from "./process-section/page";
 import ServicesPreviewTab from "./services-preview/page";
+import BlogPreviewTab from "./blog-preview/page";
+import ContactCtaTab from "./contact-cta/page";
 
 const SECTION_COMPONENTS = {
   heroSection: HeroSectionTab,
@@ -27,6 +29,8 @@ const SECTION_COMPONENTS = {
   marketingChannelsSection: MarketingChannelsTab,
   processSection: ProcessSectionTab,
   servicesPreviewSection: ServicesPreviewTab,
+  blogPreviewSection: BlogPreviewTab,
+  contactCtaSection: ContactCtaTab,
 };
 
 export default function CoozterHomeAdminPage() {

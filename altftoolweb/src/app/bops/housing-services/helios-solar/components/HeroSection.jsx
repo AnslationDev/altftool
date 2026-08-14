@@ -37,16 +37,21 @@ export default function HeroSection() {
           — Helios Solar —
         </motion.p>
 
-        <motion.div
+        {/* h1, not div: this is the page's primary heading, but the whole
+            Helios Solar lander shipped with no <h1> in any component, so the
+            document had no top-level heading at all. The three lines become
+            spans (h1 takes phrasing content) and .hero-headline > span is
+            display:block in helios.css, so the stacked layout is unchanged. */}
+        <motion.h1
           variants={containerVariants}
           initial="hidden"
           animate="show"
           className="hero-headline"
         >
-          <motion.div variants={itemVariants}>Power Your</motion.div>
-          <motion.div variants={itemVariants}>World</motion.div>
-          <motion.div variants={itemVariants}>With The Sun</motion.div>
-        </motion.div>
+          <motion.span variants={itemVariants}>Power Your</motion.span>
+          <motion.span variants={itemVariants}>World</motion.span>
+          <motion.span variants={itemVariants}>With The Sun</motion.span>
+        </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

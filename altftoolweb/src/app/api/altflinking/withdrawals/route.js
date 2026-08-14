@@ -79,44 +79,73 @@ export async function POST(request) {
 
     // Confirm the requested amount doesn't exceed the publisher's actual
     // wallet balance instead of trusting whatever the client sends.
-    const publisherOrders = await db
-      .collection("orders")
-      .where("publisherId", "==", user.uid)
-      .where("status", "==", "VERIFIED_LIVE")
-      .get();
-    const availableBalance = publisherOrders.docs.reduce(
-      (sum, doc) => sum + (Number(doc.data().price) || 0),
-      0,
-    );
-    const priorWithdrawals = await db
-      .collection("withdrawals")
-      .where("publisherId", "==", user.uid)
-      .where("status", "in", ["PENDING", "PAID"])
-      .get();
-    const alreadyWithdrawn = priorWithdrawals.docs.reduce(
-      (sum, doc) => sum + (Number(doc.data().amount) || 0),
-      0,
-    );
-    const remainingBalance = availableBalance - alreadyWithdrawn;
-    if (amount > remainingBalance) {
+    //
+    // The balance check (read orders + prior withdrawals) and the balance
+    // deduction (creating the new withdrawal doc) MUST happen atomically —
+    // otherwise two concurrent requests can both read the same starting
+    // balance, both pass the check, and both get processed, letting a
+    // publisher withdraw more than they actually have. Firestore has no
+    // dedicated balance field/ledger for this module; the balance is
+    // derived on read from `orders` (VERIFIED_LIVE) minus `withdrawals`
+    // (PENDING/PAID), so the whole read-check-write sequence is wrapped in
+    // a single transaction. Firestore tracks the query result sets read
+    // inside a transaction: if a concurrent transaction commits a change
+    // that would affect those results (e.g. another PENDING withdrawal)
+    // before this one commits, this transaction is retried automatically,
+    // re-reading the now-updated totals and re-evaluating the check.
+    const withdrawalsCollection = db.collection("withdrawals");
+    const now = FieldValue.serverTimestamp();
+    let remainingBalance = 0;
+    let insufficientBalance = false;
+    let withdrawalData = null;
+    let newDocRef = null;
+
+    await db.runTransaction(async (tx) => {
+      const publisherOrders = await tx.get(
+        db
+          .collection("orders")
+          .where("publisherId", "==", user.uid)
+          .where("status", "==", "VERIFIED_LIVE"),
+      );
+      const availableBalance = publisherOrders.docs.reduce(
+        (sum, doc) => sum + (Number(doc.data().price) || 0),
+        0,
+      );
+      const priorWithdrawals = await tx.get(
+        withdrawalsCollection
+          .where("publisherId", "==", user.uid)
+          .where("status", "in", ["PENDING", "PAID"]),
+      );
+      const alreadyWithdrawn = priorWithdrawals.docs.reduce(
+        (sum, doc) => sum + (Number(doc.data().amount) || 0),
+        0,
+      );
+      remainingBalance = availableBalance - alreadyWithdrawn;
+
+      if (amount > remainingBalance) {
+        insufficientBalance = true;
+        return;
+      }
+
+      withdrawalData = {
+        publisherId:     user.uid,
+        publisherEmail:  user.email,
+        amount,
+        method:          body.method,
+        accountDetails,
+        status:          "PENDING",
+        requestedAt:     now,
+        updatedAt:       now,
+      };
+      newDocRef = withdrawalsCollection.doc();
+      tx.set(newDocRef, withdrawalData);
+    });
+
+    if (insufficientBalance) {
       return err(`Requested amount exceeds your available balance of $${remainingBalance.toFixed(2)}`, 400);
     }
 
-    const now = FieldValue.serverTimestamp();
-    const withdrawalData = {
-      publisherId:     user.uid,
-      publisherEmail:  user.email,
-      amount,
-      method:          body.method,
-      accountDetails,
-      status:          "PENDING",
-      requestedAt:     now,
-      updatedAt:       now,
-    };
-
-    const docRef = await db.collection("withdrawals").add(withdrawalData);
-
-    return ok({ id: docRef.id, ...withdrawalData, status: "PENDING" }, 201);
+    return ok({ id: newDocRef.id, ...withdrawalData, status: "PENDING" }, 201);
   } catch (e) {
     console.error("[POST /withdrawals]", e);
     return err("Failed to submit withdrawal", 500);

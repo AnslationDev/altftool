@@ -207,7 +207,7 @@
 .hn-app *::before,
 .hn-app *::after { box-sizing: border-box; }
 
-.hn-shell { display: flex; flex-direction: column; min-height: 100vh; }
+.hn-shell { display: flex; flex-direction: column; min-height: 100dvh; }
 
 .hn-wrap {
   width: 100%;

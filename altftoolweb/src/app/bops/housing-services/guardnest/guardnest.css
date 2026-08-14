@@ -23,7 +23,7 @@
   --gn-shadow: 0 18px 40px -18px rgba(29, 92, 64, 0.25);
   --gn-shadow-soft: 0 10px 30px -12px rgba(29, 92, 64, 0.18);
 
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--gn-cream);
   color: var(--gn-ink);
   font-family: ui-rounded, "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;

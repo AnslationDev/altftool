@@ -26,14 +26,14 @@ function FooterPreview({ settings }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-[#05050d] shadow-sm">
       <div className="flex flex-col gap-3 bg-[linear-gradient(115deg,#111222,#05050d_45%,#0b0c1c)] p-8 text-white">
-        <span className="text-lg font-bold tracking-normal">ANSLIC</span>
+        <span className="text-lg font-bold tracking-normal">Campaignastra</span>
         <p className="max-w-md text-sm font-medium leading-6 text-white/80">
           {settings.tagline || DEFAULT_FOOTER_SETTINGS.tagline}
         </p>
         <p className="mt-6 text-xs font-medium text-white/50">
           {(settings.copyrightText || DEFAULT_FOOTER_SETTINGS.copyrightText).replace(
             "{siteName}",
-            "ANSLIC",
+            "Campaignastra",
           )}
         </p>
       </div>

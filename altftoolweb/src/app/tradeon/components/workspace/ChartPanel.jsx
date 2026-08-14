@@ -71,8 +71,8 @@ export default function ChartPanel({ panel, instrument, onChange, onClose, onFul
             {p.signal} {p.confidence}%
           </span>
         )}
-        <button onClick={onFullscreen} className="tdn-btn tdn-btn-icon !w-6 !h-6" aria-label="Expand panel" title="Expand panel"><Maximize2 size={12} /></button>
-        <button onClick={onClose} className="tdn-btn tdn-btn-icon !w-6 !h-6" aria-label="Close chart" title="Close"><X size={12} /></button>
+        <button onClick={onFullscreen} className="tdn-btn tdn-btn-icon !w-11 !h-11" aria-label="Expand panel" title="Expand panel"><Maximize2 size={12} /></button>
+        <button onClick={onClose} className="tdn-btn tdn-btn-icon !w-11 !h-11" aria-label="Close chart" title="Close"><X size={12} /></button>
       </div>
 
       {/* Controls */}

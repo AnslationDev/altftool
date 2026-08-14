@@ -57,7 +57,7 @@ export default function KymComments({ initialComments = EMPTY_COMMENTS, storageK
     window.localStorage.setItem(storageKey, JSON.stringify(userComments));
     setComments((current) => [...current, newComment]);
     setCommentText("");
-    setMessage("Your post is posted.");
+    setMessage("Your comment is saved on this device and is only visible to you.");
   }
 
   return (

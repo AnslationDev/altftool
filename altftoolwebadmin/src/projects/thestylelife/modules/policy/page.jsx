@@ -38,8 +38,20 @@ export function LegalDocPage({ icon: Icon, title, subtitle, successLabel, defaul
   useEffect(() => {
     const unsub = subscribe(
       (next) => {
-        setData(next);
-        setSavedData(next);
+        setSavedData((prevSaved) => {
+          setData((prevData) => {
+            const hasLocalEdits = JSON.stringify(prevData) !== JSON.stringify(prevSaved);
+            if (!hasLocalEdits) return next;
+            if (JSON.stringify(prevData) !== JSON.stringify(next)) {
+              emitAlert({
+                type: "warning",
+                message: `${successLabel} was updated elsewhere while you have unsaved changes. Your edits were kept — save to overwrite, or refresh to discard them.`,
+              });
+            }
+            return prevData;
+          });
+          return next;
+        });
         setLoading(false);
       },
       () => {

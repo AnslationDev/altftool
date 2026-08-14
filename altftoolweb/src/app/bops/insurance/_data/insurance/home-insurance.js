@@ -225,7 +225,7 @@ export const homeInsurance = {
   },
 
   seo: {
-    title: "Home Insurance — Compare Homeowners Quotes | AltFTool",
+    title: "Home Insurance — Compare Quotes | AltFTool",
     description:
       "Compare homeowners insurance quotes from top-rated insurers in minutes. Protect your home, belongings and liability — free to compare, with no obligation.",
   },

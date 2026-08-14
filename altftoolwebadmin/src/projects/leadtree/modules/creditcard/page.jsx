@@ -182,7 +182,7 @@ export default function CreditCard() {
 
         <CreditCardTable
           cards={filteredCards}
-          setcards={setcards}
+          setCards={setcards}
           setDeleteId={setDeleteId}
           openDeleteModal={() => setIsDeleteModalOpen(true)}
           selectedCards={selectedCards}

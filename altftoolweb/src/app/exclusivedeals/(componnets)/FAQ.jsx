@@ -1,29 +1,15 @@
 "use client";
 
-import { useState , useEffect } from "react";
+import { useState } from "react";
 import data from "../(data)/db.json";
-import { FAQSkeleton } from "../DealsPageSkeleton";
 
 const FAQ = () => {
   const { title, subtitle, items } = data.faq;
   const [activeIndex, setActiveIndex] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-    // ✅ FORCE LOADING
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1200); // adjust timing
-
-    return () => clearTimeout(timer);
-  }, []);
-
 
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
-
-  if (loading) return <FAQSkeleton />;
 
   return (
     <section className="section mb-8 animate-slide-up">

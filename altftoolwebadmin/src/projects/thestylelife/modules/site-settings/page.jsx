@@ -35,8 +35,20 @@ export default function ThestylelifeSiteSettingsPage() {
   useEffect(() => {
     const unsub = subscribeSiteSettings(
       (data) => {
-        setForm(data);
-        setSaved(data);
+        setSaved((prevSaved) => {
+          setForm((prevForm) => {
+            const hasLocalEdits = JSON.stringify(prevForm) !== JSON.stringify(prevSaved);
+            if (!hasLocalEdits) return data;
+            if (JSON.stringify(prevForm) !== JSON.stringify(data)) {
+              emitAlert({
+                type: "warning",
+                message: "Site settings were updated elsewhere while you have unsaved changes. Your edits were kept — save to overwrite, or refresh to discard them.",
+              });
+            }
+            return prevForm;
+          });
+          return data;
+        });
         setLoading(false);
       },
       () => {

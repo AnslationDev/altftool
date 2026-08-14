@@ -24,7 +24,6 @@ tradeon/
     format.js              Price / % / compact formatting
   hooks/
     useMarketData.js       Subscribe to the live tick stream
-    useScrolled.js         Shrink-on-scroll nav
     useTradeonTheme.js     Light/dark toggle (syncs global data-theme)
   components/
     shared/                Logo, ThemeToggle, Sparkline, AreaChart, CandleChart,

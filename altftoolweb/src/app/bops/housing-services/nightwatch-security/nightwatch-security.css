@@ -7,7 +7,7 @@
   --nw-text: #ece8e3; --nw-muted: #a89f94; --nw-radius: 14px;
   background: var(--nw-ink); color: var(--nw-text);
   font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
-  line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+  line-height: 1.6; min-height: 100dvh; overflow-x: hidden;
 }
 .nightwatch-page *, .nightwatch-page *::before, .nightwatch-page *::after { box-sizing: border-box; }
 .nightwatch-page :focus-visible { outline: 2px solid var(--nw-amber-hi); outline-offset: 3px; border-radius: 4px; }

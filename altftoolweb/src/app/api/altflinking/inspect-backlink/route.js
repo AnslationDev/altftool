@@ -27,6 +27,7 @@ function isPrivateAddress(address) {
     if (parts[0] === 127) return true;
     if (parts[0] === 169 && parts[1] === 254) return true;
     if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true;
+    if (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) return true;
     if (parts[0] === 192 && parts[1] === 168) return true;
     if (parts[0] === 0) return true;
     return false;
@@ -96,8 +97,17 @@ async function fetchPinnedFollowingRedirects(candidate, timeoutMs) {
 }
 
 export async function POST(request) {
+  // Tightened from the typical 20/min to 5/min because this route performs
+  // an attacker-directed outbound fetch + DNS lookup (SSRF-adjacent) — a
+  // stricter per-instance cap is defense-in-depth against using it to probe
+  // or amplify against arbitrary hosts. NOTE: this limiter (packages/core/
+  // src/http.js -> createTtlCache) is a per-process in-memory Map, so on a
+  // horizontally-scaled/serverless deployment (this app runs on AWS
+  // Amplify/Lambda) each warm instance enforces its own independent
+  // counter — the real aggregate ceiling across instances is higher than
+  // 5/min, not a hard global cap.
   const limited = enforceRateLimit(NextResponse, request, {
-    limit: 20,
+    limit: 5,
     scope: "altflinking:inspect-backlink",
     windowMs: 60000,
   });

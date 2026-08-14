@@ -8,8 +8,6 @@ import { storage } from "@/lib/firebaseStorage";
 const PROJECT_ID = "coozter";
 const SERVICES_DOC_PATH = ["projects", PROJECT_ID, "services", "servicesPageContent"];
 
-export const ROOT_ARRAY_SECTIONS = new Set();
-
 export const SERVICES_SECTION_TABS = [
   { key: "heroSection", label: "Hero Section" },
   { key: "serviceCategoriesSection", label: "Service Categories" },

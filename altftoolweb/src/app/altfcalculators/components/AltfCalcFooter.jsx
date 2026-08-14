@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShieldCheck, Wifi, Lock, Zap, Calculator } from "lucide-react";
+import { ShieldCheck, WifiOff, Lock, Zap, Calculator } from "lucide-react";
 import { CALCULATORS, SIDEBAR_CATEGORIES } from "../toolsData";
 
 const BASE = "/altfcalculators";
@@ -35,7 +35,7 @@ export default function AltfCalcFooter() {
             </p>
             <div className="afc-chips">
               <span className="afc-chip"><Lock size={13} /> 100% Private</span>
-              <span className="afc-chip"><Wifi size={13} /> Works Online</span>
+              <span className="afc-chip"><WifiOff size={13} /> Works Offline</span>
               <span className="afc-chip"><ShieldCheck size={13} /> No Sign-up</span>
               <span className="afc-chip"><Zap size={13} /> Instant</span>
             </div>

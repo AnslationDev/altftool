@@ -16,7 +16,11 @@ export async function verifyToken(request) {
   if (!ready) return { user: null, error: "Server not configured" };
 
   try {
-    const decoded = await auth.verifyIdToken(token);
+    // checkRevoked: true — this module gates real financial/marketplace
+    // orders, so a token that survives past an admin revoking/disabling the
+    // account must not keep working for the rest of its natural lifetime.
+    // The extra Firestore lookup this incurs is an acceptable cost here.
+    const decoded = await auth.verifyIdToken(token, true);
     return { user: decoded, error: null };
   } catch (e) {
     console.error("[altflinking/authMiddleware] verifyIdToken failed", e);
@@ -34,6 +38,26 @@ export async function getUserRole(uid) {
   } catch {
     return null;
   }
+}
+
+// True for the two roles allowed unrestricted (fail-open) access to orders
+export function isAdminRole(role) {
+  return role === "ADMIN" || role === "SUPERADMIN";
+}
+
+// Fields that are internal/admin-only and must never be exposed to the
+// BUYER or PUBLISHER on their own orders (e.g. dispute/fraud notes).
+const ADMIN_ONLY_ORDER_FIELDS = ["adminNotes", "adminApprovedBy", "adminApprovedAt"];
+
+// Strip admin-only fields from an order before it's returned to a
+// non-admin caller. Admins get the document unchanged.
+export function sanitizeOrder(order, role) {
+  if (isAdminRole(role)) return order;
+  const sanitized = { ...order };
+  for (const field of ADMIN_ONLY_ORDER_FIELDS) {
+    delete sanitized[field];
+  }
+  return sanitized;
 }
 
 // Standard error responses

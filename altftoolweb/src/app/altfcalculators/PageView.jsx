@@ -118,8 +118,12 @@ export default function AltfCalcHome() {
           <span className="afc-eyebrow">
             <span className="afc-eyebrow-dot" /> {CALCULATORS.length} free calculators · 100% private
           </span>
+          {/* The H1 named nothing the page is about ("Your life in numbers,
+              solved in seconds.") while the <title> reads "Free Online
+              Calculators — Finance, Health & Math". Same two-line shape and
+              styling, but the first line now matches the title. */}
           <h1 className="afc-hero-title">
-            Your life in numbers,{" "}<br /><em>solved in seconds.</em>
+            Free online calculators,{" "}<br /><em>answers in seconds.</em>
           </h1>
           <p className="afc-hero-sub">
             A calm, precise home for everyday maths — finance, health, conversions and more.

@@ -19,7 +19,7 @@
   color: var(--ig-text);
   font-family: var(--ig-body);
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 

@@ -8,6 +8,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Grid2x2, Link2, Maximize2, Monitor } from "lucide-react";
 import { useInView } from "../../hooks/useInView";
 import ChartPanel from "../workspace/ChartPanel";
@@ -30,6 +31,7 @@ export default function WorkspacePreview({ data = [] }) {
   const [synced, setSynced] = useState(false);
   const [panels, setPanels] = useState(() => Array.from({ length: 4 }, (_, i) => makePanel(i)));
   const [ref, inView] = useInView();
+  const router = useRouter();
 
   const bySymbol = new Map(data.map((d) => [d.symbol, d]));
   const cols = COLS[layout] || 2;
@@ -101,7 +103,7 @@ export default function WorkspacePreview({ data = [] }) {
                   density={density}
                   onChange={(patch) => updatePanel(panel.id, patch)}
                   onClose={() => closePanel(panel.id)}
-                  onFullscreen={() => {}}
+                  onFullscreen={() => router.push("/tradeon/workspace")}
                 />
               </div>
             ) : (

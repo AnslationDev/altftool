@@ -104,48 +104,6 @@
   color: var(--primary);
 }
 
-.kym-nav {
-  align-items: center;
-  display: flex;
-  height: 64px;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 1160px;
-  padding: 0 24px;
-}
-
-.kym-logo {
-  font-family: var(--font-primary);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-}
-
-.kym-nav__links {
-  display: flex;
-  gap: 26px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.kym-nav__icons {
-  display: flex;
-  gap: 12px;
-}
-
-.kym-nav__icons button {
-  align-items: center;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  display: inline-flex;
-  font-size: 22px;
-  height: 28px;
-  justify-content: center;
-  width: 28px;
-}
-
 .kym-hero {
   align-items: center;
   display: flex;
@@ -683,23 +641,6 @@ a.kym-entry-row:hover img {
   grid-column: span 2;
 }
 
-.kym-more {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  color: var(--foreground);
-  cursor: pointer;
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  margin: 24px auto 0;
-  padding: 8px 16px;
-}
-
-.kym-more:hover {
-  border-color: var(--anslation-ds-border-strong);
-}
-
 .kym-sidebar {
   display: grid;
   gap: 20px;
@@ -889,23 +830,6 @@ a.kym-entry-row:hover img {
   max-height: calc(88vh - 60px);
   object-fit: contain;
   width: 100%;
-}
-
-.kym-side-actions {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-
-.kym-side-actions a {
-  background: var(--foreground);
-  border-radius: var(--anslation-ds-radius-sm);
-  color: var(--background);
-  font-size: 12px;
-  font-weight: 800;
-  padding: 13px;
-  text-align: center;
-  text-transform: uppercase;
 }
 
 .kym-top-memes {
@@ -1150,20 +1074,6 @@ a.kym-entry-row:hover img {
 
 .kym-article-media--tall {
   max-width: 460px;
-}
-
-.kym-comment-cta {
-  align-items: center;
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  color: var(--primary);
-  display: inline-flex;
-  font-size: 13px;
-  font-weight: 800;
-  gap: 8px;
-  margin-top: 24px;
-  padding: 10px 14px;
-  text-transform: uppercase;
 }
 
 .kym-article-sidebar {
@@ -1548,10 +1458,6 @@ a.kym-entry-row:hover img {
 }
 
 @media (max-width: 720px) {
-  .kym-nav__links {
-    display: none;
-  }
-
   .kym-hero h1 {
     font-size: 34px;
   }
@@ -1756,13 +1662,3 @@ a.kym-entry-row:hover img {
   color: var(--primary);
 }
 
-[data-theme="dark"] .kym-side-actions a {
-  background: var(--foreground);
-  color: var(--background);
-}
-
-[data-theme="dark"] .kym-more {
-  background: var(--card);
-  border-color: var(--border);
-  color: var(--foreground);
-}

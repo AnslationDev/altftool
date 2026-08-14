@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { TOOLS, SIDEBAR_CATEGORIES } from "./toolsData";
-import AltfPdfPanels from "./panels";
 import { motion } from "framer-motion";
 
 const HOW_TO_STEPS = [
@@ -18,7 +17,7 @@ const HOW_TO_STEPS = [
   },
   {
     title: "Download",
-    text: "Your new document will be ready to download immediately. After the download is complete, any remaining files uploaded will be purged from our server."
+    text: "Your new document will be ready to download immediately. Nothing is uploaded, so there's nothing left on a server to clean up."
   }
 ];
 
@@ -29,18 +28,18 @@ const FEATURE_ITEMS = [
     paths: ["M9 8h18l8 8v24H9z", "M27 8v10h10", "M15 25h16", "M15 31h18"]
   },
   {
-    title: "Start a free trial",
-    text: "With a free trial of our online PDF converter, you can convert files to and from PDF for free, or sign up for one of our memberships for limitless access to our file converter's full suite of tools.",
+    title: "Free, with no sign-up",
+    text: "Every tool in this suite is free to use, with no account, trial, or subscription required — just open a tool and start converting.",
     paths: ["M24 7l4.8 10.5 11.2 1.3-8.2 7.7 2.2 11-10-5.6-10 5.6 2.2-11L8 18.8l11.2-1.3z"]
   },
   {
-    title: "Encrypted files",
-    text: "We care about the privacy of your data. 256-bit SSL Encryption of all your files means that your files, documents, and data are secure.",
+    title: "Nothing ever leaves your device",
+    text: "Every conversion runs locally in your browser. Your files are never uploaded to a server, so there's nothing for us — or anyone else — to see, store, or secure.",
     paths: ["M14 21v-5a10 10 0 0 1 20 0v5", "M11 21h26v18H11z", "M24 28v5"]
   },
   {
-    title: "Automatic deletion of your files",
-    text: "After you convert a document to PDF, you'll be able to download and delete your files from our servers. Forgotten files are removed automatically after three hours.",
+    title: "No accounts, no retention",
+    text: "There's no server-side storage to worry about. Close the tab and your files and data are gone — there was never a copy anywhere but your own device.",
     paths: ["M15 16h18", "M19 16v-5h10v5", "M17 20l1.4 19h11.2L31 20", "M22 24v11", "M26 24v11"]
   },
   {
@@ -115,9 +114,13 @@ export default function AltfPdfHomepage() {
           ))}
         </div>
         <div className="altf-navbar-actions">
-          <button className="altf-signin" type="button" suppressHydrationWarning>Sign In</button>
-          <button className="altf-signup" type="button" onClick={() => router.push(getToolLink("merge-pdf"))} suppressHydrationWarning>
-            Sign Up
+          <button
+            className="altf-signup"
+            type="button"
+            onClick={() => router.push(getToolLink("merge-pdf"))}
+            suppressHydrationWarning
+          >
+            Get started
           </button>
         </div>
       </header>
@@ -250,17 +253,6 @@ export default function AltfPdfHomepage() {
           ))}
         </div>
       </section>
-
-      {/* HIDDEN WRAPPERS FOR APP.JS ENGINE COMPATIBILITY */}
-      <div style={{ display: "none" }}>
-        <aside id="sidebar"></aside>
-        <div id="panel-home">
-          {TOOLS.map((t) => (
-            <div key={t.slug} className="home-card" data-goto={t.panelId}></div>
-          ))}
-        </div>
-        <AltfPdfPanels activePanelId={null} />
-      </div>
     </div>
   );
 }

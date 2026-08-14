@@ -1,4 +1,4 @@
-import { CategoryView } from "../../../components/community/Views";
+import { SubcategoryView } from "../../../components/community/Views";
 import { buildAltfWorldMetadata, formatAltfWorldSlug } from "../../../seo";
 
 export async function generateMetadata({ params }) {
@@ -11,10 +11,12 @@ export async function generateMetadata({ params }) {
     description: `Explore AltfWorld ${subcategoryLabel.toLowerCase()} conversations inside the ${categoryLabel.toLowerCase()} forum category.`,
     path: `/altfworld/forums/${category}/${subcategory}`,
     keywords: [categoryLabel, subcategoryLabel, "AltfWorld threads"],
+    // Procedurally generated mock-data listing page — keep it out of search results.
+    noindex: true,
   });
 }
 
 export default async function SubcategoryPage({ params }) {
-  const { category } = await params;
-  return <CategoryView slug={category} />;
+  const { category, subcategory } = await params;
+  return <SubcategoryView categorySlug={category} subcategorySlug={subcategory} />;
 }

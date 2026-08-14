@@ -582,6 +582,8 @@ export default function KnifeHitGame() {
                         width={canvasSize.width}
                         height={canvasSize.height}
                         className="w-full h-full rounded-full cursor-pointer touch-none drop-shadow-2xl"
+                        role="application"
+                        aria-label="Knife Hit game canvas. Click, tap, or press Space to throw a knife into the spinning log. Never hit another knife."
                         style={{ filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.5))' }}
                     />
 

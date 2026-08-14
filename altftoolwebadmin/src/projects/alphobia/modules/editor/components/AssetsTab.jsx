@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { uploadAsset, getFullDummyData } from "@/projects/alphobia/services/alphobiaService";
+import { uploadAsset, deleteAsset, getFullDummyData } from "@/projects/alphobia/services/alphobiaService";
 import { emitAlert } from "@/lib/alertBus";
-import { Loader2, UploadCloud, Copy, Check } from "lucide-react";
+import { Loader2, UploadCloud, Copy, Check, Trash2 } from "lucide-react";
 import ImagePreviewModal from "@/projects/alphobia/components/ImagePreviewModal";
 
 export default function AssetsTab() {
@@ -10,6 +10,7 @@ export default function AssetsTab() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [deletingPath, setDeletingPath] = useState(null);
   const [activeSubTab, setActiveSubTab] = useState("media"); // "media" or "json"
 
   // Standard dummy images inventory from the client frontend
@@ -58,6 +59,25 @@ export default function AssetsTab() {
     setCopiedIndex(idx);
     emitAlert({ type: "info", message: "URL copied to clipboard!" });
     setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
+  /** Delete a session-uploaded file from Firebase Storage. Only applies to
+   * files uploaded through this tab (uploadedFiles) — the Default Media Asset
+   * Registry below is a reference catalog of static frontend/CDN images, not
+   * Storage objects this panel owns, so it has no delete affordance. */
+  const handleDeleteFile = async (file, idx) => {
+    if (!window.confirm(`Permanently delete "${file.name}" from Firebase Storage?`)) return;
+    setDeletingPath(file.path);
+    try {
+      await deleteAsset(file.path);
+      setUploadedFiles((prev) => prev.filter((_, i) => i !== idx));
+      emitAlert({ type: "success", message: "File deleted from Firebase Storage." });
+    } catch (err) {
+      console.error(err);
+      emitAlert({ type: "error", message: "Failed to delete file." });
+    } finally {
+      setDeletingPath(null);
+    }
   };
 
   const fullJsonReference = JSON.stringify(getFullDummyData(), null, 2);
@@ -124,7 +144,7 @@ export default function AssetsTab() {
               </label>
             </div>
             {uploading && (
-              <div className="w-full max-w-xs h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className="w-full max-w-xs h-1.5 bg-[var(--surface-soft)] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[var(--primary)] transition-all duration-300"
                   style={{ width: `${uploadProgress}%` }}
@@ -145,7 +165,7 @@ export default function AssetsTab() {
                         type="button"
                         onClick={() => setPreviewImg(file.url)}
                         title="Click to view full image"
-                        className="h-10 w-10 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                        className="h-10 w-10 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                       >
                         <img src={file.url} alt={file.name} className="w-full h-full object-cover" />
                       </button>
@@ -154,17 +174,33 @@ export default function AssetsTab() {
                         <p className="text-[10px] text-[var(--muted)]">Uploaded at {file.date}</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(file.url, `uploaded-${idx}`)}
-                      className="btn btn-outline py-1 px-3 text-xs flex items-center gap-1 shrink-0"
-                    >
-                      {copiedIndex === `uploaded-${idx}` ? (
-                        <Check className="h-3.5 w-3.5 text-green-500" />
-                      ) : (
-                        <Copy className="h-3.5 w-3.5" />
-                      )}
-                      Copy URL
-                    </button>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => copyToClipboard(file.url, `uploaded-${idx}`)}
+                        className="btn btn-outline py-1 px-3 text-xs flex items-center gap-1"
+                      >
+                        {copiedIndex === `uploaded-${idx}` ? (
+                          <Check className="h-3.5 w-3.5 text-green-500" />
+                        ) : (
+                          <Copy className="h-3.5 w-3.5" />
+                        )}
+                        Copy URL
+                      </button>
+                      <button
+                        type="button"
+                        title="Delete from Firebase Storage"
+                        disabled={deletingPath === file.path}
+                        onClick={() => handleDeleteFile(file, idx)}
+                        className="btn btn-danger py-1 px-3 text-xs flex items-center gap-1 disabled:opacity-50"
+                      >
+                        {deletingPath === file.path ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-3.5 w-3.5" />
+                        )}
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -182,7 +218,7 @@ export default function AssetsTab() {
                       type="button"
                       onClick={() => setPreviewImg(img.url)}
                       title="Click to view full image"
-                      className="h-28 w-full rounded border border-[var(--border)] overflow-hidden bg-slate-100 relative block hover:opacity-85 transition cursor-pointer"
+                      className="h-28 w-full rounded border border-[var(--border)] overflow-hidden bg-[var(--surface-soft)] relative block hover:opacity-85 transition cursor-pointer"
                     >
                       <img src={img.url} alt={img.name} className="w-full h-full object-cover" />
                     </button>

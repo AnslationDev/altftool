@@ -39,10 +39,25 @@ export default function AltfCalcToolPage() {
     }
   }, [activeTool, toolSlug, router, getToolLink]);
 
+  // Only reachable for a slug that is not in CALCULATORS — `activeTool` is
+  // resolved synchronously, so a real calculator never renders this. It said
+  // "Loading calculator…" and shipped no heading and no link, which is what an
+  // unknown slug served to a crawler while the effect above redirected the
+  // browser. Name the state and leave a crawlable way back.
   if (!activeTool) {
     return (
       <div className="afc-loading">
-        <p>Loading calculator…</p>
+        <h1>Calculator not found</h1>
+        <p>
+          This calculator does not exist.{" "}
+          {/* Not getToolLink("") — that ends in a slash, and
+              /altfcalculators/ 308s to /altfcalculators (verified live), so the
+              crawler would pay a hop before reaching the hub. */}
+          <Link href={isSubdir ? "/altfcalculators" : "/"}>
+            Browse all AltFTool calculators
+          </Link>
+          .
+        </p>
       </div>
     );
   }

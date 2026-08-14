@@ -421,6 +421,85 @@ service cloud.firestore {
       allow write: if isActiveAdmin();
     }
 
+    // The blocks below cover carrerbook collections that navbar.service.js,
+    // blog.service.js, policy.service.js, terms.service.js, events.service.js,
+    // and clientRequests.service.js read/write but that had no explicit rule
+    // block. Without them the generic
+    // `match /projects/{projectId}/{document=**} { allow read, write: if
+    // isActiveAdmin(); }` catch-all further down makes this content
+    // admin-only for both read and write, so the public CareerBook site can
+    // never render it and advertiser/publisher signups always fail with
+    // permission-denied — mirrors the anslic/infodrif pattern above.
+    match /projects/carrerbook/navbar/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/navbarItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // Blog content lives in a current collection pair plus two legacy names
+    // that blog.service.js still merges for backward compatibility
+    // (subscribeMergedCollections over CATEGORY_COLLECTIONS/ARTICLE_COLLECTIONS).
+    match /projects/carrerbook/blog-category/{categoryId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/blog-articles/{articleId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/blogCategories/{categoryId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/blogArticles/{articleId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/policy/privacy-policy {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/terms/terms-conditions {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/event/events {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // Advertiser/publisher signup requests (clientRequests.service.js) are
+    // private submissions, not public content, so — unlike the blocks above —
+    // they are NOT world-readable. Anonymous create with strict field
+    // validation; reading/managing submissions is admin-only, mirroring the
+    // carrerbook/contactLeads pattern above. Field list matches what
+    // normalizeClientRequest() in clientRequests.service.js reads back.
+    match /projects/carrerbook/user/advertiser/users/{userId} {
+      allow create: if hasOnly(["fullName", "companyName", "email", "phoneNumber", "country", "message", "status", "role", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.fullName, 120) &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/user/publishers/users/{userId} {
+      allow create: if hasOnly(["fullName", "companyName", "email", "phoneNumber", "country", "message", "status", "role", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.fullName, 120) &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
     // Anslic tenant — public marketing site content, admin-managed.
     match /projects/anslic/navbar/settings {
       allow read: if true;
@@ -501,6 +580,94 @@ service cloud.firestore {
     // validation; reading/managing is admin-only. Mirrors the coozter/leads
     // pattern above.
     match /projects/anslic/contactLeads/{leadId} {
+      allow create: if hasOnly(["name", "email", "phone", "service", "message", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    // Campaignastra tenant — public marketing site content, admin-managed.
+    match /projects/campaignastra/navbar/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/navbarItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/footer/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/stats/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/homesection/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /items/{itemId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/campaignastra/about/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /items/{itemId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/campaignastra/services/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/serviceItems/{serviceId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/team/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/teamMembers/{memberId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/blog/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/campaignastra/contact/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // Campaignastra contact-form leads — anonymous create with strict field
+    // validation; reading/managing is admin-only. Mirrors the anslic/leads
+    // pattern above.
+    match /projects/campaignastra/contactLeads/{leadId} {
       allow create: if hasOnly(["name", "email", "phone", "service", "message", "status", "createdAt"]) &&
         request.resource.data.status == "new" &&
         nonEmptyText(request.resource.data.name, 120) &&
@@ -1436,6 +1603,299 @@ service cloud.firestore {
     match /projects/anternet/{document=**} {
       allow read: if true;
       allow write: if isActiveAdmin();
+    }
+
+    // My Lucky Deals is a public deals/coupons marketing site backed by
+    // admin-managed CMS data — deals, categories, stores, coupons, blogs,
+    // faqs, hero, ads, featuredOffers, collections, and settings/{docId}, all
+    // addressed via projects/myluckydeal/<collection> per lib/firebase.js's
+    // colRef()/docRef() helpers (see src/projects/myluckydeal/README.md).
+    // Keep reads public while retaining active-admin-only writes — mirrors
+    // the Anternet pattern above.
+    match /projects/myluckydeal/{document=**} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Alphobia — public marketing site content, admin-managed. Content
+    // collections/docs are world-readable so the public Alphobia site can
+    // render them; writes are admin-only. Contact leads are NOT
+    // world-readable: anonymous create with strict validation, admin-only
+    // read/manage. Paths mirror alphobiaService.js's col()/docRef() helpers
+    // (projects/alphobia/pageData/{home,about,services,stats,contact},
+    // caseStudies, insights, industries, team, testimonials).
+    match /projects/alphobia/pageData/{pageId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/alphobia/caseStudies/{caseStudyId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/alphobia/insights/{insightId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/alphobia/industries/{industryId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/alphobia/team/{memberId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/alphobia/testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    // Contact-form leads — anonymous validated create; admin-only read/manage.
+    // Mirrors the offerhoppr/anslic contactLeads pattern above.
+    match /projects/alphobia/contactLeads/{leadId} {
+      allow create: if hasOnly(["name", "email", "phone", "company", "subject", "message", "status", "submittedAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // ExclusInsider — public marketing/editorial site. All content
+    // docs/collections are world-readable; writes are admin-only. Paths
+    // mirror the exclusinsider/modules/*/service/*.js PROJECT_ID-scoped
+    // path constants (modeled on dealnbook's precedent above). No
+    // lead-capture module is in scope, so there are no anonymous-create
+    // collections here.
+    // ---------------------------------------------------------------------
+    match /projects/exclusinsider/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/navbar/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/navbarPrimary/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/footerQuickLinks/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/footerResources/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/homeHeroCredentials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/homeTrustedLogos/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/homeStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/homeAboutPoints/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/homeWhyItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/team/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/blogArticles/{articleId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/aboutValues/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/aboutTimeline/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/aboutStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/contactOffices/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/exclusinsider/legal/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Marketys — public performance-marketing agency site with booking and
+    // contact lead capture. All content docs/collections are world-readable
+    // (server-rendered via Firestore REST) and admin-writable. Bookings and
+    // contact submissions allow anonymous validated create so the public
+    // booking/contact forms work; reading/managing them is admin-only.
+    // Paths mirror src/projects/marketys/modules/*/page.jsx's
+    // COLLECTION/HERO_COLLECTION/CONFIG_COLLECTION constants (about, home,
+    // blogs, blog hero, bookings(-page), contacts/contact-page, reviews(-page),
+    // services(-page), team, pages, footer, header).
+    // ---------------------------------------------------------------------
+    match /projects/marketys/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/blogs/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/bookings-page/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    // Booking-form requests — anonymous validated create; admin-only read/manage.
+    match /projects/marketys/bookings/{bookingId} {
+      allow create: if hasOnly(["name", "email", "date", "time", "message", "createdAt"]) &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+    match /projects/marketys/contact-page/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    // Contact-form submissions — anonymous validated create; admin-only read/manage.
+    match /projects/marketys/contacts/{contactId} {
+      allow create: if hasOnly(["name", "email", "company", "budget", "date", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+    match /projects/marketys/reviews/{reviewId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/reviews-page/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/services/{serviceId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/services-page/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/team/{memberId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/pages/{pageId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/marketys/header/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Smart Lucky — public marketing site content, admin-managed. Modules
+    // are stored as single documents (collectionService.js's
+    // getModuleDocRef() → projects/smartlucky/<module>/content;
+    // siteSettingsService.js → projects/smartlucky/settings/site, shared by
+    // the home/about/resources/contact page editors). Content is
+    // world-readable so the public site can render it; writes are
+    // admin-only. Blogs are world-readable, admin-writable, per
+    // blogsService.js's SMARTLUCKY_BLOGS_COLLECTION. Contact submissions are
+    // one mutable document holding an `items` array — addContactSubmission()
+    // in contactSubmissionsService.js reads the current list then writes
+    // the whole array back. Firestore rules can't safely express "anonymous
+    // callers may only append one well-formed item and can't touch the
+    // rest" for an array-in-a-single-doc shape (no array-slice/diff
+    // primitive), so unlike the hasOnly-validated per-lead "create" pattern
+    // used by other tenants (see Marketys above), this doc stays
+    // admin-only for both read and write. The anonymous contact form
+    // cannot currently write here via direct Firestore access — same class
+    // of gap as alphobia's contacts integration — and needs its own
+    // properly-scoped fix (e.g. a per-lead `contactSubmissions/{id}`
+    // collection with anonymous create, matching every other tenant).
+    // ---------------------------------------------------------------------
+    match /projects/smartlucky/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/smartlucky/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/smartlucky/solutions/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/smartlucky/platforms/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/smartlucky/blogs/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/smartlucky/contact/submissions {
+      allow read, write: if isActiveAdmin();
     }
 
     match /projects/{projectId}/{document=**} {

@@ -206,6 +206,7 @@ export async function createCardPost(payload) {
         
     } catch (err) {
         console.error("❌ FIRESTORE ERROR:", err);
+        throw err; // ✅ re-throw so caller knows it failed
     }
 
     return refDoc;

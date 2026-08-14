@@ -298,7 +298,7 @@ export default function AboutTab() {
                 <button
                   type="button"
                   onClick={() => removeTimelineItem(idx)}
-                  className="text-red-500 hover:text-red-700 transition"
+                  className="text-[var(--danger)] hover:opacity-80 transition"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -359,12 +359,12 @@ export default function AboutTab() {
                 <button
                   type="button"
                   onClick={() => removeMember(member.id, idx)}
-                  className="text-red-500 hover:text-red-700 transition"
+                  className="text-[var(--danger)] hover:opacity-80 transition"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
               </div>
-              <div className="flex-shrink-0 w-24 h-32 rounded border border-[var(--border)] overflow-hidden bg-slate-200">
+              <div className="flex-shrink-0 w-24 h-32 rounded border border-[var(--border)] overflow-hidden bg-[var(--surface-soft)]">
                 <button
                   type="button"
                   onClick={() => setPreviewImg(member.img || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=750&q=80")}
@@ -449,7 +449,7 @@ export default function AboutTab() {
                 <button
                   type="button"
                   onClick={() => removeTestimonial(test.id, idx)}
-                  className="text-red-500 hover:text-red-700 transition"
+                  className="text-[var(--danger)] hover:opacity-80 transition"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
