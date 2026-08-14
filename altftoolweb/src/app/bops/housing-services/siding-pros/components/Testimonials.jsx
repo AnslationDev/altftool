@@ -2,48 +2,52 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 
+/**
+ * Fixed here for the same reason as src/app/siding/components/Testimonials.jsx,
+ * which this file was a copy of: it rendered five fabricated named reviews —
+ * Jessica Hartman (Naples, FL), Marcus Williams (Denver, CO), Priya & Daniel
+ * Shah (Austin, TX), Eleanor Whitfield (Boston, MA), Carlos Mendoza (Phoenix,
+ * AZ) — with stock Unsplash portraits standing in for real customers. See
+ * docs/BACKLINK_EXECUTION_KIT.md ("STOP — read before promoting anything").
+ *
+ * This component isn't rendered — see the comment in ../App.jsx — but it's
+ * kept as a scaffold for whenever there are real reviews, given with
+ * permission. That only holds if the placeholder data below never reads as a
+ * real person's endorsement, so it's generic copy and initials in place of a
+ * name, quote and stock photo.
+ */
 const items = [
   {
-    name: "Jessica Hartman",
-    location: "Naples, FL",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
+    name: "Example Reviewer",
+    location: "Sample City, ST",
     review:
-      "EliteShield transformed our coastal home into something out of a magazine. The crew was punctual, immaculate, and walked us through every detail. Our energy bill dropped 19% the first month.",
-    project: "Insulated Fiber Cement Install",
+      "Placeholder review text showing how a homeowner testimonial displays in this carousel. Swap in a real review once a customer has given permission.",
+    project: "Example Project Type",
   },
   {
-    name: "Marcus Williams",
-    location: "Denver, CO",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    name: "Example Reviewer",
+    location: "Sample City, ST",
     review:
-      "After three quotes, EliteShield was the only company that treated our home like their own. Two storms later, not a single panel has budged. Genuinely the best contractor we've worked with.",
-    project: "Vinyl Siding Replacement",
+      "A second placeholder entry, to demonstrate the carousel rotating between reviews. Not a real customer or a real quote.",
+    project: "Example Project Type",
   },
   {
-    name: "Priya & Daniel Shah",
-    location: "Austin, TX",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
+    name: "Example Reviewer",
+    location: "Sample City, ST",
     review:
-      "The project manager texted us photos every single day. Finished two days ahead of schedule and the warranty paperwork was registered before they pulled out of the driveway. Five stars.",
-    project: "Modern Farmhouse Composite",
-  },
-  {
-    name: "Eleanor Whitfield",
-    location: "Boston, MA",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-    review:
-      "Restoring a 1908 Victorian is no small task. EliteShield matched our historic trim profiles perfectly and the inspector said it's the cleanest envelope she has ever seen. Highly recommend.",
-    project: "Heritage Restoration",
-  },
-  {
-    name: "Carlos Mendoza",
-    location: "Phoenix, AZ",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-    review:
-      "Professional from quote to cleanup. They protected our landscaping, used drop cloths everywhere, and the foreman did a final walkthrough that caught two tiny details I would have missed.",
-    project: "Composite Siding Install",
+      "A third placeholder entry. Replace all of these with genuine, permissioned reviews before this component is ever re-enabled.",
+    project: "Example Project Type",
   },
 ];
+
+const initialsOf = (name) =>
+  name
+    .split(" ")
+    .map((part) => part[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
 export default function Testimonials() {
   const [idx, setIdx] = useState(0);
@@ -70,11 +74,14 @@ export default function Testimonials() {
           className="text-center max-w-3xl mx-auto mb-14"
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00AEEF]/10 text-[#0D3B66] text-xs font-bold tracking-wider uppercase mb-4">
-            Customer Reviews
+            Sample Reviews
           </div>
           <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-[#0D3B66] leading-tight">
-            Loved by 10,000+ Homeowners
+            Illustrative Homeowner Feedback
           </h2>
+          <p className="mt-4 text-sm font-semibold text-slate-500">
+            Example reviews for this demo template — not real customers.
+          </p>
         </motion.div>
 
         <div
@@ -101,7 +108,12 @@ export default function Testimonials() {
                 "{cur.review}"
               </blockquote>
               <div className="mt-8 flex items-center gap-4">
-                <img src={cur.avatar} alt={cur.name} className="w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md" />
+                <div
+                  aria-hidden="true"
+                  className="w-14 h-14 rounded-full bg-gradient-to-br from-[#0D3B66] to-[#00AEEF] text-white flex items-center justify-center font-display font-bold text-lg ring-2 ring-white shadow-md"
+                >
+                  {initialsOf(cur.name)}
+                </div>
                 <div>
                   <div className="font-bold text-[#0D3B66]">{cur.name}</div>
                   <div className="text-sm text-slate-500">{cur.location} • {cur.project}</div>
