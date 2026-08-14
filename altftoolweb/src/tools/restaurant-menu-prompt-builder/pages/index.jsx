@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, UtensilsCrossed } from "lucide-react";
 
 import {
@@ -52,6 +52,13 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const setField = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -83,7 +90,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
@@ -187,7 +195,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="menu-ingredients">
-              Ingredients — one dish per line, comma separated
+              Ingredients — comma or line separated
             </label>
             <textarea
               id="menu-ingredients"
@@ -197,7 +205,9 @@ export default function ToolHome() {
               onChange={setField("ingredientsRaw")}
             />
             <p className={HINT_CLASS}>
-              Include stocks, oils, thickeners and garnishes. The screen only sees what you type.
+              Include stocks, oils, thickeners and garnishes. Every line is pooled into one shared
+              ingredient list for the allergen screen and prompt — it is not kept per dish. The screen
+              only sees what you type.
             </p>
           </div>
         </div>
@@ -307,7 +317,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Allergen groups flagged
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {failed
                 ? DASH
                 : `${stat(result.stats.allergensDetected)} / ${stat(result.stats.allergensInRegime)}`}
@@ -397,7 +411,10 @@ export default function ToolHome() {
         {!failed && (
           <div className="mt-5">
             <h3 className="text-sm font-semibold">Generated prompt</h3>
-            <pre className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-md bg-[var(--background)] p-3 text-xs leading-6 text-[var(--foreground)] ring-1 ring-[var(--border)]">
+            <pre
+              className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-md bg-[var(--background)] p-3 text-xs leading-6 text-[var(--foreground)] ring-1 ring-[var(--border)]"
+              aria-live="polite"
+            >
               {result.prompt}
             </pre>
           </div>

@@ -14980,7 +14980,7 @@ export const toolMetaMap = {
   },
   "inr-myr-mental-math-cheat-sheet": {
     "name": "INR to MYR Mental Math Cheat Sheet",
-    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a printable price ladder.",
+    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a price ladder to memorise.",
     "category": "Finance Calculators",
     "icon": "calculator",
     "iconColor": "text-[var(--primary)]"

@@ -106,7 +106,7 @@ export const ALLERGEN_KEYWORDS = {
   Celery: ["celery", "celeriac"],
   Mustard: ["mustard", "sarson", "rai", "kasundi", "dijon"],
   "Sesame seeds": ["sesame", "til", "tahini", "gingelly", "hummus", "halva"],
-  "Sulphur dioxide and sulphites": ["sulphite", "sulfite", "sulphur dioxide", "dried apricot", "wine", "vinegar (sulphited)"],
+  "Sulphur dioxide and sulphites": ["sulphite", "sulfite", "sulphur dioxide", "dried apricot", "wine", "sulphited", "sulfited"],
   Lupin: ["lupin", "lupine"],
   Molluscs: ["mussel", "oyster", "clam", "squid", "calamari", "octopus", "scallop", "snail"],
 };
@@ -120,6 +120,35 @@ const REGIME_ALIASES = {
 };
 
 const canonicalName = (label) => REGIME_ALIASES[label] || label;
+
+/**
+ * Regular-English plural of a single normalized (lowercase, space-separated)
+ * token, or null if it already looks plural / isn't a plain alphabetic word.
+ * Deliberately conservative: only handles the standard -s / -es / consonant+y
+ * -> -ies rules, so it never invents a form for words it isn't sure about.
+ */
+function pluralizeToken(token) {
+  if (!/^[a-z]+$/.test(token) || token.endsWith("s")) return null;
+  if (/(?:x|z|ch|sh)$/.test(token)) return `${token}es`;
+  if (/[^aeiou]y$/.test(token)) return `${token.slice(0, -1)}ies`;
+  return `${token}s`;
+}
+
+/**
+ * A keyword and its plural form (only the final word of multi-word phrases
+ * is pluralized, e.g. "brazil nut" -> "brazil nuts"). Fixes plain ingredient
+ * plurals ("eggs", "prawns", "mussels", "almonds") failing to match their
+ * singular keyword under the whole-word boundary check below.
+ */
+function keywordVariants(word) {
+  const normalized = word.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const tokens = normalized.split(" ");
+  const last = tokens[tokens.length - 1];
+  const pluralLast = pluralizeToken(last);
+  const variants = [normalized];
+  if (pluralLast) variants.push([...tokens.slice(0, -1), pluralLast].join(" "));
+  return variants;
+}
 
 export const PRICING_TONES = [
   { id: "plain", label: "Plain numerals", note: "Price as a bare number, no currency symbol, no trailing zeros." },
@@ -180,7 +209,9 @@ export function screenAllergens(text, regimeId = "eu") {
   for (const label of regime.allergens) {
     const key = canonicalName(label);
     const keywords = ALLERGEN_KEYWORDS[key] || [];
-    const matches = keywords.filter((word) => haystack.includes(` ${word.toLowerCase().replace(/[^a-z0-9]+/g, " ")} `));
+    const matches = keywords.filter((word) =>
+      keywordVariants(word).some((variant) => haystack.includes(` ${variant} `))
+    );
     if (matches.length > 0) detected.push({ allergen: label, matches });
     else notDetected.push(label);
   }
@@ -220,6 +251,9 @@ export function buildMenuPrompt({
   if (ingredients.length === 0) {
     return { error: "List the key ingredients so the allergen screen has something to check." };
   }
+  // parseList silently caps at 120 items; detect an overflow (unlike dishes,
+  // which get a hard error above 60) by re-parsing with one extra slot open.
+  const ingredientsTruncated = ingredients.length >= 120 && parseList(ingredientsRaw, { limit: 121 }).length > 120;
 
   if (
     !Number.isFinite(descriptionWords) ||
@@ -233,6 +267,9 @@ export function buildMenuPrompt({
   const screen = screenAllergens(`${dishesRaw} ${ingredientsRaw}`, regimeId);
 
   const warnings = [];
+  if (ingredientsTruncated) {
+    warnings.push("Ingredient list was cut off at 120 items. Trim the list or split it into more than one run so nothing past the 120th ingredient is silently dropped.");
+  }
   if (screen.detected.length === 0) {
     warnings.push("No allergen keywords matched. That is unusual for a full menu — check the ingredient list is complete before relying on it.");
   }

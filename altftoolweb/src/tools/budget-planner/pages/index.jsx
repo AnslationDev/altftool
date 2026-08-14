@@ -4,9 +4,7 @@ import { useState, useCallback } from "react";
 import {
   PieChart,
   Calculator,
-  Info,
   RefreshCw,
-  Download,
   TrendingUp,
 } from "lucide-react";
 
@@ -45,7 +43,7 @@ export default function BudgetPlanner() {
             </div>
 
             {/* Results */}
-            <ResultsPanel result={result} showDetails={showDetails} slug={SLUG} name={NAME} />
+            <ResultsPanel result={result} showDetails={showDetails} setShowDetails={setShowDetails} slug={SLUG} name={NAME} />
           </div>
         </div>
 
@@ -99,7 +97,7 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
     <>
       {fields.map((field) => (
         <div key={field.key}>
-          <label className="mb-1.5 block text-sm font-semibold text-(--foreground)">
+          <label htmlFor={`bp-${field.key}`} className="mb-1.5 block text-sm font-semibold text-(--foreground)">
             {field.label}
           </label>
           <div className="relative">
@@ -109,6 +107,7 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
               </span>
             )}
             <input
+              id={`bp-${field.key}`}
               type="number"
               value={form[field.key] ?? ""}
               onChange={(e) => handleChange(field.key, e.target.value)}
@@ -154,7 +153,7 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
   );
 }
 
-function ResultsPanel({ result, showDetails, slug, name }) {
+function ResultsPanel({ result, showDetails, setShowDetails, slug, name }) {
   if (!result) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-(--border) bg-(--background)/50 p-8 text-center">
@@ -170,7 +169,7 @@ function ResultsPanel({ result, showDetails, slug, name }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" aria-live="polite" role="status">
       {result.primary !== undefined && (
         <div className="rounded-xl bg-(--primary)/5 border border-(--primary)/10 p-6 text-center">
           <p className="text-sm font-medium text-(--muted-foreground) mb-1">{result.primaryLabel || "Result"}</p>
@@ -229,7 +228,7 @@ function ResultsPanel({ result, showDetails, slug, name }) {
           {result.summaryItems.map((item, i) => (
             <div key={i} className="rounded-xl border border-(--border) bg-(--background)/50 p-4">
               <p className="text-xs font-medium text-(--muted-foreground)">{item.label}</p>
-              <p className="mt-1 text-lg font-bold text-(--foreground)">{formatCurrency(item.value)}</p>
+              <p className="mt-1 text-lg font-bold text-(--foreground)">{typeof item.value === "number" ? formatCurrency(item.value) : item.value}</p>
             </div>
           ))}
         </div>
@@ -333,6 +332,7 @@ function getFormFields(slug) {
       { key: "insurance", label: "Insurance", prefix: "₹", suffix: null, placeholder: "3000" },
       { key: "entertainment", label: "Entertainment", prefix: "₹", suffix: null, placeholder: "3000" },
       { key: "savings", label: "Savings & Investments", prefix: "₹", suffix: null, placeholder: "10000" },
+      { key: "other", label: "Other Expenses", prefix: "₹", suffix: null, placeholder: "5000" },
     ],
     "savings-goal-calculator": [
       { key: "target", label: "Target Amount", prefix: "₹", suffix: null, placeholder: "1000000" },
@@ -457,10 +457,6 @@ function getExtraControls(slug, form, setForm) {
       </label>
     );
   }
-  return null;
-}
-
-function getExtraControls2(slug, form, setForm) {
   return null;
 }
 
@@ -691,7 +687,7 @@ function computeResult(slug, form) {
           { label: "Monthly Income", value: Math.round(income) },
           { label: "Total Expenses", value: Math.round(expenses) },
           { label: remaining >= 0 ? "Surplus" : "Deficit", value: Math.round(Math.abs(remaining)) },
-          { label: "Savings Rate", value: income > 0 ? Math.round((remaining / income) * 100) + "%" : "0%" },
+          { label: "Leftover Rate", value: income > 0 ? Math.round((remaining / income) * 100) + "%" : "0%" },
         ],
       };
     }
@@ -964,6 +960,8 @@ function FAQSection({ slug, name }) {
           >
             <button
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              aria-expanded={openIndex === i}
+              aria-controls={`bp-faq-panel-${i}`}
               className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-semibold text-(--foreground) transition hover:bg-(--muted)/20"
             >
               {faq.q}
@@ -975,7 +973,7 @@ function FAQSection({ slug, name }) {
               </svg>
             </button>
             {openIndex === i && (
-              <div className="border-t border-(--border) px-5 py-4 text-sm leading-relaxed text-(--muted-foreground)">
+              <div id={`bp-faq-panel-${i}`} className="border-t border-(--border) px-5 py-4 text-sm leading-relaxed text-(--muted-foreground)">
                 {faq.a}
               </div>
             )}

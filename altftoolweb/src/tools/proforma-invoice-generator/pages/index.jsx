@@ -114,7 +114,7 @@ export default function ToolHome() {
     [issueDate, validityDays],
   );
 
-  const hasError = Boolean(totals.error);
+  const hasError = Boolean(totals.error) || Boolean(validity.error);
   const proformaNumber = buildProformaNumber(prefix, issueDate, toNumber(sequence));
   const words = hasError ? "" : amountInWords(totals.grandTotal, currencyMeta.unit, currencyMeta.subunit);
 
@@ -603,11 +603,15 @@ export default function ToolHome() {
           role="alert"
           className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
         >
-          {totals.error}
+          {totals.error || validity.error}
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -617,7 +621,7 @@ export default function ToolHome() {
               {hasError ? DASH : money(totals.grandTotal)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {hasError ? "Fix the line items to see a total." : words}
+              {hasError ? "Fix the error above to see a total." : words}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ClipboardCheck, Copy, RotateCcw } from "lucide-react";
 
 import {
   PAPERS,
   QUALIFYING_PERCENT,
+  RESERVED_MARKS_COMMONLY_QUOTED,
   TOTAL_MARKS,
   scoreCtet,
   sectionsFor,
@@ -41,6 +42,9 @@ export default function ToolHome() {
   const [category, setCategory] = useState(DEFAULTS.category);
   const [responses, setResponses] = useState(DEFAULT_RESPONSES);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const sections = sectionsFor(paper, track);
 
@@ -87,7 +91,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -234,7 +239,12 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -263,7 +273,6 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the CTET score result"
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -298,7 +307,7 @@ export default function ToolHome() {
                 ["Accuracy on attempted", `${result.accuracy}%`],
                 [
                   `Qualifying marks (${result.qualifyingPercent}%)`,
-                  `${result.qualifyingMarks}${result.exactQualifyingMarks !== result.qualifyingMarks ? ` (exact ${result.exactQualifyingMarks})` : ""}`,
+                  `${result.qualifyingMarks}${result.exactQualifyingMarks !== result.qualifyingMarks ? ` (exact ${result.exactQualifyingMarks})` : ""}${result.category === "reserved" ? ` — commonly quoted as ${RESERVED_MARKS_COMMONLY_QUOTED} in some state notices` : ""}`,
                 ],
                 ["Marks forgone by leaving blanks", NUM.format(result.marksForgone)],
               ]

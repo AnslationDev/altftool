@@ -71,7 +71,7 @@ export const generateAIForm = (aiprompt, theme) => {
     ];
   }
 
-  return fields.map((f) => ({
+  const mapped = fields.map((f) => ({
     id: Date.now() + Math.random(),
     type: f.type,
     label: f.label,
@@ -95,4 +95,21 @@ export const generateAIForm = (aiprompt, theme) => {
     step: "",
     theme,
   }));
+
+  // Registration/signup forms include both a Password and a Confirm
+  // Password field — link them the same way "Add Confirm Email" links an
+  // email pair (see SmartSuggestions.jsx / main.jsx's isConfirmEmail
+  // check), so the two passwords are actually validated to match.
+  const passwordField = mapped.find(
+    (f) => f.type === "password" && f.label === "Password",
+  );
+  const confirmPasswordField = mapped.find(
+    (f) => f.type === "password" && f.label === "Confirm Password",
+  );
+  if (passwordField && confirmPasswordField) {
+    confirmPasswordField.isConfirmPassword = true;
+    confirmPasswordField.linkedFieldId = passwordField.id;
+  }
+
+  return mapped;
 };

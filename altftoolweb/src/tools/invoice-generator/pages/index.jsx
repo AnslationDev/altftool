@@ -41,8 +41,11 @@ export default function ToolHome() {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
   });
-  const [taxRate, setTaxRate] = useState(18);
-  const [discount, setDiscount] = useState(0);
+  // Stored as raw strings so a mid-typing value (e.g. "1,000" or a stray
+  // "%") is never coerced with Number() and written back into the
+  // controlled input's displayed value, which used to render "NaN".
+  const [taxRate, setTaxRate] = useState("18");
+  const [discount, setDiscount] = useState("0");
   const [notes, setNotes] = useState("Thank you for your business.");
   const [items, setItems] = useState([createItem(1), createItem(2)]);
 
@@ -69,7 +72,11 @@ export default function ToolHome() {
         item.id === id
           ? {
               ...item,
-              [key]: key === "name" ? value : Number(value),
+              // Quantity/Rate are clamped to non-negative, mirroring the
+              // Math.max(0, ...) guard already applied to Discount, since
+              // the min="0" attribute on <input type="number"> is cosmetic
+              // only and does not block a typed "-" from reaching state.
+              [key]: key === "name" ? value : Math.max(0, Number(value) || 0),
             }
           : item
       )
@@ -82,6 +89,14 @@ export default function ToolHome() {
   };
 
   const removeItem = (id) => {
+    // Only prompt when the row actually holds user-entered data — an empty
+    // row is cheap to lose, but a filled-in row shouldn't disappear from a
+    // single accidental click with no way back.
+    const target = items.find((item) => item.id === id);
+    const hasContent = target && (target.name.trim() !== "" || Number(target.quantity) !== 0 || Number(target.rate) !== 0);
+    if (hasContent && !window.confirm(`Remove "${target.name || "this item"}" from the invoice?`)) {
+      return;
+    }
     setItems((current) => current.filter((item) => item.id !== id));
   };
 
@@ -122,8 +137,8 @@ export default function ToolHome() {
                   className="mt-2 h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
               </label>
-              <TextField label="Tax rate %" value={String(taxRate)} onChange={(value) => setTaxRate(Number(value))} />
-              <TextField label="Discount amount" value={String(discount)} onChange={(value) => setDiscount(Number(value))} />
+              <TextField label="Tax rate %" value={taxRate} onChange={setTaxRate} />
+              <TextField label="Discount amount" value={discount} onChange={setDiscount} />
             </div>
 
             <div>
@@ -237,7 +252,7 @@ export default function ToolHome() {
               ))}
             </div>
 
-            <div className="ml-auto mt-5 max-w-sm space-y-2">
+            <div className="ml-auto mt-5 max-w-sm space-y-2" role="status" aria-live="polite" aria-atomic="true">
               {[
                 ["Subtotal", totals.subtotal],
                 ["Discount", -totals.discountAmount],

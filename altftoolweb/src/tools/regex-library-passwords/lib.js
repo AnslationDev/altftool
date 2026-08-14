@@ -52,9 +52,11 @@ export const PATTERNS = [
     description:
       "At least 8 characters containing at least one letter and one digit — the lightest composition rule that blocks all-digit PINs.",
     breakdown: [
+      ["^", "anchor at the start of the string"],
       ["(?=.*[A-Za-z])", "lookahead: somewhere in the string there is a letter"],
       ["(?=.*\\d)", "lookahead: somewhere in the string there is a digit"],
       [".{8,}", "then the actual match: 8+ of any character"],
+      ["$", "anchor at the end — nothing else allowed"],
     ],
     limitations: [
       "'passw0rd' passes — composition does not equal strength.",
@@ -73,10 +75,12 @@ export const PATTERNS = [
     description:
       "The classic corporate policy: 8+ characters with at least one lowercase, one uppercase and one digit, enforced by three stacked lookaheads.",
     breakdown: [
+      ["^", "anchor at the start of the string"],
       ["(?=.*[a-z])", "lookahead: at least one lowercase letter anywhere"],
       ["(?=.*[A-Z])", "lookahead: at least one uppercase letter anywhere"],
       ["(?=.*\\d)", "lookahead: at least one digit anywhere"],
       [".{8,}", "then match the whole string if it is 8+ characters"],
+      ["$", "anchor at the end — nothing else allowed"],
     ],
     limitations: [
       "'Password1' passes — predictable capitalise-first, digit-last habits defeat the rule.",
@@ -95,11 +99,13 @@ export const PATTERNS = [
     description:
       "Full four-class complexity: 8+ characters with lowercase, uppercase, digit and at least one symbol, where any non-alphanumeric character (including space) counts as the symbol.",
     breakdown: [
+      ["^", "anchor at the start of the string"],
       ["(?=.*[a-z])", "lookahead: at least one lowercase letter"],
       ["(?=.*[A-Z])", "lookahead: at least one uppercase letter"],
       ["(?=.*\\d)", "lookahead: at least one digit"],
       ["(?=.*[^A-Za-z0-9])", "lookahead: at least one character that is not a letter or digit"],
       [".{8,}", "then match if the string is 8+ characters"],
+      ["$", "anchor at the end — nothing else allowed"],
     ],
     limitations: [
       "Defining 'symbol' as [^A-Za-z0-9] means spaces and unicode letters like é satisfy it — decide if that is acceptable.",

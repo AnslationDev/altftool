@@ -43,8 +43,20 @@ const DragDropBuilder = ({ fieldTypes, onDropField, addField, conditions, addCon
             <div
               key={type}
               draggable
+              tabIndex={0}
+              role="button"
+              aria-label={`Add ${label} field`}
               onDragStart={(e) => handleDragStart(e, type)}
               onClick={() => addField(type)}
+              onKeyDown={(e) => {
+                // Ignore keydowns bubbling up from the nested
+                // "Add Condition" button — only act on the tile itself.
+                if (e.target !== e.currentTarget) return;
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  addField(type);
+                }
+              }}
               className="relative text-sm p-2 border border-(--border) rounded-md cursor-grab active:cursor-grabbing text-(--foreground) bg-(--card) hover:border-(--primary) transition-all duration-200 flex flex-col"
             >
               {/* Field Label */}

@@ -169,7 +169,7 @@ export default function LogoSsimilarityCheckerPro() {
           <Images className="h-7 w-7 text-primary" />
         </div>
         <h1 className="mt-3 text-2xl font-bold text-[--foreground] sm:text-3xl">Logo Similarity Checker</h1>
-        <p className="mt-1 text-sm text-[--muted]">Compare two logos using AI-powered visual analysis</p>
+        <p className="mt-1 text-sm text-[--muted]">Compare two logos using algorithm-powered visual analysis</p>
       </div>
 
       <div className="mb-6 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">

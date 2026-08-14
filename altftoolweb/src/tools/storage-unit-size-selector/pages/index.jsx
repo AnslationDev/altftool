@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Warehouse } from "lucide-react";
 
 import { ACCESS_LEVELS, CEILING_OPTIONS, ITEMS, selectStorageUnit } from "../lib";
@@ -62,6 +62,9 @@ export default function ToolHome() {
   const [access, setAccess] = useState(DEFAULTS.access);
   const [ratePerSqFt, setRatePerSqFt] = useState(DEFAULTS.ratePerSqFt);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const result = useMemo(
     () =>
@@ -100,7 +103,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -259,7 +263,12 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -1,13 +1,13 @@
 const seo = {
   intro:
-    "This calculator turns a Kolkata CCU departure time into the single time you need to leave home, working backwards through the boarding-gate close, security, emigration, bag drop and the drive along VIP Road or the EM Bypass. It uses the larger of three deadlines - the advised reporting time (2 hours domestic, 3 hours international at Netaji Subhas Chandra Bose International), the airline bag-drop cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor.",
+    "This calculator turns a Kolkata CCU departure time into the single time you need to leave home, working backwards through the boarding-gate close, security, emigration, bag drop and the drive along VIP Road or the EM Bypass. It uses the larger of two deadlines - the advised reporting time (2 hours domestic, 3 hours international at Netaji Subhas Chandra Bose International) and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. The airline's bag-drop cut-off is shown too, for reference, though it is earlier than both of those deadlines so it does not change the leave-home time.",
   useCases: [
     "Planning a morning domestic departure from Behala or Howrah, where the drive crosses the whole city.",
     "Timing a night flight to Bangkok or Dhaka when the terminal is at its busiest bank.",
     "Adding road time during Durga Puja week, when processions and pandal traffic close normal routes.",
   ],
   benefits: [
-    ["Three deadlines, one answer", "Compares gate close, bag-drop cut-off and airport advice, and reports which one is binding."],
+    ["Two deadlines, one answer", "Compares your own gate-close estimate against the airport's advised reporting time and reports which one is binding, with the bag-drop cut-off shown for reference."],
     ["Local road model", "Free-flow times from Salt Lake, New Town, Howrah and Behala, each editable with a live maps estimate."],
     ["Full timeline", "Shows the clock time each step starts, from leaving home to the aircraft door shutting."],
   ],

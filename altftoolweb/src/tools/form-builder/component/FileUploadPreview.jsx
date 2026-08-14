@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ManagedImage from "@/components/ui/ManagedImage";
 
 const FileUploadPreview = ({ file }) => {
+  const isImage = !!file && file.type.startsWith("image/");
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  // Create the object URL exactly once per `file` (not on every render),
+  // and revoke it on cleanup so we don't leak a blob URL each re-render.
+  useEffect(() => {
+    if (!isImage) {
+      setPreviewUrl(null);
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file, isImage]);
+
   if (!file) return null;
 
-  const isImage = file.type.startsWith("image/");
   const fileSizeKB = (file.size / 1024).toFixed(2);
   const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
 
@@ -19,9 +33,9 @@ const FileUploadPreview = ({ file }) => {
         </p>
       )}
 
-      {isImage && (
+      {isImage && previewUrl && (
         <ManagedImage
-          src={URL.createObjectURL(file)}
+          src={previewUrl}
           alt="preview"
           className="mt-2 w-24 h-24 object-cover rounded-md border border-(--border)"
         />

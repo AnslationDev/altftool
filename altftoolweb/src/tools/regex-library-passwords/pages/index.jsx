@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, KeyRound, RotateCcw } from "lucide-react";
 
 import { PATTERNS, testInput } from "../lib";
@@ -24,6 +24,13 @@ export default function ToolHome() {
   const [patternId, setPatternId] = useState(DEFAULTS.patternId);
   const [sample, setSample] = useState(DEFAULTS.sample);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const pattern = PATTERNS.find((entry) => entry.id === patternId) ?? PATTERNS[0];
 
@@ -37,7 +44,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(`/${pattern.source}/${pattern.flags}`);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }

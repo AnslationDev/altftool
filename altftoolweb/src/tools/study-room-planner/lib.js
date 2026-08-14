@@ -103,6 +103,11 @@ export function planStudyRoom({
   const deskFits = deskWidthMm <= longWallM * 1000;
   const deskFitsMinimum = deskWidthMinMm <= longWallM * 1000;
   const usersThatFit = Math.max(0, Math.floor((longWallM * 1000) / DESK_WIDTH_MIN_PER_USER_MM));
+  // Seats that fit at the *comfortable* per-user width (DESK_WIDTH_PER_USER_MM),
+  // for the "drop to X seats" suggestion — usersThatFit above is the tight
+  // 750mm/user minimum and is unrelated to the "comfortable desk" the
+  // suggestion sentence quotes, so it could recommend a no-op seat count.
+  const usersThatFitComfortably = Math.max(0, Math.floor((longWallM * 1000) / DESK_WIDTH_PER_USER_MM));
 
   const zoneDepthMm = DESK_DEPTH_COMFORT_MM + CHAIR_CLEARANCE_MM;
   const remainingDepthMm = shortWallM * 1000 - zoneDepthMm;
@@ -140,6 +145,7 @@ export function planStudyRoom({
     deskFits,
     deskFitsMinimum,
     usersThatFit,
+    usersThatFitComfortably,
     deskDepthMm: DESK_DEPTH_COMFORT_MM,
     zoneDepthMm,
     remainingDepthMm,

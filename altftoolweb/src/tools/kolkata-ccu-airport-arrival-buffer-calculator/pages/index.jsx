@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PlaneTakeoff, RotateCcw } from "lucide-react";
 
 import {
@@ -24,7 +24,12 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const dayLabel = (offset) => (offset < 0 ? " (previous day)" : "");
+const dayLabel = (offset) => {
+  if (!offset) return "";
+  const days = Math.abs(offset);
+  if (offset < 0) return days === 1 ? " (previous day)" : ` (${days} days before)`;
+  return days === 1 ? " (next day)" : ` (${days} days after)`;
+};
 
 export default function ToolHome() {
   const [departureTime, setDepartureTime] = useState(DEFAULTS.departureTime);
@@ -37,6 +42,13 @@ export default function ToolHome() {
   const [parkingMinutes, setParkingMinutes] = useState(String(DEFAULTS.parkingMinutes));
   const [personalBufferMinutes, setPersonalBufferMinutes] = useState(String(DEFAULTS.personalBufferMinutes));
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const plan = useMemo(
     () =>
@@ -86,7 +98,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -288,7 +301,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Leave home by
             </p>
@@ -319,7 +332,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             [
               "Be inside the terminal by",
@@ -342,7 +355,7 @@ export default function ToolHome() {
       </section>
 
       {!failed && plan.warnings.length > 0 && (
-        <ul className="mt-4 space-y-2">
+        <ul className="mt-4 space-y-2" role="status" aria-live="polite">
           {plan.warnings.map((warning) => (
             <li
               key={warning}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, CookingPot, Copy, RotateCcw } from "lucide-react";
 
 import {
@@ -52,6 +52,13 @@ const GHOST_BTN =
 export default function ToolHome() {
   const [form, setForm] = useState(FORM_DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const set = (key) => (event) => setForm((prev) => ({ ...prev, [key]: event.target.value }));
 
@@ -78,12 +85,27 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, result, winner]);
 
+  // All the "*SavedPer*"/"saving*" fields share the same sign convention
+  // (oven figure minus air-fryer figure), so a positive value always means
+  // the air fryer is favorable for that specific metric and a negative
+  // value means the oven is. Deriving the direction word from each field's
+  // own signed value (rather than always assuming the air fryer) keeps the
+  // dl honest when the oven turns out cheaper/faster/lower-energy.
+  const favoredAppliance = (value) =>
+    Number.isFinite(value) && value !== 0 ? (value > 0 ? "air fryer" : "oven") : null;
+
+  const directionalLabel = (baseLabel, value) => {
+    const who = favoredAppliance(value);
+    return who ? `${baseLabel} by using the ${who}` : baseLabel;
+  };
+
   const copyResult = async () => {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -101,7 +123,7 @@ export default function ToolHome() {
         ["af-watts", "Rated power (watts)", "airFryerWatts", "50"],
         ["af-preheat", "Preheat time (minutes)", "airFryerPreheatMin", "1"],
         ["af-cook", "Cook time (minutes)", "airFryerCookMin", "1"],
-        ["af-duty", "Element duty cycle while cooking (0-1)", "airFryerDuty", "0.05"],
+        ["af-duty", "Element duty cycle while cooking (>0-1)", "airFryerDuty", "0.05"],
       ],
     },
     {
@@ -110,7 +132,7 @@ export default function ToolHome() {
         ["ov-watts", "Rated power (watts)", "ovenWatts", "50"],
         ["ov-preheat", "Preheat time (minutes)", "ovenPreheatMin", "1"],
         ["ov-cook", "Cook time (minutes)", "ovenCookMin", "1"],
-        ["ov-duty", "Element duty cycle while cooking (0-1)", "ovenDuty", "0.05"],
+        ["ov-duty", "Element duty cycle while cooking (>0-1)", "ovenDuty", "0.05"],
       ],
     },
   ];
@@ -200,7 +222,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -273,14 +299,14 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Energy saved per meal", ok ? kwh(Math.abs(result.kwhSavedPerMeal)) : "—"],
-            ["Time saved per meal", ok ? num(Math.abs(result.minutesSavedPerMeal), " min") : "—"],
+            [directionalLabel("Energy saved per meal", result.kwhSavedPerMeal), ok ? kwh(Math.abs(result.kwhSavedPerMeal)) : "—"],
+            [directionalLabel("Time saved per meal", result.minutesSavedPerMeal), ok ? num(Math.abs(result.minutesSavedPerMeal), " min") : "—"],
             ["Meals per year at this rate", ok ? num(result.mealsPerYear) : "—"],
-            ["Saving per month", ok ? money2(Math.abs(result.savingPerMonth)) : "—"],
-            ["Saving per year", ok ? money(Math.abs(result.savingPerYear)) : "—"],
-            ["Energy saved per year", ok ? kwh(Math.abs(result.kwhSavedPerYear)) : "—"],
-            ["Hours of cooking time saved per year", ok ? num(Math.abs(result.hoursSavedPerYear), " h") : "—"],
-            ["Estimated CO2 avoided per year", ok ? `${num(Math.abs(result.co2SavedKgPerYear))} kg` : "—"],
+            [directionalLabel("Saving per month", result.savingPerMonth), ok ? money2(Math.abs(result.savingPerMonth)) : "—"],
+            [directionalLabel("Saving per year", result.savingPerYear), ok ? money(Math.abs(result.savingPerYear)) : "—"],
+            [directionalLabel("Energy saved per year", result.kwhSavedPerYear), ok ? kwh(Math.abs(result.kwhSavedPerYear)) : "—"],
+            [directionalLabel("Hours of cooking time saved per year", result.hoursSavedPerYear), ok ? num(Math.abs(result.hoursSavedPerYear), " h") : "—"],
+            [directionalLabel("Estimated CO2 avoided per year", result.co2SavedKgPerYear), ok ? `${num(Math.abs(result.co2SavedKgPerYear))} kg` : "—"],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

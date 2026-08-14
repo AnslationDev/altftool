@@ -45,6 +45,28 @@ const ValidationBuilder = ({ field, updateField }) => {
         />
       </div>
 
+      {/* Min / Max Value (Number fields only) */}
+      {field.type === "number" && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <input
+            type="number"
+            placeholder="Min Value"
+            aria-label="Minimum value"
+            value={field.min ?? ""}
+            onChange={(e) => updateField(field.id, "min", e.target.value)}
+            className="w-full px-3 py-2 border border-(--border) rounded-md"
+          />
+          <input
+            type="number"
+            placeholder="Max Value"
+            aria-label="Maximum value"
+            value={field.max ?? ""}
+            onChange={(e) => updateField(field.id, "max", e.target.value)}
+            className="w-full px-3 py-2 border border-(--border) rounded-md"
+          />
+        </div>
+      )}
+
       {/* Pattern Label */}
       <label className="text-sm font-medium">Custom Format (Advanced)</label>
 

@@ -163,10 +163,30 @@ export function buildExamSchedule({
     const todayDate = new Date(todayMs);
     let year = todayDate.getUTCFullYear();
     let month = todayDate.getUTCMonth();
-    // Only roll over to next month once today is past the whole check
-    // window (fixed day through fixed day + WINDOW_LENGTH_DAYS - 1), not
-    // just past the window's first day.
-    if (todayDate.getUTCDate() > day + WINDOW_LENGTH_DAYS - 1) {
+
+    // Check whether the PREVIOUS month's occurrence window is still open
+    // first (e.g. a Feb 28 check whose 3-day window runs into March 1-2).
+    // Comparing today's day-of-month only against the CURRENT month's
+    // fixed day misses this: on March 1st, "today's date (1) > fixed day
+    // (28) + window - 1" is false, so the old logic never rolled forward,
+    // but it also never looked back to see that the Feb 28 window was
+    // still the one that should be reported as open.
+    let prevMonth = month - 1;
+    let prevYear = year;
+    if (prevMonth < 0) {
+      prevMonth = 11;
+      prevYear -= 1;
+    }
+    const prevMs = Date.UTC(prevYear, prevMonth, day);
+    const prevWindowEndMs = addDays(prevMs, WINDOW_LENGTH_DAYS - 1);
+
+    if (todayMs <= prevWindowEndMs) {
+      year = prevYear;
+      month = prevMonth;
+    } else if (todayDate.getUTCDate() > day + WINDOW_LENGTH_DAYS - 1) {
+      // Only roll over to next month once today is past the whole check
+      // window (fixed day through fixed day + WINDOW_LENGTH_DAYS - 1), not
+      // just past the window's first day.
       month += 1;
       if (month > 11) {
         month = 0;

@@ -112,7 +112,11 @@ export function computeBalletBurn({
 
   const weightKg = weightUnit === "lb" ? weight * LB_TO_KG : weight;
   if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
-    return { error: `Body weight should be between ${MIN_WEIGHT_KG} kg and ${MAX_WEIGHT_KG} kg.` };
+    // Report the bound in whatever unit the user actually selected, so it
+    // matches the number they typed instead of always showing kg.
+    const minInUnit = weightUnit === "lb" ? round(MIN_WEIGHT_KG / LB_TO_KG, 1) : MIN_WEIGHT_KG;
+    const maxInUnit = weightUnit === "lb" ? round(MAX_WEIGHT_KG / LB_TO_KG, 1) : MAX_WEIGHT_KG;
+    return { error: `Body weight should be between ${minInUnit} and ${maxInUnit} ${weightUnit}.` };
   }
   if (classesPerWeek < 0 || classesPerWeek > MAX_CLASSES_PER_WEEK) {
     return { error: `Classes per week should be between 0 and ${MAX_CLASSES_PER_WEEK}.` };
@@ -158,7 +162,10 @@ export function computeBalletBurn({
     };
   });
 
-  const grossKcal = rows.reduce((sum, row) => sum + row.rawKcal, 0);
+  // Sum the already-rounded per-segment kcal (not the unrounded rawKcal), so
+  // the headline total always agrees with the visible per-row figures a user
+  // could add up by hand instead of disagreeing by a rounding cent/kcal.
+  const grossKcal = rows.reduce((sum, row) => sum + row.kcal, 0);
   const restingKcalPerMin = metToKcalPerMinute(RESTING_MET, weightKg);
   const restingKcal = restingKcalPerMin * totalMinutes;
   const netKcal = Math.max(0, grossKcal - restingKcal);

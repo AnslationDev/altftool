@@ -31,7 +31,7 @@ const Description = () => {
     {
       title: "Submit & Export",
       description:
-        "Collect responses and export them in JSON or CSV format for easy analysis.",
+        "Preview submissions locally as JSON, then export your form as HTML, React JSX, or JSON — there's no hosting or response collection.",
     },
   ];
 

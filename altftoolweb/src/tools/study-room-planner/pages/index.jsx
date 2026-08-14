@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, LampDesk, RotateCcw } from "lucide-react";
 import {
   AMBIENT_LUX_TARGET,
@@ -49,6 +49,13 @@ export default function ToolHome() {
   const [height, setHeight] = useState(DEFAULTS.height);
   const [lumens, setLumens] = useState(DEFAULTS.lumens);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const plan = useMemo(
     () =>
@@ -84,7 +91,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -192,7 +200,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Floor area", error ? DASH : `${num(plan.floorArea)} m²`],
             ["Floor area per person", error ? DASH : `${num(plan.areaPerUser)} m²`],
@@ -221,9 +229,19 @@ export default function ToolHome() {
             className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
           >
             A comfortable desk for {toNumber(users)} people needs {mm(plan.deskWidthMm)} of wall and
-            the longest wall is only {metres(plan.longWallM)}. Drop to{" "}
-            {plan.usersThatFit || 1} seat(s), use an L-shaped layout, or plan a narrower desk per
-            person.
+            the longest wall is only {metres(plan.longWallM)}.{" "}
+            {plan.deskFitsMinimum ? (
+              <>
+                All {toNumber(users)} still fit at the tight minimum ({mm(plan.deskWidthMinMm)}) — plan
+                a narrower desk per person, use an L-shaped layout, or drop to{" "}
+                {plan.usersThatFitComfortably || 1} seat(s) for the full comfortable width.
+              </>
+            ) : (
+              <>
+                Even the tight minimum needs {mm(plan.deskWidthMinMm)}. Drop to{" "}
+                {plan.usersThatFit || 1} seat(s), use an L-shaped layout, or plan a longer wall.
+              </>
+            )}
           </p>
         ) : null}
 
@@ -252,7 +270,7 @@ export default function ToolHome() {
       <section className="mt-6 grid gap-6 sm:grid-cols-2">
         <div className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">Lighting</h2>
-          <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
+          <dl className="mt-3 divide-y divide-[var(--border)] text-sm" aria-live="polite">
             {[
               [`Ambient target (${AMBIENT_LUX_TARGET} lux)`, error ? DASH : `${num(plan.ambientLumens, 0)} lm`],
               ["Ceiling fittings needed", error ? DASH : plan.ceilingFittings],
@@ -269,7 +287,7 @@ export default function ToolHome() {
 
         <div className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">Shelving</h2>
-          <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
+          <dl className="mt-3 divide-y divide-[var(--border)] text-sm" aria-live="polite">
             {[
               ["Shelf length for the books", error ? DASH : `${num(plan.shelfLengthM)} m`],
               ["Shelves at 900 mm each", error ? DASH : plan.shelvesNeeded],

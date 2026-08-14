@@ -76,16 +76,6 @@ export function formatDuration(totalSeconds) {
   return parts.join(" ");
 }
 
-/** Interval needed to turn a shoot of `realDurationSeconds` into `clipSeconds` of footage. */
-export function intervalForClipLength({ realDurationSeconds, clipSeconds, playbackFps } = {}) {
-  if (!isFiniteNumber(realDurationSeconds) || realDurationSeconds <= 0) return NaN;
-  if (!isFiniteNumber(clipSeconds) || clipSeconds <= 0) return NaN;
-  if (!isFiniteNumber(playbackFps) || playbackFps <= 0) return NaN;
-  const shots = clipSeconds * playbackFps;
-  if (shots <= 0) return NaN;
-  return realDurationSeconds / shots;
-}
-
 /**
  * Full timelapse plan.
  *
@@ -192,41 +182,4 @@ export function planTimelapse({
     intervalTooShort,
     warnings,
   };
-}
-
-/**
- * Plan backwards from a target clip length: how often do I need to trigger?
- */
-export function planFromClipLength({
-  realDurationSeconds,
-  clipSeconds,
-  playbackFps,
-  fileMegabytes = 0,
-  cardGigabytes = 0,
-  exposureSeconds = 0,
-  writeOverheadSeconds = DEFAULT_WRITE_OVERHEAD_SECONDS,
-} = {}) {
-  if (!isFiniteNumber(clipSeconds) || clipSeconds <= 0) {
-    return { error: "Enter the finished clip length you are aiming for." };
-  }
-  const intervalSeconds = intervalForClipLength({ realDurationSeconds, clipSeconds, playbackFps });
-  if (!isFiniteNumber(intervalSeconds) || intervalSeconds <= 0) {
-    return { error: "Enter a shooting time, clip length and frame rate greater than zero." };
-  }
-  if (intervalSeconds < MIN_INTERVAL_SECONDS) {
-    return {
-      error: `That clip length needs an interval of ${intervalSeconds.toFixed(3)} s, which is faster than a timelapse — shoot normal video instead.`,
-    };
-  }
-  const plan = planTimelapse({
-    realDurationSeconds,
-    intervalSeconds,
-    playbackFps,
-    fileMegabytes,
-    cardGigabytes,
-    exposureSeconds,
-    writeOverheadSeconds,
-  });
-  if (plan.error) return plan;
-  return { ...plan, requestedClipSeconds: clipSeconds, exactInterval: intervalSeconds };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Grid2x2, RotateCcw } from "lucide-react";
 
 import { COMMON_TILE_SIZES, calculateFloorTiles } from "../lib";
@@ -64,6 +64,9 @@ export default function ToolHome() {
   const [thickness, setThickness] = useState(DEFAULTS.thickness);
   const [joint, setJoint] = useState(DEFAULTS.joint);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const result = useMemo(
     () =>
@@ -90,9 +93,9 @@ export default function ToolHome() {
       "Floor tile take-off",
       `Floor area: ${num(result.floorAreaSqft)} sqft (${num(result.areaSqm)} sqm)`,
       `Tile: ${tileW} x ${tileH} mm, ${num(result.tileAreaSqft)} sqft each`,
-      `Tiles required (incl. ${wastage}% wastage): ${result.tilesRequired}`,
-      `Boxes to buy: ${result.boxes} (${result.tilesSupplied} tiles)`,
-      `Spare tiles left over: ${result.spareTiles}`,
+      `Tiles required (incl. ${wastage}% wastage): ${num(result.tilesRequired)}`,
+      `Boxes to buy: ${result.boxes} (${num(result.tilesSupplied)} tiles)`,
+      `Spare tiles left over: ${num(result.spareTiles)}`,
       `Tile cost: ${money(result.totalCost)} (${money2(result.costPerSqft)} per sqft)`,
       `Adhesive: ${num(result.adhesiveKg)} kg (${result.adhesiveBags} bags of 20 kg)`,
       `Grout: ${num(result.groutKg)} kg`,
@@ -104,7 +107,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -129,10 +133,10 @@ export default function ToolHome() {
     ["Area of one tile", failed ? DASH : `${num(result.tileAreaSqft)} sqft`],
     ["Coverage of one box", failed ? DASH : `${num(result.boxCoverageSqft)} sqft`],
     ["Tiles for bare area", failed ? DASH : `${num(result.tilesExact)} tiles`],
-    ["Extra tiles for cuts and breakage", failed ? DASH : `${result.wastageTiles} tiles`],
-    ["Tiles required", failed ? DASH : `${result.tilesRequired} tiles`],
-    ["Tiles supplied in those boxes", failed ? DASH : `${result.tilesSupplied} tiles`],
-    ["Spare tiles left over", failed ? DASH : `${result.spareTiles} tiles`],
+    ["Extra tiles for cuts and breakage", failed ? DASH : `${num(result.wastageTiles)} tiles`],
+    ["Tiles required", failed ? DASH : `${num(result.tilesRequired)} tiles`],
+    ["Tiles supplied in those boxes", failed ? DASH : `${num(result.tilesSupplied)} tiles`],
+    ["Spare tiles left over", failed ? DASH : `${num(result.spareTiles)} tiles`],
     ["Total tile cost", failed ? DASH : money(result.totalCost)],
     ["Tile cost per sqft of floor", failed ? DASH : money2(result.costPerSqft)],
     ["Tile adhesive (3 mm bed)", failed ? DASH : `${num(result.adhesiveKg)} kg · ${result.adhesiveBags} bags`],
@@ -341,7 +345,12 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -353,7 +362,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {failed
                 ? "Fix the highlighted input to see a take-off."
-                : `${result.tilesSupplied} tiles covering ${num(result.areaCoveredSqft)} sqft`}
+                : `${num(result.tilesSupplied)} tiles covering ${num(result.areaCoveredSqft)} sqft`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

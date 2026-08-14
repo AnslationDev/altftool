@@ -1,45 +1,56 @@
 "use client";
 
+import { escapeHtml } from "../utils/escapeHtml";
+
 export const generateHTML = (formTitle, formDescription, formFields = [],theme) => {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>${formTitle || "Custom Form"}</title>
+  <title>${escapeHtml(formTitle) || "Custom Form"}</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class=" min-h-screen flex items-center justify-center p-6"
 style="
     background-color: #f3f4f6;
-    font-family: ${theme?.fontFamily || "sans-serif"};
+    font-family: ${escapeHtml(theme?.fontFamily) || "sans-serif"};
   "
 >
 
   <div class="w-full max-w-2xl">
-    
+
     <form id="customForm" class="bg-white rounded-xl shadow-md p-8 space-y-6">
 
       ${
         formTitle
-          ? `<h1 class="text-3xl font-bold text-gray-900">${formTitle}</h1>`
+          ? `<h1 class="text-3xl font-bold text-gray-900">${escapeHtml(formTitle)}</h1>`
           : ""
       }
 
       ${
         formDescription
-          ? `<p class="text-gray-600">${formDescription}</p>`
+          ? `<p class="text-gray-600">${escapeHtml(formDescription)}</p>`
           : ""
       }
 
       ${
         (formFields || [])
           .map((field) => {
+            // All field text below can come from a decoded share link
+            // (see utils/shareForm.js's decodeForm), so it is untrusted
+            // and must be HTML-escaped before landing in this template.
+            const safeId = escapeHtml(field.id);
+            const safeLabel = escapeHtml(field.label);
+            const safePlaceholder = escapeHtml(field.placeholder);
+            const safePattern = escapeHtml(field.pattern);
+            const safeType = escapeHtml(field.type);
+
             let fieldHTML = `
             <div class="space-y-2">
               <label class="block text-sm font-semibold text-gray-800">
-                ${field.label}
+                ${safeLabel}
                 ${
                   field.required
                     ? `<span class="text-red-500 ml-1">*</span>`
@@ -52,8 +63,8 @@ style="
               case "textarea":
                 fieldHTML += `
                   <textarea
-                    name="field_${field.id}"
-                    placeholder="${field.placeholder || ""}"
+                    name="field_${safeId}"
+                    placeholder="${safePlaceholder}"
                     ${field.required ? "required" : ""}
                     ${field.minLength ? `minlength="${field.minLength}"` : ""}
                     ${field.maxLength ? `maxlength="${field.maxLength}"` : ""}
@@ -65,13 +76,16 @@ style="
               case "select":
                 fieldHTML += `
                   <select
-                    name="field_${field.id}"
+                    name="field_${safeId}"
                     ${field.required ? "required" : ""}
                     class="w-full px-4 py-2 border border-gray-300 rounded-md"
                   >
                     <option value="">Select an option</option>
                     ${(field.options || [])
-                      .map((opt) => `<option value="${opt}">${opt}</option>`)
+                      .map((opt) => {
+                        const safeOpt = escapeHtml(opt);
+                        return `<option value="${safeOpt}">${safeOpt}</option>`;
+                      })
                       .join("")}
                   </select>
                 `;
@@ -81,16 +95,17 @@ style="
                 fieldHTML += `
                   <div class="space-y-2">
                     ${(field.options || [])
-                      .map(
-                        (opt) => `
+                      .map((opt) => {
+                        const safeOpt = escapeHtml(opt);
+                        return `
                         <label class="flex items-center gap-2">
-                          <input type="radio" name="field_${field.id}" value="${opt}" ${
+                          <input type="radio" name="field_${safeId}" value="${safeOpt}" ${
                           field.required ? "required" : ""
                         }>
-                          <span>${opt}</span>
+                          <span>${safeOpt}</span>
                         </label>
-                      `
-                      )
+                      `;
+                      })
                       .join("")}
                   </div>
                 `;
@@ -100,14 +115,15 @@ style="
                 fieldHTML += `
                   <div class="space-y-2">
                     ${(field.options || [])
-                      .map(
-                        (opt, idx) => `
+                      .map((opt, idx) => {
+                        const safeOpt = escapeHtml(opt);
+                        return `
                         <label class="flex items-center gap-2">
-                          <input type="checkbox" name="field_${field.id}_${idx}" value="${opt}">
-                          <span>${opt}</span>
+                          <input type="checkbox" name="field_${safeId}_${idx}" value="${safeOpt}">
+                          <span>${safeOpt}</span>
                         </label>
-                      `
-                      )
+                      `;
+                      })
                       .join("")}
                   </div>
                 `;
@@ -116,7 +132,7 @@ style="
               case "range":
                 fieldHTML += `
                   <input type="range"
-                    name="field_${field.id}"
+                    name="field_${safeId}"
                     min="${field.min || 0}"
                     max="${field.max || 100}"
                     step="${field.step || 1}"
@@ -129,13 +145,13 @@ style="
               default:
                 fieldHTML += `
                   <input
-                    type="${field.type}"
-                    name="field_${field.id}"
-                    placeholder="${field.placeholder || ""}"
+                    type="${safeType}"
+                    name="field_${safeId}"
+                    placeholder="${safePlaceholder}"
                     ${field.required ? "required" : ""}
                     ${field.minLength ? `minlength="${field.minLength}"` : ""}
                     ${field.maxLength ? `maxlength="${field.maxLength}"` : ""}
-                    ${field.pattern ? `pattern="${field.pattern}"` : ""}
+                    ${field.pattern ? `pattern="${safePattern}"` : ""}
                     ${field.min ? `min="${field.min}"` : ""}
                     ${field.max ? `max="${field.max}"` : ""}
                     class="w-full px-4 py-2 border border-gray-300 rounded-md"
@@ -176,8 +192,8 @@ style="
 };
 
 
-export const downloadForm = (formTitle, formDescription, formFields = []) => {
-  const html = generateHTML(formTitle, formDescription, formFields);
+export const downloadForm = (formTitle, formDescription, formFields = [], theme) => {
+  const html = generateHTML(formTitle, formDescription, formFields, theme);
 
   const blob = new Blob([html], { type: "text/html" });
   const url = URL.createObjectURL(blob);

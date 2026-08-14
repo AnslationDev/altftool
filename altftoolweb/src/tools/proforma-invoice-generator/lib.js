@@ -162,7 +162,13 @@ export function computeProformaTotals(input = {}) {
 
   const chargesTotal = freight + insurance + packing + otherCharges;
   const grandTotal = taxableValue + totalTax + chargesTotal;
-  const advanceDue = grandTotal * (advancePercent / 100);
+  // Round the grand total first, then derive advanceDue/balanceDue from that
+  // rounded figure so the two always sum exactly to the displayed grand
+  // total instead of each being rounded independently from the unrounded
+  // value (which could disagree by a cent).
+  const roundedGrandTotal = roundCents(grandTotal);
+  const roundedAdvanceDue = roundCents(grandTotal * (advancePercent / 100));
+  const roundedBalanceDue = roundCents(roundedGrandTotal - roundedAdvanceDue);
 
   return {
     lines,
@@ -180,10 +186,10 @@ export function computeProformaTotals(input = {}) {
     // Customs valuation is usually CIF: goods value plus freight plus insurance.
     cifValue: roundCents(taxableValue + freight + insurance),
     fobValue: roundCents(taxableValue),
-    grandTotal: roundCents(grandTotal),
+    grandTotal: roundedGrandTotal,
     advancePercent,
-    advanceDue: roundCents(advanceDue),
-    balanceDue: roundCents(grandTotal - advanceDue),
+    advanceDue: roundedAdvanceDue,
+    balanceDue: roundedBalanceDue,
     effectiveDiscountPercent: subtotal > 0 ? roundCents((totalDiscount / subtotal) * 100) : 0,
   };
 }
@@ -209,7 +215,16 @@ export function addDaysToIsoDate(isoDate, days) {
 
   const [year, month, day] = isoDate.split("-").map(Number);
   const base = Date.UTC(year, month - 1, day);
-  if (!Number.isFinite(base)) {
+  // Date.UTC normalizes out-of-range components (e.g. month 13, day 30 of a
+  // 28-day month) instead of returning NaN, so it always yields a finite
+  // number even for an impossible calendar date. Round-trip the constructed
+  // date against the parsed components to actually catch that case.
+  const baseDate = new Date(base);
+  if (
+    baseDate.getUTCFullYear() !== year ||
+    baseDate.getUTCMonth() !== month - 1 ||
+    baseDate.getUTCDate() !== day
+  ) {
     return { error: "That is not a valid calendar date." };
   }
   const target = new Date(base + days * 24 * 60 * 60 * 1000);

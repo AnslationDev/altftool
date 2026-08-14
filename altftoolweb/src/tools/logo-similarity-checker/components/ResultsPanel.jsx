@@ -2,7 +2,7 @@
 
 import { Shield, AlertTriangle } from "lucide-react";
 
-export default function ResultsPanel({ results, onViewChange }) {
+export default function ResultsPanel({ results }) {
   if (!results) return null;
 
   const { overall } = results;

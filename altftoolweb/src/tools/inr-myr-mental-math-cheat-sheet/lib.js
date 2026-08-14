@@ -334,22 +334,22 @@ export function buildCheatSheet({ inrPerUnit, amount } = {}) {
   const priceLadder = CURRENCY.pricePoints.map((point) => {
     const exact = point.amount * rate;
     const quick = point.amount * forward.quick.rate;
-    const tuned = point.amount * forward.tuned.rate;
+    const recommended = point.amount * forward[forward.recommendedId].rate;
     return {
       amount: point.amount,
       note: point.note,
       exactInr: round(exact, 2),
       quickInr: round(quick, 2),
-      tunedInr: round(tuned, 2),
+      recommendedInr: round(recommended, 2),
       quickGapInr: round(quick - exact, 2),
-      tunedGapInr: round(tuned - exact, 2),
+      recommendedGapInr: round(recommended - exact, 2),
     };
   });
 
   const rupeeLadder = RUPEE_ANCHORS.map((rupees) => ({
     rupees,
     exactUnits: round(rupees / rate, 2),
-    quickUnits: round(rupees * reverse.quick.rate, 2),
+    ruleUnits: round(rupees * reverse[reverse.recommendedId].rate, 2),
   }));
 
   const noteLadder = CURRENCY.notes.map((note) => ({
@@ -367,6 +367,7 @@ export function buildCheatSheet({ inrPerUnit, amount } = {}) {
       quickInr: round(parsedAmount * forward.quick.rate, 2),
       tunedInr: round(parsedAmount * forward.tuned.rate, 2),
       fractionInr: round(parsedAmount * forward.fraction.rate, 2),
+      recommendedInr: round(parsedAmount * forward[forward.recommendedId].rate, 2),
       quickGapInr: round(parsedAmount * forward.quick.rate - exact, 2),
     };
   }

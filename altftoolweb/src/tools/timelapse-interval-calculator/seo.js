@@ -7,9 +7,9 @@ const seo = {
     "Working out the interval for a construction timelapse that must compress three months into a minute",
   ],
   benefits: [
-    ["Works both directions", "Start from an interval, or start from the clip length you have been asked to deliver."],
     ["Sizes the card first", "Shows total gigabytes, how many frames the card holds and how long that lasts on location."],
     ["Catches impossible setups", "Flags intervals shorter than the exposure plus write time, before the intervalometer skips frames."],
+    ["Plain-English clip length", "Turns the raw shot count into hours, minutes and seconds instead of leaving you to convert it."],
   ],
   faqs: [
     [
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How long do I need to shoot for a 10 second timelapse?",
-      "Multiply the clip length by your frame rate to get the frame count, then multiply by the interval. Ten seconds at 24 fps needs 240 frames, so at a 5 second interval you shoot for 1,200 seconds — 20 minutes. At a 2 second interval the same clip only takes 8 minutes.",
+      "This calculator takes the interval as the starting point, so work backward manually: multiply the clip length by your frame rate to get the frame count, then multiply by the interval. Ten seconds at 24 fps needs 240 frames, so at a 5 second interval you shoot for 1,200 seconds — 20 minutes. At a 2 second interval the same clip only takes 8 minutes. Enter that shooting time and interval above to check the card space and confirm the plan.",
     ],
     [
       "How many photos are in one second of timelapse?",

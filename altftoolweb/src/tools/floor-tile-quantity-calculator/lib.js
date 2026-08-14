@@ -74,18 +74,24 @@ export function calculateFloorTiles({
 } = {}) {
   if (!isNum(lengthFt) || !isNum(widthFt)) return { error: "Enter room length and width as numbers." };
   if (lengthFt <= 0 || widthFt <= 0) return { error: "Room length and width must be greater than zero." };
-  if (!isNum(extraAreaSqft) || extraAreaSqft < 0) return { error: "Extra area cannot be negative." };
+  if (!isNum(extraAreaSqft)) return { error: "Enter the additional area as a number." };
+  if (extraAreaSqft < 0) return { error: "Extra area cannot be negative." };
   if (!isNum(tileWidthMm) || !isNum(tileHeightMm) || tileWidthMm <= 0 || tileHeightMm <= 0) {
     return { error: "Tile width and height must be greater than zero." };
   }
-  if (!isNum(tilesPerBox) || tilesPerBox < 1) return { error: "A box must contain at least one tile." };
-  if (!isNum(wastagePercent) || wastagePercent < 0) return { error: "Wastage cannot be negative." };
+  if (!isNum(tilesPerBox) || !Number.isInteger(tilesPerBox) || tilesPerBox < 1) {
+    return { error: "Tiles per box must be a whole number of at least 1." };
+  }
+  if (!isNum(wastagePercent)) return { error: "Enter the wastage allowance as a number." };
+  if (wastagePercent < 0) return { error: "Wastage cannot be negative." };
   if (wastagePercent > MAX_WASTAGE_PERCENT) {
     return { error: `Wastage above ${MAX_WASTAGE_PERCENT}% suggests a measurement error.` };
   }
-  if (!isNum(pricePerBox) || pricePerBox < 0) return { error: "Price per box cannot be negative." };
+  if (!isNum(pricePerBox)) return { error: "Enter the price per box as a number." };
+  if (pricePerBox < 0) return { error: "Price per box cannot be negative." };
   if (!isNum(tileThicknessMm) || tileThicknessMm <= 0) return { error: "Tile thickness must be greater than zero." };
-  if (!isNum(jointWidthMm) || jointWidthMm < 0) return { error: "Joint width cannot be negative." };
+  if (!isNum(jointWidthMm)) return { error: "Enter the joint width as a number." };
+  if (jointWidthMm < 0) return { error: "Joint width cannot be negative." };
   if (!isNum(adhesiveBedMm) || adhesiveBedMm <= 0) return { error: "Adhesive bed must be greater than zero." };
 
   const floorAreaSqft = lengthFt * widthFt + extraAreaSqft;

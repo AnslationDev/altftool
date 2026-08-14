@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "How many bags of tile adhesive do I need per 100 sqft?",
-      "Roughly two and a half 20 kg bags for 100 sqft at a 3 mm bed. Cementitious tile adhesive spreads at about 1.5 kg per square metre per millimetre of bed, so 100 sqft (9.29 sqm) at 3 mm needs about 42 kg. Uneven substrates and large-format tiles need a thicker bed and more adhesive.",
+      "About 2.1 bags of 20 kg adhesive for 100 sqft at a 3 mm bed, which means buying 3 since dealers do not split a bag. Cementitious tile adhesive spreads at about 1.5 kg per square metre per millimetre of bed, so 100 sqft (9.29 sqm) at 3 mm needs about 41.8 kg. Uneven substrates and large-format tiles need a thicker bed and more adhesive.",
     ],
     [
       "Should I buy all tile boxes at once?",

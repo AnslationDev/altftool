@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Test and validate regular expressions instantly with live results.",
   icon: "regex",
-  iconColor: "text-blue-600",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;
