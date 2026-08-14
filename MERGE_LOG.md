@@ -60,3 +60,84 @@ Full membership lists are at the bottom of this file.
 - perf/embed-picker-payload: skipped, already ancestor
 - seo/aeo-integrity-and-answer-first: skipped, already ancestor
 - fix/sitemap-xml-escaping: skipped, already ancestor
+
+## Family B — canonical-web legacy history (SKIPPED, out of scope, needs human review)
+
+Root commit 00f88004c... = exact root of `canonical-web/main`. Unrelated history to `beta`
+(`git merge` refuses without `--allow-unrelated-histories`). Not attempted — see the structural
+finding above. 62 branches:
+
+- claude/sleepy-clarke-4e911e
+- codex/canonical-web-release-20260807
+- codex/lookouts-integration-20260807
+- codex/canonical-web-release-20260806
+- claude/eager-cerf-8e6b2d
+- merge-one
+- claude/peaceful-elgamal-ad78ef
+- codex/sanitizer-adversarial-20260806
+- codex/seo-ui-accuracy-fixes-20260806
+- codex/wave26-audited-port-20260806
+- standalone-notice
+- merge-all
+- codex/results-panel-wiring-port-20260806
+- claude/nifty-wilbur-c566cf
+- codex/firebase-blog-legacy-slug-fallback-20260806
+- codex/audit-main75e-safe-port-20260806
+- codex/dynamic-content-feeds-20260806
+- codex/atlas-schema-gate-20260806
+- codex/content-integrity-20260806
+- codex/review-wave22-final-20260806
+- codex/wave25-audited-port-20260806
+- codex/fix-amplify-standalone-gate-20260806
+- codex/canonical-web-wave31-release-20260806
+- codex/shrink-lexicon-artifact-20260806
+- codex/dynamic-suite-sitemaps-20260806
+- codex/port-tool-audits-20260806
+- codex/fix-detour-live-500-20260806
+- codex/amplify-artifact-reduction-20260806
+- codex/integrate-persona-suite-20260806
+- codex/sync-generated-tool-descriptions-20260806
+- cmp-check
+- codex/final-override-runtime-fixes-20260806
+- codex/amplify-memory-sigkill-20260806
+- codex/pre-final-rebase-20260806
+- codex/merge-all-web-branches-20260805-v2
+- codex/canonical-ranking-metadata-20260805
+- codex/web-release-audited-20260805
+- codex/release-all-web-branches-20260805
+- codex/finalize-all-branches-20260805
+- codex/artifact-registry-opt-20260805
+- codex/aws-amplify-web-20260803
+- codex/web-dependency-sync-20260804
+- more-branches
+- ai-explore-meta
+- codex/hard-404-web-20260803
+- codex/canonical-release-20260803
+- codex/canonical-release-20260803-final
+- raise-gate
+- soft404
+- t12
+- t6
+- fix-top11
+- release/audit2
+- release/lookouts-ready
+- release/weight
+- codex/canonical-repair-20260730
+- release/gsc-wave
+- codex/canonical-sync-bd7ac1ab9
+- release/gsc-wave-with-lookouts
+- codex/canonical-web-deploy-20260727
+- fix/seo-sitemap-and-structured-data
+- fix/seo-metadata-and-soft-404s
+
+## Family C — canonical-admin legacy history (SKIPPED, out of scope, needs human review)
+
+Root commit 7ec6266b8d... = exact root of `canonical-admin/main`. Unrelated history to `beta`. 7 branches:
+
+- codex/canonical-admin-release-20260806
+- codex/admin-sale-contract-fix-20260805
+- codex/canonical-admin-reconcile-20260804
+- codex/admin-security-sync-20260804
+- codex/hard-404-admin-20260803
+- codex/admin-tools-slugs-auth-20260803
+- codex/aws-amplify-admin-20260803
