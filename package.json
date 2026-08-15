@@ -195,8 +195,6 @@
   },
   "dependencies": {
     "@prettier/plugin-php": "^0.25.0",
-    "@tiptap/core": "^2.27.2",
-    "@tiptap/pm": "^2.27.2",
     "heic2any": "^0.0.4",
     "monaco-editor": "0.53.0",
     "prettier": "^3.9.5",
