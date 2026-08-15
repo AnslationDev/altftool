@@ -85,6 +85,11 @@ test("compressed tool SEO lookup preserves legacy and per-tool content", async (
       ...withoutUnpublishableHowTo(authoredSeo[slug]),
     });
   }
+  // When any real tool's overrides/seo.js steps are generic and not rescued
+  // by a more specific source, the quality filter must have dropped "steps"
+  // before it reached the compressed payload. This is a live-data spot check,
+  // not the mechanism's only coverage — see the synthetic test below, which
+  // does not depend on the current catalogue containing a "dirty" example.
   const omittedHowToSlugs = expectedSlugs.filter((slug) => {
     const sourceHasSteps =
       Object.hasOwn(toolContentOverrides[slug] || {}, "steps") ||
@@ -98,10 +103,6 @@ test("compressed tool SEO lookup preserves legacy and per-tool content", async (
     );
     return sourceHasSteps && !expectedHasSteps;
   });
-  assert.ok(
-    omittedHowToSlugs.length > 0,
-    "fixture must include at least one generic HowTo step set",
-  );
   for (const slug of omittedHowToSlugs) {
     assert.equal(
       Object.hasOwn(generatedSeo[slug], "steps"),
@@ -115,6 +116,39 @@ test("compressed tool SEO lookup preserves legacy and per-tool content", async (
     "string",
   );
   assert.equal(typeof generatedSeo["wcag-quick-auditor"]?.intro, "string");
+});
+
+// The live-data spot check above only exercises the filter when the current
+// catalogue happens to contain a tool whose steps are generic and unrescued.
+// That fixture is not guaranteed to exist — content authors keep fixing
+// generic steps by shipping a per-tool seo.js override — so the mechanism
+// itself is verified here against controlled input instead of real content.
+test("the HowTo quality filter drops generic steps and keeps specific ones", () => {
+  const genericSteps = [
+    "Click the button to get started.",
+    "Enter your details and press submit.",
+    "View the result on the page.",
+  ];
+  const specificSteps = [
+    "Enter Height with the CM or FT/IN toggle and Weight with KG or LBS.",
+    "Add Age and Gender, then press Calculate Now.",
+    "Read the WHO category and Protein Goal, then press Download Report.",
+  ];
+
+  assert.equal(hasPublishableHowToSteps(genericSteps), false);
+  assert.equal(hasPublishableHowToSteps(specificSteps), true);
+
+  const genericSanitized = withoutUnpublishableHowTo({
+    intro: "x",
+    steps: genericSteps,
+  });
+  assert.equal(Object.hasOwn(genericSanitized, "steps"), false);
+
+  const specificSanitized = withoutUnpublishableHowTo({
+    intro: "x",
+    steps: specificSteps,
+  });
+  assert.deepEqual(specificSanitized.steps, specificSteps);
 });
 
 test("generated tool lookups stay limited to deployable server modules", async () => {

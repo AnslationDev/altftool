@@ -38,28 +38,41 @@ async function withKey(key, run) {
 
 const VALID_KEY = "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6";
 
-test("stays inert when no key is configured", async () => {
+// The committed DEFAULT_INDEXNOW_KEY in indexNow.js is intentional, not a
+// leaked secret: an IndexNow key is a public verification token (served back
+// at /indexnow-key.txt so the search engine can confirm host ownership), and
+// shipping the feature switched off because ALTFT_INDEXNOW_KEY was never set
+// anywhere was the actual bug this constant fixed. So "no override configured"
+// must fall back to the committed key and keep submitting, not go inert.
+test("falls back to the committed key when no override is configured", async () => {
   await withKey(undefined, async () => {
     const { submitToIndexNow, getIndexNowKey } = await load();
     const stub = stubFetch();
     try {
-      assert.equal(getIndexNowKey(), null);
-      assert.deepEqual(await submitToIndexNow(["/a"]), { skipped: "no-key" });
-      assert.equal(stub.calls.length, 0, "must not call the network without a key");
+      const key = getIndexNowKey();
+      assert.ok(key, "must fall back to the committed default key");
+      const result = await submitToIndexNow(["/a"]);
+      assert.equal(result.ok, true);
+      assert.equal(stub.calls.length, 1, "must submit using the committed key");
+      assert.equal(stub.calls[0].body.key, key);
     } finally {
       stub.restore();
     }
   });
 });
 
-test("a malformed key is ignored rather than submitted", async () => {
+test("a malformed override falls back to the committed key rather than disabling submission", async () => {
   await withKey("short", async () => {
     const { getIndexNowKey, submitToIndexNow } = await load();
     const stub = stubFetch();
     try {
-      assert.equal(getIndexNowKey(), null);
-      assert.deepEqual(await submitToIndexNow(["/a"]), { skipped: "no-key" });
-      assert.equal(stub.calls.length, 0);
+      const key = getIndexNowKey();
+      assert.ok(key, "must fall back to the committed default key");
+      assert.notEqual(key, "short", "the malformed override itself must not be used");
+      const result = await submitToIndexNow(["/a"]);
+      assert.equal(result.ok, true);
+      assert.equal(stub.calls.length, 1);
+      assert.equal(stub.calls[0].body.key, key);
     } finally {
       stub.restore();
     }
