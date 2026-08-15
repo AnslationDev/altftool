@@ -1,4 +1,12 @@
 const seo = {
+  title: "Word Frequency Counter with Spreadsheet-Ready Output",
+  metaDescription:
+    "Paste text and get every word ranked by how often it appears, as tab-separated count-and-word lines that drop straight into Excel or Sheets.",
+  steps: [
+    "Paste text into the Input panel — it is lowercased and split into words on anything that is not a letter, digit or apostrophe — or click Load sample for a short example.",
+    "The Result pane recounts on every keystroke, listing each word as count, tab, word — most frequent first, ties broken alphabetically.",
+    "Click Copy to grab the ranked list; pasted into Excel or Google Sheets it lands as two clean columns of count and word.",
+  ],
   intro:
     "A word frequency counter takes a block of text, lowercases it, splits it into words on anything that is not a letter, digit or apostrophe, and returns every distinct word with the number of times it appears, ordered from most to least frequent. Paste text on the left and the ranked list appears on the right as tab-separated count-and-word lines, updating on every keystroke. Ties are broken alphabetically, so the same input always produces the same order.",
   useCases: [

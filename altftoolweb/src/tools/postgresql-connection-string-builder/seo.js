@@ -1,4 +1,12 @@
 const seo = {
+  title: "PostgreSQL Connection String Builder (URI and DSN)",
+  metaDescription:
+    "Build a libpq postgresql:// URI and matching keyword/value DSN with sslmode, connect_timeout, search_path and pool settings — passwords percent-encoded.",
+  steps: [
+    "Fill in Host, Port, Database name, User and Password — special characters are percent-encoded automatically.",
+    "Pick an sslmode (disable through verify-full) and set connect_timeout, application_name, Schema / search_path or pool_max_conns.",
+    "Use Copy URI for the postgresql:// form or Copy DSN for the equivalent host=... keyword/value string.",
+  ],
   intro:
     "This builder assembles a PostgreSQL connection string in both libpq formats — the URI form postgresql://user:password@host:port/dbname?params and the keyword/value DSN form host=... dbname=... — with special characters percent-encoded automatically. It covers sslmode, connect_timeout, application_name, a schema via search_path and the pgxpool pool_max_conns setting. Everything is generated locally in the browser; nothing you type is transmitted.",
   useCases: [

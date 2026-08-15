@@ -1,4 +1,12 @@
 const seo = {
+  title: "3-2-1 Backup Planner for Growing Footage Libraries",
+  metaDescription:
+    "Project your footage library's growth in TB, count the drives each 3-2-1 copy needs, price the cloud copy month by month and estimate full restore time.",
+  steps: [
+    "Enter \"Library size today (TB)\", \"New footage per month (GB)\" and the \"Planning horizon (months)\", plus your drive capacity and price in INR.",
+    "Pick the \"Off-site copy\" mode — the cloud archive is priced per TB per month as the library grows across the horizon.",
+    "Read the total drives, drive and cloud spend, and \"Full restore from a local drive\" vs \"Full restore from the cloud\" times, then click \"Copy plan\".",
+  ],
   intro:
     "The 3-2-1 backup rule says keep three copies of your data, on two different types of media, with one copy off site. This planner applies that rule to a footage library that is still growing: it projects your storage in TB over a chosen horizon, adds free-space headroom, works out how many drives each copy needs, prices the cloud copy month by month as the library grows, and estimates how long a full restore would take over your drive bus and your internet link.",
   useCases: [

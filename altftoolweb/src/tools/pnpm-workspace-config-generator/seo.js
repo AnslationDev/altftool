@@ -1,4 +1,12 @@
 const seo = {
+  title: "pnpm-workspace.yaml Generator with Catalogs",
+  metaDescription:
+    "Build pnpm-workspace.yaml from package globs, ! exclusions and catalog versions, with the catalog: snippet packages use. Catalogs need pnpm 9.5+.",
+  steps: [
+    "List Package globs (one per line) and Exclude globs (no leading !), or start from one of the glob preset buttons.",
+    "Add Default catalog entries as react ^19.0.0, react@^19.0.0 or react: ^19.0.0, plus an optional named catalog like react17 with its own entries.",
+    "Press Copy YAML to grab the generated pnpm-workspace.yaml, shown with a catalog: usage snippet for a package.json below it.",
+  ],
   intro:
     "This tool generates a valid pnpm-workspace.yaml — the root file that tells pnpm which directories are workspace packages and, since pnpm 9.5, which dependency versions live in shared catalogs. It emits the packages glob list (including ! exclusions), a default catalog and an optional named catalog, plus the exact catalog: reference snippet for a package.json. Monorepo maintainers get a copy-paste config that keeps every package on the same dependency versions.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hex to Decimal & Binary Converter with Nibble View",
+  metaDescription:
+    "Convert one value between hex, decimal and binary (0 to 4,294,967,295) and see every hex digit broken into its 4-bit pattern and decimal value.",
+  steps: [
+    "Under Enter Value, choose the input base — Decimal, Hex or Binary — and type an unsigned whole number up to 4,294,967,295 (0xFFFFFFFF).",
+    "Click Convert to get all three representations at once, with the hexadecimal zero-padded to whole bytes and shown with a 0x prefix.",
+    "Copy any row in the Results panel with its copy icon, and read the Nibble Breakdown showing each hex digit above its 4-bit pattern and decimal value.",
+  ],
   intro:
     "This converter takes one unsigned whole number in decimal, hexadecimal or binary and returns all three representations at once, plus a nibble-by-nibble breakdown showing each hex digit with its four-bit pattern and decimal value. It accepts anything from 0 up to 4,294,967,295 — the full 32-bit unsigned range — and pads hex output to a whole number of bytes. It is for developers, students and hardware people who need the bit-level view, not just the answer.",
   useCases: [

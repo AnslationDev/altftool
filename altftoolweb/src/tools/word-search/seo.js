@@ -1,4 +1,12 @@
 const seo = {
+  title: "Word Search Puzzles Online: 4 Themes, 3 Grid Sizes",
+  metaDescription:
+    "Play a freshly generated word search — Animals, Countries, Fruits & Food or Technology — on 8×8, 12×12 or 15×15 grids with a timer and saved best times.",
+  steps: [
+    "Pick a theme — Animals, Countries, Fruits & Food or Technology — and a grid size: 8 × 8 (6 words), 12 × 12 (10 words) or 15 × 15 (14 words).",
+    "Press Start puzzle, then drag across letters (mouse or touch) or use the arrow keys with Enter to select words in any of the eight directions.",
+    "Find every hidden word to stop the timer — your best time per grid size is saved in the browser — then hit Play again for a new random grid.",
+  ],
   intro:
     "Word Search hides themed words in a letter grid in all eight directions — across, down, both diagonals and each of those backwards — and you find them by dragging across the letters or selecting them with the keyboard. Pick a theme (Animals, Countries, Fruits & Food or Technology) and a grid of 8x8, 12x12 or 15x15, and a fresh puzzle is generated with 6, 10 or 14 words placed at random. A timer runs while you play and your best time is kept per grid size.",
   useCases: [

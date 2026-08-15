@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cookie Viewer: See, Add, Edit & Delete Browser Cookies",
+  metaDescription:
+    "List every cookie document.cookie exposes for this domain with decoded values, add one with an expiry in days, or delete it with the 1970 expiry trick.",
   intro:
     "Cookie Viewer reads `document.cookie` for the current domain and lists every name and URL-decoded value it can see, then lets you add a cookie with a chosen expiry in days, overwrite an existing value, or delete one by re-setting it with an expiry of 1 January 1970. New cookies are written with `path=/` and the value URL-encoded. It is for developers and QA testers who want to flip a feature flag or clear a session marker without opening the browser's devtools panel.",
   useCases: [

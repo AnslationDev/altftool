@@ -1,4 +1,7 @@
 const seo = {
+  title: "Blog Title Generator — How-To, Listicle & Bold Ideas",
+  metaDescription:
+    "Type a keyword, pick How-to, Listicle or Bold, and get four template headlines with your keyword title-cased inside — listicle counts stay odd, 5 to 13.",
   intro:
     "The Blog Title Generator turns a keyword into four ready headlines in the tone you choose — how-to, listicle or bold — with your keyword title-cased and dropped into each template. Listicle headlines pull an odd number (5, 7, 9, 11 or 13) because odd counts are the convention for list posts, and regenerating reshuffles the order and re-rolls that number. It is for writers who have the topic settled and want several headline options to compare side by side.",
   useCases: [

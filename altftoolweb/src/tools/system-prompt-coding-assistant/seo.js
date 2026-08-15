@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coding Assistant System Prompt Builder & Token Cost",
+  metaDescription:
+    "Assemble a system prompt from your stack, style guide, test policy and hard rules - ordered role, context, rules, output - with a live token estimate.",
+  steps: [
+    "Fill the Stack fields - Primary language (required), Framework, Package manager, Test framework, Style guide - and set Answer length, Test policy and Code output format under Behaviour.",
+    "Tick Review checklist and Hard rules options such as 'Never invent APIs or packages', and set the Token budget for the system prompt.",
+    "Read the assembled prompt under 'Your system prompt' with its estimated token range and 'Gaps worth closing' warnings, then click Copy prompt.",
+  ],
   intro:
     "This builder assembles a production-grade system prompt for a coding assistant from your stack, style guide, test policy, review checklist and refusal rules, ordered role → context → rules → output format. It also estimates the prompt's token cost using the roughly-4-characters-per-token rule of thumb, because a system prompt is paid on every single request. It is for developers and teams standardising how an AI assistant behaves inside their codebase.",
   useCases: [

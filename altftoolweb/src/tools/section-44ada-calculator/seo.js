@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 44ADA Calculator – Presumptive Tax FY 2025-26",
+  metaDescription:
+    "Presumptive income at 50%+ under Section 44ADA, the ₹50/₹75 lakh limit via the 5% cash test, and a tax comparison vs regular books — new or old regime.",
+  steps: [
+    "Choose \"New regime\" or \"Old regime\", then enter \"Gross professional receipts (₹)\", the cash portion and \"Profit declared (% of receipts)\" — 50 to 100.",
+    "Add \"Actual expenses (for comparison, ₹)\", \"Other income (₹)\" and Chapter VI-A deductions (old regime only) to build the regular-books comparison.",
+    "Read the presumptive income, your eligibility against the ₹50/₹75 lakh limit and the \"44ADA vs regular books\" tax difference; click \"Copy result\".",
+  ],
   "intro": "Section 44ADA Calculator works out the presumptive income a resident professional can declare — 50% of gross receipts, or more if you choose — and the income tax on it under the new or old regime. It also checks which turnover ceiling applies to you: ₹75 lakh when cash receipts are 5% of turnover or less, otherwise ₹50 lakh. A side-by-side comparison shows what the same year would cost if you kept regular books and claimed your actual expenses instead.",
   "useCases": [
     "Decide whether a freelance doctor, lawyer, architect or IT consultant is better off under 44ADA or regular books.",

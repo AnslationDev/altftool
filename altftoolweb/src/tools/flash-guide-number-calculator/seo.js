@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flash Guide Number Calculator: Aperture & Distance",
+  metaDescription:
+    "Solve GN = f-number x distance for the missing value, scaled for ISO and manual flash power, in metres and feet — with a working-distance table.",
+  steps: [
+    "Enter the Guide number at ISO 100, choose Metres or Feet, and set ISO and the Flash power fraction.",
+    "Set Solve for to 'Aperture, from a known distance' or 'Distance, from a chosen aperture' and fill in the known value.",
+    "Read the correct f-stop or flash distance with the effective guide number and per-aperture distance table, or click Copy result.",
+  ],
   intro:
     "Flash Guide Number Calculator solves the relationship GN = f-number × distance, so entering any two of guide number, aperture and flash-to-subject distance returns the third. It scales the guide number by the square root of ISO ÷ 100 and by the square root of the manual power fraction, which is why quadrupling the ISO doubles the reach and quarter power halves it. Written for manual flash and studio strobe work where no TTL metering is involved.",
   useCases: [

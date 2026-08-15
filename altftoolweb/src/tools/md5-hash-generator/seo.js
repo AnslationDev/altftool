@@ -1,4 +1,12 @@
 const seo = {
+  title: "MD5 Hash Generator — Instant 32-Char Hex Digest",
+  metaDescription:
+    "Type text and get its 128-bit MD5 digest as 32 hex characters instantly — UTF-8 input, uppercase toggle, character/byte counts, no upload.",
+  steps: [
+    "Type or paste into the Source Text / Message box — input is UTF-8 encoded and CRLF line breaks are normalised to LF before hashing.",
+    "The 32-character digest appears in Calculated MD5 Hash on every keystroke; tick Uppercase Hash Format to change case.",
+    "Press Copy to grab the hash, with live Character Length and Payload Size in bytes shown under Message Metrics.",
+  ],
   intro:
     "The MD5 Hash Generator computes the 128-bit MD5 digest of any text you type, following the RFC 1321 algorithm and returning it as 32 hexadecimal characters. It updates as you type, encodes your input as UTF-8 first, and offers a lowercase or uppercase output format plus live character and byte counts. It is meant for checksum comparison and non-security identifiers — MD5 is broken for collision resistance and should not be used to hash passwords or sign anything.",
   useCases: [

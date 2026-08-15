@@ -1,4 +1,12 @@
 const seo = {
+  title: "EXIF and GPS Remover: Re-encode Photos to Clean PNG",
+  metaDescription:
+    "Strip EXIF, GPS and camera tags by redrawing the photo through a canvas in your browser; the download is a clean PNG with dimensions reported.",
+  steps: [
+    "Choose your photo with the 'Local file(s)' picker — if several are selected, only the first file is processed and the rest are ignored.",
+    "Press 'Run local workbench' to decode the image and redraw its pixels through a canvas, which carries no EXIF, GPS or camera metadata block.",
+    "The cleaned image downloads as altftool-batch-metadata-scrubber.png, and the Verified result table lists width, height and original bytes.",
+  ],
   intro:
     "The Batch Metadata Scrubber strips EXIF, GPS and camera metadata from a photo by decoding it and re-encoding the raw pixels through an HTML canvas, which carries no metadata block at all. It is for anyone about to post or send a photo who does not want the file to also reveal where it was taken, on what device, and when. The tool reports the decoded width, height and original byte size so you can confirm the picture itself came through unchanged.",
   useCases: [

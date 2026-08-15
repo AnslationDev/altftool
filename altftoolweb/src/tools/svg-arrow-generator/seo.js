@@ -1,4 +1,12 @@
 const seo = {
+  title: "SVG Arrow Generator - Curved Bezier Arrows to Copy",
+  metaDescription:
+    "Set two points and a bow height to draw a quadratic Bezier arrow with a tangent-aligned head. Uses currentColor; copy the full SVG or just the path.",
+  steps: [
+    "Set Start X/Y and End X/Y, drag the Bow height slider (-200% to 200% of the straight-line distance), and pick a Head style: Filled triangle, Open V (stroked) or No head.",
+    "Toggle Dashed shaft or Head at both ends, or tap a preset such as Gentle arc, Deep hook or Back-curve.",
+    "Check the live preview, then press Copy SVG for the full markup or Copy path only for the shaft's path data.",
+  ],
   intro:
     "SVG Arrow Generator turns two points and a bow amount into a ready-to-paste annotation arrow drawn as a single quadratic Bezier curve (the SVG 'Q' path command) with a matching arrowhead. The head is rotated to the curve's tangent at the tip, so it always points along the path instead of along the straight line between the endpoints. Stroke and fill use currentColor, which means one file works on light and dark backgrounds without editing.",
   useCases: [

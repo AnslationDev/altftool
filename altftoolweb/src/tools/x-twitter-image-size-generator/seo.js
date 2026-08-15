@@ -1,4 +1,12 @@
 const seo = {
+  title: "X (Twitter) Image Size Generator with Safe Areas",
+  metaDescription:
+    "Pick an X preset — 1600x900 post, 1500x500 header, 1200x630 card — set export scale up to 4x and a safe inset, then copy CSS with exact dimensions.",
+  steps: [
+    "Choose an \"Image type\" preset: Post image landscape 1600×900, square 1200×1200, portrait 1080×1350, Profile header 1500×500 or Website card 1200×630.",
+    "Set \"Export scale\" (above 0, up to 4x) and \"Safe inset (px)\" (0 to 400).",
+    "Read Canvas, Aspect ratio and Safe area in the \"Export result\" panel, then click \"Copy CSS\" for the .x-artboard and .x-safe-area rules.",
+  ],
   intro:
     "This tool resizes any image to the exact pixel dimensions X (formerly Twitter) renders without re-cropping, and shows how much of the frame is lost before you export. It covers the 1500x500 header, 1600x900 and 1080x1350 post images, the 1200x628 summary_large_image link card and the square 400x400 profile photo, using cover, contain or stretch fitting maths. Everything is computed and encoded in your browser, so the source file never leaves the device.",
   useCases: [

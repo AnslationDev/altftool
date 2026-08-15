@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloud Egress Fee Comparison: AWS, Azure, GCP, Cloudflare",
+  metaDescription:
+    "Enter monthly GB to rank egress bills on AWS, Azure, GCP, Oracle, CloudFront, Bunny and Cloudflare, with free allowances and tiered list prices applied.",
+  steps: [
+    "Enter your Outbound traffic to the internet per month (GB), or tap a preset — 500 GB, 5 TB, 50 TB or 200 TB.",
+    "Each provider's published free allowance and tiered list prices are applied to rank all seven from cheapest to dearest.",
+    "Read the Monthly cost, Effective $/GB and the dearest-vs-cheapest spread, then click Copy result for a text summary.",
+  ],
   intro:
     "This tool compares what one month of outbound internet traffic costs on AWS, Azure, Google Cloud, Oracle Cloud, Amazon CloudFront, Bunny CDN and Cloudflare, applying each provider's published free allowance and tiered per-GB list prices — for example AWS at $0.09/GB after 100 GB free versus Oracle's 10 TB free and Cloudflare's $0 egress. It is for engineers and founders deciding where to host bandwidth-heavy workloads, where egress often outweighs compute in the bill.",
   useCases: [

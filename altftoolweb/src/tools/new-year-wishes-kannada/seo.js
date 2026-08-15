@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kannada New Year Wishes: Yugadi Greetings, SMS Length",
+  metaDescription:
+    "Yugadi and 1 January greetings in Kannada script, Roman transliteration and English, with honorific salutations and exact 70-char SMS part counts.",
+  steps: [
+    "Pick the Occasion — 'Yugadi / Ugadi (Kannada new year)' or '1 January (Hosa varsha)' — plus a tone and who the greeting is for.",
+    "Choose the Script (Kannada script only, Roman transliteration only, or Kannada + Roman) and add optional recipient and sender names.",
+    "Press 'Copy greeting' for the featured wish, or 'Feature this'/'Copy' on any match — each shows the English meaning, character count and SMS parts.",
+  ],
   intro:
     "This generator assembles Kannada new year greetings from a customary salutation, a message chosen from a curated bank of Yugadi and 1 January wishes, and your sign-off. Each greeting is shown in Kannada script, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It suits anyone who wants correct Kannada wording for elders, friends or business contacts instead of a forwarded image.",
   useCases: [

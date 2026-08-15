@@ -1,4 +1,12 @@
 const seo = {
+  title: "Medication Reminder — Private Daily Dose Schedule",
+  metaDescription:
+    "Keep a private list of medicines — name, dosage, frequency, time — with doses sorted into an upcoming schedule. Stored in your browser; no account.",
+  steps: [
+    "Click + Add Medication and enter the Medication Name, Dosage (e.g. 500mg, 1 tablet) and Time of Day.",
+    "Pick a Frequency — Daily, Twice Daily, Weekly or As Needed — and press Save Medication.",
+    "Read the Upcoming Doses list, sorted by time of day; entries persist in this browser's local storage between visits.",
+  ],
   intro:
     "The Medication Reminder is a private daily medication list: you record each medicine's name, dosage, frequency (daily, twice daily, weekly or as needed) and time of day, and it builds an upcoming-doses view sorted from earliest to latest time. Entries are saved in your own browser so the list is still there next visit, with no account and no data sent anywhere. It is a written schedule for your own reference, not an alarm and not medical advice.",
   useCases: [

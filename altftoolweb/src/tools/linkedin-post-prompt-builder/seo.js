@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Post Prompt Builder – Hook, Story, Takeaway",
+  metaDescription:
+    "AI prompt for a hook-story-takeaway LinkedIn post, sized to the 3,000-character limit with the hook budgeted under the ~140-character mobile fold.",
+  steps: [
+    "Fill in 'What the post is about' and 'Who should stop scrolling', and set a Target post length between 200 and 3,000 characters.",
+    "Choose one of the five Hook styles — specific result, contrarian, confession, question or direct address.",
+    "Review the hook, story and takeaway character budgets, then click Copy prompt to paste the generated drafting prompt into your AI chat.",
+  ],
   intro:
     "The LinkedIn Post Prompt Builder writes an AI drafting prompt for a hook-story-takeaway post, sized in characters to fit LinkedIn's 3,000-character post limit. It budgets the hook to land inside the roughly 140-character mobile 'see more' fold, splits the remaining length between story and takeaway, and picks one of five hook styles — specific result, contrarian, confession, question or direct address — each with its own structural instruction.",
   useCases: [

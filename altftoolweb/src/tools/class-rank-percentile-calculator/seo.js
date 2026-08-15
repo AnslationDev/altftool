@@ -1,4 +1,12 @@
 const seo = {
+  title: "Class Rank to Percentile Calculator for College Apps",
+  metaDescription:
+    "Turn your class rank and class size into the top-X% figure and percentile applications ask for — rank 25 of 500 is top 5% and the 95th percentile.",
+  steps: [
+    "Enter Your class rank (1 = top) and the Class size (students ranked) from your transcript.",
+    "Read your standing as a Top X% figure — rank ÷ class size × 100 — with the percentile counting classmates ranked below you.",
+    "Check the Top 10% (decile) and Top 25% (quartile) rows for threshold rules, then click Copy result to paste the figures into your application.",
+  ],
   intro:
     "This calculator converts a class rank and class size into the two figures applications ask for: the 'top X%' value (rank ÷ class size × 100) and the percentile, which is the share of classmates ranked strictly below you. A rank of 25 in a class of 500 is the top 5% and the 95th percentile. It is built for high-school students completing the Common App class rank section or checking eligibility for percentage-based automatic admission rules.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stride Length Calculator – Cadence, Steps or Height",
+  metaDescription:
+    "Work out running stride and step length from watch cadence and pace, a counted step test, or height — plus steps per km and per mile.",
+  steps: [
+    "Pick a method with the mode buttons: \"Cadence + pace\", \"Steps over a distance\" or \"From height\".",
+    "Enter that mode's inputs — e.g. \"Cadence (steps per minute)\" plus pace minutes/seconds per km, or \"Distance covered (metres)\" and \"Steps counted\".",
+    "Read stride length in cm, m and ft with steps per kilometre and per mile, then click \"Copy result\" for the text summary.",
+  ],
   intro:
     "Stride length is the distance covered by one full gait cycle — from a foot strike back to the next strike of the same foot — and it is exactly two steps. This calculator derives it three ways: from watch cadence and pace (step length = speed ÷ steps per second), from a counted step test over a measured distance, or from the pedometer height rule of thumb. Runners get step length, stride length, steps per kilometre and steps per mile from the same input.",
   useCases: [

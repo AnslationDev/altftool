@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Converter: HEX, RGB, HSL, HSV, CMYK & Contrast",
+  metaDescription:
+    "Convert one color to HEX, RGB, RGBA, HSL, HSLA, HSV and CMYK at once, with WCAG contrast scores against white and black plus hue-rotated harmonies.",
   intro:
     "Color Conversions turns one colour into seven notations at once — HEX, RGB, RGBA, HSL, HSLA, HSV and CMYK — and adds the two things you usually need next: its contrast ratio against white and black scored to WCAG, and a set of harmonies derived by rotating the hue. RGB and HSL sliders plus an alpha slider let you nudge the value and watch every output update live. It suits developers and designers picking a colour rather than merely translating one they already have.",
   useCases: [

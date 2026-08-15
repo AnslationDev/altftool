@@ -1,4 +1,7 @@
 const seo = {
+  title: "Play 75-Ball Bingo Online with an Auto-Caller",
+  metaDescription:
+    "Deal a 5x5 American bingo card and call balls from a shuffled 1-75 pool — wins detected on rows, columns, diagonals, four corners and full house.",
   intro:
     "This Bingo Game deals a standard 75-ball American card — a 5x5 grid where the B column draws from 1-15, I from 16-30, N from 31-45, G from 46-60 and O from 61-75, with a free centre square — and calls balls from a shuffled 1-75 pool. It detects a win on any row, any column, either diagonal, the four corners or a full house, and names the pattern you hit. Use it as a caller for a family or classroom game, or play solo with auto-call running.",
   useCases: [

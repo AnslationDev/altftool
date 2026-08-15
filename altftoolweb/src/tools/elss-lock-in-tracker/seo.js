@@ -1,4 +1,12 @@
 const seo = {
+  title: "ELSS Lock-in Tracker – SIP-wise 3-Year Unlock Dates",
+  metaDescription:
+    "Track each ELSS SIP instalment's 36-month lock-in: amount free to redeem as on any date, the next unlock tranche and when the whole folio frees up.",
+  steps: [
+    "Enter the Instalment amount (INR), Investment frequency (monthly, quarterly, yearly or one-time), Number of instalments and First investment date.",
+    "Set the Show status as on date and an Assumed return (% per year) to value the unlocked and locked units.",
+    "Read the Free to redeem figure and the Instalment-wise unlock calendar with per-row Free or days-left status, then click Copy result.",
+  ],
   intro:
     "The ELSS Lock-in Tracker shows the exact date every one of your ELSS instalments completes its statutory three-year lock-in. Because each SIP instalment buys units on its own allotment date, a 12-month SIP does not become redeemable in one go — it frees up instalment by instalment over the following year. Enter your amount, frequency, start date and an 'as on' date to see how much is already free, how much is still locked and when the next tranche opens.",
   useCases: [

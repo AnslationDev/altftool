@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hashtag Mix Balancer: Tier Tags by Real Post Counts",
+  metaDescription:
+    "Paste hashtags with post counts to tier them mega to ultra-niche and build a set sized for your followers — counts always sum, branded tag kept.",
+  steps: [
+    "Paste hashtags with post counts one per line (e.g. '#travel 12M'), add your branded tags and set 'Hashtags in the set (1-30)'.",
+    "Pick your account size, from 'Under 1,000 followers' to 'Over 100,000 followers', to weight the tier split of the set.",
+    "Review the balanced set with each tag's tier and volume plus the Tier balance table, then press 'Copy set' to copy the hashtags.",
+  ],
   intro:
     "Hashtag Mix Balancer sorts a list of hashtags into tiers by how many posts already carry them — mega (1M+), large (100K-1M), niche (10K-100K), micro (1K-10K) and ultra-niche (under 1K) — then builds a set of the size you choose with the tier split weighted for your follower count. Slot counts are allocated by the largest-remainder method, so the per-tier numbers always add up to the total you asked for, and one slot is reserved for a branded tag.",
   useCases: [

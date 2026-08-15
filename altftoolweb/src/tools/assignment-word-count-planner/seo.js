@@ -1,4 +1,12 @@
 const seo = {
+  title: "Assignment Word Count Planner with Section Targets",
+  metaDescription:
+    "Split an essay word budget across weighted sections — 10% intro, 80% body, 10% conclusion preloaded — with exact targets and per-section progress.",
+  steps: [
+    "Enter your Total word budget (default 2000) — the 10% introduction, 80% body, 10% conclusion split comes preloaded as weighted sections.",
+    "Adjust each section's Weight % and log Words written; Add section and the remove buttons reshape the structure for reports or dissertations.",
+    "Read the table of Target, Written, Remaining and Progress per section — targets always sum exactly to the budget — plus the ±10% tolerance band; Copy plan copies it as text.",
+  ],
   intro:
     "This planner divides an assignment's total word budget across its sections in proportion to the weight you give each one, using the largest-remainder method so the per-section targets always add up exactly to the limit. It preloads the structure taught in most academic writing guides — roughly 10% introduction, 80% body and 10% conclusion — and tracks words written against each target so students can see precisely how much every section still needs.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "College Fee Instalment Planner - Monthly Set-Aside",
+  metaDescription:
+    "Turn a semester fee schedule into per-instalment sinking funds - what to set aside each month, every due date and a reminder at your chosen lead time.",
+  steps: [
+    "Enter the Total fee for the programme (₹), Number of instalments, Months between instalments and the First instalment due on date, plus anything Already saved for fees.",
+    "Read the Set aside this month figure - each instalment is funded as its own sinking fund, so the monthly amount steps down as each due date is cleared.",
+    "Use the Due dates and reminders table (Remind me this many days before defaults to 15) and click Copy plan to take the schedule as text.",
+  ],
   intro:
     "This planner converts a semester fee schedule into the amount you actually have to set aside each month, treating every instalment as its own sinking fund rather than dividing the total by the number of months. Each instalment's monthly set-aside is the annuity payment that grows to that instalment by its own due date, existing savings are applied to the earliest due dates first, and the plan reports the due date and a reminder date for every payment.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "50-30-20 Budget Rule Calculator (INR, In-Hand Pay)",
+  metaDescription:
+    "Split take-home pay into 50% needs, 30% wants, 20% savings, compare targets with actual spending in rupees, and try 60-20-20 or 40-30-30 splits.",
+  steps: [
+    "Enter \"Monthly take-home pay (INR)\" and pick a \"Split rule\" — 50 / 30 / 20, 60 / 20 / 20, 70 / 20 / 10 or 40 / 30 / 30.",
+    "Fill in what you actually spend on Needs, Wants and \"Savings & extra debt payoff\", or press \"Use the 50 / 30 / 20 targets\" to prefill the targets.",
+    "Read each bucket's over/under-budget bar, the savings rate and \"Savings in a year at this rate\", then click \"Copy result\".",
+  ],
   intro:
     "This 50-30-20 budget rule calculator splits your monthly take-home pay into three buckets — 50% for needs, 30% for wants and 20% for savings and debt payoff — and then compares those targets against what you actually spend. It shows the rupee gap in every bucket, your real savings rate, and whether your total spending has quietly crossed your income. It is built for salaried earners who want a simple, repeatable monthly budget without maintaining a spreadsheet.",
   useCases: [

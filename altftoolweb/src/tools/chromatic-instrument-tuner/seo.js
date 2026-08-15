@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chromatic Instrument Tuner with Cents Readout Log",
+  metaDescription:
+    "Listens through your mic, finds pitch by autocorrelation and logs the nearest note with cents sharp or flat (A4 = 440 Hz). Audio is analysed locally.",
+  steps: [
+    "Press 'Start with permission' and allow microphone access when the browser asks.",
+    "Play or sing a note — a 4096-sample autocorrelation estimates the pitch and appends a reading whenever the signal is loud enough.",
+    "Read the Live local readings log — timestamp, signal level, frequency in Hz and the nearest note with signed cents such as A4 +2.1¢ — and press 'Stop sensor' to finish.",
+  ],
   intro:
     "The Chromatic Instrument Tuner listens through your microphone, finds the pitch you are playing by autocorrelation, and reports the nearest equal-tempered note plus how many cents sharp or flat you are from it, with A4 fixed at 440 Hz. It is for guitarists, violinists, wind players and singers who want a running log of readings rather than a single wobbling needle. Audio is analysed in the page through the Web Audio API and never uploaded.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Birthday Wishes in Tamil — Casual & Respectful Forms",
+  metaDescription:
+    "Tamil birthday messages written separately for நீ and நீங்கள், with romanised Tamil, an English meaning and the SMS parts each wish needs.",
+  steps: [
+    "Pick Who is it for? and a Tone, set How many messages (1-6), and optionally add Their name and Sign it from.",
+    "Leave Politeness on Automatic or force the நீ or நீங்கள் form, and tick Show romanised Tamil for a transliteration.",
+    "Use Other wordings to reshuffle, then Copy one wish or Copy all — each message shows its tone and SMS segment count.",
+  ],
   intro:
     "Tamil Birthday Wishes Generator writes a complete Tamil birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Tamil separates நீ from நீங்கள், and that choice changes the possessive (உன் versus உங்கள்) and the verb ending, so every wording here is stored in both registers rather than patched. Each message comes with a romanised version, an English meaning and the number of SMS parts it needs.",
   useCases: [

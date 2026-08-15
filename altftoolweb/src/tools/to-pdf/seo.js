@@ -1,4 +1,12 @@
 const seo = {
+  title: "Convert Text or Images to PDF in Your Browser",
+  metaDescription:
+    "Turn typed text or JPG, PNG and WebP images into an A4, A5, Letter or Legal PDF in your browser — see the page count before you download. No upload.",
+  steps: [
+    "Choose \"Text to PDF\" and type or paste your content, or \"Images to PDF\" and pick JPG, PNG or WebP files — each image becomes one page.",
+    "Set \"Page size\", \"Orientation\", \"Margin (mm)\" and \"Font size (pt)\" (or \"Image placement\" for images); the \"Pages in the PDF\" count updates live.",
+    "Click \"Download PDF\" to save document.pdf (text) or images.pdf (images), generated in your browser with no upload.",
+  ],
   intro:
     "To PDF converts typed text or picture files (JPG, PNG, WebP) into a downloadable PDF entirely inside your browser, with no upload step. It lays every page out in millimetres using standard paper sizes — A4 at 210 × 297 mm (ISO 216) and US Letter at 215.9 × 279.4 mm (ANSI A) — and shows how many pages you will get before you download. It is built for anyone who needs a quick, private PDF from notes, receipts or scanned photos without installing software.",
   useCases: [

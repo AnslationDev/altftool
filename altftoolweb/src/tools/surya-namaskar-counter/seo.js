@@ -1,4 +1,12 @@
 const seo = {
+  title: "Surya Namaskar Counter: Rounds, Time & Calories",
+  metaDescription:
+    "Count sun salutation rounds with presets from 5 to 108, get session time, breaths and MET-based calories, and log a daily practice streak.",
+  steps: [
+    "Tap the plus/minus counter or a preset — 5, 11, 12, 21 or 108 rounds — and tick 'One round = both legs (2 sequences)' if you count that way.",
+    "Choose a Practice pace, your Body weight (kg) and Rest between rounds (seconds).",
+    "Read session length, breaths and kcal from MET × 3.5 × kg ÷ 200; log dates with Add day to grow the streak, then press Copy summary.",
+  ],
   intro:
     "This counter tracks rounds of Surya Namaskar — the twelve-posture sun salutation, one breath per posture — and converts them into session time, total breaths and an energy estimate. Calories use the ACSM relationship kcal/min = MET × 3.5 × body weight in kg ÷ 200, with MET values taken from the Compendium of Physical Activities (2.5 for Hatha, 3.3 for Surya Namaskar, 4.0 for power-paced flow). A day log alongside it shows your current and longest practice streak.",
   useCases: [

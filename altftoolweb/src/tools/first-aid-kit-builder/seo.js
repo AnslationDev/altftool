@@ -1,4 +1,12 @@
 const seo = {
+  title: "First Aid Kit Checklist Builder — Home, Car, Office, Trek",
+  metaDescription:
+    "Kit lists with quantities and packed weight, scaled by people, days and distance from help; workplace kits floored at the ANSI Z308.1 Class A minimum.",
+  steps: [
+    "Pick a Kit type — Home, Car / two-wheeler, Workplace, Trek / outdoors or Travel / hotel — and the Distance from professional help, from urban to remote.",
+    "Set People covered, Days of coverage before restock and the 'Packed or bought on' date, and tick Children are covered to add child-size items.",
+    "Read the list's line count, total units and packed weight in kilograms, then click Copy list for the checklist text.",
+  ],
   intro:
     "A first aid kit list is only useful when the quantities match the people, the days and the distance from help it has to cover. This builder starts from a per-item reference kit for one person over seven days, scales the consumables by group size, coverage period and how far you are from professional care, and — for workplace kits — holds every mapped item at the ANSI/ISEA Z308.1-2021 Class A minimum fill, which is defined for a kit serving up to 25 people.",
   useCases: [

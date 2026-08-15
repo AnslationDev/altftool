@@ -1,4 +1,12 @@
 const seo = {
+  title: "Best Time to Post in India: IST Posting Planner",
+  metaDescription:
+    "Get a week of IST posting slots ranked for your Indian audience, converted to local time in the UK, US, Gulf and more — daylight saving included.",
+  steps: [
+    "Pick your audience profile — working professionals, students, Tier-2/3 regional, daytime-at-home or NRI/diaspora — plus Posts per week (1-14) and the week's start date.",
+    "Tick the audience time zones to show: India, UAE (Gulf), UK, US East and West Coast, Singapore/Malaysia, Australia east or East Africa.",
+    "Read the dated weekly slots with each zone's exact local time (daylight saving applied) and the ranked IST windows, then click Copy plan.",
+  ],
   intro:
     "Creator Posting Time Planner India builds a week of posting slots in India Standard Time for the audience you actually have, then converts each slot into the exact local time in the countries your viewers live in. Because IST is a fixed UTC+05:30 with no daylight saving, an IST time maps to one UTC instant; the tool formats that instant with the IANA time-zone database, so a 20:00 IST post correctly reads 10:30 in New York in August and 09:30 in December.",
   useCases: [

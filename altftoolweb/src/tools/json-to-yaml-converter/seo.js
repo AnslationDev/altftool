@@ -1,4 +1,10 @@
 const seo = {
+  title: "JSON to YAML Converter with 2-Space Block Style",
+  steps: [
+    "Paste a JSON object or array into the JSON input textarea — a sample object is pre-loaded to start from.",
+    "The YAML output pane converts on every keystroke into block style with two-space indents; invalid JSON shows the parser's error message instead.",
+    "Press Copy (disabled while the JSON is invalid) to put the YAML on your clipboard — the button reads Copied briefly.",
+  ],
   intro:
     "The JSON to YAML Converter rewrites a JSON object or array as block-style YAML, using two spaces per nesting level and quoting only the strings that would otherwise be misread by a YAML parser. Values that contain characters like a colon, hash, dash or brace, or that begin or end with a space, are wrapped in double quotes; numbers, booleans and null are left bare. It is for anyone hand-editing a config that wants YAML but whose source of truth arrived as JSON.",
   useCases: [

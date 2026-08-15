@@ -1,4 +1,12 @@
 const seo = {
+  title: "Image Collage Maker – 1200x1200 PNG Grid Collages",
+  metaDescription:
+    "Drop photos into a grid, 2x2, row or column layout on a 1200x1200 canvas, set 0-50 px spacing, and download a full-quality PNG — all in your browser.",
+  steps: [
+    "Click \"Select Photos\" (or \"Add Photos\") or drag image files onto the workspace — the picker accepts any image/* type and thumbnails appear in the Images list.",
+    "Pick a Layout Style (grid, 2x2, horizontal or vertical) and drag the \"Image Spacing\" slider between 0 and 50 px; the 1200x1200 canvas preview redraws instantly.",
+    "Click \"Download Collage\" to save the canvas as a full-quality PNG named collage-<timestamp>.png, or \"Clear Canvas\" to start over.",
+  ],
   intro:
     "Image Collage Maker arranges the photos you drop in on a fixed 1200 x 1200 pixel canvas using one of four layouts — auto grid, 2x2, single row or single column — and exports the result as a full-quality PNG. Each photo is centre-cropped to fill its cell rather than squashed, so aspect ratios stay correct whatever mix of portrait and landscape shots you add. The gutter between cells is a slider from 0 to 50 pixels, and the preview redraws as you move it.",
   useCases: [

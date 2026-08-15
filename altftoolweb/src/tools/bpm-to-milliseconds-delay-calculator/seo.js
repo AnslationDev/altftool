@@ -1,4 +1,12 @@
 const seo = {
+  title: "BPM to ms Delay Calculator – Dotted & Triplet Times",
+  metaDescription:
+    "Convert tempo to delay times from 60000/BPM: straight, dotted and triplet notes in ms, Hz and samples — plus a reverse lookup for any ms value.",
+  steps: [
+    "Enter a \"Tempo (BPM)\" or tap a preset (70 to 174 BPM), then pick a \"Time signature\" and \"Sample rate (for the samples column)\".",
+    "Read the Note values table — straight, dotted and triplet — in milliseconds, or tick \"Show the table in samples instead of ms\".",
+    "Type a value in \"Delay time you already have (ms)\" to see the closest note value, or click \"Copy result\" for the whole ms table.",
+  ],
   intro:
     "BPM To Delay Milliseconds Calculator converts a tempo into the exact note lengths a track runs on, starting from the one rule everything else follows: a quarter note lasts 60000 ÷ BPM milliseconds. From there it derives straight, dotted and triplet values from a whole note down to a 1/64, and shows each as milliseconds, hertz for LFO rates, and samples for code or plugin automation. It also names the closest note value to a delay time you already have.",
   useCases: [

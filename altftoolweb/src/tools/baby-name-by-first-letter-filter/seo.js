@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baby Names by First Letter – A-Z Filter with Meanings",
+  metaDescription:
+    "Tap a letter on the A-Z row, then filter by gender, origin, name length and meaning keywords — every entry shows the source language and meaning.",
+  steps: [
+    "Tap a Starting letter on the A-Z keypad (or All) — each letter button announces how many names begin with it.",
+    "Narrow with the Gender and Origin dropdowns, the Shortest (letters) and Longest (letters) fields, and the Meaning contains search box.",
+    "Browse the Matching names table of name, gender, origin and meaning, then click Copy list to copy every match with its meaning.",
+  ],
   intro:
     "This filter narrows a curated list of baby names by the letter they start with, then by gender, source language, how many letters the name has, and any word in the meaning. It is built for the common real constraint — a family that wants a name beginning with a particular letter, often one suggested by a birth star, a grandparent's name or a naming custom. Every entry shows the origin language and the meaning that is consistently attested for that name.",
   useCases: [

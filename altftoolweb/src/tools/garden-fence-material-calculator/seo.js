@@ -1,4 +1,12 @@
 const seo = {
+  title: "Garden Fence Calculator: Posts, Bays & Concrete",
+  metaDescription:
+    "Turn a fence length into a take-off: posts, evenly re-spread bays, panels, wire and post-hole concrete with cement bags at a 1:2:4 mix.",
+  steps: [
+    "Enter the Total fence length or perimeter, unit and Total gate width, then pick a Fence style — it fills in typical spacing, panel width and strand count.",
+    "Set Maximum post spacing, Fence height above ground, Post section width (mm) and corners, and tick the closed-perimeter box if the run returns to its start.",
+    "Read Posts required with bays, panels, wire, buried depth and 50 kg cement bags at a 1:2:4 mix, then press Copy result.",
+  ],
   intro:
     "A fence take-off is a chain of three counts — bays, then posts, then the concrete under them — and this calculator runs all three from one length. It divides the run (minus gate openings) by your maximum post spacing, rounds bays up and re-spreads the spacing evenly so the last bay is not a stub, then sizes each post hole by the standard fencing rule of burying one third of the above-ground height with a 600 mm minimum, in a hole three times the post's width.",
   useCases: [

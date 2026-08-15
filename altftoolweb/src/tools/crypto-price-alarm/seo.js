@@ -1,4 +1,12 @@
 const seo = {
+  title: "Crypto Spot Price Checker by CoinGecko Asset ID",
+  metaDescription:
+    "Fetch a coin's spot price by CoinGecko ID with 24-hour change and last-updated timestamp. On-demand readings — no background watcher or notifications.",
+  steps: [
+    "Type a CoinGecko asset ID — bitcoin, ethereum — into the \"Lookup\" box; it comes pre-filled with bitcoin.",
+    "Click \"Get current result\" to fetch one on-demand reading of the current price.",
+    "Read the \"Current result\" panel — the price summary, the \"Updated\" timestamp and the named source line — and click the button again whenever you want a fresh figure.",
+  ],
   intro:
     "Crypto Price Alarm pulls the current spot price for any coin by its CoinGecko asset ID and reports the price, the 24-hour change as a percentage, and the exact timestamp the source last updated that figure. It is for anyone watching a target level on an asset and wanting a clean, on-demand reading rather than a chart-heavy exchange page. Enter an ID such as `bitcoin` or `ethereum`, request a reading, and you get a four-row result plus the named source it came from.",
   useCases: [

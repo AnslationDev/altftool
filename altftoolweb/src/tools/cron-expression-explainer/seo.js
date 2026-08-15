@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cron Expression Explainer with Next 5 Run Times",
+  metaDescription:
+    "Turn any crontab expression or @macro into plain English, a field-by-field breakdown and the next five run times in UTC, either/or day rule included.",
+  steps: [
+    "Type a 5-field crontab expression or an @macro into Cron expression, or tap an example chip like */15 9-17 * * MON-FRI.",
+    "Set Predict next runs from (UTC) — parsing is live, so the plain-English sentence and Field-by-field breakdown update as you type.",
+    "Read Next 5 runs (UTC) and press Copy result to copy the sentence, breakdown and run times as one text block.",
+  ],
   intro:
     "This explainer parses any standard 5-field crontab expression — minute, hour, day-of-month, month, day-of-week — and translates it into a plain-English sentence, a field-by-field breakdown and the next five run times in UTC. It implements the crontab(5) grammar exactly, including @macros like @daily, name tokens like MON or JAN, and Vixie cron's either/or rule when both day fields are restricted, so what it says matches what your cron daemon will actually do.",
   useCases: [

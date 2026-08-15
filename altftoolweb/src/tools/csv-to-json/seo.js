@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSV to JSON Converter — Edit Rows, Pretty or Minified",
+  metaDescription:
+    "Upload, drag in or paste CSV; edit cells in a paginated table, then export a JSON array of objects as pretty_data.json or minified_data.json.",
   intro:
     "CSV to JSON converts a comma-separated file into a JSON array of objects, using the header row as the key names for every record. The parser respects double-quoted fields, so commas inside quotes stay part of the value and a doubled \"\" is read as a literal quote character. Before converting you can edit cells, delete or add rows in a paginated table, then export either pretty-printed JSON with two-space indentation or a minified single-line file.",
   useCases: [

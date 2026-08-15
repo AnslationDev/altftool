@@ -1,4 +1,12 @@
 const seo = {
+  title: "AWS EBS Cost Calculator for gp3, gp2, io1, io2, st1, sc1",
+  metaDescription:
+    "Prices EBS volumes at us-east-1 list rates: gp3 $0.08/GB-month with 3,000 free IOPS, io2 tiered IOPS, plus snapshots — a line-item monthly breakdown.",
+  steps: [
+    "Choose a Volume type (gp3, gp2, io1, io2, st1 or sc1) and enter Volume size (GB), plus Provisioned IOPS and Provisioned throughput (MB/s) where the type supports them.",
+    "Add the Number of identical volumes and Total snapshot storage (GB, standard tier) across the fleet.",
+    "Read the estimated monthly EBS cost with storage, IOPS, throughput and snapshot line items, then press Copy result for the text summary.",
+  ],
   intro:
     "This calculator estimates the monthly cost of Amazon EBS volumes by multiplying provisioned GB, IOPS and throughput by the published us-east-1 on-demand rates — for example gp3 at $0.08 per GB-month with the first 3,000 IOPS and 125 MB/s free, and io2 with tiered IOPS pricing. It is built for engineers and FinOps teams sizing EC2 storage who want a line-item breakdown of storage, IOPS, throughput and snapshot charges before they provision.",
   useCases: [

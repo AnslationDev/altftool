@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kannada Word of the Day - Script, Meaning & Example",
+  metaDescription:
+    "One Kannada word per calendar date with script, ISO 15919 transliteration, meaning and example sentence - a 40-word deck plus a local revision streak.",
+  steps: [
+    "Pick a Date (it defaults to today) - the card is derived from the date itself, so everyone opening the same date sees the same word from the 40-card deck.",
+    "Read the card's Kannada word, transliteration, meaning, topic and its example in Kannada, transliteration and English, and click Copy card to share it.",
+    "Click Mark as revised to grow the streak stored in this browser, and browse the deck by topic or search script, transliteration or meaning (e.g. rain, maḷe, ಮಳೆ).",
+  ],
   intro:
     "Kannada Word of the Day shows one Kannada word for each calendar date, with the ಕನ್ನಡ script form, an ISO 15919 transliteration, the meaning and a complete example sentence translated into English. The rotation is date-driven rather than random, so every learner opening the same date sees the same word — useful for a class, a study group or a family learning together. A local revision streak tracks how many consecutive days you have actually reviewed.",
   useCases: [

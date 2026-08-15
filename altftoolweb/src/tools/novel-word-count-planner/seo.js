@@ -1,4 +1,12 @@
 const seo = {
+  title: "Novel Word Count Planner with Chapter Due Dates",
+  metaDescription:
+    "Turn a word target and deadline into a daily goal counted on the days you actually write, plus a due date and word count for every chapter.",
+  steps: [
+    "Enter a Word target (1,000 to 500,000), Chapters planned (1 to 200), start date, deadline and any words already written.",
+    "Tick the weekday chips under Days you actually write, or use Or start from a category word count to fill in a typical target.",
+    "Read Words per writing day and the Chapter schedule table of per-chapter words, cumulative totals and due dates, then press Copy schedule.",
+  ],
   intro:
     "A novel word count planner converts a manuscript target and a deadline into a daily word goal counted against the days you actually write, not the calendar. It splits the target across your planned chapters so the parts sum exactly to the whole, assigns each chapter a real due date, and labels the manuscript against the SFWA length boundaries — under 7,500 words a short story, 7,500 to 17,499 a novelette, 17,500 to 39,999 a novella, and 40,000 or more a novel.",
   useCases: [

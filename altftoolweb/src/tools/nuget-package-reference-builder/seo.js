@@ -1,4 +1,12 @@
 const seo = {
+  title: "NuGet PackageReference & Version Range Builder",
+  metaDescription:
+    "Compose PackageReference XML with version ranges decoded into plain >= and < bounds, asset flags validated, plus Directory.Packages.props for CPM.",
+  steps: [
+    "Enter each package id and Version or range — bracket notation like [1.0,2.0) is accepted — with optional PrivateAssets, IncludeAssets and ExcludeAssets; Add package appends rows.",
+    "Optionally tick Central Package Management (and Pin transitive dependencies) and set the indent from 0 to 8 spaces.",
+    "Click Copy ItemGroup for the .csproj XML — and Copy props for Directory.Packages.props — then read the table decoding what each version range allows.",
+  ],
   intro:
     "This builder writes the PackageReference items a .NET project file uses to declare NuGet dependencies, and translates each version range into the interval it really matches. NuGet's interval notation is easy to misread: 1.0 is a minimum, [1.0] is exact, [1.0,2.0) means at least 1.0 and below 2.0, and a square bracket is inclusive while a round bracket is exclusive. It also emits a Directory.Packages.props file when you switch on Central Package Management.",
   useCases: [

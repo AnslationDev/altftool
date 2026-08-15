@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSV Lead Cleaner – Dedupe Leads by Email for CRM",
+  metaDescription:
+    "Upload a lead CSV to lower-case emails, drop rows with no email and remove duplicates — then download cleaned_leads.csv with Name, Email, Phone, Company.",
   intro:
     "The CSV Lead Cleaner takes an uploaded lead list and returns a CRM-ready file by lower-casing every email address, dropping rows that have no email at all, and keeping only the first row for each unique email. It reports four counts — total rows read, rows kept, duplicates removed and rows discarded for a missing email — then previews the first five cleaned records and exports the result as cleaned_leads.csv with Name, Email, Phone and Company columns.",
   useCases: [

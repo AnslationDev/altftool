@@ -1,4 +1,12 @@
 const seo = {
+  title: "Professional Tax Calculator Andhra Pradesh: Slab Rates",
+  metaDescription:
+    "Andhra Pradesh PT slabs: nil up to Rs 15,000, Rs 150/mo to Rs 20,000, Rs 200 above — per employee plus a whole-payroll monthly deposit from head counts.",
+  steps: [
+    "Enter Monthly salary or wage (INR) and Months employed in Andhra Pradesh this year (1-12) under One employee.",
+    "For the payroll total, type head counts into the three band fields: Up to Rs 15,000, Rs 15,001 to Rs 20,000 and Above Rs 20,000.",
+    "Read Professional tax payable with the applicable slab and monthly deduction, plus the employer deposit each month and year; Copy result copies the breakdown.",
+  ],
   intro:
     "This calculator applies Schedule Entry 1 of the Andhra Pradesh Tax on Professions, Trades, Callings and Employments Act, 1987 to a monthly salary: nil up to Rs 15,000, Rs 150 a month from Rs 15,001 to Rs 20,000 and Rs 200 a month above Rs 20,000. Alongside the single-employee figure it totals a whole payroll from a head count per band, so an employer can size the monthly deposit. It also sets out the 30-day registration and enrolment windows the Act imposes.",
   useCases: [

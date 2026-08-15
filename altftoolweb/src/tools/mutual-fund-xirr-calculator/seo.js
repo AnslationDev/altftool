@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mutual Fund XIRR Calculator – SIP Annualised Return",
+  metaDescription:
+    "Enter dated purchases and redemptions plus the current value; the tool solves XIRR the way Excel does — Newton-Raphson with bisection on a 365-day year.",
+  steps: [
+    "Add each transaction with its Date, Amount (₹) and Transaction type — Investment (money in) or Redemption (money out) — using Add transaction for more rows.",
+    "Enter the Valuation date and the Current value (₹) of whatever is still invested.",
+    "Read the annualised XIRR with net gain, absolute return and holding period, then click Copy result for a text summary.",
+  ],
   "intro": "Mutual Fund XIRR Calculator turns a messy list of dated purchases and redemptions into one annualised return figure. You enter every transaction with its exact date, add the current portfolio value and its valuation date, and the tool solves for the rate that discounts all those cash flows back to zero — the same definition Excel's XIRR uses. It is built for investors comparing an actual SIP or lumpsum folio against a benchmark or an FD rate.",
   "useCases": [
     "Measure the real return on a SIP where you skipped some months or topped up in a market crash.",

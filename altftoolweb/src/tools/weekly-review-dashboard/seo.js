@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weekly Review Dashboard with Weighted OKR Scoring",
+  metaDescription:
+    "Score each goal 0.0-1.0 (actual/target, capped), weight it 1-5, and get a week score plus task completion, hours-vs-plan variance and a copy summary.",
+  steps: [
+    "Enter the Week label, Hours planned, Hours actually worked and Last week's score, then use Add goal to set each goal's Target, Actual, Unit and Weight (1-5).",
+    "Tick each task Done or Rolled over from last week, and fill in What worked this week, What blocked me and Focus for next week.",
+    "Read the Week score with its grade and trend versus last week, then press Copy summary; everything autosaves to this browser's local storage.",
+  ],
   intro:
     "A weekly review dashboard grades the week you just finished: each goal is scored on the OKR 0.0-1.0 scale (actual divided by target, capped at 1.0), the scores are combined using the weight you gave each goal, and the result sits alongside task completion and the gap between hours planned and hours actually worked. It is for anyone running a personal or team weekly review who wants a number they can compare week to week, not just a feeling.",
   useCases: [

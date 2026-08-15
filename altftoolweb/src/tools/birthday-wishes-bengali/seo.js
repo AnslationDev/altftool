@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bengali Birthday Wishes with Tumi/Apni Forms & Roman Text",
+  metaDescription:
+    "Bengali birthday messages by relationship and tone, written separately for tumi and apni, with romanised text, English meaning and SMS part count.",
+  steps: [
+    "Pick who it's for and the Politeness register — Automatic, আপনি (respectful) or তুমি (familiar) — plus a tone and 1 to 6 messages.",
+    "Add their name and Sign it from (optional), and keep Show romanised Bengali ticked for a transliteration under each wish.",
+    "Click Copy on one message or Copy all for the set; each wish shows its English meaning and SMS length, with Other wordings to reshuffle.",
+  ],
   intro:
     "Bengali Birthday Wishes Generator builds a full Bengali birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Bengali separates তুমি from আপনি, and that choice changes the possessive (তোমার versus আপনার) and the verb ending, so every wording is stored in both registers instead of being patched. Each message comes with romanised Bengali, an English meaning and the number of SMS parts it will use.",
   useCases: [

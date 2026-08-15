@@ -1,4 +1,12 @@
 const seo = {
+  title: "Street Food Budget Planner for Trips & Splurge Meals",
+  metaDescription:
+    "Build a trip food budget from daily street meals, café stops, snacks and drinks — and see how many splurge dinners fit, costing only the price difference.",
+  steps: [
+    "Set the trip basics — Currency, Days of eating, Travellers and an optional 'Total food budget (0 to skip)'.",
+    "Describe a typical day per person — street meals, café meals, snacks and drinks with their prices — then Splurge meals over the trip and the Planning buffer (%), where 15% is the usual convention.",
+    "Read the Total food budget with its per-person-per-day figure, the extra cost of one splurge meal over the meal it replaces, and 'Splurge meals that fit inside this budget'; Copy plan copies it.",
+  ],
   intro:
     "Builds a complete trip food budget from a repeating daily pattern of street meals, café meals, snacks and drinks, plus a chosen number of splurge meals, and then solves the same equation backwards to say how many splurge meals a fixed budget actually allows. The detail most hand-written food budgets get wrong is handled explicitly: a splurge meal replaces a meal you were already paying for, so only the difference between the two prices is new money.",
   useCases: [

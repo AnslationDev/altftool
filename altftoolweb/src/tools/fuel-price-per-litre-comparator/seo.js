@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fuel Price Per Litre Comparator: Gallons to Litres, Ranked",
+  metaDescription:
+    "Convert pump prices per litre, US gallon or imperial gallon in any currency to one price per litre, rank up to 6 stations and cost out the fill and trip.",
+  steps: [
+    "For up to 6 stations, enter the Price on the sign, whether it is quoted per litre, per US gallon or per imperial gallon, the currency and your exchange rate.",
+    "Pick the currency to Show everything in — INR, USD, EUR, GBP, AED, AUD, CAD or SGD — and every price is converted to that currency per litre.",
+    "Read the Cheapest per litre ranking and each station's premium %, add tank litres, km/l and remaining distance for fill and trip costs, then click Copy result.",
+  ],
   intro:
     "This comparator converts fuel prices quoted in different volume units and currencies into a single price per litre so they can be ranked honestly. It divides the sign price by the litres in the quoted unit — 1 for a litre, 3.785411784 for a US gallon, 4.54609 for an imperial gallon — then multiplies by the exchange rate you enter. It then shows the spread between the cheapest and dearest option and what a fill and the rest of the drive would cost.",
   useCases: [

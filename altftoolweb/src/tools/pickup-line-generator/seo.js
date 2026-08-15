@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pickup Line Generator: Romantic, Nerdy, Cheesy, Witty",
+  metaDescription:
+    "Tap Generate Line for a pickup line in six tones - Romantic, Cheesy, Nerdy, Funny, Smooth or Witty. Save up to 20 favourites and copy in one click.",
+  steps: [
+    "Pick a tone from the six category buttons — Romantic, Cheesy, Nerdy, Funny, Smooth or Witty.",
+    "Press 'Generate Line' to draw one from that category's hand-written set, or hit the refresh icon on the result card to shuffle again.",
+    "Copy the line to your clipboard with the copy button, or tap the heart to keep it in Favorite Lines (up to 20 saved).",
+  ],
   intro:
     "Pickup Line Generator serves one hand-written line at a time from six tone categories — Romantic, Cheesy, Nerdy, Funny, Smooth and Witty — so you pick the register first and then shuffle until something fits. Every line in the set is curated rather than assembled from templates, which is why the nerdy ones actually land on chemistry and calculus jokes instead of generic filler. Lines you like can be saved to a favourites list or copied to the clipboard in one tap.",
   useCases: [

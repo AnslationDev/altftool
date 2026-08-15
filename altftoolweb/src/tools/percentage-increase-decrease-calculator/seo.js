@@ -1,4 +1,12 @@
 const seo = {
+  title: "Percentage Increase & Decrease Calculator with Multiplier",
+  metaDescription:
+    "Compare two numbers to get the % change labelled increase or decrease, with the difference, multiplier and reverse change — or apply a % to any value.",
+  steps: [
+    "Enter the Original value and New value on the 'Change between two' tab, or switch to 'Apply a percentage' and set a starting value, a percentage and Increase or Decrease.",
+    "The result updates as you type, labelling the change as a percentage increase, decrease or no change; a zero original value is flagged as undefined.",
+    "Read the Absolute difference, Multiplier and Reverse change rows, then click Copy result for a plain-text summary.",
+  ],
   "intro": "The Percentage Increase Decrease Calculator compares two numbers and tells you the percentage change between them, clearly labelled as an increase or a decrease, alongside the plain difference and the multiplier. A second mode goes the other way: give it a starting value and a percentage and it applies the rise or cut for you. It is built for the everyday cases — a price change, a salary revision, a month-on-month traffic swing, a marks comparison.",
   "useCases": [
     "Work out that a rent rise from Rs 18,000 to Rs 21,500 is a 19.44% increase.",

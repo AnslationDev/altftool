@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tinnitus Sound Diary: Track Loudness, Triggers & Trend",
+  metaDescription:
+    "Log daily 0-10 loudness and annoyance ratings with triggers; see 7-day averages, a points-per-week trend and trigger comparisons, saved in your browser.",
+  steps: [
+    "Pick the Date, drag the Loudness and Annoyance sliders (0 to 10), choose where you hear it and what it sounds like, and tick anything notable that day.",
+    "Click Save entry — one entry per date is kept in this browser's local storage, and Clear diary asks for confirmation before deleting.",
+    "Read the last-7-days average, the points-per-week trend (needs at least 4 entries) and the noted-triggers comparison table, then click Copy diary to export it as text.",
+  ],
   intro:
     "A tinnitus sound diary is a daily record of how loud the sound is, how much it bothers you, and what else was going on that day. Ratings use the 0 to 10 scale clinics commonly use for tinnitus loudness and annoyance, and the summary reports averages, a seven-day figure, a least-squares trend in points per week, and how each noted trigger compares with days you did not note it. It is a self-monitoring log for taking to an appointment, not a diagnosis or a hearing test.",
   useCases: [

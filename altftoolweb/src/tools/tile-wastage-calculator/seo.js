@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tile Wastage Calculator by Laying Pattern & Boxes",
+  metaDescription:
+    "Work out extra tile from the laying pattern — grid 5% up to chevron 22% — plus room shape, tile size and installer, converted into whole boxes.",
+  steps: [
+    "Enter Room length and width in metres and Tile width and length in mm, then pick a Laying pattern from straight grid (+5%) to chevron (+22%).",
+    "Set the Room outline, who is laying the tiles, cutouts, Tiles per box, Spare boxes to store and Price per box.",
+    "Read the recommended wastage percentage and total boxes to order, with each factor's contribution listed — or click Copy result.",
+  ],
   intro:
     "This tool works out how much extra tile to order by adding four separate allowances — laying pattern, room outline, tile format and installer skill — instead of applying a flat 10% to every job. A straight grid starts at 5%, a 45-degree diagonal at 15% and chevron at 22%, because those patterns cut more perimeter tiles at angles that leave unusable offcuts. The result is converted into tiles and sealed boxes so you can place an order against it.",
   useCases: [

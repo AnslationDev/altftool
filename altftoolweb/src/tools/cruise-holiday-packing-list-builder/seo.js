@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cruise Packing List Builder — Formal Nights & Day Bag",
+  metaDescription:
+    "Build a cruise packing list sized by formal nights, port and sea days — with quantities, packed weight vs flight allowance, and what security confiscates.",
+  steps: [
+    "Enter Nights on board, Travellers and Port days; leave 'Use the line's usual formal-night schedule' ticked to auto-fill Formal nights, or untick it and set your own.",
+    "Pick a Baggage plan — domestic 15 kg or international 23 kg per bag — and toggle the ship's laundry package and international sailing options.",
+    "Tick off the grouped checklist as you pack and click Copy list for a text version that ends with a LEAVE AT HOME section of items confiscated at embarkation.",
+  ],
   intro:
     "This builder sizes a cruise wardrobe from the evening dress code and the port/sea split rather than from a flat day count. Mainstream lines schedule roughly one formal or gala evening per three to four nights — two on a seven-night sailing — and one outfit can cover two of them, so the list reuses rather than duplicates. It also flags the day-one carry-on you need while checked bags are still being delivered, and the cabin items confiscated at embarkation.",
   useCases: [

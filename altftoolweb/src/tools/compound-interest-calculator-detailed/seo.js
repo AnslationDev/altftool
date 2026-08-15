@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compound Interest Calculator with Yearly Growth Table",
+  metaDescription:
+    "Compound daily to annually or continuously, add a recurring deposit, and read APY plus a year-by-year table of deposits, interest and closing balance.",
+  steps: [
+    "Enter the Starting amount (₹), Annual interest rate (%) and Time period (years) — up to 100 years.",
+    "Pick a Compounding frequency from Annually to Daily or Continuously, and set an optional Deposit each period (₹) added at the end of every period.",
+    "Read the balance with the effective annual rate (APY) and the Year-by-year growth table, then click Copy result for a text summary.",
+  ],
   "intro": "This detailed compound interest calculator applies A = P(1 + r/n)^(nt) at whatever frequency you choose — daily, weekly, fortnightly, monthly, quarterly, half-yearly, annually or continuously — and can add a recurring deposit at the end of every period. Alongside the closing balance it reports total contributions, total interest, the effective annual rate (APY) and a year-by-year table of opening balance, deposits, interest and closing balance.",
   "useCases": [
     "Compare a bank FD compounded quarterly against one compounded monthly at the same headline rate.",

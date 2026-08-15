@@ -1,4 +1,12 @@
 const seo = {
+  title: "JEE Main Application Document Checklist & Fees",
+  metaDescription:
+    "Tick off every NTA JEE Main form field, scan and certificate before the portal opens — with the per-paper fee for your category and gender.",
+  steps: [
+    "Select your Candidate category and Gender (fee slab), and tick Person with disability (PwD) claim if it applies — the checklist and fee adapt to your profile.",
+    "Tick each item off the profile-specific sections, from Class 10 and Class 12 details to the passport-style photo and signature JPG scans.",
+    "Watch Checklist progress and Fee per paper (India centres), then press Copy status to copy the done count and items still needed.",
+  ],
   intro:
     "This checklist lists every field, scan and certificate the NTA JEE (Main) application asks for — Class 10 and 12 details, the passport-style photo and signature uploads, category certificates issued for the correct financial year, exam-city and medium choices, and the per-paper fee for your category and gender. It is built for candidates and parents who want the form filled in one clean sitting instead of hunting for a missing certificate at the payment step.",
   useCases: [

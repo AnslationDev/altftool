@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baby Name Voting Board with 1-5 Ratings and Vetoes",
+  metaDescription:
+    "Each family member rates every name 1-5; a 1 is a veto that drops it below un-vetoed picks. Ranked by average with a consensus score, saved in-browser.",
+  steps: [
+    "Add up to 40 names with Add name and up to 12 voters with Add voter, then select who is scoring under 'Who is voting right now?'.",
+    "Rate every name from 1 ('No — veto') to 5 ('Love it') for each voter in turn.",
+    "Read the Leading name and the ranked table of averages, consensus scores and veto flags, then press Copy results; the board saves to this browser only.",
+  ],
   intro:
     "The Baby Name Shortlist Voting Board collects a 1-to-5 rating from every family member for every name on your shortlist, then ranks the list by average score with a consensus figure alongside it. A rating of 1 is treated as a veto: the name drops below every un-vetoed option no matter how well it averages, because a name one parent cannot live with is not really a candidate. The whole board is stored in your own browser and never uploaded.",
   useCases: [

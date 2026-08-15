@@ -1,4 +1,12 @@
 const seo = {
+  title: "Property Capital Gains Tax: 12.5% vs 20% Indexed",
+  metaDescription:
+    "LTCG on Indian property both ways — flat 12.5% vs 20% with CII indexation — plus Section 54/54F reinvestment and the ₹50 lakh 54EC bond cap.",
+  steps: [
+    "Enter the \"Date of purchase\", \"Purchase cost (INR)\" and any \"Cost of improvement\" — for pre-April-2001 buys use the FMV as on 1 April 2001.",
+    "Enter the \"Date of sale\", \"Sale consideration (INR)\" (stamp duty value if higher, per Section 50C), \"Transfer expenses\" and any \"Section 54 / 54F reinvestment\" or \"Section 54EC bonds\" amounts.",
+    "Compare the flat 12.5% tax with the 20% CII-indexed tax — the cheaper route is highlighted — then click \"Copy result\".",
+  ],
   intro:
     "This calculator works out the long-term capital gains tax on a house, flat or plot in India using the CBDT's notified Cost Inflation Index. It compares the flat 12.5% rate introduced on 23 July 2024 with the older 20%-with-indexation route that pre-July-2024 owners can still choose, and shows what Section 54, 54F and 54EC exemptions do to the final bill. It is built for resident individual sellers, joint owners and anyone planning the timing of a property sale.",
   useCases: [

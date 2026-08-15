@@ -1,4 +1,12 @@
 const seo = {
+  title: "Phantom Load Checklist: What Standby Power Costs a Year",
+  metaDescription:
+    "Tick off 14 standby devices, price the wasted kWh at your electricity tariff, and see which — set-top box to phone charger — are worth unplugging.",
+  steps: [
+    "Enter your Electricity tariff (per kWh) and optional Household consumption (units a month), then tick the devices you own — 8 common ones such as the set-top box and Wi-Fi router start ticked.",
+    "Correct each ticked row's How many, Standby draw (watts each), Hours a day on standby and Hours you could cut power fields; defaults are typical measured standby figures.",
+    "Read Standby cost a year with the Ranked by what they cost you table and the realistically switchable share, then press Copy result for a text summary.",
+  ],
   intro:
     "Phantom load, also called standby or vampire power, is the electricity a device draws while switched off but still plugged in. This checklist totals it device by device using the exact relationship watts x hours per day x 365 / 1000 = kWh a year, then prices the result at your own tariff and separates what you could realistically unplug from what genuinely has to stay powered. Default wattages follow typical measured standby figures and every one is editable.",
   useCases: [

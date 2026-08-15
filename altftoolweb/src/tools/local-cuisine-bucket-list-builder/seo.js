@@ -1,4 +1,12 @@
 const seo = {
+  title: "Local Cuisine Bucket List Builder & Trip Meal Planner",
+  metaDescription:
+    "Fit a must-eat list into a trip's real eating slots — days times meals plus snack stops. Dishes that won't fit are named so you choose the cuts yourself.",
+  steps: [
+    "Set the trip under The trip: Destination, Days there (1-90), Main meals per day and Snack or sweet stops per day.",
+    "Press Add dish for each entry and set its Size (Full dish or Snack, sweet or drink), Priority (Must eat, Want to try, If there is time) and dietary tags to filter out.",
+    "Read the Suggested day-by-day schedule and the What to cut list, then press Copy plan to copy the text plan.",
+  ],
   intro:
     "Turns a must-eat list into a capacity check: a trip has a fixed number of eating slots — days multiplied by main meals plus snack stops — and this places each dish into the earliest free slot of the right type, must-eat dishes first. Full dishes take meal slots, snacks and sweets take snack stops and fall back to meals when those run out, and anything that does not fit is named rather than quietly dropped so you can choose the cut yourself.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Medication Cost Per Dose & Per Tablet Calculator",
+  metaDescription:
+    "Turn a pack MRP into cost per tablet, dose, day, month and course — with packs to buy, leftover tablets and a per-tablet brand vs generic comparison.",
+  steps: [
+    "Enter the Pack price (MRP, INR), tablets in the pack, Tablets per dose (0.5 works for half a tablet), Doses per day and Days in the course.",
+    "Tick Compare with another pack or a generic and add the alternative pack's price and tablet count.",
+    "Read Cost per dose with packs to buy, leftover tablets and the per-tablet Pack comparison table, then press Copy result.",
+  ],
   intro:
     "Cost per dose is the pack price divided by the tablets in the pack, multiplied by the tablets taken each time — the only figure that lets you compare two medicines sold in different pack sizes. This calculator turns a printed pack price into cost per tablet, per dose, per day, per month and for the whole course, works out how many whole packs the course needs and what is left over, and puts a second pack or a generic alongside it on the same per-tablet basis.",
   useCases: [

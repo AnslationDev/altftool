@@ -1,4 +1,12 @@
 const seo = {
+  title: "French New Year Wishes — Bonne Année in Tu & Vous",
+  metaDescription:
+    "French New Year messages with correct tu/vous and cher/chère agreement, fêtes-de-fin-d'année or bonne-année timing, and English translations.",
+  steps: [
+    "Choose 'Who is it for?', 'Cher or chère' and 'When are you sending it?' — before or after 1 January switches the wording.",
+    "Set Address form to tu, vous or Automatic, pick a Tone, the Incoming year and How many messages; Other wordings shuffles the set.",
+    "Every French message shows an English translation with its salutation and sign-off — Copy one or use Copy all.",
+  ],
   intro:
     "French New Year Wishes builds a ready-to-send French greeting from three things: who you are writing to, the tone you want, and whether you are writing before or after 1 January. Every message is stored twice — once in the tu form and once in the vous form — so verbs, possessives and the cher/chère agreement are correct rather than word-swapped. Each result arrives with a matching salutation, a sign-off and an English translation you can check before you send it.",
   useCases: [

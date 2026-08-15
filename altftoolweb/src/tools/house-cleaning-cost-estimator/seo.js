@@ -1,4 +1,12 @@
 const seo = {
+  title: "House Cleaning Cost Estimator — Per Sq Ft, India",
+  metaDescription:
+    "Price a home clean the way Indian agencies quote: ₹4-22 per sq ft by service level and city tier, itemised add-ons, contract discounts and 18% GST.",
+  steps: [
+    "Enter Carpet area (sq ft) and choose City tier, Type of clean and How often — a weekly contract earns the 15% discount.",
+    "Set quantities under Add-on services (sofa shampoo, chimney degrease, water tank and more) and tick 'Provider is GST-registered' for 18% GST.",
+    "Read the Estimated cost per visit with area charge, add-ons, discount and GST itemised, then press Copy quote.",
+  ],
   intro:
     "This estimator prices a professional house clean the way Indian agencies quote it: carpet area multiplied by a per-square-foot rate for the service level, adjusted for city tier, plus itemised add-ons, any recurring-contract discount and 18% GST. Reference rates run from about ₹4 per sq ft for a routine upkeep clean to roughly ₹22 per sq ft for post-construction work. It gives homeowners and tenants a defensible number to compare against a quote before they book.",
   useCases: [

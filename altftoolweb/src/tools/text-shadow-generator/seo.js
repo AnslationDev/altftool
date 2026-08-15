@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Text Shadow Generator with Offset & Blur Sliders",
+  metaDescription:
+    "Drag X offset, Y offset (-20 to 20 px) and blur (0-40 px) sliders to build a ready-to-paste text-shadow rule in rgba(0,0,0,0.5).",
   intro:
     "This builds a CSS text-shadow declaration from three sliders — horizontal offset, vertical offset and blur radius — and prints the finished rule ready to paste into a stylesheet. Offsets run from -20px to 20px and blur from 0px to 40px, and the shadow colour is fixed at rgba(0, 0, 0, 0.5), a half-transparent black that sits under most type without going muddy. It is for anyone who knows roughly the shadow they want but not the four-value shorthand order.",
   useCases: [

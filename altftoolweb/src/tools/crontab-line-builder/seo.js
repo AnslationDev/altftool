@@ -1,4 +1,12 @@
 const seo = {
+  title: "Crontab Line Builder with Next-Run Preview & flock",
+  metaDescription:
+    "Validate a five-field cron schedule, read it in plain English, preview next runs in your timezone, and wrap the command with logging, timeout and flock.",
+  steps: [
+    "Type the \"Schedule (minute hour day month weekday, or @daily style)\" or tap a preset chip, then enter the \"Command to run\".",
+    "Optionally set \"Log file\", \"Lock file for flock\", \"Working directory\", \"Timeout in seconds\", MAILTO, and the \"Set a sane PATH\" and \"Set SHELL=/bin/bash\" checkboxes.",
+    "Check the \"In plain English\" readout and the \"Next run (your timezone)\" list, then click \"Copy crontab block\" and install it with crontab -e.",
+  ],
   intro:
     "This builder assembles a complete, safe crontab entry: it validates the five-field schedule against Vixie cron syntax (man 5 crontab), translates it into plain English, previews the next run times in your timezone, and wraps the command with output logging, a timeout and an flock guard so runs never overlap. It is made for developers and sysadmins who want more than a bare '30 2 * * * script.sh' — including the SHELL, PATH and MAILTO lines cron actually needs.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deployment Window Planner Across Time Zones",
+  metaDescription:
+    "Tick your regions and local avoid hours; the planner maps all 24 UTC start hours and recommends the release window with the fewest blocked region-hours.",
+  steps: [
+    "Tick the Regions served checkboxes and set the local Avoid from / Avoid until hours (defaults 08:00 to 22:00).",
+    "Enter a Window length (hours) from 1 to 12 — the planner rescans all 24 UTC start hours as you type, with no submit button.",
+    "Read the Recommended window (UTC) with each region's local start and end times, then press Copy plan.",
+  ],
   intro:
     "This planner finds a deployment window that avoids business and peak-traffic hours in every region an application serves: it converts each region's local avoid range to UTC, maps all 24 UTC hours as clear or blocked, and recommends the start hour whose window overlaps the fewest blocked region-hours. It is built for release managers and on-call engineers on distributed teams who need one defensible answer to \"when can we ship without hitting anyone's daytime\".",
   useCases: [

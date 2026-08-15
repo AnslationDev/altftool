@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ansible Vault Planner – Which Variables to Encrypt",
+  metaDescription:
+    "Paste Ansible variable names to classify each as encrypt, review or plain, generate the vault_ prefix vars/vault split, and get ansible-vault commands.",
+  steps: [
+    "Paste your \"Variable names (one per line; 'key: value' lines also accepted)\" into the list box.",
+    "Pick a \"Vault layout\", list \"Environments (comma separated)\" for per-environment vaults, and optionally tick \"Label passwords with --vault-id\".",
+    "Review the encrypt/review/plain classification, the \"vars.yml / vault.yml split\" and the ansible-vault \"Command workflow\"; click \"Copy result\" for the whole plan.",
+  ],
   intro:
     "This planner classifies each of your Ansible variables as encrypt, review or plain using credential-keyword rules, then generates the vars/vault indirection layout and the exact ansible-vault command workflow to match. It implements the pattern from Ansible's own best-practice docs: keep a plaintext vars.yml where each secret points at a vault_-prefixed twin stored in an encrypted vault.yml, so variable names stay greppable while values stay encrypted.",
   useCases: [

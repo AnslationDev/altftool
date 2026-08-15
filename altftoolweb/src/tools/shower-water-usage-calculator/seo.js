@@ -1,4 +1,12 @@
 const seo = {
+  title: "Shower Water Usage Calculator vs Bucket Bath Cost",
+  metaDescription:
+    "Turns flow rate × minutes into litres per shower, prices geyser heating with Q = mcΔT, and compares shower vs bucket bath in litres, kWh and rupees.",
+  steps: [
+    "Enter Shower flow rate (L/min) and Shower time (minutes), or tap a Shower fittings preset like 6 L/min · Low-flow aerated head.",
+    "Fill in Buckets per bucket bath and Bucket size (litres), the inlet and bathing temperatures, Water heater efficiency (%), electricity tariff, water cost and household size.",
+    "Read Water per shower beside the bucket-bath comparison, geyser kWh and cost per shower, and the per-bath/day/month/year table; Copy result copies the summary.",
+  ],
   intro:
     "A shower water usage calculator multiplies the shower head's flow rate by the minutes it runs to give the litres one bath uses, then does the same for a bucket bath and compares the two. It also prices the heating with the sensible-heat equation Q = m × c × ΔT, using the specific heat of water (4.186 kJ per kg per °C) and your geyser's efficiency, so you see litres, kilowatt-hours and rupees for one bath, for the household per month and for the year.",
   useCases: [

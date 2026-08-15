@@ -1,4 +1,12 @@
 const seo = {
+  title: "CI Build Matrix Job Count & Runner Minutes Estimator",
+  metaDescription:
+    "Multiply matrix dimensions minus excludes plus includes for the real job count, checked against GitHub's 256-job cap, plus runner minutes per month.",
+  steps: [
+    "List Matrix dimensions one per line (name: value, value, ...) and set Excluded combinations, include entries, Average job duration (minutes) and max-parallel (0 = unlimited).",
+    "Read Jobs per workflow run - the headline turns red when the matrix would break GitHub's 256-job limit, with warnings for GitLab's 200-job parallel:matrix cap.",
+    "Check runner minutes per run, per day and per 30-day month alongside wall-clock time under max-parallel, then click Copy result for the breakdown.",
+  ],
   intro:
     "This estimator computes how many jobs a CI build matrix really generates — the cartesian product of every dimension's values, minus exclude entries, plus include entries that add new combinations — and converts that into runner minutes per run, per day and per 30-day month. It checks the result against GitHub Actions' hard limit of 256 jobs per matrix and GitLab's 200-job parallel:matrix cap, and models wall-clock time under a max-parallel constraint.",
   useCases: [

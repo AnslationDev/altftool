@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mudra Loan Category Selector - Shishu to Tarun Plus",
+  metaDescription:
+    "Place a loan in Shishu, Kishore, Tarun or Tarun Plus by sanctioned amount (up to Rs 20 lakh), with PMMY eligibility blockers and an indicative EMI.",
+  steps: [
+    "Enter the Loan amount needed (INR) and choose the Type of borrower and What the money is for, ticking 'I have already taken and fully repaid a Tarun loan' if that applies.",
+    "Read the Mudra category - Shishu, Kishore, Tarun, Tarun Plus or Outside PMMY - along with red blocker notes for any scheme condition that fails and the indicative EMI for your rate and tenure.",
+    "Click Copy result to copy the classification summary, or Reset to restore the default inputs.",
+  ],
   intro:
     "The Mudra Loan Category Selector places a proposed loan into the correct Pradhan Mantri Mudra Yojana slab purely by sanctioned amount — Shishu up to ₹50,000, Kishore ₹50,001 to ₹5 lakh, Tarun ₹5,00,001 to ₹10 lakh and Tarun Plus ₹10,00,001 to ₹20 lakh — then applies the scheme's eligibility conditions on top. It is for micro-entrepreneurs, shop owners and self-employed professionals who want to know which slab to ask their bank for before they walk in.",
   useCases: [

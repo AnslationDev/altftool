@@ -1,4 +1,12 @@
 const seo = {
+  title: "IDV Calculator — IRDAI Depreciation Grid for Car & Bike",
+  metaDescription:
+    "Compute Insured Declared Value from ex-showroom price and IRDAI's 5%–50% age-band depreciation, plus the ±15% range and an indicative own-damage premium.",
+  steps: [
+    "Enter the \"Ex-showroom price (INR)\" and \"Accessories not factory fitted (INR)\", then choose the \"Vehicle age\" band — each option shows its IRDAI rate, like \"2 years to 3 years — 30%\".",
+    "Adjust \"IDV adjustment (% — insurers allow ±15)\" and the \"Own-damage rate (% of IDV)\" to mirror your renewal quote.",
+    "Read the Insured Declared Value, the depreciation deducted, the \"Negotiable IDV range (±15%)\" and the indicative own-damage premium, then click \"Copy result\".",
+  ],
   intro:
     "The Vehicle Insurance IDV Calculator works out the Insured Declared Value of a car or two-wheeler by applying the IRDAI depreciation grid to the ex-showroom price and any accessories fitted after purchase. IDV is the ceiling on what a total-loss or theft claim can pay, so setting it correctly matters more than shaving a few hundred rupees off the premium. It also shows the ±15% range insurers normally allow and an indicative own-damage premium at the rate you enter.",
   useCases: [

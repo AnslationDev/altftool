@@ -1,4 +1,12 @@
 const seo = {
+  title: "Split Excel into Multiple Files by Sheet, Rows or Column",
+  metaDescription:
+    "Upload an .xlsx, .xls or .csv and split it one file per worksheet, by max rows, into equal parts or per column value — singly or as a ZIP.",
+  steps: [
+    "Upload a Workbook file (.xlsx, .xls or .csv) and pick a Split mode: One file per worksheet, Max rows per file, Equal number of files or One file per column value.",
+    "Set the mode's control (Rows per file, Number of files or Split on column), the Output file name prefix, and tick First row is a header to repeat it in every part.",
+    "Check the Parts table's per-file row counts, download any part with its XLSX button, or click Download ZIP for an archive named after your prefix (workbook-parts.zip by default).",
+  ],
   intro:
     "Split Excel turns one workbook into several standalone .xlsx files, either by exporting each worksheet on its own or by cutting a chosen sheet into row batches, equal parts, or one file per value in a column. Worksheet names in each output are sanitised to Excel's own rules — 31 characters maximum with : \\ / ? * [ ] removed — so every file opens without a repair prompt. It suits anyone who has to hand out slices of a master spreadsheet without sharing the whole thing.",
   useCases: [

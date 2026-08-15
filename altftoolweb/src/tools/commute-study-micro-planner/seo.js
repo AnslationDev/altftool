@@ -1,4 +1,12 @@
 const seo = {
+  title: "Commute Study Micro Planner – Audio & Flashcard Split",
+  metaDescription:
+    "Split weekly commute minutes between audio lectures and flashcards — see monthly study hours and real card counts at ~12 seconds per review.",
+  steps: [
+    "Enter your One-way commute (minutes), Trips per day and Commuting days per week.",
+    "Set the Audio lecture share (%) and Flashcard share (%) — whatever you leave unallocated stays visible as buffer.",
+    "Read Study time reclaimed per month with cards per day and per week at ~12 seconds each, then click Copy plan.",
+  ],
   intro:
     "This planner converts commute time into a concrete weekly study output: weekly commute minutes are split between audio lectures and flashcard reviews, and the flashcard share is turned into real card counts at a typical spaced-repetition pace of about 12 seconds per review. It is built for working aspirants whose only reliable daily slots are the train, metro or bus — showing that a 45-minute-each-way commute is roughly 30 hours of study time per month.",
   useCases: [

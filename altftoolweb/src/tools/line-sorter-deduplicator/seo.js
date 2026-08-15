@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sort Lines and Remove Duplicates — Line Sorter Tool",
+  metaDescription:
+    "Paste a list to sort A–Z, naturally (item 2 before item 10), by length, reversed or shuffled — and strip duplicate or blank lines in the same pass.",
+  steps: [
+    "Paste your list into the Input list box, one item per line — the live counter above it shows how many lines came in.",
+    "Choose a Sort order (A to Z, Natural / numeric, by length, reverse or Shuffle randomly) and a Duplicate handling mode, with Ignore case, Trim spaces on each line and Remove blank lines checkboxes.",
+    "Take the cleaned list from the Result box with Copy result; the stats panel counts duplicates and blank lines removed, and Shuffle again re-rolls a shuffle.",
+  ],
   "intro": "Line Sorter and Deduplicator cleans up any list you paste into it: sort A-Z or Z-A, use natural order so item 2 comes before item 10, sort by line length, reverse the order or shuffle it, and remove duplicate or blank lines in the same pass. You can ignore case, trim stray spaces, keep only the unique lines or keep only the repeated ones. Handy for marketers cleaning keyword lists, developers tidying config files and anyone deduping an email or SKU export.",
   "useCases": [
     "Dedupe a keyword export before uploading it to an ads platform that charges per row.",

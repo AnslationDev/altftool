@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kubernetes Service YAML Generator with API Validation",
+  metaDescription:
+    "Generate ClusterIP, NodePort or LoadBalancer manifests with RFC 1035 name checks, 30000-32767 nodePort limits and required multi-port names.",
+  steps: [
+    "Type the Service name and Namespace, pick ClusterIP, NodePort or LoadBalancer as the Service type, and list the Pod selector as key=value per line.",
+    "Fill each port's Service port (1-65535), targetPort and protocol, adding rows with Add port — a second port makes Port name required — and keep any nodePort inside 30000-32767 or leave it blank for auto.",
+    "Check the Generated manifest pane, fix any inline validation error, then click Copy YAML for the apply-ready Service manifest.",
+  ],
   intro:
     "This generator produces a valid Kubernetes core/v1 Service manifest — ClusterIP, NodePort or LoadBalancer — with the same validation the API server applies: RFC 1035 names (lowercase, max 63 characters, starting with a letter), ports 1-65535, nodePorts inside the default 30000-32767 range, and mandatory port names on multi-port services. It is for developers and SREs who want copy-paste-ready YAML without a round-trip of kubectl apply errors.",
   useCases: [

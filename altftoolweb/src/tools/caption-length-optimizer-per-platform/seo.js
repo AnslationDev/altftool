@@ -1,4 +1,12 @@
 const seo = {
+  title: "Caption Length Checker for Instagram, X, LinkedIn",
+  metaDescription:
+    "Check one caption against every platform limit at once — Instagram 2,200, X 280 with 23-character links — and see exactly what survives before 'more'.",
+  steps: [
+    "Paste your caption into the \"Your caption\" box; the character, word, hashtag and link counts update as you type.",
+    "Tick the platforms under \"Platforms to check\" — each checkbox lists its hard limit and preview, like Instagram feed's 2,200 max.",
+    "Read each platform card — characters spare or over, plus the exact text under Visible before \"more\" — then click \"Copy report\" for the summary.",
+  ],
   intro:
     "Caption Length Optimizer measures one caption against the hard character limit and the visible-before-\"more\" fold of every major social platform at once. It counts by code point so an emoji costs one character, applies X's rule that any link counts as a fixed 23 characters after t.co wrapping, and shows the exact words that survive above each platform's fold. Limits covered include Instagram's 2,200, X's 280, LinkedIn's 3,000, Threads' 500 and a YouTube title's 100.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Two Round Exam Strategy Planner – Per-Question Pace",
+  metaDescription:
+    "Split working time between a full first sweep and a second pass over flagged questions — get the seconds-per-question pace each round demands.",
+  steps: [
+    "Enter Total questions on the paper, Paper duration (minutes) and an End buffer for OMR transfer and final checks.",
+    "Set Round 1's share of working time (%) — the coaching convention is 60-70% — and the percentage of questions you expect to flag for round 2.",
+    "Read the seconds-per-question pace for round 1 and for each flagged question in round 2, then click Copy plan.",
+  ],
   intro:
     "This planner turns the two-pass attempt strategy used across competitive-exam coaching into concrete numbers: it splits your working time between a fast first sweep of every question and a second pass over the ones you flagged, then tells you the seconds-per-question pace each round demands. Aspirants preparing for SSC, banking, JEE, CAT or any objective paper set the time split and expected flag rate and get a plan they can rehearse in mocks.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "curl Command Builder with Shell-Safe Quoting",
+  metaDescription:
+    "Build a curl command with method, headers, auth, JSON or multipart bodies, timeouts and proxies - every flag explained and common mistakes flagged.",
+  steps: [
+    "Enter the Request URL, pick the method and add query parameters and headers one per line — query values are percent-encoded for you.",
+    "Choose auth (Basic, Bearer token or an API key header) and a body type — JSON, form URL-encoded, multipart (-F), raw or file (-d @file) — plus timeouts, retries and flags like -L and -s.",
+    "Press 'Copy command' for the shell-safe quoted command, and review the 'What each flag does' table and the 'Things to check' warnings.",
+  ],
   intro:
     "This builder turns a described HTTP request into a working curl command line, handling method selection, headers, authentication, JSON and multipart bodies, proxies, timeouts and output redirection. Arguments are wrapped in POSIX single quotes and query values are percent-encoded, so ampersands and spaces cannot be mangled by the shell. It also flags the classic traps: -X POST alongside -d, secrets left in shell history, and -s hiding the error you needed to see.",
   useCases: [

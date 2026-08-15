@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ugadi & Gudi Padwa Wishes in Telugu, Kannada, Marathi",
+  metaDescription:
+    "Generate Ugadi and Gudi Padwa greetings in Telugu, Kannada, Marathi, Hindi or English, matched to family, friends or work, with SMS parts counted.",
+  steps: [
+    "Pick Ugadi or Gudi Padwa under 'Which tradition?', choose the Language and audience in 'Who is it for?', and optionally add the recipient's name and your sign-off.",
+    "Set 'How many messages (1-2)' and press 'Shuffle wording' to rotate through alternative greetings for the same tradition, language and audience.",
+    "Press 'Copy all' for every greeting, or Copy on a single wording — each message shows its character count and SMS parts.",
+  ],
   intro:
     "Ugadi and Gudi Padwa are the same day under two names: Chaitra shukla pratipada, the first day of the bright fortnight of Chaitra, which opens the luni-solar new year in the Deccan in late March or April. This generator writes greetings for whichever name your family uses — Telugu, Kannada, Hindi or English for Ugadi, and Marathi, Hindi or English for Gudi Padwa — sorted by audience, with the six tastes of Ugadi Pachadi and the parts of a gudi listed for reference.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Punjabi New Year Wishes in Gurmukhi & Roman",
+  metaDescription:
+    "Vaisakhi, Nanakshahi (1 Chet) and 1 January greetings in Gurmukhi, Roman and English, with the ji honorific applied and real UCS-2 SMS lengths.",
+  steps: [
+    "Pick the \"Occasion\" — \"Vaisakhi (13 or 14 April)\", \"Nanakshahi new year (1 Chet)\" or \"1 January\" — plus a \"Tone\" and \"Script\".",
+    "Set \"Who is it for\" (Elder / teacher adds the ji honorific) and optionally the recipient's name and your name.",
+    "Browse the greetings in Gurmukhi, Roman transliteration and English with each one's SMS length, then click \"Copy greeting\".",
+  ],
   intro:
     "This generator builds Punjabi new year greetings by joining a customary salutation, a message from a curated bank of Vaisakhi, Nanakshahi new year and 1 January wishes, and your sign-off. Each greeting is given in Gurmukhi, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It is for anyone who wants correct Punjabi wording for elders, friends or business contacts rather than a forwarded image.",
   useCases: [

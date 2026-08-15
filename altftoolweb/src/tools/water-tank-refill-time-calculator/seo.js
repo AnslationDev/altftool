@@ -1,4 +1,12 @@
 const seo = {
+  title: "Water Tank Refill Time & Pump Cost Calculator",
+  metaDescription:
+    "Get the minutes a pump needs to fill your tank from litres missing and net fill rate, plus each fill's cost in kWh and rupees at your tariff.",
+  steps: [
+    "Enter Tank capacity (litres), Current level (% full), Pump discharge (litres/minute) and any taps running while filling, or tap a Common pumps preset.",
+    "Set the total head (lift plus losses, in metres), Wire-to-water efficiency (%) and your electricity tariff in rupees per unit.",
+    "Read Time to fill with energy per fill in kWh and cost per fill in rupees, then press Copy result.",
+  ],
   intro:
     "A water tank refill time calculator divides the litres still missing from the tank by the net rate water enters it — the pump's discharge minus anything drawn off taps at the same time — to give the minutes the pump must run. It then prices the fill using the hydraulic power equation P = ρgQH with ρ = 998 kg/m³ and g = 9.80665 m/s², divided by the pump's wire-to-water efficiency, so you see both the running time and the units of electricity each fill consumes.",
   useCases: [

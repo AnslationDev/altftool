@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prescription Abbreviation Decoder: BD, TDS, PRN & 5/7",
+  metaDescription:
+    "Paste a sig like '1 tab PO TDS 5/7' to decode each abbreviation, get doses per day, course length and total tablets — with ISMP unsafe-shorthand flags.",
+  steps: [
+    "Paste the sig into 'Directions from the prescription', or tap an example chip such as 'T. Amoxicillin 500mg 1 tab PO TDS 5/7 PC'.",
+    "The decoder translates each abbreviation and works out doses per day, the gap between doses and the course length in days.",
+    "Read the Total to dispense figure, check any red error-prone-abbreviation flags, then click Copy decode for the full breakdown.",
+  ],
   intro:
     "Prescription shorthand is abbreviated Latin: BD is bis in die (twice a day), TDS is ter die sumendum (three times a day), HS is hora somni (at bedtime) and PRN is pro re nata (as needed). This decoder translates a whole sig line, works out doses per day, the gap between doses, the course length written as 5/7 or 3/12, and the total number of tablets that adds up to — and it flags shorthand that appears on the ISMP list of error-prone abbreviations.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Best Time to Publish Video for a Global Audience",
+  metaDescription:
+    "Score an upload time against each audience timezone — all 96 quarter-hour slots ranked by how much of your audience lands in its local prime window.",
+  steps: [
+    "Set \"Your channel timezone\", the \"Publish time\", the \"Lead time before viewing (minutes)\" (0–720) and your prime and secondary viewing hours.",
+    "Under \"Audience by timezone\", give each region a timezone and \"Share of viewers (%)\" — \"Add row\" supports up to 12 audiences and shares are normalised automatically.",
+    "Read the reach score and rank out of 96 slots, the per-audience local-time table and \"Top slots in your timezone\", then click \"Use the best slot\" to adopt the winner.",
+  ],
   intro:
     "The Video Publishing Time Planner converts a single upload moment into the local clock of every audience timezone you serve, then scores it against the prime and secondary viewing windows you define. It scans all 96 quarter-hour slots in a 24-hour day, weights each one by your share of viewers per region, and ranks the slots that land the most of your audience inside a good local window. Built for creators and social teams whose viewers sit in more than one country.",
   useCases: [

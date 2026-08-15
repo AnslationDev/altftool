@@ -1,4 +1,10 @@
 const seo = {
+  title: "WebP to PNG, JPG or PDF Converter — Batch + ZIP",
+  steps: [
+    "Drag and drop .webp files onto the upload area or click Select WebP Files — multiple files are accepted for batch conversion.",
+    "Pick PNG, JPG or PDF under Output Format; a Quality slider (10-100, default 90) appears for JPG and PDF.",
+    "Press Convert, then Download each image or use Download All as ZIP to get one webp-converted archive.",
+  ],
   intro:
     "WebP to PNG / JPG Converter decodes .webp files with your browser's own image decoder, redraws them on a canvas at their native pixel dimensions, and re-encodes them as lossless PNG, JPEG at a quality you set, or a single-page PDF sized to the image. Drop in a batch and it converts them all, then packages the results as a ZIP. It is for anyone stuck with WebP downloads that an older app, a print shop, a CMS or a client's template refuses to open.",
   useCases: [

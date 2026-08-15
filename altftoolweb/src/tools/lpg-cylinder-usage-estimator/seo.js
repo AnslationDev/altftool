@@ -1,4 +1,12 @@
 const seo = {
+  title: "LPG Cylinder Usage Estimator: Days per Refill and Cost",
+  metaDescription:
+    "Enter each burner's kW rating and daily minutes to get days per 14.2 kg cylinder, cost per day and the date to book the next refill.",
+  steps: [
+    "For each burner, enter the Rating (kW) from your stove manual, How many you have, and Minutes a day (each) it runs.",
+    "Pick your Cylinder size, the Refill price you pay, the Stove thermal efficiency (%) and, optionally, the date this cylinder was connected.",
+    "Read how many days a cylinder lasts, gas burned per day in kg, the run-out date and the Book the refill by date, then click Copy result.",
+  ],
   intro:
     "How long an LPG cylinder lasts is set by physics, not by household size: a burner's kilowatt rating is its heat input, so gas burned per hour equals that rating divided by the fuel's calorific value of about 46.1 MJ per kg. This estimator takes the minutes each burner runs in a typical day, converts that to kilograms of gas, and divides a 14.2 kg domestic cylinder by it to give days per refill, cost per day and the date to book the next one.",
   useCases: [

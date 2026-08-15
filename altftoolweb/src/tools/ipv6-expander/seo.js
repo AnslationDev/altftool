@@ -1,4 +1,7 @@
 const seo = {
+  title: "IPv6 Address Expander: Full 8-Group Notation",
+  metaDescription:
+    "Expand a compressed IPv6 address: the :: shorthand is refilled with zero groups and every group padded to 4 hex digits — 2001:db8::1 to its full form.",
   intro:
     "The IPv6 Expander rewrites a compressed IPv6 address into its full uncompressed form: it replaces the :: shorthand with the exact number of zero groups needed to reach eight, then left-pads every group to four hex digits. Enter 2001:db8::1 and you get 2001:0db8:0000:0000:0000:0000:0000:0001. It is for network engineers, developers and anyone who needs the canonical long form because a device, config file or comparison refuses to accept the shortened notation.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Display Calibration Checklist: sRGB, Rec. 709, HDR",
+  metaDescription:
+    "Pick a workflow — web sRGB, print proofing, Rec. 709 or HDR PQ — get white point, gamma, luminance and room-light targets, plus the next due date.",
+  steps: [
+    "Choose the workflow under \"What is this display for?\" — from \"Web, UI and photo for screen (sRGB)\" to \"HDR grading (PQ / BT.2100)\" — and enter room lux, screen hours per day and the last-calibrated date.",
+    "Untick \"I have a colorimeter\" if you lack a device, then tick off the phase-grouped steps, clearing every one tagged \"Critical\".",
+    "Read the targets — white point, tone curve, white luminance in cd/m², room-light range and the \"Next calibration due\" date — and click \"Copy checklist\".",
+  ],
   intro:
     "This checklist turns a choice of workflow — web and sRGB, print soft proofing, Rec. 709 video or HDR PQ — into the white point, tone curve, white luminance and room-light targets that the governing standard specifies, then orders the setup steps so nothing has to be measured twice. It also warns when your measured ambient light is outside the range the workflow assumes and dates the next calibration from panel hours or the 30-day calendar cap, whichever comes first.",
   useCases: [

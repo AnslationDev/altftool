@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Diff Viewer with Word-Level Change Highlights",
+  metaDescription:
+    "Compare two drafts side by side with changed words highlighted inside edited lines - similarity and churn percentages, version history, markdown export.",
+  steps: [
+    "Paste the two drafts into the Before and After boxes — up to 1,500 lines each — and toggle Ignore case, Ignore whitespace or 'Show unchanged lines'.",
+    "Read the side-by-side table where changed words are highlighted inside edited lines, with similarity and churn percentages above it.",
+    "Press 'Copy export' for a markdown table of the comparison, or 'Save version' to snapshot the After text and reload it later as Before or After.",
+  ],
   intro:
     "The Text Diff Viewer aligns two versions of a document side by side and highlights the individual words that changed inside each edited line, rather than repainting the whole line. It runs a line-level longest common subsequence to pair the versions up, then a second word-level pass on any line that was replaced, and reports similarity and churn as Dice coefficients over words. It is for writers, editors and reviewers who need to see what moved between two drafts.",
   useCases: [

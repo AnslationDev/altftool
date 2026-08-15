@@ -1,4 +1,12 @@
 const seo = {
+  title: "Haemoglobin Unit Converter: g/dL, g/L and mmol/L",
+  metaDescription:
+    "Convert haemoglobin between g/dL, g/L and mmol/L (×0.6206) and check it against WHO anaemia thresholds by age, sex, pregnancy and altitude.",
+  steps: [
+    "Type the \"Haemoglobin result\" and pick the \"Unit on the report\" — g/dL, g/L or mmol/L.",
+    "Choose a group under \"Who is the result for?\" and, if you live above 1,000 m, fill in \"Altitude of residence in metres\".",
+    "Read the value in all three units, the WHO anaemia threshold for your group and the result band, then click \"Copy result\".",
+  ],
   intro:
     "The Haemoglobin Unit Converter changes a haemoglobin result between g/dL, g/L and mmol/L, using the exact 10× relationship between g/dL and g/L and the SI factor of 0.6206 mmol/L per g/dL, which comes from the 16,114.5 g/mol molar mass of the iron-carrying haemoglobin monomer. It then compares the value with the World Health Organization anaemia thresholds for the relevant age, sex and pregnancy group, and applies the WHO altitude adjustment above 1,000 metres.",
   useCases: [

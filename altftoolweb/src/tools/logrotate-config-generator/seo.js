@@ -1,4 +1,12 @@
 const seo = {
+  title: "Logrotate Config Generator with Conflict Warnings",
+  metaDescription:
+    "Build an /etc/logrotate.d/ rule — frequency, rotate N, compression, create modes and a postrotate hook — with warnings for size vs maxsize conflicts.",
+  steps: [
+    "Enter the log path or glob (default /var/log/myapp/*.log), pick a rotation frequency and set 'Rotations to keep (rotate N)'.",
+    "Choose a size trigger (maxsize, size or minsize), toggle directives like compress, delaycompress, dateext or copytruncate, and type postrotate command(s) one per line.",
+    "Click 'Copy config' to copy the generated /etc/logrotate.d/ rule; the install hint names the target file and warnings flag conflicting directives.",
+  ],
   intro:
     "This generator builds a complete logrotate rule — the /etc/logrotate.d/ block that controls when a log rotates, how many old copies are kept, whether they are compressed, and what runs afterwards — using the directive syntax of logrotate(8). It is aimed at Linux administrators who want a correct rule with create modes, delaycompress and a postrotate reload hook, and it flags the classic conflicts such as size vs maxsize and copytruncate vs create.",
   useCases: [

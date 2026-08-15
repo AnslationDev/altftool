@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC Exam Day Checklist & Reporting Time Planner",
+  metaDescription:
+    "Admit card, spare photo, original ID and biometric prep for an SSC CBT, plus a leave-home time counted back from the gate that closes 30 minutes early.",
+  steps: [
+    "Pick a Shift — Morning 09:00, Afternoon 13:00 or Evening 16:00 — or type the test start time from your admit card, plus travel, buffer and get-ready minutes.",
+    "Tick the Bag and document checklist; items like the printed admit card with pasted photograph carry an entry-critical badge, and Tick everything / Clear set all at once.",
+    "Read the Leave home by headline and the timeline back from gate closing 30 minutes before the start; Copy result copies the plan and Print prints the checklist.",
+  ],
   intro:
     "This checklist covers what an SSC computer-based test actually demands at the door: a printed admit card with a pasted photograph, an original photo ID, a spare photograph, and fingers clean enough for the biometric thumb impression captured at entry. It also builds a reporting plan backwards from the gate closing time, which SSC sets 30 minutes before the test begins, so the departure time you get already contains travel, frisking and verification.",
   useCases: [

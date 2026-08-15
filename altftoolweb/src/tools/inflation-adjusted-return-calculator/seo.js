@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inflation Adjusted Return Calculator – Real Returns",
+  metaDescription:
+    "Fisher-equation real return from a nominal rate and inflation, with optional tax on returns and your corpus restated in today's rupees.",
+  steps: [
+    "Enter the Investment amount (₹), Nominal return (% p.a.), Inflation (% p.a.), Period (years) and an optional Tax on returns (%).",
+    "Or apply a Quick scenario such as 'Bank FD 7% taxed at 30%' — the real return updates instantly using (1 + nominal) ÷ (1 + inflation) − 1.",
+    "Read the real annual return, the value in today's money and the purchasing power lost to inflation, then click Copy result.",
+  ],
   "intro": "Inflation Adjusted Return Calculator converts a headline (nominal) return into the real return you actually keep once inflation is stripped out, using the exact Fisher equation rather than the rough 'return minus inflation' shortcut. It also shows what your investment is worth in today's money after any number of years, and optionally accounts for tax on returns. It's for investors comparing FDs, debt funds and equity on a like-for-like basis.",
   "useCases": [
     "Check whether a 7% fixed deposit actually beats 6% inflation once 30% tax is applied.",

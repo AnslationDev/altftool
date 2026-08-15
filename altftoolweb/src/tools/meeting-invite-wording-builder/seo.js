@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meeting Invite Generator with Time-Boxed Agenda",
+  metaDescription:
+    "Turn a topic, slot and timed agenda into invite text with a run sheet — and check the agenda fits once ~10% is reserved for wrap-up.",
+  steps: [
+    "Fill in \"Topic\" and the \"Objective — what must be true when it ends\", pick a \"Meeting type\" and a length from 15 to 90 minutes, and write agenda lines as \"Item — minutes\".",
+    "List \"Required attendees\", \"Optional attendees\", the \"Pre-read / preparation ask\" and a \"Decision owner\" — or use the \"Load the … agenda template\" link to pre-fill timings.",
+    "Check \"Agenda fit\" against the slot (over-booking shows minutes to trim), review the timed \"Run sheet\", then \"Copy result\" for subject plus body or \"Copy body\" alone.",
+  ],
   intro:
     "The Meeting Invite Wording Builder turns a topic, a slot and a list of agenda items into invite text that says what the meeting is for, who must be there and what to do before it. It also checks the two things most invites get wrong: whether the time-boxed agenda actually fits the slot once you reserve about 10% for wrap-up, and how much paid attendee time the slot consumes. Useful for managers, project leads and anyone whose invites get declined or drift over time.",
   useCases: [

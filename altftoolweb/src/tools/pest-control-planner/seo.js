@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pest Control Cost Planner with 12-Month Budget Scenarios",
+  metaDescription:
+    "Pick pests, floor area and severity to build an editable 12-month pest-control budget with GST — demo rates to compare against real quotes.",
+  steps: [
+    "Tick the Pests to treat checkboxes and enter your Carpet area (sq ft), Property type and Infestation level.",
+    "Choose the month under Plan starts in, and tick the GST option (18%, SAC 998531) if the provider is GST-registered.",
+    "Read the Illustrative 12-month budget, the per-pest treatment rows and the treatment-cycle calendar, then use Copy plan to save the scenario.",
+  ],
   intro:
     "The Pest Control Planner creates an editable budget scenario from a dated demo catalogue of treatment approaches, repeat intervals, callback periods and Indian-rupee rate assumptions. It separates treatment-cycle starts from estimated technician visits and can model GST. The August 2026 demo defaults are not live market data, a provider quote, a recommended schedule or a promised warranty; replace them with written local terms before booking.",
   useCases: [

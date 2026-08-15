@@ -1,4 +1,7 @@
 const seo = {
+  title: "Clipboard Capsule: Reusable Snippet Library",
+  metaDescription:
+    "Save canned replies, addresses and code once, file them under categories, pin or star favourites, and copy them back with one click — stored locally.",
   intro:
     "Clipboard Capsule is a saved-snippet library: you paste the text you keep needing again — signatures, addresses, code blocks, canned replies, tracking links — file it under a category, and copy it back with one click. Entries can be pinned to the top or starred as favourites, and search matches across the title, the body text and the category at once. Everything is stored in your browser's local storage on this device, so nothing is uploaded and nothing syncs.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "PNG vs LPG Cost Calculator: Compare on Equal Heat",
+  metaDescription:
+    "Convert LPG kg and PNG SCM to the same usable kWh, compare monthly bills with the fixed charge included, and see when the connection fee pays back.",
+  steps: [
+    "Choose 'LPG kilograms a month' or 'PNG cubic metres (SCM) a month' under 'I know my usage in', then enter the amount, LPG cylinder price and cylinder net weight (default 14.2 kg).",
+    "Fill in the PNG rate per SCM, the monthly fixed charge and the one-time connection cost or deposit; 'Show calorific values and burner efficiency' opens the GCV and efficiency fields.",
+    "Read the monthly saving, cost per usable kWh for each fuel and the months for the PNG connection cost to pay back; 'Copy result' copies the comparison.",
+  ],
   intro:
     "Piped natural gas is billed by the standard cubic metre and LPG by the kilogram, so the two prices cannot be compared until both are converted to the heat they actually deliver. This comparison uses gross calorific values of about 49.6 MJ per kg for LPG and 39.75 MJ per SCM for domestic PNG, applies burner efficiency to both, and reports the monthly bill, the cost per usable kilowatt-hour and how long a PNG connection charge takes to repay itself.",
   useCases: [

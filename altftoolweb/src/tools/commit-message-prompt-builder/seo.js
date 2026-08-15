@@ -1,4 +1,12 @@
 const seo = {
+  title: "Commit Message Prompt Builder – Conventional Commits",
+  metaDescription:
+    "Turn a diff summary into an AI prompt for a Conventional Commits message — type, scope, breaking-change footer and your 50-character subject budget.",
+  steps: [
+    "Pick a Commit type (feat, fix, docs and eight more), add an optional Scope, and paste your change into 'What changed (summary or trimmed diff)'.",
+    "Tick 'Breaking change' to add ! and a required BREAKING CHANGE footer — the header preview shows how much of the 50-character subject your prefix leaves.",
+    "Click Copy prompt to paste the generated Conventional Commits v1.0.0 prompt into your AI assistant.",
+  ],
   intro:
     "The Commit Message Prompt Builder turns a diff summary into a prompt that produces a Conventional Commits v1.0.0 message with your chosen type, optional scope, breaking-change marker and the 50/72 length rules built in. It computes how many of the 50 subject characters your prefix (like feat(auth)!: ) already consumes, warns when the scope leaves too little room, and requires a real BREAKING CHANGE footer whenever you mark the change breaking.",
   useCases: [

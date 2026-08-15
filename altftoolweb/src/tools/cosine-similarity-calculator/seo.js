@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cosine Similarity Calculator for Embedding Vectors",
+  metaDescription:
+    "Paste two vectors — JSON arrays or comma, space or newline separated, up to 20,000 dimensions — and get cosine, dot product, L2, L1 and the angle.",
+  steps: [
+    "Paste your embeddings into Vector A and Vector B — JSON arrays or comma, space or newline separated, up to 20,000 dimensions.",
+    "Read the cosine similarity headline plus dot product, Euclidean (L2) and Manhattan (L1) distances, both norms and the angle in degrees.",
+    "Click Copy result for the full comparison summary, or Reset to restore the example vectors.",
+  ],
   intro:
     "This calculator computes the cosine similarity between two vectors — the dot product divided by the product of their L2 norms, giving a value between −1 and 1 that measures direction rather than magnitude. Alongside it you get the raw dot product, Euclidean (L2) and Manhattan (L1) distances, and the angle in degrees. It is built for developers working with text or image embeddings who want to sanity-check what their vector database is returning.",
   useCases: [

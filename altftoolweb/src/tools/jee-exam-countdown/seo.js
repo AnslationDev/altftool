@@ -3,6 +3,14 @@
 const mainQualifiersCap = (250000).toLocaleString("en-IN");
 
 const seo = {
+  title: "JEE Exam Countdown with Syllabus Pace Calculator",
+  metaDescription:
+    "Days left to JEE Main Session 1, Session 2 and JEE Advanced, converted into the syllabus units per study day you must hold after a revision buffer.",
+  steps: [
+    "Replace the default JEE Main Session 1, Session 2 and JEE Advanced dates with the ones on your NTA bulletin or admit card.",
+    "Enter total and finished units for Physics, Chemistry and Mathematics, then set the revision buffer (days), study days per week (1-7) and focused hours per study day.",
+    "Read the days-to-go headline and Required pace in units per study day, with per-subject progress bars and a countdown board; Copy result copies the summary.",
+  ],
   intro:
     "This countdown converts your JEE Main and JEE Advanced dates into days remaining and then into the only number that decides the outcome: syllabus units you must finish per study day. It subtracts a revision buffer from the calendar, counts only the days of the week you actually study, and divides the units still unread across what is left. Physics, Chemistry and Mathematics are tracked separately so you can see which subject is dragging the pace up.",
   useCases: [

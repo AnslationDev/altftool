@@ -1,4 +1,12 @@
 const seo = {
+  title: "requirements.txt Generator with PEP 508 Validation",
+  metaDescription:
+    "Build a pip requirements.txt row by row — pins, extras and environment markers validated against PEP 508/440, with warnings for unpinned packages.",
+  steps: [
+    "Fill in each row's \"Package name\", optional \"Extras (comma separated)\", a \"Version operator\" and \"Version\"; click \"Add package\" for more rows.",
+    "Optionally add an \"Environment marker\" such as python_version < \"3.11\" from the preset list, and toggle \"Sort alphabetically\" and \"Include header comment\".",
+    "Review the PEP 508/440-validated output and its unpinned-package warnings, then click \"Copy file\" to copy the requirements.txt content.",
+  ],
   intro:
     "This generator builds a pip requirements.txt line by line, validating package names, extras and environment markers against PEP 508 and version specifiers against PEP 440 — including exact pins (==), compatible releases (~=), wildcards (==2.0.*) and markers like python_version < \"3.11\". It is for Python developers who want a correct, reproducible dependency file without memorising specifier grammar, and it warns about unpinned or unbounded requirements.",
   useCases: [

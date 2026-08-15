@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bengali New Year Wishes — Shubho Nabobarsho SMS",
+  metaDescription:
+    "Poila Boishakh and 1 January greetings in Bengali script with Roman transliteration, English meaning and true SMS parts under the 70-char UCS-2 rule.",
+  steps: [
+    "Pick the Occasion — Poila Boishakh or 1 January — plus Tone, 'Who is it for' and the Script: Bengali, Roman or both.",
+    "Add the optional Recipient name and Your name to shape the salutation and sign-off.",
+    "Each greeting shows its English meaning, SMS alphabet and billable parts under the 70-character UCS-2 rule — use Copy greeting or Feature this.",
+  ],
   intro:
     "This generator composes Bengali new year greetings by joining a customary salutation, a greeting from a curated bank of Poila Boishakh and 1 January messages, and your sign-off. Every greeting comes with a Roman transliteration, a plain English meaning and its billable SMS length calculated under the 3GPP 140-byte payload rule. It is aimed at anyone who wants correct Bengali wording for family, elders or business contacts without hunting through image galleries.",
   useCases: [

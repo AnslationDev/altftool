@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rebar Weight Calculator: d²/162 kg per Metre & Total",
+  metaDescription:
+    "Turn a bar bending schedule into kg and tonnes with the d²/162 unit weight, lap and wastage allowance, stock bar count and steel cost.",
+  steps: [
+    "Add a Bar schedule row per bar mark with Diameter (mm), Length per bar (m) and Number of bars; Add bar row appends more marks.",
+    "Set the lap, bend and wastage allowance (%), the Stock bar length (m — default 12) and an optional steel rate in INR per kg.",
+    "Read the total steel weight in kg and tonnes with full-length bars to buy, cost and kg/m per row, then click Copy result.",
+  ],
   intro:
     "A steel rebar weight calculator converts a bar bending schedule — diameter, length per bar and number of bars — into kilograms and tonnes of reinforcement. It uses the standard unit weight of a round bar, w = (π/4) × (d/1000)² × 7850, which reduces to the site shorthand d²/162 kg per metre and matches the IS 1786 unit-weight table exactly. Site engineers, bar benders and estimators use it to order steel, count full-length bars and price a slab or footing.",
   useCases: [

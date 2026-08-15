@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Storage Per Hour: ProRes, DNxHR & H.265 in GB",
+  metaDescription:
+    "Turn a codec's bitrate into GB per hour — ProRes and DNxHR scale with resolution and frame rate — plus card runtime and how many cards a shoot needs.",
+  steps: [
+    "Choose the 'Codec / recording format' — ProRes, DNxHR, XAVC S, H.264/H.265 presets or 'Custom bitrate (Mbps)' — then set 'Frame width (px)', 'Frame height (px)' and 'Frame rate (fps)', or tap a resolution preset.",
+    "Enter 'Hours recorded', 'Card / drive size (GB)' and the audio channels, bit depth (16/24-bit or 32-bit float) and sample rate (44.1 to 192 kHz).",
+    "Read 'Storage per hour' in GB (with the GiB figure the OS shows), 'Runtime on one card' in minutes and 'Cards needed', then press 'Copy result'.",
+  ],
   intro:
     "This calculator converts a codec's data rate into storage: gigabytes per hour equals the combined video and audio bitrate in megabits per second multiplied by 3,600 and divided by 8. Intraframe codecs such as ProRes and DNxHR are scaled by pixels per second, so changing resolution or frame rate updates the figure the way the camera actually behaves. Shooters, DITs and producers use it to size cards, shuttle drives and archive budgets before a shoot rather than after.",
   useCases: [

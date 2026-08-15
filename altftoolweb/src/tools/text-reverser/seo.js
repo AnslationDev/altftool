@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Reverser: Flip Characters, Words or Line Order",
+  metaDescription:
+    "Reverse text four ways — whole-string characters, word order, letters inside each word, or line order — then copy it or download reversed-text.txt.",
+  steps: [
+    "Type or paste your text into the Original Input Text box.",
+    "Pick a mode — Reverse Characters, Reverse Word Order, Reverse Words Internally or Reverse Lines; the output updates as you type.",
+    "Read the Reversed Output box, then Copy it to the clipboard or Download it as reversed-text.txt.",
+  ],
   intro:
     "This tool flips text in four distinct ways: reverse every character in the whole block, reverse the order of words while leaving each word readable, reverse the letters inside each word while keeping the words in place, or reverse the order of whole lines. Pick a mode and the output updates as you type, ready to copy or download as reversed-text.txt. It is useful whenever the order of something — characters, words or rows — is what you actually need changed.",
   useCases: [

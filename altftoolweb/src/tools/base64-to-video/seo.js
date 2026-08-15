@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base64 to Video Decoder with Container Detection",
+  metaDescription:
+    "Decode Base64 or a data URL into a playable video: container identified from magic bytes, MP4/MOV duration and frame size read from mvhd/tkhd boxes.",
   intro:
     "Base64 to Video decodes a Base64 payload back into a playable video file and tells you exactly which container it is, reading the answer from the file's own magic bytes rather than a declared MIME type. For MP4, MOV and M4V it also reports the running time and frame size, parsed from the `mvhd` and `tkhd` boxes specified in ISO/IEC 14496-12, plus the average bitrate. It is for developers handling clips that arrive inside JSON, a webhook body or a database column.",
   useCases: [

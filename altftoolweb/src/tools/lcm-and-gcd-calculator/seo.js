@@ -1,4 +1,7 @@
 const seo = {
+  title: "LCM and GCD (HCF) Calculator for Two Numbers",
+  metaDescription:
+    "Enter two whole numbers to get GCD (HCF) and LCM together, computed with the Euclidean algorithm — 12 and 18 return GCD 6 and LCM 36.",
   intro:
     "This calculator finds the greatest common divisor (GCD, also called HCF) and the least common multiple (LCM) of two whole numbers. It uses the Euclidean algorithm — repeatedly replacing the pair with the smaller number and the remainder until the remainder is zero — and then derives the LCM from the identity LCM(a, b) = a x b / GCD(a, b), computed as (a / g) x b so the intermediate product stays small. Enter 12 and 18 and it returns GCD 6 and LCM 36.",
   useCases: [

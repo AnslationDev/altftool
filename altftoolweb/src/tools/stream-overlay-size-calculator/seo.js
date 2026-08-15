@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stream Overlay & Facecam Size Calculator (OBS)",
+  metaDescription:
+    "Size a facecam or chat box as a % of your canvas: exact pixel size, X/Y for nine safe-area anchors, output scaling and the artwork export size.",
+  steps: [
+    "Set the \"Canvas (base) resolution\" and \"Output (scaled) resolution\" in px, or pick each from its preset dropdown.",
+    "Enter \"Element width (% of canvas width)\", the aspect parts, \"Safe margin (% of short edge)\" and choose an \"Anchor position\".",
+    "Read the element's canvas pixel size, the \"X / Y for every anchor\" table and the \"Export artwork at\" size, then click \"Copy result\".",
+  ],
   intro:
     "This calculator turns an overlay element expressed as a percentage of your stream canvas into exact pixel dimensions and top-left X/Y coordinates. It applies the canvas-to-output scale factor (output width ÷ base width) that OBS and Streamlabs use, and reserves a safe margin off the short edge so nothing sits under a platform's own chrome. Streamers and overlay designers use it to size facecams, chat boxes and alert boxes once and reuse them at every resolution.",
   useCases: [

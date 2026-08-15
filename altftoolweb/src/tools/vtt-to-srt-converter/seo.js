@@ -1,4 +1,12 @@
 const seo = {
+  title: "VTT to SRT Converter: Clean SubRip from WebVTT Captions",
+  metaDescription:
+    "Convert WebVTT to SubRip in your browser: strips NOTE/STYLE/REGION blocks, decodes entities, renumbers cues, applies a ms offset and saves a .srt file.",
+  steps: [
+    "Paste WebVTT text or click Load .vtt file, then set a Timing offset in milliseconds if the captions drift (negative values pull them earlier).",
+    "Toggle the Conversion options: turn <v Name> voice spans into 'Name:' prefixes, keep <b>, <i> and <u> tags, or re-express cue positioning as {\\anN} overrides.",
+    "Check the cue count and the SubRip output preview, then click Copy SRT or Download .srt to save the renumbered file.",
+  ],
   intro:
     "The VTT to SRT Converter rewrites a W3C WebVTT caption file as a SubRip (.srt) file that video editors, DVD authoring tools and desktop players accept. It removes the WEBVTT header and any NOTE, STYLE or REGION blocks, changes the millisecond separator from a full stop to a comma, decodes escaped entities such as &amp; and &lt;, unwraps WebVTT-only markup like <c> class spans and karaoke timestamp tags, and renumbers every cue from 1. It runs entirely in your browser.",
   useCases: [

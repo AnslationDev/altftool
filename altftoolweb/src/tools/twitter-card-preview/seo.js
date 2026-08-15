@@ -1,4 +1,12 @@
 const seo = {
+  title: "Twitter Card Preview & Validator for X Link Cards",
+  metaDescription:
+    "Preview an X (Twitter) card and check tags against the spec — 70-char titles, 200-char descriptions, 5 MB image cap — then copy twitter: + og: markup.",
+  steps: [
+    "Choose Fill in fields or Paste HTML head, then set the Card type (twitter:card), Title and Description with their live 70 and 200 character counters.",
+    "Add the Image URL (twitter:image) plus its width, height and optional byte size so the 4096 px and 5 MB image rules can be validated.",
+    "Check the card mock-up and Card status (Valid, or the count of blocking issues), then click Copy meta tags for the combined twitter: and og: block.",
+  ],
   intro:
     "Twitter Card Preview shows how a link will appear as an X (Twitter) card and checks the underlying meta tags against X's Cards markup reference. It applies the documented limits — twitter:card must be summary, summary_large_image, app or player; titles are cut at 70 characters and descriptions at 200; card images must be under 5 MB and no larger than 4096 px on a side. It is for developers, SEO specialists and marketers who want to see the card before a post goes out.",
   useCases: [

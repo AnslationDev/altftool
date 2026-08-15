@@ -1,4 +1,12 @@
 const seo = {
+  title: "CBSE Best of Five Calculator: Class 12 Percentage",
+  metaDescription:
+    "Work out your CBSE Class 12 best-of-five percentage — compulsory language plus your four best subjects out of 500 — and see which subject drops out.",
+  steps: [
+    "Enter each subject's name and Marks (each out of 100), mark exactly one row as the 'Compulsory language', and press 'Add a subject' for a sixth or seventh — up to 8 subjects.",
+    "Optionally set 'Percentage you are aiming at' to see the marks a college cutoff needs.",
+    "Read the 'Best of five percentage' out of 500, the 'Subject dropped' with the marks it needed to get in, and the comparison against counting every subject, then press 'Copy result'.",
+  ],
   intro:
     "Best of five is the aggregate rule almost every Indian institution applies to a CBSE Class 12 marksheet: the compulsory language plus the four highest scoring of the remaining subjects, divided by 500. This calculator applies that rule to the subjects you enter, shows which paper drops out, and compares the result with counting every subject. CBSE does not print a percentage or a division on the marksheet at all, which is why the figure has to be worked out this way.",
   useCases: [

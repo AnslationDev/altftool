@@ -1,4 +1,12 @@
 const seo = {
+  title: "EMOM Workout Timer with Rest-Per-Round Calculator",
+  metaDescription:
+    "Enter interval, rounds, reps and your seconds-per-rep pace to see exact rest inside each minute. Runs the clock with a prep countdown and flags overruns.",
+  steps: [
+    "Enter Interval length (10-600 seconds), Rounds, Reps per round and Your pace (seconds per rep), or tap a preset like EMOM 60s or E2MOM (120s).",
+    "Press Start to run the prep countdown with live round tracking; the progress bar and Round schedule table follow each interval as it elapses.",
+    "Read the Rest inside each interval figure — or the overrun warning in seconds — and press Copy plan for a text summary of work, rest and total session time.",
+  ],
   intro:
     "An EMOM timer runs a fixed interval on repeat — you start the prescribed reps at the top of every interval and the time left over is your rest. This tool turns interval length, rounds, reps and your own seconds-per-rep pace into the exact rest window inside each round, then runs the clock with a prep countdown and live round tracking. It also flags when the work spills past the interval, which is the point an EMOM stops working as designed.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "CLAT Exam Countdown: Days Left, Mocks and Daily Targets",
+  metaDescription:
+    "Counts days to CLAT and turns them into mock-test capacity, current-affairs pace and daily question targets under the 120-question, +1/-0.25 pattern.",
+  steps: [
+    "Enter the CLAT exam date (from the Consortium notice), Full mocks you can write per week, Months of current affairs already covered (of 12) and Practice questions you solve per day.",
+    "Optionally set Questions attempted (of 120) and Accuracy on what you attempt (%) to project marks under the +1 / -0.25 marking, including the break-even guessing accuracy.",
+    "Read Days to CLAT with mocks possible at your rate, the current-affairs pace needed, phase dates and the section-wise daily question table; Copy result exports the plan.",
+  ],
   intro:
     "This countdown computes the days remaining until CLAT and converts them into prep milestones: how many full mocks your weekly rate allows, the pace needed to finish compiling the twelve months of current affairs the paper draws from, and daily question targets weighted by the paper's own section split. It follows the Consortium of NLUs pattern in force since CLAT 2024 — 120 questions, 120 marks, 120 minutes, +1 for a correct answer and −0.25 for a wrong one.",
   useCases: [

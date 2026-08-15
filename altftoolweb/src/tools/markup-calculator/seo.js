@@ -1,4 +1,7 @@
 const seo = {
+  title: "Markup Calculator: Selling Price, Profit & Real Margin",
+  metaDescription:
+    "Enter cost and markup % to get the selling price, cash profit and the gross margin it implies — a 40% markup is only a 28.57% margin.",
   intro:
     "The Markup Calculator applies a markup percentage to a cost to give the selling price, using price = cost x (1 + markup / 100), and reports the resulting cash profit and the gross margin that same price implies. A cost of 60 with a 40 percent markup produces a price of 84, a profit of 24 and a margin of 28.57 percent. It is for retailers, tradespeople and freelancers who price from cost upward and want to see what the margin actually works out to.",
   useCases: [

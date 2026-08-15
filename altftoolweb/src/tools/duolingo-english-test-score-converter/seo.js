@@ -1,4 +1,12 @@
 const seo = {
+  title: "Duolingo English Test Score to IELTS, TOEFL & CEFR",
+  metaDescription:
+    "Convert a DET score (10–160) to its IELTS band via Duolingo's published concordance, plus CEFR level and a TOEFL iBT range derived via ETS linking.",
+  steps: [
+    "Type your score into 'DET overall score (10–160, steps of 5)' — the box opens at 120.",
+    "The conversion recomputes as you type; out-of-range scores show an error until fixed.",
+    "Read the IELTS equivalent headline with its CEFR level, the derived TOEFL iBT range and the full DET-to-IELTS concordance table; Copy result copies all four lines.",
+  ],
   intro:
     "This converter maps a Duolingo English Test (DET) overall score — reported from 10 to 160 in 5-point increments — to its IELTS band using the concordance Duolingo publishes, plus the matching CEFR level (A1 to C1) and a TOEFL iBT range derived by chaining Duolingo's IELTS mapping with the ETS TOEFL–IELTS linking table. Applicants who took the DET for university admission use it to see how their score reads against IELTS- or TOEFL-based requirements.",
   useCases: [

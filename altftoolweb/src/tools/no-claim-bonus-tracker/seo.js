@@ -1,4 +1,12 @@
 const seo = {
+  title: "No Claim Bonus Calculator: Track NCB, Model a Claim",
+  metaDescription:
+    "Project your motor NCB up the 20-25-35-45-50% ladder, see the rupee discount each renewal, and check if a claim is worth losing the bonus.",
+  steps: [
+    "Enter the own damage premium before NCB and the third party premium per year in INR, then pick your current slab in 'NCB at this renewal' (0% to 50%).",
+    "Set 'Policy years to project' (1-15) and model a claim by choosing 'Claim lodged in policy year' and the claim amount the insurer would pay.",
+    "Read the discount this renewal, the year-by-year bonus ladder table and the verdict on whether claiming leaves you better off; 'Copy result' copies the summary.",
+  ],
   intro:
     "A No Claim Bonus tracker projects the discount on your motor insurance own-damage premium across the standard IRDAI ladder of 20%, 25%, 35%, 45% and 50% for one to five consecutive claim-free years. Enter your own-damage premium and current bonus to see the rupee value of the discount each year, and model what happens when a claim resets it to zero. Vehicle owners use it to decide whether a small dent is worth claiming or paying for out of pocket.",
   useCases: [

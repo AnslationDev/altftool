@@ -1,4 +1,12 @@
 const seo = {
+  title: "ECTS Credit Load Calculator — Credits per Semester",
+  metaDescription:
+    "See how many ECTS you must earn each remaining semester and the 25-30 h/credit workload per week; loads over 30 ECTS are flagged as overload.",
+  steps: [
+    "Enter 'Total ECTS your degree requires' — or tap a preset like 'Bachelor — 180 ECTS (3 years)' — plus ECTS already earned and Semesters remaining.",
+    "Adjust 'Workload hours per ECTS (25–30)' and 'Weeks of study per semester' to match your programme.",
+    "Read ECTS needed per semester with workload hours per semester and per week — anything above 30 ECTS is flagged — then press Copy result.",
+  ],
   intro:
     "This planner calculates how many ECTS credits you must earn in each remaining semester to graduate on time, and converts that load into study hours using the ECTS Users' Guide standard of 60 credits per academic year, 30 per full-time semester and 25-30 workload hours per credit. It flags plans that exceed the standard 30-ECTS semester as overloads. It is built for students at European universities balancing course selection, thesis semesters and part-time work.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Working Days Calculator – Custom Weekends & Holidays",
+  metaDescription:
+    "Count business days between two dates with your own weekend — Sat-Sun, Sunday-only or Fri-Sat — plus a holiday list and total working hours.",
+  steps: [
+    "Pick a \"Start date\" and \"End date\", and tick \"Include the end date in the count\" if your range is inclusive.",
+    "Toggle the Sun-Sat weekend buttons, set \"Hours per working day\", and add holidays with \"Add holiday\" or the one-click \"India national days\".",
+    "Read the working-day total with weekend days, \"Holidays excluded\" and working hours; click \"Copy result\" for the full report.",
+  ],
   "intro": "Working Days Calculator counts the business days between any two dates, skipping weekends and any holidays you add. You choose which days of the week count as your weekend — Saturday and Sunday, Sunday only, or a Friday-Saturday week — so it works for six-day offices and non-standard rosters too. Alongside the business-day count it reports weekend days, holidays removed, working days per weekday and the total working hours at your chosen hours-per-day.",
   "useCases": [
     "Check whether a proposed delivery or SLA date actually satisfies a '15 working days' promise, by counting the business days between your start date and that candidate end date.",

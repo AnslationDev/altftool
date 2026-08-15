@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apdex Score Calculator — Rating Bands and Fix Plan",
+  metaDescription:
+    "Compute Apdex = (satisfied + tolerating/2) ÷ total from your APM counts, get the rating band, and the fewest request fixes to reach a target score.",
+  steps: [
+    "Enter the Satisfied (≤ T), Tolerating (T to 4T) and Frustrated request counts from your monitoring window; Target time T in seconds is optional and only labels the buckets.",
+    "Set the Target Apdex score for the fix plan — the default of 0.94 is the Excellent threshold.",
+    "Read the 0-to-1 score with its rating band and each bucket's share, plus the fix plan to your target, then click Copy result for the text summary.",
+  ],
   intro:
     "This calculator computes an Apdex (Application Performance Index) score — (satisfied + tolerating ÷ 2) ÷ total samples — the standardised 0-to-1 user-satisfaction metric defined by the Apdex Alliance specification and reported by New Relic, Datadog and most APM tools. Enter the satisfied, tolerating and frustrated request counts from your monitoring window and get the score, its rating band, and the cheapest set of request fixes that lifts you to a target.",
   useCases: [

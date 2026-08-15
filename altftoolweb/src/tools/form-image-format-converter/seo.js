@@ -1,4 +1,12 @@
 const seo = {
+  title: "JPG/JPEG/PNG Converter for Government Form Uploads",
+  metaDescription:
+    "Convert a photo or signature to .jpg, .jpeg or PNG in your browser and auto-fit a JPEG under a KB limit like 20-50 KB — nothing is uploaded.",
+  steps: [
+    "Choose an Image file (JPG, JPEG or PNG) and the output format under Convert to.",
+    "For JPEG output, pick the 'Extension the portal demands' (.jpg or .jpeg), set JPEG quality (0.05 – 1) or a Target max size in KB, then press Convert.",
+    "Download the renamed file and check Original size, Converted size, dimensions and the JPEG quality used in the report.",
+  ],
   intro:
     "This converter turns a photo or signature between JPG, JPEG and PNG entirely in the browser, writing the exact file extension a government portal's upload validator demands. JPG and JPEG are the same JPEG format — only the extension spelling differs — and the tool can also binary-search the JPEG quality to land under a KB limit such as the 20-50 KB photo rule common on Indian recruitment portals. Nothing is uploaded: the canvas re-encoding happens on your device.",
   useCases: [

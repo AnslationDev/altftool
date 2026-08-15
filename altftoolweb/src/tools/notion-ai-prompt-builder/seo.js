@@ -1,4 +1,12 @@
 const seo = {
+  title: "Notion AI Prompt Builder for Pages & Databases",
+  metaDescription:
+    "Build Notion AI prompts for a page, selection or database autofill — length checked against the 2,000-character property limit, run count included.",
+  steps: [
+    "Choose Where it runs (a single page, a selected block, a database property or a whole database view) and an Action such as Summarise or Classify into a Select property.",
+    "Set the Target length (words); for database scopes also fill the property it writes into, its type, allowed values, Rows in the view and AI properties per row.",
+    "Check the estimated characters against Notion's 2,000-character property limit and the generations-in-one-run count, then click Copy prompt to paste it into Notion AI.",
+  ],
   intro:
     "The Notion AI Prompt Builder writes prompts shaped by where they will run — a page, a highlighted selection, or a database property filled once per row. It converts your target length into an estimated character count and checks it against Notion's 2,000-character rich text property limit, and multiplies rows by AI properties to show how many generations a single autofill run will trigger. The output is plain text you paste straight into the Notion AI box.",
   useCases: [

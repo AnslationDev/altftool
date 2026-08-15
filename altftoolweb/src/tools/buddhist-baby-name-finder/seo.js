@@ -1,4 +1,12 @@
 const seo = {
+  title: "Buddhist Baby Name Finder — Pali, Sanskrit, Tibetan",
+  metaDescription:
+    "Search Pali, Sanskrit and Tibetan Buddhist names by meaning, gender, letter or length — each entry shows the word's literal sense, origin and syllables.",
+  steps: [
+    "Set \"Gender\" and \"Language of origin\" (Pali, Sanskrit or Tibetan) and cap \"Maximum letters\" if you want a short name.",
+    "Type a meaning like \"wisdom, lotus, compassion\" into \"Search name or meaning\", or tap a \"Starting letter\" button to narrow the list.",
+    "Browse the matched name cards — literal meaning, canonical note, letter and syllable counts — and click \"Copy list\" to save the shortlist with meanings.",
+  ],
   intro:
     "The Buddhist Baby Name Finder searches a curated library of names drawn from Pali, Sanskrit and Tibetan Buddhist sources, showing the literal meaning of each word alongside the disciple, bodhisattva or doctrinal term it refers to. Filter by gender, source language, starting letter, name length or by the meaning itself — searching \"compassion\" surfaces Karuna, Avalokita and Tara. Useful for parents who want a name with a traceable source rather than an invented one.",
   useCases: [

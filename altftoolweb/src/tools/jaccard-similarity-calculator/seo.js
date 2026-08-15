@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jaccard Similarity Calculator for Text and Token Sets",
+  metaDescription:
+    "Compare two texts as token sets: Jaccard index and distance plus Dice, overlap and cosine, with word, character, line or n-gram shingle tokenisation.",
+  steps: [
+    "Paste the two texts to compare into the Text A and Text B boxes.",
+    "Choose Tokenise by — Words, Characters, Lines or Character n-grams (shingles) with an n-gram window of 1 to 12 — and toggle Case sensitive or Strip punctuation.",
+    "Read the Jaccard index plus Jaccard distance, Dice-Sorensen, overlap and cosine rows and the shared / only-in-A / only-in-B token lists; Copy result copies every coefficient.",
+  ],
   intro:
     "Jaccard Similarity Calculator measures how much two texts overlap by turning each into a set of tokens and dividing the shared tokens by the combined tokens — the Jaccard index defined by Paul Jaccard in 1901. It also reports the Jaccard distance, the Dice–Sørensen coefficient, the Szymkiewicz–Simpson overlap coefficient and the Otsuka–Ochiai set cosine, and lets you tokenise by word, character, line or character n-gram shingles for near-duplicate detection.",
   useCases: [

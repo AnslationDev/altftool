@@ -1,4 +1,12 @@
 const seo = {
+  title: "BEE Energy Label Decoder - ISEER & kWh Running Cost",
+  metaDescription:
+    "Turns the kWh/year or ISEER on a BEE star label into running cost, then compares two models on annual savings, payback of the price premium and CO2.",
+  steps: [
+    "Choose what the label states — 'ISEER — room air conditioner' or 'kWh per year — fridge, washing machine, TV' — and enter both models' figures.",
+    "Set your Electricity tariff (per kWh), How much more model B costs and Years you expect to keep it; for ACs, Cooling hours a year defaults to BEE's 1,600-hour test assumption.",
+    "Read how much Model B saves a year, the payback verdict, and the net gain and CO2 avoided over the appliance's life, then press Copy result.",
+  ],
   intro:
     "A BEE star label carries two numbers that matter and one that mostly does not. The stars are a band the model fell into when it was certified, and those bands are tightened every few years; the annual consumption in kWh, or the ISEER on an air conditioner label, is the measurement that decides your bill. This decoder converts either figure into running cost, then compares two models on savings, payback on the price premium and CO2 avoided.",
   useCases: [

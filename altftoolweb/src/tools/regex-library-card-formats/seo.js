@@ -1,4 +1,12 @@
 const seo = {
+  title: "Card Number Regex by Network: Visa, Mastercard, Amex",
+  metaDescription:
+    "Copy card-format regex for Visa, Mastercard (incl. 2221-2720), Amex, RuPay, Discover, JCB and Diners, with ISO 7813 grouping and last-4 masking.",
+  steps: [
+    "Type a public test number such as 4111 1111 1111 1111 into 'Card-style number (test numbers only)' — never a real card number.",
+    "Pick a network under 'Pattern to copy' and press 'Copy regex' to put the full pattern, slashes included, on your clipboard.",
+    "Read the detected network, digit count, ISO 7813 display grouping and the PCI-style masked form with only the last 4 digits visible.",
+  ],
   intro:
     "This library provides card number format regular expressions by network — Visa (13/16/19 digits, prefix 4), Mastercard including the 2221–2720 series added in 2016, American Express (15 digits, 34/37), RuPay, Discover, JCB and Diners Club — for input formatting, masking and network badges, explicitly not verification. It also demonstrates ISO 7813-style display grouping (4-4-4-4, Amex 4-6-5, Diners 4-6-4) and PCI-style masking that shows only the last four digits.",
   useCases: [

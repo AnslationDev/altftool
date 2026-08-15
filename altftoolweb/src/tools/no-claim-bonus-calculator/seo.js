@@ -1,4 +1,12 @@
 const seo = {
+  title: "No Claim Bonus Calculator — NCB Slabs 20% to 50%",
+  metaDescription:
+    "Apply the 20-50% NCB slab to your own-damage premium, add third-party, add-ons and GST, and see what a claim would cost at your next renewal.",
+  steps: [
+    "Enter your Own-damage premium before NCB, pick Consecutive claim-free years (0-5), and add Third-party premium, Add-on covers and GST %.",
+    "Tick 'I made a claim in the policy year just ended' and, if you hold one, 'I hold an NCB protection add-on'.",
+    "Read the NCB discount, Total premium payable and your next-renewal slab, or click Copy result for the full breakdown.",
+  ],
   intro:
     "The No Claim Bonus Calculator shows the discount you have earned on the own-damage part of your car or two-wheeler premium after consecutive claim-free years, using the standard 20/25/35/45/50 percent slabs. It nets the bonus off the OD premium, adds third-party and add-on cover, applies GST and gives the exact rupee amount you save. It also projects the slab you land on at the next renewal — including what happens if you make a claim this year.",
   useCases: [

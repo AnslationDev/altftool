@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reserved Instance Break-Even & Utilisation Calculator",
+  metaDescription:
+    "Find the months of uptime where a 1- or 3-year cloud reservation beats on-demand, plus minimum utilisation % — works for AWS, Azure and GCP commitments.",
+  steps: [
+    "Enter the \"On-demand price (USD per hour)\", the \"Reserved recurring price (USD per hour)\" (enter 0 for all-upfront) and any \"Upfront payment (USD)\".",
+    "Choose the \"Commitment term\" — 1-year or 3-year commitment — and the analysis recomputes instantly on 730-hour months.",
+    "Read the break-even uptime in months and \"Minimum utilisation to break even\", then click \"Copy result\" for the text summary.",
+  ],
   intro:
     "This calculator finds the break-even point of a cloud reservation: the number of months of real uptime at which a 1-year or 3-year commitment (upfront plus recurring rate over 730-hour months) becomes cheaper than paying the on-demand hourly price. It applies the same structure AWS Reserved Instances and Savings Plans, Azure Reservations and GCP Committed Use Discounts share, so engineers and FinOps teams can sanity-check a commitment before signing it.",
   useCases: [

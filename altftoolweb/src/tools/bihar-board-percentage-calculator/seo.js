@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bihar Board Percentage Calculator (BSEB 500 Marks)",
+  metaDescription:
+    "Enter five BSEB subject marks out of 100 for your Matric or Inter percentage on 500, pass status and First (300), Second (225) or Third (150) Division.",
+  steps: [
+    "Choose the Examination level and enter marks out of 100 for the five compulsory subjects (Hindi, second language, Mathematics, Science and Social Science for Matric).",
+    "The result updates live, checking BSEB's 30% per-subject minimum and the 150-mark aggregate minimum before awarding a division.",
+    "Read your percentage on the 500-mark aggregate and your Division against the 300/225/150 cutoff table, then click Copy result.",
+  ],
   intro:
     "This calculator computes a Bihar Board (BSEB) Matric or Intermediate percentage on the board's 500-mark aggregate — five compulsory subjects of 100 marks each — and reports pass status and division. It applies BSEB's own cutoffs: First Division at 300 marks (60%), Second at 225 (45%), Third at 150 (30%), with a 30% minimum in every subject. It is meant for Class 10 and Class 12 students of Bihar verifying their result for admissions, scholarships and government forms.",
   useCases: [

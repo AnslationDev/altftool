@@ -1,4 +1,12 @@
 const seo = {
+  title: "Running Pace Calculator: Min/km, Min/mile & Race Times",
+  metaDescription:
+    "Enter distance (km) and time (minutes) to get pace per km and per mile, average speed, and predicted 5K, 10K, half marathon and marathon finish times.",
+  steps: [
+    "Enter your run in the 'Distance (km)' and 'Time (minutes)' boxes under Inputs — they open at 5 km and 30 minutes.",
+    "The Result recomputes as you type, showing pace as 6:00 /km for the defaults with average speed as the caption — there is no calculate button.",
+    "Read the cards for Pace per mile (exact 1.609344 factor), Average Speed and the 5K, 10K, Half Marathon and Marathon Predictions; Copy copies inputs and results.",
+  ],
   intro:
     "The Running Pace Calculator turns a distance and a finish time into your pace per kilometre (time ÷ distance), your pace per mile using the exact 1.609344 conversion, and your average speed in km/h. It then projects finish times for 5K, 10K, the half marathon at 21.0975 km and the marathon at 42.195 km if you held that same pace throughout. It is for runners checking what today's session actually means for race day, in the units the race clock uses.",
   useCases: [

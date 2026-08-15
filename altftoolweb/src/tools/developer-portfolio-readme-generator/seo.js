@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Profile README Generator with Stats & Badges",
+  metaDescription:
+    "Build a GitHub profile README with shields.io skill badges, up to 10 projects, github-readme-stats widgets and contact links. Copy-paste ready Markdown.",
+  steps: [
+    "Fill in your name, GitHub username, headline, about text, skills (comma separated, max 30) and projects — one per line as 'Name | description | URL', up to 10.",
+    "Tick 'Include GitHub stats card' and 'Include top-languages card' to embed github-readme-stats widgets keyed to your username.",
+    "Press 'Copy README' and paste the Markdown into README.md in the repository named exactly after your username — github.com/username/username.",
+  ],
   intro:
     "This generator builds a complete GitHub profile README — the README.md that renders on your profile when placed in a repository named exactly after your username — with shields.io skill badges, a project list, github-readme-stats widgets and contact links. It is aimed at developers polishing their GitHub for job applications, and it validates your username against GitHub's actual rules (1–39 alphanumeric characters or single hyphens) before generating widget URLs.",
   useCases: [

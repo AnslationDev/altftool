@@ -1,4 +1,12 @@
 const seo = {
+  title: "Negative Split Planner: Half Times and Per-Km Paces",
+  metaDescription:
+    "Solves the two half-race times for your goal finish and split %, then prints a per-segment pace sheet — step-down or gradual — for a pace band.",
+  steps: [
+    "Pick a Race preset (5K to Marathon, or Custom distance) and enter the Goal finish time in Hours, Minutes and Seconds.",
+    "Set Second half faster by (%) — chips offer 1, 2, 3 and 5% — then choose the Plan shape (Two blocks or Gradual) and the Split table step (km).",
+    "Read the Halfway split with both half paces, then copy the Split sheet of pace per km, segment and elapsed times with Copy plan.",
+  ],
   intro:
     "The Negative Split Planner works out the two half-race times that add up to your goal finish while making the second half a chosen percentage faster than the first. It solves first-half time as goal time divided by (2 minus the split fraction), then expands the result into a segment-by-segment pace sheet in either a step-down or gradually tapering shape. Aimed at road runners who lose time by starting too fast and want a written plan for the first kilometre.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timesheet Hours Calculator with Breaks & Overtime",
+  metaDescription:
+    "Add up a week of clock-in and clock-out times, deduct unpaid breaks and split regular from overtime hours — night shifts past midnight handled.",
+  steps: [
+    "Enter Clock in, Clock out and Break (min) for each day Monday to Sunday — a clock-out at or before the clock-in is treated as an overnight shift into the next morning.",
+    "Set the Hourly rate (INR), Overtime after (hours per week) and the Overtime pay multiplier.",
+    "Read the weekly total in hours and decimal hours with the regular/overtime split and gross pay estimate, then click Copy result for a text summary.",
+  ],
   "intro": "Timesheet Hours Calculator turns a week of clock in and clock out times into a payable total. Each day takes an in time, an out time and unpaid break minutes; the tool handles shifts that run past midnight, then splits the week into regular and overtime hours against a threshold you set. It also estimates gross pay from an hourly rate and an overtime multiplier, so hourly staff, shift workers and small employers can check a payslip before it is submitted.",
   "useCases": [
     "Add up a retail or hospitality week where shifts start and finish at different times each day.",

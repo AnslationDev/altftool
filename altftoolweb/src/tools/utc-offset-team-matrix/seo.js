@@ -1,4 +1,12 @@
 const seo = {
+  title: "Team Time Zone Overlap Matrix with Best Meeting Slot",
+  metaDescription:
+    "Pick team cities and shared working hours for a 24-hour UTC grid, full-overlap hours and the best meeting slot in every city's local time.",
+  steps: [
+    "Tick your Team cities from the 10 presets — San Francisco (UTC−8) through Sydney (UTC+10), including Bengaluru's half-hour UTC+5:30.",
+    "Choose the shared Working day starts and Working day ends local hours from the two dropdowns.",
+    "Read the hours when the whole team overlaps, the best slot's local time in each city, and the 24-hour overlap grid; press Copy result for a text summary.",
+  ],
   intro:
     "This tool builds a 24-hour overlap matrix for a distributed team: pick the cities your teammates work from and the shared local working hours, and it maps every UTC hour to each city's local clock, counts who is at work, and finds the longest slot where the most people overlap. It handles half-hour offsets like Bengaluru's UTC+5:30 and windows that wrap midnight, giving engineering managers a defensible answer for standup and meeting times.",
   useCases: [

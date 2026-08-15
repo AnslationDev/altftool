@@ -1,4 +1,12 @@
 const seo = {
+  title: "Number Guessing Game — 1-100 with Higher/Lower Hints",
+  metaDescription:
+    "Guess the secret number from higher/lower hints — Easy 1-50 in 10 tries, Medium 1-100 in 7, Hard 1-200 in 6 — with attempt history and a best score.",
+  steps: [
+    "Pick a difficulty — Easy (1-50) with 10 guesses, Medium (1-100) with 7, or Hard (1-200) with only 6.",
+    "Type a number into 'Enter your guess...' and press Enter or the Guess button.",
+    "Follow the 'Too low! Try higher.' / 'Too high! Try lower.' hints while the Attempts, Remaining and Best cards and the Guess History update; Play Again restarts the round.",
+  ],
   intro:
     "The Number Guessing Game picks a random secret number in your chosen range and tells you after each guess whether the target is higher or lower, until you find it or run out of attempts. Three difficulties set the range and the budget: Easy is 1–50 in 10 guesses, Medium is 1–100 in 7, and Hard is 1–200 in only 6. It is a hands-on way to practise binary search — halving the remaining range each turn is the strategy the guess budgets are built around.",
   useCases: [

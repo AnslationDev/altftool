@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTTP Header Reference Explorer with RFC Citations",
+  metaDescription:
+    "Search HTTP request and response headers by name or meaning — each shows direction, defining spec (RFC 9110, 9111, 6265, Fetch) and a copyable example.",
+  steps: [
+    "Type into the 'Search headers' box (e.g. cache, cors, etag, cookie) to match names, meanings or example values.",
+    "Narrow with the Direction filter — Request only, Response only or Request & response — and the Category dropdown.",
+    "Each result card shows the header's direction, category, defining spec and an example value; its Copy button copies the details and the Matching headers count updates live.",
+  ],
   intro:
     "This explorer is a searchable reference of standard HTTP request and response headers, showing each header's direction, meaning, defining specification and a real example value. Semantics follow RFC 9110 (HTTP Semantics), RFC 9111 (Caching), RFC 6265 (Cookies) and the WHATWG Fetch Standard for CORS. It is built for backend and frontend developers who need to confirm what a header does — and which side sends it — without digging through the RFC text.",
   useCases: [

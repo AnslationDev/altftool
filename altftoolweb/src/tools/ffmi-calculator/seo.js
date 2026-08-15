@@ -1,4 +1,12 @@
 const seo = {
+  title: "FFMI Calculator — Normalised Fat-Free Mass Index",
+  metaDescription:
+    "Enter weight, height and body fat % to get FFMI and Kouri height-normalised FFMI, with lean mass, interpretation bands and drug-free ceiling headroom.",
+  steps: [
+    "Choose Metric (kg / cm) or Imperial (lb / ft), then enter Weight, Height and Body fat (%) — body fat accepts 3 to 70 in 0.5 steps.",
+    "Pick the Reference scale — Male bands (ceiling 25) or Female bands (ceiling 22); the result recomputes as you type, with no calculate button.",
+    "Read the Height-normalised FFMI headline and its band, plus lean mass, BMI and lean-mass headroom to the ceiling; Copy result copies the summary and Reset restores the 80 kg / 180 cm defaults.",
+  ],
   intro:
     "Fat-Free Mass Index (FFMI) is lean body mass in kilograms divided by height in metres squared — the muscularity measure BMI cannot give, because BMI cannot tell muscle from fat. This calculator also reports the height-normalised FFMI from Kouri et al. (1995), which adds 6.1 x (1.8 - your height in metres) so lifters of different heights land on one comparable scale. It is aimed at people tracking a bulk or cut who already have a body fat measurement.",
   useCases: [

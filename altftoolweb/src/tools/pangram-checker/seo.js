@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pangram Checker: See Which of the 26 Letters Are Missing",
+  metaDescription:
+    "Checks a sentence against all 26 letters, shows an a–z coverage grid with unique and total letter counts, and names each missing letter as you type.",
+  steps: [
+    "Type or paste a sentence into the 'Enter Text' box, or load one of the five built-in pangrams with the Sample 1–5 buttons.",
+    "Toggle 'Ignore Case (treat A = a)' — switched off, only lowercase letters are counted.",
+    "Read the PANGRAM / NOT A PANGRAM verdict, 'Unique Letters' out of 26 and the 'Missing Letters' list, with the a–z Alphabet Coverage grid marking present and missing letters.",
+  ],
   intro:
     "A pangram is a sentence that uses all 26 letters of the English alphabet at least once, and this checker tells you instantly whether yours qualifies. It strips out spaces, digits and punctuation, counts how many distinct letters from a to z appear, and lists by name any letter still missing — so a sentence at 24 of 26 shows you exactly which two to work in. Handy for font testers, typing teachers, puzzle writers and anyone drafting a sample line for a specimen sheet.",
   useCases: [

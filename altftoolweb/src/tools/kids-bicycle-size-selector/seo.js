@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Bike Size by Inseam: Wheel Size + Saddle Height",
+  metaDescription:
+    "Match a child's inseam to 12–26 inch wheels, get three saddle heights from feet-flat to full extension, and see how many months the size will fit.",
+  steps: [
+    "Measure the child crotch-to-floor with shoes off and enter it as 'Inseam (cm)'; 'Age (years, optional)' is used only as a sanity check against the inseam.",
+    "Choose the 'Riding experience' — beginners get the smaller bike when sizes overlap — and tick 'Will be ridden off-road' if extra standover clearance is needed.",
+    "Read the recommended wheel size, 'Saddle height to set' (with feet-flat and full-extension alternatives), the maximum top-tube height and 'Expected to fit for', then press 'Copy result'.",
+  ],
   intro:
     "Children's bikes are sold by wheel diameter, and the measurement that picks the right one is the child's inseam — crotch to floor with shoes off — not their age. This selector maps that inseam onto the standard 12, 14, 16, 18, 20, 24 and 26 inch bands, then sets the saddle height using the classic 0.883 x inseam leg-extension rule and checks the top tube clears the inseam by at least 2.5 cm. It also estimates how many months the bike will fit before the next size up.",
   useCases: [

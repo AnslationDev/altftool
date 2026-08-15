@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kubernetes ConfigMap & Secret Generator from .env",
+  metaDescription:
+    "Paste .env KEY=VALUE lines to get a ConfigMap and a base64 Secret manifest, keys checked against Kubernetes API rules and the 1 MiB cap — in your browser.",
+  steps: [
+    "Paste KEY=VALUE lines into the .env box (# comments, quotes and export prefixes handled) and set the Object name and optional Namespace.",
+    "Pick a Secret type — Opaque, kubernetes.io/dockerconfigjson, kubernetes.io/tls or kubernetes.io/basic-auth; both manifests regenerate as you type.",
+    "Copy the ConfigMap or the base64 Secret with its Copy YAML button; the Keys encoded card tracks bytes against the 1,048,576-byte limit.",
+  ],
   intro:
     "This generator converts .env-style KEY=VALUE lines into ready-to-apply Kubernetes ConfigMap and Secret manifests, base64-encoding Secret values per RFC 4648 exactly as kubectl create secret does. Keys are validated against the API rule [-._a-zA-Z0-9]+ (max 253 characters) and the total payload against the 1 MiB object limit, so the YAML applies cleanly the first time. Everything runs locally in the browser — configuration values never leave the page.",
   useCases: [

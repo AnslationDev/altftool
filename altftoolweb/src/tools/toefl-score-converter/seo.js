@@ -1,4 +1,12 @@
 const seo = {
+  title: "TOEFL to IELTS Score Converter (ETS Linking Table)",
+  metaDescription:
+    "Add your four TOEFL iBT sections (0-30 each) to get the 0-120 total, ETS performance levels and the IELTS band from the ETS linking table (94-101 = 7.0).",
+  steps: [
+    "Enter your Reading, Listening, Speaking and Writing scores, each 0 to 30 (a 26/25/23/24 example loads by default).",
+    "The TOEFL iBT total out of 120 and each section's ETS performance level update as you type.",
+    "Read the IELTS equivalent from the ETS linking table — for example 102-109 maps to band 7.5 — then click Copy result for a text summary.",
+  ],
   intro:
     "This converter computes the TOEFL iBT total — the sum of the Reading, Listening, Speaking and Writing sections, each scored 0–30 for a maximum of 120 — and maps it to an IELTS band using the score linking table ETS published from its TOEFL–IELTS comparison study. It also labels each section with the ETS performance level (Advanced, High-Intermediate, and so on) shown on official score reports, so applicants can read a practice score the way an admissions office would.",
   useCases: [

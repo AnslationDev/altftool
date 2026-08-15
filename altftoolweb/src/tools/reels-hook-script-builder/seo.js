@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reels Hook Script Builder with 3-Second Word Budget",
+  metaDescription:
+    "Writes hook lines in six styles and checks each against the words you can speak in the hook window — 8 words at 160 wpm in 3s — plus a timed beat sheet.",
+  steps: [
+    "Fill in Who it is for, Topic, Outcome they want and Mistake they keep making, then pick one of six Hook styles such as Open question, Bold claim or Mistake callout.",
+    "Set the Hook window (1-10 seconds), Reel length (8-180 seconds) and Speaking pace (80-260 words per minute).",
+    "Compare the Hook options against the spoken word budget — each line shows its words, seconds and any overrun — then press Copy script for hooks, beat sheet and safe-zone notes.",
+  ],
   intro:
     "Reels Hook Script Builder writes opening lines for a short-form video and checks each one against the number of words you can physically speak in the hook window. The budget comes from a speaking-rate formula — words = wpm ÷ 60 × seconds — so at a typical 160 words per minute a three-second hook holds only eight spoken words. It also lays out a timed beat sheet for the rest of the Reel and flags the on-screen areas the app interface covers.",
   useCases: [

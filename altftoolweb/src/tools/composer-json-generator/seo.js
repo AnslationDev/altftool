@@ -1,4 +1,12 @@
 const seo = {
+  title: "Composer.json Generator with PSR-4 Autoload & Scripts",
+  metaDescription:
+    "Assemble a valid composer.json — vendor/package name checks, PSR-4 autoloading, require and require-dev blocks, scripts — in Composer's own key order.",
+  steps: [
+    "Fill in the Name (vendor/package), Type, License and PHP requirement fields, plus the PSR-4 namespace prefix and Source directory for autoloading.",
+    "Use Add package, Add dev package and Add script to build the require, require-dev and scripts blocks, each row taking a vendor/package name and a version constraint.",
+    "Check the declared-requirements count and any warnings, then click Copy JSON to copy the generated composer.json.",
+  ],
   intro:
     "This generator writes a composer.json — the manifest Composer reads to resolve PHP dependencies, register autoloading and expose scripts. It validates the package name against the vendor/package pattern in the Composer schema, checks every version constraint, and enforces the PSR-4 rule that a namespace prefix must end with a backslash. Aimed at anyone starting a PHP library or application and wanting the manifest right before the first composer install.",
   useCases: [
