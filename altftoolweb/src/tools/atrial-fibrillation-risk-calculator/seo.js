@@ -1,5 +1,5 @@
 const seo = {
-  title: "Atrial Fibrillation Risk Score: 14 Points, 4",
+  title: "Atrial Fibrillation Risk Score: 14 Points, 4 Bands",
   metaDescription:
     "Tick age, BMI, hypertension, diabetes, heart failure, LVH and more for a score out of 14 in four bands — Low to Very High — with a text report to export.",
   steps: [

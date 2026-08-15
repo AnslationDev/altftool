@@ -1,5 +1,5 @@
 const seo = {
-  title: "Door Frame Timber Calculator: Running Feet",
+  title: "Door Frame Timber Calculator: Running Feet and Cft",
   metaDescription:
     "Running length, cft, clear opening, shutter size, hinges and holdfasts from the opening size and frame section — 100x65 to 150x75 mm.",
   steps: [

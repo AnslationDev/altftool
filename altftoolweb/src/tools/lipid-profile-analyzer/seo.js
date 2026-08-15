@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lipid Profile Analyzer: NCEP ATP III Cholesterol",
+  title: "Lipid Profile Analyzer: NCEP ATP III Cholesterol Bands",
   metaDescription:
     "Enter total cholesterol, LDL, HDL and triglycerides in mg/dL for NCEP ATP III bands, non-HDL, TC/HDL and LDL/HDL ratios and a 0-10 lipid score.",
   steps: [

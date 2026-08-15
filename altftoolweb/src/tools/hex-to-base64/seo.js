@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hex to Base64 Converter — RFC 4648, URL-Safe",
+  title: "Hex to Base64 Converter — RFC 4648, URL-Safe Option",
   metaDescription:
     "Paste hex with spaces, colons or 0x prefixes and get standard or URL-safe Base64 — or decode Base64 back to hex. Bytes never leave the browser.",
   steps: [

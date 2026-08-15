@@ -1,5 +1,5 @@
 const seo = {
-  title: "DXB Arrival Time Calculator: When to Leave",
+  title: "DXB Arrival Time Calculator: When to Leave for Dubai",
   metaDescription:
     "Work back from your DXB departure through gate close, passport control, security and bag drop, plus the drive and traffic, to one leave-home time.",
   steps: [

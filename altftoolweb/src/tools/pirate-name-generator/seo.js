@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pirate Name Generator with Ship, Crew, Bounty",
+  title: "Pirate Name Generator with Ship, Crew, Bounty, Motto",
   metaDescription:
     "Each roll returns one of fifteen pirate personas - name, ship, crew of 8 to 60, bounty from $150,000 to $4,500,000, ocean, weapon and motto.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cyclist Hydration Calculator: Bottles, Carbs",
+  title: "Cyclist Hydration Calculator: Bottles, Carbs, Salt",
   metaDescription:
     "Turn weight, ride length, heat and humidity into bottles per hour, refill stops, carb grams and drink sodium using the ACSM fluid and fuelling bands.",
   steps: [

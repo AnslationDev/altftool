@@ -1,5 +1,5 @@
 const seo = {
-  title: "MPG to km/l Converter – US & UK mpg, l/100 km",
+  title: "MPG to km/l Converter – US & UK mpg, l/100 km, Cost",
   metaDescription:
     "Convert US or imperial mpg, km/l, mi/l and l/100 km with exact gallon and mile definitions, plus fuel cost per km and per 100 km at your pump price.",
   steps: [

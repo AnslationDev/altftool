@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baby First Year Cost Calculator: Diapers",
+  title: "Baby First Year Cost Calculator: Diapers to Childcare",
   metaDescription:
     "Build a first-year baby budget from quantities: about 2,460 diapers, formula by feeding pattern, five immunisation visits and a saving plan.",
   steps: [

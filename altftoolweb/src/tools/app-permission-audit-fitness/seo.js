@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fitness App Permission Audit: Score 16",
+  title: "Fitness App Permission Audit: Score 16 Permissions",
   metaDescription:
     "Score the 16 permissions a fitness app holds — background location, body sensors, Health Connect, ad ID — weighted by sensitivity, with a revoke list.",
   steps: [

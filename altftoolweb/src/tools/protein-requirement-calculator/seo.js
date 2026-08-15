@@ -1,5 +1,5 @@
 const seo = {
-  title: "Protein Calculator: Grams Per Day by Weight",
+  title: "Protein Calculator: Grams Per Day by Weight & Goal",
   metaDescription:
     "Enter body weight in kg or lb and a goal to get grams a day from the 0.8-2.4 g/kg bands, split per meal, with a lean-body-mass option.",
   steps: [

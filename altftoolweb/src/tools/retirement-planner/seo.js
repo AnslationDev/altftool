@@ -1,5 +1,5 @@
 const seo = {
-  title: "Retirement Planner: Corpus & Safe Withdrawal",
+  title: "Retirement Planner: Corpus & Safe Withdrawal by Age",
   metaDescription:
     "Compound a monthly investment to your retirement age, then convert the corpus into an inflation-adjusted withdrawal with a year-by-year table.",
   steps: [

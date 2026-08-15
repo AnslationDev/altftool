@@ -1,5 +1,5 @@
 const seo = {
-  title: "SVG Cleaner: Strip Scripts, Metadata & Editor",
+  title: "SVG Cleaner: Strip Scripts, Metadata & Editor Cruft",
   metaDescription:
     "Parse an SVG as XML in your browser and strip scripts, event handlers, foreignObject, CSS, editor namespaces and remote refs before downloading.",
   steps: [

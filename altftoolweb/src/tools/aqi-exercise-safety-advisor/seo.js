@@ -1,5 +1,5 @@
 const seo = {
-  title: "AQI Exercise Safety: Is It Safe to Run Outside",
+  title: "AQI Exercise Safety: Is It Safe to Run Outside Today?",
   metaDescription:
     "Turns a US EPA or India CPCB AQI into PM2.5, the micrograms your session would inhale, and the EPA activity verdict for your risk group.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Party Food Quantity Calculator: Per-Guest",
+  title: "Party Food Quantity Calculator: Per-Guest Portions",
   metaDescription:
     "Guest count to kilos: 90 g raw rice and 2.5 rotis an adult for Indian dinner, 500 ml water and 500 g ice a head, +10% buffer, as a shopping list.",
   steps: [

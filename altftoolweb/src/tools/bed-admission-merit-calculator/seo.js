@@ -1,5 +1,5 @@
 const seo = {
-  title: "B.Ed Merit Calculator: Graduation + Entrance",
+  title: "B.Ed Merit Calculator: Graduation + Entrance Index",
   metaDescription:
     "Weight graduation percentage against entrance score to get a B.Ed merit index out of 100, with the NCTE 50% (55% B.Tech) eligibility floor checked.",
   steps: [

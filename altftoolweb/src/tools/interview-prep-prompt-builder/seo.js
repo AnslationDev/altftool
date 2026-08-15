@@ -1,5 +1,5 @@
 const seo = {
-  title: "Interview Prep Prompt Builder for AI Mock",
+  title: "Interview Prep Prompt Builder for AI Mock Interviews",
   metaDescription:
     "Builds a roleplay prompt that runs your round one question at a time — question count from the minutes left in the slot, follow-ups scaled to level.",
   steps: [

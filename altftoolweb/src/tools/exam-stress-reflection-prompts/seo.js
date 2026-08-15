@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Stress Journal Prompts for Every Stage",
+  title: "Exam Stress Journal Prompts for Every Stage of the Cycle",
   metaDescription:
     "Prompts for weeks before, the night before, exam morning, after a paper and waiting for results — about 3 minutes each, ending in one next action.",
   steps: [

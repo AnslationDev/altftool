@@ -1,5 +1,5 @@
 const seo = {
-  title: "Eye Exercise Routine Builder with Timed Running",
+  title: "Eye Exercise Routine Builder with Timed Running Order",
   metaDescription:
     "Build a routine from ten drills — warm compress, blink, near-far focus, pencil push-ups, Brock string, palming — with start times and daily total.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Luxury Font Pairing: Optical Tracking & Hairline",
+  title: "Luxury Font Pairing: Optical Tracking & Hairline Check",
   metaDescription:
     "Pair a high-contrast display serif with a quiet sans, get letter-spacing derived from size, and see when hairlines drop below half a device pixel.",
   steps: [

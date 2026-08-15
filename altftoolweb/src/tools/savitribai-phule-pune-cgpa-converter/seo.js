@@ -1,5 +1,5 @@
 const seo = {
-  title: "SPPU CGPA to Percentage: (CGPA − 0.75) × 10",
+  title: "SPPU CGPA to Percentage: (CGPA − 0.75) × 10 Formula",
   metaDescription:
     "Convert an SPPU CGPA under circular 322, plain × 10 or UGC × 9.5 — 8.2 CGPA is 74.5%. Also marks to grade points and percentage back to CGPA.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do Not Sell or Share Link Text, CCPA and CPRA",
+  title: "Do Not Sell or Share Link Text, CCPA and CPRA Wording",
   metaDescription:
     "The statutory titles from Cal. Civ. Code s.1798.135, or the single Your Privacy Choices link, plus landing copy with the 15-day and 45-day deadlines.",
   steps: [

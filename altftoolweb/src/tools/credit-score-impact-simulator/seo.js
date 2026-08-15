@@ -1,5 +1,5 @@
 const seo = {
-  title: "Credit Score Impact Simulator: 300-900",
+  title: "Credit Score Impact Simulator: 300-900, Before/After",
   metaDescription:
     "Model a card payoff, extra loan applications or a missed EMI on the 300-900 bureau scale, weighted by the five factors bureaus disclose.",
   steps: [

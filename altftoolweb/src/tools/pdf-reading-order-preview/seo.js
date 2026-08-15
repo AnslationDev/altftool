@@ -1,5 +1,5 @@
 const seo = {
-  title: "PDF Reading-Order Preview: Stored vs Visual Text",
+  title: "PDF Reading-Order Preview: Stored vs Visual Text Order",
   metaDescription:
     "Compares a PDF's stored text sequence with a Y-then-X visual estimate and flags where they disagree — the WCAG 1.3.2 risk. Up to 100 MB and 100 pages.",
   intro:

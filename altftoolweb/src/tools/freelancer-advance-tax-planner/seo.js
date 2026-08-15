@@ -1,5 +1,5 @@
 const seo = {
-  title: "Advance Tax for Freelancers: 4 Instalments After",
+  title: "Advance Tax for Freelancers: 4 Instalments After TDS",
   metaDescription:
     "Slab tax under the new or old regime, less Section 194J TDS, split 15%/45%/75%/100% across the 15 June, 15 Sept, 15 Dec and 15 March due dates.",
   steps: [

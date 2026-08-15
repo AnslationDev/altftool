@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Subject Line Tester — 9 Metrics, Inbox",
+  title: "Email Subject Line Tester — 9 Metrics, Inbox Preview",
   metaDescription:
     "Score a subject line on nine weighted metrics, see spam-dictionary matches highlighted in place, and where Gmail, Outlook and Apple Mail cut it off.",
   intro:

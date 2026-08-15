@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPSC, SSC & Banking Exams Mapped to Posts",
+  title: "UPSC, SSC & Banking Exams Mapped to Posts and Pay Levels",
   metaDescription:
     "See the posts behind UPSC CSE, SSC CGL, RRB NTPC, IBPS and RBI exams with 7th CPC pay level, entry basic pay and a one-line job profile for each.",
   steps: [

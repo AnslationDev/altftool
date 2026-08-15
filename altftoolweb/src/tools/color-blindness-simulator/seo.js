@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Blindness Simulator: Protanopia",
+  title: "Color Blindness Simulator: Protanopia to Achromatopsia",
   metaDescription:
     "Re-render your image as protanopia, deuteranopia, tritanopia or achromatopsia in LMS cone space, with a 0–1 severity slider and side-by-side compare.",
   intro:

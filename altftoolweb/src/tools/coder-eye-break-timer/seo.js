@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coder Eye Break Timer: 20-20-20 Around",
+  title: "Coder Eye Break Timer: 20-20-20 Around Your Builds",
   metaDescription:
     "Counts every build or test wait of 20 seconds or more as an eye break, then schedules only the extra 20-20-20 breaks your cycle misses.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "FIRE Number Calculator: Corpus, Date and Coast",
+  title: "FIRE Number Calculator: Corpus, Date and Coast FIRE",
   metaDescription:
     "Annual expenses ÷ your withdrawal rate gives the target; a real return of (1+r)÷(1+i)−1 gives the date, the FIRE age and your Coast FIRE gap.",
   steps: [

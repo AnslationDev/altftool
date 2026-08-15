@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ambiguous Figure Viewer: 12 Classic Optical",
+  title: "Ambiguous Figure Viewer: 12 Classic Optical Illusions",
   metaDescription:
     "Open the Necker cube, Rubin vase or duck-rabbit and switch between readings with Perceptual Focus hints, spotlight and blur. Mark solved, save as SVG.",
   intro:

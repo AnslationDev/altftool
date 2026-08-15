@@ -1,5 +1,5 @@
 const seo = {
-  title: "Supplement Cost Per Serving: Compare by Active",
+  title: "Supplement Cost Per Serving: Compare by Active Dose",
   metaDescription:
     "Compare tubs on cost per effective serving of active ingredient, not the label serving, with shipping, days per container and yearly cost included.",
   steps: [

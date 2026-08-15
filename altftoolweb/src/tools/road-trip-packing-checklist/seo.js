@@ -1,5 +1,5 @@
 const seo = {
-  title: "Road Trip Packing Checklist with Water & Car",
+  title: "Road Trip Packing Checklist with Water & Car Checks",
   metaDescription:
     "Builds a packing list sized to travellers, days, season and terrain — water at 3 L per person per day — plus India's must-carry documents and car checks.",
   steps: [

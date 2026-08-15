@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Tag Organizer with 500-Character Limit",
+  title: "YouTube Tag Organizer with 500-Character Limit Check",
   metaDescription:
     "Keep channel keywords in named groups, build a per-video tag set, strip duplicates, and see which tags overflow the 500-character field.",
   steps: [

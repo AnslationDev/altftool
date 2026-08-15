@@ -1,5 +1,5 @@
 const seo = {
-  title: "APR to APY Converter: Effective Yield to 6",
+  title: "APR to APY Converter: Effective Yield to 6 Decimals",
   steps: [
     "Enter the Nominal APR (%) and Compounds per year (12 for monthly, 4 for quarterly, 365 for daily), or apply the 12% monthly preset.",
     "Tick the Continuous compounding toggle (Use e^APR instead of periodic compounding) when a model or contract specifies it — the result recalculates instantly.",

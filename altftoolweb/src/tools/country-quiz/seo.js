@@ -1,5 +1,5 @@
 const seo = {
-  title: "Country Quiz: Capitals, Flags, Borders",
+  title: "Country Quiz: Capitals, Flags, Borders and Currencies",
   metaDescription:
     "A geography quiz generated from live country data: pick capitals, flags, borders or a random mix, 10 to 50 questions, and a 15-60 second timer or none.",
   steps: [

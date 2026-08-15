@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cheque Stop Payment Request Letter Generator",
+  title: "Cheque Stop Payment Request Letter Generator, India",
   metaDescription:
     "Draft a stop payment instruction with the 6-digit cheque number and IFSC checked, the 3-month validity date worked out and the fee totalled with tax.",
   steps: [

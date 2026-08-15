@@ -1,5 +1,5 @@
 const seo = {
-  title: "Data Correction Request Letter: GDPR Art. 16",
+  title: "Data Correction Request Letter: GDPR Art. 16 Template",
   metaDescription:
     "Draft a rectification letter listing each wrong field, its correct value and your evidence, with the one-month GDPR or 45-day CCPA reply date calculated.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bonus & Variable Pay Tax Calculator India",
+  title: "Bonus & Variable Pay Tax Calculator India (FY 2025-26)",
   metaDescription:
     "Shows the extra FY 2025-26 tax a bonus adds on top of salary - slabs, 87A rebate, surcharge and cess - plus in-hand value and the TDS hit per month.",
   steps: [

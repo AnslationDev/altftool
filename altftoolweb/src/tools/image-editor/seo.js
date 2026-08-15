@@ -1,5 +1,5 @@
 const seo = {
-  title: "Online Image Editor: Brightness, Grayscale",
+  title: "Online Image Editor: Brightness, Grayscale, Rotate & Flip",
   metaDescription:
     "Adjust brightness and saturation to 200%, invert, grayscale, rotate 90° and flip, then save a JPEG at the photo's original pixel size — nothing uploaded.",
   steps: [

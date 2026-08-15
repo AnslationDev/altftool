@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pet Care Prompt Builder: Life Stage & Session",
+  title: "Pet Care Prompt Builder: Life Stage & Session Length",
   metaDescription:
     "Turns your dog or cat's species, age and daily minutes into an AI prompt already stating the life stage, session length and toilet-break interval.",
   steps: [

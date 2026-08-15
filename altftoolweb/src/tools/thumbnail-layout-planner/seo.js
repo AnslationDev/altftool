@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Thumbnail Layout Planner — 1280x720 Safe",
+  title: "YouTube Thumbnail Layout Planner — 1280x720 Safe Zones",
   metaDescription:
     "Drag face, text and logo blocks on a 1280x720 frame; check the 5% margin, duration-badge corner and 168 px legibility, then copy a pixel brief.",
   steps: [

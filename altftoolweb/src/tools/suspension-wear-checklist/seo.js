@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Suspension Noise Diagnosis: Ranked Wear",
+  title: "Car Suspension Noise Diagnosis: Ranked Wear Checklist",
   metaDescription:
     "Tick the knocks, handling changes and tyre wear you notice; a weighted matrix ranks 12 suspension components and gives the check that confirms each.",
   steps: [

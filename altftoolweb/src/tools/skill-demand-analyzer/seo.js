@@ -1,5 +1,5 @@
 const seo = {
-  title: "Skill Demand Analyzer: 0-100 Score",
+  title: "Skill Demand Analyzer: 0-100 Score from Job-Board Data",
   metaDescription:
     "Turn live openings, year-on-year growth, applicants per posting, salary premium and remote share into a 0-100 score weighted 30/30/20/15/5.",
   intro:

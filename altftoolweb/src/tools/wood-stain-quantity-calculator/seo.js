@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wood Stain Calculator: Litres, Coats and Tin",
+  title: "Wood Stain Calculator: Litres, Coats and Tin Sizes",
   metaDescription:
     "Turns surface area into litres of stain, oil, sealer or varnish using spreading rate, texture and porosity factors and a 1.3x first coat on bare wood.",
   steps: [

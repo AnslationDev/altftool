@@ -1,5 +1,5 @@
 const seo = {
-  title: "Minimal Font Pairings with Type Scale and CSS",
+  title: "Minimal Font Pairings with Type Scale and CSS Output",
   metaDescription:
     "Six minimal Google Fonts pairs with a modular scale, a column width from your target line length, body line height at the WCAG 1.5 minimum, copyable CSS.",
   steps: [

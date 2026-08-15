@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ecommerce Listing Prompt Builder with a Keyword",
+  title: "Ecommerce Listing Prompt Builder with a Keyword Plan",
   metaDescription:
     "Build a listing prompt from verified attributes, spreading keywords across title and bullets inside Merchant Center's 150 and 5,000 character limits.",
   steps: [

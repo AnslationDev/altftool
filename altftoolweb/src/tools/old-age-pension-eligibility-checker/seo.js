@@ -1,5 +1,5 @@
 const seo = {
-  title: "Old Age Pension (NSAP) Eligibility and Amount",
+  title: "Old Age Pension (NSAP) Eligibility and Amount Check",
   metaDescription:
     "Check IGNOAPS, widow and disability pension criteria, split the central share from your state top-up and see the higher rate from age 80.",
   steps: [

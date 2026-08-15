@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thai Baht Cash Planner: Notes vs Card, GST",
+  title: "Thai Baht Cash Planner: Notes vs Card, GST and ATM Fees",
   metaDescription:
     "Size your baht float, price the changer markup and GST against Thai ATM withdrawals at ~฿220 a time, and check the RBI USD 3,000 note limit.",
   steps: [

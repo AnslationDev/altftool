@@ -1,5 +1,5 @@
 const seo = {
-  title: "Geyser Capacity Selector: Litres for Bath",
+  title: "Geyser Capacity Selector: Litres for Bath or Shower",
   metaDescription:
     "Size a water heater from the mixing balance — a 20 L bucket at 40 °C from a 60 °C tank draws 10 L — plus reheat minutes and kWh per heat.",
   steps: [

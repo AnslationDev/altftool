@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Art Style Sheet: 8 Axes and a CLIP Token",
+  title: "AI Art Style Sheet: 8 Axes and a CLIP Token Estimate",
   metaDescription:
     "Lock medium, lighting, lens, composition, colour, era, finish and mood into a reusable prompt sheet, with a coverage score and 75-token estimate.",
   steps: [

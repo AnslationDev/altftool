@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Vendor Comparison Matrix — Weighted 0-100",
+  title: "AI Vendor Comparison Matrix — Weighted 0-100 Scoring",
   metaDescription:
     "Score up to 6 AI vendors 1-5 on cost, control, support and compliance, weight each criterion, and get a ranked 0-100 shortlist with ties flagged.",
   steps: [

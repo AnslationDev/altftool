@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Summarizer — Extractive, No AI, Runs",
+  title: "Text Summarizer — Extractive, No AI, Runs in Browser",
   metaDescription:
     "Pulls the first, middle and last sentences from your text — nothing rewritten, nothing uploaded. Three fixed lengths, with your last 10 summaries kept.",
   steps: [

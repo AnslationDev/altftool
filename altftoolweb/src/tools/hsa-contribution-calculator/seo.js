@@ -1,5 +1,5 @@
 const seo = {
-  title: "HSA Contribution Calculator: 2025 and 2026 IRS",
+  title: "HSA Contribution Calculator: 2025 and 2026 IRS Limits",
   metaDescription:
     "Work out your HSA limit for self-only or family HDHP coverage with the $1,000 age-55 catch-up, month-by-month proration and the last-month rule.",
   steps: [

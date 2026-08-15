@@ -1,5 +1,5 @@
 const seo = {
-  title: "Seller Details Disclosure Generator",
+  title: "Seller Details Disclosure Generator (GSTIN, PAN, CIN)",
   metaDescription:
     "Build the e-commerce seller identity block Rules 4(2) and 5(3) require, with the GSTIN checksum, PAN pattern and 21-character CIN checked as you type.",
   steps: [

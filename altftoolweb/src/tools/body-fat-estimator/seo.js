@@ -1,5 +1,5 @@
 const seo = {
-  title: "Body Fat Calculator: Navy Tape, BMI, 3-Site",
+  title: "Body Fat Calculator: Navy Tape, BMI, 3-Site Caliper",
   metaDescription:
     "Run US Navy tape, BMI regression and Jackson-Pollock 3-site caliper on the same stats, with fat and lean mass, bands and a goal weight.",
   intro:

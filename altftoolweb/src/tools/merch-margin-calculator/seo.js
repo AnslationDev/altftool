@@ -1,5 +1,5 @@
 const seo = {
-  title: "Merch Margin Calculator: Profit per Unit After",
+  title: "Merch Margin Calculator: Profit per Unit After Fees",
   metaDescription:
     "Profit per merch unit after blank, print, packaging and shipping costs plus marketplace, payment and fixed fees — with margin and break-even price.",
   steps: [

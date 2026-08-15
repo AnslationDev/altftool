@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON Parser: Type-Coloured Tree View",
+  title: "JSON Parser: Type-Coloured Tree View and Validator",
   metaDescription:
     "Validate JSON with JSON.parse and read it as a type-coloured tree with indexed arrays, a two-space formatted view, minify, and the exact error.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Backup Restore Verifier: CRC32-Test a ZIP",
+  title: "Backup Restore Verifier: CRC32-Test a ZIP In-Browser",
   metaDescription:
     "Decompresses every entry of a ZIP with CRC32 checking on and marks each Readable, Directory, or Encrypted or unreadable. Nothing is uploaded.",
   steps: [

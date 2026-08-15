@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gas Leak Time-to-LEL Calculator & Safety",
+  title: "Gas Leak Time-to-LEL Calculator & Safety Checklist",
   metaDescription:
     "Model how long an LPG or PNG leak takes to reach the explosive limit in your room and ventilation, with detector placement and shut-down order.",
   steps: [

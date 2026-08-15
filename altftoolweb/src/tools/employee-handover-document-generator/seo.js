@@ -1,5 +1,5 @@
 const seo = {
-  title: "Employee Handover Document Generator & Readiness",
+  title: "Employee Handover Document Generator & Readiness Score",
   metaDescription:
     "List what you own, weight items critical 3 / important 2 / routine 1, and get a handover readiness score plus a document that names open blockers.",
   steps: [

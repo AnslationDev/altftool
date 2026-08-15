@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ideal Weight Calculator: Devine, Robinson",
+  title: "Ideal Weight Calculator: Devine, Robinson, Miller, Hamwi",
   metaDescription:
     "Run all four ideal body weight formulas from one height, adjust for a small, medium or large frame, and switch between WHO and ICMR BMI cut-offs.",
   steps: [

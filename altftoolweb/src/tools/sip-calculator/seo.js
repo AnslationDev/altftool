@@ -1,5 +1,5 @@
 const seo = {
-  title: "SIP Calculator with Annual Step-Up and Maturity",
+  title: "SIP Calculator with Annual Step-Up and Maturity Split",
   metaDescription:
     "Project monthly SIP maturity from ₹500 to ₹2,00,000 over 1-40 years with a 0-25% annual step-up, and see invested versus returns split.",
   steps: [

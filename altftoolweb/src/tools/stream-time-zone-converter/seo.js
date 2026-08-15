@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stream Time Zone Converter – DST-Correct Local",
+  title: "Stream Time Zone Converter – DST-Correct Local Times",
   metaDescription:
     "Convert one stream start time into every audience zone via IANA data — DST correct for the exact date, with day shifts and prime-time flags.",
   steps: [

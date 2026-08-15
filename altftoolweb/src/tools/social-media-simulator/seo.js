@@ -1,5 +1,5 @@
 const seo = {
-  title: "Social Media Post Preview for Seven Feeds",
+  title: "Social Media Post Preview for Seven Feeds and Counts",
   metaDescription:
     "Preview one draft as an X, Bluesky, Mastodon, Threads, Instagram, LinkedIn and Facebook card, with each platform's own count and where the feed crops.",
   steps: [

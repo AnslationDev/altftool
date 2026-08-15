@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Branch Naming Convention Generator",
+  title: "Git Branch Naming Convention Generator with Regex + CI",
   metaDescription:
     "Pick branch types, separator and a Jira-style ticket key; get the template, a validation regex, worked examples and a copy-paste CI check script.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Checklist Generator: Visa, Loan, KYC",
+  title: "Document Checklist Generator: Visa, Loan, KYC, Job",
   metaDescription:
     "Seven templates of eight documents each, sorted High to Low priority with copy counts and masked-copy flags, exported to Markdown or CSV.",
   steps: [

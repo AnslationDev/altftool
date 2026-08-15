@@ -1,5 +1,5 @@
 const seo = {
-  title: "CUET Countdown: Days Left and Per-Subject",
+  title: "CUET Countdown: Days Left and Per-Subject Readiness",
   metaDescription:
     "Days to CUET plus a readiness bar per subject from syllabus coverage and forgetting-curve decay, with marks projected at +5 and -1.",
   steps: [

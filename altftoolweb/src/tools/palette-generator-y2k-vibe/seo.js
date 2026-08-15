@@ -1,5 +1,5 @@
 const seo = {
-  title: "Y2K Colour Palette Generator: Chrome",
+  title: "Y2K Colour Palette Generator: Chrome and Bubblegum",
   metaDescription:
     "Build a Y2K palette from a seed word: bubblegum, cyber lilac, ice aqua, a five-step chrome ramp and holographic gradients, with WCAG contrast.",
   steps: [

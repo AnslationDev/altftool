@@ -1,5 +1,5 @@
 const seo = {
-  title: "WCAG Quick Auditor: 19 Structural Checks",
+  title: "WCAG Quick Auditor: 19 Structural Checks on Pasted HTML",
   metaDescription:
     "Paste up to 750,000 characters of HTML for 19 structural checks: alt text, labels, heading order, duplicate IDs, landmarks. Nothing is rendered.",
   steps: [

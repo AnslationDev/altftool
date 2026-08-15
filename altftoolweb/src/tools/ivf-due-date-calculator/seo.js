@@ -1,5 +1,5 @@
 const seo = {
-  title: "IVF Due Date Calculator: Day-3, Day-5 & Day-6",
+  title: "IVF Due Date Calculator: Day-3, Day-5 & Day-6 Transfers",
   metaDescription:
     "Counts 261 days from a day-5 blastocyst transfer (263 day-3, 260 day-6, 266 from retrieval), plus the equivalent LMP date and scan milestones.",
   steps: [

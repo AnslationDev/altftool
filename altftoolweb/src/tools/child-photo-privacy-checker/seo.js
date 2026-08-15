@@ -1,5 +1,5 @@
 const seo = {
-  title: "Child Photo Privacy Checker: Mask Faces, Strip",
+  title: "Child Photo Privacy Checker: Mask Faces, Strip EXIF",
   metaDescription:
     "Six-point checklist, drag masks burnt into the pixels, and an EXIF and GPS readout for JPEG, PNG and WebP. Export re-encodes with no metadata.",
   steps: [

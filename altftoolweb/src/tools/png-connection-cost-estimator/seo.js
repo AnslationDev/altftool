@@ -1,5 +1,5 @@
 const seo = {
-  title: "PNG Connection Cost Estimator: Deposit vs Real",
+  title: "PNG Connection Cost Estimator: Deposit vs Real Cost",
   metaDescription:
     "Itemise registration, refundable deposit, piping past the free length and extra points, then pay back only the non-refundable part against LPG.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Name Generator: Up to 50 Realistic Full",
+  title: "Random Name Generator: Up to 50 Realistic Full Names",
   metaDescription:
     "Pairs a given name with a surname from 130 first names and 50 surnames. Pick Any, Male, Female or Neutral, set 1 to 50, and Copy All one name per line.",
   steps: [

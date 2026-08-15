@@ -1,5 +1,5 @@
 const seo = {
-  title: "British Airways Excess Baggage: Prepaid",
+  title: "British Airways Excess Baggage: Prepaid vs Airport",
   metaDescription:
     "Price extra, heavy (over 23 kg / 32 kg) and oversize bags per piece on a BA booking, compare prepaid against airport rates, and spot repacking savings.",
   steps: [

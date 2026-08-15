@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voiceover Script Formatter: Cue Sheet",
+  title: "Voiceover Script Formatter: Cue Sheet With Timecodes",
   steps: [
     "Paste the narration into the Script box, keeping any stage direction in [square brackets] on its own line.",
     "Set 'Words per cue (max)' between 5 and 120 and 'Reading pace (words per minute)' - or press the Slow / audiobook 130, Standard narration 150, Conversational 165 or Fast / promo 185 chip - and a Cue label prefix such as CUE.",

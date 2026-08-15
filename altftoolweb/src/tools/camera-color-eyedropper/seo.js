@@ -1,5 +1,5 @@
 const seo = {
-  title: "Camera Color Eyedropper: RGB from the Centre",
+  title: "Camera Color Eyedropper: RGB from the Centre Pixel",
   metaDescription:
     "Point the rear camera, press Sample centre frame, and it reads the single pixel under the reticle — logging R, G, B and a timestamped rgb() string.",
   steps: [

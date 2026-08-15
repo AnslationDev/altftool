@@ -1,5 +1,5 @@
 const seo = {
-  title: "Break-Even Accuracy Calculator for Negative",
+  title: "Break-Even Accuracy Calculator for Negative Marking",
   metaDescription:
     "Break-even accuracy is P ÷ (M + P) — 20% at +4/−1, 25% at one-third. Pick NEET, UPSC, IBPS or a custom scheme to see when a guess pays.",
   steps: [

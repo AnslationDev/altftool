@@ -1,5 +1,5 @@
 const seo = {
-  title: "SWOT Analysis Maker + TOWS Strategies",
+  title: "SWOT Analysis Maker + TOWS Strategies, Markdown/CSV",
   metaDescription:
     "Four plain lists become a SWOT grid, a check that flags empty or overloaded quadrants, and SO/WO/ST/WT crosses — as Markdown or swot-analysis.csv.",
   steps: [

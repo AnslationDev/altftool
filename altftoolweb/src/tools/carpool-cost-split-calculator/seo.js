@@ -1,5 +1,5 @@
 const seo = {
-  title: "Carpool Cost Split Calculator: Fuel, Tolls",
+  title: "Carpool Cost Split Calculator: Fuel, Tolls, Per Rider",
   metaDescription:
     "Splits running cost by person-kilometres and tolls and parking equally, then shows each rider's per-trip and monthly share.",
   steps: [

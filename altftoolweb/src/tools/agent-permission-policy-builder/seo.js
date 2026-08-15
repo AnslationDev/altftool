@@ -1,5 +1,5 @@
 const seo = {
-  title: "Agent Permission Policy Builder: Validated JSON",
+  title: "Agent Permission Policy Builder: Validated JSON Rules",
   metaDescription:
     "Build agent guardrails as JSON: allowed and denied tools, path prefixes, hostnames, recipients, numeric ceilings and confirmation flags, validated live.",
   steps: [

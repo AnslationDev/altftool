@@ -1,5 +1,5 @@
 const seo = {
-  title: "What's Your Superpower? 10-Question Personality",
+  title: "What's Your Superpower? 10-Question Personality Quiz",
   metaDescription:
     "10 questions map how you handle friends, pressure and risk to one of 8 powers — Telepathy to Time Control — with 4 strengths and 3 weaknesses each.",
   steps: [

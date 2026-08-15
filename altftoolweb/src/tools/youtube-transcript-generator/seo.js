@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Transcript Generator: SRT, VTT, json3",
+  title: "YouTube Transcript Generator: SRT, VTT, json3, Panel",
   metaDescription:
     "Paste YouTube's Show transcript panel or drop a .srt, .vtt or .json3 file to get timestamped paragraphs, word count, speaking rate — all in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voter ID (EPIC) Format Validator – 3 Letters + 7",
+  title: "Voter ID (EPIC) Format Validator – 3 Letters + 7 Digits",
   metaDescription:
     "Check an Indian EPIC number against the 3-letter + 7-digit pattern. Strips spaces, uppercases, and splits the letter and serial blocks. Format only.",
   steps: [

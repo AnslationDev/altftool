@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grade-1 Braille Draft Maker with BRF File",
+  title: "Grade-1 Braille Draft Maker with BRF File Download",
   metaDescription:
     "Convert basic Latin text to uncontracted Grade-1 Braille cells, wrap at 20 to 42 cells per line, and download braille-draft.brf for a transcriber.",
   steps: [

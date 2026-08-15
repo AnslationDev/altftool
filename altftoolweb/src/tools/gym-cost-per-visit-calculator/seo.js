@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gym Cost Per Visit Calculator with Break-Even",
+  title: "Gym Cost Per Visit Calculator with Break-Even Visits",
   metaDescription:
     "Divide plan fee, joining fee, add-ons and travel by real attendance for true cost per gym visit, plus break-even sessions vs a day pass.",
   steps: [

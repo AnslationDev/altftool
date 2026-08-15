@@ -1,5 +1,5 @@
 const seo = {
-  title: "Convert Chat Logs to OpenAI, Anthropic, Gemini",
+  title: "Convert Chat Logs to OpenAI, Anthropic, Gemini or Llama",
   metaDescription:
     "Paste a messages array or Markdown transcript and re-emit it as OpenAI, Anthropic, Gemini, Cohere, Llama prompt or Markdown — live as you type.",
   intro:

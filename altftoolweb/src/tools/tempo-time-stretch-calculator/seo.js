@@ -1,5 +1,5 @@
 const seo = {
-  title: "BPM Time Stretch Calculator: Length and Pitch",
+  title: "BPM Time Stretch Calculator: Length and Pitch Shift",
   metaDescription:
     "Enter two tempos to get the stretch percentage, new clip length, and the resampled pitch shift in semitones and cents — 120 to 128 BPM is 93.75%.",
   steps: [

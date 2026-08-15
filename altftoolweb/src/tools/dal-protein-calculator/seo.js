@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dal Protein Calculator: Protein Per Katori, 10",
+  title: "Dal Protein Calculator: Protein Per Katori, 10 Dals",
   metaDescription:
     "Protein and calories per katori from the raw dal actually used — 15 g thin, 25 g everyday, 40 g thick — across 10 pulses, with tadka oil counted.",
   steps: [

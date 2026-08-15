@@ -1,5 +1,5 @@
 const seo = {
-  title: "Inverter Backup Time Calculator with Peukert's",
+  title: "Inverter Backup Time Calculator with Peukert's Law",
   metaDescription:
     "Realistic backup hours from battery Ah, bank voltage, load and inverter efficiency, corrected with Peukert's law rather than watt-hours over watts.",
   steps: [

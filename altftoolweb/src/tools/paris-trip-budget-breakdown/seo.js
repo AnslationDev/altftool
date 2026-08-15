@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paris Trip Cost: Per-Person Budget With Tourist",
+  title: "Paris Trip Cost: Per-Person Budget With Tourist Tax",
   metaDescription:
     "Split a Paris trip into flights, room, food, metro and activities, with taxe de séjour at the real rate plus 10% and 15% surtaxes, per person per day.",
   steps: [

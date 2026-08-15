@@ -1,5 +1,5 @@
 const seo = {
-  title: "go.mod Generator: Module Path, require",
+  title: "go.mod Generator: Module Path, require and replace",
   metaDescription:
     "Set the module path, go and toolchain directives, add require and replace rows, and copy a go.mod checked against the /vN suffix and semver rules.",
   steps: [

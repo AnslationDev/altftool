@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Efficiency Calculator with CBT-I 85%",
+  title: "Sleep Efficiency Calculator with CBT-I 85% Benchmark",
   metaDescription:
     "Scores one sleep-diary night: total sleep time over time in bed against the 85% benchmark, plus the time-in-bed window sleep restriction targets.",
   steps: [

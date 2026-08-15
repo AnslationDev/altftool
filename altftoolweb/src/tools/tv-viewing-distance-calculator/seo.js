@@ -1,5 +1,5 @@
 const seo = {
-  title: "TV Size and Viewing Distance Calculator",
+  title: "TV Size and Viewing Distance Calculator (SMPTE, THX)",
   metaDescription:
     "Enter screen size and seating distance for your viewing angle against SMPTE 30° and THX 36°, the pixel acuity limit and the mount height.",
   steps: [

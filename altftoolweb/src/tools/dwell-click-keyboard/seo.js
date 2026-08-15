@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dwell-Click Keyboard: Type by Hovering",
+  title: "Dwell-Click Keyboard: Type by Hovering, No Clicking",
   metaDescription:
     "On-screen QWERTY that types when the pointer rests on a key. Dwell time adjusts 400-3000 ms; Space, Delete, Clear and Speak keys included.",
   steps: [

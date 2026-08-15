@@ -1,5 +1,5 @@
 const seo = {
-  title: "Clinic Front Desk AI Prompts + SMS Segment",
+  title: "Clinic Front Desk AI Prompts + SMS Segment Counter",
   metaDescription:
     "Administrative prompts for reminders, waitlists, recalls and complaints, screened for clinical advice, with GSM 03.38 segment counting (160 or 70).",
   steps: [

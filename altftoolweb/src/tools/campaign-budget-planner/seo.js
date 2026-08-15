@@ -1,5 +1,5 @@
 const seo = {
-  title: "Campaign Budget Planner: Channel CPA, ROAS, 30",
+  title: "Campaign Budget Planner: Channel CPA, ROAS, 30 Days",
   metaDescription:
     "Split a budget across six channels, each with its own CPC and conversion rate, for per-channel and blended CPA, ROAS from your LTV, and a 30-day plan.",
   intro:

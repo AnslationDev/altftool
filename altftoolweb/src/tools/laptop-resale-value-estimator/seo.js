@@ -1,5 +1,5 @@
 const seo = {
-  title: "Laptop Resale Value Estimator: Price a Used",
+  title: "Laptop Resale Value Estimator: Price a Used Laptop",
   metaDescription:
     "Estimate a used laptop's worth from age, condition, battery health, paperwork and warranty. Shows an asking range and the lower trade-in figure.",
   steps: [

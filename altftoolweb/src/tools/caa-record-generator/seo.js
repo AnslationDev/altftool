@@ -1,5 +1,5 @@
 const seo = {
-  title: "CAA Record Generator: RFC 8659 issue, issuewild",
+  title: "CAA Record Generator: RFC 8659 issue, issuewild, iodef",
   metaDescription:
     "Build RFC 8659 CAA records — issue, issuewild and iodef tags with the flags octet — to limit which CAs may issue TLS certificates for your domain.",
   steps: [

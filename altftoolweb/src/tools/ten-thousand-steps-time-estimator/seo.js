@@ -1,5 +1,5 @@
 const seo = {
-  title: "How Long 10,000 Steps Takes at Your Cadence",
+  title: "How Long 10,000 Steps Takes at Your Cadence and Height",
   metaDescription:
     "Divide your step target by your cadence for minutes and km (step length from height), subtract steps already taken, and split the rest into equal walks.",
   steps: [

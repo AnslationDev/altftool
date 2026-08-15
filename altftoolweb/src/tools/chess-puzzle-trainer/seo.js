@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chess Puzzle Trainer: 18 Tactics Puzzles",
+  title: "Chess Puzzle Trainer: 18 Tactics Puzzles with Hints",
   metaDescription:
     "Solve 18 fork, pin, skewer, discovered attack, checkmate and endgame puzzles with three attempts, square hints, explanations and a local streak score.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Code Complexity Analyzer: Cyclomatic & Cognitive",
+  title: "Code Complexity Analyzer: Cyclomatic & Cognitive Scores",
   metaDescription:
     "Scores pasted code on cyclomatic and cognitive complexity, Halstead volume and the maintainability index, then names the functions to refactor first.",
   intro:

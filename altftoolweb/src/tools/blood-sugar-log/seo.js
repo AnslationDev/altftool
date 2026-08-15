@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blood Sugar Log: Time in Range and Estimated",
+  title: "Blood Sugar Log: Time in Range and Estimated HbA1c",
   metaDescription:
     "Scores each reading against its own ADA band, fasting 80-130 and 2h post-meal under 180 mg/dL, then reports time in range and an estimated HbA1c.",
   intro:

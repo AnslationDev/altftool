@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gardening Calorie Calculator: MET Values",
+  title: "Gardening Calorie Calculator: MET Values by Garden Job",
   metaDescription:
     "Calories from MET x 3.5 x kg / 200 — watering 1.5, weeding 3.5, digging 5.0, push mowing 6.0 — with weekly MET-minutes vs the WHO 150-minute target.",
   steps: [

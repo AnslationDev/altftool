@@ -1,5 +1,5 @@
 const seo = {
-  title: "OAuth Scope Explainer: What Each Permission",
+  title: "OAuth Scope Explainer: What Each Permission Grants",
   metaDescription:
     "Paste a scope list or consent URL — each Google, Graph, GitHub or Slack scope expanded into read/write, reach and deletion, plus PKCE and state checks.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Government Portal Password Tester: 8-14 Char",
+  title: "Government Portal Password Tester: 8-14 Char Rules",
   metaDescription:
     "Check a password against the 8-14 character rule shape Indian government portals use, and see which rule fails: length, symbols, login ID, mobile or PAN.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Itinerary Prompt Builder: Day-by-Day AI",
+  title: "Travel Itinerary Prompt Builder: Day-by-Day AI Plans",
   metaDescription:
     "Enter destination, trip length, travellers and preferences to build a prompt asking for morning/afternoon/evening days, rest breaks and a rainy-day plan.",
   steps: [

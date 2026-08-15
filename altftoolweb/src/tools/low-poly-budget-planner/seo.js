@@ -1,5 +1,5 @@
 const seo = {
-  title: "Triangle Budget Calculator for Low Poly Game",
+  title: "Triangle Budget Calculator for Low Poly Game Assets",
   metaDescription:
     "Turn measured tris/sec throughput and a target fps into a per-frame triangle budget, split across asset classes with LOD chains and buffer memory.",
   steps: [

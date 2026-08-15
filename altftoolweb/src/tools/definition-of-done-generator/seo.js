@@ -1,5 +1,5 @@
 const seo = {
-  title: "Definition of Done Generator with Compliance",
+  title: "Definition of Done Generator with Compliance Clauses",
   metaDescription:
     "Build a Definition of Done from project type, team size, release cadence and coverage target, adding GDPR, HIPAA, PCI DSS, SOC 2 or WCAG 2.2 AA items.",
   steps: [

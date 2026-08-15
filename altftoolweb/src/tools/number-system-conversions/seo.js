@@ -1,5 +1,5 @@
 const seo = {
-  title: "Binary, Octal, Hex & Base-36 Converter",
+  title: "Binary, Octal, Hex & Base-36 Converter with BigInt",
   metaDescription:
     "Convert one whole number to binary, octal, decimal, hex and base-36 at once, with 0b/0o/0x prefixes, bit and byte width, and the Unicode character.",
   steps: [

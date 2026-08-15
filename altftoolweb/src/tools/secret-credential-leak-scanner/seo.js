@@ -1,5 +1,5 @@
 const seo = {
-  title: "Secret Scanner: Find AWS, GitHub & Stripe Keys",
+  title: "Secret Scanner: Find AWS, GitHub & Stripe Keys in Text",
   metaDescription:
     "Scan pasted text, a source file or a bounded ZIP against nine credential patterns. Findings show rule, line and column with the value redacted.",
   steps: [

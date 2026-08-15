@@ -1,5 +1,5 @@
 const seo = {
-  title: "IP Address Finder: IANA Block, Subnet",
+  title: "IP Address Finder: IANA Block, Subnet and Reverse DNS",
   metaDescription:
     "Classify an IPv4 or IPv6 address against the IANA special-purpose registries, get its subnet boundaries and reverse-DNS name. Geolocation is opt-in.",
   steps: [

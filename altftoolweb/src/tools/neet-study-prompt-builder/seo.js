@@ -1,5 +1,5 @@
 const seo = {
-  title: "NEET Study Prompt Builder: NCERT-Locked AI",
+  title: "NEET Study Prompt Builder: NCERT-Locked AI Prompts",
   metaDescription:
     "Turn an NTA NEET unit and study goal into an AI prompt carrying +4/-1 marking, sized against the real 200 minutes for 180 questions.",
   steps: [

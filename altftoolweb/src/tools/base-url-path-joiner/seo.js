@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base URL Path Joiner: Safe Join vs RFC 3986",
+  title: "Base URL Path Joiner: Safe Join vs RFC 3986 Result",
   metaDescription:
     "Join a base URL with path segments and see both answers: the safe concatenation and what new URL()/fetch resolves, with the RFC 3986 rule named.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stand Up India Loan Eligibility & Margin Money",
+  title: "Stand Up India Loan Eligibility & Margin Money Check",
   metaDescription:
     "Test every Stand Up India criterion — category, age, greenfield, sector, 51% shareholding — then size the loan at 85% of cost against the 10% margin.",
   steps: [

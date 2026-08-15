@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Bitrate, Timecode and Target-Size",
+  title: "Video Bitrate, Timecode and Target-Size Calculator",
   metaDescription:
     "Drop a clip in and get bitrate, bits per pixel, aspect ratio, frame count and HH:MM:SS:FF timecode — plus the kbit/s needed to hit a target file size.",
   steps: [

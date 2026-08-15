@@ -1,5 +1,5 @@
 const seo = {
-  title: "PHP Beautifier: Prettier + plugin-php",
+  title: "PHP Beautifier: Prettier + plugin-php in Your Browser",
   metaDescription:
     "Format PHP with Prettier and @prettier/plugin-php in the page: pick indent, print width, quotes and brace style, then download formatted.php.",
   steps: [

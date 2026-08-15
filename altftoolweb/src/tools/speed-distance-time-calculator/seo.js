@@ -1,5 +1,5 @@
 const seo = {
-  title: "Speed Distance Time Calculator: km/h, mph, m/s",
+  title: "Speed Distance Time Calculator: km/h, mph, m/s & Pace",
   metaDescription:
     "Divide distance in km by time in hours to get average speed in km/h, mph and m/s, plus running pace per km and per mile and the time to cover 100 km.",
   steps: [

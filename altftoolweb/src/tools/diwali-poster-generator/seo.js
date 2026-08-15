@@ -1,5 +1,5 @@
 const seo = {
-  title: "Diwali Sale Poster Maker: Offer Maths, PNG",
+  title: "Diwali Sale Poster Maker: Offer Maths, PNG and SVG",
   metaDescription:
     "Build a Diwali sale or greeting poster: enter list price, discount and cap to get the real price and effective rate. Export square, story or A4 PNG.",
   steps: [

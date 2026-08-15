@@ -1,5 +1,5 @@
 const seo = {
-  title: "Portfolio Rebalancer: Exact Buys, Sells or New",
+  title: "Portfolio Rebalancer: Exact Buys, Sells or New Money",
   metaDescription:
     "Compare each holding against its target, see the drift in percentage points, and get exact buys and sells - or fix it with fresh money, no selling.",
   steps: [

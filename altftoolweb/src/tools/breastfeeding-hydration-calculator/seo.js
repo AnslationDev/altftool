@@ -1,5 +1,5 @@
 const seo = {
-  title: "Breastfeeding Hydration Calculator From Milk",
+  title: "Breastfeeding Hydration Calculator From Milk Output",
   metaDescription:
     "Rebuilds EFSA's +700 ml lactation increment from your own milk volume x 87% water, scaled by stage, feeds and twins, on a 2.0 L or 35 ml/kg baseline.",
   steps: [

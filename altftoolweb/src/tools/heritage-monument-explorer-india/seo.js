@@ -1,5 +1,5 @@
 const seo = {
-  title: "Explore Indian Monuments by State, Era, Style",
+  title: "Explore Indian Monuments by State, Era, Style & UNESCO",
   metaDescription:
     "Filter India's major monuments by state, era, architectural style and UNESCO year — each entry lists the patron, build period and defining feature.",
   steps: [

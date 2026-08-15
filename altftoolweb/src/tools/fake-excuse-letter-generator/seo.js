@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fake Excuse Letter Generator: Work, School",
+  title: "Fake Excuse Letter Generator: Work, School, Medical",
   metaDescription:
     "Fill a work, school, medical or family absence-letter template with names, date and reason, then copy it or download excuse-letter-work.txt.",
   steps: [

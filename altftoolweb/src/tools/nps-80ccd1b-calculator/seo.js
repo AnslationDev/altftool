@@ -1,5 +1,5 @@
 const seo = {
-  title: "NPS 80CCD(1B): How Much of Rs 50,000 You Really",
+  title: "NPS 80CCD(1B): How Much of Rs 50,000 You Really Get",
   metaDescription:
     "Split an NPS Tier-I contribution between 80CCD(1) inside the Rs 1.5 lakh 80CCE cap and the extra Rs 50,000 of 80CCD(1B), and price the tax it saves.",
   steps: [

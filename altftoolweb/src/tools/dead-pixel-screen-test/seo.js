@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dead Pixel Test — Full-Screen Red, Green & Blue",
+  title: "Dead Pixel Test — Full-Screen Red, Green & Blue Check",
   metaDescription:
     "Cycles five full-screen fields — dark, red, green, blue, light — with one click per pattern, so stuck or dead pixels stand out. Press Exit test to leave.",
   steps: [

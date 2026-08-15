@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vertical Video Reframer: Crop 16:9 to 9:16",
+  title: "Vertical Video Reframer: Crop 16:9 to 9:16 (1080x1920)",
   metaDescription:
     "Crop landscape video to 9:16 with a left, centre or right anchor and export a 1080x1920 H.264/AAC MP4 — processed in your browser, nothing uploaded.",
   steps: [

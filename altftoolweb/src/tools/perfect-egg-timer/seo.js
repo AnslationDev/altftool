@@ -1,5 +1,5 @@
 const seo = {
-  title: "Boiled Egg Timer: 6 Min Soft, 7 Jammy, 10",
+  title: "Boiled Egg Timer: 6 Min Soft, 7 Jammy, 10 Hard-Boiled",
   metaDescription:
     "Base times of 6:00 soft to 12:00 very hard, adjusted for egg size, fridge or room temperature, boiling or steaming, and altitude above 1,000 m.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exposure Triangle Calculator: Aperture, Shutter",
+  title: "Exposure Triangle Calculator: Aperture, Shutter, ISO",
   metaDescription:
     "Get the EV for any aperture, shutter and ISO from log2(N²/t), plus handheld-shake risk against your focal length and a subject-freeze verdict.",
   steps: [

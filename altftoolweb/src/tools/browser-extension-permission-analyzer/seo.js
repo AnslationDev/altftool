@@ -1,5 +1,5 @@
 const seo = {
-  title: "Extension Permission Analyzer: Read",
+  title: "Extension Permission Analyzer: Read a manifest.json",
   metaDescription:
     "Paste an extension manifest.json to see what each permission, host match pattern and content script allows, and which combinations add up to more.",
   steps: [

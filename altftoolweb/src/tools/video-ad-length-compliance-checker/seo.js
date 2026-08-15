@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Ad Length Checker: YouTube, Reels, TikTok",
+  title: "Video Ad Length Checker: YouTube, Reels, TikTok Specs",
   metaDescription:
     "Test one cut against the accepted min–max and recommended length of every placement you tick, find a single master-cut window, and convert to frames.",
   steps: [

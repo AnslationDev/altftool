@@ -1,5 +1,5 @@
 const seo = {
-  title: "SGD to INR Mental Math: Rounding Rules and ++",
+  title: "SGD to INR Mental Math: Rounding Rules and ++ Bills",
   metaDescription:
     "Turns today's rate into a round multiplier you can run at a till, states each rule's error, and compounds a ++ menu price through service charge then GST.",
   steps: [

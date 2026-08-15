@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mileage Reimbursement Calculator: HMRC 45p/25p",
+  title: "Mileage Reimbursement Calculator: HMRC 45p/25p Tiers",
   metaDescription:
     "Two-tier rates handled properly: 45p to 10,000 miles then 25p, with miles already claimed deducted. IRS and per-km presets, tolls, parking, fuel check.",
   steps: [

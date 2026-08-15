@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fractal Generator: Mandelbrot, Julia, Koch",
+  title: "Fractal Generator: Mandelbrot, Julia, Koch, Barnsley",
   metaDescription:
     "Draw the Mandelbrot and Julia sets, Sierpinski triangle, Koch snowflake and Barnsley fern on a 480x360 canvas, with iteration depth 20 to 150.",
   steps: [

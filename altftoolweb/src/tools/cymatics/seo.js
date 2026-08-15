@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chladni Plate Simulator: Nodal Patterns",
+  title: "Chladni Plate Simulator: Nodal Patterns by Frequency",
   metaDescription:
     "Set drive frequency, plate side, thickness and material - steel, aluminium, brass, glass or acrylic - to draw the Chladni figure from thin-plate theory.",
   steps: [

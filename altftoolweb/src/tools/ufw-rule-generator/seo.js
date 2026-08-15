@@ -1,5 +1,5 @@
 const seo = {
-  title: "UFW Rule Generator: Valid Rules & Safe Apply",
+  title: "UFW Rule Generator: Valid Rules & Safe Apply Order",
   metaDescription:
     "Build valid ufw allow, deny, reject or limit rules for ports, ranges or app profiles, with source CIDR and an apply order that puts SSH before ufw enable.",
   steps: [

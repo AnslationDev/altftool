@@ -1,5 +1,5 @@
 const seo = {
-  title: "Check package.json Install Scripts Without",
+  title: "Check package.json Install Scripts Without Running",
   metaDescription:
     "Nothing runs: paste a package.json and see which preinstall, install, postinstall and prepare hooks fire on npm install, flagged by six review cues.",
   steps: [

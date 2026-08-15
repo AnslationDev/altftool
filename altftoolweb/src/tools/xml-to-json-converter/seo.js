@@ -1,5 +1,5 @@
 const seo = {
-  title: "XML to JSON Converter: 5 Parser Output",
+  title: "XML to JSON Converter: 5 Parser Output Conventions",
   metaDescription:
     "Convert XML into the exact JSON shape your code expects — fast-xml-parser, xml2js, xml-js compact, BadgerFish or plain keys — with a force-array list.",
   steps: [

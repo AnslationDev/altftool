@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tab to Spaces Converter with Real Tab Stops",
+  title: "Tab to Spaces Converter with Real Tab Stops (expand)",
   metaDescription:
     "Expands each tab to the next tab stop like POSIX expand — a tab at column 6 gives 2 spaces at size 4 — and converts back, showing bytes before and after.",
   steps: [

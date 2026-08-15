@@ -1,5 +1,5 @@
 const seo = {
-  title: "Watercolor Mixing Game: 6 Pigments, 5 Color",
+  title: "Watercolor Mixing Game: 6 Pigments, 5 Color Levels",
   metaDescription:
     "Blend Crimson, Cobalt, Amber, Emerald, Violet and Ivory to hit a target shade. Four or five strokes a level, scored on RGB distance.",
   steps: [

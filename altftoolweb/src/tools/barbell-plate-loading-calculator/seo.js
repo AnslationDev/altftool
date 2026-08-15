@@ -1,5 +1,5 @@
 const seo = {
-  title: "Barbell Plate Calculator: Plates Per Side, kg",
+  title: "Barbell Plate Calculator: Plates Per Side, kg or lb",
   metaDescription:
     "Subtracts the bar and both collars, halves the rest, then picks plates from the pairs you own. Shows the shortfall when a target cannot be made.",
   steps: [

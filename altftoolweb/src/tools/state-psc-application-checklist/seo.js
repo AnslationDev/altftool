@@ -1,5 +1,5 @@
 const seo = {
-  title: "State PSC Deadlines: Fee Date, Form Date",
+  title: "State PSC Deadlines: Fee Date, Form Date, Correction",
   metaDescription:
     "Counts down registration, the fee date, form date, correction window and exam — and flags that an out-of-state SC/OBC certificate gives no reservation.",
   steps: [

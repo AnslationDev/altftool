@@ -1,5 +1,5 @@
 const seo = {
-  title: "Speed Converter: km/h, mph, Knots + Stopping",
+  title: "Speed Converter: km/h, mph, Knots + Stopping Distance",
   metaDescription:
     "Convert a speed between km/h, mph, knots, m/s, ft/s and Mach, and see the reaction and braking distance it needs on dry, wet, gravel, snow or ice.",
   steps: [

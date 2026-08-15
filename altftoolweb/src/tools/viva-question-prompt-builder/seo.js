@@ -1,5 +1,5 @@
 const seo = {
-  title: "Viva Question Prompt Builder for Your Thesis",
+  title: "Viva Question Prompt Builder for Your Thesis Defence",
   metaDescription:
     "Turn your abstract and methods into a mock-examiner prompt: 4 to 40 questions split across the seven areas a viva panel predictably probes.",
   steps: [

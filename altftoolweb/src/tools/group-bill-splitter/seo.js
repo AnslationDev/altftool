@@ -1,5 +1,5 @@
 const seo = {
-  title: "Group Expense Splitter: Settle Up in Fewest",
+  title: "Group Expense Splitter: Settle Up in Fewest Payments",
   metaDescription:
     "Log who paid what on a trip or flatshare, split each expense across everyone or just some, and get the shortest list of transfers that settles it.",
   steps: [

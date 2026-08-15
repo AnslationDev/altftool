@@ -1,5 +1,5 @@
 const seo = {
-  title: "Education Loan EMI Calculator with Moratorium",
+  title: "Education Loan EMI Calculator with Moratorium Interest",
   metaDescription:
     "Model the moratorium and the EMI phase: simple interest through the course plus grace, capitalised into the principal, or serviced monthly instead.",
   steps: [

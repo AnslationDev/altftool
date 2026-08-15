@@ -1,5 +1,5 @@
 const seo = {
-  title: "Firewood Cord Calculator: Species, Stove",
+  title: "Firewood Cord Calculator: Species, Stove Efficiency",
   metaDescription:
     "Cords needed for a season from your species (13 to 32.9 MMBtu a cord) and stove efficiency, plus face cords, seasoned weight and stack length.",
   steps: [

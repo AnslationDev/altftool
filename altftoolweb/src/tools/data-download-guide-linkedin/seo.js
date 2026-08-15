@@ -1,5 +1,5 @@
 const seo = {
-  title: "LinkedIn Data Export: 10-Minute Files vs 24-Hour",
+  title: "LinkedIn Data Export: 10-Minute Files vs 24-Hour Archive",
   metaDescription:
     "See whether your LinkedIn export lands in about 10 minutes or needs the 24-hour archive, how big the zip is, and which CSVs expose other people's data.",
   steps: [

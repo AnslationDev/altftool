@@ -1,5 +1,5 @@
 const seo = {
-  title: "Xiaomi Router Security Checklist: 22 Weighted",
+  title: "Xiaomi Router Security Checklist: 22 Weighted Steps",
   metaDescription:
     "Audit a Mi or Redmi router on 192.168.31.1 against 22 weighted controls; seven critical ones cap the score at 60%. Plus a WPA2 crack-time check.",
   steps: [

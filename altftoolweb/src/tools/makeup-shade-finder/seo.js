@@ -1,5 +1,5 @@
 const seo = {
-  title: "Makeup Shade Finder: Undertone and Depth",
+  title: "Makeup Shade Finder: Undertone and Depth from a Selfie",
   metaDescription:
     "Averages the skin pixels in a selfie to read your undertone and depth, then names a shade with its hex across six categories, from foundation to bronzer.",
   steps: [

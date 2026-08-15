@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rainy Day Backup Plan Builder for Trip",
+  title: "Rainy Day Backup Plan Builder for Trip Itineraries",
   metaDescription:
     "Enter each day's rain forecast and what rain would ruin; get the compounded chance of losing a day, backup assignments and day swaps that cut the risk.",
   steps: [

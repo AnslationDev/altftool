@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dream Vacation Finder: 55 Destinations, 7",
+  title: "Dream Vacation Finder: 55 Destinations, 7 Questions",
   metaDescription:
     "Answer seven questions on budget, climate and trip type to rank 55 destinations by match percentage, with best months, daily costs and local dishes.",
   intro:

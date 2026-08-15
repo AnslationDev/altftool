@@ -1,5 +1,5 @@
 const seo = {
-  title: "LLM Cost Per User: Chat History Grows",
+  title: "LLM Cost Per User: Chat History Grows Quadratically",
   metaDescription:
     "Cost per active user from sessions, tokens and per-million rates, including the resent transcript that grows prompt tokens with the square of turn count.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bond Yield Calculator: Current Yield",
+  title: "Bond Yield Calculator: Current Yield & Approximate YTM",
   metaDescription:
     "Current yield is coupon ÷ price; approximate YTM uses (C + (F − P)/n) ÷ ((F + P)/2). Also shows the discount or premium to face value.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Amazon 2-Step Verification Setup & Security",
+  title: "Amazon 2-Step Verification Setup & Security Checklist",
   metaDescription:
     "15 weighted controls for your Amazon account: authenticator 2SV, backup method, device deregistration and voice-purchase codes, with 4 critical steps.",
   steps: [

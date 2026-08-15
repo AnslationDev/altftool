@@ -1,5 +1,5 @@
 const seo = {
-  title: "Desert Safari Packing List: Water Litres & Night",
+  title: "Desert Safari Packing List: Water Litres & Night Low",
   metaDescription:
     "Sizes water at ~0.75 L per hour of heat plus a 1.5 L baseline, works out the night low from the diurnal swing, and lists the layers and kit to match.",
   steps: [

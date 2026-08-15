@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Tracker: Sleep Score, Efficiency and Sleep",
+  title: "Sleep Tracker: Sleep Score, Efficiency and Sleep Debt",
   metaDescription:
     "Log bedtime, wake time and awakenings for a score out of 100: 50 for duration, 30 for efficiency, 20 for continuity. Logs stay in your browser.",
   steps: [

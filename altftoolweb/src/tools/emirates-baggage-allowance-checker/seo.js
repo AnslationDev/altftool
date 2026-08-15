@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emirates Baggage Allowance Checker: Weight",
+  title: "Emirates Baggage Allowance Checker: Weight vs Piece",
   metaDescription:
     "Test cabin and checked bags against Emirates weight or Americas piece allowances, the 32 kg per-bag ceiling and the 150/300 cm size caps.",
   steps: [

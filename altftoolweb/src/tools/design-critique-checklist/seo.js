@@ -1,5 +1,5 @@
 const seo = {
-  title: "Design Critique Checklist: 4 Frameworks, Timed",
+  title: "Design Critique Checklist: 4 Frameworks, Timed Plan",
   metaDescription:
     "Pick objective-based, I like / I wish / What if, Rose-Thorn-Bud or Plus/Delta; get a timed agenda, stage-matched prompts and a vague-feedback score.",
   steps: [

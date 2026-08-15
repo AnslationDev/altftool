@@ -1,5 +1,5 @@
 const seo = {
-  title: "Extract Video Frames as JPEG, PNG or WebP",
+  title: "Extract Video Frames as JPEG, PNG or WebP Thumbnails",
   metaDescription:
     "Pull up to 120 stills from a video in your browser — evenly spaced, every N seconds or one exact timecode — and download them as JPEG, PNG or WebP.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creator Contract Rights Timeline: Usage",
+  title: "Creator Contract Rights Timeline: Usage & Exclusivity",
   metaDescription:
     "Turn a brand deal's durations into three dates: usage end, exclusivity end and the renewal notice deadline, plus a five-clause scan of the wording.",
   steps: [

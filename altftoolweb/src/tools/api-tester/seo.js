@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Tester: 7 HTTP Methods, Auth, Saved",
+  title: "API Tester: 7 HTTP Methods, Auth, Saved Collections",
   metaDescription:
     "GET to OPTIONS with Bearer or Basic auth, {{variable}} substitution, and status, time, size and headers on every response. Collections stay local.",
   intro:

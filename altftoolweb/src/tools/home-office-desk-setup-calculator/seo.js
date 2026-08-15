@@ -1,5 +1,5 @@
 const seo = {
-  title: "Desk, Chair & Monitor Height Calculator for Home",
+  title: "Desk, Chair & Monitor Height Calculator for Home Office",
   metaDescription:
     "Enter your standing height and get seat, seated desk, standing desk and monitor heights from anthropometric ratios, plus footrest size for fixed desks.",
   steps: [

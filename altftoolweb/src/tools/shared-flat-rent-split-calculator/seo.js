@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shared Flat Rent Split Calculator by Room",
+  title: "Shared Flat Rent Split Calculator by Room and Area",
   metaDescription:
     "Common areas split equally per head, bedrooms by floor area with 12% for an attached bathroom. Whole-rupee shares that add up to the rent exactly.",
   steps: [

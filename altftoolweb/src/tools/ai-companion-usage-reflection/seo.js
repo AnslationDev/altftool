@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Companion Usage Reflection: 12 Statements, 4",
+  title: "AI Companion Usage Reflection: 12 Statements, 4 Themes",
   metaDescription:
     "Twelve statements across four themes score how AI chat sits in your week, and daily minutes become weekly hours. A worksheet, not a diagnostic test.",
   steps: [

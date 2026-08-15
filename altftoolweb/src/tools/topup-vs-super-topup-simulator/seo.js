@@ -1,5 +1,5 @@
 const seo = {
-  title: "Top-up vs Super Top-up: Per-Claim vs Aggregate",
+  title: "Top-up vs Super Top-up: Per-Claim vs Aggregate Deductible",
   metaDescription:
     "Run one policy year of claims through the same deductible measured per claim and on the year's aggregate, and see claim by claim who pays what.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Smart Speaker Privacy Checklist: 16 Alexa & Nest",
+  title: "Smart Speaker Privacy Checklist: 16 Alexa & Nest Steps",
   metaDescription:
     "Harden an Alexa, Google or Siri speaker across 16 weighted controls, then see how many voice recordings your account holds at its retention setting.",
   steps: [

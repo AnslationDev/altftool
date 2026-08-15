@@ -1,5 +1,5 @@
 const seo = {
-  title: "ITR Document Checklist: What to Collect Before",
+  title: "ITR Document Checklist: What to Collect Before Filing",
   metaDescription:
     "Tick your income sources and deductions to get the exact Form 16, interest certificates, broker statements and 80C/80D proofs your return needs.",
   steps: [

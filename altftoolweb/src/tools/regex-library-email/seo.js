@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Regex Library: 5 Patterns from HTML5",
+  title: "Email Regex Library: 5 Patterns from HTML5 to RFC 5322",
   metaDescription:
     "Five copy-ready email validation regexes ranked by strictness — including the WHATWG HTML5 browser pattern — each with a live tester and honest limits.",
   steps: [

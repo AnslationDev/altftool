@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tax Jargon Glossary: Indian Income Tax and GST",
+  title: "Tax Jargon Glossary: Indian Income Tax and GST Terms",
   metaDescription:
     "Search Indian income tax, GST, investing and banking terms by word, abbreviation or section number. TDS, 87A, ITC and XIRR all resolve to an entry.",
   steps: [

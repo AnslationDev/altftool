@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fast Click Challenge: 10-Second CPS Click Speed",
+  title: "Fast Click Challenge: 10-Second CPS Click Speed Test",
   metaDescription:
     "Click for 10 seconds and get clicks per second to one decimal, a named speed band, your best CPS and your last 10 runs - nothing saved between visits.",
   steps: [

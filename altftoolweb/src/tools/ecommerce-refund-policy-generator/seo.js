@@ -1,5 +1,5 @@
 const seo = {
-  title: "Refund Policy Generator With EU, UK and India",
+  title: "Refund Policy Generator With EU, UK and India Checks",
   metaDescription:
     "Set return window, restocking fee and shipping split to generate a 12-section refund policy, checked against EU 14-day, UK, India and FTC rules.",
   steps: [

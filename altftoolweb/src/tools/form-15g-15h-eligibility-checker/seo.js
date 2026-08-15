@@ -1,5 +1,5 @@
 const seo = {
-  title: "Form 15G or 15H? Check Eligibility and TDS",
+  title: "Form 15G or 15H? Check Eligibility and TDS at Stake",
   metaDescription:
     "Applies the section 197A nil-tax test and the 15G interest ceiling, then shows the section 194A TDS at 10% (20% without PAN) you would lose.",
   steps: [

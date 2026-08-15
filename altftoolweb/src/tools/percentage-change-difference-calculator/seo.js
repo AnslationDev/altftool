@@ -1,5 +1,5 @@
 const seo = {
-  title: "Percentage Change vs Difference Calculator, 6",
+  title: "Percentage Change vs Difference Calculator, 6 Modes",
   metaDescription:
     "Percentage change divides by the old value, percentage difference by the average — two answers for one pair. Plus percent of, what percent and pp.",
   steps: [

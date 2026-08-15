@@ -1,5 +1,5 @@
 const seo = {
-  title: "Windfall Planner: Tax, Emergency Fund, Debt",
+  title: "Windfall Planner: Tax, Emergency Fund, Debt, Then Split",
   metaDescription:
     "Runs a bonus, inheritance or sale proceeds through a waterfall — tax, emergency cover, then debt in avalanche order — to what is genuinely free.",
   steps: [

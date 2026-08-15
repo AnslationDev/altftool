@@ -1,5 +1,5 @@
 const seo = {
-  title: "Expense Tracker with Category Pie & 6-Month",
+  title: "Expense Tracker with Category Pie & 6-Month Charts",
   metaDescription:
     "Log expenses by date and one of seven categories — totals, highest category, pie and six-month bar charts recalculate on every add or delete.",
   steps: [

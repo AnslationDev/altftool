@@ -1,5 +1,5 @@
 const seo = {
-  title: "Secrets Rotation Planner: Key, Token and TLS Due",
+  title: "Secrets Rotation Planner: Key, Token and TLS Due Dates",
   metaDescription:
     "List secret names, owners and last-rotation dates and get a deadline-ordered calendar with overdue flags — 90-day API keys and 200-day TLS certificates.",
   steps: [

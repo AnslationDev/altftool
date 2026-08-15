@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving Break Planner: Real Arrival Time",
+  title: "Driving Break Planner: Real Arrival Time with Stops",
   metaDescription:
     "Distance and a realistic average speed become a stop-by-stop running order: 15-minute breaks every 2 hours, meals, fuel and overnight halts counted.",
   steps: [

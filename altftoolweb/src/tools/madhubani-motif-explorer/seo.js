@@ -1,5 +1,5 @@
 const seo = {
-  title: "Madhubani Motifs: 27 Meanings & Panel Grid",
+  title: "Madhubani Motifs: 27 Meanings & Panel Grid Planner",
   metaDescription:
     "27 Mithila motifs with Maithili names, meanings and occasions, plus a planner turning sheet size, border and grid into exact cell sizes and a motif order.",
   steps: [

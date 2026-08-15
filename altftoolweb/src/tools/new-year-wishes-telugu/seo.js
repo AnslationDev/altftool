@@ -1,5 +1,5 @@
 const seo = {
-  title: "Telugu New Year Wishes: Ugadi in Telugu",
+  title: "Telugu New Year Wishes: Ugadi in Telugu or Tenglish",
   steps: [
     "Pick the Occasion — \"Ugadi - Telugu New Year (Chaitra Shuddha Padyami)\" or \"1 January new year\" — then a Tone and a Language / script of Telugu script (తెలుగు), Tenglish or English.",
     "Add the optional Recipient name, Sign off as and Telugu year name (used only for Ugadi, from the 60-year cycle), set How many messages up to 8, and press Shuffle for a different set.",

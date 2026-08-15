@@ -1,5 +1,5 @@
 const seo = {
-  title: "Appliance Upgrade Payback: Simple, Discounted",
+  title: "Appliance Upgrade Payback: Simple, Discounted & NPV Years",
   metaDescription:
     "Enter old and new kWh per year, price, trade-in and tariff to get simple and discounted payback plus lifetime NPV, and CO2 avoided at 0.71 kg per kWh.",
   steps: [

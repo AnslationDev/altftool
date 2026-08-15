@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Script Timer: Words to Minutes at 130-250",
+  title: "Video Script Timer: Words to Minutes at 130-250 WPM",
   metaDescription:
     "Paste a script to see its read-aloud time at five speaking rates from 130 to 250 WPM, with a 2-second pause added per 45 seconds of speech.",
   steps: [

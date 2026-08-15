@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Image Disclosure Label & IPTC Source Type",
+  title: "AI Image Disclosure Label & IPTC Source Type Tagger",
   metaDescription:
     "Turn how a photo or video was made into a badge, caption, alt-text ending and the IPTC DigitalSourceType term, with the ExifTool command to embed it.",
   steps: [

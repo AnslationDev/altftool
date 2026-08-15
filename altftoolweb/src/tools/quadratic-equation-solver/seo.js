@@ -1,5 +1,5 @@
 const seo = {
-  title: "Quadratic Equation Solver with Discriminant",
+  title: "Quadratic Equation Solver with Discriminant & Vertex",
   metaDescription:
     "Enter a, b and c to get roots from x = (-b ± √(b² - 4ac)) / 2a — real to three decimals or a complex pair — plus discriminant and vertex.",
   intro:

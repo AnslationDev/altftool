@@ -1,5 +1,5 @@
 const seo = {
-  title: "Name Tracing Worksheet Generator Sized",
+  title: "Name Tracing Worksheet Generator Sized in Millimetres",
   metaDescription:
     "Type a name up to 24 characters, set a 4-40 mm x-height, and print four-line rows on A4, A5 or US Letter with a solid model then dotted copies to trace.",
   steps: [

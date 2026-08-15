@@ -1,5 +1,5 @@
 const seo = {
-  title: "Laptop Riser Height Calculator for Neck",
+  title: "Laptop Riser Height Calculator for Neck and Posture",
   metaDescription:
     "Work out the cm to raise a laptop so the screen top sits 5 cm below seated eye height, with the gaze angle and neck load before and after.",
   steps: [

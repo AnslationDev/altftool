@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tokens to Words Converter: Budget to Words",
+  title: "Tokens to Words Converter: Budget to Words and Pages",
   metaDescription:
     "Turn an LLM token budget into words, pages and reading time at ~0.75 words per token, with presets for prose, technical text, other languages and code.",
   steps: [

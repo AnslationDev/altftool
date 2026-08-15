@@ -1,5 +1,5 @@
 const seo = {
-  title: "WHOIS Lookup over RDAP: Registrar, Dates, Status",
+  title: "WHOIS Lookup over RDAP: Registrar, Dates, Status Codes",
   metaDescription:
     "Query a domain's RDAP record through IANA's bootstrap: registrar, creation and expiry dates, age in days, nameservers, DNSSEC and EPP codes explained.",
   steps: [

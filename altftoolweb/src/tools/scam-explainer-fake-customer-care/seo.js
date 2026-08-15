@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fake Customer Care Number Check & Refund Scam",
+  title: "Fake Customer Care Number Check & Refund Scam Maths",
   metaDescription:
     "Rate where a helpline number came from, flag requests no support line makes — OTP, PIN, remote access — and price the excess-refund trick.",
   intro:

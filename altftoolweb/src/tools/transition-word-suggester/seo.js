@@ -1,5 +1,5 @@
 const seo = {
-  title: "Transition Words by Relationship",
+  title: "Transition Words by Relationship, With Punctuation",
   metaDescription:
     "94 connectives sorted by contrast, cause, result, sequence and more — each with its grammatical type and the comma or semicolon it takes.",
   steps: [

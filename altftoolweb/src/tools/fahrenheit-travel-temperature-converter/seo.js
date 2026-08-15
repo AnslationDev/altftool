@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fahrenheit to Celsius: Heat Index, Wind Chill",
+  title: "Fahrenheit to Celsius: Heat Index, Wind Chill, Packing",
   metaDescription:
     "Convert forecast highs and lows both ways, add the NWS heat index and wind chill where they actually apply, and get a packing hint for the band.",
   steps: [

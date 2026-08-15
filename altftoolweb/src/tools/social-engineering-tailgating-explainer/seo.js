@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tailgating Risk: Unsupervised Door Openings",
+  title: "Tailgating Risk: Unsupervised Door Openings Per Day",
   metaDescription:
     "Headcount x trips plus visitors and deliveries gives openings a day; entrance type sets how many nobody supervises. Get the control tier and scripts.",
   steps: [

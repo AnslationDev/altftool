@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hindi New Year Wishes: 1 January & Nav Varsh",
+  title: "Hindi New Year Wishes: 1 January & Nav Varsh Messages",
   metaDescription:
     "Devanagari greetings for 1 January and Chaitra Nav Varsh, worded for family, elders, bosses or clients, with Vikram Samvat years and SMS segment counts.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base64 to URL-Safe Base64 Converter with Auto",
+  title: "Base64 to URL-Safe Base64 Converter with Auto Padding",
   metaDescription:
     "Convert between plain text, standard Base64 and URL-safe base64url (RFC 4648). Missing = padding is restored automatically, so JWT segments decode.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sinclair Calculator: IWF Weightlifting Total",
+  title: "Sinclair Calculator: IWF Weightlifting Total Ranking",
   metaDescription:
     "Enter bodyweight, snatch and clean & jerk for the IWF Sinclair total, using the published 2021-2024 Paris or 2017-2020 Tokyo constants.",
   steps: [

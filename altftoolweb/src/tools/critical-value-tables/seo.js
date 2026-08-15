@@ -1,5 +1,5 @@
 const seo = {
-  title: "Critical Value Tables: t, z, Chi-Square and F",
+  title: "Critical Value Tables: t, z, Chi-Square and F at Any df",
   intro:
     "A critical value table gives the cut-off a test statistic must pass for a result to sit in the rejection region at a chosen significance level α, and this page computes those cut-offs live for the Student t, standard normal z, chi-square and F distributions. It is built for anyone reading a printed table and finding their degrees of freedom missing from it — students, analysts and researchers whose df is 37, or 214, or the fractional 18.7 that a Welch–Satterthwaite correction produced. Every figure comes from the distribution functions themselves: tail probabilities from the regularised incomplete beta I_x(a, b) and the regularised incomplete gamma Q(a, x) evaluated by continued fraction, inverted by bracketed bisection, so t(0.05, two-tailed, df = 10) returns 2.228138852 rather than the rounded 2.228 a book prints.",
   useCases: [

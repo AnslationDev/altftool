@@ -1,5 +1,5 @@
 const seo = {
-  title: "Income Tax Slab Visualizer: Old vs New, FY",
+  title: "Income Tax Slab Visualizer: Old vs New, FY 2025-26",
   metaDescription:
     "See the rupee tax each slab adds under both FY 2025-26 regimes, with the ₹75,000 standard deduction, 87A rebate, surcharge relief and 4% cess.",
   intro:

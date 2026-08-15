@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home State Quota Explainer: NIT, IIT, NEET UG",
+  title: "Home State Quota Explainer: NIT, IIT, NEET UG Counselling",
   metaDescription:
     "See your quota: NITs split 50:50 on your Class 12 state, IITs have no state quota, and NEET UG splits 15% All India against 85% State Quota.",
   steps: [

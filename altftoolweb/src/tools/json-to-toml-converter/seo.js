@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON to TOML Converter — Tables",
+  title: "JSON to TOML Converter — Tables & Array-of-Tables Output",
   metaDescription:
     "Convert JSON to TOML v1.0.0 with [table] sections, [[array of tables]] and quoted keys. Choose to omit or fail on nulls, since TOML has no null.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shot List Planner: Setups, Takes and Days You",
+  title: "Shot List Planner: Setups, Takes and Days You Need",
   metaDescription:
     "Costs each shot as setup + rig + rehearsal + takes × (length + reset) against a 10-hour day less the meal break and 15% contingency.",
   steps: [

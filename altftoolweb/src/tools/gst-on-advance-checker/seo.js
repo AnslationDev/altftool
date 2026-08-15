@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST on Advance Received: Goods vs Services Time",
+  title: "GST on Advance Received: Goods vs Services Time of Supply",
   metaDescription:
     "Advances for services are taxed on receipt under section 13(2); goods are not. Get the verdict, CGST/SGST or IGST split, voucher and GSTR-1 line.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "RTI for Scholarship Status: Verification, DBT",
+  title: "RTI for Scholarship Status: Verification, DBT, Reason",
   metaDescription:
     "Section 6(1) draft tracing institute, district and state verification, sanction and DBT payment, citing Section 4(1)(d) for the recorded rejection ground.",
   steps: [

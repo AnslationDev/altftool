@@ -1,5 +1,5 @@
 const seo = {
-  title: "Overhead Water Tank Size Calculator",
+  title: "Overhead Water Tank Size Calculator (IS 1172 Litres)",
   metaDescription:
     "Turn residents at IS 1172's 135 LPCD plus garden and car-wash use into litres for the roof tank and sump, rounded up to standard tank sizes.",
   steps: [

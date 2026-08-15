@@ -1,5 +1,5 @@
 const seo = {
-  title: "Developer Onboarding Runbook Generator",
+  title: "Developer Onboarding Runbook Generator (ONBOARDING.md)",
   metaDescription:
     "Generate a day-one setup runbook: access requests first, then brew/apt/winget installs with a verify command each, repo clones and a first task.",
   steps: [

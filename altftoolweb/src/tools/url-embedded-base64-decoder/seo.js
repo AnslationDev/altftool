@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base64 in URL Decoder: See a Link's Real",
+  title: "Base64 in URL Decoder: See a Link's Real Destination",
   metaDescription:
     "Scan a redirect link for base64, base64url and hex blobs, decode up to four layers, and reveal the target URL or your email. Nothing is fetched.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nail Size Selector: Penny Size by Penetration",
+  title: "Nail Size Selector: Penny Size by Penetration Rule",
   metaDescription:
     "Framing, sheathing or trim: enter both thicknesses in mm to get the first penny size clearing 10 shank diameters, checked for blow-through, with counts.",
   steps: [

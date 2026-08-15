@@ -1,5 +1,5 @@
 const seo = {
-  title: "British American Spelling Converter With Change",
+  title: "British American Spelling Converter With Change Table",
   metaDescription:
     "Turn colour into color and organise into organize using a curated word list plus the -our, -ise and -yse rules, with every swap listed and explained.",
   steps: [

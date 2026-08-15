@@ -1,5 +1,5 @@
 const seo = {
-  title: "Microsoft Account 2FA: 15-Control Hardening",
+  title: "Microsoft Account 2FA: 15-Control Hardening Checklist",
   metaDescription:
     "Work through Authenticator, the single 25-character recovery code, session cleanup and the Outlook forwarding check, scored by blast radius.",
   steps: [

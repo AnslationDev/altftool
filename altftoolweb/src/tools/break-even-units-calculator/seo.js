@@ -1,5 +1,5 @@
 const seo = {
-  title: "Break-Even Units Calculator with Contribution",
+  title: "Break-Even Units Calculator with Contribution Margin",
   metaDescription:
     "Enter fixed costs, price and variable cost to get break-even units rounded up, plus contribution margin per unit and break-even revenue.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baby Size by Week: Length, Weight & Fruit",
+  title: "Baby Size by Week: Length, Weight & Fruit Comparison",
   metaDescription:
     "Average fetal length and weight for weeks 8-40 with a fruit-size comparison — crown-rump to week 19, crown-heel from week 20 — in metric and imperial.",
   steps: [

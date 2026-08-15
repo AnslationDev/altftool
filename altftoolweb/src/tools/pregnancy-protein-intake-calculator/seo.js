@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pregnancy Protein Calculator: IOM Trimester",
+  title: "Pregnancy Protein Calculator: IOM Trimester Targets",
   metaDescription:
     "Protein target from the IOM intakes: 1.1 g/kg from the second trimester or +25 g a day, whichever is higher, with extra kcal and the weight-gain band.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Speed Dating Rotation Planner: Every Pair Meets",
+  title: "Speed Dating Rotation Planner: Every Pair Meets Once",
   metaDescription:
     "Circle-method round-robin for speed dating or networking: n-1 rounds, no repeated pair, a start time per round and the total running time.",
   steps: [

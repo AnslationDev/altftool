@@ -1,5 +1,5 @@
 const seo = {
-  title: "Meesho Catalog Image Checker: Size, Ratio",
+  title: "Meesho Catalog Image Checker: Size, Ratio & Watermark",
   metaDescription:
     "Test a Meesho catalogue photo against the 500 x 500 px minimum, 1:1 or 3:4 framing and watermark rules, and see how much a square thumbnail crops.",
   steps: [

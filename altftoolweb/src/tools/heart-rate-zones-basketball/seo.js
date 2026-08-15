@@ -1,5 +1,5 @@
 const seo = {
-  title: "Basketball Heart Rate Zones and Shuttle Drill",
+  title: "Basketball Heart Rate Zones and Shuttle Drill Planner",
   metaDescription:
     "Five conditioning zones in bpm from age or measured max, the 85-90% live-play band, a shuttle planner with a bpm restart cue, and 1-minute recovery.",
   steps: [

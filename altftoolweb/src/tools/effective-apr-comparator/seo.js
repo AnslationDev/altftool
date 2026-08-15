@@ -1,5 +1,5 @@
 const seo = {
-  title: "Compare Loan Offers on True APR, Not the Quoted",
+  title: "Compare Loan Offers on True APR, Not the Quoted Rate",
   metaDescription:
     "Effective APR as the IRR of real cash flows after fees, 18% GST, bundled insurance and foreclosure penalty — the RBI Key Facts Statement method.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vendor Data Inventory: GDPR Article 30 in 8",
+  title: "Vendor Data Inventory: GDPR Article 30 in 8 Columns",
   metaDescription:
     "Turn one pipe-separated line per vendor into a register of purpose, data categories, people, location, retention, DPA and owner, with gaps counted.",
   steps: [

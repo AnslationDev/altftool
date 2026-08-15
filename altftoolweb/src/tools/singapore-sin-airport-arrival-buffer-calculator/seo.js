@@ -1,5 +1,5 @@
 const seo = {
-  title: "When to Leave Home for Changi Airport (SIN)",
+  title: "When to Leave Home for Changi Airport (SIN) Calculator",
   metaDescription:
     "Work back from your Changi departure time through gate close, check-in cut-off, immigration and the drive to one leave-home time, with a full timeline.",
   steps: [

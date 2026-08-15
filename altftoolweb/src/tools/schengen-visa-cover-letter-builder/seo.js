@@ -1,5 +1,5 @@
 const seo = {
-  title: "Schengen Cover Letter Builder With 90/180 Day",
+  title: "Schengen Cover Letter Builder With 90/180 Day Check",
   metaDescription:
     "Builds a printable Type C cover letter and checks the 90/180-day count, passport validity three months past departure and EUR 30,000 insurance cover.",
   steps: [

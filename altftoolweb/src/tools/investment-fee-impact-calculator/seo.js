@@ -1,5 +1,5 @@
 const seo = {
-  title: "Investment Fee Impact: What 1.5% Costs Over 20",
+  title: "Investment Fee Impact: What 1.5% Costs Over 20 Years",
   metaDescription:
     "Compound your money at the gross return and at return minus fee, side by side: a 1.5% charge removes about 24% of a 20-year corpus.",
   steps: [

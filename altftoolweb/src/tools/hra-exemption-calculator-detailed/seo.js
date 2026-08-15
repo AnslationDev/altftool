@@ -1,5 +1,5 @@
 const seo = {
-  title: "HRA Exemption Calculator: Least-of-Three",
+  title: "HRA Exemption Calculator: Least-of-Three, Month-Wise",
   metaDescription:
     "Applies the section 10(13A) least-of-three test with 50%/40% metro rules, names the limb that binds, and prints a month-by-month exempt/taxable table.",
   steps: [

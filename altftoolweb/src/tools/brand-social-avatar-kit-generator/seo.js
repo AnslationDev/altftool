@@ -1,5 +1,5 @@
 const seo = {
-  title: "Social Profile Picture Sizes: Circle-Safe Avatar",
+  title: "Social Profile Picture Sizes: Circle-Safe Avatar Kit",
   metaDescription:
     "Crop one square master to each platform's avatar size — 400px X, 800px YouTube, 512px icon — with the 70.71% circle-safe square drawn on the preview.",
   steps: [

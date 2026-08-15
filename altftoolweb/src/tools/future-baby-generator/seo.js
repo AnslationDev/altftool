@@ -1,5 +1,5 @@
 const seo = {
-  title: "Future Baby Generator: Eye and Hair Odds",
+  title: "Future Baby Generator: Eye and Hair Odds From Parents",
   metaDescription:
     "Enter both parents' names, eye colour and hair type; optional photos are analysed in your browser. Output is a text trait report, not a baby picture.",
   steps: [

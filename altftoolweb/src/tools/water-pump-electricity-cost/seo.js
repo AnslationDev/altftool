@@ -1,5 +1,5 @@
 const seo = {
-  title: "Water Pump Electricity Cost per Month and 1000",
+  title: "Water Pump Electricity Cost per Month and 1000 Litres",
   metaDescription:
     "Costs a 1 HP pump at its real 1.04 kW draw, not 746 W. Runtime comes from tank litres and flow rate; shows cost per month and per 1000 litres.",
   steps: [

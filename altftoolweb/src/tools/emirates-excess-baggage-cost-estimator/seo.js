@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emirates Excess Baggage Calculator: Per Kg",
+  title: "Emirates Excess Baggage Calculator: Per Kg or Per Bag",
   metaDescription:
     "Price excess baggage per kg on weight-concept routes, or per bag on Americas piece routes, and compare prepaid 5 kg steps against the airport rate.",
   steps: [

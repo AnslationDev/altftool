@@ -1,5 +1,5 @@
 const seo = {
-  title: "FD Ladder Planner: Rung Maturities and Blended",
+  title: "FD Ladder Planner: Rung Maturities and Blended Yield",
   metaDescription:
     "Split a lump sum across 2–10 staggered FDs. Quarterly compounding gives each rung's amount, rate, maturity value and date, plus the blended yield.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cycling Cadence Calculator: Speed, Gear Inches",
+  title: "Cycling Cadence Calculator: Speed, Gear Inches, Gain",
   metaDescription:
     "Enter chainring, cog, wheel circumference and cadence for speed in km/h, gear ratio, development per crank turn, gear inches and crank-aware gain ratio.",
   steps: [

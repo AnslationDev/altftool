@@ -1,5 +1,5 @@
 const seo = {
-  title: "Face Symmetry Checker: 68 Landmarks, 6 Feature",
+  title: "Face Symmetry Checker: 68 Landmarks, 6 Feature Pairs",
   metaDescription:
     "Detects 68 facial landmarks in your browser and scores eyes, brows, cheeks, jaw, nose and lips against the nose-bridge midline.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vitamin D Dose Schedule: Dates and Daily IU",
+  title: "Vitamin D Dose Schedule: Dates and Daily IU Average",
   metaDescription:
     "Turns 60,000 IU weekly or a monthly sachet into dated doses and an average daily IU, set against the 600 IU RDA and 4,000 IU adult upper limit.",
   steps: [

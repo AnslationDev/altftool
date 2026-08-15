@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Exam Countdown: IBPS, SBI and RBI Stage",
+  title: "Bank Exam Countdown: IBPS, SBI and RBI Stage Dates",
   metaDescription:
     "Days to each stage and the prelims-to-mains gap, plus seconds per question by section and the attempts a cutoff needs after 1/4 negative marking.",
   steps: [

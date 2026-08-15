@@ -1,5 +1,5 @@
 const seo = {
-  title: "Profile Picture Rating: Brightness, Contrast",
+  title: "Profile Picture Rating: Brightness, Contrast Score",
   metaDescription:
     "Measures brightness, edge contrast and background colour variety from your photo's pixels in the browser, with a checklist for the platform you pick.",
   steps: [

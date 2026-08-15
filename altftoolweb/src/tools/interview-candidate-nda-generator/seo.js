@@ -1,5 +1,5 @@
 const seo = {
-  title: "Interview NDA Generator: Scoped",
+  title: "Interview NDA Generator: Scoped, Not a Non-Compete",
   metaDescription:
     "Builds a short candidate NDA from the materials you tick, sets the term and deletion deadline from the interview date, and is not a non-compete.",
   steps: [

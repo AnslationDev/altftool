@@ -1,5 +1,5 @@
 const seo = {
-  title: "Odia Birthday Wishes Generator — Script or Roman",
+  title: "Odia Birthday Wishes Generator — Script or Roman Text",
   metaDescription:
     "Full Odia birthday messages by relationship, tone and age — in Odia script or Roman transliteration, built on 'janmadinara hardika shubhechha'.",
   steps: [

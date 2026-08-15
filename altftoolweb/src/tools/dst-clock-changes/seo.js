@@ -1,5 +1,5 @@
 const seo = {
-  title: "When Do the Clocks Change? Exact DST Times",
+  title: "When Do the Clocks Change? Exact DST Times by Zone",
   metaDescription:
     "The next clock change in any time zone to the exact UTC instant, plus the dates a weekly cross-border meeting's gap silently moves.",
   steps: [

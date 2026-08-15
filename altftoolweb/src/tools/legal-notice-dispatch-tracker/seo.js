@@ -1,5 +1,5 @@
 const seo = {
-  title: "Legal Notice Reply Deadline & Service Date",
+  title: "Legal Notice Reply Deadline & Service Date Tracker",
   metaDescription:
     "Board your sent legal notices: service date (actual or deemed, S.27 General Clauses Act), reply deadline and next step - s.138 and s.80 CPC included.",
   intro:

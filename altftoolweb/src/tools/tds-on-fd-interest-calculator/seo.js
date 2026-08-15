@@ -1,5 +1,5 @@
 const seo = {
-  title: "TDS on FD Interest Calculator: Section 194A",
+  title: "TDS on FD Interest Calculator: Section 194A and 15G/H",
   metaDescription:
     "Section 194A TDS at 10%, or 20% without PAN, on the full FD interest once the threshold is crossed, plus Form 15G/15H eligibility and net payout.",
   steps: [

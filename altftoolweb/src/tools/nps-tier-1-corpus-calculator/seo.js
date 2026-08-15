@@ -1,5 +1,5 @@
 const seo = {
-  title: "NPS Tier 1 Calculator: Corpus, 40% Annuity",
+  title: "NPS Tier 1 Calculator: Corpus, 40% Annuity, Pension",
   metaDescription:
     "Project your NPS Tier 1 corpus from monthly contribution, annual step-up and return, then split it into the 40% minimum annuity and the lump sum.",
   steps: [

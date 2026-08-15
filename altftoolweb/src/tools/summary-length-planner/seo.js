@@ -1,5 +1,5 @@
 const seo = {
-  title: "Summary Length Planner: Words at Any Compression",
+  title: "Summary Length Planner: Words at Any Compression %",
   metaDescription:
     "Give a source word count and a compression target — 15% of 2,400 words is a 360-word brief — and get the plan, with the facts the summary must preserve.",
   steps: [

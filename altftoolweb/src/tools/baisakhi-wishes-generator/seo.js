@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baisakhi Wishes in Gurmukhi With SMS Segment",
+  title: "Baisakhi Wishes in Gurmukhi With SMS Segment Count",
   metaDescription:
     "Write a Vaisakhi greeting in Gurmukhi, Roman and English, see the GSM-7 or UCS-2 segment count, and get the Khalsa anniversary for any year.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "VTU CGPA to Percentage: 2018 vs 2022 Scheme",
+  title: "VTU CGPA to Percentage: 2018 vs 2022 Scheme Formula",
   metaDescription:
     "(CGPA - 0.75) x 10 for 2015/2017/2018 CBCS, CGPA x 10 for 2021/2022. Pick your scheme and get the percentage, class awarded and SGPA from credits.",
   steps: [

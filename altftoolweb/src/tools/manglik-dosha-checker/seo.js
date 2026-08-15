@@ -1,5 +1,5 @@
 const seo = {
-  title: "Manglik Dosha Checker: Mars House From Your Moon",
+  title: "Manglik Dosha Checker: Mars House From Your Moon Sign",
   metaDescription:
     "Computes sidereal Moon and Mars longitudes from your birth date and time, then reports the house Mars occupies from the Moon and the severity.",
   steps: [

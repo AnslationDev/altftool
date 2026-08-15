@@ -1,5 +1,5 @@
 const seo = {
-  title: "EV Road-Trip Charge Planner: Stops, kWh",
+  title: "EV Road-Trip Charge Planner: Stops, kWh and Reserve",
   metaDescription:
     "Enter each leg's distance and your kWh/100 km. It carries state of charge forward, adds a stop below your 80% target and totals the kWh.",
   steps: [

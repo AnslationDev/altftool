@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dry Eye Blink Trainer: Count, Compare, Paced",
+  title: "Dry Eye Blink Trainer: Count, Compare, Paced Drill",
   metaDescription:
     "Turn a blink count into blinks per minute against the 15-20/min resting range, then run a metronome drill with a 2-second squeeze every 20 minutes.",
   steps: [

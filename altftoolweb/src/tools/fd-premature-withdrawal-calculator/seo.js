@@ -1,5 +1,5 @@
 const seo = {
-  title: "FD Premature Withdrawal Calculator: Break",
+  title: "FD Premature Withdrawal Calculator: Break or Borrow?",
   metaDescription:
     "What a bank pays when you close an FD early — repriced at the card rate for the period it ran, less the penalty — versus a loan held to the maturity date.",
   steps: [

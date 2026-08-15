@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weigh-In Rolling Average & Weight Trend",
+  title: "Weigh-In Rolling Average & Weight Trend Calculator",
   metaDescription:
     "Smooths daily weigh-ins with a moving average and 0.1 exponential trend, then reports your weekly rate and the calorie balance it implies.",
   steps: [

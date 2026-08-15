@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dough Hydration Calculator with Baker's",
+  title: "Dough Hydration Calculator with Baker's Percentages",
   metaDescription:
     "Flour is 100%; everything else is a share of it. Sourdough starter is split into its own flour and water, so true hydration is not overstated.",
   steps: [

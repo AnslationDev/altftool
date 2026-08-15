@@ -1,5 +1,5 @@
 const seo = {
-  title: "Logo Contrast Tester: 3:1 WCAG Check and Scrim",
+  title: "Logo Contrast Tester: 3:1 WCAG Check and Scrim Fix",
   metaDescription:
     "Measure a logo colour on light, dark, grey and custom surfaces against WCAG 1.4.11's 3:1 bar, and get the black or white scrim opacity that fixes it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Merry Christmas in 30 Languages + SMS Length",
+  title: "Merry Christmas in 30 Languages + SMS Length Check",
   metaDescription:
     "Write a Christmas greeting in 30 languages in a warm, formal or short tone, with transliteration and whether it sends as one 160-character SMS.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "ASL Alphabet Poster Maker: Printable A–Z",
+  title: "ASL Alphabet Poster Maker: Printable A–Z with Quiz Mode",
   metaDescription:
     "Lay out the one-handed ASL alphabet and numbers 0–9 as a printable poster — pick 3 to 6 columns, hide letters for quiz mode, and see the page count.",
   steps: [

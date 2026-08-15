@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Thumbnail Size: Crop to 1280x720",
+  title: "YouTube Thumbnail Size: Crop to 1280x720, Under 2 MB",
   metaDescription:
     "Crop any JPG, PNG or WebP to YouTube's 1280x720 16:9 frame in your browser. Measures the encoded file against the 640 px and 2 MB limits.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Short Modern Indian Baby Names: 2-6 Letters",
+  title: "Short Modern Indian Baby Names: 2-6 Letters Scored",
   metaDescription:
     "Two- to six-letter Sanskrit, Tamil, Punjabi, Arabic and Persian names with meanings and a spelling-ease score out of 100 for each one.",
   steps: [

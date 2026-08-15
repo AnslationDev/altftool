@@ -1,5 +1,5 @@
 const seo = {
-  title: "Snake Draft Board: Serpentine Pick Order",
+  title: "Snake Draft Board: Serpentine Pick Order Generator",
   metaDescription:
     "Enter players in seed order and rounds to get every numbered pick, direction reversing each round. Recorded selections are checked for out-of-turn picks.",
   steps: [

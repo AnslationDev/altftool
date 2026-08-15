@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vitamin Intake Tracker: Daily Supplement",
+  title: "Vitamin Intake Tracker: Daily Supplement Checklist",
   metaDescription:
     "One-tap checklist for D3, B-complex, magnesium, omega-3 and vitamin C, with each target range and a progress bar that resets every day.",
   steps: [

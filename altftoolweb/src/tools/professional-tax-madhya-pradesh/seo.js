@@ -1,5 +1,5 @@
 const seo = {
-  title: "MP Professional Tax: Rs 2,500 Slab and Rs",
+  title: "MP Professional Tax: Rs 2,500 Slab and Rs 208/Month",
   metaDescription:
     "Madhya Pradesh professional tax by annual gross slab — nil to Rs 2,25,000, then Rs 1,500/2,000/2,500 — with the Rs 208 x 11 + Rs 212 monthly split.",
   steps: [

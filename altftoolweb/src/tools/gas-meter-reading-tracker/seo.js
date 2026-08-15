@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gas Meter Reading Tracker - PNG Bill in SCM",
+  title: "Gas Meter Reading Tracker - PNG Bill in SCM and Slabs",
   metaDescription:
     "Log piped gas meter readings in SCM to get SCM per day, a next-cycle bill on your own telescopic slabs plus fixed charge and VAT, and the LPG equivalent.",
   steps: [

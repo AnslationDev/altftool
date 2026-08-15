@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brand Deal Rate Calculator: CPM, Usage",
+  title: "Brand Deal Rate Calculator: CPM, Usage and Exclusivity",
   metaDescription:
     "Prices a sponsorship as reach ÷ 1,000 × CPM × deliverables, plus production, usage and exclusivity uplifts and agency fee, with an 85-125% band.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "RC, Insurance & PUC Expiry Tracker: Days",
+  title: "RC, Insurance & PUC Expiry Tracker: Days Remaining",
   metaDescription:
     "Paste RC, insurance, PUC and licence expiry dates as 'Document | date | reference' and read days remaining, overdue flags and a 30-day warning window.",
   steps: [

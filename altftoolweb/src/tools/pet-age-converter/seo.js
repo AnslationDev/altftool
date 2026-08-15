@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dog and Cat Age in Human Years: Vet Staged",
+  title: "Dog and Cat Age in Human Years: Vet Staged Formula",
   metaDescription:
     "Year one counts 15, year two adds 9, then +4 to +7 a year by size. Get the human-year age, life stage from Puppy to Geriatric, and lifespan progress.",
   steps: [

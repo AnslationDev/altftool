@@ -1,5 +1,5 @@
 const seo = {
-  title: "Financial Goal Planner: Monthly Contribution",
+  title: "Financial Goal Planner: Monthly Contribution Needed",
   metaDescription:
     "Enter goal amount, years, expected return and current savings in rupees; get the monthly contribution needed after existing savings are compounded in.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Meal Card Tax Benefit Calculator: Rs 50/Meal",
+  title: "Meal Card Tax Benefit Calculator: Rs 50/Meal Exemption",
   metaDescription:
     "Splits your Sodexo or Pluxee card credit into the exempt Rs 50-per-meal portion and the taxable excess, with tax saved at your slab plus cess.",
   steps: [

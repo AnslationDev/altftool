@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cell Explorer: Clickable Animal and Plant Cell",
+  title: "Cell Explorer: Clickable Animal and Plant Cell Diagram",
   metaDescription:
     "Click any organelle on the animal or plant cell diagram for its function and one fact: nucleus, mitochondria, Golgi, lysosomes, chloroplast, vacuole.",
   intro:

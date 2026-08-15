@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Expiry Tracker: Passport, Visa, Licence",
+  title: "Document Expiry Tracker: Passport, Visa, Licence Dates",
   metaDescription:
     "One local register for passport, visa, licence and certificate renewals: searchable, saved in this browser only, with JSON export and import.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fever Fluid Replacement Calculator: Daily ml",
+  title: "Fever Fluid Replacement Calculator: Daily ml Target",
   metaDescription:
     "Adds about 10-12% per °C above 37 °C to Holliday-Segar or 30/25 ml/kg maintenance, prorated by hours febrile. Informational only.",
   steps: [

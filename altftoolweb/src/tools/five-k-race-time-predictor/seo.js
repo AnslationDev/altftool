@@ -1,5 +1,5 @@
 const seo = {
-  title: "5K Race Time Predictor Using the Riegel Formula",
+  title: "5K Race Time Predictor Using the Riegel Formula & Splits",
   metaDescription:
     "Convert a recent race into a predicted 5K finish with Riegel's T2 = T1 × (D2/D1)^1.06, plus per-km target pace, even splits and equivalent times.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Child Screen Time Planner: WHO and AAP Daily",
+  title: "Child Screen Time Planner: WHO and AAP Daily Limits",
   metaDescription:
     "Turns WHO and AAP screen guidance into one daily minute limit for a child's age, then tests it against a 24-hour budget for sleep, school and daylight.",
   steps: [

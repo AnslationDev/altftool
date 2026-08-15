@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rowing Machine Calorie Calculator",
+  title: "Rowing Machine Calorie Calculator (Concept2 Formula)",
   metaDescription:
     "Distance and time become watts, 500 m split and calories via Concept2's own formulas, plus a weight-adjusted figure - the monitor assumes a 175 lb rower.",
   intro:

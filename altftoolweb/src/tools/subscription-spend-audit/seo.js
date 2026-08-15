@@ -1,5 +1,5 @@
 const seo = {
-  title: "Subscription Spend Audit: True Annual Cost",
+  title: "Subscription Spend Audit: True Annual Cost of Plans",
   metaDescription:
     "Converts weekly (52.18x), monthly, quarterly and yearly charges to one annual total, ranks them by cost and totals what cancelling gives back.",
   steps: [

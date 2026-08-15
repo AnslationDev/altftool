@@ -1,5 +1,5 @@
 const seo = {
-  title: "Notice Period Buyout Calculator for Indian IT",
+  title: "Notice Period Buyout Calculator for Indian IT Jobs",
   metaDescription:
     "Last working day, shortfall buyout on basic, gross or CTC at ÷30 or ÷26, leave offset and encashment, and a dated handover plan. No GST on recovery.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "DICGC Cover Checker: ₹5 Lakh per Depositor",
+  title: "DICGC Cover Checker: ₹5 Lakh per Depositor per Bank",
   metaDescription:
     "List each bank, balance with interest and the capacity it is held in. Accounts in the same capacity are added up, then the ₹5,00,000 DICGC limit applied.",
   steps: [

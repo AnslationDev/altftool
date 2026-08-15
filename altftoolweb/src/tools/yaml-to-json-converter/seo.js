@@ -1,5 +1,5 @@
 const seo = {
-  title: "YAML to JSON Converter – Anchors & Merge Keys",
+  title: "YAML to JSON Converter – Anchors & Merge Keys Resolved",
   metaDescription:
     "Convert YAML 1.2 to JSON in your browser — anchors, aliases and merge keys resolved, multi-document streams become an array, output 2-space to minified.",
   steps: [

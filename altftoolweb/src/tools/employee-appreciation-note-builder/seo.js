@@ -1,5 +1,5 @@
 const seo = {
-  title: "Employee Appreciation Note Builder: SBI + 7",
+  title: "Employee Appreciation Note Builder: SBI + 7 Checks",
   metaDescription:
     "Write recognition with the Situation-Behaviour-Impact model. Scores the draft on 7 checks: measurable impact, vague-praise words, and a 7-day window.",
   steps: [

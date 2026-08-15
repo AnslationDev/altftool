@@ -1,5 +1,5 @@
 const seo = {
-  title: "Road Roughness Logger: Jolts Over 12 m/s²",
+  title: "Road Roughness Logger: Jolts Over 12 m/s² with GPS",
   metaDescription:
     "Logs a jolt whenever total acceleration passes 12 m/s², alongside GPS fixes with lat/long to six decimals, speed in km/h and accuracy in metres.",
   steps: [

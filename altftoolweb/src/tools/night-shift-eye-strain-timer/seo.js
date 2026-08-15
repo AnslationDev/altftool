@@ -1,5 +1,5 @@
 const seo = {
-  title: "Night Shift Eye Break Timer: 20-20-20",
+  title: "Night Shift Eye Break Timer: 20-20-20 on the Clock",
   metaDescription:
     "Lays every 20-minute eye break across an overnight shift as wall-clock times, lengthens the ones in the 03:00-05:00 circadian low, adds a wind-down.",
   steps: [

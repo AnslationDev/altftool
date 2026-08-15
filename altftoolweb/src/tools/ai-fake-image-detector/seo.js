@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Fake Image Detector: 8 In-Browser Forensic",
+  title: "AI Fake Image Detector: 8 In-Browser Forensic Checks",
   metaDescription:
     "Eight weighted checks — noise, JPEG blocks, EXIF, lighting, texture, edges, colour, faces — score a JPEG, PNG, WebP or TIFF 0-100 in your browser.",
   intro:

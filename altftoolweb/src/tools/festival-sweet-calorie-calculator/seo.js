@@ -1,5 +1,5 @@
 const seo = {
-  title: "Festival Sweet Calorie Calculator: 35 Indian",
+  title: "Festival Sweet Calorie Calculator: 35 Indian Mithai",
   metaDescription:
     "Count gulab jamun, laddoo or halwa by the piece and see kcal, added sugar in grams and teaspoons, and the share of the WHO 10% free-sugar ceiling.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multiplication Table Generator: Any Number, 1",
+  title: "Multiplication Table Generator: Any Number, 1 to 100",
   metaDescription:
     "Single table, full grid or up to six tables compared, with perfect squares flagged, the last-digit cycle spelled out and a CSV export.",
   steps: [

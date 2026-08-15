@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sri Lanka ETA Checklist: Passport, 30 Days",
+  title: "Sri Lanka ETA Checklist: Passport, 30 Days and Fees",
   metaDescription:
     "Tests your passport against the six-months-from-arrival rule, compares your stay with the 30-day tourist admission and totals the ETA fee.",
   steps: [

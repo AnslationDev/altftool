@@ -1,5 +1,5 @@
 const seo = {
-  title: "Digital Gold vs Jewellery, Coins and ETFs: Real",
+  title: "Digital Gold vs Jewellery, Coins and ETFs: Real Cost",
   metaDescription:
     "Prices the friction on the same metal: making charge or spread, 3% GST, annual storage or expense ratio and the exit deduction, ranked by total cost.",
   steps: [

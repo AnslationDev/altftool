@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hairstyle Preview: Try On Cuts with Face",
+  title: "Hairstyle Preview: Try On Cuts with Face Detection",
   metaDescription:
     "Face detection fits buzz cuts, fades, quiffs, wolf cuts and more on your photo in 15 colours - rendered in your browser, PNG/JPG export up to 3840 px.",
   steps: [

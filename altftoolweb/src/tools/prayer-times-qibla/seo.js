@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prayer Times and Qibla Direction, Computed",
+  title: "Prayer Times and Qibla Direction, Computed Offline",
   metaDescription:
     "Fajr to Isha and the Qibla bearing from true north for 92 cities or your own location, worked out on your device — MWL, ISNA, Umm al-Qura or Karachi.",
   steps: [

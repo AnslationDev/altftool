@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ganesh Chaturthi Wishes in 6 Languages",
+  title: "Ganesh Chaturthi Wishes in 6 Languages, SMS-Length",
   metaDescription:
     "Ganesh Chaturthi greetings in Marathi, Hindi, English, Gujarati, Kannada or Telugu with the recipient's name, character and SMS part counts.",
   steps: [

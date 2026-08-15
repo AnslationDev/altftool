@@ -1,5 +1,5 @@
 const seo = {
-  title: "Atkins Phase Calculator: Net Carbs, Protein",
+  title: "Atkins Phase Calculator: Net Carbs, Protein and Fat",
   metaDescription:
     "Get the net carb allowance for your Atkins phase and week on the 20 g / +5 g / +10 g ladder, plus protein per kg and the fat that fills your calories.",
   steps: [

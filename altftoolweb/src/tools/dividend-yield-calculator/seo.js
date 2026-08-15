@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dividend Yield Calculator with Tax and Target",
+  title: "Dividend Yield Calculator with Tax and Target Income",
   metaDescription:
     "Annual dividend over share price gives the yield, then after-tax income per payout, the capital a target income needs, and growth compounded to 60 years.",
   steps: [

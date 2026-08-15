@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Packing List: Temple Dress Code",
+  title: "Singapore Packing List: Temple Dress Code and Air-Con",
   metaDescription:
     "Pick your month and venues to get the mosque and temple cover-up rules, Marina Bay door policy and a counted packing list sized by your wash cycle.",
   intro:

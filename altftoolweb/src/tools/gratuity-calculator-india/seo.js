@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gratuity Calculator India: 15/26 Formula and Tax",
+  title: "Gratuity Calculator India: 15/26 Formula and Tax Cap",
   metaDescription:
     "Gratuity under the Payment of Gratuity Act 1972, 15 days of basic plus DA per year divided by 26, with the section 10(10) Rs 20 lakh lifetime cap.",
   steps: [

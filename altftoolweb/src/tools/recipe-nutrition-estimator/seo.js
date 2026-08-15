@@ -1,5 +1,5 @@
 const seo = {
-  title: "Recipe Nutrition Estimator: 147 Foods",
+  title: "Recipe Nutrition Estimator: 147 Foods, Per Serving",
   metaDescription:
     "Build a dish from 147 ingredients using tsp, tbsp and katori weights, then read per-serving calories, protein, carbs, fat and fibre with %DV.",
   steps: [

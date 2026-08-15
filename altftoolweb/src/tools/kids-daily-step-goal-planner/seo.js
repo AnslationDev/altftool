@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids Daily Step Goal by Age and Sex, With WHO",
+  title: "Kids Daily Step Goal by Age and Sex, With WHO Minutes",
   metaDescription:
     "Paediatric pedometer targets — 13,000 steps a day for boys 6-11, 11,000 for girls — plus the WHO 60-minute goal and play minutes to close the gap.",
   steps: [

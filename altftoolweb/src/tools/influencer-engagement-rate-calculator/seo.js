@@ -1,5 +1,5 @@
 const seo = {
-  title: "Engagement Rate Calculator — Followers, Reach",
+  title: "Engagement Rate Calculator — Followers, Reach, Impressions",
   metaDescription:
     "Compute engagement rate three ways — by followers, reach and impressions — from one batch of post totals, plus creator tier and comment/save share.",
   steps: [

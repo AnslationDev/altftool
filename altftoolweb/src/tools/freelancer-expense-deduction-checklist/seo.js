@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelancer Expense Deductions vs Section 44ADA",
+  title: "Freelancer Expense Deductions vs Section 44ADA (India)",
   metaDescription:
     "Total 13 expense heads, apply the Rs 10,000 cash bar under 40A(3) and the 30% TDS cut under 40(a)(ia), then compare profit against 44ADA's flat 50%.",
   steps: [

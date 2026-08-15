@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thailand Visa Cost: Exemption, e-Visa, Overstay",
+  title: "Thailand Visa Cost: Exemption, e-Visa, Overstay Fine",
   metaDescription:
     "Price a Thai trip in rupees — 1,000 baht tourist visa, 1,900 baht extension, 500 baht a day overstay capped at 20,000 — plus agent and insurance.",
   steps: [

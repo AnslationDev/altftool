@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monorepo vs Polyrepo: 8-Question Decision",
+  title: "Monorepo vs Polyrepo: 8-Question Decision Scorecard",
   metaDescription:
     "Answer eight questions on code sharing, CI investment, release coupling and access control for scored monorepo and polyrepo fit percentages.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Date of Birth Leaked? 17-Step Breach Response",
+  title: "Date of Birth Leaked? 17-Step Breach Response Plan",
   metaDescription:
     "Score the leak by what else was exposed — name, address, ID number — then work the 17 steps that stop the date acting as a PIN or security answer.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ibuprofen Timer: Next Dose and mg Left in 24",
+  title: "Ibuprofen Timer: Next Dose and mg Left in 24 Hours",
   metaDescription:
     "Enter the last dose time to get the earliest next dose and the mg still left under the 1200 mg OTC, 3200 mg Rx or 40 mg/kg child ceiling.",
   steps: [

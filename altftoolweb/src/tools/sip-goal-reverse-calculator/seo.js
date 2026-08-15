@@ -1,5 +1,5 @@
 const seo = {
-  title: "SIP Goal Reverse Calculator: Monthly Amount",
+  title: "SIP Goal Reverse Calculator: Monthly Amount Needed",
   metaDescription:
     "Enter a target amount and date to get the monthly SIP required: annuity-due maths, credit for money already invested, step-up and inflation options.",
   steps: [

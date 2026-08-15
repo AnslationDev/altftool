@@ -1,5 +1,5 @@
 const seo = {
-  title: "Incident Severity Matrix Builder: SEV-1 to SEV-5",
+  title: "Incident Severity Matrix Builder: SEV-1 to SEV-5 Table",
   metaDescription:
     "Define SEV-1 to SEV-5 — impact, first-response target, update cadence, escalation — and copy the Markdown table straight into a runbook or wiki.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Convert File Encoding: UTF-8, UTF-16",
+  title: "Convert File Encoding: UTF-8, UTF-16, Windows-1252",
   metaDescription:
     "Detect a text file encoding from its bytes, re-encode to UTF-8, UTF-16 LE or BE, ASCII or Windows-1252, and repair Ã© mojibake before you download.",
   steps: [

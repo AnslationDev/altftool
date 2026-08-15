@@ -1,5 +1,5 @@
 const seo = {
-  title: "HP to kW Converter: 200 hp = 149.14 kW, PS",
+  title: "HP to kW Converter: 200 hp = 149.14 kW, PS and BTU/h",
   metaDescription:
     "Converts on the exact 745.6998716 W and 735.49875 W definitions, keeps metric PS apart from hp, and adds drivetrain loss and power per tonne.",
   steps: [

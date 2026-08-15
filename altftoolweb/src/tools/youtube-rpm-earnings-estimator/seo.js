@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube RPM Earnings Estimator With CPM",
+  title: "YouTube RPM Earnings Estimator With CPM Cross-Check",
   metaDescription:
     "Views divided by 1,000 times RPM, run at conservative, expected and optimistic rates, with a CPM check using the 55% long-form or 45% Shorts share.",
   steps: [

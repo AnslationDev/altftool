@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do You Need an IDP in Canada?",
+  title: "Do You Need an IDP in Canada? Province-by-Province",
   metaDescription:
     "A licence in English or French needs no permit. Check the provincial window — Ontario 60 days, BC and Quebec about six months.",
   steps: [

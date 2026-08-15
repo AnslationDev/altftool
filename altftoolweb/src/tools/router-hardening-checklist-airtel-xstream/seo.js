@@ -1,5 +1,5 @@
 const seo = {
-  title: "Airtel Xstream Router Hardening Checklist",
+  title: "Airtel Xstream Router Hardening Checklist (16 Steps)",
   metaDescription:
     "A scored 16-step pass over the Airtel Xstream ONT at 192.168.1.1: admin login, WPA2/WPA3, WPS, UPnP, WAN management, port forwards and guest SSID.",
   steps: [

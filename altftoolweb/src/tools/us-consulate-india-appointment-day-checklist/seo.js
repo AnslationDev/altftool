@@ -1,5 +1,5 @@
 const seo = {
-  title: "US Visa Appointment India: What to Carry",
+  title: "US Visa Appointment India: What to Carry Checklist",
   metaDescription:
     "OFC, interview or dropbox: separate carry, wear and leave-behind lists, plus the 15-minute arrival ceiling and a leave-home time.",
   steps: [

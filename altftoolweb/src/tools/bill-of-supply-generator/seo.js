@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bill of Supply Generator: Rule 49 Format, GSTIN",
+  title: "Bill of Supply Generator: Rule 49 Format, GSTIN Check",
   metaDescription:
     "Print a Rule 49 bill of supply for exempt, nil-rated and composition sales, with GSTIN check-digit validation and the total in words.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Simple Interest Calculator: SI = (P × R × T) ÷",
+  title: "Simple Interest Calculator: SI = (P × R × T) ÷ 100",
   metaDescription:
     "Enter principal, annual rate and years to get interest, maturity amount, the interest per year, month and day, and return as a % of principal.",
   steps: [

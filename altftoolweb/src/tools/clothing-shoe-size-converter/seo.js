@@ -1,5 +1,5 @@
 const seo = {
-  title: "Clothing & Shoe Size Converter: US, UK, EU",
+  title: "Clothing & Shoe Size Converter: US, UK, EU, IN, cm",
   metaDescription:
     "Convert a size between US, UK, EU, Indian and cm, or get a recommendation from a chest, waist or foot-length measurement and a fit preference.",
   steps: [

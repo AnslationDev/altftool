@@ -1,5 +1,5 @@
 const seo = {
-  title: "Heat Loss Calculator: U-Value Retrofit Savings",
+  title: "Heat Loss Calculator: U-Value Retrofit Savings in kWh",
   metaDescription:
     "Enter each wall, roof and window as area, current U and improved U to get watts saved per surface, the % drop in fabric loss and kWh and cost a year.",
   steps: [

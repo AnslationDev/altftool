@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Prepayment Calculator: Interest Saved",
+  title: "Loan Prepayment Calculator: Interest Saved & Months Cut",
   metaDescription:
     "Runs your EMI schedule with and without prepayments, one-time to yearly, and reports interest saved, new closure month and a month-by-month CSV.",
   steps: [

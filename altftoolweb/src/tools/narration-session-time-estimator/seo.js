@@ -1,5 +1,5 @@
 const seo = {
-  title: "Narration Time Estimator: Booth Hours, Not Read",
+  title: "Narration Time Estimator: Booth Hours, Not Read Time",
   metaDescription:
     "Turn word count into real booth time: a clean read at your wpm plus punch-and-roll retakes, vocal rest per hour and setup for each session.",
   steps: [

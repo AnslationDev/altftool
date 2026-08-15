@@ -1,5 +1,5 @@
 const seo = {
-  title: "Product Photo AI Prompt Builder: Amazon 85%",
+  title: "Product Photo AI Prompt Builder: Amazon 85% Framing",
   metaDescription:
     "Compose an ecommerce product-shot prompt from surface, angle and lighting, with canvas size, coverage and margins for Amazon, Etsy or Instagram.",
   steps: [

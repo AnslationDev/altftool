@@ -1,5 +1,5 @@
 const seo = {
-  title: "Markdown to HTML Converter, and HTML Back",
+  title: "Markdown to HTML Converter, and HTML Back to Markdown",
   metaDescription:
     "Convert Markdown to HTML with GitHub-flavoured tables and strikethrough, or turn HTML back into Markdown or plain text. Runs in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "English Dictionary With US/UK Audio and Word",
+  title: "English Dictionary With US/UK Audio and Word Quizzes",
   metaDescription:
     "Definitions by part of speech with synonyms, antonyms and examples, spoken in en-US or en-GB and translatable into Hindi, Spanish or French.",
   intro:

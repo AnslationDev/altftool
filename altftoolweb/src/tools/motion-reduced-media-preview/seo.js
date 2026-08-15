@@ -1,5 +1,5 @@
 const seo = {
-  title: "Motion-Reduced Media Preview: No Autoplay, PNG",
+  title: "Motion-Reduced Media Preview: No Autoplay, PNG Still",
   metaDescription:
     "Loads a GIF, MP4 or WebM up to 80 MB without autoplay, captures any frame as a PNG fallback, and checks the four WCAG 2.2.2 conditions. Nothing uploads.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "RTI for Passport Status: File Movement, Police",
+  title: "RTI for Passport Status: File Movement, Police Check",
   metaDescription:
     "Section 6(1) draft to the Regional Passport Office for file movement, police verification dates and pendency reasons, with the 30-day and appeal dates.",
   steps: [

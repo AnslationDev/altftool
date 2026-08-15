@@ -1,5 +1,5 @@
 const seo = {
-  title: "Facebook Cover Safe Zone: 820x312 vs 640x360",
+  title: "Facebook Cover Safe Zone: 820x312 vs 640x360 Crops",
   metaDescription:
     "One cover, two crops. Get the region that survives both the 820x312 desktop and 640x360 mobile crop, plus the pixels lost on each side.",
   steps: [

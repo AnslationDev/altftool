@@ -1,5 +1,5 @@
 const seo = {
-  title: "Keyboard Tester: Rollover, Key Log and WPM",
+  title: "Keyboard Tester: Rollover, Key Log and WPM Counter",
   metaDescription:
     "Keys stay lit while physically held, so rollover limits show. Logs the last 100 keystrokes, counts each key, and reports elapsed time and estimated WPM.",
   steps: [

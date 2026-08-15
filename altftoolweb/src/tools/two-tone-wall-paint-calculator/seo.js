@@ -1,5 +1,5 @@
 const seo = {
-  title: "Two-Tone Wall Paint Calculator — Litres Per Dado",
+  title: "Two-Tone Wall Paint Calculator — Litres Per Dado Band",
   metaDescription:
     "Work out litres and cost for each colour above and below a dado line, with doors and windows deducted from the band they actually sit in.",
   steps: [

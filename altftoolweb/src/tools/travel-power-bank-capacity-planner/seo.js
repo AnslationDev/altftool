@@ -1,5 +1,5 @@
 const seo = {
-  title: "Power Bank Size Calculator: mAh, Wh and 100 Wh",
+  title: "Power Bank Size Calculator: mAh, Wh and 100 Wh Limit",
   metaDescription:
     "Convert every device battery to watt-hours, add recharges per day and 75-90% transfer losses, and get the mAh to buy against the 100 Wh airline limit.",
   steps: [

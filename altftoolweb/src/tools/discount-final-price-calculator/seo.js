@@ -1,5 +1,5 @@
 const seo = {
-  title: "Discount Calculator: Stacked Offers, GST, Final",
+  title: "Discount Calculator: Stacked Offers, GST, Final Price",
   metaDescription:
     "20% then 10% is 28% off, not 30%. Stack percentage and flat discounts in order, add GST on the discounted value, see the equivalent single discount.",
   steps: [

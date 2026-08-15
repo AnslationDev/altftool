@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Score Analyzer: Percentage, Grade & Weak",
+  title: "Exam Score Analyzer: Percentage, Grade & Weak Subject",
   metaDescription:
     "Total marks ÷ total maximum × 100, graded on the 90/80/70/60/40 scale, with your strongest and weakest subject by percentage, charts and a PDF export.",
   intro:

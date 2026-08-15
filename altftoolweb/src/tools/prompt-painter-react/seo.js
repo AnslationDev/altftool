@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prompt Painter: Live HTML Preview with Tailwind",
+  title: "Prompt Painter: Live HTML Preview with Tailwind CDN",
   metaDescription:
     "Paste HTML in the Monaco editor and a sandboxed iframe renders it instantly with Tailwind preloaded. Mobile 375×667, tablet 768×1024, 50–200% zoom.",
   steps: [

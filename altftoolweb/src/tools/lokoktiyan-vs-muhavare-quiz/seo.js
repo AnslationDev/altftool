@@ -1,5 +1,5 @@
 const seo = {
-  title: "Muhavara vs Lokokti Quiz: 32 Hindi Lines",
+  title: "Muhavara vs Lokokti Quiz: 32 Hindi Lines With Reasons",
   metaDescription:
     "Sort real Hindi lines into muhavare and lokoktiyan from a 32-item pool. Every answer gives the grammatical reason, and a round number repeats the round.",
   steps: [

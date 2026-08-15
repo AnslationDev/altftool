@@ -1,5 +1,5 @@
 const seo = {
-  title: "Which Planets Are Retrograde Right Now? Station",
+  title: "Which Planets Are Retrograde Right Now? Station Dates",
   metaDescription:
     "Retrograde status for Mercury through Pluto on any date 1900–2100, with station-retrograde and station-direct instants in UT and both shadow windows.",
   intro:

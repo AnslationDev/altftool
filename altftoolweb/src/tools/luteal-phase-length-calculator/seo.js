@@ -1,5 +1,5 @@
 const seo = {
-  title: "Luteal Phase Length Calculator from Ovulation",
+  title: "Luteal Phase Length Calculator from Ovulation to Period",
   metaDescription:
     "Counts the days from the day after ovulation to the day before your period, so a 28-day cycle with ovulation on day 14 returns 14 days.",
   steps: [

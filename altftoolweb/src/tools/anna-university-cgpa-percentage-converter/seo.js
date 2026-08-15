@@ -1,5 +1,5 @@
 const seo = {
-  title: "Anna University CGPA to Percentage Converter",
+  title: "Anna University CGPA to Percentage Converter (x10)",
   metaDescription:
     "Convert CGPA with the x10 rule, the (CGPA - 0.5) x 10 variant or UGC x 9.5, build CGPA from semester credits, and check the 8.50 / 7.00 class.",
   steps: [

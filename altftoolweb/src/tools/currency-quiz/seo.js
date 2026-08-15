@@ -1,5 +1,5 @@
 const seo = {
-  title: "Currency Quiz: 82 World Currencies, Symbols",
+  title: "Currency Quiz: 82 World Currencies, Symbols, Flags",
   metaDescription:
     "Timed four-option rounds on country, symbol and currency. Easy is 10 questions at 25s each, Expert 30 at 8s, with a streak bonus after two right.",
   steps: [

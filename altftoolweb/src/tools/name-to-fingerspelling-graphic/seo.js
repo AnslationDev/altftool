@@ -1,5 +1,5 @@
 const seo = {
-  title: "ASL Fingerspelling Name Generator — Printable",
+  title: "ASL Fingerspelling Name Generator — Printable Hand Chart",
   metaDescription:
     "Type a name (up to 40 characters) and get an ASL manual-alphabet strip with handshape diagrams, palm directions and written descriptions to print.",
   steps: [

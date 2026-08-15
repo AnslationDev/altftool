@@ -1,5 +1,5 @@
 const seo = {
-  title: "Souvenir Price Checker: Markup vs the Median You",
+  title: "Souvenir Price Checker: Markup vs the Median You Saw",
   metaDescription:
     "Test a market quote against the median of prices you recorded yourself. Get the markup, an opening counter, a target and a walk-away price.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "IDV Calculator for Car and Bike: GR.8 Tariff",
+  title: "IDV Calculator for Car and Bike: GR.8 Tariff Slabs",
   metaDescription:
     "IDV from ex-showroom price on India Motor Tariff GR.8 slabs: 5% depreciation under six months rising to 50% in year five, plus accessories and OD premium.",
   steps: [

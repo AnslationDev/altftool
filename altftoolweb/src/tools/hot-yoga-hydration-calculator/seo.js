@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hot Yoga Hydration Calculator: Sweat Rate",
+  title: "Hot Yoga Hydration Calculator: Sweat Rate and Sips",
   metaDescription:
     "Before, during and after fluid plan built on ACSM targets: 5-7 mL/kg pre-class, under 2% body-mass loss, 125-150% of the deficit after.",
   steps: [

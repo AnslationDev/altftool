@@ -1,5 +1,5 @@
 const seo = {
-  title: "IP Address to Number: IPv4 to 32-bit Integer",
+  title: "IP Address to Number: IPv4 to 32-bit Integer, Both Ways",
   metaDescription:
     "Convert a dotted-quad IPv4 address to its 32-bit integer and back, with binary and 8-digit hex. Valid range 0 to 4,294,967,295; IPv4 only.",
   steps: [

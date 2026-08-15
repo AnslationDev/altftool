@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio File Size Calculator: WAV, FLAC, MP3, AAC",
+  title: "Audio File Size Calculator: WAV, FLAC, MP3, AAC, Opus",
   metaDescription:
     "Sample rate x bit depth x channels x duration gives the exact PCM size, with the 44-byte WAV header, a 4 GB RIFF limit warning and codec comparisons.",
   steps: [

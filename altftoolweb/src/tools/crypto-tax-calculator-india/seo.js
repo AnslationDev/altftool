@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crypto Tax Calculator India: 30% Tax + 1% TDS",
+  title: "Crypto Tax Calculator India: 30% Tax + 1% TDS (115BBH)",
   metaDescription:
     "Work out India's flat 30% crypto tax under Section 115BBH plus surcharge, 4% cess and 1% TDS under 194S — with losses excluded as the law requires.",
   steps: [

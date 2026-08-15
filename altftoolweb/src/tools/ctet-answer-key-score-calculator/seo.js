@@ -1,5 +1,5 @@
 const seo = {
-  title: "CTET Score Calculator: 150 Marks, No Negative",
+  title: "CTET Score Calculator: 150 Marks, No Negative Marking",
   metaDescription:
     "Count correct answers per section for Paper I or Paper II and see your total against the 90-mark (60%) line, or 55% with relaxation.",
   steps: [

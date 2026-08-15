@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base Converter: Any Base 2 to 36, Exact",
+  title: "Base Converter: Any Base 2 to 36, Exact With BigInt",
   metaDescription:
     "Convert between base 2 and 36 with BigInt integers and exact fractions, no floating point. Shows bit length, byte count and the fixed-width types it fits.",
   intro:

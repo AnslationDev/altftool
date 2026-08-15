@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids Water Intake Calculator: Holliday-Segar +",
+  title: "Kids Water Intake Calculator: Holliday-Segar + EFSA",
   metaDescription:
     "Takes the higher of the 100/50/20 ml Holliday-Segar rule and the EFSA age intake, subtracts water from food, and adds an AAP sport top-up.",
   steps: [

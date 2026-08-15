@@ -1,5 +1,5 @@
 const seo = {
-  title: "Auto-Debit Cancellation Letter + Working-Day",
+  title: "Auto-Debit Cancellation Letter + Working-Day Counter",
   metaDescription:
     "Count the clear working days between lodging a NACH, e-mandate or UPI AutoPay cancellation and the next debit, then draft both letters.",
   steps: [

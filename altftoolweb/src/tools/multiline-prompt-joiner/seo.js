@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multiline Prompt Joiner: Escape for JSON",
+  title: "Multiline Prompt Joiner: Escape for JSON, Python, Shell",
   metaDescription:
     "Collapse a multi-line prompt into one escaped string literal for JSON, JS template literals, Python, Java, YAML or POSIX shell. Runs in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roman Hindi to Devanagari Converter, Both",
+  title: "Roman Hindi to Devanagari Converter, Both Directions",
   metaDescription:
     "Rule-based conversion between Roman Hindi and Devanagari, with a keep-or-strip punctuation toggle and a count of the characters the rules changed.",
   steps: [

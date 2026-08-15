@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nepali Birthday Wishes: Timi or Tapai, Both",
+  title: "Nepali Birthday Wishes: Timi or Tapai, Both Scripts",
   metaDescription:
     "Complete Nepali birthday messages in Devanagari or Roman letters, written separately for casual timi and polite tapai, with dai, bhai, didi and bahini.",
   steps: [

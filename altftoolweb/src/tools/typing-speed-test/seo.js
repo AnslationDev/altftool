@@ -1,5 +1,5 @@
 const seo = {
-  title: "Typing Speed Test: Net WPM & Accuracy in 30, 60",
+  title: "Typing Speed Test: Net WPM & Accuracy in 30, 60, 120s",
   metaDescription:
     "Net WPM counts correct characters ÷ 5 over a 30, 60 or 120 second run. The timer starts on your first keystroke; results add raw WPM and accuracy.",
   steps: [

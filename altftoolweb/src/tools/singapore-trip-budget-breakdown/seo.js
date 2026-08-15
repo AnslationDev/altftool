@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Trip Budget: the ++, 10% Service, 9%",
+  title: "Singapore Trip Budget: the ++, 10% Service, 9% GST",
   metaDescription:
     "Price a Singapore trip with the ++ applied in the right order: 10% service charge first, then 9% GST on top, so a quoted rate becomes 1.199x.",
   steps: [

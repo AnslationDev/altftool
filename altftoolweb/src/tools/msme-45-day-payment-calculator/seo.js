@@ -1,5 +1,5 @@
 const seo = {
-  title: "MSME 45-Day Payment Rule: s.16 Interest & 43B(h)",
+  title: "MSME 45-Day Payment Rule: s.16 Interest & 43B(h) Cost",
   metaDescription:
     "Enter the invoice and payment dates: get the MSMED s.15 due date (15 or 45 days), s.16 interest at 3x the RBI bank rate, and the 43B(h) deduction year.",
   steps: [

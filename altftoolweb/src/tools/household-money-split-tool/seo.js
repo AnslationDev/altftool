@@ -1,5 +1,5 @@
 const seo = {
-  title: "Household Money Split: Equal, Proportional",
+  title: "Household Money Split: Equal, Proportional, Leftover",
   metaDescription:
     "Compare an equal, income-proportional and equal-leftover split of shared bills, after each partner's personal loans and family support are removed.",
   steps: [

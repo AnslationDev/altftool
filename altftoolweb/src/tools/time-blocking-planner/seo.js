@@ -1,5 +1,5 @@
 const seo = {
-  title: "Time Blocking Planner with Clash & Focus-Run",
+  title: "Time Blocking Planner with Clash & Focus-Run Checks",
   metaDescription:
     "Drag time blocks onto your day and see utilisation, overlaps in minutes, dead gaps under 15 minutes and your longest focus run. Autosaves locally.",
   steps: [

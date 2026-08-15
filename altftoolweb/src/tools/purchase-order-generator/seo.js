@@ -1,5 +1,5 @@
 const seo = {
-  title: "Purchase Order Generator with GST Split & Amount",
+  title: "Purchase Order Generator with GST Split & Amount in Words",
   metaDescription:
     "Build a printable purchase order with line items, IGST or CGST+SGST split, freight, round-off and the total in words (Indian crore-lakh system).",
   steps: [

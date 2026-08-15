@@ -1,5 +1,5 @@
 const seo = {
-  title: "Phone Wipe Checklist for Resale, in the Right",
+  title: "Phone Wipe Checklist for Resale, in the Right Order",
   metaDescription:
     "Orders every step as a dependency chain and warns when you tick one early — Activation Lock, Factory Reset Protection, eSIM, passkeys and 2FA seeds.",
   steps: [

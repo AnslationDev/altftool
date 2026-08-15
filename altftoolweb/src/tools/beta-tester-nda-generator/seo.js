@@ -1,5 +1,5 @@
 const seo = {
-  title: "Beta Tester NDA Generator: Feedback, Telemetry",
+  title: "Beta Tester NDA Generator: Feedback, Telemetry, CFAA",
   metaDescription:
     "Build a closed-beta NDA with a perpetual feedback licence, a CFAA safe harbour for good-faith security testing and GDPR notice for crash telemetry.",
   steps: [

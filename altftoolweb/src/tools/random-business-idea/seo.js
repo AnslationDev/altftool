@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Business Idea Generator: Competitors",
+  title: "Random Business Idea Generator: Competitors Included",
   metaDescription:
     "Draws an industry, problem, technology, business model, audience and cost band at random, then names the company, competitors and challenges.",
   steps: [

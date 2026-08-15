@@ -1,5 +1,5 @@
 const seo = {
-  title: "Line Break Remover: Join Lines into One Single",
+  title: "Line Break Remover: Join Lines into One Single Line",
   metaDescription:
     "Paste multi-line text and join it with a space, a comma, or nothing. Lines are trimmed, blank lines dropped, Windows and Unix endings both handled.",
   intro:

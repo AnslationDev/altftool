@@ -1,5 +1,5 @@
 const seo = {
-  title: "Greek Alphabet Explorer: 24 Letters, Sounds",
+  title: "Greek Alphabet Explorer: 24 Letters, Sounds, Numerals",
   metaDescription:
     "All 24 Greek letters with names, classical and modern sounds, Latin transliteration and Milesian numeral values — plus a two-way numeral converter.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reel Script Prompt Builder: Second-by-Second",
+  title: "Reel Script Prompt Builder: Second-by-Second Beats",
   metaDescription:
     "Builds an AI script prompt with a time-coded beat sheet — hook inside 3s, payoff in the final 20%, CTA in the last 2-5s — on a ~2.5 words/second budget.",
   steps: [

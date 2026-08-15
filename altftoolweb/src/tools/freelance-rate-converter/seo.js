@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelance Rate Converter: Hourly to Day, Year",
+  title: "Freelance Rate Converter: Hourly to Day, Year, Project",
   metaDescription:
     "Converts a freelance rate between hourly, daily, monthly, annual and project figures using real billable hours, plus take-home after costs and tax.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Granite Countertop Calculator: Sq Ft, Running",
+  title: "Granite Countertop Calculator: Sq Ft, Running Ft, Cost",
   metaDescription:
     "Platform, backsplash and facia area plus wastage, converted to running feet at 2 ft depth, with edge profile and sink/hob cutouts billed separately.",
   steps: [

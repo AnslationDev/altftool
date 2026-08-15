@@ -1,5 +1,5 @@
 const seo = {
-  title: "First-Week Onboarding Doc Prompt Builder +",
+  title: "First-Week Onboarding Doc Prompt Builder + Timetable",
   metaDescription:
     "A job title, seniority and access list become an AI prompt: the week's hours split across six sections in 15-minute blocks, plus 30/60/90-day checkpoints.",
   steps: [

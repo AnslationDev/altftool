@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scholarship Checklist: NSP Income Limit",
+  title: "Scholarship Checklist: NSP Income Limit & Documents",
   metaDescription:
     "Tests family income against each scheme's ceiling — ₹2.5L for SC/OBC post-matric, ₹4.5L Central Sector, ₹8L AICTE — then lists the documents it needs.",
   steps: [

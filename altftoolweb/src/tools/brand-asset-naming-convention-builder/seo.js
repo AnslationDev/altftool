@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brand Asset Naming Convention Builder",
+  title: "Brand Asset Naming Convention Builder and Validator",
   metaDescription:
     "Build a filename pattern from brand, campaign, asset, date and version tokens, then check it against the POSIX character set, 255 bytes and MAX_PATH 260.",
   steps: [

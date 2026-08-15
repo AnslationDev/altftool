@@ -1,5 +1,5 @@
 const seo = {
-  title: "Which Time Period Do You Belong In? 10-Question",
+  title: "Which Time Period Do You Belong In? 10-Question Quiz",
   metaDescription:
     "Ten weighted questions match you to one of six eras: Ancient World, Medieval, Renaissance, Victorian, the Roaring Twenties or the Future Age past 2100.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in Japan: IDP Rules, Alcohol, Speed",
+  title: "Driving in Japan: IDP Rules, Alcohol, Speed Limits",
   metaDescription:
     "Japan accepts only 1949 Geneva IDPs. Check the document your licence needs, the 0.15 mg/L breath threshold, and 100-120 km/h expressway limits.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pounds to Rupees in Your Head: Rules and Error",
+  title: "Pounds to Rupees in Your Head: Rules and Error Rates",
   metaDescription:
     "Turns the GBP-INR rate into head maths — round multipliers, an eighth nudge, simple fractions — each with its error stated, plus VAT and service charge.",
   steps: [

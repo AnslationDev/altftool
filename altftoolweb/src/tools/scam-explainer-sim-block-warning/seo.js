@@ -1,5 +1,5 @@
 const seo = {
-  title: "SIM Block Warning Scam Explained: Stages",
+  title: "SIM Block Warning Scam Explained: Stages & Scoring",
   metaDescription:
     "The fake TRAI disconnection call, stage by stage. Score the call on a 12-point checklist and check your SIM count against the DoT ceiling of nine.",
   steps: [

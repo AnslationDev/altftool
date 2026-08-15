@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cash Denomination Calculator: Fewest ₹ Notes",
+  title: "Cash Denomination Calculator: Fewest ₹ Notes and Coins",
   metaDescription:
     "Round an amount to a ₹1, ₹5, ₹10, ₹50 or ₹100 step, then split it into the fewest notes and coins — correct even with denominations switched off.",
   steps: [

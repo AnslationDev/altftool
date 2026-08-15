@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gold Loan Eligibility Calculator – Per-Gram",
+  title: "Gold Loan Eligibility Calculator – Per-Gram Value & LTV",
   metaDescription:
     "Convert each item's weight and karat into 24K-equivalent grams, deduct stones, apply your lender's LTV cap and compare EMI vs interest-only repayment.",
   steps: [

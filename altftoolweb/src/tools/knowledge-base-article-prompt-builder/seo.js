@@ -1,5 +1,5 @@
 const seo = {
-  title: "Help Article Prompt Builder Using DITA Topic",
+  title: "Help Article Prompt Builder Using DITA Topic Types",
   metaDescription:
     "Turns rough steps into a prompt shaped by the DITA task, concept, reference or troubleshooting type, with alt text required and TODO(verify) for unknowns.",
   steps: [

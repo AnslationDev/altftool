@@ -1,5 +1,5 @@
 const seo = {
-  title: "NEET Countdown: Chapters-per-Day Pace & 45-45-90",
+  title: "NEET Countdown: Chapters-per-Day Pace & 45-45-90 Split",
   metaDescription:
     "Days left to NEET, the chapter pace each subject needs before your revision buffer, question targets in the 45-45-90 split and projected marks.",
   steps: [

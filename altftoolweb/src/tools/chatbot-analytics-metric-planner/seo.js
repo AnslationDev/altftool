@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chatbot Metric Planner: Containment, CSAT",
+  title: "Chatbot Metric Planner: Containment, CSAT & Deflection",
   metaDescription:
     "Fix each chatbot metric's formula before launch — containment, escalation, deflection, CSAT, fallback — and project deflected contacts and annual savings.",
   steps: [

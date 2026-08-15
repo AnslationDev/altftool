@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do You Need an IDP to Drive in the UK? 12-Month",
+  title: "Do You Need an IDP to Drive in the UK? 12-Month Rule",
   metaDescription:
     "British law asks visitors for no international driving permit: drive on a full foreign licence for 12 months. Dates your window and exchange deadline.",
   steps: [

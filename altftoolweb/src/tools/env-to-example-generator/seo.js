@@ -1,5 +1,5 @@
 const seo = {
-  title: ".env to .env.example Generator - Strip Secrets",
+  title: ".env to .env.example Generator - Strip Secrets Safely",
   metaDescription:
     "Paste a real .env, get a commit-safe .env.example: keys, comments and order kept, credential-pattern keys always blanked. Runs entirely in your browser.",
   steps: [

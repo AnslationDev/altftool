@@ -1,5 +1,5 @@
 const seo = {
-  title: "EPF Maturity Calculator with EPS Split and Year",
+  title: "EPF Maturity Calculator with EPS Split and Year Table",
   metaDescription:
     "Projects your PF corpus month by month with 8.33% of wages up to Rs 15,000 diverted to EPS, yearly salary hikes and an age-by-age balance table.",
   steps: [

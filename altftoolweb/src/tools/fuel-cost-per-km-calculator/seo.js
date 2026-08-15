@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fuel Cost Per Km Calculator: Petrol, Diesel",
+  title: "Fuel Cost Per Km Calculator: Petrol, Diesel, CNG, EV",
   metaDescription:
     "Divide fuel price by mileage for petrol, diesel, CNG or EV, add servicing, insurance and depreciation, and see the km a CNG kit takes to pay back.",
   steps: [

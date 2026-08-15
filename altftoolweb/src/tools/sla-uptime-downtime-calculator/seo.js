@@ -1,5 +1,5 @@
 const seo = {
-  title: "SLA Uptime to Downtime Calculator — Day, Month",
+  title: "SLA Uptime to Downtime Calculator — Day, Month & Year",
   metaDescription:
     "Convert an uptime percentage into allowed downtime per day, week, month, quarter and year — 99.9% allows about 44 minutes a month — or work backwards.",
   steps: [

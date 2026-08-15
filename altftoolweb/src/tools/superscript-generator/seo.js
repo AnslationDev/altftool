@@ -1,5 +1,5 @@
 const seo = {
-  title: "Superscript Generator — Unicode Text You Can",
+  title: "Superscript Generator — Unicode Text You Can Paste",
   metaDescription:
     "Turn digits, letters and + − = ( ) into real Unicode superscript that survives a paste anywhere. Characters with no raised form are listed, not hidden.",
   steps: [

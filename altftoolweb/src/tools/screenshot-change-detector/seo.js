@@ -1,5 +1,5 @@
 const seo = {
-  title: "Screenshot Diff Tool: Compare Before/After Pixel",
+  title: "Screenshot Diff Tool: Compare Before/After Pixel by Pixel",
   metaDescription:
     "Upload Before and After screenshots; changed pixels are marked red with counts and a percentage to two decimals. Download the diff PNG or copy a report.",
   steps: [

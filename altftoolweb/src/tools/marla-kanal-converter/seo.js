@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marla to Kanal and Square Feet Converter",
+  title: "Marla to Kanal and Square Feet Converter with Pricing",
   metaDescription:
     "Convert marla, kanal, sarsai, killa and murabba under the 272.25 sq ft revenue marla or the 225 sq ft society marla, and price a plot at any rate.",
   steps: [

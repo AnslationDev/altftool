@@ -1,5 +1,5 @@
 const seo = {
-  title: "Telangana Professional Tax Calculator: Slabs",
+  title: "Telangana Professional Tax Calculator: Slabs & Enrolment",
   metaDescription:
     "Monthly PT on the Telangana slabs — nil to Rs 15,000, Rs 150 to Rs 20,000, Rs 200 above — plus the Rs 2,500 enrolment tax after five years' standing.",
   steps: [

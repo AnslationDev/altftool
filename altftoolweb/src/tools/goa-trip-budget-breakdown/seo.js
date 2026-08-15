@@ -1,5 +1,5 @@
 const seo = {
-  title: "Goa Trip Budget: Cost Per Person Per Day",
+  title: "Goa Trip Budget: Cost Per Person Per Day Breakdown",
   metaDescription:
     "Splits a Goa trip into flights, stay, food, scooter, activities and a buffer, prices the season on the room rate alone, and says what your cap buys.",
   steps: [

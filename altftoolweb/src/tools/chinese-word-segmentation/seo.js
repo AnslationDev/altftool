@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chinese Word Segmentation With Intl.Segmenter",
+  title: "Chinese Word Segmentation With Intl.Segmenter (zh-Hans)",
   metaDescription:
     "Tokenise Chinese, Hindi and Latin text by script using the browser's ICU segmenter, up to 12,000 characters, with per-token labels and TXT or JSON export.",
   intro:

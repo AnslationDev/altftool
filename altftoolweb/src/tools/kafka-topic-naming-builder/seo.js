@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kafka Topic Naming Builder — Convention & Rule",
+  title: "Kafka Topic Naming Builder — Convention & Rule Validator",
   metaDescription:
     "Compose Kafka topic names from domain, entity, event and version, then derive retry, dead-letter, consumer-group and ACL names — broker rules checked.",
   steps: [

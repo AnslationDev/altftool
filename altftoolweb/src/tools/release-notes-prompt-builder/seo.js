@@ -1,5 +1,5 @@
 const seo = {
-  title: "Release Notes Prompt Builder: Breaking Changes",
+  title: "Release Notes Prompt Builder: Breaking Changes First",
   metaDescription:
     "Prefix changes breaking, security, deprecated, feature or fix, pick a channel from a 60-word in-app note to a 900-word blog post, and date the removal.",
   steps: [

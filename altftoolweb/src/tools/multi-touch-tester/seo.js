@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multi-Touch Tester: See Every Contact",
+  title: "Multi-Touch Tester: See Every Contact and Pointer ID",
   metaDescription:
     "Press several fingers on the test surface: each contact draws a dot labelled with its Pointer Events ID, so dropped touches show up.",
   steps: [

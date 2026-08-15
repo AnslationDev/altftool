@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Blur Comparison Slider — Preview CSS",
+  title: "Image Blur Comparison Slider — Preview CSS blur() 1–100px",
   metaDescription:
     "Drag a split line to compare a photo against a 1–100px CSS Gaussian blur, then export the blurred version as a PNG at full native resolution.",
   intro:

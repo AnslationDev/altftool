@@ -1,5 +1,5 @@
 const seo = {
-  title: "Japan Plug and Voltage Guide: 100V, Type",
+  title: "Japan Plug and Voltage Guide: 100V, Type A, 50/60Hz",
   metaDescription:
     "Japan runs 100 V through Type A sockets, 50 Hz in the east and 60 Hz in the west. See whether you need an adapter, a converter, or neither.",
   steps: [

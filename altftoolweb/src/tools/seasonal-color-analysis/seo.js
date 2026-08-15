@@ -1,5 +1,5 @@
 const seo = {
-  title: "Seasonal Color Analysis from a Selfie",
+  title: "Seasonal Color Analysis from a Selfie, in Your Browser",
   metaDescription:
     "Samples skin, hair and cheek RGB in-browser: red over blue by 25 sets warm or cool, an 80-point luminance gap sets contrast. Four seasons, four colours.",
   steps: [

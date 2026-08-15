@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Emoji Combiner — Lock Slots, Mix 3-Emoji",
+  title: "Random Emoji Combiner — Lock Slots, Mix 3-Emoji Combos",
   metaDescription:
     "Roll three random emoji from a 100-emoji pool — up to a million combos. Lock any slot, re-roll the rest, and copy the trio as plain text.",
   steps: [

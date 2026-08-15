@@ -1,5 +1,5 @@
 const seo = {
-  title: "X (Twitter) Privacy Settings Checklist: 30",
+  title: "X (Twitter) Privacy Settings Checklist: 30 Controls",
   metaDescription:
     "Weighted audit of 30 X settings: phone and email discoverability, location on past posts, message requests and the Grok AI training switch.",
   steps: [

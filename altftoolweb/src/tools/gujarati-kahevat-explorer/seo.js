@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gujarati Kahevat Explorer: 25 Proverbs",
+  title: "Gujarati Kahevat Explorer: 25 Proverbs with Meanings",
   metaDescription:
     "25 Gujarati proverbs in script with Roman transliteration, the literal image, everyday usage and the closest English proverb. Search or filter by theme.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Retake IELTS, TOEFL, PTE or Duolingo? Hours",
+  title: "Retake IELTS, TOEFL, PTE or Duolingo? Hours vs Weeks",
   metaDescription:
     "Prices your score gap at ~200 guided hours per CEFR level and compares it with the hours your deadline leaves: realistic, tight, or reconsider.",
   steps: [

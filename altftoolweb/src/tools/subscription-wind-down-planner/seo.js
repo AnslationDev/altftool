@@ -1,5 +1,5 @@
 const seo = {
-  title: "Subscription Wind-Down Planner for Digital",
+  title: "Subscription Wind-Down Planner for Digital Inheritance",
   metaDescription:
     "List recurring charges and get an ordered cancellation sheet: next renewal date, cost per year, and whether Apple, Google Play, a card or UPI bills it.",
   steps: [

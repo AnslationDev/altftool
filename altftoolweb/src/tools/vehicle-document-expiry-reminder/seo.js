@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vehicle Document Expiry Reminder: PUC, RC",
+  title: "Vehicle Document Expiry Reminder: PUC, RC, Insurance",
   metaDescription:
     "Track insurance, PUC, RC, fitness, permit and licence expiry in one browser-only list, with days left, a renewal start date and the rule behind each.",
   intro:

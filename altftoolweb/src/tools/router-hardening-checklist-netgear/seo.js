@@ -1,5 +1,5 @@
 const seo = {
-  title: "Netgear Router Hardening Checklist: 22 Weighted",
+  title: "Netgear Router Hardening Checklist: 22 Weighted Steps",
   metaDescription:
     "Score what is still open on a Nighthawk: admin login, WPA mode, WPS, Remote Management, UPnP and ReadySHARE, each with its routerlogin.net menu path.",
   steps: [

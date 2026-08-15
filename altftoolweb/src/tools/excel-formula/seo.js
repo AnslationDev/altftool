@@ -1,5 +1,5 @@
 const seo = {
-  title: "Excel Formula Reference: 24 Functions",
+  title: "Excel Formula Reference: 24 Functions with Examples",
   metaDescription:
     "Search 24 Excel functions by name, syntax, description or example across Mathematical, Statistical, Logical, Text, Lookup, Date & Time and Conditional.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Periodic Table Query Tool: Search & Sort 118",
+  title: "Periodic Table Query Tool: Search & Sort 118 Elements",
   metaDescription:
     "Search all 118 elements by name, symbol or atomic number, filter by category, orbital block, period or state, sort by any property, export CSV.",
   steps: [

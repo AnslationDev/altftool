@@ -1,5 +1,5 @@
 const seo = {
-  title: "Oral Hygiene Score Tool: 9 Habits Scored",
+  title: "Oral Hygiene Score Tool: 9 Habits Scored Out of 100",
   metaDescription:
     "Score brushing, fluoride, flossing, sugar exposures, tobacco, brush age and check-ups out of 100, with fixes ranked by the points each one costs you.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Scanner: 4-Corner Perspective Fix",
+  title: "Document Scanner: 4-Corner Perspective Fix in Browser",
   metaDescription:
     "Drag four corners onto a page photo to remove the keystone, tune brightness, contrast and B&W threshold, then download PNG or JPEG. No upload.",
   steps: [

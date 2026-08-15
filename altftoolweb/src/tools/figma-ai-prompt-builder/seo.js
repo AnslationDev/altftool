@@ -1,5 +1,5 @@
 const seo = {
-  title: "Figma AI Prompt Builder with Real Column-Grid",
+  title: "Figma AI Prompt Builder with Real Column-Grid Maths",
   metaDescription:
     "Build Figma AI prompts for wireframes, layer naming or dev handoff, with column width computed from your frame, gutter and margin, plus 8px grid checks.",
   steps: [

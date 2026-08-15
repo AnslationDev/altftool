@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Deliverability Predictor: Check Before",
+  title: "Email Deliverability Predictor: Check Before Sending",
   metaDescription:
     "Scores content 30%, subject 20%, HTML 20%, links 15% and best practices 15%, with a spam-risk figure and an inbox estimate capped at 97%.",
   intro:

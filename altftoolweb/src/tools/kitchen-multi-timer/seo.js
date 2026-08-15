@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kitchen Multi-Timer with a Finish-Together",
+  title: "Kitchen Multi-Timer with a Finish-Together Planner",
   metaDescription:
     "Run named, emoji-tagged timers for every dish and set a serve time — each staged dish gets its own start time so rice, dal and the roast finish together.",
   steps: [

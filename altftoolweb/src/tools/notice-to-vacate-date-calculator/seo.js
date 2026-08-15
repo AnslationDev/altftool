@@ -1,5 +1,5 @@
 const seo = {
-  title: "Notice to Vacate Date Calculator: TPA s.106",
+  title: "Notice to Vacate Date Calculator: TPA s.106 in India",
   metaDescription:
     "Counts the notice period from receipt, not posting, under TPA s.106(2) — adds deemed postal days and checks the 15-day or 6-month statutory floor.",
   steps: [

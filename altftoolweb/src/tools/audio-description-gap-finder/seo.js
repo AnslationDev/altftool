@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Description Gap Finder: Find Quiet Timing",
+  title: "Audio Description Gap Finder: Find Quiet Timing Gaps",
   metaDescription:
     "Decodes audio or video in your browser, measures RMS loudness, subtracts SRT/WebVTT cues, and ranks quiet gaps with in/out points and mean dBFS.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Construction Waste Removal Cost: Bulking",
+  title: "Construction Waste Removal Cost: Bulking and Truck Trips",
   metaDescription:
     "Price debris removal from measured volume: about 1.5x bulking for concrete, trips set by body volume or payload, plus hire, tipping, labour and permits.",
   steps: [

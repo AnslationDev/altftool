@@ -1,5 +1,5 @@
 const seo = {
-  title: "Society Parking Complaint Letter: Bye-law 78",
+  title: "Society Parking Complaint Letter: Bye-law 78 Grounds",
   metaDescription:
     "Drafts a dated letter to the managing committee over a denied, encroached or wrongly allotted slot, citing bye-laws 78 and 79 and the Nahalchand ruling.",
   steps: [

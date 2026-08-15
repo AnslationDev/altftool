@@ -1,5 +1,5 @@
 const seo = {
-  title: "Focus Timer With Session Score and Distraction",
+  title: "Focus Timer With Session Score and Distraction Log",
   metaDescription:
     "Pomodoro 25/5, Deep Work 50/10 or Quick Focus 15/3. Finishing adds 20 to a 0-100 score, each \"I got distracted\" tap takes 5, quitting takes 10.",
   intro:

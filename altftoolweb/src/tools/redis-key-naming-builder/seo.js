@@ -1,5 +1,5 @@
 const seo = {
-  title: "Redis Key Naming Builder",
+  title: "Redis Key Naming Builder: app:env:tenant:entity:id",
   metaDescription:
     "Build a colon-separated Redis key convention with env, tenant and version segments and cluster hash tags, checked against 128 characters.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blood Glucose Log with Estimated HbA1c",
+  title: "Blood Glucose Log with Estimated HbA1c (mg/dL, mmol/L)",
   metaDescription:
     "Log readings in mg/dL or mmol/L for average, time in target against your own range and an estimated HbA1c. Entries stay in your browser's storage.",
   steps: [

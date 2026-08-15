@@ -1,5 +1,5 @@
 const seo = {
-  title: "Heat Pump vs Furnace Cost: COP Break-Even",
+  title: "Heat Pump vs Furnace Cost: COP Break-Even Estimator",
   metaDescription:
     "Divides your annual heat demand by seasonal COP and furnace efficiency at your own tariffs, and shows the break-even COP where the two cost the same.",
   steps: [

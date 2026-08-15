@@ -1,5 +1,5 @@
 const seo = {
-  title: "US B-1/B-2 Visa Cover Letter Builder, 214(b)",
+  title: "US B-1/B-2 Visa Cover Letter Builder, 214(b) Ready",
   metaDescription:
     "Draft a B-1/B-2 cover letter with itinerary, funding and a 214(b) ties statement, and check passport validity and the US$185 MRV receipt dates.",
   steps: [

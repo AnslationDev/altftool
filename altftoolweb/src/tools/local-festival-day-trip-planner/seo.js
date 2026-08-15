@@ -1,5 +1,5 @@
 const seo = {
-  title: "Festival Day Planner: Gate Queue, Exit Time",
+  title: "Festival Day Planner: Gate Queue, Exit Time, Last Train",
   metaDescription:
     "Builds the day backwards from the gate: queue growth from lane throughput, exit clear time at 82 people/min per metre, and the margin on the last service.",
   steps: [

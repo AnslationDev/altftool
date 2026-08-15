@@ -1,5 +1,5 @@
 const seo = {
-  title: "India Inflation Calculator: CPI FY 2011-12",
+  title: "India Inflation Calculator: CPI FY 2011-12 Onwards",
   metaDescription:
     "Restates a rupee amount into another financial year on India's CPI (Combined) series from FY 2011-12, with cumulative and compound annual inflation.",
   steps: [

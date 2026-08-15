@@ -1,5 +1,5 @@
 const seo = {
-  title: "Invoice Attachment Phishing Anatomy: Score",
+  title: "Invoice Attachment Phishing Anatomy: Score the Red Flags",
   metaDescription:
     "Paste an invoice email's file name, From, Reply-To and body for a red-flag score out of 100 naming double extensions and macro lures.",
   steps: [

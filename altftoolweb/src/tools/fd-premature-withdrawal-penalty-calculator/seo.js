@@ -1,5 +1,5 @@
 const seo = {
-  title: "FD Premature Withdrawal Penalty Calculator",
+  title: "FD Premature Withdrawal Penalty Calculator (India)",
   metaDescription:
     "See your FD's net payout on early closure: the rate reset to the card rate, the 0.5-1% penalty cut, quarterly compounding, and break-or-wait compared.",
   steps: [

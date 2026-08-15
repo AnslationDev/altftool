@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Spend Alert Planner: Budget Thresholds & Trip",
+  title: "AI Spend Alert Planner: Budget Thresholds & Trip Dates",
   metaDescription:
     "Projects month-end AI spend from your run rate and shows the day each alert threshold trips, with a named owner and action per level plus spike detection.",
   steps: [

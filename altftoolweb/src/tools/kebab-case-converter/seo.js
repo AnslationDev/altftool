@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kebab Case Converter — Slugs, snake_case",
+  title: "Kebab Case Converter — Slugs, snake_case & dot.case",
   metaDescription:
     "Turn any phrase into kebab-case, snake_case and dot.case at once — splits on non-alphanumerics, lowercases and collapses separators for clean URL slugs.",
   intro:

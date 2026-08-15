@@ -1,5 +1,5 @@
 const seo = {
-  title: "Oil Change Interval Planner: Distance vs Time",
+  title: "Oil Change Interval Planner: Distance vs Time Limit",
   metaDescription:
     "Work out the next oil change from the km and month limits together, shortened for severe service but never below half the normal interval.",
   steps: [

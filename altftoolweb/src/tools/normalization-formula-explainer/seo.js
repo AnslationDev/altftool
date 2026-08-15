@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Normalization Calculator: SSC, NTA",
+  title: "Exam Normalization Calculator: SSC, NTA and Z-Score",
   metaDescription:
     "Put your own marks through SSC linear equating, Z-score equating, the NTA percentile or min-max scaling, with every substitution shown as a step.",
   steps: [

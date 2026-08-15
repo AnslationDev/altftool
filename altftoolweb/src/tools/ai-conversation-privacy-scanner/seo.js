@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Chat Privacy Scanner: Redact PII",
+  title: "AI Chat Privacy Scanner: Redact PII in Your Browser",
   steps: [
     "Paste the log into Chat text or export JSON, or use Open file to load a .json or .txt export of up to 2 MB; anything past 5,000 messages is cut off with a truncation warning.",
     "Pick a Redaction style — Stable labels, Partial masking or Remove values — narrow the list under Choose detector categories, then press Scan locally.",

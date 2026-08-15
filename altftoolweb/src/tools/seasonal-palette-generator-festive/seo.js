@@ -1,5 +1,5 @@
 const seo = {
-  title: "Festive Palette Generator with WCAG Contrast",
+  title: "Festive Palette Generator with WCAG Contrast Audit",
   metaDescription:
     "Six-role campaign palettes for Black Friday, Winter holiday and more, every pairing graded against WCAG contrast, copyable as CSS custom properties.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "LUFS Loudness Normalizer: -14, -16 or -23",
+  title: "LUFS Loudness Normalizer: -14, -16 or -23 at -1.5 dBTP",
   metaDescription:
     "Run FFmpeg loudnorm on audio or video in your browser to hit -14, -16 or -23 LUFS with a -1.5 dBTP ceiling, and download a WAV.",
   steps: [

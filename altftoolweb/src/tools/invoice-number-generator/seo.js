@@ -1,5 +1,5 @@
 const seo = {
-  title: "Invoice Number Generator — Series with FY",
+  title: "Invoice Number Generator — Series with FY & Monthly Reset",
   metaDescription:
     "Generate a whole invoice numbering series — prefix, date segment, zero-padded counter — resetting monthly, yearly or by Indian FY. Copy or export CSV.",
   steps: [

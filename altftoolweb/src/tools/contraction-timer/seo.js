@@ -1,5 +1,5 @@
 const seo = {
-  title: "Contraction Timer with 5-1-1 Rule Check",
+  title: "Contraction Timer with 5-1-1 Rule Check for Labour",
   metaDescription:
     "Tap to time each contraction, get start-to-start gaps and averages, and test the pattern against the 5-1-1, 4-1-1 or 3-1-1 rule your maternity unit uses.",
   steps: [

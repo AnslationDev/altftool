@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS clamp() Generator for Fluid Typography",
+  title: "CSS clamp() Generator for Fluid Typography and Spacing",
   metaDescription:
     "Enter a min px, preferred vw and max px and get a valid clamp() value like clamp(16px, 4vw, 48px), ready to paste into font-size or padding.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Breaking Change Checklist & API Risk Score",
+  title: "Breaking Change Checklist & API Risk Score Generator",
   metaDescription:
     "Plan an API or library breaking change: phased before/release/after checklist, a 0-100 risk score and the SemVer major bump rule, as copyable Markdown.",
   steps: [

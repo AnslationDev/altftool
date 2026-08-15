@@ -1,5 +1,5 @@
 const seo = {
-  title: "Achromatopsia Simulator: Palette in True",
+  title: "Achromatopsia Simulator: Palette in True Greyscale",
   metaDescription:
     "Convert swatches to greyscale by WCAG luminance, CSS grayscale() or Rec. 601, and score every pair against the 3:1 and 4.5:1 contrast thresholds.",
   steps: [

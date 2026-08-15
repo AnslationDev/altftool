@@ -1,5 +1,5 @@
 const seo = {
-  title: "Corporate Trust Palette Generator: WCAG-Checked",
+  title: "Corporate Trust Palette Generator: WCAG-Checked Blues",
   metaDescription:
     "10-step blue brand scale, tinted neutrals and status colours with WCAG contrast checked for light and dark - output as CSS variables, Tailwind and JSON.",
   intro:

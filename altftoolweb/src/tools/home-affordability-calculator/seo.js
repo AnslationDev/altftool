@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Affordability Calculator: FOIR, LTV, Stamp",
+  title: "Home Affordability Calculator: FOIR, LTV, Stamp Duty",
   metaDescription:
     "Works back from net salary to the top property price: FOIR after existing EMIs, the bank's LTV cap, and stamp duty paid from your own savings.",
   steps: [

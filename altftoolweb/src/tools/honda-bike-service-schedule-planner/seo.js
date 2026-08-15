@@ -1,5 +1,5 @@
 const seo = {
-  title: "Honda Two-Wheeler Service Schedule & Parts",
+  title: "Honda Two-Wheeler Service Schedule & Parts Planner",
   metaDescription:
     "Dates every Honda service at 1,000 km, 4,000 km then every 3,000 km, whichever comes first, with the chain or CVT parts and cost due at each visit.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reading Speed Calculator: Timed WPM Test, 3",
+  title: "Reading Speed Calculator: Timed WPM Test, 3 Passages",
   metaDescription:
     "Read a 72, 75 or 80-word passage hidden until a 3-second countdown, then get your words per minute and band, from Beginner to Speed Reader.",
   steps: [

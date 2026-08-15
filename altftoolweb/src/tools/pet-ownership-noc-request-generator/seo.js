@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pet NOC Request Letter for Housing Society",
+  title: "Pet NOC Request Letter for Housing Society (AWBI 2015)",
   metaDescription:
     "Draft a society NOC request for keeping a pet, citing the AWBI circular of 26 February 2015, with anti-rabies booster status and a readiness score.",
   steps: [

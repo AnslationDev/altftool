@@ -1,5 +1,5 @@
 const seo = {
-  title: "Docker Network Modes: bridge, host, macvlan",
+  title: "Docker Network Modes: bridge, host, macvlan Compared",
   metaDescription:
     "Pick bridge, user-defined bridge, host, none, container:<name> or macvlan and see the exact address the host, LAN and other containers use for your app.",
   steps: [

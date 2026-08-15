@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brisk Walking Heart Rate Zones by Age",
+  title: "Brisk Walking Heart Rate Zones by Age and Resting HR",
   metaDescription:
     "ACSM zones from Tanaka, 220-age or Gulati max HR, by %max or Karvonen reserve, each with its steps-per-minute cadence target.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Media Release Checklist: Model, Music & Drone",
+  title: "Media Release Checklist: Model, Music & Drone Clearances",
   metaDescription:
     "Describe the shoot and where it runs; get only the releases and licences that apply, split into required and recommended, with a residual-risk score.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sort Lines Alphabetically: A-Z or Z-A",
+  title: "Sort Lines Alphabetically: A-Z or Z-A, Locale-Aware",
   metaDescription:
     "Paste a list and get it back sorted A to Z or Z to A with localeCompare, so accents sort as a dictionary would. Blank lines are dropped.",
   steps: [

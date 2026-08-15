@@ -1,5 +1,5 @@
 const seo = {
-  title: "Algebra Equation Practice with Step-by-Step",
+  title: "Algebra Equation Practice with Step-by-Step Answers",
   metaDescription:
     "Drill five levels from x + a = b to ax² + bx + c = 0, with hints, full working and answers accepted within 0.05. Practice, 60-second timed or survival.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Digital Wallet Manager: Totals and HHI",
+  title: "Digital Wallet Manager: Totals and HHI Concentration",
   metaDescription:
     "Total cash, crypto, funds, stocks and gold, see each holding's share, and score concentration on the HHI scale — no login, no API keys, nothing sent.",
   steps: [

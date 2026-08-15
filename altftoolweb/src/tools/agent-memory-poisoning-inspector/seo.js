@@ -1,5 +1,5 @@
 const seo = {
-  title: "Agent Memory Poisoning Inspector: Diff Two",
+  title: "Agent Memory Poisoning Inspector: Diff Two Exports",
   metaDescription:
     "Compare an earlier and newer AI memory export and flag added or modified entries carrying instruction overrides, hidden Unicode or permission expansion.",
   steps: [

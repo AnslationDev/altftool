@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Hydration Planner: ESPEN Target, Timed",
+  title: "Senior Hydration Planner: ESPEN Target, Timed Drinks",
   metaDescription:
     "Set an older adult's target from the ESPEN 1.6/2.0 L minimum or 30 ml per kg, then split it into 80-300 ml prompts that stop two hours before bed.",
   steps: [

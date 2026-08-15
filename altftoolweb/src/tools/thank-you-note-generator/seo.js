@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thank You Note Generator: Card, Email or Text",
+  title: "Thank You Note Generator: Card, Email or Text Length",
   metaDescription:
     "Builds the four parts of a thank you note — greeting, specific thanks, impact, close — at 25-90 words for a card, 60-200 for email, 15-70 for a text.",
   steps: [

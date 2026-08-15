@@ -1,5 +1,5 @@
 const seo = {
-  title: "Breast Self-Exam Reminder — Best Day to Check",
+  title: "Breast Self-Exam Reminder — Best Day to Check Each Month",
   metaDescription:
     "Finds the least tender day to check — three days after bleeding stops, or a fixed date without a cycle — and lists your next 12 check dates to copy.",
   steps: [

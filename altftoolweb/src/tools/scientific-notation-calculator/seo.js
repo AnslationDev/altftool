@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scientific Notation Calculator: Sig Figs & SI",
+  title: "Scientific Notation Calculator: Sig Figs & SI Prefix",
   metaDescription:
     "Convert a number to a x 10^n and to engineering form with its SI prefix, or combine two values and see which significant-figure rule set the answer.",
   steps: [

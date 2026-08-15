@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calendar Privacy Scrubber: Redact ICS Before",
+  title: "Calendar Privacy Scrubber: Redact ICS Before Sharing",
   metaDescription:
     "Replace ICS event titles, attendees, locations and notes with placeholders, strip meeting links and shift dates - all in your browser.",
   steps: [

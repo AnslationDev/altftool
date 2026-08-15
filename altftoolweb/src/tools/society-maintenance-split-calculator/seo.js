@@ -1,5 +1,5 @@
 const seo = {
-  title: "Society Maintenance Split: Per Sq Ft, Equal",
+  title: "Society Maintenance Split: Per Sq Ft, Equal or Hybrid",
   metaDescription:
     "Divides a housing society's monthly budget across flat types equally, per sq ft of carpet area or a hybrid mix, with parking and sinking fund added.",
   steps: [

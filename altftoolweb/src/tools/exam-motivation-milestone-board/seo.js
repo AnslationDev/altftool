@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Milestone Board: Target Dates, Ahead",
+  title: "Exam Milestone Board: Target Dates, Ahead or Behind",
   metaDescription:
     "Space 2 to 12 prep milestones between your start date and exam day, get a target date for each, and see if you are ahead, on track or behind.",
   steps: [

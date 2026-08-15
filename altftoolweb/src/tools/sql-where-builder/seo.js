@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL WHERE Clause Builder for Five Database",
+  title: "SQL WHERE Clause Builder for Five Database Dialects",
   metaDescription:
     "Build a WHERE clause with correct quoting for MySQL, PostgreSQL, SQL Server, SQLite and Oracle, plus a parameterised version and IS NULL for null checks.",
   steps: [

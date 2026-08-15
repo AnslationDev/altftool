@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Data Usage Estimator for Roaming and eSIM",
+  title: "Travel Data Usage Estimator for Roaming and eSIM Packs",
   metaDescription:
     "Turn trip length and daily maps, streaming, calls and photo backup into a trip MB total and a recommended pack size with 20% head-room.",
   steps: [

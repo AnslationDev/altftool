@@ -1,5 +1,5 @@
 const seo = {
-  title: "Trademark Name Check: Distinctiveness Score +",
+  title: "Trademark Name Check: Distinctiveness Score + Steps",
   metaDescription:
     "Score a brand name out of 100 on the distinctiveness spectrum, see its likely Nice classes, and get the USPTO, EUIPO, UKIPO, IP India or WIPO steps.",
   steps: [

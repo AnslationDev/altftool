@@ -1,5 +1,5 @@
 const seo = {
-  title: "Card Trick: Prediction, Memory & 52-Card Free",
+  title: "Card Trick: Prediction, Memory & 52-Card Free Play",
   metaDescription:
     "Four modes on one 52-card deck: Free Play with a Fisher-Yates shuffle, Pick a Card, a forced-card Prediction, and an eight-card Memory round.",
   intro:

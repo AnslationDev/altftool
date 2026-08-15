@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Citizen FD Calculator: Extra Rate, TDS",
+  title: "Senior Citizen FD Calculator: Extra Rate, TDS & 80TTB",
   metaDescription:
     "Price the senior citizen FD rate premium in rupees with quarterly compounding, the Rs 1,00,000 section 194A TDS threshold and the 80TTB deduction.",
   steps: [

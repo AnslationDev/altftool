@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scientific Notation Converter: Mantissa",
+  title: "Scientific Notation Converter: Mantissa and Exponent",
   metaDescription:
     "Turn 0.00042 into 4.2 x 10^-4 and see the E notation, the engineering form with an exponent that is a multiple of 3, mantissa and order of magnitude.",
   steps: [

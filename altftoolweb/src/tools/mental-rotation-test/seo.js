@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mental Rotation Test — 15-Trial Spatial",
+  title: "Mental Rotation Test — 15-Trial Spatial Reasoning Online",
   metaDescription:
     "Judge rotated vs mirrored block figures in 15 keyboard trials. Get accuracy, average reaction time and a spatial grade in the Shepard-Metzler style.",
   steps: [

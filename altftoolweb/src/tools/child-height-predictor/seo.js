@@ -1,5 +1,5 @@
 const seo = {
-  title: "Child Height Predictor: Mid-Parental Height",
+  title: "Child Height Predictor: Mid-Parental Height Formula",
   metaDescription:
     "Estimates a child's adult height from both parents: (mother + father ± 13 cm) ÷ 2, with the ±8.5 cm likely range and a feet-and-inches conversion.",
   intro:

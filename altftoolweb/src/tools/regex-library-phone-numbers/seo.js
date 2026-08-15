@@ -1,5 +1,5 @@
 const seo = {
-  title: "Phone Number Regex: E.164, India, US/Canada & UK",
+  title: "Phone Number Regex: E.164, India, US/Canada & UK Patterns",
   metaDescription:
     "Copy-ready regex for E.164, Indian mobiles starting 6–9, US/Canada NANP and UK numbers — each with a live tester and a list of what it cannot verify.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Restaurant Bill Splitter With Proportional GST",
+  title: "Restaurant Bill Splitter With Proportional GST and Tip",
   metaDescription:
     "Assign each dish to who ordered it and GST plus tip follow their share — per-person totals that add back to the exact bill, with the check shown.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emergency Light Backup Time Calculator",
+  title: "Emergency Light Backup Time Calculator with Peukert",
   metaDescription:
     "Runtime from battery V, Ah, depth of discharge and state of health against LED load and driver loss, derated by Peukert, plus recharge time.",
   steps: [

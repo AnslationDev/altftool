@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shopify Image Size Checker: 25 MP, 5000 px, 20",
+  title: "Shopify Image Size Checker: 25 MP, 5000 px, 20 MB Rules",
   metaDescription:
     "Tests width, height, file size and format against Shopify's 25 megapixel, 5000 px and 20 MB limits, plus your store's aspect ratio and centre-crop loss.",
   steps: [

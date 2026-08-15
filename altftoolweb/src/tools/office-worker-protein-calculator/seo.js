@@ -1,5 +1,5 @@
 const seo = {
-  title: "Office Worker Protein Calculator: Daily",
+  title: "Office Worker Protein Calculator: Daily and Per Meal",
   metaDescription:
     "Set a desk-job protein target from Mifflin-St Jeor, your step count and gym sessions, then split it per meal against 0.24 g/kg, or 0.40 from age 60.",
   steps: [

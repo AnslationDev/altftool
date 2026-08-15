@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chinese Character Generator: 180 Glyphs",
+  title: "Chinese Character Generator: 180 Glyphs with Pinyin",
   metaDescription:
     "Browse 180 verified characters across 15 themes with tone-marked pinyin, meaning, stroke count and Unicode. Copy, or export as PNG or SVG.",
   intro:

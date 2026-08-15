@@ -1,5 +1,5 @@
 const seo = {
-  title: "Podcast Guest Brief Builder: Timed Rundown",
+  title: "Podcast Guest Brief Builder: Timed Rundown & Questions",
   metaDescription:
     "Turn a recording length into a timecoded rundown, a question count that fits at 1.5, 2.5 or 4 minutes each, and a pre-record tech checklist.",
   steps: [

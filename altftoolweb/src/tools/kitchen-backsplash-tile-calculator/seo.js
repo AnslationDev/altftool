@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kitchen Backsplash Tile Calculator: Boxes",
+  title: "Kitchen Backsplash Tile Calculator: Boxes and Cost",
   metaDescription:
     "Sizes the band from counter run and cabinet height, adds the hob panel, deducts windows, and converts net area into boxes with wastage and spares.",
   steps: [

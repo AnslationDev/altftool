@@ -1,5 +1,5 @@
 const seo = {
-  title: "Financial Literacy Quiz: 16 Questions Scored",
+  title: "Financial Literacy Quiz: 16 Questions Scored by Topic",
   metaDescription:
     "16 questions on interest, inflation, insurance and tax — the 4% RBI target, the Rs 1,50,000 section 80C cap — with a worked explanation for each.",
   steps: [

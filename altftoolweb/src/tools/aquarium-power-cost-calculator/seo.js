@@ -1,5 +1,5 @@
 const seo = {
-  title: "Aquarium Running Cost: Heater, Filter, Light",
+  title: "Aquarium Running Cost: Heater, Filter, Light per Month",
   metaDescription:
     "Monthly electricity for filter, air pump, light and heater. The heater is costed from tank heat loss and temperature difference, not its rated watts.",
   steps: [

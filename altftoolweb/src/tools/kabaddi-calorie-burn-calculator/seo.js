@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kabaddi Calorie Burn Calculator by Role and Mat",
+  title: "Kabaddi Calorie Burn Calculator by Role and Mat Time",
   metaDescription:
     "Uses kcal/min = MET x 3.5 x kg / 200, with a raider at 8.3 METs borrowed from rugby union and bench minutes priced at 1.3. Kabaddi has no MET entry.",
   steps: [

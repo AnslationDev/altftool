@@ -1,5 +1,5 @@
 const seo = {
-  title: "Leftover Recipe Finder: 100 Dishes",
+  title: "Leftover Recipe Finder: 100 Dishes From Your Fridge",
   metaDescription:
     "Tick what is left from 80 ingredients and see which of 100 recipes you can cook now, plus the ones you are one item away from. Salt and oil assumed.",
   steps: [

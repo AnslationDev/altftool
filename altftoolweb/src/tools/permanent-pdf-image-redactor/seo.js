@@ -1,5 +1,5 @@
 const seo = {
-  title: "Permanent PDF & Image Redaction, Flattened",
+  title: "Permanent PDF & Image Redaction, Flattened Locally",
   metaDescription:
     "Draw masks and export a flattened PDF or PNG with no selectable text left. Up to 40 pages, 50 MB, at 96, 144 or 216 DPI, all in your browser.",
   steps: [

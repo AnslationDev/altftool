@@ -1,5 +1,5 @@
 const seo = {
-  title: "Night Driving Checklist: Lights, Glass",
+  title: "Night Driving Checklist: Lights, Glass and Fatigue",
   metaDescription:
     "Score 20 pre-drive checks with the essential ones as blockers, plus hours-awake impairment in BAC terms and time inside the 02:00-06:00 window.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Announcement Graphic Maker With a Modular Type",
+  title: "Announcement Graphic Maker With a Modular Type Scale",
   metaDescription:
     "Six templates at real placement sizes, from 1080x1080 Instagram to a 1200x400 email banner, with type sized by one ratio and a countdown line in UTC days.",
   steps: [

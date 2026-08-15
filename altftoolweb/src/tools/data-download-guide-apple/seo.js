@@ -1,5 +1,5 @@
 const seo = {
-  title: "Apple Data Download Request Planner: Size",
+  title: "Apple Data Download Request Planner: Size and Split",
   metaDescription:
     "Plan a privacy.apple.com request: size the archive, pick 1–25 GB parts, see what only exports from the device. Up to 7 days to prepare, 14 to download.",
   steps: [

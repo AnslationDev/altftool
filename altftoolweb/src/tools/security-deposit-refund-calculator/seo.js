@@ -1,5 +1,5 @@
 const seo = {
-  title: "Security Deposit Refund Calculator",
+  title: "Security Deposit Refund Calculator (Model Tenancy Act)",
   metaDescription:
     "Itemise unpaid rent, notice shortfall, utilities and damage against the deposit, add agreed interest, and test it against the Model Tenancy Act cap.",
   steps: [

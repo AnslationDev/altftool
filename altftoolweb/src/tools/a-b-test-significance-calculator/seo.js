@@ -1,5 +1,5 @@
 const seo = {
-  title: "A/B Test Significance Calculator",
+  title: "A/B Test Significance Calculator (Two-Sided Z-Test)",
   steps: [
     "Enter your test counts in the Variant A visitors, Variant A conversions, Variant B visitors and Variant B conversions fields (defaults 1000/100 vs 1000/125).",
     "Pick 90%, 95% or 99% in the Confidence target (%) select - this sets the alpha the two-sided p-value is compared against.",

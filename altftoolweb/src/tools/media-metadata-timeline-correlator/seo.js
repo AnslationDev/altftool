@@ -1,5 +1,5 @@
 const seo = {
-  title: "Correlate EXIF, MP4 and WAV Timestamps",
+  title: "Correlate EXIF, MP4 and WAV Timestamps on a Timeline",
   metaDescription:
     "Line up EXIF, PNG tIME, MP4/MOV and WAV dates from up to 20 local files on one timeline. Missing timezones stay unresolved, never guessed.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Event Photography Notice Generator with Sign",
+  title: "Event Photography Notice Generator with Sign Sizing",
   metaDescription:
     "Write filming notices for the entrance sign, ticket terms, registration form, PA script and web page, sized at 25 mm of cap height per 3 m of distance.",
   steps: [

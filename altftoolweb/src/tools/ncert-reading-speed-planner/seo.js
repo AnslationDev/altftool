@@ -1,5 +1,5 @@
 const seo = {
-  title: "NCERT Reading Planner: Daily Pages to Meet",
+  title: "NCERT Reading Planner: Daily Pages to Meet a Deadline",
   metaDescription:
     "Enter pages left, deadline, weekly days off and a revision buffer — get the daily NCERT page quota and minutes per day at your own reading speed.",
   steps: [

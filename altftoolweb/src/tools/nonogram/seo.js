@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nonogram Puzzle: 5x5, 10x10 and 15x15 Picture",
+  title: "Nonogram Puzzle: 5x5, 10x10 and 15x15 Picture Logic",
   metaDescription:
     "Solve generated nonograms at 5x5, 10x10 or 15x15 in easy, medium or hard. Clues dim as you satisfy them and best times are kept per grid size.",
   intro:

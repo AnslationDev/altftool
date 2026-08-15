@@ -1,5 +1,5 @@
 const seo = {
-  title: "Road Trip Fuel Cost: Mileage, Tolls, Cost",
+  title: "Road Trip Fuel Cost: Mileage, Tolls, Cost per Head",
   metaDescription:
     "Adjust rated mileage for highway, city or ghat roads, AC and a roof carrier, then get fuel, tolls, refuel stops and the per-head share.",
   steps: [

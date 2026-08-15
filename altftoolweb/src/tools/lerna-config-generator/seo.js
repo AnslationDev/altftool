@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lerna Config Generator: lerna.json for Lerna v7",
+  title: "Lerna Config Generator: lerna.json for Lerna v7 & v8",
   metaDescription:
     "Pick fixed or independent versioning, allowBranch, registry and dist-tag; copy a lerna.json that validates against Lerna's own JSON schema.",
   steps: [

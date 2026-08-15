@@ -1,5 +1,5 @@
 const seo = {
-  title: "ULID Generator: 26-Char Sortable IDs, Five",
+  title: "ULID Generator: 26-Char Sortable IDs, Five at Once",
   metaDescription:
     "Generate five 26-character ULIDs at a time: a 10-char millisecond timestamp plus 16 random chars in Crockford base32, so string sort is creation order.",
   steps: [

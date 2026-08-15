@@ -1,5 +1,5 @@
 const seo = {
-  title: "Due Date Calculator: LMP, Conception or IVF",
+  title: "Due Date Calculator: LMP, Conception or IVF Transfer",
   metaDescription:
     "Due date from LMP + 280 days adjusted for cycle length, conception + 266, or IVF transfer + 261 days, with trimester dates and dated milestones.",
   steps: [

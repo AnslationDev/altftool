@@ -1,5 +1,5 @@
 const seo = {
-  title: "Startup Name Generator: 50 Names With Logo",
+  title: "Startup Name Generator: 50 Names With Logo Mockups",
   metaDescription:
     "Type a keyword, pick an industry and style, then get a deduplicated batch of 50 names, each with a tagline, three brand hex colours and an SVG logo mark.",
   steps: [

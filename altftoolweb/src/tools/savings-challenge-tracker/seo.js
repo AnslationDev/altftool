@@ -1,5 +1,5 @@
 const seo = {
-  title: "52-Week Savings Challenge Tracker & No-Spend",
+  title: "52-Week Savings Challenge Tracker & No-Spend Month",
   metaDescription:
     "Tick each week and watch the total build: base × 1,378 on the increasing style, plus streaks, projected finish date and a no-spend day grid.",
   steps: [

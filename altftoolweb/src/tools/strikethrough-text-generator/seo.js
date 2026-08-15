@@ -1,5 +1,5 @@
 const seo = {
-  title: "Strikethrough Text Generator: Copy-Paste U+0336",
+  title: "Strikethrough Text Generator: Copy-Paste U+0336 Text",
   metaDescription:
     "Inserts Unicode U+0336 after every character, so crossed-out text pastes intact into bios, usernames and comment boxes that strip formatting.",
   intro:

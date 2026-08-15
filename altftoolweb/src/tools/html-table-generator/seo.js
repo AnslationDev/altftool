@@ -1,5 +1,5 @@
 const seo = {
-  title: "HTML Table Generator — Semantic Markup + CSS",
+  title: "HTML Table Generator — Semantic Markup + CSS Themes",
   metaDescription:
     "Build a table up to 10x10 with real thead/tbody markup, editable cells and zebra, minimal, dark or teal CSS — copy it or download custom-table.html.",
   steps: [

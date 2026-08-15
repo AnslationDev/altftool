@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 44AA Books of Accounts Requirement",
+  title: "Section 44AA Books of Accounts Requirement Checker",
   metaDescription:
     "Applies the Rule 6F test — Rs 1,50,000 receipts in all three preceding years — and the Rs 25,00,000 / Rs 2,50,000 limits for an individual or HUF.",
   steps: [

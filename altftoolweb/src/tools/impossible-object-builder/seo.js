@@ -1,5 +1,5 @@
 const seo = {
-  title: "Penrose Triangle Generator: Build Impossible",
+  title: "Penrose Triangle Generator: Build Impossible Objects",
   metaDescription:
     "Build a Penrose triangle, impossible rectangle or endless staircase from unit cubes, then move the azimuth and elevation sliders to break the illusion.",
   steps: [

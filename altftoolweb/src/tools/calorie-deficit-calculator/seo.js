@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calorie Deficit Calculator: Goal Weight",
+  title: "Calorie Deficit Calculator: Goal Weight by a Deadline",
   metaDescription:
     "Turns kg to lose and weeks into a daily deficit using 7,700 kcal per kg, and shows the weekly loss rate that deficit implies.",
   intro:

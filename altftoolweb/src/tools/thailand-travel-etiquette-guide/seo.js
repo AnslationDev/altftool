@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thailand Etiquette Guide: Ranked Rules and Legal",
+  title: "Thailand Etiquette Guide: Ranked Rules and Legal Lines",
   metaDescription:
     "Builds a Thailand etiquette briefing ranked by severity for the places on your itinerary, with lèse-majesté and the vape ban shown whatever you tick.",
   steps: [

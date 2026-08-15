@@ -1,5 +1,5 @@
 const seo = {
-  title: "WCAG 2.2 Accessible Authentication Auditor",
+  title: "WCAG 2.2 Accessible Authentication Auditor (SC 3.3.8)",
   metaDescription:
     "Paste sign-in HTML to flag blocked paste, autocomplete=off and captcha wording, answer a 7-question flow checklist, and get findings citing WCAG 2.2.",
   steps: [

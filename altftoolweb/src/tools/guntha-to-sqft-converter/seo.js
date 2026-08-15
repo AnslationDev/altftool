@@ -1,5 +1,5 @@
 const seo = {
-  title: "Guntha to Square Feet Converter — 1 Guntha =",
+  title: "Guntha to Square Feet Converter — 1 Guntha = 1,089 Sq Ft",
   metaDescription:
     "Convert guntha to sq ft, acre, are and hectare (1 guntha = 1,089 sq ft, 40 per acre), read a 7/12 or RTC H-R-P entry, and cross-check per-guntha rates.",
   steps: [

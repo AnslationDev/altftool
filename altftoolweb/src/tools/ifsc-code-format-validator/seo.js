@@ -1,5 +1,5 @@
 const seo = {
-  title: "IFSC Code Format Validator: 11-Character RBI",
+  title: "IFSC Code Format Validator: 11-Character RBI Structure",
   metaDescription:
     "Checks all 11 characters — four bank letters, the reserved 0, six branch characters — in your browser, and suggests a fix for the letter-O typo.",
   steps: [

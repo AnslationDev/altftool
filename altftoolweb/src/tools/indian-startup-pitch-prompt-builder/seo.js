@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Startup Pitch Prompt Builder with Runway",
+  title: "Indian Startup Pitch Prompt Builder with Runway Maths",
   metaDescription:
     "Turns stage, sector, cash and burn into an AI prompt carrying your runway, implied pre- and post-money and a second-by-second slide budget.",
   steps: [

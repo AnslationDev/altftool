@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Palette Compare – Two Palettes in One UI",
+  title: "Color Palette Compare – Two Palettes in One UI Mockup",
   metaDescription:
     "Render two five-role palettes into the same dashboard mockup and grade background/text contrast — AAA 7:1, AA 4.5:1, large-text 3:1.",
   intro:

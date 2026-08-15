@@ -1,5 +1,5 @@
 const seo = {
-  title: "Egypt Tipping Calculator: Baksheesh by Service",
+  title: "Egypt Tipping Calculator: Baksheesh by Service, EGP",
   metaDescription:
     "Percentage on restaurant subtotals and fixed EGP per bag, night, ride or guiding day, with the 12% service-charge case and a small-note plan.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Table Tennis Calorie Calculator",
+  title: "Table Tennis Calorie Calculator (MET-Based Estimate)",
   metaDescription:
     "Calories from kcal/min = MET × 3.5 × kg / 200, using the Compendium's 4.0 METs for table tennis and 1.3 for standing between games.",
   steps: [

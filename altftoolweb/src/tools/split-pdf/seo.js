@@ -1,5 +1,5 @@
 const seo = {
-  title: "Split PDF in Your Browser — Pages, Batches",
+  title: "Split PDF in Your Browser — Pages, Batches & Ranges",
   metaDescription:
     "Cut a PDF into one file per page, fixed batches or ranges like 1-3, 5, 9-, or extract/remove pages — pdf-lib in your browser, nothing uploaded.",
   steps: [

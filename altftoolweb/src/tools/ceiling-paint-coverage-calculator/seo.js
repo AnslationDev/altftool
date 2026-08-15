@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ceiling Paint Calculator: Litres, Tins and Cove",
+  title: "Ceiling Paint Calculator: Litres, Tins and Cove Area",
   metaDescription:
     "Litres = area × coats ÷ spreading rate, from 140 sq ft per litre per coat, with the cove band added and a tin-by-tin buy list at your paint price.",
   steps: [

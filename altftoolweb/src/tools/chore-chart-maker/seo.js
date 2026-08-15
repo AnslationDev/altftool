@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chore Chart Maker: Round-Robin Rota for Any",
+  title: "Chore Chart Maker: Round-Robin Rota for Any Household",
   metaDescription:
     "Deals chores out round-robin — chore 1 to person 1, wrapping back at the end — so any two people differ by at most one chore. Same lists, same chart.",
   intro:

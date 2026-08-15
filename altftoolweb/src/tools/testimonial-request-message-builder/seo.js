@@ -1,5 +1,5 @@
 const seo = {
-  title: "Testimonial Request Builder for Email, WhatsApp",
+  title: "Testimonial Request Builder for Email, WhatsApp, SMS",
   steps: [
     "Enter Client's name, Your name (sign-off), Project or service and the optional Result you want them to remember, such as 'checkout drop-off fell by 22%'",
     "Choose Send it on — Email, WhatsApp, LinkedIn message or SMS — and a Tone of Warm, Professional or Brief, set Ask for a reply within (days, 0 = none), then tick up to four boxes under Questions to include: The problem before, The measurable result, What working together was like, The hesitation they had and Who they'd recommend it to",

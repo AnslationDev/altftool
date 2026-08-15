@@ -1,5 +1,5 @@
 const seo = {
-  title: "Father's Day Message Generator — 4 Tones, 7",
+  title: "Father's Day Message Generator — 4 Tones, 7 Recipients",
   metaDescription:
     "Heartfelt, funny, proud or a short caption, written for a dad, father-in-law, grandfather, stepdad, mentor — or a father who has passed away.",
   steps: [

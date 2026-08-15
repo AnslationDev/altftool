@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grep & Ripgrep Command Builder with Safe Shell",
+  title: "Grep & Ripgrep Command Builder with Safe Shell Quoting",
   metaDescription:
     "Build a grep or ripgrep command from checkboxes — case, whole word, -A/-B context, include/exclude globs — with POSIX single-quote escaping done for you.",
   steps: [

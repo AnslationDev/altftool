@@ -1,5 +1,5 @@
 const seo = {
-  title: "Switch-Scanning Communicator: One-Switch AAC",
+  title: "Switch-Scanning Communicator: One-Switch AAC Speech",
   metaDescription:
     "A highlight steps through your phrase list on a 600–4000 ms timer; Space, Enter or a large on-screen button speaks the highlighted phrase aloud.",
   intro:

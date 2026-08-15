@@ -1,5 +1,5 @@
 const seo = {
-  title: "E-Way Bill Validity Calculator: Rule 138(10)",
+  title: "E-Way Bill Validity Calculator: Rule 138(10) Slabs",
   metaDescription:
     "Work out e-way bill validity under Rule 138(10): 200 km a day, 20 km for ODC, expiry at midnight of the next day, and the 8-hour extension window.",
   steps: [

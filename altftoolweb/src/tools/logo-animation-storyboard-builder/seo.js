@@ -1,5 +1,5 @@
 const seo = {
-  title: "Logo Sting Storyboard: Frame-Accurate Beat",
+  title: "Logo Sting Storyboard: Frame-Accurate Beat Timings",
   metaDescription:
     "Split a logo sting into weighted beats and get whole-frame in and out points, SMPTE timecodes and a cubic-bezier easing curve for each one.",
   steps: [

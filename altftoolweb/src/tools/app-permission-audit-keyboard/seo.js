@@ -1,5 +1,5 @@
 const seo = {
-  title: "Keyboard App Permission Audit: Score and Revoke",
+  title: "Keyboard App Permission Audit: Score and Revoke List",
   metaDescription:
     "Scores what a third-party keyboard reaches beyond the keys — network, cloud sync, clipboard history, contacts — out of 100, with a ranked revoke list.",
   steps: [

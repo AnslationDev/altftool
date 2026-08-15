@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unit Test Prompt Builder for Jest, pytest, JUnit",
+  title: "Unit Test Prompt Builder for Jest, pytest, JUnit 5",
   metaDescription:
     "Pick a framework, branch-coverage target and edge-case classes to get a test prompt that bans weak assertions and estimates the baseline test count.",
   steps: [

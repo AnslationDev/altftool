@@ -1,5 +1,5 @@
 const seo = {
-  title: "Daily Spending Calculator — Your Safe-to-Spend",
+  title: "Daily Spending Calculator — Your Safe-to-Spend Number",
   metaDescription:
     "One safe-to-spend number for today: (income − bills − savings − spent) ÷ days left this month, with pace warnings and food, transport and fun envelopes.",
   steps: [

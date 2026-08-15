@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reynolds Number Calculator for Pipe Flow",
+  title: "Reynolds Number Calculator for Pipe Flow and Head Loss",
   metaDescription:
     "Re = ρvD/μ with the laminar, transitional or turbulent regime, plus the Darcy friction factor, pressure drop, head loss and volumetric flow.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Restaurant Refund Policy Generator — 48h /",
+  title: "Restaurant Refund Policy Generator — 48h / 30-day Caps",
   metaDescription:
     "Draft a food order refund policy for missing, wrong, late or spoiled items, inside the 48-hour acknowledgement and one-month redressal limits.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON Editor: Validate, Format, Minify & CSV",
+  title: "JSON Editor: Validate, Format, Minify & CSV Export",
   metaDescription:
     "Validate JSON to RFC 8259 with the line and column of the first fault and any duplicate keys, then pretty-print, minify, flatten or export RFC 4180 CSV.",
   steps: [

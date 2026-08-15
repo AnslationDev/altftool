@@ -1,5 +1,5 @@
 const seo = {
-  title: "Argentina Plug Adapter & Voltage Checker",
+  title: "Argentina Plug Adapter & Voltage Checker (220 V, Type I)",
   metaDescription:
     "Argentina runs 220 V 50 Hz on IRAM 2073 type I sockets. Enter your plug and label voltage to see if you need an adapter, a converter, or nothing.",
   steps: [

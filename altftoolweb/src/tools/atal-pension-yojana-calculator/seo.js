@@ -1,5 +1,5 @@
 const seo = {
-  title: "Atal Pension Yojana Calculator: APY Contribution",
+  title: "Atal Pension Yojana Calculator: APY Contribution by Age",
   metaDescription:
     "Official PFRDA contribution for each ₹1,000–₹5,000 APY slab and joining age 18–40, plus total paid to 60 and the corpus your nominee receives.",
   steps: [

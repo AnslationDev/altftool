@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Commit Metadata Checker: Email, Timezone",
+  title: "Git Commit Metadata Checker: Email, Timezone, Hours",
   metaDescription:
     "Paste git log output to see the author email, UTC offsets, your busiest 8-hour window and off-hours share, scored out of 100 — parsed in your browser.",
   steps: [

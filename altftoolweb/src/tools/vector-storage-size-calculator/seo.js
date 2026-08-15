@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vector Index Size Calculator With HNSW and IVF",
+  title: "Vector Index Size Calculator With HNSW and IVF Overhead",
   metaDescription:
     "Size a vector index from count, dimensions and data type: adds HNSW graph links (M × 2 × 4 bytes/vector), IVF ids and centroids, metadata and replicas.",
   steps: [

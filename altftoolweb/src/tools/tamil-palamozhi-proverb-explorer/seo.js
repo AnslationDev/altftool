@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tamil Palamozhi: 30 Proverbs With Meanings",
+  title: "Tamil Palamozhi: 30 Proverbs With Meanings in English",
   metaDescription:
     "30 Tamil proverbs with ISO 15919 transliteration, a literal translation, the figurative meaning, a Tamil gloss and the closest English proverb.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Doubt Resolution Log with Retest Rate for Exam",
+  title: "Doubt Resolution Log with Retest Rate for Exam Prep",
   metaDescription:
     "Log study doubts with who resolved them, flag any open past 7 days, and track the retest rate — the share you actually re-solved on your own.",
   steps: [

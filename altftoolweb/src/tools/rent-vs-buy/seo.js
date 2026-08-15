@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rent vs Buy Calculator: EMI vs Rent +",
+  title: "Rent vs Buy Calculator: EMI vs Rent + Opportunity Cost",
   metaDescription:
     "Compares net buying cost — EMI, registration, maintenance, tax and insurance minus future value — against rent minus your invested corpus.",
   steps: [

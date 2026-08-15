@@ -1,5 +1,5 @@
 const seo = {
-  title: "Family Photo Backup Checker: 3-2-1 Redundancy",
+  title: "Family Photo Backup Checker: 3-2-1 Redundancy Score",
   metaDescription:
     "Tick where your photos actually live - copies sharing a house, provider or sign-in count once - and score the archive against the 3-2-1-1-0 rule.",
   steps: [

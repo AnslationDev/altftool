@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vegan Macro Calculator with Plant Protein",
+  title: "Vegan Macro Calculator with Plant Protein Adjustment",
   metaDescription:
     "Plant-based protein, fat and carb targets from Mifflin-St Jeor, raised by a 1.0-1.3 digestibility factor, with a 14 g/1,000 kcal fibre goal.",
   steps: [

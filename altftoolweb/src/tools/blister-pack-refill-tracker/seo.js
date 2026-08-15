@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blister Pack Refill Tracker: Run-Out & Reorder",
+  title: "Blister Pack Refill Tracker: Run-Out & Reorder Dates",
   metaDescription:
     "Count your strips once to get the run-out date, a reorder-by date from lead time plus safety buffer, and how many packs the next order needs.",
   steps: [

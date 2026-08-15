@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Spam Checker — Score Your Draft 1–10",
+  title: "Email Spam Checker — Score Your Draft 1–10 Before Sending",
   metaDescription:
     "Paste subject and body to get a 1–10 spam score with the exact keyword, link, ALL-CAPS and punctuation counts behind it, plus specific fixes.",
   steps: [

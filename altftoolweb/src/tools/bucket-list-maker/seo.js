@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bucket List Goal Planner with Target-Date",
+  title: "Bucket List Goal Planner with Target-Date Countdown",
   intro:
     "The Bucket List Goal Planner turns one bucket-list ambition and a target date into a live countdown, showing exactly how many days are left — or how many days the goal is already overdue. Enter the goal and the date you want it done by and it returns the formatted target, the day count, and a three-step starting plan: break it into three milestones, set a monthly reminder, and check progress weekly. It is for the goal that has been sitting on a list for years without a date attached to it.",
   useCases: [

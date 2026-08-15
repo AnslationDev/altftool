@@ -1,5 +1,5 @@
 const seo = {
-  title: "British Airways Baggage Allowance Checker",
+  title: "British Airways Baggage Allowance Checker by Piece",
   metaDescription:
     "Counts bags the way BA does: 56x45x25 cm cabin bag, 40x30x15 cm handbag, 90x75x43 cm checked pieces at 23 kg or 32 kg, extra-bag and heavy-bag fees apart.",
   steps: [

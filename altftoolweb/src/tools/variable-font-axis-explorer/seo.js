@@ -1,5 +1,5 @@
 const seo = {
-  title: "Variable Font Axis Tester: fvar Ranges",
+  title: "Variable Font Axis Tester: fvar Ranges and @font-face",
   metaDescription:
     "Open a .ttf or .otf and read its fvar table: every axis with its real min, default and max, every named instance, and the @font-face rule they imply.",
   steps: [

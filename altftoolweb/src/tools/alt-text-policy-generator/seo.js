@@ -1,5 +1,5 @@
 const seo = {
-  title: "Alt Text Policy Generator with WCAG 2.2 Rule",
+  title: "Alt Text Policy Generator with WCAG 2.2 Rule Per Type",
   metaDescription:
     "Write a team alt text policy: a rule, sentence pattern and example per image type, each tied to a WCAG criterion, plus the monthly authoring hours.",
   steps: [

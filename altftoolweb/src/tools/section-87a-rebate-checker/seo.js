@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 87A Rebate Checker – FY 2025-26 Zero Tax",
+  title: "Section 87A Rebate Checker – FY 2025-26 Zero Tax Limit",
   metaDescription:
     "Check your FY 2025-26 Section 87A rebate: Rs 60,000 up to Rs 12 lakh new regime, Rs 12,500 up to Rs 5 lakh old, with marginal relief.",
   steps: [

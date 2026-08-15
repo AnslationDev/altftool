@@ -1,5 +1,5 @@
 const seo = {
-  title: "Student Loan Calculator: Payment, Interest",
+  title: "Student Loan Calculator: Payment, Interest, Payoff",
   metaDescription:
     "Amortised monthly payment plus the grace-period interest that capitalises, a year-by-year schedule, and what an extra payment each month would save.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "BTU to Ton Converter - AC Cooling Capacity",
+  title: "BTU to Ton Converter - AC Cooling Capacity and COP",
   metaDescription:
     "Convert cooling capacity between BTU/h, tons (12,000 BTU/h each), kW and kcal/h, with the wattage drawn at your COP and the matching EER.",
   steps: [

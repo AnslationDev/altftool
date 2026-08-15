@@ -1,5 +1,5 @@
 const seo = {
-  title: "Medicine Schedule Builder: OD, BD, TDS, QDS",
+  title: "Medicine Schedule Builder: OD, BD, TDS, QDS or q8h",
   metaDescription:
     "Turns OD, BD, TDS, QDS, HS or a strict q4h-q12h interval into dated dose times for the whole course, with total doses and tablets to stock.",
   steps: [

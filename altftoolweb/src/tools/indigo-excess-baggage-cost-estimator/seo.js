@@ -1,5 +1,5 @@
 const seo = {
-  title: "IndiGo Excess Baggage: Counter vs Prepaid Slab",
+  title: "IndiGo Excess Baggage: Counter vs Prepaid Slab Cost",
   metaDescription:
     "Price extra kilos both ways: per-kg at check-in, rounded up, versus prepaid 3, 5, 10, 15, 20 or 30 kg blocks. Both rates are editable.",
   steps: [

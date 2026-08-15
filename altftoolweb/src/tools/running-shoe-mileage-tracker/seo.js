@@ -1,5 +1,5 @@
 const seo = {
-  title: "Running Shoe Mileage Tracker with 500-800 km",
+  title: "Running Shoe Mileage Tracker with 500-800 km Wear Limits",
   metaDescription:
     "Log kilometres per pair against its rated midsole life, get a warning at 80% used, and see a projected retirement date from your weekly volume.",
   steps: [

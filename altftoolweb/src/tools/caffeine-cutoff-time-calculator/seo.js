@@ -1,5 +1,5 @@
 const seo = {
-  title: "Caffeine Cutoff Calculator: Last Coffee Before",
+  title: "Caffeine Cutoff Calculator: Last Coffee Before Bed",
   metaDescription:
     "Enter bedtime, dose in mg and your caffeine half-life for the latest coffee time, never closer than the 6-hour evidence-backed gap.",
   steps: [

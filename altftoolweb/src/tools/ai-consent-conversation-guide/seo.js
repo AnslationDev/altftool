@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Disclosure Guide: Do You Have to Tell",
+  title: "AI Disclosure Guide: Do You Have to Tell the Client?",
   metaDescription:
     "Grades the disclosure a job needs — none, spoken, written or sign-off — from AI involvement, audience and aggravating factors, then writes the script.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flipkart Image Spec Checker: 500px Min, 1500px",
+  title: "Flipkart Image Spec Checker: 500px Min, 1500px Zoom",
   metaDescription:
     "Check a catalogue image before upload: 500 px minimum side, 1500 px recommended for zoom, a near-square crop, 80-90% frame fill and a white background.",
   steps: [

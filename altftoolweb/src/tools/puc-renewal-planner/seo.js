@@ -1,5 +1,5 @@
 const seo = {
-  title: "PUC Renewal Planner: Expiry Date, Booking Day",
+  title: "PUC Renewal Planner: Expiry Date, Booking Day, Cost",
   metaDescription:
     "Turn your PUC certificate date into expiry and booking dates on the 12-month first, 6-month renewal rule, with test cost by vehicle type.",
   steps: [

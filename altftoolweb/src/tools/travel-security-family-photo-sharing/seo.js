@@ -1,5 +1,5 @@
 const seo = {
-  title: "Holiday Photo Sharing: Score Your Empty-House",
+  title: "Holiday Photo Sharing: Score Your Empty-House Risk",
   metaDescription:
     "Score how many nights of an empty house your posting advertises. Live posting, public audience, dates and tags weighed; mitigations capped at 60%.",
   steps: [

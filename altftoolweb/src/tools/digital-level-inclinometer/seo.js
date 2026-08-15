@@ -1,5 +1,5 @@
 const seo = {
-  title: "Phone Digital Level & Inclinometer",
+  title: "Phone Digital Level & Inclinometer (Tilt in Degrees)",
   metaDescription:
     "Use your phone's orientation sensor as a spirit level: logs beta, gamma and combined tilt in degrees, keeping the last 200 readings in your browser.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Key Signature Quiz — Name Major & Minor Keys",
+  title: "Key Signature Quiz — Name Major & Minor Keys Instantly",
   metaDescription:
     "Drill all 15 key signatures with instant scoring. Every answer shows the last-sharp or second-to-last-flat rule, plus a full reference table.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Privacy Policy Diff: Find Retention and Sharing",
+  title: "Privacy Policy Diff: Find Retention and Sharing Edits",
   metaDescription:
     "Compares two policy versions line by line and counts how many added or removed lines contain collect, share, retain, delete, consent, transfer or cookie.",
   steps: [

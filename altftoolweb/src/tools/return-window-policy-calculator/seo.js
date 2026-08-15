@@ -1,5 +1,5 @@
 const seo = {
-  title: "Return Window Calculator: Request, Pickup",
+  title: "Return Window Calculator: Request, Pickup & Refund Dates",
   metaDescription:
     "Sets a per-category return window and dates three deadlines - request, pickup, refund - from delivery, dispatch or order date; 12 category presets ship.",
   intro:

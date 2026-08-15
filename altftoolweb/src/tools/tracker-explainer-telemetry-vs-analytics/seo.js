@@ -1,5 +1,5 @@
 const seo = {
-  title: "Telemetry vs Analytics: Which Signals Need",
+  title: "Telemetry vs Analytics: Which Signals Need Consent",
   metaDescription:
     "Tick the signals your product collects and see which trigger ePrivacy Article 5(3) consent, scored on five checks, with a drafted measurement notice.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Festival & Gifting Budget Planner with Gift-Tax",
+  title: "Festival & Gifting Budget Planner with Gift-Tax Flag",
   metaDescription:
     "Multiply people by amount for each gift group, add food, travel, decor and clothing, compare against your cap, and flag gifts over ₹50,000.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "School Bag Weight Checker: 10% Rule and Class",
+  title: "School Bag Weight Checker: 10% Rule and Class Limits",
   metaDescription:
     "Checks a loaded bag against the 10% of body weight rule and the class-wise 1.6–5.0 kg limits in India's School Bag Policy 2020, and what to remove.",
   steps: [

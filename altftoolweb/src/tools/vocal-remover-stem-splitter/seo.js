@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vocal Remover & Stem Splitter: 4 WAV Stems",
+  title: "Vocal Remover & Stem Splitter: 4 WAV Stems in Browser",
   intro:
     "The Vocal Remover & Stem Splitter runs FFmpeg in your browser to pull four approximate stems out of a stereo audio file: an instrumental made by centre-channel cancellation (left minus right), a vocal pass band-limited to 120 Hz–5 kHz and downmixed to mono, a bass stem low-passed at 250 Hz, and a drum stem high-passed at 250 Hz with 4:1 compression above -18 dB. It is for musicians, karaoke makers and video editors who need a usable backing track or a rough isolated part in minutes. These are deterministic filter approximations rather than neural source separation, so expect some leakage and check the result before you use it.",
   useCases: [

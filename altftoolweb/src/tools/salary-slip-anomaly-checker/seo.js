@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salary Slip Checker: Do Gross, Deductions",
+  title: "Salary Slip Checker: Do Gross, Deductions and Net Add Up?",
   metaDescription:
     "Paste Month | gross | deductions | net for each payslip to flag any totals mismatch over 0.01 or a net swing past your threshold.",
   steps: [

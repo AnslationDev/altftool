@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flesch-Kincaid Grade Checker and AI Rewrite",
+  title: "Flesch-Kincaid Grade Checker and AI Rewrite Prompt",
   metaDescription:
     "Score any text with the Flesch-Kincaid formula, then build a rewrite prompt with a hard sentence-length cap for grades 2-3 through college level.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flu Shot Timing Planner: Booking and Protection",
+  title: "Flu Shot Timing Planner: Booking and Protection Dates",
   metaDescription:
     "Get a booking date for your hemisphere's flu season and the day protection starts, 14 days after the shot, with travel and child two-dose schedules.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bullet Points to Prose: AI Prompt with a Word",
+  title: "Bullet Points to Prose: AI Prompt with a Word Budget",
   metaDescription:
     "Paste bullet notes and get an AI prompt with a computed word, sentence and paragraph budget — and a hard rule against inventing facts.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "India Payment Gateway Fees: UPI, Cards and 18%",
+  title: "India Payment Gateway Fees: UPI, Cards and 18% GST",
   metaDescription:
     "Applies each rail's rate to your own payment mix, adds 18% GST and reports an effective percentage and cost per transaction, with UPI and RuPay at zero.",
   steps: [

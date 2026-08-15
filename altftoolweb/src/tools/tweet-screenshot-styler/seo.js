@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tweet Screenshot Styler: SVG Quote Cards",
+  title: "Tweet Screenshot Styler: SVG Quote Cards at 1080px",
   metaDescription:
     "Typeset your own post as a quote card at 1080x1080, 1080x1350, 1080x1920 or 1200x675 and download it as SVG. Counts truncate like X: 1,299 shows 1.2K.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Study Timetable Planner: 60-Min Blocks, Hardest",
+  title: "Study Timetable Planner: 60-Min Blocks, Hardest First",
   metaDescription:
     "Turn subjects with difficulty, priority and exam dates into 7 days of dated 60-minute study blocks with 15-minute breaks. Saves locally, exports JSON.",
   steps: [

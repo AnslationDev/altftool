@@ -1,5 +1,5 @@
 const seo = {
-  title: "Personal Loan EMI Calculator with Fees, GST",
+  title: "Personal Loan EMI Calculator with Fees, GST and APR",
   metaDescription:
     "EMI on a reducing-balance personal loan plus total interest, processing fee, 18% GST, the amount actually credited and effective annual cost.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Number Plate Validator: State, BH",
+  title: "Indian Number Plate Validator: State, BH & Diplomatic",
   metaDescription:
     "Check an Indian registration number against the state series, BH series, diplomatic and defence formats — with each part parsed and the regex to reuse.",
   steps: [

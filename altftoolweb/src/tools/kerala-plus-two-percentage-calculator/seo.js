@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kerala Plus Two Percentage Calculator",
+  title: "Kerala Plus Two Percentage Calculator (DHSE Marks)",
   metaDescription:
     "Convert DHSE marks to the percentage forms ask for — on the 1200-mark combined or 600-mark Plus Two total — plus A+ to E grades and GPA out of 9.",
   steps: [

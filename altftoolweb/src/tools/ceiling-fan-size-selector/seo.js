@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ceiling Fan Size Selector: Sweep, Downrod",
+  title: "Ceiling Fan Size Selector: Sweep, Downrod, Airflow",
   metaDescription:
     "Enter room length, width and ceiling height to get the fan sweep in mm, how many fans, the downrod to order and air changes per minute.",
   steps: [

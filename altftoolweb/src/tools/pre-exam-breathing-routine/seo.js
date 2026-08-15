@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pre-Exam Breathing Timer: Box, 4-7-8 & 4-6",
+  title: "Pre-Exam Breathing Timer: Box, 4-7-8 & 4-6 Patterns",
   metaDescription:
     "Paced timer for box breathing 4-4-4-4, 4-7-8 or a 4-6 extended exhale — pick a pattern, press Start, and follow the count for two to three minutes.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "GitHub Actions Secrets: Org, Repo or Environment",
+  title: "GitHub Actions Secrets: Org, Repo or Environment Scope?",
   metaDescription:
     "Describe each CI secret and get the right GitHub Actions scope — organization, repository or environment — with reasons, gh CLI commands and limit checks.",
   steps: [

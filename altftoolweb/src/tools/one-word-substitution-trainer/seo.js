@@ -1,5 +1,5 @@
 const seo = {
-  title: "One Word Substitution: 80-Item MCQ Drill",
+  title: "One Word Substitution: 80-Item MCQ Drill with Roots",
   intro:
     "One Word Substitution Trainer drills the 80 substitutions that repeat across SSC, banking, railway and state public-service papers, in multiple-choice form with a root explanation after every answer. A one-word substitution replaces a descriptive phrase with the single word that carries the same sense — 'one who collects coins' becomes numismatist. Distractors are drawn from the same word family as the answer, because that is how real papers set them, and eliminating options by topic alone will not work here.",
   useCases: [

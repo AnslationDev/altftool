@@ -1,5 +1,5 @@
 const seo = {
-  title: "Teething Timeline Tracker: 20 Baby Teeth, Real",
+  title: "Teething Timeline Tracker: 20 Baby Teeth, Real Dates",
   metaDescription:
     "Turn a date of birth into calendar dates for all 20 primary teeth in eruption order, from lower central incisors at 6-10 months to second molars.",
   steps: [

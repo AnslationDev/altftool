@@ -1,5 +1,5 @@
 const seo = {
-  title: "KYC Expiry Scam SMS: Anatomy and 13-Marker",
+  title: "KYC Expiry Scam SMS: Anatomy and 13-Marker Scanner",
   metaDescription:
     "Line-by-line teardown of the KYC-expiry scam SMS, plus a scanner scoring anything you paste on 13 weighted markers and each link's registrable domain.",
   steps: [

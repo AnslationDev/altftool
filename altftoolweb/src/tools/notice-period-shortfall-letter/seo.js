@@ -1,5 +1,5 @@
 const seo = {
-  title: "Notice Period Shortfall: Buyout Cost & Waiver",
+  title: "Notice Period Shortfall: Buyout Cost & Waiver Letter",
   metaDescription:
     "Prices unserved notice days at salary ÷ 30, 26 or the month's actual days, sets leave encashment against it, and drafts the waiver or buyout request.",
   steps: [

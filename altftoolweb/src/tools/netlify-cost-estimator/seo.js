@@ -1,5 +1,5 @@
 const seo = {
-  title: "Netlify Cost Estimator: Credits, Plans",
+  title: "Netlify Cost Estimator: Credits, Plans & Recharge Packs",
   metaDescription:
     "Convert bandwidth, function compute, deploys and requests into Netlify credits - Free 300, Personal $9/1,000, Pro from $20/3,000 - with recharge packs.",
   steps: [

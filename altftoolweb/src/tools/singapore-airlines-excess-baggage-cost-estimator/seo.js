@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Airlines Excess Baggage: Prepaid",
+  title: "Singapore Airlines Excess Baggage: Prepaid vs Airport",
   metaDescription:
     "Works out excess kilos over your fare brand allowance plus KrisFlyer bonus, and prices them at the airport rate against 5-40 kg advance blocks.",
   steps: [

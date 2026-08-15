@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Resume Prompt Builder: Pages, Bullets",
+  title: "Indian Resume Prompt Builder: Pages, Bullets, Keywords",
   metaDescription:
     "Budget your resume at 46 lines a page and ~28 words a bullet, check job-description keyword coverage, and get an AI prompt with notice period and CTC.",
   steps: [

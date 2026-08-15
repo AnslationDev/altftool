@@ -1,5 +1,5 @@
 const seo = {
-  title: "NRE vs NRO Account Calculator: Post-Tax Maturity",
+  title: "NRE vs NRO Account Calculator: Post-Tax Maturity & TDS",
   metaDescription:
     "Compare the same deposit as NRE vs NRO: NRE interest is tax-exempt, NRO faces 31.2% TDS (or a DTAA rate), plus the USD 1 million repatriation cap.",
   steps: [

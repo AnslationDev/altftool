@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wedding Font Pairing: x-Height in mm and 300 dpi",
+  title: "Wedding Font Pairing: x-Height in mm and 300 dpi Sizes",
   metaDescription:
     "Eight script, caps and serif pairings for invitations, checked as printed x-height in millimetres against the 1.4 mm legibility mark, plus dpi artboards.",
   intro:

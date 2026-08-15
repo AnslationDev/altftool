@@ -1,5 +1,5 @@
 const seo = {
-  title: "WebAuthn Debugger: Decode clientDataJSON",
+  title: "WebAuthn Debugger: Decode clientDataJSON and authData",
   metaDescription:
     "Base64url-decodes clientDataJSON, walks the attestation CBOR, and unpacks authenticatorData: rpIdHash, all eight flag bits, counter, AAGUID, COSE key.",
   steps: [

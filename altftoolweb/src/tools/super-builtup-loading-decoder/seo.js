@@ -1,5 +1,5 @@
 const seo = {
-  title: "Super Built-Up vs Carpet Area: Real Price per Sq",
+  title: "Super Built-Up vs Carpet Area: Real Price per Sq Ft",
   metaDescription:
     "Restate two flats on one RERA carpet-area basis and get the real rate per sq ft of carpet, with the loading each quote implies on all three denominators.",
   intro:

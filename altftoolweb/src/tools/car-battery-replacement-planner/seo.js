@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Battery Replacement Planner: How Long",
+  title: "Car Battery Replacement Planner: How Long Is Left?",
   metaDescription:
     "Estimates remaining starter-battery life from type — flooded, MF, EFB or AGM — adjusted for heat and short trips, minus a penalty for symptoms you see.",
   steps: [

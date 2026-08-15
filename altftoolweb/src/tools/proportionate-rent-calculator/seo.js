@@ -1,5 +1,5 @@
 const seo = {
-  title: "Proportionate Rent Calculator: Pro-Rata Part",
+  title: "Proportionate Rent Calculator: Pro-Rata Part Months",
   metaDescription:
     "Pro-rate rent for a move-in or move-out part month by actual days, a 30-day month or a 365-day year, with a month-by-month breakdown.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Electricity Tariff Comparator for Your Own kWh",
+  title: "Electricity Tariff Comparator for Your Own kWh Split",
   metaDescription:
     "Ranks plans on your own off-peak, standard and peak kWh: total = (fixed charge + energy) x (1 + tax %), with unpriced bands flagged as Missing labels.",
   steps: [

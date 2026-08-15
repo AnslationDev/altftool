@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pillarbox & Letterbox Bar Calculator with ffmpeg",
+  title: "Pillarbox & Letterbox Bar Calculator with ffmpeg Pad",
   metaDescription:
     "Fit any ratio inside any frame: exact bar thickness per side, scaled size, even-pixel encoder dimensions and a copy-paste ffmpeg pad filter.",
   steps: [

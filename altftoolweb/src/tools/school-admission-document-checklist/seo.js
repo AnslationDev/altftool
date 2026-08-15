@@ -1,5 +1,5 @@
 const seo = {
-  title: "School Admission Documents by Board, Class",
+  title: "School Admission Documents by Board, Class & Scenario",
   metaDescription:
     "Build the admission document list by board, class and joining route, with the six-year Class 1 age check against your school's cut-off date.",
   steps: [

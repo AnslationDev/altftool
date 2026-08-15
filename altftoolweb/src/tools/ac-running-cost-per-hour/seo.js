@@ -1,5 +1,5 @@
 const seo = {
-  title: "AC Running Cost Per Hour: Tonnage, ISEER",
+  title: "AC Running Cost Per Hour: Tonnage, ISEER and Tariff",
   metaDescription:
     "Cooling capacity divided by ISEER gives the average draw; times your rupee tariff it gives cost per hour, day and month. 1 ton = 3,516.85 W.",
   steps: [

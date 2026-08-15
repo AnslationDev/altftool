@@ -1,5 +1,5 @@
 const seo = {
-  title: "Job Scam Deposit Checker — 8 Signals, Scored",
+  title: "Job Scam Deposit Checker — 8 Signals, Scored 0-100",
   metaDescription:
     "Paste a job offer or recruiter chat and see eight scam signals scored 0-100: deposits, gift cards, money-mule forwarding, domain mismatch. Runs locally.",
   steps: [

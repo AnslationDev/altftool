@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salary Slip Generator: Payslip with Net Pay",
+  title: "Salary Slip Generator: Payslip with Net Pay in Words",
   metaDescription:
     "Build a monthly payslip from your own earning and deduction heads, prorate by paid days, and get gross, deductions and net pay spelled out in words.",
   steps: [

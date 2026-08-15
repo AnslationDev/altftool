@@ -1,5 +1,5 @@
 const seo = {
-  title: "Menstrual Cup Size Finder: Diameter, Length",
+  title: "Menstrual Cup Size Finder: Diameter, Length, Firmness",
   metaDescription:
     "Age and birth history set the diameter, your measured cervix height sets the length, pelvic floor sets firmness. Brand-neutral, no product picks.",
   steps: [

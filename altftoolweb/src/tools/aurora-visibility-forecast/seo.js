@@ -1,5 +1,5 @@
 const seo = {
-  title: "Aurora Visibility Forecast: Kp Index",
+  title: "Aurora Visibility Forecast: Kp Index vs Your Latitude",
   steps: [
     "Enter your latitude and longitude, or press Use device location to fill them from the browser.",
     "Press Get current result to fetch the latest planetary K-index from NOAA's Space Weather Prediction Center.",

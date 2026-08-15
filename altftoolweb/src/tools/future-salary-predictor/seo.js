@@ -1,5 +1,5 @@
 const seo = {
-  title: "Future Salary Predictor: Compound Raises to 50",
+  title: "Future Salary Predictor: Compound Raises to 50 Years",
   metaDescription:
     "Compound your salary at a fixed annual raise for up to 50 years: final-year pay, total earned, average, and a year-by-year cumulative table.",
   steps: [

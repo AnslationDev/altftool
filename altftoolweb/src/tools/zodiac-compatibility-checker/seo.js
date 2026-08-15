@@ -1,5 +1,5 @@
 const seo = {
-  title: "Zodiac Compatibility Score from the Classical",
+  title: "Zodiac Compatibility Score from the Classical Aspect",
   metaDescription:
     "Compare two sun signs or birth dates for a 0-100 score set by the aspect between them - trine 92, sextile 84, opposition 74 - with the working shown.",
   steps: [

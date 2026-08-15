@@ -1,5 +1,5 @@
 const seo = {
-  title: "Smile Detector: 68-Point Landmark Smile Score",
+  title: "Smile Detector: 68-Point Landmark Smile Score & Report",
   metaDescription:
     "Upload a photo to get a smile score from the model's happy probability, plus mouth curve, teeth, eye squint, cheek raise and symmetry — all in-browser.",
   steps: [

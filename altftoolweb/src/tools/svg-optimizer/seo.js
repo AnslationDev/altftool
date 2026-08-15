@@ -1,5 +1,5 @@
 const seo = {
-  title: "SVG Optimizer: Strip Metadata, Round Path",
+  title: "SVG Optimizer: Strip Metadata, Round Path Precision",
   metaDescription:
     "Removes comments, metadata blocks, sodipodi and inkscape:* leftovers plus SVG 1.1 default attributes, rounds coordinates, and keeps every referenced id.",
   steps: [

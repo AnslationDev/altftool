@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stock Photo Attribution Generator: TASL Credit",
+  title: "Stock Photo Attribution Generator: TASL Credit Lines",
   metaDescription:
     "Build a credit line for a Creative Commons, Unsplash, Pexels, Getty or Shutterstock image in plain text, HTML or Markdown, with licence terms flagged.",
   steps: [

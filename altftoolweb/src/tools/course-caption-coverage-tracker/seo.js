@@ -1,5 +1,5 @@
 const seo = {
-  title: "Course Caption Coverage by Runtime, Not Lesson",
+  title: "Course Caption Coverage by Runtime, Not Lesson Count",
   metaDescription:
     "Tick captions and transcripts per lesson and see coverage by runtime as well as lesson count, plus hours left at your x-runtime editing pace. WCAG 1.2.2.",
   steps: [

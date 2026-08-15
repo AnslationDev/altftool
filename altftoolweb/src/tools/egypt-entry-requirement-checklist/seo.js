@@ -1,5 +1,5 @@
 const seo = {
-  title: "Egypt Visa Checklist: Arrival, e-Visa or Sinai",
+  title: "Egypt Visa Checklist: Arrival, e-Visa or Sinai Permit",
   metaDescription:
     "Price Egypt's USD 25 visa on arrival, USD 25 or 60 e-visa and free 15-day Sinai permission for your party, and test six months of passport validity.",
   steps: [

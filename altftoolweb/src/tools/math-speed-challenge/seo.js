@@ -1,5 +1,5 @@
 const seo = {
-  title: "Math Speed Challenge: Timed Mental Arithmetic",
+  title: "Math Speed Challenge: Timed Mental Arithmetic Drill",
   metaDescription:
     "Pick operations and a 30, 60, 90 or 120-second round; numbers grow from 20 to 1000 as your streak reaches 5, 15, 30, 50 and 80 correct in a row.",
   steps: [

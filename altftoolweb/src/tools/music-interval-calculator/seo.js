@@ -1,5 +1,5 @@
 const seo = {
-  title: "Music Interval Calculator: Name, Semitones",
+  title: "Music Interval Calculator: Name, Semitones & Cents",
   metaDescription:
     "Pick two notes to get the spelling-aware interval name — C–F# is an augmented 4th, C–Gb a diminished 5th — plus cents, inversion and just ratios.",
   steps: [

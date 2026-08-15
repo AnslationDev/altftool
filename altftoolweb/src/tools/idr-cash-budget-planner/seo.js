@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indonesia Rupiah Cash Budget: Notes, ATM Fees",
+  title: "Indonesia Rupiah Cash Budget: Notes, ATM Fees, GST",
   metaDescription:
     "Size the rupiah float for Bali or Java, price the changer markup and GST, count per-withdrawal ATM fees, and test the USD 3,000 RBI note limit.",
   steps: [

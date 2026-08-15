@@ -1,5 +1,5 @@
 const seo = {
-  title: "Silver Investment Return Calculator: GST",
+  title: "Silver Investment Return Calculator: GST & Buyback",
   metaDescription:
     "Prices both ends of a silver trade - 3% GST, premium and buyback discount - to show real profit, annualised return and break-even price per kg.",
   steps: [

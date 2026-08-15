@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Renovation Budget Planner with GST",
+  title: "Home Renovation Budget Planner with GST & Contingency",
   metaDescription:
     "Price each room at its own ₹/sq ft rate, add designer fees, a 10-15% contingency and 18% GST on works contracts, and see the monthly saving needed.",
   steps: [

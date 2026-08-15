@@ -1,5 +1,5 @@
 const seo = {
-  title: "GDPR Article 20 Data Portability Request",
+  title: "GDPR Article 20 Data Portability Request Generator",
   metaDescription:
     "Drafts a GDPR Art. 20 portability letter, switches to an Art. 15 access request when the lawful basis rules it out, and dates the reply deadline.",
   steps: [

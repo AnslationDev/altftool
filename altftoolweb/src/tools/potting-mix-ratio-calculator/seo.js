@@ -1,5 +1,5 @@
 const seo = {
-  title: "Potting Mix Ratio Calculator: Litres per Pot",
+  title: "Potting Mix Ratio Calculator: Litres per Pot & Parts",
   metaDescription:
     "Pot size becomes litres of soil, compost, cocopeat, perlite and sand — tapered pots use the truncated-cone volume, and cocopeat converts to 5 kg blocks.",
   steps: [

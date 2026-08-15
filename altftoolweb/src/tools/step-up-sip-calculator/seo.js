@@ -1,5 +1,5 @@
 const seo = {
-  title: "Step-Up SIP Calculator: Month-by-Month vs Flat",
+  title: "Step-Up SIP Calculator: Month-by-Month vs Flat SIP",
   metaDescription:
     "Raise your SIP a fixed % each year and see the corpus month by month, next to a flat SIP. Goal seek solves the starting instalment for a target.",
   steps: [

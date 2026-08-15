@@ -1,5 +1,5 @@
 const seo = {
-  title: "Powerlifting Total Tracker – Meet vs Gym Total",
+  title: "Powerlifting Total Tracker – Meet vs Gym Total Log",
   metaDescription:
     "Log dated squat, bench and deadlift sessions to see your best single-day total vs the all-time gym total, lift-balance flags and bodyweight multiples.",
   steps: [

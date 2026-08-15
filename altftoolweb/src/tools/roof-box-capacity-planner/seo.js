@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roof Box Capacity Planner: Litres vs Roof Load",
+  title: "Roof Box Capacity Planner: Litres vs Roof Load Limit",
   metaDescription:
     "Check a packing list against usable litres and your car's dynamic roof load limit — bars and empty box included — plus the highway fuel penalty.",
   steps: [

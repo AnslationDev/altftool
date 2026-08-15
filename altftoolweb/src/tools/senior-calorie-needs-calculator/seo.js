@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Calorie Calculator: Mifflin-St Jeor",
+  title: "Senior Calorie Calculator: Mifflin-St Jeor Over 50",
   metaDescription:
     "Daily calories for adults 50+ from Mifflin-St Jeor, an activity factor of 1.2-1.9, a 1,200/1,500 kcal floor and the 1.0-1.2 g/kg senior protein target.",
   steps: [

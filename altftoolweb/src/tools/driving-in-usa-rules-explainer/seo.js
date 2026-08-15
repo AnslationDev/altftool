@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in the USA: State Speed Limits and BAC",
+  title: "Driving in the USA: State Speed Limits and BAC Rules",
   metaDescription:
     "Pick your state for the speed maximum in mph and km/h, the blood-alcohol limit that applies to you (0.08%, Utah 0.05%) and whether you need an IDP.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Result Day Plan: Support, Checking, First",
+  title: "Exam Result Day Plan: Support, Checking, First Moves",
   metaDescription:
     "Decide before results land: your support people, how you will check the score, and one first move for better, as-expected and below-hoped outcomes.",
   steps: [

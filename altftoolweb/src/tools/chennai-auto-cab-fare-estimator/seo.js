@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chennai Auto and Cab Fare Estimator",
+  title: "Chennai Auto and Cab Fare Estimator (₹25 + ₹12/km)",
   metaDescription:
     "Applies the notified auto meter — ₹25 for 1.8 km, ₹12/km after, ₹3 per 5 min waiting, 50% from 11 pm to 5 am — or prices an app cab with surge.",
   steps: [

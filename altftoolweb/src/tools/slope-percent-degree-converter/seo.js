@@ -1,5 +1,5 @@
 const seo = {
-  title: "Slope Converter: Percent, Degrees, 1-in-X",
+  title: "Slope Converter: Percent, Degrees, 1-in-X, in/ft, mm/m",
   metaDescription:
     "Percent grade is rise ÷ run x 100 and degrees is its arctangent, so 100% is 45°. Converts to 1-in-X, inches per foot, mm/m and roof pitch in twelfths.",
   steps: [

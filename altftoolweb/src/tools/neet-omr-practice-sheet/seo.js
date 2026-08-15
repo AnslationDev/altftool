@@ -1,5 +1,5 @@
 const seo = {
-  title: "NEET OMR Sheet: Print 180 or 200-Question",
+  title: "NEET OMR Sheet: Print 180 or 200-Question Practice",
   metaDescription:
     "Prints a NEET-style bubble sheet with (1)-(4) options, roll number grid and booklet code — 2025's 180 questions or the 2021-24 200-question layout.",
   steps: [

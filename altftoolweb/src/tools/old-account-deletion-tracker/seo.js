@@ -1,5 +1,5 @@
 const seo = {
-  title: "Account Deletion Tracker with GDPR and CCPA",
+  title: "Account Deletion Tracker with GDPR and CCPA Deadlines",
   metaDescription:
     "Track dormant accounts you are closing — one calendar month under GDPR, 45 days under CCPA — with overdue flags and a proof reference required.",
   steps: [

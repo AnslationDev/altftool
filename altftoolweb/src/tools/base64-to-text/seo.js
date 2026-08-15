@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base64 to Text Decoder with URL-Safe and Padding",
+  title: "Base64 to Text Decoder with URL-Safe and Padding Fix",
   metaDescription:
     "Decode Base64 to UTF-8 in the browser with atob: missing = padding restored, base64url - and _ handled, MIME line breaks and data: headers stripped.",
   intro:

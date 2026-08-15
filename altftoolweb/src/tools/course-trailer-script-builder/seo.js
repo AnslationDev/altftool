@@ -1,5 +1,5 @@
 const seo = {
-  title: "Course Trailer Script Builder with Per-Beat Word",
+  title: "Course Trailer Script Builder with Per-Beat Word Counts",
   metaDescription:
     "Split a 15–300 second course trailer across seven beats — hook to call to action — and get each beat's seconds and word budget at 120, 140 or 160 wpm.",
   steps: [

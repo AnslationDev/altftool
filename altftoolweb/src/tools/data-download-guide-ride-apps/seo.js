@@ -1,5 +1,5 @@
 const seo = {
-  title: "Uber, Ola & Rapido Data Download Guide",
+  title: "Uber, Ola & Rapido Data Download Guide & Deadlines",
   metaDescription:
     "Plan a ride-app data request: count the GPS points held about you, size the archive, and cite the IT Rules 2021 24-hour/15-day or 30-day GDPR deadlines.",
   steps: [

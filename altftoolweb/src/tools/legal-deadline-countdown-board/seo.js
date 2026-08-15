@@ -1,5 +1,5 @@
 const seo = {
-  title: "Legal Deadline Tracker: Working Days & Start-By",
+  title: "Legal Deadline Tracker: Working Days & Start-By Dates",
   metaDescription:
     "Ranks every filing and limitation date by urgency with calendar days, working days net of weekends and registry holidays, and the date to start drafting.",
   steps: [

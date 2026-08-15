@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brick Calculator: Bricks, Cement and Sand",
+  title: "Brick Calculator: Bricks, Cement and Sand for a Wall",
   metaDescription:
     "Wall size, brick size and joint thickness give the brick count, wet and dry mortar, 50 kg cement bags, sand in m³ and cft, and mixing water.",
   steps: [

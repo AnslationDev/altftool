@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text to Handwriting Converter: 40 Fonts, PNG",
+  title: "Text to Handwriting Converter: 40 Fonts, PNG or PDF",
   metaDescription:
     "Renders typed or imported text as a handwritten A4-style page in one of 40 fonts on ruled, grid, blank or parchment paper — download as PNG or PDF.",
   steps: [

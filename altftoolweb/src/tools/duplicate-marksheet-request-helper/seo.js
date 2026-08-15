@@ -1,5 +1,5 @@
 const seo = {
-  title: "Duplicate Marksheet Application Letter",
+  title: "Duplicate Marksheet Application Letter & Affidavit",
   metaDescription:
     "Draft the board or university application, a notarised-affidavit skeleton and a checklist that changes with the reason — lost, stolen or damaged.",
   steps: [

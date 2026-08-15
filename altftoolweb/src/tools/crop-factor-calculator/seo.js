@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crop Factor Calculator: Equivalent Focal Length",
+  title: "Crop Factor Calculator: Equivalent Focal Length, f-Stop",
   metaDescription:
     "Pick a sensor to get its crop factor from the 43.27 mm full-frame diagonal, plus equivalent focal length, f-number, ISO and angle of view.",
   steps: [

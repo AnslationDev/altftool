@@ -1,5 +1,5 @@
 const seo = {
-  title: "English Pronunciation Practice",
+  title: "English Pronunciation Practice with Your Microphone",
   metaDescription:
     "Hear 30 tricky English words and phrases read aloud, then say them back — your browser transcribes the attempt and marks it against the target.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Deep Freezer Size Selector: Litres and Holdover",
+  title: "Deep Freezer Size Selector: Litres and Holdover Hours",
   metaDescription:
     "Converts household size or kg of food into gross litres at 0.56 kg/L, allows 80% chest or 70% upright packing, and gives holdover hours in a power cut.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "HRA Exemption Calculator: Section 10(13A) Three",
+  title: "HRA Exemption Calculator: Section 10(13A) Three Rules",
   metaDescription:
     "Shows actual HRA, rent minus 10% of basic + DA, and 50% metro or 40% non-metro side by side, marks which one binds, and the tax saved at your slab.",
   steps: [

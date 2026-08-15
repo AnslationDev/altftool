@@ -1,5 +1,5 @@
 const seo = {
-  title: "GDPR Checklist for Blogs, Scoped to Features You",
+  title: "GDPR Checklist for Blogs, Scoped to Features You Use",
   metaDescription:
     "Shows only the GDPR duties your analytics, ads, newsletter or non-EU hosting trigger, names the article behind each, and counts critical items triple.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creatinine mg/dL to µmol/L Converter",
+  title: "Creatinine mg/dL to µmol/L Converter with CKD-EPI eGFR",
   metaDescription:
     "Convert serum creatinine between mg/dL and µmol/L with the 88.4 factor, check adult reference intervals, and estimate GFR via the CKD-EPI 2021 equation.",
   steps: [

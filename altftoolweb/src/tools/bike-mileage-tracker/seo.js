@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bike Mileage Tracker: Tank-to-Tank km/l",
+  title: "Bike Mileage Tracker: Tank-to-Tank km/l and Cost/km",
   metaDescription:
     "Log brim-to-brim fill-ups for true distance-weighted km/l, cost per kilometre and a monthly fuel bill. Partial top-ups are carried forward, not dropped.",
   steps: [

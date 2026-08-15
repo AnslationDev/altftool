@@ -1,5 +1,5 @@
 const seo = {
-  title: "Microwave Running Cost: an 800 W Oven Draws 1230",
+  title: "Microwave Running Cost: an 800 W Oven Draws 1230 W",
   metaDescription:
     "Cost per reheat, month and year for solo, grill and convection — the door rating is output, so an 800 W oven pulls about 1230 W. Standby counted.",
   steps: [

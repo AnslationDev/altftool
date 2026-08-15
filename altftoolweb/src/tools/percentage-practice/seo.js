@@ -1,5 +1,5 @@
 const seo = {
-  title: "Percentage Practice: 7 Question Types, Worked",
+  title: "Percentage Practice: 7 Question Types, Worked Steps",
   metaDescription:
     "Unlimited percentage questions across 7 types and 5 difficulty levels, each marked with full working. Practice, 60-second timed or 3-life survival.",
   steps: [

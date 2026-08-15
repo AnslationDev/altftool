@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Phone Setup Checklist with Readiness",
+  title: "Travel Phone Setup Checklist with Readiness Scoring",
   metaDescription:
     "A phone checklist for one trip: tasks filter by roaming pack, eSIM, local SIM or Wi-Fi only, and readiness weights critical 3, recommended 2, optional 1.",
   steps: [

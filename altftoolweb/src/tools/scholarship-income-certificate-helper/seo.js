@@ -1,5 +1,5 @@
 const seo = {
-  title: "Income Certificate Calculator for Scholarships",
+  title: "Income Certificate Calculator for Scholarships, India",
   metaDescription:
     "Totals each earner's monthly income × 12 plus other annual income, then checks it against eight scheme ceilings from Rs 1 lakh to Rs 8 lakh.",
   steps: [

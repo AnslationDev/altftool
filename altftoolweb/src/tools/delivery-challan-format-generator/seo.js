@@ -1,5 +1,5 @@
 const seo = {
-  title: "Delivery Challan Format: Rule 55 CGST and E-Way",
+  title: "Delivery Challan Format: Rule 55 CGST and E-Way Bill",
   metaDescription:
     "Lays out all nine Rule 55(2) particulars in triplicate, totals consignment value per Explanation 2 to Rule 138(1), and dates the e-way bill validity.",
   steps: [

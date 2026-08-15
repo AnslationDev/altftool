@@ -1,5 +1,5 @@
 const seo = {
-  title: "DNS TTL Planner: Lower, Cut Over, Restore",
+  title: "DNS TTL Planner: Lower, Cut Over, Restore Timeline",
   metaDescription:
     "Turns your current TTL into a cutover schedule: lower it one doubled TTL period ahead, see when the change is visible, and restore the steady TTL.",
   steps: [

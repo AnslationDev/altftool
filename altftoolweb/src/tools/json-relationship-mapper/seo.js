@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON Relationship Mapper: Paths and Inferred",
+  title: "JSON Relationship Mapper: Paths and Inferred Foreign Keys",
   steps: [
     "Paste a document into the JSON input box, or press Load sample for the built-in project, teams and tasks payload.",
     "The mapper walks the parsed tree, addressing every node as $.teams[1].id and indexing each field named id by its value.",

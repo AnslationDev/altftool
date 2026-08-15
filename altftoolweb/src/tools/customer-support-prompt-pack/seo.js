@@ -1,5 +1,5 @@
 const seo = {
-  title: "Customer Support Reply Prompts + Flesch Grade",
+  title: "Customer Support Reply Prompts + Flesch Grade Check",
   metaDescription:
     "Score a draft reply with Flesch reading ease and Flesch-Kincaid grade, then build a rewrite prompt carrying your channel cap, tone and policy facts.",
   steps: [

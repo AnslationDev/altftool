@@ -1,5 +1,5 @@
 const seo = {
-  title: "Medical Report De-identifier: 9 Identifier",
+  title: "Medical Report De-identifier: 9 Identifier Categories",
   metaDescription:
     "Replace patient names, MRNs, dates, phones and clinician or facility names with numbered placeholders like [PATIENT_NAME_1], in your browser.",
   steps: [

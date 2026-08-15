@@ -1,5 +1,5 @@
 const seo = {
-  title: "Advance Tax Installment Calculator: 15%, 45%",
+  title: "Advance Tax Installment Calculator: 15%, 45%, 75%, 100%",
   steps: [
     "Enter your Estimated annual tax liability (₹), Expected TDS / TCS credits (₹) and Advance tax already paid (₹), or start from the Regular schedule preset.",
     "Leave the Eligible presumptive taxpayer toggle off for the four cumulative dates, or tick \"Use single 100% target by 15 March\" for the single presumptive target.",

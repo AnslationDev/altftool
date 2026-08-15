@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wedding Trip Packing List with Outfit & Baggage",
+  title: "Wedding Trip Packing List with Outfit & Baggage Weights",
   metaDescription:
     "Builds a wedding packing list by function - one outfit each, shoes by dress code - and weighs it against a 15 kg or 23 kg checked-bag allowance.",
   steps: [

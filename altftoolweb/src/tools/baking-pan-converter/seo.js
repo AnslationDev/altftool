@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baking Pan Size Converter: Exact Recipe",
+  title: "Baking Pan Size Converter: Exact Recipe Multiplier",
   metaDescription:
     "Scales recipes by pan brim volume — exact ingredient multiplier, bake-time and temperature advice, and overflow warnings past the two-thirds fill line.",
   intro:

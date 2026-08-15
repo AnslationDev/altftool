@@ -1,5 +1,5 @@
 const seo = {
-  title: "Life Stats: Heartbeats, Breaths and Steps Since",
+  title: "Life Stats: Heartbeats, Breaths and Steps Since Birth",
   metaDescription:
     "Enter your date of birth for 25+ lifetime totals — heartbeats at 80 a minute, 8,000 steps a day, dreams, meals and orbits — in six themed chapters.",
   steps: [

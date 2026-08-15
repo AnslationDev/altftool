@@ -1,5 +1,5 @@
 const seo = {
-  title: "Password Reuse Breach Checklist: 18 Steps",
+  title: "Password Reuse Breach Checklist: 18 Steps by Window",
   metaDescription:
     "Tick which account types share the leaked password to see the blast radius, then work 18 weighted steps in order — 24 hours, week, month, ongoing.",
   steps: [

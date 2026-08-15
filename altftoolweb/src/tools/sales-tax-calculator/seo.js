@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sales Tax Calculator: Add Tax or Remove It",
+  title: "Sales Tax Calculator: Add Tax or Remove It From a Total",
   metaDescription:
     "Add sales tax to a price or back it out of a tax-inclusive total by dividing by 1 + rate — see subtotal, tax, total and effective tax share at any rate.",
   steps: [

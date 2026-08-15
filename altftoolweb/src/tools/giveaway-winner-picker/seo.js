@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Giveaway Winner Picker with a Published",
+  title: "Random Giveaway Winner Picker with a Published Seed",
   metaDescription:
     "Draws winners with a seeded Fisher-Yates shuffle and prints the seed, so the same list and seed reproduce the same names. Duplicates handled.",
   steps: [

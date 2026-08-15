@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git LFS Storage, Bandwidth and Data-Pack Cost",
+  title: "Git LFS Storage, Bandwidth and Data-Pack Cost Estimator",
   metaDescription:
     "Projects LFS storage from versions kept forever, clone bandwidth from the working set, and the cost in $5 GitHub data packs beyond the 1 GiB free tier.",
   steps: [

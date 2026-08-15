@@ -1,5 +1,5 @@
 const seo = {
-  title: "Circled Text Generator - 4 Enclosed Unicode",
+  title: "Circled Text Generator - 4 Enclosed Unicode Styles",
   metaDescription:
     "Convert letters to enclosed Unicode in four styles: Circled, Filled Circle, Filled Square and Parenthesized. Real Unicode characters, not a font.",
   intro:

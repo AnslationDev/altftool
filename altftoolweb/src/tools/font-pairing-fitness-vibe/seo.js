@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gym & Fitness Font Pairing + Headline Fit",
+  title: "Gym & Fitness Font Pairing + Headline Fit Calculator",
   metaDescription:
     "Six condensed display and body pairs - Oswald, Anton, Bebas Neue, Teko - with the largest single-line px size for your headline at any container width.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Google Meet Background Maker: Blur Past the Mask",
+  title: "Google Meet Background Maker: Blur Past the Mask Limit",
   metaDescription:
     "Makes a 16:9 Meet background at 1920x1080 and blurs it past the 256x144 segmentation mask, so the cut-out edge round your shoulders stops shimmering.",
   steps: [

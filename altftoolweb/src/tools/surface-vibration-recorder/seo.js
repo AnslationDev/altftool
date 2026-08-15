@@ -1,5 +1,5 @@
 const seo = {
-  title: "Surface Vibration Recorder - X/Y/Z Accelerometer",
+  title: "Surface Vibration Recorder - X/Y/Z Accelerometer Log",
   metaDescription:
     "Logs your phone accelerometer as a timestamped timeline: X, Y and Z in m/s² to three decimals plus rotation rate, latest 200 samples.",
   steps: [

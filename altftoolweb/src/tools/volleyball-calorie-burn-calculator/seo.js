@@ -1,5 +1,5 @@
 const seo = {
-  title: "Volleyball Calorie Calculator: Beach 8.0",
+  title: "Volleyball Calorie Calculator: Beach 8.0 vs Indoor 6.0",
   metaDescription:
     "Calories burned per set from MET x 3.5 x kg / 200 — beach sand 8.0, competitive indoor 6.0, casual six-a-side 3.0, with breaks priced at 1.3 METs.",
   steps: [

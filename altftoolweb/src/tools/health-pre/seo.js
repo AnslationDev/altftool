@@ -1,5 +1,5 @@
 const seo = {
-  title: "Symptom Checker: Match Symptoms to 10 Common",
+  title: "Symptom Checker: Match Symptoms to 10 Common Conditions",
   metaDescription:
     "Tick symptoms across eight body systems and see the top five of ten conditions, each scored as matched symptoms over that condition's full list.",
   steps: [

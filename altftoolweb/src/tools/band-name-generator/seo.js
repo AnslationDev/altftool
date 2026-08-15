@@ -1,5 +1,5 @@
 const seo = {
-  title: "Band Name Generator: Rock, Indie, Metal",
+  title: "Band Name Generator: Rock, Indie, Metal, Electronic",
   metaDescription:
     "Get five 'The [adjective] [noun]' band names per run from genre-matched word lists - rock, indie, metal or electronic. Regenerate for more.",
   intro:

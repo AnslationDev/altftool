@@ -1,5 +1,5 @@
 const seo = {
-  title: "USA Dress Code Planner: Courthouse, Club",
+  title: "USA Dress Code Planner: Courthouse, Club, Packing List",
   metaDescription:
     "Pick a US region and month for NOAA 1991-2020 climate normals, posted courthouse and Las Vegas club dress rules, and a counted packing list.",
   steps: [

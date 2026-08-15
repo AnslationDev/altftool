@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ultrasound vs LMP Due Date: ACOG Redating",
+  title: "Ultrasound vs LMP Due Date: ACOG Redating Comparator",
   metaDescription:
     "Compares period-based and scan-based due dates, measures the gap in days and applies ACOG redating thresholds to show which date a clinic would keep.",
   steps: [

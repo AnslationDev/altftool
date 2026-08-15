@@ -1,5 +1,5 @@
 const seo = {
-  title: "VAT Calculator Ireland – 23%, 13.5%, 9% & 4.8%",
+  title: "VAT Calculator Ireland – 23%, 13.5%, 9% & 4.8% Rates",
   metaDescription:
     "Add or remove Irish VAT at 23%, 13.5%, 9%, 4.8% or zero, see net, VAT and gross, and check the €85,000/€42,500 registration thresholds.",
   steps: [

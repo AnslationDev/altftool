@@ -1,5 +1,5 @@
 const seo = {
-  title: "Punjabi Birthday Wishes in Gurmukhi & Roman",
+  title: "Punjabi Birthday Wishes in Gurmukhi & Roman Script",
   metaDescription:
     "Birthday messages matched to your relationship - veer, bhain, mummy ji, satkaryog forms - in Gurmukhi or Roman script, with an optional age line.",
   steps: [

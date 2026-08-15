@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pinned Comment Generator for YouTube, IG",
+  title: "Pinned Comment Generator for YouTube, IG & LinkedIn",
   metaDescription:
     "Build a pinned comment in order - correction, timestamps, links, question - checked against the 10,000 YouTube, 2,200 Instagram and 1,250 LinkedIn limits.",
   steps: [

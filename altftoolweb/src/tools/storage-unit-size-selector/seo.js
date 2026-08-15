@@ -1,5 +1,5 @@
 const seo = {
-  title: "Storage Unit Size Calculator by Cubic Feet",
+  title: "Storage Unit Size Calculator by Cubic Feet, Not Area",
   metaDescription:
     "Adds your furniture and cartons in cu ft, subtracts 18 in of sprinkler clearance and an access factor, then names the smallest unit that fits.",
   steps: [

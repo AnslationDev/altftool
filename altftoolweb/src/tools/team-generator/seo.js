@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Team Generator – Split Names into Even",
+  title: "Random Team Generator – Split Names into Even Teams",
   steps: [
     "Type or paste names into the 'Add name or paste list...' box — line- or comma-separated lists are split in one go and duplicates are dropped case-insensitively.",
     "In Settings pick Number of Teams (slider 2-20) or Team Size (slider 1-20), then press Generate Teams to run a Fisher-Yates shuffle over the whole list.",

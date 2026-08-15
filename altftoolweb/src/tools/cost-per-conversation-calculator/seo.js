@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Cost Per Conversation Calculator",
+  title: "AI Cost Per Conversation Calculator with Escalation",
   metaDescription:
     "Models the resent transcript that makes input tokens grow quadratically, adds prompt-cache rates and expected human escalation cost.",
   steps: [

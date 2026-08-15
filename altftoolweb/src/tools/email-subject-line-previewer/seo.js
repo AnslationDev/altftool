@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Subject Line Preview: Gmail, Outlook",
+  title: "Email Subject Line Preview: Gmail, Outlook, Apple Mail",
   metaDescription:
     "See where your subject and preview text cut off at 38, 46, 54 and 68 characters, and score the line out of 100 as you type.",
   steps: [

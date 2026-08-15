@@ -1,5 +1,5 @@
 const seo = {
-  title: "RICE Protocol Timer: Ice 10-20 Min Every 2-3",
+  title: "RICE Protocol Timer: Ice 10-20 Min Every 2-3 Hours",
   metaDescription:
     "Run ice-on/ice-off cycles for a fresh sprain: 10-20 minute applications every 2-3 hours for 24-48 hours, with sleep-time sessions marked as skip.",
   steps: [

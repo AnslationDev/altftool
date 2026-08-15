@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Translator: 11 Languages, With Copy",
+  title: "Text Translator: 11 Languages, With Copy and Speak",
   metaDescription:
     "Translate between any two of 11 languages, then copy, share or hear it. Text goes to Google’s translate endpoint, so keep confidential material out.",
   steps: [

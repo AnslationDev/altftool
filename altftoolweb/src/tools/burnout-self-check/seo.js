@@ -1,5 +1,5 @@
 const seo = {
-  title: "Burnout Self-Check: Score ICD-11's Three",
+  title: "Burnout Self-Check: Score ICD-11's Three Dimensions",
   metaDescription:
     "Twelve statements rated 0–6 score exhaustion, cynicism and efficacy separately, return a burnout profile, and log a trend across saved checks.",
   steps: [

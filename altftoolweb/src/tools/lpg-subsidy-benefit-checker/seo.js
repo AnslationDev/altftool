@@ -1,5 +1,5 @@
 const seo = {
-  title: "LPG Subsidy Checker: Ujjwala ₹300",
+  title: "LPG Subsidy Checker: Ujjwala ₹300 & the 12-Refill Cap",
   metaDescription:
     "Enter your city's cylinder price to see the effective cost after the ₹300 PMUY subsidy, your yearly bill, and where the 12-refill cap bites.",
   steps: [

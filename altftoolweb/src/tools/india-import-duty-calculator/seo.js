@@ -1,5 +1,5 @@
 const seo = {
-  title: "India Import Duty Calculator: Courier vs Baggage",
+  title: "India Import Duty Calculator: Courier vs Baggage Rates",
   metaDescription:
     "CIF, Basic Customs Duty, 10% Social Welfare Surcharge and IGST line by line for a courier parcel — or the flat 38.5% above a ₹50,000 baggage allowance.",
   intro:

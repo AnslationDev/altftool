@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marketing Consent Withdrawal Letter, SMS or Call",
+  title: "Marketing Consent Withdrawal Letter, SMS or Call Script",
   metaDescription:
     "Write an opt-out for email, SMS, phone or letter, citing GDPR Article 7(3), DPDP section 6(6) or CAN-SPAM, plus the date they should have acted by.",
   steps: [

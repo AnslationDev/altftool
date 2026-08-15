@@ -1,5 +1,5 @@
 const seo = {
-  title: "Release Train Planner: Code Freeze, RC and GA",
+  title: "Release Train Planner: Code Freeze, RC and GA Dates",
   metaDescription:
     "Generate every code freeze, RC cut and GA date from one first GA date and a weekly cadence, with weekend milestones pulled back to Friday.",
   steps: [

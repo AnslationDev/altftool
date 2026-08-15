@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brass to CFT Converter: Cubic Feet, m3, Tonnes",
+  title: "Brass to CFT Converter: Cubic Feet, m3, Tonnes, Trips",
   metaDescription:
     "1 brass = 100 cubic feet. Enter brass, cft, m3 or tonnes with a loose bulk density to get the rest, plus tipper trips for sand or aggregate.",
   steps: [

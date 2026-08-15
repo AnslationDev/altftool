@@ -1,5 +1,5 @@
 const seo = {
-  title: "Navratri Wishes by Night: Goddess, Colour, 5",
+  title: "Navratri Wishes by Night: Goddess, Colour, 5 Languages",
   metaDescription:
     "Pick one of the nine nights and get a greeting naming that night's Nava Durga form and colour, in Hindi, Marathi, Gujarati, English or Telugu.",
   steps: [

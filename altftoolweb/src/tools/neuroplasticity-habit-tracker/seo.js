@@ -1,5 +1,5 @@
 const seo = {
-  title: "Neuroplasticity Habit Tracker: 5 Daily Brain",
+  title: "Neuroplasticity Habit Tracker: 5 Daily Brain Habits",
   metaDescription:
     "Tick exercise, learning, sleep, meditation and social contact — each worth 20 points toward a 60% daily target. Saved in your browser and resets daily.",
   steps: [

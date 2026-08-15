@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hearing Aid Notes Tracker: Programme, Clarity",
+  title: "Hearing Aid Notes Tracker: Programme, Clarity, Comfort",
   intro:
     "A hearing aid notes tracker records which programme you used in each listening situation and how clear and how comfortable it was, rated separately out of five, along with how many steps you moved the volume from the fitted setting. It then reports the best-scoring programme per situation once there are at least two notes for it, and flags recurring problems such as whistling or an odd-sounding own voice. Designed for the acclimatisation weeks after a fitting, when the useful information is what happens in real rooms rather than in the booth.",
   useCases: [

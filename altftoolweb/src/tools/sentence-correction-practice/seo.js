@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sentence Correction Practice: 7 Grammar Error",
+  title: "Sentence Correction Practice: 7 Grammar Error Types",
   metaDescription:
     "Pick the correct rewrite of a flawed sentence from four options and see the rule explained. Filter seven grammar categories and three difficulty levels.",
   steps: [

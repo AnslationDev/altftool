@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voice Steadiness Visualizer: Pitch and Volume",
+  title: "Voice Steadiness Visualizer: Pitch and Volume Spread",
   metaDescription:
     "Reads your mic and reports current volume, estimated pitch in Hz, average volume and pitch spread. Autocorrelation over 70-500 Hz; nothing is recorded.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vitamin IU to mcg Converter for Vitamin A, D",
+  title: "Vitamin IU to mcg Converter for Vitamin A, D and E",
   metaDescription:
     "1 IU of vitamin D is 0.025 mcg; retinol is 0.3 mcg RAE and natural vitamin E 0.67 mg. Pick the exact form and get %DV and the upper intake level.",
   steps: [

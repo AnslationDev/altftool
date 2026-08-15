@@ -1,5 +1,5 @@
 const seo = {
-  title: "Startup Runway Calculator: Month-by-Month Net",
+  title: "Startup Runway Calculator: Month-by-Month Net Burn",
   metaDescription:
     "Walks the cash balance month by month as revenue and costs compound, so you get runway, the break-even month, burn multiple and default alive or dead.",
   steps: [

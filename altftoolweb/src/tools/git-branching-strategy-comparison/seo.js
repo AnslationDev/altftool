@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Branching Strategy Comparison — Scored Best",
+  title: "Git Branching Strategy Comparison — Scored Best Fit",
   metaDescription:
     "Answer five questions on team size, release cadence and CI maturity to score git flow, GitHub flow, trunk-based and release branching — reasoning shown.",
   steps: [

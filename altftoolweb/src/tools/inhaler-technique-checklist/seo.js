@@ -1,5 +1,5 @@
 const seo = {
-  title: "Inhaler Technique Checklist: pMDI, Spacer, DPI",
+  title: "Inhaler Technique Checklist: pMDI, Spacer, DPI Steps",
   metaDescription:
     "Tick the correct steps for a pMDI, spacer, dry powder, soft mist or breath-actuated inhaler; critical steps and inhalation speed are flagged.",
   steps: [

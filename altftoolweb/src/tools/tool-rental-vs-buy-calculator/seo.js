@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tool Rent vs Buy Calculator: Break-Even Usage",
+  title: "Tool Rent vs Buy Calculator: Break-Even Usage Days",
   metaDescription:
     "Enter the day rate, trip cost, purchase price and resale value to get the break-even usage days at which owning a tool beats hiring it.",
   steps: [

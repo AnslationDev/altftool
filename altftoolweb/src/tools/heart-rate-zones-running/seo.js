@@ -1,5 +1,5 @@
 const seo = {
-  title: "Running Heart Rate Zones in bpm With Matching",
+  title: "Running Heart Rate Zones in bpm With Matching Paces",
   metaDescription:
     "Five running zones in bpm from Tanaka, Fox or Gulati max HR, by flat percentage or Karvonen reserve, each with the Friel pace band that matches it.",
   steps: [

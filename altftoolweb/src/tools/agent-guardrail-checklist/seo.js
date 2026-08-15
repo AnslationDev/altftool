@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Agent Guardrail Checklist: 21 Weighted Ship",
+  title: "AI Agent Guardrail Checklist: 21 Weighted Ship Gates",
   metaDescription:
     "Score an agent across 21 OWASP-aligned items — permissions, spend caps, confirmation gates, injection defences. Any missing critical blocks the verdict.",
   steps: [

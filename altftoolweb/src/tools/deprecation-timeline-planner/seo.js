@@ -1,5 +1,5 @@
 const seo = {
-  title: "Deprecation Planner: Announce, Warn, Brownout",
+  title: "Deprecation Planner: Announce, Warn, Brownout, Remove",
   metaDescription:
     "Turn one announcement date and three day offsets into announce, warn, brownout and removal dates, with comms templates and a 90-day notice check.",
   steps: [

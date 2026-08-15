@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Name Picker with Elimination Mode",
+  title: "Random Name Picker with Elimination Mode & Winner Log",
   metaDescription:
     "Paste comma or line-separated names and Pick Winner; elimination mode removes each winner and a timestamped history keeps the last 50 draws.",
   steps: [

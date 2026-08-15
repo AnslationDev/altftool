@@ -1,5 +1,5 @@
 const seo = {
-  title: "Floor Tile Calculator: Boxes, Adhesive & Grout",
+  title: "Floor Tile Calculator: Boxes, Adhesive & Grout Needed",
   metaDescription:
     "Turn room size in feet into tile boxes to order — wastage 0-40% built in — plus adhesive kg at 1.5 kg/sqm/mm and grout weight, priced per box in INR.",
   steps: [

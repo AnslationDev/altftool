@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chit Fund Calculator with XIRR on Your Bidding",
+  title: "Chit Fund Calculator with XIRR on Your Bidding Month",
   metaDescription:
     "Simulate a chit month by month — discount, foreman commission, dividend — then price your bidding month as an XIRR against FD, RD, PPF and loan rates.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Phishing URL X-Ray: Check a Link Without Opening",
+  title: "Phishing URL X-Ray: Check a Link Without Opening It",
   metaDescription:
     "Paste a suspicious link and see it decoded, not opened: punycode via RFC 3492, mixed-script labels, the real registrable domain, and unwrapped redirects.",
   steps: [

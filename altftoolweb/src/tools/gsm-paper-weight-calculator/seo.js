@@ -1,5 +1,5 @@
 const seo = {
-  title: "GSM Paper Weight Calculator: Sheet, Ream",
+  title: "GSM Paper Weight Calculator: Sheet, Ream and Parcel",
   metaDescription:
     "Sheet size x GSM gives exact weight: A4 at 80 GSM is 4.99 g and a 500-sheet ream 2.49 kg. Also stack height and lb Bond, Text, Cover to GSM.",
   steps: [

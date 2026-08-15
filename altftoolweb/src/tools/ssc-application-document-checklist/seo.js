@@ -1,5 +1,5 @@
 const seo = {
-  title: "SSC Form Checklist: OTR Details, Signature, Age",
+  title: "SSC Form Checklist: OTR Details, Signature, Age Check",
   metaDescription:
     "Every SSC application item — Aadhaar, matric roll number, OTP-verified mobile, the 10-20 KB JPEG signature — plus an age check on the notice cutoff date.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brand Colour Palette Locker: 50-900 Tints",
+  title: "Brand Colour Palette Locker: 50-900 Tints & Contrast",
   metaDescription:
     "Lock brand hex values and get a 50-900 tint and shade ramp with RGB, HSL, CMYK, WCAG contrast, ink coverage checks and CSS tokens.",
   steps: [

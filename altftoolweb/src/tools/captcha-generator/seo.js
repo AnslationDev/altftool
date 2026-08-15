@@ -1,5 +1,5 @@
 const seo = {
-  title: "CAPTCHA Image Generator: 4-10 Characters, PNG",
+  title: "CAPTCHA Image Generator: 4-10 Characters, PNG Export",
   metaDescription:
     "Draw a distorted-text CAPTCHA on a 640x180 canvas: 4 to 10 characters, noise and line sliders, an ambiguous-character filter, then copy the answer or PNG.",
   intro:

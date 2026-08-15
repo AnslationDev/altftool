@@ -1,5 +1,5 @@
 const seo = {
-  title: "JavaScript Formatter, Minifier and Complexity",
+  title: "JavaScript Formatter, Minifier and Complexity Checker",
   metaDescription:
     "Re-indent, strip comments and whitespace, or count lines, functions and McCabe cyclomatic complexity. A // inside a string is never a comment.",
   steps: [

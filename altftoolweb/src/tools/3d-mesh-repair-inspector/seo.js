@@ -1,5 +1,5 @@
 const seo = {
-  title: "3D Mesh Inspector: Find Duplicate Vertices",
+  title: "3D Mesh Inspector: Find Duplicate Vertices in OBJ Files",
   steps: [
     "Choose your ASCII OBJ file under \"Local file(s)\" — the parser reads v vertex and f face lines, so a binary STL, glTF or FBX reports that no OBJ vertices were found.",
     "Press \"Run local workbench\" to compare vertex coordinates at eight decimal places and flag faces that reference fewer than three distinct vertices.",

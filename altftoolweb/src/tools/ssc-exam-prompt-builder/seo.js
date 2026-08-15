@@ -1,5 +1,5 @@
 const seo = {
-  title: "SSC Study Prompt Builder for CGL, CHSL, MTS",
+  title: "SSC Study Prompt Builder for CGL, CHSL, MTS, CPO, JE",
   metaDescription:
     "Build AI study prompts carrying each SSC paper's real marking and pace, and see how many attempts your accuracy needs for a target score.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Motor Insurance IDV Calculator with Tariff",
+  title: "Motor Insurance IDV Calculator with Tariff Depreciation",
   metaDescription:
     "Applies the motor tariff slabs — 5%, 15%, 20%, 30%, 40%, 50% to five years — to your car and accessories, and prices the cut from a lower IDV.",
   steps: [

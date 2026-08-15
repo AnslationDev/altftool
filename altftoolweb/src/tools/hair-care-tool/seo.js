@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hair Care Routine Quiz: 4 Questions, Morning",
+  title: "Hair Care Routine Quiz: 4 Questions, Morning & Night",
   intro:
     "This guide asks four questions — hair type (straight, wavy, curly or coily), strand texture (fine, medium or thick), your main concern (dryness, oiliness, dandruff or damage) and your goal (growth, shine, volume or repair) — and matches that profile to a wash-day routine. Each result lays out morning steps, night steps and maintenance tips, such as conditioning only from mid-length to ends on oily hair or sealing coily hair with the leave-in, oil, cream order. It is a starting framework for people who do not know where to begin, not a diagnosis.",
   useCases: [

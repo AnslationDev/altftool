@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 80E Calculator: Education Loan Interest",
+  title: "Section 80E Calculator: Education Loan Interest Deduction",
   metaDescription:
     "Builds a year-by-year EMI schedule and marks which years fall inside Section 80E's 8-year window, plus the tax saved at your slab rate and 4% cess.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crypto Wallet Address Validator for 10",
+  title: "Crypto Wallet Address Validator for 10 Blockchains",
   metaDescription:
     "Check an address against 10 chains' formats and see which it matches - Taproot bc1p, SegWit bc1q, P2SH, or a 40-hex 0x address. No chain lookup.",
   intro:

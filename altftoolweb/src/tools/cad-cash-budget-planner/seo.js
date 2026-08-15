@@ -1,5 +1,5 @@
 const seo = {
-  title: "How Much Cash to Carry to Canada: CAD Float",
+  title: "How Much Cash to Carry to Canada: CAD Float Planner",
   metaDescription:
     "Size the Canadian-dollar cash float against card spend, priced with the changer markup, GST, the RBI USD 3,000 note limit and the Rs 10 lakh LRS TCS line.",
   steps: [

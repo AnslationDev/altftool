@@ -1,5 +1,5 @@
 const seo = {
-  title: "TCS on Car Purchase Calculator: 1% Above Rs 10",
+  title: "TCS on Car Purchase Calculator: 1% Above Rs 10 Lakh",
   metaDescription:
     "Section 206C(1F) charges 1% on the whole invoice once a vehicle crosses Rs 10,00,000. Covers the 5% no-PAN rate and exempt buyers.",
   steps: [

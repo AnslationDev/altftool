@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Academic Integrity Checklist: 10-Item",
+  title: "AI Academic Integrity Checklist: 10-Item Self-Audit",
   metaDescription:
     "Ten questions on permission, disclosure, authorship and AI-citation checks. Critical fails flag high risk; get a fix list and a compliance score.",
   steps: [

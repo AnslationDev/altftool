@@ -1,5 +1,5 @@
 const seo = {
-  title: "IP Range Overlap Checker for CIDR Blocks",
+  title: "IP Range Overlap Checker for CIDR Blocks and Ranges",
   metaDescription:
     "Paste IPv4 CIDR blocks, start-end ranges or single addresses; every pair is tested and each conflict shows the exact intersecting range and size.",
   steps: [

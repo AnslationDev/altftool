@@ -1,5 +1,5 @@
 const seo = {
-  title: "Regex Replace Preview with $1, $&, $<name>",
+  title: "Regex Replace Preview with $1, $&, $<name> Expansion",
   metaDescription:
     "Preview a JavaScript regex find-and-replace before running it: full output plus each match's expansion — $1–$99, $&, $<name> handled per ECMA-262.",
   steps: [

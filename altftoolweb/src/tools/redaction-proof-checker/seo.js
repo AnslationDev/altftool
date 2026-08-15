@@ -1,5 +1,5 @@
 const seo = {
-  title: "Redaction Checker: Is Text Still Under the Black",
+  title: "Redaction Checker: Is Text Still Under the Black Box?",
   metaDescription:
     "Opens a redacted PDF, PNG, JPEG or WebP up to 50 MB in your browser and reports text still extractable under the marks, Redact annotations and metadata.",
   steps: [

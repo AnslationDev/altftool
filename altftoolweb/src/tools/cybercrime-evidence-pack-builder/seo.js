@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cybercrime Evidence Pack Builder: SHA-256",
+  title: "Cybercrime Evidence Pack Builder: SHA-256 Manifest",
   metaDescription:
     "Hash evidence copies with SHA-256 in your browser and build a numbered incident timeline into a JSON manifest, plus a counts-only summary.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "FAQ Prompt Builder with Intent Mix and FAQPage",
+  title: "FAQ Prompt Builder with Intent Mix and FAQPage Schema",
   metaDescription:
     "Paste a product description, choose 3 to 30 questions across pricing, setup, comparison, trust, support and policy, and set 40-60 word snippet answers.",
   steps: [

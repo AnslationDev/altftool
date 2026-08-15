@@ -1,5 +1,5 @@
 const seo = {
-  title: "Screenshot OCR Change Comparator: Line + Word",
+  title: "Screenshot OCR Change Comparator: Line + Word Diff",
   metaDescription:
     "Diff two screenshots' OCR text you paste and confirm you reviewed: line and word additions, removals, replacements and a similarity percentage.",
   steps: [

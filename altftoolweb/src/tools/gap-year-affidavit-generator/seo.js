@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gap Year Affidavit: 8 Clauses + Verification",
+  title: "Gap Year Affidavit: 8 Clauses + Verification Wording",
   metaDescription:
     "Drafts the education-gap affidavit: eight clauses plus the verification paragraph, the gap computed from your dates, and a notary checklist.",
   steps: [

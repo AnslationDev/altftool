@@ -1,5 +1,5 @@
 const seo = {
-  title: "Remove Markdown Formatting, Keep Code Blocks",
+  title: "Remove Markdown Formatting, Keep Code Blocks Intact",
   metaDescription:
     "Strip CommonMark and GFM markup — headings, emphasis, links, tables, fences — while code spans and fenced blocks keep their contents unchanged.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "PSA Screening Planner: ACS Start Age and Re-Test",
+  title: "PSA Screening Planner: ACS Start Age and Re-Test Date",
   metaDescription:
     "Enter age, family history and your last PSA for the ACS start age of 40, 45 or 50 and the next due date under the 2.5 ng/mL interval rule.",
   steps: [

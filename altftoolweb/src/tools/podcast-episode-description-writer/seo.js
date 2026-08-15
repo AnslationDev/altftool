@@ -1,5 +1,5 @@
 const seo = {
-  title: "Podcast Description Writer with Chapter",
+  title: "Podcast Description Writer with Chapter Validation",
   metaDescription:
     "Assembles summary, takeaways, chapters, links and CTA, then checks the 4,000-char Apple/Spotify limit, 5,000 on YouTube, and chapter rules.",
   steps: [

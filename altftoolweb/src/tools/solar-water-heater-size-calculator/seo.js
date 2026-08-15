@@ -1,5 +1,5 @@
 const seo = {
-  title: "Solar Water Heater Size Calculator: LPD",
+  title: "Solar Water Heater Size Calculator: LPD for a Family",
   metaDescription:
     "Size a solar water heater in LPD from your household, bathing temperature and mains inlet temp, with collector area, roof space and savings.",
   steps: [

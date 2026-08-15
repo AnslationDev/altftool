@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weighted vs Unweighted GPA Calculator",
+  title: "Weighted vs Unweighted GPA Calculator (4.0 & 5.0 Scale)",
   metaDescription:
     "Enter each course's grade, credits and rigor to get both GPAs at once - unweighted on 4.0, weighted with +0.5 Honors and +1.0 AP/IB up to 5.0.",
   steps: [

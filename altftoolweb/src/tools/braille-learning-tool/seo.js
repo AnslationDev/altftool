@@ -1,5 +1,5 @@
 const seo = {
-  title: "Braille Learning Tool: 49 Characters, 4 Practice",
+  title: "Braille Learning Tool: 49 Characters, 4 Practice Modes",
   metaDescription:
     "Learn the six-dot cell for A–Z, 0–9 and 13 punctuation marks across Learn, Quiz, Practice and Reference. Mastery at 80% over five or more tries.",
   intro:

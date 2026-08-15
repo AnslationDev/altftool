@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mobility Aid Selection Guide: Cane, Walker",
+  title: "Mobility Aid Selection Guide: Cane, Walker, Rollator",
   metaDescription:
     "Ranks sticks, quad canes, crutches, frames, rollators, knee walkers and wheelchairs on support, stability and grip, with the wrist-crease fitting height.",
   steps: [

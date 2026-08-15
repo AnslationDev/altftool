@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multitasking Test: 60-Second Math and Alert Dual",
+  title: "Multitasking Test: 60-Second Math and Alert Dual Task",
   metaDescription:
     "Solve four-option sums while hitting the spacebar within 1.5s of every red flash. 60 seconds, minus 0.5 per error, then a score and grade.",
   steps: [

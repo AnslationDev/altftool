@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Power Strip Load Calculator: Amps and 80%",
+  title: "Travel Power Strip Load Calculator: Amps and 80% Rule",
   metaDescription:
     "Add up device watts to see the amps your travel strip draws at 120 V or 230 V, against the lower of the socket and strip rating and the 80% margin.",
   steps: [

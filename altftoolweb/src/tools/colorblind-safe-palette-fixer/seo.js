@@ -1,5 +1,5 @@
 const seo = {
-  title: "Colorblind Palette Checker: OKLab Pairs +",
+  title: "Colorblind Palette Checker: OKLab Pairs + Contrast",
   metaDescription:
     "Screens up to 12 hex colors through protanopia, deuteranopia and tritanopia matrices, ranks the closest OKLab pairs and checks text contrast ratios.",
   steps: [

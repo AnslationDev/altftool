@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Degree Equivalence: US, UK, Canada",
+  title: "Indian Degree Equivalence: US, UK, Canada, Australia",
   metaDescription:
     "How Class 10 to PhD, BTech and MBBS are recognised in the US, UK, Canada, Australia and Germany, following WES, ECCTIS, ECA, AQF and Anabin.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Counselling Fee Refund Tracker: UGC",
+  title: "Counselling Fee Refund Tracker: UGC 100/90/80/50/0",
   metaDescription:
     "Estimate an admission-withdrawal refund from your dates: UGC 100/90/80/50/0% slabs, an up-to-5% processing cut capped at Rs 5,000.",
   steps: [

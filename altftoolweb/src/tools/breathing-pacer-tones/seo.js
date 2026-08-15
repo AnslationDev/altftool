@@ -1,5 +1,5 @@
 const seo = {
-  title: "Breathing Pacer with Tones: Box, 4-7-8",
+  title: "Breathing Pacer with Tones: Box, 4-7-8 and Coherent",
   metaDescription:
     "A breathing pacer that glides a tone up as you inhale and down as you exhale. Set any in-hold-out-hold counts, or load Box 4-4-4-4, 4-7-8 or Coherent.",
   steps: [

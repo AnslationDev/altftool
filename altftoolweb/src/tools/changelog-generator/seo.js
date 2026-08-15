@@ -1,5 +1,5 @@
 const seo = {
-  title: "Changelog Generator: Keep a Changelog Entry",
+  title: "Changelog Generator: Keep a Changelog Entry Builder",
   metaDescription:
     "Paste one-line changes and get a Keep a Changelog entry: ## [version] - YYYY-MM-DD with Added, Changed, Fixed and Removed sorted by verb.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Company Social Media Policy Generator with Gap",
+  title: "Company Social Media Policy Generator with Gap Check",
   metaDescription:
     "Build an employee social media policy from clauses tied to the FTC Endorsement Guides, GDPR and the DPDP Act, plus an NLRA Section 7 savings clause.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Caste Certificate Checklist: SC, ST and OBC",
+  title: "Caste Certificate Checklist: SC, ST and OBC Documents",
   metaDescription:
     "Checks the religion bar, migration and marriage rules and the ₹8 lakh creamy-layer test first, then lists the documents your SC, ST or OBC file needs.",
   steps: [

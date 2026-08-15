@@ -1,5 +1,5 @@
 const seo = {
-  title: "ESI Calculator: 0.75% Employee, 3.25% Employer",
+  title: "ESI Calculator: 0.75% Employee, 3.25% Employer Share",
   metaDescription:
     "Monthly ESI on gross wages: 0.75% employee and 3.25% employer, rounded up to the rupee, with the Rs 21,000 ceiling and Rule 52 daily-wage exemption.",
   steps: [

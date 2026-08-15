@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bargaining Simulator: Opening Counter",
+  title: "Bargaining Simulator: Opening Counter and Walk-Away",
   metaDescription:
     "Sets your opening counter at 2 x target minus the asking price so the midpoint is your target, then plays the concessions out round by round.",
   steps: [

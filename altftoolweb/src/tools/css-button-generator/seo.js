@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Button Generator with Hover State",
+  title: "CSS Button Generator with Hover State and Gradient",
   metaDescription:
     "Build a .custom-button rule plus a matching :hover block — gradient or solid fill, radius, shadow depth and hover scale — and export the CSS with HTML.",
   intro:

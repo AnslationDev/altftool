@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Diagram Practice Tracker: Readiness Score",
+  title: "Exam Diagram Practice Tracker: Readiness Score & Queue",
   metaDescription:
     "Track which exam diagrams you can draw from memory within a time budget, get a weighted readiness percentage and a weakest-first practice queue.",
   steps: [

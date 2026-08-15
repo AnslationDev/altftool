@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emergency Fund Calculator India: Months You Need",
+  title: "Emergency Fund Calculator India: Months You Need & Target",
   metaDescription:
     "Adjusts the six-month baseline for income type, earners, dependants, health cover and EMIs, then gives a rupee target and the month you reach it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Apply a .cube LUT to Video or Photos Online",
+  title: "Apply a .cube LUT to Video or Photos Online — FFmpeg WASM",
   metaDescription:
     "Bake a .cube LUT into video or images with FFmpeg's lut3d filter in your browser — pick tetrahedral, trilinear or nearest; nothing is uploaded.",
   steps: [

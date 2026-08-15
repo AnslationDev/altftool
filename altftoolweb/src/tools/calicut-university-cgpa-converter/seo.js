@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calicut University CGPA to Percentage Converter",
+  title: "Calicut University CGPA to Percentage Converter (CBCSS)",
   metaDescription:
     "Convert Calicut University CBCSS CGPA to percentage by the straight ×10 rule — no offset — or rebuild SGPA from letter grades and credits.",
   steps: [

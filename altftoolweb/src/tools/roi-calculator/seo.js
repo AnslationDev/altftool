@@ -1,5 +1,5 @@
 const seo = {
-  title: "ROI Calculator - Percentage, Multiple, Profit",
+  title: "ROI Calculator - Percentage, Multiple, Profit Margin",
   metaDescription:
     "Enter amount invested and amount returned to get ROI %, net profit or loss, the return multiple (1.50x for a half gain) and profit margin.",
   steps: [

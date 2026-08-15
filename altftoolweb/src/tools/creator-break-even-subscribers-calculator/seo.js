@@ -1,5 +1,5 @@
 const seo = {
-  title: "Break-Even Subscribers Calculator for Paid",
+  title: "Break-Even Subscribers Calculator for Paid Memberships",
   metaDescription:
     "How many members cover your monthly costs after platform %, processing % and the flat per-payment charge, blended across tiers, with churn replacements.",
   steps: [

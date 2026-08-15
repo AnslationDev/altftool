@@ -1,5 +1,5 @@
 const seo = {
-  title: "Future Child Predictor: Eye Color and Hair Type",
+  title: "Future Child Predictor: Eye Color and Hair Type Odds",
   metaDescription:
     "Pick both parents' eye color and hair type for a percentage split of your child's traits, plus name ideas. Entertainment only - no photo, no upload.",
   steps: [

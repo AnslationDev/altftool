@@ -1,5 +1,5 @@
 const seo = {
-  title: "Terraform Workspaces vs Directories: Strategy",
+  title: "Terraform Workspaces vs Directories: Strategy Planner",
   metaDescription:
     "Score CLI workspaces, a directory per environment and separate backends against your isolation, divergence and team answers. Each gets 0-10.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nm to ft-lb Converter with Crowfoot Wrench",
+  title: "Nm to ft-lb Converter with Crowfoot Wrench Correction",
   metaDescription:
     "Convert torque between N-m, lbf-ft, lbf-in and kgf-m — 1 lbf-ft is 1.3558 N-m, 1 kgf-m is 9.80665 — plus the wrench setting for a crowfoot.",
   steps: [

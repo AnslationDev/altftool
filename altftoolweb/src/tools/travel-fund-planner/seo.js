@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Fund Planner: Forex, TCS and Monthly",
+  title: "Travel Fund Planner: Forex, TCS and Monthly Saving",
   metaDescription:
     "Build a trip budget with forex markup on the foreign share, a contingency buffer and section 206C(1G) TCS, then back-solve the monthly saving.",
   steps: [

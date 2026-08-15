@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Merge vs Rebase vs Squash: Which to Use",
+  title: "Git Merge vs Rebase vs Squash: Which to Use and When",
   metaDescription:
     "Answer four questions about your branch and get a merge, rebase or squash recommendation with the reasoning, ASCII history previews and exact commands.",
   steps: [

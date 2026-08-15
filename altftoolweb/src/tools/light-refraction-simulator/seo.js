@@ -1,5 +1,5 @@
 const seo = {
-  title: "Snell's Law Simulator: Refraction and Critical",
+  title: "Snell's Law Simulator: Refraction and Critical Angle",
   metaDescription:
     "Drag the incident angle 0–89° between air, water, glass and diamond. Solves n₁sinθ₁ = n₂sinθ₂ live and flags total internal reflection past θc.",
   steps: [

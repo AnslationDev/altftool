@@ -1,5 +1,5 @@
 const seo = {
-  title: "Docstring Prompt Builder for JSDoc, TSDoc",
+  title: "Docstring Prompt Builder for JSDoc, TSDoc, rustdoc",
   metaDescription:
     "Build an AI prompt carrying one convention's exact skeleton, tag spelling and column limit — 72 columns for PEP 8 docstrings, 100 for rustfmt.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON Flatten and Unflatten: Dot Notation Both",
+  title: "JSON Flatten and Unflatten: Dot Notation Both Ways",
   metaDescription:
     "Flatten nested JSON to dot-notation paths or rebuild it, with bracket [0] or dot .0 array indices; conflicting paths error instead of overwriting.",
   steps: [

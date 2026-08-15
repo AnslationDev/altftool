@@ -1,5 +1,5 @@
 const seo = {
-  title: "Burn SRT or VTT Subtitles Into Video",
+  title: "Burn SRT or VTT Subtitles Into Video in the Browser",
   metaDescription:
     "Renders an .srt or .vtt permanently into the picture using FFmpeg WebAssembly: H.264 video, copied audio, three type sizes, nothing uploaded.",
   steps: [

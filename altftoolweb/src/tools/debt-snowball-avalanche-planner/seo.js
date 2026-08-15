@@ -1,5 +1,5 @@
 const seo = {
-  title: "Debt Snowball vs Avalanche Planner — See",
+  title: "Debt Snowball vs Avalanche Planner — See the Interest Gap",
   metaDescription:
     "Runs both payoff orders month by month with rolled-over minimums — months to debt-free, total interest and the exact rupee gap between the two.",
   steps: [

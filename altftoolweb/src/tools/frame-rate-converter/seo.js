@@ -1,5 +1,5 @@
 const seo = {
-  title: "Frame Rate Converter: 23.976 to 120 fps",
+  title: "Frame Rate Converter: 23.976 to 120 fps in Browser",
   metaDescription:
     "Convert a video to 23.976, 24, 25, 29.97, 30, 48, 50, 59.94, 60 or 120 fps with FFmpeg.wasm - H.264 MP4 at CRF 18, nothing uploaded.",
   steps: [

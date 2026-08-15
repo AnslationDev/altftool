@@ -1,5 +1,5 @@
 const seo = {
-  title: "SOP Prompt Builder: Section Word Budget",
+  title: "SOP Prompt Builder: Section Word Budget and Anchors",
   metaDescription:
     "Turn a 4,000-character or 650-word cap into a six-section word budget, count your named faculty, modules and labs, and flag stock openings.",
   steps: [

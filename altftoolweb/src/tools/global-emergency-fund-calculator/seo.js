@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emergency Fund Calculator: Months of Cover You",
+  title: "Emergency Fund Calculator: Months of Cover You Need",
   steps: [
     "Choose a Currency, then enter Essential monthly expenses and Loan & card instalments a month.",
     "Set How your income is earned and People depending on this income, and tick Only one earner in the household or Household has health insurance.",

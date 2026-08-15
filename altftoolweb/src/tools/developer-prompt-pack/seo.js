@@ -1,5 +1,5 @@
 const seo = {
-  title: "Developer Prompt Pack: 10 Fill-in-the-Blank",
+  title: "Developer Prompt Pack: 10 Fill-in-the-Blank Prompts",
   metaDescription:
     "Templates for ranked-hypothesis debugging, senior diff review, security passes, test design, READMEs, ADRs and incremental refactor plans.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Italy Plug & Voltage Guide: Adapter or Converter",
+  title: "Italy Plug & Voltage Guide: Adapter or Converter at 230V?",
   metaDescription:
     "Check your device label against Italy's 230 V, 50 Hz mains and type C, F and L sockets — get an adapter-or-converter verdict plus the amps it will draw.",
   steps: [

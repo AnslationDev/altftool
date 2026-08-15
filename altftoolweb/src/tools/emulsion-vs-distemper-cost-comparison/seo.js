@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emulsion vs Distemper: Whole-Life Cost",
+  title: "Emulsion vs Distemper: Whole-Life Cost & Break-Even",
   metaDescription:
     "Prices every repaint inside your horizon, discounts each one back to today, and names the year emulsion draws level with cheaper distemper.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Date & Time Converter: Units, Unix Timestamps",
+  title: "Date & Time Converter: Units, Unix Timestamps, Formats",
   metaDescription:
     "Four panels convert time units, turn Unix timestamps into UTC/ISO 8601 dates and back, rewrite dates in eight formats, and give exact date differences.",
   steps: [

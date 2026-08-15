@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monte Carlo Risk Lab: Seeded Lognormal",
+  title: "Monte Carlo Risk Lab: Seeded Lognormal Percentiles",
   metaDescription:
     "Run up to 20,000 seeded lognormal paths and read the 5th to 95th percentiles plus the share ending below your starting value. Same seed, same result.",
   steps: [

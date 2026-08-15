@@ -1,5 +1,5 @@
 const seo = {
-  title: "Treadmill Pace Converter: Speed & Incline",
+  title: "Treadmill Pace Converter: Speed & Incline to Min/Km Pace",
   metaDescription:
     "Convert belt speed and incline to min/km and min/mile pace, the flat and outdoor equivalents, plus METs and calories from the ACSM equations.",
   steps: [

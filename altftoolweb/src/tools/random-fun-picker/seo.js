@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Picker: Lunch, Truth or Dare, Names",
+  title: "Random Picker: Lunch, Truth or Dare, Names & Teams",
   metaDescription:
     "Three fair pickers in one page: filter a lunch spot, draw Truth or Dare, or pick names and split even teams. Fisher-Yates shuffle, odds shown.",
   intro:

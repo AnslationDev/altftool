@@ -1,5 +1,5 @@
 const seo = {
-  title: "Colourblind Logo Checker: 4 CVD Simulations",
+  title: "Colourblind Logo Checker: 4 CVD Simulations, Delta-E",
   metaDescription:
     "See a logo under protanopia, deuteranopia, tritanopia and achromatopsia at once, with CIE76 delta-E scores on its own colours — all in your browser.",
   steps: [

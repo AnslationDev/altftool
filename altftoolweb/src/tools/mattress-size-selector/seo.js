@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mattress Size Selector: Width, Thickness",
+  title: "Mattress Size Selector: Width, Thickness & Firmness",
   metaDescription:
     "Turns sleeper count, height, weight and sleeping position into a size with 90 cm of width per adult, a thickness band and a 1-10 firmness rating.",
   steps: [

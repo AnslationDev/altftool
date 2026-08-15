@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sweat Rate Calculator: Litres Per Hour",
+  title: "Sweat Rate Calculator: Litres Per Hour From Weight",
   metaDescription:
     "Enter weight before and after training, fluid drunk and session length for litres of sweat per hour, a 15-minute drinking target and sodium lost.",
   steps: [

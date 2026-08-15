@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lakh Crore to Million Converter — Indian Number",
+  title: "Lakh Crore to Million Converter — Indian Number Format",
   metaDescription:
     "Convert lakh, crore and lakh crore to million, billion, trillion with exact powers of ten, shown in Indian 2-2-3 and international 3-3-3 grouping.",
   steps: [

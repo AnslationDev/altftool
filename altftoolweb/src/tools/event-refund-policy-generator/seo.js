@@ -1,5 +1,5 @@
 const seo = {
-  title: "Event Refund Policy Generator with GST Split",
+  title: "Event Refund Policy Generator with GST Split (India)",
   metaDescription:
     "Build a tiered event cancellation ladder by days before the event and price one booking — ticket, GST and booking fee — per CBIC Circular 178/10/2022.",
   steps: [

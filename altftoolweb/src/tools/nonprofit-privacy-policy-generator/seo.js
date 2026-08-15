@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nonprofit Privacy Policy Generator: Donors",
+  title: "Nonprofit Privacy Policy Generator: Donors & Grants",
   metaDescription:
     "Separate donor, volunteer and beneficiary sections, an Article 9(2) condition for sensitive records, plus the $250 and $75 IRS receipting thresholds.",
   steps: [

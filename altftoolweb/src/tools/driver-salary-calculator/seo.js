@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driver Salary Calculator with Overtime, PF",
+  title: "Driver Salary Calculator with Overtime, PF and ESI",
   metaDescription:
     "Build a driver's payslip: ordinary rate from wage, duty days and hours; overtime at twice that rate; night, outstation and weekly-off pay; EPF and ESI.",
   steps: [

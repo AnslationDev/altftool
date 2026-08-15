@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calories Burned Washing a Car — MET-Based",
+  title: "Calories Burned Washing a Car — MET-Based Calculator",
   metaDescription:
     "Prices six wash stages at published MET values — scrubbing and waxing at 4.5 METs — with editable vehicle presets from hatchback to full detail.",
   steps: [

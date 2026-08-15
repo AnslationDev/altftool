@@ -1,5 +1,5 @@
 const seo = {
-  title: "World Clock Dashboard: 12 Cities, Shared Work",
+  title: "World Clock Dashboard: 12 Cities, Shared Work Hours",
   metaDescription:
     "Live local time, UTC offset and day for up to 12 cities, plus an overlap strip of hours inside everyone's working window. DST and +05:45 handled.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Employee Monitoring: What 13 Tools Actually",
+  title: "Employee Monitoring: What 13 Tools Actually Capture",
   metaDescription:
     "See what screenshots, keystroke logs, DLP agents and MDM really capture, score what your employer put in writing, and draft the request to HR.",
   steps: [

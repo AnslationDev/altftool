@@ -1,5 +1,5 @@
 const seo = {
-  title: "Food Shelf Life Guide: 99 Foods, Fridge",
+  title: "Food Shelf Life Guide: 99 Foods, Fridge, Freezer, Pantry",
   metaDescription:
     "Keeping times for 99 foods in the pantry, fridge at 4 C and freezer at -18 C, plus a verdict on leftovers from the time you stored them.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blog Outline Prompt Builder with Word Budget",
+  title: "Blog Outline Prompt Builder with Word Budget per H2",
   metaDescription:
     "Splits a target word count into intro, H2, H3, FAQ and conclusion budgets, warns below 120 or above 500 words a section, and writes the prompt.",
   steps: [

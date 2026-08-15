@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lens Field of View Calculator: Angle, Crop",
+  title: "Lens Field of View Calculator: Angle, Crop and DoF",
   metaDescription:
     "Angle of view, crop factor, scene coverage and depth of field from AOV = 2 arctan(sensor / 2f), across ten sensor formats.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hashtag Generator From Your Caption",
+  title: "Hashtag Generator From Your Caption, With Platform Caps",
   metaDescription:
     "Build a hashtag set from the words in your own caption, capped to each platform limit: 30 on Instagram, 15 on YouTube, one on Threads.",
   steps: [

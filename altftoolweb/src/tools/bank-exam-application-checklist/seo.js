@@ -1,5 +1,5 @@
 const seo = {
-  title: "IBPS & SBI Age Eligibility and Application",
+  title: "IBPS & SBI Age Eligibility and Application Checklist",
   metaDescription:
     "Check your DOB against the IBPS or SBI age window on the notification cut-off date. Stacked relaxations, plus photo, signature and thumb upload specs.",
   steps: [

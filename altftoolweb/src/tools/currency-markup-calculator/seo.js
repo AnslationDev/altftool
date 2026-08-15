@@ -1,5 +1,5 @@
 const seo = {
-  title: "Currency Markup Calculator: Mid-Market",
+  title: "Currency Markup Calculator: Mid-Market vs Your Rate",
   metaDescription:
     "(mid - offered) / mid x 100 gives the spread; add fixed and % fees for one all-in cost in your currency, derive mid from bid/ask, and rank quotes.",
   steps: [

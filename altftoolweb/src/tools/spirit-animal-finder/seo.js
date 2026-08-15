@@ -1,5 +1,5 @@
 const seo = {
-  title: "Spirit Animal Finder: 10-Question Quiz, 16",
+  title: "Spirit Animal Finder: 10-Question Quiz, 16 Animals",
   metaDescription:
     "Ten questions scored against 16 archetypes — each option feeds three animals 3, 2 and 1 points. Get a primary match plus second and third. For fun.",
   steps: [

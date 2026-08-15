@@ -1,5 +1,5 @@
 const seo = {
-  title: "Eggetarian Macro Calculator: Eggs a Day",
+  title: "Eggetarian Macro Calculator: Eggs a Day for Protein",
   metaDescription:
     "Mifflin-St Jeor calories and a g/kg protein target turned into whole eggs and extra whites a day, with yolk cholesterol, choline, B12 and vitamin D.",
   steps: [

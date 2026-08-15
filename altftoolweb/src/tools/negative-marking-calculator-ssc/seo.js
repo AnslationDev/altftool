@@ -1,5 +1,5 @@
 const seo = {
-  title: "SSC Negative Marking Calculator — CGL & CHSL Net",
+  title: "SSC Negative Marking Calculator — CGL & CHSL Net Score",
   metaDescription:
     "Net score under real SSC schemes — CGL Tier-I's −0.50 of 2 marks means four wrong answers erase one correct — plus marks lost and break-even accuracy.",
   steps: [

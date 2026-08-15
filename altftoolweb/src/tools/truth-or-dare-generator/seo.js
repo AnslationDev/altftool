@@ -1,5 +1,5 @@
 const seo = {
-  title: "Truth or Dare Generator — Family, Party",
+  title: "Truth or Dare Generator — Family, Party & Couples Levels",
   metaDescription:
     "Draw from 72 truths and dares across family, party and couples levels, build a full turn order for up to 20 players, and replay any game by its number.",
   steps: [

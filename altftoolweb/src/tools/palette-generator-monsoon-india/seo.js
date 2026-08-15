@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monsoon Palette Generator With WCAG Scrim",
+  title: "Monsoon Palette Generator With WCAG Scrim Opacity Solver",
   metaDescription:
     "Six-role rain-season palettes plus the exact scrim opacity a headline needs over a bright, mid or dark photo to reach 3:1, 4.5:1 and 7:1.",
   steps: [

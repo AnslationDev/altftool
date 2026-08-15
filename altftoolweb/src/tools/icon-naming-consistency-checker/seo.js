@@ -1,5 +1,5 @@
 const seo = {
-  title: "Icon Naming Checker: kebab, snake, camel",
+  title: "Icon Naming Checker: kebab, snake, camel or Pascal",
   metaDescription:
     "Audit icon file names against one convention, flag case-only collisions, illegal characters and reserved device names, and get git mv commands.",
   steps: [

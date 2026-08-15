@@ -1,5 +1,5 @@
 const seo = {
-  title: "Zombie Survival Quiz: 10 Questions, 8 Traits, 5",
+  title: "Zombie Survival Quiz: 10 Questions, 8 Traits, 5 Ranks",
   metaDescription:
     "A 10-question quiz scoring eight weighted traits into a survival percentage and one of five ranks, from Zombie Bait to Zombie Slayer Legend.",
   steps: [

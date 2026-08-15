@@ -1,5 +1,5 @@
 const seo = {
-  title: "Birthday Wishes in Hindi: Generator with आप/तुम",
+  title: "Birthday Wishes in Hindi: Generator with आप/तुम Forms",
   metaDescription:
     "Complete Hindi birthday messages written separately for आप and तुम, with romanised Hindi, English meaning and the SMS part count for each wish.",
   steps: [

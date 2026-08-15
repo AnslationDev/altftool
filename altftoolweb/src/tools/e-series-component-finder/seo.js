@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nearest E-Series Value Finder: E6 to E96 + Error",
+  title: "Nearest E-Series Value Finder: E6 to E96 + Error %",
   metaDescription:
     "Enter a calculated target and get the nearest E6, E12, E24, E48 or E96 preferred value per IEC 60063, with the six closest and signed % error.",
   steps: [

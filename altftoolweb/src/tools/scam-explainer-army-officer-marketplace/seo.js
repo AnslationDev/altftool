@@ -1,5 +1,5 @@
 const seo = {
-  title: "Army Officer Marketplace Scam: Advance Payment",
+  title: "Army Officer Marketplace Scam: Advance Payment Check",
   metaDescription:
     "The defence-personnel advance-payment script broken down: how far below market the price sits, what you have paid so far, and weighted red flags.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "ADR Generator: Nygard & MADR 4.0 Markdown",
+  title: "ADR Generator: Nygard & MADR 4.0 Markdown Templates",
   metaDescription:
     "Generate an architecture decision record in Nygard or MADR 4.0 markdown, named the adr-tools way (0007-short-title.md), with consequences included.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 234F Late Fee & 234A Interest Calculator",
+  title: "Section 234F Late Fee & 234A Interest Calculator (ITR)",
   metaDescription:
     "Work out the Rs 5,000 or Rs 1,000 Section 234F fee plus 1% per month 234A interest on unpaid tax — and the 25-70% extra tax if only an ITR-U is left.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids Game Permission Audit: What to Revoke",
+  title: "Kids Game Permission Audit: What to Revoke and Why",
   metaDescription:
     "Score the 16 permissions a child's game can hold, from precise location to the Advertising ID, and see which to revoke and exactly what each one breaks.",
   steps: [

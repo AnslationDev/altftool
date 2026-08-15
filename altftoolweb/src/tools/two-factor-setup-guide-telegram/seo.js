@@ -1,5 +1,5 @@
 const seo = {
-  title: "Telegram 2FA Setup: 15-Control Hardening",
+  title: "Telegram 2FA Setup: 15-Control Hardening Checklist",
   metaDescription:
     "Score your Telegram account across 15 weighted controls — cloud password, recovery email, session cleanup. Four are critical; the score caps at 69%.",
   steps: [

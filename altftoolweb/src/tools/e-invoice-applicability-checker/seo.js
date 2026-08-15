@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST E-Invoice Applicability: Rs 5 Crore Limit",
+  title: "GST E-Invoice Applicability: Rs 5 Crore Limit Check",
   metaDescription:
     "Enter PAN-level aggregate turnover to see if Rule 48(4) e-invoicing applies, from which date, and whether the 30-day IRP reporting window binds you.",
   steps: [

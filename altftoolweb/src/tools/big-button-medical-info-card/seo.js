@@ -1,5 +1,5 @@
 const seo = {
-  title: "Big-Button Emergency Medical Info Card, Large",
+  title: "Big-Button Emergency Medical Info Card, Large Print",
   metaDescription:
     "Name, conditions, medicines, allergies, contact and clinician become a heavy-bordered large-text card you can print or copy. Nothing is stored.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cookie Banner Dark Pattern Checker: 14 Tricks",
+  title: "Cookie Banner Dark Pattern Checker: 14 Tricks Scored",
   metaDescription:
     "Tick what a cookie banner does and score it against 14 patterns EU regulators name, with the rule each one runs into and how to refuse.",
   steps: [

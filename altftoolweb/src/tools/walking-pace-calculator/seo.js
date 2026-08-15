@@ -1,5 +1,5 @@
 const seo = {
-  title: "Walking Pace Calculator: Min/km, Min/mile, MET",
+  title: "Walking Pace Calculator: Min/km, Min/mile, MET Intensity",
   metaDescription:
     "Enter distance and time to get pace per km and mile, speed, and the MET intensity from the Compendium scale, plus projected 5K to marathon finish times.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weather Front Simulator: Cold, Warm, Occluded",
+  title: "Weather Front Simulator: Cold, Warm, Occluded Fronts",
   metaDescription:
     "Animated atmospheric cross-section of the four frontal boundaries, each with its expected weather, cloud sequence and barometric pressure signature.",
   steps: [

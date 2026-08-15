@@ -1,5 +1,5 @@
 const seo = {
-  title: "Press Release Prompt Builder with AP Dateline",
+  title: "Press Release Prompt Builder with AP Dateline Rules",
   metaDescription:
     "Build an AI press release prompt with a correct AP dateline and a 200-800 word budget split across lead, quotes and boilerplate. Runs in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gold Price Checker: XAU, XAG, XPT, XPD by Gram",
+  title: "Gold Price Checker: XAU, XAG, XPT, XPD by Gram or Oz",
   metaDescription:
     "Gold, silver, platinum and palladium rates in 10 currencies, per troy ounce, gram or kilogram, converted at 31.1035 g per troy ounce.",
   steps: [

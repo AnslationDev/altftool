@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pillion Load Checker: Two-Up Payload and Tyre",
+  title: "Pillion Load Checker: Two-Up Payload and Tyre Limit",
   metaDescription:
     "Weigh rider, pillion and luggage against your bike's RC payload (GVW minus kerb) and the rear tyre load index, with the front-rear axle split.",
   steps: [

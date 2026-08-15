@@ -1,5 +1,5 @@
 const seo = {
-  title: "Packing List Generator With Quantities and Bag",
+  title: "Packing List Generator With Quantities and Bag Weight",
   metaDescription:
     "Six trip templates scale each item by days, travellers and laundry stops, then total the estimated weight against a 7 kg cabin or 15 kg checked allowance.",
   steps: [

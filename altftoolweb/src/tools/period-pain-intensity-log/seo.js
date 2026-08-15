@@ -1,5 +1,5 @@
 const seo = {
-  title: "Period Pain Intensity Log: 0-10 NRS Scale",
+  title: "Period Pain Intensity Log: 0-10 NRS Scale by Cycle Day",
   metaDescription:
     "Record cramp severity on the clinical 0-10 Numeric Rating Scale with cycle day and relief used; see averages by cycle day, peaks and severe-band days.",
   steps: [

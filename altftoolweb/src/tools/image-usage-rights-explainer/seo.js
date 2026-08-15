@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Usage Rights: Six Questions, One Clearance",
+  title: "Image Usage Rights: Six Questions, One Clearance List",
   metaDescription:
     "Answer six questions about an image and get a ranked checklist separating copyright, licence scope, model release and trademark. Not legal advice.",
   steps: [

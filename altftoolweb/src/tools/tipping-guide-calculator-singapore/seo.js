@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Tipping Guide & ++ Bill Calculator",
+  title: "Singapore Tipping Guide & ++ Bill Calculator (GST 9%)",
   metaDescription:
     "Where tipping applies in Singapore — mostly nowhere — and what '++' does to a bill: 10% service charge then 9% GST, a 19.9% uplift on the menu price.",
   steps: [

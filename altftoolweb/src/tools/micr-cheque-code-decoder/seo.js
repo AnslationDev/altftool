@@ -1,5 +1,5 @@
 const seo = {
-  title: "MICR Code Decoder: City, Bank & Branch from 9",
+  title: "MICR Code Decoder: City, Bank & Branch from 9 Digits",
   metaDescription:
     "Paste a cheque's 9-digit MICR number and see the city (first 3), bank (middle 3) and branch (last 3) codes, with spaces stripped automatically.",
   steps: [

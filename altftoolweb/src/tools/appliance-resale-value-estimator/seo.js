@@ -1,5 +1,5 @@
 const seo = {
-  title: "Second-Hand Appliance Value: Fridge, AC, Washing",
+  title: "Second-Hand Appliance Value: Fridge, AC, Washing Machine",
   metaDescription:
     "Price a used fridge, AC or washing machine from original cost, age, condition, BEE star rating and warranty left, with an added discount for R-22 units.",
   steps: [

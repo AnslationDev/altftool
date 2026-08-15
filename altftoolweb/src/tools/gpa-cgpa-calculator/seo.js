@@ -1,5 +1,5 @@
 const seo = {
-  title: "GPA & CGPA Calculator: 10-Point Scale",
+  title: "GPA & CGPA Calculator: 10-Point Scale to Percentage",
   metaDescription:
     "Credit-weighted SGPA and CGPA on the O=10 to F=0 scale, percentage via (CGPA − 0.75) × 10, and the GPA you need next semester.",
   steps: [

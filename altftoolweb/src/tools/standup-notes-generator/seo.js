@@ -1,5 +1,5 @@
 const seo = {
-  title: "Standup Notes Generator for Slack, Markdown",
+  title: "Standup Notes Generator for Slack, Markdown and Jira",
   metaDescription:
     "Paste rough bullets for yesterday, today and blockers and get a daily scrum update in Slack mrkdwn, Markdown, Jira wiki markup or plain text.",
   steps: [

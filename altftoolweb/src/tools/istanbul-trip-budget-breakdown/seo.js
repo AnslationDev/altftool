@@ -1,5 +1,5 @@
 const seo = {
-  title: "Istanbul Trip Budget: Lira and Rupee Cost",
+  title: "Istanbul Trip Budget: Lira and Rupee Cost Breakdown",
   metaDescription:
     "Price flights, stay, food, Istanbulkart rides and sights in lira and rupees, with a drift factor that nets Turkish inflation against the lira's fall.",
   steps: [

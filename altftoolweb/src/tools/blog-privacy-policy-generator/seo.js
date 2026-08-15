@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blog Privacy Policy Generator with GDPR & CCPA",
+  title: "Blog Privacy Policy Generator with GDPR & CCPA Checks",
   metaDescription:
     "Build a blog privacy policy from what your site runs — logs, analytics, comments, ads — with a lawful basis per purpose, cookie-banner and CCPA checks.",
   steps: [

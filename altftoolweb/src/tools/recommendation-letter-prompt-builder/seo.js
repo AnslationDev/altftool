@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reference Letter Prompt Builder: Honest",
+  title: "Reference Letter Prompt Builder: Honest Percentiles",
   metaDescription:
     "Rank 3 of 120 is 2.5%, so it claims 'top 5%', never 'top 1%'. Under 20 people it drops percentages, and splits your word target six ways.",
   steps: [

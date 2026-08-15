@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON vs Protobuf vs Avro vs MessagePack vs CBOR",
+  title: "JSON vs Protobuf vs Avro vs MessagePack vs CBOR Picker",
   metaDescription:
     "Weight nine requirements — wire size, schema evolution, binary payloads, IoT — and rank five formats, with each one's weak spots shown, not just wins.",
   steps: [

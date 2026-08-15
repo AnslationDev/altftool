@@ -1,5 +1,5 @@
 const seo = {
-  title: "Spelling and Grammar Checker",
+  title: "Spelling and Grammar Checker (LanguageTool, en-US)",
   metaDescription:
     "Paste text and check it against LanguageTool’s en-US rules. Each match shows the rule and up to five replacements; Apply All Suggestions accepts them all.",
   steps: [

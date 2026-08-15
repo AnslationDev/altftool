@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lab Results History Tracker: Local, Exportable",
+  title: "Lab Results History Tracker: Local, Exportable Log",
   metaDescription:
     "Log test names and results with dates in your browser's local storage, search every entry, and export or import the whole history as a JSON file.",
   steps: [

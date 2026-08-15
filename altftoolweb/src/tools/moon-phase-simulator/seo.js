@@ -1,5 +1,5 @@
 const seo = {
-  title: "Moon Phase Simulator: Orbit and Earth View",
+  title: "Moon Phase Simulator: Orbit and Earth View Together",
   metaDescription:
     "Scrub the 29.53-day synodic month and watch the Sun-Earth-Moon diagram and the disc seen from Earth update together, with age, angle and % lit.",
   steps: [
