@@ -1,4 +1,12 @@
 const seo = {
+  title: "Umask Calculator - File and Directory Permissions",
+  metaDescription:
+    "See the modes any umask yields - files 666 & ~umask, directories 777 & ~umask - with presets 022, 002, 027, 077 and a reverse lookup from a target mode.",
+  steps: [
+    "Enter an octal mask (up to 4 digits) in the \"Umask value\" field, or click a Common values preset: 022, 002, 027, 077 or 000.",
+    "Read \"New files get\" (666 & ~umask) and \"New directories get\" (777 & ~umask) in octal and symbolic form, with per-class removed bits and a warning when the mask leaves files world-writable.",
+    "Click \"Copy result\" to copy the umask plus both resulting modes, or type a 3-digit target into \"Directory mode you want\" for the reverse lookup — it answers with \"Use umask N\" and the file mode that follows.",
+  ],
   intro:
     "This calculator shows the exact permissions any umask value produces, using the POSIX rule that new files get 666 & ~umask and new directories get 777 & ~umask. It is built for Linux and Unix administrators tuning /etc/login.defs, shell profiles or systemd UMask= settings, and it also works backwards — enter the directory mode you want and get the umask that produces it.",
   useCases: [

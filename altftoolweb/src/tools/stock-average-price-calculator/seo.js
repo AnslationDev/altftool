@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stock Average Price Calculator with Averaging Planner",
+  metaDescription:
+    "Enter each buy's quantity and price to get your weighted average, total invested and unrealised P&L — plus the shares needed to hit a target average.",
+  steps: [
+    "Enter each lot's 'Buy 1 — quantity' and 'Buy 1 — price per share (INR)', using Add another purchase for more rows and the optional Charges per order field.",
+    "Fill in the Current market price (INR, optional) and a Target average price (INR) for the averaging planner.",
+    "Read the weighted average buy price, total invested and unrealised P&L, see the 'more shares' plan with its cash outlay, then click Copy result.",
+  ],
   intro:
     "The Stock Average Price Calculator blends every purchase you have made in the same stock into one weighted average buy price. Enter each lot's quantity and price — plus optional brokerage — and it returns your total holding, total invested amount and the exact break-even price per share. It also tells you how many more shares at today's market price would move your average to a level you pick.",
   useCases: [

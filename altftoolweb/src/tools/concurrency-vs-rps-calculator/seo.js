@@ -1,4 +1,12 @@
 const seo = {
+  title: "Concurrency vs RPS Calculator (Little's Law L = λW)",
+  metaDescription:
+    "Solve Little's Law in any direction: users, req/s or response time from the other two, with think time separating virtual users from in-flight load.",
+  steps: [
+    "Choose what to Solve for — concurrent users, requests per second, or response time — then enter the other two values.",
+    "Set think time between requests (ms): 0 for raw in-flight concurrency, or a realistic pause to size load-test virtual users.",
+    "Read the solved figure from Little's Law L = λ × W, compare requests actually in flight against users idle in think time, and click Copy result.",
+  ],
   intro:
     "This calculator converts between concurrent users, requests per second and average response time using Little's Law (L = λ × W), the queueing-theory identity that holds for any stable system. It is built for performance engineers and backend developers sizing load tests, connection pools and worker counts, and it separates true in-flight concurrency from virtual users who spend part of each cycle in think time.",
   useCases: [

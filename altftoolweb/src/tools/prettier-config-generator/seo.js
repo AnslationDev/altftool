@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prettier Config Generator: .prettierrc with Live Preview",
+  metaDescription:
+    "Set all 14 core Prettier 3 options with a live code sample, add per-file overrides for md/json/yaml, and copy a .prettierrc listing only what changed.",
+  steps: [
+    "Set the Options — Print width, Tab width, Trailing commas, Arrow function parens, Semicolons, Single quotes and the rest of the 14 core Prettier 3 settings, each labelled with its default.",
+    "Tick \"Per-file overrides\" presets — Wrap markdown prose (*.md), Wider JSON lines (*.json) or the YAML preset — or \"Write every option explicitly, including defaults\".",
+    "Compare the generated .prettierrc JSON with the \"Sample with these options\" preview, then click \"Copy JSON\" and save it as .prettierrc in your project root.",
+  ],
   intro:
     "This generator produces a ready-to-commit .prettierrc covering all fourteen core Prettier 3 options — print width, tabs, semicolons, quotes, trailing commas, arrow parens and more — with a live sample showing what each choice does to real code. It emits only the options you changed from the documented Prettier 3 defaults (or all of them if you prefer explicit config), plus optional per-file overrides for markdown, JSON and YAML.",
   useCases: [

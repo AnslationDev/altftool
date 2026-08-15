@@ -1,4 +1,12 @@
 const seo = {
+  title: "Port Number Lookup — TCP/UDP Services & IANA Ranges",
+  metaDescription:
+    "Search TCP and UDP ports by number or service name; every port is classed per RFC 6335 as well-known (0-1023), registered or dynamic.",
+  steps: [
+    "Type a port number or service name — e.g. 443, postgres, mail — in the 'Port number or service name' field and pick a 'Transport protocol' (Any, TCP or UDP).",
+    "For a numeric query, read the RFC 6335 classification — well-known, registered or dynamic — shown above the matching entries.",
+    "Scan the results table of port, protocol, service, description and 'IANA-assigned' vs 'Conventional' source, then click 'Copy list' to copy up to the first 25 matches.",
+  ],
   intro:
     "This explorer looks up TCP and UDP port numbers by number, service name or keyword, and classifies any port into the IANA ranges defined by RFC 6335 — well-known (0-1023), registered (1024-49151) and dynamic (49152-65535). It is built for developers, sysadmins and network engineers who need to identify what runs on a port, pick a safe port for a new service, or write a firewall rule without guessing.",
   useCases: [

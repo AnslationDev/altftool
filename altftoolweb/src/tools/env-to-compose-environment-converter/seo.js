@@ -1,4 +1,12 @@
 const seo = {
+  title: ".env to Docker Compose Environment Converter",
+  metaDescription:
+    "Turn .env lines into a compose environment block (list or map form) with literal $ escaped as $$, YAML-ambiguous values quoted, or an env_file reference.",
+  steps: [
+    "Paste your variables into the '.env contents' box, then choose the 'Output style' — 'environment: list form (- KEY=value)', 'environment: map form (KEY: value)' or 'env_file: reference (keep values in .env)' — and set the 'Service name'.",
+    "The Compose snippet regenerates as you type: literal $ becomes $$ while 'Escape literal $ as $$' is ticked, YAML-ambiguous values like NO and 3000 are quoted, and the panel counts variables converted and values escaped.",
+    "Press 'Copy YAML' to copy the snippet, or 'Reset' to restore the five-line example ending in COUNTRY=NO and PRICE_SUFFIX=$0.99.",
+  ],
   intro:
     "This tool converts .env entries into a docker compose environment block, in either of the two syntaxes the Compose Specification defines: the list form (- KEY=value) or the map form (KEY: value). It escapes literal dollar signs as $$ so compose interpolation cannot mangle values, quotes YAML-ambiguous scalars like NO, true and 3000, and can emit an env_file reference when you would rather keep values out of the compose file.",
   useCases: [

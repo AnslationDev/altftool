@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telugu Word of the Day – 30-Word Deck with Script & Streak",
+  metaDescription:
+    "A 30-word Telugu deck fixed by calendar date: script, romanisation, meaning, example sentence and idiom note, with a streak saved in your browser.",
+  steps: [
+    "Pick a date in the Date field or use the Previous day / Next day buttons — the same date always shows the same card from the 30-word deck.",
+    "Read the card's Telugu script, romanisation, part of speech, meaning and example sentence, then press Mark studied to update your streak.",
+    "Click Copy card to copy the word card as text; the streak and longest-run count stay only in this browser's local storage.",
+  ],
   "intro": "A Telugu word-of-the-day deck of 30 curated words, each with its Telugu script spelling, a romanised reading, the part of speech, an everyday example sentence and a note on the idiom or origin behind it. The card is chosen by the calendar date rather than at random, so the same date always shows the same word and you can look at any past or future day. The streak counter lives only in your browser.",
   "useCases": [
     "Add one precise Telugu word a day instead of working through an undifferentiated list.",

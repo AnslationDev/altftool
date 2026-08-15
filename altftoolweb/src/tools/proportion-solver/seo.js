@@ -1,4 +1,12 @@
 const seo = {
+  title: "Proportion Solver – Find the Missing Value in a/b = c/d",
+  metaDescription:
+    "Pick which of a, b, c or d is unknown, type the other three, and get the answer by cross multiplication with every algebra step shown, ready to copy.",
+  steps: [
+    "Under 'Which term is unknown?', press a, b, c or d — that input is disabled and shows 'solving…' while the others stay editable.",
+    "Type the other three values (decimals and negatives allowed), or load a Quick example like 'Recipe scale-up', 'Map scale 1:250' or 'Unit price'.",
+    "Read the solved value with the numbered 'Cross multiplication steps', both ratios as decimals and the a×d vs b×c check, then click 'Copy result'.",
+  ],
   "intro": "Proportion Solver finds the missing term in a / b = c / d. Pick which of the four values is unknown, type the other three, and the tool cross multiplies to isolate it while printing every algebra step. It also reports both ratios as decimals, the simplified whole-number ratio and the scale factor between the two sides — handy for students checking homework and for anyone scaling a recipe, a map distance or a unit price.",
   "useCases": [
     "Scale a recipe: 2 cups of flour serves 5 people, so how much flour serves 8?",

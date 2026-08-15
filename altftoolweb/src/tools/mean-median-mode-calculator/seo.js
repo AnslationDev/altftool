@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mean, Median & Mode Calculator (Range, Std Dev)",
+  metaDescription:
+    "Paste numbers separated by commas, spaces or line breaks to get mean, median, mode, range, population standard deviation and count in one pass.",
+  steps: [
+    "Paste your list into the 'Numbers (comma or space separated)' box — commas, spaces or line breaks all work, and negative numbers and decimals are extracted automatically.",
+    "There is no calculate button: the Result panel recomputes as you type, showing 'Mean' to two decimals with Median, Mode, Range, 'Std. dev (pop)' and Count cards beneath; Mode reads 'none' when no value repeats.",
+    "Click 'Copy' to put the summary on the clipboard or 'Download' to save it as mean-median-mode-calculator.txt.",
+  ],
   intro:
     "This calculator takes a list of numbers and returns the mean, median, mode, range, population standard deviation and count in one pass. You can paste values separated by commas, spaces or line breaks — negatives and decimals included — and it pulls out every number it finds without you having to clean the list first. Mean and standard deviation are shown to two decimal places, and the mode reads \"none\" when no value repeats.",
   useCases: [

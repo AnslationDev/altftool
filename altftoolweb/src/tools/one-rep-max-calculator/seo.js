@@ -1,4 +1,12 @@
 const seo = {
+  title: "One Rep Max Calculator - 7 Formulas, kg or lb",
+  metaDescription:
+    "Estimate 1RM from a set's weight and reps with Brzycki, Lander, Lombardi and 4 more formulas, plus training percentages, warm-up sets and plate math.",
+  steps: [
+    "Pick the lift — Bench Press, Squat or Deadlift preset chips, or any entry in the \"Select Exercise\" list — plus the unit (Kilograms or Pounds) and one of 7 formulas: Brzycki, Lander, Lombardi, Mayhew, O'Conner, Wathan or Adams.",
+    "Type the Weight and Reps (1-20) from a completed set — RPE (6-10) and RIR (0-5) fields sit alongside — and press \"Calculate 1RM\".",
+    "Read the Estimated 1RM with the Training Percentages grid (\"Copy Table\"), the Rep Max Chart (1-12) and the Plate Calculator; save via \"Export CSV\" or \"Export PNG Card\".",
+  ],
   intro:
     "One Rep Max Calculator estimates the heaviest weight you could lift for a single rep, using the weight and rep count from a set you have already completed. It runs the well-known Epley, Brzycki and Lombardi formulas so you can compare estimates instead of trusting one number, and it works for any lift — squat, bench, deadlift or overhead press.",
   useCases: [

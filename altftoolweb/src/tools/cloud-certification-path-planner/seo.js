@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloud Certification Path Planner: AWS, Azure, GCP",
+  metaDescription:
+    "Plan an ordered AWS, Azure or GCP cert path for five roles — published exam fees, typical study hours and a week-by-week timeline at your own pace.",
+  steps: [
+    "Pick a \"Cloud provider\" (AWS, Microsoft Azure or Google Cloud) and a \"Target role\" — Solutions Architect, Developer, DevOps / SRE, Data Engineer or Security Engineer.",
+    "Set \"Study hours per week (1–40)\" and tick or untick \"Start with the fundamentals exam (skip it if you already work in cloud)\".",
+    "Read the exam table — certification, level, fee, study hours and the week to sit each exam — with total weeks, months and fees above it, then click \"Copy plan\" for a Markdown table.",
+  ],
   intro:
     "This planner builds an ordered cloud certification sequence — foundational, associate, then professional — for a chosen role on AWS, Microsoft Azure or Google Cloud, using the providers' published exam fees (AWS $100/$150/$300 by tier, Azure $99/$165, GCP $99/$125/$200) and typical study-hour estimates. Enter your weekly study hours and it lays out which exam to sit in which week, plus the total cost and time to finish the path.",
   useCases: [

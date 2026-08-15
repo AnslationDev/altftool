@@ -1,4 +1,12 @@
 const seo = {
+  title: ".dockerignore Generator for Node, Python, Go & More",
+  metaDescription:
+    "Tick your stacks — Node, Python, Go, Rust, Java, .NET, PHP, Ruby — plus groups for secrets and logs, and copy a sectioned, deduplicated .dockerignore.",
+  steps: [
+    "Tick your toolchains under Stacks (Node.js, Python, Go, Rust, Java, .NET, PHP, Ruby) and the Common file groups such as Secrets & env files.",
+    "Add anything extra under 'Custom patterns (one per line)', like tmp/** or !important.txt — duplicates across selections are removed automatically.",
+    "Review the sectioned file and its pattern count, then click Copy .dockerignore and save the file next to your Dockerfile.",
+  ],
   intro:
     "This generator builds a sectioned .dockerignore file from your toolchain (Node, Python, Go, Rust, Java, .NET, PHP, Ruby) plus cross-cutting groups for version control, secrets, editor clutter, CI configs and logs. Patterns follow the Docker build-context rules — Go filepath.Match syntax extended with ** and ! negation, matched relative to the context root — and duplicates across selections are removed automatically.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pool Laps to Distance Converter – Metres, Yards, Pace",
+  metaDescription:
+    "Convert pool laps to metres, km, yards and miles for any lane length. Choose if a lap = 1 length or down-and-back; add time for pace per 100 m.",
+  steps: [
+    "Enter 'Laps counted' and pick a 'Pool preset' — 25 m short course, 50 m Olympic, 25 yd short course yards, down to a 15 m hotel pool — or type a custom pool length in metres or yards.",
+    "Answer 'What does one lap mean to you?' by picking '1 lap = 1 length (competitive convention)' or '1 lap = down and back (2 lengths)', and optionally add a session goal and swim time.",
+    "Read the distance in metres, kilometres, yards, miles, metric swim miles (1500 m), swimmer's mile (1650 yd) and pace per 100 m, then click 'Copy result'.",
+  ],
   intro:
     "This converter turns a counted number of pool laps into metres, kilometres, yards and miles for any lane length, using the exact international yard (0.9144 m) and statute mile (1609.344 m). Because 'lap' means one length to competitive swimmers and a there-and-back to most gym swimmers, you choose the convention first and the maths follows it. Add your total swim time and it also returns pace per 100 m and average speed.",
   useCases: [

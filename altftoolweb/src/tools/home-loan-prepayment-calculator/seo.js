@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Loan Prepayment Calculator: Interest Saved",
+  metaDescription:
+    "Amortises your loan month by month with and without a lump sum or extra amount per EMI, showing interest saved, months cut and the new tenure.",
+  steps: [
+    "Enter your \"Outstanding loan amount (₹)\", \"Interest rate (% per year)\" and \"Remaining tenure (years)\" — the EMI is derived from these three fields.",
+    "Add a \"Lump-sum prepayment (₹)\" with its \"Lump sum paid in month\", or an amount in \"Extra with every EMI (₹)\", or both — the schedule is amortised month by month each way.",
+    "Read \"Interest saved\" with the new tenure, total prepaid and total outgo, then click \"Copy result\" to copy the comparison summary.",
+  ],
   "intro": "Home Loan Prepayment Calculator amortises your loan month by month, once without prepayments and once with them, so you can see exactly how much interest a bonus or a small monthly top-up saves. It works out your EMI from the outstanding amount, rate and remaining tenure, then applies a lump sum in any month plus any extra you add to every EMI. The result: interest avoided, the new tenure and how many months you cut.",
   "useCases": [
     "Test whether putting an annual bonus into the loan beats leaving it in a deposit.",

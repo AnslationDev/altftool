@@ -1,4 +1,12 @@
 const seo = {
+  title: "Newsletter Prompt Builder: One CTA, Word Budgets",
+  metaDescription:
+    "Build an AI newsletter-drafting prompt around your segment, cadence and one CTA — with a 40-character subject limit and per-item word budgets built in.",
+  steps: [
+    "Fill in the \"Newsletter name\", \"Audience segment\", \"Primary CTA (the one ask)\", \"Email length (words)\" and \"Number of items\", and pick a Cadence — each option shows its word ceiling, from Daily ≤300 to Monthly ≤1,500.",
+    "Review the plan rows: opening-note, per-item and sign-off word budgets, the 40-character subject line limit and the 40–100 character preheader range.",
+    "Read the \"Generated prompt\" panel and click \"Copy prompt\" to paste it into your AI chat.",
+  ],
   intro:
     "The Newsletter Prompt Builder writes an AI drafting prompt for one newsletter edition, built around your audience segment, sending cadence and a single primary CTA. It allocates the word count across the opening note, each item and the sign-off, and embeds the deliverability limits that matter in practice: a roughly 40-character mobile subject line, a 40-100 character preheader, and a rule that the one CTA appears at most twice.",
   useCases: [

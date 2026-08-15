@@ -1,4 +1,7 @@
 const seo = {
+  title: "Passport Photo Maker - 51x51 mm & 35x45 mm Crop Online",
+  metaDescription:
+    "Crop photos to 51x51 mm, 35x45 mm and 7 more passport sizes with head-height guides, 300-600 dpi export and 4x6 to A4 print sheets. Runs in your browser.",
   intro:
     "This passport photo maker crops any photo to an official ID size — 51 × 51 mm for US and Indian passports, 35 × 45 mm for Schengen, UK and Indian forms — and shows the published chin-to-crown head band you have to fit inside it. It converts millimetres to pixels at 300, 400 or 600 dpi using the exact 25.4 mm inch, then lays out a print sheet on 4×6, 5×7, A6 or A4 paper. Everything runs in your browser, so the photo is never uploaded.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS Rate Finder FY 2025-26: 36 Sections with Thresholds",
+  metaDescription:
+    "Search 36 TDS sections for FY 2025-26 - 194C, 194J, 194-I and more - see the rate and threshold, then enter a payment to get the deduction and net payout.",
+  steps: [
+    "Search by section number or payment type, e.g. 194J, rent, commission, contractor, and pick a section from the list of 36 for FY 2025-26.",
+    "Enter the Payment amount (INR) and choose 'PAN available' or 'No PAN (206AA)', which deducts at the higher of the section rate and 20% (5% for 194-O and 194Q).",
+    "Read the TDS to deduct with the threshold check ('Yes - deduct TDS' or no deduction required), the amount liable and the net payable to the deductee, then press Copy result.",
+  ],
   intro:
     "TDS is deducted at a rate fixed by the section that governs the payment, and only once the payment crosses that section's threshold for the year. This reference brings the common sections together — contractor payments, professional fees, rent, interest, commission — with the rate and the threshold for each, so you can check a deduction before you make or receive a payment.",
   useCases: [

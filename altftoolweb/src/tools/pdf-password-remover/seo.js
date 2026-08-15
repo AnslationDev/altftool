@@ -1,4 +1,10 @@
 const seo = {
+  title: "PDF Password Remover - Unlock PDFs in Your Browser",
+  steps: [
+    "Drag & drop your PDF (or click to browse; one .pdf file) — the tool reports its size and page count and detects whether a user password is required.",
+    "Type the password into 'Enter PDF password' if asked — owner-only restrictions decrypt with an empty password — and click Remove Password & Download.",
+    "Save the decrypted copy with Download Unlocked PDF; it is written as your file's name plus _unlocked.pdf.",
+  ],
   intro:
     "PDF Password Remover decrypts a password-protected PDF in your browser and re-saves it without encryption, producing a copy you can open, print and copy from freely. Drop in the file, type the password if one is required, and download the unlocked PDF. It detects the common case where a PDF has only an owner (permissions) password by attempting decryption with an empty user password, so those files unlock without you typing anything.",
   useCases: [

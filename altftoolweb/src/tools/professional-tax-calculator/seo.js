@@ -1,4 +1,12 @@
 const seo = {
+  title: "Professional Tax Calculator - State-Wise PT Slabs",
+  metaDescription:
+    "Pick your state and monthly gross to see the PT slab, monthly deduction, final-month adjustment and annual total - capped at Rs 2,500 by Article 276.",
+  steps: [
+    "Choose your \"State of employment\" — 14 slab tables from Maharashtra to Sikkim plus a no-levy entry for Delhi, Haryana, UP, Uttarakhand and Rajasthan — and enter \"Monthly gross salary (INR)\"; Maharashtra also asks Gender for its Rs 25,000 women's exemption.",
+    "The calculator reads your income against that state's slab basis — monthly, half-yearly (Tamil Nadu, Kerala) or annual (Bihar, Jharkhand) — and highlights \"your slab\" in the slab table.",
+    "Read the \"Monthly professional tax\", any final-month adjustment (e.g. Rs 300 in February on Maharashtra's top slab), the annual total and net salary after PT, then press \"Copy result\".",
+  ],
   intro:
     "Professional tax is a state-level tax on salaried and self-employed income, deducted monthly by the employer and shown on the payslip. Each state sets its own slabs and its own annual ceiling, so the amount differs by where you work — this calculator applies the slab for the selected state to your monthly salary.",
   useCases: [

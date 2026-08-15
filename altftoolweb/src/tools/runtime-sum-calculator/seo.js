@@ -1,4 +1,12 @@
 const seo = {
+  title: "Runtime Sum Calculator: Add Clip Durations & Timecode",
+  metaDescription:
+    "Paste durations in any mix — 1:30, 00:02:15, 90, 1m 20s or hh:mm:ss:ff timecode — for total runtime, per-clip start times and the gap to a target slot.",
+  steps: [
+    "Paste one duration per line under 'Clip durations, one per line' — 1:30, 00:02:15, 90, 1m 20s and hh:mm:ss:ff timecode can mix freely.",
+    "Set the Frame rate for timecode entries, a Gap between clips in seconds, and a 'Target slot length (seconds, 0 for none)'.",
+    "Read the Total runtime in clock time, seconds, minutes and frames plus each clip's start time, then click Copy result.",
+  ],
   intro:
     "Total runtime is simply the sum of every clip length plus any padding between them, but only once each duration has been converted to the same unit. This calculator normalises mixed notation — 1:30, 00:02:15, plain seconds, 1m 20s and SMPTE hh:mm:ss:ff — into seconds, adds them, and reports the total in clock time, seconds, minutes and frames alongside the average and median clip length and the gap to a target slot.",
   useCases: [

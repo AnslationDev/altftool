@@ -1,4 +1,12 @@
 const seo = {
+  title: "Remove Duplicate Lines – Keep First, Preserve Order",
+  metaDescription:
+    "Delete repeated lines from text, keeping the first occurrence in original order. Whole-line exact matching with an optional Ignore case toggle.",
+  steps: [
+    "Paste your list into the Input panel (or click 'Load sample') — lines are compared whole, exactly as typed.",
+    "Turn on the 'Ignore case' toggle if lines like 'Delhi' and 'delhi' should count as one; deduplication reruns live on every change.",
+    "The Result panel keeps only the first occurrence of each line in its original order — click 'Copy' to take the cleaned list.",
+  ],
   intro:
     "Remove Duplicate Lines deletes repeated lines from a block of text and keeps only the first occurrence of each, leaving the surviving lines in their original order. It compares whole lines exactly as typed, with an optional Ignore case toggle that treats \"Delhi\" and \"delhi\" as the same line. Useful for anyone cleaning up an email list, a log file, a keyword dump or a pasted CSV column before importing it somewhere else.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "WhatsApp Two-Step Verification Setup Checklist",
+  metaDescription:
+    "A local 12-point checklist for the WhatsApp 6-digit PIN, recovery email, linked devices, backups and SIM-swap defence - never asks for your PIN or OTP.",
+  steps: [
+    "Complete each control inside WhatsApp or your carrier/email settings first — the 12 checks are grouped under Two-step verification, Recovery, SIM and device, Sessions, Backups, Monitoring and Privacy, each showing where to do it.",
+    "Tick the matching checkbox; the Hardening score adds each control's weighted points and stays capped at 69% while any control marked Critical is unticked.",
+    "Follow \"Next best actions\" for the highest-weight gaps, press \"Copy result\" for a text summary of the score and remaining actions, or \"Reset\" to clear every checkbox.",
+  ],
   intro:
     "This WhatsApp two-step verification guide is a local checklist for turning on the 6-digit registration PIN, adding recovery email, preparing SIM-swap protection, reviewing linked devices, enabling passkeys where available, and protecting encrypted chat backups. It never asks for your OTP, PIN, recovery email password or backup key.",
   useCases: [

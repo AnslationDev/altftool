@@ -1,4 +1,12 @@
 const seo = {
+  title: "JioFiber Router Hardening Checklist & Security Score",
+  metaDescription:
+    "Score your JioFiber ONT: sticker admin password, WPA2/WPA3, WPS, UPnP and port forwards. Critical gaps cap the score; includes a Wi-Fi crack-time table.",
+  steps: [
+    "Pick a Risk profile and tick each JioFiber hardening item you have completed — items tagged critical cap the score while they stay open.",
+    "Set Attacking GPUs to compare WPA2 crack times for phone-number, birthday, lower-case and mixed 12-character Wi-Fi keys.",
+    "Read the Hardening score percentage, its band and the Next actions list, then press Copy checklist to export the summary.",
+  ],
   intro:
     "The JioFiber Router Hardening Checklist walks through the settings that matter on a Jio Home Gateway or ONT: changing the sticker admin password, avoiding mobile-number Wi-Fi keys, keeping WPA2/WPA3 on, disabling WPS, checking UPnP and port forwards, using guest Wi-Fi, and knowing which items Jio manages remotely. The score weights critical controls more heavily and caps the result when a critical hole remains open.",
   useCases: [

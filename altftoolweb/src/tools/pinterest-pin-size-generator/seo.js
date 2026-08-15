@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pinterest Pin Sizes: 1000×1500, 1000×1000, 1080×1920",
+  metaDescription:
+    "Get canvas dimensions for standard 2:3 (1000×1500), square and idea/story pins, with scaled exports, safe-area size and ready-to-paste CSS.",
+  steps: [
+    "Pick a Pin type — Standard 2:3 pin 1000×1500, Square pin 1000×1000, or Idea/story pin 1080×1920 — then set the Export scale and Safe inset px.",
+    "Read the Pin dimensions panel: the scaled canvas width × height, the safe area remaining after the inset, and .pin-artboard / .pin-safe-area CSS rules.",
+    "Click Copy output to grab the preset, dimensions and CSS block in one paste-ready snippet.",
+  ],
   intro:
     "This generator resizes artwork to Pinterest's pin canvases — 1000x1500 standard, 1000x1000 square, 1000x2100 long and 1080x1920 idea pin — and tells you how much of the frame is cropped before you export. It also applies Pinterest's feed rule: pins are shown in full up to about 1:2.1 height-to-width, and anything taller is cut off. All resizing runs on canvas in your browser, so the image is never uploaded.",
   useCases: [

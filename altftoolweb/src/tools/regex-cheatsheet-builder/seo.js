@@ -1,4 +1,12 @@
 const seo = {
+  title: "Regex Cheatsheet Builder for JavaScript, PCRE2, Python",
+  metaDescription:
+    "Build a regex cheatsheet filtered to JavaScript, PCRE2 or Python re — unsupported tokens hidden, 7 toggleable sections, copy as Markdown or print.",
+  steps: [
+    "Choose your engine in the \"Regex flavor\" dropdown — JavaScript (ECMA-262), PCRE2 (PHP, grep -P) or Python re module.",
+    "Tick or untick the seven \"Sections to include\" checkboxes: Anchors & boundaries, Character classes, Quantifiers, Groups & backreferences, Lookaround, Flags / modifiers, and Escapes & literals.",
+    "Read the Token / Meaning / Example tables — tokens your flavor does not support are hidden, and the counter shows how many were filtered — then click \"Copy Markdown\" or \"Print\".",
+  ],
   intro:
     "The Regex Cheatsheet Builder generates a reference sheet of regular-expression tokens filtered to a single flavor — JavaScript (ECMA-262), PCRE2 or Python's re module — so every token shown is one your engine actually supports. Developers pick the feature groups they use (anchors, classes, quantifiers, groups, lookaround, flags, escapes) and get a copyable Markdown or printable sheet with per-token examples and cross-flavor notes.",
   useCases: [

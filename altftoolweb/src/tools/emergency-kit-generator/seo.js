@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emergency Kit Checklist Generator with Quantities",
+  metaDescription:
+    "A kit list with amounts worked out — 4 L water per person per day, calories by age — sized for a go-bag or two weeks at home, plus hazard extras.",
+  steps: [
+    "Count your household — Adults, 'Children (4–12)', 'Infants (under 2)', Pets — and pick a Kit type: 'Go-bag (evacuation)' at 3 days or 'Home supplies (shelter in place)' at 14.",
+    "Tick the 'Hazards where you live' — flood, cyclone, earthquake, wildfire, extreme heat or cold, long power cut — and 'Hot climate or summer (adds 50% water)' if it applies.",
+    "Read the 'Water to store' litres, total kit weight per person and the itemised category lists with rotation due dates, then click 'Copy result'.",
+  ],
   intro:
     "An emergency kit list with the quantities worked out rather than left to you: water at 4 litres per person per day, the FEMA one-gallon figure rounded, food sized from 2,000 kcal an adult and 1,400 a child, and every other item scaled per person, per infant or per household. Choose a three-day go-bag or two weeks of home supplies, tick the hazards that apply where you live, and it returns the full list with weights and rotation dates.",
   useCases: [

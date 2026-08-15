@@ -1,4 +1,12 @@
 const seo = {
+  title: "ICC Profiles Explained - sRGB vs Adobe RGB Gamut Size",
+  metaDescription:
+    "Compare sRGB, Adobe RGB, Display P3, Rec. 2020 and ProPhoto gamut areas, see what a wrong profile tag does to each primary, and when to assign vs convert.",
+  steps: [
+    "Pick a Working space — sRGB, Rec. 709, Adobe RGB (1998), Display P3, Rec. 2020 or ProPhoto RGB — and an Editing bit depth of 8, 16 or 32-bit per channel.",
+    "In 'What a wrong tag does', set 'The file was really authored in' and 'The app or browser assumed' to list each primary's authored versus displayed xy chromaticity.",
+    "Read the chromaticity-area ratio against sRGB and the banding-risk advice for your bit depth, then press Copy summary to keep the numbers.",
+  ],
   intro:
     "An ICC profile is the label that says what a file's RGB numbers actually mean, and this explainer makes that concrete. It computes each working space's gamut as the area of the triangle its primaries span in CIE 1931 xy — sRGB covers 0.1121, Adobe RGB 0.1512 and ProPhoto RGB 0.2770 — then shows exactly where each primary lands when a file is read under the wrong profile, and spells out the difference between assigning and converting.",
   useCases: [

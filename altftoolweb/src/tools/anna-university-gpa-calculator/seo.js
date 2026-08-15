@@ -1,4 +1,12 @@
 const seo = {
+  title: "Anna University GPA Calculator with O-U Grade Scale",
+  metaDescription:
+    "Semester GPA by Anna University's Σ(Ci×GPi)/ΣCi formula: grades O (10) to C (5), U and AB at 0 with credits still counted, for up to 15 courses.",
+  steps: [
+    "For each course row, pick the Grade awarded — O (Outstanding, 10 pts) down to U or AB at 0 — and enter the Course credits; Add course allows up to 15 rows.",
+    "Read the Semester GPA out of 10, computed as Σ(Ci×GPi) ÷ ΣCi, with total credits, credit points and arrear (U/AB) credits listed below it.",
+    "Check the built-in Anna University grade scale table (marks bands 91–100 down to 50–55), then click Copy result for the per-course breakdown.",
+  ],
   intro:
     "This calculator computes an Anna University semester GPA using the formula in the university's UG regulations: GPA = Σ(Ci × GPi) ÷ ΣCi, the credit weighted mean of grade points. It is built for B.E., B.Tech and allied-programme students of Anna University and its affiliated colleges who want the GPA from their letter grades (O = 10 down to C = 5, with U and AB at 0) before or alongside the official grade sheet.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Semester Exam Countdown Board with At-Risk Flags",
+  metaDescription:
+    "List every semester paper with its date and a 0-100% readiness slider; papers under 50% ready within 7 days are flagged at risk on one board.",
+  steps: [
+    "Enter each paper's subject and \"Exam date\" and drag its Readiness slider (0–100% in steps of 5); \"Add paper\" adds rows and \"Counting from\" sets the start date.",
+    "The board sorts papers by date with a days-left countdown and average readiness, flagging any paper under 50% ready with 7 or fewer days to go as at risk.",
+    "Click \"Copy board\" to copy the countdown and readiness list as text, or \"Reset\" to return to the example papers.",
+  ],
   intro:
     "This board counts the exact days remaining to each semester exam paper and lines them up with a readiness bar per subject, so the whole exam window is visible at a glance. Papers you rate under 50% ready with a week or less to go are flagged at risk — a plain, transparent rule for deciding what to study next. It is built for university and college students juggling four to eight papers spread across an exam timetable.",
   useCases: [

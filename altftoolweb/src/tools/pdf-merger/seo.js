@@ -1,4 +1,12 @@
 const seo = {
+  title: "Merge PDF Files in Your Browser — Up to 20 at Once",
+  metaDescription:
+    "Combine up to 20 PDFs (80 MB each) into one file in your browser — drag to reorder, see page counts, download merged-<timestamp>.pdf. No upload.",
+  steps: [
+    "Drag & drop PDF files into the dropzone or click to browse — up to 20 PDFs per batch, 80 MB each; each file's page count is read as it is added.",
+    "Arrange the sequence by dragging rows or using the move up/down arrows, then click 'Merge Files' (enabled once at least 2 files are queued).",
+    "Click 'Download' to save the merged file as merged-<timestamp>.pdf, or use 'Copy Manifest' / 'Export Manifest' for a text record of the input order, pages and sizes.",
+  ],
   intro:
     "PDF Merger combines up to 20 PDFs into one document in your browser, copying every page from each file in the order you arrange them and writing a single new PDF. Drag the rows to set the sequence, watch the running page count, then download the merged file. It also produces a plain-text merge manifest listing each input file, its page count and size, so you have a record of what went into the output.",
   useCases: [

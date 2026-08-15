@@ -1,4 +1,12 @@
 const seo = {
+  title: "Online To-Do List with Starred Tasks Pinned on Top",
+  metaDescription:
+    "Free browser to-do list: star tasks to pin them on top, filter by All, Active, Important or Completed, edit inline. Saved to local storage, no account.",
+  steps: [
+    "Type a task into 'What needs to be done?' and click Add or press Enter.",
+    "Star a task to pin it above the rest, tick it complete, or edit its text inline; every change saves to this browser's local storage.",
+    "Switch between the All, Active, Important and Completed tabs — each carries a live count of matching tasks.",
+  ],
   intro:
     "To Do List is a checklist that keeps starred tasks pinned to the top: every item can be completed, starred as important, renamed inline or deleted, and the list sorts important first and then newest first. Four filter tabs — All, Active, Important and Completed — carry live counts, matched by four stat cards above the list. Everything is saved to this browser's local storage as you type, with no account and no sync.",
   useCases: [

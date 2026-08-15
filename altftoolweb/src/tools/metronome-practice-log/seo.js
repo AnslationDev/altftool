@@ -1,4 +1,12 @@
 const seo = {
+  title: "Metronome Practice Log with Tempo Ladder & Streaks",
+  metaDescription:
+    "Log tempo and minutes per block, then see total time, per-exercise BPM gains, day streaks and a next-session tempo ladder. Stays in your browser.",
+  steps: [
+    "Fill the 'Log a practice block' form — Date, 'Exercise or passage', 'Metronome tempo (BPM)' and 'Minutes practised' — then press 'Add block'.",
+    "The summary updates instantly: 'Total practice logged' in minutes, weighted average tempo, current and longest streaks, and a 'Tempo progress by exercise' table showing first → last BPM and the gain.",
+    "Press 'Copy summary' for a plain-text report, and plan the next session under 'Next tempo ladder' by setting start tempo, target tempo, step size and minutes per step to get the list of rungs.",
+  ],
   intro:
     "A metronome practice log records three numbers per block — what you practised, the tempo you set, and how long you spent — so progress can be measured in beats per minute rather than by feel. This tool totals your minutes, tracks the first and last tempo reached on every exercise, counts consecutive practice days, and builds the next tempo ladder from a start tempo, a target and a step size. Everything stays in your browser.",
   useCases: [

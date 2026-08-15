@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mirror Text Generator — Reverse Text Backwards Online",
+  metaDescription:
+    "Reverses the character order of your text as you type — 'Hello world' becomes 'dlrow olleH'. Letters keep their normal shapes; copy in one click.",
+  steps: [
+    "Type or paste into the Input pane, or click Load sample to insert 'Hello world'.",
+    "The Result pane reverses the character order live — 'Hello world' becomes 'dlrow olleH', with spaces and punctuation moved too.",
+    "Click Copy above the Result pane to take the reversed text; Clear empties the input.",
+  ],
   intro:
     "The Mirror Text Generator reverses the character order of whatever you type, so \"Hello world\" becomes \"dlrow olleH\" and reads back-to-front. It rewrites the sequence only — the letters keep their normal shapes rather than being replaced with mirrored glyphs — and the reversed result updates as you type, ready to copy. It suits anyone making a puzzle, a novelty username or a string that has to be read right to left.",
   useCases: [

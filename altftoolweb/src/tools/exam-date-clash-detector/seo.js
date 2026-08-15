@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Date Clash Detector with Tight-Gap Warnings",
+  metaDescription:
+    "Enter each exam's date or shift window; interval-overlap maths flags shared days and gaps of 2 days or fewer, with a sorted timeline you can copy.",
+  steps: [
+    "Type the Exam name, set 'First (or only) exam day' — plus 'Last exam day' for a multi-day shift window — and click Add exam.",
+    "Tune 'Flag gaps of (days) or fewer' (default 2) to control when a tight gap between two exams is flagged.",
+    "Read the 'Date clashes found' count, the overlap and tight-gap alerts and the sorted exam timeline, then click Copy report.",
+  ],
   intro:
     "This detector runs a standard interval-overlap check (two ranges clash when each starts on or before the other ends) across every exam you have applied for, flagging both same-day clashes and tight gaps with fewer free days than travel and revision need. It is for aspirants juggling multiple recruitment cycles — SSC, banking, railways, state PSCs — whose exams are announced independently and collide without warning.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Code Review Checklist Generator (Markdown for PRs)",
+  metaDescription:
+    "Generate a review checklist tuned by language, change type and risk — sections follow Google's code review guide, output as Markdown task boxes for PRs.",
+  steps: [
+    "Pick the \"Language\" (TypeScript / JavaScript through SQL / database), \"Change type\" (New feature, Bug fix, Hotfix, Dependency upgrade, Config) and \"Risk level\" dropdowns, and optionally name the checklist.",
+    "Tick the \"What does the change touch?\" focus areas — such as \"Touches auth, secrets or user input\" or \"Touches database schema or queries\" — to add targeted sections.",
+    "Review the generated sections and item count, then click \"Copy Markdown\" to paste the \"- [ ]\" task-box list into a pull request template.",
+  ],
   intro:
     "This generator builds a code review checklist matched to your language, change type and risk level, output as Markdown task boxes ready for a pull request template. Its core sections — design, functionality, complexity, tests and documentation — follow Google's Code Review Developer Guide, and its security items follow the OWASP Code Review Guide. Reviewers and tech leads get a focused list instead of a generic wall of questions.",
   useCases: [

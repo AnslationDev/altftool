@@ -1,4 +1,7 @@
 const seo = {
+  title: "Random Card Picker — Draw From a Full 52-Card Deck",
+  metaDescription:
+    "Press Pick Card to flip one of 52 cards — four suits, Ace to King, no jokers. Draws with replacement, so every pull is an even 1-in-52 chance.",
   intro:
     "The Random Card Picker draws one card from a standard 52-card deck — 13 ranks across hearts, diamonds, clubs and spades, no jokers — and reveals it with a flip animation. Each press picks a suit and a rank independently at random, so it is a draw with replacement: the same card can come up twice in a row, exactly like reshuffling the full deck before every pull. Useful when you need an impartial card and there is no deck on the table.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Column Extractor: cut -f for Pasted CSV & Logs",
+  metaDescription:
+    "Pull columns out of pasted CSV, TSV or fixed-width text — RFC 4180 quotes, ranges like 2,4-6, -1 for the last column, up to 200,000 lines in-browser.",
+  steps: [
+    "Paste up to 200,000 lines into 'Text to extract from' and pick a Splitting mode — delimited (CSV, TSV, pipe) or fixed width; Detect separator can find the delimiter for you.",
+    "List 'Columns to keep' as 1-based numbers — 2,4 for a set, 2-5 for a range, -1 for the last column — or character positions like 1-10,12-20 in fixed-width mode.",
+    "Choose an Output separator (Tab, Comma, New line, Space or Pipe) and click Copy result to take every extracted row.",
+  ],
   intro:
     "A text column extractor takes a block of pasted rows and returns only the columns you name — the browser equivalent of `cut -d, -f2,4` or `awk '{print $2}'`. It is for anyone cleaning a log dump, an exported report or a CSV where only two of fifteen columns matter. Splitting follows RFC 4180 for quoted CSV fields, so a comma inside \"Rao, Kiran\" stays inside that one field instead of shifting every column after it.",
   useCases: [

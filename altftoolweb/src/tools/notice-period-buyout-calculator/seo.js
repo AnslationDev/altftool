@@ -1,4 +1,12 @@
 const seo = {
+  title: "Notice Period Buyout Calculator for India (INR)",
+  metaDescription:
+    "Per-day salary from Basic + DA or gross × unserved notice days after leave set-off — buyout, optional 18% GST and net cost after reimbursement.",
+  steps: [
+    "Enter 'Monthly Basic + DA' and other allowances in INR, choose 'Buyout is charged on' (Basic + DA only or Full monthly gross) and the 'Per-day salary basis' (30 days, 26 working days or calendar year / 365), then set contract notice days, days you will serve, adjustable leave and any new-employer reimbursement.",
+    "'Notice buyout payable' recomputes live — unserved days times per-day salary — with rows for leave adjusted, buyout amount, GST at 18% if the 'Employer invoices GST' checkbox is ticked, total payable and net cost after reimbursement.",
+    "Press 'Copy result' for the line-by-line recovery note or 'Reset'; the 30/60/90-day preset buttons switch the contract notice period in one click.",
+  ],
   intro:
     "The Notice Period Buyout Calculator tells you what leaving early actually costs. It converts your monthly salary into a per-day rate on the base your contract specifies — Basic + DA or full gross — and multiplies it by the notice days you will not serve, after setting off any leave balance your employer allows you to adjust. It is built for employees weighing an early joining date, and for HR teams issuing a recovery note.",
   useCases: [

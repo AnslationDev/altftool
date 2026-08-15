@@ -1,4 +1,12 @@
 const seo = {
+  title: "NDA & CDS Exam Countdown with SSB Interview Dates",
+  metaDescription:
+    "Days to the NDA or CDS written paper and your SSB reporting date, with paper-wise marks, one-third negative-marking maths and the 5-day SSB schedule.",
+  steps: [
+    "Choose your exam in \"Exam and entry\", set the \"Written exam date (UPSC calendar)\", and optionally add the SSB reporting date from your call-up letter plus \"Study hours per day\".",
+    "Read \"Days to the written exam\", study hours left, the written-to-SSB prep window and the day-by-day 5-day SSB schedule from screening to conference.",
+    "Under \"Marks from your attempt plan\", set \"Questions attempted\" and \"Accuracy on what you attempt (%)\" to project marks under one-third negative marking, then press \"Copy result\".",
+  ],
   intro:
     "This countdown tracks the two clocks a defence aspirant lives by: days to the UPSC written paper (NDA or CDS) and days to the SSB interview reporting date, including the prep window between them. It encodes the real paper structures — NDA Mathematics 300 marks and GAT 600 marks, CDS papers of 100 marks each — and UPSC's one-third negative marking rule, plus the standard 5-day SSB schedule from screening to conference.",
   useCases: [

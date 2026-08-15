@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bonus & Variable Pay Calculator with Rating Multipliers",
+  metaDescription:
+    "Work out your bonus from target variable pay: rating multiplier x company payout factor, prorated for eligible months, with tax and per-cycle payouts.",
+  steps: [
+    "Choose how variable pay is defined — '% of annual CTC' or 'Fixed annual amount' — and enter the figures (defaults: ₹20,00,000 CTC with a 15% share).",
+    "Pick a 'Performance rating' from Outstanding 150% down to Below expectations 0%, then fine-tune the 'Rating multiplier (%)', 'Company / business payout factor (%)' and 'Months eligible in the year (0-12)'.",
+    "Read the 'Gross bonus payout' headline with the after-tax figure and gross/net per payout cycle, then click 'Copy result' for the full text breakdown.",
+  ],
   intro:
     "The Bonus and Variable Pay Calculator converts a target variable pay figure into the amount that actually reaches your account. Enter variable pay as a share of CTC or as a fixed annual number, then apply your individual rating multiplier, the company or business payout factor and the months you were eligible. It shows the gross payout, the tax deducted and what each quarterly or annual cycle pays out.",
   useCases: [

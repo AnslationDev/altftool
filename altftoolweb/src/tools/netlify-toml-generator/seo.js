@@ -1,4 +1,12 @@
 const seo = {
+  title: "netlify.toml Generator — Redirects, Headers, SPA Fallback",
+  metaDescription:
+    "Assemble a valid netlify.toml: build command, SPA /* to /index.html 200 rewrite, redirects with valid statuses, OWASP security headers, edge functions.",
+  steps: [
+    "Fill in Build settings — Build command, Publish directory, optional Base directory, Node version and Functions directory — and keep the 'Single-page app fallback' (/* to /index.html, status 200) checkbox on for SPAs.",
+    "Add [[redirects]] rows with From, To, a Status limited to 301/302/200/404/410/451 and an optional Force checkbox, tick header presets like 'Security headers on /*', and declare edge function Path and Function name rows.",
+    "Review the generated netlify.toml preview with its section and redirect counts, then click 'Copy file' and save it at your repository root.",
+  ],
   intro:
     "This generator assembles a valid netlify.toml — Netlify's file-based configuration format — covering the [build] block, [build.environment], [[redirects]], [[headers]], [functions] and [[edge_functions]] sections. It is built for developers deploying static sites, SPAs and serverless apps to Netlify who want correct TOML syntax, valid redirect status codes and OWASP-baseline security headers without hand-writing the file.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "nginx log_format Builder with JSON & Sample Preview",
+  metaDescription:
+    "Pick nginx variables in order and get the log_format and access_log directives plus a realistic sample line — combined-style or JSON via escape=json.",
+  steps: [
+    "Set a Format name and an Output style — 'Plain line (combined-style)' or 'JSON object per line', which always uses escape=json.",
+    "Tick variables such as $request_time and $upstream_response_time (click order sets column order), or press Load nginx's \"combined\" variable set.",
+    "Copy the log_format directive, access_log line and sample log entry with Copy directives, then declare log_format in your http block.",
+  ],
   intro:
     "This builder composes a custom nginx log_format directive from a catalogue of 30 real nginx variables — request timing, upstream response time, TLS details, request IDs and the classic combined-format fields — and previews a realistic sample log line before you deploy it. It supports both plain combined-style lines and one-JSON-object-per-line output using log_format's escape=json parameter from ngx_http_log_module.",
   useCases: [

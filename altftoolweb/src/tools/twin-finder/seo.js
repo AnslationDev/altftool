@@ -1,4 +1,7 @@
 const seo = {
+  title: "Twin Finder - Photo Similarity Score & Heat Map",
+  metaDescription:
+    "Upload two photos (up to 12 MB each) and get a playful similarity score from perceptual hash, colour and brightness - with an 8x8 difference heat map.",
   intro:
     "Twin Finder scores how alike two photographs look by combining three measurements: a 128-bit perceptual hash (average hash plus difference hash on an 8x8 luma grid), a 64-bin RGB colour histogram intersection, and the gap in average brightness. The three are blended 55/30/15 into a single percentage. It is a party trick for friends, couples and pet owners — it is not face recognition and it cannot tell you whether two people are related.",
   useCases: [

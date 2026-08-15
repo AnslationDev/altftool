@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marksheet Percentage Calculator & Score Visualizer",
+  metaDescription:
+    "Enter subject-wise marks to get the correct mark-weighted overall percentage, bars per subject, strongest and weakest subjects and Indian division bands.",
+  steps: [
+    "Fill in each Subject with its Obtained marks and the Out of maximum - five rows (Mathematics to Hindi) are preloaded, and Add subject or the remove button changes the list.",
+    "The visualizer draws a percentage bar per subject, painting anything under the 33% pass mark red, and computes the mark-weighted Overall percentage as total obtained over total maximum.",
+    "Read Strongest subject, Weakest subject and the Spread (standard deviation), check the Division bands used table (Distinction 75%, First division 60%, Pass 33%), then press Copy result for a text summary.",
+  ],
   intro:
     "This visualizer converts subject-wise marks into percentage bars and a mark-weighted overall percentage (total obtained ÷ total maximum × 100), instantly showing your strongest subject, weakest subject and how evenly performance is spread. It applies the standard Indian division bands — 75% distinction, 60% first division, 50% second division, 33% pass — and is built for students and parents reading a board, school or semester marksheet.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exit Code Lookup: 137, 139, 127 and 128+N Signals",
+  metaDescription:
+    "Type any exit code 0-255 and get its meaning: POSIX 126/127, sysexits.h 64-78, and 128+N signal deaths — 137 decoded as SIGKILL with the Docker OOM note.",
+  steps: [
+    "Type the code from echo $? into the Exit code (0–255) field, or hit a quick-pick chip such as 126, 127, 137 or 139.",
+    "Read the decoded meaning — signal deaths show the maths, e.g. SIGKILL (signal 9), 128 + 9 = 137 — plus who defines the code and a Docker/Kubernetes note where relevant.",
+    "Filter the full reference table (try SIGKILL, usage or 74) to browse every code, then click Copy result.",
+  ],
   intro:
     "This explorer decodes any process exit code from 0 to 255 into its meaning — POSIX shell conventions (126 not executable, 127 not found), the BSD sysexits.h EX_* block (64–78), and the 128+N rule that turns a signal death into a code, so 137 is decoded as 128 + SIGKILL(9). It is built for developers and SREs staring at echo $?, a failed CI step or a crashed container status and needing the cause in one lookup.",
   useCases: [

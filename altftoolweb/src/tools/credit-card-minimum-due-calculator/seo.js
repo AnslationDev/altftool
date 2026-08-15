@@ -1,4 +1,12 @@
 const seo = {
+  title: "Credit Card Minimum Due Calculator (India, 18% GST)",
+  metaDescription:
+    "Simulates your card balance month by month — interest, 18% GST and the shrinking minimum — to show how many years the debt lasts vs a fixed payment.",
+  steps: [
+    "Enter your Outstanding balance (INR), Interest rate (% per month), and the Minimum due percentage and floor from your card statement.",
+    "Tick 'Add 18% GST on the interest charged' and fill 'Compare with a fixed monthly payment (INR)' — the month-by-month simulation reruns as you type, with no submit button.",
+    "Read the time to clear (or 'Never cleared'), the interest and GST totals and the milestone table, then click 'Copy result' to copy the summary.",
+  ],
   "intro": "Credit Card Minimum Due Calculator simulates your card balance month by month when you pay only the minimum amount due. It applies the monthly finance charge, adds 18% GST on that interest, recalculates the shrinking minimum each cycle, and reports how many years the debt lasts and what it costs in total. It also compares that against paying a fixed amount every month, so you can see exactly what the minimum-due trap costs you.",
   "useCases": [
     "See how long a 1 lakh revolved balance at 3.5% per month really takes to clear on minimum payments alone.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Therapy Notes Tracker — Private In-Browser Journal",
+  metaDescription:
+    "A two-field log for therapy sessions and homework, saved only in your browser's local storage — searchable, with JSON export and import. No account.",
+  steps: [
+    "Write the session in the 'Session' box and what you agreed to practise in 'Takeaways and exercises', then click 'Add record' — entries save to this browser's local storage only.",
+    "Find past entries with the 'Search records' box, which matches text in both the Session and Takeaways fields across every saved record.",
+    "Click 'Export JSON' to download your history as therapy-notes-tracker.json, and use 'Import JSON' to load it back in another browser.",
+  ],
   intro:
     "Therapy Notes Tracker is a private, two-field log for your own therapy sessions: one box for the session and one for the takeaways and exercises that came out of it. Records are saved to this browser's local storage only, searchable across both fields, and exportable as a JSON file you control. It is for clients keeping track of what they discussed and what they agreed to practise between appointments — not a clinical record system.",
   useCases: [

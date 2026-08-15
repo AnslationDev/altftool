@@ -1,4 +1,12 @@
 const seo = {
+  title: "SPPU Attendance Calculator — 75% Defaulter Check",
+  metaDescription:
+    "Enter lectures held and attended per subject to see which subjects sit under SPPU's 75% line, the exact safe bunks left, and the streak to recover.",
+  steps: [
+    "For each subject enter 'Lectures held' and 'Attended', using 'Add subject' for up to 20 subjects.",
+    "The 75% check runs per subject as you type, marking each row Safe or 'Defaulter zone' immediately.",
+    "Read 'Safe bunks left' and 'Attend in a row to recover' for every subject plus the aggregate, then click 'Copy result' for a shareable summary.",
+  ],
   intro:
     "This calculator checks SPPU (Savitribai Phule Pune University) attendance subject by subject: percentage = lectures attended ÷ lectures held × 100, measured against the 75% line affiliated colleges use for defaulter lists. For safe subjects it computes the exact number of lectures you can still bunk while holding 75% — solving attended ÷ (held + n) ≥ 0.75 — and for short subjects, the consecutive lectures needed to climb back.",
   useCases: [

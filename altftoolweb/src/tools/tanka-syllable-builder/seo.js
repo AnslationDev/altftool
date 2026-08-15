@@ -1,4 +1,7 @@
 const seo = {
+  title: "Tanka Syllable Builder: Plan 5-7-5-7-7 Line Drafts",
+  metaDescription:
+    "Plan a five-line tanka around the 5-7-5-7-7 pattern: paste draft lines, theme and images, then copy a structured working note for revision.",
   intro:
     "Tanka Syllable Builder helps plan a five-line poem using the 5-7-5-7-7 pattern. Add the theme, emotional turn, images and draft lines to get a structured writing note.",
   useCases: [

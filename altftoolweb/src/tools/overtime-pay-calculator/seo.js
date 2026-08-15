@@ -1,4 +1,12 @@
 const seo = {
+  title: "Overtime Pay Calculator: 1.5x, 2x & Custom Multiplier",
+  metaDescription:
+    "Enter hourly rate, regular and overtime hours, and a 1.5x, 2x or custom multiplier to get overtime pay, gross weekly pay and blended hourly rate.",
+  steps: [
+    "Enter your Hourly rate, Regular hours, Overtime hours, Overtime multiplier (1.5 for time-and-a-half, 2 for double-time) and any Bonus / allowance.",
+    "Watch the Pay breakdown update live with regular pay, overtime rate, overtime pay, gross pay and blended hourly rate; weekly hours are capped at 168.",
+    "Click Copy pay summary to copy the Overtime Pay Estimate text, or Reset to restore the 40-hour example timesheet.",
+  ],
   intro:
     "Calculate overtime pay using an hourly rate, regular hours, overtime hours and multiplier. It works for weekly payroll estimates, contractor invoices and simple what-if checks before approving extra shifts.",
   useCases: [

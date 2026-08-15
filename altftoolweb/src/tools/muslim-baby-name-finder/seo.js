@@ -1,4 +1,12 @@
 const seo = {
+  title: "Muslim Baby Names with Arabic & Urdu Spellings",
+  metaDescription:
+    "Filter 118 Muslim baby names by letter, gender, origin and meaning, with Arabic and Urdu spellings side by side and an Abd- compound name checker.",
+  steps: [
+    "Pick a \"Starting letter\" (A–Z or All) and set the Gender, Category, \"Language of origin\" and \"Meaning contains\" filters over the 118-name list.",
+    "Review the \"Matching names\" table showing each name's Arabic and Urdu spelling, gender and meaning, or type a compound like Abdul Rahman into \"Name to check\" to test the Abd- rule.",
+    "Click \"Copy list\" to copy every matched name with its Arabic and Urdu form and meaning, or \"Reset filters\" to start over.",
+  ],
   intro:
     "This finder lists Muslim baby names with the Arabic spelling, the usual Urdu form of the same name, and the meaning of the underlying Arabic or Persian word. Names carried by a prophet, by a companion of the Prophet Muhammad, or by his family are tagged so you can see the association at a glance. It also checks Abd- compound names against the rule that Abd, meaning servant of, should be joined only to a name of Allah.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Linksys Router Hardening Checklist: 18-Step Score",
+  metaDescription:
+    "Score 18 Linksys settings — router password, Smart Wi-Fi cloud account, remote management, WPS, UPnP — capped at Weak while critical steps stay open.",
+  steps: [
+    "Mark the 18 Linksys steps 'Done' or 'Not applicable' — router password, Smart Wi-Fi cloud account, remote management, WPS, UPnP, guest access, port forwards, automatic firmware and more.",
+    "Watch the Hardening score out of 100 with bands from 'Exposed' to 'Hardened'; any open critical step caps the band at 'Weak', with open-critical count and estimated minutes shown.",
+    "Click 'Copy summary' to export the open steps, critical count and remaining minutes as a text plan.",
+  ],
   intro:
     "The Linksys Router Hardening Checklist scores common Linksys and Linksys Smart Wi-Fi settings: router password, cloud account, remote management, WPS, WPA mode, guest access, UPnP, port forwards, DNS, firmware and device inventory.",
   useCases: [

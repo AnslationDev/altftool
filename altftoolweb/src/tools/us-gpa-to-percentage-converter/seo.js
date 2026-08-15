@@ -1,4 +1,12 @@
 const seo = {
+  title: "US GPA to Percentage Converter (GPA ÷ 4 × 100)",
+  metaDescription:
+    "Convert a 4.0-scale GPA to the linear percentage forms expect (GPA ÷ 4 × 100), plus the nearest US letter grade and its typical percentage band.",
+  steps: [
+    "Enter your cumulative GPA (4.0 scale) — use the unweighted figure, since weighted GPAs above 4.0 have no standard percentage mapping.",
+    "Read the linear percentage (GPA ÷ 4 × 100) plus the nearest US letter grade and its typical classroom band — 3.5 converts to 87.5%.",
+    "Compare against the full US letter grade table from A+ (97–100%) to F, then click Copy result.",
+  ],
   intro:
     "This converter turns a US 4.0-scale GPA back into an approximate percentage using the linear formula (GPA ÷ 4 × 100) that most application forms specify, and also reports the nearest US letter grade with its standard classroom percentage band (A = 93-96%, B = 83-86%, and so on). It is built for US-educated students filling in Indian or other national application forms that demand a percentage instead of a GPA.",
   useCases: [

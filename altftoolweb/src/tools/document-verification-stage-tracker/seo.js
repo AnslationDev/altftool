@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Verification Checklist for Government DV",
+  metaDescription:
+    "Track the 12 documents DV notices demand — DOB proof, marksheets, category certificates, NOC — as ready or pending, with critical gaps flagged first.",
+  steps: [
+    "Set your 'DV appointment date (optional)' to get a days-to-DV countdown against the checklist.",
+    "For each of the 12 standard documents, tick 'Applies to me' and set its status — 'Ready (original + photocopies)', 'Not yet arranged' or 'Needs correction / reissue'.",
+    "Read the Readiness percentage with any 'Critical and not ready' documents flagged plus the photocopy sets to carry, then click 'Copy summary'.",
+  ],
   intro:
     "This tracker manages the document verification (DV) stage of government recruitment: it lists the documents DV notices routinely demand — matriculation certificate as date-of-birth proof, all marksheets, category certificates in central format, NOC for serving employees — and tracks each as ready, pending or needing reissue against your DV date. Documents whose absence stops verification outright are marked critical and surface first.",
   useCases: [

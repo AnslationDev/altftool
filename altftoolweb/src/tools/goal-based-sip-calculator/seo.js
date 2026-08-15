@@ -1,4 +1,12 @@
 const seo = {
+  title: "Goal Based SIP Calculator — Solve the Monthly Amount",
+  metaDescription:
+    "Works backwards from your target: enter the corpus, years, return, existing investment, step-up and goal inflation to get the monthly SIP required.",
+  steps: [
+    "Enter the 'Target corpus in today's money (INR)', Years to the goal (1 to 40) and Expected return (% per year).",
+    "Add what is 'Already invested for this goal', an Annual SIP step-up — quick chips for 0/5/10/15% — and Goal inflation (% per year).",
+    "Read the Monthly SIP required, the inflation-adjusted goal value and the year-by-year projection, then click Copy result.",
+  ],
   intro:
     "Most SIP calculators start from an instalment and tell you what it grows into. This one works backwards: you name the corpus you need and the date you need it, and it solves for the monthly SIP that gets you there. It accounts for money you have already invested, an annual step-up as your income grows, and inflation on the goal itself — because a ₹50 lakh target twelve years away is not ₹50 lakh in today's money.",
   useCases: [

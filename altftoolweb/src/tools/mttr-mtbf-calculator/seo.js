@@ -1,4 +1,12 @@
 const seo = {
+  title: "MTTR & MTBF Calculator with Availability and Nines",
+  metaDescription:
+    "Enter window hours, failures and repair time to get MTBF, MTTR, failure rate λ and availability as a percentage and its nines. One-click copy.",
+  steps: [
+    "Enter the 'Observation window (hours)' — or tap a preset from '1 week (168 h)' to '1 year (8760 h)' — and the 'Number of failures in the window'.",
+    "Add the 'Total repair / down time across all failures (hours)', summed from failure detection to restored service over every incident.",
+    "Read the Availability headline with its nines plus the MTBF, MTTR, failure rate λ, uptime and downtime rows, then click 'Copy result'.",
+  ],
   intro:
     "This calculator computes MTBF (mean time between failures = uptime ÷ number of failures), MTTR (mean time to repair = total repair time ÷ number of failures), the failure rate λ = 1 ÷ MTBF, and inherent availability A = MTBF ÷ (MTBF + MTTR). It is built for SREs, maintenance engineers and operations teams who track incidents over a window — a week, a month, a quarter — and want the standard reliability metrics from raw counts and hours.",
   useCases: [

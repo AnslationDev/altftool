@@ -1,4 +1,12 @@
 const seo = {
+  title: "IVA Calculator Italy: 22% Scorporo and Forfettario",
+  metaDescription:
+    "Add IVA or scorporate a gross total at 22%, 10%, 5% or 4%: imponibile, IVA and totale to the centesimo, plus the EUR 85,000 forfettario check.",
+  steps: [
+    "Toggle Add IVA or Scorporo, enter the amount and pick the aliquota IVA — 22% ordinaria, 10%, 5%, 4% or a custom rate.",
+    "Read the imponibile, the IVA amount and the totale documento, with the IVA share of the total and a comparison table at every Italian rate.",
+    "Check annual revenue against the EUR 85,000 forfettario limit and the EUR 100,000 hard exit, then click Copy result.",
+  ],
   intro:
     "This calculator adds Italian IVA to an imponibile or scorporates it out of a gross total, at the 22% aliquota ordinaria and the 10%, 5% and 4% reduced rates set by DPR 633/1972. Adding tax multiplies the base by 1.22; the scorporo divides the total by 1.22, so a 122 EUR invoice is 100 EUR imponibile plus 22 EUR of IVA. Freelancers, partite IVA and bookkeepers get invoice-ready lines rounded to the centesimo.",
   useCases: [

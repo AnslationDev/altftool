@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marathi Word of the Day with Gender and Examples",
+  metaDescription:
+    "A 30-word Marathi deck fixed by date: Devanagari spelling, romanisation, noun gender, example sentence and usage note, with a browser-only streak counter.",
+  steps: [
+    "Pick any date in the \"Date\" field or step with the \"Previous day\" / \"Next day\" buttons — the card is fixed by the calendar date, one word from the curated 30-word deck.",
+    "Study the card — Devanagari headword, romanisation, part of speech, meaning, note and an \"In a sentence\" example — then press \"Mark studied\" to update the streak stored only in this browser.",
+    "Press \"Copy card\" to copy the card as text, preview \"The next 7 days\" table, or search the whole deck by word, romanisation or meaning.",
+  ],
   "intro": "A Marathi word-of-the-day deck of 30 curated words, each with its Devanagari spelling, a romanised reading, the grammatical gender, an example sentence and a note on usage or origin. The card is fixed by the calendar date rather than picked at random, so everyone studying on the same day sees the same word. A streak counter is stored only in your own browser.",
   "useCases": [
     "Learn the distinctly Marathi words that Hindi has no equivalent for, such as जिव्हाळा, आपुलकी and चिकाटी.",

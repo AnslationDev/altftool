@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tyre Cost Per KM Calculator: Compare Two Tyres",
+  metaDescription:
+    "Divide fitted set price by real tread life to compare two tyres per km and per 10,000 km, add each tyre's km/l fuel gap, and see the break-even life.",
+  steps: [
+    "Set the Shared assumptions — 'Tyres per set', 'Distance you plan to cover (km)' and fuel price in INR per litre (leave 0 to ignore fuel) — then fill Option A and Option B with price per tyre, expected life, fitting charges and real-world km/l.",
+    "The comparison recomputes as you type: fitted set cost, tyre and fuel cost per km, 'Total cost per km', 'Tyre cost per 10,000 km' and the break-even life the losing option would need to draw level.",
+    "Press 'Copy result' for the plain-text comparison or 'Reset' to restore the sample 'Budget tyre' vs 'Premium tyre' figures.",
+  ],
   intro:
     "Tyre cost per kilometre is the fitted price of a full set divided by the distance that set actually lasts, and it is the only fair way to compare a cheap tyre against a premium one. This calculator works out cost per km and cost per 10,000 km for two options, adds the fuel-cost difference when you supply each tyre's real-world km/l, and returns the break-even life the costlier-per-km option would need to reach to draw level.",
   useCases: [

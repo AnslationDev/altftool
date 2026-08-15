@@ -1,4 +1,10 @@
 const seo = {
+  title: "Open Source License Chooser: MIT, Apache, GPL, AGPL",
+  steps: [
+    "Answer question 1 by choosing a copyleft scope, from 'No — anyone may use it in closed-source software (permissive)' up to 'Even SaaS/hosted use must share source (network copyleft)'.",
+    "Tick any of the three follow-ups: an express patent grant from contributors, the shortest simplest license text, or waiving everything including attribution.",
+    "Read the recommended license (MIT, Apache-2.0, MPL-2.0, GPL-3.0, AGPL-3.0 …) with clause-level reasons under 'Why this license', then hit 'Copy result'.",
+  ],
   intro:
     "This tool recommends an open source license — MIT, ISC, BSD-3-Clause, Apache-2.0, MPL-2.0, LGPL-3.0, GPL-3.0, AGPL-3.0, the Unlicense or CC0 — from four questions about copyleft scope, patent protection, simplicity and public-domain intent. The logic encodes each license's actual terms: MPL-2.0's file-level copyleft (§3.3), LGPL-3.0's linking exception (§4), AGPL-3.0's network clause (§13) and Apache-2.0's express patent grant (§3).",
   useCases: [

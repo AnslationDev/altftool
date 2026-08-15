@@ -1,4 +1,12 @@
 const seo = {
+  title: "RabbitMQ AMQP URI Builder: amqps, %2F Vhost, Heartbeat",
+  metaDescription:
+    "Build amqp:// or amqps:// URIs with percent-encoded credentials and vhost (%2F), scheme-default ports 5672/5671, plus heartbeat and connection_timeout.",
+  steps: [
+    "Pick the Scheme — amqp, plain TCP on default port 5672, or amqps, TLS on 5671 — then enter host, username, password and the virtual host (the default \"/\" encodes as %2F).",
+    "Add optional heartbeat (seconds), connection timeout (ms) and channel max query parameters, or tick 'Omit the port when it is the scheme default'.",
+    "Read the assembled connection URI with its vhost segment and query string shown separately, then click Copy URI.",
+  ],
   intro:
     "This tool assembles a RabbitMQ connection URI of the form amqp[s]://username:password@host:port/vhost?heartbeat=... following the official RabbitMQ URI specification, which profiles RFC 3986. It is for developers wiring services, workers or CI pipelines to a RabbitMQ broker who need credentials and the vhost percent-encoded correctly, with heartbeat, connection_timeout and channel_max query parameters attached.",
   useCases: [

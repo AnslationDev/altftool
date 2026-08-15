@@ -1,4 +1,12 @@
 const seo = {
+  title: "Awards and Honours Tracker for Bank, SSC & UPSC Prep",
+  metaDescription:
+    "Log award-recipient-field-year rows in a searchable, sortable table saved in your browser, and copy them out as CSV for revision notes.",
+  steps: [
+    "Fill Award, Recipient and Year (Field / category and Notes are optional) under Add an entry and press Add entry — rows persist in your browser's localStorage.",
+    "Use the 'Search the table' box or click any column header to sort by award, recipient, field or year in either direction.",
+    "Press Copy CSV to copy the visible rows as CSV for pasting into your revision notes; Reset restores the starter rows.",
+  ],
   intro:
     "This tracker is a structured revision table for the award questions that appear in every competitive exam's current-affairs section: each row records award, recipient, field and year, and the table is searchable, sortable by any column and exportable as CSV. It is built for SSC, banking, UPSC prelims and state PSC aspirants who currently keep award facts scattered across monthly PDFs, and it stores everything locally in the browser.",
   useCases: [

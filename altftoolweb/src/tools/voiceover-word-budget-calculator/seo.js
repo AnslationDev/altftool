@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voiceover Word Count Calculator for 15, 30, 60s Slots",
+  metaDescription:
+    "Turns slot seconds x wpm into a word budget after subtracting breaths and end tags. Paste your script to see the over/under and the pace needed to fit.",
+  steps: [
+    "Set the Slot length (seconds) or tap a slot preset from 6s to 90s, then pick a Pace preset such as Conversational broadcast at 150 wpm.",
+    "Enter the Breath and beat pauses and End tag / sting seconds; they are subtracted from the slot before words = speaking seconds x wpm / 60 is applied.",
+    "Read the 'Words that fit this slot' figure, paste a draft to see the over/under in words and the pace needed to fit the script, then press Copy result.",
+  ],
   intro:
     "This calculator converts a voiceover slot length into a word count using the words-per-minute model: words = speaking seconds × wpm ÷ 60. It subtracts the seconds you reserve for breaths, beats and an end tag first, so the number you get is the copy that will actually fit on air. Copywriters, radio producers and e-learning narrators use it to size a draft before it reaches the booth.",
   useCases: [

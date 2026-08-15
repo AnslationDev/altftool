@@ -1,4 +1,12 @@
 const seo = {
+  title: "ACT Fibernet Router Hardening Checklist and Score",
+  metaDescription:
+    "Score your router across 12 checks - admin password, WPA2/WPA3, WPS, remote admin, UPnP, DNS - capped at 72% until every critical item is closed.",
+  steps: [
+    "Verify each setting in your router at the menu path shown — e.g. \"Wireless > WPS > Disable\" or \"Administration > Remote access / WAN management\" — across the Admin, Wi-Fi, Exposure, Devices and Maintenance groups.",
+    "Tick the checkbox for each of the 12 checks you have completed; the weighted Hardening score stays capped at 72% while any of the five critical checks (admin password, WPA2/WPA3 mode, Wi-Fi key, WPS off, remote admin) is open.",
+    "Read \"Next fixes\" for what to close next and press \"Copy summary\" to export the score, checked count and paths; \"Mark all done\", \"Clear all\" and \"Reset\" set the whole list at once.",
+  ],
   intro:
     "The ACT Fibernet Router Hardening Checklist gives a practical security score for home routers used with ACT broadband. It covers the controls users can actually verify: router admin password, WPA2/WPA3 mode, WPS, strong Wi-Fi keys, guest access, remote administration, port forwards, UPnP, DNS and connected-device review.",
   useCases: [

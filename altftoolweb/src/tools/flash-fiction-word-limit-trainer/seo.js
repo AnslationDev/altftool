@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flash Fiction Word Counter for 50-1000 Word Limits",
+  metaDescription:
+    "Count words against drabble (100), dribble (50) and 300/500/1000-word contest caps, with hyphen rules plus the intensifiers and hedges to cut first.",
+  steps: [
+    "Pick a 'Form / limit' — Dribble exactly 50, Drabble exactly 100, Micro fiction up to 300, Flash fiction up to 500, Long flash up to 1000 — or set a custom limit between 10 and 5,000 words.",
+    "Paste the story body into 'Your draft'; toggle 'Count each half of a hyphenated compound separately' only if your contest counts them as two words.",
+    "Watch the live word count against the budget and the 'Cut these first' table of flagged intensifiers, hedges and filter verbs, then click 'Copy report'.",
+  ],
   intro:
     "A live word counter built around the fixed limits flash fiction actually uses — 50 words for a dribble, exactly 100 for a drabble, and 300, 500 or 1000 word ceilings for competitions. It counts by the standard submission rule (a hyphenated compound is one word, numerals count as one), then flags the intensifiers, hedges and filter verbs that are usually the first thing to cut when you are over budget.",
   useCases: [

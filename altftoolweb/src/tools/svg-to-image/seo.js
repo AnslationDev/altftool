@@ -1,4 +1,12 @@
 const seo = {
+  title: "SVG to PNG, JPEG or WebP Converter - Scale up to 16x",
+  metaDescription:
+    "Paste SVG markup and rasterise it to PNG, JPEG or WebP on a browser canvas at 0.1-16x scale - scripts stripped, exact pixel size shown before export.",
+  steps: [
+    "Paste your markup into the SVG markup box, set a Scale factor between 0.1 and 16, choose an Output format - PNG (keeps transparency), JPEG (no transparency) or WebP - and a Transparent, White or Black background.",
+    "The page rasterises the SVG on a canvas and reports the exact Output size in pixels, the Intrinsic size and where it was taken from, and how many script(s) and on* handler(s) were stripped from the markup.",
+    "Press Download to save the image as svg-export-<width>x<height>.png, .jpg or .webp, or Copy data URI for the sanitised SVG string; Reset restores the sample SVG after a confirmation.",
+  ],
   intro:
     "This converter rasterises SVG markup into a PNG, JPEG or WebP bitmap by drawing it onto an HTML canvas at a scale factor you choose. It reads the intrinsic size from the width and height attributes, falls back to the viewBox and then to the CSS replaced-element default of 300×150, and refuses any output above the 16,777,216-pixel canvas limit that Safari on iOS enforces. Everything happens in the browser, so the artwork is never uploaded.",
   useCases: [

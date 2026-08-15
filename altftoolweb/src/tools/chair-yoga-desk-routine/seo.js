@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chair Yoga Desk Routine Builder with Guided Timer",
+  metaDescription:
+    "Build a seated stretch routine that fits your break exactly — 18 chair positions for neck, wrists, spine and eyes, with a timer cueing each hold.",
+  steps: [
+    "Set 'Break length (minutes)' from 1 to 45 — or tap the 3, 5, 10 or 15 min preset — and 'Seconds to change position'.",
+    "Pick your sore areas under 'Where does it ache?' — Neck, Shoulders & chest, Wrists & hands, Spine, Hips & legs, Eyes or Breath.",
+    "Press Start to run the guided timer naming each position, its cue and the seconds left, or click 'Copy routine' to take the numbered hold list with you.",
+  ],
   intro:
     "This builder assembles a seated stretch routine that fits the exact number of minutes you have, drawing from eighteen chair-based positions for the neck, shoulders and chest, wrists, spine, hips and eyes. Holds sit in the 20-30 second static stretch range recommended for adults, and the eye break follows the 20-20-20 rule — every 20 minutes, look about 20 feet away for 20 seconds. Nothing requires a mat, floor space or changing clothes.",
   useCases: [

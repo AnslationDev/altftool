@@ -1,4 +1,12 @@
 const seo = {
+  title: "Who Pays the Bill? Random Payer Picker for Groups",
+  metaDescription:
+    "Add names one by one or paste a comma-separated list, then draw one payer at uniform random with a visible shuffle. Keeps the last 20 picks on screen.",
+  steps: [
+    "Type a name and click Add, or paste a comma- or newline-separated list — duplicate names are dropped case-insensitively.",
+    "With at least 2 people added, press the 'Who Pays the Bill?' button and watch the shuffle flip through 15-25 names before it settles.",
+    "The card reads 'The bill goes to...' with the payer's name — Copy Result or Spin Again, with the last 20 timestamped draws kept in Payment History.",
+  ],
   intro:
     "Who Pays the Bill? is a random picker that takes a list of names and draws exactly one of them, with every name having the same chance of being chosen. Type names one at a time or paste a comma- or newline-separated list, hit the button, and a short shuffle animation lands on a single payer. It keeps a running history of the last 20 draws so a group can see who has already been picked.",
   useCases: [

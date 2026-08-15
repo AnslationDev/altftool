@@ -1,4 +1,12 @@
 const seo = {
+  title: "VTU Attendance Calculator: the 85% Rule per Subject",
+  metaDescription:
+    "Check each course against VTU's 85% rule: classes you can still miss, exact consecutive classes needed to recover, and the 75% condonation band.",
+  steps: [
+    "Enter classes held and attended for each course; click Add course to check up to 20 subjects at once.",
+    "Read each course's status — eligible, condonable (75–85%) or ineligible — with how many classes you can still miss or must attend in a row to reach 85%.",
+    "Compare the aggregate attendance against the lowest course attendance figure, then click Copy result for the per-course summary.",
+  ],
   intro:
     "This calculator checks VTU exam eligibility course by course: attendance percentage = classes attended ÷ classes held × 100, measured against VTU's requirement of at least 85% in each course, with condonation possible down to 75% in genuine cases. For every course it also computes how many classes you can still miss while staying at 85%, or how many you must now attend consecutively to climb back over the line.",
   useCases: [

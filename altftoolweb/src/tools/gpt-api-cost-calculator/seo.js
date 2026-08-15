@@ -1,4 +1,12 @@
 const seo = {
+  title: "OpenAI GPT API Cost Calculator with Cached Input Rates",
+  metaDescription:
+    "Estimate monthly OpenAI spend from requests/day and token counts, with per-1M rates for GPT-5.1 to GPT-4o mini, cached-input and 50% Batch discounts.",
+  steps: [
+    "Pick a model in 'Model (loads preset rates)' — GPT-5.1, GPT-5 mini, GPT-4o mini, o3 and more — or edit the input, cached-input and output '$ / 1M tokens' rate fields directly.",
+    "Enter 'Requests per day', average input and output tokens per request, a 'Cached input share (%)', and tick 'Batch API (50% discount)' if your jobs run through it.",
+    "Read the estimated monthly spend for a 30-day month plus per-request, per-1,000-request, daily and yearly costs, then click 'Copy result'.",
+  ],
   intro:
     "This calculator projects monthly OpenAI GPT API spend from three numbers — requests per day, average input tokens and average output tokens per request — multiplied by the model's per-1M-token input and output rates. It models the cached-input discount and the Batch API's 50% rate, and every preset rate is editable so teams can match the live OpenAI pricing page exactly before committing to a budget.",
   useCases: [

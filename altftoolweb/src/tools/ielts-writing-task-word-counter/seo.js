@@ -1,4 +1,12 @@
 const seo = {
+  title: "IELTS Writing Word Counter — Task 1 & Task 2 Minimums",
+  metaDescription:
+    "Check your answer against the 150-word Task 1 and 250-word Task 2 minimums — hyphenated compounds count once — with per-paragraph structure counts.",
+  steps: [
+    "Choose the Writing task — each option shows its minimum, 150 words for Task 1 or 250 for Task 2.",
+    "Paste or type your essay into the 'Your answer' box; hyphenated compounds are counted as one word, the way examiners count.",
+    "Read the word count with 'Above minimum by' or 'Below minimum by', the per-paragraph breakdown, and click 'Copy result'.",
+  ],
   intro:
     "This counter checks an IELTS Writing answer against the official minimums — 150 words for Task 1 and 250 words for Task 2 — counting the way examiners do: every word counts, and hyphenated compounds like “well-known” count as one word. It also breaks the answer into paragraphs and sentences with per-paragraph word counts, so candidates can see structure problems (a bloated body paragraph, a one-line conclusion) alongside the raw count.",
   useCases: [

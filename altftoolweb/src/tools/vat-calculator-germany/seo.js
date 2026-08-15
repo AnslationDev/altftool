@@ -1,4 +1,12 @@
 const seo = {
+  title: "German VAT Calculator — 19% & 7% Netto–Brutto (MwSt)",
+  metaDescription:
+    "Switch netto and brutto at 19% or 7%, see the Umsatzsteuer and the 19/119 tax fraction, and test the 25,000/100,000 EUR Kleinunternehmer limits.",
+  steps: [
+    "Choose the direction — 'Netto → Brutto' or 'Brutto → Netto' — and enter the amount in euros.",
+    "Pick the Steuersatz: 19% Regelsteuersatz, 7% ermäßigter Satz, 0% Nullsatz, or a custom rate for historic comparisons like 2020's 16%.",
+    "Read netto, Umsatzsteuer and brutto rounded to cents plus the tax fraction of the brutto price, then 'Copy result' — or test the § 19 UStG limits in the Kleinunternehmer check.",
+  ],
   intro:
     "This calculator converts between netto and brutto prices under German Umsatzsteuer law: it multiplies a net figure by 1.19 at the 19% Regelsteuersatz, or divides a gross figure by 1.19 to strip the tax back out. The 7% ermäßigter Satz under § 12 Abs. 2 UStG is one click away, as is the tax fraction of the gross price — 19/119 at the standard rate. It is aimed at freelancers, Kleinunternehmer and anyone reconciling a German invoice.",
   useCases: [

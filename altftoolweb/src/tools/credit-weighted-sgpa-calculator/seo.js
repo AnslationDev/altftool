@@ -1,4 +1,12 @@
 const seo = {
+  title: "SGPA Calculator with Credits: UGC 10-Point & US 4-Point",
+  metaDescription:
+    "Computes SGPA = (grade point x credits) / total credits on the UGC 10-point or US 4-point scale, and shows each subject's pull on the average.",
+  steps: [
+    "Pick a Grade scheme (UGC 10-point letters O to F, US 4-point letters, or direct grade point entry), then fill each subject's Grade and Credit hours; Add subject allows up to 20 rows.",
+    "The SGPA updates as you type using the credit-weighted mean: sum of grade point x credits divided by total credit hours, with quality points and failed credits listed below.",
+    "Check the per-subject table for 'Pull on average' and 'SGPA without it', then press Copy result to copy the score and subject list as text.",
+  ],
   intro:
     "This calculator computes SGPA — the credit weighted mean of grade points, SGPA = Σ(grade point × credits) ÷ Σ credits — from each subject's grade and credit hours. It supports the UGC choice based credit system 10-point letter scale (O = 10 down to F = 0), the US 4-point scale, and direct grade point entry, and it shows exactly how much each subject pulled the average up or down.",
   useCases: [

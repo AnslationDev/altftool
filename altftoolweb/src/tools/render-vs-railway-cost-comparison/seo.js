@@ -1,4 +1,12 @@
 const seo = {
+  title: "Render vs Railway Pricing Calculator — Monthly Cost",
+  metaDescription:
+    "Price one workload both ways: Render's fixed instance tiers vs Railway's $20/vCPU + $10/GB-RAM metering, with egress, disk and plan credits included.",
+  steps: [
+    "Describe the workload: 'vCPUs needed', 'RAM needed (GB)', 'Hours running per month (730 = always on)', 'Egress / bandwidth per month (GB)' and 'Persistent disk / volume (GB)'.",
+    "Pick your Railway plan — the subscription and its included usage credit are deducted in the Railway column.",
+    "Read the 'Cheapest monthly cost for this workload' headline with side-by-side Render and Railway line items, then click 'Copy result'.",
+  ],
   intro:
     "This comparison tool prices the same application on Render's fixed instance tiers and on Railway's usage-based metering ($20 per vCPU and $10 per GB of RAM per month, prorated by run time) so you can see which platform is cheaper for your specific workload. It is aimed at developers choosing a PaaS for a hobby project or a small production service, and it includes the costs people usually forget: bandwidth overages and persistent disk.",
   useCases: [

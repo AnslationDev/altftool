@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cease & Desist Noise Nuisance Letter Organiser",
+  metaDescription:
+    "Organise a noise complaint before escalating: paste dates, times, impact and prior requests, then copy a structured working note for your letter.",
   intro:
     "Cease & Desist Noise Nuisance Letter helps organise a formal but calm notice about repeated noise disturbance. It captures dates, times, impact, prior requests, evidence and the remedy you are asking for.",
   useCases: [

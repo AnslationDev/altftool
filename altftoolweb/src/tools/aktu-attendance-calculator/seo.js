@@ -1,4 +1,12 @@
 const seo = {
+  title: "AKTU Attendance Calculator — 75% Rule & Recovery",
+  metaDescription:
+    "Enter classes held and attended to see your shortage against AKTU's 75% rule, the consecutive classes needed to recover and safe misses left.",
+  steps: [
+    "Enter 'Classes held so far' and 'Classes attended' — your percentage is measured against AKTU's 75% eligibility line as you type.",
+    "Fill in 'Classes still to be held this semester (optional)' to unlock the projection of whether 75% is still reachable.",
+    "Read the shortage in classes, the consecutive classes needed to recover, safe misses right now and the best finish if you attend everything, then hit 'Copy result'.",
+  ],
   intro:
     "This calculator measures AKTU attendance — attended ÷ held × 100 — against the 75% minimum AKTU's ordinances set for end-semester exam eligibility. It reports the shortage in both percent and classes, solves (attended + n) ÷ (held + n) ≥ 75% for the exact consecutive classes needed to recover, and, given the classes still left in the semester, tells you whether 75% is even reachable and how many future classes you can safely miss.",
   useCases: [

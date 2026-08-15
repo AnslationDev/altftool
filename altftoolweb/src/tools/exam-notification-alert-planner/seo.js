@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Notification Reminder Planner for UPSC, SSC, IBPS",
+  metaDescription:
+    "Track expected notification months for UPSC, SSC, IBPS, JEE and NEET, and get a concrete reminder date a set lead (default 15 days) before each.",
+  steps: [
+    "Pick an exam from the 'Quick add' preset list (UPSC Civil Services, SSC CGL, IBPS PO, JEE Main, NEET UG, CTET) or type an 'Exam name' and its 'Expected notification month'.",
+    "Set the 'Reminder lead (days before the month starts)' — default 15 — and click 'Add exam' to put it on the schedule.",
+    "Read the 'Next expected notification' date and the table of reminder dates with 'Prepare now' flags, then click 'Copy plan' to copy the schedule.",
+  ],
   intro:
     "This planner turns the expected notification month of every exam you follow into concrete dates: the 1st of that month as the earliest-plausible drop date, and a reminder date a chosen lead (default 15 days) before it. It is for aspirants tracking several recruitment cycles at once — UPSC, SSC, banking, NTA exams — who want a single sorted list of what is coming next instead of refreshing six websites.",
   useCases: [

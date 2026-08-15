@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Lecture Speed Planner - Finish Date at 1x to 2x",
+  metaDescription:
+    "Enter your lecture backlog, daily watch minutes and pause overhead to get an exact finish date at 1x-2x playback, with a days-saved comparison table.",
+  steps: [
+    "Enter Remaining content (hours at 1x), Daily watch time (minutes), a Start date and your Pause / rewind / note-taking overhead (%), then pick a Playback speed from 1x to 2x.",
+    "The planner shows the exact Finish date at your speed - counting the start date as day 1 - along with Days needed, Content cleared per day and Days saved vs 1x.",
+    "Compare all five speeds (1x, 1.25x, 1.5x, 1.75x and 2x) in the Every speed compared table, then press Copy result to put the full plan on the clipboard as text.",
+  ],
   intro:
     "This planner computes the exact date you finish a video lecture backlog at each playback speed, using the model that watching at speed s for W minutes consumes W x s minutes of content, minus a pause-and-notes overhead you set. It is for coaching students and self-paced learners staring at a 100-hour backlog who want a concrete answer to 'does 1.5x actually get me done before the mock test?' — with a side-by-side table for 1x through 2x.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Streak Tracker with Streak Freezes & Adherence",
+  metaDescription:
+    "Paste your daily study hours and a goal to see current and longest streaks, with 0-3 streak freezes per rolling 7 days and an honest goal-adherence rate.",
+  steps: [
+    "Enter your log in Hours studied per day (oldest first, comma separated) - e.g. 2, 2.5, 0, 3 - set the Daily goal (hours), and pick Streak freezes per 7 days, from 0 (strict, any miss breaks the streak) up to 3.",
+    "The tracker computes your current streak instantly and maps every logged day as a numbered tile: solid for goal met, outlined for freeze used, red for missed.",
+    "Read Longest streak, Goal adherence, Freezes used, Total hours logged and Average hours per day in the summary list, then press Copy result to put the streak report on the clipboard.",
+  ],
   intro:
     "This tracker computes your current and longest study streaks from a simple list of daily hours and a daily goal, using a Duolingo-style streak-freeze rule: a limited number of off-days per rolling 7-day window preserve an active streak without extending it. It also reports goal adherence, total hours and your day-by-day record. It is built for students who want the motivational pull of a streak without one bad day erasing weeks of effort.",
   useCases: [

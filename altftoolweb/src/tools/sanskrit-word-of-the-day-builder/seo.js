@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sanskrit Word of the Day: 30-Word Deck with Roots",
+  metaDescription:
+    "A date-fixed daily card from a 30-word deck - Devanagari, romanisation, meaning, the verbal root and a cited line from a classical text.",
+  steps: [
+    "Pick any date in the Date field or step with the Previous day and Next day buttons; the card is fixed by the calendar date as it cycles the 30-word deck.",
+    "Study the card's Devanagari headword, romanisation, meaning, root note and 'In a sentence' example, then press Mark studied to grow the streak saved in your browser.",
+    "Press Copy card for a text version, scan 'The next 7 days' preview table, or search the whole deck by word, romanisation or meaning.",
+  ],
   "intro": "A Sanskrit word-of-the-day deck of 30 terms, each given with its Devanagari form, IAST transliteration, the verbal root (dhātu) it derives from, and a line from a classical source — the Upaniṣads, the Bhagavad Gītā, the Yoga Sūtra or a well-known subhāṣita — where the word actually appears. The card is fixed by the calendar date, so the same date always shows the same word.",
   "useCases": [
     "Learn the vocabulary that recurs across yoga, philosophy and devotional texts, with the root that explains the meaning.",

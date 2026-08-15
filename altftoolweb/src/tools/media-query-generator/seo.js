@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Media Query Generator: Min & Max Width Breakpoints",
+  metaDescription:
+    "Enter min and max widths in px to get a ready @media rule — min-only, max-only or both joined with 'and' — plus the bare condition for matchMedia.",
   intro:
     "The Media Query Generator builds a ready-to-paste CSS `@media` rule from a min width and a max width in pixels. Enter either bound, or both, and it emits `(min-width: Npx)`, `(max-width: Npx)`, or the two joined with `and`; entering 0 for a field leaves that bound out, and leaving both at 0 produces `@media all`. It is for anyone writing responsive CSS by hand who wants the bracket and condition syntax right the first time.",
   useCases: [

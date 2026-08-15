@@ -1,4 +1,12 @@
 const seo = {
+  title: "WiFi QR Code Generator with Printable Table Card",
+  metaDescription:
+    "Encodes SSID and password into the WIFI: format phones scan to join. Download a 256px PNG or print a table card — generated in your browser.",
+  steps: [
+    "Enter the Network name (SSID), choose the Security type (WPA/WPA2/WPA3, WEP or none) and type the password; tick 'Hidden network' if the SSID is not broadcast.",
+    "Optionally add a Card label heading, then click 'Download PNG' for a 256-pixel wifi-qr-<network>.png, or 'Print card' for the printable table card.",
+    "Guests point a phone camera at the code and tap the join prompt; 'Copy code text' copies the raw WIFI:T:...;S:...;P:...;; payload.",
+  ],
   intro:
     "A WiFi QR code generator encodes your network name, security type and password into the standard WIFI:T:WPA;S:<ssid>;P:<password>;; payload that phone cameras recognise as a join-network request. Enter the SSID, pick WPA/WPA2/WPA3, WEP or open, and you get a scannable code you can download as a 256-pixel PNG or send to a printer as a table card. The code is drawn in the browser, so the password is never transmitted to build it.",
   useCases: [

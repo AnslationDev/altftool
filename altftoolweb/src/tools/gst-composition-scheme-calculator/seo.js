@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Composition Scheme Calculator: Levy & Limit",
+  metaDescription:
+    "Estimate composition levy from taxable turnover with trader (1%), restaurant (5%) and service (6%) presets, plus an annualized turnover-limit check.",
+  steps: [
+    "Pick a Business type preset — Trader / supplier of goods, Manufacturer, Restaurant service, Other eligible service or Custom — to pre-fill the rate and turnover limit.",
+    "Enter Taxable turnover for period, Exempt / non-GST turnover, Composition rate (%), Turnover limit and Period months.",
+    "Read the levy payable, monthly reserve, annualized turnover and limit headroom in the Composition result panel, then click 'Copy estimate' for an accountant-ready note.",
+  ],
   intro:
     "Estimate the GST composition levy payable from turnover and business type. The calculator separates taxable turnover, exempt or non-GST turnover and the selected composition rate so small businesses can sanity-check quarterly cash flow.",
   useCases: [

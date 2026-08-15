@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fetal Kick Counter: Time 10 Movements in 2 Hours",
+  metaDescription:
+    "Tap once per kick to time how long ten movements take — the count-to-ten method. Tracks time to the tenth movement, session history and your baseline.",
+  steps: [
+    "Set \"Movements to count\" (default 10) and the \"Counting window (minutes)\" (default 120), then press \"Start session\".",
+    "Tap the large \"Tap for a movement\" button once for every kick, roll or jab — \"Undo\" removes a mistaken tap.",
+    "Press \"Finish and save\" to log the session; the summary shows movements counted, session length and time to the tenth movement, with \"Copy result\" to share it.",
+  ],
   intro:
     "A kick counter times how long it takes to feel ten distinct fetal movements, which is the Cardiff count-to-ten method used in antenatal care. Tap once per kick, roll, jab or flutter and the session records each movement, the elapsed time, the time the tenth movement arrived, and whether that fell inside the usual two-hour window. Counting is normally started from around 28 weeks, once a baby's pattern of movement is established.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Embedding Dimension & Vector Memory Calculator",
+  metaDescription:
+    "Size embeddings exactly: dimensions x bytes per dimension, from float64 to 1-bit binary, per vector and per 1K/1M/10M, with OpenAI and Cohere presets.",
+  steps: [
+    "Enter \"Embedding dimensions\" or tap a model preset such as OpenAI text-embedding-3-small (1,536) or all-MiniLM-L6-v2 (384), then pick a \"Storage precision\" from float64 (8 bytes/dim) to binary (1 bit/dim).",
+    "Optionally add \"Metadata per vector (bytes)\" for ids, source text or JSON stored beside each embedding.",
+    "Read \"Memory per vector\" with per-1,000, per-1,000,000 and per-10,000,000 totals and the every-precision comparison table, then press \"Copy result\".",
+  ],
   intro:
     "This calculator computes the exact memory one embedding vector occupies — dimensions multiplied by bytes per dimension, so a 1536-dimension float32 embedding takes 6,144 bytes. It is built for engineers sizing a RAG pipeline or vector database who need per-vector, per-thousand and per-million figures before choosing a model or a quantisation scheme, across float64, float32, float16, bfloat16, int8 and binary storage.",
   useCases: [

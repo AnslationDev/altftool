@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bike Fuel Cost Calculator – Petrol per Ride & Month",
+  metaDescription:
+    "Enter ride distance, km/l mileage and petrol price to get cost per ride, week, month and year — plus tank range, full-tank cost and refills per month.",
+  steps: [
+    "Enter 'Ride distance one way (km)', 'Rides per week', 'Mileage (km per litre)', 'Petrol price (per litre)' and 'Tank capacity (litres)', ticking 'Return ride (there and back)' if you ride both ways.",
+    "Or tap a preset — '100–110cc commuter', '125cc scooter', '150–200cc' or '350cc cruiser' — to fill typical mileage and tank figures, and compare another bike by its km/l.",
+    "Read petrol cost per ride, week, month and year plus 'Range on a full tank' and 'Refills per month', then click 'Copy result' for the summary.",
+  ],
   intro:
     "This calculator turns a motorcycle or scooter's mileage in km/l into petrol cost per ride, per week, per month and per year, using litres = distance ÷ km/l and cost = litres × pump price. It also reports tank range (tank litres × mileage), the cost of filling up, and how many refills a month your riding pattern needs. Useful for commuters, delivery riders and anyone weighing a 60 km/l commuter against a 32 km/l cruiser.",
   useCases: [

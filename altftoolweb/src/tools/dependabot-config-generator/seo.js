@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dependabot Config Generator for .github/dependabot.yml",
+  metaDescription:
+    "Build a version-2 .github/dependabot.yml: pick from 18 package ecosystems, set daily, weekly or monthly schedules, group minor+patch PRs, ignore majors.",
+  steps: [
+    "For each update entry, pick a Package ecosystem (18 choices, npm to GitHub Actions), its Directory and a daily, weekly or monthly Schedule interval; press Add ecosystem for more entries.",
+    "Set the Open PR limit (0 disables version PRs) and tick 'Group minor and patch updates into a single pull request' or 'Ignore major version updates for all dependencies'.",
+    "Press Copy YAML and commit the generated file to .github/dependabot.yml on your default branch, where Dependabot picks it up automatically.",
+  ],
   intro:
     "This generator builds a valid .github/dependabot.yml file — the version 2 configuration GitHub's Dependabot reads to open automated dependency-update pull requests. Pick your package ecosystems (npm, pip, Docker, Go modules, Maven and more), set daily, weekly or monthly schedules, group minor and patch bumps into one PR, and ignore major versions, then copy the ready-to-commit YAML.",
   useCases: [

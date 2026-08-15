@@ -1,4 +1,7 @@
 const seo = {
+  title: "Carpet Area Calculator: m², Sq Ft & +10% Wastage",
+  metaDescription:
+    "Multiply room length by width to get floor area in square metres and square feet, plus a +10% wastage figure for ordering carpet, laminate or tile.",
   intro:
     "The Carpet / Floor Area Calculator multiplies a room's length by its width and returns the floor area in both square metres and square feet, plus the same figure with 10% added for wastage. Enter the two dimensions in metres or feet and it converts using the exact factors 1 sq ft = 0.092903 m2 and 1 m2 = 10.7639 sq ft. It is for anyone pricing carpet, laminate, tiles or vinyl who needs the order quantity, not just the bare area.",
   useCases: [

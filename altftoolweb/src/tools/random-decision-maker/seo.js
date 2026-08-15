@@ -1,4 +1,7 @@
 const seo = {
+  title: "Random Decision Maker - Magic 8-Ball Yes/No Answers",
+  metaDescription:
+    "Ask a yes/no question and shake for one of nine classic Magic 8-Ball replies, each equally likely - a yes about 44% of the time. Re-shake in one click.",
   intro:
     "Random Decision Maker is a Magic 8-Ball in a web page: you type a yes/no question and it returns one of nine fixed replies picked uniformly at random, from \"It is certain\" to \"Very doubtful\". Four of the nine are affirmative, three are negative and two tell you to ask again, so a shake lands positive about 44% of the time. It is for settling low-stakes ties and for the moment when hearing an answer tells you which one you were hoping for.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "UNESCO World Heritage Site Explorer with Filters",
+  metaDescription:
+    "Filter 194 notable World Heritage sites by country, region, cultural/natural/mixed type and inscription year, then copy the matches as a clean study list.",
   intro:
     "The UNESCO Heritage Site Explorer is a compact world-heritage reference tool for quickly filtering notable UNESCO World Heritage properties by region, cultural/natural/mixed type, country and inscription year. It is built for students, teachers, travel planning and quiz prep where a short, copyable result list is more useful than a long encyclopedia article.",
   useCases: [

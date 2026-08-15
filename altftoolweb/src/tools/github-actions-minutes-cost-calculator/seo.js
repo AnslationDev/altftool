@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Actions Minutes Cost – Estimate Your CI Bill",
+  metaDescription:
+    "Estimate the monthly GitHub Actions bill from jobs and durations: Linux $0.008/min, Windows 2x, macOS 10x, minus your plan's included minutes.",
+  steps: [
+    "Pick your 'GitHub plan' — Free (2,000), Pro or Team (3,000) or Enterprise Cloud (50,000 included minutes) — and tick 'Public repository (standard runners are free)' if that applies.",
+    "For Linux (ubuntu-latest), Windows and macOS, enter 'jobs per month' and 'average minutes per job'; Windows minutes count 2x and macOS 10x against the allowance.",
+    "Read the Raw minutes / Multiplier / Billed minutes table, overage minutes and the 'Estimated monthly overage cost' in USD, then click 'Copy result'.",
+  ],
   intro:
     "This calculator estimates your monthly GitHub Actions bill from job counts and average durations, applying GitHub's documented billing rules: each job rounds up to a whole minute, Windows minutes count 2x and macOS minutes 10x against your plan's included allowance, and overage is charged from $0.008 per Linux minute. It is for engineering leads sizing a CI budget or hunting down why the Actions line item suddenly grew.",
   useCases: [

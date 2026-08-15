@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tip & Bill Split Calculator with Round-Up Shares",
+  metaDescription:
+    "Split the bill, tax and tip per person, tip on the pre- or post-tax amount, and round each share up to ₹1-₹100 — with the effective tip rate shown.",
+  steps: [
+    "Enter 'Bill amount before tax (₹)', 'Tax / GST on the bill (%)' and 'Number of people' (up to 200), then set the 'Tip (%)' by typing or tapping a preset from 0% to 20%.",
+    "Keep or untick 'Tip on the pre-tax amount', then pick a rounding mode — 'Round each share up' or 'Round the total up' — to the nearest ₹1, ₹5, ₹10, ₹20, ₹50 or ₹100.",
+    "Read the 'Each person pays' figure with the effective tip rate and 'Rounding added' rows, then click 'Copy result' for the split summary.",
+  ],
   "intro": "Tip and Bill Split Calculator takes the bill, the tax on it and the tip you want to leave, then divides the total between everyone at the table. You choose whether the tip is calculated on the pre-tax or post-tax amount, and you can round each person's share (or the whole bill) up to the nearest ₹1, ₹5, ₹10, ₹20, ₹50 or ₹100 — the tool then shows the effective tip rate that rounding actually produced.",
   "useCases": [
     "Split a restaurant bill four ways and round each share up to a clean ₹10 note.",

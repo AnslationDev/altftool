@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gaj to Square Feet Converter — 1 Gaj = 9 Sq Ft",
+  metaDescription:
+    "1 gaj = 9 sq ft. Convert plots between gaj, sq ft, sq m, marla, kanal and acres, price them at a per-gaj rate and see state-wise bigha values.",
+  steps: [
+    "Start from 'An area' — a value in gaj, square feet, square metres, biswa, marla, kanal, acre or hectare — or from 'Length × width' in feet, yards or metres.",
+    "Optionally enter a Rate in ₹ and the unit it is quoted per (per gaj, per sq ft and so on) to price the plot.",
+    "Read the square-feet headline and every unit's equivalent, the plot value with per-unit rates, the state-wise bigha table and the 'Plot shape check' second side.",
+  ],
   intro:
     "Gaj is the north Indian name for a square yard, so one gaj is exactly 9 square feet and 0.83612736 square metres. This converter restates a plot in gaj, square feet, square metres, biswa, marla, kanal, acres and hectares, prices it from a rate quoted in any of those units, and shows what the same plot works out to in the bigha each state uses. It also gives the second side of a rectangular plot when you know the area and one side.",
   useCases: [

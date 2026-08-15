@@ -1,4 +1,12 @@
 const seo = {
+  title: ".env to Kubernetes Secret Converter (base64 YAML)",
+  metaDescription:
+    "Paste a .env and get a ready-to-apply Secret manifest with base64 data or plain stringData, validated against DNS-1123 name rules and the 1 MiB limit.",
+  steps: [
+    "Paste your variables into the '.env contents' box and set a Secret name (validated as a DNS-1123 subdomain) plus an optional Namespace.",
+    "Tick 'Use stringData' to keep values readable instead of base64-encoding them into data, or 'Mark immutable'; keys are checked against the [-._a-zA-Z0-9]+ rule and the 1 MiB Secret limit.",
+    "Press Copy YAML to grab the manifest for kubectl apply; the result panel confirms how many keys were converted and the approximate value bytes.",
+  ],
   intro:
     "This tool converts a .env file into a Kubernetes Secret manifest, base64-encoding each value into the data field (or emitting plain stringData) exactly as kubectl expects. It validates the Secret name against the DNS-1123 subdomain rule and every key against the [-._a-zA-Z0-9]+ pattern the Kubernetes API server enforces, so the generated YAML applies cleanly on the first try.",
   useCases: [

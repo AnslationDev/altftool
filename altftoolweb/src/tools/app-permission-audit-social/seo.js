@@ -1,4 +1,12 @@
 const seo = {
+  title: "Social Media App Permission Audit & Privacy Score",
+  metaDescription:
+    "Tick the camera, contacts, location, ad-ID and photo permissions a social app holds to get a 0-100 privacy score and the top permissions to revoke.",
+  steps: [
+    "Enter the App name and tick the granted permissions across 10 checkboxes — camera, microphone, all photos/videos, precise location, contacts, ad ID and more — or start from the 'Typical social app' preset.",
+    "Review the privacy score out of 100 with its exposure band, from 'Minimal exposure' to 'Severe over-collection', plus up to five top risky grants each with a suggested fix.",
+    "Click 'Copy summary' to copy the score, granted-permission count and top fixes as a plain-text report.",
+  ],
   intro:
     "The Social Media App Permission Audit scores a social app's camera, microphone, photos, location, contacts, notifications, Bluetooth, ad ID, background activity and accessibility permissions. It explains which permissions are useful for posting and messaging, and which ones create unnecessary privacy exposure.",
   useCases: [

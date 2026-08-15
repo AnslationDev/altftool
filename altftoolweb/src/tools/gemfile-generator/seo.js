@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gemfile Generator with ~> Constraint Expansion",
+  metaDescription:
+    "Build a Bundler Gemfile with source, ruby version, groups, github: forks and require: false — and see the exact range each ~> constraint allows.",
+  steps: [
+    "Set the Gem source and Ruby version (or tick 'Read version from .ruby-version'), then fill each gem's name, version requirement and group.",
+    "Click 'Add gem' for more rows, and per gem set 'github: owner/repo', 'branch:' or 'require: false' — the file regenerates live as you edit.",
+    "Review the generated Gemfile, the 'What each ~> constraint allows' table and any warnings, then click 'Copy Gemfile'.",
+  ],
   intro:
     "A Gemfile generator produces the Bundler manifest that lists a Ruby project's gem source, Ruby version and dependencies, including grouped and git-sourced gems. It also expands every pessimistic constraint so you can see the real range: ~> 1.2 means >= 1.2 and < 2.0, while ~> 1.2.3 means >= 1.2.3 and < 1.3.0. Useful when starting a Ruby or Rails project, or when reviewing whether a constraint is as tight as the author intended.",
   useCases: [

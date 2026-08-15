@@ -1,4 +1,12 @@
 const seo = {
+  title: "URL Slug Generator with Cyrillic & Greek Transliteration",
+  metaDescription:
+    "Paste titles one per line to get lowercase hyphenated slugs. Accents, German, Cyrillic and Greek transliterate to ASCII; duplicates get numbered.",
+  steps: [
+    "Paste your headlines into the 'Title (one per line for bulk slugs)' box — each non-empty line becomes its own slug.",
+    "Set the Word separator (Hyphen or Underscore), a Max length between 5 and 300 characters (blank for no limit), and toggle 'Lowercase everything', 'Remove stop words' or 'Remove standalone numbers'.",
+    "Click 'Copy slug' for the first result or 'Copy all' for the whole list — identical slugs are automatically numbered so every URL stays unique.",
+  ],
   "intro": "URL Slug Generator turns headlines into clean, lowercase, hyphenated slugs that are safe in any URL. It transliterates accented Latin, German, Cyrillic and Greek letters to ASCII, converts symbols such as & and % into words, optionally strips stop words, enforces a maximum length at a word boundary, and numbers duplicate slugs. Paste one title or a whole list — bloggers, CMS editors and developers can generate hundreds of slugs at once.",
   "useCases": [
     "Create a permalink for a new blog post before publishing it in WordPress or a headless CMS.",

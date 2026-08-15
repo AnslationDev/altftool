@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPI QR Code Generator – Payment QR from Your UPI ID",
+  metaDescription:
+    "Type your UPI ID and payee name to get a standard upi://pay QR. Lock an amount in INR, add a note or reference, then download the code as a PNG.",
+  steps: [
+    "Enter your UPI ID / VPA (name@bank format) and a payee name, and tick 'Lock a fixed amount' to set an INR amount — values above ₹1,00,000 are flagged.",
+    "Optionally add a payment note (up to 50 characters), a reference ID (up to 35) or a 4-digit merchant category code; the upi://pay QR redraws as you type.",
+    "Click 'PNG' to download the QR as upi-qr-<your-vpa>.png, or 'Copy UPI link' to copy the raw upi://pay URI.",
+  ],
   "intro": "UPI QR Code Generator turns your UPI ID into a scannable payment code. It assembles a standard upi://pay link from the payee VPA, payee name, currency (INR) and — if you want — a locked amount, a payment note, a reference ID and a merchant category code, then renders it as a QR you can download as PNG. Useful for shopkeepers, freelancers, tuition teachers, event stalls and anyone collecting payments without a POS machine.",
   "useCases": [
     "Print a counter-top QR for a shop or stall so customers can pay by scanning instead of typing your UPI ID.",

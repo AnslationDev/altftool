@@ -1,4 +1,12 @@
 const seo = {
+  title: "Summits and Reports Tracker for Exam Current Affairs",
+  metaDescription:
+    "Log summit/report, publisher, host, year and India's rank in a sortable, searchable table saved in your browser; copy rows as CSV for exam revision.",
+  steps: [
+    "Fill the Add an entry form: summit/report/index name, organisation/publisher, host/venue, year and India's rank or outcome (e.g. 'India ranked 105 of 127').",
+    "Click Add entry, then sort the table by any column header or use 'Search the table' to filter by summit, host, publisher or year.",
+    "Click Copy CSV to copy the visible rows; entries persist in your browser's localStorage between visits.",
+  ],
   intro:
     "This tracker is a structured revision table for the summit and index questions in competitive-exam current affairs: each row records the summit or report name, the organisation or publisher behind it, the host or venue, the year, and India's rank or outcome. Built for SSC, banking, UPSC prelims and state PSC aspirants, it is searchable, sortable by any column, stored only in your browser, and exportable as CSV.",
   useCases: [

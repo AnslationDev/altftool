@@ -1,4 +1,12 @@
 const seo = {
+  title: "Environment Variable Name Checker – POSIX & Prefix Rules",
+  metaDescription:
+    "Check names against POSIX [A-Za-z_][A-Za-z0-9_]*, UPPER_SNAKE_CASE, reserved names like PATH, and risky prefixes like GITHUB_ and NEXT_PUBLIC_.",
+  steps: [
+    "Paste names into the 'Variable names' box — one per line, comma separated, or whole .env lines — starting from the built-in example list.",
+    "Checks run live against the POSIX rule [A-Za-z_][A-Za-z0-9_]*, UPPER_SNAKE_CASE convention, reserved names like PATH and IFS, and prefixes like GITHUB_, LD_ and NEXT_PUBLIC_.",
+    "Read the per-name OK / Warning / Error verdicts with reasons plus the Names checked / Errors / Warnings / Clean counts, then click 'Copy report'.",
+  ],
   intro:
     "This tool checks environment variable names against the POSIX portable rule [A-Za-z_][A-Za-z0-9_]* (IEEE Std 1003.1, section 8.1), the UPPER_SNAKE_CASE convention, reserved system names such as PATH and IFS, and platform-owned prefixes like GITHUB_, LD_, npm_ and NEXT_PUBLIC_. It is for developers naming new configuration variables who want them to work identically in shells, Docker, CI runners and frontend build tools.",
   useCases: [

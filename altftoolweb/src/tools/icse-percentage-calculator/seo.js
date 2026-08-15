@@ -1,4 +1,12 @@
 const seo = {
+  title: "ICSE Percentage Calculator – English + Best 4 CISCE Rule",
+  metaDescription:
+    "Applies the CISCE formula — English plus best 4 (ICSE) or best 3 (ISC) — marking counted vs dropped subjects, with 33%/35% per-subject pass checks.",
+  steps: [
+    "Pick ICSE (Class 10) or ISC (Class 12) in the Examination selector and enter your English marks (compulsory, out of 100).",
+    "Enter Marks (out of 100) for each other subject, adding up to 10 rows with the 'Add subject' button.",
+    "Read the percentage averaged as English + best 4 (ICSE) or best 3 (ISC), see every subject marked counted or Dropped with the 33%/35% pass check, then click Copy result.",
+  ],
   intro:
     "This calculator computes ICSE and ISC percentages exactly as CISCE does: English is compulsory, and the aggregate averages English with your best 4 other subjects for ICSE (five subjects) or best 3 for ISC (four subjects). Enter marks out of 100, and the tool shows which subjects were counted, which were dropped, and whether every subject clears the pass mark — 33% for ICSE and 35% for ISC.",
   useCases: [
