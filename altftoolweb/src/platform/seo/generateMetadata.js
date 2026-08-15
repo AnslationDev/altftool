@@ -264,7 +264,12 @@ export async function createPageMetadata(rawArgs = {}) {
   const url = normalizeCanonicalUrl(canonical || path, path, getSiteUrl());
   const imageUrl = absoluteUrl(image || siteConfig.defaultImagePath);
   const cleanDescription = trimMetaDescription(description);
-  const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
+  // Page keywords first, sitewide brand keywords as filler, capped: Bing's
+  // only documented use of this tag is as a spam signal when stuffed, so a
+  // GST-calculator page should not carry ten unrelated brand phrases.
+  const keywordList = [
+    ...new Set([...keywords, ...siteConfig.keywords].filter(Boolean)),
+  ].slice(0, 12);
   const resolvedTitle = title || siteConfig.name;
   const suppressIndexing = noindex || shouldNoindexPagePath(path);
 
@@ -417,6 +422,37 @@ export function createOrganizationJsonLd() {
   return node;
 }
 
+/**
+ * Sitewide hub inventory — feeds both WebSite.hasPart and the
+ * SiteNavigationElement ItemList so search engines get one consistent picture
+ * of the site's section structure (the hub-level signal that informs sitelink
+ * selection). Every entry must be a real, indexable route: the directory must
+ * exist under src/app with a page file, it must not sit under a
+ * NOINDEX_ROUTE_PREFIXES prefix (pageIndexPolicy.js), and its page must not
+ * pass `noindex` to createPageMetadata. `name` is the hub's real on-page
+ * title wording — never an invented marketing name. Ordered by importance;
+ * tools first. Note /games 301s to /tools/games (next.config.mjs), so the
+ * standalone games hub here is /altfgame.
+ */
+// Names must mirror each hub page's own CollectionPage JSON-LD name where one
+// exists: both nodes share the `${url}#collection` @id, so on the hub's own
+// page they merge into one entity — two different name strings would leave the
+// parser to pick one nondeterministically.
+const SITE_HUBS = [
+  { path: "/tools/all", name: "All Online Tools" },
+  { path: "/altfcalculators", name: "Free Online Calculators" },
+  { path: "/transform", name: "Transform — Format & Code Converters" },
+  { path: "/altflovepdf", name: "Free Online PDF Tools" },
+  { path: "/altfloveimg", name: "AltFLoveImg — Free In-Browser Image Tools" },
+  { path: "/altfgame", name: "AltF Games" },
+  { path: "/blogs", name: "AltFTool Blog" },
+  { path: "/news", name: "AltFTool News" },
+  { path: "/alternatives", name: "Free Alternatives to Popular Online Tools" },
+  { path: "/deals", name: "Paid tool prices vs free alternatives" },
+  { path: "/extensions", name: "AltFTool Extensions" },
+  { path: "/apps", name: "AltFTool Android Apps" },
+];
+
 export function createWebsiteJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -440,30 +476,15 @@ export function createWebsiteJsonLd() {
       { "@type": "Audience", audienceType: "Privacy-conscious users" },
     ],
     hasPart: [
-      {
-        "@type": "CollectionPage",
-        "@id": `${getSiteUrl()}/tools/all#collection`,
-        name: "All AltFTool tools",
-        url: `${getSiteUrl()}/tools/all`,
-      },
-      {
-        "@type": "CollectionPage",
-        "@id": `${getSiteUrl()}/tools/security-privacy#collection`,
-        name: "Security and privacy tools",
-        url: `${getSiteUrl()}/tools/security-privacy`,
-      },
-      {
-        "@type": "CollectionPage",
-        "@id": `${getSiteUrl()}/altflovepdf#collection`,
-        name: "AltFLovePDF tools",
-        url: `${getSiteUrl()}/altflovepdf`,
-      },
-      {
-        "@type": "CollectionPage",
-        "@id": `${getSiteUrl()}/altfloveimg#collection`,
-        name: "AltFLoveIMG tools",
-        url: `${getSiteUrl()}/altfloveimg`,
-      },
+      ...SITE_HUBS.map((hub) =>
+        compactJsonLdObject({
+          "@type": "CollectionPage",
+          "@id": `${getSiteUrl()}${hub.path}#collection`,
+          name: hub.name,
+          description: hub.description,
+          url: `${getSiteUrl()}${hub.path}`,
+        }),
+      ),
       {
         "@type": "CreativeWork",
         "@id": `${getSiteUrl()}/llms.txt#llm-manifest`,
@@ -482,6 +503,26 @@ export function createWebsiteJsonLd() {
       },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+/**
+ * Sitewide navigation entity — an ItemList of SiteNavigationElement built
+ * from the same SITE_HUBS inventory as WebSite.hasPart. Emitted once from the
+ * root layout alongside Organization + WebSite.
+ */
+export function createSiteNavigationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${getSiteUrl()}/#site-navigation`,
+    name: `${siteConfig.name} site navigation`,
+    itemListElement: SITE_HUBS.map((hub, index) => ({
+      "@type": "SiteNavigationElement",
+      position: index + 1,
+      name: hub.name,
+      url: `${getSiteUrl()}${hub.path}`,
+    })),
   };
 }
 

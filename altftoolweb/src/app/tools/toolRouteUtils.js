@@ -2,6 +2,7 @@ import { cache } from "react";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "./toolSeoContent";
+import { buildFallbackToolTitle, buildToolKeywords } from "./toolKeywords";
 import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
 import {
   CANONICAL_CATEGORIES,
@@ -257,8 +258,17 @@ export async function buildToolMetadata(slug) {
   const seoContent = buildToolSeoContent(slug, tool);
 
   return createPageMetadata({
-    title: seoContent.title || buildFallbackToolTitle(tool.name || slug),
+    // Hand-written titles always win; the generated fallback carries the
+    // category's query-shaped noun ("... - Free Online Calculator") so titles
+    // vary with what searchers actually type instead of one fixed tail, and
+    // degrades its suffix until the rendered title fits the 60-char budget.
+    title:
+      seoContent.title ||
+      buildFallbackToolTitle(tool.name || slug, getToolCategories(tool)[0]),
     description: seoContent.metaDescription,
+    // Real registry data only (name/topics/category variants) — unioned with
+    // the sitewide list inside createPageMetadata.
+    keywords: buildToolKeywords(slug, tool),
     path: `/tools/all/${slug}`,
     // Point at this route's own generated share card. createPageMetadata always
     // sets openGraph.images, and an explicit images array overrides Next's
@@ -270,29 +280,3 @@ export async function buildToolMetadata(slug) {
   });
 }
 
-/** " | AltFTool", appended by the root layout's title template. */
-const BRAND_SUFFIX_LENGTH = 11;
-const TITLE_BUDGET = 60;
-
-/**
- * Tool titles for the 3,811 tools with no hand-written seo.js title.
- *
- * The flat `${name} - Free Online Tool` put 1,194 of them past 60 characters
- * once the brand suffix landed — measured against the registry — e.g.
- * "Advance Tax Interest 234B 234C Calculator - Free Online Tool | AltFTool"
- * at 71. The suffix carries no information the tool name and the brand do not
- * already carry, so drop it down rather than let the SERP cut the title.
- *
- * Deliberately does NOT touch seoContent.title. Those are hand-written per
- * tool, and 57 of them are also over 60; machine-trimming them cuts words that
- * were chosen ("Age Calculator — Exact Age from Your Date of Birth" would lose
- * "Birth"), which is worse than letting Google truncate for display only. They
- * need editing at source, in src/tools/<slug>/seo.js.
- */
-function buildFallbackToolTitle(name) {
-  const suffixes = [" - Free Online Tool", " - Free Online", ""];
-  const fitting = suffixes.find(
-    (suffix) => name.length + suffix.length + BRAND_SUFFIX_LENGTH <= TITLE_BUDGET,
-  );
-  return fitting === undefined ? name : `${name}${fitting}`;
-}
