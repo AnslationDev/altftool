@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tetris Clone – Browser Game with SRS & 7-Bag Randomiser",
+  title: "Tetris Clone – Browser Game with SRS & 7-Bag",
   metaDescription:
     "Playable browser Tetris: SRS wall kicks, 7-bag randomiser, hold, ghost piece and guideline scoring, plus a piece seed to replay identical runs.",
   steps: [

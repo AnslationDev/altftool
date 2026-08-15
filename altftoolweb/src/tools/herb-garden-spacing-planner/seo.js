@@ -1,5 +1,5 @@
 const seo = {
-  title: "Herb Garden Spacing Planner: Will They Fit Your Bed?",
+  title: "Herb Garden Spacing Planner: Will They Fit",
   metaDescription:
     "Each herb gets a square of its own spacing — 30 cm basil, 60 cm rosemary — so you see if your picks fit the bed, plus soil depth and sun hours.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Restaurant Phrasebook: 8 Languages, Script & Romanisation",
+  title: "Restaurant Phrasebook: 8 Languages, Script",
   metaDescription:
     "Builds a restaurant phrasebook in Hindi, Tamil, Japanese and five more — native script plus read-aloud romanisation — as a card, Markdown or CSV.",
   steps: [

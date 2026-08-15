@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bookmark Organizer: Import bookmarks.html, Tag, Sort",
+  title: "Bookmark Organizer: Import bookmarks.html, Tag",
   metaDescription:
     "Import a Netscape bookmarks HTML export or a JSON backup, then file links in folders, tag and bulk-edit them, and sort by how often you open each.",
   intro:

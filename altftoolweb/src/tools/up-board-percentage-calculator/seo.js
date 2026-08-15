@@ -1,5 +1,5 @@
 const seo = {
-  title: "UP Board Percentage Calculator: Class 10 & 12 Division",
+  title: "UP Board Percentage Calculator: Class 10 & 12",
   metaDescription:
     "Total your UPMSP marks over 600 (Class 10) or 500 (Class 12) for the exact percentage, the 33% subject pass check and First/Second/Third Division.",
   steps: [

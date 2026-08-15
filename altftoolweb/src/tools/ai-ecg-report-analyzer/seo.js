@@ -1,5 +1,5 @@
 const seo = {
-  title: "ECG Report Analyzer: PR, QRS and QTc Reference Bands",
+  title: "ECG Report Analyzer: PR, QRS and QTc Reference",
   metaDescription:
     "Grades typed heart rate, PR, QRS and QTc against adult reference ranges into a weighted 0-25 score. An educational reference, not a diagnostic device.",
   steps: [

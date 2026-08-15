@@ -1,5 +1,5 @@
 const seo = {
-  title: "Truth or Dare Game: 360 Prompts in 6 Packs, 3 Levels",
+  title: "Truth or Dare Game: 360 Prompts in 6 Packs, 3",
   metaDescription:
     "Deal random truths and dares from 360 built-in prompts across Friends, Family, Party, Couples, Kids and Office packs, at easy, medium or hard.",
   steps: [

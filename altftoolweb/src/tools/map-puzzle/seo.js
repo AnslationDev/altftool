@@ -1,5 +1,5 @@
 const seo = {
-  title: "Map Puzzle: Timed Capital City & Country Quiz Game",
+  title: "Map Puzzle: Timed Capital City & Country Quiz",
   metaDescription:
     "Guess the country from its capital, continent and a fact — 78 countries, four difficulties from 10 questions at 45 s to 50 at 12 s, streaks score double.",
   steps: [

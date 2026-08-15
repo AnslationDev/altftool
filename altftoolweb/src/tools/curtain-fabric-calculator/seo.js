@@ -1,5 +1,5 @@
 const seo = {
-  title: "Curtain Fabric Calculator: Widths, Metres & Repeat",
+  title: "Curtain Fabric Calculator: Widths, Metres",
   metaDescription:
     "Track width × fullness ÷ roll width gives whole widths; cut length rounds up to a full pattern repeat. Returns face fabric, lining, tape and hook count.",
   steps: [

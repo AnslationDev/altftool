@@ -1,5 +1,5 @@
 const seo = {
-  title: "Canva AI Prompt Builder: Exact Canvas Size and Copy Fit",
+  title: "Canva AI Prompt Builder: Exact Canvas Size",
   metaDescription:
     "Writes a Canva brief with the real preset size, reduced aspect ratio, brand palette and type, and a headline budget from a 16 px readable floor.",
   steps: [

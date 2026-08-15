@@ -1,5 +1,5 @@
 const seo = {
-  title: "South Indian Breakfast Calories: Idli, Dosa, Vada, Pongal",
+  title: "South Indian Breakfast Calories: Idli, Dosa",
   metaDescription:
     "Builds a plate from 25 standard portions and derives calories from protein, carbs and fat with Atwater factors, against your budget.",
   steps: [

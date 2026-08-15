@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prompt Injection Scanner for Untrusted Text & HTML",
+  title: "Prompt Injection Scanner for Untrusted Text",
   metaDescription:
     "Scans up to 500,000 characters of HTML, Markdown, CSV or text for hidden instructions and bidi Unicode, scoring each match with its line and column.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "LinkedIn Headline Prompt Builder (220-Character Budget)",
+  title: "LinkedIn Headline Prompt Builder",
   metaDescription:
     "Split LinkedIn's 220-character headline into role, niche and proof segments, measure your draft against the limit and get an AI prompt plus About prompt.",
   steps: [

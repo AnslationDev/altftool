@@ -1,5 +1,5 @@
 const seo = {
-  title: "Group Viva Planner: Fair Round-Robin Question Rota",
+  title: "Group Viva Planner: Fair Round-Robin Question",
   metaDescription:
     "Builds a round-robin viva practice rota where nobody questions themselves and everyone asks and answers equally, with per-round and total session timings.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Frame Continuity Inspector — Local, up to 80 MB",
+  title: "Video Frame Continuity Inspector — Local",
   metaDescription:
     "Sample up to 60 frames from a local MP4, WebM, MOV or M4V and compare pixel and 16-bin luminance differences — nothing is uploaded, JSON export.",
   steps: [

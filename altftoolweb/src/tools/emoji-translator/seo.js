@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emoji Translator: Turn Words Into Emoji (377-Word List)",
+  title: "Emoji Translator: Turn Words Into Emoji",
   metaDescription:
     "Type a sentence and 377 English words — feelings, animals, food, numbers — swap to emoji live, keeping punctuation and leaving unknown words as text.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cycling Commute Calorie Calculator: Fuel and CO2 Saved",
+  title: "Cycling Commute Calorie Calculator: Fuel and CO2",
   metaDescription:
     "Calories from the ACSM equation with speed-banded METs, plus the litres, money and tailpipe CO2 the drive would have cost at 2.31 kg per litre of petrol.",
   steps: [

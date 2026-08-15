@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tokens Per Second Calculator for Local LLM Benchmarks",
+  title: "Tokens Per Second Calculator for Local LLM",
   metaDescription:
     "Turn llama.cpp timings into decode and prefill tok/s, TTFT and weight size at real bpw (Q4_K_M 4.83), against your memory-bandwidth ceiling.",
   steps: [

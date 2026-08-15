@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hidden Revision Inspector: 19 DOCX/XLSX/PPTX Checks",
+  title: "Hidden Revision Inspector: 19 DOCX/XLSX/PPTX",
   metaDescription:
     "Unzip a DOCX, XLSX or PPTX in your browser and count tracked changes, comments, author fields, veryHidden sheets, macros and external links. Counts only.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "TDS Calculator Section 194J: 10%, 2% and No-PAN 20%",
+  title: "TDS Calculator Section 194J: 10%, 2% and No-PAN",
   metaDescription:
     "Works out 194J TDS on professional or technical fees at 10% or 2%, applies the yearly aggregate exemption limit, and the 206AA 20% rate without PAN.",
   steps: [

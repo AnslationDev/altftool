@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fake Chat Maker: WhatsApp, iMessage & Discord Mockups",
+  title: "Fake Chat Maker: WhatsApp, iMessage & Discord",
   metaDescription:
     "Build labelled mock chat screenshots in six interfaces — WhatsApp, Instagram, Telegram, iMessage, KakaoTalk, Discord — and export SVG, 2x PNG or JSON.",
   steps: [

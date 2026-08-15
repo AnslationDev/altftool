@@ -1,5 +1,5 @@
 const seo = {
-  title: "Convert RAW to JPEG in Browser: DNG, NEF, CR2, ARW",
+  title: "Convert RAW to JPEG in Browser: DNG, NEF, CR2",
   metaDescription:
     "Open a DNG, NEF, CR2 or ARW file, pick -1 stop, neutral or +1 stop, and export a JPEG at -q:v 2 quality — FFmpeg WebAssembly, in your browser.",
   steps: [

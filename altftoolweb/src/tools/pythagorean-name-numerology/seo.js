@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pythagorean Name Numerology Calculator (Chart 1 to 9)",
+  title: "Pythagorean Name Numerology Calculator",
   metaDescription:
     "Get expression, soul urge and personality numbers from any name on the Pythagorean 1–9 chart, with master numbers 11, 22, 33 kept and karmic debts shown.",
   steps: [

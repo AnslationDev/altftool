@@ -1,5 +1,5 @@
 const seo = {
-  title: "Post Office RD Calculator: Maturity and Default Fee",
+  title: "Post Office RD Calculator: Maturity and Default",
   metaDescription:
     "Maturity value for the 5-year National Savings RD with quarterly compounding, the ₹1 per ₹100 default fee, advance rebate and premature closure.",
   steps: [

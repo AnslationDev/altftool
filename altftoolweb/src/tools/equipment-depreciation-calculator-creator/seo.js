@@ -1,5 +1,5 @@
 const seo = {
-  title: "Camera Gear Depreciation Calculator – Cost per Shoot",
+  title: "Camera Gear Depreciation Calculator – Cost",
   metaDescription:
     "Run straight line, declining balance and sum-of-years depreciation on camera gear, floored at resale value, and get a true cost per shoot.",
   steps: [

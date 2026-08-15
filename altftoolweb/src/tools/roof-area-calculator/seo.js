@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roof Area Calculator — Pitch, Slope Factor and Rafters",
+  title: "Roof Area Calculator — Pitch, Slope Factor",
   metaDescription:
     "Convert a building footprint and pitch into the true sloped roof area via the slope factor, plus rafter, ridge, hip and gutter lengths and sheet count.",
   steps: [

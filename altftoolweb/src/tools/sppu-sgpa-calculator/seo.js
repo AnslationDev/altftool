@@ -1,5 +1,5 @@
 const seo = {
-  title: "SPPU SGPA and CGPA Calculator on the 10-Point Scale",
+  title: "SPPU SGPA and CGPA Calculator on the 10-Point",
   metaDescription:
     "Credit-weighted SGPA on SPPU's O-to-F scale, CGPA weighted by each semester's credits, and the SGPA your remaining credits need for a target CGPA.",
   steps: [

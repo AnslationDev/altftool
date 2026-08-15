@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPSC Negative Marking Calculator: One-Third Penalty",
+  title: "UPSC Negative Marking Calculator: One-Third",
   metaDescription:
     "Score a tiered UPSC prelims attempt plan under the one-third penalty. Break-even accuracy is 25% — see which guesses add marks in GS Paper I or CSAT.",
   steps: [

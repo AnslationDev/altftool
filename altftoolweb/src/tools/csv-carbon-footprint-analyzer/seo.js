@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSV Carbon Footprint Calculator with Your Own Factors",
+  title: "CSV Carbon Footprint Calculator with Your Own",
   metaDescription:
     "Paste rows as Activity | quantity | unit | kg CO₂e per unit to get the total in kg and tonnes CO₂e, a per-person split and a line-by-line breakdown.",
   steps: [

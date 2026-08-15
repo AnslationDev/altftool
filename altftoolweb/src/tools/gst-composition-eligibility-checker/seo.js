@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST Composition Scheme Eligibility: Section 10 Check",
+  title: "GST Composition Scheme Eligibility: Section 10",
   metaDescription:
     "Test turnover, state and activity against all eight section 10 conditions. Returns your 1%, 5% or 6% composition rate, or the clause that blocks you.",
   steps: [

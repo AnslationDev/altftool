@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wedding Budget Planner India: Per-Plate Rate & Shares",
+  title: "Wedding Budget Planner India: Per-Plate Rate",
   metaDescription:
     "Split a budget across venue, catering, jewellery and travel, hold back a contingency, and get the per-plate rate your catering share supports.",
   steps: [

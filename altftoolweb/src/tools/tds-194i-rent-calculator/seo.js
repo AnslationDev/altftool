@@ -1,5 +1,5 @@
 const seo = {
-  title: "TDS on Rent Calculator: Section 194-I at 2% or 10%",
+  title: "TDS on Rent Calculator: Section 194-I at 2%",
   metaDescription:
     "Section 194-I TDS at 10% on land and buildings or 2% on plant and machinery, tested against the Rs 50,000 monthly threshold, with net rent per month.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "LLM Quantization Size Calculator (GGUF Q4_K, Q8_0)",
+  title: "LLM Quantization Size Calculator",
   metaDescription:
     "Estimate a model's weight-file size from parameters × bits-per-weight ÷ 8 across FP32 to Q2_K, in GB and GiB, with the saving against FP16.",
   steps: [

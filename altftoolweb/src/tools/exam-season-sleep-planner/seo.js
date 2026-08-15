@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Sleep Planner: Shift Bedtime 30 Minutes a Night",
+  title: "Exam Sleep Planner: Shift Bedtime 30 Minutes",
   metaDescription:
     "Builds an exam-day alarm, bedtime and revision blocks, shifting your body clock no faster than 30 minutes earlier a night.",
   steps: [

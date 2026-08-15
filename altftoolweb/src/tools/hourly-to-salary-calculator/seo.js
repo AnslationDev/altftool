@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hourly to Salary Calculator: Yearly, Monthly, Daily Pay",
+  title: "Hourly to Salary Calculator: Yearly, Monthly",
   metaDescription:
     "Multiply rate x hours per week x weeks per year for gross annual pay, then see monthly, weekly and daily figures. Set your own weeks, not a fixed 52.",
   intro:

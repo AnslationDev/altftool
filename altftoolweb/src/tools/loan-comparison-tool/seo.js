@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Comparison Calculator: EMI, Interest, Total Cost",
+  title: "Loan Comparison Calculator: EMI, Interest, Total",
   metaDescription:
     "Enter amount, annual rate and term in years for the level monthly EMI, total interest and total payable. A 0% rate falls back to principal / months.",
   intro:

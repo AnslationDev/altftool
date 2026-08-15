@@ -1,5 +1,5 @@
 const seo = {
-  title: "International Call Cost: Roaming vs SIM vs VoIP vs Pack",
+  title: "International Call Cost: Roaming vs SIM vs VoIP",
   metaDescription:
     "Compare one trip's calls four ways: roaming, local SIM, VoIP data at 0.5 MB per minute and a calling pack, ranked by total cost and cost per minute.",
   steps: [

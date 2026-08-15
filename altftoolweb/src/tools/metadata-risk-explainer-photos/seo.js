@@ -1,5 +1,5 @@
 const seo = {
-  title: "Photo EXIF Metadata Risk Explainer: What Each Tag Reveals",
+  title: "Photo EXIF Metadata Risk Explainer: What Each",
   metaDescription:
     "Tick the EXIF, GPS, IPTC and XMP fields a photo carries for a 0–100 exposure score, risky combinations and what to strip first. Nothing is uploaded.",
   steps: [

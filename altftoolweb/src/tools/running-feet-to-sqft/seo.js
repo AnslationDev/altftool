@@ -1,5 +1,5 @@
 const seo = {
-  title: "Running Feet to Sqft: Sq Ft = Running Feet x Height",
+  title: "Running Feet to Sqft: Sq Ft = Running Feet x",
   metaDescription:
     "Running feet is only an area once you add the unit height. Convert each kitchen or wardrobe run, then compare a per-rft quote with a per-sqft one.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dining Table Size Calculator: Seats, Clearance & Fit",
+  title: "Dining Table Size Calculator: Seats, Clearance",
   metaDescription:
     "Size a rectangular, round or square table from 60–70 cm of edge per diner, add 90 cm chair clearance, and check the whole footprint fits your room.",
   steps: [

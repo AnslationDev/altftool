@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio-Transcript Alignment Checker for SRT and VTT",
+  title: "Audio-Transcript Alignment Checker for SRT",
   steps: [
     "Press 'Choose an audio file' (maximum 30 MB, decoded maximum 10 minutes) and paste your Candidate timed transcript as SRT or WebVTT, adding a Reference timed transcript if you want a diff.",
     "Set Audio activity threshold (Sensitive -50 dBFS through Strong audio only -20 dBFS) and Cue timing tolerance (250 ms to 2 seconds), then press 'Run alignment screen'.",

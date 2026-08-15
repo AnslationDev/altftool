@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mopping Calorie Calculator: 3.5 METs by Time or Area",
+  title: "Mopping Calorie Calculator: 3.5 METs by Time",
   metaDescription:
     "Calories burned mopping from your weight and either minutes or floor area, using MET x 3.5 x kg / 200 at 2.3, 3.5 or 4.3 METs.",
   steps: [

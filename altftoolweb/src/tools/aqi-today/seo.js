@@ -1,5 +1,5 @@
 const seo = {
-  title: "AQI Today: 36 Indian Cities Ranked, Worst Air First",
+  title: "AQI Today: 36 Indian Cities Ranked, Worst Air",
   metaDescription:
     "Live CPCB AQI for 36 cities, worst first, with the dominant pollutant, all six sub-indices and each city's band. Modelled data, not station readings.",
   steps: [

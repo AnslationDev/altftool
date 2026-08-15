@@ -1,5 +1,5 @@
 const seo = {
-  title: "Menu Font Pairing With Minimum Size and Leader Dots",
+  title: "Menu Font Pairing With Minimum Size and Leader",
   metaDescription:
     "Pick a pair like Playfair Display + Karla, set lighting and reading distance, and get the minimum body size in pt plus the leader dots that fit a column.",
   steps: [

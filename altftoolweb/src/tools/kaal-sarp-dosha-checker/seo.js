@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kaal Sarp Dosha Checker: Sidereal Planet Positions",
+  title: "Kaal Sarp Dosha Checker: Sidereal Planet",
   metaDescription:
     "Tests whether all seven grahas fall in the 180° Rahu-Ketu arc, names the type from Rahu's sign, and lists each planet's sidereal longitude and rashi.",
   intro:

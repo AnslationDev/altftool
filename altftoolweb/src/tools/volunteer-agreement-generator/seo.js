@@ -1,5 +1,5 @@
 const seo = {
-  title: "Volunteer Agreement Generator: POSH, Expenses, Hours",
+  title: "Volunteer Agreement Generator: POSH, Expenses",
   metaDescription:
     "Draft a volunteer agreement that stays clear of employment: hours, travel and meal reimbursement budget, and optional POSH and safeguarding clauses.",
   steps: [

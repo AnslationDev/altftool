@@ -1,5 +1,5 @@
 const seo = {
-  title: "Data Retention Schedule Builder: 7-Column Table Output",
+  title: "Data Retention Schedule Builder: 7-Column Table",
   metaDescription:
     "Paste records one per line, pipe-separated, for a seven-column schedule — category, purpose, system, period, trigger, method, owner — with gaps flagged.",
   intro:

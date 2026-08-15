@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kayaking Calorie Calculator: MET Bands by Paddle Speed",
+  title: "Kayaking Calorie Calculator: MET Bands by Paddle",
   metaDescription:
     "Calories from distance, time and water type using the ACSM equation and Compendium METs: 2.8, 5.8 or 12.5 on flat water by the speed you actually held.",
   steps: [

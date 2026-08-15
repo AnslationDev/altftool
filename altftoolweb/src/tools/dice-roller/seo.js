@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dice Roller: d4 to d100 with Modifiers, Drop Lowest",
+  title: "Dice Roller: d4 to d100 with Modifiers, Drop",
   metaDescription:
     "Roll 1–10 dice from d4 to d100 with a −99 to +99 modifier and drop lowest. Fair crypto randomness, every die shown, last 20 rolls kept.",
   steps: [

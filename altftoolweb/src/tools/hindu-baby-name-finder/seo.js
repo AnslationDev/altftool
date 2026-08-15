@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hindu Baby Name Finder by Nakshatra, Pada & Meaning",
+  title: "Hindu Baby Name Finder by Nakshatra, Pada",
   metaDescription:
     "Pick a nakshatra and pada to get names starting with that syllable, each shown with its Sanskrit root in IAST, its meaning and its linked deity.",
   steps: [

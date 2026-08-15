@@ -1,5 +1,5 @@
 const seo = {
-  title: "Location History Cleaner: Redact Home and Work GPS",
+  title: "Location History Cleaner: Redact Home and Work",
   metaDescription:
     "Deletes records inside a lat/lon/radius zone by haversine distance, then coarsens coordinates to 4, 3 or 2 decimals and times to 15 min, hour or day.",
   steps: [

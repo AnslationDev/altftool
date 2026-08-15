@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPI Collect Request Decoder: Read It Before Paying",
+  title: "UPI Collect Request Decoder: Read It Before",
   steps: [
     "Paste the upi:// URI or QR text into the \"UPI URI or QR text\" box, or press Example to load a sample payload.",
     "Read the Decoded request panel: the action label, Payee, Payee UPI ID and Stated amount, plus warnings for duplicate or invisible-Unicode parameters.",

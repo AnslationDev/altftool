@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lab Attendance Calculator: 75% Bar and Contact Hours",
+  title: "Lab Attendance Calculator: 75% Bar and Contact",
   metaDescription:
     "Scores practical attendance against its own bar, shows the combined figure by session count and by contact hours, and counts unsigned experiments.",
   steps: [

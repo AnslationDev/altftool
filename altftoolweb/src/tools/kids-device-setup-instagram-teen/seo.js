@@ -1,5 +1,5 @@
 const seo = {
-  title: "Instagram Teen Account Setup Checklist for Parents",
+  title: "Instagram Teen Account Setup Checklist",
   metaDescription:
     "Verify Teen Account defaults, add the controls Instagram leaves off, and get a Sleep mode window worked back from your teen's school wake time.",
   steps: [

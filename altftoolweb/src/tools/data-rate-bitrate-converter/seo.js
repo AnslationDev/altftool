@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bitrate Converter: Mbps, MB/s, GB per Hour, File Size",
+  title: "Bitrate Converter: Mbps, MB/s, GB per Hour, File",
   metaDescription:
     "Convert a data rate between kbps, Mbps, Gbps, MB/s, GB per hour and TB per day, then see the file size it makes over a set duration.",
   steps: [

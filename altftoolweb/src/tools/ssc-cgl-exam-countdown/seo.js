@@ -1,5 +1,5 @@
 const seo = {
-  title: "SSC CGL Countdown: Tier-I and Tier-II Revision Plan",
+  title: "SSC CGL Countdown: Tier-I and Tier-II Revision",
   metaDescription:
     "Live clock to CGL Tier-I or Tier-II, the full mocks that fit at your weekly cadence, and the 50/80/95% revision taper mapped onto calendar dates.",
   steps: [

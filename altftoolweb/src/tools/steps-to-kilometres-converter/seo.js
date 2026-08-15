@@ -1,5 +1,5 @@
 const seo = {
-  title: "Steps to Kilometres Converter: How Far Is 10,000 Steps",
+  title: "Steps to Kilometres Converter: How Far Is 10,000",
   metaDescription:
     "Convert steps to km and miles using step length from your height, a measured walk or a known figure. Shows steps per km, walking time and MET calories.",
   steps: [

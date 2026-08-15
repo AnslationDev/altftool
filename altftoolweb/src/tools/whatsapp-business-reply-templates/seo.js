@@ -1,5 +1,5 @@
 const seo = {
-  title: "WhatsApp Business Quick Replies: 10 Ready Templates",
+  title: "WhatsApp Business Quick Replies: 10 Ready",
   metaDescription:
     "Fill 10 customer replies with your business name, hours and links in English, Hindi or Hinglish. Shortcuts under 25 chars, messages under 1,024.",
   steps: [

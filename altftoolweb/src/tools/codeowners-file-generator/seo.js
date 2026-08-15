@@ -1,5 +1,5 @@
 const seo = {
-  title: "CODEOWNERS File Generator with Last-Match Rule Preview",
+  title: "CODEOWNERS File Generator with Last-Match Rule",
   metaDescription:
     "Build a CODEOWNERS file from path patterns and validated @user, @org/team or email owners, then test any path to see which rule wins under last-match.",
   steps: [

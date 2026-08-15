@@ -1,5 +1,5 @@
 const seo = {
-  title: "Inverter AC Running Cost: ISEER, Setpoint and Tariff",
+  title: "Inverter AC Running Cost: ISEER, Setpoint",
   metaDescription:
     "Average draw is rated cooling ÷ ISEER, then about 6% per degree from 24 C. Adds standby and a 5% stabiliser loss to give monthly units and rupee cost.",
   steps: [

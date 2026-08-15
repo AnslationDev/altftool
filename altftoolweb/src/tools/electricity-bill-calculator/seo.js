@@ -1,5 +1,5 @@
 const seo = {
-  title: "Electricity Bill Calculator: Appliance-Wise Units & Cost",
+  title: "Electricity Bill Calculator: Appliance-Wise",
   metaDescription:
     "Enter each appliance's wattage, hours and count plus your tariff to get monthly units, energy, fixed and duty charges, and the biggest power users ranked.",
   steps: [

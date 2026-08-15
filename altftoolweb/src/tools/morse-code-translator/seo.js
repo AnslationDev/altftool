@@ -1,5 +1,5 @@
 const seo = {
-  title: "Morse Code Translator with ITU Timing and WPM Speed",
+  title: "Morse Code Translator with ITU Timing and WPM",
   metaDescription:
     "Encodes and decodes International Morse to ITU-R M.1677-1, then times the message in dot units against PARIS at your words-per-minute speed.",
   steps: [

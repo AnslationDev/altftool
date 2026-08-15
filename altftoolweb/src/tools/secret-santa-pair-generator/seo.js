@@ -1,5 +1,5 @@
 const seo = {
-  title: "Secret Santa Generator With Exclusions & Reveal Codes",
+  title: "Secret Santa Generator With Exclusions & Reveal",
   metaDescription:
     "Shuffles until nobody draws themselves, an excluded pair or last year’s person, then hands out six-character reveal codes. Export CSV or JSON.",
   steps: [

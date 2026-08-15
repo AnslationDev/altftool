@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Vegetarian Macro Calculator (Roti, Dal, Paneer)",
+  title: "Indian Vegetarian Macro Calculator",
   metaDescription:
     "Mifflin-St Jeor calories with a 1.0-1.25 vegetarian protein adjustment, then a plate builder in chapatis, katoris of dal and rice, paneer, curd and ghee.",
   steps: [

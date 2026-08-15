@@ -1,5 +1,5 @@
 const seo = {
-  title: "GSTIN Validator — Check Format, Checksum & State Code",
+  title: "GSTIN Validator — Check Format, Checksum & State",
   metaDescription:
     "Validate 15-character GSTINs against the mod-36 checksum, decode the state and PAN, and see which rule failed. Bulk lists run locally with CSV export.",
   steps: [

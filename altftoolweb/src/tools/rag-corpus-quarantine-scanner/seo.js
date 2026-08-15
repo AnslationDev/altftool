@@ -1,5 +1,5 @@
 const seo = {
-  title: "RAG Corpus Quarantine Scanner: Injection & Hidden Text",
+  title: "RAG Corpus Quarantine Scanner: Injection",
   metaDescription:
     "Scan up to 30 .txt, .md, .html, .csv or .json files for prompt-injection phrasing, zero-width characters, risky links and duplicates before you index.",
   steps: [

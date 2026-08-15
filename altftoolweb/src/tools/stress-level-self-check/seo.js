@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stress Level Self-Check: 10 Questions, Scored 0-40",
+  title: "Stress Level Self-Check: 10 Questions, Scored",
   metaDescription:
     "Rate ten questions about the last month from 0 to 4, four of them reverse scored, for a 0-40 total in the low, moderate or high band.",
   steps: [

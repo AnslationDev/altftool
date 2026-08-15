@@ -1,5 +1,5 @@
 const seo = {
-  title: "Form Label Auditor: Find Inputs With No Accessible Name",
+  title: "Form Label Auditor: Find Inputs",
   metaDescription:
     "Paste up to 500 KB of HTML to see each control's accessible name and its source, plus broken aria-labelledby refs, duplicate IDs and missing legends.",
   steps: [

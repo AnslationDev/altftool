@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Render Time Estimator: Codec, Effects, Hardware",
+  title: "Video Render Time Estimator: Codec, Effects",
   metaDescription:
     "Estimate a video export from timeline length, resolution, frame rate, codec, effects coverage and machine class - as a range, with a finish time.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Refund Request Email Builder - Dated Reply Deadline",
+  title: "Refund Request Email Builder - Dated Reply",
   metaDescription:
     "Build a refund email with order facts, days since delivery counted for you, a dated reply deadline and the escalation route for India, UK, EU or US.",
   steps: [

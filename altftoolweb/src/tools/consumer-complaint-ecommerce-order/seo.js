@@ -1,5 +1,5 @@
 const seo = {
-  title: "Consumer Complaint Letter for an Online Order (India)",
+  title: "Consumer Complaint Letter for an Online Order",
   metaDescription:
     "Drafts the notice to the platform and seller, then the complaint outline — picking District, State or National Commission from the consideration paid.",
   steps: [

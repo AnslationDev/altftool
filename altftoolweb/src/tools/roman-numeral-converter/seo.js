@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roman Numeral Converter with Strict 1–3999 Validation",
+  title: "Roman Numeral Converter with Strict 1–3999",
   metaDescription:
     "Converts both ways and rejects IIII, VX or DD with the exact rule broken — only IV, IX, XL, XC, CD, CM subtract — plus a place-value breakdown.",
   steps: [

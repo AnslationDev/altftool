@@ -1,5 +1,5 @@
 const seo = {
-  title: "LED Equivalent Wattage Chart — Incandescent, Halogen, CFL",
+  title: "LED Equivalent Wattage Chart — Incandescent",
   metaDescription:
     "Converts incandescent, halogen, CFL or tube wattage to lumens, then to the LED watts that match — 60 W = 800 lm — with yearly bill savings.",
   steps: [

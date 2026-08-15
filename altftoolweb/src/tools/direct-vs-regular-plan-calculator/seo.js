@@ -1,5 +1,5 @@
 const seo = {
-  title: "Direct vs Regular Plan Calculator – Mutual Fund TER Cost",
+  title: "Direct vs Regular Plan Calculator – Mutual Fund",
   metaDescription:
     "See what the TER gap between a direct and regular mutual fund plan costs in rupees: commission paid plus compounding lost, for a lumpsum or SIP.",
   steps: [

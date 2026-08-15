@@ -1,5 +1,5 @@
 const seo = {
-  title: "US Visa Refusal Explained: INA 214(b), 221(g) & More",
+  title: "US Visa Refusal Explained: INA 214(b), 221(g)",
   metaDescription:
     "Pick the INA section on your refusal slip for what the officer decided, whether a waiver exists, and a checklist of the fixes you can score off.",
   steps: [

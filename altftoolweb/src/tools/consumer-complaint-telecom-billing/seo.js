@@ -1,5 +1,5 @@
 const seo = {
-  title: "Telecom Billing Complaint Letter with TRAI Deadlines",
+  title: "Telecom Billing Complaint Letter with TRAI",
   metaDescription:
     "Write a telecom overbilling or network complaint and get the TRAI four-week resolution date, the one-week credit date and the Appellate Authority date.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 194A TDS Calculator: FD Interest Thresholds",
+  title: "Section 194A TDS Calculator: FD Interest",
   metaDescription:
     "Check 194A TDS on interest with the Rs 50,000 bank, Rs 1,00,000 senior citizen and Rs 10,000 non-bank limits, the 10% rate and 20% without PAN.",
   steps: [

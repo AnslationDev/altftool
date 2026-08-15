@@ -1,5 +1,5 @@
 const seo = {
-  title: "Confidence Interval Calculator from Estimate and SE",
+  title: "Confidence Interval Calculator from Estimate",
   metaDescription:
     "Enter an estimate and its standard error, pick 90, 95 or 99%, and read the bounds with the exact z (1.959964 at 95%) and margin of error.",
   steps: [

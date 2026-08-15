@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rent Escalation Calculator for 11-Month and Yearly Steps",
+  title: "Rent Escalation Calculator for 11-Month",
   metaDescription:
     "Compounds each rent step instead of adding it: rent at every step, total outgo, average monthly rent and the true annual rate for an 11-month cycle.",
   steps: [

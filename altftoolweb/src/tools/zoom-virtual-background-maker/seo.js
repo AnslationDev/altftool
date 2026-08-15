@@ -1,5 +1,5 @@
 const seo = {
-  title: "Zoom Virtual Background Maker With a Face-Safe Zone",
+  title: "Zoom Virtual Background Maker With a Face-Safe",
   metaDescription:
     "Builds a 1920x1080 16:9 Zoom background, marks the face-safe zone your head covers, scores WCAG text contrast and exports a PNG under Zoom's 15 MB cap.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Workout Prompt Builder: Sets, Split and Session Time",
+  title: "Workout Prompt Builder: Sets, Split and Session",
   metaDescription:
     "Turns your days, level and goal into a training prompt with 10-20 hard sets per muscle a week, the matching split, rep bands and a session time check.",
   steps: [

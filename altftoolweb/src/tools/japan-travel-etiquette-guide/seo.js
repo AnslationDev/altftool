@@ -1,5 +1,5 @@
 const seo = {
-  title: "Japan Travel Etiquette: Rules Ranked by Your Itinerary",
+  title: "Japan Travel Etiquette: Rules Ranked",
   metaDescription:
     "Tick the temples, trains, ryokan and restaurants on your trip and get the etiquette rules that apply, ranked by severity, plus a readiness score.",
   steps: [

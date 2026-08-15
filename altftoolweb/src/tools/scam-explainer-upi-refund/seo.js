@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPI Refund Scam: Why a PIN Can Only Send, Not Receive",
+  title: "UPI Refund Scam: Why a PIN Can Only Send",
   metaDescription:
     "A UPI PIN only authorises money leaving your account. Check any 'refund' step against that rule, see the real debit, and get the 1930 reporting path.",
   steps: [

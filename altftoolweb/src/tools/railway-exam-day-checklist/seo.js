@@ -1,5 +1,5 @@
 const seo = {
-  title: "RRB Exam Day Checklist: E-Call Letter, ID, Gate Time",
+  title: "RRB Exam Day Checklist: E-Call Letter, ID, Gate",
   metaDescription:
     "What to carry to an RRB CBT: printed e-call letter and the photo ID from your application, plus a leave-home time and one-third negative-marking maths.",
   steps: [

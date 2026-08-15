@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Air Filter Change Interval Planner: Engine, Cabin",
+  title: "Car Air Filter Change Interval Planner: Engine",
   metaDescription:
     "Engine and cabin filters get separate schedules from 20,000 km and 15,000 km baselines, cut to 40% for severe dust, with an inspection point between.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Skating Calorie Burn Calculator: MET by Discipline",
+  title: "Skating Calorie Burn Calculator: MET",
   metaDescription:
     "Inline, quad, ice and speed skating calories from your km/h and minutes, matched to the Compendium MET row for that discipline and pace.",
   steps: [

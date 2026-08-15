@@ -1,5 +1,5 @@
 const seo = {
-  title: "Celsius, Fahrenheit & Kelvin Converter — Exact Formulas",
+  title: "Celsius, Fahrenheit & Kelvin Converter — Exact",
   metaDescription:
     "Type one temperature and read Celsius, Fahrenheit and Kelvin together, using °F = °C×9/5+32 and K = °C+273.15, rounded to two decimal places.",
   steps: [

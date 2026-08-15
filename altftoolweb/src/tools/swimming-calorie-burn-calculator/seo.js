@@ -1,5 +1,5 @@
 const seo = {
-  title: "Swimming Calorie Calculator: MET by Stroke and Pace",
+  title: "Swimming Calorie Calculator: MET by Stroke",
   metaDescription:
     "Estimate swim calories with the ACSM MET formula: 11 stroke options, gross and net kcal, pace per 100 m and calories per length.",
   steps: [

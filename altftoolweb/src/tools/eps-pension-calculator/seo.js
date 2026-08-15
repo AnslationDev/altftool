@@ -1,5 +1,5 @@
 const seo = {
-  title: "EPS Pension Calculator: Salary x Service / 70 (EPS-95)",
+  title: "EPS Pension Calculator: Salary x Service / 70",
   metaDescription:
     "EPS-95 monthly pension from pensionable salary x service / 70, with the 2 bonus years past 20, the 4% early/deferred change, family pension and Table D.",
   steps: [

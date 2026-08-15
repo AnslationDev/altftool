@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dark Pattern Self-Audit: 6 Consent & Checkout Checks",
+  title: "Dark Pattern Self-Audit: 6 Consent & Checkout",
   metaDescription:
     "Audit your consent banner, checkout or cancellation flow against six named signals: prominence, preselection, confirmshaming, hidden cost and more.",
   steps: [

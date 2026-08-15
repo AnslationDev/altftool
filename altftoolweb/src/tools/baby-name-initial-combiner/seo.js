@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baby Name Initial Combiner: Blend Two Names, Scored",
+  title: "Baby Name Initial Combiner: Blend Two Names",
   metaDescription:
     "Splits both names into syllables and splices them ten ways, scoring each out of 100 — 60% pronounceability, 40% how evenly the two names contributed.",
   steps: [

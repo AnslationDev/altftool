@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hotel Room Tech Safety Checklist: 18 Check-In Actions",
+  title: "Hotel Room Tech Safety Checklist: 18 Check-In",
   metaDescription:
     "Eighteen ranked actions across door hardware, the smart TV, the room network and the safe, scaled by nights stayed and how sensitive your laptop is.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prompt Escape Helper: JS, JSON, Python, Shell, SQL",
+  title: "Prompt Escape Helper: JS, JSON, Python, Shell",
   metaDescription:
     "Escape a prompt for JavaScript, JSON, Python, shell, SQL, YAML or CSV using each target’s real rule, and count the quotes and braces that changed.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Storyboard Builder with SMPTE Timecode and Shot Timing",
+  title: "Storyboard Builder with SMPTE Timecode and Shot",
   metaDescription:
     "Sequence shots with running SMPTE non-drop-frame timecode at 23.976-60 fps, check dialogue fits each shot at your wpm pace, export a sheet or CSV.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "CGST SGST IGST Split Calculator with GSTIN State Code",
+  title: "CGST SGST IGST Split Calculator with GSTIN State",
   metaDescription:
     "Same state code both sides splits tax into CGST plus SGST or UTGST; different codes mean IGST. SEZ and export supplies stay inter-state under s.7(5).",
   steps: [

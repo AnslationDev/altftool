@@ -1,5 +1,5 @@
 const seo = {
-  title: "Heart Rate Zones Calculator: Tanaka, Fox or Gulati",
+  title: "Heart Rate Zones Calculator: Tanaka, Fox",
   metaDescription:
     "Five training zones in real bpm from the Tanaka, Fox or Gulati max-HR formula, by % of max or Karvonen reserve, plus the zone your goal needs.",
   steps: [

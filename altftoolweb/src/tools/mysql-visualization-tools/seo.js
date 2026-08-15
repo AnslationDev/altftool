@@ -1,5 +1,5 @@
 const seo = {
-  title: "MySQL ER Diagram Builder & Browser SQL Query Runner",
+  title: "MySQL ER Diagram Builder & Browser SQL Query",
   metaDescription:
     "Paste CREATE TABLE statements to draw a draggable ER diagram, export PNG or JSON, and run SELECT with JOIN and aggregates. No database connection.",
   steps: [

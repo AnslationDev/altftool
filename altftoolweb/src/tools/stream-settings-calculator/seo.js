@@ -1,5 +1,5 @@
 const seo = {
-  title: "OBS Stream Settings Calculator: Bitrate, Keyframe, VBV",
+  title: "OBS Stream Settings Calculator: Bitrate",
   metaDescription:
     "Set platform, resolution, fps and upload speed for a bitrate capped at 70% of upload and the Twitch 6,000 or YouTube 9,000 kbps ceiling. Exports JSON.",
   steps: [

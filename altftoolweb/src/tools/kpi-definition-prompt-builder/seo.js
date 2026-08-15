@@ -1,5 +1,5 @@
 const seo = {
-  title: "KPI Definition Prompt Builder with Margin-of-Error Check",
+  title: "KPI Definition Prompt Builder",
   metaDescription:
     "Define a metric's numerator, denominator and grain, see the 95% margin of error on a worked example, and get an AI prompt that pins down edge cases.",
   steps: [

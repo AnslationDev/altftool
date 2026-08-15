@@ -1,5 +1,5 @@
 const seo = {
-  title: "CLAT Syllabus Tracker: Weighted 5-Section Progress",
+  title: "CLAT Syllabus Tracker: Weighted 5-Section",
   metaDescription:
     "Track all five CLAT sections at their published weights, log 30 days of reading, and project marks on 120 questions under +1 / -0.25 marking.",
   steps: [

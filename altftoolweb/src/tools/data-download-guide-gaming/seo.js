@@ -1,5 +1,5 @@
 const seo = {
-  title: "Steam, PlayStation, Xbox & Discord Data Export Guide",
+  title: "Steam, PlayStation, Xbox & Discord Data Export",
   metaDescription:
     "Get the exact export route for Steam, PlayStation, Xbox, Nintendo, Epic or Discord, plus the GDPR one-month or CCPA 45-day deadline and a 12-step audit.",
   steps: [

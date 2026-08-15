@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fall Prevention Home Checklist With a Safety Score",
+  title: "Fall Prevention Home Checklist With a Safety",
   metaDescription:
     "Tick hazards across seven rooms, from the CDC checklist and NICE guidance, for a weighted safety score and the fixes left ranked by impact.",
   steps: [

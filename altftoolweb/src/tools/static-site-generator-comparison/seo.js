@@ -1,5 +1,5 @@
 const seo = {
-  title: "Compare 7 Static Site Generators by Your Own Weights",
+  title: "Compare 7 Static Site Generators by Your Own",
   metaDescription:
     "Weight build speed, client JS, rendering and scale to rank Next.js, Astro, Hugo, Eleventy, Gatsby, SvelteKit and Jekyll, then project CI minutes.",
   steps: [

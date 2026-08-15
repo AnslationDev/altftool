@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pulse Pressure Calculator with MAP and Reference Bands",
+  title: "Pulse Pressure Calculator with MAP and Reference",
   metaDescription:
     "Systolic minus diastolic gives pulse pressure in mmHg, plus MAP = diastolic + PP/3, placed on the narrow, low, normal, elevated and wide bands.",
   steps: [

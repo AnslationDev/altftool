@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sensory Detail Prompt Generator + Sense Balance Scan",
+  title: "Sensory Detail Prompt Generator + Sense Balance",
   metaDescription:
     "One craft question per sense — sight, sound, smell, taste, touch and body — built around your chosen setting, plus a draft scan for missing senses.",
   steps: [

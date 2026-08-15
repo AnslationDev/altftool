@@ -1,5 +1,5 @@
 const seo = {
-  title: "Luxury Gold Palette Generator with CMYK Ink Limits",
+  title: "Luxury Gold Palette Generator with CMYK Ink",
   metaDescription:
     "Six-role gold and dark-neutral palettes, every text pair scored against WCAG 2.x, plus a CMYK build and a 300%/260% ink-coverage check.",
   steps: [

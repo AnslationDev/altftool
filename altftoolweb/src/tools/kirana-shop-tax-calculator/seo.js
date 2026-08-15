@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kirana Shop Tax Calculator: 44AD, GST and Net Profit",
+  title: "Kirana Shop Tax Calculator: 44AD, GST and Net",
   metaDescription:
     "Build the trading account from stock and purchases, then compare tax on real profit with section 44AD at 6% digital and 8% cash receipts.",
   steps: [

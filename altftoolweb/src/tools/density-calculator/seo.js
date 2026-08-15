@@ -1,5 +1,5 @@
 const seo = {
-  title: "Density Calculator: g/cm3, kg/m3 and Sinks or Floats",
+  title: "Density Calculator: g/cm3, kg/m3 and Sinks",
   metaDescription:
     "Divide mass in grams by volume in cm3 or mL for density to three decimals, the kg/m3 equivalent, and whether the sample sinks or floats.",
   intro:

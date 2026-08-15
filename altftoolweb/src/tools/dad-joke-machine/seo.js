@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dad Joke Machine – 30 Clean Puns With Hidden Punchlines",
+  title: "Dad Joke Machine – 30 Clean Puns With Hidden",
   metaDescription:
     "Draw a random clean dad joke from a 30-pun library, keep the punchline hidden behind Reveal, and save up to 20 favourites with one-tap copy.",
   steps: [

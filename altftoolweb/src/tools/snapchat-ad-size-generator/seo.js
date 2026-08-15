@@ -1,5 +1,5 @@
 const seo = {
-  title: "Snapchat Ad Sizes: 1080x1920 Export with Safe Zone",
+  title: "Snapchat Ad Sizes: 1080x1920 Export with Safe",
   metaDescription:
     "Resize artwork to 1080x1920, 360x600, 160x160 or a 1080x2340 geofilter, with the 150px safe zone drawn on and the 300 KB PNG ceiling checked.",
   steps: [

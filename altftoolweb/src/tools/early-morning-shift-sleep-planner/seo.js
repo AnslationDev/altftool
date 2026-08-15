@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shift Sleep Planner: Bedtime for a 4am or 5am Start",
+  title: "Shift Sleep Planner: Bedtime for a 4am or 5am",
   metaDescription:
     "Counts back from your shift start through commute and getting-ready time to lights-out, the caffeine cutoff, last meal and wind-down.",
   steps: [

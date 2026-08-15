@@ -1,5 +1,5 @@
 const seo = {
-  title: "UGC Brief Generator — Timed Shot Lists & Delivery Specs",
+  title: "UGC Brief Generator — Timed Shot Lists",
   metaDescription:
     "Build a creator brief with scene timings that sum exactly to the runtime, word budgets at 150 wpm, platform delivery specs, and dos and don'ts.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Split PDF Online: By Pages, Batches, Extract or Remove",
+  title: "Split PDF Online: By Pages, Batches, Extract",
   metaDescription:
     "Preview the exact file-by-file plan, then split a PDF by every page, fixed batches, custom groups, extract or remove modes — output as PDF or ZIP.",
   steps: [

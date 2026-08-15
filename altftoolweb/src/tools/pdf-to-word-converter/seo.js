@@ -1,5 +1,5 @@
 const seo = {
-  title: "PDF to Word Converter: Editable DOCX in Your Browser",
+  title: "PDF to Word Converter: Editable DOCX",
   metaDescription:
     "Rebuilds a text-based PDF as an editable .docx — paragraphs merged, headings detected, page range optional. Up to 80 MB, in your browser.",
   steps: [

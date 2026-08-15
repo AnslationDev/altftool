@@ -1,5 +1,5 @@
 const seo = {
-  title: "Matrimonial & Dating Fraud Checker: 13 Warning Signs",
+  title: "Matrimonial & Dating Fraud Checker: 13 Warning",
   metaDescription:
     "Score profile, story and money warning signs separately, weigh them against what you verified independently, and total every transfer already sent.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Resignation Letter Generator With Last Working Day",
+  title: "Resignation Letter Generator With Last Working",
   metaDescription:
     "Enter your notice period, leave adjustment and buyout days to get your exact last working day, a dated handover plan and a ready resignation letter.",
   steps: [

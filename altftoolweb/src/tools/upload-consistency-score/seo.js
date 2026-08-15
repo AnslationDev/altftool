@@ -1,5 +1,5 @@
 const seo = {
-  title: "Upload Consistency Score: Rate Your Posting Cadence",
+  title: "Upload Consistency Score: Rate Your Posting",
   metaDescription:
     "Paste your publish dates for a 0-100 score built from gap adherence, coefficient of variation and pace, plus every silence over 2.5x your target.",
   steps: [

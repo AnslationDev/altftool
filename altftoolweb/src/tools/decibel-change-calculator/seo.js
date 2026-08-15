@@ -1,5 +1,5 @@
 const seo = {
-  title: "Decibel Change Calculator — dB to Ratio & Loudness",
+  title: "Decibel Change Calculator — dB to Ratio",
   metaDescription:
     "Converts a dB change into power (10^(dB/10)), amplitude (10^(dB/20)) and perceived loudness ratios, plus distance and equivalent-source counts.",
   steps: [

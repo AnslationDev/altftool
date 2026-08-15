@@ -1,5 +1,5 @@
 const seo = {
-  title: "SRT to TXT Converter: Captions to Plain Transcript",
+  title: "SRT to TXT Converter: Captions to Plain",
   metaDescription:
     "Strip timecodes and [MUSIC] tags from an .srt file and re-flow it into paragraphs at each pause, with word count, reading time and speaking rate.",
   steps: [

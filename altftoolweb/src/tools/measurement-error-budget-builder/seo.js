@@ -1,5 +1,5 @@
 const seo = {
-  title: "Measurement Uncertainty Budget Calculator (GUM, k=2)",
+  title: "Measurement Uncertainty Budget Calculator",
   metaDescription:
     "Enter one source per line as name | uncertainty | distribution | sensitivity. Rectangular ÷√3, triangular ÷√6, normal-k2 ÷2, then RSS to expanded U.",
   steps: [

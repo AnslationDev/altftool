@@ -1,5 +1,5 @@
 const seo = {
-  title: "Staking Rewards Calculator: Daily to Annual Compounding",
+  title: "Staking Rewards Calculator: Daily to Annual",
   intro:
     "The Staking Rewards Calculator projects what a crypto stake grows to by applying the standard compound interest formula FV = P × (1 + r/n)^(n×t), where n is 365, 12, 4 or 1 depending on whether rewards compound daily, monthly, quarterly or annually. Enter your stake, the advertised annual rate, the term and the compounding frequency, and it returns the final value, total rewards earned, the effective growth percentage over the whole term, and an average monthly and daily reward figure. It is built for anyone comparing validator, exchange or liquid-staking offers before locking funds up.",
   useCases: [

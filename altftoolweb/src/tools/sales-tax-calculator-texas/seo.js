@@ -1,5 +1,5 @@
 const seo = {
-  title: "Texas Sales Tax Calculator: 6.25% + Up to 2% Local",
+  title: "Texas Sales Tax Calculator: 6.25% + Up to 2%",
   metaDescription:
     "Add the 6.25% state rate plus local tax capped at 2% (8.25% max), with taxable delivery under Rule 3.303, exempt groceries and a reverse mode.",
   steps: [

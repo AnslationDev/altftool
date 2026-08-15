@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sugar Substitute Conversion Calculator (17 Sweeteners)",
+  title: "Sugar Substitute Conversion Calculator",
   metaDescription:
     "Convert any of 17 sweeteners to an equally sweet amount of another, with calories, glycaemic index, JECFA ADI use for your weight and baking notes.",
   steps: [

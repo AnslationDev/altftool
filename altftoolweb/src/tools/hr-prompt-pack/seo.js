@@ -1,5 +1,5 @@
 const seo = {
-  title: "HR Prompt Pack: 12 Prompts for Hiring, Reviews, Policies",
+  title: "HR Prompt Pack: 12 Prompts for Hiring, Reviews",
   metaDescription:
     "12 fill-in-the-blank prompts for job posts, structured interview guides with rubrics, 30-60-90 plans, policies and evidence-based reviews.",
   steps: [

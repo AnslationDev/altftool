@@ -1,5 +1,5 @@
 const seo = {
-  title: "Appliance Warranty Tracker: Comprehensive + Part Cover",
+  title: "Appliance Warranty Tracker: Comprehensive + Part",
   metaDescription:
     "Tracks both clocks, the 1-2 year comprehensive and the 10-year compressor or motor cover, plus AMC renewals and the 2-year Section 69 window.",
   steps: [

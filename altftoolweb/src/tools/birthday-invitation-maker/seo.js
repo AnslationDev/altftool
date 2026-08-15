@@ -1,5 +1,5 @@
 const seo = {
-  title: "Birthday Invitation Maker – A5 Print, Square & Story",
+  title: "Birthday Invitation Maker – A5 Print, Square",
   metaDescription:
     "Enter name, date, venue and RSVP details; download the invite as PNG or SVG in A5 print (1748×2480 px, 300 dpi), 1080 px square or 1080×1920 story.",
   steps: [

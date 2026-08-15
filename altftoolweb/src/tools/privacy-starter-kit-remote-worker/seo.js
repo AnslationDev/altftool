@@ -1,5 +1,5 @@
 const seo = {
-  title: "Remote Worker Privacy Starter Kit: Home Office Audit",
+  title: "Remote Worker Privacy Starter Kit: Home Office",
   metaDescription:
     "Scores a home office across router, laptop, accounts and calls, skipping controls that don't apply, and counts devices kept off the work network.",
   steps: [

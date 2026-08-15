@@ -1,5 +1,5 @@
 const seo = {
-  title: "School Leave Application in Hindi — Prarthna Patra",
+  title: "School Leave Application in Hindi — Prarthna",
   metaDescription:
     "Formal prarthna patra with सेवा में, विषय and signature block, छात्र/छात्रा verb agreement, an inclusive day count and optional Devanagari numerals.",
   steps: [

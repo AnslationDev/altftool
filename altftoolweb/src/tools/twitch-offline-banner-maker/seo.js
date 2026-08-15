@@ -1,5 +1,5 @@
 const seo = {
-  title: "Twitch Offline Banner Layout: 1920x1080 Block Grid",
+  title: "Twitch Offline Banner Layout: 1920x1080 Block",
   metaDescription:
     "Plan a 1920x1080 offline screen: control-bar strip reserved, block grid sized, type checked at the player's 940px width, against Twitch's 10 MB cap.",
   steps: [

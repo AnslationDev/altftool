@@ -1,5 +1,5 @@
 const seo = {
-  title: "Workout Planner: 4, 8 or 12-Week Periodized Blocks",
+  title: "Workout Planner: 4, 8 or 12-Week Periodized",
   metaDescription:
     "Turn goal, level, days and equipment into a 4, 8 or 12-week block with sets, reps, RPE-gated 2.5-5% progression and a week-4 deload at 35% less volume.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Changelog Prompt Builder: SemVer Bump from Commits",
+  title: "Changelog Prompt Builder: SemVer Bump",
   metaDescription:
     "Classifies merged commit titles by Conventional Commits, maps them to Keep a Changelog sections, and computes the SemVer bump the set implies.",
   steps: [

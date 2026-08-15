@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Attachment Risk Check: Only the Last Extension",
+  title: "Email Attachment Risk Check: Only the Last",
   metaDescription:
     "Rates an attachment from its file name alone: last extension, Outlook's blocked list, .pdf.exe double extensions, RTL overrides. Nothing is uploaded.",
   steps: [

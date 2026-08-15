@@ -1,5 +1,5 @@
 const seo = {
-  title: "Badminton Calorie Burn Calculator: Singles vs Doubles",
+  title: "Badminton Calorie Burn Calculator: Singles",
   metaDescription:
     "Rally time is priced at 5.5 to 7.0 METs and breaks at 1.3, so two hours at the hall is not counted as two hours of play. Four match formats.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fence Post Spacing Calculator: Depth and Concrete Bags",
+  title: "Fence Post Spacing Calculator: Depth",
   metaDescription:
     "Divides the run into even sections, buries a third of the post height (24 in minimum), digs 3× the post width and counts concrete bags per hole.",
   steps: [

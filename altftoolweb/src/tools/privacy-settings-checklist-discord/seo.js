@@ -1,5 +1,5 @@
 const seo = {
-  title: "Discord Privacy Checklist: 26 Settings, Risk-Scored",
+  title: "Discord Privacy Checklist: 26 Settings",
   metaDescription:
     "Scores 26 Discord privacy and security controls by weight — including the per-server DM override the global toggle never touches.",
   steps: [

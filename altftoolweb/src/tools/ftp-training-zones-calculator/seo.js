@@ -1,5 +1,5 @@
 const seo = {
-  title: "FTP Cycling Power Zones Calculator: 7 Coggan Bands",
+  title: "FTP Cycling Power Zones Calculator: 7 Coggan",
   metaDescription:
     "Turn your FTP into watts for all seven Coggan zones, estimate FTP from a 20-minute test at 95%, and split a training week 80/20.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fire Extinguisher Selector: Right Agent + NFPA 10 Count",
+  title: "Fire Extinguisher Selector: Right Agent + NFPA",
   metaDescription:
     "Pick the agent for a kitchen, garage or server room, see the ones that make it worse, and get NFPA 10 counts, A/B ratings and travel distances.",
   steps: [

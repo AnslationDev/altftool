@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kubernetes Label Selector Tester - Clause Verdicts",
+  title: "Kubernetes Label Selector Tester - Clause",
   metaDescription:
     "Test matchLabels and matchExpressions (In, NotIn, Exists, DoesNotExist) against pod labels with per-clause PASS/FAIL and API-exact semantics.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Textbook Edition Tracker: Current, Behind or Unknown",
+  title: "Textbook Edition Tracker: Current, Behind",
   metaDescription:
     "Log the edition you study from against the latest one, and see what is Behind, by how many editions, and which revisions are over 5 years old.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL JOIN Fan-Out Debugger: Why Your SUM Is Too High",
+  title: "SQL JOIN Fan-Out Debugger: Why Your SUM Is Too",
   metaDescription:
     "Give each table's grain and key cardinality to get the exact row-multiplication factor, which aggregates are inflated, and two corrected queries.",
   intro:

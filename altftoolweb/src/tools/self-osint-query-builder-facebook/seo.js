@@ -1,5 +1,5 @@
 const seo = {
-  title: "Facebook Self Exposure: 13 Ready-to-Run Search Queries",
+  title: "Facebook Self Exposure: 13 Ready-to-Run Search",
   metaDescription:
     "Turn your name, username or profile.php id into 13 site: and quoted-phrase searches covering public group posts, events, the directory and archives.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "CBC Report Interpreter: Read Your Blood Count Values",
+  title: "CBC Report Interpreter: Read Your Blood Count",
   metaDescription:
     "Flag each CBC value high, low or normal on sex-specific ranges, classify anaemia from MCV, MCH and MCHC, and turn the differential into absolute counts.",
   steps: [

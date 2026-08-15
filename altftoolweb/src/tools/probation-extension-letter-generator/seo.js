@@ -1,5 +1,5 @@
 const seo = {
-  title: "Probation Extension Letter: Revised End Date + Review",
+  title: "Probation Extension Letter: Revised End Date +",
   metaDescription:
     "Drafts a probation extension letter and works out the revised end date with month-end clamping, a review meeting date and total probation served.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Percentage to UK Degree Class (First, 2:1, 2:2)",
+  title: "Indian Percentage to UK Degree Class",
   metaDescription:
     "Convert an Indian degree percentage to a UK First, 2:1, 2:2 or Third using published equivalency thresholds, with lower cut-offs for IIT/NIT graduates.",
   steps: [

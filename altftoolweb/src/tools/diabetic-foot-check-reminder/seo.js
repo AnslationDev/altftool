@@ -1,5 +1,5 @@
 const seo = {
-  title: "Diabetic Foot Check: 12-Point Daily Inspection List",
+  title: "Diabetic Foot Check: 12-Point Daily Inspection",
   metaDescription:
     "A twelve-point daily foot check that separates same-day red flags from appointment findings, and gives the NICE NG19 review interval by risk band.",
   steps: [

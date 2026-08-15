@@ -1,5 +1,5 @@
 const seo = {
-  title: "Daily Word Challenge: Guess the Word from Its Definition",
+  title: "Daily Word Challenge: Guess the Word from Its",
   metaDescription:
     "Guess the word from its dictionary definition in 5 tries with Wordle-style letter feedback. Two free hints, one shared word per day, streaks tracked.",
   steps: [

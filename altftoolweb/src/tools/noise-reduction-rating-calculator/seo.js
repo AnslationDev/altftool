@@ -1,5 +1,5 @@
 const seo = {
-  title: "NRR Calculator: OSHA, OSHA 50% and NIOSH Deratings",
+  title: "NRR Calculator: OSHA, OSHA 50% and NIOSH",
   metaDescription:
     "Turn an NRR or SNR label into the level at the ear using dBA - (NRR - 7), OSHA's 50% factor or NIOSH deratings, against the 90 and 85 dBA limits.",
   steps: [

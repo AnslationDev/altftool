@@ -1,5 +1,5 @@
 const seo = {
-  title: "Inflation Impact Calculator: Real Value of Your SIP",
+  title: "Inflation Impact Calculator: Real Value",
   metaDescription:
     "Compound costs and salary at separate rates, deflate SIP and savings to today's rupees, and re-run it all at 3.5%, 6%, 8.5% and 12% inflation.",
   steps: [

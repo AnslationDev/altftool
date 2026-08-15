@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in Vietnam: Speed Limits, IDP, Zero Alcohol",
+  title: "Driving in Vietnam: Speed Limits, IDP, Zero",
   metaDescription:
     "Vietnam drives on the right. Speed by vehicle class from Circular 31/2019, zero alcohol under Law 36/2024, and only a 1968 Vienna IDP is valid.",
   steps: [

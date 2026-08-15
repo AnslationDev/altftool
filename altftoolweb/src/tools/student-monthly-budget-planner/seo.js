@@ -1,5 +1,5 @@
 const seo = {
-  title: "Student Monthly Budget Planner with a 50/30/20 Check",
+  title: "Student Monthly Budget Planner with a 50/30/20",
   metaDescription:
     "Enter your allowance or stipend and eight spends from mess to subscriptions; get surplus or deficit, each category's share and a 50/30/20 check.",
   steps: [

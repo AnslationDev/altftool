@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do I Need an IEC Code? DGFT FTP 2023 Para 2.05 Check",
+  title: "Do I Need an IEC Code? DGFT FTP 2023 Para 2.05",
   metaDescription:
     "Answer a few questions and see whether DGFT requires an IEC — with the personal-use, government and Rs 25,000 border-trade exemptions applied.",
   steps: [

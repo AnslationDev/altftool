@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ad Tracking Opt-Out Checklist, Ranked by Impact per Minute",
+  title: "Ad Tracking Opt-Out Checklist, Ranked by Impact",
   metaDescription:
     "Tick your devices and accounts, set the minutes you have, and get opt-outs ordered by tracking removed per minute — flagging ones a cookie clear undoes.",
   steps: [

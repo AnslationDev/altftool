@@ -1,5 +1,5 @@
 const seo = {
-  title: "What Size Moving Truck Do I Need? Cu Ft Calculator",
+  title: "What Size Moving Truck Do I Need? Cu Ft",
   metaDescription:
     "Count furniture and cartons for packed cu ft at cube-sheet allowances, weight at 7 lb per cu ft, and the smallest vehicle that holds it at 85% fill.",
   steps: [

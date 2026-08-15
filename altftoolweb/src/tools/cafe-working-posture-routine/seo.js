@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cafe Table Height for Laptop Work: 75, 89 or 104 cm",
+  title: "Cafe Table Height for Laptop Work: 75, 89 or 104",
   metaDescription:
     "Rank the 75 cm dining, 89 cm counter and 104 cm bar table against your seated elbow height, then size the cushion, footrest and laptop riser in cm.",
   steps: [

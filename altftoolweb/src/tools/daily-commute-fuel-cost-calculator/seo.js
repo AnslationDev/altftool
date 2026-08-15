@@ -1,5 +1,5 @@
 const seo = {
-  title: "Daily Commute Fuel Cost Calculator (Toll + Parking)",
+  title: "Daily Commute Fuel Cost Calculator",
   metaDescription:
     "Turn one-way km, km/l and pump price into monthly and yearly commute cost — toll and parking per day, 4.33 weeks a month, all-in cost per km.",
   steps: [

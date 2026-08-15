@@ -1,5 +1,5 @@
 const seo = {
-  title: "Is It Down Now? Check if a Site Is Down for Everyone",
+  title: "Is It Down Now? Check if a Site",
   metaDescription:
     "Requests your URL from ALTFTool's server and reports the HTTP status code, response time in ms and final URL after redirects — down for all, or just you.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "HTML Email Checker: Gmail and Outlook Compatibility",
+  title: "HTML Email Checker: Gmail and Outlook",
   metaDescription:
     "Audit email HTML against Gmail's ~102KB clipping limit, Outlook CSS gaps, alt text and inline CSS coverage. Six weighted categories, graded A+ to D.",
   intro:

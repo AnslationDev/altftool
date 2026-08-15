@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in the UAE: Licence Rules, Speed and Zero BAC",
+  title: "Driving in the UAE: Licence Rules, Speed",
   metaDescription:
     "Whether your home licence works depends on your visa, not your passport. Limits to 140 km/h, zero alcohol, and 24 black points suspend a licence.",
   steps: [

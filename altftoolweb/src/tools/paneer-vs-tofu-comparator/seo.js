@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paneer vs Tofu: Protein, Calories and Calcium Compared",
+  title: "Paneer vs Tofu: Protein, Calories and Calcium",
   metaDescription:
     "Scale five varieties to the portion you cook and see kcal, protein, saturated fat, calcium and iron — plus the tofu grams matching paneer's protein.",
   steps: [

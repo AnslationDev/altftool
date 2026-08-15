@@ -1,5 +1,5 @@
 const seo = {
-  title: "Motorcycle Winter Storage Checklist: Battery, Fuel, Tyres",
+  title: "Motorcycle Winter Storage Checklist: Battery",
   metaDescription:
     "Weeks stored, temperature and battery type set the list: projected state of charge, tyre pressure 25% above normal, fuel steps gated by duration.",
   steps: [

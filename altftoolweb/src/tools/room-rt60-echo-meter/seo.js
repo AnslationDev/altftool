@@ -1,5 +1,5 @@
 const seo = {
-  title: "Room RT60 Echo Meter: Clap Decay Log, -35 to -55 dB",
+  title: "Room RT60 Echo Meter: Clap Decay Log, -35 to -55",
   metaDescription:
     "Run a clap or sweep recording through FFmpeg in your browser at a -35, -45 or -55 dB floor and download the decay log. Not a calibrated RT60.",
   steps: [

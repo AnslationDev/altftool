@@ -1,5 +1,5 @@
 const seo = {
-  title: "Batch API Savings Calculator: 50% Off LLM Token Costs",
+  title: "Batch API Savings Calculator: 50% Off LLM Token",
   metaDescription:
     "Price a bulk LLM job real-time versus batch at the published 50% discount, blend the share that can wait, and see monthly and annual savings.",
   steps: [

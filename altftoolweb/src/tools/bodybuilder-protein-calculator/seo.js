@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bodybuilder Protein Calculator: Daily and Per Meal",
+  title: "Bodybuilder Protein Calculator: Daily",
   metaDescription:
     "Daily protein from 1.6-2.2 g/kg for a bulk or 2.3-3.1 g/kg fat-free mass on a cut, split into meals that each clear the 0.4 g/kg dose.",
   steps: [

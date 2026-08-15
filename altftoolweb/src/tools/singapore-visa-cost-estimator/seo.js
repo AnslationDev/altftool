@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Visa Cost Estimator: Fees in SGD and INR",
+  title: "Singapore Visa Cost Estimator: Fees in SGD",
   metaDescription:
     "Split the SGD 30 processing fee you lose on rejection from the on-approval issuance fee, then total agent, photo and courier charges in rupees.",
   steps: [

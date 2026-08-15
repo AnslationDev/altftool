@@ -1,5 +1,5 @@
 const seo = {
-  title: "Body Frame Size Calculator: Wrist and Height Bands",
+  title: "Body Frame Size Calculator: Wrist and Height",
   metaDescription:
     "Small, medium or large frame from wrist circumference and height, using the MedlinePlus bands and the height/wrist ratio, plus a Hamwi ideal weight.",
   steps: [

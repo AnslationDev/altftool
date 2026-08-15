@@ -1,5 +1,5 @@
 const seo = {
-  title: "Event Video Delivery Dates and Edit-Hour Estimates",
+  title: "Event Video Delivery Dates and Edit-Hour",
   metaDescription:
     "Turns the last day of the shoot into dated deliverables, edit hours per finished minute, start-by dates and a capacity check in business or calendar days.",
   steps: [

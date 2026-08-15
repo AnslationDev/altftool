@@ -1,5 +1,5 @@
 const seo = {
-  title: "Earthy Palette Generator: Ochre, Sienna, Umber Hues",
+  title: "Earthy Palette Generator: Ochre, Sienna, Umber",
   metaDescription:
     "Seven earth-pigment roles from limestone to umber, a six-step lead ramp, warm share and lightness spread readings, and kraft-board label contrast.",
   steps: [

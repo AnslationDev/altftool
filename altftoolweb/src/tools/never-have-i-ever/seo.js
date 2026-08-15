@@ -1,5 +1,5 @@
 const seo = {
-  title: "Never Have I Ever: 240 Prompts, 8 Themes, 3 Levels",
+  title: "Never Have I Ever: 240 Prompts, 8 Themes, 3",
   metaDescription:
     "240 written prompts across 8 themes with separate easy, medium and hard lists. Nothing repeats in a session; skip a card or star the ones that landed.",
   steps: [

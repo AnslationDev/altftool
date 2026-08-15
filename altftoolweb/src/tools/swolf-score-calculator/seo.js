@@ -1,5 +1,5 @@
 const seo = {
-  title: "SWOLF Score Calculator with Per-25 m Normalisation",
+  title: "SWOLF Score Calculator with Per-25 m",
   metaDescription:
     "Add length time to stroke count for a SWOLF score, normalised per 25 m so 50 m pools compare, with the stroke-vs-time trade-off table behind it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bubble Text Generator — Circled Letters to Copy & Paste",
+  title: "Bubble Text Generator — Circled Letters to Copy",
   metaDescription:
     "Turn letters and digits into Unicode circled characters — hello becomes ⓗⓔⓛⓛⓞ — real text that pastes into bios, usernames and chats, not an image.",
   intro:

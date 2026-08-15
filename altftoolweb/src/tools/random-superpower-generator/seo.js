@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Superpower Generator – 30 Powers & Weaknesses",
+  title: "Random Superpower Generator – 30 Powers",
   metaDescription:
     "Roll one of 30 hand-written superpowers, each with a description, named weakness, category, rarity from Common to Mythic and a power level from 3 to 10.",
   steps: [

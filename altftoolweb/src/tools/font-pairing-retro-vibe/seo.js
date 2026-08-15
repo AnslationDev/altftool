@@ -1,5 +1,5 @@
 const seo = {
-  title: "Retro Font Pairing: 70s and 80s Fonts with WCAG Check",
+  title: "Retro Font Pairing: 70s and 80s Fonts with WCAG",
   metaDescription:
     "Eight seventies and eighties Google Font pairs with period palettes scored live against WCAG 2.1 contrast. Shift lightness in HSL and copy the CSS.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Swim Stroke Count Tracker: Distance per Stroke, Drift",
+  title: "Swim Stroke Count Tracker: Distance per Stroke",
   metaDescription:
     "Log the strokes in each length of a 25, 33.3 or 50 m pool and get the average, spread, distance per stroke and first-to-second-half drift.",
   steps: [

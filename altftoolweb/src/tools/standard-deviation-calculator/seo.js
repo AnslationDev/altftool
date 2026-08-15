@@ -1,5 +1,5 @@
 const seo = {
-  title: "Standard Deviation Calculator: Sample or Population",
+  title: "Standard Deviation Calculator: Sample",
   metaDescription:
     "Paste numbers split by commas, spaces or line breaks and get the standard deviation, variance, mean and count - dividing by n or by n-1.",
   intro:

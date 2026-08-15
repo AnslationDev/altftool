@@ -1,5 +1,5 @@
 const seo = {
-  title: "iPhone Privacy Settings Checklist: 27 Real Controls",
+  title: "iPhone Privacy Settings Checklist: 27 Real",
   metaDescription:
     "Score your iPhone on 27 weighted settings — App Tracking, Significant Locations, Find My shares, Advanced Data Protection, Stolen Device Protection.",
   steps: [

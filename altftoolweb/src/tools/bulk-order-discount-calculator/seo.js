@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bulk Discount Calculator: Flat vs Graduated Tier Pricing",
+  title: "Bulk Discount Calculator: Flat vs Graduated Tier",
   metaDescription:
     "Prices a quantity order on flat or graduated volume tiers, folds in freight and GST, and shows the effective and landed cost per unit.",
   steps: [

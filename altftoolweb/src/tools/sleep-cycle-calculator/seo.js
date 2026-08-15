@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Cycle Calculator — Best Bedtime & Wake-Up Times",
+  title: "Sleep Cycle Calculator — Best Bedtime & Wake-Up",
   metaDescription:
     "Turn an alarm time into bedtimes, or a bedtime into wake-up times, counting 90-minute cycles plus the minutes you take to fall asleep.",
   steps: [

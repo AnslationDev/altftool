@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ideal Body Measurements Calculator (McCallum Ratios)",
+  title: "Ideal Body Measurements Calculator",
   metaDescription:
     "Chest, waist, arms, thighs and calves scaled from your wrist (chest = wrist x 6.5), plus a Steve Reeves joint-ratio mode and waist-to-height check.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Standby Power Cost Calculator – Ranked Cost per Year",
+  title: "Standby Power Cost Calculator – Ranked Cost",
   metaDescription:
     "Add your devices, tariff and idle hours to see what standby power costs in ₹ per year, ranked worst-first — a set-top box alone can waste ₹880.",
   steps: [

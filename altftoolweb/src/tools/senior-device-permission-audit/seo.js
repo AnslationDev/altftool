@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Phone App Permission Audit: Rank Apps to Review",
+  title: "Senior Phone App Permission Audit: Rank Apps",
   steps: [
     "In 'Apps and permissions', type one app per line as App | permissions | usage note, or load the 'Example phone' preset to see the format.",
     "Keep the 'Use plain-language guidance' toggle on to add senior-friendly action wording to each row's suggested conversation.",

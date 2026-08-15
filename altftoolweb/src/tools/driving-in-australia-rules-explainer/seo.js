@@ -1,5 +1,5 @@
 const seo = {
-  title: "Australia Driving Rules: Speed Limits & Alcohol by State",
+  title: "Australia Driving Rules: Speed Limits & Alcohol",
   metaDescription:
     "Pick your state and licence class: speed limits from ACT 100 to NT 130 km/h, alcohol 0.05 on a full licence, zero for learner and provisional drivers.",
   steps: [

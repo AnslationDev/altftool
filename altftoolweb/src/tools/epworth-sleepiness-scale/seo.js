@@ -1,5 +1,5 @@
 const seo = {
-  title: "Epworth Sleepiness Scale: 8-Question Score Out of 24",
+  title: "Epworth Sleepiness Scale: 8-Question Score",
   metaDescription:
     "Rate eight dozing situations 0-3 for an Epworth score out of 24 with its band — 11+ marks excessive daytime sleepiness worth raising with a doctor.",
   steps: [

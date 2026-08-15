@@ -1,5 +1,5 @@
 const seo = {
-  title: "Invoice Late Fee Calculator: Interest by Day Count",
+  title: "Invoice Late Fee Calculator: Interest by Day",
   metaDescription:
     "Price an overdue invoice on actual/365, actual/360 or 30/360, with grace days, fixed or % fees, and presets for 1.5%/month, UK, EU and MSMED terms.",
   steps: [

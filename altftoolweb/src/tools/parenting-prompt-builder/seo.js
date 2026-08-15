@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Parenting Prompt Builder: Activities by Age & Time",
+  title: "AI Parenting Prompt Builder: Activities by Age",
   metaDescription:
     "Maps a child's age to a Piaget stage and a 2–5 minutes-per-year attention block, fits activities into the minutes you have, then writes the AI prompt.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Technical Doc Prompt Builder on the Diátaxis Model",
+  title: "Technical Doc Prompt Builder on the Diátaxis",
   metaDescription:
     "Pick tutorial, how-to, reference or explanation and get a prompt with that type's sections, Google/Microsoft style rules and TODO(author) for gaps.",
   steps: [

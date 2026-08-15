@@ -1,5 +1,5 @@
 const seo = {
-  title: "Posting Schedule Planner: Board, Week and Analytics",
+  title: "Posting Schedule Planner: Board, Week",
   metaDescription:
     "Plan posts across 8 platforms with caption limits beside the box — X 280, Instagram 2,200, LinkedIn 3,000 — in a board, week calendar and analytics.",
   steps: [

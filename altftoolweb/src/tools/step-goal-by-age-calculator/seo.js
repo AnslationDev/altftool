@@ -1,5 +1,5 @@
 const seo = {
-  title: "Step Goal by Age: Evidence Bands, Not 10,000 Steps",
+  title: "Step Goal by Age: Evidence Bands, Not 10,000",
   metaDescription:
     "Targets from the age bands where benefit levels off — 8,000-10,000 a day under 60, 6,000-8,000 at 60 and over — plus a 10%-a-week ramp.",
   steps: [

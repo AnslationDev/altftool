@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in Thailand: Speed, Alcohol and Licence Rules",
+  title: "Driving in Thailand: Speed, Alcohol and Licence",
   metaDescription:
     "Thai rules for visitors: 80/90/120 km/h by road type, a 50 mg or 20 mg blood-alcohol limit by licence type, and whether yours covers a scooter.",
   steps: [

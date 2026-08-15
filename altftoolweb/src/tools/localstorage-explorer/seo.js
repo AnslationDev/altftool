@@ -1,5 +1,5 @@
 const seo = {
-  title: "LocalStorage Explorer — Read, Edit and Delete Keys",
+  title: "LocalStorage Explorer — Read, Edit and Delete",
   metaDescription:
     "List every localStorage key for this origin, edit long JSON values in a full textarea, add or delete entries, and clear the store with a confirm.",
   steps: [

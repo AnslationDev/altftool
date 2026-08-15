@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Life Challenge Generator with XP and Badges",
+  title: "Random Life Challenge Generator with XP",
   metaDescription:
     "Rolls one of 19 self-improvement tasks across five categories, worth 10-40 XP each, with countdowns for timed ones and a level every 100 XP.",
   steps: [

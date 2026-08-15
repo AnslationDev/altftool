@@ -1,5 +1,5 @@
 const seo = {
-  title: "Electricity Disconnection SMS Scam: Paste and Score",
+  title: "Electricity Disconnection SMS Scam: Paste",
   metaDescription:
     "Why the power-cut-tonight SMS has no consumer number, and where the AnyDesk and UPI-PIN steps lead. Paste a message to score it on 13 markers locally.",
   steps: [

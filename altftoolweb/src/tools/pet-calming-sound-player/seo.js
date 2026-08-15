@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pet Calming Sound Player – Firework Masking Planner",
+  title: "Pet Calming Sound Player – Firework Masking",
   metaDescription:
     "Play a species-shaped noise loop in your browser and see the dB(A) actually reaching your pet — masking maths capped at the WHO 70 dB(A) guideline.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Copy Editor System Prompt Builder (AP, Chicago, APA)",
+  title: "AI Copy Editor System Prompt Builder",
   metaDescription:
     "Build a system prompt that makes AI edit to AP, Chicago or APA style at a set depth — proofread, copyedit or line edit — with every change tracked.",
   steps: [

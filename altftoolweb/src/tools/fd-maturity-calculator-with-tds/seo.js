@@ -1,5 +1,5 @@
 const seo = {
-  title: "FD Maturity Calculator with TDS (Quarterly Compounding)",
+  title: "FD Maturity Calculator with TDS",
   metaDescription:
     "Maturity value with quarterly compounding, year-wise section 194A TDS at the ₹50,000/₹1 lakh limits, and the post-tax return at your slab rate.",
   steps: [

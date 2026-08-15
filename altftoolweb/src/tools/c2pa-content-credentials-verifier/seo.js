@@ -1,5 +1,5 @@
 const seo = {
-  title: "C2PA Content Credentials Checker for JPEG, PNG, MP4",
+  title: "C2PA Content Credentials Checker for JPEG, PNG",
   metaDescription:
     "Inspect the C2PA JUMBF box tree in a JPEG, PNG, MP4 or .c2pa file locally. Counts manifests, claims and signatures — it does not verify them.",
   steps: [

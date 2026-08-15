@@ -1,5 +1,5 @@
 const seo = {
-  title: "Future Job Predictor: Score 5 Careers on 10 Skills",
+  title: "Future Job Predictor: Score 5 Careers on 10",
   metaDescription:
     "Rate 10 skills on 0-100 sliders; each career starts at 70 and moves 0.15 per point off 50. Returns a ranked list, radar chart and study roadmap.",
   steps: [

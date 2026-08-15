@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wilks Score Calculator – Original 1994 Coefficients",
+  title: "Wilks Score Calculator – Original 1994",
   metaDescription:
     "Enter bodyweight, squat, bench and deadlift in kg or lb to get your Wilks coefficient and score, plus totals needed for 300, 400 and 500 at your weight.",
   steps: [

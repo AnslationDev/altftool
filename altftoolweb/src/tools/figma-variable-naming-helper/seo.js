@@ -1,5 +1,5 @@
 const seo = {
-  title: "Figma Variable Naming Helper: Scheme, Tokens & Linter",
+  title: "Figma Variable Naming Helper: Scheme, Tokens",
   metaDescription:
     "Set separator, case and tier rules for Figma variables, generate a starter token set, and lint pasted names for mixed casing and baked-in units.",
   steps: [

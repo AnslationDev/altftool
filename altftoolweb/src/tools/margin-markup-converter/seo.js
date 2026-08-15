@@ -1,5 +1,5 @@
 const seo = {
-  title: "Markup to Margin Converter and Discount Break-Even",
+  title: "Markup to Margin Converter and Discount",
   metaDescription:
     "Convert markup to margin with margin = markup ÷ (1 + markup), solve cost, price and profit from any two, and see the margin a discount leaves.",
   steps: [

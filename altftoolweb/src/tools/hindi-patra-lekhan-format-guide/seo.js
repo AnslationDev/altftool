@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hindi Patra Lekhan Format: Aupcharik and Anaupcharik",
+  title: "Hindi Patra Lekhan Format: Aupcharik",
   metaDescription:
     "Builds a formal or informal Hindi letter in the right order - सेवा में, विषय, महोदय, भवदीय - with a 60-150 word check and matching संबोधन and स्वनिर्देश.",
   steps: [

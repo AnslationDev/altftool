@@ -1,5 +1,5 @@
 const seo = {
-  title: "India Tipping Calculator: 10% Pre-GST + Cash Rates",
+  title: "India Tipping Calculator: 10% Pre-GST + Cash",
   metaDescription:
     "About 10% of the pre-GST subtotal in a restaurant, fixed rupee amounts per bag, night, ride or guiding day, plus the CCPA service-charge rule.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Font Licence Checker: Desktop, Web, App & Server Use",
+  title: "Font Licence Checker: Desktop, Web, App & Server",
   metaDescription:
     "Check 14 uses — @font-face, app embedding, ePub, server rendering, logos, modification — against a retail EULA, the OFL 1.1 or Apache 2.0.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weight Goal Date Predictor: When You Hit Your Target",
+  title: "Weight Goal Date Predictor: When You Hit",
   metaDescription:
     "Projects your goal date week by week, recalculating Mifflin-St Jeor maintenance as you lighten, and shows the weight your intake settles at.",
   steps: [

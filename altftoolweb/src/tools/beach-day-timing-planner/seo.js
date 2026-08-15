@@ -1,5 +1,5 @@
 const seo = {
-  title: "Beach Day Planner: Tide, UV and Crowd by Half-Hour",
+  title: "Beach Day Planner: Tide, UV and Crowd",
   metaDescription:
     "Scores every half-hour of daylight on UV at solar noon, the 2-3 hour heat lag, crowds and tide projected on the 12 h 25 min interval.",
   steps: [

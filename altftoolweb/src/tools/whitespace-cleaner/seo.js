@@ -1,5 +1,5 @@
 const seo = {
-  title: "Whitespace Cleaner: Trim Lines, Tabs & Blank Lines",
+  title: "Whitespace Cleaner: Trim Lines, Tabs & Blank",
   metaDescription:
     "Paste text to convert every tab to one space, trim each line and delete blank lines in one pass - output updates live, Windows CRLF comes out as LF.",
   steps: [

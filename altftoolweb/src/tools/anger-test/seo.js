@@ -1,5 +1,5 @@
 const seo = {
-  title: "Anger Test: 10 Scenarios Scored 10-50 With Your Band",
+  title: "Anger Test: 10 Scenarios Scored 10-50",
   metaDescription:
     "Answer 10 everyday situations, each scored 1 to 5, for a total of 10-50 that maps to one of five bands with matched immediate and long-term steps.",
   intro:

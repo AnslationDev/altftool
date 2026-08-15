@@ -1,5 +1,5 @@
 const seo = {
-  title: "Double Opt-In Email Copy and Consent Record Writer",
+  title: "Double Opt-In Email Copy and Consent Record",
   metaDescription:
     "Writes the signup consent line, post-signup screen, confirmation and welcome emails, plus the consent record GDPR Art. 7(1) makes you able to show.",
   steps: [

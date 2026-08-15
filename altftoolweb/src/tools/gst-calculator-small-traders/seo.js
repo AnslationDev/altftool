@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST Calculator for Small Traders: Composition or Not",
+  title: "GST Calculator for Small Traders: Composition",
   metaDescription:
     "Checks your state's Rs 40/20/10 lakh registration threshold, whether the composition scheme is still open, and which leaves more margin at one price.",
   steps: [

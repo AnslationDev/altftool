@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Training Plan Builder for Teams, by Role and Level",
+  title: "AI Training Plan Builder for Teams, by Role",
   metaDescription:
     "Build a week-by-week AI upskilling plan by role and skill level — 1-4 hour modules packed into a 1-10 h/week budget, each with a stated outcome.",
   steps: [

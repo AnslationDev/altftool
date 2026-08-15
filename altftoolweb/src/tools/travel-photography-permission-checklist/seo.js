@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Photography Permission & Drone Rules Checklist",
+  title: "Travel Photography Permission & Drone Rules",
   metaDescription:
     "Grade what you plan to shoot by consequence — prohibited, permit or consent — and check drone flights against EASA 120 m and FAA Part 107 400 ft limits.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Superpower Generator: Power, Weakness and Origin Story",
+  title: "Superpower Generator: Power, Weakness and Origin",
   metaDescription:
     "Type an alter-ego name, pick one of six suit colours, and get a superpower, a Kryptonite weakness and an origin story. Same name, same hero.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "ROPA Builder: GDPR Article 30 Register in 7 Columns",
+  title: "ROPA Builder: GDPR Article 30 Register in 7",
   metaDescription:
     "Type one pipe-separated line per processing activity for an Article 30 register across 7 columns, with a count of rows missing a field.",
   steps: [

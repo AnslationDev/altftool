@@ -1,5 +1,5 @@
 const seo = {
-  title: "Desk Stretch Routine Generator: 2, 5, 10 or 15 Min",
+  title: "Desk Stretch Routine Generator: 2, 5, 10 or 15",
   metaDescription:
     "Fills the minutes you have with stretches for neck, shoulders, wrists, hips and eyes, rotating areas, with timed 15-30 second holds.",
   steps: [

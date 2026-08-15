@@ -1,5 +1,5 @@
 const seo = {
-  title: "Electricity Bill Complaint Letter with Section 56 Dates",
+  title: "Electricity Bill Complaint Letter with Section",
   metaDescription:
     "Recompute the bill from your meter readings and draft a complaint citing the section 56(2) two-year arrear bar and 15 clear days before disconnection.",
   steps: [

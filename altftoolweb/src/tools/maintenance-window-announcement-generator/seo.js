@@ -1,5 +1,5 @@
 const seo = {
-  title: "Maintenance Window Notice: UTC Times, Impact, Rollback",
+  title: "Maintenance Window Notice: UTC Times, Impact",
   metaDescription:
     "Enter the window once in your zone; get an ISO 8601 UTC instant, a per-zone table, a notice-period check and an update cadence in a ready notice.",
   steps: [

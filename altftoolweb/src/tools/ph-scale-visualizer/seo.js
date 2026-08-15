@@ -1,5 +1,5 @@
 const seo = {
-  title: "pH Scale Visualizer: H+ and OH- Concentration, 0-14",
+  title: "pH Scale Visualizer: H+ and OH- Concentration",
   metaDescription:
     "Drag the slider from pH 0 to 14 and watch [H+] and [OH-] in mol/L, with eleven presets from battery acid at 0 to drain cleaner at 14.",
   steps: [

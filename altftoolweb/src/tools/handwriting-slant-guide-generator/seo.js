@@ -1,5 +1,5 @@
 const seo = {
-  title: "Printable Handwriting Slant Guide: 55°, 52° or Custom",
+  title: "Printable Handwriting Slant Guide: 55°, 52°",
   metaDescription:
     "Generate an A4 or US Letter slant underlay at Copperplate 55°, Spencerian 52°, italic 85° or any angle, with baseline, waist and ascender ruling in mm.",
   steps: [

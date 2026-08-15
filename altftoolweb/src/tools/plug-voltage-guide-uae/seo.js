@@ -1,5 +1,5 @@
 const seo = {
-  title: "UAE Plug and Voltage Guide: Type G, 230V, Fuse Size",
+  title: "UAE Plug and Voltage Guide: Type G, 230V, Fuse",
   metaDescription:
     "Enter your plug type and label voltage to see whether the UAE's 230 V type G socket needs an adapter, the current drawn and the BS 1362 fuse.",
   steps: [

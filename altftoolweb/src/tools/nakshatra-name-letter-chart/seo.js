@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nakshatra Name Letter Chart: All 108 Pada Syllables",
+  title: "Nakshatra Name Letter Chart: All 108 Pada",
   metaDescription:
     "Every nakshatra pada with its namakarana syllable, 3 degree 20 minute span, rashi, navamsa, Vimshottari lord and deity - searchable by syllable or longitude.",
   steps: [

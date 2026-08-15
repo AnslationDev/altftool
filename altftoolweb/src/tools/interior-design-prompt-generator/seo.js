@@ -1,5 +1,5 @@
 const seo = {
-  title: "Interior Design AI Prompt Generator + Lumen Targets",
+  title: "Interior Design AI Prompt Generator + Lumen",
   metaDescription:
     "Builds an AI render prompt from room type, style, palette and budget, plus lumen targets, rug size and walkway clearance from your real room dimensions.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kundli Matching: Guna Milan Score Out of 36 + Manglik",
+  title: "Kundli Matching: Guna Milan Score Out of 36 +",
   metaDescription:
     "Match two birth charts on all eight Ashta Koota categories out of 36 gunas, with Moon nakshatra from sidereal longitudes and a Manglik check.",
   steps: [

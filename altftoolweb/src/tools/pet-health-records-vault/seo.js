@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pet Health Records Vault: Local Log with JSON Export",
+  title: "Pet Health Records Vault: Local Log with JSON",
   metaDescription:
     "Keep every pet's vaccinations, doses, weights and vet visits in one searchable list saved in this browser's localStorage, and export it all as JSON.",
   steps: [

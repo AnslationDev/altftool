@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ahmedabad Airport (AMD): When to Leave for a Flight",
+  title: "Ahmedabad Airport (AMD): When to Leave",
   metaDescription:
     "Hansol is 9 km from Kalupur, so the 2-hour reporting advice usually binds, not the drive. Works back through bag-drop and gate close too.",
   steps: [

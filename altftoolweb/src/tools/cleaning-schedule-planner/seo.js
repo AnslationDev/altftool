@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cleaning Schedule Planner: Board, Week Grid, Minutes",
+  title: "Cleaning Schedule Planner: Board, Week Grid",
   metaDescription:
     "Tag chores with room, frequency, priority, owner and minutes. See them as a board, a Mon-Sun grid or a checklist, and print a report by room and person.",
   intro:

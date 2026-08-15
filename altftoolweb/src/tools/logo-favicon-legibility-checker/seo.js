@@ -1,5 +1,5 @@
 const seo = {
-  title: "Will Your Logo Read at 16px? Favicon Legibility Check",
+  title: "Will Your Logo Read at 16px? Favicon Legibility",
   metaDescription:
     "Scales your thinnest stroke and cap height to 16, 32, 48 and 180px, grades each, and downscales the real file in-browser to measure detail loss.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "LinkedIn Headline Writer: 6 Scored 220-Char Options",
+  title: "LinkedIn Headline Writer: 6 Scored 220-Char",
   metaDescription:
     "Six headline patterns from your role, value and proof — each scored on LinkedIn's 220-character limit and what survives the first 70 characters.",
   steps: [

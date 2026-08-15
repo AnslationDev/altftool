@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brokerage Calculator: STT, GST, Stamp Duty, Net P&L",
+  title: "Brokerage Calculator: STT, GST, Stamp Duty, Net",
   metaDescription:
     "Prices an equity or F&O round trip across brokerage, STT, exchange, SEBI, stamp duty, GST and DP charges, and solves the breakeven sell price.",
   intro:

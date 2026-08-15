@@ -1,5 +1,5 @@
 const seo = {
-  title: "HAR Egress Check: Did Your Local AI App Phone Home?",
+  title: "HAR Egress Check: Did Your Local AI App Phone",
   metaDescription:
     "Load a HAR trace to sort every host into loopback, expected or unlisted, and count outbound bodies, credential headers and sensitive query names.",
   steps: [

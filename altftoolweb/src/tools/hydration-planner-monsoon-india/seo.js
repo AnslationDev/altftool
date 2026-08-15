@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monsoon Hydration Planner for Humid Indian Weather",
+  title: "Monsoon Hydration Planner for Humid Indian",
   metaDescription:
     "Runs simplified ISO 7933 sweat maths plus the NWS heat index for humid Indian days, and sizes the litres of safe water a household must treat.",
   steps: [

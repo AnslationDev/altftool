@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Learning Roadmap: Prerequisite-Ordered Study Plan",
+  title: "AI Learning Roadmap: Prerequisite-Ordered Study",
   metaDescription:
     "Pick a goal and your hours per week to get an ordered plan from how LLMs work through retrieval and LoRA, with each module placed in a study week.",
   steps: [

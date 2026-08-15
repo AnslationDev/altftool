@@ -1,5 +1,5 @@
 const seo = {
-  title: "Relationship Adviser: NVC and Gottman Framework Prompts",
+  title: "Relationship Adviser: NVC and Gottman Framework",
   metaDescription:
     "Build a four-part NVC statement, check your week against Gottman's 5:1 ratio and the 360-minute Magic Six Hours budget. Not therapy.",
   steps: [

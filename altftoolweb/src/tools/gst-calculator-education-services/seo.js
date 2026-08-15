@@ -3,7 +3,7 @@
 // `coaching-classes`, `renting-to-institution` and `placement-services` entries in lib.js's
 // SCENARIOS array — keep them in sync if those entries ever change.
 const seo = {
-  title: "Education GST Calculator: Exempt or 18% on SAC 9992",
+  title: "Education GST Calculator: Exempt or 18% on SAC",
   metaDescription:
     "Pick the supply — school fees, coaching, online course, school bus — to see if entry 66, 69 or 80 exempts it, or get 18% split into CGST/SGST or IGST.",
   steps: [

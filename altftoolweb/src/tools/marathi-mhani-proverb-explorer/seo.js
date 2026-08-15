@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marathi Mhani Explorer – 30 Proverbs, Meanings & Quiz",
+  title: "Marathi Mhani Explorer – 30 Proverbs, Meanings",
   metaDescription:
     "Browse 30 Marathi mhani with transliteration, literal and real meanings, a Marathi gloss and honest English equivalents — plus a four-option quiz.",
   steps: [

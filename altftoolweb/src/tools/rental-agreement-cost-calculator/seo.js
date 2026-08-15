@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rent Agreement Cost: Stamp Duty, Registration, GST",
+  title: "Rent Agreement Cost: Stamp Duty, Registration",
   metaDescription:
     "Totals stamp duty on your state's consideration formula, the registration fee, brokerage and 18% GST, then splits the bill between tenant and landlord.",
   steps: [

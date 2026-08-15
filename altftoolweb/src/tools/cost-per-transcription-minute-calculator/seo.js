@@ -1,5 +1,5 @@
 const seo = {
-  title: "Transcription Cost Calculator: Per Minute + AI Summary",
+  title: "Transcription Cost Calculator: Per Minute + AI",
   metaDescription:
     "Combine speech-to-text billed per audio minute with per-token summarisation and optional proofing to get cost per minute, per hour and per file.",
   steps: [

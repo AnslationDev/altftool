@@ -1,5 +1,5 @@
 const seo = {
-  title: "Secret Message Encoder: 8 Ciphers Plus AES-256-GCM",
+  title: "Secret Message Encoder: 8 Ciphers Plus",
   metaDescription:
     "Encode text as Caesar, ROT13, Atbash, Vigenere, Base64, URL, Morse or binary - or genuinely encrypt it with AES-256-GCM, all in your browser.",
   steps: [

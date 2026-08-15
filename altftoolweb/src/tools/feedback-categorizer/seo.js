@@ -1,5 +1,5 @@
 const seo = {
-  title: "Feedback Categorizer: Theme, Sentiment, Priority Tags",
+  title: "Feedback Categorizer: Theme, Sentiment, Priority",
   metaDescription:
     "Paste one comment per line and get a theme (Usability, Reliability, Feature request, Pricing, Praise or General) plus sentiment and priority.",
   steps: [

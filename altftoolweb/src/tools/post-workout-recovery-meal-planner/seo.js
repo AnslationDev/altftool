@@ -1,5 +1,5 @@
 const seo = {
-  title: "Post-Workout Recovery Meal Planner: Protein & Carbs",
+  title: "Post-Workout Recovery Meal Planner: Protein",
   metaDescription:
     "Bodyweight and session in, out come protein at 0.25-0.40 g/kg, carbs at 1.0-1.2 g/kg/h, fluid, sodium — and eight meal portions that hit them.",
   steps: [

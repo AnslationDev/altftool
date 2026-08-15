@@ -1,5 +1,5 @@
 const seo = {
-  title: "TNEA Cutoff Calculator: Maths + (Physics+Chemistry)/2",
+  title: "TNEA Cutoff Calculator: Maths +",
   metaDescription:
     "Cutoff out of 200 with Maths at full weight and Physics and Chemistry at half, for TNEA engineering or the medical/agriculture group, plus a target check.",
   steps: [

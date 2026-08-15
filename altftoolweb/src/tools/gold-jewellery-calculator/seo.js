@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gold Jewellery Price Calculator - Making, GST, Resale",
+  title: "Gold Jewellery Price Calculator - Making, GST",
   metaDescription:
     "Split a jeweller's quote into 22K/18K metal value, wastage, making charges, 3% GST and the ₹45 hallmark fee — then see what a buyback pays back today.",
   steps: [

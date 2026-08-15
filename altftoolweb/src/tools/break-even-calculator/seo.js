@@ -1,5 +1,5 @@
 const seo = {
-  title: "Break-Even Calculator: Units, Revenue, Safety Margin",
+  title: "Break-Even Calculator: Units, Revenue, Safety",
   metaDescription:
     "Break-even units = fixed cost ÷ (price − variable cost). Returns contribution per unit, break-even revenue, target-profit units and margin of safety.",
   intro:

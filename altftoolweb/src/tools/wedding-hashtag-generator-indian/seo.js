@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Wedding Hashtag Generator: Name Blends & Puns",
+  title: "Indian Wedding Hashtag Generator: Name Blends",
   metaDescription:
     "Blend both first names into shaadi hashtags across four formats, each shown with its character count and checked against Instagram's 30-character limit.",
   steps: [

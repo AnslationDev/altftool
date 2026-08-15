@@ -1,5 +1,5 @@
 const seo = {
-  title: "Room Paint Calculator: Litres, Cans and Total Cost",
+  title: "Room Paint Calculator: Litres, Cans and Total",
   metaDescription:
     "Wall area minus doors and windows, divided by your paint's coverage and coats, into a 20/10/4/1 L can list plus paint, labour and contingency cost.",
   steps: [

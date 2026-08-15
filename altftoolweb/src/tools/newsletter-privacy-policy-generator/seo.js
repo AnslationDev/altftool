@@ -1,5 +1,5 @@
 const seo = {
-  title: "Newsletter Privacy Policy Generator: CAN-SPAM & CASL",
+  title: "Newsletter Privacy Policy Generator: CAN-SPAM",
   metaDescription:
     "Assembles the subscriber notice — consent proof, tracking pixel, unsubscribe — and dates the 10-business-day opt-out and the CASL 60-day link.",
   steps: [

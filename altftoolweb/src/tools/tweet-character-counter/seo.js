@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tweet Character Counter — 280 Limit and Posts Needed",
+  title: "Tweet Character Counter — 280 Limit and Posts",
   metaDescription:
     "Live count against the 280-character post limit: how many characters remain or overshoot, plus words, lines and how many posts a long draft needs.",
   intro:

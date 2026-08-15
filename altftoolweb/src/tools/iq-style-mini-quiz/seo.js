@@ -1,5 +1,5 @@
 const seo = {
-  title: "IQ Style Mini Quiz: 10 Timed Questions, 7 Categories",
+  title: "IQ Style Mini Quiz: 10 Timed Questions, 7",
   metaDescription:
     "Ten multiple-choice questions on a per-question clock — 30s on Easy down to 15s on Expert — scored on accuracy, response time and category breakdown.",
   steps: [

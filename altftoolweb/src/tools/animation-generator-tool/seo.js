@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Animation Generator — 15 Presets, Live Preview",
+  title: "CSS Animation Generator — 15 Presets, Live",
   metaDescription:
     "15 CSS keyframe presets — fade, slide, bounce, shake — with duration, delay, easing, iterations, direction and fill mode. Copy or download the CSS.",
   intro:

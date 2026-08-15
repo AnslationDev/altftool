@@ -1,5 +1,5 @@
 const seo = {
-  title: "E-Way Bill Validity Calculator: Days and Expiry Time",
+  title: "E-Way Bill Validity Calculator: Days and Expiry",
   metaDescription:
     "Enter distance and cargo type to get validity days under Rule 138(10) — 200 km or 20 km per day — and the exact midnight the e-way bill lapses.",
   steps: [

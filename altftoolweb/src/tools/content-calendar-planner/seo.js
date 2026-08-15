@@ -1,5 +1,5 @@
 const seo = {
-  title: "Editorial Content Calendar with Platform Checklists",
+  title: "Editorial Content Calendar with Platform",
   metaDescription:
     "Plan blog, YouTube, Instagram, LinkedIn, X and newsletter posts on one month grid, with pre-filled production checklists, budget and average progress.",
   intro:

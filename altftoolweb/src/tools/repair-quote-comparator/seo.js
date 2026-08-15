@@ -1,5 +1,5 @@
 const seo = {
-  title: "Repair Quote Comparator: Totals, Warranty, Exclusions",
+  title: "Repair Quote Comparator: Totals, Warranty",
   metaDescription:
     "Paste quotes as Provider | parts | labour | other | hours | warranty | exclusions, add your tax rate, and rank tax-inclusive totals cheapest first.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stair Climbing Calculator: Floors, Calories and METs",
+  title: "Stair Climbing Calculator: Floors, Calories",
   metaDescription:
     "Convert stair steps into elevation gain, Fitbit-style 10-ft floors, physics-based calories at 23% efficiency, and a MET intensity rating.",
   steps: [

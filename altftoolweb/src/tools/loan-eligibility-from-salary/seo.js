@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Eligibility from Salary: FOIR and RBI LTV Caps",
+  title: "Loan Eligibility from Salary: FOIR and RBI LTV",
   metaDescription:
     "Enter take-home pay, running EMIs, rate and tenure to get the loan a FOIR band supports, capped by the RBI 90/80/75% loan-to-value ladder for home loans.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thai Visa Rejection Reasons: Funds, Bans, What to Fix",
+  title: "Thai Visa Rejection Reasons: Funds, Bans, What",
   metaDescription:
     "Maps a Thai e-Visa refusal line to the rule behind it: the 20,000 baht benchmark, 500 baht/day overstay fine and the 1-to-10-year re-entry bans.",
   steps: [

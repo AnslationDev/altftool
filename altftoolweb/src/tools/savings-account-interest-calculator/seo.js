@@ -1,5 +1,5 @@
 const seo = {
-  title: "Savings Account Interest Calculator – Daily Balance",
+  title: "Savings Account Interest Calculator – Daily",
   metaDescription:
     "Simulates every day's closing balance with monthly deposits, credits interest each calendar quarter, and shows the 80TTA/80TTB tax-free portion.",
   steps: [

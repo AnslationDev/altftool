@@ -1,5 +1,5 @@
 const seo = {
-  title: "Syllable Splitter with Stress Marks: in-for-MA-tion",
+  title: "Syllable Splitter with Stress Marks",
   metaDescription:
     "Splits an English word by phonics rules — VC-CV, V-CV, silent final e, C+le — and capitalises the stressed syllable, naming the suffix rule that fired.",
   steps: [

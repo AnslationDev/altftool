@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baby Wake Window Planner: Nap Schedule by Age & Bedtime",
+  title: "Baby Wake Window Planner: Nap Schedule by Age",
   metaDescription:
     "Give it age, wake time and target bedtime; it picks the nap count and exact nap clock times that land on your bedtime, using AASM totals to 36 months.",
   intro:

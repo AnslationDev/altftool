@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audiobook Length Calculator: Words to Finished Hours",
+  title: "Audiobook Length Calculator: Words to Finished",
   metaDescription:
     "Converts manuscript word count into finished hours at your narration pace, plus prep, booth and edit time, session count and MP3 size at 192 kbps.",
   steps: [

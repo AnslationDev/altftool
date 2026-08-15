@@ -1,5 +1,5 @@
 const seo = {
-  title: "Spin the Bottle Online - Random Name Picker for Groups",
+  title: "Spin the Bottle Online - Random Name Picker",
   metaDescription:
     "Add or paste player names, spin one of five bottle designs, and land on a random name - equal slices, with the last 20 picks kept with timestamps.",
   steps: [

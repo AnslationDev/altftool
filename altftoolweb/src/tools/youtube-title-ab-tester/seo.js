@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Title A/B Tester: Truncation Preview + Score",
+  title: "YouTube Title A/B Tester: Truncation Preview +",
   metaDescription:
     "Rank up to 12 title variants on YouTube's 100-character limit, where each clips at 40, 55 and 70 characters, keyword position and caps, scored out of 100.",
   steps: [

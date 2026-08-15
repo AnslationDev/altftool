@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fuel Cost Split Calculator — Share by Kilometres Ridden",
+  title: "Fuel Cost Split Calculator — Share by Kilometres",
   metaDescription:
     "Split fuel, tolls and shared costs by person-kilometres, so someone aboard for half the trip pays half a full share. Rounded amounts match the total.",
   steps: [

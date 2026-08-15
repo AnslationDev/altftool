@@ -1,5 +1,5 @@
 const seo = {
-  title: "Agent Undo Plan Validator: Reversible or Irreversible?",
+  title: "Agent Undo Plan Validator: Reversible",
   metaDescription:
     "Paste an agent plan as JSON or one step per line: each step is graded reversible, recoverable or irreversible, and each safeguard detailed or vague.",
   steps: [

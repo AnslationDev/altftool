@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPSC Exam Day Checklist: Admit Card, ID and Timing",
+  title: "UPSC Exam Day Checklist: Admit Card, ID",
   metaDescription:
     "Ticks off what gets you through the gate and what does not, with a leave-home time counted back from entry closing 10 minutes before the paper.",
   steps: [

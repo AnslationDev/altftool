@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Loan Eligibility Calculator: FOIR and RBI LTV Cap",
+  title: "Home Loan Eligibility Calculator: FOIR and RBI",
   metaDescription:
     "Estimate your sanction from income, existing EMIs, age and property value — the lower of the FOIR repayment limit and the RBI loan-to-value ceiling.",
   steps: [

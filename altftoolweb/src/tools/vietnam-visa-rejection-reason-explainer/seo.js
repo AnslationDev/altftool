@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vietnam e-Visa Rejection Reasons and How to Fix Them",
+  title: "Vietnam e-Visa Rejection Reasons and How to Fix",
   metaDescription:
     "Match a refusal to its ground — photo spec, data mismatch, the six-month passport rule, Article 21 suspension — and the fixes to make before reapplying.",
   steps: [

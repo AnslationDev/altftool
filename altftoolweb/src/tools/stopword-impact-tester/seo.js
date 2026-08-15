@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stopword Impact Tester: 179 NLTK Stopwords Removed",
+  title: "Stopword Impact Tester: 179 NLTK Stopwords",
   metaDescription:
     "Strip the 179-word NLTK English stopword list and filler, see words, characters, tokens and reading time saved — with negations protected.",
   steps: [

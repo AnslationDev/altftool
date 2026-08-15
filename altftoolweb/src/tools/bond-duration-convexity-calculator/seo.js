@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bond Duration & Convexity Calculator with Cash Flows",
+  title: "Bond Duration & Convexity Calculator with Cash",
   metaDescription:
     "Get Macaulay and modified duration, convexity and the approximate 1% yield price move, with the discounted cash flow schedule behind every number.",
   steps: [

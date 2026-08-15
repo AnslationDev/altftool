@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fancy Text Generator: Bold, Script & Bubble Unicode",
+  title: "Fancy Text Generator: Bold, Script & Bubble",
   metaDescription:
     "Type once and get six Unicode variants — bold, italic, script, monospace, wide and bubble — as real characters that paste into bios, usernames and posts.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "English Idiom Explainer: 45 Idioms With Register Tags",
+  title: "English Idiom Explainer: 45 Idioms With Register",
   metaDescription:
     "45 English idioms with the literal image, the real meaning, an example sentence and whether the phrase is safe in business writing.",
   intro:

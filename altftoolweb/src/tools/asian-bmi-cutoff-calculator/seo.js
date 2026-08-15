@@ -1,5 +1,5 @@
 const seo = {
-  title: "Asian BMI Calculator: WHO Asia-Pacific 23 and 25 Cutoffs",
+  title: "Asian BMI Calculator: WHO Asia-Pacific 23 and 25",
   metaDescription:
     "Read your BMI against the WHO Asia-Pacific cutoffs, overweight 23 and obese 25, beside the international bands, with 90/80 cm waist thresholds.",
   steps: [

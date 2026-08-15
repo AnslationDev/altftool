@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bonafide Certificate Request Letter for Visa or Loan",
+  title: "Bonafide Certificate Request Letter for Visa",
   metaDescription:
     "Choose visa, bank loan, passport or scholarship and get the request letter, the facts the certificate must state, the copy fee and the freshness dates.",
   steps: [

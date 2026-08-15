@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ideal Body Weight Calculator: 4 Formulas + BMI Range",
+  title: "Ideal Body Weight Calculator: 4 Formulas + BMI",
   metaDescription:
     "Runs your height through Devine, Robinson, Miller and Hamwi, sets them beside the 18.5-24.9 BMI band, and adjusts for small or large frame.",
   steps: [

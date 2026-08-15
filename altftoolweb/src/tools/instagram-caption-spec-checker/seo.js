@@ -1,5 +1,5 @@
 const seo = {
-  title: "Instagram Caption Checker: 2,200 Chars, 30 Hashtags",
+  title: "Instagram Caption Checker: 2,200 Chars, 30",
   metaDescription:
     "Check a caption against the 2,200-character and 30-hashtag limits, see where the feed cuts it at ~125 characters, and catch duplicate or numeric tags.",
   steps: [

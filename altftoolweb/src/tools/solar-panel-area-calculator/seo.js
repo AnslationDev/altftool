@@ -1,5 +1,5 @@
 const seo = {
-  title: "Solar Panel Area Calculator: Roof Space for Your kW",
+  title: "Solar Panel Area Calculator: Roof Space",
   metaDescription:
     "Turns a target kW into panel count and roof area, deriving efficiency from the panel's spec sheet and adding row-spacing factors — with a roof fit check.",
   steps: [

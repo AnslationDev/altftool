@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Homework Helper Prompt That Won’t Write the Answer",
+  title: "AI Homework Helper Prompt That Won’t Write",
   metaDescription:
     "Builds a tutoring prompt that bans the submittable artefact per assignment type: essay prose, final answers, working code, at three strictness levels.",
   steps: [

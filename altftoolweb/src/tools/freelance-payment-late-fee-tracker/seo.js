@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelance Late-Fee Tracker: Invoice Evidence Register",
+  title: "Freelance Late-Fee Tracker: Invoice Evidence",
   metaDescription:
     "Paste pipe-separated invoice lines into an eight-column register with the agreed late-fee term and its evidence, and see how many rows are incomplete.",
   steps: [

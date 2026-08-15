@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Foreclosure Amount Calculator + Request Letter",
+  title: "Loan Foreclosure Amount Calculator + Request",
   metaDescription:
     "Principal, accrued interest, foreclosure fee and 18% GST in one total, with the RBI floating-rate exemption applied and a request letter drafted.",
   steps: [

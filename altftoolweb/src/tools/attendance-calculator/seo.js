@@ -1,5 +1,5 @@
 const seo = {
-  title: "Attendance Calculator: Classes You Can Skip at 75%",
+  title: "Attendance Calculator: Classes You Can Skip",
   metaDescription:
     "Work out your attendance percentage, how many classes in a row you must attend to reach 75%, and how many you can still skip — with the algebra shown.",
   intro:

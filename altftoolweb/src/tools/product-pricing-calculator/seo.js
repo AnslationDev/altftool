@@ -1,5 +1,5 @@
 const seo = {
-  title: "Product Pricing Calculator: Margin, Commission, Tax",
+  title: "Product Pricing Calculator: Margin, Commission",
   metaDescription:
     "Solves price = cost / (1 - commission - margin), so a marketplace cut is priced in properly. Adds tax, rounds to a price point, rechecks the margin.",
   steps: [

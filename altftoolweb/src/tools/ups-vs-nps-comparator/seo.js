@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPS vs NPS: Break-Even Return and Lump Sum Compared",
+  title: "UPS vs NPS: Break-Even Return and Lump Sum",
   metaDescription:
     "Solve for the annual NPS return at which the annuity equals the UPS assured payout of 50% of last-12-month average basic pay, plus Dearness Relief.",
   steps: [

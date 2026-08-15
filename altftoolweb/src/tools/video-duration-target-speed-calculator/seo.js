@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Speed Calculator: Fit a Clip to a Target Runtime",
+  title: "Video Speed Calculator: Fit a Clip to a Target",
   metaDescription:
     "Divide current length by target runtime to get the exact speed multiplier. Accepts seconds, m:ss or h:mm:ss and shows the trim needed to stay under 1.5x.",
   steps: [

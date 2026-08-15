@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hashing vs Encryption: SHA-256, XOR and Base64 Compared",
+  title: "Hashing vs Encryption: SHA-256, XOR and Base64",
   metaDescription:
     "One input, three operations: a real SHA-256 digest, a keyed XOR cipher and Base64, with the avalanche effect measured in bits flipped out of 256.",
   steps: [

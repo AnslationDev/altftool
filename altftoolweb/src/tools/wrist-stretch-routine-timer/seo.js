@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wrist Stretch Timer: Guided Holds for Typing Breaks",
+  title: "Wrist Stretch Timer: Guided Holds for Typing",
   steps: [
     "Choose a Routine — \"Quick reset\", \"Standard routine\" or \"Full session\" — each listed in the select with the stretches it covers.",
     "Set \"Hold each stretch (seconds)\" between 10 and 60 (30 by default) and \"Changeover gap (seconds)\" up to 30, and tick \"Include median nerve glides (full session only)\" if you want them.",

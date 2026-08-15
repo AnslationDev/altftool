@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crush Percentage Quiz – Names + How They Act Around You",
+  title: "Crush Percentage Quiz – Names + How They Act",
   metaDescription:
     "A fun crush test scoring 15–99% from your two names plus four questions about how they act — who texts first, one-on-one plans — with a copyable report.",
   intro:

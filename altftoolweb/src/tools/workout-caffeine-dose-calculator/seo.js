@@ -1,5 +1,5 @@
 const seo = {
-  title: "Workout Caffeine Dose Calculator: 3-6 mg/kg Timing",
+  title: "Workout Caffeine Dose Calculator: 3-6 mg/kg",
   metaDescription:
     "Scales caffeine to bodyweight at 3-6 mg/kg, sets the clock time to take it so peak lands at your session, and shows what is left at bedtime.",
   steps: [

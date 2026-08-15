@@ -1,5 +1,5 @@
 const seo = {
-  title: "Compare Image Resolution & Quality: 8-Metric Score",
+  title: "Compare Image Resolution & Quality: 8-Metric",
   metaDescription:
     "Score two images on resolution, sharpness, compression, noise and colour out of 100, check 12 social sizes, and export PDF, CSV or JSON.",
   steps: [

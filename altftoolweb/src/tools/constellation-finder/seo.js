@@ -1,5 +1,5 @@
 const seo = {
-  title: "Constellation Finder - Map 16 Constellations by Season",
+  title: "Constellation Finder - Map 16 Constellations",
   metaDescription:
     "An interactive star chart with 16 constellations — Orion, Ursa Major, Scorpius and more. Filter by season; click any star for its magnitude and distance.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Domain Expiry Planner: Grace, Redemption & Drop Dates",
+  title: "Domain Expiry Planner: Grace, Redemption & Drop",
   metaDescription:
     "Turn one expiry date into a dated gTLD timeline: registrar grace, 30-day redemption, 5-day pending delete, drop date, ERRP reminders and transfer locks.",
   steps: [

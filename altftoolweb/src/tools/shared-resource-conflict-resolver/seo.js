@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shared Resource Booking Conflict Resolver by Priority",
+  title: "Shared Resource Booking Conflict Resolver",
   metaDescription:
     "Paste booking requests as resource, start, end, requester and priority; clashes go to the lowest priority number, with an optional buffer in minutes.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crypto Loss Set-Off Rules: What Section 115BBH Costs",
+  title: "Crypto Loss Set-Off Rules: What Section 115BBH",
   metaDescription:
     "Section 115BBH taxes crypto gains at 30% and blocks every set-off. Enter your trades to see the extra tax, the 1% 194S TDS and disallowed fees.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Waist to Height Ratio Calculator: Your 0.50 Target",
+  title: "Waist to Height Ratio Calculator: Your 0.50",
   metaDescription:
     "Divide waist by height in cm for your WHtR, land in one of four bands from Low to High Risk, and see the exact waist that puts you at 0.50.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Netflix Account Security Checklist: 15 Weighted Controls",
+  title: "Netflix Account Security Checklist: 15 Weighted",
   metaDescription:
     "Weighted 15-control Netflix checklist: password, device sign-out, Household and billing checks. Score capped at 69% until all critical controls are done.",
   steps: [

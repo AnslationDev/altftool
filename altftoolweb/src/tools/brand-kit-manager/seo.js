@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brand Kit Manager: Logos, Hex Palette & JSON Export",
+  title: "Brand Kit Manager: Logos, Hex Palette & JSON",
   intro:
     "Brand Kit Manager is a browser workspace that stores one brand's logo files, hex palette, type scale, official links and written guidelines as a single reusable kit. It is built for freelancers, small studios and in-house marketers who keep re-sending the same assets to designers, developers and printers. Colours are validated as six-digit hex, links are checked against the http, https and mailto protocols, and everything stays in your browser's localStorage — nothing is uploaded.",
   useCases: [

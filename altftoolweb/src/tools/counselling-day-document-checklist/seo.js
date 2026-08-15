@@ -1,5 +1,5 @@
 const seo = {
-  title: "Counselling Reporting Day Document and Fee Checklist",
+  title: "Counselling Reporting Day Document and Fee",
   metaDescription:
     "Documents the institute keeps, the money due on reporting day, and how much is refundable or adjusted later — for JoSAA, MCC and state counselling.",
   steps: [

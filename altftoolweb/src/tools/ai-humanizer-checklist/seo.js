@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Humanizer Checklist: Sentence Variation & Phrases",
+  title: "AI Humanizer Checklist: Sentence Variation",
   metaDescription:
     "Counts filler connectors, hedges, em dashes and -ly adverbs per 1,000 words plus sentence-length std dev, then ranks 15 edits. Not an AI detector.",
   steps: [

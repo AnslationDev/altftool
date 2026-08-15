@@ -1,5 +1,5 @@
 const seo = {
-  title: "Oxygen Requirement Calculator: FiO2 by Device and Flow",
+  title: "Oxygen Requirement Calculator: FiO2 by Device",
   metaDescription:
     "Classify SpO2 as normal to critical, estimate FiO2 at about 4% per L/min, and compare nasal cannula, simple mask, rebreathers and Venturi.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Room Humidity Checker: Dew Point, Mould & Comfort Band",
+  title: "Room Humidity Checker: Dew Point, Mould",
   metaDescription:
     "Magnus dew point, NWS heat index and absolute humidity from your room reading, against the ASHRAE 55 band, plus litres a dehumidifier must remove.",
   steps: [

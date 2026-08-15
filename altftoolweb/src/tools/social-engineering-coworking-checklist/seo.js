@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coworking Security Checklist: 20 Habits, 5 Categories",
+  title: "Coworking Security Checklist: 20 Habits, 5",
   metaDescription:
     "Scores screens, printing, devices, network and people separately, weighted by impact and by whether you sit at a hot desk or a lockable cabin.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "PPF Maturity Calculator: 15-Year Value and Extensions",
+  title: "PPF Maturity Calculator: 15-Year Value",
   metaDescription:
     "See what a PPF account matures to after 15 years at 7.1%, lump sum before 5 April or spread monthly, plus 5, 10 and 15-year extension scenarios.",
   steps: [

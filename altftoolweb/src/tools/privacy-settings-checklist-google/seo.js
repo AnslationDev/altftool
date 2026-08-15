@@ -1,5 +1,5 @@
 const seo = {
-  title: "Google Account Privacy Checklist: 26 Settings Audited",
+  title: "Google Account Privacy Checklist: 26 Settings",
   metaDescription:
     "Work through 26 Google controls — Web & App Activity and its audio and Chrome sub-toggles, YouTube, Gemini, Timeline, Drive links and app access.",
   steps: [

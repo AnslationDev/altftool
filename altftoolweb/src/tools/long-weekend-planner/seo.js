@@ -1,5 +1,5 @@
 const seo = {
-  title: "Long Weekend Planner: Which Leaves Buy the Most Days",
+  title: "Long Weekend Planner: Which Leaves Buy the Most",
   metaDescription:
     "Indian holidays 2024-2028 run through a knapsack optimiser: set a leave budget up to 60 and get the exact dates to file, at 2+ days off per leave.",
   steps: [

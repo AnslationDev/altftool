@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sunset & Golden Hour Planner with Hike Departure Time",
+  title: "Sunset & Golden Hour Planner with Hike Departure",
   metaDescription:
     "NOAA solar equations give sunset, golden hour and civil twilight for any coordinates and date; Naismith's rule works back to when you must leave home.",
   steps: [

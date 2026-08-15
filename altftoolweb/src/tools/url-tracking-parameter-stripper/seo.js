@@ -1,5 +1,5 @@
 const seo = {
-  title: "Strip utm, gclid & fbclid Tracking From URLs in Bulk",
+  title: "Strip utm, gclid & fbclid Tracking From URLs",
   metaDescription:
     "Clean up to 200 links at once: removes utm_, gclid, fbclid, msclkid and mc_eid, keeps the rest byte-for-byte, and lists what it took off each link.",
   steps: [

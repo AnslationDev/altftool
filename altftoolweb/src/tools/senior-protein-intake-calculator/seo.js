@@ -1,5 +1,5 @@
 const seo = {
-  title: "Protein for Adults 60+: PROT-AGE and ESPEN Targets",
+  title: "Protein for Adults 60+: PROT-AGE and ESPEN",
   metaDescription:
     "Daily grams from the 1.0-1.2, 1.2-1.5 and up-to-2.0 g/kg bands, split per meal against the 25-30 g threshold, on adjusted body weight above BMI 30.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Robots.txt Generator: Allow, Disallow, Crawl-delay",
+  title: "Robots.txt Generator: Allow, Disallow",
   metaDescription:
     "Build robots.txt from a form: global allow or Disallow: /, per-crawler rules grouped by user agent, Crawl-delay and a Sitemap line, with a live preview.",
   steps: [

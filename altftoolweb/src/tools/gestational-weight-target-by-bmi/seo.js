@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pregnancy Weight Gain Calculator by BMI (IOM Ranges)",
+  title: "Pregnancy Weight Gain Calculator by BMI",
   metaDescription:
     "IOM weight-gain ranges from pre-pregnancy BMI — 11.5–16 kg at a healthy BMI — plus weekly rate, gain-by-week check and twin ranges.",
   steps: [

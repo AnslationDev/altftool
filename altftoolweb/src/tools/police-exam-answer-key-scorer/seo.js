@@ -1,5 +1,5 @@
 const seo = {
-  title: "Police Exam Score Calculator with Negative Marking",
+  title: "Police Exam Score Calculator with Negative",
   metaDescription:
     "Score a constable paper from your correct and wrong counts: UP 2 marks with -0.5, Delhi 1 with -0.25, Bihar no-negative, or your own scheme.",
   steps: [

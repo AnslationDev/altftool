@@ -1,5 +1,5 @@
 const seo = {
-  title: "Male Body Fat Calculator: Navy Tape & 3-Site Skinfold",
+  title: "Male Body Fat Calculator: Navy Tape & 3-Site",
   metaDescription:
     "Estimate men's body fat three ways — US Navy tape, Jackson-Pollock 3-site skinfold and Deurenberg BMI — with fat mass, lean mass and your ACE category.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Encrypted Local File Vault – Passphrase Hint Index",
+  title: "Encrypted Local File Vault – Passphrase Hint",
   metaDescription:
     "A browser-local index of your encrypted archives: file name plus passphrase hint per record, saved to localStorage with JSON export — no files stored.",
   steps: [

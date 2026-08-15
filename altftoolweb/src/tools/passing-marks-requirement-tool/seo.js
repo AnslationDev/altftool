@@ -1,5 +1,5 @@
 const seo = {
-  title: "Passing Marks Calculator: External vs Aggregate Rule",
+  title: "Passing Marks Calculator: External vs Aggregate",
   metaDescription:
     "Applies both university minima at once, the external-paper floor and the internal-plus-external aggregate floor, and shows which one sets your target.",
   steps: [

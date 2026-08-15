@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gratuity Calculator: Payment of Gratuity Act Formula",
+  title: "Gratuity Calculator: Payment of Gratuity Act",
   metaDescription:
     "Applies (15 × basic + DA × years) ÷ 26 to your last drawn pay, with the 6-month rounding rule, 5-year eligibility and the ₹20 lakh tax-free ceiling.",
   steps: [

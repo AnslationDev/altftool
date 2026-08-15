@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Balance Certificate Request Letter for Visa Files",
+  title: "Bank Balance Certificate Request Letter for Visa",
   metaDescription:
     "Size visa funds as days of stay × the Article 21(5) per-day amount, work out the earliest date to ask your branch, and draft the request letter.",
   steps: [

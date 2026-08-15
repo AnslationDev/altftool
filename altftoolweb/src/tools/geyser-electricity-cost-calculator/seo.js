@@ -1,5 +1,5 @@
 const seo = {
-  title: "Geyser Electricity Cost Calculator + Standing Loss",
+  title: "Geyser Electricity Cost Calculator + Standing",
   steps: [
     "Set Heater type to Storage tank geyser or Instant / tankless heater, then add Tank capacity (litres), BEE star rating and Hours left switched on per day.",
     "Fill Bucket baths per day, Litres per bucket, Showers per day, Minutes per shower, Shower flow (litres per minute), Bathing and Mains water temperature (°C), Days used per month and Electricity tariff (₹ per unit).",

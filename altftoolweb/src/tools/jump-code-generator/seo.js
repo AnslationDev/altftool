@@ -1,5 +1,5 @@
 const seo = {
-  title: "Jump Code Generator: Anchor, Smooth Scroll, React Ref",
+  title: "Jump Code Generator: Anchor, Smooth Scroll",
   metaDescription:
     "Generate anchor, offset smooth-scroll, button, React Router and scrollIntoView jump code, with your sticky-header offset built into the maths.",
   steps: [

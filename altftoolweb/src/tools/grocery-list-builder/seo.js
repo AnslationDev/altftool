@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grocery List Builder: Auto-Sorts into 8 Store Aisles",
+  title: "Grocery List Builder: Auto-Sorts into 8 Store",
   metaDescription:
     "Type onion or pyaz and it files into one of 8 aisles automatically. Lists stay on your device and copy out as aisle-grouped text for any chat.",
   steps: [

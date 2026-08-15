@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Statement Request Letter to Your Bank or NBFC",
+  title: "Loan Statement Request Letter to Your Bank",
   metaDescription:
     "Draft a formal letter asking for your loan statement, interest certificate, schedule, foreclosure figure or NOC, with the RBI Ombudsman clause.",
   steps: [

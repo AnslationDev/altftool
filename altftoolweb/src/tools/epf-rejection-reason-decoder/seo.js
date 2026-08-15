@@ -1,5 +1,5 @@
 const seo = {
-  title: "EPF Claim Rejected? Decode the Remark and Who Must Fix It",
+  title: "EPF Claim Rejected? Decode the Remark and Who",
   metaDescription:
     "26 EPFO rejection families decoded: what the remark means, whether you, the employer or the field office can clear it, and the correction route.",
   intro:

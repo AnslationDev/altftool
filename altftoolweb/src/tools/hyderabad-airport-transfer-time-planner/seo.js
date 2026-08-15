@@ -1,5 +1,5 @@
 const seo = {
-  title: "When to Leave for Hyderabad Airport (RGIA, Shamshabad)",
+  title: "When to Leave for Hyderabad Airport",
   steps: [
     "Set the scheduled departure and distance, or tap a Starting from chip — Hitec City / Madhapur 34 km, Secunderabad 35 km, Shamshabad 5 km.",
     "Choose Domestic or International, the mode (app cab, own car, Pushpak airport bus), a traffic assumption, and tick if you have a bag to check in.",

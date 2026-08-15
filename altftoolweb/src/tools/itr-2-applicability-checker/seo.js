@@ -1,5 +1,5 @@
 const seo = {
-  title: "ITR-2 Applicability Checker: Which ITR Form to File",
+  title: "ITR-2 Applicability Checker: Which ITR Form",
   metaDescription:
     "Check capital gains, a second property, foreign assets, NRI status and income above Rs 50 lakh against ITR-2, ITR-1, ITR-3 and ITR-4 Sugam.",
   steps: [

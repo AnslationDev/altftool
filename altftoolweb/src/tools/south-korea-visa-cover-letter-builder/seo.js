@@ -1,5 +1,5 @@
 const seo = {
-  title: "Korea C-3 Visa Cover Letter Builder with Date Checks",
+  title: "Korea C-3 Visa Cover Letter Builder with Date",
   metaDescription:
     "Drafts a C-3 short-term visit letter and checks the 90-day sojourn from your entry day, single-entry validity and the US$40/70/90 consular fee.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Apache NOTICE File Generator for License Attribution",
+  title: "Apache NOTICE File Generator for License",
   metaDescription:
     "Build an Apache-2.0 section 4(d) NOTICE file — product name, copyright year range and one attribution block per dependency — from pipe-separated lines.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kannada Birthday Wishes with Roman Text and Meaning",
+  title: "Kannada Birthday Wishes with Roman Text",
   metaDescription:
     "Every wish is written separately for ನೀನು and ನೀವು so the possessive and verb ending agree, with romanised Kannada, an English meaning and SMS parts.",
   steps: [

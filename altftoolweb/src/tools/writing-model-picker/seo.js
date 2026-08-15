@@ -1,5 +1,5 @@
 const seo = {
-  title: "Writing Model Picker: Score 6 AI Options on 11 Criteria",
+  title: "Writing Model Picker: Score 6 AI Options on 11",
   metaDescription:
     "Rank six ways to write - frontier, retrieval-backed, fast mid-tier, self-hosted, on-device or grammar checker - on 11 weighted criteria.",
   steps: [

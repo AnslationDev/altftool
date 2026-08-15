@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ad Topics Explained: Reset Checklist for 10 Platforms",
+  title: "Ad Topics Explained: Reset Checklist for 10",
   steps: [
     "Tick the platforms you use under \"Where do your ad topics live?\" — each row is labelled Browser, Account or Device and says whether a full opt-out or mute-only is available.",
     "Set \"How often will you redo this? (days)\", or press the 30d, 90d, 180d or 365d preset, to see the minutes per round and hours per year.",

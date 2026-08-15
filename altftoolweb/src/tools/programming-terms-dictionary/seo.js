@@ -1,5 +1,5 @@
 const seo = {
-  title: "Programming Terms Dictionary — 53 Plain Definitions",
+  title: "Programming Terms Dictionary — 53 Plain",
   metaDescription:
     "53 core programming terms — closure, Big O, CRUD, polymorphism, webpack — one plain sentence each, 12 category filters, search matches definitions.",
   steps: [

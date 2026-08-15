@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unix Timestamp Converter: Epoch to Local, UTC and ISO",
+  title: "Unix Timestamp Converter: Epoch to Local, UTC",
   metaDescription:
     "Paste epoch seconds or milliseconds — over 10 digits is read as ms — and get local time, UTC, ISO 8601 and your offset in minutes. Converts back too.",
   steps: [

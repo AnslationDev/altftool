@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Channel Mapper — Swap Stereo or Fold to Mono",
+  title: "Audio Channel Mapper — Swap Stereo or Fold",
   metaDescription:
     "Remap audio channels with FFmpeg WebAssembly in your browser: swap left/right or fold one channel to mono, from any audio or video file, out as WAV.",
   steps: [

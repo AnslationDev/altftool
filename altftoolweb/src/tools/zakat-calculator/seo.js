@@ -1,5 +1,5 @@
 const seo = {
-  title: "Zakat Calculator: 2.5% Against Gold or Silver Nisab",
+  title: "Zakat Calculator: 2.5% Against Gold or Silver",
   metaDescription:
     "List cash, deposits, stock, shares, gold and silver by gram, deduct debts due now, and check 2.5% against the 87.48 g or 612.36 g nisab.",
   steps: [

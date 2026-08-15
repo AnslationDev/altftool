@@ -1,5 +1,5 @@
 const seo = {
-  title: "Maldives Entry Checklist: IMUGA, Visa, Green Tax Cost",
+  title: "Maldives Entry Checklist: IMUGA, Visa, Green Tax",
   metaDescription:
     "Test passport validity against the Maldivian one-month and airline six-month rules, price Green Tax at USD 12 or 6 a night, and the funds test.",
   steps: [

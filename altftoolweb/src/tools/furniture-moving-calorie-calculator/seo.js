@@ -1,5 +1,5 @@
 const seo = {
-  title: "Furniture Moving Calorie Calculator for a Moving Day",
+  title: "Furniture Moving Calorie Calculator for a Moving",
   metaDescription:
     "Packing is 3.5 METs, level carries 5.8, heavy pushing 7.5 and stair carries 9.0. Get the day's total, vigorous minutes and a jogging equivalent.",
   steps: [

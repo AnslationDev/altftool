@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tech Spec Template Generator: Design Doc, RFC or ADR",
+  title: "Tech Spec Template Generator: Design Doc, RFC",
   metaDescription:
     "Generate a Markdown skeleton in a Google-style design doc, Rust/React-style RFC or Nygard ADR format, with optional risk, rollout and metrics sections.",
   steps: [

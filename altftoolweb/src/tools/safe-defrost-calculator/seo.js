@@ -1,5 +1,5 @@
 const seo = {
-  title: "Safe Defrost Time Calculator: Fridge, Water, Microwave",
+  title: "Safe Defrost Time Calculator: Fridge, Water",
   metaDescription:
     "Thawing times for nine foods by fridge, cold water or microwave, plus the exact clock time to move it out of the freezer for your cooking hour.",
   steps: [

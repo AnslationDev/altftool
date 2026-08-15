@@ -1,5 +1,5 @@
 const seo = {
-  title: "camelCase Converter: Also PascalCase and CONSTANT_CASE",
+  title: "camelCase Converter: Also PascalCase",
   metaDescription:
     "Splits your phrase at spaces and punctuation, then returns camelCase, PascalCase and CONSTANT_CASE from the same word split.",
   intro:

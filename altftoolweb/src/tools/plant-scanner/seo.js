@@ -1,5 +1,5 @@
 const seo = {
-  title: "Plant Identifier From Photo – Top 3 Species + Taxonomy",
+  title: "Plant Identifier From Photo – Top 3 Species +",
   metaDescription:
     "Upload a plant photo up to 4 MB and get the three likeliest species with match probability, family, genus, order and a Wikipedia link for each.",
   steps: [

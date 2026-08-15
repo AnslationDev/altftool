@@ -1,5 +1,5 @@
 const seo = {
-  title: "Leitner Box Flashcard Planner: Daily Load Calendar",
+  title: "Leitner Box Flashcard Planner: Daily Load",
   metaDescription:
     "Set boxes, spacing (doubling, expanding or gentle) and cards per box to get a dated review calendar, per-box load and a cards-per-day figure.",
   steps: [

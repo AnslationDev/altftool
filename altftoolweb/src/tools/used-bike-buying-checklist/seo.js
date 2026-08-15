@@ -1,5 +1,5 @@
 const seo = {
-  title: "Used Bike Buying Checklist: 41 Weighted Inspection Points",
+  title: "Used Bike Buying Checklist: 41 Weighted",
   metaDescription:
     "Score a used motorcycle on 41 weighted checks across 8 areas, with 5 deal-breakers, and turn each failure into an itemised opening offer.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Security Guard Sleep Planner: 3 Day-Sleep Schedules",
+  title: "Security Guard Sleep Planner: 3 Day-Sleep",
   metaDescription:
     "Three daytime sleep plans for an overnight shift - straight after, delayed or split - with lights-out times, last caffeine and dark-glasses hours.",
   steps: [

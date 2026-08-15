@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scientific Calculator with DEG/RAD Toggle & History",
+  title: "Scientific Calculator with DEG/RAD Toggle",
   metaDescription:
     "Type whole expressions like sin(30) + 2^5 / sqrt(16) and evaluate with precedence. DEG/RAD toggle, log and ln, 8-decimal results, 20-entry history.",
   steps: [

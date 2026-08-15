@@ -1,5 +1,5 @@
 const seo = {
-  title: "Adjusted-Winner Splitter: Divide Assets by 100 Points",
+  title: "Adjusted-Winner Splitter: Divide Assets by 100",
   steps: [
     "Type one line per asset into 'Items and point allocations' using the 'Item | Person A points | Person B points' format shown in the hint, and set 'Names' to the two people (the built-in example is 'Asha, Ben').",
     "Each item is awarded to whoever bid more points, then the single item with the lowest ratio between the richer and poorer side's valuation is split fractionally until both point totals meet.",

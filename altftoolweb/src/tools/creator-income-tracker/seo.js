@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creator Income Tracker: Gross, Fees & Withholding Log",
+  title: "Creator Income Tracker: Gross, Fees",
   metaDescription:
     "Turns pipe-separated payment lines into an 8-column income table and counts rows missing a field - sponsorships, affiliate and ad revenue together.",
   steps: [

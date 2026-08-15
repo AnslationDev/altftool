@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paternity Leave Planner: Split Blocks in the Window",
+  title: "Paternity Leave Planner: Split Blocks",
   metaDescription:
     "Checks leave blocks against the allowance, window from the birth date, minimum block and block count. UK, India Rule 43-A and Singapore presets.",
   steps: [

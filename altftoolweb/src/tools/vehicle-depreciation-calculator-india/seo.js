@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Depreciation Calculator India: IDV and Tax WDV",
+  title: "Car Depreciation Calculator India: IDV and Tax",
   metaDescription:
     "Ex-showroom price and age in months give the motor tariff value, 5% under six months to 50% at five years, beside the 15% or 30% written down value.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Amount in Words for Cheques: Indian or International",
+  title: "Amount in Words for Cheques: Indian",
   metaDescription:
     "Spells a money amount for a cheque, invoice or agreement in lakh-crore or million-billion, with paise or cents worded separately. Eight currencies.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dollar to Rupee Mental Math: Rounding Rules + Error %",
+  title: "Dollar to Rupee Mental Math: Rounding Rules +",
   metaDescription:
     "Enter today's rate for rounding rules you can run in your head, each with its error stated, plus what US sales tax and a tip add to a tag price.",
   steps: [

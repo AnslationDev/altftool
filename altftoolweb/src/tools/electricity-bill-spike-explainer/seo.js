@@ -1,5 +1,5 @@
 const seo = {
-  title: "Why Your Electricity Bill Jumped: Slab Creep Split",
+  title: "Why Your Electricity Bill Jumped: Slab Creep",
   metaDescription:
     "Enter two months of units and rupees paid; the change splits into slab creep, extra units, fixed charge, fuel surcharge, duty and anything unexplained.",
   steps: [

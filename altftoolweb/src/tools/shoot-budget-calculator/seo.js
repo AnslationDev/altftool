@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shoot Budget Calculator: Crew, Gear, Contingency & Tax",
+  title: "Shoot Budget Calculator: Crew, Gear, Contingency",
   metaDescription:
     "Build an AICP-style shoot budget from crew day rates, gear and location fees, travel and post hours — contingency on the subtotal, then tax on top.",
   steps: [

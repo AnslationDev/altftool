@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roll Number Format Validator: Length, O vs 0, Spaces",
+  title: "Roll Number Format Validator: Length, O vs 0",
   metaDescription:
     "Checks a roll or application number for length, character set, prefix and hidden spaces, and flags O typed for 0 or I for 1 before the portal does.",
   steps: [

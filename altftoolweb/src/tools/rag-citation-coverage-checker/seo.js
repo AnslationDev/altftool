@@ -1,5 +1,5 @@
 const seo = {
-  title: "RAG Citation Coverage Checker: Claim-to-Source Map",
+  title: "RAG Citation Coverage Checker: Claim-to-Source",
   metaDescription:
     "Splits an answer into claims and marks each linked, mixed, unknown or missing against your retrieval set. Structural check, not a support check.",
   steps: [

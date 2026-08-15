@@ -1,5 +1,5 @@
 const seo = {
-  title: "Friendship Score Calculator — 0-100 Rating & Badges",
+  title: "Friendship Score Calculator — 0-100 Rating",
   metaDescription:
     "Rate trust, humour, loyalty, communication and shared history on five sliders — 65% of the score — plus a name hash for a repeatable 0-100 badge rating.",
   steps: [

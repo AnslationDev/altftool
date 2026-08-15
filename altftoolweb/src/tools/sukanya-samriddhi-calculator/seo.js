@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sukanya Samriddhi Yojana Calculator with Maturity Date",
+  title: "Sukanya Samriddhi Yojana Calculator",
   metaDescription:
     "Project an SSY account: 15 years of deposits from ₹250 to ₹1.5 lakh, 8.2% compounded yearly, and the exact maturity date 21 years after opening.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Delhi Airport (DEL): When to Leave Home for Your Flight",
+  title: "Delhi Airport (DEL) Arrival Buffer Calculator",
   metaDescription:
     "Work back from your DEL departure through gate close, security, bag drop and the drive to one leave-home time — and see which deadline sets it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Trimmer: Cut MP4, MOV or WebM in Your Browser",
+  title: "Video Trimmer: Cut MP4, MOV or WebM",
   metaDescription:
     "Trim MP4, MOV, WebM, MKV, AVI or M4V with in-browser FFmpeg: Fast Trim stream-copies at a keyframe, Precise Trim re-encodes at CRF 18-32.",
   steps: [

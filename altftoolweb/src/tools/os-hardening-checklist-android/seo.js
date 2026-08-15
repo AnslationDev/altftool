@@ -1,5 +1,5 @@
 const seo = {
-  title: "Android Hardening Checklist by Version & Patch Age",
+  title: "Android Hardening Checklist by Version & Patch",
   metaDescription:
     "Filter dozens of Android security settings to your OS version and threat profile, weight them by impact, and grade your security patch date.",
   steps: [

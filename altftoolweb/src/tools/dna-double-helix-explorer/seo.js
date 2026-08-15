@@ -1,5 +1,5 @@
 const seo = {
-  title: "DNA Double Helix Explorer: A-T and G-C Hydrogen Bonds",
+  title: "DNA Double Helix Explorer: A-T and G-C Hydrogen",
   metaDescription:
     "Rotating 16-rung double helix with 2 hydrogen bonds drawn on every A-T pair and 3 on every G-C. Pause it, or run 0.2x to 3x.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Productivity Optimizer: A Focus Plan for Your Day",
+  title: "AI Productivity Optimizer: A Focus Plan",
   steps: [
     "Pick your Primary Role — Developer, Designer, Writer / Creator, Manager / Executive or Student — and your Biggest Distractor from Multitasking / Context Switching, Social Media / Phones, Emails / Slack Messages or Perfectionism / Overthinking.",
     "Set Peak Energy Time to Morning (Early Bird), Afternoon (Mid-day Sprinter) or Night (Night Owl), choose a Primary Goal such as \"Focus longer on deep work\", then press Generate AI Stack.",

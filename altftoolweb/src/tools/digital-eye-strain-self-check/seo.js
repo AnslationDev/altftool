@@ -1,5 +1,5 @@
 const seo = {
-  title: "Digital Eye Strain Self-Check: CVS-Q Score Out of 32",
+  title: "Digital Eye Strain Self-Check: CVS-Q Score",
   metaDescription:
     "Rate 16 screen-related eye symptoms by frequency and intensity using the published CVS-Q method — a total out of 32 against the cut-off of 6.",
   steps: [

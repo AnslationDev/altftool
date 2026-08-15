@@ -1,5 +1,5 @@
 const seo = {
-  title: "Warm-Up Set Calculator – Loadable Weights & Percentages",
+  title: "Warm-Up Set Calculator – Loadable Weights",
   metaDescription:
     "Build a warm-up ramp to your top set from four schemes — standard, heavy single, short or hypertrophy — with every rung rounded to plates you can load.",
   steps: [

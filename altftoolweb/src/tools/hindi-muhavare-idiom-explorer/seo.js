@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hindi Muhavare Explorer: 32 Idioms with Meaning & Quiz",
+  title: "Hindi Muhavare Explorer: 32 Idioms with Meaning",
   metaDescription:
     "32 Hindi muhavare with literal sense, meaning in Hindi and English, usage sentences and exam-level tags, plus a four-option meaning quiz.",
   steps: [

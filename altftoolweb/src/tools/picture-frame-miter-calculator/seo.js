@@ -1,5 +1,5 @@
 const seo = {
-  title: "Picture Frame Miter Calculator: Angle, Long & Short Point",
+  title: "Picture Frame Miter Calculator: Angle, Long",
   metaDescription:
     "Miter setting is 180 divided by sides: 45 for a square, 30 hexagon, 22.5 octagon. Long and short point per rail, plus moulding after kerf and waste.",
   steps: [

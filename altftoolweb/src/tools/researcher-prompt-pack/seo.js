@@ -1,5 +1,5 @@
 const seo = {
-  title: "Researcher Prompt Pack: 9 Anti-Confabulation Prompts",
+  title: "Researcher Prompt Pack: 9 Anti-Confabulation",
   steps: [
     "Narrow the nine prompts with 'Search prompts' or the Category dropdown, then click the prompt card you want from the list.",
     "Under 'Fill in the blanks' type into each labelled field, or press 'Use example values' to load the worked example; 'Clear fields' empties them again.",

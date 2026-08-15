@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exterior Wall Paint Calculator: Litres, Tins and Cost",
+  title: "Exterior Wall Paint Calculator: Litres, Tins",
   metaDescription:
     "Litres = paintable area x coats ÷ spreading rate, corrected for smooth, porous, sand-faced or textured walls, then split into 20, 10, 4 and 1 L tins.",
   steps: [

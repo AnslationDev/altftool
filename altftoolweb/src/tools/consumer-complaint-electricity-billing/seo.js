@@ -1,5 +1,5 @@
 const seo = {
-  title: "Electricity Bill Complaint Letter with Meter Proof",
+  title: "Electricity Bill Complaint Letter with Meter",
   metaDescription:
     "Compare metered units with billed units, get the overcharge in rupees, and draft a DISCOM letter citing CGRF under section 42(5) of the Electricity Act.",
   intro:

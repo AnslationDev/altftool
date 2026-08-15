@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lucky Name Analyzer: 5-Part 0-100 Score, Just for Fun",
+  title: "Lucky Name Analyzer: 5-Part 0-100 Score, Just",
   metaDescription:
     "Scores a spelling 0-100 from vowel balance, letter variety, consonant runs, English letter frequency and Chaldean vs Pythagorean roots. A novelty index.",
   steps: [

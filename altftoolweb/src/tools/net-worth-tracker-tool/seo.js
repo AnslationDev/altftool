@@ -1,5 +1,5 @@
 const seo = {
-  title: "Net Worth Tracker: Liquidity & Debt-to-Asset Ratio",
+  title: "Net Worth Tracker: Liquidity & Debt-to-Asset",
   metaDescription:
     "Itemise assets and liabilities to get net worth plus the ratios: liquid share, financial vs property and gold, debt-to-asset. Computed in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Memory Precision Test with RGB & HSL Scoring",
+  title: "Color Memory Precision Test with RGB & HSL",
   metaDescription:
     "Memorise a colour for 8, 5 or 3 seconds by difficulty, rebuild it with RGB sliders, and get a score blending RGB distance and hue-weighted HSL.",
   intro:

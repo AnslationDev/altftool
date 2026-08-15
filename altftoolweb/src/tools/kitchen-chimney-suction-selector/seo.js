@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kitchen Chimney Suction Calculator in m³/h With Duct Loss",
+  title: "Kitchen Chimney Suction Calculator in m³/h",
   metaDescription:
     "Kitchen volume x 10-15 air changes, plus burner and layout allowances, divided by duct efficiency: the m³/h to shop for and the chimney width.",
   steps: [

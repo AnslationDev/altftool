@@ -1,5 +1,5 @@
 const seo = {
-  title: "Petty Cash Book Builder: Imprest, Heads, Reimbursement",
+  title: "Petty Cash Book Builder: Imprest, Heads",
   metaDescription:
     "Post vouchers against a fixed float and get the running balance, totals by expense head for one journal entry, and the reimbursement that restores it.",
   steps: [

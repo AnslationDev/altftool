@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelance Rate Calculator: Take-Home to Hourly Rate",
+  title: "Freelance Rate Calculator: Take-Home to Hourly",
   metaDescription:
     "Works backwards from your target take-home: adds tax and costs, then divides by billable hours — 48 weeks x 40h at 60% is 1,152, not 1,920.",
   steps: [

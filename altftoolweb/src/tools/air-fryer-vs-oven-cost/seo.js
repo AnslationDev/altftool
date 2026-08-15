@@ -1,5 +1,5 @@
 const seo = {
-  title: "Air Fryer vs Oven Electricity Cost Calculator (per Meal)",
+  title: "Air Fryer vs Oven Electricity Cost Calculator",
   metaDescription:
     "Compare a meal's kWh and cost in an air fryer vs an electric oven — preheat at full watts, cooking at the duty cycle — plus yearly INR and time savings.",
   steps: [

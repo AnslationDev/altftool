@@ -1,5 +1,5 @@
 const seo = {
-  title: "Course Video File Naming Builder: Zero-Padded Names",
+  title: "Course Video File Naming Builder: Zero-Padded",
   metaDescription:
     "Turn a module and lesson outline into one filesystem-safe name per lesson: zero-padded numbers, kebab/snake/Pascal case, 255-byte and duplicate checks.",
   steps: [

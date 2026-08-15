@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tipping in Germany Calculator - Trinkgeld Round-Ups",
+  title: "Tipping in Germany Calculator - Trinkgeld",
   metaDescription:
     "German Trinkgeld for your actual bill: 5-10% in restaurants, round-ups in cafes and taxis, EUR 1 a bag - and what to say when you hand it over.",
   steps: [

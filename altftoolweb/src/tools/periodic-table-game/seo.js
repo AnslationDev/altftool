@@ -1,5 +1,5 @@
 const seo = {
-  title: "Periodic Table Game: 118 Elements, 10-Question Quiz",
+  title: "Periodic Table Game: 118 Elements, 10-Question",
   metaDescription:
     "Ten questions on a clickable 118-element table: find the cell, name the symbol, name the atomic number. Easy to hard, optional 30/60/120s timer.",
   steps: [

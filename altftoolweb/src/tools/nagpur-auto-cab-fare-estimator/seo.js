@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nagpur Auto & Cab Fare: RTA Meter + 25% Night Charge",
+  title: "Nagpur Auto & Cab Fare: RTA Meter + 25% Night",
   metaDescription:
     "Price a Nagpur auto, shared auto or app cab on the RTA meter card — minimum fare, per-km rate, waiting time and the midnight-to-5am 25% night charge.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tax Bracket Calculator: 2025 and 2026 IRS Brackets",
+  title: "Tax Bracket Calculator: 2025 and 2026 IRS",
   metaDescription:
     "See how many dollars each federal rate taxes — 10% through 37% — for 2025 or 2026, plus your marginal rate, effective rate and bracket headroom.",
   steps: [

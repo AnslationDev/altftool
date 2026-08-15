@@ -1,5 +1,5 @@
 const seo = {
-  title: "Windows 11 Privacy Settings Checklist: 28 Controls",
+  title: "Windows 11 Privacy Settings Checklist: 28",
   metaDescription:
     "Score a Windows 11 PC on 28 weighted settings — advertising ID, diagnostic data, Recall snapshots, activity and clipboard history, OneDrive, BitLocker.",
   steps: [

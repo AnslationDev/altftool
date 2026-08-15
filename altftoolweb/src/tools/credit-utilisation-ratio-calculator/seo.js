@@ -1,5 +1,5 @@
 const seo = {
-  title: "Credit Utilisation Calculator: Overall and Per Card",
+  title: "Credit Utilisation Calculator: Overall",
   metaDescription:
     "Balance ÷ limit for every card: overall utilisation, each card’s ratio, a healthy/watch/high band and the rupees to clear to get under 30%.",
   steps: [

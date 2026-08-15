@@ -1,5 +1,5 @@
 const seo = {
-  title: "Younger Version Generator - Childhood Polaroid Filter",
+  title: "Younger Version Generator - Childhood Polaroid",
   steps: [
     "Pick a stage under \"Select Younger Target Stage\": \"Toddler (2-4 yrs)\", \"Child (6-10 yrs)\" or \"Teen (13-17 yrs)\".",
     "Press \"Select Photo\" or drop an image on the dashed zone (max size 10MB); a TinyFaceDetector and 68-point landmark pass locates the face, then the canvas warms the exposure and blurs inside the face oval.",

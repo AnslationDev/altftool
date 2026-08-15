@@ -1,5 +1,5 @@
 const seo = {
-  title: "Moving Checklist: 42 Tasks Across 6 Countdown Phases",
+  title: "Moving Checklist: 42 Tasks Across 6 Countdown",
   metaDescription:
     "42 preset moving tasks from 8 weeks out to after moving day — tick, edit, add or delete them, track your percentage, and export a plain-text checklist.",
   steps: [

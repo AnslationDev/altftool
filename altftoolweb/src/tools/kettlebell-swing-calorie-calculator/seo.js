@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kettlebell Swing Calories by Bell Weight and Cadence",
+  title: "Kettlebell Swing Calories by Bell Weight",
   metaDescription:
     "Estimates swing calories from the measured 9.8 MET cost of two-hand swings, scaled by bell-to-body-mass ratio, with rest costed at 2 METs.",
   steps: [

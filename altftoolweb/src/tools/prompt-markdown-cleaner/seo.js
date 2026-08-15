@@ -1,5 +1,5 @@
 const seo = {
-  title: "Clean Prompt Text: Strip Markdown, Smart Quotes, Unicode",
+  title: "Clean Prompt Text: Strip Markdown, Smart Quotes",
   metaDescription:
     "Strip markdown, straighten curly quotes and delete zero-width characters before pasting into an AI model. Four toggleable passes, runs in your browser.",
   steps: [

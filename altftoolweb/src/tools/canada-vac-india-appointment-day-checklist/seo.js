@@ -1,5 +1,5 @@
 const seo = {
-  title: "Canada VAC India Appointment Day: Fee, Time, Checklist",
+  title: "Canada VAC India Appointment Day: Fee, Time",
   metaDescription:
     "Get your leave-home time, the CAD 85 biometric fee with the CAD 170 family cap, your 30-day BIL deadline and what to leave outside the centre.",
   steps: [

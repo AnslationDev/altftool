@@ -1,5 +1,5 @@
 const seo = {
-  title: "Liquid Volume Converter with 100 ml Cabin Bag Check",
+  title: "Liquid Volume Converter with 100 ml Cabin Bag",
   metaDescription:
     "US fl oz is 29.5735295625 ml, imperial 28.4130625 ml — exact factors across 14 units, plus a check against the 100 ml container and 1 litre bag rule.",
   steps: [

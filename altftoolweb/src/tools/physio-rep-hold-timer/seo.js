@@ -1,5 +1,5 @@
 const seo = {
-  title: "Physio Rep and Isometric Hold Timer with Tempo Cues",
+  title: "Physio Rep and Isometric Hold Timer with Tempo",
   metaDescription:
     "Turn a prescribed set into phase countdowns for lift, hold, lower and rest, with Alfredson and 45-second isometric presets and time-under-tension totals.",
   steps: [

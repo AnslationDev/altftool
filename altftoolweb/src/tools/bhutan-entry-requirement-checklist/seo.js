@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bhutan Entry Checklist: SDF Cost and Visa Documents",
+  title: "Bhutan Entry Checklist: SDF Cost and Visa",
   metaDescription:
     "Total Bhutan's Sustainable Development Fee across your party and nights, add the USD 40 visa fee, and test your passport against the six-month rule.",
   steps: [

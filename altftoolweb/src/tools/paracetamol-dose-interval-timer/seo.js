@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paracetamol Dose Timer: Next Dose and 4000 mg Limit",
+  title: "Paracetamol Dose Timer: Next Dose and 4000 mg",
   metaDescription:
     "Enter your last dose time, doses taken and mg per dose to see the earliest next dose, doses left and which limit binds first. Not medical advice.",
   steps: [

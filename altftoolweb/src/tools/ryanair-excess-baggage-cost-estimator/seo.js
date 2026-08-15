@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ryanair Excess Baggage Calculator: Per-Flight Fees",
+  title: "Ryanair Excess Baggage Calculator: Per-Flight",
   metaDescription:
     "Totals Ryanair bag fees per passenger per one-way flight from your own booking's prices, and ranks every 10 kg/20 kg bag combo against per-kg excess.",
   steps: [

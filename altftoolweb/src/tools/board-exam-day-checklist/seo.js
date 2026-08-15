@@ -1,5 +1,5 @@
 const seo = {
-  title: "Board Exam Day Checklist: Gate Time to Wake-Up Clock",
+  title: "Board Exam Day Checklist: Gate Time to Wake-Up",
   metaDescription:
     "CBSE gates shut 30 minutes before the paper. Enter the 10:30 start and your journey to get a wake-up time, plus the kit list for that paper.",
   steps: [

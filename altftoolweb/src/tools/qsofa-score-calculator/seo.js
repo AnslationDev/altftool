@@ -1,5 +1,5 @@
 const seo = {
-  title: "qSOFA Score Calculator - Sepsis-3 Bedside Criteria",
+  title: "qSOFA Score Calculator - Sepsis-3 Bedside",
   metaDescription:
     "Scores the three Sepsis-3 criteria - RR 22+, systolic 100 mmHg or less, GCS under 15 - one point each, with a per-criterion breakdown. For revision use.",
   steps: [

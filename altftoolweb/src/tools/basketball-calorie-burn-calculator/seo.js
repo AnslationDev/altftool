@@ -1,5 +1,5 @@
 const seo = {
-  title: "Basketball Calories Burned Calculator by Court Time",
+  title: "Basketball Calories Burned Calculator by Court",
   metaDescription:
     "Calories from body weight and court minutes via kcal/min = MET x 3.5 x kg / 200 — 8.0 game, 6.0 pick-up, 9.3 drills, 4.5 shooting, bench at 1.3.",
   steps: [

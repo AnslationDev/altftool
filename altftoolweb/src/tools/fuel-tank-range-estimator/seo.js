@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fuel Tank Range Estimator: Km Left from Gauge Reading",
+  title: "Fuel Tank Range Estimator: Km Left from Gauge",
   metaDescription:
     "Convert tank size and gauge percentage into km of range with a reserve held back, a real-mileage condition factor and a can-you-make-the-trip verdict.",
   steps: [

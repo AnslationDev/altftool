@@ -1,5 +1,5 @@
 const seo = {
-  title: "Korean Visa Refusal Reasons and the Rule Behind Them",
+  title: "Korean Visa Refusal Reasons and the Rule Behind",
   metaDescription:
     "Match the short reason line on a Korean visa refusal to the Immigration Act rule behind it, and fix the file before the six-month restriction bites.",
   steps: [

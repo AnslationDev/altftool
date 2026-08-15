@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Against Property Calculator: LTV & FOIR Eligibility",
+  title: "Loan Against Property Calculator: LTV & FOIR",
   metaDescription:
     "Tests both lender limits — the LTV cap on your property and the EMI your FOIR allows — shows which binds, plus EMI, total interest and post-loan FOIR.",
   steps: [

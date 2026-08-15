@@ -1,5 +1,5 @@
 const seo = {
-  title: "Clipboard Auto-Clear Timer for OTPs & Temp Secrets",
+  title: "Clipboard Auto-Clear Timer for OTPs & Temp",
   metaDescription:
     "Copy an OTP or temporary password with a 10-second to 1-hour countdown that blanks the clipboard only if that exact value is still the one copied.",
   intro:

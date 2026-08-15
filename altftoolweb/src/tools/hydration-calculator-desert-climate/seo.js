@@ -1,5 +1,5 @@
 const seo = {
-  title: "Desert Hydration Calculator: Water and Sodium Needs",
+  title: "Desert Hydration Calculator: Water and Sodium",
   metaDescription:
     "Fluid and sodium replacement for hot dry air, from weight, temperature, humidity and hours out. Warns above the 1.5 L per hour absorption ceiling.",
   steps: [

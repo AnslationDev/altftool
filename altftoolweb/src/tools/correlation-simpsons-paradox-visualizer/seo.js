@@ -1,5 +1,5 @@
 const seo = {
-  title: "Correlation & Simpson's Paradox: Group vs Pooled r",
+  title: "Correlation & Simpson's Paradox: Group vs Pooled",
   metaDescription:
     "Paste rows as Group | x | y and get each group's Pearson r to six decimals beside the aggregate, with a sign-reversal flag when they disagree.",
   steps: [

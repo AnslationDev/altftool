@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cloned Card Fraud Playbook: RBI Liability Deadlines",
+  title: "Cloned Card Fraud Playbook: RBI Liability",
   metaDescription:
     "Block, report on 1930 and notify in writing — then see your RBI liability: nil inside 3 working days, capped at ₹5,000/10,000/25,000 by day 7.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "OG Image Text Fit Checker: Wrap, Crop and Legibility",
+  title: "OG Image Text Fit Checker: Wrap, Crop",
   metaDescription:
     "Wrap a share-card headline with real Helvetica advance widths: widest line, block height, the largest size that still fits, and the centre-crop safe area.",
   steps: [

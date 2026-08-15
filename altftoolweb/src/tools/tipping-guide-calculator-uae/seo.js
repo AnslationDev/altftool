@@ -1,5 +1,5 @@
 const seo = {
-  title: "UAE Tipping Calculator: Dubai Bills, Taxis, Valets",
+  title: "UAE Tipping Calculator: Dubai Bills, Taxis",
   metaDescription:
     "How much to tip in the UAE: 10% in a restaurant worked out before the service charge, AED 5-10 for porters and valets, taxis rounded up to AED 5.",
   steps: [

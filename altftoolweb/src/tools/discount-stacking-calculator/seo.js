@@ -1,5 +1,5 @@
 const seo = {
-  title: "Discount Stacking Calculator: The Real Basket Total",
+  title: "Discount Stacking Calculator: The Real Basket",
   metaDescription:
     "Stack sale prices, coupons, a capped card offer, shipping, tax and cashback in the order shops apply them. Percentages multiply: 20% then 10% is 28% off.",
   steps: [

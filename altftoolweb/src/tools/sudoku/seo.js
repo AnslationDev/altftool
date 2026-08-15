@@ -1,5 +1,5 @@
 const seo = {
-  title: "Play Sudoku Free: Daily Challenge & Unlimited Puzzles",
+  title: "Play Sudoku Free: Daily Challenge & Unlimited",
   metaDescription:
     "Same daily grid for every player worldwide, plus unlimited easy to expert boards. Every puzzle has one solution; notes, hints and streaks built in.",
   steps: [

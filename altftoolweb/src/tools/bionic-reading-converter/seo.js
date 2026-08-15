@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bionic Reading Converter — Bold Text HTML/Markdown",
+  title: "Bionic Reading Converter — Bold Text",
   metaDescription:
     "Bolds the first half of each word (adjustable 30-70% fixation), reports the exact share of letters emphasised and outputs escaped HTML or Markdown.",
   steps: [

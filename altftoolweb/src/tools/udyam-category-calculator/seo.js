@@ -1,5 +1,5 @@
 const seo = {
-  title: "Udyam MSME Category Calculator: Micro, Small, Medium",
+  title: "Udyam MSME Category Calculator: Micro, Small",
   metaDescription:
     "Apply the composite MSME test on the 1 April 2025 limits or the 2020 set: investment and turnover together, export turnover excluded, plus your headroom.",
   steps: [

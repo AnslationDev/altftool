@@ -1,5 +1,5 @@
 const seo = {
-  title: "Domicile Certificate Documents & Residence Checker",
+  title: "Domicile Certificate Documents & Residence",
   steps: [
     "Pick your State or union territory, then set the Qualifying period the state asks for (years) and the Years you have actually lived there.",
     "Tick what fits under Which of these apply to you? — born in this state, family owns property here, the applicant is a minor, a school or college admission, a married woman on her husband's domicile, or a government posting — plus the seven-years-and-a-board-exam route where the territory offers it.",

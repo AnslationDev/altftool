@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Budget Calculator: KB per Hero and Other Image",
+  title: "Image Budget Calculator: KB per Hero and Other",
   metaDescription:
     "Split a total page image budget in KB across hero and supporting images — heroes take half — for a per-image KB target in WebP/AVIF, JPEG or PNG.",
   steps: [

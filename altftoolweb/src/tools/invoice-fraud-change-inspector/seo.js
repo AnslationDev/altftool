@@ -1,5 +1,5 @@
 const seo = {
-  title: "Invoice Fraud Change Inspector - Compare 13 Fields",
+  title: "Invoice Fraud Change Inspector - Compare 13",
   metaDescription:
     "Diff two invoices across 13 fields and see bank account, IBAN and UPI changes flagged on their own. Runs locally; the export holds counts, not values.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mutual Fund Exit Load Calculator with STT & Free Exit",
+  title: "Mutual Fund Exit Load Calculator with STT & Free",
   metaDescription:
     "Exit load on redemption value, the 10% free-exit allowance, 0.001% STT on equity schemes, and the rupees you save by waiting out the load period.",
   steps: [

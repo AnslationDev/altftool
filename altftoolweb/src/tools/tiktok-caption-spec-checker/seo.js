@@ -1,5 +1,5 @@
 const seo = {
-  title: "TikTok Caption Checker: 2,200 Chars and Safe Zones",
+  title: "TikTok Caption Checker: 2,200 Chars and Safe",
   metaDescription:
     "Count a TikTok caption by code point against the 2,200 limit, see what shows before more, and test text against 1080x1920 safe zones.",
   steps: [

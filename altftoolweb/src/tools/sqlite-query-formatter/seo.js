@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQLite Query Formatter with PRAGMA and Bind Params",
+  title: "SQLite Query Formatter with PRAGMA and Bind",
   metaDescription:
     "Breaks SELECT, FROM, JOIN, WHERE and GROUP BY onto their own lines, folds keyword case, and keeps '' escapes, [brackets] and :name params intact.",
   steps: [

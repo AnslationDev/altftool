@@ -1,5 +1,5 @@
 const seo = {
-  title: "File to Base64 Converter with Data URL & CSS Snippets",
+  title: "File to Base64 Converter with Data URL & CSS",
   metaDescription:
     "Encode a local file (up to 32 MB) to Base64 or a full data: URL in your browser — nothing uploads — with HTML, CSS, Markdown and JSON snippets.",
   steps: [

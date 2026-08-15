@@ -1,5 +1,5 @@
 const seo = {
-  title: "FINDRISC: 8 Questions, 10-Year Diabetes Risk Score",
+  title: "FINDRISC: 8 Questions, 10-Year Diabetes Risk",
   metaDescription:
     "Age, BMI, waist, activity, diet, BP medication, past glucose and family history give a FINDRISC score out of 26 and its risk band. No blood test needed.",
   steps: [

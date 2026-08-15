@@ -1,5 +1,5 @@
 const seo = {
-  title: "SpiceJet Excess Baggage Calculator: Counter vs Prepaid",
+  title: "SpiceJet Excess Baggage Calculator: Counter",
   metaDescription:
     "Prices extra kilos at the per-kg counter rate against a pre-booked 3, 5, 10, 15, 20 or 30 kg block, and adds cabin weight over 7 kg moved to the hold.",
   steps: [

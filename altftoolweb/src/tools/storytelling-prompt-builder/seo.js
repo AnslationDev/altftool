@@ -1,5 +1,5 @@
 const seo = {
-  title: "Storytelling Prompt Builder: 4 Classic Narrative Arcs",
+  title: "Storytelling Prompt Builder: 4 Classic Narrative",
   metaDescription:
     "Turns a premise into a full AI writing prompt on a three-act, Hero's Journey, Freytag or kishōtenketsu arc, with POV, tone, pacing and ending fixed.",
   steps: [

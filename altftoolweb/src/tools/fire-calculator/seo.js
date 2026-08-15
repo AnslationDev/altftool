@@ -1,5 +1,5 @@
 const seo = {
-  title: "FIRE Calculator: Your Number at Any Withdrawal Rate",
+  title: "FIRE Calculator: Your Number at Any Withdrawal",
   metaDescription:
     "FIRE number = annual expenses ÷ your SWR — 25× at 4%, 33.3× at 3%. Projects your SIP over 360 monthly steps and names the crossing year.",
   steps: [

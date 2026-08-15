@@ -1,5 +1,5 @@
 const seo = {
-  title: "SEO Article Prompt Builder: AI Brief with Word Budgets",
+  title: "SEO Article Prompt Builder: AI Brief with Word",
   metaDescription:
     "Turn a target query, search intent and heading plan into an AI writing prompt with per-section word budgets, title and meta limits and a ~1% query cap.",
   steps: [

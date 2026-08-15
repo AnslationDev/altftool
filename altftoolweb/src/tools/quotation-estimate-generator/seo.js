@@ -1,5 +1,5 @@
 const seo = {
-  title: "Quotation & Estimate Generator with Payment Schedule",
+  title: "Quotation & Estimate Generator with Payment",
   metaDescription:
     "Price lines by quantity and rate, apply an overall discount before tax, add contingency, and split the total into milestones that sum exactly.",
   steps: [

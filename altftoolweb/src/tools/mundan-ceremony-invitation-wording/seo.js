@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mundan Invitation Wording: Programme from the Muhurat",
+  title: "Mundan Invitation Wording: Programme",
   metaDescription:
     "Enter the muhurat and the arrival time is worked backwards through the puja, kalash sthapana and havan — plus the child's exact age, in four styles.",
   steps: [

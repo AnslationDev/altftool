@@ -1,5 +1,5 @@
 const seo = {
-  title: "Field Hockey Calories Burned: 7.8 MET, Rolling Subs",
+  title: "Field Hockey Calories Burned: 7.8 MET, Rolling",
   metaDescription:
     "Enter body weight and minutes on the pitch. Match play uses the Compendium's 7.8 MET; bench minutes are priced at the 1.3 MET standing rate.",
   steps: [

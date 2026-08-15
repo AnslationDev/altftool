@@ -1,5 +1,5 @@
 const seo = {
-  title: "Face Blur Tool: Blur Faces and Drop EXIF In-Browser",
+  title: "Face Blur Tool: Blur Faces and Drop EXIF",
   metaDescription:
     "Paints an 18px blur over each face the browser's FaceDetector finds, re-encodes to PNG without the original EXIF block, and reports the face count.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gaming Chair Setup Calculator: Seat, Armrest, Lumbar",
+  title: "Gaming Chair Setup Calculator: Seat, Armrest",
   metaDescription:
     "Turn your height into seat height, seat depth, armrest and lumbar positions in cm, plus recline ranges and breaks rounded up to whole matches.",
   steps: [

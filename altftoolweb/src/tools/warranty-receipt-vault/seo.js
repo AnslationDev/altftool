@@ -1,5 +1,5 @@
 const seo = {
-  title: "Warranty and Receipt Tracker Saved in Your Browser",
+  title: "Warranty and Receipt Tracker Saved",
   metaDescription:
     "Log each purchase as an Item plus warranty and receipt details, search every field, and export the lot to warranty-receipt-vault.json. Not encrypted.",
   steps: [

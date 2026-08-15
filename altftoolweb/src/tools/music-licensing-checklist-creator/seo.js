@@ -1,5 +1,5 @@
 const seo = {
-  title: "Music Licensing Checklist: Sync, Master & PRO Clearance",
+  title: "Music Licensing Checklist: Sync, Master & PRO",
   metaDescription:
     "Four answers build an itemised clearance list - sync, master, mechanical, performance - naming who grants each right, plus hard Stop flags.",
   intro:

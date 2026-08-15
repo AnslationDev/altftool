@@ -1,5 +1,5 @@
 const seo = {
-  title: "Obsidian AI Prompt Pack: 12 Prompts + Syntax Checker",
+  title: "Obsidian AI Prompt Pack: 12 Prompts + Syntax",
   metaDescription:
     "Twelve Obsidian prompts for linking, splitting and weekly review, with a live checker for wikilinks, tags, forbidden filename characters and date tokens.",
   steps: [

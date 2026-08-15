@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dark Circle Detector: Score Under-Eye Darkness 0-100",
+  title: "Dark Circle Detector: Score Under-Eye Darkness",
   metaDescription:
     "Upload a front-facing selfie: facial landmarks find the under-eye skin, then darkness and blue tint score 0-100 across five bands, in your browser.",
   steps: [

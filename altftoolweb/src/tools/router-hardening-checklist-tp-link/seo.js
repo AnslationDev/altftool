@@ -1,5 +1,5 @@
 const seo = {
-  title: "TP-Link Router Hardening: 21-Step Archer and Deco Audit",
+  title: "TP-Link Router Hardening: 21-Step Archer",
   metaDescription:
     "21 weighted steps for Archer and Deco routers, each with its exact tplinkwifi.net menu path, plus a WPA2 passphrase crack-time estimate.",
   steps: [

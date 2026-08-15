@@ -1,5 +1,5 @@
 const seo = {
-  title: "IndiGo Baggage Allowance Checker: 15 kg, 7 kg Cabin",
+  title: "IndiGo Baggage Allowance Checker: 15 kg, 7 kg",
   metaDescription:
     "Test every bag against IndiGo's 15 kg combined check-in, the 7 kg 55x35x25 cm cabin bag and the 32 kg single-piece cap, and price the excess.",
   steps: [

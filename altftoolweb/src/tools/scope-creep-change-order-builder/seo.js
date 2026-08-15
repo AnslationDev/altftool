@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scope Creep Change Order Builder: Price + Deadline",
+  title: "Scope Creep Change Order Builder: Price +",
   metaDescription:
     "Price an out-of-scope client request as extra hours x your rate plus expenses, with the calendar-day deadline extension and an acceptance clause.",
   steps: [

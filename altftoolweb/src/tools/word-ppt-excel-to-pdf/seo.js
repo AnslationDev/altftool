@@ -1,5 +1,5 @@
 const seo = {
-  title: "Word, PPT & Excel to PDF Converter in Your Browser",
+  title: "Word, PPT & Excel to PDF Converter",
   metaDescription:
     "Turn DOCX, PPTX, XLSX, XLS, CSV and TXT into PDFs on your device - 20 files at 50 MB each, A4 or Letter, batch ZIP, nothing uploaded.",
   steps: [

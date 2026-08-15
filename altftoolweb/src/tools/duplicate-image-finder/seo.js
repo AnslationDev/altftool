@@ -1,5 +1,5 @@
 const seo = {
-  title: "Duplicate Image Finder – Find Resized & Renamed Copies",
+  title: "Duplicate Image Finder – Find Resized & Renamed",
   metaDescription:
     "Hashes photos in your browser with dHash + aHash, groups pairs at 80%+ similarity, keeps the best copy and exports duplicate-report.csv — no uploads.",
   steps: [

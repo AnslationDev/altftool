@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cost Per Unit Calculator with Rejects and Break-Even",
+  title: "Cost Per Unit Calculator with Rejects",
   metaDescription:
     "Absorb overhead across a batch, recover the cost of rejects from good units, and get full cost per unit, contribution, break-even and target price.",
   steps: [

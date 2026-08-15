@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Prepayment Calculator - Cut Tenure, Save Interest",
+  title: "Loan Prepayment Calculator - Cut Tenure, Save",
   metaDescription:
     "Enter loan amount, rate, tenure and a monthly prepayment; it amortises month by month and returns the EMI, the reduced tenure and interest saved.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "OBS Pre-Live Checklist + Bitrate and Upload Headroom",
+  title: "OBS Pre-Live Checklist + Bitrate and Upload",
   metaDescription:
     "Build a pre-live OBS checklist for scenes, audio, alerts and privacy, with the platform's bitrate range, 2-second keyframes and 1.5x upload headroom.",
   steps: [

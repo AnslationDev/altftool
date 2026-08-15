@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 234F Late Fee Calculator with 234A Interest",
+  title: "Section 234F Late Fee Calculator with 234A",
   metaDescription:
     "Rs 1,000 below Rs 5 lakh of total income, Rs 5,000 above it, plus section 234A interest at 1% a month on unpaid self-assessment tax.",
   steps: [

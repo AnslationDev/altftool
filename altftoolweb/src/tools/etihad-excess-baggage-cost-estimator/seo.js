@@ -1,5 +1,5 @@
 const seo = {
-  title: "Etihad Excess Baggage Calculator: Advance vs Airport",
+  title: "Etihad Excess Baggage Calculator: Advance",
   metaDescription:
     "Price your excess kilos through every advance weight block and against the airport desk rate, and see which route actually costs least.",
   steps: [

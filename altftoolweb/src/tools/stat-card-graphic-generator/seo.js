@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stat Card Generator: Big Numbers, Correct % Change",
+  title: "Stat Card Generator: Big Numbers, Correct %",
   metaDescription:
     "Lay out 1 to 4 stats at sizes like 1080x1080 or 1920x1080, format as compact, currency or percent, and show both % and percentage-point change.",
   steps: [

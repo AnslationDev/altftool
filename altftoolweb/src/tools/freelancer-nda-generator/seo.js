@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelancer NDA Generator: IP, Portfolio & Deletion",
+  title: "Freelancer NDA Generator: IP, Portfolio",
   metaDescription:
     "Draft a contractor NDA covering deliverable ownership, portfolio rights and data handling — deletion and confidentiality dates computed for you.",
   steps: [

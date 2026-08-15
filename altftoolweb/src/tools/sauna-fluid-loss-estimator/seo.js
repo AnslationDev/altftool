@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sauna Sweat Loss Calculator: Litres and Rehydration",
+  title: "Sauna Sweat Loss Calculator: Litres",
   metaDescription:
     "Sweat lost per sauna session from a before/after weigh-in or from room temperature and humidity, with the ACSM 125-150% amount to drink back.",
   steps: [

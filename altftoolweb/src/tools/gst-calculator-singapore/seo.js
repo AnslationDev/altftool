@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore GST Calculator – Add or Reverse 9% GST (9/109)",
+  title: "Singapore GST Calculator – Add or Reverse 9% GST",
   metaDescription:
     "Add 9% Singapore GST or reverse it out with the exact 9/109 fraction; historical 8% and 7% rates and the S$1 million registration test built in.",
   steps: [

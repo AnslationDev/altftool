@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roaming vs Travel eSIM vs Local SIM: Privacy Guide",
+  title: "Roaming vs Travel eSIM vs Local SIM: Privacy",
   metaDescription:
     "Score four connectivity options on identity exposure, OTP access, cost and coverage. Travel eSIMs are data-only, so bank OTPs will not arrive on them.",
   steps: [

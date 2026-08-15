@@ -1,5 +1,5 @@
 const seo = {
-  title: "ATM Skimmer Checklist: 16 Checks Before You Insert",
+  title: "ATM Skimmer Checklist: 16 Checks Before You",
   metaDescription:
     "Sixteen physical ATM checks — card slot, keypad, fascia, dispenser — with a stop-or-proceed verdict. Three findings alone prove tampering.",
   steps: [

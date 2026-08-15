@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lumpsum Calculator: Future Value of a One-Time Investment",
+  title: "Lumpsum Calculator: Future Value of a One-Time",
   metaDescription:
     "Compounds a one-time investment with FV = P × (1 + r)^n and shows a year-by-year table splitting invested capital from accumulated interest.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Typing Speed Test Game: Gross WPM, Net WPM, Accuracy",
+  title: "Typing Speed Test Game: Gross WPM, Net WPM",
   metaDescription:
     "Type a randomly generated prompt and get gross WPM, net WPM, CPM and accuracy, scored on the 5-keystroke word; the timer starts on your first key.",
   steps: [

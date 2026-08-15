@@ -1,5 +1,5 @@
 const seo = {
-  title: "View to Subscriber Ratio Calculator (Per 1,000 Views)",
+  title: "View to Subscriber Ratio Calculator",
   metaDescription:
     "Turn views and new subscribers into a per-1,000-views rate, see the views needed for a subscriber goal, and compare with your previous period.",
   steps: [

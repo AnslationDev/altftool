@@ -1,5 +1,5 @@
 const seo = {
-  title: "PDF Active Content Inspector: JS & OpenAction Cues",
+  title: "PDF Active Content Inspector: JS & OpenAction",
   metaDescription:
     "Counts /JavaScript, /OpenAction, /Launch, /SubmitForm, /EmbeddedFile and more across nine categories in a PDF up to 20 MB. Nothing is decoded or run.",
   steps: [

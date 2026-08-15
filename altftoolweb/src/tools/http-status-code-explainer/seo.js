@@ -1,5 +1,5 @@
 const seo = {
-  title: "HTTP Status Code Explainer: 404, 429, 502 and More",
+  title: "HTTP Status Code Explainer: 404, 429, 502",
   steps: [
     "Type a number into the Enter HTTP Status Code (e.g., 404) box, or click a quick code such as 200, 301, 403 or 503.",
     "Press Explain, or pick a card from the grid of common codes — 204, 307, 409, 418, 429 and 502 among them.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "20-20-20 Eye Rest Timer with Breaks, Streaks & Exercises",
+  title: "20-20-20 Eye Rest Timer with Breaks, Streaks",
   metaDescription:
     "Chimes every 20 minutes for a 20-second look at 20 feet, rotates eight eye exercises and tracks breaks, screen time and streaks on your device.",
   steps: [

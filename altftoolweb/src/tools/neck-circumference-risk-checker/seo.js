@@ -1,5 +1,5 @@
 const seo = {
-  title: "Neck Circumference Check: Sleep Apnoea & BMI Cut-offs",
+  title: "Neck Circumference Check: Sleep Apnoea & BMI",
   metaDescription:
     "Check a neck measurement against Ben-Noun's 37/34 cm adiposity cut-offs and the 40 cm STOP-BANG apnoea criterion, with an optional BMI cross-check.",
   steps: [

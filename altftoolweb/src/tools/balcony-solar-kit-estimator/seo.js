@@ -1,5 +1,5 @@
 const seo = {
-  title: "Balcony Solar Kit Estimator: Vertical Tilt Yield Loss",
+  title: "Balcony Solar Kit Estimator: Vertical Tilt Yield",
   steps: [
     "Under 'The kit' enter Number of panels, 'Panel rating (Wp)', 'Micro-inverter AC limit (W)' and 'Installed kit cost (INR)'.",
     "Under 'Where it hangs' tap a mounting preset — 'Flat against the railing (90°)', 'Angled out on a bracket (45°)', 'Well-angled bracket (30°)' or 'Laid nearly flat on the floor (10°)' — then set 'Which way the balcony faces', 'Latitude, degrees (drop the N or S)', 'Peak sun hours a day', 'Extra shading loss (%)', 'Used in the home immediately (%)' and 'Your tariff (INR per unit)'.",

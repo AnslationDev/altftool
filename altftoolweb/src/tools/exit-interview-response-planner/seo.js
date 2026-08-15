@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exit Interview Answers: Ranked Reasons, 3 Candour Levels",
+  title: "Exit Interview Answers: Ranked Reasons, 3",
   metaDescription:
     "Rates each reason 0-5 and weights it 1-3 by what the employer could change, then writes guarded, balanced or candid answers with a disclosure-risk score.",
   steps: [

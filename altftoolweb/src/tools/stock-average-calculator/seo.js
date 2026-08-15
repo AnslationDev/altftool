@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stock Average Calculator with Break-Even and Planner",
+  title: "Stock Average Calculator with Break-Even",
   metaDescription:
     "Weighted average from every buy lot, live P&L and a charge-adjusted break-even, plus the shares a target average takes: Q×(A−T)÷(T−P).",
   steps: [

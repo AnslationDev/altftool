@@ -1,5 +1,5 @@
 const seo = {
-  title: "Face Recognition Memory Test: Old/New Recall Score",
+  title: "Face Recognition Memory Test: Old/New Recall",
   metaDescription:
     "Study faces, sit a 15-second distraction task, then mark each face seen or not. Scored as hits, misses, false alarms and correct rejections.",
   steps: [

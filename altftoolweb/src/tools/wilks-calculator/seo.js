@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wilks Score Calculator with DOTS and IPF GL Points",
+  title: "Wilks Score Calculator with DOTS and IPF GL",
   metaDescription:
     "Scores a powerlifting total against bodyweight with the 1994 Wilks coefficient, plus DOTS and IPF GL, and the total needed at any other bodyweight.",
   steps: [

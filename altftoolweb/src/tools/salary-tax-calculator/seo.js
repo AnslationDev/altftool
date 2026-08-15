@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salary Tax Calculator: CTC to Take-Home, Slab by Slab",
+  title: "Salary Tax Calculator: CTC to Take-Home, Slab",
   metaDescription:
     "Enter CTC, HRA, LTA, 80C and 80D to get taxable income, tax across the 5% to 30% slabs, 4% cess and monthly take-home. An estimate, not a filing.",
   steps: [

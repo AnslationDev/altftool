@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grafana Dashboard Layout Planner: RED, USE, Golden Signals",
+  title: "Grafana Dashboard Layout Planner: RED, USE",
   metaDescription:
     "Plans service dashboard panels from RED, USE or the Four Golden Signals, sized to Grafana's 24-column grid, with an SLO row and starter PromQL per panel.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Per Diem Calculator: Part Days, Nights and Meals Off",
+  title: "Per Diem Calculator: Part Days, Nights and Meals",
   metaDescription:
     "Totals a trip the way a travel policy reads it: full days at the city rate, first and last at 75%, lodging per night, provided meals deducted.",
   steps: [

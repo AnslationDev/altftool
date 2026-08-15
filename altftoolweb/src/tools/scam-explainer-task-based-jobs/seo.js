@@ -1,5 +1,5 @@
 const seo = {
-  title: "Task-Based Job Scam: What the Deposit Ladder Costs",
+  title: "Task-Based Job Scam: What the Deposit Ladder",
   metaDescription:
     "Model the like-and-review job scam as a geometric deposit ladder, and see the balance the app displays beside the cash that left your bank.",
   steps: [

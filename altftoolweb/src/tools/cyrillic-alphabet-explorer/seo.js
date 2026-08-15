@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cyrillic Alphabet Explorer: 33 Letters, ICAO & ISO 9",
+  title: "Cyrillic Alphabet Explorer: 33 Letters, ICAO",
   metaDescription:
     "All 33 Russian letters with names, sounds and Latin lookalikes, plus a transliterator using ICAO passport romanisation or reversible ISO 9:1995.",
   steps: [

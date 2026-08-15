@@ -1,5 +1,5 @@
 const seo = {
-  title: "Plate Tectonics Simulator: 3 Boundaries, 1-15 cm/yr",
+  title: "Plate Tectonics Simulator: 3 Boundaries, 1-15",
   metaDescription:
     "Animated cross-section of divergent, convergent and transform plate boundaries, with a 1-15 cm/yr velocity slider and the landforms each produces.",
   steps: [

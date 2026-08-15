@@ -1,5 +1,5 @@
 const seo = {
-  title: "SCSS Calculator: Quarterly Payout, Interest and Maturity",
+  title: "SCSS Calculator: Quarterly Payout, Interest",
   metaDescription:
     "SCSS quarterly payout is deposit × rate ÷ 400. Get the payout schedule, total interest, 80C deduction and tax at your slab, up to the ₹30 lakh cap.",
   steps: [

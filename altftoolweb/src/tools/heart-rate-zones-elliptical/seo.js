@@ -1,5 +1,5 @@
 const seo = {
-  title: "Elliptical Heart Rate Zones Scaled to Your Console",
+  title: "Elliptical Heart Rate Zones Scaled",
   metaDescription:
     "Five ACSM zones from age and resting pulse via Tanaka (208 - 0.7 x age) or Karvonen, each with a stride rate and a resistance level on your machine.",
   steps: [

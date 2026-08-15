@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chennai Airport MAA: When to Leave Home Calculator",
+  title: "Chennai Airport MAA: When to Leave Home",
   metaDescription:
     "Work back from your MAA departure through gate close, security, bag drop and the drive to one time to leave home, and see which deadline binds.",
   steps: [

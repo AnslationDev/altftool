@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Self-Exposure Query Builder: site:, inurl:",
+  title: "YouTube Self-Exposure Query Builder: site",
   metaDescription:
     "Turn your name, handle, channel ID or email into ready-to-run site:, inurl: and quoted queries, grouped by exposure area. Built in your browser only.",
   steps: [

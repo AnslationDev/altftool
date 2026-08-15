@@ -1,5 +1,5 @@
 const seo = {
-  title: "TC String Decoder for IAB TCF v2.2 Consent Strings",
+  title: "TC String Decoder for IAB TCF v2.2 Consent",
   metaDescription:
     "Unpacks a TCF v2/v2.2 TC String's bit fields in your browser: purposes, special features, vendor IDs, timestamps and CMP id. No vendor list fetched.",
   steps: [

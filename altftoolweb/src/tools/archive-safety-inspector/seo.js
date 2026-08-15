@@ -1,5 +1,5 @@
 const seo = {
-  title: "ZIP Safety Inspector: Preflight Without Extracting",
+  title: "ZIP Safety Inspector: Preflight Without",
   metaDescription:
     "Reads a ZIP's central directory for path traversal, symlinks, encryption and 200:1 ratios — up to 30 MB, and nothing is decompressed.",
   steps: [

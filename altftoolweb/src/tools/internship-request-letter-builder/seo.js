@@ -1,5 +1,5 @@
 const seo = {
-  title: "Internship Request Letter Builder: Email + Subject Line",
+  title: "Internship Request Letter Builder: Email +",
   metaDescription:
     "Turn your course, skills and free dates into an internship email with a subject line and availability window, scored on seven checks and 90-200 words.",
   steps: [

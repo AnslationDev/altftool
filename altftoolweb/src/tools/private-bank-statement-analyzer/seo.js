@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSV Bank Statement Analyzer That Never Uploads Data",
+  title: "CSV Bank Statement Analyzer That Never Uploads",
   steps: [
     "Paste the rows or press Choose text file for a CSV, TSV or .txt export up to 10 MB and 25,000 rows, then press Parse locally.",
     "Confirm the Date, Description, Debit / money out and Credit / money in mappings, pick DD/MM/YYYY or MM/DD/YYYY, then press Analyze in memory.",

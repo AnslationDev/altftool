@@ -1,5 +1,5 @@
 const seo = {
-  title: "AES-256-GCM Text Encryptor with PBKDF2 & SHA Hashes",
+  title: "AES-256-GCM Text Encryptor with PBKDF2 & SHA",
   metaDescription:
     "Encrypt text with AES-256-GCM in the browser, keyed by PBKDF2-HMAC-SHA256 at 600,000 rounds with a fresh salt and IV. SHA-1 to SHA-512 too.",
   steps: [

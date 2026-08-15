@@ -1,5 +1,5 @@
 const seo = {
-  title: "Google Ads Description Writer: 5 Lines Under 90 Chars",
+  title: "Google Ads Description Writer: 5 Lines Under 90",
   metaDescription:
     "Paste up to 200 characters about your product and get 5 responsive search ad descriptions, each truncated to Google's 90-character limit.",
   steps: [

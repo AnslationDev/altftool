@@ -1,5 +1,5 @@
 const seo = {
-  title: "20-20-20 Rule Timer: Look 20 Feet Away Every 20 Min",
+  title: "20-20-20 Rule Timer: Look 20 Feet Away Every 20",
   metaDescription:
     "Runs the 20-20-20 cycle — 20 minutes of near work, then 20 seconds at 20 feet (6.1 m) — and counts breaks taken and total eye rest.",
   steps: [

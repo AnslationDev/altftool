@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calorie Burn Calculator Using MET Values and Weight",
+  title: "Calorie Burn Calculator Using MET Values",
   metaDescription:
     "Estimate calories burned with MET × 3.5 × kg ÷ 200 across six activities, from brisk walking at 3.5 METs to jump rope at 8.5, plus per-minute rates.",
   intro:

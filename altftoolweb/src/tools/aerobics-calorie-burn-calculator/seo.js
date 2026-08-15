@@ -1,5 +1,5 @@
 const seo = {
-  title: "Aerobics Calorie Burn Calculator - MET by Class Type",
+  title: "Aerobics Calorie Burn Calculator - MET by Class",
   metaDescription:
     "Calories for low impact (4.8 MET), high impact (8.0), aqua and step classes at three riser heights, plus the walking or running distance that matches.",
   steps: [

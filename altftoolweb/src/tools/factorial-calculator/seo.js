@@ -1,5 +1,5 @@
 const seo = {
-  title: "Factorial Calculator: Exact n! for 0–2000, Every Digit",
+  title: "Factorial Calculator: Exact n! for 0–2000, Every",
   metaDescription:
     "Compute n! exactly with big integers — all 158 digits of 100!, up to the 5,736-digit 2000! — plus a digit count and the full value to copy.",
   intro:

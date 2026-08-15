@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Expiry Tracker: Passport, Licence, PUC, Visa",
+  title: "Document Expiry Tracker: Passport, Licence, PUC",
   metaDescription:
     "Track every expiry date with a staged reminder ladder, the date each renewal window opens, and a six-month passport check against your travel date.",
   steps: [

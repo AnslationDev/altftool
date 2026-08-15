@@ -1,5 +1,5 @@
 const seo = {
-  title: "Solar Self-Consumption Optimizer: Best Appliance Hour",
+  title: "Solar Self-Consumption Optimizer: Best Appliance",
   metaDescription:
     "Paste Time | solar kWh | load kWh rows to get direct self-consumption, the highest-surplus start time and your percentage after one shifted load.",
   steps: [

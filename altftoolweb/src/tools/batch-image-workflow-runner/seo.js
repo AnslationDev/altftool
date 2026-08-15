@@ -1,5 +1,5 @@
 const seo = {
-  title: "Batch Image Workflow Runner: Resize, Crop, Watermark",
+  title: "Batch Image Workflow Runner: Resize, Crop",
   metaDescription:
     "Four FFmpeg WebAssembly presets — resize to 1200px, 1080×1080 centre crop, grayscale, corner watermark — run in the tab and output PNG.",
   steps: [

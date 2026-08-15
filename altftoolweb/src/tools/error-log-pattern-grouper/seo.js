@@ -1,5 +1,5 @@
 const seo = {
-  title: "Error Log Grouper: Mask IDs and Rank Repeat Errors",
+  title: "Error Log Grouper: Mask IDs and Rank Repeat",
   metaDescription:
     "Masks timestamps, IPs, UUIDs, paths and numbers, then ranks distinct error patterns with counts, trend, burst flag and shared stack frame. CSV/JSON/MD.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON Formatter, Query String and Form Body to JSON",
+  title: "JSON Formatter, Query String and Form Body",
   intro:
     "This JSON formatter pretty-prints or minifies a document and also converts the two other shapes API parameters arrive in — a GET query string and an x-www-form-urlencoded POST body — into JSON objects, using the browser's own URLSearchParams to split them. Indentation is selectable at 2, 4 or 8 spaces or a real tab, and an editable key/value table stays in sync both ways, so editing a row rewrites the URL, the form body or the JSON depending on which mode you are in. Nothing is transmitted: the request preview that shows method, headers and body is a local illustration, not a live call.",
   useCases: [

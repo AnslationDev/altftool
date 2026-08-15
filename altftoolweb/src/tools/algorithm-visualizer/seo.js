@@ -1,5 +1,5 @@
 const seo = {
-  title: "Algorithm Visualizer: Bubble Sort on Your Own Array",
+  title: "Algorithm Visualizer: Bubble Sort on Your Own",
   metaDescription:
     "Type up to 16 numbers and watch every comparison and swap as bars — scrub, pause, live counters, plus 12 algorithms with their Big-O complexities.",
   intro:

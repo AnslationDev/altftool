@@ -1,5 +1,5 @@
 const seo = {
-  title: "SHA-1 Hash Generator — 40-Char Hex Digest of Any Text",
+  title: "SHA-1 Hash Generator — 40-Char Hex Digest of Any",
   metaDescription:
     "Computes the SHA-1 digest of pasted text as 40 lowercase hex characters, live as you type, using the browser's Web Crypto with UTF-8 encoding.",
   intro:

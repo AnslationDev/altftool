@@ -1,5 +1,5 @@
 const seo = {
-  title: "URL Slug Collision Checker With WordPress Suffixes",
+  title: "URL Slug Collision Checker With WordPress",
   metaDescription:
     "Paste titles one per line and see which slugs collide after NFKD folding, lowercasing and truncation, with -2 and -3 suffixes assigned as a CMS would.",
   steps: [

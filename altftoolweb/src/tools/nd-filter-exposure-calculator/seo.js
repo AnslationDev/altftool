@@ -1,5 +1,5 @@
 const seo = {
-  title: "ND Filter Exposure Calculator — 10-Stop & Stacked NDs",
+  title: "ND Filter Exposure Calculator — 10-Stop",
   metaDescription:
     "Turns a metered shutter speed into the time needed behind ND — 1/125 s becomes 8.2 s at 10 stops — plus filter factor, density and stacked stops.",
   steps: [

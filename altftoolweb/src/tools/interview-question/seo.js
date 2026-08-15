@@ -1,5 +1,5 @@
 const seo = {
-  title: "150 Interview Questions for 15 Roles, Answers Hidden",
+  title: "150 Interview Questions for 15 Roles, Answers",
   metaDescription:
     "A practice bank of 150 questions, ten each for 15 roles from frontend to HR. Answers stay hidden until you press Show Answer; filter by difficulty.",
   steps: [

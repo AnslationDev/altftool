@@ -1,5 +1,5 @@
 const seo = {
-  title: "Teen BMI Calculator With IOTF Age and Sex Cut-Offs",
+  title: "Teen BMI Calculator With IOTF Age and Sex",
   metaDescription:
     "BMI for ages 10 to 20 read against the IOTF curves that reach 25 and 30 at age 18, with the kilogram weight at each cut-off for that height.",
   steps: [

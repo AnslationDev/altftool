@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Doc Prompt Builder: OpenAPI 3.1, Markdown, README",
+  title: "API Doc Prompt Builder: OpenAPI 3.1, Markdown",
   metaDescription:
     "Paste METHOD /path lines and get a doc prompt with every path parameter, RFC 9110 error cases and TODO(verify) markers instead of invented fields.",
   steps: [

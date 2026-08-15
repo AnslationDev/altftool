@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelance Hourly Rate Calculator – From Take-Home Pay",
+  title: "Freelance Hourly Rate Calculator",
   metaDescription:
     "Work backwards from target take-home pay: add tax, expenses and a profit buffer, divide by real billable hours, and get hourly, day and monthly targets.",
   steps: [

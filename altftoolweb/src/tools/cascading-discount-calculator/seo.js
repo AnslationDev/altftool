@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cascading Discount Calculator: True Effective % Off",
+  title: "Cascading Discount Calculator: True Effective %",
   metaDescription:
     "Stack successive offers, a flat coupon and tax for the real effective discount: 50% then 20% is 60% off, not 70%, and the gap is shown.",
   steps: [

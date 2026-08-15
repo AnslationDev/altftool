@@ -1,5 +1,5 @@
 const seo = {
-  title: "Churn Rate Calculator: Churn, Retention, Remaining",
+  title: "Churn Rate Calculator: Churn, Retention",
   metaDescription:
     "Customers lost ÷ customers at the start × 100, to 0.01%. Shows churn, the matching retention rate and customers remaining from the same two numbers.",
   intro:

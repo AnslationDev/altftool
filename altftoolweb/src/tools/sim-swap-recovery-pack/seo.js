@@ -1,5 +1,5 @@
 const seo = {
-  title: "SIM Swap Recovery Checklist: 24 Actions, 5 Domains",
+  title: "SIM Swap Recovery Checklist: 24 Actions, 5",
   metaDescription:
     "Orders 24 recovery actions across carrier, bank, email, sessions and evidence. No phone number, account name or secret is ever entered.",
   steps: [

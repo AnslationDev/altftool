@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gujarati Birthday Wishes: Formal and Informal Forms",
+  title: "Gujarati Birthday Wishes: Formal and Informal",
   metaDescription:
     "Gujarati birthday messages written separately for તમે and તું, each with romanisation, an English meaning and the SMS part count.",
   steps: [

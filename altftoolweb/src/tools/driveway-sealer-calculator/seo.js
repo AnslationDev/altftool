@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driveway Sealer Calculator: Gallons, Pails & Coats",
+  title: "Driveway Sealer Calculator: Gallons, Pails",
   metaDescription:
     "Turn driveway area, surface porosity and coat count into gallons, litres and 5-gallon pails at ~75 sq ft/gal asphalt or 250 for concrete sealer.",
   steps: [

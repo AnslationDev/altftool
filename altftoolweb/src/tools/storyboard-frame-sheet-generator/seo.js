@@ -1,5 +1,5 @@
 const seo = {
-  title: "Storyboard Template Generator — 16:9, 2.39:1, 9:16 Frames",
+  title: "Storyboard Template Generator — 16:9, 2.39:1",
   metaDescription:
     "Lay out printable storyboard frames at 16:9, 1.85:1, 2.39:1, 4:3 or 9:16 on your paper size, check they fit, and download the sheet as an SVG.",
   steps: [

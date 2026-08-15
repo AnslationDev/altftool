@@ -1,5 +1,5 @@
 const seo = {
-  title: "Qatar Entry Rules: Visa Days & Compulsory Insurance",
+  title: "Qatar Entry Rules: Visa Days & Compulsory",
   metaDescription:
     "Check your stay against the 90-in-180 or 30+30 waiver, count six months of passport validity from arrival, and price the 30-day health cover.",
   steps: [

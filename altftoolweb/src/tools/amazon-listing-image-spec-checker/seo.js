@@ -1,5 +1,5 @@
 const seo = {
-  title: "Amazon Image Checker: 1000 px Zoom, White Background",
+  title: "Amazon Image Checker: 1000 px Zoom, White",
   metaDescription:
     "Test width, height, format and frame fill against Amazon's 500 px minimum, 1000 px zoom line, pure white main image and 85% fill rules.",
   steps: [

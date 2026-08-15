@@ -1,5 +1,5 @@
 const seo = {
-  title: "Private Dream Journal: Tag and Search Recurring Dreams",
+  title: "Private Dream Journal: Tag and Search Recurring",
   metaDescription:
     "Log a dream title plus free-text tags, then search every entry for a recurring theme. Saved in this browser's local storage; export the journal as JSON.",
   steps: [

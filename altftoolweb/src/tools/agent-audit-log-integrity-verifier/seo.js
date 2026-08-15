@@ -1,5 +1,5 @@
 const seo = {
-  title: "Verify Agent Audit Log Integrity: JSON/JSONL Chains",
+  title: "Verify Agent Audit Log Integrity: JSON/JSONL",
   metaDescription:
     "Check JSON or JSONL logs for duplicate IDs, sequence gaps, backwards timestamps and broken previousHash links, and recompute a SHA-256 chain in-browser.",
   steps: [

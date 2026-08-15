@@ -1,5 +1,5 @@
 const seo = {
-  title: "Life Productivity Score: 7 Weighted Pillars out of 100",
+  title: "Life Productivity Score: 7 Weighted Pillars",
   metaDescription:
     "Score one logged day out of 100 across sleep (25), focused work (20), activity (15), tasks (15), screen time (10), learning (8) and social (7).",
   intro:

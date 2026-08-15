@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wallpaper App Permission Audit and Ad SDK Risk Score",
+  title: "Wallpaper App Permission Audit and Ad SDK Risk",
   metaDescription:
     "A wallpaper app needs only SET_WALLPAPER and internet. Scores 18 permissions by sensitivity and flags what to revoke: overlay, install, accessibility.",
   steps: [

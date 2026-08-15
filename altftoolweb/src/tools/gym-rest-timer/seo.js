@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gym Rest Timer: Per-Exercise Rests That Auto-Advance",
+  title: "Gym Rest Timer: Per-Exercise Rests",
   metaDescription:
     "Give every exercise its own rest countdown — presets from 2-5 min strength to 30 s endurance — and the timer chains work and rest through the session.",
   steps: [

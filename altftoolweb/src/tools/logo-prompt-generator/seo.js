@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Logo Prompt Builder + Stroke and Favicon Limits",
+  title: "AI Logo Prompt Builder + Stroke and Favicon",
   metaDescription:
     "Compose a Midjourney or DALL-E logo prompt from mark type, shape language and palette — with minimum stroke %, element budget, clear space and print px.",
   steps: [

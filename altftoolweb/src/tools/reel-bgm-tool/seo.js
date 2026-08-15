@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reel BGM Finder: Match Your Clip to a Mood and Track",
+  title: "Reel BGM Finder: Match Your Clip to a Mood",
   metaDescription:
     "Describe your reel and get up to five tracks across twelve mood categories, each with its vibe and typical footage — a curated list, not a live chart.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tamil New Year Wishes in Tamil, Tanglish or English",
+  title: "Tamil New Year Wishes in Tamil, Tanglish",
   metaDescription:
     "Puthandu greetings for Chithirai 1 (usually 14 April) and 1 January, in Tamil script, Tanglish or English, with SMS segment and 700-char status counts.",
   steps: [

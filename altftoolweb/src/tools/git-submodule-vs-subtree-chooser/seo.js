@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Submodule vs Subtree vs Package: Scored Chooser",
+  title: "Git Submodule vs Subtree vs Package: Scored",
   metaDescription:
     "Answer six questions — registry, change rate, consumer edits, git expertise, consumers, pinning — to rank submodule, subtree and package with reasons.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Design Handoff Checklist Generator with Weighted Score",
+  title: "Design Handoff Checklist Generator with Weighted",
   metaDescription:
     "Build a platform-specific design handoff checklist where blockers weigh 3x nice-to-haves, then copy it as a GitHub-flavoured markdown task list.",
   steps: [

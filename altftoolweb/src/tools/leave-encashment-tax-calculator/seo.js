@@ -1,5 +1,5 @@
 const seo = {
-  title: "Leave Encashment Tax Calculator: ₹25 Lakh Exemption",
+  title: "Leave Encashment Tax Calculator: ₹25 Lakh",
   metaDescription:
     "Runs the section 10(10AA)(ii) four-way test: received, ₹25 lakh lifetime cap, 10 months’ salary, 30 days a year, and shows what stays taxable.",
   steps: [

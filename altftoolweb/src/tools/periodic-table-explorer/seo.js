@@ -1,5 +1,5 @@
 const seo = {
-  title: "Periodic Table Explorer: 25 Element Reference Cards",
+  title: "Periodic Table Explorer: 25 Element Reference",
   metaDescription:
     "Browse 25 elements with atomic mass, noble-gas electron configuration, melting and boiling points in °C, density, discovery year and uses.",
   steps: [

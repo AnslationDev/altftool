@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chatbot Escalation Rules: When to Hand Off to a Human",
+  title: "Chatbot Escalation Rules: When to Hand",
   metaDescription:
     "Build a first-match-wins handoff rule set: two failed attempts, a 0.7 intent-confidence floor, explicit human requests and always-on safety triggers.",
   steps: [

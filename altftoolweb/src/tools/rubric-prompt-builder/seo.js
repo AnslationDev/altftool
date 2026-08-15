@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rubric Prompt Builder — Weighted Criteria, Exact Points",
+  title: "Rubric Prompt Builder — Weighted Criteria, Exact",
   metaDescription:
     "Generate an AI prompt for an analytic grading rubric: weights become whole point maxima that sum exactly to your total, with 3-5 performance levels.",
   steps: [

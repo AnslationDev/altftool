@@ -1,5 +1,5 @@
 const seo = {
-  title: "MIRR Calculator with Finance and Reinvestment Rates",
+  title: "MIRR Calculator with Finance and Reinvestment",
   metaDescription:
     "Discounts outflows at the finance rate, compounds inflows at the reinvestment rate, and returns one MIRR per period with the PV and FV used.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Compare – Side-by-Side Diff with Similarity %",
+  title: "Text Compare – Side-by-Side Diff with Similarity",
   metaDescription:
     "Paste two texts for a line-by-line diff marking added, removed and modified lines, a similarity percentage, and a downloadable text-compare-report.txt.",
   steps: [

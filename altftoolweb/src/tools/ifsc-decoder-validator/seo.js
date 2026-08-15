@@ -1,5 +1,5 @@
 const seo = {
-  title: "IFSC Code Validator: Check Format, Bank and Branch",
+  title: "IFSC Code Validator: Check Format, Bank",
   metaDescription:
     "Tests an IFSC against the RBI pattern — 4 letters, a 0, then 6 alphanumerics — then splits bank prefix from branch code. Catches O-for-zero typos.",
   steps: [

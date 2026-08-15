@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monsoon Packing List Sized by Humidity and Rainfall",
+  title: "Monsoon Packing List Sized by Humidity",
   metaDescription:
     "Sizes the list from drying time at your humidity and the IMD 24-hour rainfall band, and drops the wash-mid-trip assumption when nothing dries.",
   steps: [

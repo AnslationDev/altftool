@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Quote Generator: 48 Quotes, Same Seed, Same Line",
+  title: "Random Quote Generator: 48 Quotes, Same Seed",
   metaDescription:
     "48 attributed quotes from 35 public-domain authors across six themes, 8 each. Copy takes the line and the author together; a seed reproduces any pick.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Slow Down Audio Without Changing Pitch — 0.35× to 1.25×",
+  title: "Slow Down Audio Without Changing Pitch — 0.35×",
   metaDescription:
     "Play a local audio file at 0.35×–1.25× speed in 0.05 steps with pitch preserved. Loop and seek to repeat hard phrases when learning or transcribing.",
   steps: [

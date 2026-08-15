@@ -1,5 +1,5 @@
 const seo = {
-  title: "ASCII Table: All 128 Codes in Decimal, Hex, Oct, Binary",
+  title: "ASCII Table: All 128 Codes in Decimal, Hex, Oct",
   metaDescription:
     "Searchable 7-bit ASCII reference: all 128 codes in decimal, hex, octal and binary, named control characters, and character-to-code lookup both ways.",
   intro:

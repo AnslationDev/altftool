@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dockerfile Security Linter: root, :latest, curl to bash",
+  title: "Dockerfile Security Linter: root, :latest, curl",
   metaDescription:
     "Paste a Dockerfile and get line-numbered findings for curl piped to a shell, ADD from a URL, :latest bases, secret-like ENV and a root final stage.",
   steps: [

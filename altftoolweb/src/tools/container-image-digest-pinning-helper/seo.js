@@ -1,5 +1,5 @@
 const seo = {
-  title: "Docker Image Digest Pinning: Tag to sha256 Reference",
+  title: "Docker Image Digest Pinning: Tag to sha256",
   metaDescription:
     "Convert a mutable image tag into a pinned name:tag@sha256 reference and scan Dockerfile FROM lines and compose or Kubernetes image keys for unpinned tags.",
   steps: [

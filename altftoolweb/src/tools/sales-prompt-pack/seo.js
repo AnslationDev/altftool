@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sales Prompt Pack: 12 Fill-in-the-Blank AI Prompts",
+  title: "Sales Prompt Pack: 12 Fill-in-the-Blank AI",
   steps: [
     "Narrow the 12 prompts with Search prompts or the Category list — Prospecting, Outreach, Discovery, Follow-up, Objections, Closing — then pick a card.",
     "Under Fill in the blanks type your account, buyer and deal details, or press Use example values; Clear fields empties every blank again.",

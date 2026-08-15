@@ -1,5 +1,5 @@
 const seo = {
-  title: "Missed Dose Checker: The Halfway-to-Next-Dose Rule",
+  title: "Missed Dose Checker: The Halfway-to-Next-Dose",
   metaDescription:
     "Enter when the dose was due, the time now and how often you take it, to see how late you are against the halfway cut-off and when the next dose is due.",
   steps: [

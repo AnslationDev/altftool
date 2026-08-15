@@ -1,5 +1,5 @@
 const seo = {
-  title: "Candy Match 3: Free 8x8 Puzzle with Cascade Combos",
+  title: "Candy Match 3: Free 8x8 Puzzle with Cascade",
   metaDescription:
     "Swap adjacent candies on an 8x8 board: 10 points a candy, +15 past three, times the cascade step. Three levels, classic or timed, best score saved.",
   intro:

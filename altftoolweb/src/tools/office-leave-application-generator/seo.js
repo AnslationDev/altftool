@@ -1,5 +1,5 @@
 const seo = {
-  title: "Office Leave Application Generator with Notice Check",
+  title: "Office Leave Application Generator with Notice",
   metaDescription:
     "Drafts a casual, earned, sick or emergency leave letter or email, checks the notice you have given for that type, and states the balance left after it.",
   steps: [

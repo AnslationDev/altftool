@@ -1,5 +1,5 @@
 const seo = {
-  title: "Recipe Remix Prompt Builder for Leftover Ingredients",
+  title: "Recipe Remix Prompt Builder for Leftover",
   metaDescription:
     "Turns a dish, the ingredients you have and a diet constraint into one AI prompt demanding substitutions, exact quantities, timings and storage notes.",
   steps: [

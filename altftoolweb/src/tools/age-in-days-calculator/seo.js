@@ -1,5 +1,5 @@
 const seo = {
-  title: "Age in Days Calculator – Exact Days, Weeks & Hours",
+  title: "Age in Days Calculator – Exact Days, Weeks",
   metaDescription:
     "Enter a birth date to count exact days lived — leap days included — plus weeks, whole months, hours and the days left until your next birthday.",
   intro:

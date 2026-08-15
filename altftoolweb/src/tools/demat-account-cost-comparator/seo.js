@@ -1,5 +1,5 @@
 const seo = {
-  title: "Demat Account Charges Calculator: AMC, DP, Brokerage",
+  title: "Demat Account Charges Calculator: AMC, DP",
   metaDescription:
     "Compare demat plans on real yearly cost — AMC, DP charge per scrip sold, brokerage, 18% GST, STT, stamp duty and exchange fees.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL Server Connection String Builder: ADO.NET + JDBC",
+  title: "SQL Server Connection String Builder: ADO.NET +",
   metaDescription:
     "Generate matching SqlClient and JDBC strings with named instances, port 1433, Encrypt, TrustServerCertificate and passwords escaped for each format.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids Playful Palette Generator With WCAG Text Tones",
+  title: "Kids Playful Palette Generator With WCAG Text",
   metaDescription:
     "Bright themed palettes for kids’ design, each hue paired with a text-safe sibling walked to 4.5:1 AA or 7:1 AAA contrast against the page.",
   steps: [

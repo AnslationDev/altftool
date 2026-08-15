@@ -1,5 +1,5 @@
 const seo = {
-  title: "Landlord PAN for HRA: the ₹1,00,000 Rent Threshold",
+  title: "Landlord PAN for HRA: the ₹1,00,000 Rent",
   metaDescription:
     "Test your annual rent against the ₹1,00,000 PAN limit, the ₹3,000 receipt relaxation and the ₹50,000 section 194-IB TDS trigger, shared flats included.",
   steps: [

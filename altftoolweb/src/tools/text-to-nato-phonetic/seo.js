@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text to NATO Phonetic Alphabet with Spoken Playback",
+  title: "Text to NATO Phonetic Alphabet with Spoken",
   steps: [
     "Type or paste into English Input Text — the counter caps the field at 500 chars — and the NATO Phonetic Output panel fills in as you type, with a slash at every word break.",
     "Set the Reading Speed and Voice Pitch sliders, then press LISTEN PHONETIC to hear each code word spoken one at a time while the sequencer highlights the character it is on.",

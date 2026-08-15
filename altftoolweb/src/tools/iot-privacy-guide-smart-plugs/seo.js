@@ -1,5 +1,5 @@
 const seo = {
-  title: "Smart Plug Security: 14 Controls, VLAN & Subnet Plan",
+  title: "Smart Plug Security: 14 Controls, VLAN & Subnet",
   metaDescription:
     "Score 14 weighted controls for cheap smart plugs and bulbs, get a segmentation plan matched to your router, and size the IoT subnet from usable hosts.",
   steps: [

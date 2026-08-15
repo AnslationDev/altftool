@@ -1,5 +1,5 @@
 const seo = {
-  title: "Instagram Post Size Generator: 1080px Batch Export",
+  title: "Instagram Post Size Generator: 1080px Batch",
   metaDescription:
     "Fit one image to 1080×1080, 1080×1350, 1080×566 and 1080×1920, see how much each ratio crops away, then export them all in your browser.",
   steps: [

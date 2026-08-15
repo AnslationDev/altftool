@@ -1,5 +1,5 @@
 const seo = {
-  title: "Daily Word Game: Five-Letter Puzzle in Six Guesses",
+  title: "Daily Word Game: Five-Letter Puzzle in Six",
   metaDescription:
     "One five-letter answer a day, six guesses, green and amber letter scoring. Practice rounds never touch your streak, and hard mode enforces clues.",
   steps: [

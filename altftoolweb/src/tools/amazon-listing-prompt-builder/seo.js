@@ -1,5 +1,5 @@
 const seo = {
-  title: "Amazon Listing Prompt Builder — 250-Byte Search Terms",
+  title: "Amazon Listing Prompt Builder — 250-Byte Search",
   metaDescription:
     "Build one AI brief for Amazon title, bullets and description with policy rules included, plus a backend search-term string packed into 250 bytes.",
   steps: [

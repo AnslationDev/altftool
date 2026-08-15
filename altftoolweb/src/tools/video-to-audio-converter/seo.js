@@ -1,5 +1,5 @@
 const seo = {
-  title: "Extract Audio from Video to WAV or Opus, with a Timeline",
+  title: "Extract Audio from Video to WAV or Opus",
   metaDescription:
     "Pull audio from video in your browser, trim, split and reorder clips on a timeline, then export 16-bit WAV or Opus at 64-256 kbps. No upload.",
   steps: [

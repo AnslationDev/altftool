@@ -1,5 +1,5 @@
 const seo = {
-  title: "Job Description Prompt Builder: Word Budget and Bias",
+  title: "Job Description Prompt Builder: Word Budget",
   metaDescription:
     "Build one AI prompt that keeps must-haves apart from nice-to-haves, splits your word target across six sections, and flags 22 coded wordings.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unit Price Calculator: Compare Price Per Kg, Litre, Piece",
+  title: "Unit Price Calculator: Compare Price Per Kg",
   metaDescription:
     "Compare pack sizes by price per kg, per litre or per piece — multipack aware, mixed units normalised, cheapest option ranked with the % gap shown.",
   steps: [

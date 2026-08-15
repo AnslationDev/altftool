@@ -1,5 +1,5 @@
 const seo = {
-  title: "Speed Limit Converter: km/h, mph, Knots, m/s and ft/s",
+  title: "Speed Limit Converter: km/h, mph, Knots, m/s",
   metaDescription:
     "Convert posted limits with exact factors (1 mile = 1609.344 m), plus the nearest multiple of 5 and the time to cover one kilometre and one mile.",
   steps: [

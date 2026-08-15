@@ -1,5 +1,5 @@
 const seo = {
-  title: "Personal Data Export Auditor - Schema Only, No Values",
+  title: "Personal Data Export Auditor - Schema Only",
   metaDescription:
     "Scan a downloaded data export of JSON, CSV and TXT files for eight personal-data categories. Reads field names and counts only, never the values.",
   steps: [

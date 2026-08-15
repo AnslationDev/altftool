@@ -1,5 +1,5 @@
 const seo = {
-  title: "Motorcycle Engine Comparison: BMEP, PS/L, Piston Speed",
+  title: "Motorcycle Engine Comparison: BMEP, PS/L, Piston",
   metaDescription:
     "Compare two bikes on specific power, torque density, BMEP = 2π × nᵣ × torque ÷ swept volume, power-to-weight and mean piston speed at peak power.",
   steps: [

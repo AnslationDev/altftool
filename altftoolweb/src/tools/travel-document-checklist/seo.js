@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Document Checklist with Deadlines by Priority",
+  title: "Travel Document Checklist with Deadlines",
   metaDescription:
     "Six trip profiles, per-document due dates 21/14/7/3 days before departure, a readiness percentage and a passport flag under 180 days. Exports CSV.",
   steps: [

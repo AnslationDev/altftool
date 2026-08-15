@@ -1,5 +1,5 @@
 const seo = {
-  title: "Invisible Gorilla Test: Count Passes, Spot the Gorilla",
+  title: "Invisible Gorilla Test: Count Passes, Spot",
   metaDescription:
     "The Simons and Chabris selective-attention task: count only the white team's passes across 45, 30 or 20 seconds, then say what you saw.",
   steps: [

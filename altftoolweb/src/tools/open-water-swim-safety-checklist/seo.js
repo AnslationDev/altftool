@@ -1,5 +1,5 @@
 const seo = {
-  title: "Open Water Swim Safety Checklist: 15 Pre-Swim Checks",
+  title: "Open Water Swim Safety Checklist: 15 Pre-Swim",
   metaDescription:
     "Scores 15 pre-swim checks with safety-critical items weighted double, and reads your water temperature against the 16-31 °C range and the 1-10-1 rule.",
   steps: [

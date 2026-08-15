@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gravity Orbit Simulator: Circular, Elliptical, Escape",
+  title: "Gravity Orbit Simulator: Circular, Elliptical",
   metaDescription:
     "Set star mass, radius and tangential speed, then watch a = -GM*r/r^3 integrate live against the circular sqrt(GM/r) and escape sqrt(2GM/r) speeds.",
   steps: [

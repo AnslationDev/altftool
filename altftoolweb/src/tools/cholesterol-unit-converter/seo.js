@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cholesterol mg/dL to mmol/L Converter - Full Panel",
+  title: "Cholesterol mg/dL to mmol/L Converter - Full",
   metaDescription:
     "Convert a lipid panel both ways - 38.67 for cholesterol, 88.57 for triglycerides - with non-HDL, the ratio and a Friedewald LDL estimate.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Payment Receipt Generator with Amount in Words & Balance",
+  title: "Payment Receipt Generator with Amount in Words",
   metaDescription:
     "Number receipts as RCPT-2026-0007, spell the amount in Indian lakh or short-scale words, and show the balance still due on the invoice.",
   steps: [

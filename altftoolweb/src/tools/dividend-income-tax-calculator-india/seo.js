@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dividend Tax Calculator India: Slab Rate & 194 TDS",
+  title: "Dividend Tax Calculator India: Slab Rate & 194",
   metaDescription:
     "Dividend taxed at your slab rate with surcharge capped at 15%, 4% cess, the section 57 interest cap of 20%, and section 194 TDS credited per company.",
   steps: [

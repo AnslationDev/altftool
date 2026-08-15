@@ -1,5 +1,5 @@
 const seo = {
-  title: "Jump Rope Calorie Calculator with Work-Rest Intervals",
+  title: "Jump Rope Calorie Calculator with Work-Rest",
   metaDescription:
     "Uses the ACSM equation and Compendium MET bands of 8.8, 11.8 and 12.3, blending rope time with 1.5 MET rest so intervals are costed honestly.",
   steps: [

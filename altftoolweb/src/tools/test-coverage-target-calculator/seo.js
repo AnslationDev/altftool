@@ -1,5 +1,5 @@
 const seo = {
-  title: "Test Coverage Target Calculator - Exact Lines Needed",
+  title: "Test Coverage Target Calculator - Exact Lines",
   metaDescription:
     "Turns a coverage gate % into the whole-number lines or branches to cover - ceil(total x target/100) - plus new-code needs and a sprint ratchet plan.",
   steps: [

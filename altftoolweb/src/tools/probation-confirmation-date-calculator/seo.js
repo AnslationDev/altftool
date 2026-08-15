@@ -1,5 +1,5 @@
 const seo = {
-  title: "Probation Confirmation Date: Extensions, Unpaid Leave",
+  title: "Probation Confirmation Date: Extensions, Unpaid",
   metaDescription:
     "Turns a joining date and probation months into the last day of probation and the confirmation date, adjusted for extensions and unpaid leave days.",
   steps: [

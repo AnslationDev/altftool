@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pune Airport (PNQ): When to Leave Home for a Flight",
+  title: "Pune Airport (PNQ): When to Leave Home",
   metaDescription:
     "Works back from departure through bag-drop close, gate close and the 2-hour reporting advice, with an hourly traffic factor. No metro serves Lohegaon.",
   steps: [

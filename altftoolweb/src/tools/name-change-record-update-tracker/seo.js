@@ -1,5 +1,5 @@
 const seo = {
-  title: "Name Change Record Tracker: Gazette to Aadhaar to PAN",
+  title: "Name Change Record Tracker: Gazette to Aadhaar",
   metaDescription:
     "Sequences a name change by dependency — affidavit, newspaper ads, Gazette, Aadhaar, PAN — and shows what is ready to file today and what is blocked.",
   steps: [

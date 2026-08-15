@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lorem Ipsum Generator: Paragraphs, Sentences, Words",
+  title: "Lorem Ipsum Generator: Paragraphs, Sentences",
   metaDescription:
     "Generate up to 50 deterministic paragraphs, sentences or words of placeholder Latin — identical settings always return identical text for stable mockups.",
   steps: [

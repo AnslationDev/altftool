@@ -1,5 +1,5 @@
 const seo = {
-  title: "Community Post Planner - Dated Schedule Between Uploads",
+  title: "Community Post Planner - Dated Schedule Between",
   metaDescription:
     "Turn an upload cadence into dated community posts - polls, images, text, questions, clips - evenly spaced, with the longest silent gap and weekly minutes.",
   steps: [

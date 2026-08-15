@@ -1,5 +1,5 @@
 const seo = {
-  title: "Canvas Wrap Bleed Calculator: Print Size & Safe Zone",
+  title: "Canvas Wrap Bleed Calculator: Print Size & Safe",
   metaDescription:
     "Face size plus twice the bar depth and back tuck gives the sheet to print — bleed per edge, safe zone, image lost at the sides, 300 DPI pixel count.",
   steps: [

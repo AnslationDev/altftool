@@ -1,5 +1,5 @@
 const seo = {
-  title: "Liquid Medicine Dose: mg to mL and the Right Syringe",
+  title: "Liquid Medicine Dose: mg to mL and the Right",
   metaDescription:
     "Divide the prescribed mg by the bottle mg/mL to get the volume, pick the smallest oral syringe that holds it, and see what the nearest mark delivers.",
   steps: [

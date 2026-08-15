@@ -1,5 +1,5 @@
 const seo = {
-  title: "20-20-20 Eye Break Timer That Runs Between Matches",
+  title: "20-20-20 Eye Break Timer That Runs Between",
   metaDescription:
     "Schedules 20-20-20 eye breaks on match boundaries, not a blind 20-minute loop, counts lobby time as rest, and says when a 32-minute MOBA cannot meet it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "IOU Letter Generator: Acknowledgement of Debt, India",
+  title: "IOU Letter Generator: Acknowledgement of Debt",
   metaDescription:
     "Writes a signed acknowledgement of debt with the amount in words, simple interest to the due date and the fresh three-year limitation date.",
   steps: [

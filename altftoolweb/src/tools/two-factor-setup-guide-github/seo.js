@@ -1,5 +1,5 @@
 const seo = {
-  title: "GitHub 2FA Setup Guide: 15 Weighted Security Controls",
+  title: "GitHub 2FA Setup Guide: 15 Weighted Security",
   metaDescription:
     "Checklist of 15 weighted GitHub controls: recovery codes, passkeys, token and SSH key hygiene, push protection, with four of them marked critical.",
   steps: [

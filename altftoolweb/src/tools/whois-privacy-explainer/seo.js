@@ -1,5 +1,5 @@
 const seo = {
-  title: "WHOIS Privacy Explainer: What a Lookup Still Shows",
+  title: "WHOIS Privacy Explainer: What a Lookup Still",
   metaDescription:
     "Field-by-field: which registrant details a WHOIS or RDAP lookup publishes under ICANN's Registration Data Policy, and what a proxy service costs you.",
   steps: [

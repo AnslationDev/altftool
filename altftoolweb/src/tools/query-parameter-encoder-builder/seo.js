@@ -1,5 +1,5 @@
 const seo = {
-  title: "URL Query String Encoder: JSON to RFC 3986 Parameters",
+  title: "URL Query String Encoder: JSON to RFC 3986",
   metaDescription:
     "Turn a JSON object into a percent-encoded query string — six array styles, %20 or + for spaces, and a strict RFC 3986 mode for OAuth 1.0a signing.",
   steps: [

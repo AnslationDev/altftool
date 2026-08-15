@@ -1,5 +1,5 @@
 const seo = {
-  title: "Photo Editor App Permission Audit: 0-100 Privacy Score",
+  title: "Photo Editor App Permission Audit: 0-100 Privacy",
   metaDescription:
     "Score a photo editor's permissions against the system photo picker baseline: 0-100 privacy score, ranked revoke list and each grant's manifest name.",
   intro:

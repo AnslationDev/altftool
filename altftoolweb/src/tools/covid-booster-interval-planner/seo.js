@@ -1,5 +1,5 @@
 const seo = {
-  title: "COVID Booster Interval Planner — Earliest Dose Date",
+  title: "COVID Booster Interval Planner — Earliest Dose",
   metaDescription:
     "Enter your last dose and any recent infection, pick a 2, 3 or 6-month rule or custom day counts, and get your earliest eligible date and countdown.",
   steps: [

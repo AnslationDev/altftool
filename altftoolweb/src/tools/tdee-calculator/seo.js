@@ -1,5 +1,5 @@
 const seo = {
-  title: "TDEE Calculator: Maintenance Calories from 3 BMR Formulas",
+  title: "TDEE Calculator: Maintenance Calories from 3 BMR",
   metaDescription:
     "Estimate daily calorie burn with Mifflin-St Jeor, Harris-Benedict or Katch-McArdle, an activity factor from 1.2 to 1.9, and cut-to-bulk targets.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Insurance Claim Document Checklist + IRDAI Deadline",
+  title: "Insurance Claim Document Checklist + IRDAI",
   metaDescription:
     "Pick health, motor or life claim and get the exact documents an Indian insurer asks for, plus the 15- or 30-day IRDAI settlement deadline as a date.",
   steps: [

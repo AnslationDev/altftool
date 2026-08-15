@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stock Price & Volume Dashboard: Last 30 Daily Closes",
+  title: "Stock Price & Volume Dashboard: Last 30 Daily",
   metaDescription:
     "Chart a ticker's last 30 daily closes and volume side by side, with day-over-day change and the 30-day high and low. End-of-day data, not live quotes.",
   steps: [

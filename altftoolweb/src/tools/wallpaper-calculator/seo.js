@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wallpaper Calculator: Rolls from Drops & Pattern Repeat",
+  title: "Wallpaper Calculator: Rolls from Drops & Pattern",
   metaDescription:
     "Counts drops, not area: drops per roll rounded down, rolls rounded up, with free, straight or half-drop match on a 10.05 m x 53 cm roll, plus waste.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tamil Nadu Professional Tax Calculator (Half-Yearly)",
+  title: "Tamil Nadu Professional Tax Calculator",
   metaDescription:
     "Greater Chennai Corporation slabs: nil up to Rs 21,000 half-yearly, rising to Rs 1,250, Rs 2,500 a year. Enter a monthly salary or half-yearly income.",
   steps: [

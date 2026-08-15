@@ -1,5 +1,5 @@
 const seo = {
-  title: "Carpet Roll Calculator: Running Metres, Drops & Seams",
+  title: "Carpet Roll Calculator: Running Metres, Drops",
   steps: [
     "Enter \"Room length (m)\" and \"Room width (m)\", pick the carpet roll width from the dropdown — 2 m, 3.66 m (12 ft), 4 m or 5 m — and set any pattern repeat.",
     "Adjust the trim allowance per drop, total doorway width, and the carpet and underlay prices per m².",

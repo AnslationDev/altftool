@@ -1,5 +1,5 @@
 const seo = {
-  title: "Endurance Protein Calculator: g/kg by Training Hours",
+  title: "Endurance Protein Calculator: g/kg by Training",
   metaDescription:
     "Place weekly training hours in the ACSM 1.2-2.0 g/kg range for a daily protein target, with the 0.3 g/kg post-session dose and a per-meal split.",
   steps: [

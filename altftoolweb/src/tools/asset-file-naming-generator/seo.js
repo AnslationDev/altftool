@@ -1,5 +1,5 @@
 const seo = {
-  title: "Asset File Naming Generator: ISO Dates, Padded Runs",
+  title: "Asset File Naming Generator: ISO Dates, Padded",
   metaDescription:
     "Build sortable file names from tokens with hyphen, underscore or dot separators, ISO 8601 or year-quarter dates and zero-padded sequence numbers.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Driving Licence Number Decoder: State, RTO, Year",
+  title: "Indian Driving Licence Number Decoder: State",
   metaDescription:
     "Split a 15-character DL number into state code, 2-digit RTO, 4-digit year and 7-digit serial, naming the state — DL0420110012345 reads as Delhi, RTO 04.",
   steps: [

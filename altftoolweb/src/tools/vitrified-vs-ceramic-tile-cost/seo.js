@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vitrified vs Ceramic Tile Cost: Whole-Life Compare",
+  title: "Vitrified vs Ceramic Tile Cost: Whole-Life",
   metaDescription:
     "Compares laid cost — tile, labour, bedding — then spreads installation over your horizon with upkeep and shows when vitrified pays back its premium.",
   steps: [

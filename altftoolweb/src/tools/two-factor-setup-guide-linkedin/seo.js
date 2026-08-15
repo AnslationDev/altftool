@@ -1,5 +1,5 @@
 const seo = {
-  title: "LinkedIn 2FA Setup: 15-Control Hardening Checklist",
+  title: "LinkedIn 2FA Setup: 15-Control Hardening",
   metaDescription:
     "Work through 15 weighted LinkedIn controls: authenticator 2FA, recovery codes, session cleanup. The score caps at 69% until all 4 critical ones pass.",
   steps: [

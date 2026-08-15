@@ -1,5 +1,5 @@
 const seo = {
-  title: "CFT to Cubic Meter Converter — Brass, Litres, Tonnes",
+  title: "CFT to Cubic Meter Converter — Brass, Litres",
   metaDescription:
     "Converts cubic feet to cubic metres (×0.0283168), brass, litres and yards, then applies bulk density for tonnes, tipper loads and cost per unit.",
   steps: [

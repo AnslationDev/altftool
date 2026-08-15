@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marketing Opt-Out Letter: GDPR Art. 21(2) Objection",
+  title: "Marketing Opt-Out Letter: GDPR Art. 21(2)",
   metaDescription:
     "Pick the channels and the applicable law; the letter cites GDPR Art. 21(2) and dates each stop — immediate under GDPR, 10 business days under CAN-SPAM.",
   steps: [

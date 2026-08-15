@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lecture Recording Checklist: Audio, Light, Capture",
+  title: "Lecture Recording Checklist: Audio, Light",
   metaDescription:
     "Pre-flight check for audio, framing, screen capture and power, weighted 3/2/1 by severity. It holds the shoot while any critical item is still open.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Loan EMI Calculator with Amortisation & Total Cost",
+  title: "Car Loan EMI Calculator with Amortisation",
   metaDescription:
     "Reducing-balance EMI from on-road price, down payment, rate and tenure - with total interest, year-wise amortisation and full cash outgo including fees.",
   steps: [

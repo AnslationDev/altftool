@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marketplace Scam Checker: 17 Rules, 0-100 Signal Score",
+  title: "Marketplace Scam Checker: 17 Rules, 0-100 Signal",
   metaDescription:
     "Paste a buyer or seller message and match it against 17 rules — escrow, overpayment, OTP, remote access, advance fees — for a 0-100 signal score.",
   steps: [

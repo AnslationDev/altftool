@@ -1,5 +1,5 @@
 const seo = {
-  title: "RTI Fee and Deadline Calculator: Rs 10 plus Rs 2 a Page",
+  title: "RTI Fee and Deadline Calculator: Rs 10 plus Rs 2",
   metaDescription:
     "Price an RTI under the 2012 Rules and date the reply under Section 7(1), with APIO +5 days, the 40-day third-party track and the BPL exemption.",
   steps: [

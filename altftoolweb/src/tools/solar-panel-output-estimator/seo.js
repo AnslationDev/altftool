@@ -1,5 +1,5 @@
 const seo = {
-  title: "Solar Panel Output Estimator: kWh After Real Losses",
+  title: "Solar Panel Output Estimator: kWh After Real",
   metaDescription:
     "Daily, monthly and annual kWh from panel wattage and peak sun hours, with system, shading, temperature and inverter losses set separately — plus savings.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Food Delivery Complaint Letter and Refund Calculator",
+  title: "Food Delivery Complaint Letter and Refund",
   metaDescription:
     "Work out the refund you can claim after coupon and GST apportioning, then draft a letter to the platform's grievance officer with the 48-hour clock.",
   steps: [

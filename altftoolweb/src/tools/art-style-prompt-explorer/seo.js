@@ -1,5 +1,5 @@
 const seo = {
-  title: "Art Style Prompt Explorer: 16 Movements, CLIP Budget",
+  title: "Art Style Prompt Explorer: 16 Movements, CLIP",
   metaDescription:
     "Pick up to 3 of 16 art movements and get a prompt plus a negative prompt built from what each style structurally avoids, with a 75-token CLIP estimate.",
   steps: [

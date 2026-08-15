@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cumulative vs Non-Cumulative FD: Payout, Break-Even",
+  title: "Cumulative vs Non-Cumulative FD: Payout",
   metaDescription:
     "Compare quarterly compounding with monthly, quarterly, half-yearly or annual payouts at the same rate, plus the break-even reinvestment rate and TDS.",
   steps: [

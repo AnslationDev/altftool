@@ -1,5 +1,5 @@
 const seo = {
-  title: "One-Way NDA Generator: Term, Survival, Governing Law",
+  title: "One-Way NDA Generator: Term, Survival, Governing",
   metaDescription:
     "Drafts a unilateral NDA with four-limb exclusions and separate term and survival dates, under India, England and Wales, Singapore, Delaware, NY or CA law.",
   steps: [

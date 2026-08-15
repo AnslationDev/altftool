@@ -1,5 +1,5 @@
 const seo = {
-  title: "CORS Configuration Linter: Fetch-Spec Preflight Checks",
+  title: "CORS Configuration Linter: Fetch-Spec Preflight",
   metaDescription:
     "Paste response headers and see which Fetch check fails: wildcard with credentials, a missing Vary: Origin, or Authorization not covered by *.",
   steps: [

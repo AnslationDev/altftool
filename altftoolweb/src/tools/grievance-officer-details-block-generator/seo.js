@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grievance Officer Details Block + Statutory Deadlines",
+  title: "Grievance Officer Details Block + Statutory",
   metaDescription:
     "Publish grievance officer name, designation, email, phone and office hours as text or HTML, with Rule 4(6) 48-hour and IT Rules 24-hour deadlines.",
   steps: [

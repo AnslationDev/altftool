@@ -1,5 +1,5 @@
 const seo = {
-  title: "Influencer Campaign NDA Generator with Embargo Dates",
+  title: "Influencer Campaign NDA Generator with Embargo",
   metaDescription:
     "Assemble a creator embargo NDA carrying the DTSA 1833(b) immunity notice, an FTC 16 CFR 255 carve-out and a Consumer Review Fairness Act clause.",
   steps: [

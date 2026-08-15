@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bonafide Certificate Request Letter Format + Timing",
+  title: "Bonafide Certificate Request Letter Format +",
   metaDescription:
     "Date, subject line, body and a signature block with your roll number — plus a check of your deadline against the office turnaround in working days.",
   steps: [

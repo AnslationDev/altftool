@@ -1,5 +1,5 @@
 const seo = {
-  title: "Late Payment Reminder Letter Builder - 5 Chase Levels",
+  title: "Late Payment Reminder Letter Builder - 5 Chase",
   metaDescription:
     "Draft an overdue-invoice chase letter at the right rung — courtesy to final notice — with UK 1998 Act, EU Directive 2011/7 or MSMED Act 2006 wording.",
   steps: [

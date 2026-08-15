@@ -1,5 +1,5 @@
 const seo = {
-  title: "Transcript Request Letter to the Controller of Exams",
+  title: "Transcript Request Letter to the Controller",
   metaDescription:
     "Draft a university transcript application with enrolment number, study period, sets required and delivery mode, including sealed sets sent direct to WES.",
   steps: [

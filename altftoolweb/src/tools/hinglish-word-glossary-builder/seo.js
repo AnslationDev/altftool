@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hinglish Glossary Builder: 28 Starter Terms + Export",
+  title: "Hinglish Glossary Builder: 28 Starter Terms +",
   metaDescription:
     "Start from 28 documented Hinglish terms like jugaad and prepone, add your own with example and origin, then export Markdown, CSV, JSON or text.",
   steps: [

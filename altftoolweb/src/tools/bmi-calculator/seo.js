@@ -1,5 +1,5 @@
 const seo = {
-  title: "BMI Calculator with WHO Bands and Healthy Weight Range",
+  title: "BMI Calculator with WHO Bands and Healthy Weight",
   metaDescription:
     "Weight in kg divided by height in metres squared, on the WHO bands, plus the kg range for a BMI of 18.5-24.9 at your height and 33 ml/kg of water.",
   steps: [

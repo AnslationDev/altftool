@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Cost Per Day and Per Person Per Day Calculator",
+  title: "Travel Cost Per Day and Per Person Per Day",
   metaDescription:
     "Each cost scales as per trip, night, person or person-day, so you get total, per day, per person per day, a category split and your cash gap.",
   steps: [

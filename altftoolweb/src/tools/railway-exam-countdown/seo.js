@@ -1,5 +1,5 @@
 const seo = {
-  title: "RRB Exam Countdown: NTPC, Group D, ALP and JE Dates",
+  title: "RRB Exam Countdown: NTPC, Group D, ALP and JE",
   metaDescription:
     "Count down to your RRB stage date, get today's new learning, revision and mock split, and net scores after one-third negative marking.",
   steps: [

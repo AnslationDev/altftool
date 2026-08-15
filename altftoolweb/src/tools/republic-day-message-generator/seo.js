@@ -1,5 +1,5 @@
 const seo = {
-  title: "Republic Day Messages, Captions and Speech Openers",
+  title: "Republic Day Messages, Captions and Speech",
   metaDescription:
     "Greetings, social captions and speech openers for 26 January — up to 8 at a time, with the Republic Day number counted from 1950 (2026 is the 77th).",
   steps: [

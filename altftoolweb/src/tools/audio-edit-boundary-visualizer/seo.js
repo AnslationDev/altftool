@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Edit Boundary Visualizer: Flag Clicks & DC Steps",
+  title: "Audio Edit Boundary Visualizer: Flag Clicks & DC",
   metaDescription:
     "Draw a local waveform and shortlist timestamps where the sample jump or DC offset spikes. Up to 30 MB and 10 minutes; export the list as JSON.",
   steps: [

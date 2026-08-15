@@ -1,5 +1,5 @@
 const seo = {
-  title: "MUAC Calculator: WHO 115/125 mm Bands for Children",
+  title: "MUAC Calculator: WHO 115/125 mm Bands",
   metaDescription:
     "Read a MUAC tape measurement in mm or cm against the WHO cut-offs for children 6-59 months: red under 115 mm, yellow to 125 mm, green above.",
   steps: [

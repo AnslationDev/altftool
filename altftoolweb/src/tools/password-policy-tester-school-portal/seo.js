@@ -1,5 +1,5 @@
 const seo = {
-  title: "School Password Checker: 8 Rules, Passphrase Builder",
+  title: "School Password Checker: 8 Rules, Passphrase",
   metaDescription:
     "Checks a school login password against eight plain-language rules — no name, no birth year, no keyboard runs — and builds a 4-word passphrase.",
   steps: [

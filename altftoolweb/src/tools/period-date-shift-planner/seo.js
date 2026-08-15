@@ -1,5 +1,5 @@
 const seo = {
-  title: "Period Date Planner — Will Your Period Hit Your Trip?",
+  title: "Period Date Planner — Will Your Period Hit",
   metaDescription:
     "Projects up to 12 cycles from your last period and counts the days that overlap a trip or exam — plus how far the clash would have to shift either way.",
   steps: [

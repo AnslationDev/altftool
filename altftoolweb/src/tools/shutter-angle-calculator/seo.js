@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shutter Angle Calculator: 180° Rule and Flicker Check",
+  title: "Shutter Angle Calculator: 180° Rule and Flicker",
   metaDescription:
     "Convert a shutter angle to the 1/x speed your camera menu asks for at any fps — 180° is 1/48s at 24fps — and check it against 50 Hz or 60 Hz mains.",
   steps: [

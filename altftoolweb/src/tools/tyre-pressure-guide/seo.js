@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tyre Pressure Guide: Cold psi, bar and kPa by Load",
+  title: "Tyre Pressure Guide: Cold psi, bar and kPa",
   metaDescription:
     "Cold tyre pressure by vehicle class and load in psi, bar and kPa, with the drop to expect on a cold morning and a check against sidewall MAX PRESS.",
   steps: [

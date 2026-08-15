@@ -1,5 +1,5 @@
 const seo = {
-  title: "SVG Blob Generator: Seeded Organic Shapes, One Path",
+  title: "SVG Blob Generator: Seeded Organic Shapes, One",
   metaDescription:
     "Set 3 to 12 points and 0-100% fluidity to build one closed quadratic-Bezier path in a 400x400 viewBox. The same seed always redraws the identical blob.",
   steps: [

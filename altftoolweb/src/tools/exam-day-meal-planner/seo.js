@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Day Meal Planner: Eating Timeline by Report Time",
+  title: "Exam Day Meal Planner: Eating Timeline by Report",
   metaDescription:
     "Works backward from your admit-card reporting time: main meal 3 hours out, carb snack 60-90 minutes, last big drink 45 minutes, wake and leave times.",
   intro:

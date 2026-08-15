@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sprite Animation Timing Calculator with CSS steps()",
+  title: "Sprite Animation Timing Calculator with CSS",
   metaDescription:
     "Turns frame count and fps into frame duration, sheet dimensions and CSS steps() keyframes, and flags rates that don't divide your refresh evenly.",
   steps: [

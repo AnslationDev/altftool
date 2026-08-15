@@ -1,5 +1,5 @@
 const seo = {
-  title: "Docker Tag Naming Convention Builder (OCI-Valid Tags)",
+  title: "Docker Tag Naming Convention Builder",
   metaDescription:
     "Compose Docker image tags from SemVer, branch, SHA, date and environment parts, validated against the OCI 128-character grammar with branches sanitised.",
   steps: [

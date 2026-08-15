@@ -1,5 +1,5 @@
 const seo = {
-  title: "Etihad Baggage Allowance Checker: Weight vs Piece Rules",
+  title: "Etihad Baggage Allowance Checker: Weight",
   metaDescription:
     "Checks bags against Etihad weight-concept limits, the 2 × 23 kg piece rule on US, Canada and Brazil routes, and the 7 kg 50 × 40 × 21 cm Economy cabin.",
   steps: [

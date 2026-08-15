@@ -1,5 +1,5 @@
 const seo = {
-  title: "Radioactive Decay Calculator: Half-Life to Amount Left",
+  title: "Radioactive Decay Calculator: Half-Life",
   metaDescription:
     "Enter half-life and elapsed time in any matching unit: get the remaining quantity, decay constant λ = ln2/t½, half-lives elapsed, and time to a target.",
   steps: [

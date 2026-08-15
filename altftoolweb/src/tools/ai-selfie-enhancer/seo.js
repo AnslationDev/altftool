@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Selfie Enhancer: 79 Presets, Split Before/After",
+  title: "AI Selfie Enhancer: 79 Presets, Split",
   metaDescription:
     "Adjust brightness, contrast and saturation 50–150% plus 0–10 smoothing, compare on a split slider, export full-resolution JPEG in your browser.",
   intro:

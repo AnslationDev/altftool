@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voltage Converter vs Plug Adapter: Read Your Label",
+  title: "Voltage Converter vs Plug Adapter: Read",
   metaDescription:
     "A 100-240V label needs only a plug adapter anywhere. A single-voltage one gets a converter sized in VA — 1.25x heating, 1.5x electronics, 3x motor.",
   steps: [

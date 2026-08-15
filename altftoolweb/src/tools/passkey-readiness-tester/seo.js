@@ -1,5 +1,5 @@
 const seo = {
-  title: "Passkey Readiness Tester: Audit WebAuthn Options JSON",
+  title: "Passkey Readiness Tester: Audit WebAuthn Options",
   metaDescription:
     "Paste your PublicKeyCredential options and check residentKey, RP ID, user handle PII, attachment and conditional mediation against WebAuthn Level 3.",
   steps: [

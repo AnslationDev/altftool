@@ -1,5 +1,5 @@
 const seo = {
-  title: "MSSC Calculator: 7.5% Quarterly Maturity in 2 Years",
+  title: "MSSC Calculator: 7.5% Quarterly Maturity in 2",
   metaDescription:
     "Values a Mahila Samman certificate with P x (1 + r/400)^(4t) - Rs 2,00,000 matures at Rs 2,32,044 - plus the 40% withdrawal cap and premature closure.",
   steps: [

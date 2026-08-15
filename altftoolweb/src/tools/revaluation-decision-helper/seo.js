@@ -1,5 +1,5 @@
 const seo = {
-  title: "Revaluation Calculator: Is the Re-Check Fee Worth It?",
+  title: "Revaluation Calculator: Is the Re-Check Fee",
   metaDescription:
     "Prices both sides of a revaluation: expected marks from P(rise)×gain − P(fall)×loss, cost per expected mark, break-even chance and days left to apply.",
   steps: [

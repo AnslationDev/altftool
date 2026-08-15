@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Triangle Generator — Border Trick Code, 4-200px",
+  title: "CSS Triangle Generator — Border Trick Code",
   metaDescription:
     "Pick up, down, left or right, a 4-200px size and a colour to get the width:0;height:0 border-trick CSS for a triangle — N px tall on a 2N px base.",
   intro:

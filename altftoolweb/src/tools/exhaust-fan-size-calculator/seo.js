@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exhaust Fan Size Calculator: CFM and Duct Diameter",
+  title: "Exhaust Fan Size Calculator: CFM and Duct",
   metaDescription:
     "Size a bathroom or kitchen extractor from room volume and air changes per hour, with duct-run losses, the 50/100 CFM minimums, and duct diameter.",
   intro:

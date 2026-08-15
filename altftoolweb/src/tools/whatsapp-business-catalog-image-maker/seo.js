@@ -1,5 +1,5 @@
 const seo = {
-  title: "WhatsApp Catalog Image Maker: 1:1, 500px+, Under 5MB",
+  title: "WhatsApp Catalog Image Maker: 1:1, 500px+",
   metaDescription:
     "Builds square catalogue tiles at 500-1600 px and sizes burned-in type above the 11 pt floor for a 177 pt grid tile. Exports PNG, checked under 5 MB.",
   steps: [

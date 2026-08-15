@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roommate Agreement Generator – Rent Split, Chores, Exit",
+  title: "Roommate Agreement Generator – Rent Split",
   metaDescription:
     "Split rent, utilities and deposit equally, by room area or custom percent, build a chore rotation and generate a ready-to-sign flatmate agreement.",
   steps: [

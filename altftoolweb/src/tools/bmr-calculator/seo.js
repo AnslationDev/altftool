@@ -1,5 +1,5 @@
 const seo = {
-  title: "BMR Calculator (Mifflin-St Jeor) With TDEE and Macros",
+  title: "BMR Calculator (Mifflin-St Jeor) With TDEE",
   metaDescription:
     "Mifflin-St Jeor BMR, then TDEE at activity factors 1.2 to 1.9, a 0.25-0.5 kg/week target and 25/45/30 protein, carb and fat grams.",
   intro:

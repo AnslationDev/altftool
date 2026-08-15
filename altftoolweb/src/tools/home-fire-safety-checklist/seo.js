@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Fire Safety Checklist: Score and Alarms Needed",
+  title: "Home Fire Safety Checklist: Score and Alarms",
   metaDescription:
     "Score seven areas — detection, escape, cooking, LPG, electrical, heating, equipment — and size smoke alarms, CO alarms and extinguishers for your home.",
   steps: [

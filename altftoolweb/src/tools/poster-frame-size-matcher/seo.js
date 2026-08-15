@@ -1,5 +1,5 @@
 const seo = {
-  title: "Poster Frame Size Matcher: Crop, Mount Border, DPI",
+  title: "Poster Frame Size Matcher: Crop, Mount Border",
   metaDescription:
     "Ranks A5-A0, 4x6 to 24x36 inch and 10x15 to 70x100 cm frames by how far each is off your ratio, with printed size, mount border and crop percentage.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Azerbaijan e-Visa Fee & 15-Day Registration Deadline",
+  title: "Azerbaijan e-Visa Fee & 15-Day Registration",
   metaDescription:
     "Prices the ASAN e-visa at USD 25 standard or USD 60 urgent for your party, dates the 15-day migration registration and tests passport validity.",
   steps: [

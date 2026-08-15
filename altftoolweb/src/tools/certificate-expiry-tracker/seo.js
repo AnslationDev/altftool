@@ -1,5 +1,5 @@
 const seo = {
-  title: "TLS Certificate Expiry Tracker With .ics Reminders",
+  title: "TLS Certificate Expiry Tracker With .ics",
   metaDescription:
     "Track notAfter dates in your browser: days remaining, renewal deadline at your lead time, worst-first sorting and a certificate-renewals.ics download.",
   steps: [

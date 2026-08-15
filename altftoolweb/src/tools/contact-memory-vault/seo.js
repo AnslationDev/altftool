@@ -1,5 +1,5 @@
 const seo = {
-  title: "Contact Memory Vault: Private Notes Saved In-Browser",
+  title: "Contact Memory Vault: Private Notes Saved",
   metaDescription:
     "A two-field Contact and Memory notebook stored in your browser's localStorage — search both fields, export and reimport as a JSON file. No account.",
   steps: [

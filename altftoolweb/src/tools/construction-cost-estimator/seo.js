@@ -1,5 +1,5 @@
 const seo = {
-  title: "House Construction Cost Estimator per Sq Ft, India",
+  title: "House Construction Cost Estimator per Sq Ft",
   metaDescription:
     "Built-up area and finish grade to a rupee total: economy ₹1,600 to luxury ₹3,600 per sq ft, a city factor, 12 work heads and material quantities.",
   steps: [

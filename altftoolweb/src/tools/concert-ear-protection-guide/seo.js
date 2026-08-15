@@ -1,5 +1,5 @@
 const seo = {
-  title: "Concert Ear Protection: Real dB After NIOSH Derating",
+  title: "Concert Ear Protection: Real dB After NIOSH",
   metaDescription:
     "Turn the NRR, SNR or flat filter figure on the packet into the dB(A) reaching your ear, derated the NIOSH way, and the safe time against 85 dB for 8 h.",
   steps: [

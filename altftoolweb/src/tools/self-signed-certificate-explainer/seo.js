@@ -1,5 +1,5 @@
 const seo = {
-  title: "Self-Signed Certificate Risk: Scored by Where It Runs",
+  title: "Self-Signed Certificate Risk: Scored by Where It",
   metaDescription:
     "Scores a self-signed or private-CA TLS setup out of 100 by context and trust model, with a yes/no table for machine-in-the-middle and browser trust.",
   steps: [

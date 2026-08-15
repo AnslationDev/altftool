@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dilution & Molarity Calculator: C1V1 = C2V2 Solver",
+  title: "Dilution & Molarity Calculator: C1V1 = C2V2",
   metaDescription:
     "Solve V2 = C1V1/C2 and get the diluent to add plus the dilution factor, or switch to Molarity from mass for moles and mol/L from grams.",
   steps: [

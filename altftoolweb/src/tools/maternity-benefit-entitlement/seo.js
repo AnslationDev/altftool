@@ -1,5 +1,5 @@
 const seo = {
-  title: "Maternity Benefit Act Calculator: 80 Days & 26 Weeks",
+  title: "Maternity Benefit Act Calculator: 80 Days & 26",
   metaDescription:
     "Dates the section 5(2) eighty-day condition, then the 26 or 12 week leave, earliest start, leave end, rejoining date and nursing breaks.",
   steps: [

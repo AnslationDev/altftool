@@ -1,5 +1,5 @@
 const seo = {
-  title: "School Attendance Percentage Tracker (75% CBSE Rule)",
+  title: "School Attendance Percentage Tracker",
   metaDescription:
     "Days present ÷ working days × 100 against the 75% board requirement, turned into a leave allowance in days and a projection for the whole session.",
   steps: [

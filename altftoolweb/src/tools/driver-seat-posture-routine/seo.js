@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving Break Planner and Car Seat Posture Targets",
+  title: "Driving Break Planner and Car Seat Posture",
   steps: [
     "Enter Time behind the wheel (hours), Departure time and Your height (cm).",
     "Set Which break rule applies to Private driving — 15 min every 2 h, or Professional — 45 min after 4.5 h.",

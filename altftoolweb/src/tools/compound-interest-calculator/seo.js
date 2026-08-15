@@ -1,5 +1,5 @@
 const seo = {
-  title: "Compound Interest Calculator with Year-by-Year Table",
+  title: "Compound Interest Calculator with Year-by-Year",
   metaDescription:
     "A = P(1+r/n)^nt with daily, monthly, quarterly, half-yearly or yearly compounding - maturity amount, interest earned and a year-wise balance table in ₹.",
   intro:

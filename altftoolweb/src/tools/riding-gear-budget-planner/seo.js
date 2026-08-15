@@ -1,5 +1,5 @@
 const seo = {
-  title: "Riding Gear Budget Planner: Helmet-First Allocation",
+  title: "Riding Gear Budget Planner: Helmet-First",
   metaDescription:
     "Spends your budget in protection order — helmet, gloves, jacket, boots — tags each with its IS 4151 or EN standard, and scores honest coverage.",
   steps: [

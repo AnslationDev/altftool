@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Best Wishes Generator: 7 Languages + Days Left",
+  title: "Exam Best Wishes Generator: 7 Languages + Days",
   metaDescription:
     "Good luck messages for boards, JEE, NEET, UPSC or CAT in English, Hinglish, Hindi, Marathi, Bengali, Gujarati or Tamil, with revision hours per subject.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cyberpunk Palette Generator With WCAG Contrast Tuning",
+  title: "Cyberpunk Palette Generator With WCAG Contrast",
   metaDescription:
     "Neon-on-dark palette from a seed word: elevation ramp, status colours and glow shadows, each accent lifted until it hits your 4.5:1 or 7:1 target.",
   steps: [

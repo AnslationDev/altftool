@@ -1,5 +1,5 @@
 const seo = {
-  title: "SBV to SRT Converter for YouTube Caption Downloads",
+  title: "SBV to SRT Converter for YouTube Caption",
   metaDescription:
     "Convert a YouTube SBV caption file to numbered SubRip cues with zero-padded hh:mm:ss,mmm times, an optional millisecond offset — all in your browser.",
   steps: [

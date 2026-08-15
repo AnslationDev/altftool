@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dubai Trip Cost Calculator with Tourism Dirham & VAT",
+  title: "Dubai Trip Cost Calculator with Tourism Dirham",
   metaDescription:
     "Price a Dubai trip with the 10% municipality fee, 10% service charge, 5% VAT and the 7-20 AED Tourism Dirham per room per night, then per person per day.",
   steps: [

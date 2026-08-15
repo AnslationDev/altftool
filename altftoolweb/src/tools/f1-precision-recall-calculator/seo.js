@@ -1,5 +1,5 @@
 const seo = {
-  title: "F1 Score Calculator: Precision, Recall, F-beta, MCC",
+  title: "F1 Score Calculator: Precision, Recall, F-beta",
   metaDescription:
     "Enter TP, FP, FN and TN to get precision, recall, F1, F-beta, balanced accuracy, MCC and Cohen's kappa; zero denominators show as undefined.",
   steps: [

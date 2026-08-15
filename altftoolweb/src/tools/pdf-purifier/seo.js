@@ -1,5 +1,5 @@
 const seo = {
-  title: "Delete PDF Pages Online — Reorder & Rebuild the File",
+  title: "Delete PDF Pages Online — Reorder & Rebuild",
   metaDescription:
     "Preview thumbnails, delete and drag-reorder PDF pages (up to 80 MB), then download a rebuilt file ending -cleaned.pdf — removed pages are truly gone.",
   steps: [

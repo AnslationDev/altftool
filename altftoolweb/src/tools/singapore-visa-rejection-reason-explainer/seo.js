@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Visa Rejection Reasons and How to Reapply",
+  title: "Singapore Visa Rejection Reasons and How",
   metaDescription:
     "ICA publishes no reason and no appeal. Work through form and photo compliance, local contact, funds, purpose, ties and record, then score what you fixed.",
   steps: [

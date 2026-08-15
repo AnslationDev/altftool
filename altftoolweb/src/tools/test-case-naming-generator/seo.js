@@ -1,5 +1,5 @@
 const seo = {
-  title: "Test Case Naming Generator for Jest, pytest, JUnit",
+  title: "Test Case Naming Generator for Jest, pytest",
   metaDescription:
     "Turn given-when-then scenarios into test names in four conventions, plus a Jest, pytest, JUnit 5, Go or RSpec skeleton that obeys each runner’s rules.",
   steps: [

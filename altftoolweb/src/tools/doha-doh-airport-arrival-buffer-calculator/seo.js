@@ -1,5 +1,5 @@
 const seo = {
-  title: "When to Leave for Doha DOH Airport: Buffer Calculator",
+  title: "When to Leave for Doha DOH Airport: Buffer",
   metaDescription:
     "Works back from your Doha departure through gate close, check-in cut-off and the 3-hour advice, minus the drive after traffic — one leave-home time.",
   steps: [

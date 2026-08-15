@@ -1,5 +1,5 @@
 const seo = {
-  title: "Alt-Text Checker: Purpose-First, W3C-Aligned Rules",
+  title: "Alt-Text Checker: Purpose-First, W3C-Aligned",
   metaDescription:
     "Classify the image as decorative, informative, functional or complex, then W3C-aligned rules flag empty alt, 'image of', filenames and duplicated text.",
   steps: [

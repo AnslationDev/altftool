@@ -1,5 +1,5 @@
 const seo = {
-  title: "Python venv Commands for Your OS, Shell and Version",
+  title: "Python venv Commands for Your OS, Shell",
   metaDescription:
     "Exact create, activate and install commands: bin vs Scripts, activate.fish, activate.bat or Activate.ps1, and --upgrade-deps only on Python 3.9+.",
   steps: [

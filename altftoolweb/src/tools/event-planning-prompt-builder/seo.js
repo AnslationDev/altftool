@@ -1,5 +1,5 @@
 const seo = {
-  title: "Event Planning Prompt Builder: Run of Show & Sizing",
+  title: "Event Planning Prompt Builder: Run of Show",
   steps: [
     "Fill the Agenda box — one line each, as \"Segment name | minutes\" — then set Expected attendance and Start time (24-hour HH:MM).",
     "Pick the Event type, Seating layout and Catering style, and add the optional Venue and Known risks fields.",
