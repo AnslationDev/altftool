@@ -34,6 +34,14 @@ export const FEATURED = GAMES.filter((g) => g.featured);
 export const TRENDING = GAMES.filter((g) => g.trending);
 export const NEW_RELEASES = GAMES.filter((g) => g.isNew);
 
+// No play-count or rating data exists anywhere in this catalog (see
+// gameContent.js: "Nothing is invented — no review counts, no player
+// numbers, no awards"), so a real "most played" ranking can't be computed.
+// POPULAR reuses the hand-curated `featured` flag rather than fabricate a
+// popularity metric — it's a distinct editorial set from TRENDING, not an
+// alias of it.
+export const POPULAR = FEATURED;
+
 export function getByCategory(name) {
   return GAMES.filter((g) => g.category === name);
 }
