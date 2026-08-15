@@ -8,7 +8,6 @@ import { ArrowRight, BadgeCheck, Bath, Check, Droplets, FileText, Home, ImageIco
 // site's real contact route.
 const contactUrl = "/policypages/contact";
 const contactLabel = "Contact us";
-const formSrc = "https://api.leadconnectorhq.com/widget/form/YZr1FGoPxQjSdeBdbOjL";
 const bathroomGallery = [
   "https://images.unsplash.com/photo-1756079664354-34944e001f6d?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1754522711595-84428937b07a?auto=format&fit=crop&w=1200&q=82",
@@ -249,91 +248,17 @@ const footerLinks = {
   ],
 };
 
-function LeadFormFrame({ title }) {
-  const [isLoaded, setIsLoaded] = useState(false);
+// This card used to embed a live LeadConnector form (a real third-party
+// lead-capture widget) in an embedded frame. BOPS pages are non-transactional
+// design demonstrations — see src/app/bops/layout.jsx — so submitting this
+// form would have sent a real enquiry to a live external service. The card
+// now shows a static, inert notice instead, matching the pattern used for the
+// disabled map embeds elsewhere in BOPS (e.g.
+// src/app/bops/tripfindbox/contact-us/page.jsx).
+function LeadFormFrame() {
   return (
-    <div style={{ position: "relative", minHeight: "350px", width: "100%" }}>
-      {!isLoaded && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            backgroundColor: "#ffffff",
-            zIndex: 2,
-            borderRadius: "8px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "18px",
-              padding: "8px 0",
-            }}
-          >
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "48px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-                marginTop: "8px",
-              }}
-            />
-          </div>
-        </div>
-      )}
-      <iframe
-        src={formSrc}
-        title={title}
-        className="bathroom-remodel-formFrame"
-        loading="lazy"
-        scrolling="no"
-        onLoad={() => setIsLoaded(true)}
-        style={{ opacity: isLoaded ? 1 : 0 }}
-      />
+    <div className="bathroom-remodel-formDisabled" role="note">
+      Enquiry form unavailable in this design demonstration — nothing is sent.
     </div>
   );
 }
@@ -432,7 +357,7 @@ export default function BathroomRemodelClient() {
             <p className="bathroom-remodel-formCopy">
               Speak with an Austin bathroom remodeling expert today.
             </p>
-            <LeadFormFrame title="Bathroom remodeling consultation form" />
+            <LeadFormFrame />
           </aside>
         </div>
       </section>
@@ -785,7 +710,7 @@ export default function BathroomRemodelClient() {
 
           <aside className="bathroom-remodel-formCard bathroom-remodel-formCardFinal">
             <h3 className="bathroom-remodel-formTitle">Start Your Free Quote</h3>
-            <LeadFormFrame title="Bathroom remodeling final quote form" />
+            <LeadFormFrame />
           </aside>
         </div>
       </section>

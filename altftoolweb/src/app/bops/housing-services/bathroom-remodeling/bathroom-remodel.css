@@ -329,12 +329,18 @@
   padding-bottom: 14px;
 }
 
-.bathroom-remodel-formFrame {
-  border: 0;
+.bathroom-remodel-formDisabled {
+  align-items: center;
+  background: var(--bathroom-remodel-off-white);
+  border: 1px dashed var(--bathroom-remodel-border);
   border-radius: 8px;
-  display: block;
-  height: 590px;
-  transition: opacity 0.3s ease-in-out;
+  color: var(--bathroom-remodel-gray-mid);
+  display: flex;
+  font-size: 13px;
+  justify-content: center;
+  min-height: 220px;
+  padding: 24px;
+  text-align: center;
   width: 100%;
 }
 
@@ -1267,18 +1273,3 @@
   }
 }
 
-@keyframes remodelSkeletonPulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.remodel-skeleton-pulse {
-  animation: remodelSkeletonPulse 1.5s infinite ease-in-out;
-}
