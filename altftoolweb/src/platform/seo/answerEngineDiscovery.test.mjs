@@ -22,8 +22,14 @@ const barcodeScannerSeoSource = readFileSync(
   new URL("../../tools/barcode-scanner/seo.js", import.meta.url),
   "utf8",
 );
-const barcodeScannerRuntimeSource = readFileSync(
-  new URL("../../tools/barcode-scanner/components/scanner.jsx", import.meta.url),
+// barcode-scanner's live pipeline is entry.jsx -> pages/index.jsx ->
+// utils/decodeEngine.js; there is no components/scanner.jsx in this tree
+// (an earlier ZXing-based, network-calling variant that used to live there
+// has been removed entirely, not just left unimported). decodeEngine.js is
+// the actual decode pipeline the page renders, so that is what the
+// local-only privacy claim below is checked against.
+const barcodeScannerDecodeEngineSource = readFileSync(
+  new URL("../../tools/barcode-scanner/utils/decodeEngine.js", import.meta.url),
   "utf8",
 );
 
@@ -56,9 +62,13 @@ test("fallback SEO copy does not promise local-only processing", () => {
 test("networked tool privacy copy names the data recipient", () => {
   assert.match(apiTesterSeoSource, /travel directly from your browser to the target API/i);
   assert.doesNotMatch(apiTesterSeoSource, /tokens never reach a third-party server/i);
-  assert.match(barcodeScannerRuntimeSource, /fetchProductData\(detectedBarcode\)/);
-  assert.match(barcodeScannerSeoSource, /sent to Open Food Facts[\s\S]*UPCitemdb/i);
-  assert.match(barcodeScannerSeoSource, /image or live camera frames stay in your browser/i);
+});
+
+test("barcode scanner's local-only privacy claim matches its actual decode pipeline", () => {
+  // The pipeline only decodes — it never looks up product data over the
+  // network, so it must not call out to a server.
+  assert.doesNotMatch(barcodeScannerDecodeEngineSource, /fetch\(|axios|XMLHttpRequest/i);
+  assert.match(barcodeScannerSeoSource, /never sent anywhere/i);
 });
 
 test("explicit answer-engine rules still honor ALTF Engine crawl policy", () => {
