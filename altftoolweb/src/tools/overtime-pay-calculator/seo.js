@@ -1,5 +1,5 @@
 const seo = {
-  title: "Overtime Pay Calculator: 1.5x, 2x & Custom Multiplier",
+  title: "Overtime Calculator: 1.5x, 2x & Custom Multiplier",
   metaDescription:
     "Enter hourly rate, regular and overtime hours, and a 1.5x, 2x or custom multiplier to get overtime pay, gross weekly pay and blended hourly rate.",
   steps: [

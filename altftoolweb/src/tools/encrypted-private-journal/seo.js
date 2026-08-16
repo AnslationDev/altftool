@@ -1,5 +1,5 @@
 const seo = {
-  title: "Private Journal in Your Browser - No Account, No Sync",
+  title: "Private Journal in Your Browser - No Account",
   metaDescription:
     "Write diary entries that stay in your browser's localStorage - full-text search across titles and bodies, JSON export and import, nothing uploaded.",
   steps: [

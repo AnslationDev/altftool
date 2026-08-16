@@ -1,5 +1,5 @@
 const seo = {
-  title: "Headphone Left/Right Balance Test: 440 Hz Tone Online",
+  title: "Headphone Left/Right Balance Test: 440 Hz Tone",
   metaDescription:
     "Play a hard-panned 440 Hz sine tone that switches ears every 1.5 seconds to catch dead or swapped channels, with a timestamped log of each side.",
   steps: [

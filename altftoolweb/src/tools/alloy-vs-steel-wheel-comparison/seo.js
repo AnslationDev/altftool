@@ -1,5 +1,5 @@
 const seo = {
-  title: "Alloy vs Steel Wheels: Weight, Fuel & Payback Compared",
+  title: "Alloy vs Steel Wheels: Weight, Fuel & Payback",
   metaDescription:
     "Enter both wheels' weights and prices to see kg saved with rotating-mass weighting, the annual fuel value and when - if ever - alloys repay the premium.",
   steps: [

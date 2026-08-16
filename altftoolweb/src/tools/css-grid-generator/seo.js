@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Grid Generator with Per-Track fr, auto & px Sizing",
+  title: "CSS Grid Generator: Per-Track fr/auto/px Sizing",
   metaDescription:
     "Set 1-8 columns and rows, click each track to cycle 1fr, 2fr, auto or fixed px, tune gaps 0-40px, then copy the CSS or download it with an HTML scaffold.",
   intro:

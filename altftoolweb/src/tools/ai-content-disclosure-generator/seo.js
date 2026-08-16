@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Content Disclosure Statement Generator for Publishers",
+  title: "AI Content Disclosure Generator for Publishers",
   metaDescription:
     "Build an AI-use disclosure saying what the AI did, who reviewed it and who is accountable — five assistance levels plus FTC-style placement guidance.",
   steps: [

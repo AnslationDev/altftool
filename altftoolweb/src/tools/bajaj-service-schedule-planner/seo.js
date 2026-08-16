@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bajaj Bike Service Schedule Planner with Cost Estimate",
+  title: "Bajaj Service Schedule Planner with Cost Estimate",
   metaDescription:
     "Plan every free and paid Bajaj service by km and month, price the parts due at each visit, and check a prepaid package against pay-per-visit totals.",
   steps: [

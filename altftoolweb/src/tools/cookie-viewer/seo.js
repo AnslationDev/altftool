@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cookie Viewer: See, Add, Edit & Delete Browser Cookies",
+  title: "Cookie Viewer: Add, Edit & Delete Browser Cookies",
   metaDescription:
     "List every cookie document.cookie exposes for this domain with decoded values, add one with an expiry in days, or delete it with the 1970 expiry trick.",
   intro:

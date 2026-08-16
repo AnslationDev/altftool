@@ -1,5 +1,5 @@
 const seo = {
-  title: "Split Excel into Multiple Files by Sheet, Rows or Column",
+  title: "Split Excel by Sheet, Rows or Column",
   metaDescription:
     "Upload an .xlsx, .xls or .csv and split it one file per worksheet, by max rows, into equal parts or per column value — singly or as a ZIP.",
   steps: [

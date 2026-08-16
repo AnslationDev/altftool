@@ -1,5 +1,5 @@
 const seo = {
-  title: "Percentage of Total Calculator — Part, Percent, Whole",
+  title: "Percentage of Total Calculator with Remainder",
   metaDescription:
     "Solve X is what % of Y, what is X% of Y, and X is Y% of what — with the remainder shown in amount and percent, and zero-total errors explained.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Tag Naming Generator: SemVer 2.0.0 Format + Regex",
+  title: "Git Tag Naming Generator: SemVer 2.0.0 + Regex",
   metaDescription:
     "Set MAJOR.MINOR.PATCH, the v prefix, a prerelease channel and an environment label; get the format template, a validation regex and git commands.",
   steps: [

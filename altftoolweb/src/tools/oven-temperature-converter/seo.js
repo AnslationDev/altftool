@@ -1,5 +1,5 @@
 const seo = {
-  title: "Oven Temperature Converter - Celsius, Fahrenheit, Gas Mark",
+  title: "Oven Temperature Converter: °C, °F & Gas Mark",
   metaDescription:
     "Type in any box - Celsius, Fahrenheit, fan C or gas mark - and the rest update live, with heat-zone guidance and a full gas mark 1/4-10 reference chart.",
   steps: [

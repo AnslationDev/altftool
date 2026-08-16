@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Shoot Gear Packing List - Battery & Card Calculator",
+  title: "Video Shoot Gear Packing List: Battery & Cards",
   metaDescription:
     "Describe your shoot and get a gear checklist with calculated battery counts, card capacity in GB, backup storage, pack weight and watt-hours for flying.",
   steps: [

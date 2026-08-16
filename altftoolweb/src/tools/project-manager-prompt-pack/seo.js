@@ -1,5 +1,5 @@
 const seo = {
-  title: "12 Project Manager AI Prompts: Status, RAID, Escalation",
+  title: "12 Project Manager AI Prompts",
   metaDescription:
     "Twelve delivery prompts filled with your project context, a 120, 250 or 500-word budget, and a reader directive — with [TBC] instead of invented dates.",
   steps: [

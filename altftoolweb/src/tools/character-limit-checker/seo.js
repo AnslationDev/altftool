@@ -1,5 +1,5 @@
 const seo = {
-  title: "Character Limit Checker – 23 Platform Limits, Live Count",
+  title: "Character Limit Checker: 23 Platform Limits",
   metaDescription:
     "Count text against 23 real limits — X 280, Instagram 2,200, meta description 160 — with links weighted as 23 chars and SMS segment billing.",
   steps: [

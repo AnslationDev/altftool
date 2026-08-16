@@ -1,5 +1,5 @@
 const seo = {
-  title: "TDS Rate Finder FY 2025-26: 36 Sections with Thresholds",
+  title: "TDS Rate Finder FY 2025-26: Sections & Thresholds",
   metaDescription:
     "Search 36 TDS sections for FY 2025-26 - 194C, 194J, 194-I and more - see the rate and threshold, then enter a payment to get the deduction and net payout.",
   steps: [

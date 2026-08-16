@@ -1,5 +1,5 @@
 const seo = {
-  title: "EPF Calculator: Corpus, EPS Split and Year-Wise Table",
+  title: "EPF Calculator: Corpus, EPS Split & Yearly Table",
   metaDescription:
     "Projects EPF year by year with the 8.33% EPS diversion capped at ₹1,250 a month, a VPF comparison and the pensionable salary × service ÷ 70 estimate.",
   steps: [

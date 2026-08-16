@@ -1,5 +1,5 @@
 const seo = {
-  title: "Newsletter Header Image Size and Retina Export Planner",
+  title: "Newsletter Header Image Size & Retina Planner",
   metaDescription:
     "Get export pixels, phone render size, the smallest text that still reads at 14px and a KB budget for a 600px-wide email header.",
   steps: [

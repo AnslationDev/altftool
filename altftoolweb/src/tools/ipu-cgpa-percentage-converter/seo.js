@@ -1,5 +1,5 @@
 const seo = {
-  title: "IPU CGPA to Percentage Converter — (CGPA − 0.75) × 10",
+  title: "IPU CGPA to Percentage Converter: (CGPA−0.75)×10",
   metaDescription:
     "Converts GGSIPU CGPA to percentage with the notified (CGPA − 0.75) × 10 formula, runs in reverse, and shows your division band. An 8.2 CGPA is 74.5%.",
   steps: [

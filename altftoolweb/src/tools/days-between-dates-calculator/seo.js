@@ -1,5 +1,5 @@
 const seo = {
-  title: "Days Between Dates Calculator - Weeks, Months & Years",
+  title: "Days Between Dates Calculator with Conversions",
   metaDescription:
     "Counts whole days between two dates and converts to weeks, months (30.44-day average) and years (365.25). Reversed dates return the gap, not an error.",
   intro:

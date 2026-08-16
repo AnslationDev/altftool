@@ -1,5 +1,5 @@
 const seo = {
-  title: "Laminate Flooring Calculator: Packs, Underlay, Beading",
+  title: "Laminate Flooring Calculator: Packs & Underlay",
   metaDescription:
     "Sizes a laminate job's three orders — packs of planks with wastage, underlay rolls and beading less doorways — plus the 10 mm expansion gap and cost.",
   steps: [

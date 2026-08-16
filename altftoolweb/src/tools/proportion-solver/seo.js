@@ -1,5 +1,5 @@
 const seo = {
-  title: "Proportion Solver – Find the Missing Value in a/b = c/d",
+  title: "Proportion Solver: Missing Value in a/b = c/d",
   metaDescription:
     "Pick which of a, b, c or d is unknown, type the other three, and get the answer by cross multiplication with every algebra step shown, ready to copy.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "JSON to Query Params, form-data & urlencoded Converter",
+  title: "JSON to Query Params, form-data & urlencoded",
   metaDescription:
     "Convert JSON to query params, form-data or x-www-form-urlencoded and back, with tags[] / tags / tags[0] array styles, headers and a cURL command.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monthly Budget Planner: Savings Rate & Needs vs Wants",
+  title: "Monthly Budget Planner: Savings Rate, Needs/Wants",
   metaDescription:
     "Set four income lines against your expense categories to see savings rate, needs vs wants, a daily spend limit, and export the plan as CSV.",
   steps: [

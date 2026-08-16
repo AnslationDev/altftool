@@ -1,5 +1,5 @@
 const seo = {
-  title: "Instagram Carousel Planner: Slide Roles & Swipe Retention",
+  title: "Instagram Carousel Planner — Slide Roles",
   metaDescription:
     "Plan 2-20 Instagram carousel slides with hook-to-CTA roles, word budgets and read time, and see how many viewers your swipe rate leaves on the last slide.",
   steps: [

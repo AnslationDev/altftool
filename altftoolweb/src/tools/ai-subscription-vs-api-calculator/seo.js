@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Subscription vs API Cost Calculator: Break-Even Point",
+  title: "AI Subscription vs API Calculator: Break-Even",
   metaDescription:
     "Finds the messages per month where a flat AI seat beats pay-per-token API rates for your prompt sizes, plus how much of the plan's value you actually use.",
   steps: [

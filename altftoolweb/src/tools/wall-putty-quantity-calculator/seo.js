@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wall Putty Quantity Calculator — Kg, Bags & Mixing Water",
+  title: "Wall Putty Quantity Calculator: Kg, Bags, Water",
   metaDescription:
     "Convert wall and ceiling area into putty kilos, bags to buy and gauging water litres, using published coverage of 20-22 sq ft per kg in two coats.",
   steps: [

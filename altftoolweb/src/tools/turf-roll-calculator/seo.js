@@ -1,5 +1,5 @@
 const seo = {
-  title: "Turf Roll Calculator: Rolls, Pallets and Delivered Cost",
+  title: "Turf Roll Calculator: Rolls, Pallets & Cost",
   metaDescription:
     "Enter lawn size in metres or feet, add 5-15% trim wastage and get whole rolls to order, pallet count, spare turf and total cost with delivery and labour.",
   steps: [

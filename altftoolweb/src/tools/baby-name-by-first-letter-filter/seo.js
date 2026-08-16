@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baby Names by First Letter – A-Z Filter with Meanings",
+  title: "Baby Names by First Letter: A-Z Filter & Meanings",
   metaDescription:
     "Tap a letter on the A-Z row, then filter by gender, origin, name length and meaning keywords — every entry shows the source language and meaning.",
   steps: [

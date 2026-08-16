@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coin Toss Streak Game: Flip 20 Coins, See the Longest Run",
+  title: "Coin Toss Streak Game — Longest Run in 20 Flips",
   metaDescription:
     "Flip 20 fair coins at once and see the longest run of heads or tails. The full H/T sequence and count show how often streaks of 5+ appear by pure chance.",
   intro:

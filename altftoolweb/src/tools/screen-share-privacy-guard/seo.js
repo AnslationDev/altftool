@@ -1,5 +1,5 @@
 const seo = {
-  title: "Screen Share Privacy Guard: Rehearse Before You Share",
+  title: "Screen Share Privacy Guard: Rehearse First",
   metaDescription:
     "Previews the screen, window or tab you would share via getDisplayMedia, lets you mark leaky areas, and runs a six-point check. Covers are preview-only.",
   steps: [

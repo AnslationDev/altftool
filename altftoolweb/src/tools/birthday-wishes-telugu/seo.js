@@ -1,5 +1,5 @@
 const seo = {
-  title: "Birthday Wishes in Telugu — Casual & Respectful Forms",
+  title: "Birthday Wishes in Telugu: Casual & Respectful",
   metaDescription:
     "Telugu birthday messages written separately for నువ్వు and మీరు, with romanised Telugu, an English meaning and the SMS parts each wish needs.",
   steps: [

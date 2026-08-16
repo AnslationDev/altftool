@@ -1,5 +1,5 @@
 const seo = {
-  title: "Runtime Sum Calculator: Add Clip Durations & Timecode",
+  title: "Runtime Sum Calculator: Clip Durations & Timecode",
   metaDescription:
     "Paste durations in any mix — 1:30, 00:02:15, 90, 1m 20s or hh:mm:ss:ff timecode — for total runtime, per-clip start times and the gap to a target slot.",
   steps: [

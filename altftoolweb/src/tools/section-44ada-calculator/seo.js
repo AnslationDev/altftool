@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 44ADA Calculator – Presumptive Tax FY 2025-26",
+  title: "Section 44ADA Calculator for FY 2025-26",
   metaDescription:
     "Presumptive income at 50%+ under Section 44ADA, the ₹50/₹75 lakh limit via the 5% cash test, and a tax comparison vs regular books — new or old regime.",
   steps: [

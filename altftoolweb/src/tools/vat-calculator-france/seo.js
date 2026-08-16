@@ -1,5 +1,5 @@
 const seo = {
-  title: "France VAT Calculator - TVA HT to TTC at 20%, 10%, 5.5%",
+  title: "France VAT Calculator: 20%, 10%, 5.5% TVA Rates",
   metaDescription:
     "Convert HT to TTC and back at France's 20%, 10%, 5.5% and 2.1% TVA rates or a custom rate, and check the article 293 B franchise en base thresholds.",
   steps: [

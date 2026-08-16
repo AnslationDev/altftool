@@ -1,5 +1,5 @@
 const seo = {
-  title: "CBSE Class 10 Percentage Calculator: Best of Five Marks",
+  title: "CBSE Class 10 Percentage Calculator: Best of Five",
   metaDescription:
     "Computes the best-of-five percentage from subject marks out of 100, shows the all-subject average and flags any subject below the 33% pass mark.",
   steps: [

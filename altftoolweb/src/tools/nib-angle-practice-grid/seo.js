@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nib Angle Practice Grid: Printable Calligraphy Sheets",
+  title: "Nib Angle Practice Grid: Calligraphy Sheets",
   metaDescription:
     "Rule a guide sheet in nib widths with pen-angle hatch marks — Foundational 30°/4 n.w., Italic 45°/5 — and see the stem width your stroke should measure.",
   steps: [

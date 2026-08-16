@@ -1,5 +1,5 @@
 const seo = {
-  title: "OpenAI GPT API Cost Calculator with Cached Input Rates",
+  title: "GPT API Cost Calculator with Cached Input Rates",
   metaDescription:
     "Estimate monthly OpenAI spend from requests/day and token counts, with per-1M rates for GPT-5.1 to GPT-4o mini, cached-input and 50% Batch discounts.",
   steps: [

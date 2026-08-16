@@ -1,5 +1,5 @@
 const seo = {
-  title: "Savings Goal Tracker - Exact Date You Hit Your Target",
+  title: "Savings Goal Tracker: Date You Hit Your Target",
   metaDescription:
     "Enter target, balance and monthly saving to get the date you hit the goal, 25/50/75% milestone dates, and the monthly top-up a deadline needs.",
   steps: [

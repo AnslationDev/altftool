@@ -1,5 +1,5 @@
 const seo = {
-  title: "ITR Deadline Tracker: Belated, Revised and ITR-U Dates",
+  title: "ITR Deadline Tracker: Belated, Revised & ITR-U",
   metaDescription:
     "Section 139(1) due date, the 31 December belated and revised cut-off, and the 48-month ITR-U window with the 25-70% section 140B additional tax.",
   steps: [

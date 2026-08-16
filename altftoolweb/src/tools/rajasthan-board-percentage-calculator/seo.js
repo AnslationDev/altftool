@@ -1,5 +1,5 @@
 const seo = {
-  title: "RBSE Percentage Calculator - Division on 60/48/36 Bands",
+  title: "RBSE Percentage & Division Calculator (60/48/36)",
   metaDescription:
     "Plain RBSE aggregate from every subject's marks - division off the 60/48/36 bands, 33% per-subject minimum checks and the marks needed for the next band.",
   steps: [

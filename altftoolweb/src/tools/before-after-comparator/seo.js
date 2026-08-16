@@ -1,5 +1,5 @@
 const seo = {
-  title: "Before/After Image Comparator: Slider, Fade & PNG Export",
+  title: "Before/After Image Comparator: Slider & Fade",
   metaDescription:
     "Compare two images with a draggable split slider, side-by-side grid or 0–100 fade, then export a labelled before/after PNG. Nothing is uploaded.",
   intro:

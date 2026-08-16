@@ -1,5 +1,5 @@
 const seo = {
-  title: "Minecraft Parental Controls Checklist by Age and Mode",
+  title: "Minecraft Parental Controls Checklist by Age",
   metaDescription:
     "Answer age, edition and play style to get the exact Xbox privacy, Realm, chat and spending settings with menu paths, plus a weighted coverage score.",
   steps: [

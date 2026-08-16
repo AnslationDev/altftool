@@ -1,5 +1,5 @@
 const seo = {
-  title: "Toiletry Quantity Estimator for the 100 ml Liquids Bag",
+  title: "Toiletry Quantity Estimator: 100 ml Liquids Bag",
   metaDescription:
     "Turn trip length and daily habits into millilitres, then into travel bottles, and total the container sizes against the 1 litre cabin liquids bag.",
   steps: [

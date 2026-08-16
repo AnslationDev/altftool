@@ -1,5 +1,5 @@
 const seo = {
-  title: "ICSE Percentage Calculator – English + Best 4 CISCE Rule",
+  title: "ICSE Percentage Calculator (English + Best 4)",
   metaDescription:
     "Applies the CISCE formula — English plus best 4 (ICSE) or best 3 (ISC) — marking counted vs dropped subjects, with 33%/35% per-subject pass checks.",
   steps: [

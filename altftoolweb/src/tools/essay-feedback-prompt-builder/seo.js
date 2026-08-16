@@ -1,5 +1,5 @@
 const seo = {
-  title: "Essay Feedback Prompt Builder for Quote-Anchored AI Review",
+  title: "Essay Feedback Prompt Builder — Quote-Anchored",
   metaDescription:
     "Builds an AI reviewer prompt with a comment budget of one per 150 words (3-15), quote-anchored feedback and an optional no-rewriting rule.",
   steps: [

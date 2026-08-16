@@ -1,5 +1,5 @@
 const seo = {
-  title: "Study Plan Prompt Builder — Spaced-Repetition AI Prompt",
+  title: "Study Plan Prompt Builder: Spaced Repetition",
   metaDescription:
     "Paste syllabus topics and an exam date to get an AI prompt for a day-by-day plan: 1-3-7-14-30 day spaced reviews plus a final mixed-review block.",
   steps: [

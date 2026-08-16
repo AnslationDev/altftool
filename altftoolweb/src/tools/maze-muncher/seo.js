@@ -1,5 +1,5 @@
 const seo = {
-  title: "Maze Muncher — Maze Arcade Game with Four Smart Ghosts",
+  title: "Maze Muncher — Arcade Game with Four Smart Ghosts",
   metaDescription:
     "Clear a 19x21 maze while four ghosts with different chase styles hunt you. Pellets 10 pts, power pellets 50, frightened ghosts 200. Keys, WASD or swipe.",
   steps: [

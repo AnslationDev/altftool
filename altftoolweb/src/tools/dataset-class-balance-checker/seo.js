@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dataset Class Balance Checker: Imbalance Ratio & Weights",
+  title: "Class Balance Checker: Imbalance Ratio & Weights",
   metaDescription:
     "Paste labels as lines, a CSV column or JSONL to get the imbalance ratio, entropy, baseline accuracy and scikit-learn balanced class weights.",
   steps: [

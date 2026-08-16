@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Media Query Generator: Min & Max Width Breakpoints",
+  title: "CSS Media Query Generator: Min & Max Breakpoints",
   metaDescription:
     "Enter min and max widths in px to get a ready @media rule — min-only, max-only or both joined with 'and' — plus the bare condition for matchMedia.",
   intro:

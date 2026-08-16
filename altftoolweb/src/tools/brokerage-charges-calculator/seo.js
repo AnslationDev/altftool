@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brokerage Charges Calculator – STT, GST, Net P&L per Trade",
+  title: "Brokerage Charges Calculator: STT, GST, Net P&L",
   metaDescription:
     "Itemises STT/CTT, exchange, SEBI, stamp duty and 18% GST for delivery, intraday and F&O trades — with net P&L after costs and the break-even move.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bengali Birthday Wishes with Tumi/Apni Forms & Roman Text",
+  title: "Bengali Birthday Wishes with Tumi/Apni Forms",
   metaDescription:
     "Bengali birthday messages by relationship and tone, written separately for tumi and apni, with romanised text, English meaning and SMS part count.",
   steps: [

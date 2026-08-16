@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brick Breaker: 6 Levels, 3 Lives, Paddle-Angle Aiming",
+  title: "Brick Breaker: 6 Levels, 3 Lives, Paddle Aiming",
   metaDescription:
     "Six hand-built levels and three lives. Bounce angle comes from where the ball hits the paddle. Catch W, S and M capsules. Mouse, touch or arrows.",
   steps: [

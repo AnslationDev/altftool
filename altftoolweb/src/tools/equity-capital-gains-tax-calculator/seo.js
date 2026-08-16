@@ -1,5 +1,5 @@
 const seo = {
-  title: "Equity Capital Gains Tax Calculator (LTCG & STCG India)",
+  title: "Equity Capital Gains Tax Calculator (LTCG & STCG)",
   metaDescription:
     "Enter buy and sell dates and the tool decides short or long term, applies the Rs 1,25,000 LTCG exemption, 4% cess and pre-2018 grandfathering.",
   steps: [

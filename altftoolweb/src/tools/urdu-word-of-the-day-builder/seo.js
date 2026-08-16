@@ -1,5 +1,5 @@
 const seo = {
-  title: "Urdu Word of the Day – Nastaliq Deck of 30 with Streak",
+  title: "Urdu Word of the Day: Nastaliq Deck of 30",
   metaDescription:
     "A 30-word Urdu deck fixed by date: Nastaliq script, Roman Urdu reading, meaning, example sentence and origin note, with a browser-saved streak.",
   steps: [

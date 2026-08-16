@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in Italy: Speed Limits, ZTL and Alcohol Rules",
+  title: "Driving in Italy: Speed, ZTL & Alcohol Rules",
   metaDescription:
     "Italian limits for your licence: 50, 90, 110 and 130 km/h with mph, the rain and neopatentato drops, 0.5 g/l or zero BAC, and ZTL fines.",
   steps: [

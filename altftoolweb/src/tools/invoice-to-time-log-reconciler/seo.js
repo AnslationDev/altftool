@@ -1,5 +1,5 @@
 const seo = {
-  title: "Invoice vs Time Log Reconciler: Per-Activity Variance",
+  title: "Invoice vs Time Log Reconciler by Activity",
   metaDescription:
     "Paste time-log rows as Activity | hours | rate and invoice lines as Activity | amount, set a tolerance, and get the variance on every activity.",
   steps: [

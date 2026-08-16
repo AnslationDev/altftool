@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gujarat Professional Tax Calculator: Rs 200 Flat Slab",
+  title: "Gujarat Professional Tax: Rs 200 Flat Slab",
   metaDescription:
     "Nil up to Rs 12,000 a month, flat Rs 200 above - Rs 2,400 a year max. Prorates part years and shows the Section 16(iii) old-regime saving.",
   steps: [

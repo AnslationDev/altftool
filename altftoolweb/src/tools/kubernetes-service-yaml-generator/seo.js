@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kubernetes Service YAML Generator with API Validation",
+  title: "Kubernetes Service YAML Generator with Validation",
   metaDescription:
     "Generate ClusterIP, NodePort or LoadBalancer manifests with RFC 1035 name checks, 30000-32767 nodePort limits and required multi-port names.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tinnitus Sound Diary: Track Loudness, Triggers & Trend",
+  title: "Tinnitus Sound Diary: Loudness, Triggers & Trend",
   metaDescription:
     "Log daily 0-10 loudness and annoyance ratings with triggers; see 7-day averages, a points-per-week trend and trigger comparisons, saved in your browser.",
   steps: [

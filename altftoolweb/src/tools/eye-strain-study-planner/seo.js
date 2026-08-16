@@ -1,5 +1,5 @@
 const seo = {
-  title: "Eye Strain Study Planner: 20-20-20 Screen-Paper Blocks",
+  title: "Eye Strain Study Planner with 20-20-20 Breaks",
   metaDescription:
     "Splits a study session into alternating screen and paper blocks with 20-second eye breaks every 20 minutes marked inside each screen block.",
   steps: [

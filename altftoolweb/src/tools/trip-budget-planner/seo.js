@@ -1,5 +1,5 @@
 const seo = {
-  title: "Trip Budget Planner: Target Gap, Savings Gap, Per Head",
+  title: "Trip Budget Planner: Target & Savings Gaps",
   metaDescription:
     "Scale each cost per day, per night, per person or as a % buffer, then see the gap to your target budget and the shortfall against what you have saved.",
   steps: [

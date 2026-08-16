@@ -1,5 +1,5 @@
 const seo = {
-  title: "Running Pace Calculator: Min/km, Min/mile & Race Times",
+  title: "Running Pace Calculator & Race Time Predictor",
   metaDescription:
     "Enter distance (km) and time (minutes) to get pace per km and per mile, average speed, and predicted 5K, 10K, half marathon and marathon finish times.",
   steps: [

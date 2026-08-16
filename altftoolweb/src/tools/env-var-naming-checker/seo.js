@@ -1,5 +1,5 @@
 const seo = {
-  title: "Environment Variable Name Checker – POSIX & Prefix Rules",
+  title: "Env Variable Name Checker: POSIX & Prefix Rules",
   metaDescription:
     "Check names against POSIX [A-Za-z_][A-Za-z0-9_]*, UPPER_SNAKE_CASE, reserved names like PATH, and risky prefixes like GITHUB_ and NEXT_PUBLIC_.",
   steps: [

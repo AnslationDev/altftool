@@ -1,5 +1,5 @@
 const seo = {
-  title: "Instagram 2FA Setup Guide: 13-Step Hardening Checklist",
+  title: "Instagram 2FA Setup Guide: 13-Step Checklist",
   metaDescription:
     "Work through 13 Instagram security controls: authenticator 2FA, backup codes, session cleanup, each with its exact menu path and a weighted score.",
   steps: [

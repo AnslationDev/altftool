@@ -1,5 +1,5 @@
 const seo = {
-  title: "Jumbled Sentence Drill – Rearrange Words, Learn Rules",
+  title: "Jumbled Sentence Drill: Rearrange, Learn Rules",
   metaDescription:
     "Tap word tiles to rebuild a scrambled sentence at Easy, Medium or Hard level; checking names the first misplaced word and the grammar rule behind it.",
   steps: [

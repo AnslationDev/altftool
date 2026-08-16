@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Budget Planner — Rooms, Daily Spend & Contingency",
+  title: "Travel Budget Planner: Daily Spend & Contingency",
   metaDescription:
     "Total a trip from per-person one-offs, per-room nights and daily spending, add a contingency buffer, and get a monthly saving target before departure.",
   steps: [

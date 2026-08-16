@@ -1,5 +1,5 @@
 const seo = {
-  title: "Excuse Generator – 48 Excuses for Work, School & Dates",
+  title: "Excuse Generator: Work, School & Date Excuses",
   metaDescription:
     "Pick a category — work, school, social, date, family or travel — and get a ready one-line excuse from a set of 48. Save up to 20 favourites and copy one.",
   steps: [

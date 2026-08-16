@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPSC Application Document Checklist: OTR to Fee Payment",
+  title: "UPSC Application Checklist: OTR to Fee Payment",
   metaDescription:
     "Category-aware UPSC application checklist: OTR, photo ID, matriculation certificate, scans and the Rs 100 fee or exemption, with progress tracking.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Diff Tool — Compare Two Texts, Unified Diff Export",
+  title: "Text Diff Tool — Compare & Export Unified Diff",
   metaDescription:
     "Line-by-line diff with the LCS algorithm: added and removed lines, similarity %, and a unified diff you can copy. Handles up to 2,000 lines per side.",
   steps: [

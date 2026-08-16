@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST Invoice Series Generator - Rule 46(b) Length Check",
+  title: "GST Invoice Series Generator: Rule 46(b) Check",
   metaDescription:
     "Design a financial-year invoice series and check every number against Rule 46(b): sixteen characters max, allowed characters, e-invoice-safe start.",
   steps: [

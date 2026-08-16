@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paddle Ball Arcade: Two-Paddle Rally Game, First to 7",
+  title: "Paddle Ball Arcade: Rally Game, First to 7",
   metaDescription:
     "Play a two-paddle rally game in your browser — W/S vs arrow keys or touch, three computer difficulties, speed rising every hit, first to 7 points wins.",
   steps: [

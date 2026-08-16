@@ -1,5 +1,5 @@
 const seo = {
-  title: "Browser Storage Cleanup Planner: What to Clear & Keep",
+  title: "Browser Storage Cleanup Planner: Clear vs Keep",
   metaDescription:
     "Pick a goal — tracking, space or a broken site — and get a clear/keep plan for localStorage, IndexedDB and service worker caches, with what breaks.",
   steps: [

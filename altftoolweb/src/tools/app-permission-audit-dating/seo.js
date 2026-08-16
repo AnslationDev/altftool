@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dating App Permission Audit: Location & Privacy Score",
+  title: "Dating App Permission Audit with Privacy Score",
   metaDescription:
     "Score a dating app's precise location, background location, contacts, all-photos and tracking grants 0-100, with the safest setting change for each.",
   steps: [

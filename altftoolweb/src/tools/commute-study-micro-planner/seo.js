@@ -1,5 +1,5 @@
 const seo = {
-  title: "Commute Study Micro Planner – Audio & Flashcard Split",
+  title: "Commute Study Micro Planner: Audio & Flashcards",
   metaDescription:
     "Split weekly commute minutes between audio lectures and flashcards — see monthly study hours and real card counts at ~12 seconds per review.",
   steps: [

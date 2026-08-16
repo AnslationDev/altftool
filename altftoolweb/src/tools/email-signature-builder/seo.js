@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Signature Builder: 26 Table-Based HTML Templates",
+  title: "Email Signature Builder: 26 Table-Based Templates",
   metaDescription:
     "Nested-table, inline-style HTML that Gmail, Outlook, Apple Mail and Yahoo render alike. Outlook preview plus checks for base64, http:// and 600px width.",
   steps: [

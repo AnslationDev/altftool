@@ -1,5 +1,5 @@
 const seo = {
-  title: "SHA-256 Hash Generator — 64-Hex Digest, Computed Locally",
+  title: "SHA-256 Hash Generator — 64-Hex Digest",
   metaDescription:
     "Paste text and get its SHA-256 digest as 64 hex characters, computed with the browser's native Web Crypto — matches sha256sum and OpenSSL output.",
   steps: [

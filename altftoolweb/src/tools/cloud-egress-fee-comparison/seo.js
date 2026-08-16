@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cloud Egress Fee Comparison: AWS, Azure, GCP, Cloudflare",
+  title: "Cloud Egress Fee Comparison Across Providers",
   metaDescription:
     "Enter monthly GB to rank egress bills on AWS, Azure, GCP, Oracle, CloudFront, Bunny and Cloudflare, with free allowances and tiered list prices applied.",
   steps: [

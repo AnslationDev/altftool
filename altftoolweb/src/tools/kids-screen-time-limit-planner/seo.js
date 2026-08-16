@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids' Screen Time Limits by Age, from WHO and AAP Rules",
+  title: "Kids' Screen Time Limits by Age (WHO & AAP)",
   metaDescription:
     "Turns a child's age into a daily recreational screen budget from WHO and AAP guidance, split by purpose, with sleep and screens-off checks.",
   steps: [

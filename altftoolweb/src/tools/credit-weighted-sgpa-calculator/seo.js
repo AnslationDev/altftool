@@ -1,5 +1,5 @@
 const seo = {
-  title: "SGPA Calculator with Credits: UGC 10-Point & US 4-Point",
+  title: "SGPA Calculator with Credits: UGC & US Scales",
   metaDescription:
     "Computes SGPA = (grade point x credits) / total credits on the UGC 10-point or US 4-point scale, and shows each subject's pull on the average.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Standard Deduction Impact: Tax Saved Old vs New Regime",
+  title: "Standard Deduction Impact: Tax Saved, Old vs New",
   metaDescription:
     "See the actual tax the Rs 75,000 (new regime) or Rs 50,000 (old) standard deduction saves for FY 2025-26, with the 87A rebate and 4% cess applied.",
   steps: [

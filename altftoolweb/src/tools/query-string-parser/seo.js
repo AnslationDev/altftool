@@ -1,5 +1,5 @@
 const seo = {
-  title: "Query String Parser: Decode URL Parameters Line by Line",
+  title: "Query String Parser: Decode URL Parameters",
   metaDescription:
     "Paste a query string to get one decoded key = value line per parameter — URLSearchParams decodes %20 and +, and repeated keys keep separate lines.",
   steps: [

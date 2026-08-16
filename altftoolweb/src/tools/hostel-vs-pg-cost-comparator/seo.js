@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hostel vs PG Cost Calculator with Deposit & Upfront Cash",
+  title: "Hostel vs PG Calculator: Deposit & Upfront Cash",
   metaDescription:
     "Compare hostel vs PG over your stay: rent, mess, utilities and commute per month plus one-time charges, with refundable deposits shown as locked-up cash.",
   steps: [

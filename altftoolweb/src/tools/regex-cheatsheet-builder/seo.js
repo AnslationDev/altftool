@@ -1,5 +1,5 @@
 const seo = {
-  title: "Regex Cheatsheet Builder for JavaScript, PCRE2, Python",
+  title: "Regex Cheatsheet Builder: JS, PCRE2 & Python",
   metaDescription:
     "Build a regex cheatsheet filtered to JavaScript, PCRE2 or Python re — unsupported tokens hidden, 7 toggleable sections, copy as Markdown or print.",
   steps: [

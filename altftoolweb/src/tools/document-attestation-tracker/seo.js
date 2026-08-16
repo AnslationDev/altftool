@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Attestation Tracker: Validity & Expiry Dates",
+  title: "Document Attestation Tracker: Validity & Expiry",
   metaDescription:
     "Add up to 20 documents with attestation date and validity in months; each gets an expiry date, a day count and a valid, expiring-soon or expired flag.",
   intro:

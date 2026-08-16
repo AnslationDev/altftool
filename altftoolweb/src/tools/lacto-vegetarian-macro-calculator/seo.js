@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lacto-Vegetarian Macros: Dairy vs Plant Protein Split",
+  title: "Lacto-Vegetarian Macros: Dairy vs Plant Protein",
   metaDescription:
     "Mifflin-St Jeor calories and macros, with milk, curd and paneer counted at face value and the remaining plant protein raised 12.5% for digestibility.",
   steps: [

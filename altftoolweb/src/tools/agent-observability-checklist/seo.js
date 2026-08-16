@@ -1,5 +1,5 @@
 const seo = {
-  title: "Agent Observability Checklist for OpenTelemetry gen_ai",
+  title: "Agent Observability Checklist for OTel gen_ai",
   metaDescription:
     "Score what your LLM agent traces against the gen_ai.* conventions - spans, metrics, logs, evals, redaction - then size a sampling and storage plan.",
   steps: [

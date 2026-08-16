@@ -1,5 +1,5 @@
 const seo = {
-  title: "Professional Tax Calculator Andhra Pradesh: Slab Rates",
+  title: "Professional Tax Calculator Andhra Pradesh: Slabs",
   metaDescription:
     "Andhra Pradesh PT slabs: nil up to Rs 15,000, Rs 150/mo to Rs 20,000, Rs 200 above — per employee plus a whole-payroll monthly deposit from head counts.",
   steps: [

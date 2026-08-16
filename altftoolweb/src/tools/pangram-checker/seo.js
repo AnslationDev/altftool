@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pangram Checker: See Which of the 26 Letters Are Missing",
+  title: "Pangram Checker: See Which Letters Are Missing",
   metaDescription:
     "Checks a sentence against all 26 letters, shows an a–z coverage grid with unique and total letter counts, and names each missing letter as you type.",
   steps: [

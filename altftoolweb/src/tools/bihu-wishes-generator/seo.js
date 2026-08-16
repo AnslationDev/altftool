@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bihu Wishes Generator: Rongali, Bhogali & Kongali Bihu",
+  title: "Bihu Wishes Generator: Rongali, Bhogali & Kongali",
   metaDescription:
     "Bihu greetings for the right festival — Rongali, Bhogali or Kongali — in Assamese script, Roman Assamese, English or Hindi, with a day countdown.",
   steps: [

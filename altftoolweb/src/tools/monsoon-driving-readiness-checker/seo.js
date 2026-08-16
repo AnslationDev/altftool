@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monsoon Driving Readiness Check – Tread, PSI, Braking",
+  title: "Monsoon Driving Readiness: Tread, PSI, Braking",
   metaDescription:
     "Enter tread depth and tyre pressure to get wet braking distance in metres, aquaplaning onset speed from NASA's 9√p formula, and an 18-point checklist.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Running Cadence Calculator - Steps/Min & Stride Length",
+  title: "Running Cadence & Stride Length Calculator",
   metaDescription:
     "Turn a 30-second step count into steps per minute, step and stride length, a metronome BPM, and safe +5% and +10% cadence targets at the same speed.",
   steps: [

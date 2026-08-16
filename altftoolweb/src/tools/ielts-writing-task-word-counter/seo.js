@@ -1,5 +1,5 @@
 const seo = {
-  title: "IELTS Writing Word Counter — Task 1 & Task 2 Minimums",
+  title: "IELTS Writing Word Counter: Task 1 & 2 Minimums",
   metaDescription:
     "Check your answer against the 150-word Task 1 and 250-word Task 2 minimums — hyphenated compounds count once — with per-paragraph structure counts.",
   steps: [

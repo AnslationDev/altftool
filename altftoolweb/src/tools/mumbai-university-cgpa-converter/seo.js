@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mumbai University CGPA to Percentage: 7.1 x CGPA + 11",
+  title: "Mumbai University CGPA to %: 7.1 x CGPA + 11",
   metaDescription:
     "Reproduces Mumbai University's CBCGS map, 7.1 x CGPA + 11, and computes the aggregate percentage from raw semester marks for the post-repeal route.",
   steps: [

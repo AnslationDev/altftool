@@ -1,5 +1,5 @@
 const seo = {
-  title: "Child Education Cost Planner – Future Fees & Monthly SIP",
+  title: "Child Education Cost Planner: Future Fees & SIP",
   metaDescription:
     "Inflate each academic year's fee to the year it is paid, see the corpus needed on admission day, and the monthly SIP or lumpsum that closes the gap.",
   steps: [

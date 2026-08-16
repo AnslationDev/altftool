@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mulch Calculator – Bags, Cubic Yards, Litres & Bulk Cost",
+  title: "Mulch Calculator: Bags, Cubic Yards & Bulk Cost",
   metaDescription:
     "Enter bed size and mulch depth to get volume in cu ft, cu yd, m³ and litres — plus bag count, bag-vs-bulk cost at your prices, and weight in kg.",
   steps: [

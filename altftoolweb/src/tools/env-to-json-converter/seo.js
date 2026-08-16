@@ -1,5 +1,5 @@
 const seo = {
-  title: ".env to JSON Converter with Nesting and Type Coercion",
+  title: ".env to JSON Converter: Nesting & Type Coercion",
   steps: [
     "Pick '.env → JSON' or 'JSON → .env' in the Direction select, then paste your file into the '.env contents' (or 'JSON object') box — a sample with DB__HOST, PORT and a quoted \"1.10\" loads by default.",
     "Tick 'Coerce types (true/false, numbers, null)' and 'Nest keys on the delimiter (DB__HOST → DB.HOST)', or change the 'Nesting delimiter' from the default __.",

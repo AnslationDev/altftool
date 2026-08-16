@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dependabot Config Generator for .github/dependabot.yml",
+  title: "Dependabot Config Generator (dependabot.yml)",
   metaDescription:
     "Build a version-2 .github/dependabot.yml: pick from 18 package ecosystems, set daily, weekly or monthly schedules, group minor+patch PRs, ignore majors.",
   steps: [

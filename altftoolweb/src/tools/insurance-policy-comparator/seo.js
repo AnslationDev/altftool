@@ -1,5 +1,5 @@
 const seo = {
-  title: "Insurance Policy Comparator: Premium, Waiting, Co-Pay",
+  title: "Insurance Policy Comparator & Ranker",
   metaDescription:
     "Paste one policy per line as pipe-separated fields, then rank them by higher coverage, lower premium or shorter waiting period.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dimensional Consistency Checker: Compare M L T Vectors",
+  title: "Dimensional Consistency Checker: M L T Vectors",
   metaDescription:
     "Enter each side of an equation as base-dimension exponents like M1 L1 T-2 and get an exponent-by-exponent match table across all seven SI base dimensions.",
   steps: [

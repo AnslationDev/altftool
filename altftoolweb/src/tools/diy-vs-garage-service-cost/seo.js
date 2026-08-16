@@ -1,5 +1,5 @@
 const seo = {
-  title: "DIY vs Garage Car Service Cost Calculator (India, GST)",
+  title: "DIY vs Garage Car Service Cost Calculator (India)",
   metaDescription:
     "Price a car service twice — DIY parts vs a garage bill with parts markup, labour and 18% GST — and see when a tool kit pays for itself.",
   steps: [

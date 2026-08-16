@@ -1,5 +1,5 @@
 const seo = {
-  title: "DNS Propagation Timeline — How Long a TTL Change Takes",
+  title: "DNS Propagation Timeline — TTL Change Wait Time",
   metaDescription:
     "Enter a record's TTL for the worst-case wait before a DNS change shows everywhere — RFC 1035/2308 caching maths instead of the '24 to 48 hours' guess.",
   steps: [

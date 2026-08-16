@@ -1,5 +1,5 @@
 const seo = {
-  title: "Jaccard Similarity Calculator for Text and Token Sets",
+  title: "Jaccard Similarity Calculator for Text & Tokens",
   metaDescription:
     "Compare two texts as token sets: Jaccard index and distance plus Dice, overlap and cosine, with word, character, line or n-gram shingle tokenisation.",
   steps: [

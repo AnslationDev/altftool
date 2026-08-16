@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scandinavian Palette Generator: Nordic Colours with LRV",
+  title: "Scandinavian Palette Generator (LRV & WCAG)",
   metaDescription:
     "Generate a low-saturation Nordic scheme with Light Reflectance Value and WCAG contrast per surface, warmth tuned to which way the room faces.",
   steps: [

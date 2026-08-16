@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vercel Cost Estimator – Pro Seats, Bandwidth & Functions",
+  title: "Vercel Cost Estimator: Pro Seats & Overages",
   metaDescription:
     "Estimate a Vercel Pro bill: $20/seat plus overages past 1 TB transfer ($0.15/GB), 10M edge requests, 1M invocations and 1,000 GB-hours of duration.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Local Cuisine Bucket List Builder & Trip Meal Planner",
+  title: "Local Cuisine Bucket List & Trip Meal Planner",
   metaDescription:
     "Fit a must-eat list into a trip's real eating slots — days times meals plus snack stops. Dishes that won't fit are named so you choose the cuts yourself.",
   steps: [

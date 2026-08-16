@@ -1,5 +1,5 @@
 const seo = {
-  title: "Geometry Formula Explorer: Area, Volume, Working Shown",
+  title: "Geometry Formulas: Area, Volume, Working Shown",
   intro:
     "Geometry Formula Explorer calculates area, perimeter, surface area and volume for ten shapes — circle, rectangle, triangle, trapezoid, parallelogram and ellipse in 2D, plus sphere, cylinder, cone and rectangular prism in 3D — and shows the substitution line by line rather than just the answer. Enter the dimensions and every formula for that shape recalculates at once: a circle returns πr², 2πr and 2r together, a rectangular prism returns volume, surface area and the space diagonal √(l²+w²+h²). Results are rounded to four decimal places and a scaled diagram of the shape updates alongside the numbers.",
   useCases: [

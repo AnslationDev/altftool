@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dockerfile AI Prompt Builder: Multi-Stage and Non-Root",
+  title: "Dockerfile Prompt Builder: Multi-Stage, Non-Root",
   metaDescription:
     "Pick a runtime preset - Node, Python, Go, Java, Ruby, Rust, PHP, .NET - add port and commands, and get a prompt demanding pinned tags and a non-root USER.",
   steps: [

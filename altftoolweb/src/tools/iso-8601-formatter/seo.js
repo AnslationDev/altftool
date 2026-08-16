@@ -1,5 +1,5 @@
 const seo = {
-  title: "ISO 8601 Date Formatter – UTC Timestamp & Unix Seconds",
+  title: "ISO 8601 Date Formatter: UTC & Unix Seconds",
   metaDescription:
     "Convert any date to the ISO 8601 UTC form YYYY-MM-DDTHH:mm:ss.sssZ, with Unix seconds, UTC and local time shown for the same instant.",
   intro:

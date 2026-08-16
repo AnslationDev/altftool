@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dripping Tap Calculator – Water Loss in Litres & Rupees",
+  title: "Dripping Tap Calculator: Litres & Rupees Lost",
   metaDescription:
     "Count drips for a minute or time a 1-litre fill — see litres lost per day, month and year, cost at your water rate, and geyser units for hot leaks.",
   steps: [

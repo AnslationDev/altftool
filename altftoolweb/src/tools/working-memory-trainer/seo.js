@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dual N-Back Working Memory Trainer with Adaptive Levels",
+  title: "Dual N-Back Working Memory Trainer (Adaptive)",
   metaDescription:
     "Adaptive dual n-back: 20 scored trials, press A for position and L for spoken-letter matches; 80%+ raises the n-level, under 50% lowers it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kannada New Year Wishes: Yugadi Greetings, SMS Length",
+  title: "Kannada New Year Wishes: Yugadi & SMS Length",
   metaDescription:
     "Yugadi and 1 January greetings in Kannada script, Roman transliteration and English, with honorific salutations and exact 70-char SMS part counts.",
   steps: [

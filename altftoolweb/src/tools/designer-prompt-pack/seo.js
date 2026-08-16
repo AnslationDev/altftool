@@ -1,5 +1,5 @@
 const seo = {
-  title: "Designer Prompt Pack: 12 Fill-in-the-Blank AI Prompts",
+  title: "Designer Prompt Pack: 12 AI Prompt Templates",
   metaDescription:
     "Twelve prompts for moodboards, palettes, empty states, critique and WCAG 2.2 AA review. Fill the blanks in your browser and copy the finished prompt.",
   steps: [

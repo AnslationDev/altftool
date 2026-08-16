@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Exam Day Checklist - IBPS & SBI Documents & Timing",
+  title: "Bank Exam Day Checklist: IBPS & SBI Documents",
   metaDescription:
     "Call letter, photo ID and its photocopy, photos - plus a leave-home time worked back from the reporting deadline and 0.25 negative-marking maths.",
   steps: [

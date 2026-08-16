@@ -1,5 +1,5 @@
 const seo = {
-  title: "File Integrity Manifest Builder: SHA-256 in Your Browser",
+  title: "File Integrity Manifest: SHA-256 in Your Browser",
   metaDescription:
     "Hash up to 200 files with SHA-256 into a deterministic JSON manifest, then diff it against an earlier one — files never leave the tab.",
   steps: [

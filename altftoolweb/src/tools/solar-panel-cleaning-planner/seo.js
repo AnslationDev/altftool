@@ -1,5 +1,5 @@
 const seo = {
-  title: "Solar Panel Cleaning Calculator: Cost-Optimal Interval",
+  title: "Solar Panel Cleaning Interval Calculator",
   metaDescription:
     "Models soiling by dust level and panel tilt, credits rain of 10 mm or more, and finds the wash interval where cleaning cost balances lost units in ₹.",
   steps: [

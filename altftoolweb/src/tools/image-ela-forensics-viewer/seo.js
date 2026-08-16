@@ -1,5 +1,5 @@
 const seo = {
-  title: "Error Level Analysis (ELA) Viewer With Residual Stats",
+  title: "Error Level Analysis (ELA) Viewer & Stats",
   metaDescription:
     "Re-encodes your JPEG, PNG or WebP in the browser at 30-95% quality and reports mean, RMS, median, p95 and p99 residuals per region. No verdict given.",
   steps: [

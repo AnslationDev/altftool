@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan Foreclosure Calculator – Interest Saved vs Charges",
+  title: "Loan Foreclosure Calculator: Savings vs Charges",
   metaDescription:
     "Work out what closing a loan early really saves: interest left minus the foreclosure charge and 18% GST, plus a foreclose-vs-invest comparison.",
   steps: [

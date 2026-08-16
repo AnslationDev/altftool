@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Debt Calculator: 14 Nights and a Repayment Plan",
+  title: "Sleep Debt Calculator: 14 Nights & Repayment Plan",
   metaDescription:
     "Log 7, 10 or 14 nights on a slider, let surplus nights offset the shortfall, and see hours owed, your weekday-weekend gap and nights to clear it.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chennai Airport (MAA): When to Leave Home for a Flight",
+  title: "Chennai Airport (MAA): When to Leave Home",
   metaDescription:
     "Works back from your departure time through bag-drop close, gate close and the 2-hour reporting advice. Metro and Tirusulam rail skip the traffic factor.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lumpsum vs SIP Calculator with Equal-Money Comparison",
+  title: "Lumpsum vs SIP Calculator: Equal-Money Match",
   metaDescription:
     "Compare a one-time lumpsum against a monthly SIP at the same return — the SIP can auto-match the lumpsum total — with a year-by-year corpus table.",
   steps: [

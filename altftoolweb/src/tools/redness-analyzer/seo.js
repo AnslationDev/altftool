@@ -1,5 +1,5 @@
 const seo = {
-  title: "Redness Analyzer: Measure Facial Redness in CIELAB a*",
+  title: "Redness Analyzer: CIELAB a* From a Photo",
   metaDescription:
     "Reads skin-toned pixels from a photo in your browser, converts sRGB to CIELAB and reports Δa* for cheeks, nose, forehead and chin. Not a diagnosis.",
   steps: [

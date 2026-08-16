@@ -1,5 +1,5 @@
 const seo = {
-  title: "Address Change Request Letter for Bank, School or RTO",
+  title: "Address Change Request Letter: Bank, School, RTO",
   metaDescription:
     "Write an address update letter to a bank, school, utility or RTO — with the right proof list, the 30-day section 49 deadline and the 2-month bill rule.",
   steps: [

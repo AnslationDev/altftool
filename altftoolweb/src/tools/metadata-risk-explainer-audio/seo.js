@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Metadata Risk: What MP3, M4A & WAV Files Reveal",
+  title: "Audio Metadata Risk: What MP3, M4A & WAV Reveal",
   metaDescription:
     "Tick the tags, timestamps, GPS titles and audible clues in a voice note, pick a sharing channel, and see an exposure score of what actually survives.",
   steps: [

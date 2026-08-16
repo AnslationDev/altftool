@@ -1,5 +1,5 @@
 const seo = {
-  title: "CLAT Exam Countdown: Days Left, Mocks and Daily Targets",
+  title: "CLAT Exam Countdown: Mocks & Daily Targets",
   metaDescription:
     "Counts days to CLAT and turns them into mock-test capacity, current-affairs pace and daily question targets under the 120-question, +1/-0.25 pattern.",
   steps: [

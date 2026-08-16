@@ -1,5 +1,5 @@
 const seo = {
-  title: "Health Insurance Cover Calculator: Sum Insured Needed",
+  title: "Health Insurance Cover Calculator: Sum Insured",
   metaDescription:
     "Sizes a family floater from city tier, family size, eldest age and chronic conditions, then shows the gap against the cover you already hold.",
   steps: [

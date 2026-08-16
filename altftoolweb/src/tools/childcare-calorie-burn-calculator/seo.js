@@ -1,5 +1,5 @@
 const seo = {
-  title: "Childcare Calorie Burn Calculator: MET-Based Estimate",
+  title: "Childcare Calorie Burn Calculator (MET-Based)",
   metaDescription:
     "Calories from feeding, standing care, pram walking and play using published MET values, counting only the active share of playtime at play intensity.",
   steps: [

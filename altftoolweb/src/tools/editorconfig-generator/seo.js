@@ -1,5 +1,5 @@
 const seo = {
-  title: "EditorConfig File Generator: Indent, EOL & Per-Type Rules",
+  title: "EditorConfig File Generator: Indent & EOL Rules",
   metaDescription:
     "Build a valid .editorconfig from indent, charset, line-ending and whitespace choices, with one-click sections for Makefiles, Markdown, YAML and more.",
   steps: [

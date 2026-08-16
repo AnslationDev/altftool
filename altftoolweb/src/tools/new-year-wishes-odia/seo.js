@@ -1,5 +1,5 @@
 const seo = {
-  title: "Odia New Year Wishes: Pana Sankranti Greetings and SMS",
+  title: "Odia New Year Wishes: Pana Sankranti & SMS",
   metaDescription:
     "Pana Sankranti and 1 January wishes in Odia script, Roman transliteration and English, with correct salutations and 70-character SMS part counts.",
   steps: [

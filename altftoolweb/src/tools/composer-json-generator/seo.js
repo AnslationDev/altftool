@@ -1,5 +1,5 @@
 const seo = {
-  title: "Composer.json Generator with PSR-4 Autoload & Scripts",
+  title: "Composer.json Generator: PSR-4 Autoload & Scripts",
   metaDescription:
     "Assemble a valid composer.json — vendor/package name checks, PSR-4 autoloading, require and require-dev blocks, scripts — in Composer's own key order.",
   steps: [

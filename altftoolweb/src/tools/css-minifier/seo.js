@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Minifier - Compress CSS and See Exact Bytes Saved",
+  title: "CSS Minifier: See Exact Bytes Saved",
   metaDescription:
     "Strips comments and whitespace only, so selectors and values are untouched. Reports exact byte savings; /*! license banners can be kept.",
   intro:

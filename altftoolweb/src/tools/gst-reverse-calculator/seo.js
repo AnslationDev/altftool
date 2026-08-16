@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reverse GST Calculator - Base Value & CGST/SGST Split",
+  title: "Reverse GST Calculator with CGST/SGST Split",
   metaDescription:
     "Split any GST-inclusive amount into taxable value and tax at 0.25% to 28% or a custom rate - CGST/SGST halved to the paise, or one IGST line.",
   steps: [

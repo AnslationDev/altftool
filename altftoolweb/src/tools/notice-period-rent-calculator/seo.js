@@ -1,5 +1,5 @@
 const seo = {
-  title: "Notice Period Rent Calculator with Lock-In and Deposit",
+  title: "Notice Period Rent Calculator: Lock-In & Deposit",
   metaDescription:
     "Price the unserved days when you vacate early. Takes the later of notice end and lock-in end, then sets the shortfall against your deposit.",
   steps: [

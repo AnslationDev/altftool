@@ -1,5 +1,5 @@
 const seo = {
-  title: "Percentage Change Calculator – Increase or Decrease %",
+  title: "Percentage Change Calculator: Increase/Decrease",
   metaDescription:
     "Enter an original and new value to get the signed % change via ((new − original) ÷ original) × 100, plus absolute change and the value ratio.",
   steps: [

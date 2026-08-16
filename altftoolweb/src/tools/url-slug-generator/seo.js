@@ -1,5 +1,5 @@
 const seo = {
-  title: "URL Slug Generator with Cyrillic & Greek Transliteration",
+  title: "URL Slug Generator: Cyrillic & Greek to ASCII",
   metaDescription:
     "Paste titles one per line to get lowercase hyphenated slugs. Accents, German, Cyrillic and Greek transliterate to ASCII; duplicates get numbered.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pest Control Cost Planner with 12-Month Budget Scenarios",
+  title: "Pest Control Cost Planner with 12-Month Budgets",
   metaDescription:
     "Pick pests, floor area and severity to build an editable 12-month pest-control budget with GST — demo rates to compare against real quotes.",
   steps: [

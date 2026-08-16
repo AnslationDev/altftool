@@ -1,5 +1,5 @@
 const seo = {
-  title: "Telugu Word of the Day – 30-Word Deck with Script & Streak",
+  title: "Telugu Word of the Day: 30-Word Deck & Script",
   metaDescription:
     "A 30-word Telugu deck fixed by calendar date: script, romanisation, meaning, example sentence and idiom note, with a streak saved in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bonus & Variable Pay Calculator with Rating Multipliers",
+  title: "Bonus & Variable Pay Calculator by Rating",
   metaDescription:
     "Work out your bonus from target variable pay: rating multiplier x company payout factor, prorated for eligible months, with tax and per-cycle payouts.",
   steps: [

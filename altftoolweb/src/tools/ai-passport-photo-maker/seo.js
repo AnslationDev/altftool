@@ -1,5 +1,5 @@
 const seo = {
-  title: "Passport Photo Maker - 51x51 mm & 35x45 mm Crop Online",
+  title: "Passport Photo Maker: 51x51 mm & 35x45 mm Crop",
   metaDescription:
     "Crop photos to 51x51 mm, 35x45 mm and 7 more passport sizes with head-height guides, 300-600 dpi export and 4x6 to A4 print sheets. Runs in your browser.",
   intro:

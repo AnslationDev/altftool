@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pickup Line Generator: Romantic, Nerdy, Cheesy, Witty",
+  title: "Pickup Line Generator: Romantic, Nerdy, Cheesy",
   metaDescription:
     "Tap Generate Line for a pickup line in six tones - Romantic, Cheesy, Nerdy, Funny, Smooth or Witty. Save up to 20 favourites and copy in one click.",
   steps: [

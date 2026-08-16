@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coffee Shop Work Spot Rater — Score a Café Out of 100",
+  title: "Coffee Shop Work Spot Rater: Score Out of 100",
   metaDescription:
     "Rate a café as a workspace from nine measurements — upload speed, latency, noise in dB(A), sockets, seating — with hard pass/fail gates for video calls.",
   steps: [

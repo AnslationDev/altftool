@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weighted Average Calculator with Per-Item Contribution",
+  title: "Weighted Average Calculator: Item Contributions",
   metaDescription:
     "Enter value and weight pairs to get the weighted mean — weights need not total 100 — with each item's contribution and the plain average alongside.",
   steps: [

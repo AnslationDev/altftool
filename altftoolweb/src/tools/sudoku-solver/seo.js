@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sudoku Solver: Instant or Step-by-Step With Techniques",
+  title: "Sudoku Solver: Instant or Step-by-Step Solutions",
   metaDescription:
     "Type any 9×9 grid, then hit Instant Solve, or Step by Step to see each Naked/Hidden Single named. Generates puzzles with 40, 32, 26 or 22 clues.",
   intro:

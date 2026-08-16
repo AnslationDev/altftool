@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monitor PPI Calculator: Pixel Pitch & Retina Distance",
+  title: "Monitor PPI Calculator with Retina Distance",
   metaDescription:
     "Work out PPI from resolution and screen diagonal, then get pixel pitch in mm, retina distance and pixels per degree at the distance you sit.",
   steps: [

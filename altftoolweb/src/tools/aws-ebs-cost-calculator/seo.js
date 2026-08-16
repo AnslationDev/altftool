@@ -1,5 +1,5 @@
 const seo = {
-  title: "AWS EBS Cost Calculator for gp3, gp2, io1, io2, st1, sc1",
+  title: "AWS EBS Cost Calculator: gp3, gp2, io1, io2, st1",
   metaDescription:
     "Prices EBS volumes at us-east-1 list rates: gp3 $0.08/GB-month with 3,000 free IOPS, io2 tiered IOPS, plus snapshots — a line-item monthly breakdown.",
   steps: [

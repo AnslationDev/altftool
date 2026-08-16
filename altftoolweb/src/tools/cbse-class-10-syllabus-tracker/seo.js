@@ -1,5 +1,5 @@
 const seo = {
-  title: "CBSE Class 10 Syllabus Tracker: Chapter Revision Pace",
+  title: "CBSE Class 10 Syllabus Tracker: Revision Pace",
   metaDescription:
     "Mark every Class 10 chapter Not started, Read once, Revised or Revised + sample papers done, then get the chapters-per-week pace to finish in time.",
   steps: [

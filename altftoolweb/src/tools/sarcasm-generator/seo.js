@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sarcasm Generator - Hand-Written Comebacks by Context",
+  title: "Sarcasm Generator: Hand-Written Comebacks",
   metaDescription:
     "Pick Work, Social, Family, Tech or General and draw one of 40 hand-written deadpan one-liners - no AI, just a curated deck with copy and favourites.",
   steps: [

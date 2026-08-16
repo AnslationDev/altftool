@@ -1,5 +1,5 @@
 const seo = {
-  title: "PostCSS Config Generator - Plugins in the Right Order",
+  title: "PostCSS Config Generator: Plugins in Order",
   metaDescription:
     "Generate postcss.config.mjs, .js or .postcssrc.json with import, nesting, preset-env, autoprefixer and cssnano in order, plus the install command.",
   steps: [

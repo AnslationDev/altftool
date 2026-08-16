@@ -1,5 +1,5 @@
 const seo = {
-  title: "Philippines Entry Checklist: Visa-Free Stay & eTravel",
+  title: "Philippines Entry Checklist: Visa-Free & eTravel",
   metaDescription:
     "Turn Philippine entry rules into dates: when your visa-free admission expires, the 72-hour eTravel window, and the passport validity your trip needs.",
   steps: [

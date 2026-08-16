@@ -1,5 +1,5 @@
 const seo = {
-  title: "Algebra Solver with Steps: Linear, Quadratic, Systems",
+  title: "Algebra Solver with Steps: Linear & Quadratic",
   metaDescription:
     "Solve linear equations, quadratics via the discriminant and 2x2 systems by Cramer's rule - every step shown, with exact fractions beside decimals.",
   intro:

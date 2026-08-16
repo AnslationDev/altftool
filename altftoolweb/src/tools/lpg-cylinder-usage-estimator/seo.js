@@ -1,5 +1,5 @@
 const seo = {
-  title: "LPG Cylinder Usage Estimator: Days per Refill and Cost",
+  title: "LPG Cylinder Usage Estimator: Days per Refill",
   metaDescription:
     "Enter each burner's kW rating and daily minutes to get days per 14.2 kg cylinder, cost per day and the date to book the next refill.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Markup Calculator: Selling Price, Profit & Real Margin",
+  title: "Markup Calculator: Selling Price, Profit & Margin",
   metaDescription:
     "Enter cost and markup % to get the selling price, cash profit and the gross margin it implies — a 40% markup is only a 28.57% margin.",
   intro:

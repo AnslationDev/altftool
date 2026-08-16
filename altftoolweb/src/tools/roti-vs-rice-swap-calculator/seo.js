@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roti vs Rice: Equivalent Portion by Calories or Carbs",
+  title: "Roti vs Rice: Equal Portion by Calories or Carbs",
   metaDescription:
     "Match rotis to katoris of rice on calories or carbohydrate from dry weight - atta grams and raw rice - and see what the swap costs in protein and fibre.",
   steps: [

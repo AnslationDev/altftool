@@ -1,5 +1,5 @@
 const seo = {
-  title: "netlify.toml Generator — Redirects, Headers, SPA Fallback",
+  title: "netlify.toml Generator: Redirects & SPA Fallback",
   metaDescription:
     "Assemble a valid netlify.toml: build command, SPA /* to /index.html 200 rewrite, redirects with valid statuses, OWASP security headers, edge functions.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Contribution Margin Calculator: Per Unit, Ratio, Total",
+  title: "Contribution Margin Calculator (Unit/Ratio/Total)",
   metaDescription:
     "Price minus variable cost per unit, that figure as a percentage of price, and the total across your volume — three outputs from three numbers.",
   intro:

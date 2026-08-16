@@ -1,5 +1,5 @@
 const seo = {
-  title: "Content Creator Prompt Pack — Scripts With Word Budgets",
+  title: "Content Creator Prompt Pack with Word Budgets",
   metaDescription:
     "Build AI prompts for hooks, scripts, titles or repurposing plans with a word budget from runtime × pace, plus real platform caption and hashtag limits.",
   steps: [

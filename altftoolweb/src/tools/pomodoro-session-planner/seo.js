@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pomodoro Session Planner: Fit Focus Blocks to Your Day",
+  title: "Pomodoro Session Planner: Focus Blocks & Breaks",
   metaDescription:
     "Enter a start time, your available window and a 25/5 or 50/10 rhythm; get every focus block and break as clock times, plus leftover minutes.",
   steps: [

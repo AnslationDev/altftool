@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cruise Packing List Builder — Formal Nights & Day Bag",
+  title: "Cruise Packing List Builder: Formal Nights",
   metaDescription:
     "Build a cruise packing list sized by formal nights, port and sea days — with quantities, packed weight vs flight allowance, and what security confiscates.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Italy IDP Checker: Do You Need One With Your Licence?",
+  title: "Italy IDP Checker: Do You Need One?",
   steps: [
     "Choose where your licence was issued, what you already hold, and why you are in Italy from the three dropdowns.",
     "Add the date you arrive, an optional departure date and your age in years; the verdict recalculates as you type.",

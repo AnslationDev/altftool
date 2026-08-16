@@ -1,5 +1,5 @@
 const seo = {
-  title: "Navy Body Fat Calculator (Neck, Waist, Hip Tape Method)",
+  title: "Navy Body Fat Calculator (Tape Method)",
   metaDescription:
     "US Navy circumference equations turn neck, waist and hip tapes into body fat % with a ±3.5-point range, ACE bands, lean mass, FFMI and a goal weight.",
   intro:

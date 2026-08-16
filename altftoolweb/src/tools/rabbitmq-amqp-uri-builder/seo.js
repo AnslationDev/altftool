@@ -1,5 +1,5 @@
 const seo = {
-  title: "RabbitMQ AMQP URI Builder: amqps, %2F Vhost, Heartbeat",
+  title: "RabbitMQ AMQP URI Builder: amqps & %2F Vhost",
   metaDescription:
     "Build amqp:// or amqps:// URIs with percent-encoded credentials and vhost (%2F), scheme-default ports 5672/5671, plus heartbeat and connection_timeout.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Compost Calculator — Browns to Add & Yield from Scraps",
+  title: "Compost Calculator: Browns & Yield from Scraps",
   metaDescription:
     "Enter your weekly kitchen waste to get the browns needed for a ~30:1 C:N blend, realistic compost yield, bin size and landfill waste diverted.",
   steps: [

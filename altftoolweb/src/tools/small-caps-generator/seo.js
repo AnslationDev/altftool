@@ -1,5 +1,5 @@
 const seo = {
-  title: "Small Caps Text Generator - Copy-Paste Unicode Letters",
+  title: "Small Caps Text Generator: Copy-Paste Unicode",
   metaDescription:
     "Swap the 26 Latin letters for Unicode small-capital lookalikes you can paste into bios and posts - numbers, emoji and punctuation pass through unchanged.",
   steps: [

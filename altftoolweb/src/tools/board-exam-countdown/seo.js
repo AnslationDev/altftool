@@ -1,5 +1,5 @@
 const seo = {
-  title: "Board Exam Countdown with Free Study Days Between Papers",
+  title: "Board Exam Countdown: Study Days Between Papers",
   metaDescription:
     "Enter your Class 10 or 12 datesheet to see days to each paper, free study days between papers, and the theory marks a target percentage demands.",
   steps: [

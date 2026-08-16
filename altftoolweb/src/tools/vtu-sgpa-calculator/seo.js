@@ -1,5 +1,5 @@
 const seo = {
-  title: "VTU SGPA Calculator – CIE & SEE Marks to SGPA (2021-22)",
+  title: "VTU SGPA Calculator: CIE & SEE Marks (2021-22)",
   metaDescription:
     "Enter CIE out of 50 and SEE out of 100 per course; the tool scales SEE to 50, applies VTU's 40/35/40 pass rules, grades each course and computes SGPA.",
   steps: [

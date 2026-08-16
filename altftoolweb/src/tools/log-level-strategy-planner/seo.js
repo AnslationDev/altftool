@@ -1,5 +1,5 @@
 const seo = {
-  title: "Log Level Planner: trace, debug, info, warn, error, fatal",
+  title: "Log Level Planner: from trace to fatal",
   metaDescription:
     "Answer five questions about an event and get its level on the log4j/SLF4J/RFC 5424 ladder, plus minimum levels for dev, CI, staging and production.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Museum Visit Time Estimator: How Long It Really Takes",
+  title: "Museum Visit Time Estimator: How Long It Takes",
   metaDescription:
     "Estimates a visit from objects on display and your pace, using the 17-21 second median look recorded at the Met and the Art Institute of Chicago.",
   steps: [

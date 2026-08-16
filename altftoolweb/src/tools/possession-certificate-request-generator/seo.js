@@ -1,5 +1,5 @@
 const seo = {
-  title: "Possession Certificate Request Letter Generator (RERA)",
+  title: "Possession Certificate Request Letter (RERA)",
   metaDescription:
     "Generate a RERA-based letter demanding possession from your builder, with delay days, MCLR+2% interest and an 18-item handover document checklist.",
   steps: [

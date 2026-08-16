@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reserved Instance Break-Even & Utilisation Calculator",
+  title: "Reserved Instance Break-Even Calculator",
   metaDescription:
     "Find the months of uptime where a 1- or 3-year cloud reservation beats on-demand, plus minimum utilisation % — works for AWS, Azure and GCP commitments.",
   steps: [

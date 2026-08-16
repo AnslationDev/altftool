@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Notification Reminder Planner for UPSC, SSC, IBPS",
+  title: "Exam Notification Reminder: UPSC, SSC, IBPS",
   metaDescription:
     "Track expected notification months for UPSC, SSC, IBPS, JEE and NEET, and get a concrete reminder date a set lead (default 15 days) before each.",
   steps: [

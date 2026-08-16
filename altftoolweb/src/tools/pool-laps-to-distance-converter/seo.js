@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pool Laps to Distance Converter – Metres, Yards, Pace",
+  title: "Pool Laps to Distance & Pace Converter",
   metaDescription:
     "Convert pool laps to metres, km, yards and miles for any lane length. Choose if a lap = 1 length or down-and-back; add time for pace per 100 m.",
   steps: [

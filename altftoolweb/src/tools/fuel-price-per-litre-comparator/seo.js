@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fuel Price Per Litre Comparator: Gallons to Litres, Ranked",
+  title: "Fuel Price Per Litre Comparator: Gallon to Litre",
   metaDescription:
     "Convert pump prices per litre, US gallon or imperial gallon in any currency to one price per litre, rank up to 6 stations and cost out the fill and trip.",
   steps: [

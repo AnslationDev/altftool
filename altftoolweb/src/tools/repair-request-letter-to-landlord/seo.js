@@ -1,5 +1,5 @@
 const seo = {
-  title: "Repair Request Letter to Landlord (Model Tenancy Act)",
+  title: "Repair Letter to Landlord (Model Tenancy Act)",
   metaDescription:
     "Log faults, split them landlord vs tenant under the Model Tenancy Act Second Schedule, and draft a dated letter with a deadline and the 50% rent cap.",
   steps: [

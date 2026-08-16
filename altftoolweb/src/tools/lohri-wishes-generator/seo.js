@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lohri Wishes in Punjabi, Hindi & English (13 January)",
+  title: "Lohri Wishes in Punjabi, Hindi & English (13 Jan)",
   metaDescription:
     "Lohri greetings in Gurmukhi, Roman Punjabi, Hindi and English — first-Lohri wishes for a baby or newlyweds — with SMS part counts and a countdown.",
   steps: [

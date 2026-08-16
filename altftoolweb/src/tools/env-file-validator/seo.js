@@ -1,5 +1,5 @@
 const seo = {
-  title: ".env File Validator — Lint Syntax, Quotes, Duplicates",
+  title: ".env File Validator: Syntax, Quotes, Duplicates",
   metaDescription:
     "Paste a .env file to catch unclosed quotes, duplicate keys and invalid names, with line numbers and dotenv vs docker --env-file portability warnings.",
   steps: [

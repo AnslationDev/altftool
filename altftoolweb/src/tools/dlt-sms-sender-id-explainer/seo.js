@@ -1,5 +1,5 @@
 const seo = {
-  title: "SMS Sender ID Explained: DLT Header Prefix and Suffix",
+  title: "SMS Sender ID: DLT Header Prefix & Suffix",
   metaDescription:
     "Splits an Indian SMS header into provider and service-area prefix, six-character header code and -P, -S, -T or -G suffix. Format only, never proof.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "HbA1c to Average Glucose: %, mmol/mol, mg/dL Converter",
+  title: "HbA1c to Average Glucose: %, mmol/mol, mg/dL",
   metaDescription:
     "Convert HbA1c between DCCT %, IFCC mmol/mol and eAG in mg/dL or mmol/L using the ADAG equation eAG = 28.7 × A1C − 46.7. 7% = 53 mmol/mol, 154 mg/dL.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Morse Code Trainer with Audio Quiz and 5-40 WPM Tones",
+  title: "Morse Code Trainer: Audio Quiz & 5-40 WPM Tones",
   metaDescription:
     "Learn all 36 Morse characters in four groups, unlocked at 80% accuracy over 5 attempts, with tone playback at 5-40 WPM and a listening quiz.",
   steps: [

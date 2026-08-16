@@ -1,5 +1,5 @@
 const seo = {
-  title: "South Korea Etiquette: Hoesik, Subway and Photo Rules",
+  title: "South Korea Etiquette: Hoesik, Subway & Photos",
   metaDescription:
     "Ranks Korean etiquette for the places you will actually be - restaurants, hoesik, subway, palaces, homes and offices - with legal rules always shown.",
   steps: [

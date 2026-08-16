@@ -1,5 +1,5 @@
 const seo = {
-  title: "ICC Profiles Explained - sRGB vs Adobe RGB Gamut Size",
+  title: "ICC Profiles Explained: sRGB vs Adobe RGB Gamut",
   metaDescription:
     "Compare sRGB, Adobe RGB, Display P3, Rec. 2020 and ProPhoto gamut areas, see what a wrong profile tag does to each primary, and when to assign vs convert.",
   steps: [

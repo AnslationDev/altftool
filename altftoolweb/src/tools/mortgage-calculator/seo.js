@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mortgage Calculator: EMI, Loan Amount and Total Interest",
+  title: "Mortgage Calculator: EMI, Loan Amount, Interest",
   metaDescription:
     "Home price, down payment %, rate and term into a monthly EMI by the amortised formula, plus the loan amount after deposit and total interest.",
   steps: [

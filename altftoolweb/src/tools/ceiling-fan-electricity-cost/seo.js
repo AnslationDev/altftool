@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ceiling Fan Electricity Cost & BLDC Payback Calculator",
+  title: "Ceiling Fan Electricity Cost & BLDC Payback",
   metaDescription:
     "Watts x hours x days x your INR tariff prices the fans you run, then shows months until a BLDC swap pays back. Speed buttons apply the cube affinity law.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Percentage Increase & Decrease Calculator with Multiplier",
+  title: "Percentage Increase & Decrease Calculator",
   metaDescription:
     "Compare two numbers to get the % change labelled increase or decrease, with the difference, multiplier and reverse change — or apply a % to any value.",
   steps: [

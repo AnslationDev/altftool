@@ -1,5 +1,5 @@
 const seo = {
-  title: "Women's Day Message Generator: Wishes by Tone & Length",
+  title: "Women's Day Message Generator: Wishes by Tone",
   metaDescription:
     "Generate 8 March Women's Day messages for family or colleagues — pick tone and length, get up to 8 distinct wordings to copy and edit.",
   steps: [

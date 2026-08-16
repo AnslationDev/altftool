@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dino Run — Play the Dinosaur Endless Runner Game Online",
+  title: "Dino Run: Play the Dinosaur Endless Runner Game",
   metaDescription:
     "Jump cacti with space, duck pterodactyls with the down arrow. Speed climbs from 480 to 1,200 px/s as your score grows — no account, no download.",
   steps: [

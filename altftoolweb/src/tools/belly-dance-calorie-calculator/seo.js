@@ -1,5 +1,5 @@
 const seo = {
-  title: "Belly Dance Calorie Calculator (4.5 MET, Props Counted)",
+  title: "Belly Dance Calorie Calculator (4.5 MET)",
   metaDescription:
     "Estimate calories burned belly dancing by style — class, drills, drum solo or cardio — with veil, cane or sword load and a minutes-to-goal readout.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "BUN to Urea Converter — mg/dL, mmol/L & Creatinine Ratio",
+  title: "BUN to Urea Converter & Creatinine Ratio",
   steps: [
     "Enter the Result value and pick the Reported unit — BUN (mg/dL), Urea (mg/dL) or Urea (mmol/L).",
     "Optionally fill 'Creatinine mg/dL' to switch on the BUN:creatinine ratio lines; the 'Converted result' panel recomputes as you edit.",

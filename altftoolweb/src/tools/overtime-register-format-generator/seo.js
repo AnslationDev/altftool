@@ -1,5 +1,5 @@
 const seo = {
-  title: "Overtime Register Format Generator (Form IV, 2x Rate)",
+  title: "Overtime Register Generator (Form IV, 2x Rate)",
   metaDescription:
     "Build a Form IV overtime register under rule 25(2): double-rate wages per s.59(1), the 10-hour day and 50-hour quarter checks, copied out as CSV.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Depth of Field Estimator with Hyperfocal & Diffraction",
+  title: "Depth of Field Estimator: Hyperfocal, Diffraction",
   metaDescription:
     "Near limit, far limit and hyperfocal from H = f²/(N×c) + f, with a real circle of confusion per sensor and a warning when diffraction outruns it.",
   steps: [

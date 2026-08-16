@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prettier Config Generator: .prettierrc with Live Preview",
+  title: "Prettier Config Generator (.prettierrc)",
   metaDescription:
     "Set all 14 core Prettier 3 options with a live code sample, add per-file overrides for md/json/yaml, and copy a .prettierrc listing only what changed.",
   steps: [

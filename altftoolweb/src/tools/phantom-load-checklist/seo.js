@@ -1,5 +1,5 @@
 const seo = {
-  title: "Phantom Load Checklist: What Standby Power Costs a Year",
+  title: "Phantom Load Checklist: Yearly Standby Power Cost",
   metaDescription:
     "Tick off 14 standby devices, price the wasted kWh at your electricity tariff, and see which — set-top box to phone charger — are worth unplugging.",
   steps: [

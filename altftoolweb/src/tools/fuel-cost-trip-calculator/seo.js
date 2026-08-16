@@ -1,5 +1,5 @@
 const seo = {
-  title: "Trip Fuel Cost Calculator: km or Miles, Split Per Person",
+  title: "Trip Fuel Cost Calculator: Split Per Person",
   metaDescription:
     "Distance, mileage and pump price give litres burned, total cost with tolls and each person's share. Works in km or miles, km/l, l/100 km or mpg.",
   steps: [

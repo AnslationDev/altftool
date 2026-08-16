@@ -1,5 +1,5 @@
 const seo = {
-  title: "Utility Name Transfer Letter: Electricity, Gas and Water",
+  title: "Utility Name Transfer Letter Generator",
   metaDescription:
     "Drafts the name-transfer application and its document checklist, applying the Rule 4(3) cap of 7, 15 or 30 days as a completion date.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Taiwan Entry Checklist: Visa-Free Days & Passport Rule",
+  title: "Taiwan Entry Checklist: Visa-Free Days & Passport",
   metaDescription:
     "Test your stay against Taiwan's 90, 30 or 14-day visa-free admission, the passport rule for your nationality, and the certificate's 90-day window.",
   steps: [

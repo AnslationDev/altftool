@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blue-Green Deployment Checklist with Rollback Triggers",
+  title: "Blue-Green Deployment Checklist with Rollbacks",
   metaDescription:
     "Build a cutover checklist with the DNS wait set at twice your TTL, a canary ramp, session and migration steps, and numeric rollback triggers.",
   steps: [

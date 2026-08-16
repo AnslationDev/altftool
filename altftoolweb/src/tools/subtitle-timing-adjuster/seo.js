@@ -1,5 +1,5 @@
 const seo = {
-  title: "SRT Subtitle Timing Adjuster: Shift, Scale & Fix FPS Drift",
+  title: "SRT Timing Adjuster: Shift, Scale & Fix FPS Drift",
   metaDescription:
     "Shift SRT subtitles by milliseconds, scale by percent, or convert 23.976 to 25 fps drift — with cue-range targeting, overlap fixes and SRT/VTT export.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Resignation Letter Generator with Last-Day Calculator",
+  title: "Resignation Letter Generator: Exact Last Day",
   metaDescription:
     "Draft a resignation letter and get the exact last working day from a 15, 30, 60 or 90-day notice, plus a shortfall and buyout estimate for early release.",
   steps: [

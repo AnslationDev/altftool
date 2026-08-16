@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blood Pressure Log: AHA Categories and 7-Day Averages",
+  title: "Blood Pressure Log: AHA Categories & Averages",
   metaDescription:
     "Log each cuff reading with time, arm and posture, see the 2017 AHA/ACC category, and print 7-day, 30-day, morning and evening averages.",
   intro:

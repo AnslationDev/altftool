@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lip-Read Practice Mirror: Zoom and Slow-Motion Replay",
+  title: "Lip-Read Practice Mirror: Zoom & Slow-Mo Replay",
   metaDescription:
     "Mirror your camera, magnify the mouth up to 4x, record a clip and replay it as slowly as 0.35x. The video stays in the tab and is never uploaded.",
   steps: [

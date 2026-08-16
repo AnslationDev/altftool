@@ -1,5 +1,5 @@
 const seo = {
-  title: "PSI to Bar Converter: kPa, kgf/cm2, atm + Hot Tyre Rise",
+  title: "PSI to Bar Converter + Hot Tyre Pressure Rise",
   metaDescription:
     "Converts pressure between psi, bar, kPa, kgf/cm2, atm and torr with exact factors, and projects a cold tyre reading to its hot value by gas law.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Travel Agency Prompt Pack + GST & TCS Quote Calculator",
+  title: "Travel Agency Prompt Pack + GST/TCS Calculator",
   metaDescription:
     "10 fill-in-the-blank prompts for package copy, quotes and follow-ups, plus a quote calculator applying markup, 5% GST and the 5%/20% TCS slabs.",
   steps: [

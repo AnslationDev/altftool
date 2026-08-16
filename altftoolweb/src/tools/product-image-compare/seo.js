@@ -1,5 +1,5 @@
 const seo = {
-  title: "Before & After Image Slider – Compare Two Product Photos",
+  title: "Before & After Image Slider for Product Photos",
   metaDescription:
     "Load two images and wipe between them with a draggable divider. Show A, 50/50 and Show B buttons snap the split; photos never leave your browser.",
   steps: [

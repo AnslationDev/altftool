@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mirror Text Generator — Reverse Text Backwards Online",
+  title: "Mirror Text Generator — Reverse Text Backwards",
   metaDescription:
     "Reverses the character order of your text as you type — 'Hello world' becomes 'dlrow olleH'. Letters keep their normal shapes; copy in one click.",
   steps: [

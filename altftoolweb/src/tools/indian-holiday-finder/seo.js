@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Holidays 2025-2027: State Lists & Long Weekends",
+  title: "Indian Holidays 2025-2027: States & Long Weekends",
   metaDescription:
     "Filter India's 2025-2027 holidays by month, state and type, see bank closures (Sundays plus 2nd/4th Saturdays) and long weekends, then export CSV.",
   steps: [

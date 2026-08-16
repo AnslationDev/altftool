@@ -1,5 +1,5 @@
 const seo = {
-  title: "Compound Interest Calculator with Yearly Growth Table",
+  title: "Compound Interest Calculator with Yearly Table",
   metaDescription:
     "Compound daily to annually or continuously, add a recurring deposit, and read APY plus a year-by-year table of deposits, interest and closing balance.",
   steps: [

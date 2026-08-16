@@ -1,5 +1,5 @@
 const seo = {
-  title: "IDV Calculator — IRDAI Depreciation Grid for Car & Bike",
+  title: "IDV Calculator: IRDAI Depreciation for Car & Bike",
   metaDescription:
     "Compute Insured Declared Value from ex-showroom price and IRDAI's 5%–50% age-band depreciation, plus the ±15% range and an indicative own-damage premium.",
   steps: [

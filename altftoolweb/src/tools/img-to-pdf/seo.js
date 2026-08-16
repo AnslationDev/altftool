@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image to PDF Converter: One Page per Image, In Browser",
+  title: "Image to PDF Converter: One Page per Image",
   metaDescription:
     "Merge JPG, PNG, WebP and GIF images into one PDF in your browser — each image becomes a page at its own pixel size, saved as images_merged.pdf.",
   steps: [

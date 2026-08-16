@@ -1,5 +1,5 @@
 const seo = {
-  title: "CRC32 Calculator: IEEE 802.3 Checksum in Hex & Decimal",
+  title: "CRC32 Calculator: IEEE 802.3, Hex & Decimal",
   metaDescription:
     "Computes the zip/gzip/PNG CRC-32 (polynomial 0xEDB88320, init and XOR 0xFFFFFFFF) of text, shown as eight hex digits and unsigned decimal with length.",
   intro:

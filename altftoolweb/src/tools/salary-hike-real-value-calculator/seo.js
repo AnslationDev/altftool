@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salary Hike Calculator — Real Value After Tax & Inflation",
+  title: "Salary Hike Calculator: After-Tax Real Value",
   metaDescription:
     "See what a 10% hike is worth after your marginal slab, 4% cess, surcharge and inflation — extra in hand per month plus the break-even hike to stay level.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSV to JSON Converter — Edit Rows, Pretty or Minified",
+  title: "CSV to JSON Converter with Row Editing",
   metaDescription:
     "Upload, drag in or paste CSV; edit cells in a paginated table, then export a JSON array of objects as pretty_data.json or minified_data.json.",
   intro:

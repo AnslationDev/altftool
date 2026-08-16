@@ -1,5 +1,5 @@
 const seo = {
-  title: "Household Electricity Bill Calculator with State Slabs",
+  title: "Household Electricity Bill Calculator",
   metaDescription:
     "Price your appliances at watts x hours / 1000, through telescopic domestic slabs plus fixed charge and duty — or your own flat rate per unit.",
   steps: [

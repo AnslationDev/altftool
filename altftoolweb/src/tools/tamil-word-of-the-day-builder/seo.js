@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tamil Word of the Day with Script and Romanised Reading",
+  title: "Tamil Word of the Day: Script & Romanised Reading",
   steps: [
     "Pick any date in the \"Date\" field or move with the \"Previous day\" / \"Next day\" buttons — each date maps to one card from the curated 30-word Tamil deck.",
     "Study the card — Tamil-script headword, romanisation, part of speech, meaning, note and an \"In a sentence\" example — then press \"Mark studied\" to update the streak kept only in this browser.",

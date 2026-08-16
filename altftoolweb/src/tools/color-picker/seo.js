@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Picker with HEX, RGB, HSL, CMYK & WCAG AA Check",
+  title: "Color Picker: HEX, RGB, HSL, CMYK & WCAG AA",
   metaDescription:
     "Pick a color and get HEX, RGB, RGBA, HSL and CMYK codes, four palettes from one hue, plus live WCAG AA contrast checks at 4.5:1.",
   intro:

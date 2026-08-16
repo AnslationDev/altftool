@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marathi New Year Wishes – Gudhi Padwa Greetings & SMS",
+  title: "Marathi New Year Wishes: Gudhi Padwa & SMS",
   metaDescription:
     "Gudhi Padwa and 1 January greetings in Devanagari and Roman script with English meaning, plus each message's real SMS length and parts.",
   steps: [

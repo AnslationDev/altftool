@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ideal Gas Law Calculator – Solve PV=nRT for P, V, n, T",
+  title: "Ideal Gas Law Calculator: PV=nRT for P, V, n, T",
   metaDescription:
     "Solve PV = nRT for pressure, volume, moles or kelvin temperature with R = 8.314462618 kPa·L/(mol·K); every substituted value is listed with the answer.",
   steps: [

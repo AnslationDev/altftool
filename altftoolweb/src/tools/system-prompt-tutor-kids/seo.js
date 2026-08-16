@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids AI Tutor System Prompt Builder - Child-Safe Rules",
+  title: "Kids AI Tutor System Prompt Builder (Child-Safe)",
   metaDescription:
     "Generate a child-safe AI tutor system prompt with an age band (5-7, 8-10, 11-13), allowed subjects and seven safety rules like trusted-adult referral.",
   steps: [

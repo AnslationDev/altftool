@@ -1,5 +1,5 @@
 const seo = {
-  title: "Git Commit Message Linter: Conventional Commits Check",
+  title: "Git Commit Message Linter: Conventional Commits",
   metaDescription:
     "Lint a commit message against Conventional Commits v1.0.0 and commitlint config-conventional rules, with each violation named and a fixed message to copy.",
   steps: [

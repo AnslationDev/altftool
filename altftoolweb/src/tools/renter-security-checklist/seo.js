@@ -1,5 +1,5 @@
 const seo = {
-  title: "Renter Security Checklist: 25 Weighted Move-In Checks",
+  title: "Renter Security Checklist: 25 Move-In Checks",
   metaDescription:
     "Score a rental on 25 checks weighted 5 to 1, citing NFPA 72 alarm rules, the 1-inch deadbolt throw and NEC 210.8 GFCI, then copy the repair list.",
   steps: [

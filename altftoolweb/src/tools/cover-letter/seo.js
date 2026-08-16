@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cover Letter Generator: Fill 12 Fields, Export as PDF",
+  title: "Cover Letter Generator with PDF Export",
   intro:
     "This generator turns twelve fields — your name, phone, email, portfolio link, date, hiring manager, company, job title, years of experience, previous work, skills and why that company — into a complete, correctly structured cover letter: contact block, date, addressee, subject line, four body paragraphs and a sign-off. Eight of those fields are required, so the letter cannot be produced with the placeholders still empty. You can copy the finished text, download it as a .txt file, or export it as a PDF.",
   useCases: [

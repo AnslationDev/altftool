@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roast Generator – Playful, Savage, Witty & Dark Lines",
+  title: "Roast Generator: Playful, Savage, Witty & Dark",
   metaDescription:
     "Pick a tier — playful, savage, witty or dark humor — and draw one of 31 hand-written roast one-liners. Add a name to aim it, copy it in one tap.",
   intro:

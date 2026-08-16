@@ -1,5 +1,5 @@
 const seo = {
-  title: "Assamese New Year Wishes - Bihu Greetings with SMS Count",
+  title: "Assamese New Year & Bihu Wishes with SMS Count",
   metaDescription:
     "Bohag Bihu and 1 January greetings in Assamese script with Roman transliteration, English meaning and exact SMS parts under the 70-character UCS-2 rule.",
   steps: [

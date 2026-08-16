@@ -1,5 +1,5 @@
 const seo = {
-  title: "Personal Crisis Safety Plan: Warning Signs to Contacts",
+  title: "Crisis Safety Plan: Warning Signs to Contacts",
   metaDescription:
     "Write a safety plan in the order a crisis unfolds: warning signs, coping steps, safer place, trusted contacts, risk reduction. Assembled in your browser.",
   steps: [

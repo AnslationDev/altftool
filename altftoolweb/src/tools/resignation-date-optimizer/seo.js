@@ -1,5 +1,5 @@
 const seo = {
-  title: "Resignation Date Optimizer: Gratuity, Notice, Tax Year",
+  title: "Resignation Date Optimizer: Gratuity & Tax Year",
   metaDescription:
     "Prices every candidate last working day in rupees: gratuity at 15÷26, notice buyout, leave encashment, bonus clawback and the tax year it lands in.",
   intro:

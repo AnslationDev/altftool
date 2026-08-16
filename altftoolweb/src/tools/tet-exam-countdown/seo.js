@@ -1,5 +1,5 @@
 const seo = {
-  title: "TET Exam Countdown: Days Left & CTET 90-Mark Score Check",
+  title: "TET Exam Countdown & CTET 90-Mark Score Check",
   metaDescription:
     "Count days to CTET or a state TET, weight section readiness by question share, and see expected marks against the 90-mark (60%) qualifying line.",
   steps: [

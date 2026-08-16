@@ -1,5 +1,5 @@
 const seo = {
-  title: "VTT to SRT Converter: Clean SubRip from WebVTT Captions",
+  title: "VTT to SRT Converter: Clean SubRip from WebVTT",
   metaDescription:
     "Convert WebVTT to SubRip in your browser: strips NOTE/STYLE/REGION blocks, decodes entities, renumbers cues, applies a ms offset and saves a .srt file.",
   steps: [

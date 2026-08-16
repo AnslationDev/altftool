@@ -1,5 +1,5 @@
 const seo = {
-  title: "Traffic Challan Tracker: Pending, Overdue, Payoff Plan",
+  title: "Traffic Challan Tracker: Overdue & Payoff Plan",
   metaDescription:
     "Log e-challans privately in your browser: each offence shows its Motor Vehicles Act section and central penalty, with overdue flags and months to clear.",
   steps: [

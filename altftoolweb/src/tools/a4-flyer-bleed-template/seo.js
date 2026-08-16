@@ -1,5 +1,5 @@
 const seo = {
-  title: "A4 Flyer Bleed Template: 3 mm Bleed, Crop Marks & SVG",
+  title: "A4 Flyer Bleed Template: 3 mm Bleed & Crop Marks",
   metaDescription:
     "Set up A4, A5 or DL flyer artboards with 3 mm bleed, 5 mm safe area, crop marks and fold panels, then copy the spec or download an SVG guide layer.",
   steps: [

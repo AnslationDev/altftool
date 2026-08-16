@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL Naming Conventions: Tables, Keys, Indexes, Limits",
+  title: "SQL Naming Conventions: Tables, Keys & Indexes",
   metaDescription:
     "Generate table, column, PK, FK, index and check naming rules with worked examples, checked against PostgreSQL's 63 bytes, MySQL's 64 and Oracle's 30.",
   steps: [

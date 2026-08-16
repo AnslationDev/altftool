@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Pitch & Tempo Shifter with ffmpeg Filter Chains",
+  title: "Audio Pitch & Tempo Shifter with ffmpeg",
   metaDescription:
     "Shift pitch in semitones and tempo in percent independently — get the resample rate and a copy-ready atempo chain split into ffmpeg's 0.5–2.0 limit.",
   steps: [

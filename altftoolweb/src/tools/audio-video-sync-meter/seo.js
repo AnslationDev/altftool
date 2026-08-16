@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Video Sync Meter: Lip-Sync Offset in Milliseconds",
+  title: "Audio Video Sync Meter: Lip-Sync Offset in ms",
   steps: [
     "Enter the Frame rate (fps), the Frame of the flash / clap, the Audio spike time (seconds or HH:MM:SS.mmm), and whether the first frame is numbered 1 or 0.",
     "Press \"Add to average\" to fold in a second or third slate, since reading one flash is only accurate to about half a frame.",

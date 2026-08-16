@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thailand Dress Code Planner: Temples, Beaches, Packing",
+  title: "Thailand Dress Code Planner: Temples & Packing",
   metaDescription:
     "Applies real entry rules — ankle-length trousers at the Grand Palace, covered shoulders and knees in any wat — and sizes a packing list by wash cycle.",
   steps: [

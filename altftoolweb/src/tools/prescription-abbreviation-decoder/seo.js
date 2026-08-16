@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prescription Abbreviation Decoder: BD, TDS, PRN & 5/7",
+  title: "Prescription Abbreviation Decoder: Sig to Doses",
   metaDescription:
     "Paste a sig like '1 tab PO TDS 5/7' to decode each abbreviation, get doses per day, course length and total tablets — with ISMP unsafe-shorthand flags.",
   steps: [

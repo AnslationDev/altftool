@@ -1,5 +1,5 @@
 const seo = {
-  title: "Elderly BMI Calculator: 24-29 Range, MUST, Knee Height",
+  title: "Elderly BMI Calculator: 24-29, MUST, Knee Height",
   metaDescription:
     "BMI for adults 65+ read against the 24-29 desirable band, with Chumlea knee-height stature estimation and a MUST malnutrition screening score.",
   steps: [

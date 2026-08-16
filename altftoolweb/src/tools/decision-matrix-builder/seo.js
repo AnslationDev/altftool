@@ -1,5 +1,5 @@
 const seo = {
-  title: "Decision Matrix Builder: Weight Criteria, Rank Options",
+  title: "Decision Matrix Builder with Weighted Criteria",
   metaDescription:
     "Score options 0-10 against criteria whose weights auto-normalise to 100%, and rank them by SUM(weight x score) / SUM(weights) x 10.",
   steps: [

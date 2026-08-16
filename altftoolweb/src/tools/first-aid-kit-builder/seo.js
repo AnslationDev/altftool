@@ -1,5 +1,5 @@
 const seo = {
-  title: "First Aid Kit Checklist Builder — Home, Car, Office, Trek",
+  title: "First Aid Kit Checklist: Home, Car, Office, Trek",
   metaDescription:
     "Kit lists with quantities and packed weight, scaled by people, days and distance from help; workplace kits floored at the ANSI Z308.1 Class A minimum.",
   steps: [

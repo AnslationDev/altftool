@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sextortion Email Check: Is That Password Threat Real?",
+  title: "Sextortion Check: Is That Password Threat Real?",
   metaDescription:
     "Score the email against the 10 hallmarks of the mass-mailed bluff: an old leaked password, no evidence attached, a crypto demand, a forged From line.",
   steps: [
