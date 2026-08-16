@@ -37,8 +37,21 @@ const EMPTY_SETTINGS = [];
  * the pre-routing behavior (start on the home page). Everything below that
  * syncs `activeId` back out to the URL as the visitor navigates is additive
  * — no existing prop, handler, or piece of local state changes shape.
+ *
+ * `serverArticle` (also only passed by the [...slug] route) is the resolved
+ * record's article pre-rendered on the server (see [...slug]/serverArticle.jsx).
+ * While the page isn't ready — the same window that used to show only a
+ * skeleton — it renders in the main column instead of the content skeleton,
+ * so the article substance is in the server HTML for crawlers and visible
+ * immediately for visitors. The first client render takes the same branch,
+ * so hydration matches; once `pageReady` flips, the interactive app replaces
+ * it wholesale — the content never appears twice.
  */
-export default function SettingSupportPage({ initialActiveId = null, initialPlatformOverride = null }) {
+export default function SettingSupportPage({
+  initialActiveId = null,
+  initialPlatformOverride = null,
+  serverArticle = null,
+}) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeId, setActiveId] = useState(initialActiveId);
   const [searchQuery, setSearchQuery] = useState("");
@@ -415,15 +428,19 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
 
           <div className="support-setting-main-wrap flex flex-1 min-w-0">
             <main className="support-setting-main flex-1 min-w-0">
-              <div className="support-settings-content-inner">
-                <Skeleton className="support-skeleton-hero" />
-                <SkeletonText lines={2} className="support-skeleton-text-block" />
-                <div className="support-skeleton-grid">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <Skeleton key={index} className="support-skeleton-card" />
-                  ))}
+              {serverArticle ? (
+                <div className="support-settings-content-inner">{serverArticle}</div>
+              ) : (
+                <div className="support-settings-content-inner">
+                  <Skeleton className="support-skeleton-hero" />
+                  <SkeletonText lines={2} className="support-skeleton-text-block" />
+                  <div className="support-skeleton-grid">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <Skeleton key={index} className="support-skeleton-card" />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </main>
           </div>
         </div>

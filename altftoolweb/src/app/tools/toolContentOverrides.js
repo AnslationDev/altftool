@@ -6710,7 +6710,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What is the character limit for the Base64 string I can decode?",
-        "The Base64 to Text tool can handle Base64 strings of any length, but extremely long strings may take longer to decode."
+        "The limit is on the decoded size, not the character count: anything that would decode past 8 MB is refused with an error naming the limit, since 8 MB of text is already beyond a readable preview. Below that, longer strings simply take a moment more."
       ],
       [
         "Can I decode multiple Base64 strings at once?",
@@ -6723,7 +6723,7 @@ export const toolContentOverrides = {
     ],
     "steps": [
       "Load the string into the 'Base64 Encoded Input' box — type it, press Paste, press Upload .txt (it accepts .txt, .b64 and .base64), drop a file onto the box, or press Sample Data. Clear empties the box and the character count sits beneath it.",
-      "Auto Decode is ON by default, so the 'Decoded Text Output' panel updates as you type; switch it off and press Decode to run it by hand. Advanced Options holds 'Preserve line breaks', 'Trim whitespace', 'Detect invalid Base64' and 'URL-safe Base64 support' — turn the last one on when the payload uses - and _ characters.",
+      "Auto Decode is ON by default, so the 'Decoded Text Output' panel updates as you type; switch it off and press Decode to run it by hand. Advanced Options holds 'Auto decode while typing', 'Preserve line breaks' and 'Trim whitespace' — URL-safe - and _ characters, missing = padding, byte-order marks and binary content are all detected automatically, with nothing to switch on.",
       "Press Copy, Download .txt (saved as decoded-text.txt) or Share to take the text away; the Input Size, Output Size, Decoding Status and Processing Time tiles describe the last run, and Reset All returns the tool to its defaults."
     ]
   },

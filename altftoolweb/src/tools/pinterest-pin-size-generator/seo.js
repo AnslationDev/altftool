@@ -8,17 +8,17 @@ const seo = {
     "Click Copy output to grab the preset, dimensions and CSS block in one paste-ready snippet.",
   ],
   intro:
-    "This generator resizes artwork to Pinterest's pin canvases — 1000x1500 standard, 1000x1000 square, 1000x2100 long and 1080x1920 idea pin — and tells you how much of the frame is cropped before you export. It also applies Pinterest's feed rule: pins are shown in full up to about 1:2.1 height-to-width, and anything taller is cut off. All resizing runs on canvas in your browser, so the image is never uploaded.",
+    "This generator turns Pinterest's three pin canvases — Standard 2:3 at 1000×1500, Square at 1000×1000 and Idea/story at 1080×1920 — into exact numbers for your design file. Pick a Pin type, set an Export scale for 2x or 3x output, and enter a Safe inset in pixels: the Pin dimensions panel returns the scaled canvas size, the safe area left inside that inset, and ready-to-paste .pin-artboard and .pin-safe-area CSS rules. It works entirely from those three inputs — it does not resize, crop or upload images.",
   useCases: [
-    "Convert a 4:3 product photograph into the recommended 2:3 pin shape and see exactly which 44% of the image gets cropped away.",
-    "Check whether a tall infographic at 1000x2600 will be truncated in the home feed, and what height keeps it fully visible.",
-    "Repurpose a 1080x1920 Reel frame as an idea pin without letterboxing, then export a matching 1000x1500 static pin for the same campaign.",
-    "Batch a set of board covers to a consistent 1000x1000 square so the board grid stops looking ragged.",
+    "Set up a Figma or Photoshop artboard for a standard pin at retina scale: choose Standard 2:3, type 2 into Export scale and read off the 2000×3000 canvas before you draw anything.",
+    "Keep headlines clear of the edges by giving a 1000×1500 pin a 64px safe inset and designing text inside the 872×1372 safe area the panel reports.",
+    "Build a pin template in code by pasting the generated .pin-artboard aspect-ratio rule and .pin-safe-area inset straight into your stylesheet.",
+    "Brief a designer with one click: Copy output grabs the preset name, canvas, safe area and CSS block as a single plain-text snippet for the ticket.",
   ],
   benefits: [
-    ["Feed truncation check", "Warns when a pin is taller than the roughly 1:2.1 point where the feed stops showing the whole image."],
-    ["Crop shown before export", "The preview frame is the real pin shape, with the cropped percentage stated as a number."],
-    ["Local canvas export", "PNG, JPEG or WebP written in the browser with an adjustable encoder quality — no upload, no watermark."],
+    ["Three real Pinterest presets", "Standard 2:3 (1000×1500), Square (1000×1000) and Idea/story (1080×1920) are built into the Pin type menu, so you never mistype a canvas size."],
+    ["Scale and safe area computed together", "Export scale multiplies the canvas while Safe inset px is subtracted from every edge of the scaled result, clamped so the safe area never goes negative."],
+    ["CSS included in every result", "Each output ends with a .pin-artboard width, height and aspect-ratio rule plus a .pin-safe-area inset rule, ready for Copy output."],
   ],
   faqs: [
     [

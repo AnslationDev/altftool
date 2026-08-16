@@ -8,7 +8,7 @@ const seo = {
     "Press Export to download the canvas render named like status-1080x1920.jpg, check it against the 16 MB media ceiling, or Copy spec for the full size breakdown.",
   ],
   intro:
-    "This tool exports WhatsApp Status images at 1080 x 1920, the 9:16 shape that fills the status viewport with no background bars, and shows exactly how much of the screen any other ratio leaves empty. It also marks the areas WhatsApp's own overlays cover — the contact name and progress bar at the top, the reply field at the bottom — and splits a long video into the 60 second clips a single status allows. Resizing and encoding both run on canvas in your browser.",
+    "This tool exports WhatsApp Status images at 1080 x 1920, the 9:16 shape that fills the status viewport with no background bars, and shows exactly how much of the screen any other ratio leaves empty. It also marks the areas WhatsApp's own overlays cover — the contact name and progress bar at the top, the reply field at the bottom — and works out how many 60-second clips a longer video needs to fit the status limit. Resizing and encoding both run on canvas in your browser.",
   useCases: [
     "Convert a landscape product photo into a full-bleed 1080 x 1920 status instead of letting it float between two black bars.",
     "See that a square 1080 x 1080 graphic only covers 56% of the status screen before you decide whether that is acceptable.",

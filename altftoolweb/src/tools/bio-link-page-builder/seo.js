@@ -29,7 +29,7 @@ const seo = {
     ],
     [
       "What can I customise about the look?",
-      "Four gradient presets, a free-choice accent colour, three typefaces, three button styles (glass, solid, outline) and a corner radius from 8 to 32 pixels. The preview applies the preset gradient, the typeface and the accent colour on your tagline; button style and radius are stored with the project and travel in the export, since the preview shows the profile and share card rather than the link buttons. Profile images accept PNG, JPEG and WEBP.",
+      "Four gradient presets, a free-choice accent colour, three typefaces, three button styles (glass, solid, outline) and a corner radius from 8 to 32 pixels. The phone preview applies all of it live — the preset gradient, the typeface, the accent colour on your tagline, and every valid link drawn as a button in the chosen glass, solid or outline style at the radius you set. Profile images accept PNG, JPEG and WEBP.",
     ],
   ],
 };
