@@ -1,5 +1,5 @@
 const seo = {
-  title: "Remove Extra Spaces: Collapse Double Spaces and Tabs",
+  title: "Remove Extra Spaces: Collapse Spaces & Tabs",
   metaDescription:
     "Paste text and every run of spaces or tabs collapses to one space, with each line trimmed at both ends. Line breaks stay, so your paragraphs keep shape.",
   steps: [

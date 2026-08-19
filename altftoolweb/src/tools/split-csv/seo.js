@@ -1,5 +1,5 @@
 const seo = {
-  title: "Split CSV into Multiple Files – Rows or Column Value",
+  title: "Split CSV into Files by Rows or Column Value",
   metaDescription:
     "Split a CSV by max rows per file, equal parts, or one file per column value. The header repeats in every part; download files singly or as a ZIP.",
   steps: [

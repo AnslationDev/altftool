@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bash Script Scaffold Generator – Strict Mode & Traps",
+  title: "Bash Script Scaffold: Strict Mode & Traps",
   metaDescription:
     "Generate a bash skeleton with set -Eeuo pipefail, ERR and EXIT traps, getopts parsing, logging and an optional flock guard against overlapping runs.",
   steps: [

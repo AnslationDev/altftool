@@ -1,5 +1,5 @@
 const seo = {
-  title: "Claude API Cost Calculator - Caching & Batch Pricing",
+  title: "Claude API Cost Calculator: Cache & Batch Pricing",
   metaDescription:
     "Project monthly Claude API spend from requests and tokens - Opus, Sonnet and Haiku presets, 0.1x cache reads, 1.25x/2x writes and the 50% batch discount.",
   steps: [

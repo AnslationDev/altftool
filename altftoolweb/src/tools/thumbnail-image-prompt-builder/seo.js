@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Thumbnail Prompt Builder with Text-Size Maths",
+  title: "YouTube Thumbnail Prompt Builder",
   metaDescription:
     "Builds a text-free AI thumbnail prompt with a reserved headline zone and computes cap height and character budget from each platform's smallest render.",
   steps: [

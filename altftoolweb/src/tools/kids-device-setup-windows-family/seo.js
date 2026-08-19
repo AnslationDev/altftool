@@ -1,5 +1,5 @@
 const seo = {
-  title: "Windows Child Account Setup: Family Safety Checklist",
+  title: "Windows Child Account Setup: Family Safety",
   metaDescription:
     "Set up a Windows child account: standard-user rights first, screen-time schedules, Store age ratings, purchase approval, and the Edge-only catch.",
   steps: [

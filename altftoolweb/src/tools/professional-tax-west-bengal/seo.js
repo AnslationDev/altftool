@@ -1,5 +1,5 @@
 const seo = {
-  title: "West Bengal Professional Tax Calculator (2023 Slabs)",
+  title: "West Bengal Professional Tax Calculator (2023)",
   metaDescription:
     "Monthly PT for West Bengal's five post-2023 slabs — nil up to Rs 10,000, Rs 200 above Rs 40,000 — with head count and the employer's deposit calendar.",
   steps: [

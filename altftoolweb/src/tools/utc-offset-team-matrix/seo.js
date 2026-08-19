@@ -1,5 +1,5 @@
 const seo = {
-  title: "Team Time Zone Overlap Matrix with Best Meeting Slot",
+  title: "Team Time Zone Overlap Matrix & Meeting Slot",
   metaDescription:
     "Pick team cities and shared working hours for a 24-hour UTC grid, full-overlap hours and the best meeting slot in every city's local time.",
   steps: [

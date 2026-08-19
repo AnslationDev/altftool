@@ -1,5 +1,5 @@
 const seo = {
-  title: "CI Build Matrix Job Count & Runner Minutes Estimator",
+  title: "CI Matrix Job Count & Runner Minutes Estimator",
   metaDescription:
     "Multiply matrix dimensions minus excludes plus includes for the real job count, checked against GitHub's 256-job cap, plus runner minutes per month.",
   steps: [

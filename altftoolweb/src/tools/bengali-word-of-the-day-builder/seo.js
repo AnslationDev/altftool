@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bengali Word of the Day: 30-Word Deck & Romanisation",
+  title: "Bengali Word of the Day: 30-Word Deck",
   metaDescription:
     "One Bengali word a day from a 30-word deck — script, spoken-style romanisation, meaning and example sentence, with a streak saved only in your browser.",
   steps: [

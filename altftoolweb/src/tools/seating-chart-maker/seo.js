@@ -1,5 +1,5 @@
 const seo = {
-  title: "Seating Chart Maker: Table Count & Guest Assignments",
+  title: "Seating Chart Maker: Tables & Guest Assignments",
   metaDescription:
     "Paste a guest list and get seats per table from table size at 22 in per cover, tables needed, per-table assignments and an NFPA room check.",
   steps: [

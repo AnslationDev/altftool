@@ -1,5 +1,5 @@
 const seo = {
-  title: "JioFiber Router Hardening Checklist & Security Score",
+  title: "JioFiber Router Hardening Checklist",
   metaDescription:
     "Score your JioFiber ONT: sticker admin password, WPA2/WPA3, WPS, UPnP and port forwards. Critical gaps cap the score; includes a Wi-Fi crack-time table.",
   steps: [

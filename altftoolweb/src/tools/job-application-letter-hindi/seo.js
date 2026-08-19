@@ -1,5 +1,5 @@
 const seo = {
-  title: "नौकरी हेतु आवेदन पत्र — Hindi Job Application Letter",
+  title: "नौकरी हेतु आवेदन पत्र — Job Application Letter",
   metaDescription:
     "Full patra format — सेवा में, विषय, सविनय निवेदन, भवदीय, संलग्न — with gendered verb forms, your age on the cut-off date and the category relaxation.",
   intro:

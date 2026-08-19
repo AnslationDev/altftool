@@ -1,5 +1,5 @@
 const seo = {
-  title: "Spark Plug Gap Tool: mm, Inch & Thou with Boost Rule",
+  title: "Spark Plug Gap Tool: mm, Inch, Thou & Boost Rule",
   metaDescription:
     "Converts a plug gap using the exact 25.4 mm inch, checks it against the range for your engine type, and closes it 0.05 mm per 0.5 bar of boost.",
   steps: [

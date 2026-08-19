@@ -1,5 +1,5 @@
 const seo = {
-  title: "Transitive Dependency Risk: Graph Size and Advisories",
+  title: "Transitive Dependency Risk: Size & Advisories",
   metaDescription:
     "Model how direct deps expand by branching factor and package reuse into the installed graph, then read expected advisories per year and audit hours.",
   steps: [

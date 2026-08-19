@@ -1,5 +1,5 @@
 const seo = {
-  title: "Last-Minute Study Priority: Rank Units by Marks/Hour",
+  title: "Last-Minute Study Priority: Units by Marks/Hour",
   metaDescription:
     "Ranks syllabus units by marks recoverable per study hour and allocates your remaining hours greedily, with full, partial and skip verdicts per unit.",
   steps: [

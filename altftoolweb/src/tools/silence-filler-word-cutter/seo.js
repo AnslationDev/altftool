@@ -1,5 +1,5 @@
 const seo = {
-  title: "Remove Silence from Audio – In-Browser FFmpeg Cutter",
+  title: "Remove Silence from Audio – In-Browser FFmpeg",
   metaDescription:
     "Cuts pauses longer than 0.65 s below a -35, -40 or -45 dB threshold with FFmpeg WebAssembly in your browser. Audio never uploads; output is WAV.",
   steps: [

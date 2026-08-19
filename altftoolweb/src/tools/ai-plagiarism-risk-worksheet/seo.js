@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Plagiarism Risk Worksheet: Score Your Draft 0-100",
+  title: "AI Plagiarism Risk Worksheet: Score a Draft 0-100",
   metaDescription:
     "Six questions on verbatim text, paraphrase depth, sourcing, reference checks, disclosure and originality give a weighted 0-100 risk score.",
   steps: [

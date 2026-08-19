@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weighted Grade Calculator: What You Need on the Final",
+  title: "Weighted Grade Calculator: Mark Needed on Final",
   metaDescription:
     "Weighted average from SUM(score x weight) / SUM(weight), with letter and 4.0 GPA. Leave a score blank and it works out the mark the final needs.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text to QR Code — Wi-Fi, vCard & 8 More Payload Types",
+  title: "Text to QR Code: Wi-Fi, vCard & 8 More Types",
   metaDescription:
     "Encode text, URLs, Wi-Fi, vCards and events as QR codes with colour, sizes to 512 px, L-H error correction and a centre logo — export PNG, SVG or JPEG.",
   steps: [

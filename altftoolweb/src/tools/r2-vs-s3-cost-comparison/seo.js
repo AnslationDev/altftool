@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cloudflare R2 vs Amazon S3 Cost Calculator (Monthly)",
+  title: "Cloudflare R2 vs Amazon S3 Cost Calculator",
   metaDescription:
     "Compare monthly cost at list prices: R2 $0.015/GB with $0 egress vs S3 $0.023/GB plus tiered egress from $0.09/GB, with request pricing mapped correctly.",
   steps: [

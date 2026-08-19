@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lateral Entry Merit Calculator for LEET, ECET, JELET",
+  title: "Lateral Entry Merit Calculator: LEET, ECET, JELET",
   metaDescription:
     "Weigh diploma percentage against your LEET/ECET/JELET score for a merit index out of 100, with the AICTE 45% (40% reserved) diploma floor checked.",
   steps: [

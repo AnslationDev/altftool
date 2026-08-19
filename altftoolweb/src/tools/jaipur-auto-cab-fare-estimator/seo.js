@@ -1,5 +1,5 @@
 const seo = {
-  title: "Jaipur Auto and Cab Fare Estimator: Fair Rate per Km",
+  title: "Jaipur Auto & Cab Fare Estimator: Rate per Km",
   metaDescription:
     "Price a Jaipur auto, e-rickshaw or cab from distance, waiting time, round trips and a night premium, with an opening offer and a walk-away figure.",
   steps: [

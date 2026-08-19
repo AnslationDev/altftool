@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI ROI Calculator — Hours Saved vs Subscription Cost",
+  title: "AI ROI Calculator: Hours Saved vs Tool Cost",
   metaDescription:
     "Work out whether an AI tool pays for itself: active seats × hours saved × loaded rate vs cost, with break-even hours and monthly and annual net benefit.",
   steps: [

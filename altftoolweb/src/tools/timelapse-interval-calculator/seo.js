@@ -1,5 +1,5 @@
 const seo = {
-  title: "Timelapse Interval Calculator: Frames, Clip, Card GB",
+  title: "Timelapse Interval Calculator: Frames, Clip, GB",
   metaDescription:
     "Enter shoot hours, interval and playback fps to get the shot count, finished clip length, storage in GB and whether your card is big enough.",
   steps: [

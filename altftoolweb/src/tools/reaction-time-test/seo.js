@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reaction Time Test — 5-Round Average in Milliseconds",
+  title: "Reaction Time Test — 5-Round Average in ms",
   metaDescription:
     "Click when the screen turns green after a random 500–5000 ms wait. Five rounds, a seven-band grade from Inhuman to Very Slow, and a CSV of the run.",
   steps: [

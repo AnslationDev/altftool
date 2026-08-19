@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thai Airways Excess Baggage Cost: Per Kg or Per Piece",
+  title: "Thai Airways Excess Baggage Cost Estimator",
   metaDescription:
     "Price excess baggage on the weight concept or the Americas piece concept, pooled across the booking, comparing prepaid blocks against the airport rate.",
   steps: [

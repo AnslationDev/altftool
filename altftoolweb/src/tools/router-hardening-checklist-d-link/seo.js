@@ -1,5 +1,5 @@
 const seo = {
-  title: "D-Link Router Hardening Checklist: 22 Weighted Steps",
+  title: "D-Link Router Hardening Checklist: 22 Steps",
   metaDescription:
     "Score a DIR router on the blank admin password, WPS, remote management, UPnP and end-of-support firmware, with a WPS PIN attack timer.",
   steps: [

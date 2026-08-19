@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thai Airways Baggage Allowance and Excess Fee Checker",
+  title: "Thai Airways Baggage Allowance Checker",
   metaDescription:
     "Check bags against TG weight allowances from 20 to 50 kg, the 56x45x25 cm and 115 cm cabin rules, and Americas 2-piece routes.",
   steps: [

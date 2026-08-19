@@ -1,5 +1,5 @@
 const seo = {
-  title: "Number Guessing Game — 1-100 with Higher/Lower Hints",
+  title: "Number Guessing Game — 1-100, Higher/Lower Hints",
   metaDescription:
     "Guess the secret number from higher/lower hints — Easy 1-50 in 10 tries, Medium 1-100 in 7, Hard 1-200 in 6 — with attempt history and a best score.",
   steps: [

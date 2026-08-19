@@ -1,5 +1,5 @@
 const seo = {
-  title: "Product Description Prompt Builder for Amazon & Etsy",
+  title: "Product Description Prompt Builder: Amazon, Etsy",
   metaDescription:
     "Turn a feature list into a listing-copy prompt: feature-to-benefit bullets, a word budget that sums exactly, and Amazon, Etsy or eBay title limits.",
   steps: [

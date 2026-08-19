@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 138 Cheque Bounce Notice Draft + 30-Day Date",
+  title: "Section 138 Cheque Bounce Notice + 30-Day Date",
   metaDescription:
     "Turn cheque, amount, return-memo date and reason into a To/From/Subject demand skeleton with a 30-day review target. Drafting aid, not legal advice.",
   steps: [

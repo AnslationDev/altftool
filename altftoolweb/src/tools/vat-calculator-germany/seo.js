@@ -1,5 +1,5 @@
 const seo = {
-  title: "German VAT Calculator — 19% & 7% Netto–Brutto (MwSt)",
+  title: "German VAT Calculator — 19% & 7% Netto–Brutto",
   metaDescription:
     "Switch netto and brutto at 19% or 7%, see the Umsatzsteuer and the 19/119 tax fraction, and test the 25,000/100,000 EUR Kleinunternehmer limits.",
   steps: [

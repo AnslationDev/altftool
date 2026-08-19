@@ -1,5 +1,5 @@
 const seo = {
-  title: "Threads Image Size: Export 1080x1350, 1080x1080 Posts",
+  title: "Threads Image Size: 1080x1350 & 1080x1080",
   metaDescription:
     "Resize posts to the 1080 px width Threads serves — 1080x1350 portrait, 1080x1080 square, 1080x566 landscape — and preview the crop outside 1.91:1 to 4:5.",
   steps: [

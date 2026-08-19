@@ -1,5 +1,5 @@
 const seo = {
-  title: "URL Parser: Split Protocol, Host, Path, Query & Hash",
+  title: "URL Parser: Protocol, Host, Path, Query & Hash",
   metaDescription:
     "Paste a URL and read protocol, host, hostname, port, path and hash line by line, with every query parameter listed as a decoded key = value pair.",
   steps: [

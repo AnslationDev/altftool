@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tablet Strength Split Calculator: Halves and Quarters",
+  title: "Tablet Split Calculator: Halves & Quarters",
   metaDescription:
     "Divide a target dose by your tablet strength and round to whole, half or quarter tablets, with the nearest dose below and above and days of supply.",
   steps: [

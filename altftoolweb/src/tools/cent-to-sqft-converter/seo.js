@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cent to Square Feet Converter (1 Cent = 435.6 Sq Ft)",
+  title: "Cent to Square Feet: 1 Cent = 435.6 Sq Ft",
   metaDescription:
     "1 cent = 435.6 sq ft exactly. Convert cent, ground, ankanam, guntha, are, acre and hectare, price land from a rate per cent, and split equal shares.",
   steps: [

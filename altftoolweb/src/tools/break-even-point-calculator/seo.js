@@ -1,5 +1,5 @@
 const seo = {
-  title: "Break-Even Point Calculator: Units, Revenue & Margin",
+  title: "Break-Even Point Calculator: Units & Revenue",
   metaDescription:
     "Divide fixed costs by contribution per unit to get break-even units and revenue, plus margin of safety, target-profit volume and operating leverage.",
   steps: [

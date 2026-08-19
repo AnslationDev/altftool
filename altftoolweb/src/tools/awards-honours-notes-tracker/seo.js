@@ -1,5 +1,5 @@
 const seo = {
-  title: "Awards and Honours Tracker for Bank, SSC & UPSC Prep",
+  title: "Awards & Honours Tracker for Bank, SSC & UPSC",
   metaDescription:
     "Log award-recipient-field-year rows in a searchable, sortable table saved in your browser, and copy them out as CSV for revision notes.",
   steps: [

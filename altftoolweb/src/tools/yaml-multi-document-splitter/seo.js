@@ -1,5 +1,5 @@
 const seo = {
-  title: "YAML Multi-Document Splitter for Kubernetes Manifests",
+  title: "YAML Multi-Document Splitter for Kubernetes",
   metaDescription:
     "Split a YAML stream at its --- markers, validate each document, name Kubernetes docs kind-name, and recombine. Block-scalar separators stay intact.",
   steps: [

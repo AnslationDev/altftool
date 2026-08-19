@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pomodoro Study Timer — 25/5/15 Cycle, Custom Lengths",
+  title: "Pomodoro Study Timer: 25/5/15, Custom Lengths",
   metaDescription:
     "Run 25-minute focus blocks with 5 and 15-minute breaks, adjust each from 1 to 120 minutes, and count completed sessions with a progress ring.",
   intro:

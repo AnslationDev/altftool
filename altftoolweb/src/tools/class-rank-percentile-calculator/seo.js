@@ -1,5 +1,5 @@
 const seo = {
-  title: "Class Rank to Percentile Calculator for College Apps",
+  title: "Class Rank to Percentile Calculator",
   metaDescription:
     "Turn your class rank and class size into the top-X% figure and percentile applications ask for — rank 25 of 500 is top 5% and the 95th percentile.",
   steps: [

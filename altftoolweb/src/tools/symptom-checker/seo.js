@@ -1,5 +1,5 @@
 const seo = {
-  title: "Symptom Checker: How Soon to Be Seen, Not a Diagnosis",
+  title: "Symptom Checker: How Soon to Be Seen",
   metaDescription:
     "Tick symptoms, duration and severity: fixed red-flag rules - FAST, sepsis signs, neck stiffness - give one urgency band and name the rule that fired.",
   steps: [

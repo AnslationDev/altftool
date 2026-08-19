@@ -1,5 +1,5 @@
 const seo = {
-  title: "Words to Tokens Estimator: 1,000 Words ≈ 1,334 Tokens",
+  title: "Words to Tokens Estimator: ~1.33 Tokens per Word",
   metaDescription:
     "Convert a planned word count to LLM tokens at ~1.33 per English word — 1.67 technical, 1.8 European, 2.5 code — plus a 10% budgeting margin.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "package.json Generator with Real npm Name Validation",
+  title: "package.json Generator with npm Name Validation",
   metaDescription:
     "Builds a package.json validated by npm's actual rules — lowercase names ≤214 chars, SemVer 2.0.0 — with type, exports map, engines and trap warnings.",
   steps: [

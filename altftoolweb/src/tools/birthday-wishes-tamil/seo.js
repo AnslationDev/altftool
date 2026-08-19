@@ -1,5 +1,5 @@
 const seo = {
-  title: "Birthday Wishes in Tamil — Casual & Respectful Forms",
+  title: "Tamil Birthday Wishes: Casual & Respectful Forms",
   metaDescription:
     "Tamil birthday messages written separately for நீ and நீங்கள், with romanised Tamil, an English meaning and the SMS parts each wish needs.",
   steps: [

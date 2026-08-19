@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mandi Bhav Today: AGMARKNET Modal, Min and Max Rates",
+  title: "Mandi Bhav Today: AGMARKNET Modal, Min, Max Rates",
   metaDescription:
     "Daily mandi rates from the AGMARKNET feed on data.gov.in: modal, minimum and maximum per commodity, with the market, district and arrival date.",
   steps: [

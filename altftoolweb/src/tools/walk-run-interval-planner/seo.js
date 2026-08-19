@@ -1,5 +1,5 @@
 const seo = {
-  title: "Run-Walk Interval Calculator: Finish Time & True Pace",
+  title: "Run-Walk Interval Calculator: Finish Time & Pace",
   metaDescription:
     "Enter run and walk intervals, both paces and a distance to get cycle count, finish time, true average pace and what the walk breaks cost you.",
   steps: [

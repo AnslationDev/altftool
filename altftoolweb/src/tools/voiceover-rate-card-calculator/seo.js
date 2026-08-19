@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voiceover Rate Calculator: Session + Usage Fee Quote",
+  title: "Voiceover Rate Calculator: Session + Usage Fees",
   metaDescription:
     "Price a voiceover from word count and read pace, then multiply by media, territory, term and exclusivity. Shows session fee, usage fee and net.",
   steps: [

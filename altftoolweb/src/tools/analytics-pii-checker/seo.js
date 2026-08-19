@@ -1,5 +1,5 @@
 const seo = {
-  title: "Analytics PII Checker: Scan Event Payloads for Leaks",
+  title: "Analytics PII Checker: Scan Event Payloads",
   metaDescription:
     "Scans a pasted analytics payload for emails, phone numbers, IPv4 addresses, bearer tokens and keys like dob or user_id, showing masked examples only.",
   steps: [

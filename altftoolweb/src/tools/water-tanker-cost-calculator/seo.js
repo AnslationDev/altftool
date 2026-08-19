@@ -1,5 +1,5 @@
 const seo = {
-  title: "Water Tanker Cost Calculator: Monthly Tankers & ₹/kL",
+  title: "Water Tanker Cost Calculator: Tankers & ₹/kL",
   metaDescription:
     "Enter daily demand, piped supply and tanker size to get tankers needed per month, the monthly bill, cost per kilolitre and the blended water cost.",
   steps: [

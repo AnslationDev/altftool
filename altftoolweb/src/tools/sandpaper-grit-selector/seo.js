@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sandpaper Grit Selector — Sequence + FEPA/CAMI Chart",
+  title: "Sandpaper Grit Selector — Sequence + FEPA/CAMI",
   metaDescription:
     "Builds your grit progression from surface condition to finish — max 1.65× particle-size steps — with FEPA-CAMI conversion, sheets and sanding time.",
   steps: [

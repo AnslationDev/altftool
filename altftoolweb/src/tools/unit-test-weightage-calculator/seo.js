@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weighted Test Score Calculator for Unit Tests & Exams",
+  title: "Weighted Test Score Calculator for Unit Tests",
   metaDescription:
     "Combine unequal unit tests into one score by the weighted mean of percentages — weight a half-yearly 2× and see each test's exact mark contribution.",
   steps: [

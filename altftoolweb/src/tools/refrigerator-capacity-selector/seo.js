@@ -1,5 +1,5 @@
 const seo = {
-  title: "Refrigerator Size Calculator: Litres for a Household",
+  title: "Refrigerator Size Calculator: Household Litres",
   metaDescription:
     "Fridge litres from a 60 L base plus 55 L per adult and 30 L per child, adjusted for cooking, shopping and frozen use, then matched to real sizes.",
   steps: [

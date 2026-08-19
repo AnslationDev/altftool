@@ -1,5 +1,5 @@
 const seo = {
-  title: "Polytechnic Merit Calculator: Class 10 Plus Entrance",
+  title: "Polytechnic Merit Calculator: Class 10 + Entrance",
   metaDescription:
     "Merit = Class 10 % x weight + entrance % x the rest, out of 100. Presets cover Maharashtra DTE Class-10-only, JEECUP/JEXPO/DCECE entrance-only and 50:50.",
   steps: [

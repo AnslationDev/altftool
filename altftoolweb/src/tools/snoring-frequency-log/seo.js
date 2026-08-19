@@ -1,5 +1,5 @@
 const seo = {
-  title: "Snoring Frequency Log - Nightly 0-3 Severity Tracker",
+  title: "Snoring Frequency Log: Nightly 0-3 Severity",
   metaDescription:
     "Rate each night's snoring 0-3 with position and triggers - weekly snoring rate, loud-night share and with/without trigger comparisons for a GP visit.",
   steps: [

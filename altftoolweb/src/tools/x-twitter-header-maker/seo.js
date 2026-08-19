@@ -1,5 +1,5 @@
 const seo = {
-  title: "X (Twitter) Header Safe Zone: 1500x500 Layout Planner",
+  title: "X (Twitter) Header Safe Zone: 1500x500 Planner",
   metaDescription:
     "Maps the circular avatar and the mobile top bar on a 1500x500 canvas, returns the largest clear rectangle in x/y/px, and exports an SVG guide layer.",
   steps: [

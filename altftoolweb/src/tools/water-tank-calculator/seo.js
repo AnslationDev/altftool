@@ -1,5 +1,5 @@
 const seo = {
-  title: "Water Tank Size Calculator - 135 lpcd Sump & Overhead",
+  title: "Water Tank Calculator: 135 lpcd Sump & Overhead",
   metaDescription:
     "Size an overhead tank and sump from 135 lpcd (IS 1172), split 1/3 to 2/3, with a per-head breakdown, market sizes and pump filling time.",
   steps: [

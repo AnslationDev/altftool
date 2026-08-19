@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rent vs Buy Home Calculator: Find the Crossover Year",
+  title: "Rent vs Buy Home Calculator: Crossover Year",
   metaDescription:
     "Compares buyer net worth (home value minus loan) against a renter investing the down payment and every monthly saving, and reports the crossover year.",
   steps: [

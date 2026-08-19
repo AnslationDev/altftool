@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gmail 2FA Setup Guide: 2-Step Verification & Passkeys",
+  title: "Gmail 2FA Setup: 2-Step Verification & Passkeys",
   metaDescription:
     "A local checklist for Google 2-Step Verification: authenticator, passkeys or security keys, the 10 backup codes, SMS removal and a recovery test.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "UV Safety Window: Low-UV Hours in the 3-Day Forecast",
+  title: "UV Safety Window: Low-UV Hours, 3-Day Forecast",
   metaDescription:
     "Lists the hours in the next three days where the forecast UV index is 2 or below, with the clear-sky value beside it, from the Open-Meteo API.",
   steps: [

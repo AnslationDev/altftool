@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sunscreen Reapply Timer: 2-Hour, 40 or 80 Minute Rule",
+  title: "Sunscreen Reapply Timer: 2-Hour Rule",
   metaDescription:
     "Clock times for every reapplication — 2 hours dry, or the bottle's 40 or 80 minute rating when wet — plus the millilitres each round needs.",
   steps: [

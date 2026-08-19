@@ -1,5 +1,5 @@
 const seo = {
-  title: "LinkedIn Post Prompt Builder – Hook, Story, Takeaway",
+  title: "LinkedIn Post Prompt Builder: Hook-Story-Takeaway",
   metaDescription:
     "AI prompt for a hook-story-takeaway LinkedIn post, sized to the 3,000-character limit with the hook budgeted under the ~140-character mobile fold.",
   steps: [

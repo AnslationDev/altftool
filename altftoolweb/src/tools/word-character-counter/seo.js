@@ -1,5 +1,5 @@
 const seo = {
-  title: "Word & Character Counter with Reading & Speaking Time",
+  title: "Word & Character Counter with Reading Time",
   metaDescription:
     "Count words, characters with and without spaces, sentences, paragraphs and lines as you type, plus reading time at 225 wpm and speaking time at 150 wpm.",
   steps: [

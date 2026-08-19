@@ -1,5 +1,5 @@
 const seo = {
-  title: "Teen WhatsApp Privacy Settings Checklist for Parents",
+  title: "Teen WhatsApp Privacy Checklist for Parents",
   metaDescription:
     "A checklist of WhatsApp settings that cut stranger contact for teens — group adds, silenced unknown callers, two-step PIN — each with its exact menu path.",
   steps: [

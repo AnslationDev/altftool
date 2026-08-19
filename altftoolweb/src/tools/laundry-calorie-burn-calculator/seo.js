@@ -1,5 +1,5 @@
 const seo = {
-  title: "Laundry Calorie Burn Calculator (MET-Based Estimate)",
+  title: "Laundry Calorie Burn Calculator (MET-Based)",
   metaDescription:
     "Prices seven laundry stages at published MET values — hand washing 4.0, folding 2.0, stairs with a basket 7.5 — and totals kcal per day, week and year.",
   steps: [

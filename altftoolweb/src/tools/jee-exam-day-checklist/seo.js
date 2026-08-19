@@ -1,5 +1,5 @@
 const seo = {
-  title: "JEE Main Exam Day Checklist & Reporting Time Planner",
+  title: "JEE Main Exam Day Checklist & Reporting Time",
   metaDescription:
     "Tick off admit card, self-declaration and photo ID, get leave-home and gate-closing times for either shift, and project marks under +4/−1 marking.",
   steps: [

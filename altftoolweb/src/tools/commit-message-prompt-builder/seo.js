@@ -1,5 +1,5 @@
 const seo = {
-  title: "Commit Message Prompt Builder – Conventional Commits",
+  title: "Commit Message Prompt: Conventional Commits",
   metaDescription:
     "Turn a diff summary into an AI prompt for a Conventional Commits message — type, scope, breaking-change footer and your 50-character subject budget.",
   steps: [

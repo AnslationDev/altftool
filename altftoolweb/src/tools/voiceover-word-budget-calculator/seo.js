@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voiceover Word Count Calculator for 15, 30, 60s Slots",
+  title: "Voiceover Word Count Calculator for 15, 30, 60s",
   metaDescription:
     "Turns slot seconds x wpm into a word budget after subtracting breaths and end tags. Paste your script to see the over/under and the pace needed to fit.",
   steps: [

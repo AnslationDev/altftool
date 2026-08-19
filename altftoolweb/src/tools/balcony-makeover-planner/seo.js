@@ -1,5 +1,5 @@
 const seo = {
-  title: "Balcony Makeover Planner: Budget and Slab Load Check",
+  title: "Balcony Makeover Planner: Budget & Slab Load",
   metaDescription:
     "Prices flooring, planters, seating and lights by area, then converts the added weight to kN/m² against the 3.0 kN/m² balcony load in IS 875 (Part 2).",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Business Name Numerology: Chaldean Plus Domain Tests",
+  title: "Business Name Numerology: Chaldean & Domain Tests",
   metaDescription:
     "Score names on Chaldean and Pythagorean numbers, then test them against the 63-character DNS label, 15-character X and 30-character Instagram limits.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Cost Per 1000 Requests Calculator — Token Pricing",
+  title: "AI Cost Per 1000 Requests Calculator",
   metaDescription:
     "Convert $/million-token rates into cost per request, per 1,000 and per month — with retries, prompt-cache hits and a five-tier price comparison.",
   steps: [

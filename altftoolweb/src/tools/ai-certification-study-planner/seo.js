@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Certification Study Planner by Exam Domain Weight",
+  title: "AI Certification Study Planner by Domain Weight",
   metaDescription:
     "Split study hours by published domain weights for AIF-C01, MLA-C01, MLS-C01, AI-900, AI-102 and Google's PMLE, with 20% held back for revision.",
   steps: [

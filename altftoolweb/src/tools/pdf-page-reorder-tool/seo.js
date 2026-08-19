@@ -1,5 +1,5 @@
 const seo = {
-  title: "PDF Page Reorder – Drag Thumbnails, Keep Text Intact",
+  title: "PDF Page Reorder: Drag Thumbnails, Text Intact",
   metaDescription:
     "Drag PDF page thumbnails into a new order and download reordered.pdf. Pages are copied intact in your browser — no upload, no re-rasterising.",
   intro:

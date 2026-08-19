@@ -1,5 +1,5 @@
 const seo = {
-  title: "Retirement Wishes with FR 56(a) Date & Service Years",
+  title: "Retirement Wishes with FR 56(a) Date",
   metaDescription:
     "Farewell messages in English, Hinglish, Hindi, Marathi, Bengali or Tamil with exact years of service and the FR 56(a) end-of-month superannuation date.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "UK Visa Centre India: What to Carry and When to Leave",
+  title: "UK Visa Centre India: What to Carry, When to Go",
   metaDescription:
     "Work back from your slot to a leave-home time (15 min early plus travel and buffer), and get a route-specific list of what to carry and leave behind.",
   steps: [

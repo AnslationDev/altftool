@@ -1,5 +1,5 @@
 const seo = {
-  title: "UI Spacing Checker: Tailwind Classes on the 4px Grid",
+  title: "UI Spacing Checker: Tailwind on the 4px Grid",
   metaDescription:
     "Paste JSX, HTML or CSS and every p, m and gap class converts at 4px a step, with each value listed by pixel size, line and on or off scale.",
   steps: [

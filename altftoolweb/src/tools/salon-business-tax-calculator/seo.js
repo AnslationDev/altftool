@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salon Break-Even and Tax Calculator on Chair Revenue",
+  title: "Salon Break-Even & Tax Calculator",
   metaDescription:
     "Revenue from chairs, clients per chair per day and average ticket, then break-even clients, both FY 2025-26 regimes and section 44AD at 6% or 8%.",
   steps: [

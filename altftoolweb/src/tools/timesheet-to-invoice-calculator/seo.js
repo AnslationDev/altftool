@@ -1,5 +1,5 @@
 const seo = {
-  title: "Timesheet to Invoice Calculator with Billing Rounding",
+  title: "Timesheet to Invoice Calculator with Rounding",
   metaDescription:
     "Enter time as 7:30, 7.5 or 7h 30m, set a 6 to 60-minute billing increment, and get the total with per-task rates, discount before tax and expenses.",
   steps: [

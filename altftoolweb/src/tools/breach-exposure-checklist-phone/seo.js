@@ -1,5 +1,5 @@
 const seo = {
-  title: "Leaked Phone Number: SIM-Swap and Smishing Checklist",
+  title: "Leaked Phone Number: SIM-Swap & Smishing Checks",
   steps: [
     "Enter \"Date you learned about the exposure\" so every step is measured against its window — First 24 hours, First week, First month or Ongoing.",
     "Tick your way through the four groups — \"Contain it today\", \"Lock down against SIM swap\", \"Triage smishing and spam calls\" and \"Demote the number as an identity check\" — where each step shows its weight and Critical steps hold the score at 69% while open.",

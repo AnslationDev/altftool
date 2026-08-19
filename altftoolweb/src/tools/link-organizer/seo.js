@@ -1,5 +1,5 @@
 const seo = {
-  title: "Link Organizer - Save Link Groups & Open All in Tabs",
+  title: "Link Organizer: Save Link Groups, Open in Tabs",
   metaDescription:
     "File links into named groups, star favourites and open a whole group in new tabs with one Open All click. Stored in your browser - no account needed.",
   steps: [

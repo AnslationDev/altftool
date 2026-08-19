@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stock Average Price Calculator with Averaging Planner",
+  title: "Stock Average Price Calculator & Planner",
   metaDescription:
     "Enter each buy's quantity and price to get your weighted average, total invested and unrealised P&L — plus the shares needed to hit a target average.",
   steps: [

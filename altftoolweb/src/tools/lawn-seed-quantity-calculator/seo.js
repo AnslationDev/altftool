@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grass Seed Calculator: kg, Bags & Sowing Rate per m²",
+  title: "Grass Seed Calculator: kg, Bags & Sowing Rate",
   metaDescription:
     "Convert your lawn area and grass species into kilograms of seed and whole bags, corrected for the purity and germination printed on the label.",
   steps: [

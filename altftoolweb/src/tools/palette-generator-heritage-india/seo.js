@@ -1,5 +1,5 @@
 const seo = {
-  title: "Traditional Indian Colour Palettes, Contrast-Checked",
+  title: "Traditional Indian Palettes, Contrast-Checked",
   metaDescription:
     "Six-role palettes from indigo, madder, lac, turmeric and ochre — each swatch named for its source, with 4.5:1 contrast and single-ink print checks.",
   steps: [

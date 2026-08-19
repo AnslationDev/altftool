@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tar Command Builder – GNU tar with Correct Flag Order",
+  title: "Tar Command Builder with Correct Flag Order",
   metaDescription:
     "Assemble GNU tar commands to create, extract or list archives — compression, --exclude placement, -C and quoting handled, every flag explained.",
   steps: [

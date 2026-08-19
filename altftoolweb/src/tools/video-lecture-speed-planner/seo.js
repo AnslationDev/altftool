@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Lecture Speed Planner - Finish Date at 1x to 2x",
+  title: "Video Lecture Speed Planner: 1x-2x Finish Date",
   metaDescription:
     "Enter your lecture backlog, daily watch minutes and pause overhead to get an exact finish date at 1x-2x playback, with a days-saved comparison table.",
   steps: [

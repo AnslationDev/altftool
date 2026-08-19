@@ -1,5 +1,5 @@
 const seo = {
-  title: "Keyboard & Mouse Position Guide: Height, Tilt, Reach",
+  title: "Keyboard & Mouse Position: Height, Tilt, Reach",
   metaDescription:
     "Measures key-surface height against your seated elbow height, keyboard tilt from the front and back key heights, and how far the board pushes the mouse.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Malayalam Birthday Wishes with Romanisation, Meaning",
+  title: "Malayalam Birthday Wishes with Romanisation",
   metaDescription:
     "Pick the relationship and tone for a Malayalam birthday message in the familiar, polite or formal form, with romanisation, English and SMS length.",
   steps: [

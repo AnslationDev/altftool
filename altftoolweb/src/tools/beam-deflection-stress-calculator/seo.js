@@ -1,5 +1,5 @@
 const seo = {
-  title: "Simply Supported Beam Deflection & Stress Calculator",
+  title: "Simply Supported Beam Deflection Calculator",
   metaDescription:
     "Max deflection, bending moment, bending stress and span/deflection ratio for a simply supported beam under a centre point load or a uniform load.",
   steps: [

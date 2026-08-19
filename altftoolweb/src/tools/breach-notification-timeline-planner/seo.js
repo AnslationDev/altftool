@@ -1,5 +1,5 @@
 const seo = {
-  title: "Data Breach Notification Timeline Planner (72 Hours)",
+  title: "Data Breach Notification Planner (72 Hours)",
   metaDescription:
     "Turn the discovery date into milestones: containment +4h, scope review +12h, authority decision 72h, individuals 96h, post-incident review +168h.",
   intro:

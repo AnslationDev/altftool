@@ -1,5 +1,5 @@
 const seo = {
-  title: "Portfolio Rebalancing Calculator with No-Sell Option",
+  title: "Portfolio Rebalancing Calculator: No-Sell Option",
   metaDescription:
     "Get the exact buy or sell amount for each holding to hit your target mix — or split fresh money across underweight assets without selling anything.",
   steps: [
