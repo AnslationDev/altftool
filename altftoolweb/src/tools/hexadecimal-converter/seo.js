@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hex to Decimal & Binary Converter with Nibble View",
+  title: "Hex to Decimal & Binary Converter: Nibble View",
   metaDescription:
     "Convert one value between hex, decimal and binary (0 to 4,294,967,295) and see every hex digit broken into its 4-bit pattern and decimal value.",
   steps: [

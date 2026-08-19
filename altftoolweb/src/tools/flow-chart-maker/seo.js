@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flow Chart Maker: 8 Standard Symbols in Your Browser",
+  title: "Flow Chart Maker: 8 Standard Symbols",
   metaDescription:
     "Start/End, Process, Decision, Input/Output, Database, Document, Subprocess and Comment — the eight standard flowchart symbols, shown on a worked example.",
   intro:

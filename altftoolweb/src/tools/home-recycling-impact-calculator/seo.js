@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Recycling Impact Calculator: CO2, Energy, Water",
+  title: "Home Recycling Calculator: CO2, Energy, Water",
   metaDescription:
     "Enter weekly kg of aluminium, plastic, paper and glass to see yearly CO2, energy and water saved — with a capture rate for loads that never get recycled.",
   steps: [

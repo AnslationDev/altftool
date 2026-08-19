@@ -1,5 +1,5 @@
 const seo = {
-  title: "Merge PDF Files in Your Browser — Up to 20 at Once",
+  title: "Merge PDF Files in Your Browser — Up to 20",
   metaDescription:
     "Combine up to 20 PDFs (80 MB each) into one file in your browser — drag to reorder, see page counts, download merged-<timestamp>.pdf. No upload.",
   steps: [

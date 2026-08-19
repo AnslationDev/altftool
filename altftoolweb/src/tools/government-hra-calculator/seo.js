@@ -1,5 +1,5 @@
 const seo = {
-  title: "Central Govt HRA Calculator: 30/20/10% by City Class",
+  title: "Central Govt HRA Calculator: 30/20/10% by City",
   metaDescription:
     "7th Pay Commission HRA on your Level pay at 30%, 20% or 10% by X, Y or Z city, with the ₹5,400/₹3,600/₹1,800 floors and the 10(13A) exemption.",
   steps: [

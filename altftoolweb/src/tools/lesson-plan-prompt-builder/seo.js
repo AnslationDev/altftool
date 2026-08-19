@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lesson Plan Prompt Builder: Bloom's + Timed 5E Plan",
+  title: "Lesson Plan Prompt Builder: Bloom's + Timed 5E",
   metaDescription:
     "Turns a topic, year group and period length into an AI prompt: measurable Bloom's objectives and 5E, Hunter or Gagné phases timed to the minute.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flat vs Reducing Interest Rate Converter for Loans",
+  title: "Flat vs Reducing Interest Rate Converter",
   metaDescription:
     "Turns a quoted flat rate into the reducing-balance rate with the same EMI - 8% flat over 5 years is about 14% reducing - and shows the total interest gap.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tie Breaker Rules: NEET, JEE Main, UPSC, SSC, IBPS",
+  title: "Exam Tie Breaker Rules: Which Criterion Decides",
   metaDescription:
     "Runs the published tie-breaking order on two candidates and shows which criterion decided the rank — and which were never reached.",
   steps: [

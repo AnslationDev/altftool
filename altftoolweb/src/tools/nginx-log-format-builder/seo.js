@@ -1,5 +1,5 @@
 const seo = {
-  title: "nginx log_format Builder with JSON & Sample Preview",
+  title: "nginx log_format Builder: JSON & Sample Preview",
   metaDescription:
     "Pick nginx variables in order and get the log_format and access_log directives plus a realistic sample line — combined-style or JSON via escape=json.",
   steps: [

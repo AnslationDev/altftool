@@ -1,5 +1,5 @@
 const seo = {
-  title: "Netflix or Prime Payment-Failed Email: Real or Fake",
+  title: "Netflix/Prime Payment-Failed Email: Real or Fake",
   metaDescription:
     "Paste the sender and button link from a streaming payment-failed email; it checks them against netflix.com, primevideo.com, disneyplus.com and more.",
   steps: [

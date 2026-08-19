@@ -1,5 +1,5 @@
 const seo = {
-  title: "Education GST Calculator: Exempt or 18% on SAC 9992",
+  title: "Education GST Calculator: Exempt or 18%, SAC 9992",
   metaDescription:
     "Pick the supply — school fees, coaching, online course, school bus — to see if entry 66, 69 or 80 exempts it, or get 18% split into CGST/SGST or IGST.",
   steps: [

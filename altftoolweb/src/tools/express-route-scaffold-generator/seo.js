@@ -1,5 +1,5 @@
 const seo = {
-  title: "Express Router Generator: CRUD, Zod, Error Handler",
+  title: "Express Router Generator: CRUD Routes with Zod",
   metaDescription:
     "Generates list, read, create, update and delete routes for Express 4 or 5, with Zod or express-validator, asyncHandler and RFC 9110 status codes.",
   steps: [

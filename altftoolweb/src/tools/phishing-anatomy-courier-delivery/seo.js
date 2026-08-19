@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fake Parcel SMS: Redelivery Fee Scam, Line by Line",
+  title: "Fake Parcel SMS: Redelivery Fee Scam",
   metaDescription:
     "Paste a parcel-on-hold message and score it against 13 weighted markers; the link inspector reads the registrable domain, not the brand word. Runs in-tab.",
   intro:

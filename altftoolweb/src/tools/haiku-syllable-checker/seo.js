@@ -1,5 +1,5 @@
 const seo = {
-  title: "Haiku Syllable Checker: Organise 5-7-5 Line Drafts",
+  title: "Haiku Syllable Checker: Organise 5-7-5 Drafts",
   metaDescription:
     "Organise a three-line haiku draft against the 5-7-5 pattern: paste your lines and theme notes, then copy a structured working note for rewrites.",
   intro:

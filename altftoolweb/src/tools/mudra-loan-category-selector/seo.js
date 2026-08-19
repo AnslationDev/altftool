@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mudra Loan Category Selector - Shishu to Tarun Plus",
+  title: "Mudra Loan Category: Shishu to Tarun Plus",
   metaDescription:
     "Place a loan in Shishu, Kishore, Tarun or Tarun Plus by sanctioned amount (up to Rs 20 lakh), with PMMY eligibility blockers and an indicative EMI.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marks Needed Calculator – Hit Your Target Percentage",
+  title: "Marks Needed Calculator for Target Percentage",
   metaDescription:
     "Enter marks scored, papers remaining and a target percent to get the exact marks still needed, rounded up, plus whether the target is still reachable.",
   steps: [

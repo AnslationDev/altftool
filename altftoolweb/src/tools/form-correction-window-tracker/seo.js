@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Form Correction Window Tracker: NTA, SSC, IBPS",
+  title: "Form Correction Window Tracker: NTA, SSC, IBPS",
   metaDescription:
     "See which fields NTA, SSC, RRB or IBPS actually let you edit, the ₹200/₹500 SSC correction charge, and the days left in the window.",
   steps: [

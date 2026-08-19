@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kannada Gaade: 25 Proverbs With Meaning in English",
+  title: "Kannada Gaade: 25 Proverbs With English Meaning",
   metaDescription:
     "25 Kannada gaades in script and Roman transliteration, each with the literal image, how speakers actually use it, and the English equivalent.",
   intro:

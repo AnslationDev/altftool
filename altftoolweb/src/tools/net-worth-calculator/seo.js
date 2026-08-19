@@ -1,5 +1,5 @@
 const seo = {
-  title: "Net Worth Calculator: Assets Minus Liabilities in ₹",
+  title: "Net Worth Calculator: Assets Minus Liabilities",
   metaDescription:
     "Add cash, investments, property and vehicles against home loan, car loan and credit card debt for net worth plus both subtotals, in rupees.",
   steps: [

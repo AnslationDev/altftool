@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ghee Intake Calculator: Daily Teaspoons You Can Eat",
+  title: "Ghee Intake Calculator: Teaspoons Per Day",
   metaDescription:
     "How much ghee fits your day in teaspoons: applies the ICMR-NIN 20-30% fat range and WHO's under-10% saturated ceiling, and names which limit binds.",
   steps: [

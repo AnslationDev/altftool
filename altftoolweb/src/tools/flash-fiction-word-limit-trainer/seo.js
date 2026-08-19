@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flash Fiction Word Counter for 50-1000 Word Limits",
+  title: "Flash Fiction Word Counter: 50-1000 Word Limits",
   metaDescription:
     "Count words against drabble (100), dribble (50) and 300/500/1000-word contest caps, with hyphen rules plus the intensifiers and hedges to cut first.",
   steps: [

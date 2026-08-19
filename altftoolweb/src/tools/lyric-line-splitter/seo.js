@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lyric Line Splitter for Karaoke and Subtitle Timing",
+  title: "Lyric Line Splitter for Karaoke & Subtitle Timing",
   metaDescription:
     "Re-wrap pasted lyrics at 10-42 characters a line, break at breath punctuation, merge orphans, and get minimum screen time at 17 chars per second.",
   steps: [

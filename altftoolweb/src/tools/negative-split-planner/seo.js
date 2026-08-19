@@ -1,5 +1,5 @@
 const seo = {
-  title: "Negative Split Planner: Half Times and Per-Km Paces",
+  title: "Negative Split Planner: Half Times & Per-Km Paces",
   metaDescription:
     "Solves the two half-race times for your goal finish and split %, then prints a per-segment pace sheet — step-down or gradual — for a pace band.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Gift Idea Prompt Builder with Budget & Lead Time",
+  title: "AI Gift Idea Prompt Builder: Budget & Lead Time",
   metaDescription:
     "Build an AI gift-idea prompt that sticks to your real budget — tax and shipping reserve, per-person share, lead-time check and an under-3 safety flag.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Luggage Weight Splitter for Bags, Limits and People",
+  title: "Luggage Weight Splitter for Bags, Limits & People",
   metaDescription:
     "Give every bag its own kilo limit, flag any at 85% of allowance, and let Auto Balance move the heaviest item to the bag with the most free space.",
   steps: [

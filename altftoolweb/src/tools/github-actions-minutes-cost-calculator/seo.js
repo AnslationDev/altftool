@@ -1,5 +1,5 @@
 const seo = {
-  title: "GitHub Actions Minutes Cost – Estimate Your CI Bill",
+  title: "GitHub Actions Minutes Cost: Your CI Bill",
   metaDescription:
     "Estimate the monthly GitHub Actions bill from jobs and durations: Linux $0.008/min, Windows 2x, macOS 10x, minus your plan's included minutes.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "PM-KISAN Eligibility: Exclusion List & e-KYC Check",
+  title: "PM-KISAN Eligibility: Exclusion List & e-KYC",
   metaDescription:
     "Runs your family against the PM-KISAN exclusion list — the 2-hectare limit ended in June 2019 — and flags e-KYC, Aadhaar seeding and DBT gaps.",
   steps: [

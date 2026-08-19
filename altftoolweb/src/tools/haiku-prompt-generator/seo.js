@@ -1,5 +1,5 @@
 const seo = {
-  title: "Haiku Prompt Generator with Kigo and 5-7-5 Checker",
+  title: "Haiku Prompt Generator: Kigo & 5-7-5 Checker",
   metaDescription:
     "Get real saijiki season words with a grounding image, a contrast and a cut point, then count your draft's syllables line by line against 5-7-5.",
   steps: [

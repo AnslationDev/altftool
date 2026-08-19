@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tech Startup Font Pairing & Grid-Snapped Type Scale",
+  title: "Startup Font Pairing & Grid-Snapped Type Scale",
   steps: [
     "Under 1. Pick a trio, choose one of the eight pairings such as Developer platform, Clean SaaS or Fintech-adjacent, each naming a display, UI text and monospace family.",
     "In 2. Scale and grid, set UI body size (px), Scale ratio such as Minor third or Perfect fourth, Baseline grid (px), Hero step on the scale and Text container width (px).",

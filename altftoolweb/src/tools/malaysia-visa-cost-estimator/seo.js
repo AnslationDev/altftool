@@ -1,5 +1,5 @@
 const seo = {
-  title: "Malaysia Visa Cost Estimator: Waiver or eVISA Fees",
+  title: "Malaysia Visa Cost Estimator: Waiver or eVISA",
   metaDescription:
     "Checks whether your stay fits the 30-day visa waiver first, then totals the eVISA fee, portal charge, agent handling and card markup in rupees.",
   steps: [

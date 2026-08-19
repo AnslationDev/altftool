@@ -1,5 +1,5 @@
 const seo = {
-  title: "Metronome Practice Log with Tempo Ladder & Streaks",
+  title: "Metronome Practice Log with Tempo Ladder",
   metaDescription:
     "Log tempo and minutes per block, then see total time, per-exercise BPM gains, day streaks and a next-session tempo ladder. Stays in your browser.",
   steps: [

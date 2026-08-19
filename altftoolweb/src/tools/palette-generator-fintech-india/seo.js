@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fintech Palette Generator: Light, Dark, WCAG Audit",
+  title: "Fintech Palette Generator with WCAG Audit",
   metaDescription:
     "One brand hue becomes a 50-900 ramp, Material 3 dark elevation surfaces, credit and debit money colours, and a WCAG contrast audit of both themes.",
   steps: [

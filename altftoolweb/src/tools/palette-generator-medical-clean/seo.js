@@ -1,5 +1,5 @@
 const seo = {
-  title: "Medical UI Palette: Contrast and Colour-Blind Audit",
+  title: "Medical UI Palette: Contrast & Colour-Blind Audit",
   steps: [
     "Pick a Base hue — Clinical blue, Calm teal, Neutral slate or Sage green — and an Interface mode of Light interface or Dark interface.",
     "Set 'Status intensity (-20 to 20)' and press Next variation to cycle Base variation 0 to 4; the palette and both audits regenerate on every change.",

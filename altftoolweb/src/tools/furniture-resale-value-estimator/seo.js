@@ -1,5 +1,5 @@
 const seo = {
-  title: "Used Furniture Value Calculator: Teak, MDF, Modular",
+  title: "Used Furniture Value Calculator",
   metaDescription:
     "Depreciates teak, sheesham, plywood, MDF or particle board by age and condition, deducts restoration, and gives private-sale, asking and dealer prices.",
   steps: [

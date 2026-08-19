@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Mobile Number Validator: 10 Digits, +91 E.164",
+  title: "Indian Mobile Number Validator: 10 Digits",
   metaDescription:
     "Check an Indian mobile number: 10 digits starting 6-9, with +91 or a leading 0 stripped automatically and the E.164 +91 form shown for storage.",
   steps: [

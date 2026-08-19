@@ -1,5 +1,5 @@
 const seo = {
-  title: "Full and Final Settlement Calculator with Gratuity",
+  title: "Full & Final Settlement Calculator with Gratuity",
   metaDescription:
     "Itemise your India F&F: unpaid salary days, leave encashment on Basic+DA, 15/26 gratuity with the 20 lakh cap, minus notice recovery, loans and TDS.",
   steps: [

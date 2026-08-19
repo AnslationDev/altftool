@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Attachment Metadata: What Actually Gets Sent",
+  title: "Email Attachment Metadata: What Gets Sent",
   metaDescription:
     "Pick the file type and your clean-up step to see which document properties, tracked changes, hidden content and image EXIF still leave with the email.",
   steps: [

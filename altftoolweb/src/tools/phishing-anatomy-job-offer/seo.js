@@ -1,5 +1,5 @@
 const seo = {
-  title: "Job Offer Scam Check: Fee Demands & Fake HR Domains",
+  title: "Job Offer Scam Check: Fees & Fake HR Domains",
   metaDescription:
     "Scores a recruiter message against 13 weighted markers and checks every link’s registrable domain. No real employer charges a candidate a fee.",
   steps: [

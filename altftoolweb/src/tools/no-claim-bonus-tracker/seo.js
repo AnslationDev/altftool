@@ -1,5 +1,5 @@
 const seo = {
-  title: "No Claim Bonus Calculator: Track NCB, Model a Claim",
+  title: "No Claim Bonus (NCB) Calculator: Model a Claim",
   metaDescription:
     "Project your motor NCB up the 20-25-35-45-50% ladder, see the rupee discount each renewal, and check if a claim is worth losing the bonus.",
   steps: [

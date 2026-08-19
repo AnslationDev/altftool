@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fuel Economy Converter: km/l, l/100 km, US & UK mpg",
+  title: "Fuel Economy Converter: km/l, l/100km, US/UK mpg",
   metaDescription:
     "Convert km/l, l/100 km, US mpg and imperial mpg in one step - the two gallons differ by 20% - and see the litres a trip distance needs.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Music Ducking Calculator: dB Under Voice + Fader %",
+  title: "Music Ducking Calculator: dB Under Voice",
   metaDescription:
     "Set how many dB the music bed sits under the voiceover and get the exact level, gain change and fader percentage, plus the power-summed mix level.",
   steps: [

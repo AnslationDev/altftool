@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Storage Per Hour: ProRes, DNxHR & H.265 in GB",
+  title: "Video Storage Per Hour: ProRes, DNxHR & H.265",
   metaDescription:
     "Turn a codec's bitrate into GB per hour — ProRes and DNxHR scale with resolution and frame rate — plus card runtime and how many cards a shoot needs.",
   steps: [

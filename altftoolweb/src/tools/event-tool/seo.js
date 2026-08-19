@@ -1,5 +1,5 @@
 const seo = {
-  title: "Event Planner: Head Count, Sq Ft, Tables and Staff",
+  title: "Event Planner: Head Count, Sq Ft, Tables & Staff",
   metaDescription:
     "Turns invitations into expected attendance, then floor area at 12 sq ft per banquet guest, round tables, 1 server per 10 plated guests and a budget.",
   steps: [

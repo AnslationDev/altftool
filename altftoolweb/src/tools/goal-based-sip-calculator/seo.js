@@ -1,5 +1,5 @@
 const seo = {
-  title: "Goal Based SIP Calculator — Solve the Monthly Amount",
+  title: "Goal Based SIP Calculator: Solve Monthly Amount",
   metaDescription:
     "Works backwards from your target: enter the corpus, years, return, existing investment, step-up and goal inflation to get the monthly SIP required.",
   steps: [

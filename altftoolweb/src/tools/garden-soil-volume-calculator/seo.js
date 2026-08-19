@@ -1,5 +1,5 @@
 const seo = {
-  title: "Garden Soil Volume Calculator — Litres, Bags, Weight",
+  title: "Garden Soil Calculator: Litres, Bags, Weight",
   metaDescription:
     "Turn area × depth into m³, litres and cubic yards of topsoil, split a topsoil/compost/grit mix, and get weight, bag counts and cost for a raised bed.",
   steps: [

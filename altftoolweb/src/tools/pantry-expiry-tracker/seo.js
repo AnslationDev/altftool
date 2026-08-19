@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pantry Expiry Tracker – USDA FoodKeeper Shelf Life",
+  title: "Pantry Expiry Tracker: USDA FoodKeeper",
   metaDescription:
     "List fridge, freezer and cupboard items, sort by days left with USDA FoodKeeper shelf lives, and see the money at risk in your reminder window.",
   steps: [

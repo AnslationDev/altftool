@@ -1,5 +1,5 @@
 const seo = {
-  title: "Linux Signal Reference: Numbers, Exit Codes, PID 1",
+  title: "Linux Signals: Numbers, Exit Codes, PID 1",
   metaDescription:
     "Look up all 31 signal(7) signals by number, name or keyword — default action, catchability, 128+N exit code, kill command, and PID 1 container notes.",
   steps: [

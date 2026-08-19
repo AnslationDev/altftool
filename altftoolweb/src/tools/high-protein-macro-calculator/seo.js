@@ -1,5 +1,5 @@
 const seo = {
-  title: "High-Protein Macro Calculator for a Calorie Deficit",
+  title: "High-Protein Macro Calculator: Calorie Deficit",
   metaDescription:
     "Protein first: 1.4–3.0 g/kg body weight or 1.8–3.1 g/kg lean mass, a fat floor, carbs from the rest. Flags a loss rate above 1% of body weight a week.",
   steps: [

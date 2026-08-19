@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ladder Safety Calculator: OSHA 4-to-1 Base Distance",
+  title: "Ladder Safety Calculator: OSHA 4-to-1 Distance",
   metaDescription:
     "Base distance at the OSHA 4-to-1 angle (about 75.5°), minimum ladder length with 3 ft of rail above the roof, highest safe rung and ANSI load check.",
   steps: [

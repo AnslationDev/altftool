@@ -1,5 +1,5 @@
 const seo = {
-  title: "Offensive Hand Gestures by Country: Traveller Guide",
+  title: "Offensive Hand Gestures by Country",
   metaDescription:
     "Tick your destinations and see which of 17 common gestures turn insulting or change meaning there, with a safer alternative and a worldwide lookup.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Intermittent Fasting Timer: 16:8, 18:6, OMAD Phases",
+  title: "Intermittent Fasting Timer: 16:8, 18:6, OMAD",
   metaDescription:
     "Track a 16:8, 18:6, 20:4 or OMAD fast live, see which metabolic phase your elapsed hours reach, and log every fast with a target-hit streak.",
   steps: [

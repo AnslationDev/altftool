@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flash Guide Number Calculator: Aperture & Distance",
+  title: "Flash Guide Number Calculator: Aperture, Distance",
   metaDescription:
     "Solve GN = f-number x distance for the missing value, scaled for ISO and manual flash power, in metres and feet — with a working-distance table.",
   steps: [

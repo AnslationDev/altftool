@@ -1,5 +1,5 @@
 const seo = {
-  title: "MIME Type Lookup: Extension to Content-Type & Back",
+  title: "MIME Type Lookup: Extension to Content-Type",
   metaDescription:
     "Two-way lookup across 60 common web MIME types: the exact Content-Type for an extension, every extension for a type, plus charset and gzip guidance.",
   steps: [

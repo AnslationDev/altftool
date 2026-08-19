@@ -1,5 +1,5 @@
 const seo = {
-  title: "GTU CGPA to Percentage Converter — (CPI − 0.5) × 10",
+  title: "GTU CGPA to Percentage Converter: (CPI−0.5)×10",
   metaDescription:
     "Convert GTU SPI, CPI or CGPA to percentage with the credit-system rule (CPI − 0.5) × 10, build SPI from AA–FF grades, or reverse a cut-off.",
   steps: [

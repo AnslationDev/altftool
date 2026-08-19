@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Festival Colour Palettes with WCAG Contrast",
+  title: "Indian Festival Colour Palettes: WCAG Contrast",
   metaDescription:
     "Six-role palettes for Diwali, Holi, Onam, Pongal and Durga Puja, with a 50-900 tint ramp and every text pairing graded against 4.5:1 and 3:1.",
   steps: [

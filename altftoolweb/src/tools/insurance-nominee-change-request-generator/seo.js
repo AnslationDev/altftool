@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nominee Change Request Letter for Insurance Policy",
+  title: "Nominee Change Request Letter for Insurance",
   metaDescription:
     "Drafts a section 39 nomination change letter, refuses shares that do not total 100%, and demands an appointee when a nominee is under 18.",
   steps: [

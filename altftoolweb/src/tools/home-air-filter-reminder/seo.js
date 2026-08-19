@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Air Filter Reminder: Next Change Date and Cost",
+  title: "Home Air Filter Reminder: Next Change Date & Cost",
   metaDescription:
     "Both filter limits applied — rated hours and calendar months — shortened for your AQI band and pets, with the next change dated and the yearly cost.",
   steps: [

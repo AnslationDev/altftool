@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ringgit to Rupees Mental Math Cheat Sheet + Error %",
+  title: "Ringgit to Rupees Mental Math Cheat Sheet",
   metaDescription:
     "Enter the ringgit rate you actually pay and get a mental shortcut — multiplier, percentage nudge or fraction — with the exact error of each rule.",
   steps: [

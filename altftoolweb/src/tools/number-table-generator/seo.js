@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multiplication Table Generator for Any Range 1-100",
+  title: "Multiplication Table Generator: Any Range 1-100",
   metaDescription:
     "Print times tables from x1 to x10 for any range of numbers 1-100, shade multiples of a number you pick, and copy any table as plain text lines.",
   steps: [

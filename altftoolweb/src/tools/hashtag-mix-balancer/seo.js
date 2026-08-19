@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hashtag Mix Balancer: Tier Tags by Real Post Counts",
+  title: "Hashtag Mix Balancer: Tier Tags by Post Counts",
   metaDescription:
     "Paste hashtags with post counts to tier them mega to ultra-niche and build a set sized for your followers — counts always sum, branded tag kept.",
   steps: [

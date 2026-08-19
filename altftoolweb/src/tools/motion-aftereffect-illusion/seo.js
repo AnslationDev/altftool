@@ -1,5 +1,5 @@
 const seo = {
-  title: "Motion Aftereffect Illusion: Run the Waterfall Demo",
+  title: "Motion Aftereffect Illusion: Waterfall Demo",
   metaDescription:
     "Adapt to a spiral, stripes, rings or wheel, then watch a still pattern drift. Predicts aftereffect seconds from adaptation time, speed and contrast.",
   steps: [

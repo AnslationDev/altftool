@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Revaluation Application: Fee, Deadline, New %",
+  title: "Exam Revaluation Application Generator",
   metaDescription:
     "Draft a verification, photocopy or re-evaluation application, total the per-unit fee, count the days left to apply and see the corrected percentage.",
   steps: [

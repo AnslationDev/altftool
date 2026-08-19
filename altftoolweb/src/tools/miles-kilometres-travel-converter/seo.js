@@ -1,5 +1,5 @@
 const seo = {
-  title: "Miles to Km Converter for Road Trips & Speed Limits",
+  title: "Miles to Km Converter: Road Trips & Speed Limits",
   metaDescription:
     "Convert road distances and speed limits between miles and km with the exact 1.609344 factor, plus driving time at that speed and a posted-limit table.",
   steps: [

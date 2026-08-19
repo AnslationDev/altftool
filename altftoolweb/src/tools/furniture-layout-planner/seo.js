@@ -1,5 +1,5 @@
 const seo = {
-  title: "Furniture Layout Planner: Clearances and Floor Plan",
+  title: "Furniture Layout Planner: Clearances & Floor Plan",
   metaDescription:
     "Add up your furniture's real footprint against the room, check 91 cm walkways and the 60% floor rule, and get a to-scale floor plan to print.",
   steps: [

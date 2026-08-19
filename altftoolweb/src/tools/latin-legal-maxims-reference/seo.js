@@ -1,5 +1,5 @@
 const seo = {
-  title: "Latin Legal Maxims: Search by Phrase or by Meaning",
+  title: "Latin Legal Maxims: Search by Phrase or Meaning",
   metaDescription:
     "Type the Latin or the idea — hear the other side finds audi alteram partem. Each entry gives the literal translation, what it does and an example.",
   steps: [

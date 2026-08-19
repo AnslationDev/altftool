@@ -1,5 +1,5 @@
 const seo = {
-  title: "Feature Flag Name Generator with Expiry & Lint Rules",
+  title: "Feature Flag Name Generator: Expiry & Lint Rules",
   metaDescription:
     "Build a flag key from type prefix, team, description and expiry date — linted for negative names and keys over 64 characters, in six case conventions.",
   steps: [

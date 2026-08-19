@@ -1,5 +1,5 @@
 const seo = {
-  title: "JPG/JPEG/PNG Converter for Government Form Uploads",
+  title: "JPG/JPEG/PNG Converter for Govt Form Uploads",
   metaDescription:
     "Convert a photo or signature to .jpg, .jpeg or PNG in your browser and auto-fit a JPEG under a KB limit like 20-50 KB — nothing is uploaded.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Society Maintenance Split: Landlord vs Tenant Share",
+  title: "Society Maintenance Split: Landlord vs Tenant",
   metaDescription:
     "Split a society bill across 13 Bye-law 68 heads with an editable landlord % each, and check non-occupancy against the 10% of service charges cap.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "HEIC to JPG Converter – Batch, with PNG & PDF Output",
+  title: "HEIC to JPG Converter: Batch, PNG & PDF Output",
   metaDescription:
     "Convert iPhone HEIC/HEIF photos to JPG, PNG or one-page PDF in your browser — batch queue, 10-100 quality slider, per-file downloads or one ZIP.",
   steps: [

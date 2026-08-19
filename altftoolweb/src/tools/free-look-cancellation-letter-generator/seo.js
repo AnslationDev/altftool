@@ -1,5 +1,5 @@
 const seo = {
-  title: "Free Look Cancellation Letter: 30-Day IRDAI Window",
+  title: "Free Look Cancellation Letter: 30-Day Window",
   metaDescription:
     "Count the 30-day free look window from the date the policy reached you, estimate the refund after deductions, and draft the letter to the insurer.",
   steps: [

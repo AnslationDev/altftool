@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lost Phone Checklist: What to Do in the First Hour",
+  title: "Lost Phone Checklist: The First Hour",
   steps: [
     "Set Phone platform to Android, iPhone / iOS or Other, and enter your Mobile number / SIM reference.",
     "Toggle Phone had PIN/password/biometric lock, Banking, wallet, UPI, or saved cards are present, and Work email, admin, health, or other sensitive access is present.",

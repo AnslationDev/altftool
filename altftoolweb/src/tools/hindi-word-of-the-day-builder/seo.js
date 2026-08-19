@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hindi Word of the Day — 30-Word Deck with Devanagari",
+  title: "Hindi Word of the Day: 30-Word Devanagari Deck",
   metaDescription:
     "A daily Hindi word fixed by the calendar date — Devanagari spelling, romanisation, example sentence and usage note — with a local streak counter.",
   steps: [

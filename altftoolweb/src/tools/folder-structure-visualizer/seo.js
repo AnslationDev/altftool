@@ -1,5 +1,5 @@
 const seo = {
-  title: "Folder Structure Visualizer: Tree, Sizes and Stats",
+  title: "Folder Structure Visualizer: Tree, Sizes, Stats",
   metaDescription:
     "Turn a picked folder or a pasted ASCII, indented or JSON tree into a searchable tree with rolled-up folder sizes, max depth and top extensions.",
   steps: [

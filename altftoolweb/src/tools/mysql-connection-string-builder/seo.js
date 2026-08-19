@@ -1,5 +1,5 @@
 const seo = {
-  title: "MySQL Connection String Builder: URI, Go DSN & JDBC",
+  title: "MySQL Connection String Builder",
   metaDescription:
     "Enter host, port, charset, TLS mode and timeout once — get a mysql:// URI, a go-sql-driver DSN and a Connector/J JDBC URL with correct parameter names.",
   steps: [

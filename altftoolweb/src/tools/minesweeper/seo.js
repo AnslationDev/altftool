@@ -1,5 +1,5 @@
 const seo = {
-  title: "Play Classic Minesweeper: Beginner to Expert 16x30",
+  title: "Classic Minesweeper: Beginner to Expert 16x30",
   metaDescription:
     "Classic Minesweeper with safe first click, chording and flag mode. Beginner 9x9/10 mines to Expert 16x30/99, with per-difficulty best times.",
   steps: [

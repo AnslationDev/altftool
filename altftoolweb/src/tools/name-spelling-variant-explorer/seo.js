@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Name Spelling Variants: Meera, Mira, Lakshmi",
+  title: "Indian Name Spelling Variants",
   metaDescription:
     "Applies aa/a, ee/i, ksh/x, sh/s and the dropped final a one swap at a time, naming the rule behind each variant, and tells you if two spellings match.",
   steps: [

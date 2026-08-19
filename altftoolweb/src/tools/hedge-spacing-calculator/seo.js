@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hedge Spacing Calculator — How Many Plants to Order",
+  title: "Hedge Spacing Calculator: How Many Plants",
   metaDescription:
     "Convert run length and plant spacing into the exact number to order, for single or staggered double rows, with spares and 12 species distances built in.",
   steps: [

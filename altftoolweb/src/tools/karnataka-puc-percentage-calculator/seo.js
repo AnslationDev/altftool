@@ -1,5 +1,5 @@
 const seo = {
-  title: "Karnataka II PUC Percentage Calculator (Out of 600)",
+  title: "Karnataka II PUC Percentage Calculator: 600 Marks",
   metaDescription:
     "Aggregate over 600 with the class awarded - Distinction 85%, First 60% - plus a separate 35%-per-subject pass check and the marks you fell short by.",
   steps: [

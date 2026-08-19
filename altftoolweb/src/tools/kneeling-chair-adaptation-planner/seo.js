@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kneeling Chair Adaptation Planner: 10% Weekly Ramp",
+  title: "Kneeling Chair Adaptation Planner: 10% a Week",
   metaDescription:
     "Build a week-by-week ramp from your current daily minutes to your target at 10% a week, with the single sit capped at 20 minutes rising to 45.",
   steps: [

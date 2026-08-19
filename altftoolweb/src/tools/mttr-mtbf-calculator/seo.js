@@ -1,5 +1,5 @@
 const seo = {
-  title: "MTTR & MTBF Calculator with Availability and Nines",
+  title: "MTTR & MTBF Calculator with Availability & Nines",
   metaDescription:
     "Enter window hours, failures and repair time to get MTBF, MTTR, failure rate λ and availability as a percentage and its nines. One-click copy.",
   steps: [

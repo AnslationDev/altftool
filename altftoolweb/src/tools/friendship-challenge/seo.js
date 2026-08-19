@@ -1,5 +1,5 @@
 const seo = {
-  title: "Friendship Challenge: 10 Questions, 6 Themes to Play",
+  title: "Friendship Challenge: 10 Questions, 6 Themes",
   metaDescription:
     "Pick Memories, Personality, Experiences, Preferences, Fun or Deep Talks, answer 10 questions, then compare answer lists with your friend.",
   intro:

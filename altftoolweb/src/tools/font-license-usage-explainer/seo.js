@@ -1,5 +1,5 @@
 const seo = {
-  title: "Font Licence Checker: Desktop vs Webfont vs App Use",
+  title: "Font Licence Checker: Desktop vs Webfont vs App",
   metaDescription:
     "Check 14 uses — @font-face, logos, app embedding, EPUB, server rendering — against a desktop, webfont, app, server, OFL 1.1 or Apache 2.0 licence.",
   steps: [

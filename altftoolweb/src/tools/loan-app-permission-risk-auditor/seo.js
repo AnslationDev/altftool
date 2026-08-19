@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan App Permission Auditor: 28 Android Permissions",
+  title: "Loan App Permission Auditor for Android",
   intro:
     "The Loan App Permission Risk Auditor reads a pasted AndroidManifest.xml or plain permission list and classifies every declared permission against a focused checklist of 28 sensitive Android permissions grouped into nine areas — contacts, SMS, call logs, files and media, accessibility, location, package installation, screen overlay and device admin. It then runs eight combination rules that flag pairings such as contacts plus SMS, or accessibility plus overlay, and returns one of four review levels: high-attention, elevated, review recommended, or no focused signal. It is built for borrowers, journalists and consumer-protection volunteers who want to understand what a lending app is asking for, and the text never leaves the browser.",
   useCases: [

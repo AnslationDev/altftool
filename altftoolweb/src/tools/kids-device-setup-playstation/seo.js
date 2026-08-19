@@ -1,5 +1,5 @@
 const seo = {
-  title: "PlayStation Parental Controls Planner for PS5, PS4",
+  title: "PlayStation Parental Controls Planner: PS5, PS4",
   metaDescription:
     "Plan the PSN child account, spending limit, communication and play-time settings for your child's age, with the PEGI/ESRB ceiling and menu paths.",
   steps: [

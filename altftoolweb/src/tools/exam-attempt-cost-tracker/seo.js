@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Attempt Cost Tracker for UPSC, JEE, NEET and CA",
+  title: "Exam Attempt Cost Tracker: UPSC, JEE, NEET & CA",
   metaDescription:
     "Log form fees, coaching, test series, books, travel and stay for every attempt to see the grand total, average per attempt and biggest cost head.",
   steps: [

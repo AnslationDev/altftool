@@ -1,5 +1,5 @@
 const seo = {
-  title: "Old Photo Restorer – Fix Faded & Sepia Scans Online",
+  title: "Old Photo Restorer – Fix Faded & Sepia Scans",
   metaDescription:
     "Restore faded scans in the browser: contrast lift, luminance-based sepia removal and 3×3 sharpening, with a drag-to-compare slider. Up to 15 MB, PNG out.",
   steps: [

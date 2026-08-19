@@ -1,5 +1,5 @@
 const seo = {
-  title: "Idiom Explorer: 59 English Idioms, Origins and Quiz",
+  title: "Idiom Explorer: 59 English Idioms, Origins & Quiz",
   metaDescription:
     "Each of 59 idioms carries a meaning, literal reading, usage, origin and two examples. Filter by letter, difficulty or 45 categories, then quiz yourself.",
   steps: [

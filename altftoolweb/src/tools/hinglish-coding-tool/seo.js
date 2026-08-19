@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hinglish Coding Dictionary — 40 Terms, 3 Ways Each",
+  title: "Hinglish Coding Dictionary: 40 Terms, 3 Ways Each",
   metaDescription:
     "40 programming terms explained three ways: precise English, everyday Hinglish and an analogy, with code examples and a quiz drawn from your filters.",
   steps: [

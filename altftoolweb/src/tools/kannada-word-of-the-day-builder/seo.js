@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kannada Word of the Day - Script, Meaning & Example",
+  title: "Kannada Word of the Day: Script, Meaning, Example",
   metaDescription:
     "One Kannada word per calendar date with script, ISO 15919 transliteration, meaning and example sentence - a 40-word deck plus a local revision streak.",
   steps: [

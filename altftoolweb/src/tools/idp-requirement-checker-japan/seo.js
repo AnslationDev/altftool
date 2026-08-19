@@ -1,5 +1,5 @@
 const seo = {
-  title: "International Driving Permit Japan: 1949 Geneva Only",
+  title: "IDP for Japan: 1949 Geneva Permits Only",
   metaDescription:
     "Japan refuses 1968 Vienna and 1926 Paris permits. Check your format, see which licences need a JAF translation, and date the one-year window from entry.",
   steps: [

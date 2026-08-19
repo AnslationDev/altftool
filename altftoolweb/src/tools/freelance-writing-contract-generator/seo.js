@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelance Writing Contract With Kill Fee & Copyright",
+  title: "Freelance Writing Contract: Kill Fee & Copyright",
   metaDescription:
     "Price a writing job per word, per piece or hourly, then generate a contract with deposit, kill fee, revision rounds and copyright assigned on payment.",
   steps: [

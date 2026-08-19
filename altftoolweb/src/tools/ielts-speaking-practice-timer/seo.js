@@ -1,5 +1,5 @@
 const seo = {
-  title: "IELTS Speaking Timer: Part 2 Cue Cards & Real Timing",
+  title: "IELTS Speaking Timer: Part 2 Cue Cards",
   metaDescription:
     "Practise IELTS Speaking to the real clock: Part 2 gives exactly 1 minute of cue-card prep then stops the long turn at 2 minutes, like the examiner.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian Street Food Calories: Pani Puri to Vada Pav",
+  title: "Indian Street Food Calories: Pani Puri, Vada Pav",
   metaDescription:
     "Build the plate you ordered and get kcal, protein, carbs and fat for typical vendor portions — six pani puri is about 210 kcal, give or take 20%.",
   steps: [

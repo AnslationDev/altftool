@@ -1,5 +1,5 @@
 const seo = {
-  title: "Open Source License Chooser: MIT, Apache, GPL, AGPL",
+  title: "Open Source License Chooser: MIT/Apache/GPL/AGPL",
   steps: [
     "Answer question 1 by choosing a copyleft scope, from 'No — anyone may use it in closed-source software (permissive)' up to 'Even SaaS/hosted use must share source (network copyleft)'.",
     "Tick any of the three follow-ups: an express patent grant from contributors, the shortest simplest license text, or waiving everything including attribution.",

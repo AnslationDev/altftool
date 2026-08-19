@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marriage Registration Documents Checklist for India",
+  title: "Marriage Registration Checklist for India",
   metaDescription:
     "Builds the proofs, photos and witness list for your Act, checks both ages against 21 and 18, and dates the 30-day Special Marriage Act notice window.",
   steps: [

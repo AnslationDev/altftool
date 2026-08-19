@@ -1,5 +1,5 @@
 const seo = {
-  title: "Podcast Outline Prompt Builder with Timed Segments",
+  title: "Podcast Outline Prompt Builder: Timed Segments",
   metaDescription:
     "Splits a 5-240 minute runtime into cold open, intro, timed segments and outro, warns when questions get under 2 minutes, and writes the outline prompt.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Informal to Formal Word Swapper: 112 Register Pairs",
+  title: "Informal to Formal Word Swapper: 112 Pairs",
   metaDescription:
     "Swap wording between registers with 112 paired equivalents — 80 safe, 32 context-dependent and opt-in — keeping your original capitalisation.",
   steps: [

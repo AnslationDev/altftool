@@ -1,5 +1,5 @@
 const seo = {
-  title: "Nx vs Turborepo vs Bazel vs Lerna: Weighted Ranking",
+  title: "Nx vs Turborepo vs Bazel vs Lerna: Ranked",
   metaDescription:
     "Set 0-5 weights on seven criteria to rank Nx, Turborepo, Bazel, Lerna and pnpm workspaces — weighted scores plus a full 35-cell ratings matrix.",
   steps: [

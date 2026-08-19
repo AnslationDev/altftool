@@ -1,5 +1,5 @@
 const seo = {
-  title: "IELTS Band Score Calculator: Overall and Raw Score",
+  title: "IELTS Band Score Calculator: Overall & Raw Score",
   metaDescription:
     "Average the four skill bands with the official IELTS rounding - .25 up to the next half band - and convert Listening and Reading scores out of 40.",
   steps: [

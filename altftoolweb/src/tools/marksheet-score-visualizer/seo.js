@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marksheet Percentage Calculator & Score Visualizer",
+  title: "Marksheet Percentage Calculator & Visualizer",
   metaDescription:
     "Enter subject-wise marks to get the correct mark-weighted overall percentage, bars per subject, strongest and weakest subjects and Indian division bands.",
   steps: [

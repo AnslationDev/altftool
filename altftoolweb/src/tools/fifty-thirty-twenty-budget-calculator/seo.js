@@ -1,5 +1,5 @@
 const seo = {
-  title: "50-30-20 Budget Rule Calculator (INR, In-Hand Pay)",
+  title: "50-30-20 Budget Rule Calculator (INR)",
   metaDescription:
     "Split take-home pay into 50% needs, 30% wants, 20% savings, compare targets with actual spending in rupees, and try 60-20-20 or 40-30-30 splits.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hashtag Set Organizer: Dedupe and Check Tag Limits",
+  title: "Hashtag Set Organizer: Dedupe & Check Tag Limits",
   metaDescription:
     "Dedupes a pasted tag list and checks it against Instagram's 30 tags and 2,200 characters, X's 280, LinkedIn's 3,000 and YouTube's 15-tag cutoff.",
   intro:

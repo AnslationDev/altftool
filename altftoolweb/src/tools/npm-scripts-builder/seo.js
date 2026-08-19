@@ -1,5 +1,5 @@
 const seo = {
-  title: "npm Scripts Builder: Pre/Post Hooks & Windows Audit",
+  title: "npm Scripts Builder: Pre/Post Hooks",
   metaDescription:
     "Compose a package.json scripts block with automatic pre/post hooks, run-s/run-p or concurrently combos, and an audit for commands cmd.exe breaks.",
   steps: [

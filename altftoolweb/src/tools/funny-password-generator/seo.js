@@ -1,5 +1,5 @@
 const seo = {
-  title: "Funny Password Generator: WobblyPlatypus472$ Style",
+  title: "Funny Password Generator: WobblyPlatypus472$",
   metaDescription:
     "Memorable passwords built as adjective + noun + a 100-999 number + one symbol, 6-30 characters, with a length-based Weak/Fair/Good/Strong meter.",
   steps: [

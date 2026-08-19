@@ -1,5 +1,5 @@
 const seo = {
-  title: "PDF Password Remover - Unlock PDFs in Your Browser",
+  title: "PDF Password Remover: Unlock PDFs in Your Browser",
   steps: [
     "Drag & drop your PDF (or click to browse; one .pdf file) — the tool reports its size and page count and detects whether a user password is required.",
     "Type the password into 'Enter PDF password' if asked — owner-only restrictions decrypt with an empty password — and click Remove Password & Download.",

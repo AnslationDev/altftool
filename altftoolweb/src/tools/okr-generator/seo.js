@@ -1,5 +1,5 @@
 const seo = {
-  title: "OKR Generator: 3-5 Numeric Key Results per Quarter",
+  title: "OKR Generator: 3-5 Key Results per Quarter",
   metaDescription:
     "Build one objective with three to five key results, targets set from a baseline by committed +10%, stretch +25% or moonshot +50%, and graded 0.0-1.0.",
   steps: [
