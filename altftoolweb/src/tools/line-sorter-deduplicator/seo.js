@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sort Lines and Remove Duplicates — Line Sorter Tool",
+  title: "Sort Lines and Remove Duplicates",
   metaDescription:
     "Paste a list to sort A–Z, naturally (item 2 before item 10), by length, reversed or shuffled — and strip duplicate or blank lines in the same pass.",
   steps: [

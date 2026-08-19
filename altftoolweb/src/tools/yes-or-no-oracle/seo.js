@@ -1,5 +1,5 @@
 const seo = {
-  title: "Yes or No Oracle - Weighted Random Answer Generator",
+  title: "Yes or No Oracle: Weighted Random Answers",
   metaDescription:
     "Ask any yes/no question and get one of 30 fortune-teller phrases after a 2-second reveal — weighted 45% yes, 40% no, 15% hazy — with your last 20 asks.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "BCAA and EAA Dose Calculator — Leucine per Serving",
+  title: "BCAA & EAA Dose Calculator: Leucine per Serving",
   metaDescription:
     "Set a leucine target and get the grams of BCAA 2:1:1, 4:1:1, 8:1:1, EAA or whey it takes — with WHO/FAO daily requirements and whole-food equivalents.",
   steps: [

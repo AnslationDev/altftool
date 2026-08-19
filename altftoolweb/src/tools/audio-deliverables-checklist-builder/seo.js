@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Delivery Checklist: ACX, Podcast, R128 Specs",
+  title: "Audio Delivery Checklist: ACX, Podcast, R128",
   metaDescription:
     "Builds the file list per destination with real specs: ACX 192 kbps MP3, podcasts at -16 LUFS and -1 dBTP, EBU R128 at -23 LUFS, plus the gain change.",
   steps: [

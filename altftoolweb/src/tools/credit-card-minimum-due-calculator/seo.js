@@ -1,5 +1,5 @@
 const seo = {
-  title: "Credit Card Minimum Due Calculator (India, 18% GST)",
+  title: "Credit Card Minimum Due Calculator (18% GST)",
   metaDescription:
     "Simulates your card balance month by month — interest, 18% GST and the shrinking minimum — to show how many years the debt lasts vs a fixed payment.",
   steps: [

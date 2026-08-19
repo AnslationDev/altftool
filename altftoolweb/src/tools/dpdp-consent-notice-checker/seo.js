@@ -1,5 +1,5 @@
 const seo = {
-  title: "DPDP Consent Notice Checker: 8-Point Coverage Scan",
+  title: "DPDP Consent Notice Checker: 8-Point Scan",
   metaDescription:
     "Paste a consent notice to see which of eight DPDP signals - fiduciary, purpose, withdrawal, grievance - are missing. A drafting aid, not certification.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Final Exam Score Needed Calculator by Grade Weight",
+  title: "Final Exam Score Needed Calculator",
   metaDescription:
     "Enter your current grade, the final's weight and your target to get the minimum exam score in percent and marks — plus every grade band and what-ifs.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "ECTS Credit Load Calculator — Credits per Semester",
+  title: "ECTS Credit Load Calculator: Credits per Semester",
   metaDescription:
     "See how many ECTS you must earn each remaining semester and the 25-30 h/credit workload per week; loads over 30 ECTS are flagged as overload.",
   steps: [

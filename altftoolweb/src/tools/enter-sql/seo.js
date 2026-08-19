@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL Formatter: Beautify, Compress or Escape a Query",
+  title: "SQL Formatter: Beautify, Compress or Escape",
   metaDescription:
     "Beautify SQL onto clause lines, compress it to one line, or escape it as a string literal — quoted text and -- or /* */ comments stay untouched.",
   steps: [

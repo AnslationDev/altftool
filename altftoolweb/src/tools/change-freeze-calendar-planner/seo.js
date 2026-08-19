@@ -1,5 +1,5 @@
 const seo = {
-  title: "Change Freeze Calendar Planner for Release Windows",
+  title: "Change Freeze Planner for Release Windows",
   metaDescription:
     "Turn protected dates into dated freeze windows: overlaps merge, and you see total days, Mon–Fri days frozen, and the release gaps between blocks.",
   intro:

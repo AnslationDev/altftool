@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coaching Institute Prompt Pack + CCPA Claim Screen",
+  title: "Coaching Institute Prompt Pack + CCPA Screen",
   metaDescription:
     "10 fill-in-the-blank AI prompts for batch, doubt, result and fee messages, screened against 18 claims the CCPA's 2024 coaching guidelines restrict.",
   steps: [

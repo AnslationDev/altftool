@@ -1,5 +1,5 @@
 const seo = {
-  title: "Permutation and Combination Calculator (nPr & nCr)",
+  title: "Permutation & Combination Calculator (nPr & nCr)",
   metaDescription:
     "Enter n and r to get nPr and nCr side by side — 8 choose 3 gives 336 permutations but 56 combinations. Rejects r > n instead of a bogus number.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dishwasher vs Hand Washing Cost per Load Calculator",
+  title: "Dishwasher vs Hand Washing Cost per Load",
   metaDescription:
     "Price a dishwasher cycle against hand washing: label kWh and litres vs tap flow x minutes, hot-water energy from real physics. Per load and per year.",
   steps: [

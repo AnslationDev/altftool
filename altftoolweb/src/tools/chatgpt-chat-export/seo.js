@@ -1,5 +1,5 @@
 const seo = {
-  title: "Export ChatGPT Chats to PDF, DOCX, Markdown & More",
+  title: "Export ChatGPT Chats to PDF, DOCX & Markdown",
   metaDescription:
     "Convert a saved ChatGPT conversation to PDF, DOCX, Markdown, HTML, JSON, TXT or CSV — parsed and exported entirely in your browser, nothing uploaded.",
   intro:

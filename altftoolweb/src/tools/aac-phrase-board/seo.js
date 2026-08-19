@@ -1,5 +1,5 @@
 const seo = {
-  title: "AAC Phrase Board — Tap Tiles to Speak Phrases Aloud",
+  title: "AAC Phrase Board: Tap a Tile to Speak Aloud",
   metaDescription:
     "Tap a tile to speak it with your browser's own voice. Starts with 8 core phrases — Yes, No, I need help — and takes typed custom phrases up to 24 tiles.",
   steps: [

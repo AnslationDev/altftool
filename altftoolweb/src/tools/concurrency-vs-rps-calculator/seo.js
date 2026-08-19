@@ -1,5 +1,5 @@
 const seo = {
-  title: "Concurrency vs RPS Calculator (Little's Law L = λW)",
+  title: "Concurrency vs RPS Calculator (Little's Law)",
   metaDescription:
     "Solve Little's Law in any direction: users, req/s or response time from the other two, with think time separating virtual users from in-flight load.",
   steps: [

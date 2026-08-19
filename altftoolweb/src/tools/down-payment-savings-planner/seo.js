@@ -1,5 +1,5 @@
 const seo = {
-  title: "Down Payment Savings Planner: Stamp Duty and RBI LTV",
+  title: "Down Payment Planner: Stamp Duty & RBI LTV",
   metaDescription:
     "Monthly saving for a house down payment, with price growth to the purchase date, stamp duty and registration in cash, and a check against the RBI LTV cap.",
   steps: [

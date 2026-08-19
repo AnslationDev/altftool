@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mutual Fund XIRR Calculator – SIP Annualised Return",
+  title: "Mutual Fund XIRR Calculator for SIP Returns",
   metaDescription:
     "Enter dated purchases and redemptions plus the current value; the tool solves XIRR the way Excel does — Newton-Raphson with bisection on a 365-day year.",
   steps: [

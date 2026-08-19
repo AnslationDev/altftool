@@ -1,5 +1,5 @@
 const seo = {
-  title: "Anagram Generator: Up to 100 Letter Rearrangements",
+  title: "Anagram Generator: Up to 100 Rearrangements",
   metaDescription:
     "Shuffles every letter of your word into up to 100 unique orderings, filtered by prefix, suffix or substring, and exports as TXT, CSV or JSON.",
   intro:

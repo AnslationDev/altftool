@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coin Flip Simulator — Fair 3D Toss & Best-of Series",
+  title: "Coin Flip Simulator: Fair Toss & Best-of Series",
   metaDescription:
     "Flip a fair coin using crypto.getRandomValues — 3D animation, 1–6 coins at once, best-of-3 to 9 series scoring, streak tracking and your last 30 results.",
   intro:

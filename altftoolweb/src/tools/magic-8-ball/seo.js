@@ -1,5 +1,5 @@
 const seo = {
-  title: "Magic 8 Ball Online: Ask a Yes/No Question and Shake",
+  title: "Magic 8 Ball: Ask a Yes/No Question & Shake",
   metaDescription:
     "Type a yes/no question and shake for one of 13 classic replies - six affirmative, three non-committal, four negative - each an independent random draw.",
   intro:

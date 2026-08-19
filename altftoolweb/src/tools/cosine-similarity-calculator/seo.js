@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cosine Similarity Calculator for Embedding Vectors",
+  title: "Cosine Similarity Calculator for Embeddings",
   metaDescription:
     "Paste two vectors — JSON arrays or comma, space or newline separated, up to 20,000 dimensions — and get cosine, dot product, L2, L1 and the angle.",
   steps: [

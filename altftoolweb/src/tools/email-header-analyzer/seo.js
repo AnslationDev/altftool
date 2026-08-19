@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Header Analyzer: SPF, DKIM and DMARC Alignment",
+  title: "Email Header Analyzer: SPF, DKIM & DMARC",
   metaDescription:
     "Paste raw headers to read the Received hop chain and delays, every DKIM-Signature tag, and DMARC alignment recomputed here against the From domain.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "BPM to ms Delay Calculator – Dotted & Triplet Times",
+  title: "BPM to ms Calculator: Dotted & Triplet Delays",
   metaDescription:
     "Convert tempo to delay times from 60000/BPM: straight, dotted and triplet notes in ms, Hz and samples — plus a reverse lookup for any ms value.",
   steps: [

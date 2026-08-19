@@ -1,5 +1,5 @@
 const seo = {
-  title: "Condolence Message Generator in 6 Indian Languages",
+  title: "Condolence Message Generator, 6 Indian Languages",
   metaDescription:
     "Sympathy drafts by relationship, kinship and customary closing, in English, Hinglish, Hindi, Marathi, Bengali or Tamil, at SMS, medium or letter length.",
   steps: [

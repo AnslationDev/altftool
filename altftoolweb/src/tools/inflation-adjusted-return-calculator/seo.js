@@ -1,5 +1,5 @@
 const seo = {
-  title: "Inflation Adjusted Return Calculator – Real Returns",
+  title: "Inflation Adjusted Return Calculator",
   metaDescription:
     "Fisher-equation real return from a nominal rate and inflation, with optional tax on returns and your corpus restated in today's rupees.",
   steps: [

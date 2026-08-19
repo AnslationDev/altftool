@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ansible Inventory File Builder – INI & YAML Output",
+  title: "Ansible Inventory File Builder: INI & YAML",
   metaDescription:
     "Type groups, hosts and vars in INI style — [group:children], [group:vars], ranges like web[01:05] — and copy a validated inventory as INI or YAML.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Assignment Word Count Planner with Section Targets",
+  title: "Assignment Word Count Planner: Section Targets",
   metaDescription:
     "Split an essay word budget across weighted sections — 10% intro, 80% body, 10% conclusion preloaded — with exact targets and per-section progress.",
   steps: [

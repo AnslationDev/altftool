@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Converter: HEX, RGB, HSL, HSV, CMYK & Contrast",
+  title: "Color Converter: HEX, RGB, HSL, HSV, CMYK",
   metaDescription:
     "Convert one color to HEX, RGB, RGBA, HSL, HSLA, HSV and CMYK at once, with WCAG contrast scores against white and black plus hue-rotated harmonies.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Engine Displacement Calculator: Bore & Stroke to cc",
+  title: "Engine Displacement Calculator: Bore & Stroke",
   metaDescription:
     "Get cc, litres and cubic inches from bore, stroke and cylinder count, plus bore/stroke ratio and the clearance volume a compression ratio implies.",
   steps: [

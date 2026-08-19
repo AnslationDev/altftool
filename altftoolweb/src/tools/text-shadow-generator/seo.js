@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Text Shadow Generator with Offset & Blur Sliders",
+  title: "CSS Text Shadow Generator: Offset & Blur Sliders",
   metaDescription:
     "Drag X offset, Y offset (-20 to 20 px) and blur (0-40 px) sliders to build a ready-to-paste text-shadow rule in rgba(0,0,0,0.5).",
   intro:

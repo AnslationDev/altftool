@@ -1,5 +1,5 @@
 const seo = {
-  title: "Apple Health export.xml: Summarize Records by Type",
+  title: "Apple Health export.xml: Summary by Record Type",
   steps: [
     "Paste your Apple Health export.xml text into the 'Apple Health export.xml content or Record lines' box, or load the 'Two records' example.",
     "Set 'Maximum records to summarize' — the default is 5,000 and the field accepts up to 50,000 Record elements.",

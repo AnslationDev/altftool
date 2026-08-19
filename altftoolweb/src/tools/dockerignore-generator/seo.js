@@ -1,5 +1,5 @@
 const seo = {
-  title: ".dockerignore Generator for Node, Python, Go & More",
+  title: ".dockerignore Generator: Node, Python, Go & More",
   metaDescription:
     "Tick your stacks — Node, Python, Go, Rust, Java, .NET, PHP, Ruby — plus groups for secrets and logs, and copy a sectioned, deduplicated .dockerignore.",
   steps: [

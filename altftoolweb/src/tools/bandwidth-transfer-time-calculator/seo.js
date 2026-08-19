@@ -1,5 +1,5 @@
 const seo = {
-  title: "File Transfer Time Calculator: Mbps, GB, GiB Units",
+  title: "File Transfer Time Calculator: Mbps, GB, GiB",
   metaDescription:
     "Divide size in bits by link rate and efficiency to get transfer time — bits vs bytes handled, GB and GiB kept separate, overhead shown beside ideal.",
   steps: [

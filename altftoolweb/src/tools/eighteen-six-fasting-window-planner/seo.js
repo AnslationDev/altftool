@@ -1,5 +1,5 @@
 const seo = {
-  title: "18:6 Fasting Window Planner with Hydration Schedule",
+  title: "18:6 Fasting Window Planner with Hydration",
   metaDescription:
     "Sets your 6-hour eating window and 18-hour fast, then times drinks from the EFSA 2.5 L / 2.0 L intake minus the ~20% water food supplies.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Apdex Score Calculator — Rating Bands and Fix Plan",
+  title: "Apdex Score Calculator: Rating Bands and Fix Plan",
   metaDescription:
     "Compute Apdex = (satisfied + tolerating/2) ÷ total from your APM counts, get the rating band, and the fewest request fixes to reach a target score.",
   steps: [

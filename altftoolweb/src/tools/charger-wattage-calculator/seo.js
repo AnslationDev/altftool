@@ -1,5 +1,5 @@
 const seo = {
-  title: "Charger Wattage Calculator: Volts x Amps, Cable Cap",
+  title: "Charger Wattage Calculator: Volts x Amps",
   metaDescription:
     "Multiply your charger's V x A, clip it to the cable rating and device limit, then get usable watts, charge time and the USB-C PD profile.",
   steps: [

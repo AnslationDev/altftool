@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bicycle Frame Size Calculator by Inseam, Not Height",
+  title: "Bicycle Frame Size Calculator: Inseam, Not Height",
   metaDescription:
     "Road seat tube = inseam x 0.67, mountain inches = inseam x 0.226, hybrid x 0.63, plus LeMond saddle height and the shop height chart side by side.",
   steps: [

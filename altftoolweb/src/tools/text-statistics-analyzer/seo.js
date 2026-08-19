@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Statistics: Word Count and Readability Scores",
+  title: "Text Statistics: Word Count & Readability Scores",
   metaDescription:
     "Paste text for words, sentences, paragraphs and syllables plus Flesch Reading Ease, Flesch-Kincaid, Gunning Fog, SMOG, Coleman-Liau and ARI, in-browser.",
   steps: [

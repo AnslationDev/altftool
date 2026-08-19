@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dehumidifier Size Calculator: Litres per Day Needed",
+  title: "Dehumidifier Size Calculator: Litres per Day",
   metaDescription:
     "Size a unit from room volume, humidity and moisture sources, derated from the 30 °C / 80% RH nameplate, with runtime and monthly running cost.",
   steps: [

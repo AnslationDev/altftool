@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bharatanatyam Calorie Calculator by Session Segment",
+  title: "Bharatanatyam Calorie Calculator by Segment",
   metaDescription:
     "Price adavu drill, nritta, item run-throughs, abhinaya and rest at 5.0, 6.8, 3.0 and 1.3 METs, with the published dance entry named on every row.",
   steps: [

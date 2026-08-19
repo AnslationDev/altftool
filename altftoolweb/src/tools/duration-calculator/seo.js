@@ -1,5 +1,5 @@
 const seo = {
-  title: "Convert Seconds to Days, Hours, Minutes and Seconds",
+  title: "Convert Seconds to Days, Hours, Minutes & Seconds",
   metaDescription:
     "Type a number of seconds and get a compact duration — 90061 becomes 1d 1h 1m 1s — with a Days, Hours, Minutes and Seconds breakdown.",
   intro:

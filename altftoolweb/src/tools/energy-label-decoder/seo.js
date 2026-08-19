@@ -1,5 +1,5 @@
 const seo = {
-  title: "BEE Energy Label Decoder - ISEER & kWh Running Cost",
+  title: "BEE Energy Label Decoder: ISEER & Running Cost",
   metaDescription:
     "Turns the kWh/year or ISEER on a BEE star label into running cost, then compares two models on annual savings, payback of the price premium and CO2.",
   steps: [

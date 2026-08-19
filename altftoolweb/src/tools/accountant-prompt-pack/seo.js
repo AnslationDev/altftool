@@ -1,5 +1,5 @@
 const seo = {
-  title: "Accountant Prompt Pack: 9 Fill-in-the-Blank Prompts",
+  title: "Accountant Prompt Pack: 9 Fill-in-the-Blanks",
   metaDescription:
     "Nine fill-in-the-blank AI prompts for reconciliation triage, variance analysis, journal narratives, fee emails, records chasing and close checklists.",
   steps: [

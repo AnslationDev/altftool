@@ -1,5 +1,5 @@
 const seo = {
-  title: "DCA Calculator: Weekly to Yearly Investment Growth",
+  title: "DCA Calculator: Weekly to Yearly Growth",
   metaDescription:
     "Compound a lump sum plus recurring contributions weekly to yearly. Returns projected value, total invested, ROI, CAGR, inflation-adjusted and ±2% cases.",
   steps: [

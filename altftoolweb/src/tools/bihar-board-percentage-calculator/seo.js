@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bihar Board Percentage Calculator (BSEB 500 Marks)",
+  title: "Bihar Board Percentage Calculator: 500 Marks",
   metaDescription:
     "Enter five BSEB subject marks out of 100 for your Matric or Inter percentage on 500, pass status and First (300), Second (225) or Third (150) Division.",
   steps: [

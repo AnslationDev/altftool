@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio to Base64 Data URL Converter (MP3, WAV, OGG)",
+  title: "Audio to Base64 Converter (MP3, WAV, OGG)",
   metaDescription:
     "Encode MP3, WAV, OGG or M4A files up to 50 MB into a Base64 data URL in your browser, with exact size arithmetic and a flag past the 100 KB inline limit.",
   intro:

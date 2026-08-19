@@ -1,5 +1,5 @@
 const seo = {
-  title: "Duolingo English Test Score to IELTS, TOEFL & CEFR",
+  title: "Duolingo English Test to IELTS, TOEFL & CEFR",
   metaDescription:
     "Convert a DET score (10–160) to its IELTS band via Duolingo's published concordance, plus CEFR level and a TOEFL iBT range derived via ETS linking.",
   steps: [

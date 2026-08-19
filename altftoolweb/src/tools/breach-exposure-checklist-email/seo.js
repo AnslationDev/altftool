@@ -1,5 +1,5 @@
 const seo = {
-  title: "Email Breach Response Checklist: 16 Weighted Steps",
+  title: "Email Breach Response Checklist: 16 Steps",
   metaDescription:
     "Score your response to a leaked email address across 16 weighted steps grouped by window — 24 hours, a week, a month, ongoing — and see what has slipped.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Anna University GPA Calculator with O-U Grade Scale",
+  title: "Anna University GPA Calculator: O-U Grade Scale",
   metaDescription:
     "Semester GPA by Anna University's Σ(Ci×GPi)/ΣCi formula: grades O (10) to C (5), U and AB at 0 with credits still counted, for up to 15 courses.",
   steps: [

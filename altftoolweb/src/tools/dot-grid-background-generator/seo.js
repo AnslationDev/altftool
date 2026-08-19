@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dot Grid Background CSS Generator with Live Preview",
+  title: "Dot Grid Background CSS Generator",
   metaDescription:
     "Set dot spacing, radius and opacity, preview the pattern live, and copy a two-line CSS radial-gradient background that needs no image file.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Appliance Load-Shift Planner: Cheapest kWh Windows",
+  title: "Appliance Load-Shift Planner: Cheapest Windows",
   steps: [
     "Fill the Tariff windows box with one window per line as start-end | price — it opens on 00:00-06:00 | 5 through 22:00-24:00 | 6 — and list your Flexible appliances as appliance | cycle kWh, such as Dishwasher | 1.2 and Water heater | 3.0.",
     "Set Maximum parallel cycles to how many appliances may share a window (1 by default); the “Three appliances” button under Examples refills both boxes and Reset restores the defaults.",

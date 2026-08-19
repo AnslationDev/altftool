@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bike Fuel Cost Calculator – Petrol per Ride & Month",
+  title: "Bike Fuel Cost Calculator: Per Ride & Month",
   metaDescription:
     "Enter ride distance, km/l mileage and petrol price to get cost per ride, week, month and year — plus tank range, full-tank cost and refills per month.",
   steps: [

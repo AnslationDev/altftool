@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grade Percentage Calculator for Marks and Weightings",
+  title: "Grade Percentage Calculator: Marks & Weightings",
   metaDescription:
     "Find what a percentage of a total comes to — 15% of 200 is 30 — plus the value with that amount added and subtracted, for weightings and grace marks.",
   intro:

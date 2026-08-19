@@ -1,5 +1,5 @@
 const seo = {
-  title: "Consent Inventory Mapper: Collection to Withdrawal",
+  title: "Consent Inventory Mapper: Collect to Withdraw",
   metaDescription:
     "Paste pipe-separated lines to build a five-column consent record - collection point, purpose, action, withdrawal route, owner - with gaps counted.",
   steps: [

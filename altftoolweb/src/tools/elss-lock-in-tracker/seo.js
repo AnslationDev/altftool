@@ -1,5 +1,5 @@
 const seo = {
-  title: "ELSS Lock-in Tracker – SIP-wise 3-Year Unlock Dates",
+  title: "ELSS Lock-in Tracker: SIP-wise Unlock Dates",
   metaDescription:
     "Track each ELSS SIP instalment's 36-month lock-in: amount free to redeem as on any date, the next unlock tranche and when the whole folio frees up.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Card Picker — Draw From a Full 52-Card Deck",
+  title: "Random Card Picker: Draw From a 52-Card Deck",
   metaDescription:
     "Press Pick Card to flip one of 52 cards — four suits, Ace to King, no jokers. Draws with replacement, so every pull is an even 1-in-52 chance.",
   intro:

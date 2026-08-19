@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cursive Text Generator: Real Unicode Script Letters",
+  title: "Cursive Text Generator: Unicode Script Letters",
   metaDescription:
     "Turns a-z into Unicode Mathematical Script from U+1D49C and U+1D4B6, filling the eleven gap letters so nothing pastes as a blank box. Digits stay plain.",
   intro:

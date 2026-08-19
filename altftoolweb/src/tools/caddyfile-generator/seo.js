@@ -1,5 +1,5 @@
 const seo = {
-  title: "Caddyfile Generator for Caddy v2 - Proxy, SPA, HSTS",
+  title: "Caddyfile Generator for Caddy v2",
   metaDescription:
     "Build a Caddy v2 site block from a form - reverse proxy or file server, encode zstd gzip, security headers, guarded HSTS, www redirect and access logs.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Alliteration Finder: Match by Sound, Not by Letter",
+  title: "Alliteration Finder: Match by Sound, Not Letter",
   metaDescription:
     "Type a word to get adjectives, nouns, verbs and adverbs sharing its onset — ph as /f/, kn as /n/, soft c as /s/ — plus ready-made sample lines.",
   steps: [

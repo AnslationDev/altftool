@@ -1,5 +1,5 @@
 const seo = {
-  title: "ETH Gas Now: Live Gwei Price from an Ethereum Node",
+  title: "ETH Gas Now: Live Gwei from an Ethereum Node",
   metaDescription:
     "Reads eth_gasPrice live from the Cloudflare Ethereum Gateway, shows slow/normal/fast tiers at 0.9x/1x/1.2x and prices a 21,000-gas ETH transfer.",
   steps: [

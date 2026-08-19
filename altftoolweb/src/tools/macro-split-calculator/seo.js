@@ -1,5 +1,5 @@
 const seo = {
-  title: "Macro Split Calculator: Calories to Grams Per Meal",
+  title: "Macro Split Calculator: Calories to Grams",
   metaDescription:
     "Turn a calorie target into protein, carb and fat grams at 4/4/9 kcal per gram — balanced, high-protein, keto or custom splits, divided across 1-10 meals.",
   steps: [

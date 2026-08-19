@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Decision Maker - Magic 8-Ball Yes/No Answers",
+  title: "Random Decision Maker: Magic 8-Ball Answers",
   metaDescription:
     "Ask a yes/no question and shake for one of nine classic Magic 8-Ball replies, each equally likely - a yes about 44% of the time. Re-shake in one click.",
   intro:

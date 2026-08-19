@@ -1,5 +1,5 @@
 const seo = {
-  title: "Delhi University Attendance Calculator — 66.67% Rule",
+  title: "Delhi University Attendance Calculator (66.67%)",
   metaDescription:
     "Check each DU paper against Ordinance VII's two-thirds rule with exact integer maths — see lectures you can still miss or the exact recovery run you need.",
   steps: [

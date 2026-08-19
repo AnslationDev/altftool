@@ -1,5 +1,5 @@
 const seo = {
-  title: "English Preposition Drill: in, on, at with the Rule",
+  title: "English Preposition Drill: in, on, at + the Rule",
   metaDescription:
     "Graded questions on prepositions of time, place, movement and fixed pairs. Every answer states the rule behind it, and blanks are scored apart from wrong.",
   steps: [

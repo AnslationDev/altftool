@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cash Deposit Limit Checker: Rule 114E, 194N, 269ST",
+  title: "Cash Deposit Checker: Rule 114E, 194N, 269ST",
   metaDescription:
     "Enter a year of cash deposits and withdrawals to see which Rule 114E, PAN and section 194N thresholds you cross, with the 194N TDS the bank deducts.",
   steps: [

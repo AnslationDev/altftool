@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Backup Priority Ranker: What to Scan First",
+  title: "Document Backup Priority Ranker",
   metaDescription:
     "Rank household papers by replaceability, urgency and dependency on a 0-100 score, then fit the Tier 1 items into the minutes you have today.",
   steps: [

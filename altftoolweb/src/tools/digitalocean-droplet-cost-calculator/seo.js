@@ -1,5 +1,5 @@
 const seo = {
-  title: "DigitalOcean Cost Calculator: Droplets + Bandwidth",
+  title: "DigitalOcean Cost Calculator: Droplets, Bandwidth",
   metaDescription:
     "Whole-bill estimate: Basic droplets billed at 1/672 per hour, volumes $0.10/GB, snapshots $0.06/GB, $12 load balancers and $0.01/GB bandwidth overage.",
   steps: [

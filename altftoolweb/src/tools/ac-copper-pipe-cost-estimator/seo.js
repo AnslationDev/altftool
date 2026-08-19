@@ -1,5 +1,5 @@
 const seo = {
-  title: "AC Copper Pipe Cost Estimator: Beyond the Free 3 m",
+  title: "AC Copper Pipe Cost Estimator: Past the Free 3 m",
   metaDescription:
     "Prices the extra copper pair, drain, cable, core holes and refrigerant top-up past the free 3 m, using the manual's chargeless length and g/m rate.",
   steps: [

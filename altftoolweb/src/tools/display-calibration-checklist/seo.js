@@ -1,5 +1,5 @@
 const seo = {
-  title: "Display Calibration Checklist: sRGB, Rec. 709, HDR",
+  title: "Display Calibration Checklist: sRGB, Rec 709, HDR",
   metaDescription:
     "Pick a workflow — web sRGB, print proofing, Rec. 709 or HDR PQ — get white point, gamma, luminance and room-light targets, plus the next due date.",
   steps: [

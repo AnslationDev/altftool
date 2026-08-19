@@ -1,5 +1,5 @@
 const seo = {
-  title: "Basic Auth Header Generator (Base64 Authorization)",
+  title: "Basic Auth Header Generator (Base64)",
   metaDescription:
     "Builds the full 'Basic <base64>' Authorization header from username:password, masks the password, and copies only the finished header. HTTPS only.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Working Days Calculator – Custom Weekends & Holidays",
+  title: "Working Days Calculator: Weekends & Holidays",
   metaDescription:
     "Count business days between two dates with your own weekend — Sat-Sun, Sunday-only or Fri-Sat — plus a holiday list and total working hours.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Tone Rewrite Prompt Builder With Flesch Scoring",
+  title: "AI Tone Rewrite Prompt Builder: Flesch Scoring",
   metaDescription:
     "Scores your text on Flesch Reading Ease and Flesch-Kincaid grade, then writes a rewrite prompt naming the tone, target band and the gap in points.",
   steps: [

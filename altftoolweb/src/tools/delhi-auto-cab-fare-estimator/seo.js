@@ -1,5 +1,5 @@
 const seo = {
-  title: "Delhi Auto & Taxi Fare Calculator (Notified Meter)",
+  title: "Delhi Auto & Taxi Fare Calculator: Notified Meter",
   metaDescription:
     "Price a Delhi trip on the notified meter: ₹25 for 1.5 km, ₹9.50 per km, ₹0.75 a minute waiting, and the 25% night charge from 11pm to 5am.",
   steps: [

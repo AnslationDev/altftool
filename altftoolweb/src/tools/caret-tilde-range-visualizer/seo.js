@@ -1,5 +1,5 @@
 const seo = {
-  title: "Caret vs Tilde: npm Semver Ranges on a Number Line",
+  title: "Caret vs Tilde: npm Ranges on a Number Line",
   metaDescription:
     "See what ^ and ~ really allow: the npm desugaring drawn as a number line of allowed and blocked versions, with the stricter 0.x caret rules.",
   steps: [

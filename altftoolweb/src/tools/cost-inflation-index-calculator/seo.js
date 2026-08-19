@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cost Inflation Index Calculator FY 2001-02 to 2025-26",
+  title: "Cost Inflation Index Calculator (CBDT CII)",
   metaDescription:
     "Convert a purchase price to indexed cost with the CBDT's CII (100 to 376), index each improvement from its own year, and see the LTCG before and after.",
   steps: [

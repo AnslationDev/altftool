@@ -1,5 +1,5 @@
 const seo = {
-  title: "3-2-1 Backup Planner for Growing Footage Libraries",
+  title: "3-2-1 Backup Planner for Footage Libraries",
   metaDescription:
     "Project your footage library's growth in TB, count the drives each 3-2-1 copy needs, price the cloud copy month by month and estimate full restore time.",
   steps: [

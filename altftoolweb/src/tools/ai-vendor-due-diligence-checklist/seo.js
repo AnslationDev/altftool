@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Vendor Due Diligence Checklist: Questions to Ask",
+  title: "AI Vendor Due Diligence Checklist",
   metaDescription:
     "Generate must-ask and recommended questions on training data, retention, subprocessors, SOC 2 / ISO 27001 / ISO 42001 and GDPR exit terms.",
   steps: [

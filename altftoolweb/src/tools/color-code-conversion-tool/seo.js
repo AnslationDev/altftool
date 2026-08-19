@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Code Converter: HEX, RGB, HSL, CMYK and Alpha",
+  title: "Color Code Converter: HEX, RGB, HSL, CMYK & Alpha",
   metaDescription:
     "Paste any one colour — HEX, rgba(), hsl(), cmyk() or a named colour — and get all seven notations at once, with alpha preserved. No convert button.",
   intro:

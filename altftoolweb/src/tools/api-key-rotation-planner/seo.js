@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Key Rotation Planner: 90-Day Cadence & Runbook",
+  title: "API Key Rotation Planner: 90-Day Cadence",
   metaDescription:
     "Turn a key's creation date and exposure level into rotation due dates with a dual-key overlap window and a six-step revocation runbook (NIST SP 800-57).",
   steps: [

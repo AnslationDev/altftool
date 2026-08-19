@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chai and Coffee Sugar Tracker with WHO Limit Check",
+  title: "Chai & Coffee Sugar Tracker: WHO Limit Check",
   metaDescription:
     "Count the added sugar in a day of chai and coffee — cups times teaspoons at 4 g each — check it against WHO free-sugar limits and scale it to a year.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Basic Calculator That Respects Order of Operations",
+  title: "Basic Calculator with Order of Operations",
   metaDescription:
     "Type a whole expression like 12 + 7 * 3: it evaluates with correct precedence, rounds to 8 decimal places, and keeps your last 20 results in a log.",
   intro:

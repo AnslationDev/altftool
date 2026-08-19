@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dentist Visit Planner — Risk-Based Recall Interval",
+  title: "Dentist Visit Planner: Risk-Based Recall Interval",
   metaDescription:
     "Tick any of 13 caries and gum risk factors to get a recall interval inside the 3-24 month guideline range, a due date and a downloadable .ics reminder.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Time Saved Calculator: Before and After Timings",
+  title: "AI Time Saved Calculator: Before & After Timings",
   metaDescription:
     "Weekly and annual hours saved by AI from your own before/after timings and runs per week over 46 working weeks. Tasks that got slower show as negative.",
   steps: [

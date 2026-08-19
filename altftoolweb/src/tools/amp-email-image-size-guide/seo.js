@@ -1,5 +1,5 @@
 const seo = {
-  title: "AMP Email Image Sizes: amp-img, Retina, 200 KB Cap",
+  title: "AMP Email Image Sizes and the 200 KB Cap",
   metaDescription:
     "Turn a placement into CSS size, 2x source pixels and estimated weight per format, with the amp-img tag and Gmail's 200 KB AMP part budget.",
   steps: [

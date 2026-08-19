@@ -1,5 +1,5 @@
 const seo = {
-  title: "Etsy Listing Photo Size & 4:3 Thumbnail Crop Checker",
+  title: "Etsy Photo Size & 4:3 Thumbnail Crop Checker",
   metaDescription:
     "Check an Etsy photo against the 2000 px rule, JPG/PNG/GIF formats and the 10-photo limit — and see the exact % the 4:3 search thumbnail crops away.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emergency Fund Calculator: 3 to 12 Months of Bills",
+  title: "Emergency Fund Calculator: 3 to 12 Months",
   metaDescription:
     "Itemise rent, groceries, utilities and fees, answer four risk questions, and get a 3, 6, 9 or 12-month target with the gap and a monthly plan.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Drinking Game Picker: 48 Games, 6 Categories",
+  title: "Random Drinking Game Picker: 48 Games",
   metaDescription:
     "Spin up one of 48 drinking games across classic, card, challenge, social, couples and penalty sets — each with player count, duration and a dare prompt.",
   steps: [

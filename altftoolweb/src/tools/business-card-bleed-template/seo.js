@@ -1,5 +1,5 @@
 const seo = {
-  title: "Business Card Bleed, Trim and Safe Area Calculator",
+  title: "Business Card Bleed, Trim & Safe Area Calculator",
   metaDescription:
     "Enter card width, height and bleed per side to get the trim size, the full artwork size with bleed and the safe text inset, in mm or inches.",
   steps: [

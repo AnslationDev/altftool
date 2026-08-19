@@ -1,5 +1,5 @@
 const seo = {
-  title: "Profit Margin Calculator — Margin, Markup and Profit",
+  title: "Profit Margin Calculator: Margin, Markup & Profit",
   metaDescription:
     "Enter cost and selling price to get gross margin, cash profit and the equivalent markup — 60 and 100 gives a 40% margin and 66.67% markup.",
   intro:

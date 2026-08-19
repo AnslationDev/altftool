@@ -1,5 +1,5 @@
 const seo = {
-  title: "Digital Detox Study Planner: Phone-Free Block Ramp",
+  title: "Digital Detox Study Planner: Phone-Free Blocks",
   metaDescription:
     "Build phone-free study blocks that grow daily from an easy start to your cap. See the day you hit the cap and the total phone-free hours you will bank.",
   steps: [

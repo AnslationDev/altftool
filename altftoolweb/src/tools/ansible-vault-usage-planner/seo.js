@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ansible Vault Planner – Which Variables to Encrypt",
+  title: "Ansible Vault Planner: Which Variables to Encrypt",
   metaDescription:
     "Paste Ansible variable names to classify each as encrypt, review or plain, generate the vault_ prefix vars/vault split, and get ansible-vault commands.",
   steps: [

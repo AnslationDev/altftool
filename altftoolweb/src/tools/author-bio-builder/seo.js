@@ -1,5 +1,5 @@
 const seo = {
-  title: "Author Bio Generator: Micro, Short & Long Versions",
+  title: "Author Bio Generator: Micro, Short & Long",
   metaDescription:
     "Fill in role, niche, proof and audience to generate a ~25, ~55 or ~110-word author bio in first or third person, in four tones, with live word counts.",
   steps: [

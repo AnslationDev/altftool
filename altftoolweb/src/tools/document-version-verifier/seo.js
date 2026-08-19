@@ -1,5 +1,5 @@
 const seo = {
-  title: "Document Version Verifier: Diff, Hashes, Tampering",
+  title: "Document Version Verifier",
   metaDescription:
     "Compare two PDF, DOCX or text versions in your browser: line diff, CRC32, MD5, SHA-1, SHA-256 and SHA-512 hashes, plus a 100-point tamper score.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Credit Card Closure Letter: RBI 7-Working-Day Rule",
+  title: "Credit Card Closure Letter (RBI 7 Working Days)",
   metaDescription:
     "Draft a closure request that names the card and nil dues, counts the 7 working days RBI allows, and totals Rs 500 a day delay compensation.",
   steps: [

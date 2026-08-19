@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marathi Birthday Wishes Generator with Romanisation",
+  title: "Marathi Birthday Wishes with Romanisation",
   metaDescription:
     "Full Marathi birthday messages in the correct तू or तुम्ही form, with romanised text, English meaning and the SMS part count for each wish.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Client Video Revision Tracker — Timecoded Feedback",
+  title: "Client Video Revision Tracker: Timecoded Feedback",
   metaDescription:
     "Log each client note with a timecode, round and status, then see the resolution rate, remaining edit time and the price of rounds beyond your contract.",
   steps: [

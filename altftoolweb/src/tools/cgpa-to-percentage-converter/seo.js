@@ -1,5 +1,5 @@
 const seo = {
-  title: "CGPA to Percentage Converter: CBSE, VTU, GTU Rules",
+  title: "CGPA to Percentage Converter: CBSE, VTU, GTU",
   metaDescription:
     "Convert CGPA to percentage using CBSE's x9.5, a flat x10, VTU's (CGPA-0.75)x10, GTU's or Mumbai University's rule — and back again.",
   steps: [

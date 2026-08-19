@@ -1,5 +1,5 @@
 const seo = {
-  title: "Project Estimate Calculator - Cost & Delivery Date",
+  title: "Project Estimate Calculator: Cost & Delivery Date",
   metaDescription:
     "Turn task hours into a quote - per-task costs, a priced contingency buffer, and a weekday delivery date from the hours you can really give each week.",
   steps: [

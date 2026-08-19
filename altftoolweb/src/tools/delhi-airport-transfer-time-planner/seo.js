@@ -1,5 +1,5 @@
 const seo = {
-  title: "Delhi Airport (DEL): When to Leave Home for a Flight",
+  title: "Delhi Airport (DEL): When to Leave Home",
   metaDescription:
     "Works back from departure through bag-drop close, gate close and the 2-hour reporting advice. Airport Express metro skips the hourly congestion factor.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Blog Post Cost Calculator: Tool Fee + Edit Time",
+  title: "AI Blog Post Cost Calculator: Tool Fee, Edit Time",
   metaDescription:
     "Cost per post = (monthly AI spend + posts x editing minutes x hourly rate / 60) / posts. Four inputs give the monthly total and the per-post figure.",
   steps: [

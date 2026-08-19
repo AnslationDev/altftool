@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sponsored Post Disclosure Generator: FTC, ASA, ASCI",
+  title: "Sponsored Disclosure Generator: FTC, ASA, ASCI",
   metaDescription:
     "Build a #Ad or #Sponsored line that names the brand and the relationship, checked against FTC, ASA and ASCI rules and each platform's cut-off.",
   steps: [

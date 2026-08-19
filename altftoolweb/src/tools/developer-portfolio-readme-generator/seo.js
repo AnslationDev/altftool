@@ -1,5 +1,5 @@
 const seo = {
-  title: "GitHub Profile README Generator with Stats & Badges",
+  title: "GitHub Profile README Generator: Stats & Badges",
   metaDescription:
     "Build a GitHub profile README with shields.io skill badges, up to 10 projects, github-readme-stats widgets and contact links. Copy-paste ready Markdown.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "College Fee Instalment Planner - Monthly Set-Aside",
+  title: "College Fee Instalment Planner: Monthly Set-Aside",
   metaDescription:
     "Turn a semester fee schedule into per-instalment sinking funds - what to set aside each month, every due date and a reminder at your chosen lead time.",
   steps: [

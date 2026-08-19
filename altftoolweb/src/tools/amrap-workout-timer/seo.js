@@ -1,5 +1,5 @@
 const seo = {
-  title: "AMRAP Timer with Round Counter and Pace Projection",
+  title: "AMRAP Timer with Round Counter & Pace Projection",
   metaDescription:
     "Run a time cap with prep countdown, tap rounds and reps as you finish them, and get the rounds+reps score, pace and projected finish.",
   steps: [

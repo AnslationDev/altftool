@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cloud Tagging Policy Generator for AWS, Azure & GCP",
+  title: "Cloud Tag Policy Generator for AWS, Azure & GCP",
   metaDescription:
     "Build a mandatory cloud tag schema — environment, owner, cost-center, application, project — with provider-legal keys, exported as Markdown or JSON.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Docker HEALTHCHECK Generator — Dockerfile & Compose",
+  title: "Docker HEALTHCHECK Generator: Dockerfile, Compose",
   metaDescription:
     "Generate matching Dockerfile HEALTHCHECK and compose blocks — curl, wget or nc probes — plus worst-case time to unhealthy: (retries−1)×interval+timeout.",
   steps: [

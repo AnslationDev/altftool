@@ -1,5 +1,5 @@
 const seo = {
-  title: "Baby Name Voting Board with 1-5 Ratings and Vetoes",
+  title: "Baby Name Voting Board: 1-5 Ratings & Vetoes",
   metaDescription:
     "Each family member rates every name 1-5; a 1 is a veto that drops it below un-vetoed picks. Ranked by average with a consensus score, saved in-browser.",
   steps: [

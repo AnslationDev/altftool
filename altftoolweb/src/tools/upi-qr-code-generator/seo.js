@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPI QR Code Generator – Payment QR from Your UPI ID",
+  title: "UPI QR Code Generator from Your UPI ID",
   metaDescription:
     "Type your UPI ID and payee name to get a standard upi://pay QR. Lock an amount in INR, add a note or reference, then download the code as a PNG.",
   steps: [

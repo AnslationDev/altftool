@@ -1,5 +1,5 @@
 const seo = {
-  title: "Domain Expiry Date Lookup via RDAP Registry Records",
+  title: "Domain Expiry Date Lookup via RDAP Records",
   metaDescription:
     "Look up a domain's registration, expiry and last-changed dates plus EPP status codes and registrar handle straight from the registry's RDAP record.",
   steps: [

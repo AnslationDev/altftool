@@ -1,5 +1,5 @@
 const seo = {
-  title: "Docker Volume Mount Planner: -v, --mount and Compose",
+  title: "Docker Volume Mount Planner: -v, --mount, Compose",
   metaDescription:
     "Describe one bind, named volume or tmpfs mount and get all four syntaxes - -v, --mount, Compose short and long - with read-only and propagation.",
   steps: [

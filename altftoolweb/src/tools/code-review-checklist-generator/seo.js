@@ -1,5 +1,5 @@
 const seo = {
-  title: "Code Review Checklist Generator (Markdown for PRs)",
+  title: "Code Review Checklist Generator (Markdown)",
   metaDescription:
     "Generate a review checklist tuned by language, change type and risk — sections follow Google's code review guide, output as Markdown task boxes for PRs.",
   steps: [

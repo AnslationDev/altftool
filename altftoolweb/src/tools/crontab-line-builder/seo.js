@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crontab Line Builder with Next-Run Preview & flock",
+  title: "Crontab Line Builder: Next-Run Preview & flock",
   metaDescription:
     "Validate a five-field cron schedule, read it in plain English, preview next runs in your timezone, and wrap the command with logging, timeout and flock.",
   steps: [

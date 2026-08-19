@@ -1,5 +1,5 @@
 const seo = {
-  title: "Eclipse Simulator: Umbra and Penumbra Shadow Cones",
+  title: "Eclipse Simulator: Umbra & Penumbra Shadow Cones",
   metaDescription:
     "Drag orbital alignment and Earth-Moon distance to watch the umbra and penumbra cones decide total, annular, partial or penumbral. Not drawn to scale.",
   steps: [

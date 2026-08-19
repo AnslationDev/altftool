@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Statement Redactor: Flattened PDF, In-Browser",
+  title: "Bank Statement Redactor: Flattened PDF In-Browser",
   metaDescription:
     "Masks are baked into rasterised pages, so covered text is gone, not hidden. Flags account numbers, IBAN, IFSC and card numbers. Runs in your browser.",
   intro:

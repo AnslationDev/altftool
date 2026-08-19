@@ -1,5 +1,5 @@
 const seo = {
-  title: "EMI Moratorium Calculator: Real Cost of Pausing EMIs",
+  title: "EMI Moratorium Calculator: The Real Cost",
   metaDescription:
     "See what a loan moratorium really costs: interest compounds on your balance, then the loan is repriced as a longer tenure or a higher EMI.",
   steps: [

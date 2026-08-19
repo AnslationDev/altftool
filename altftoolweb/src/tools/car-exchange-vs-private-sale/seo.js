@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Exchange vs Private Sale: Net Proceeds Compared",
+  title: "Car Exchange vs Private Sale: Net Proceeds",
   metaDescription:
     "Nets a dealer offer and loyalty bonus against a private sale after reconditioning, RTO, depreciation and delay, and solves the break-even asking price.",
   steps: [

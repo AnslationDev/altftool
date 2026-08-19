@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cloudflare Workers Cost Calculator (Paid Plan + KV)",
+  title: "Cloudflare Workers Cost Calculator (Paid + KV)",
   metaDescription:
     "Estimate the $5 Workers Paid plan bill from monthly requests and CPU-ms, plus Workers KV reads, writes, lists and storage — egress is free.",
   steps: [

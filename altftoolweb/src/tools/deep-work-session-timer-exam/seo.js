@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Study Timer — Reading Time, Checkpoints, Review",
+  title: "Exam Study Timer: Reading, Checkpoints, Review",
   metaDescription:
     "Split a study block like a real paper: 15 min reading, a solving phase with checkpoints every 30 min, and a protected review buffer at the end.",
   steps: [

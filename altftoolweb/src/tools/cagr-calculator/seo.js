@@ -1,5 +1,5 @@
 const seo = {
-  title: "CAGR Calculator – Growth Rate, Multiple & Total Gain",
+  title: "CAGR Calculator: Annual Growth Rate & Total Gain",
   metaDescription:
     "Applies CAGR = (final/initial)^(1/years) − 1 to report the annual rate plus total growth, growth multiple and absolute gain. Negative CAGR supported.",
   intro:

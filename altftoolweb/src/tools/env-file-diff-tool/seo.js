@@ -1,5 +1,5 @@
 const seo = {
-  title: ".env File Diff: Missing, Extra and Changed Variables",
+  title: ".env Diff: Missing, Extra & Changed Variables",
   metaDescription:
     "Paste two .env files to see every variable only in A, only in B, or changed — compared after dotenv parsing, so FOO=bar equals FOO=\"bar\". Runs locally.",
   steps: [

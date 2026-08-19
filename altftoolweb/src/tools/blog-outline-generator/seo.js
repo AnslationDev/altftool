@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blog Outline Generator: Markdown H1, Sections, FAQ",
+  title: "Blog Outline Generator: Markdown Headings & FAQ",
   metaDescription:
     "Turns a topic into 6-12 markdown headings: an H1, an intro, 2 to 8 body sections from a fixed angle order, then a conclusion and an FAQ. No AI.",
   intro:

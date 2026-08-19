@@ -1,5 +1,5 @@
 const seo = {
-  title: "Binary Learning Tool — Converter, Bit Values & Quiz",
+  title: "Binary Learning Tool: Converter, Bits & Quiz",
   metaDescription:
     "Convert decimal to binary (padded to 8 bits) and back, see each bit over its 128–1 place value, then quiz yourself on random numbers from 0 to 255.",
   intro:

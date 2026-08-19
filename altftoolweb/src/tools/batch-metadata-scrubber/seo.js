@@ -1,5 +1,5 @@
 const seo = {
-  title: "EXIF and GPS Remover: Re-encode Photos to Clean PNG",
+  title: "EXIF & GPS Remover: Re-encode Photos to Clean PNG",
   metaDescription:
     "Strip EXIF, GPS and camera tags by redrawing the photo through a canvas in your browser; the download is a clean PNG with dimensions reported.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Carpool Rotation Scheduler with Fair Turn Counting",
+  title: "Carpool Rotation Scheduler: Fair Turn Counting",
   metaDescription:
     "Each trip date goes to the eligible driver with the fewest turns so far, ties broken by seats then name, and every row is checked against the group size.",
   steps: [

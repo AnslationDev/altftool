@@ -1,5 +1,5 @@
 const seo = {
-  title: "Clothing Size Converter: US, UK, EU & Body Measures",
+  title: "Clothing Size Converter: US, UK and EU Sizes",
   metaDescription:
     "Convert women's, men's and kids' sizes across US, UK, EU and XS-XXL with the bust, waist, hip or foot length behind each row, plus inches to cm at 2.54.",
   intro:

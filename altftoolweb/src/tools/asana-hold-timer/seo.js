@@ -1,5 +1,5 @@
 const seo = {
-  title: "Asana Hold Timer – Yoga Poses in Breaths & Seconds",
+  title: "Asana Hold Timer: Yoga Poses in Breaths & Seconds",
   metaDescription:
     "Build a pose sequence, set seconds per breath, and get holds, breath counts and total practice time — two-sided poses expand into right and left holds.",
   steps: [
