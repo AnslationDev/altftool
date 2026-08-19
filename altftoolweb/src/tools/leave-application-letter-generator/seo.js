@@ -1,5 +1,5 @@
 const seo = {
-  title: "Leave Application Letter for School or Work",
+  title: "Leave Application Letter Generator: School/Work",
   metaDescription:
     "Builds the receiver block, subject line, salutation and close for school, college or office leave, days counted inclusively, with a format checklist.",
   steps: [

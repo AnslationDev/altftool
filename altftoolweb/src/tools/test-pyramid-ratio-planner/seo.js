@@ -1,5 +1,5 @@
 const seo = {
-  title: "Test Pyramid Planner: Runtime, CI Cost, Flakes",
+  title: "Test Pyramid Ratio Planner: Runtime, Cost, Flakes",
   metaDescription:
     "Split a suite across unit, integration and E2E to see wall-clock per run, billed CI minutes, monthly spend and the odds a run fails on flakes.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Real Estate KYC Retention Register: 5-Year PMLA",
+  title: "Real Estate KYC Register: 5-Year PMLA Rule",
   metaDescription:
     "Turn a broker's client documents into a dated retention register: five-year PMLA keep-until dates, purpose-limitation deletes, unmasked Aadhaar flagged.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Canada Visa Refusal Reasons: IRCC Checkboxes",
+  title: "Canada Visa Refusal Explainer: IRCC Checkboxes",
   metaDescription:
     "Maps the ticked boxes on an IRCC refusal letter to the IRPR provision behind each, s.179(b) or 216(1)(b), with a fix checklist and readiness score.",
   steps: [

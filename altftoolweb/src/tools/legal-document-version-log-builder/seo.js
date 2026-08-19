@@ -1,5 +1,5 @@
 const seo = {
-  title: "Legal Document Version Log & Revision History",
+  title: "Legal Document Version Log Builder",
   metaDescription:
     "Build a contract revision history on the 0.1/1.0 draft convention: dates, authors, reviewers and changes, with turnaround days measured between rounds.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Induction vs LPG Calculator: Break-Even Tariff",
+  title: "Induction vs LPG Cost Calculator—Breakeven Tariff",
   metaDescription:
     "Compare monthly cooking cost of an induction hob vs an LPG cylinder on useful heat — 85% vs 68% efficiency — and get the break-even electricity tariff.",
   steps: [

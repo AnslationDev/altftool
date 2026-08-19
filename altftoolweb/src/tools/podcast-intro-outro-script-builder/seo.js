@@ -1,5 +1,5 @@
 const seo = {
-  title: "Podcast Intro & Outro Scripts with Read Times",
+  title: "Podcast Intro & Outro Script Builder: Read Times",
   metaDescription:
     "Build a repeatable intro (hook, show ID, promise, sponsor) and outro, with word count and read time per section at 125, 145 or 165 wpm.",
   steps: [

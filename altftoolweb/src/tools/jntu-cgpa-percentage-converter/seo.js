@@ -1,5 +1,5 @@
 const seo = {
-  title: "JNTU CGPA to Percentage: (CGPA − 0.75) × 10",
+  title: "JNTU CGPA to Percentage Converter: (CGPA−0.75)×10",
   metaDescription:
     "Convert JNTUH, JNTUK or JNTUA CGPA using the notified (CGPA − 0.75) × 10 rule — 8.5 becomes 77.5% — with class bands and an SGPA-to-CGPA combiner.",
   steps: [

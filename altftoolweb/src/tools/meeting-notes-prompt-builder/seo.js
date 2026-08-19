@@ -1,5 +1,5 @@
 const seo = {
-  title: "Meeting Notes Prompt That Counts Missing Owners",
+  title: "Meeting Notes Prompt Builder: Missing Owners",
   metaDescription:
     "Paste raw notes: lines are sorted into decision, commitment or open question, owner and date gaps are counted, and the prompt forbids inventing them.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Smartphone Resale Value Estimator by Age",
+  title: "Smartphone Resale Value: Age & Condition",
   metaDescription:
     "Estimate a used phone's worth from launch price, months of age, grade, storage and demand — with instant trade-in and patient private-sale figures.",
   steps: [

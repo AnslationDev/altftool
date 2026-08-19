@@ -1,5 +1,5 @@
 const seo = {
-  title: "Italy Etiquette: ZTL Fines, Coperto, Churches",
+  title: "Italy Etiquette Guide: ZTL, Coperto, Churches",
   metaDescription:
     "Tick where you'll be and get a ranked briefing: ZTL camera zones, regional ticket validation, church dress code and coperto, with a readiness score.",
   steps: [
