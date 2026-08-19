@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PlaneTakeoff, RotateCcw } from "lucide-react";
 
 import {
@@ -13,6 +13,8 @@ import {
   computeArrivalPlan,
   formatClock,
   formatDuration,
+  parseClock,
+  suggestTrafficLevel,
 } from "../lib";
 
 const INPUT_CLASS =
@@ -24,7 +26,11 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const dayLabel = (offset) => (offset < 0 ? " (previous day)" : "");
+const dayLabel = (offset) => {
+  if (offset >= 0) return "";
+  const days = Math.abs(offset);
+  return days === 1 ? " (previous day)" : ` (${days} days earlier)`;
+};
 
 export default function ToolHome() {
   const [departureTime, setDepartureTime] = useState(DEFAULTS.departureTime);
@@ -37,6 +43,9 @@ export default function ToolHome() {
   const [parkingMinutes, setParkingMinutes] = useState(String(DEFAULTS.parkingMinutes));
   const [personalBufferMinutes, setPersonalBufferMinutes] = useState(String(DEFAULTS.personalBufferMinutes));
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const plan = useMemo(
     () =>
@@ -55,6 +64,26 @@ export default function ToolHome() {
 
   const failed = Boolean(plan.error);
 
+  // Suggests a road-conditions level from roughly when the drive itself would
+  // start (departure minus the plan's actual terminal lead time, minus parking
+  // and driving) - independent of the traffic level itself so it never loops
+  // back on its own answer. Uses plan.terminalLeadMinutes (which already
+  // accounts for the airport's advice, check-in cut-off and the driver's own
+  // queue/buffer estimates, whichever is largest) rather than the airport's
+  // flat recommended lead, so the hint stays in sync with the actual plan even
+  // when the process estimates exceed the airport's published advice. Shown as
+  // a hint only; it never overrides the driver's own choice.
+  const suggestedTrafficId = useMemo(() => {
+    if (failed) return null;
+    const departure = parseClock(departureTime);
+    const drive = driveMinutes.trim() === "" ? NaN : Number(driveMinutes);
+    const parking = parkingMinutes.trim() === "" ? NaN : Number(parkingMinutes);
+    if (departure === null || !Number.isFinite(drive) || !Number.isFinite(parking)) return null;
+    const approxDriveStartMinutes = departure - plan.terminalLeadMinutes - parking - drive;
+    return suggestTrafficLevel(approxDriveStartMinutes);
+  }, [failed, departureTime, driveMinutes, parkingMinutes, plan]);
+  const suggestedTraffic = suggestedTrafficId ? TRAFFIC_LEVELS.find((item) => item.id === suggestedTrafficId) : null;
+
   const summary = useMemo(() => {
     if (failed) return "";
     return [
@@ -62,7 +91,7 @@ export default function ToolHome() {
       `Flight departs: ${formatClock(plan.departureMinutes)}`,
       `Leave home by: ${formatClock(plan.leaveByMinutes)}${dayLabel(plan.leaveByDayOffset)}`,
       `Be at the terminal by: ${formatClock(plan.arriveTerminalMinutes)}${dayLabel(plan.arriveTerminalDayOffset)}`,
-      `Bag drop closes: ${formatClock(plan.checkInCloseMinutes)}`,
+      plan.hasBags ? `Bag drop closes: ${formatClock(plan.checkInCloseMinutes)}` : "Bag drop: Not needed",
       `Boarding gate closes: ${formatClock(plan.gateCloseMinutes)}`,
       `Road time with traffic: ${formatDuration(plan.roadMinutes)}`,
       `Time inside the terminal: ${formatDuration(plan.terminalLeadMinutes)}`,
@@ -86,7 +115,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -221,6 +251,11 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+            {suggestedTraffic && suggestedTraffic.id !== trafficId && (
+              <p className={HINT_CLASS}>
+                Suggested for roughly when you would leave: {suggestedTraffic.label}.
+              </p>
+            )}
           </div>
 
           <div>
@@ -286,7 +321,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

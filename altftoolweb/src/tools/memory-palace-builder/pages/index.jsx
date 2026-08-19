@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import {
   Building2,
   Plus,
@@ -100,14 +100,46 @@ function EmptyState({ icon: Icon, title, description, action, onAction }) {
 }
 
 function Modal({ open, onClose, title, children }) {
+  const dialogRef = useRef(null);
+
   useEffect(() => {
-    if (open) {
-      const handler = (e) => {
-        if (e.key === "Escape") onClose();
-      };
-      window.addEventListener("keydown", handler);
-      return () => window.removeEventListener("keydown", handler);
-    }
+    if (!open) return;
+
+    const previouslyFocused = document.activeElement;
+    const dialogNode = dialogRef.current;
+    const firstFocusable = dialogNode?.querySelector(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    firstFocusable?.focus();
+
+    const handler = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && dialogNode) {
+        const focusable = Array.from(
+          dialogNode.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.disabled);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => {
+      window.removeEventListener("keydown", handler);
+      previouslyFocused?.focus?.();
+    };
   }, [open, onClose]);
 
   if (!open) return null;
@@ -120,7 +152,7 @@ function Modal({ open, onClose, title, children }) {
       aria-label={title}
     >
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
+      <div ref={dialogRef} className="relative w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-[var(--foreground)]">{title}</h2>
           <button
@@ -242,6 +274,7 @@ export default function MemoryPalaceBuilder() {
   }
 
   function handleDeletePalace(id) {
+    if (!window.confirm("Delete this palace and all its rooms/items? This cannot be undone.")) return;
     persist((d) => {
       d.palaces = d.palaces.filter((p) => p.id !== id);
     });
@@ -282,6 +315,7 @@ export default function MemoryPalaceBuilder() {
   }
 
   function handleDeleteRoom(palaceId, roomId) {
+    if (!window.confirm("Delete this room and all its items? This cannot be undone.")) return;
     persist((d) => {
       const p = d.palaces.find((x) => x.id === palaceId);
       if (p) p.rooms = p.rooms.filter((r) => r.id !== roomId);
@@ -334,6 +368,7 @@ export default function MemoryPalaceBuilder() {
   }
 
   function handleDeleteItem(palaceId, roomId, itemId) {
+    if (!window.confirm("Delete this item? This cannot be undone.")) return;
     persist((d) => {
       const p = d.palaces.find((x) => x.id === palaceId);
       if (!p) return;
@@ -466,6 +501,10 @@ export default function MemoryPalaceBuilder() {
             onPrev={prevReviewItem}
             onNext={nextReviewItem}
             onExit={stopReview}
+            onJump={(idx) => {
+              setReviewStep(idx);
+              setReviewRevealed(false);
+            }}
           />
         ) : (
           <>
@@ -1058,7 +1097,7 @@ function PalaceView({
   );
 }
 
-function ReviewView({ palace, items, step, revealed, onReveal, onPrev, onNext, onExit }) {
+function ReviewView({ palace, items, step, revealed, onReveal, onPrev, onNext, onExit, onJump }) {
   const item = items[step];
   const progress = items.length > 0 ? ((step + 1) / items.length) * 100 : 0;
 
@@ -1113,7 +1152,11 @@ function ReviewView({ palace, items, step, revealed, onReveal, onPrev, onNext, o
       </section>
 
       {item ? (
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm sm:p-8">
+        <div
+          className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm sm:p-8"
+          role="status"
+          aria-live="polite"
+        >
           <div className="mb-2 flex items-center gap-2">
             <span className="rounded-full bg-[var(--muted)] px-2.5 py-0.5 text-xs font-semibold text-[var(--primary)]">
               {item.roomName}
@@ -1203,10 +1246,8 @@ function ReviewView({ palace, items, step, revealed, onReveal, onPrev, onNext, o
             {items.map((i, idx) => (
               <button
                 key={idx}
-                onClick={() => {
-                  // allow jumping directly — but we keep it simple: step click
-                  // handled below via simulation
-                }}
+                onClick={() => onJump(idx)}
+                aria-label={`Jump to item ${idx + 1}`}
                 className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
                   idx === step
                     ? "bg-[var(--primary)] text-[var(--primary-foreground)]"

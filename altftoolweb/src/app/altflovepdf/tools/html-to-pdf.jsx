@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Upload, X, Check, AlertCircle, FileCode, Eye } from "lucide-react";
+import DOMPurify from "dompurify";
 
 export default function HtmlToPdf() {
   const [file, setFile] = useState(null);
@@ -159,6 +160,23 @@ export default function HtmlToPdf() {
         `;
       }
 
+      // SECURITY: this is fully untrusted, user-supplied HTML (pasted or
+      // uploaded). Sanitize it with DOMPurify BEFORE it ever touches the
+      // DOM. This is the primary defense — the iframe `sandbox` attribute
+      // below is defense-in-depth only, because html2pdf.js's own
+      // toContainer() step deep-clones the rendered content and re-inserts
+      // that clone directly into the TOP-LEVEL page's document.body before
+      // handing it to html2canvas, which bypasses any source-iframe
+      // sandboxing entirely. DOMPurify strips <script> tags, javascript:
+      // URLs, and every on*="" event-handler attribute (onerror, onload,
+      // onclick, ...), so no executable payload survives into either the
+      // iframe or html2pdf's later clone.
+      const sanitizedHtml = DOMPurify.sanitize(fullHtml, {
+        WHOLE_DOCUMENT: true,
+        FORCE_BODY: true,
+        FORBID_TAGS: ["script"],
+      });
+
       iframe = document.createElement("iframe");
       iframe.style.position = "fixed";
       iframe.style.left = "-10000px";
@@ -168,6 +186,13 @@ export default function HtmlToPdf() {
       iframe.style.border = "0";
       iframe.style.background = "#ffffff";
       iframe.style.visibility = "visible";
+      // Defense-in-depth: `allow-same-origin` (without `allow-scripts`)
+      // keeps the iframe's document same-origin so we can still read its
+      // DOM for html2canvas/html2pdf, while the sandbox disables ALL
+      // script execution inside it. Never add `allow-scripts` here — that
+      // combination would let any script reach window.parent with full
+      // same-origin access to this page's cookies/localStorage.
+      iframe.setAttribute("sandbox", "allow-same-origin");
 
       document.body.appendChild(iframe);
 
@@ -177,7 +202,7 @@ export default function HtmlToPdf() {
         iframe.onload = resolve;
         iframe.onerror = reject;
         iframeDoc.open();
-        iframeDoc.write(fullHtml);
+        iframeDoc.write(sanitizedHtml);
         iframeDoc.close();
       });
 
@@ -565,7 +590,7 @@ export default function HtmlToPdf() {
               width: "100%",
               maxWidth: "1000px",
               height: "90%",
-              background: "#ffffff",
+              background: "var(--surface)",
               borderRadius: "12px",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
               display: "flex",
@@ -606,7 +631,7 @@ export default function HtmlToPdf() {
               </button>
             </div>
             {/* PDF Embed / Iframe */}
-            <div style={{ flex: 1, position: "relative", background: "#f1f5f9" }}>
+            <div style={{ flex: 1, position: "relative", background: "var(--warm)" }}>
               <iframe
                 src={`${result.url}#toolbar=1`}
                 title="PDF Preview"

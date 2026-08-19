@@ -57,7 +57,13 @@ export const MAX_REQUESTS_PER_MONTH = 1_000_000_000;
  * tier applies; null means the model has a single flat tier.
  * Treat these as starting points and confirm against Google's pricing page.
  */
-export const GEMINI_MODELS = [
+/**
+ * Base published rates. `cachedInputPerMTok`/`longCachedInputPerMTok` are
+ * intentionally omitted here and derived below from `inputPerMTok` /
+ * `longInputPerMTok` via CACHE_DISCOUNT_FACTOR, so the constant stays
+ * load-bearing instead of being duplicated by hand.
+ */
+const GEMINI_MODEL_BASE_RATES = [
   {
     id: "gemini-2.5-pro",
     label: "Gemini 2.5 Pro",
@@ -66,8 +72,6 @@ export const GEMINI_MODELS = [
     longInputPerMTok: 2.5,
     outputPerMTok: 10,
     longOutputPerMTok: 15,
-    cachedInputPerMTok: 0.3125,
-    longCachedInputPerMTok: 0.625,
     audioInputPerMTok: 1.25,
     cacheStoragePerMTokHour: 4.5,
   },
@@ -79,8 +83,6 @@ export const GEMINI_MODELS = [
     longInputPerMTok: 0.3,
     outputPerMTok: 2.5,
     longOutputPerMTok: 2.5,
-    cachedInputPerMTok: 0.075,
-    longCachedInputPerMTok: 0.075,
     audioInputPerMTok: 1,
     cacheStoragePerMTokHour: 1,
   },
@@ -92,8 +94,6 @@ export const GEMINI_MODELS = [
     longInputPerMTok: 0.1,
     outputPerMTok: 0.4,
     longOutputPerMTok: 0.4,
-    cachedInputPerMTok: 0.025,
-    longCachedInputPerMTok: 0.025,
     audioInputPerMTok: 0.3,
     cacheStoragePerMTokHour: 1,
   },
@@ -105,8 +105,6 @@ export const GEMINI_MODELS = [
     longInputPerMTok: 0.1,
     outputPerMTok: 0.4,
     longOutputPerMTok: 0.4,
-    cachedInputPerMTok: 0.025,
-    longCachedInputPerMTok: 0.025,
     audioInputPerMTok: 0.7,
     cacheStoragePerMTokHour: 1,
   },
@@ -118,12 +116,16 @@ export const GEMINI_MODELS = [
     longInputPerMTok: 0.075,
     outputPerMTok: 0.3,
     longOutputPerMTok: 0.3,
-    cachedInputPerMTok: 0.01875,
-    longCachedInputPerMTok: 0.01875,
     audioInputPerMTok: 0.075,
     cacheStoragePerMTokHour: 1,
   },
 ];
+
+export const GEMINI_MODELS = GEMINI_MODEL_BASE_RATES.map((model) => ({
+  ...model,
+  cachedInputPerMTok: model.inputPerMTok * CACHE_DISCOUNT_FACTOR,
+  longCachedInputPerMTok: model.longInputPerMTok * CACHE_DISCOUNT_FACTOR,
+}));
 
 export function getGeminiModel(id) {
   return GEMINI_MODELS.find((model) => model.id === id) || GEMINI_MODELS[0];
@@ -199,9 +201,14 @@ export function computeGeminiCost({
     "cachedInputPerMTok",
     "longCachedInputPerMTok",
     "audioInputPerMTok",
+    "cacheStoragePerMTokHour",
   ];
   if (rateKeys.some((key) => !isNum(pricing[key]) || pricing[key] < 0)) {
     return { error: "Per-million-token rates must be zero or a positive number." };
+  }
+
+  if (images > 0 && tilesPerImage <= 0) {
+    return { error: "Tiles per image must be at least 1 when images are counted." };
   }
 
   const imgTokens = imageTokens(images, tilesPerImage);

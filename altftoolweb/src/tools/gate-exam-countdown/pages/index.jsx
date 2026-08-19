@@ -265,14 +265,22 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               GATE {ok ? `on ${examDate}` : "countdown"}
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {ok ? `${NUM0.format(plan.daysToExam)} days` : DASH}
+              {ok
+                ? count.isPast
+                  ? `${NUM0.format(Math.abs(plan.daysToExam))} days ago`
+                  : `${NUM0.format(plan.daysToExam)} days`
+                : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok

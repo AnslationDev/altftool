@@ -211,7 +211,9 @@ export function generateSeasonalPalette({ seasonId = "winterHoliday", hueShift =
   const shift = Number(hueShift);
   const step = Number(variation);
   if (!Number.isFinite(shift)) return { error: "Hue shift must be a number of degrees." };
-  if (!Number.isFinite(step) || step < 0) return { error: "Variation must be zero or a positive whole number." };
+  if (!Number.isInteger(step) || step < 0 || step > MAX_VARIATION) {
+    return { error: `Variation must be a whole number from 0 to ${MAX_VARIATION}.` };
+  }
 
   const v = Math.round(step) % (MAX_VARIATION + 1);
   const hueNudge = v * 9;

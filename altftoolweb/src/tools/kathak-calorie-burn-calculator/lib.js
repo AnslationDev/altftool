@@ -165,11 +165,22 @@ export function computeKathakBurn({
     .filter((row) => row.footwork)
     .reduce((sum, row) => sum + row.minutes, 0);
 
-  // Same session with no ghungroo, to isolate what the bells cost.
+  // Same session with no ghungroo, to isolate what the bells cost. Rounded
+  // per-row before summing, matching how grossKcal is built above, so that
+  // when ghungroo is 0 kg the two totals are computed identically and cancel
+  // to exactly 0 rather than differing by leftover rounding error.
   const withoutGhungroo = rows.reduce(
-    (sum, row) => sum + metToKcalPerMinute(row.met, weightKg) * row.minutes,
+    (sum, row) => sum + round(metToKcalPerMinute(row.met, weightKg) * row.minutes),
     0,
   );
+
+  // True weighted-average MET across the session, weighted by minutes and
+  // taken from each segment's own defined MET value (not derived from kcal
+  // totals, which mix different body masses and rounding stages and can
+  // push the "average" outside the session's actual MET range).
+  const averageMet = totalMinutes > 0
+    ? rows.reduce((sum, row) => sum + row.met * row.minutes, 0) / totalMinutes
+    : 0;
 
   return {
     weightKg: round(weightKg, 1),
@@ -182,7 +193,7 @@ export function computeKathakBurn({
     restingKcal: round(restingKcal),
     netKcal: round(netKcal),
     ghungrooExtraKcal: round(grossKcal - withoutGhungroo),
-    averageMet: round(grossKcal / (metToKcalPerMinute(RESTING_MET, weightKg) * totalMinutes), 2),
+    averageMet: round(averageMet, 2),
     kcalPerHour: round((grossKcal / totalMinutes) * 60),
     fatGramsEquivalent: round((netKcal / KCAL_PER_KG_BODY_FAT) * 1000, 1),
   };

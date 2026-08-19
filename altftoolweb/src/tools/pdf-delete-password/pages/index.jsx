@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { KeyRound, Upload, CheckCircle2, AlertCircle, Loader2, Info, Lock } from "lucide-react";
+import { decryptPDF } from "@pdfsmaller/pdf-decrypt";
 
 export default function ToolHome() {
   const [file, setFile] = useState(null);
@@ -10,34 +11,42 @@ export default function ToolHome() {
   const [message, setMessage] = useState("");
   const [resultUrl, setResultUrl] = useState(null);
 
+  // Revoke the blob URL on unmount so we don't leak it.
+  useEffect(() => {
+    return () => {
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+    };
+  }, [resultUrl]);
+
   const handleFile = useCallback((e) => {
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.type !== "application/pdf") { setMessage("Please select a valid PDF file."); setStatus("error"); return; }
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
     setFile(f);
     setStatus("idle");
     setMessage("");
     setResultUrl(null);
-  }, []);
+  }, [resultUrl]);
 
   const handleRemove = useCallback(async () => {
     if (!file || !password) return;
     setStatus("loading");
     setMessage("Processing PDF...");
     try {
-      // Client-side: attempt to read using the password — requires pdf-lib for real decryption
-      // We show the file for download as a placeholder (real removal needs backend or pdf-lib)
       const arrayBuffer = await file.arrayBuffer();
-      const blob = new Blob([arrayBuffer], { type: "application/pdf" });
+      const decryptedBytes = await decryptPDF(new Uint8Array(arrayBuffer), password);
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+      const blob = new Blob([decryptedBytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       setResultUrl(url);
       setStatus("done");
       setMessage("Password removed successfully. Download your unlocked PDF.");
     } catch (err) {
       setStatus("error");
-      setMessage("Failed to remove password: " + err.message);
+      setMessage("Failed to remove password: " + (err?.message || "Unknown error."));
     }
-  }, [file, password]);
+  }, [file, password, resultUrl]);
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
@@ -80,10 +89,10 @@ export default function ToolHome() {
 
         {/* Password Input */}
         <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
-          <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Current PDF Password</label>
+          <label htmlFor="pdf-password" className="text-xs font-medium text-muted-foreground mb-1.5 block">Current PDF Password</label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+            <input id="pdf-password" type="password" value={password} onChange={e => setPassword(e.target.value)}
               placeholder="Enter current password..."
               className="w-full rounded-lg border border-border bg-background pl-9 pr-4 py-2.5 text-sm font-mono text-foreground outline-none focus:border-primary" />
           </div>
@@ -95,7 +104,7 @@ export default function ToolHome() {
         </button>
 
         {status === "done" && resultUrl && (
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex items-center justify-between gap-3">
+          <div role="status" aria-live="polite" className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
               <p className="text-sm font-semibold text-foreground">Password removed successfully</p>
@@ -107,7 +116,7 @@ export default function ToolHome() {
           </div>
         )}
         {status === "error" && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-center gap-3">
+          <div role="alert" aria-live="assertive" className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex items-center gap-3">
             <AlertCircle className="h-5 w-5 text-red-500 shrink-0" />
             <p className="text-sm text-red-500">{message}</p>
           </div>

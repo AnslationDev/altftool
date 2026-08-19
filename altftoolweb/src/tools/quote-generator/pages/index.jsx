@@ -47,6 +47,7 @@ export default function ToolHome() {
   const [toasts, setToasts] = useState([]);
 
   const quoteRef = useRef(null);
+  const toastTimersRef = useRef([]);
 
   // Load favorites on mount
   useEffect(() => {
@@ -58,12 +59,23 @@ export default function ToolHome() {
     }
   }, []);
 
+  // Clear any pending toast-dismissal timers on unmount so they never call
+  // setState after the component is gone.
+  useEffect(() => {
+    return () => {
+      toastTimersRef.current.forEach(clearTimeout);
+      toastTimersRef.current = [];
+    };
+  }, []);
+
   const addToast = (message, tone = "info") => {
     const id = Date.now().toString();
     setToasts(prev => [...prev, { id, message, tone }]);
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
+      toastTimersRef.current = toastTimersRef.current.filter((t) => t !== timerId);
     }, 3000);
+    toastTimersRef.current.push(timerId);
   };
 
   // Core generate — reads from refs so it's always fresh, never stale
@@ -79,6 +91,19 @@ export default function ToolHome() {
     setHistory(newHistory);
     setHistoryIndex(newIndex);
     setCurrentQuote(newQuote);
+  };
+
+  // Push an externally-selected quote (search result or favorite) onto history,
+  // mirroring generateAndPush's history-push logic so Previous/Next stay in sync
+  // with whatever is actually on screen.
+  const selectQuote = (quote) => {
+    const truncated = historyRef.current.slice(0, historyIndexRef.current + 1);
+    const newHistory = [...truncated, quote];
+    const newIndex = newHistory.length - 1;
+
+    setHistory(newHistory);
+    setHistoryIndex(newIndex);
+    setCurrentQuote(quote);
   };
 
   const handlePreviousQuote = () => {
@@ -118,7 +143,7 @@ export default function ToolHome() {
       const results = searchQuotes(val);
       if (results.length > 0) {
         const found = results.find(q => q.id !== currentQuoteRef.current?.id) || results[0];
-        setCurrentQuote(found);
+        selectQuote(found);
       }
     }
   };
@@ -241,7 +266,7 @@ export default function ToolHome() {
 
         {/* Toolbar */}
         <Toolbar
-          onGenerate={generateAndPush}
+          onGenerate={() => generateAndPush()}
           onPrevious={handlePreviousQuote}
           onNext={handleNextQuote}
           canGoPrevious={historyIndex > 0}
@@ -274,7 +299,7 @@ export default function ToolHome() {
         favorites={favorites}
         onRemoveFavorite={removeFavorite}
         onSelectQuote={(quote) => {
-          setCurrentQuote(quote);
+          selectQuote(quote);
           setIsFavoritesModalOpen(false);
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}

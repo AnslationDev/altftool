@@ -196,12 +196,13 @@ export function planThyroidTiming({ mode = "morning", doseMinutes, lastMealMinut
       itemLabel: formatClockTime(lastMealMinutes),
       requiredGap: BEDTIME_FASTING_GAP,
       actualGap: gap,
-      // A gap over 12 h means the meal is really after the dose, not before it.
-      ok: gap >= BEDTIME_FASTING_GAP && gap <= 720,
+      // Any gap at or above the fasting minimum is fine; a longer wait is
+      // never itself an absorption problem, so there is no upper bound here.
+      ok: gap >= BEDTIME_FASTING_GAP,
       shortfall: Math.max(0, BEDTIME_FASTING_GAP - gap),
       direction: "before",
       suggestion:
-        gap >= BEDTIME_FASTING_GAP && gap <= 720
+        gap >= BEDTIME_FASTING_GAP
           ? null
           : `Take the tablet at ${formatClockTime(lastMealMinutes + BEDTIME_FASTING_GAP)} or later, or finish eating by ${formatClockTime(doseMinutes - BEDTIME_FASTING_GAP)}.`,
     });
@@ -217,7 +218,9 @@ export function planThyroidTiming({ mode = "morning", doseMinutes, lastMealMinut
 
     if (item.direction === "after") {
       const gap = forwardGap(doseMinutes, at);
-      const ok = gap >= item.gap && gap <= 720;
+      // Any gap at or above the required minimum is fine; a longer wait is
+      // never itself an absorption problem, so there is no upper bound here.
+      const ok = gap >= item.gap;
       checks.push({
         key: item.key,
         label: item.label,
@@ -292,7 +295,10 @@ export function planThyroidTiming({ mode = "morning", doseMinutes, lastMealMinut
     clearCount: checks.length - failures.length,
     failures,
     warnings,
-    allClear: failures.length === 0,
+    // Only claim a clean bill of timing if something was actually checked;
+    // with every optional field left blank, checks is empty and there is
+    // nothing to report as "clear".
+    allClear: checks.length > 0 && failures.length === 0,
     worstShortfall: failures.reduce((max, check) => Math.max(max, check.shortfall), 0),
     recommendedDoseMinutes,
     recommendedDoseLabel:

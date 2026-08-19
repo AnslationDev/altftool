@@ -7,9 +7,6 @@
  *    Rs 40 lakh for normal category states while leaving services at Rs 20 lakh.
  *    Special category states use Rs 20 lakh (goods) and Rs 10 lakh (services).
  *  - Compulsory registration irrespective of turnover: section 24 of the CGST Act.
- *  - Composition scheme limits: section 10 of the CGST Act (Rs 1.5 crore, Rs 75
- *    lakh in specified states) and Notification 2/2019-Central Tax (Rate) for
- *    the Rs 50 lakh service-provider option.
  *  - Return due dates: rules 59, 61 and 80 of the CGST Rules.
  *
  * Nothing in this file is tax advice. It reproduces published thresholds and
@@ -25,16 +22,6 @@ export const THRESHOLD_SERVICES_NORMAL = 2000000; // Rs 20 lakh
 export const THRESHOLD_GOODS_SPECIAL = 2000000; // Rs 20 lakh
 /** Section 22 threshold: services, special category states. */
 export const THRESHOLD_SERVICES_SPECIAL = 1000000; // Rs 10 lakh
-
-/** Section 10 composition turnover limit for goods and restaurants. */
-export const COMPOSITION_LIMIT_NORMAL = 15000000; // Rs 1.5 crore
-/** Section 10 composition turnover limit in specified states. */
-export const COMPOSITION_LIMIT_SPECIAL = 7500000; // Rs 75 lakh
-/** Notification 2/2019 composition-style option for service providers. */
-export const COMPOSITION_LIMIT_SERVICES = 5000000; // Rs 50 lakh
-
-/** E-way bill is required once consignment value crosses this figure (rule 138). */
-export const EWAY_BILL_THRESHOLD = 50000; // Rs 50,000
 
 /**
  * States and union territories treated as special category for the section 22

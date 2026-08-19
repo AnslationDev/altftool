@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Copy, ExternalLink, Link as LinkIcon, Check, RefreshCw, Trash2 } from 'lucide-react';
 import { Button } from '@/shared/ui/Button';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
@@ -15,6 +15,8 @@ export default function ToolHome() {
   const [recentUrls, setRecentUrls] = useState([]);
   const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
   const abortControllerRef = useRef(null);
+
+  useEffect(() => () => abortControllerRef.current?.abort(), []);
 
   const normalizeUrl = (url) => {
     const trimmed = url.trim();

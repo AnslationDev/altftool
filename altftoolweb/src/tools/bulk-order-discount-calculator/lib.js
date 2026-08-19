@@ -213,28 +213,3 @@ export function priceBulkOrder({
     cheaperUpgrade,
   };
 }
-
-/**
- * Compare a set of candidate order quantities on landed cost per unit.
- * Handy for choosing between "what we need" and "what gets the better rate".
- */
-export function compareQuantities({ quantities = [], ...options }) {
-  if (!Array.isArray(quantities) || quantities.length === 0) {
-    return { error: "Give at least one quantity to compare." };
-  }
-  const rows = [];
-  for (const quantity of quantities) {
-    const priced = priceBulkOrder({ ...options, quantity });
-    if (priced.error) return { error: priced.error };
-    rows.push({
-      quantity,
-      total: priced.total,
-      goodsValue: priced.goodsValue,
-      effectiveUnitPriceLanded: priced.effectiveUnitPriceLanded,
-    });
-  }
-  const best = rows.reduce((low, row) =>
-    row.effectiveUnitPriceLanded < low.effectiveUnitPriceLanded ? row : low,
-  );
-  return { rows, bestQuantity: best.quantity };
-}

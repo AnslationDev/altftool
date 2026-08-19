@@ -23,25 +23,41 @@ export default function ToolHome() {
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   const generateNames = () => {
-    const result = [];
     const words = industry !== "general" ? INDUSTRY_WORDS[industry] || [] : [];
     const allWords = [...PREFIXES, ...words];
     const allSuffixes = [...SUFFIXES, ...MODIFIERS];
 
-    for (let i = 0; i < count; i++) {
+    const makeName = () => {
       const prefix = allWords[Math.floor(Math.random() * allWords.length)];
       const suffix = allSuffixes[Math.floor(Math.random() * allSuffixes.length)];
 
       if (style === "modern") {
-        result.push(`${prefix}${suffix}`);
+        return `${prefix}${suffix}`;
       } else if (style === "classic") {
-        result.push(`${prefix} ${suffix}`);
+        return `${prefix} ${suffix}`;
       } else if (style === "prefixed") {
-        const p = PREFIXES[Math.floor(Math.random() * PREFIXES.length)];
-        result.push(`${p} ${prefix}`);
-      } else {
-        const m = MODIFIERS[Math.floor(Math.random() * MODIFIERS.length)];
-        result.push(`${prefix} ${m} ${suffix}`);
+        let p = PREFIXES[Math.floor(Math.random() * PREFIXES.length)];
+        let guard = 0;
+        while (p === prefix && PREFIXES.length > 1 && guard < 10) {
+          p = PREFIXES[Math.floor(Math.random() * PREFIXES.length)];
+          guard++;
+        }
+        return `${p} ${prefix}`;
+      }
+      const m = MODIFIERS[Math.floor(Math.random() * MODIFIERS.length)];
+      return `${prefix} ${m} ${suffix}`;
+    };
+
+    const result = [];
+    const seen = new Set();
+    const maxAttempts = count * 50;
+    let attempts = 0;
+    while (result.length < count && attempts < maxAttempts) {
+      const name = makeName();
+      attempts++;
+      if (!seen.has(name)) {
+        seen.add(name);
+        result.push(name);
       }
     }
     setNames(result);
@@ -54,9 +70,14 @@ export default function ToolHome() {
   };
 
   const copyName = (text, index) => {
-    navigator.clipboard.writeText(text);
-    setCopiedIndex(index);
-    setTimeout(() => setCopiedIndex(null), 1200);
+    if (!navigator.clipboard) return;
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 1200);
+      })
+      .catch(() => {});
   };
 
   return (
@@ -105,6 +126,7 @@ export default function ToolHome() {
                       <button
                         key={ind}
                         onClick={() => setIndustry(ind)}
+                        aria-pressed={industry === ind}
                         className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${
                           industry === ind
                             ? "bg-primary text-primary-foreground"
@@ -124,6 +146,7 @@ export default function ToolHome() {
                       <button
                         key={s}
                         onClick={() => setStyle(s)}
+                        aria-pressed={style === s}
                         className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${
                           style === s
                             ? "bg-primary text-primary-foreground"
@@ -137,8 +160,9 @@ export default function ToolHome() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-foreground uppercase tracking-wider">How Many? ({count})</label>
+                  <label htmlFor="bng-count" className="text-xs font-bold text-foreground uppercase tracking-wider">How Many? ({count})</label>
                   <input
+                    id="bng-count"
                     type="range"
                     min={1}
                     max={30}
@@ -166,43 +190,47 @@ export default function ToolHome() {
                 Suggested Names
               </h2>
 
-              {names.length > 0 ? (
-                <ul className="space-y-2">
-                  {names.map((name, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center justify-between px-4 py-3 bg-surface-soft rounded-lg border border-border group/item"
-                    >
-                      <span className="text-sm font-bold text-foreground">{name}</span>
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => toggleFavorite(name)}
-                          className="p-1.5 rounded-lg opacity-0 group-hover/item:opacity-100 transition hover:bg-surface-soft"
-                        >
-                          <Heart
-                            size={14}
-                            className={favorites.includes(name) ? "fill-red-500 text-red-500" : "text-muted-foreground"}
-                          />
-                        </button>
-                        <button
-                          onClick={() => copyName(name, index)}
-                          className="p-1.5 rounded-lg opacity-0 group-hover/item:opacity-100 transition border border-border bg-background hover:bg-primary/10"
-                        >
-                          {copiedIndex === index ? (
-                            <Check className="w-3.5 h-3.5 text-primary" />
-                          ) : (
-                            <Copy className="w-3.5 h-3.5 text-muted-foreground" />
-                          )}
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-muted-foreground text-xs text-center py-12">
-                  Configure options above and click "Generate Business Names" to get started.
-                </p>
-              )}
+              <div aria-live="polite" aria-atomic="true">
+                {names.length > 0 ? (
+                  <ul className="space-y-2">
+                    {names.map((name, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center justify-between px-4 py-3 bg-surface-soft rounded-lg border border-border group/item"
+                      >
+                        <span className="text-sm font-bold text-foreground">{name}</span>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => toggleFavorite(name)}
+                            aria-label={favorites.includes(name) ? `Remove ${name} from shortlist` : `Add ${name} to shortlist`}
+                            className="p-1.5 rounded-lg opacity-0 group-hover/item:opacity-100 focus-visible:opacity-100 transition hover:bg-surface-soft"
+                          >
+                            <Heart
+                              size={14}
+                              className={favorites.includes(name) ? "fill-red-500 text-red-500" : "text-muted-foreground"}
+                            />
+                          </button>
+                          <button
+                            onClick={() => copyName(name, index)}
+                            aria-label={`Copy ${name}`}
+                            className="p-1.5 rounded-lg opacity-0 group-hover/item:opacity-100 focus-visible:opacity-100 transition border border-border bg-background hover:bg-primary/10"
+                          >
+                            {copiedIndex === index ? (
+                              <Check className="w-3.5 h-3.5 text-primary" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                            )}
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-muted-foreground text-xs text-center py-12">
+                    Configure options above and click "Generate Business Names" to get started.
+                  </p>
+                )}
+              </div>
             </div>
 
             {favorites.length > 0 && (

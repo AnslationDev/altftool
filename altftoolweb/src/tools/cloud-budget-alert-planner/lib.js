@@ -95,9 +95,14 @@ export function planBudgetAlerts({ monthlyBudget, monthToDateSpend, dayOfMonth, 
     onTrack,
     projectedOverspend: round2(Math.max(0, forecast - budget)),
     remainingBudget: round2(Math.max(0, budget - spend)),
+    // Days left in the month after today to spend the remaining budget over.
+    remainingDays: Math.max(0, days - day),
     // Max average daily spend for the rest of the month that still lands on budget.
+    // When there are no remaining days (today is the last day), there is no "tomorrow"
+    // left to spend a daily rate over, so this is 0 rather than a misleading one-time
+    // lump sum labeled as a sustainable per-day rate.
     safeDailySpend:
-      day < days ? round2(Math.max(0, budget - spend) / (days - day)) : round2(Math.max(0, budget - spend)),
+      day < days ? round2(Math.max(0, budget - spend) / (days - day)) : 0,
     exhaustionDay,
     actualAlerts,
     forecastAlert,

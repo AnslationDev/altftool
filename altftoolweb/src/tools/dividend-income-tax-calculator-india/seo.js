@@ -8,7 +8,7 @@ const seo = {
     "\"Total tax on dividend income\" appears with rows for \"Interest deduction allowed (max 20%)\", Taxable dividend, \"Health and education cess at 4%\", \"TDS already deducted under section 194\" and Balance tax payable or Refund due, plus a \"TDS company by company\" table; Copy result copies it.",
   ],
   intro:
-    "This calculator works out the income tax a resident individual owes on dividends from Indian companies and mutual funds, which since the Finance Act 2020 are taxed at the shareholder's own slab rate as income from other sources under section 56(2)(i). It applies the only deduction the law allows — interest on money borrowed to buy the shares, capped at 20% of the dividend under the second proviso to section 57(1) — then credits the tax already withheld under section 194 and shows what is still payable. It is aimed at retail investors reconciling their Annual Information Statement before filing.",
+    "This calculator works out the income tax a resident individual owes on dividends from Indian companies and mutual funds, which since the Finance Act 2020 are taxed at the shareholder's own slab rate as income from other sources under section 56(2)(i) of the Income-tax Act, 1961 — provisions now carried forward under the Income-tax Act, 2025, which took effect 1 April 2026 for Tax Year 2026-27. It applies the only deduction the law allows — interest on money borrowed to buy the shares, capped at 20% of the dividend under the second proviso to section 57(1) — then credits the tax already withheld under section 194 and shows what is still payable. It is aimed at retail investors reconciling their Annual Information Statement before filing.",
   useCases: [
     "Check whether the 10% TDS your registrar deducted covers the tax due, or whether a 30%-slab investor still owes the balance.",
     "See how much of the interest on a loan-against-shares actually reduces dividend income once the 20% ceiling bites.",
@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "What is the TDS limit on dividend for FY 2025-26?",
-      "₹10,000 per company for the financial year. The Finance Act 2025 raised the section 194 threshold from ₹5,000 to ₹10,000 with effect from 1 April 2025, and the rate stays at 10% where PAN is on record, or 20% under section 206AA if it is not.",
+      "₹10,000 per company for the financial year. The Finance Act 2025 raised the section 194 threshold from ₹5,000 to ₹10,000 with effect from 1 April 2025, and the rate stays at 10% where PAN is on record, or 20% under section 206AA if it is not. Section 194 and 206AA are Income-tax Act, 1961 provisions; both carry forward under the Income-tax Act, 2025, effective 1 April 2026 for Tax Year 2026-27.",
     ],
     [
       "Can I deduct demat charges or brokerage from dividend income?",

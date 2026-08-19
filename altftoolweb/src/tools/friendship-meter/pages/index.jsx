@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Users, Sparkles, RefreshCw, Copy, Download, Info, Check, Heart, ShieldAlert } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Users, Sparkles, RefreshCw, Copy, Download, Info, Check } from "lucide-react";
 import { getDeterministicMatch } from "../../love-calculator/utils/compatibilityUtils";
 
 const INTERESTS = [
@@ -15,6 +15,14 @@ const INTERESTS = [
   { id: "work", label: "Studying/Working together" }
 ];
 
+// Interest categories used to derive the Friendship Pillar sub-scores from
+// real quiz answers instead of a finalScore-mod-N trick.
+const FUN_INTEREST_IDS = ["gaming", "memes", "music", "food"];
+const SUPPORT_INTEREST_IDS = ["talks", "support"];
+const LOYALTY_INTEREST_IDS = ["travel", "work"];
+
+const clampScore = (value) => Math.max(0, Math.min(100, Math.round(value)));
+
 export default function ToolHome() {
   const [yourName, setYourName] = useState("");
   const [friendName, setFriendName] = useState("");
@@ -24,6 +32,14 @@ export default function ToolHome() {
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [formError, setFormError] = useState("");
+  const calculateTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (calculateTimeoutRef.current) clearTimeout(calculateTimeoutRef.current);
+    };
+  }, []);
 
   const toggleInterest = (id) => {
     setSelectedInterests((prev) =>
@@ -33,12 +49,17 @@ export default function ToolHome() {
 
   const handleCalculate = (e) => {
     e.preventDefault();
-    if (!yourName.trim() || !friendName.trim() || !crisisReaction || !frequency) return;
+    if (!yourName.trim() || !friendName.trim() || !crisisReaction || !frequency) {
+      setFormError("Enter both names (not just spaces) and answer both questions before calculating.");
+      return;
+    }
+    setFormError("");
 
     setCalculating(true);
     setResult(null);
 
-    setTimeout(() => {
+    if (calculateTimeoutRef.current) clearTimeout(calculateTimeoutRef.current);
+    calculateTimeoutRef.current = setTimeout(() => {
       const baseScore = getDeterministicMatch(yourName, friendName);
 
       // Quiz values
@@ -49,11 +70,18 @@ export default function ToolHome() {
       // Final score clamped from 15 to 99
       const finalScore = Math.max(15, Math.min(99, baseScore + reactionValue + frequencyValue + interestBonus));
 
-      // Deterministic sub-scores
-      const loyalty = Math.min(100, Math.round(((finalScore * 11) % 21) + 80));
-      const trust = Math.min(100, Math.round(((finalScore * 13) % 21) + 80));
-      const fun = Math.min(100, Math.round(((finalScore * 17) % 21) + 80));
-      const support = Math.min(100, Math.round(((finalScore * 19) % 21) + 80));
+      // Sub-scores derived from the actual quiz answers (crisis reaction,
+      // interaction frequency, selected activity categories) rather than the
+      // finalScore itself, so each pillar reflects a distinct real signal and
+      // a low-scoring quiz produces correspondingly low pillar values.
+      const funCount = selectedInterests.filter((id) => FUN_INTEREST_IDS.includes(id)).length;
+      const supportCount = selectedInterests.filter((id) => SUPPORT_INTEREST_IDS.includes(id)).length;
+      const loyaltyCount = selectedInterests.filter((id) => LOYALTY_INTEREST_IDS.includes(id)).length;
+
+      const trust = clampScore(10 + ((reactionValue + 5) / 20) * 85);
+      const loyalty = clampScore(15 + (frequencyValue / 15) * 65 + loyaltyCount * 10);
+      const fun = clampScore(10 + funCount * 20);
+      const support = clampScore(15 + supportCount * 25 + Math.max(0, reactionValue) * 2);
 
       setResult({
         score: finalScore,
@@ -143,12 +171,20 @@ ${verdict.text}
     setCrisisReaction("");
     setFrequency("");
     setResult(null);
+    setFormError("");
   };
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+      <div role="status" aria-live="polite" className="sr-only">
+        {calculating
+          ? "Analyzing bond strength."
+          : result
+            ? `${getFriendshipVerdict(result.score).label} Friendship index ${result.score}%.`
+            : ""}
+      </div>
       <div className="max-w-3xl mx-auto space-y-8">
-        
+
         {/* Header */}
         <div className="text-center space-y-3">
           <div className="inline-flex p-3 bg-cyan-500/10 rounded-2xl border border-cyan-500/20 mb-1">
@@ -212,6 +248,7 @@ ${verdict.text}
                         key={item.id}
                         type="button"
                         onClick={() => toggleInterest(item.id)}
+                        aria-pressed={isChecked}
                         className={`flex items-center gap-2.5 p-3 rounded-xl border text-xs font-medium cursor-pointer transition text-left active:scale-[0.98] duration-100 ${
                           isChecked
                             ? "bg-cyan-500/10 border-cyan-500 text-foreground"
@@ -263,7 +300,7 @@ ${verdict.text}
                     <option value="15">We interact/talk every single day</option>
                     <option value="10">We check in multiple times a week</option>
                     <option value="5">We connect a few times a month</option>
-                    <option value="10">Every few months but it's instant pickup</option>
+                    <option value="0">Every few months but it's instant pickup</option>
                   </select>
                 </div>
               </div>
@@ -275,6 +312,11 @@ ${verdict.text}
               >
                 <Users size={18} /> Calculate Friendship Index
               </button>
+              {formError && (
+                <p role="alert" className="text-xs font-medium text-danger text-center">
+                  {formError}
+                </p>
+              )}
 
             </form>
           ) : calculating ? (

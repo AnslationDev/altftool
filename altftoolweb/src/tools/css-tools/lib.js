@@ -232,13 +232,14 @@ export function parseCss(source) {
 /* ------------------------------------------------------------------ */
 
 /** Count rules, declarations and comments in a parsed tree. */
-export function countNodes(nodes) {
+export function countNodes(nodes, { dropEmptyRules = false } = {}) {
   let rules = 0;
   let declarations = 0;
   let comments = 0;
   const walk = (list) => {
     for (const node of list) {
       if (node.type === NODE_RULE) {
+        if (dropEmptyRules && !hasContent(node)) continue;
         rules += 1;
         walk(node.nodes);
       } else if (node.type === NODE_DECLARATION) declarations += 1;
@@ -354,7 +355,7 @@ export function printFormatted(nodes, indentWidth = DEFAULT_INDENT, depth = 0) {
       const selector = tidy.startsWith("@")
         ? tidy.replace(/\s*:\s*/g, ": ")
         : splitTopLevelCommas(tidy)
-            .map((part) => tightenSelectorPart(part).replace(/([>+~])/g, " $1 "))
+            .map((part) => tightenSelectorPart(part).replace(/([>+~])(?!=)/g, " $1 "))
             .join(`,\n${pad}`);
       lines.push(`${pad}${selector} {`);
       if (node.nodes.length) {
@@ -451,7 +452,9 @@ export function processCss(source, mode = "minify", options = {}) {
   const savedBytes = inputBytes - outputBytes;
   // Guard: inputBytes cannot be 0 here because css.trim() is non-empty.
   const savedPercent = Math.round((savedBytes / inputBytes) * 1000) / 10;
-  const counts = countNodes(parsed.nodes);
+  const counts = countNodes(parsed.nodes, {
+    dropEmptyRules: mode === "minify" && options.dropEmptyRules !== false,
+  });
 
   return {
     mode,

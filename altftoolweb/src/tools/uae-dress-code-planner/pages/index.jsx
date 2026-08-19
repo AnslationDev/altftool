@@ -240,7 +240,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD_CLASS}`}>
+      <section className={`mt-6 ${CARD_CLASS}`} aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
@@ -259,7 +259,9 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the UAE packing and dress plan"
+              aria-label={
+                copied ? "Copied the UAE packing and dress plan" : "Copy the UAE packing and dress plan"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >

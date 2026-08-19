@@ -504,6 +504,13 @@ export default function ToolHome() {
                 paneer, or raise the fat share.
               </p>
             )}
+            {result.carbBudgetExceeded && (
+              <p className={NOTE_CLASS}>
+                Milk, curd and paneer supply {g1(result.dairyCarb)} of carbohydrate, more than the
+                whole day&apos;s carbohydrate budget of {g1(result.carbGrams)}. Switch to a
+                lower-carb dairy choice, cut the milk or curd, or lower the fat share.
+              </p>
+            )}
             {result.satFatOverCeiling && (
               <p className={NOTE_CLASS}>
                 Milk fat is about 65% saturated, so your dairy contributes roughly{" "}

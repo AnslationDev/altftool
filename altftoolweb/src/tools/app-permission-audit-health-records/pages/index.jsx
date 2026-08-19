@@ -239,7 +239,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -327,7 +331,11 @@ export default function ToolHome() {
       ) : null}
 
       {hasResult && result.revoke.length > 0 ? (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          role="status"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="text-base font-semibold text-[var(--danger)]">Revoke these first</h2>
           <ul className="mt-3 space-y-3">
             {result.revoke.map((row) => (
@@ -342,7 +350,11 @@ export default function ToolHome() {
       ) : null}
 
       {hasResult && result.review.length > 0 ? (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          role="status"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="text-base font-semibold">Worth reviewing</h2>
           <ul className="mt-3 space-y-3">
             {result.review.map((row) => (
@@ -356,7 +368,11 @@ export default function ToolHome() {
       ) : null}
 
       {hasResult && result.keep.length > 0 ? (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          role="status"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="text-base font-semibold">Justified — but know what they see</h2>
           <ul className="mt-3 space-y-3">
             {result.keep.map((row) => (

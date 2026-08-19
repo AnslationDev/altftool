@@ -69,7 +69,7 @@ function checkDeclaration(form, isSenior, hasPan, totalIncome, interest, exempti
   }
   if (form === "15g" && interest > exemptionLimit) {
     reasons.push(
-      `Form 15G also requires total interest income (${money(interest)}) to stay within the basic exemption limit of ${money(exemptionLimit)}.`,
+      `Form 15G also requires interest income at this bank (${money(interest)}) to stay within the basic exemption limit of ${money(exemptionLimit)}.`,
     );
   }
   return { filed: true, valid: reasons.length === 0, reasons };
@@ -388,14 +388,16 @@ export default function ToolHome() {
               <p className="mt-3 text-sm leading-6 text-[var(--muted-foreground)]">
                 No declaration selected. With estimated total income of {money(calc.totalIncome)} you
                 would{" "}
-                {calc.totalIncome <= toNumber(exemptionLimit) ? (
+                {calc.hasPan && calc.totalIncome <= toNumber(exemptionLimit) ? (
                   <span className="font-semibold text-[var(--success)]">
                     likely qualify for {calc.isSenior ? "Form 15H" : "Form 15G"}
                   </span>
                 ) : (
                   <span className="font-semibold text-[var(--foreground)]">not qualify</span>
                 )}
-                , because a declaration requires tax on total income to be nil.
+                {calc.hasPan
+                  ? ", because a declaration requires tax on total income to be nil."
+                  : ", because a valid PAN must be quoted on Form 15G/15H — the declaration is invalid without it."}
               </p>
             ) : calc.declaration.valid ? (
               <p className="mt-3 rounded-md px-3 py-2 text-sm font-medium text-[var(--success)] ring-1 ring-[var(--border)]">

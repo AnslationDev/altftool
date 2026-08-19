@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Gauge, RotateCcw } from "lucide-react";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -141,6 +141,13 @@ export default function ToolHome() {
   const [extraEnquiries, setExtraEnquiries] = useState(String(DEFAULTS.extraEnquiries));
   const [extraMissed, setExtraMissed] = useState(String(DEFAULTS.extraMissed));
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const calc = useMemo(() => {
     const values = {
@@ -185,13 +192,20 @@ export default function ToolHome() {
     const utilisation = (values.balance / values.limit) * 100;
     const nextUtilisation = (values.newBalance / values.limit) * 100;
     const nextMissed = values.missed + values.extraMissed;
+    // If missed payments are recorded but "worst delinquency" is left at "none", the
+    // two fields contradict each other and the flat per-missed-payment penalty alone
+    // would understate severity (none of the WORST_PENALTY tiers would engage). Treat
+    // any recorded missed payment as at least a 30-day-late mark, mirroring the same
+    // extraMissed -> worstAfter correction this file already applies below.
+    const worstNow =
+      values.missed > 0 && WORST_PENALTY[worst] < WORST_PENALTY.dpd30 ? "dpd30" : worst;
     const worstAfter =
-      values.extraMissed > 0 && WORST_PENALTY[worst] < WORST_PENALTY.dpd30 ? "dpd30" : worst;
+      values.extraMissed > 0 && WORST_PENALTY[worstNow] < WORST_PENALTY.dpd30 ? "dpd30" : worstNow;
 
     const now = estimateScore({
       utilisation,
       missed: values.missed,
-      worst,
+      worst: worstNow,
       historyYears: values.historyYears,
       cards: values.cards,
       loans: values.loans,
@@ -250,7 +264,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -290,8 +305,9 @@ export default function ToolHome() {
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Model how paying down a card, adding a loan enquiry or missing an EMI could move your score
-          on the 300–900 bureau scale. It uses the published factor weights bureaus disclose — payment
-          history 35%, utilisation 30%, history length 15%, credit mix 10%, new credit 10%.
+          on the 300–900 bureau scale. It uses the widely cited FICO-style factor weighting as an
+          illustrative proxy — payment history 35%, utilisation 30%, history length 15%, credit mix
+          10%, new credit 10% — since Indian bureaus do not publish their own exact scoring weights.
         </p>
       </header>
 
@@ -360,6 +376,12 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+            {Number(missed) > 0 && worst === "none" ? (
+              <p className="mt-1 text-xs text-[var(--warning)]">
+                You have missed payments recorded but selected &ldquo;No late payments&rdquo; — the
+                estimate treats this as at least a 30-day-late delinquency instead of ignoring it.
+              </p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="cs-history">
@@ -506,7 +528,11 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+            role="status"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -524,7 +550,7 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy credit score simulation result"
+                  aria-label={copied ? "Result copied to clipboard" : "Copy credit score simulation result"}
                   className={GHOST_BTN}
                 >
                   {copied ? (

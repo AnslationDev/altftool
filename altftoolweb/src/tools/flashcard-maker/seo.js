@@ -31,7 +31,7 @@ const seo = {
   faqs: [
     [
       "What format should my notes be in?",
-      "One item per line. A line with a colon becomes term on the front and definition on the back; a line ending in a question mark splits at the question mark; and a sentence like 'Osmosis is the movement of water across a membrane' becomes 'What is Osmosis?' on the front. Lines under 10 characters are ignored.",
+      "One item per line. A line with a colon becomes term on the front and definition on the back; a line ending in a question mark splits at the question mark; and a sentence like 'Osmosis is the movement of water across a membrane' becomes 'What is Osmosis?' on the front. A line that matches none of those three shapes only becomes a card if it is longer than 20 characters, shorter than 200, and has more than five words — shorter or longer plain lines are skipped.",
     ],
     [
       "How does rapid mode differ from review?",

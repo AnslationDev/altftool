@@ -171,7 +171,7 @@ function simulate(raw) {
   return { emi, down, reg, loan, rows, last, crossover, totalTaxSaved, horizonYears };
 }
 
-function NumField({ label, value, onChange, step = 1, min = 0, max, hint }) {
+function NumField({ label, value, onChange, onBlur, step = 1, min = 0, max, hint, type = "number", inputMode }) {
   return (
     <label className="block">
       <span className="flex items-baseline justify-between gap-2 text-sm font-semibold">
@@ -181,12 +181,14 @@ function NumField({ label, value, onChange, step = 1, min = 0, max, hint }) {
         ) : null}
       </span>
       <input
-        type="number"
+        type={type}
+        inputMode={inputMode}
         value={value}
         onChange={onChange}
-        step={step}
-        min={min}
-        max={max}
+        onBlur={onBlur}
+        step={type === "number" ? step : undefined}
+        min={type === "number" ? min : undefined}
+        max={type === "number" ? max : undefined}
         className={inputClass}
       />
     </label>
@@ -225,6 +227,11 @@ function ToggleRow({ label, hint, checked, onChange }) {
 
 export default function ToolHome() {
   const [inp, setInp] = useState(DEFAULTS);
+  // Home appreciation is the one field that allows negative values. It is
+  // edited as free text (not type="number") and clamped only when the typed
+  // string parses to a real number or on blur, so intermediate states like a
+  // bare "-" while typing "-5" are not force-corrected mid-keystroke.
+  const [appreciationText, setAppreciationText] = useState(String(DEFAULTS.appreciation));
   const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1200 });
 
   const num = (key) => (event) => {
@@ -234,6 +241,21 @@ export default function ToolHome() {
     setInp((prev) => ({ ...prev, [key]: value }));
   };
   const toggle = (key) => () => setInp((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const onAppreciationChange = (event) => {
+    const raw = event.target.value;
+    setAppreciationText(raw);
+    const parsed = Number(raw);
+    if (raw.trim() !== "" && raw.trim() !== "-" && Number.isFinite(parsed)) {
+      const value = clamp(parsed, FIELD_BOUNDS.appreciation[0], FIELD_BOUNDS.appreciation[1]);
+      setInp((prev) => ({ ...prev, appreciation: value }));
+    }
+  };
+  const onAppreciationBlur = () => {
+    // Normalize the visible text to whatever was actually simulated once the
+    // user leaves the field (e.g. "-", "", or an out-of-range value).
+    setAppreciationText(String(inp.appreciation));
+  };
 
   const sim = useMemo(() => simulate(inp), [inp]);
   const sensitivity = useMemo(
@@ -303,7 +325,15 @@ export default function ToolHome() {
               <NumField label="Loan tenure" hint="years" value={inp.tenureYears} onChange={num("tenureYears")} step={1} min={FIELD_BOUNDS.tenureYears[0]} max={FIELD_BOUNDS.tenureYears[1]} />
               <NumField label="Monthly rent (same home)" hint="INR" value={inp.rent} onChange={num("rent")} step={1000} min={FIELD_BOUNDS.rent[0]} max={FIELD_BOUNDS.rent[1]} />
               <NumField label="Rent inflation" hint="% / year" value={inp.rentInflation} onChange={num("rentInflation")} step={0.5} min={FIELD_BOUNDS.rentInflation[0]} max={FIELD_BOUNDS.rentInflation[1]} />
-              <NumField label="Home appreciation" hint="% / year" value={inp.appreciation} onChange={num("appreciation")} step={0.5} min={FIELD_BOUNDS.appreciation[0]} max={FIELD_BOUNDS.appreciation[1]} />
+              <NumField
+                label="Home appreciation"
+                hint="% / year, can be negative"
+                type="text"
+                inputMode="decimal"
+                value={appreciationText}
+                onChange={onAppreciationChange}
+                onBlur={onAppreciationBlur}
+              />
               <NumField label="Investment return on savings" hint="% / year" value={inp.invReturn} onChange={num("invReturn")} step={0.5} min={FIELD_BOUNDS.invReturn[0]} max={FIELD_BOUNDS.invReturn[1]} />
               <NumField label="Maintenance + property tax" hint="% of value / year" value={inp.maintPct} onChange={num("maintPct")} step={0.1} min={FIELD_BOUNDS.maintPct[0]} max={FIELD_BOUNDS.maintPct[1]} />
             </div>
@@ -347,6 +377,7 @@ export default function ToolHome() {
                   onClick={() => {
                     if (window.confirm("Reset all inputs to the defaults? This clears everything you've entered.")) {
                       setInp(DEFAULTS);
+                      setAppreciationText(String(DEFAULTS.appreciation));
                     }
                   }}
                   className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)]"

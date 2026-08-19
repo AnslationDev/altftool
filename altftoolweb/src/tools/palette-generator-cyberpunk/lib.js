@@ -338,7 +338,7 @@ export function generateCyberpunkPalette({
     ...neons.map((neon) => ({
       id: `${neon.key}-base`,
       label: `${neon.name} as text on base`,
-      ratio: neon.ratio,
+      ratio: neon.textRatio,
       min: target.value,
     })),
     ...neons.slice(0, 2).map((neon) => ({

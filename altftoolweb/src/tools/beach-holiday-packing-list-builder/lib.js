@@ -66,7 +66,7 @@ const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
  * @returns {number}
  */
 function afterSunBottles(days, travellers) {
-  return clamp(ceil((days * travellers * 10) / 100), 1, 3);
+  return Math.max(1, ceil((days * travellers * 10) / 100));
 }
 
 /**
@@ -191,7 +191,10 @@ const CATALOG = [
     gramsEach: 150,
     perTraveller: true,
     qty: (c) => (c.days === 1 ? (c.swimsPerDay >= 2 ? 2 : 1) : clamp(1 + c.swimsPerDay, 2, 4)),
-    note: () => "At least two so one can dry while the other is worn",
+    note: (c) =>
+      c.days === 1 && c.swimsPerDay < 2
+        ? "One is enough for a single short trip"
+        : "At least two so one can dry while the other is worn",
   },
   {
     id: "rash-guard",
@@ -293,7 +296,7 @@ const CATALOG = [
     gramsEach: 115,
     perTraveller: false,
     include: (c) => c.mosquitoes,
-    qty: (c) => clamp(ceil((c.days * c.travellers * 10) / 100), 1, 4),
+    qty: (c) => Math.max(1, ceil((c.days * c.travellers * 10) / 100)),
     note: () => "About 10 ml a person a day for exposed skin at dusk",
   },
   {
@@ -442,7 +445,8 @@ export function buildBeachPackingList(input) {
     return { error: "Enter how many days between washes, or 0 for no laundry." };
   }
 
-  const wearDays = wearCycleDays(wholeDays, laundryEveryDays);
+  const wholeLaundryEveryDays = Math.round(laundryEveryDays);
+  const wearDays = wearCycleDays(wholeDays, wholeLaundryEveryDays);
 
   const sun = sunscreenNeed({
     days: wholeDays,
@@ -511,7 +515,7 @@ export function buildBeachPackingList(input) {
 
   // Cabin liquid audit: sunscreen plus after-sun plus repellent, all decanted.
   const afterSunMl = 100 * afterSunBottles(wholeDays, people);
-  const repellentMl = mosquitoes ? 100 * clamp(ceil((wholeDays * people * 10) / 100), 1, 4) : 0;
+  const repellentMl = mosquitoes ? 100 * Math.max(1, ceil((wholeDays * people * 10) / 100)) : 0;
   const liquidsMl = sun.totalMl + afterSunMl + repellentMl;
   const cabinLiquidCapacityMl = LIQUID_BAG_MAX_ML * people;
 

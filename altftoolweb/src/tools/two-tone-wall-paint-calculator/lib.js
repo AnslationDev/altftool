@@ -177,13 +177,27 @@ export function computeTwoTonePaint({
     return { error: `Wastage should be between 0% and ${MAX_WASTAGE_PCT}%.` };
   }
 
-  const doorHeight = Number(doors?.heightFt ?? 0);
-  const windowSill = Number(windows?.sillFt ?? 0);
-  const windowHeight = Number(windows?.heightFt ?? 0);
-  if (doorHeight > H && Number(doors?.count) > 0) {
+  const doorCount = Number(doors?.count ?? 0);
+  const doorWidth = Number(doors?.widthFt);
+  const doorHeight = Number(doors?.heightFt);
+  if (doorCount > 0 && (!isNum(doorWidth) || doorWidth <= 0 || !isNum(doorHeight) || doorHeight <= 0)) {
+    return { error: "Enter a valid door width and height, or set the door count to 0." };
+  }
+  if (doorCount > 0 && doorHeight > H) {
     return { error: "A door cannot be taller than the wall." };
   }
-  if (windowSill + windowHeight > H && Number(windows?.count) > 0) {
+
+  const windowCount = Number(windows?.count ?? 0);
+  const windowWidth = Number(windows?.widthFt);
+  const windowHeight = Number(windows?.heightFt);
+  const windowSill = Number(windows?.sillFt ?? 0);
+  if (
+    windowCount > 0 &&
+    (!isNum(windowWidth) || windowWidth <= 0 || !isNum(windowHeight) || windowHeight <= 0 || !isNum(windowSill) || windowSill < 0)
+  ) {
+    return { error: "Enter a valid window width, height and sill, or set the window count to 0." };
+  }
+  if (windowCount > 0 && windowSill + windowHeight > H) {
     return { error: "The window top sits above the ceiling — check the sill height." };
   }
 
@@ -222,6 +236,13 @@ export function computeTwoTonePaint({
       cost: plan.cost,
     };
   });
+
+  const overCapBand = bands.find((band) => band.litres > MAX_LITRES);
+  if (overCapBand) {
+    return {
+      error: `${overCapBand.label} needs ${Math.ceil(overCapBand.litres)} L of paint, above the ${MAX_LITRES} L planning limit built into the pack calculator — split this job into smaller sections.`,
+    };
+  }
 
   const lower = bands[0];
   const upper = bands[1];

@@ -453,16 +453,16 @@ export function buildGetWellMessages({
     const parts = [];
 
     if (lenId === "short") {
-      parts.push(`${person}, ${rotate(pack.tones[toneId], toneOffset, step)}`);
+      const line = `${person}, ${rotate(pack.tones[toneId], toneOffset, step)}`;
+      parts.push(senderName ? `${line} — ${senderName}` : line);
     } else {
       parts.push(fill(pack.greeting, tokens));
       parts.push(rotate(pack.openings, openOffset, step));
       if (lenId === "long") parts.push(pack.context[sitEntry.id]);
       parts.push(rotate(pack.tones[toneId], toneOffset, step));
       parts.push(rotate(pack.closings[relEntry.group], closeOffset, step));
+      if (senderName) parts.push(fill(pack.signoff, tokens));
     }
-
-    if (senderName) parts.push(fill(pack.signoff, tokens));
 
     const text = parts.join("\n");
     variants.push({ id: step + 1, text, stats: messageStats(text) });

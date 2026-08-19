@@ -43,6 +43,9 @@ export const CREDENTIAL_REQUEST_PHRASES = [
   "confirm your apple id", "re-enter your credentials", "validate your account",
 ];
 
+/** Subset of CREDENTIAL_REQUEST_PHRASES that specifically ask for a 2FA/verification code. */
+const CODE_REQUEST_PHRASES = new Set(["verification code", "two-factor code"]);
+
 /** Payment-harvesting wording. */
 export const PAYMENT_PHRASES = [
   "billing information", "payment method", "update your card", "credit card details",
@@ -110,7 +113,7 @@ export const APPLE_LOCKED_ANATOMY = [
   {
     part: "The button",
     lure: "Verify Your Account → https://appleid.apple.com.verify-secure.co/login",
-    tell: "The visible text and the actual destination are different things. Read the host to the left of the first single slash: the site here is verify-secure.co.",
+    tell: "The visible text and the actual destination are different things. The host to the left of the first single slash is appleid.apple.com.verify-secure.co — take its last two labels, the registrable domain, and the site here is verify-secure.co.",
   },
   {
     part: "The form",
@@ -146,11 +149,35 @@ export function emailDomain(address) {
   return /^[a-z0-9.-]+\.[a-z]{2,}$/.test(domain) ? domain : "";
 }
 
-/** Host of a URL, or "" when it cannot be read. Never throws. */
-export function urlHost(rawUrl) {
+/** Schemes that legitimately have no "//" after the colon (mailto:a@b, tel:+1…). */
+const NO_SLASH_SCHEMES = new Set(["mailto", "tel", "sms"]);
+
+/**
+ * Does `raw` actually start with a URI scheme? A bare "host:port/path" string
+ * (no real scheme) looks like `scheme:rest` to a naive regex — e.g.
+ * "appleid.apple.com.verify-secure.co:8443/login" — because everything before
+ * the first colon happens to match the scheme grammar. Only treat it as a
+ * real scheme when what follows is "//" (authority-based, like https://) or
+ * the "scheme" is a known no-slash scheme.
+ */
+function hasUriScheme(raw) {
+  const match = /^([a-z][a-z0-9+.-]*):(.*)$/is.exec(raw);
+  if (!match) return false;
+  const [, scheme, rest] = match;
+  return rest.startsWith("//") || NO_SLASH_SCHEMES.has(scheme.toLowerCase());
+}
+
+/** Turn a pasted link into something `new URL()` can parse. Never throws. */
+function toUrlCandidate(rawUrl) {
   const raw = String(rawUrl ?? "").trim().replace(/\\/g, "/");
   if (!raw) return "";
-  const candidate = /^[a-z][a-z0-9+.-]*:/i.test(raw) ? raw : `https://${raw}`;
+  return hasUriScheme(raw) ? raw : `https://${raw}`;
+}
+
+/** Host of a URL, or "" when it cannot be read. Never throws. */
+export function urlHost(rawUrl) {
+  const candidate = toUrlCandidate(rawUrl);
+  if (!candidate) return "";
   try {
     return new URL(candidate).hostname.toLowerCase();
   } catch {
@@ -160,9 +187,8 @@ export function urlHost(rawUrl) {
 
 /** Does the URL carry user information before an @ in the authority? */
 export function urlUserInfo(rawUrl) {
-  const raw = String(rawUrl ?? "").trim().replace(/\\/g, "/");
-  if (!raw) return "";
-  const candidate = /^[a-z][a-z0-9+.-]*:/i.test(raw) ? raw : `https://${raw}`;
+  const candidate = toUrlCandidate(rawUrl);
+  if (!candidate) return "";
   try {
     return new URL(candidate).username || "";
   } catch {
@@ -251,8 +277,11 @@ export function analyseAppleIdLure({
 
   const credentials = matched(text, CREDENTIAL_REQUEST_PHRASES);
   if (credentials.length) {
-    add("critical", 34, "Asks for a password, code or security answer",
-      `"${credentials[0]}" contradicts Apple's own guidance: Apple does not ask for your password, verification code or security answers by email, message or phone. A request for a two-factor code is the strongest single signal, because it means someone already has the password.`);
+    const isCodeRequest = CODE_REQUEST_PHRASES.has(credentials[0]);
+    const detail = isCodeRequest
+      ? `"${credentials[0]}" contradicts Apple's own guidance: Apple does not ask for your password, verification code or security answers by email, message or phone. A request for a two-factor code is the strongest single signal, because it means someone already has the password.`
+      : `"${credentials[0]}" contradicts Apple's own guidance: Apple does not ask for your password, verification code or security answers by email, message or phone.`;
+    add("critical", isCodeRequest ? 34 : 28, "Asks for a password, code or security answer", detail);
   }
 
   const payment = matched(text, PAYMENT_PHRASES);

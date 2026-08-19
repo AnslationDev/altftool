@@ -357,6 +357,14 @@ export function planTransfer({
     leaveByMinute = next;
   }
 
+  // Guarantee "Leave by" + "Journey time" always equals "Be at the terminal
+  // by", regardless of whether the iteration above converged: derive the
+  // displayed travel time directly from the leave-by time that was finally
+  // chosen, rather than from an hour-bucket factor lookup that may not
+  // correspond to it (the oscillation fallback above can otherwise pick a
+  // leaveByMinute and then look up a factor/travel pair for a different hour).
+  travel = terminalArrivalMinute - leaveByMinute - buffer;
+
   const freeFlowTravel = journeyMinutes({ distanceKm: km, mode, factor: 1 });
   const totalDoorToDeparture = departureMinute - leaveByMinute;
 

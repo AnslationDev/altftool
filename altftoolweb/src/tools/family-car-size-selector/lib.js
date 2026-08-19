@@ -270,7 +270,7 @@ export function selectFamilyCar({
   }
 
   const efficiency = num(packingEfficiency);
-  if (!Number.isFinite(efficiency) || efficiency <= 0.2 || efficiency > 1) {
+  if (!Number.isFinite(efficiency) || efficiency < 0.2 || efficiency > 1) {
     return { error: "Packing efficiency has to be between 0.2 and 1. Around 0.8 is realistic for wheeled cases." };
   }
 
@@ -356,7 +356,7 @@ export function selectFamilyCar({
       `At ${best.lengthM} m this is longer than the ${STANDARD_BAY_LENGTH_M} m standard parking bay, so it will overhang in a marked space and be awkward in multi-storey car parks.`,
     );
   }
-  if (best && best.overFourMetres && maxLength <= INDIA_SMALL_CAR_LENGTH_M + 0.01) {
+  if (best && best.overFourMetres) {
     warnings.push(
       `Cars over ${INDIA_SMALL_CAR_LENGTH_M} m fall outside India's small-car tax bracket, which is why so many models stop just under that length.`,
     );

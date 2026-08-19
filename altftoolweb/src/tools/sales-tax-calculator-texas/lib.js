@@ -192,6 +192,6 @@ export function computeTexasMotorVehicleTax(input = {}) {
     taxableValue: roundCents(taxableValue),
     ratePercent: TX_MOTOR_VEHICLE_RATE_PERCENT,
     tax,
-    totalWithTax: roundCents(salesPrice + tax),
+    totalWithTax: roundCents(taxableValue + tax),
   };
 }

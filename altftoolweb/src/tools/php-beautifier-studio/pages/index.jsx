@@ -6,7 +6,7 @@ import EditorPanel from "../components/EditorPanel";
 import Controls from "../components/Controls";
 import StatusPanels from "../components/StatusPanels";
 import Features from "../components/Features";
-import { DEFAULT_SETTINGS, formatPhp, getPhpStats, loadPhpFormatter } from "../utils/phpFormatter";
+import { BRACE_STYLES, DEFAULT_SETTINGS, formatPhp, getPhpStats, loadPhpFormatter } from "../utils/phpFormatter";
 
 const STORAGE_KEY = "phpBeautifierStudioState";
 const HISTORY_KEY = "phpBeautifierStudioHistory";
@@ -129,7 +129,7 @@ export default function ToolHome() {
 
   const restoreHistory = (item) => {
     setInput(item.input);
-    setSettings({ ...DEFAULT_SETTINGS, ...item.settings });
+    setSettings(sanitizeSettings(item.settings));
   };
 
   const clearAll = () => {
@@ -176,7 +176,13 @@ export default function ToolHome() {
             />
           </div>
 
-          <StatusPanels messages={result.messages} stats={stats} history={history} restoreHistory={restoreHistory} />
+          <StatusPanels
+            messages={result.messages}
+            stats={stats}
+            history={history}
+            restoreHistory={restoreHistory}
+            hasInput={Boolean(input.trim())}
+          />
 
         </main>
 
@@ -184,6 +190,16 @@ export default function ToolHome() {
       </div>
     </div>
   );
+}
+
+// Guards against stale localStorage state from before braceStyle was
+// restricted to the values @prettier/plugin-php actually accepts.
+function sanitizeSettings(settings) {
+  const merged = { ...DEFAULT_SETTINGS, ...(settings || {}) };
+  if (!BRACE_STYLES.includes(merged.braceStyle)) {
+    merged.braceStyle = DEFAULT_SETTINGS.braceStyle;
+  }
+  return merged;
 }
 
 function getSavedState() {
@@ -194,7 +210,7 @@ function getSavedState() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
     return {
       input: saved.input || "",
-      settings: { ...DEFAULT_SETTINGS, ...(saved.settings || {}) },
+      settings: sanitizeSettings(saved.settings),
     };
   } catch {
     localStorage.removeItem(STORAGE_KEY);

@@ -28,7 +28,7 @@ export const blogs = [
   },
 
   {
-    title: "Top 9 Dog Breeds for First-Time Owners in 2026",
+    title: "Best Dog Breeds for First-Time Owners in 2026",
 
     slug: "top-9-dog-breeds",
 

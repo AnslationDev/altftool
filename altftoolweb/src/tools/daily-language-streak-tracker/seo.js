@@ -17,7 +17,7 @@ const seo = {
   ],
   benefits: [
     ["Clear counting rule", "A day counts when logged minutes reach the goal, so the streak number can always be checked by hand."],
-    ["Per-language view", "Filter to one language to see whether the streak is really that language or is being propped up by another."],
+    ["Per-language view", "Filter to one language to see that language's own streak, minutes and adherence on their own, separate from your combined total across every language you log."],
     ["Adherence, not just streaks", "Shows days met against days elapsed, which is the number that predicts progress."],
   ],
   faqs: [

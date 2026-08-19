@@ -2,18 +2,22 @@
  * Departure planning for Netaji Subhas Chandra Bose International Airport (CCU / VECC).
  *
  * The maths is plain clock arithmetic on minutes-from-midnight. Working backwards
- * from the scheduled departure time there are three independent deadlines:
+ * from the scheduled departure time there are two deadlines that can govern the plan,
+ * plus a third figure shown for reference only:
  *
  *   1. Process deadline  - you must physically be at the gate before it closes, so
  *      terminal arrival must be at least (all in-terminal steps + gate-closing lead)
  *      before departure.
- *   2. Check-in deadline - if you are dropping a bag you must reach the counter
- *      before the airline closes it.
- *   3. Airport advice    - the reporting time the airport publishes for the flight type.
+ *   2. Airport advice    - the reporting time the airport publishes for the flight type.
+ *   3. Check-in deadline (informational) - if you are dropping a bag, the time you'd need
+ *      to reach the counter before the airline closes it. With this tool's constants
+ *      (45-60 min airline cut-off) it is always earlier than deadlines 1 and 2, so it
+ *      never ends up being the binding one - it is still shown ("Bag drop closes") so
+ *      you know the counter's own cut-off, just not treated as governing the plan.
  *
- * The terminal arrival lead is the LARGEST of the three; the leave-home time is that
- * arrival time minus the road journey (free-flow drive time x traffic factor) and the
- * parking / drop-off walk. Everything is pure: pass the departure clock time in, no
+ * The terminal arrival lead is the LARGER of deadlines 1 and 2; the leave-home time is
+ * that arrival time minus the road journey (free-flow drive time x traffic factor) and
+ * the parking / drop-off walk. Everything is pure: pass the departure clock time in, no
  * clock is read inside.
  */
 
@@ -272,17 +276,15 @@ export function computeArrivalPlan({
   // Deadline 3: the airport's published reporting time.
   const recommendedLeadMinutes = journey.recommendedLeadMinutes;
 
+  // Note: the bag-drop counter cut-off (checkInLeadMinutes, ~55-70 min) is always
+  // smaller than the airport's advised reporting time (recommendedLeadMinutes,
+  // 120-180 min) with the current constants, so it can never be the binding
+  // deadline. It is still computed and shown informationally (see checkInCloseMinutes),
+  // but only the process estimate vs. the airport's advice can govern the plan.
   const terminalLeadMinutes = Math.max(processLeadMinutes, checkInLeadMinutes, recommendedLeadMinutes);
   let governedBy = "the airport's published reporting time";
-  if (terminalLeadMinutes === processLeadMinutes && processLeadMinutes >= checkInLeadMinutes) {
+  if (terminalLeadMinutes === processLeadMinutes && processLeadMinutes >= recommendedLeadMinutes) {
     governedBy = "your own queue, walking and buffer estimates";
-  }
-  if (
-    terminalLeadMinutes === checkInLeadMinutes &&
-    checkInLeadMinutes > processLeadMinutes &&
-    checkInLeadMinutes > recommendedLeadMinutes
-  ) {
-    governedBy = "the bag-drop counter cut-off";
   }
 
   const driveWithTrafficMinutes = Math.round(drive * traffic.multiplier);
@@ -317,11 +319,6 @@ export function computeArrivalPlan({
   if (processLeadMinutes > recommendedLeadMinutes) {
     warnings.push(
       `Your own step estimates need ${formatDuration(processLeadMinutes)} inside the terminal, which is more than the ${formatDuration(recommendedLeadMinutes)} the airport advises. The larger figure is used.`,
-    );
-  }
-  if (hasBags && checkInLeadMinutes > recommendedLeadMinutes) {
-    warnings.push(
-      `Bag drop closes ${journey.checkInClosesMinutes} minutes before departure, which is the binding deadline here.`,
     );
   }
   if (dayOffset(leaveByMinutes) < 0) {

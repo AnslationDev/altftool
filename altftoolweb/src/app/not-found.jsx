@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Compass, Home, Search, ShoppingBag, Wrench } from "lucide-react";
 import { SITE_ROUTES } from "@/platform/navigation/siteRoutes";
+import BrokenLinkRecovery from "./BrokenLinkRecovery";
 
 const routeSuggestions = [
   { ...SITE_ROUTES.tools, icon: Wrench, description: "Browse all online tools" },
@@ -25,6 +26,10 @@ export default function NotFound() {
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-(--muted-foreground) sm:text-base">
           The link may be old, moved, or typed incorrectly. Use one of the main paths below to continue.
         </p>
+
+        {/* The broken URL usually says what the visitor wanted; offer it as a
+            prefilled search rather than discarding it. */}
+        <BrokenLinkRecovery />
 
         <div className="mt-8 grid gap-3 text-left sm:grid-cols-2">
           {routeSuggestions.map(({ href, label, description, icon: Icon }) => (

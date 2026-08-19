@@ -329,12 +329,20 @@ export default function AnslicNavbarPage() {
         file,
         onProgress: setUploadProgress,
       });
+      const oldPath = settingsDraft.logoImagePath;
       setSettingsDraft((prev) => ({
         ...prev,
         logoType: "image",
         logoImageUrl: uploaded.url,
         logoImagePath: uploaded.path,
       }));
+      if (oldPath) {
+        try {
+          await deleteNavbarLogo(oldPath);
+        } catch {
+          emitAlert({ type: "warning", message: "New logo uploaded, but old logo cleanup failed." });
+        }
+      }
       emitAlert({ type: "success", message: "Logo image uploaded." });
     } catch (error) {
       emitAlert({ type: "error", message: error?.message || "Logo upload failed." });

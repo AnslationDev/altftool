@@ -16,16 +16,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import {
-  Download,
-  Plus,
-  Trash2,
-  ArrowLeft,
-  Workflow,
-  Edit3,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { Plus, ArrowLeft } from 'lucide-react';
 
 import { Sidebar } from '../components/sidebar';
 import { ProcessNode } from '../nodes/processNode';
@@ -66,9 +57,6 @@ const getNodeId = () => `node_${nodeIdCounter++}_${Date.now()}`;
 
 function FlowChartEditor() {
   const [isCreating, setIsCreating] = useState(false);
-  const [flowchartTitle, setFlowchartTitle] = useState('My Flowchart');
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -86,6 +74,40 @@ function FlowChartEditor() {
     [setEdges]
   );
 
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
+      const type = event.dataTransfer.getData('application/reactflow-type');
+      const label = event.dataTransfer.getData('application/reactflow-label');
+      if (!type || !reactFlowInstance) return;
+      const position = reactFlowInstance.screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+      setNodes((nds) => nds.concat({ id: getNodeId(), type, position, data: { label } }));
+    },
+    [reactFlowInstance, setNodes]
+  );
+
+  const handleAddNode = useCallback(
+    (type, label) => {
+      setNodes((nds) =>
+        nds.concat({
+          id: getNodeId(),
+          type,
+          position: { x: 120 + (nds.length % 5) * 40, y: 120 + Math.floor(nds.length / 5) * 60 },
+          data: { label },
+        })
+      );
+    },
+    [setNodes]
+  );
+
   const handleStartCreating = () => {
     setIsCreating(true);
     setNodes([]);
@@ -93,10 +115,10 @@ function FlowChartEditor() {
   };
 
   const handleBackToDemo = () => {
+    if (nodes.length > 0 && !window.confirm('Discard your unsaved flowchart?')) return;
     setIsCreating(false);
     setNodes([]);
     setEdges([]);
-    setFlowchartTitle('My Flowchart');
   };
 
   // ==========================
@@ -117,20 +139,14 @@ function FlowChartEditor() {
         <div className="h-screen flex overflow-hidden">
 
   {/* Sidebar */}
-  <div
-    className={`${
-      sidebarCollapsed ? "w-16" : "w-72"
-    } bg-(--card) border-r border-(--border) flex flex-col transition-all duration-300 shadow-sm`}
-  >
+  <div className="w-72 bg-(--card) border-r border-(--border) flex flex-col transition-all duration-300 shadow-sm">
     <div className="p-4 border-b border-(--border)">
-      {!sidebarCollapsed && <h1 className="subheading">FlowCraft</h1>}
+      <h1 className="subheading">FlowCraft</h1>
     </div>
 
-    {!sidebarCollapsed && (
-      <div className="flex-1 overflow-y-auto p-4 min-h-0">
-        <Sidebar />
-      </div>
-    )}
+    <div className="flex-1 overflow-y-auto p-4 min-h-0">
+      <Sidebar />
+    </div>
   </div>
 
   {/* Demo Area */}
@@ -173,27 +189,28 @@ function FlowChartEditor() {
   }
 
   // ==========================
-  // 🔹 CREATE MODE (UNCHANGED)
+  // 🔹 CREATE MODE
   // ==========================
   return (
     <div className="h-screen w-screen flex overflow-hidden">
 
       {/* Sidebar */}
       <div className="w-72 bg-(--card) border-r border-(--border)">
-        <Sidebar />
+        <Sidebar onAddNode={handleAddNode} />
         <button onClick={handleBackToDemo}>
           <ArrowLeft size={16} /> Back
         </button>
       </div>
 
       {/* Editor */}
-      <div className="flex-1">
+      <div className="flex-1" ref={reactFlowWrapper} onDragOver={onDragOver} onDrop={onDrop}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          onInit={setReactFlowInstance}
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
           fitView

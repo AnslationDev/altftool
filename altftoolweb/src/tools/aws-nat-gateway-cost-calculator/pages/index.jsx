@@ -99,7 +99,10 @@ export default function ToolHome() {
           `Hourly charges (${NUM.format(result.gatewayCount)} × ${money(result.hourlyCostPerGateway)})`,
           money(result.hourlyCost),
         ],
-        [`Data processing @ $${NAT_DATA_PROCESSING_PER_GB.toFixed(3)}/GB`, money(result.processingCost)],
+        [
+          `Data processing (total ${NUM.format(Number(dataProcessedGb) || 0)} GB × $${NAT_DATA_PROCESSING_PER_GB.toFixed(3)}/GB)`,
+          money(result.processingCost),
+        ],
         ["Internet egress on top (after 100 GB free)", money(result.egressCost)],
         ["Effective cost per GB moved", money(result.effectivePerGb)],
       ];
@@ -159,7 +162,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="nat-data">
-              Data processed per month (GB)
+              Total data processed per month, all gateways combined (GB)
             </label>
             <input
               id="nat-data"
@@ -171,6 +174,10 @@ export default function ToolHome() {
               value={dataProcessedGb}
               onChange={(event) => setDataProcessedGb(event.target.value)}
             />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Sum across every NAT gateway — this is a total, not per-gateway like the hourly
+              charge above.
+            </p>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="nat-egress">
@@ -202,7 +209,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

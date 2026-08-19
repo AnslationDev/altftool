@@ -45,6 +45,10 @@ export default function ToolHome() {
   }, []);
 
   const handleGenerate = useCallback(() => {
+    if (generateTimerRef.current) window.clearTimeout(generateTimerRef.current);
+    if (fadeInFrameRef.current) window.cancelAnimationFrame(fadeInFrameRef.current);
+    generateTimerRef.current = null;
+    fadeInFrameRef.current = null;
     setAnimating(true);
     generateTimerRef.current = window.setTimeout(() => {
       setPirate(getRandomPirate());

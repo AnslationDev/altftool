@@ -6,11 +6,11 @@ const features = [
   { icon: Image, title: "Upload Logos", description: "Upload PNG, SVG, JPG, WEBP. Drag & drop, browse, or paste image URLs." },
   { icon: Palette, title: "Color Analysis", description: "Extract dominant colors, compare palettes, get HEX/RGB values with coverage percentages." },
   { icon: Shapes, title: "Shape Detection", description: "Detect circles, squares, triangles, curves, lines. Analyze geometry and complexity." },
-  { icon: Type, title: "Typography Analysis", description: "Detect text presence, estimate font style, boldness, spacing, and alignment." },
+  { icon: Type, title: "Typography Analysis", description: "Detect text presence, estimate font style, boldness, and alignment." },
   { icon: Eye, title: "Visual Comparison", description: "Side-by-side, overlay with opacity, difference heatmap, and split view with draggable divider." },
   { icon: BarChart3, title: "Similarity Scores", description: "Animated circular scores for overall, shape, color, layout, edge, symmetry, and more." },
   { icon: Layers, title: "Difference Heatmap", description: "Pixel-level difference highlighting shows exactly where logos diverge." },
-  { icon: Grid3X3, title: "Image Quality", description: "Analyze resolution, transparency, sharpness, noise, and compression." },
+  { icon: Grid3X3, title: "Image Quality", description: "Analyze resolution, transparency, sharpness, and noise." },
   { icon: SlidersHorizontal, title: "Opacity Slider", description: "Adjust overlay opacity in real-time to compare logo alignment." },
   { icon: ZoomIn, title: "Zoom & Pan", description: "Zoom in/out and pan across logos for detailed inspection." },
   { icon: Columns, title: "Multiple Views", description: "Switch between side-by-side, overlay, split, and difference modes." },
@@ -28,7 +28,7 @@ export default function Features() {
     <section className="py-16">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold text-[--foreground]">Compare two logos using AI-powered visual analysis</h2>
+          <h2 className="text-2xl font-bold text-[--foreground]">Compare two logos using algorithm-powered visual analysis</h2>
           <p className="mt-2 text-[--muted]">Advanced browser-based logo comparison with shape, color, layout, and typography analysis</p>
         </div>
         <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-center text-xs text-amber-800">

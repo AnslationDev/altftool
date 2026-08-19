@@ -32,7 +32,7 @@ const seo = {
   faqs: [
     [
       "How high should I raise my laptop?",
-      "Raise it until the top of the screen is at, or up to about 5 cm below, your seated eye height. For someone 170 cm tall on a 45 cm seat at a 74 cm desk with a 14-inch 16:10 screen, that works out to roughly 23 cm of riser — which is why a laptop stand alone is rarely enough without a separate keyboard.",
+      "Raise it until the top of the screen is at, or up to about 5 cm below, your seated eye height. For someone 170 cm tall on a 45 cm seat at a 74 cm desk with a 14-inch 16:10 screen, that works out to roughly 29 cm of riser — which is why a laptop stand alone is rarely enough without a separate keyboard.",
     ],
     [
       "Do I need an external keyboard with a laptop stand?",

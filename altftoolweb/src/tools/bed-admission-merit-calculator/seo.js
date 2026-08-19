@@ -22,7 +22,7 @@ const seo = {
   faqs: [
     [
       "How is B.Ed admission merit calculated?",
-      "Entrance-based states rank purely on the entrance score — UP B.Ed JEE, Bihar CET-B.Ed and MAH B.Ed CET publish rank lists from the exam alone, with graduation marks only as an eligibility condition. Universities without an entrance rank on graduation percentage, and some use a weighted mix; all three are the formula merit = graduation % x weight + entrance % x (100 - weight).",
+      "Entrance-based states rank purely on the entrance score — UP B.Ed JEE, Bihar CET-B.Ed and MAH B.Ed CET publish rank lists from the exam alone, with graduation marks only as an eligibility condition. Universities without an entrance rank on graduation percentage, and some use a weighted mix; all three fit the formula merit = graduationPercent x (w/100) + entrancePercent x ((100-w)/100), where w is the graduation weight from 0 to 100.",
     ],
     [
       "What is the minimum percentage in graduation for B.Ed admission?",

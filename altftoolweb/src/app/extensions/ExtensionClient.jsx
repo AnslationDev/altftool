@@ -139,6 +139,7 @@ export default function ExtensionsPage() {
                   <Search className="extensions-hero-search-icon h-5 w-5" aria-hidden="true" />
                   <input
                     type="text"
+                    aria-label="Search extensions"
                     placeholder="Search extensions..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

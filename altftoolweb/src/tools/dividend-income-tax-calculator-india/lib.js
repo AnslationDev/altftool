@@ -2,7 +2,11 @@
  * Tax on dividend income received by a resident individual from Indian companies
  * and mutual funds.
  *
- * Statutory basis (Income-tax Act, 1961):
+ * Statutory basis (Income-tax Act, 1961). Note: the Income-tax Act, 2025 replaced
+ * the 1961 Act with effect from 1 April 2026 (applicable from Tax Year 2026-27).
+ * The provisions below are carried forward/consolidated under the new Act; the
+ * section numbers cited are the 1961 Act's, and the computed rates/thresholds
+ * remain substantively the same under the 2025 Act.
  *  - Since the Finance Act, 2020 abolished Dividend Distribution Tax with effect
  *    from 1 April 2020, dividend is taxable in the hands of the shareholder as
  *    "Income from Other Sources" under section 56(2)(i), at the slab rate that
@@ -18,7 +22,7 @@
  *  - Section 197A(1A)/(1C): a Form 15G (or 15H for a resident aged 60+) can be
  *    filed for nil deduction where the estimated total income is below the
  *    taxable limit.
- *  - Finance Act, 2022: surcharge on dividend income is capped at 15%, even where
+ *  - Finance Act, 2020: surcharge on dividend income is capped at 15%, even where
  *    the taxpayer's other income attracts a 25% or 37% surcharge.
  *  - Health and Education Cess is 4% of income tax plus surcharge.
  *  - Section 208: advance tax is payable where the estimated tax liability after

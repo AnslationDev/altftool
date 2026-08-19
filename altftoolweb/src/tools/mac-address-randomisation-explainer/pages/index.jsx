@@ -118,7 +118,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -233,12 +233,14 @@ export default function ToolHome() {
                 <span className="font-semibold">{entry.label}</span>
                 <span
                   className={
-                    entry.breaksWhenRandom
-                      ? "rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--danger)]"
-                      : "rounded-full bg-[var(--warning-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--warning)]"
+                    entry.positiveOutcome
+                      ? "rounded-full bg-[var(--success-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--success)]"
+                      : entry.breaksWhenRandom
+                        ? "rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--danger)]"
+                        : "rounded-full bg-[var(--warning-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--warning)]"
                   }
                 >
-                  {entry.breaksWhenRandom ? "Breaks" : "Gets messy"}
+                  {entry.positiveOutcome ? "Protects you" : entry.breaksWhenRandom ? "Breaks" : "Gets messy"}
                 </span>
               </span>
               <span className="mt-1 block leading-6 text-[var(--muted-foreground)]">

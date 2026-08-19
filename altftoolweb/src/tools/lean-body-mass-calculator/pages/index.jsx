@@ -339,7 +339,7 @@ export default function ToolHome() {
             </div>
           </div>
 
-          <div className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <div className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
             {hasError ? (
               <div role="alert" className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
                 {result.errors[0]}

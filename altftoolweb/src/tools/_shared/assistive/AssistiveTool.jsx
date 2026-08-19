@@ -83,7 +83,7 @@ const TOOL_META = {
   "slow-speech-playback-trainer": {
     title: "Slow Speech Playback Trainer",
     description:
-      "Play a local audio file more slowly, preserve pitch where supported, and loop difficult segments.",
+      "Play a local audio file more slowly, preserve pitch where supported, and loop the full file to repeat it without a manual rewind.",
     icon: Volume2,
   },
   "lip-read-practice-mirror": {
@@ -539,6 +539,7 @@ function useCamera() {
       setError("");
       setActive(true);
     } catch (cameraError) {
+      stop();
       setError(cameraError?.message || "Camera permission was not available.");
     } finally {
       startingRef.current = false;
@@ -597,7 +598,7 @@ function CameraMagnifier() {
             onChange={setGrayscale}
           />
           {error ? (
-            <p className="text-sm text-[var(--destructive)]">{error}</p>
+            <p className="text-sm text-[var(--destructive)]" role="alert">{error}</p>
           ) : null}
         </div>
       }
@@ -919,6 +920,13 @@ function DocumentRecolor() {
   const [brightness, setBrightness] = useState(1);
   const [invert, setInvert] = useState(false);
   const [grayscale, setGrayscale] = useState(true);
+  // Tracks whether the picked file actually decoded into a renderable image
+  // (as opposed to merely being picked). HEIC/HEIF photos — a realistic
+  // input given this tool's own "phone photo of a whiteboard" copy — pick
+  // successfully but fail to decode in most desktop/Android <img> engines,
+  // which previously left a blank preview and a silently-dead Export button.
+  const [decoded, setDecoded] = useState(false);
+  const [decodeFailed, setDecodeFailed] = useState(false);
 
   const filter = `contrast(${contrast}) brightness(${brightness}) invert(${invert ? 1 : 0}) grayscale(${grayscale ? 1 : 0})`;
   const download = () => {
@@ -944,9 +952,13 @@ function DocumentRecolor() {
           <input
             id="recolor-file"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             className={input}
-            onChange={(event) => setFile(event.target.files?.[0] || null)}
+            onChange={(event) => {
+              setDecoded(false);
+              setDecodeFailed(false);
+              setFile(event.target.files?.[0] || null);
+            }}
           />
           <RangeControl
             label={`Contrast · ${contrast.toFixed(1)}×`}
@@ -970,7 +982,7 @@ function DocumentRecolor() {
             type="button"
             className={primaryButton}
             onClick={download}
-            disabled={!url}
+            disabled={!decoded}
           >
             <Download className="h-4 w-4" />
             Export PNG
@@ -986,12 +998,26 @@ function DocumentRecolor() {
               ref={imageRef}
               src={url}
               alt="Recolored local page preview"
-              style={{ filter }}
+              style={{ filter, display: decodeFailed ? "none" : undefined }}
               className="max-h-[70vh] max-w-full"
+              onLoad={() => {
+                setDecoded(true);
+                setDecodeFailed(false);
+              }}
+              onError={() => {
+                setDecoded(false);
+                setDecodeFailed(true);
+              }}
             />
-          ) : (
+          ) : null}
+          {!url && (
             <p className="text-sm text-[var(--muted-foreground)]">
               Choose a page image to preview it.
+            </p>
+          )}
+          {decodeFailed && (
+            <p className="text-sm text-[var(--destructive)]" role="alert">
+              This image couldn&apos;t be loaded — try a JPEG, PNG, or WebP file.
             </p>
           )}
         </div>
@@ -1488,7 +1514,9 @@ function VoiceSteadiness() {
   const audioContextRef = useRef(null);
   const streamRef = useRef(null);
   const frameRef = useRef(null);
+  const startingRef = useRef(false);
   const [active, setActive] = useState(false);
+  const [starting, setStarting] = useState(false);
   const [error, setError] = useState("");
   const [volume, setVolume] = useState(0);
   const [pitch, setPitch] = useState(0);
@@ -1505,7 +1533,17 @@ function VoiceSteadiness() {
   useEffect(() => stop, [stop]);
 
   const start = async () => {
+    // Guard against a rapid double-click re-entering start() while the
+    // previous getUserMedia() call is still in flight. Without this, two
+    // overlapping calls can each resolve with their own MediaStream/
+    // AudioContext/requestAnimationFrame loop; the second assignment to
+    // streamRef.current/audioContextRef.current orphans the first set and
+    // its microphone + rAF loop keep running even after stop() is pressed.
+    if (startingRef.current) return;
+    startingRef.current = true;
+    setStarting(true);
     try {
+      stop();
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       const context = new AudioContext();
@@ -1540,6 +1578,9 @@ function VoiceSteadiness() {
       frameRef.current = requestAnimationFrame(loop);
     } catch (microphoneError) {
       setError(microphoneError?.message || "Microphone permission was not available.");
+    } finally {
+      startingRef.current = false;
+      setStarting(false);
     }
   };
 
@@ -1567,9 +1608,10 @@ function VoiceSteadiness() {
             type="button"
             className={active ? secondaryButton : primaryButton}
             onClick={active ? stop : start}
+            disabled={starting}
           >
             <Mic className="h-4 w-4" />
-            {active ? "Stop microphone" : "Start microphone"}
+            {active ? "Stop microphone" : starting ? "Starting microphone…" : "Start microphone"}
           </button>
           <p className="text-sm leading-6 text-[var(--muted-foreground)]">
             Sustain a comfortable vowel or read a short sentence. The tool
@@ -1577,13 +1619,13 @@ function VoiceSteadiness() {
             noise, microphones, and voice quality can make pitch unavailable.
           </p>
           {error ? (
-            <p className="text-sm text-[var(--destructive)]">{error}</p>
+            <p className="text-sm text-[var(--destructive)]" role="alert">{error}</p>
           ) : null}
         </div>
       }
       preview={
         <div className="grid gap-4">
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2" aria-live="polite">
             <Metric label="Current volume" value={`${volume}/100`} />
             <Metric
               label="Estimated pitch"
@@ -1637,7 +1679,32 @@ function estimatePitch(buffer, sampleRate) {
       bestOffset = offset;
     }
   }
-  return bestOffset > 0 ? sampleRate / bestOffset : 0;
+  if (bestOffset <= 0) return 0;
+
+  // At high sample rates (e.g. a 96 kHz interface), buffer.length/2 caps
+  // maxOffset below what a true 70 Hz period needs, so a genuinely
+  // in-range low voice can have no real periodic match inside
+  // [minOffset, maxOffset]. The raw-sum correlation above is then biased
+  // toward small offsets purely because the summation window is largest
+  // there, and can "win" with a weak, non-periodic match instead of the
+  // dash the out-of-range case is supposed to show. Guard against that by
+  // checking how strong the winning match actually is: normalize the
+  // correlation by the geometric mean of the two windows' energy (a
+  // Pearson-style coefficient bounded in [-1, 1]) and only trust matches
+  // that are close to a genuine periodic lock, regardless of sample rate.
+  let energyA = 0;
+  let energyB = 0;
+  const count = buffer.length - bestOffset;
+  for (let index = 0; index < count; index += 1) {
+    energyA += buffer[index] * buffer[index];
+    energyB += buffer[index + bestOffset] * buffer[index + bestOffset];
+  }
+  const energyProduct = energyA * energyB;
+  const normalizedConfidence =
+    energyProduct > 0 ? bestCorrelation / Math.sqrt(energyProduct) : 0;
+  if (normalizedConfidence < 0.85) return 0;
+
+  return sampleRate / bestOffset;
 }
 
 function CopyButton({ text }) {

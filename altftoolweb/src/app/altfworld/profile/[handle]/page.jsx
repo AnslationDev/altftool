@@ -11,6 +11,9 @@ export async function generateMetadata({ params }) {
     description: `View ${label}'s AltfWorld community profile, builder context, and shared activity.`,
     path: `/altfworld/profile/${handle}`,
     keywords: [label, "AltfWorld profile"],
+    // One of ~5,000 procedurally generated mock profiles — must not be
+    // indexed as if it were a real person.
+    noindex: true,
   });
 }
 

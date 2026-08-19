@@ -15,12 +15,26 @@ const sampleJson = JSON.stringify(
   2,
 );
 
+const YAML_KEYWORD = /^(true|false|yes|no|on|off|y|n|null|~)$/i;
+const YAML_NUMBER = /^[-+]?(\.inf|\.nan|\d[\d_]*(\.\d+)?([eE][-+]?\d+)?)$/i;
+
 function scalar(value) {
   if (value === null) return "null";
   if (typeof value === "number" || typeof value === "boolean") return String(value);
   if (value === "") return '""';
-  if (/[:#{}\[\],&*?|\-<>=!%@`]/.test(value) || /^\s|\s$/.test(value)) return JSON.stringify(value);
+  if (
+    /[:#{}\[\],&*?|\-<>=!%@`]/.test(value) ||
+    /^\s|\s$/.test(value) ||
+    YAML_KEYWORD.test(value) ||
+    YAML_NUMBER.test(value)
+  )
+    return JSON.stringify(value);
   return value;
+}
+
+function yamlKey(key) {
+  if (key === "" || /[:#{}\[\],&*?|\-<>=!%@`]/.test(key) || /^\s|\s$/.test(key)) return JSON.stringify(key);
+  return key;
 }
 
 function toYaml(value, indent = 0) {
@@ -39,8 +53,8 @@ function toYaml(value, indent = 0) {
     if (!entries.length) return "{}";
     return entries
       .map(([key, item]) => {
-        if (item && typeof item === "object") return `${pad}${key}:\n${toYaml(item, indent + 2)}`;
-        return `${pad}${key}: ${scalar(item)}`;
+        if (item && typeof item === "object") return `${pad}${yamlKey(key)}:\n${toYaml(item, indent + 2)}`;
+        return `${pad}${yamlKey(key)}: ${scalar(item)}`;
       })
       .join("\n");
   }
@@ -80,8 +94,8 @@ export default function ToolHome() {
 
         <section className="grid gap-6 2xl:grid-cols-2">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <h2 className="text-lg font-semibold">JSON input</h2>
-            <textarea value={input} onChange={(event) => setInput(event.target.value)} className="mt-4 min-h-[360px] w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 outline-none focus:border-[var(--primary)] sm:min-h-[460px]" spellCheck={false} />
+            <h2 id="json-input-heading" className="text-lg font-semibold">JSON input</h2>
+            <textarea aria-labelledby="json-input-heading" value={input} onChange={(event) => setInput(event.target.value)} className="mt-4 min-h-[360px] w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 outline-none focus:border-[var(--primary)] sm:min-h-[460px]" spellCheck={false} />
           </div>
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -91,7 +105,7 @@ export default function ToolHome() {
                 {copied ? "Copied" : "Copy"}
               </button>
             </div>
-            <pre className={`mt-4 min-h-[360px] overflow-auto whitespace-pre-wrap break-words rounded-lg p-4 text-sm leading-6 sm:min-h-[460px] ${result.ok ? "bg-slate-950 text-slate-100" : "bg-red-50 text-red-700 dark:bg-red-950/30 dark:text-red-300"}`}>
+            <pre aria-live="polite" role={result.ok ? "status" : "alert"} className={`mt-4 min-h-[360px] overflow-auto whitespace-pre-wrap break-words rounded-lg p-4 text-sm leading-6 sm:min-h-[460px] ${result.ok ? "bg-slate-950 text-slate-100" : "bg-red-50 text-red-700 dark:bg-red-950/30 dark:text-red-300"}`}>
               {result.value}
             </pre>
           </div>

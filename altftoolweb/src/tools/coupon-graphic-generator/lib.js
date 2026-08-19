@@ -199,8 +199,17 @@ export function expiryLine(expiryIso, todayIso, locale = "en-GB") {
  * with the offer itself rather than only behind a link.
  */
 export function buildTermsLine({ expiryIso, todayIso, minSpend, currency = "USD", locale = "en-US", maxDiscount, oneUsePerCustomer, exclusions, combinable }) {
-  const money = (amount) =>
-    new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 }).format(Number(amount) || 0);
+  // Guard against malformed/partial currency codes (e.g. mid-edit "US") so this never
+  // throws — callers that need a hard error validate the code themselves beforehand.
+  const money = (amount) => {
+    try {
+      return new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 }).format(
+        Number(amount) || 0,
+      );
+    } catch {
+      return `${Number(amount) || 0} ${currency}`;
+    }
+  };
   const parts = [];
   const stamp = parseIsoDate(expiryIso);
   if (stamp !== null) {
@@ -359,7 +368,16 @@ export function buildCoupon(input = {}) {
 
   const currency = String(input.currency || "USD").toUpperCase();
   const locale = String(input.locale || "en-US");
-  const money = (amount) => new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 }).format(Number(amount) || 0);
+  if (!/^[A-Z]{3}$/.test(currency)) {
+    return { error: "Enter a valid 3-letter currency code." };
+  }
+  let currencyFormatter;
+  try {
+    currencyFormatter = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 });
+  } catch {
+    return { error: "Enter a valid 3-letter currency code." };
+  }
+  const money = (amount) => currencyFormatter.format(Number(amount) || 0);
 
   const expiry = expiryLine(input.expiryIso, input.todayIso, locale === "en-US" ? "en-US" : locale);
   const terms = buildTermsLine({
@@ -374,9 +392,21 @@ export function buildCoupon(input = {}) {
     exclusions: input.exclusions,
   });
 
-  // Headline: the number the customer reads first.
+  // Headline: the number the customer reads first. It must always reflect what the
+  // merchant actually configured (raw value, capped by any maximum discount) — never
+  // an illustrative-basket outcome such as a minSpend-zeroed or basket-clamped amount,
+  // which would bake a misleading number into an exported graphic. Those situations are
+  // still surfaced via the warnings list below.
   let headline = offer.headline;
-  if (offer.type === "amount") headline = `${money(offer.discount)} off`;
+  if (offer.type === "percent" && (offer.capped || offer.qualifies === false)) {
+    headline = `${offer.effectivePercent}% off`;
+  }
+  if (offer.type === "amount") {
+    const rawValue = Number(input.value) || 0;
+    const capValue = Number(input.maxDiscount) > 0 ? Number(input.maxDiscount) : 0;
+    const faceValue = capValue > 0 ? Math.min(rawValue, capValue) : rawValue;
+    headline = `${money(faceValue)} off`;
+  }
   if (offer.type === "shipping") headline = "Free shipping";
 
   const { width, height } = preset;

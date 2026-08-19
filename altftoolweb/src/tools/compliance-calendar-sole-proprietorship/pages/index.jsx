@@ -17,11 +17,30 @@ const CHECK_ROW =
 
 const DASH = "—";
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+// Every deadline in this tool is an India-specific statutory date, so the
+// "today" default is derived in Asia/Kolkata regardless of the visitor's
+// browser timezone — using the UTC calendar date instead made both the
+// default date and the FY auto-detect wrong for the ~5.5 hours of every IST
+// day (00:00-05:29 IST) that fall on the previous UTC calendar date.
+const istPartsNow = () => {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const get = (type) => Number(parts.find((part) => part.type === type).value);
+  return { year: get("year"), month: get("month"), day: get("day") };
+};
+
+const todayIso = () => {
+  const { year, month, day } = istPartsNow();
+  return `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+};
 
 const currentFyStartYear = () => {
-  const now = new Date();
-  return now.getUTCMonth() >= 3 ? now.getUTCFullYear() : now.getUTCFullYear() - 1;
+  const { year, month } = istPartsNow();
+  return month >= 4 ? year : year - 1;
 };
 
 const prettyDate = (iso) => {
@@ -147,7 +166,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="numeric"
-              min="2017"
+              min="2018"
               max="2035"
               step="1"
               value={fyStartYear}
@@ -270,7 +289,11 @@ export default function ToolHome() {
         </>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

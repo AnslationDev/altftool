@@ -248,7 +248,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -332,7 +336,7 @@ export default function ToolHome() {
             muscle protein synthesis in adults.
           </p>
         )}
-        {!hasError && !plan.leucineThresholdMetWithFood && (
+        {!hasError && !plan.leucineThresholdMetWithFood && plan.leucineThresholdMetWithWhey && (
           <p className="mt-2 text-xs text-[var(--muted-foreground)]">
             Whole-food protein delivers roughly {LEUCINE_THRESHOLD_G} g of leucine only at higher
             doses — dairy, whey or eggs are leucine-dense options if you want to close the gap.

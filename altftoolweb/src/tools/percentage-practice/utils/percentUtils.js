@@ -81,7 +81,7 @@ function generateFindNumber(difficulty) {
 function generateFindWhatPercent(difficulty) {
   const cfg = getConfig(difficulty);
   const num2 = randInt(cfg.numRange[0], cfg.numRange[1]);
-  const pctChoices = [10, 20, 25, 30, 40, 50, 60, 75, 80];
+  const pctChoices = cfg.pctChoices;
   const pct = pickRandom(pctChoices);
   const num1 = roundClean((pct / 100) * num2);
 
@@ -182,11 +182,11 @@ function generateOriginal(difficulty) {
     question: `After a ${pct}% discount, the price is $${salePrice}. What was the original price?`,
     answer: original,
     unit: "$",
-    explanation: `Original = $${salePrice} / (1 - ${pct}/100) = $${salePrice} / ${roundClean(1 - pct / 100)} = $${original}`,
+    explanation: `Original = $${salePrice} / (1 - ${pct}/100) = $${salePrice} / ${roundClean(1 - pct / 100)} ≈ $${original}`,
     steps: [
       `Formula: Original = Sale Price / (1 - discount%/100)`,
       `Calculate: 1 - ${pct}/100 = ${roundClean(1 - pct / 100)}`,
-      `$${salePrice} / ${roundClean(1 - pct / 100)} = $${original}`,
+      `$${salePrice} / ${roundClean(1 - pct / 100)} ≈ $${original}`,
     ],
   };
 }
@@ -215,7 +215,7 @@ export function checkAnswer(userAnswer, correctAnswer) {
   const num = parseFloat(userAnswer);
   if (isNaN(num)) return false;
   if (Math.abs(correctAnswer) < 0.01) return Math.abs(num) < 0.01;
-  return Math.abs(num - correctAnswer) / Math.max(1, Math.abs(correctAnswer)) < 0.005;
+  return Math.abs(num - correctAnswer) / Math.abs(correctAnswer) < 0.005;
 }
 
 export function formatAnswer(answer, unit) {

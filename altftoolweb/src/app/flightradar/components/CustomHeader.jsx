@@ -232,7 +232,7 @@ export default function CustomHeader({
         {/* Global Theme Toggle Button */}
         <button
           onClick={() => setThemeMode(resolvedTheme === 'dark' ? 'light' : 'dark')}
-          className="h-10 w-10 flex items-center justify-center rounded-full border border-border/50 bg-card/40 hover:bg-card/80 text-foreground backdrop-blur transition-all duration-300 cursor-pointer"
+          className="h-11 w-11 flex items-center justify-center rounded-full border border-border/50 bg-card/40 hover:bg-card/80 text-foreground backdrop-blur transition-all duration-300 cursor-pointer"
           aria-label="Toggle Theme"
           title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} Mode`}
         >
@@ -247,7 +247,7 @@ export default function CustomHeader({
         <div className="relative" ref={filterRef}>
           <button 
             onClick={() => setShowFilters(!showFilters)}
-            className={`h-10 w-10 flex items-center justify-center rounded-full border border-border/50 backdrop-blur transition-all duration-300 cursor-pointer ${
+            className={`h-11 w-11 flex items-center justify-center rounded-full border border-border/50 backdrop-blur transition-all duration-300 cursor-pointer ${
               hasActiveFilters 
                 ? 'bg-[var(--secondary)] text-white shadow-sm hover:bg-[var(--secondary)]/90 border-[var(--secondary)]/50' 
                 : 'bg-card/40 hover:bg-card/80 text-foreground border-border/50'
@@ -256,7 +256,7 @@ export default function CustomHeader({
           >
             <SlidersHorizontal size={15} className={`transition-transform duration-300 ${showFilters ? 'rotate-180' : ''}`} />
             {hasActiveFilters && (
-              <span className="absolute -top-1 -right-1 bg-primary text-card-foreground border-2 border-rice rounded-full text-[8px] font-extrabold w-5 h-5 flex items-center justify-center shadow-sm">
+              <span className="absolute -top-1 -right-1 bg-primary text-card-foreground border-2 border-card rounded-full text-[8px] font-extrabold w-5 h-5 flex items-center justify-center shadow-sm">
                 !
               </span>
             )}

@@ -144,6 +144,7 @@ export function buildTypographyReport({ text, left, right } = {}) {
       words: summary.words,
       paragraphs: summary.paragraphs,
       scriptCount: summary.scriptCount,
+      truncated: summary.truncated,
     },
     left: normalizedLeft,
     right: normalizedRight,

@@ -36,6 +36,15 @@ export function ProcessNode({ data, selected }) {
         selected ? 'border-blue-500 shadow-blue-200 shadow-lg' : 'border-slate-300'
       }`}
       onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      role="button"
+      aria-label="Double-click or press Enter to rename"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleDoubleClick();
+        }
+      }}
     >
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-blue-500 !border-2 !border-white" />
       {isEditing ? (

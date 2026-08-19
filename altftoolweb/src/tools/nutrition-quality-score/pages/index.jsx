@@ -60,15 +60,6 @@ export default function NutritionQualityScore() {
 
   const resetForm = () => {
     setScore(null);
-    setFormData({
-      vegetables: 2,
-      fruits: 2,
-      fish: 1,
-      nuts: 1,
-      water: 4,
-      sugaryDrinks: 1,
-      fastFood: 1
-    });
   };
 
   return (
@@ -91,78 +82,78 @@ export default function NutritionQualityScore() {
             <div className="space-y-6">
 
               <div className="space-y-3">
-                <label className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
+                <label htmlFor="vegetables" className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
                   <Leaf className="w-5 h-5 text-emerald-500" />
                   Daily servings of Vegetables
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="vegetables" min="0" max="10" value={formData.vegetables} onChange={handleChange} className="w-full accent-emerald-500" />
+                  <input id="vegetables" type="range" name="vegetables" min="0" max="10" value={formData.vegetables} onChange={handleChange} className="w-full accent-emerald-500" />
                   <span className="w-8 text-center font-bold">{formData.vegetables}</span>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
+                <label htmlFor="fruits" className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
                   <Apple className="w-5 h-5 text-rose-500" />
                   Daily servings of Fruits
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="fruits" min="0" max="10" value={formData.fruits} onChange={handleChange} className="w-full accent-rose-500" />
+                  <input id="fruits" type="range" name="fruits" min="0" max="10" value={formData.fruits} onChange={handleChange} className="w-full accent-rose-500" />
                   <span className="w-8 text-center font-bold">{formData.fruits}</span>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
+                <label htmlFor="fish" className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
                   <Fish className="w-5 h-5 text-blue-500" />
                   Weekly servings of Fish/Seafood
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="fish" min="0" max="7" value={formData.fish} onChange={handleChange} className="w-full accent-blue-500" />
+                  <input id="fish" type="range" name="fish" min="0" max="7" value={formData.fish} onChange={handleChange} className="w-full accent-blue-500" />
                   <span className="w-8 text-center font-bold">{formData.fish}</span>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
+                <label htmlFor="nuts" className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
                   <Activity className="w-5 h-5 text-amber-500" />
                   Daily servings of Nuts/Seeds
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="nuts" min="0" max="5" value={formData.nuts} onChange={handleChange} className="w-full accent-amber-500" />
+                  <input id="nuts" type="range" name="nuts" min="0" max="5" value={formData.nuts} onChange={handleChange} className="w-full accent-amber-500" />
                   <span className="w-8 text-center font-bold">{formData.nuts}</span>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
+                <label htmlFor="water" className="flex items-center gap-2 font-semibold text-[var(--foreground)]">
                   <Droplets className="w-5 h-5 text-cyan-500" />
                   Daily glasses of Water
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="water" min="0" max="15" value={formData.water} onChange={handleChange} className="w-full accent-cyan-500" />
+                  <input id="water" type="range" name="water" min="0" max="15" value={formData.water} onChange={handleChange} className="w-full accent-cyan-500" />
                   <span className="w-8 text-center font-bold">{formData.water}</span>
                 </div>
               </div>
 
               <div className="space-y-3 pt-4 border-t border-[var(--border)]">
-                <label className="flex items-center gap-2 font-semibold text-rose-500">
+                <label htmlFor="sugaryDrinks" className="flex items-center gap-2 font-semibold text-rose-500">
                   <Coffee className="w-5 h-5" />
                   Daily Sugary Drinks (Sodas, Juices)
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="sugaryDrinks" min="0" max="10" value={formData.sugaryDrinks} onChange={handleChange} className="w-full accent-rose-500" />
+                  <input id="sugaryDrinks" type="range" name="sugaryDrinks" min="0" max="10" value={formData.sugaryDrinks} onChange={handleChange} className="w-full accent-rose-500" />
                   <span className="w-8 text-center font-bold">{formData.sugaryDrinks}</span>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-2 font-semibold text-rose-500">
+                <label htmlFor="fastFood" className="flex items-center gap-2 font-semibold text-rose-500">
                   <Flame className="w-5 h-5" />
                   Weekly Fast Food / Fried Meals
                 </label>
                 <div className="flex items-center gap-4">
-                  <input type="range" name="fastFood" min="0" max="14" value={formData.fastFood} onChange={handleChange} className="w-full accent-rose-500" />
+                  <input id="fastFood" type="range" name="fastFood" min="0" max="14" value={formData.fastFood} onChange={handleChange} className="w-full accent-rose-500" />
                   <span className="w-8 text-center font-bold">{formData.fastFood}</span>
                 </div>
               </div>
@@ -174,7 +165,7 @@ export default function NutritionQualityScore() {
             </button>
           </div>
         ) : (
-          <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 text-center shadow-md animate-in fade-in zoom-in duration-300">
+          <div role="status" aria-live="polite" className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 text-center shadow-md animate-in fade-in zoom-in duration-300">
             <h2 className="text-2xl font-extrabold text-[var(--foreground)] mb-2">Your Nutrition Score</h2>
 
             <div className={`mx-auto my-8 flex h-40 w-40 items-center justify-center rounded-full border-8 ${

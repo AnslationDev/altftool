@@ -348,13 +348,19 @@ export function modelGasLeak({
   const massToLelGrams =
     (lelFraction * roomVolumeM3 * 1000 * gas.molarMass) / MOLAR_VOLUME_L_PER_MOL;
 
+  // Mirrors the day/hour/minute thresholds of formatDuration() in
+  // pages/index.jsx (hours < 1 => minutes, hours < 48 => hours, else days) so
+  // this sentence and the headline/UEL row never disagree on units for the
+  // same hoursToLel value. Keep both in sync if either changes.
   let verdict;
   if (!reachesLel) {
     verdict = `At ${airChangesPerHour} air changes an hour the room settles at about ${steadyStatePct.toFixed(3)} % gas, below the ${gas.lel.toFixed(1)} % lower explosive limit. Ventilation is winning — but only while the window stays open.`;
   } else if (hoursToLel < 1) {
     verdict = `The room reaches its lower explosive limit in about ${Math.round(hoursToLel * 60)} minutes. That is a leak to act on immediately, not to investigate.`;
-  } else {
+  } else if (hoursToLel < 48) {
     verdict = `The room reaches its lower explosive limit in about ${hoursToLel.toFixed(1)} hours with the doors and windows as they are.`;
+  } else {
+    verdict = `The room reaches its lower explosive limit in about ${(hoursToLel / 24).toFixed(1)} days with the doors and windows as they are.`;
   }
 
   return {

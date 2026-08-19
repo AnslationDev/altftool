@@ -165,7 +165,11 @@ export default function ToolHome() {
           >
             {result.error}
           </p>
-          <section className="mt-4 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            aria-live="polite"
+            role="status"
+            className="mt-4 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          >
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Verdict</p>
             <p className="mt-2 text-2xl font-semibold text-[var(--muted-foreground)]">{DASH}</p>
             <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
@@ -180,7 +184,11 @@ export default function ToolHome() {
         </>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            aria-live="polite"
+            role="status"
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Verdict</p>

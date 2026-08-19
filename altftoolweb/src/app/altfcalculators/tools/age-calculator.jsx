@@ -4,6 +4,24 @@ import React, { useMemo, useState } from "react";
 import { Field, TextInput, Grid, ResultPanel, ResultStat, ResultRow } from "./ui";
 import { fmt } from "./format";
 
+// Parse a "YYYY-MM-DD" date-input string into a LOCAL midnight Date.
+// Parsing manually (rather than new Date(str)) avoids the UTC-vs-local
+// off-by-one that bites date-only strings in negative timezones.
+function parseDate(str) {
+  if (!str) return null;
+  const parts = String(str).split("-");
+  if (parts.length !== 3) return null;
+  const y = Number(parts[0]);
+  const m = Number(parts[1]);
+  const d = Number(parts[2]);
+  if (!Number.isFinite(y) || !Number.isFinite(m) || !Number.isFinite(d)) return null;
+  const dt = new Date(y, m - 1, d);
+  if (Number.isNaN(dt.getTime())) return null;
+  // Reject overflow like 2026-02-30 (which JS would roll to March).
+  if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== d) return null;
+  return dt;
+}
+
 function diffYMD(from, to) {
   let years = to.getFullYear() - from.getFullYear();
   let months = to.getMonth() - from.getMonth();
@@ -26,9 +44,9 @@ export default function AgeCalculator() {
 
   const result = useMemo(() => {
     if (!dob) return null;
-    const from = new Date(dob);
-    const to = asOf ? new Date(asOf) : new Date();
-    if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime())) return null;
+    const from = parseDate(dob);
+    const to = asOf ? parseDate(asOf) : new Date();
+    if (!from || !to || Number.isNaN(to.getTime())) return null;
     if (to < from) return { invalid: true };
 
     const ymd = diffYMD(from, to);

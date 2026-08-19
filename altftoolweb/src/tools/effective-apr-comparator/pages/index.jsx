@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRightLeft, Check, Copy, Plus, RotateCcw, Scale, Trash2 } from "lucide-react";
 
 import { compareOffers, DEFAULT_GST_ON_FEES_PCT, MAX_OFFERS, MIN_OFFERS } from "../lib";
@@ -122,6 +122,13 @@ export default function ToolHome() {
   const [scheduleIndex, setScheduleIndex] = useState(0);
   const [showAllRows, setShowAllRows] = useState(false);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => compareOffers({ offers, horizonMonths, includeInsuranceInApr }),
@@ -210,7 +217,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -350,7 +358,7 @@ export default function ToolHome() {
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className={LABEL_CLASS} htmlFor={`apr-${index}-principal`}>
-                    Loan amount you need in hand (INR)
+                    Loan amount (sanctioned, INR)
                   </label>
                   <input
                     id={`apr-${index}-principal`}

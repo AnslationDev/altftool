@@ -19,36 +19,52 @@ export const MAX_TAGS_PER_GROUP = 200;
 /**
  * Parse a group block. One group per line:
  *   Core: video editing, editing tutorial
- * Lines without a colon become a group called "Ungrouped".
+ * Lines without a colon (or with a colon in the first position) become a
+ * group called "Ungrouped".
+ *
+ * @returns {{groups:Array,droppedGroups:number,groupsTruncated:number}}
+ *   `droppedGroups` counts new groups skipped once MAX_GROUPS is reached;
+ *   `groupsTruncated` counts distinct groups whose tags were cut down to
+ *   MAX_TAGS_PER_GROUP. Callers should surface both instead of dropping
+ *   them silently.
  */
 export function parseGroups(text) {
   const groups = [];
   const lines = String(text ?? "").split(/\r?\n/);
+  const truncatedGroupNames = new Set();
+  let droppedGroups = 0;
   for (const line of lines) {
     const trimmed = line.trim();
     if (!trimmed) continue;
     const colon = trimmed.indexOf(":");
     const name = colon > 0 ? trimmed.slice(0, colon).trim() : "Ungrouped";
-    const body = colon > 0 ? trimmed.slice(colon + 1) : trimmed;
+    const body = colon >= 0 ? trimmed.slice(colon + 1) : trimmed;
     const tags = body
       .split(TAG_SEPARATOR)
       .map((tag) => tag.trim().replace(/\s+/g, " "))
-      .filter(Boolean)
-      .slice(0, MAX_TAGS_PER_GROUP);
+      .filter(Boolean);
     if (tags.length === 0) continue;
     const existing = groups.find((group) => group.name.toLowerCase() === name.toLowerCase());
-    if (existing) existing.tags.push(...tags);
-    else groups.push({ name, tags });
-    if (groups.length > MAX_GROUPS) break;
+    if (existing) {
+      existing.tags.push(...tags);
+      if (existing.tags.length > MAX_TAGS_PER_GROUP) {
+        existing.tags.length = MAX_TAGS_PER_GROUP;
+        truncatedGroupNames.add(existing.name);
+      }
+    } else {
+      if (groups.length >= MAX_GROUPS) {
+        droppedGroups += 1;
+        continue;
+      }
+      let groupTags = tags;
+      if (groupTags.length > MAX_TAGS_PER_GROUP) {
+        groupTags = groupTags.slice(0, MAX_TAGS_PER_GROUP);
+        truncatedGroupNames.add(name);
+      }
+      groups.push({ name, tags: groupTags });
+    }
   }
-  return groups;
-}
-
-/** How many characters a tag list costs in the tags field: tags plus the commas between them. */
-export function charCost(tags) {
-  const list = Array.isArray(tags) ? tags : [];
-  if (list.length === 0) return 0;
-  return list.reduce((sum, tag) => sum + String(tag).length, 0) + (list.length - 1);
+  return { groups, droppedGroups, groupsTruncated: truncatedGroupNames.size };
 }
 
 /**
@@ -115,7 +131,9 @@ export function buildTagSet({ groups = [], selected = [], maxChars = MAX_TAG_CHA
   const warnings = [];
   if (excluded.length > 0) {
     warnings.push(
-      `${excluded.length} tag${excluded.length === 1 ? " does" : "s do"} not fit in ${budget} characters and were left out — drop a group or shorten the long tags.`,
+      `${excluded.length} tag${excluded.length === 1 ? "" : "s"} didn't fit in the remaining budget and ${
+        excluded.length === 1 ? "was" : "were"
+      } left out — drop a group, remove some tags, or raise the character budget.`,
     );
   }
   if (duplicatesRemoved > 0) {
@@ -140,10 +158,7 @@ export function buildTagSet({ groups = [], selected = [], maxChars = MAX_TAG_CHA
       .forEach((word) => words.add(word));
   });
 
-  const groupCounts = {};
-  included.forEach((entry) => {
-    groupCounts[entry.group] = (groupCounts[entry.group] || 0) + 1;
-  });
+  const totalTagChars = included.reduce((sum, entry) => sum + entry.length, 0);
 
   return {
     included,
@@ -155,20 +170,7 @@ export function buildTagSet({ groups = [], selected = [], maxChars = MAX_TAG_CHA
     warnings,
     tagCount: included.length,
     uniqueWords: words.size,
-    averageTagLength: included.length > 0 ? chars / included.length : 0,
-    groupCounts,
+    averageTagLength: included.length > 0 ? totalTagChars / included.length : 0,
     tagString: included.map((entry) => entry.tag).join(TAG_SEPARATOR),
   };
-}
-
-/** Compare two tag sets: what a new video shares with the channel's core set. */
-export function overlap(setA, setB) {
-  const a = new Set((Array.isArray(setA) ? setA : []).map((tag) => String(tag).trim().toLowerCase()).filter(Boolean));
-  const b = new Set((Array.isArray(setB) ? setB : []).map((tag) => String(tag).trim().toLowerCase()).filter(Boolean));
-  if (a.size === 0 || b.size === 0) return { shared: 0, percent: 0 };
-  let shared = 0;
-  a.forEach((tag) => {
-    if (b.has(tag)) shared += 1;
-  });
-  return { shared, percent: (shared / Math.min(a.size, b.size)) * 100 };
 }

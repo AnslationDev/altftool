@@ -150,6 +150,16 @@ export default function ToolHome() {
     }
   }, []);
 
+  useEffect(() => {
+    return () => {
+      try {
+        audioRef.current?.close();
+      } catch {
+        /* already closed or unsupported */
+      }
+    };
+  }, []);
+
   const playChime = useCallback(() => {
     const ctx = audioRef.current || ensureAudio();
     if (!ctx) return;
@@ -231,11 +241,11 @@ export default function ToolHome() {
   const pauseTimer = (id) => {
     const ts = Date.now();
     setTimers((prev) =>
-      prev.map((t) =>
-        t.id === id && t.status === "running"
-          ? { ...t, status: "paused", remainingMs: Math.max(0, t.endAt - ts), endAt: null }
-          : t
-      )
+      prev.map((t) => {
+        if (t.id !== id || t.status !== "running") return t;
+        if (t.endAt - ts <= 0) return { ...t, status: "done", remainingMs: 0, endAt: null };
+        return { ...t, status: "paused", remainingMs: t.endAt - ts, endAt: null };
+      })
     );
   };
 
@@ -279,11 +289,11 @@ export default function ToolHome() {
   const pauseAll = () => {
     const ts = Date.now();
     setTimers((prev) =>
-      prev.map((t) =>
-        t.status === "running"
-          ? { ...t, status: "paused", remainingMs: Math.max(0, t.endAt - ts), endAt: null }
-          : t
-      )
+      prev.map((t) => {
+        if (t.status !== "running") return t;
+        if (t.endAt - ts <= 0) return { ...t, status: "done", remainingMs: 0, endAt: null };
+        return { ...t, status: "paused", remainingMs: t.endAt - ts, endAt: null };
+      })
     );
   };
 

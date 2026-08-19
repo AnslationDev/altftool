@@ -98,6 +98,13 @@ export const ORIGINS = [
  * `freeFlowKmh` is the door-to-terminal average speed with no congestion; the fixed
  * overhead covers everything that does not scale with distance — waiting for the cab,
  * parking and the walk in, or the wait at the bus bay.
+ *
+ * Every mode below is currently road-based, so `trafficSensitive` is `true` for all
+ * of them today, and the `!mode.trafficSensitive` UI branches in pages/index.jsx
+ * (traffic-assumption select disabled state, "runs on rails" copy, hourly-table
+ * visibility) are dormant. They are kept intentionally for the day a rail option is
+ * added — Namma Metro's airport corridor (referenced in this tool's FAQ) is under
+ * construction — rather than removed as dead code.
  */
 export const MODES = [
   {
@@ -345,23 +352,38 @@ export function planTransfer({
       break;
     }
     if (previous !== null && Math.abs(next - previous) < 0.5) {
-      // Oscillating between two hours — trust the congestion factor for the
-      // earlier (safer) of the pair, then re-solve leaveByMinute for THAT
-      // factor's travel time. Re-solving (rather than keeping the raw
-      // Math.min candidate) is what keeps leaveByMinute a genuine fixed
-      // point of terminalArrival - travel - buffer, so every number the UI
-      // prints from this result (journey, required lead, buffer, total
-      // door-to-departure) reconciles with the others even though strict
-      // iteration never settled.
-      const saferMinute = Math.min(next, leaveByMinute);
-      factor = level.factor === null ? trafficFactorAt(saferMinute, { isWeekend }) : level.factor;
+      // Oscillating between two adjacent hours. Take the EARLIER (safer) of
+      // the two actual candidate minutes from the last two iterations and
+      // use it directly as the final answer — do NOT re-solve leaveByMinute
+      // from its factor. Re-solving can drift the result back into the
+      // LATER (less safe) hour, which would report a travel time from the
+      // earlier hour's (lower) factor while actually landing in the later
+      // hour's higher-congestion window — silently understating travel time
+      // and eating into the required arrival margin. Instead, compute
+      // travel/factor FROM the chosen minute's own hour, so every number
+      // reported is self-consistent with the leave-by time actually used.
+      leaveByMinute = Math.min(next, leaveByMinute);
+      factor = level.factor === null ? trafficFactorAt(leaveByMinute, { isWeekend }) : level.factor;
       travel = journeyMinutes({ distanceKm: km, mode, factor });
-      leaveByMinute = terminalArrivalMinute - travel - buffer;
       break;
     }
     previous = leaveByMinute;
     leaveByMinute = next;
   }
+
+  // Canonicalize: leaveByTime below is formatMinutes(leaveByMinute), which
+  // rounds to the nearest minute, while the hour bucket used for factor/travel
+  // (trafficFactorAt, and the matching hourlyTravel row) floors to the hour.
+  // A raw leaveByMinute in the last ~30 seconds of an hour (e.g. 359.5) would
+  // therefore round up to the next hour for display while its factor/travel
+  // still came from the floor of the un-rounded value — describing two
+  // different hours on the same page. Rounding leaveByMinute itself first,
+  // then deriving factor/travel from that same rounded value, keeps every
+  // figure (leaveByTime, factor, travelMinutes, hourlyTravel row) pinned to
+  // one consistent hour.
+  leaveByMinute = Math.round(leaveByMinute);
+  factor = level.factor === null ? trafficFactorAt(leaveByMinute, { isWeekend }) : level.factor;
+  travel = journeyMinutes({ distanceKm: km, mode, factor });
 
   const freeFlowTravel = journeyMinutes({ distanceKm: km, mode, factor: 1 });
   const totalDoorToDeparture = departureMinute - leaveByMinute;

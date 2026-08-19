@@ -84,6 +84,11 @@ export function computeCampaignMetrics({
   if (clicks > delivered) return { error: "Unique clicks cannot exceed delivered emails." };
   if (machine > opens) return { error: "Machine opens cannot exceed total unique opens." };
 
+  const unsubscribeCount = Number(unsubscribes);
+  const complaintCount = Number(complaints);
+  if (unsubscribeCount > delivered) return { error: "Unsubscribes cannot exceed delivered emails." };
+  if (complaintCount > delivered) return { error: "Complaints cannot exceed delivered emails." };
+
   const humanOpens = opens - machine;
 
   const metrics = {
@@ -100,8 +105,8 @@ export function computeCampaignMetrics({
     adjustedOpenRate: rate(humanOpens, delivered),
     clickRate: rate(clicks, delivered),
     clickToOpenRate: rate(clicks, opens),
-    unsubscribeRate: rate(Number(unsubscribes), delivered),
-    complaintRate: rate(Number(complaints), delivered),
+    unsubscribeRate: rate(unsubscribeCount, delivered),
+    complaintRate: rate(complaintCount, delivered),
   };
 
   const flags = [];

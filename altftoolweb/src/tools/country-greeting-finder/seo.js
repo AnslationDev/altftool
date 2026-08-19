@@ -25,7 +25,7 @@ const seo = {
     ],
     [
       "Can I hear the greeting pronounced?",
-      "There is a read-aloud button that uses your browser's built-in speech synthesis, but it speaks with an English voice, so treat it as a rough guide only. The written pronunciation on each card — IPA for European languages, romanisation for scripts like Japanese and Chinese — is the more reliable reference.",
+      "There is a read-aloud button that uses your browser's built-in speech synthesis, matched to the greeting's own language where your browser has that voice installed (Japanese, Mandarin, Hindi, Korean, Russian, Greek, Arabic, Thai, Hebrew and Persian each get their own voice; other entries use an English voice). Voice availability still depends on what is installed on your device, so treat it as a rough guide only. The written pronunciation on each card — IPA for European languages, romanisation for scripts like Japanese and Chinese — is the more reliable reference.",
     ],
     [
       "Why does one country show only one language when it has several?",

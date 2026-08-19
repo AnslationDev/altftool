@@ -104,7 +104,7 @@ export default function TopRated({
         href={externalLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full sm:w-auto justify-center px-4 sm:px-6 py-2.5 rounded-full bg-(--primary) text-white flex items-center gap-2 whitespace-nowrap"
+        className="w-full sm:w-auto justify-center px-4 sm:px-6 py-2.5 rounded-full bg-(--primary) text-(--primary-foreground) flex items-center gap-2 whitespace-nowrap"
       >
         View Site
         <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />

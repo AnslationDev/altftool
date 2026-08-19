@@ -18,15 +18,28 @@ import {
   Area,
 } from "recharts";
 
-export default function CareerCharts({ activeCareer, matches }) {
-  // 1. Radar chart data showing skill matching (Required vs Current)
-  const radarData = [
-    { subject: "Tech / Prog", A: activeCareer.matchScore - 5, B: 85, fullMark: 100 },
-    { subject: "Communication", A: activeCareer.matchScore + 2, B: 75, fullMark: 100 },
-    { subject: "Management", A: Math.max(20, activeCareer.matchScore - 20), B: 70, fullMark: 100 },
-    { subject: "Creativity", A: activeCareer.matchScore - 2, B: 80, fullMark: 100 },
-    { subject: "AI Knowledge", A: Math.max(10, activeCareer.matchScore - 30), B: 90, fullMark: 100 },
-  ];
+const clamp = (value) => Math.min(100, Math.max(0, value));
+
+// Recommended proficiency benchmark plotted as the "Career Requirement" line.
+// Every skill in a career's requiredSkills list is treated as equally
+// necessary, so a single flat benchmark (rather than fabricated per-skill
+// numbers) is the honest way to represent "what this role expects".
+const REQUIRED_SKILL_BENCHMARK = 80;
+
+export default function CareerCharts({ activeCareer, matches, skills }) {
+  // 1. Radar chart data showing skill matching (Required vs Current).
+  // Plots the user's ACTUAL rating (from Step 2's sliders) for each of the
+  // active career's real requiredSkills, falling back to a neutral 50 only
+  // for a skill name that genuinely isn't tracked in SKILL_LIST.
+  const radarData = (activeCareer.requiredSkills || []).map((skillName) => {
+    const rating = skills && skillName in skills ? skills[skillName] : 50;
+    return {
+      subject: skillName,
+      A: clamp(rating),
+      B: REQUIRED_SKILL_BENCHMARK,
+      fullMark: 100,
+    };
+  });
 
   // 2. Bar chart data comparing Top 5 Careers salaries
   const barData = matches.slice(0, 5).map((m) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ClipboardList, Copy, RotateCcw } from "lucide-react";
 
 import {
@@ -58,6 +58,9 @@ export default function ToolHome() {
   const [isEsm, setIsEsm] = useState(DEFAULTS.isEsm);
   const [checked, setChecked] = useState({});
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const relaxation =
     AGE_RELAXATIONS.find((entry) => entry.id === relaxId) ?? AGE_RELAXATIONS[0];
@@ -126,7 +129,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -181,7 +185,14 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]">
+        <div
+          className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
+          role="progressbar"
+          aria-valuenow={Math.round(readiness.percent)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Checklist completion"
+        >
           <span
             className="block h-full bg-[var(--primary)]"
             style={{ width: `${Math.max(0, Math.min(100, readiness.percent))}%` }}
@@ -352,7 +363,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Age on the cutoff date
             </p>
@@ -407,7 +418,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             [
               "Eligible date-of-birth window",

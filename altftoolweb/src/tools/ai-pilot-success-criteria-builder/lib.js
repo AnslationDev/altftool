@@ -288,7 +288,7 @@ export function buildPilotPlan({
     decision = niceMissed > 0 ? "Go with caveats" : "Go";
     decisionReason =
       niceMissed > 0
-        ? `Every must-have was met, but ${niceMissed} nice-to-have criterion${niceMissed === 1 ? " was" : "s were"} missed — carry them into the rollout plan.`
+        ? `Every must-have was met, but ${niceMissed} nice-to-have ${niceMissed === 1 ? "criterion was" : "criteria were"} missed — carry them into the rollout plan.`
         : "Every must-have criterion was met, so the pilot graduates as scoped.";
   } else {
     decision = "Not measured yet";

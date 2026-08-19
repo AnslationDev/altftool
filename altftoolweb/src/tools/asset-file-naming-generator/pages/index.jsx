@@ -214,7 +214,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Generated names</p>
@@ -239,7 +243,7 @@ export default function ToolHome() {
         </pre>
 
         {single.warnings?.length > 0 && (
-          <ul className="mt-4 space-y-2 text-sm text-[var(--warning)]">
+          <ul className="mt-4 space-y-2 text-sm text-[var(--warning-text)]">
             {single.warnings.map((warning) => (
               <li key={warning}>• {warning}</li>
             ))}

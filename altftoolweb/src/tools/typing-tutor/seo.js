@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "How are WPM and accuracy calculated?",
-      "WPM is correctly typed characters divided by 5, divided by the minutes elapsed, and accuracy is correct characters as a percentage of all keystrokes. The five-character word is the standard convention, so scores here are comparable to other typing tests.",
+      "WPM is correctly typed characters divided by 5, divided by the minutes elapsed — the five-character word is the standard convention. Accuracy is correct characters as a percentage of your current keystroke count, which resets when you backspace, so corrected mistakes don't count against your final score.",
     ],
     [
       "What accuracy should I aim for before moving on?",

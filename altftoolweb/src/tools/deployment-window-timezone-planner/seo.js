@@ -22,7 +22,7 @@ const seo = {
   faqs: [
     [
       "What is the best time to deploy for a global audience?",
-      "There is no universal hour — the right window is the UTC slot that falls outside business and peak hours in every region you actually serve. For a US East + Europe + India footprint with 08:00-22:00 local avoided, the clear slots collapse to a few hours around 00:00-03:00 UTC, which is why teams compute the window rather than guessing.",
+      "There is no universal hour — the right window is the UTC slot that falls outside business and peak hours in every region you actually serve. A US East + Central Europe + India footprint with 08:00-22:00 local avoided in every region has zero fully clear UTC hours at all: someone's business day is always running somewhere in that trio. The tool falls back to its least-conflict window instead, 00:00-02:00 UTC, which overlaps only 2 region-hours (US East 19:00-21:00, Central Europe 01:00-03:00, India 05:30-07:30 local) — which is why teams compute the window rather than guessing.",
     ],
     [
       "How do I avoid deploying during business hours across timezones?",

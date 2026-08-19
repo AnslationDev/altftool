@@ -19,7 +19,7 @@ html:has(.packngo-page) {
   --packngo-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
   --packngo-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #ffffff;
   color: var(--packngo-ink);
   font-family: var(--packngo-sans);

@@ -245,7 +245,11 @@ export default function AccessibleDocumentChecker() {
 
       {result ? (
         <>
-          <section className="tool-card p-4 sm:p-5">
+          <section
+            className="tool-card p-4 sm:p-5"
+            role="status"
+            aria-live="polite"
+          >
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h2 className="flex items-center gap-2 text-lg font-bold text-foreground">

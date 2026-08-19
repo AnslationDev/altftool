@@ -60,6 +60,11 @@ const DEFAULTS = {
 
 const DASH = "—";
 
+// An empty form field is "not answered", not zero — coercing "" to 0 with a bare
+// Number() would make computeExpectedBill/assessComplaint silently treat a blank
+// field as a real zero reading or amount instead of rejecting it.
+const numOrBlank = (raw) => (raw === "" ? NaN : Number(raw));
+
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState("");
@@ -71,12 +76,12 @@ export default function ToolHome() {
   const expectedBill = useMemo(() => {
     if (!type.needsReadings) return null;
     return computeExpectedBill({
-      previousReading: Number(form.previousReading),
-      currentReading: Number(form.currentReading),
-      multiplyingFactor: Number(form.multiplyingFactor),
-      tariffPerUnit: Number(form.tariffPerUnit),
-      fixedCharge: Number(form.fixedCharge),
-      otherCharges: Number(form.otherCharges),
+      previousReading: numOrBlank(form.previousReading),
+      currentReading: numOrBlank(form.currentReading),
+      multiplyingFactor: numOrBlank(form.multiplyingFactor),
+      tariffPerUnit: numOrBlank(form.tariffPerUnit),
+      fixedCharge: numOrBlank(form.fixedCharge),
+      otherCharges: numOrBlank(form.otherCharges),
     });
   }, [
     type.needsReadings,
@@ -91,9 +96,9 @@ export default function ToolHome() {
   const assessment = useMemo(
     () =>
       assessComplaint({
-        billedAmount: Number(form.billedAmount),
+        billedAmount: numOrBlank(form.billedAmount),
         expectedBill,
-        averageMonthlyUnits: Number(form.averageMonthlyUnits),
+        averageMonthlyUnits: numOrBlank(form.averageMonthlyUnits),
         letterDateISO: form.letterDate,
         billDateISO: form.billDate,
         arrearFirstDueISO: form.arrearFirstDue,
@@ -126,12 +131,12 @@ export default function ToolHome() {
         letterDateISO: form.letterDate,
         billDateISO: form.billDate,
         billMonth: form.billMonth,
-        billedAmount: Number(form.billedAmount),
+        billedAmount: numOrBlank(form.billedAmount),
         complaintTypeId: form.complaintTypeId,
         complaintDetail: form.complaintDetail,
         earlierComplaintRef: form.earlierComplaintRef,
         earlierComplaintDateISO: form.earlierComplaintDate,
-        arrearAmount: Number(form.arrearAmount),
+        arrearAmount: numOrBlank(form.arrearAmount),
         arrearFirstDueISO: form.arrearFirstDue,
         disconnectionNoticeDateISO: form.disconnectionNoticeDate,
         phone: form.phone,
@@ -217,12 +222,14 @@ export default function ToolHome() {
             </label>
             <input id="ec-bill-month" className={INPUT} value={form.billMonth} onChange={set("billMonth")} />
           </div>
-          <div>
-            <label className={LABEL} htmlFor="ec-billed">
-              Amount the bill demands
-            </label>
-            <input id="ec-billed" className={INPUT} type="number" inputMode="decimal" min="0" step="1" value={form.billedAmount} onChange={set("billedAmount")} />
-          </div>
+          {type.needsReadings || type.billedAmountRelevant ? (
+            <div>
+              <label className={LABEL} htmlFor="ec-billed">
+                Amount the bill demands
+              </label>
+              <input id="ec-billed" className={INPUT} type="number" inputMode="decimal" min="0" step="1" value={form.billedAmount} onChange={set("billedAmount")} />
+            </div>
+          ) : null}
           <div className="sm:col-span-2">
             <label className={LABEL} htmlFor="ec-detail">
               Describe the problem in your own words (optional)
@@ -328,13 +335,19 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
-              {expectedBill && !expectedBill.error && assessment.excessBilled < 0
-                ? "Short-billed by"
-                : "Excess demanded over your working"}
+              {expectedBill && !expectedBill.error
+                ? assessment.excessBilled < 0
+                  ? "Short-billed by"
+                  : "Excess demanded over your working"
+                : "Complaint type"}
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">{headline}</p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -361,14 +374,18 @@ export default function ToolHome() {
                         expectedBill && !expectedBill.error
                           ? `Units on my working: ${formatNumber(expectedBill.units)} — total ${formatINR(expectedBill.total)}`
                           : "No meter working attached",
-                        `Amount demanded: ${formatINR(Number(form.billedAmount))}`,
+                        type.needsReadings || type.billedAmountRelevant
+                          ? `Amount demanded: ${formatINR(Number(form.billedAmount))}`
+                          : null,
                         assessment.arrear
                           ? `Arrear first due ${formatLongDate(form.arrearFirstDue)} — two-year bar date ${formatLongDate(assessment.arrear.barDateISO)}`
                           : "No arrear entered",
                         assessment.disconnection
                           ? `Earliest lawful disconnection: ${formatLongDate(assessment.disconnection.earliestISO)}`
                           : "No disconnection notice entered",
-                      ].join("\n"),
+                      ]
+                        .filter(Boolean)
+                        .join("\n"),
                   "summary",
                 )
               }
@@ -508,7 +525,10 @@ export default function ToolHome() {
         ) : (
           <>
             <p className="mt-3 text-xs text-[var(--muted-foreground)]">{letter.wordCount} words</p>
-            <pre className="mt-3 max-h-[28rem] overflow-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-6 whitespace-pre-wrap text-[var(--foreground)]">
+            <pre
+              aria-live="polite"
+              className="mt-3 max-h-[28rem] overflow-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-6 whitespace-pre-wrap text-[var(--foreground)]"
+            >
               {letter.body}
             </pre>
           </>

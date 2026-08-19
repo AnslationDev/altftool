@@ -11,7 +11,7 @@ const seo = {
     "This generator exports Twitch channel art at the sizes and file limits the platform enforces: 320 pixel wide panels capped at 300 pixels tall and 2.9 MB, 72x72 subscriber badges under 25 KB, 112x112 emotes under 1 MB, a 1200x480 profile banner and 1920x1080 offline video art. Because a panel is always rendered in a fixed 320 pixel column, the tool also works out how tall your artwork becomes at that width and warns when it would be trimmed. All resizing and encoding happens locally in your browser.",
   useCases: [
     "Slice a wide banner design into channel panels and check that each one stays under the 300 pixel display height.",
-    "Shrink a detailed logo to a 18x18 subscriber badge to see whether it still reads before committing to the full set.",
+    "Export a subscriber badge at 72x72, confirm it clears the 25 KB ceiling, then downscale it yourself to 18x18 and 36x36 for the rest of the set.",
     "Export an offline video banner at 1920x1080 from a vertical poster without stretching the artwork.",
     "Get a 112x112 emote PNG under the 1 MB ceiling straight from a high-resolution illustration.",
   ],

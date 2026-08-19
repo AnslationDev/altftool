@@ -140,18 +140,24 @@ export const CATEGORIES = [
 ];
 
 /**
- * Suggested defaults for a counselling type and category.
+ * Suggested defaults for a counselling type, category and PwD status.
  *
  * @param {string} typeId
  * @param {string} categoryId
+ * @param {boolean} [pwd] Whether the candidate is allotted under the PwD profile. MCC's
+ *   reduced fee extends to a PwD candidate regardless of category (see the header comment);
+ *   JoSAA's OPEN-PwD / EWS-PwD candidates pay the same fee as their base category, so `pwd`
+ *   has no effect there.
  * @returns {{ fee:number, deposit:number }|null}
  */
-export function defaultFeesFor(typeId, categoryId) {
+export function defaultFeesFor(typeId, categoryId, pwd = false) {
   const type = COUNSELLING_TYPES.find((entry) => entry.id === typeId);
   const category = CATEGORIES.find((entry) => entry.id === categoryId);
   if (!type || !category) return null;
-  // MCC treats OBC and PwD alongside SC and ST for the reduced fee; JoSAA does not.
-  const reduced = type.id.startsWith("mcc") ? category.id !== "general" && category.id !== "ews" : category.reserved;
+  // MCC treats OBC, PwD and SC/ST alike for the reduced fee; JoSAA does not.
+  const reduced = type.id.startsWith("mcc")
+    ? (category.id !== "general" && category.id !== "ews") || pwd
+    : category.reserved;
   return {
     fee: reduced ? type.reservedFee : type.generalFee,
     deposit: reduced ? type.reservedDeposit : type.generalDeposit,
@@ -266,11 +272,13 @@ export function computeReportingWindow({ allotmentDate = "", lastReportingDate =
     notStarted: elapsed < 0,
     urgent: daysLeft >= 0 && daysLeft <= 1,
     message:
-      daysLeft < 0
-        ? `The reporting window closed ${Math.abs(daysLeft)} day(s) ago. A seat not reported against is released, and any security deposit is liable to be forfeited.`
-        : daysLeft === 0
-          ? "Today is the last day to report. Reach the centre in the morning — a queue at 4 pm is not a defence."
-          : `${daysLeft} day(s) left in a ${windowDays}-day window. Collect anything missing today, not on the last morning.`,
+      elapsed < 0
+        ? `Reporting opens in ${Math.abs(elapsed)} day(s), for a ${windowDays}-day window.`
+        : daysLeft < 0
+          ? `The reporting window closed ${Math.abs(daysLeft)} day(s) ago. A seat not reported against is released, and any security deposit is liable to be forfeited.`
+          : daysLeft === 0
+            ? "Today is the last day to report. Reach the centre in the morning — a queue at 4 pm is not a defence."
+            : `${daysLeft} day(s) left in a ${windowDays}-day window. Collect anything missing today, not on the last morning.`,
   };
 }
 

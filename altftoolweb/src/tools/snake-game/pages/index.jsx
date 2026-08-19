@@ -27,7 +27,7 @@ export default function ToolHome() {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <StatCard label="Score" value={game.score} />
+              <StatCard label="Score" value={game.score} live />
               <StatCard label="High score" value={game.stats.highestScore} />
             </div>
           </div>
@@ -39,7 +39,7 @@ export default function ToolHome() {
             aria-live="polite"
             className="rounded-lg border border-[var(--primary)] bg-[var(--primary)]/10 p-4 text-sm font-semibold text-[var(--foreground)]"
           >
-            Collision detected. Restart when you are ready for another run.
+            Collision detected. Final score: {game.score}. Restart when you are ready for another run.
           </div>
         )}
 

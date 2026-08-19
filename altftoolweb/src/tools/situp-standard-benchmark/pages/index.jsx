@@ -284,6 +284,7 @@ export default function ToolHome() {
                 {result.rows.map((row) => (
                   <tr
                     key={row.name}
+                    aria-current={row.current ? "true" : undefined}
                     className={`border-b border-[var(--border)] last:border-0 ${
                       row.current ? "font-semibold text-[var(--primary)]" : ""
                     }`}

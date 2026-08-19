@@ -261,7 +261,11 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -348,7 +352,11 @@ export default function ToolHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[1, 2, 3, 4, 5, 6].map((slot) => {
+                  {(() => {
+                    const windowSize = 6;
+                    const start = Math.max(1, calc.days - Math.floor(windowSize / 2));
+                    return Array.from({ length: windowSize }, (_, idx) => start + idx);
+                  })().map((slot) => {
                     const from = (slot - 1) * calc.perDay + 1;
                     const to = slot * calc.perDay;
                     const active = calc.days === slot;

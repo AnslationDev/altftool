@@ -166,16 +166,25 @@ export function simulateHaggle({
   }
 
   const target = fair * (1 + premium / 100);
+  if (target >= asking) {
+    return {
+      error:
+        "Your target price already meets or exceeds the seller's quote — there's nothing to negotiate, buy it.",
+    };
+  }
   const walkAway = target * (1 + tolerance / 100);
   /* A seller's floor cannot sit above their own quote, so the reserve is capped at the
      asking price — otherwise a high assumed margin on a modestly marked-up item would
      produce a floor the seller has already undercut. */
   const sellerReserve = Math.min(fair * (1 + sellerMargin / 100), asking);
 
-  /* Mirrored anchor: place the counter so the midpoint of the two anchors is the target. */
+  /* Mirrored anchor: place the counter so the midpoint of the two anchors is the target.
+     Defense in depth: also clamp to the asking price — the guard above already keeps this
+     from firing in practice, but an opening counter can never rationally exceed the
+     seller's own quote. */
   const mirroredAnchor = 2 * target - asking;
   const anchorFloor = target * ANCHOR_FLOOR_RATIO;
-  const openingCounter = Math.max(mirroredAnchor, anchorFloor);
+  const openingCounter = Math.min(Math.max(mirroredAnchor, anchorFloor), asking);
   const anchorWasFloored = mirroredAnchor < anchorFloor;
 
   /* If the seller cannot go as low as you will go, no agreement exists. */

@@ -34,6 +34,7 @@ const DEFAULTS = {
   imageHeight: "600",
   imageBytes: "",
   site: "@example",
+  creator: "",
   imageAlt: "A video timeline with a section highlighted",
   url: "https://example.com/blog/trim-video",
 };
@@ -59,6 +60,7 @@ export default function ToolHome() {
         imageUrl: resolved.image.value,
         imageAlt: resolved.imageAlt.value,
         site: resolved.site.value,
+        creator: resolved.creator.value,
         url: resolved.url.value,
         imageWidth: 0,
         imageHeight: 0,
@@ -72,6 +74,7 @@ export default function ToolHome() {
       imageUrl: form.imageUrl,
       imageAlt: form.imageAlt,
       site: form.site,
+      creator: form.creator,
       url: form.url,
       imageWidth: Number(form.imageWidth) || 0,
       imageHeight: Number(form.imageHeight) || 0,
@@ -81,6 +84,25 @@ export default function ToolHome() {
 
   const result = useMemo(() => validateCard(fields), [fields]);
   const hasError = Boolean(result.error);
+
+  // Which fields fell back to an Open Graph (or <title>/description) tag
+  // instead of their own twitter:* tag, so the UI can say so instead of
+  // silently using the fallback value with no indication of its source.
+  const fallbackNotes = useMemo(() => {
+    if (!resolved) return [];
+    const checks = [
+      ["Title", "title"],
+      ["Description", "description"],
+      ["Image", "image"],
+      ["Image alt text", "imageAlt"],
+    ];
+    return checks
+      .filter(([, key]) => {
+        const source = resolved[key]?.source;
+        return source && !source.startsWith("twitter:");
+      })
+      .map(([label, key]) => `${label} from ${resolved[key].source}`);
+  }, [resolved]);
 
   const cssImage = safeImageCssUrl(fields.imageUrl);
   const isLarge = result.cardType === "summary_large_image" || result.cardType === "";
@@ -95,6 +117,7 @@ export default function ToolHome() {
             description: fields.description,
             imageUrl: fields.imageUrl,
             site: fields.site,
+            creator: fields.creator,
             imageAlt: fields.imageAlt,
             url: fields.url,
           }),
@@ -212,6 +235,18 @@ export default function ToolHome() {
                 className={`${INPUT_CLASS} mt-1`}
               />
             </div>
+            <div>
+              <label className={LABEL_CLASS} htmlFor="tcp-creator">
+                Creator handle (twitter:creator)
+              </label>
+              <input
+                id="tcp-creator"
+                type="text"
+                value={form.creator}
+                onChange={setField("creator")}
+                className={`${INPUT_CLASS} mt-1`}
+              />
+            </div>
             <div className="sm:col-span-2">
               <label className={LABEL_CLASS} htmlFor="tcp-title">
                 Title ({form.title.length}/{TITLE_MAX_CHARS})
@@ -309,7 +344,11 @@ export default function ToolHome() {
         )}
       </section>
 
-      <section className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {hasError && (
           <p
             role="alert"
@@ -328,6 +367,11 @@ export default function ToolHome() {
             ? DASH
             : `${result.cardTypeLabel} · ${result.warningCount} warning${result.warningCount === 1 ? "" : "s"}`}
         </p>
+        {!hasError && fallbackNotes.length > 0 && (
+          <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+            Using Open Graph fallback — {fallbackNotes.join(", ")}.
+          </p>
+        )}
 
         {!hasError && (
           <div className="mt-5 max-w-md overflow-hidden rounded-xl border border-[var(--border)]">

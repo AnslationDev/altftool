@@ -152,10 +152,9 @@ export default function ToolHome() {
   const partsTotal = parts.reduce((sum, part) => sum + part.value, 0) || 1;
 
   const pensionableService = plan.years >= 20 ? plan.years + 2 : plan.years;
-  const pensionableSalary = Math.min(
-    capWage ? WAGE_CEILING : Math.max(0, Number(monthlyWage) || 0),
-    WAGE_CEILING
-  );
+  // EPS pension is based on the pensionable salary near/at retirement (capped at the
+  // statutory Rs 15,000 ceiling), not the day-one wage the employee started with.
+  const pensionableSalary = Math.min(Math.max(0, Number(plan.finalWage) || 0), WAGE_CEILING);
   const epsPension = (pensionableSalary * pensionableService) / 70;
 
   const vpfDelta = vpfPlan.corpus - plan.corpus;

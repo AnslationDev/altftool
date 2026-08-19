@@ -78,7 +78,7 @@ export function yamlQuote(value) {
 
 /** A YAML plain scalar is safe unquoted only in simple cases; otherwise quote. */
 function yamlValue(value) {
-  if (/^[A-Za-z0-9_][A-Za-z0-9_./@-]*$/.test(value) && !/^(true|false|null|yes|no|on|off|~)$/i.test(value) && !/^[-+]?[0-9]/.test(value)) {
+  if (/^[A-Za-z0-9_][A-Za-z0-9_./@-]*$/.test(value) && !/^(true|false|null|yes|no|on|off|y|n|~)$/i.test(value) && !/^[-+]?[0-9]/.test(value)) {
     return value;
   }
   return yamlQuote(value);
@@ -191,7 +191,8 @@ export function convertEnvToSecret(text, { name, namespace = "", useStringData =
     lines.push("data:");
     for (const [key, value] of map) {
       approxBytes += utf8Bytes(value).length;
-      lines.push(`  ${key}: ${base64Encode(value)}`);
+      const encoded = base64Encode(value);
+      lines.push(`  ${key}: ${encoded === "" ? '""' : encoded}`);
     }
   }
 

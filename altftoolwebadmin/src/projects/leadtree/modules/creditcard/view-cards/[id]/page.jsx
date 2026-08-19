@@ -167,7 +167,7 @@ export default function CardsView() {
               {cards.slug && <InfoRow label="Slug" value={cards.slug} mono />}
             </div>
 
-            {(caches.seoTitle || cards.seoDescription) && (
+            {(cards.seoTitle || cards.seoDescription) && (
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-2">
                 <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">SEO</h3>
                 {cards.seoTitle && (

@@ -29,7 +29,7 @@ export default function App() {
 
       {/* ================= UPLOAD + PREVIEW ================= */}
       <section className="max-w-6xl mx-auto px-6 py-14">
-        <h2 className="subheading text-center mb-10 mt-[-50]">
+        <h2 className="subheading text-center mb-10 mt-[-50px]">
           Upload Your CSV
         </h2>
 

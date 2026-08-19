@@ -66,8 +66,13 @@ export function compareMarks({ periods }) {
   const rows = [];
   for (let i = 0; i < periods.length; i += 1) {
     const label = String(periods[i].label ?? "").trim() || `Period ${i + 1}`;
-    const obtained = Number(periods[i].obtained);
-    const max = Number(periods[i].max);
+    const rawObtained = String(periods[i].obtained ?? "").trim();
+    const rawMax = String(periods[i].max ?? "").trim();
+    if (rawObtained === "" || rawMax === "") {
+      return { error: `Enter marks obtained and maximum marks for ${label}.` };
+    }
+    const obtained = Number(rawObtained);
+    const max = Number(rawMax);
     if (!Number.isFinite(obtained) || !Number.isFinite(max)) {
       return { error: `Enter numeric marks for ${label}.` };
     }

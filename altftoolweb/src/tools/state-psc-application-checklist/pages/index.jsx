@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ClipboardList, Copy, RotateCcw, TriangleAlert } from "lucide-react";
 
 import {
@@ -69,12 +69,20 @@ export default function ToolHome() {
   const [needsScribe, setNeedsScribe] = useState(false);
   const [doneIds, setDoneIds] = useState([]);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
 
   // Seed the calendar from the visitor's own clock after hydration, never during render.
   useEffect(() => {
     const now = todayISO();
     setToday(now);
     setDates(seedDates(now));
+  }, []);
+
+  // Clear the "Copied!" timer on unmount so it never calls setState on a gone component.
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
   }, []);
 
   const setStageDate = (id, value) =>
@@ -151,7 +159,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => {
+        setCopied(false);
+        copiedTimeoutRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }
@@ -304,7 +316,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Days to the next deadline
             </p>

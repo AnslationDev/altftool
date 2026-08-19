@@ -579,6 +579,7 @@ function buildChatSvg(settings, messages) {
       <text x="${innerX + 18}" y="${height - 27}" font-family="Inter,Arial" font-size="13" font-weight="750" fill="${timestamp}">Message</text>
       <circle cx="${width - 42}" cy="${height - 32}" r="20" fill="${theme.accent}"/>
       <text x="${width - 47}" y="${height - 27}" font-family="Inter,Arial" font-size="14" font-weight="950" fill="${theme.sendIcon || inputText}">➤</text>` : ""}
+    ${settings.watermark ? `<g opacity=".55" clip-path="url(#phoneClip)"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" font-family="Inter,Arial" font-size="15" font-weight="900" fill="#ffffff" stroke="#0f172a" stroke-width="3" paint-order="stroke" transform="rotate(-32 ${width / 2} ${height / 2})">MOCKUP — NOT A REAL CONVERSATION</text></g>` : ""}
   </svg>`;
 }
 
@@ -1026,6 +1027,7 @@ function FakeChatHome({ settings, messages, savedAt, onOpenTemplate, onOpenBuild
             onChange={(event) => setTemplateSearch(event.target.value)}
             className="h-11 w-full rounded-full border border-transparent bg-[var(--muted)] px-5 pr-12 text-center text-base font-semibold text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
             placeholder="Template"
+            aria-label="Search templates"
           />
         </label>
 
@@ -1056,6 +1058,7 @@ function FakeChatHome({ settings, messages, savedAt, onOpenTemplate, onOpenBuild
             onChange={(event) => setHistorySearch(event.target.value)}
             className="h-11 w-full rounded-full border border-transparent bg-[var(--muted)] px-5 pr-12 text-center text-base font-semibold text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
             placeholder="Title"
+            aria-label="Search chat history"
           />
         </label>
 
@@ -1155,7 +1158,6 @@ export default function FakeChatMaker() {
     textScale: 14,
     previewWidth: 390,
     phoneHeight: 690,
-    fixedHeight: true,
   });
   const [messages, setMessages] = useState(SAMPLE_MESSAGES);
   const [draft, setDraft] = useState(emptyDraft);
@@ -1318,7 +1320,6 @@ export default function FakeChatMaker() {
       textScale: 14,
       previewWidth: 390,
       phoneHeight: 690,
-      fixedHeight: true,
     });
     setMessages(SAMPLE_MESSAGES);
     setDraft(emptyDraft());
@@ -1592,7 +1593,7 @@ export default function FakeChatMaker() {
               </div>
               <label className="relative block min-w-0 lg:w-72">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
-                <TextInput value={search} onChange={(event) => setSearch(event.target.value)} className="pl-10" placeholder="Search chat..." />
+                <TextInput value={search} onChange={(event) => setSearch(event.target.value)} className="pl-10" placeholder="Search chat..." aria-label="Search messages" />
               </label>
             </div>
 

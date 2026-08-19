@@ -74,6 +74,7 @@ export const ROUTES = [
     id: "international",
     label: "International visitor (visa required)",
     currency: "USD",
+    currencyLabel: "USD",
     sdfPerNight: SDF_INTERNATIONAL_USD_PER_NIGHT,
     visaFeePerPerson: VISA_FEE_USD,
     needsVisa: true,
@@ -83,6 +84,7 @@ export const ROUTES = [
     id: "bangladesh-maldives",
     label: "Bangladeshi or Maldivian national (permit, no visa)",
     currency: "USD",
+    currencyLabel: "USD",
     sdfPerNight: SDF_INTERNATIONAL_USD_PER_NIGHT,
     visaFeePerPerson: 0,
     needsVisa: false,
@@ -91,7 +93,12 @@ export const ROUTES = [
   {
     id: "india",
     label: "Indian national (regional visitor permit)",
+    // The SDF for this route is billed in Bhutanese ngultrum (at par with INR), not
+    // Indian rupees, and every piece of copy for this route says "Nu." — currencyLabel
+    // drives the displayed amounts so they agree with that copy instead of the "₹"
+    // symbol Intl's INR currency style would otherwise produce.
     currency: "INR",
+    currencyLabel: "Nu.",
     sdfPerNight: SDF_INDIA_INR_PER_NIGHT,
     visaFeePerPerson: 0,
     needsVisa: false,
@@ -168,13 +175,23 @@ function buildDocuments(context) {
   }
 
   if (context.route.id === "india") {
-    documents.push({
-      id: "identity",
-      label: "Indian passport valid six months, or an Election Commission voter ID",
-      detail:
-        "Either is accepted for Indian nationals. An Aadhaar card alone is not, and a driving licence is not.",
-      required: true,
-    });
+    if (context.documentType === "voterId") {
+      documents.push({
+        id: "identity",
+        label: "Election Commission of India voter ID",
+        detail:
+          "Accepted in place of a passport for Indian nationals. A voter ID carries no expiry date, so the six-month passport-validity rule does not apply to it. An Aadhaar card alone is not accepted, and neither is a driving licence.",
+        required: true,
+      });
+    } else {
+      documents.push({
+        id: "identity",
+        label: `Indian passport valid at least ${PASSPORT_VALIDITY_MONTHS} months beyond entry`,
+        detail:
+          "Counted from the day you enter Bhutan. An Election Commission of India voter ID is also accepted and, unlike a passport, has no expiry to check.",
+        required: true,
+      });
+    }
   } else {
     documents.push({
       id: "passport",
@@ -275,6 +292,9 @@ function buildDocuments(context) {
  * @param {number} [input.waivedNights] Nights waived under a current incentive notification.
  * @param {boolean} [input.travellingOutsideThimphuParo]
  * @param {boolean} [input.trekking]
+ * @param {string} [input.documentType] "passport" or "voterId" — only meaningful on the
+ *   India route, where a Voter Identity Card is an accepted travel document that carries
+ *   no expiry date, so the six-month validity rule below does not apply to it.
  * @returns {object} result, or { error }.
  */
 export function buildBhutanChecklist({
@@ -288,6 +308,7 @@ export function buildBhutanChecklist({
   waivedNights = 0,
   travellingOutsideThimphuParo = true,
   trekking = false,
+  documentType = "passport",
 } = {}) {
   const route = ROUTES.find((entry) => entry.id === routeId);
   if (!route) return { error: "Choose which entry route applies to you." };
@@ -295,14 +316,21 @@ export function buildBhutanChecklist({
   const entry = parseDate(entryDate);
   if (!entry) return { error: "Enter your date of entry as a real calendar date." };
 
-  const expiry = parseDate(passportExpiry);
-  if (!expiry) {
-    return {
-      error:
-        route.id === "india"
-          ? "Enter the expiry date of the passport or voter ID you will travel on."
-          : "Enter your passport expiry date as a real calendar date.",
-    };
+  // A Voter ID is only a valid document choice on the India route, and it has no
+  // expiry date — so the six-month forward-validity rule below is skipped for it.
+  const usingVoterId = route.id === "india" && documentType === "voterId";
+
+  let expiry = null;
+  if (!usingVoterId) {
+    expiry = parseDate(passportExpiry);
+    if (!expiry) {
+      return {
+        error:
+          route.id === "india"
+            ? "Enter the expiry date of the passport you will travel on, or switch to Voter ID."
+            : "Enter your passport expiry date as a real calendar date.",
+      };
+    }
   }
 
   const nightCount = Number(nights);
@@ -336,10 +364,12 @@ export function buildBhutanChecklist({
     return { error: "You cannot waive more nights than you are staying." };
   }
 
-  // Passport validity: six months counted from the day of entry.
-  const passportMustReach = addMonths(entry, PASSPORT_VALIDITY_MONTHS);
-  const passportOk = expiry.getTime() >= passportMustReach.getTime();
-  const passportShortfallDays = passportOk ? 0 : daysBetween(expiry, passportMustReach);
+  // Passport validity: six months counted from the day of entry. Not applicable to a
+  // Voter ID, which has no expiry date and is exempt from this check entirely.
+  const passportMustReach = usingVoterId ? null : addMonths(entry, PASSPORT_VALIDITY_MONTHS);
+  const passportOk = usingVoterId ? true : expiry.getTime() >= passportMustReach.getTime();
+  const passportShortfallDays =
+    usingVoterId || passportOk ? 0 : daysBetween(expiry, passportMustReach);
 
   // SDF: chargeable nights x rate, at full rate for 12 and over, half for 6 to 11,
   // nothing for under 6.
@@ -361,6 +391,7 @@ export function buildBhutanChecklist({
     needsGuide,
     hasMinors: midCount + infantCount > 0,
     trekking: Boolean(trekking),
+    documentType: usingVoterId ? "voterId" : "passport",
   });
   const requiredDocuments = documents.filter((doc) => doc.required);
   const optionalDocuments = documents.filter((doc) => !doc.required);
@@ -388,17 +419,20 @@ export function buildBhutanChecklist({
   }
 
   const verdict = passportOk
-    ? `Route is clear — budget ${route.currency} ${grandTotal.toLocaleString("en-US")} in government charges before flights and hotels.`
+    ? `Route is clear — budget ${route.currencyLabel} ${grandTotal.toLocaleString("en-US")} in government charges before flights and hotels.`
     : "Travel document validity fails the six-month rule — fix that before paying the SDF.";
 
   return {
     route,
     currency: route.currency,
+    currencyLabel: route.currencyLabel,
     entryDate: toIso(entry),
-    passportExpiry: toIso(expiry),
-    passportMustBeValidUntil: toIso(passportMustReach),
+    passportExpiry: usingVoterId ? null : toIso(expiry),
+    passportMustBeValidUntil: usingVoterId ? null : toIso(passportMustReach),
     passportOk,
     passportShortfallDays,
+    documentType: usingVoterId ? "voterId" : "passport",
+    documentValidityApplicable: !usingVoterId,
     nights: Math.round(nightCount),
     waivedNights: Math.round(waived),
     chargeableNights,

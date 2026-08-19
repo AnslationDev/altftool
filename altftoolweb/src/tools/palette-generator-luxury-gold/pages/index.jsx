@@ -185,7 +185,8 @@ export default function ToolHome() {
               step="1"
               value={variation}
               onChange={(event) => {
-                setVariation(Number(event.target.value));
+                const next = Math.min(MAX_VARIATION, Math.max(0, Number(event.target.value) || 0));
+                setVariation(next);
                 setCopied("");
               }}
             />
@@ -220,7 +221,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -264,6 +269,13 @@ export default function ToolHome() {
               )}
               {copied === "text" ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {copied === "css"
+                ? "Copied the palette as CSS to the clipboard."
+                : copied === "text"
+                  ? "Copied the palette, contrast audit and print builds to the clipboard."
+                  : ""}
+            </span>
           </div>
         </div>
         {hasError ? null : (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Flag, RotateCcw } from "lucide-react";
 
 import { CASE_STYLES, FLAG_TYPES, MAX_RECOMMENDED_LENGTH, generateFlagName } from "../lib";
@@ -34,6 +34,11 @@ export default function ToolHome() {
   const [includeTeam, setIncludeTeam] = useState(DEFAULTS.includeTeam);
   const [includePrefix, setIncludePrefix] = useState(DEFAULTS.includePrefix);
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => {
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+  }, []);
 
   const result = useMemo(
     () =>
@@ -56,8 +61,9 @@ export default function ToolHome() {
     if (!value) return;
     try {
       await navigator.clipboard.writeText(value);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
       setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
@@ -201,7 +207,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

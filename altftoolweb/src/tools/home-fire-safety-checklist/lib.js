@@ -68,7 +68,7 @@ export const CATEGORIES = [
       {
         id: "alarmAge",
         weight: "critical",
-        label: "No alarm is more than 10 years old, counted from the manufacture date printed on the back",
+        label: `No alarm is more than ${ALARM_LIFE_YEARS} years old, counted from the manufacture date printed on the back`,
       },
       { id: "alarmBattery", weight: "important", label: "Batteries are replaced on schedule, and no alarm has been disconnected to stop nuisance beeping" },
       {
@@ -101,7 +101,7 @@ export const CATEGORIES = [
     items: [
       { id: "unattended", weight: "critical", label: "Frying and high-heat cooking are never left unattended" },
       { id: "panFire", weight: "critical", label: "Everyone knows to smother a pan fire — lid or damp cloth, never water" },
-      { id: "clearance", weight: "important", label: "Cloths, packaging and plastics stay at least 1 m from the burners" },
+      { id: "clearance", weight: "important", label: `Cloths, packaging and plastics stay at least ${HEAT_CLEARANCE_M} m from the burners` },
       { id: "hoodClean", weight: "important", label: "The extractor hood and filter are degreased regularly" },
       { id: "sleeves", weight: "recommended", label: "Loose sleeves and dupattas are tied back while cooking" },
     ],
@@ -109,15 +109,19 @@ export const CATEGORIES = [
   {
     id: "lpg",
     title: "LPG and gas",
-    when: "lpg",
+    // Shown for either bottled LPG (cylinder) or piped natural gas (PNG) —
+    // see the "gasCooking" flag computed in auditFireSafety(). The three
+    // cylinder-only items below carry their own `when: "lpgCylinder"` so a
+    // piped-gas home is never shown checks it can never satisfy.
+    when: "gasCooking",
     note: "The hose and the regulator are where most domestic gas incidents start.",
     items: [
-      { id: "hose", weight: "critical", label: "An ISI-marked LPG hose is fitted and replaced before its stamped expiry" },
-      { id: "regulatorOff", weight: "critical", label: "The regulator knob is turned off at the cylinder every night" },
-      { id: "upright", weight: "critical", label: "The cylinder stands upright, on the floor, never above or beside the burner" },
+      { id: "hose", weight: "critical", label: "An ISI-marked gas hose is fitted and replaced before its stamped expiry" },
+      { id: "regulatorOff", weight: "critical", label: "The regulator knob is turned off at the cylinder every night", when: "lpgCylinder" },
+      { id: "upright", weight: "critical", label: "The cylinder stands upright, on the floor, never above or beside the burner", when: "lpgCylinder" },
       { id: "ventilation", weight: "important", label: "The kitchen has a window or vent that is kept open while cooking" },
       { id: "leakCheck", weight: "important", label: "Joints are checked for leaks with soap solution, never a flame" },
-      { id: "noStorage", weight: "recommended", label: "Spare cylinders are not stored in a bedroom, basement or stairwell" },
+      { id: "noStorage", weight: "recommended", label: "Spare cylinders are not stored in a bedroom, basement or stairwell", when: "lpgCylinder" },
     ],
   },
   {
@@ -136,7 +140,7 @@ export const CATEGORIES = [
     id: "heat",
     title: "Heating, flames and flammables",
     items: [
-      { id: "heaterClearance", weight: "critical", label: "Everything that can burn stays at least 1 m from heaters and open flames" },
+      { id: "heaterClearance", weight: "critical", label: `Everything that can burn stays at least ${HEAT_CLEARANCE_M} m from heaters and open flames` },
       { id: "candles", weight: "important", label: "Candles and diyas sit on a stable non-combustible base and are never left burning in an empty room" },
       { id: "smoking", weight: "important", label: "Nobody smokes indoors, and ash is doused before it goes in a bin" },
       { id: "chimney", weight: "important", label: "The chimney or flue is swept and inspected annually", when: "fireplace" },
@@ -159,6 +163,7 @@ export const CATEGORIES = [
 ];
 
 const isCount = (value) => Number.isFinite(value) && value >= 0;
+const isWholeCount = (value) => isCount(value) && Number.isInteger(value);
 
 /**
  * Minimum detection and suppression equipment for a home.
@@ -176,17 +181,17 @@ export function equipmentNeeded({ bedrooms = 0, levels = 1, fuelAppliance = fals
   const beds = Number(bedrooms);
   const floors = Number(levels);
   if (!isCount(beds) || !isCount(floors)) return { error: "Enter 0 or more bedrooms and levels." };
+  if (!isWholeCount(beds) || !isWholeCount(floors)) {
+    return { error: "Bedrooms and levels must be whole numbers — a fractional count cannot be used to size equipment." };
+  }
   if (beds > 20) return { error: "Enter up to 20 bedrooms." };
   if (floors < 1) return { error: "A home has at least one level." };
   if (floors > 10) return { error: "Enter up to 10 levels." };
 
-  const wholeBeds = Math.floor(beds);
-  const wholeLevels = Math.floor(floors);
-
   return {
-    smokeAlarms: wholeBeds + wholeLevels,
-    coAlarms: fuelAppliance ? wholeLevels : 0,
-    extinguishers: wholeLevels + KITCHEN_EXTINGUISHERS,
+    smokeAlarms: beds + floors,
+    coAlarms: fuelAppliance ? floors : 0,
+    extinguishers: floors + KITCHEN_EXTINGUISHERS,
     fireBlankets: 1,
   };
 }
@@ -196,7 +201,7 @@ export function equipmentNeeded({ bedrooms = 0, levels = 1, fuelAppliance = fals
  *
  * @param {object} input
  * @param {string[]} input.checked   Ids of items that pass.
- * @param {object} input.home        { bedrooms, levels, lpg, fuelAppliance, fireplace, dryer, hasKids }
+ * @param {object} input.home        { bedrooms, levels, lpgCylinder, pipedGas, fuelAppliance, fireplace, dryer, hasKids }
  * @returns {object} score, verdict and equipment, or { error }.
  */
 export function auditFireSafety({ checked = [], home = {} } = {}) {
@@ -207,15 +212,21 @@ export function auditFireSafety({ checked = [], home = {} } = {}) {
   });
   if (equipment.error) return { error: equipment.error };
 
+  // Bottled LPG (cylinder) and piped natural gas (PNG) share most of the "LPG
+  // and gas" section, but a PNG home has no cylinder to check — gasCooking
+  // gates the whole section, while the raw lpgCylinder flag (used by item-level
+  // `when`) further narrows the handful of cylinder-only items within it.
+  const gasHome = { ...home, gasCooking: Boolean(home.lpgCylinder) || Boolean(home.pipedGas) };
+
   const done = new Set(Array.isArray(checked) ? checked.filter((id) => typeof id === "string") : []);
 
   let score = 0;
   let maxScore = 0;
   const missingCritical = [];
 
-  const byCategory = CATEGORIES.filter((category) => !category.when || home[category.when]).map(
+  const byCategory = CATEGORIES.filter((category) => !category.when || gasHome[category.when]).map(
     (category) => {
-      const items = category.items.filter((item) => !item.when || home[item.when]);
+      const items = category.items.filter((item) => !item.when || gasHome[item.when]);
       let catScore = 0;
       let catMax = 0;
       let catDone = 0;

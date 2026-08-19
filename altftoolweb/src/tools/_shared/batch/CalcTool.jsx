@@ -133,6 +133,10 @@ export default function CalcTool({ title, description, note, fields = [], comput
               {out.caption ? (
                 <p className="mt-2 text-sm text-[var(--muted-foreground)]">{out.caption}</p>
               ) : null}
+              <div aria-live="polite" aria-atomic="true" className="sr-only">
+                {out.result}
+                {out.caption ? ` — ${out.caption}` : ""}
+              </div>
             </div>
 
             {out.rows.length > 0 && (

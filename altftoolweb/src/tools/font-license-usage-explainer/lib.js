@@ -347,8 +347,12 @@ export const NOTES = {
     "Covered when the licensed server generates the file; distributing the font itself is still prohibited.",
   "server:web-app":
     "Server-side rendering of images is covered. Sending the font to the browser with @font-face is web use and needs a webfont licence.",
+  "server:share-file":
+    "A copy can go to whoever operates or maintains the licensed server for that job. A freelancer designing with the font needs their own seat.",
   "broadcast:desktop-artwork":
     "Broadcast licences are usually sold as an add-on, so you still need a desktop seat for whoever opens the font in After Effects or Premiere.",
+  "broadcast:share-file":
+    "A copy can go to the production or post house working on the licensed broadcast job. Anyone designing with it separately needs their own seat.",
   "app:share-file":
     "The developers building the licensed app can hold a copy; anyone designing with it needs a desktop seat.",
   "ebook:pdf-public":

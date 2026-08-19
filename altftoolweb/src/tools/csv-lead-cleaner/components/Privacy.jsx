@@ -20,7 +20,7 @@ export default function Privacy() {
   return (
     <section className="max-w-5xl mx-auto px-6 py-16">
       <div className="text-center mb-14">
-        <h1 className="text-center text-5xl mb-12 mt-[-120]">
+        <h1 className="text-center text-5xl mb-12 mt-[-120px]">
           Privacy Policy
         </h1>
         <p className="description mt-4 max-w-2xl mx-auto">

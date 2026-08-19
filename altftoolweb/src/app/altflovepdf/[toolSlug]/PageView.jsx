@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { TOOLS, SIDEBAR_CATEGORIES } from "../toolsData";
-import AltfPdfPanels from "../panels";
 import { ToolRegistry } from "../tools/registry";
 import { motion } from "framer-motion";
 
@@ -99,22 +98,6 @@ export default function AltfPdfToolPage() {
     }
   }, [activeTool, toolSlug, router, getToolLink]);
 
-  // Sync / initialize app.js bindings
-  useEffect(() => {
-    const initInterval = setInterval(() => {
-      if (typeof window !== "undefined" && typeof window.initPDFToolkit === "function") {
-        clearInterval(initInterval);
-        if (!window.pdfToolkitInitialized) {
-          window.pdfToolkitInitialized = true;
-          window.initPDFToolkit();
-          console.log("AltfPDF Toolkit Engine Initialized!");
-        }
-      }
-    }, 100);
-
-    return () => clearInterval(initInterval);
-  }, []);
-
   // Custom slider repaint and sync bindings for route transitions
   useEffect(() => {
     const repaintSliders = () => {
@@ -140,7 +123,7 @@ export default function AltfPdfToolPage() {
           const max = parseFloat(el.max) || 100;
           const val = parseFloat(el.value);
           const pct = Math.round(((val - min) / (max - min)) * 100);
-          el.style.background = `linear-gradient(to right, #1A4FD6 0%, #1A4FD6 ${pct}%, rgba(0, 0, 0, 0.06) ${pct}%, rgba(0, 0, 0, 0.06) 100%)`;
+          el.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${pct}%, var(--border) ${pct}%, var(--border) 100%)`;
           if (lbl) lbl.textContent = val + c.sfx;
         };
         paint();
@@ -229,9 +212,13 @@ export default function AltfPdfToolPage() {
         </div>
 
         <div className="altf-navbar-actions">
-          <button className="altf-signin" type="button" suppressHydrationWarning>Sign In</button>
-          <button className="altf-signup" type="button" onClick={() => router.push(getToolLink(""))} suppressHydrationWarning>
-            Sign Up
+          <button
+            className="altf-signup"
+            type="button"
+            onClick={() => router.push(getToolLink(""))}
+            suppressHydrationWarning
+          >
+            Get started
           </button>
         </div>
       </header>
@@ -372,16 +359,9 @@ export default function AltfPdfToolPage() {
           >
             <div className="alabel">Upload Files</div>
             <div className="altf-tool-card">
-              {ActiveToolComponent ? (
-                <ActiveToolComponent />
-              ) : (
-                <AltfPdfPanels activePanelId={activeTool.panelId} />
-              )}
+              {ActiveToolComponent && <ActiveToolComponent />}
             </div>
           </motion.section>
-
-          {/* Hidden panel-home to satisfy app.js event binding */}
-          <div id="panel-home" style={{ display: "none" }}></div>
 
           {/* RELATED TOOLS */}
           {relatedTools.length > 0 && (

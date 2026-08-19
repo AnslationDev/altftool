@@ -169,7 +169,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -187,7 +187,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the UP Board percentage result"
+              aria-label={copied ? "Copied" : "Copy the UP Board percentage result"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (

@@ -39,7 +39,7 @@ const seo = {
     ],
     [
       "Why does the port say '(default)'?",
-      "Because the URL did not state one, so the scheme's default applies — 443 for https and 80 for http. The URL constructor leaves the port property empty when it matches the scheme default, and the tool shows that as (default) rather than a blank.",
+      "Because the URL did not state one. For schemes with a defined default (443 for https, 80 for http, and similar for ftp/ws/wss/file) the scheme's default applies; for schemes without a host/port concept (like mailto: or data:) or custom schemes with no defined default, the tool still shows (default) to mean 'no port was present in the URL.'",
     ],
     [
       "Does it decode percent-encoded query values?",

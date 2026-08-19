@@ -34,7 +34,7 @@ const seo = {
     ],
     [
       "Why is cosine similarity undefined for a zero vector?",
-      "Because the formula divides by the vector norms, and a zero vector has norm 0, making the division undefined. This calculator reports an error for an all-zeros vector instead of returning a misleading number. Euclidean and Manhattan distances remain well-defined and are still shown in that case only if both vectors parse.",
+      "Because the formula divides by the vector norms, and a zero vector has norm 0, making the division undefined. This calculator reports an error for an all-zeros vector instead of returning a misleading number. It withholds all metrics, including Euclidean and Manhattan distance, whenever either vector is all zeros, since the comparison itself is treated as invalid input.",
     ],
   ],
 };

@@ -1,31 +1,31 @@
 "use client";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Heart, Sparkles, RotateCcw, Star, Trophy,
-  Users, MessageCircle, Camera, Music, MapPinned,
-  Book, Coffee, Gamepad2, Smile,
+  Heart, Sparkles, RotateCcw, Trophy,
+  MessageCircle, Camera, MapPinned, Gamepad2, Smile,
 } from "lucide-react";
 
-function generateId() {
-  return Math.random().toString(36).substring(2, 9);
-}
-
-function stableQuestionOrder(value) {
-  let hash = 0;
-  for (let index = 0; index < value.length; index += 1) {
-    hash = ((hash << 5) - hash + value.charCodeAt(index)) | 0;
+// Fisher-Yates shuffle so every question in a category's 15-question pool is
+// reachable across replays, instead of a fixed hash order always producing
+// the same top 10 (see wave-53 audit finding: 30 of 90 questions were
+// permanently unreachable).
+function shuffleQuestions(pool) {
+  const shuffled = [...pool];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return hash;
+  return shuffled;
 }
 
 const CATEGORIES = [
-  { id: "memories", label: "Memories", icon: Camera, color: "text-blue-500" },
-  { id: "personality", label: "Personality", icon: Smile, color: "text-pink-500" },
-  { id: "experiences", label: "Experiences", icon: MapPinned, color: "text-emerald-500" },
-  { id: "preferences", label: "Preferences", icon: Heart, color: "text-rose-500" },
-  { id: "fun", label: "Fun", icon: Gamepad2, color: "text-purple-500" },
-  { id: "deep", label: "Deep Talks", icon: MessageCircle, color: "text-cyan-500" },
+  { id: "memories", label: "Memories", icon: Camera, color: "text-(--info)" },
+  { id: "personality", label: "Personality", icon: Smile, color: "text-(--accent)" },
+  { id: "experiences", label: "Experiences", icon: MapPinned, color: "text-(--success)" },
+  { id: "preferences", label: "Preferences", icon: Heart, color: "text-(--danger)" },
+  { id: "fun", label: "Fun", icon: Gamepad2, color: "text-(--warning)" },
+  { id: "deep", label: "Deep Talks", icon: MessageCircle, color: "text-(--secondary)" },
 ];
 
 const QUESTIONS = {
@@ -142,42 +142,48 @@ export default function ToolHome() {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const [score, setScore] = useState(0);
-  const [playerName, setPlayerName] = useState("");
-  const [friendName, setFriendName] = useState("");
-
-  const selectedQuestions = useMemo(() => {
-    const pool = QUESTIONS[category] || QUESTIONS.memories;
-    const shuffled = [...pool].sort(
-      (first, second) => stableQuestionOrder(`${category}:${first.q}`) - stableQuestionOrder(`${category}:${second.q}`),
-    );
-    return shuffled.slice(0, 10);
-  }, [category]);
 
   const startGame = useCallback(() => {
-    setQuestions(selectedQuestions);
+    const pool = QUESTIONS[category] || QUESTIONS.memories;
+    setQuestions(shuffleQuestions(pool).slice(0, 10));
     setCurrentIndex(0);
     setAnswers({});
     setInputValue("");
     setGameStarted(true);
     setGameFinished(false);
     setScore(0);
-  }, [selectedQuestions]);
+  }, [category]);
 
   const currentQuestion = questions[currentIndex];
   const progress = questions.length > 0 ? ((currentIndex) / questions.length) * 100 : 0;
 
+  const finishGame = useCallback((finalAnswers) => {
+    setGameFinished(true);
+    const answeredCount = Object.keys(finalAnswers).length;
+    setScore(questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0);
+  }, [questions.length]);
+
   const submitAnswer = useCallback(() => {
-    if (!inputValue.trim()) return;
-    setAnswers((prev) => ({ ...prev, [currentQuestion.q]: inputValue.trim() }));
+    const trimmed = inputValue.trim();
+    if (!trimmed) return;
+    const nextAnswers = { ...answers, [currentQuestion.q]: trimmed };
+    setAnswers(nextAnswers);
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setInputValue("");
     } else {
-      setGameFinished(true);
-      const totalScore = Object.keys(answers).length + 1;
-      setScore(Math.min(100, Math.round((totalScore / questions.length) * 100)));
+      finishGame(nextAnswers);
     }
-  }, [inputValue, currentIndex, currentQuestion, questions.length, answers]);
+  }, [inputValue, currentIndex, currentQuestion, questions.length, answers, finishGame]);
+
+  const skipQuestion = useCallback(() => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+      setInputValue("");
+    } else {
+      finishGame(answers);
+    }
+  }, [currentIndex, questions.length, answers, finishGame]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -198,9 +204,9 @@ export default function ToolHome() {
   }, []);
 
   const getScoreLevel = (s) => {
-    if (s >= 90) return { label: "Best Friends Forever!", color: "text-amber-500", emoji: "🏆" };
-    if (s >= 70) return { label: "Great Friends!", color: "text-emerald-500", emoji: "🌟" };
-    if (s >= 50) return { label: "Good Friends", color: "text-blue-500", emoji: "👍" };
+    if (s >= 90) return { label: "Best Friends Forever!", color: "text-(--warning)", emoji: "🏆" };
+    if (s >= 70) return { label: "Great Friends!", color: "text-(--success)", emoji: "🌟" };
+    if (s >= 50) return { label: "Good Friends", color: "text-(--info)", emoji: "👍" };
     return { label: "Getting to Know", color: "text-(--muted-foreground)", emoji: "🤝" };
   };
 
@@ -213,6 +219,7 @@ export default function ToolHome() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className="rounded-2xl bg-(--card) border-2 border-(--primary) p-8 text-center space-y-6"
+            aria-live="polite"
           >
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-(--primary)/10 text-(--primary)">
               <Trophy size="40" />
@@ -253,7 +260,10 @@ export default function ToolHome() {
         <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-(--foreground)">Friendship Challenge</h1>
-            <span className="text-sm text-(--muted-foreground) bg-(--muted) px-3 py-1 rounded-full">
+            <span
+              className="text-sm text-(--muted-foreground) bg-(--muted) px-3 py-1 rounded-full"
+              aria-live="polite"
+            >
               Question {currentIndex + 1} of {questions.length}
             </span>
           </div>
@@ -273,6 +283,7 @@ export default function ToolHome() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             className="rounded-2xl bg-(--card) border border-(--border) p-8 text-center space-y-6"
+            aria-live="polite"
           >
             <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold uppercase mb-2 bg-(--primary)/10 text-(--primary)">
               {CATEGORIES.find((c) => c.id === category)?.label || category}
@@ -285,16 +296,25 @@ export default function ToolHome() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type your answer..."
+                aria-label={`Your answer to: ${currentQuestion.q}`}
                 className="w-full px-4 py-3 rounded-xl bg-(--muted) border border-(--border) text-(--foreground) placeholder:text-(--muted-foreground) focus:outline-none focus:ring-2 focus:ring-(--primary) text-sm resize-none"
                 rows="3"
               />
-              <button
-                onClick={submitAnswer}
-                disabled={!inputValue.trim()}
-                className="w-full py-3.5 rounded-xl bg-(--primary) text-(--primary-foreground) font-bold hover:opacity-90 disabled:opacity-40 transition shadow-lg shadow-(--primary)/20 text-lg"
-              >
-                {currentIndex < questions.length - 1 ? "Next Question" : "Finish Challenge"}
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={submitAnswer}
+                  disabled={!inputValue.trim()}
+                  className="flex-1 py-3.5 rounded-xl bg-(--primary) text-(--primary-foreground) font-bold hover:opacity-90 disabled:opacity-40 transition shadow-lg shadow-(--primary)/20 text-lg"
+                >
+                  {currentIndex < questions.length - 1 ? "Next Question" : "Finish Challenge"}
+                </button>
+                <button
+                  onClick={skipQuestion}
+                  className="px-5 py-3.5 rounded-xl bg-(--muted) text-(--foreground) font-semibold hover:bg-(--border) transition text-sm"
+                >
+                  Skip
+                </button>
+              </div>
             </div>
           </motion.div>
         </div>

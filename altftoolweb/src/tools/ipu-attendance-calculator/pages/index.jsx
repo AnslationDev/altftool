@@ -260,7 +260,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -351,13 +351,19 @@ export default function ToolHome() {
                     </td>
                     <td className="px-1 py-3 text-right">
                       {row.remaining > 0
-                        ? `${row.mustAttendOfRemaining} of ${row.remaining}`
+                        ? row.targetReachable
+                          ? `${row.mustAttendOfRemaining} of ${row.remaining}`
+                          : "not reachable"
                         : row.consecutiveNeeded === null
                           ? "not possible"
                           : `${row.consecutiveNeeded} in a row`}
                     </td>
                     <td className="px-1 py-3 text-right">
-                      {row.remaining > 0 ? row.canSkipOfRemaining : row.canMissNow}
+                      {row.remaining > 0
+                        ? row.targetReachable
+                          ? row.canSkipOfRemaining
+                          : 0
+                        : row.canMissNow}
                     </td>
                     <td className="px-1 py-3 text-right">
                       {row.bestPossible === null ? DASH : pct(row.bestPossible)}

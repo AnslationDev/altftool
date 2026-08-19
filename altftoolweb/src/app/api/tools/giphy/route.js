@@ -13,16 +13,19 @@ export async function GET(req) {
     if (limited) return limited;
 
     const apiKey = requireServerEnv(SERVER_ENV.giphy);
-    const query = searchParam(req, "q", "trending");
-    const endpoint =
-      query === "trending"
-        ? "https://api.giphy.com/v1/gifs/trending"
-        : "https://api.giphy.com/v1/gifs/search";
+    // Presence of a non-empty `q` param — not its literal value — decides the
+    // endpoint, so a real search for the word "trending" hits the search
+    // endpoint like any other keyword instead of being misread as "no query".
+    const query = searchParam(req, "q", "");
+    const hasQuery = query.length > 0;
+    const endpoint = hasQuery
+      ? "https://api.giphy.com/v1/gifs/search"
+      : "https://api.giphy.com/v1/gifs/trending";
 
     const upstream = new URL(endpoint);
     upstream.searchParams.set("api_key", apiKey);
     upstream.searchParams.set("limit", "20");
-    if (query !== "trending") upstream.searchParams.set("q", query);
+    if (hasQuery) upstream.searchParams.set("q", query);
 
     return proxyJson(NextResponse, upstream, { next: { revalidate: 300 } });
   } catch (error) {

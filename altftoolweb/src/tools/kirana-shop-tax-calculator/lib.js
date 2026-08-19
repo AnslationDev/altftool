@@ -52,6 +52,16 @@ export const OLD_REBATE_LIMIT_INCOME = 500000;
 export const OLD_REBATE_MAX = 12500;
 
 export const LIMIT_80C = 150000;
+/**
+ * Section 80D health-insurance premium cap (unchanged since Finance Act 2018, still in force
+ * for FY 2025-26): Rs 25,000 for self/family when the assessee is under 60, Rs 50,000 when the
+ * assessee is a senior citizen (60+). This is the self/family limit only — the Act also allows an
+ * additional Rs 25,000 (or Rs 50,000 if the parents are senior citizens) for parents' premiums,
+ * which is not modeled here since parents' age isn't collected by this tool; using only the
+ * self/family limit is the conservative floor so the deduction is never overstated.
+ */
+export const LIMIT_80D_SELF = 25000;
+export const LIMIT_80D_SENIOR = 50000;
 /** Health and education cess on tax plus surcharge. */
 export const CESS_RATE = 4;
 
@@ -251,9 +261,6 @@ export function computeKiranaTax({
   const grossMarginPercent = sales > 0 ? pct2((grossProfit / sales) * 100) : 0;
   const netProfit = grossProfit - operatingExpenses;
   const netMarginPercent = sales > 0 ? pct2((netProfit / sales) * 100) : 0;
-  if (netProfit < 0) {
-    return { error: "The shop shows a loss — a loss return needs books of account, not this estimate." };
-  }
 
   const digitalTurnover = (sales * digitalSharePercent) / 100;
   const cashTurnover = sales - digitalTurnover;
@@ -267,9 +274,18 @@ export function computeKiranaTax({
     (digitalTurnover * PRESUMPTIVE_RATE_DIGITAL) / 100 + (cashTurnover * PRESUMPTIVE_RATE_CASH) / 100;
 
   const onPresumptive = usePresumptive && presumptiveAvailable;
+
+  // A real accounting loss only blocks this estimate when the shop is not electing section 44AD —
+  // 44AD presumptive income is based on turnover, not actual profit, so a loss-making shop can
+  // still declare (and see) the presumptive figure.
+  if (netProfit < 0 && !onPresumptive) {
+    return { error: "The shop shows a loss — a loss return needs books of account, not this estimate." };
+  }
+
   const businessIncome = onPresumptive ? presumptiveIncome : netProfit;
 
-  const chapterVIA = Math.min(deduction80C, LIMIT_80C) + deduction80D;
+  const limit80D = ageGroup === "below60" ? LIMIT_80D_SELF : LIMIT_80D_SENIOR;
+  const chapterVIA = Math.min(deduction80C, LIMIT_80C) + Math.min(deduction80D, limit80D);
   const gti = businessIncome + otherIncome;
 
   const newRegime = taxForRegime({ grossTotalIncome: gti, regime: "new", ageGroup });

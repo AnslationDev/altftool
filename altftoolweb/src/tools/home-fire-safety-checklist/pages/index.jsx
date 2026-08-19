@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Flame, RotateCcw } from "lucide-react";
 
 import { WEIGHTS, WEIGHT_LABELS, auditFireSafety } from "../lib";
@@ -10,7 +10,8 @@ const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const DEFAULT_HOME = {
   bedrooms: "3",
   levels: "1",
-  lpg: true,
+  lpgCylinder: true,
+  pipedGas: false,
   fuelAppliance: true,
   fireplace: false,
   dryer: false,
@@ -18,7 +19,8 @@ const DEFAULT_HOME = {
 };
 
 const HOME_FLAGS = [
-  ["lpg", "We cook on LPG or piped gas"],
+  ["lpgCylinder", "We cook on bottled LPG (a cylinder)"],
+  ["pipedGas", "We cook on piped natural gas (PNG), not a cylinder"],
   ["fuelAppliance", "There is a fuel-burning appliance or an attached garage (gas geyser, generator, stove, car)"],
   ["fireplace", "There is a fireplace, wood stove or chimney"],
   ["dryer", "There is a tumble dryer"],
@@ -57,7 +59,8 @@ export default function ToolHome() {
   const [bedrooms, setBedrooms] = useState(DEFAULT_HOME.bedrooms);
   const [levels, setLevels] = useState(DEFAULT_HOME.levels);
   const [flags, setFlags] = useState({
-    lpg: DEFAULT_HOME.lpg,
+    lpgCylinder: DEFAULT_HOME.lpgCylinder,
+    pipedGas: DEFAULT_HOME.pipedGas,
     fuelAppliance: DEFAULT_HOME.fuelAppliance,
     fireplace: DEFAULT_HOME.fireplace,
     dryer: DEFAULT_HOME.dryer,
@@ -65,6 +68,13 @@ export default function ToolHome() {
   });
   const [checked, setChecked] = useState(DEFAULT_CHECKED);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -118,17 +128,20 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(lines.join("\n").trim());
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setBedrooms(DEFAULT_HOME.bedrooms);
     setLevels(DEFAULT_HOME.levels);
     setFlags({
-      lpg: DEFAULT_HOME.lpg,
+      lpgCylinder: DEFAULT_HOME.lpgCylinder,
+      pipedGas: DEFAULT_HOME.pipedGas,
       fuelAppliance: DEFAULT_HOME.fuelAppliance,
       fireplace: DEFAULT_HOME.fireplace,
       dryer: DEFAULT_HOME.dryer,
@@ -231,10 +244,10 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Fire safety score
             </p>
-            <p className={`mt-1 text-4xl font-semibold ${levelTone}`}>
+            <p className={`mt-1 text-4xl font-semibold ${levelTone}`} aria-live="polite">
               {hasError ? DASH : `${NUM.format(result.percent)}%`}
             </p>
-            <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
+            <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]" aria-live="polite">
               {hasError ? "Fix the input above to score the home." : result.verdict}
             </p>
           </div>
@@ -251,6 +264,9 @@ export default function ToolHome() {
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
               {copied ? "Copied!" : "Copy audit"}
+              <span className="sr-only" role="status" aria-live="polite">
+                {copied ? "Audit copied to clipboard" : ""}
+              </span>
             </button>
             <button type="button" onClick={reset} aria-label="Reset the audit" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />

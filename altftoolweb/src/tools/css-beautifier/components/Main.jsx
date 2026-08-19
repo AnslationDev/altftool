@@ -15,49 +15,214 @@ import {
 } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
+// Declaration-holding at-rules whose body contains property:value pairs
+// rather than nested rule blocks (the inverse of things like @media/@supports
+// /@keyframes, which hold rule-like children and must NOT get colon-spacing
+// applied to their own selector-position colons, e.g. inside :not(), ::before).
+const DECLARATION_AT_RULES = [
+  "@font-face",
+  "@page",
+  "@property",
+  "@counter-style",
+  "@viewport",
+  "@font-palette-values",
+];
+
+// Single-pass tokenizer/formatter. Walks the CSS character by character,
+// tracking brace depth plus whether we're inside a string, a comment, or a
+// url(...) literal, so structural whitespace/colon handling never touches
+// protected content (strings, comments, url() bodies including data: URIs).
 function formatCSS(css, indentSize = 2, spacingBetweenRules = true) {
   if (!css || !css.trim()) return "";
-  
+
   const indentString = " ".repeat(indentSize);
-  
-  // Basic token cleaning around special characters
-  let clean = css
-    .replace(/\s*([\{\};,])\s*/g, "$1") // Clear spacing around braces, semicolons, commas
-    .replace(/;\s*}/g, "}") // Fix trailing semicolon within braces
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m + "\n") // Clean comments
-    .replace(/\s*{\s*/g, " {\n") // Place open braces on new lines
-    .replace(/;\s*/g, ";\n") // Semicolons on new lines
-    .replace(/,\s*/g, ", ") // Spacing after commas
-    .replace(/:\s*/g, ": "); // Spacing after colons
+  const src = css;
+  const len = src.length;
 
-  const lines = clean.split("\n");
-  const formattedLines = [];
-  let indentLevel = 0;
+  let result = "";
+  let atLineStart = true;
+  let depth = 0;
+  // Context stack: one entry per open brace, "decl" (declarations expected,
+  // e.g. a normal rule or @font-face) or "container" (nested rules expected,
+  // e.g. @media/@supports/@keyframes).
+  const stack = [];
+  // "none": selector-position (colons must not be touched, e.g. :hover)
+  // "propName": next colon is the property:value separator, add a space
+  // "value": already past that colon for the current declaration
+  let declState = "none";
+  // Accumulates the raw text seen since the last {, }, or ; so that, right
+  // before an opening brace, we can inspect it to detect at-rules.
+  let curToken = "";
 
-  for (let i = 0; i < lines.length; i++) {
-    let line = lines[i].trim();
-    if (!line) continue;
-
-    // Adjust indentation level for closing brackets
-    if (line.includes("}")) {
-      indentLevel = Math.max(0, indentLevel - 1);
+  function write(str) {
+    if (!str) return;
+    if (atLineStart) {
+      result += indentString.repeat(depth);
+      atLineStart = false;
     }
-
-    // Add line with current indentation
-    formattedLines.push(indentString.repeat(indentLevel) + line);
-
-    // Adjust indentation level for opening brackets
-    if (line.includes("{")) {
-      indentLevel++;
-    }
-
-    // Add spacer between rules if configured
-    if (spacingBetweenRules && line.includes("}") && indentLevel === 0) {
-      formattedLines.push("");
-    }
+    result += str;
   }
 
-  return formattedLines.join("\n").trim();
+  function newline() {
+    result = result.replace(/[ \t]+$/, "");
+    result += "\n";
+    atLineStart = true;
+  }
+
+  let i = 0;
+  while (i < len) {
+    const ch = src[i];
+
+    // Block comments: kept verbatim, pushed onto their own line.
+    if (ch === "/" && src[i + 1] === "*") {
+      const end = src.indexOf("*/", i + 2);
+      const commentEnd = end === -1 ? len : end + 2;
+      const comment = src.slice(i, commentEnd);
+      write(comment);
+      newline();
+      curToken += comment;
+      i = commentEnd;
+      while (i < len && /\s/.test(src[i])) i++;
+      continue;
+    }
+
+    // Quoted strings: copied verbatim, colons/semicolons/commas inside never
+    // get restructured.
+    if (ch === '"' || ch === "'") {
+      const quote = ch;
+      let j = i + 1;
+      while (j < len && src[j] !== quote) {
+        if (src[j] === "\\") j++;
+        j++;
+      }
+      j = Math.min(j + 1, len);
+      const tok = src.slice(i, j);
+      write(tok);
+      curToken += tok;
+      i = j;
+      continue;
+    }
+
+    // url(...) literals (including data: URIs): treated as an opaque token
+    // so colons/semicolons/commas inside are never touched.
+    if ((ch === "u" || ch === "U") && /^url\(/i.test(src.slice(i, i + 4))) {
+      const prevChar = i > 0 ? src[i - 1] : "";
+      if (!/[A-Za-z0-9_-]/.test(prevChar)) {
+        let j = i + 4;
+        let parenDepth = 1;
+        while (j < len && parenDepth > 0) {
+          if (src[j] === '"' || src[j] === "'") {
+            const q = src[j];
+            j++;
+            while (j < len && src[j] !== q) {
+              if (src[j] === "\\") j++;
+              j++;
+            }
+            j++;
+          } else {
+            if (src[j] === "(") parenDepth++;
+            else if (src[j] === ")") parenDepth--;
+            j++;
+          }
+        }
+        const tok = src.slice(i, j);
+        write(tok);
+        curToken += tok;
+        i = j;
+        continue;
+      }
+    }
+
+    if (ch === "{") {
+      result = result.replace(/[ \t]+$/, "");
+      write(" {");
+      newline();
+      const trimmedSel = curToken.trim().toLowerCase();
+      const isAtRule = trimmedSel.startsWith("@");
+      const isDeclHolder = DECLARATION_AT_RULES.some((p) => trimmedSel.startsWith(p));
+      const context = isAtRule && !isDeclHolder ? "container" : "decl";
+      stack.push(context);
+      depth++;
+      declState = context === "decl" ? "propName" : "none";
+      curToken = "";
+      i++;
+      while (i < len && /\s/.test(src[i])) i++;
+      continue;
+    }
+
+    if (ch === "}") {
+      result = result.replace(/[ \t]+$/, "");
+      if (!atLineStart) newline();
+      stack.pop();
+      depth = Math.max(0, depth - 1);
+      write("}");
+      newline();
+      declState = stack.length > 0 && stack[stack.length - 1] === "decl" ? "propName" : "none";
+      curToken = "";
+      i++;
+      while (i < len && /\s/.test(src[i])) i++;
+      if (spacingBetweenRules && depth === 0 && i < len) {
+        newline();
+      }
+      continue;
+    }
+
+    if (ch === ";") {
+      result = result.replace(/[ \t]+$/, "");
+      write(";");
+      newline();
+      declState = depth > 0 && stack[stack.length - 1] === "decl" ? "propName" : "none";
+      curToken = "";
+      i++;
+      while (i < len && /\s/.test(src[i])) i++;
+      continue;
+    }
+
+    if (ch === ":") {
+      curToken += ":";
+      i++;
+      if (declState === "propName" && depth > 0) {
+        result = result.replace(/[ \t]+$/, "");
+        write(": ");
+        declState = "value";
+        // We already wrote the canonical single space, so skip past any
+        // spacing the source had of its own to avoid doubling it up.
+        while (i < len && /[ \t]/.test(src[i])) i++;
+      } else {
+        write(":");
+        // Selector-position colon (:hover, ::before, :not(), or a colon
+        // inside e.g. @media (...) parens) — leave any following
+        // whitespace for the normal whitespace handler to preserve as-is.
+      }
+      continue;
+    }
+
+    if (ch === ",") {
+      result = result.replace(/[ \t]+$/, "");
+      write(", ");
+      curToken += ",";
+      i++;
+      while (i < len && /[ \t]/.test(src[i])) i++;
+      continue;
+    }
+
+    if (/\s/.test(ch)) {
+      let j = i;
+      while (j < len && /\s/.test(src[j])) j++;
+      if (!atLineStart) {
+        write(" ");
+        curToken += " ";
+      }
+      i = j;
+      continue;
+    }
+
+    write(ch);
+    curToken += ch;
+    i++;
+  }
+
+  return result.trim();
 }
 
 export default function MainComponent() {
@@ -144,12 +309,19 @@ h1{color:#333;font-size:2rem;margin-bottom:10px;}`;
 
       {/* Notifications */}
       {success && (
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm"
+        >
           {success}
         </div>
       )}
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm">
+        <div
+          role="alert"
+          className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm"
+        >
           {error}
         </div>
       )}

@@ -128,6 +128,30 @@ export function resolveSlug(slug) {
   return { activeId: null, platformOverride: null };
 }
 
+/**
+ * Every page under /supportsetting renders <SupportClient />, which returns a
+ * skeleton until `pageReady` flips on the client — so the served HTML of each
+ * of these URLs contained no <h1> at all. `heading` is the visible-page name
+ * the route file renders server-side so the heading is in the HTML; it is the
+ * bare human name, not the SEO title (no " — Support Settings | AltFTool").
+ */
+function describeDevice(device) {
+  const guides = ALL_DEVICE_SETTINGS.filter((setting) => setting.platform === device.id).length;
+  // "Browse support settings and guides for {name}." was 44-58 characters — far
+  // under the 70-character floor a useful meta description needs, and it read
+  // the same on all 32 device pages. The guide count is the same number the
+  // page's own hero prints, so it stays true to what the visitor lands on.
+  const description = guides
+    ? `Browse the ${guides} ${device.name} support guides on AltFTool. Open any one for step-by-step instructions, grouped by the part of the device they cover.`
+    : `The ${device.name} section of AltFTool support: check compatibility, see which settings apply to this device, and jump to the guides that cover it.`;
+  return {
+    title: `${device.name} Support — Support Settings | AltFTool`,
+    heading: `${device.name} support`,
+    description,
+    resolved: true,
+  };
+}
+
 /** Best-effort title/description for generateMetadata on the slug route. */
 export function describeSlug(slug) {
   const { activeId } = resolveSlug(slug);
@@ -138,25 +162,34 @@ export function describeSlug(slug) {
   if (!activeId) {
     const parts = Array.isArray(slug) ? slug.filter(Boolean) : [];
     const device = parts[0] ? getDeviceById(parts[0]) : null;
-    if (device) {
-      return {
-        title: `${device.name} Support — ${base} | AltFTool`,
-        description: `Browse support settings and guides for ${device.name}.`,
-      };
-    }
-    return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription };
+    if (device) return describeDevice(device);
+    return {
+      title: `${base} – Manage Preferences | AltFTool`,
+      heading: "AltFTool Settings and Support",
+      description: baseDescription,
+      resolved: false,
+    };
   }
 
   if (activeId.startsWith("util-")) {
     const title = UTIL_TITLES[activeId] || "Help & Tools";
-    return { title: `${title} — ${base} | AltFTool`, description: baseDescription };
+    return {
+      title: `${title} — ${base} | AltFTool`,
+      heading: title,
+      // Was baseDescription verbatim, i.e. byte-identical to /supportsetting
+      // and to every other Help & Tools page.
+      description: `${title} for AltFTool tools and settings: what to check first, the steps to follow, and where to go next if it still is not working.`,
+      resolved: true,
+    };
   }
 
   if (activeId.startsWith("ai-")) {
     const tool = getAiToolById(activeId);
     return {
       title: `${tool?.name || "AI Tool"} — ${base} | AltFTool`,
+      heading: tool?.name || "AI Tool",
       description: tool?.tagline || baseDescription,
+      resolved: true,
     };
   }
 
@@ -165,7 +198,9 @@ export function describeSlug(slug) {
     const category = getCategoryById(categoryRef.categoryId);
     return {
       title: `${category?.label || "Settings"} — ${base} | AltFTool`,
+      heading: category?.label || "Settings",
       description: category?.description || baseDescription,
+      resolved: true,
     };
   }
 
@@ -173,7 +208,9 @@ export function describeSlug(slug) {
   if (osSetting) {
     return {
       title: `${osSetting.title} — ${base} | AltFTool`,
+      heading: osSetting.title,
       description: osSetting.description || baseDescription,
+      resolved: true,
     };
   }
 
@@ -182,9 +219,16 @@ export function describeSlug(slug) {
     const device = getDeviceById(deviceSetting.platform);
     return {
       title: `${deviceSetting.title} — ${device?.name || ""} ${base} | AltFTool`,
+      heading: device?.name ? `${deviceSetting.title} on ${device.name}` : deviceSetting.title,
       description: deviceSetting.description || baseDescription,
+      resolved: true,
     };
   }
 
-  return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription };
+  return {
+    title: `${base} – Manage Preferences | AltFTool`,
+    heading: "AltFTool Settings and Support",
+    description: baseDescription,
+    resolved: false,
+  };
 }

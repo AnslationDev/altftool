@@ -26,7 +26,7 @@ export const spec = {
   ]
 },
   compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
-      let a = Math.abs(Math.floor(num(values.a))), b = Math.abs(Math.floor(num(values.b)));
+      let a = Math.floor(Math.abs(num(values.a))), b = Math.floor(Math.abs(num(values.b)));
       if (!a || !b) return { result: "—", caption: "Enter two whole numbers" };
       const gcd = (x, y) => { while (y) { [x, y] = [y, x % y]; } return x; };
       const g = gcd(a, b);

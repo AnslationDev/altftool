@@ -299,7 +299,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} role="status" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
@@ -353,7 +353,7 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && result.warnings.length > 0 ? (
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-4 space-y-2" role="status" aria-live="polite">
             {result.warnings.map((warning) => (
               <li
                 key={warning}

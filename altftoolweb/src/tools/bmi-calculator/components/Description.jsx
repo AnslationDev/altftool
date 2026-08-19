@@ -25,7 +25,7 @@ export default function Description() {
     },
     {
       title: "Calorie Breakdown",
-      desc: "Discover your BMR and the specific daily calories required for weight loss, maintenance, or muscle gain.",
+      desc: "Add your age and gender to see an estimated daily maintenance calorie figure, based on the Mifflin-St Jeor formula.",
       icon: <Flame className="w-6 h-6" />,
     },
     {

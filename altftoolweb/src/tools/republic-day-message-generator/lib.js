@@ -247,7 +247,7 @@ export function generateMessages({
       return item.text;
     });
     let text = capitalizeFirst(
-      pieces.join(" ").replace(/\{name\}/g, who).replace(/\{ordinal\}/g, rd.label),
+      pieces.join(" ").replace(/\{ordinal\}/g, rd.label).replace(/\{name\}/g, who),
     );
     if (hashtags) text = `${text} ${HASHTAGS}`;
     messages.push(text);

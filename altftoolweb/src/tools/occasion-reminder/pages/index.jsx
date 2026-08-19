@@ -4,10 +4,15 @@ import { useEffect, useMemo, useState } from "react";
 import Features from "../components/Features";
 import HowItWorks from "../components/HowItWorks";
 
+// Concrete (deliberately past) illustrative dates rather than "" so loading
+// the pack immediately shows recurrence rollover and reminder-date math
+// instead of every row landing on "Need Date". nextOccurrence() rolls any
+// past date forward to the next live cycle, so these stay illustrative no
+// matter when the pack is loaded.
 const PRESET_OCCASIONS = [
-  { title: "Mom Birthday", category: "family", date: "", recurrence: "yearly", remindBeforeDays: "14", notes: "Gift + dinner", priority: "high" },
-  { title: "Rent Payment", category: "finance", date: "", recurrence: "monthly", remindBeforeDays: "3", notes: "Transfer before due date", priority: "high" },
-  { title: "Team Anniversary", category: "work", date: "", recurrence: "yearly", remindBeforeDays: "7", notes: "Post announcement", priority: "medium" },
+  { title: "Mom Birthday", category: "family", date: "1990-03-15", recurrence: "yearly", remindBeforeDays: "14", notes: "Gift + dinner", priority: "high" },
+  { title: "Rent Payment", category: "finance", date: "2024-01-01", recurrence: "monthly", remindBeforeDays: "3", notes: "Transfer before due date", priority: "high" },
+  { title: "Team Anniversary", category: "work", date: "2020-06-10", recurrence: "yearly", remindBeforeDays: "7", notes: "Post announcement", priority: "medium" },
 ];
 
 function blankOccasion(id) {
@@ -83,6 +88,16 @@ function nextOccurrence(dateStr, recurrence) {
   return formatLocalDate(candidate);
 }
 
+// Escapes a value for a quoted CSV cell: doubles embedded double-quotes
+// (RFC 4180) and, if the value would otherwise start with =, +, - or @,
+// prefixes a leading apostrophe so Excel/Sheets treat it as text instead of
+// evaluating it as a live formula (standard OWASP CSV-injection mitigation).
+function csvEscape(value) {
+  const str = String(value ?? "");
+  const guarded = /^[=+\-@]/.test(str) ? `'${str}` : str;
+  return guarded.replace(/"/g, '""');
+}
+
 function diffDays(fromDate, toDate) {
   const a = new Date(fromDate);
   const b = new Date(toDate);
@@ -103,7 +118,14 @@ export default function ToolHome() {
       ...prev,
       blankOccasion(prev.reduce((maxId, o) => Math.max(maxId, o.id), 0) + 1),
     ]);
-  const removeOccasion = (id) => setOccasions((prev) => (prev.length === 1 ? prev : prev.filter((o) => o.id !== id)));
+  const removeOccasion = (id) =>
+    setOccasions((prev) => {
+      if (prev.length === 1) return prev;
+      const target = prev.find((o) => o.id === id);
+      const hasData = target && (target.title.trim() || target.date || target.notes.trim());
+      if (hasData && !window.confirm(`Remove "${target.title || "this occasion"}"? This can't be undone.`)) return prev;
+      return prev.filter((o) => o.id !== id);
+    });
   const toggleCompleted = (id) =>
     setOccasions((prev) =>
       prev.map((o) => {
@@ -203,12 +225,18 @@ export default function ToolHome() {
       .sort((a, b) => b.priorityScore - a.priorityScore)
       .slice(0, 6)
       .map((e) => {
-        if (!e.eventDate) return `Add date for ${e.title}.`;
-        if (e.status === "Completed") return `${e.title} completed. Update next cycle details if needed.`;
-        if (e.status === "Today") return `${e.title} is today. Execute checklist now.`;
-        if (e.status === "Missed") return `${e.title} was missed. Reschedule/follow up immediately.`;
-        if ((e.daysToReminder ?? 9999) <= 0) return `Reminder window open for ${e.title}. Start preparations now.`;
-        return `${e.title}: prep starts in ${e.daysToReminder} day(s), event in ${e.daysToEvent} day(s).`;
+        const text = !e.eventDate
+          ? `Add date for ${e.title}.`
+          : e.status === "Completed"
+          ? `${e.title} completed. Update next cycle details if needed.`
+          : e.status === "Today"
+          ? `${e.title} is today. Execute checklist now.`
+          : e.status === "Missed"
+          ? `${e.title} was missed. Reschedule/follow up immediately.`
+          : (e.daysToReminder ?? 9999) <= 0
+          ? `Reminder window open for ${e.title}. Start preparations now.`
+          : `${e.title}: prep starts in ${e.daysToReminder} day(s), event in ${e.daysToEvent} day(s).`;
+        return { id: e.id, text };
       });
 
     return { enriched, filtered, upcoming, todayCount, missed, completed, dueThisWeek, nextActions };
@@ -227,7 +255,7 @@ export default function ToolHome() {
 
   const exportCSV = () => {
     const header = "title,category,event_date,reminder_date,status,priority,notes";
-    const rows = summary.enriched.map((e) => `"${e.title}","${e.category}","${e.eventDate || ""}","${e.reminderDate || ""}","${e.status}","${e.priority}","${(e.notes || "").replace(/"/g, '""')}"`);
+    const rows = summary.enriched.map((e) => `"${csvEscape(e.title)}","${e.category}","${e.eventDate || ""}","${e.reminderDate || ""}","${e.status}","${e.priority}","${csvEscape(e.notes || "")}"`);
     const blob = new Blob([[header, ...rows].join("\n")], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -284,7 +312,7 @@ export default function ToolHome() {
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <input value={o.title} onChange={(e) => updateOccasion(o.id, "title", e.target.value)} placeholder={`Occasion ${idx + 1} title`} className="w-full max-w-sm px-3 py-2 rounded-lg border border-(--border) bg-(--card)" />
                     <label className="text-xs flex items-center gap-1"><input type="checkbox" checked={o.completed} onChange={() => toggleCompleted(o.id)} /> Completed</label>
-                    <button onClick={() => removeOccasion(o.id)} className="px-3 py-2 rounded-lg border border-(--border)">Remove</button>
+                    <button onClick={() => removeOccasion(o.id)} aria-label={`Remove ${o.title || `occasion ${idx + 1}`}`} className="px-3 py-2 rounded-lg border border-(--border)">Remove</button>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-6 gap-3">
@@ -321,6 +349,7 @@ export default function ToolHome() {
                       min="0"
                       step="1"
                       inputMode="numeric"
+                      aria-label={`Remind days before for ${o.title || `occasion ${idx + 1}`}`}
                       value={o.remindBeforeDays}
                       onChange={(e) => updateOccasion(o.id, "remindBeforeDays", e.target.value)}
                       placeholder="Remind days before"
@@ -336,7 +365,13 @@ export default function ToolHome() {
                       <option value="medium">Medium</option>
                       <option value="high">High</option>
                     </select>
-                    <input value={o.notes} onChange={(e) => updateOccasion(o.id, "notes", e.target.value)} placeholder="Notes" className="px-3 py-2 rounded-lg border border-(--border) bg-(--card)" />
+                    <input
+                      value={o.notes}
+                      onChange={(e) => updateOccasion(o.id, "notes", e.target.value)}
+                      placeholder="Notes"
+                      aria-label={`Notes for ${o.title || `occasion ${idx + 1}`}`}
+                      className="px-3 py-2 rounded-lg border border-(--border) bg-(--card)"
+                    />
                   </div>
                 </div>
               ))}
@@ -352,7 +387,7 @@ export default function ToolHome() {
 
             <div className="rounded-xl border border-(--border) bg-(--background) p-4">
               <h3 className="font-semibold mb-3">Reminder Timeline</h3>
-              <div className="overflow-x-auto" role="status" aria-live="polite">
+              <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead><tr className="text-left border-b border-(--border)"><th className="py-2">Occasion</th><th className="py-2">Category</th><th className="py-2">Next Date</th><th className="py-2">Reminder Date</th><th className="py-2">Priority</th><th className="py-2">Status</th></tr></thead>
                   <tbody>
@@ -373,8 +408,8 @@ export default function ToolHome() {
 
             <div className="rounded-xl border border-(--border) bg-(--background) p-4">
               <h3 className="font-semibold mb-2">Clear Next Steps</h3>
-              <div className="space-y-1 text-sm" role="status" aria-live="polite">
-                {summary.nextActions.length ? summary.nextActions.map((a) => <p key={a}>- {a}</p>) : <p className="text-(--muted-foreground)">Add occasions to generate action steps.</p>}
+              <div className="space-y-1 text-sm">
+                {summary.nextActions.length ? summary.nextActions.map((a) => <p key={a.id}>- {a.text}</p>) : <p className="text-(--muted-foreground)">Add occasions to generate action steps.</p>}
               </div>
             </div>
           </div>

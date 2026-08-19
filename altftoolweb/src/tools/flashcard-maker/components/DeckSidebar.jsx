@@ -123,9 +123,10 @@ export default function DeckSidebar({ decks, activeDeckId, onSelect, onAdd, onDe
                 )}
               </div>
 
-              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
                 <button
                   onClick={(e) => startEdit(e, deck)}
+                  aria-label="Edit deck"
                   className={`p-1 rounded hover:bg-black/10 transition-colors ${activeDeckId === deck.id ? 'text-white' : 'text-gray-400'}`}
                 >
                   <Edit3 className="w-3.5 h-3.5" />
@@ -135,6 +136,7 @@ export default function DeckSidebar({ decks, activeDeckId, onSelect, onAdd, onDe
                     e.stopPropagation();
                     if (window.confirm("Delete this deck and all its cards?")) onDelete(deck.id);
                   }}
+                  aria-label="Delete deck"
                   className={`p-2 rounded-md hover:bg-red-500/20 hover:text-red-500 transition-colors ${activeDeckId === deck.id ? 'text-white' : 'text-gray-400'}`}
                 >
                   <Trash2 className="w-4 h-4" />

@@ -101,6 +101,7 @@ export default function ToolHome() {
       `Water: ${num1(result.waterL)} litres (${num1(result.waterKg)} kg)`,
       `Food: ${num0(result.totalKcal)} kcal, about ${num1(result.foodKg)} kg`,
       `Total pack weight: ${num1(result.totalKg)} kg, ${num1(result.perPersonKg)} kg per person`,
+      result.verdict,
       "",
     ];
     for (const group of result.byCategory) {
@@ -110,6 +111,12 @@ export default function ToolHome() {
     for (const hazard of result.hazardKits) {
       lines.push("", `${hazard.label} extras:`);
       for (const [name] of hazard.items) lines.push(`  - ${name}`);
+    }
+    if (result.rotations.length > 0) {
+      lines.push("", "Rotation dates:");
+      for (const row of result.rotations) {
+        lines.push(`  - ${ROTATION_LABEL[row.item] ?? row.item}: every ${row.months} months, next due ${row.dueIso}`);
+      }
     }
     return lines.join("\n");
   }, [failed, result]);
@@ -279,7 +286,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -34,8 +34,15 @@ test("validates only bounded modern document formats", () => {
 });
 
 test("finds observable PDF structural markers without a conformance claim", () => {
+  // /Title only counts as a document-title marker when it is scoped to the
+  // Info dictionary the trailer's /Info N G R reference points at (see
+  // extractInfoDict in documentAccessibility.mjs) — this keeps an Outline or
+  // bookmark /Title entry from being mistaken for the document title. So the
+  // fixture needs a real "1 0 obj ... endobj" Info dictionary carrying
+  // /Title, plus a trailer /Info reference to it, not just a bare /Title
+  // floating in the byte stream.
   const source =
-    "%PDF-1.7\n/StructTreeRoot 1 0 R /MarkInfo << /Marked true >> /Lang (en) /Title (Guide) /Outlines 2 0 R /Subtype /Image /Alt (Chart)";
+    "%PDF-1.7\n1 0 obj\n<< /Title (Guide) >>\nendobj\n/StructTreeRoot 2 0 R /MarkInfo << /Marked true >> /Lang (en) /Outlines 3 0 R /Subtype /Image /Alt (Chart)\ntrailer\n<< /Info 1 0 R >>";
   const result = inspectPdfMarkers(new TextEncoder().encode(source));
   assert.equal(result.ok, true);
   assert.equal(result.statusCounts.review, 0);

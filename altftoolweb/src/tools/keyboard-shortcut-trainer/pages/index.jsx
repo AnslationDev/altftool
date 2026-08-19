@@ -34,7 +34,7 @@ const PLATFORMS = [
       hard: [
         { keys: { ctrl: true, shift: true, key: "s" }, description: "Open Save As dialog", display: "Ctrl + Shift + S" },
         { keys: { ctrl: true, shift: true, key: "z" }, description: "Redo last undone action", display: "Ctrl + Shift + Z" },
-        { keys: { ctrl: true, shift: true, key: "Escape" }, description: "Open Task Manager", display: "Ctrl + Shift + Esc" },
+        { keys: { key: "F3" }, description: "Open Search", display: "F3" },
         { keys: { alt: true, key: "Enter" }, description: "Open properties of selected item", display: "Alt + Enter" },
         { keys: { ctrl: true, key: "Backspace" }, description: "Delete previous word", display: "Ctrl + Backspace" },
       ],
@@ -202,7 +202,7 @@ const PLATFORMS = [
         { keys: { ctrl: true, shift: true, key: "i" }, description: "Invert active selection", display: "Ctrl + Shift + I" },
         { keys: { ctrl: true, alt: true, shift: true, key: "e" }, description: "Stamp visible layers into new layer", display: "Ctrl + Alt + Shift + E" },
         { keys: { key: "Tab" }, description: "Toggle all panel visibility", display: "Tab" },
-        { keys: { key: "F" }, description: "Cycle through screen modes", display: "F" },
+        { keys: { key: "f" }, description: "Cycle through screen modes", display: "F" },
       ],
     },
   },
@@ -243,6 +243,15 @@ function getNormalizedKey(event) {
     return key.toLowerCase();
   }
   return key;
+}
+
+const INTERACTIVE_TAGS = new Set(["BUTTON", "A", "INPUT", "SELECT", "TEXTAREA"]);
+
+function isInteractiveTarget(target) {
+  if (!target || typeof target.tagName !== "string") return false;
+  if (INTERACTIVE_TAGS.has(target.tagName)) return true;
+  if (typeof target.getAttribute === "function" && target.getAttribute("role") === "button") return true;
+  return false;
 }
 
 function keysMatch(event, expected) {
@@ -360,34 +369,6 @@ function PressedKeysDisplay({ keysPressed }) {
   );
 }
 
-function FeedbackOverlay({ type }) {
-  if (!type) return null;
-  const isCorrect = type === "correct";
-  return (
-    <div
-      className={`fixed inset-0 pointer-events-none z-50 flex items-center justify-center transition-opacity duration-200`}
-      style={{ animation: "feedbackFlash 0.6s ease-out" }}
-    >
-      <div
-        className={`flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg backdrop-blur-sm ${
-          isCorrect ? "bg-green-500/15 text-green-600 dark:text-green-400" : "bg-red-500/15 text-red-600 dark:text-red-400"
-        }`}
-      >
-        {isCorrect ? <CheckCircle2 size={28} /> : <XCircle size={28} />}
-        <span className="text-lg font-bold">{isCorrect ? "Correct!" : "Wrong"}</span>
-      </div>
-      <style jsx>{`
-        @keyframes feedbackFlash {
-          0% { opacity: 0; transform: scale(0.8); }
-          20% { opacity: 1; transform: scale(1); }
-          80% { opacity: 1; transform: scale(1); }
-          100% { opacity: 0; transform: scale(0.9); }
-        }
-      `}</style>
-    </div>
-  );
-}
-
 function PracticeMode({
   shortcuts,
   difficulty,
@@ -422,7 +403,11 @@ function PracticeMode({
       }));
       return;
     }
-    event.preventDefault();
+    const isTab = event.key === "Tab";
+    const isActivationKey = event.key === "Enter" || event.key === " ";
+    if (!isTab && !(isActivationKey && isInteractiveTarget(event.target))) {
+      event.preventDefault();
+    }
     const normKey = getNormalizedKey(event);
     setPressedKeys({
       ctrl: event.ctrlKey,
@@ -605,7 +590,7 @@ function PracticeMode({
           <PressedKeysDisplay keysPressed={pressedKeys} />
         </div>
 
-        <div className={`text-xs transition-opacity ${feedback ? "opacity-100" : "opacity-0"}`}>
+        <div className={`text-xs transition-opacity ${feedback ? "opacity-100" : "opacity-0"}`} aria-live="polite" role="status">
           {feedback === "correct" && (
             <span className="text-green-600 dark:text-green-400 font-semibold">
               Correct! The shortcut is <span className="font-mono">{currentShortcut.display}</span>

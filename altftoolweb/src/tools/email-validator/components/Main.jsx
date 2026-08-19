@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   AtSign,
@@ -389,6 +389,7 @@ export default function MainComponent() {
   const [isValidating, setIsValidating] = useState(false);
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState("");
+  const singleRequestId = useRef(0);
 
   const bulkStats = useMemo(() => {
     const total = bulkResults.length;
@@ -402,18 +403,21 @@ export default function MainComponent() {
   }, [bulkResults]);
 
   const validateSingle = async () => {
+    const requestId = (singleRequestId.current += 1);
     setIsValidating(true);
     setStatus("Checking syntax, domain, and MX records...");
 
     try {
       const result = await validateEmail(singleEmail);
       await new Promise((resolve) => window.setTimeout(resolve, 550));
+      if (requestId !== singleRequestId.current) return;
       setSingleResult(result);
       setStatus(`${result.status} email. Score ${result.score}/100.`);
     } catch {
+      if (requestId !== singleRequestId.current) return;
       setStatus("Could not validate this email. Try again.");
     } finally {
-      setIsValidating(false);
+      if (requestId === singleRequestId.current) setIsValidating(false);
     }
   };
 
@@ -500,9 +504,11 @@ export default function MainComponent() {
               value={singleEmail}
               onChange={(event) => setSingleEmail(event.target.value)}
               onKeyDown={(event) => {
-                if (event.key === "Enter") validateSingle();
+                if (event.key === "Enter" && !isValidating) validateSingle();
               }}
-              className="w-full rounded-lg border border-(--border) bg-(--background) px-4 py-3 text-(--foreground) outline-none transition focus:border-(--primary)"
+              disabled={isValidating}
+              aria-label="Email address to validate"
+              className="w-full rounded-lg border border-(--border) bg-(--background) px-4 py-3 text-(--foreground) outline-none transition focus:border-(--primary) disabled:opacity-60"
               placeholder="name@example.com"
             />
             <button
@@ -520,6 +526,7 @@ export default function MainComponent() {
             <textarea
               value={bulkInput}
               onChange={(event) => setBulkInput(event.target.value)}
+              aria-label="Bulk email list, one per line or comma-separated"
               className="min-h-52 w-full resize-y rounded-lg border border-(--border) bg-(--background) px-4 py-3 font-mono text-sm leading-6 text-(--foreground) outline-none transition focus:border-(--primary)"
               placeholder="Paste one email per line, or comma-separated emails..."
             />
@@ -558,7 +565,7 @@ export default function MainComponent() {
       </section>
 
       {!!status && (
-        <div className="mt-5 flex items-start gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
+        <div role="status" aria-live="polite" className="mt-5 flex items-start gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
           {isValidating ? (
             <Loader2 className="mt-0.5 h-5 w-5 shrink-0 animate-spin" />
           ) : (
@@ -599,7 +606,7 @@ export default function MainComponent() {
               <MetricCard
                 icon={ShieldAlert}
                 label="Risk Signals"
-                value={singleResult.signals.length}
+                value={singleResult.signals.filter((s) => s.severity === "bad" || s.severity === "warn").length}
                 detail={singleResult.suggestion ? `Suggestion: ${singleResult.local}@${singleResult.suggestion}` : "No typo suggestion"}
               />
               <MetricCard

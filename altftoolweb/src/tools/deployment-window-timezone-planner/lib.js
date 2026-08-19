@@ -104,32 +104,7 @@ export function planDeploymentWindow({ regionIds, avoidStartHour, avoidEndHour, 
   }
 
   const blockedByHour = matrix.map((row) => row.blockedCount);
-
-  // Contiguous fully-clear runs, wrapping midnight.
   const clear = blockedByHour.map((count) => count === 0);
-  const runs = [];
-  if (clear.every(Boolean)) {
-    runs.push({ startUtcHour: 0, lengthHours: 24 });
-  } else {
-    // Start scanning right after a blocked hour so wrapped runs are single runs.
-    const firstBlocked = clear.findIndex((c) => !c);
-    let runStart = null;
-    for (let i = 0; i < 24; i += 1) {
-      const hour = (firstBlocked + 1 + i) % 24;
-      if (clear[hour]) {
-        if (runStart === null) runStart = hour;
-      } else if (runStart !== null) {
-        const length = ((hour - runStart + 24) % 24) || 24;
-        runs.push({ startUtcHour: runStart, lengthHours: length });
-        runStart = null;
-      }
-    }
-    if (runStart !== null) {
-      const length = ((firstBlocked + 1 - runStart + 24) % 24) || 24;
-      runs.push({ startUtcHour: runStart, lengthHours: length });
-    }
-  }
-  runs.sort((a, b) => b.lengthHours - a.lengthHours);
 
   // Best start: minimise total blocked region-hours inside the window;
   // tie-break on the earlier count of blocked regions then earlier UTC hour.
@@ -155,7 +130,6 @@ export function planDeploymentWindow({ regionIds, avoidStartHour, avoidEndHour, 
 
   return {
     matrix,
-    clearRuns: runs,
     totalClearHours: clear.filter(Boolean).length,
     recommendation,
     regions: regions.map((r) => r.label),

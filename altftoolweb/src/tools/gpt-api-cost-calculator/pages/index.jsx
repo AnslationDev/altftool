@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Calculator, Check, Copy, RotateCcw } from "lucide-react";
 
 import { DAYS_PER_MONTH, GPT_MODELS, computeGptCost } from "../lib";
@@ -37,6 +37,9 @@ export default function ToolHome() {
   const [useBatch, setUseBatch] = useState(DEFAULTS.useBatch);
   const [rates, setRates] = useState(null); // null => use preset for selected model
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const preset = GPT_MODELS.find((m) => m.id === modelId) ?? GPT_MODELS[0];
   const activeRates = rates ?? {
@@ -88,7 +91,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -194,7 +198,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

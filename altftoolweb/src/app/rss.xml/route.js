@@ -20,16 +20,39 @@ function escapeXml(value = "") {
     .replace(/'/g, "&apos;");
 }
 
-function itemDate(article) {
-  const hoursAgo = Number(article.published_hours_ago || 0);
-  return new Date(Date.now() - hoursAgo * 60 * 60 * 1000).toUTCString();
+// News items carry no absolute timestamp, only `published_hours_ago` relative
+// to the build. Missing or non-numeric means we do not know when it ran, so the
+// item is dropped rather than dated "now" — a fabricated pubDate would also sort
+// the item to the top of the feed.
+function newsDate(article) {
+  const hoursAgo = Number(article?.published_hours_ago);
+  if (!Number.isFinite(hoursAgo) || hoursAgo < 0) return null;
+  return new Date(Date.now() - hoursAgo * 60 * 60 * 1000);
 }
 
-function safeRssDate(value) {
-  if (!value) return new Date().toUTCString();
-  if (typeof value?.seconds === "number") return new Date(value.seconds * 1000).toUTCString();
+// Returns a Date or null. Previously this fell back to `new Date()`, which gave
+// undated posts a pubDate of the build time — invented freshness, and in a
+// date-sorted feed it would rank them above everything real.
+function toRssDate(value) {
+  if (!value) return null;
+  if (typeof value?.seconds === "number") {
+    const fromTimestamp = new Date(value.seconds * 1000);
+    return Number.isNaN(fromTimestamp.getTime()) ? null : fromTimestamp;
+  }
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? new Date().toUTCString() : date.toUTCString();
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+// The published date, mirroring how the blog pages resolve it.
+function blogDate(blog) {
+  return toRssDate(blog?.reviewedAt || blog?.updatedAt || blog?.date || blog?.createdAt);
+}
+
+// Newest first, which is what every reader and every feed-reading crawler
+// assumes. RSS has no ordering guarantee in the spec, so consumers take the
+// document order at face value.
+function sortRecordsNewestFirst(records) {
+  return records.sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
 async function fetchRssFirebaseBlogs() {
@@ -53,47 +76,75 @@ async function fetchRssFirebaseBlogs() {
   return posts;
 }
 
+// Each builder returns a { date, xml } record, or null when the item has no
+// real date. Carrying the date alongside the markup is what lets blogs and news
+// be merged into one date-ordered sequence.
 function buildNewsItem(siteUrl, article) {
+  const date = newsDate(article);
+  if (!date) return null;
+
   const link = `${siteUrl}/news/${article.slug}`;
-  return `
+  return {
+    date,
+    xml: `
         <item>
           <title>${escapeXml(article.headline)}</title>
           <link>${escapeXml(link)}</link>
           <guid isPermaLink="true">${escapeXml(link)}</guid>
           <description>${escapeXml(article.summary)}</description>
-          <pubDate>${itemDate(article)}</pubDate>
+          <pubDate>${date.toUTCString()}</pubDate>
           <category>News</category>
           <source>${escapeXml(article.source || "AltFTool News")}</source>
-        </item>`;
+        </item>`,
+  };
 }
 
 function buildBlogItem(siteUrl, blog) {
+  const date = blogDate(blog);
+  if (!date) return null;
+
   const link = `${siteUrl}/blogs/${blog.slug}`;
   const description = blog.seoDescription || blog.excerpt || stripHtml(blog.description || "").slice(0, 180);
 
-  return `
+  return {
+    date,
+    xml: `
         <item>
           <title>${escapeXml(blog.heading || blog.title)}</title>
           <link>${escapeXml(link)}</link>
           <guid isPermaLink="true">${escapeXml(link)}</guid>
           <description>${escapeXml(description)}</description>
-          <pubDate>${safeRssDate(blog.reviewedAt || blog.updatedAt || blog.date || blog.createdAt)}</pubDate>
+          <pubDate>${date.toUTCString()}</pubDate>
           <category>${escapeXml(blog.category || "Blog")}</category>
           <author>${escapeXml(blog.author || "AltFTool Editorial")}</author>
           <source>${escapeXml("AltFTool Blog")}</source>
-        </item>`;
+        </item>`,
+  };
 }
 
 export async function GET() {
   const siteUrl = getSiteUrl();
   const firebaseBlogs = await fetchRssFirebaseBlogs();
-  const blogItems = mergeBlogPosts(getAllBlogs(), firebaseBlogs)
-    .slice(0, 160)
-    .map((blog) => buildBlogItem(siteUrl, blog));
-  const newsItems = (newsData.news || [])
-    .slice(0, 80)
-    .map((article) => buildNewsItem(siteUrl, article));
-  const items = [...blogItems, ...newsItems].join("");
+
+  // Sort each source by its own emitted pubDate before applying the per-source
+  // cap, so the cap keeps the genuinely newest items. mergeBlogPosts() orders by
+  // `date`, but the pubDate we emit prefers reviewedAt/updatedAt, and those
+  // disagree for most posts — slicing on the wrong key dropped recent ones.
+  const blogRecords = sortRecordsNewestFirst(
+    mergeBlogPosts(getAllBlogs(), firebaseBlogs)
+      .map((blog) => buildBlogItem(siteUrl, blog))
+      .filter(Boolean),
+  ).slice(0, 160);
+  const newsRecords = sortRecordsNewestFirst(
+    (newsData.news || []).map((article) => buildNewsItem(siteUrl, article)).filter(Boolean),
+  ).slice(0, 80);
+
+  // One feed, newest first across both sources. Concatenating blogs then news
+  // put every news item — the freshest content on the site — behind 160 older
+  // blog posts, so the first item a reader or crawler saw was never the newest.
+  const items = sortRecordsNewestFirst([...blogRecords, ...newsRecords])
+    .map((record) => record.xml)
+    .join("");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

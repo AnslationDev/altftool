@@ -139,7 +139,7 @@ function socialHtml(state, opts) {
       if (state.design.iconStyle === "text") {
         return `<td style="padding:0 10px 0 0;"><a href="${href}" style="font-family:${font};font-size:${state.design.fontSize - 1}px;color:${state.design.accent};text-decoration:none;font-weight:bold;">${esc(n.label)}</a></td>`;
       }
-      return `<td style="padding:0 6px 0 0;"><a href="${href}" style="text-decoration:none;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle" width="24" height="24" bgcolor="${n.color}" style="background-color:${n.color};width:24px;height:24px;${radiusStyle(12, opts)}font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:#FFFFFF;text-align:center;">${esc(n.badge)}</td></tr></table></a></td>`;
+      return `<td style="padding:0 6px 0 0;"><a href="${href}" aria-label="${esc(n.label)}" style="text-decoration:none;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle" width="24" height="24" bgcolor="${n.color}" style="background-color:${n.color};width:24px;height:24px;${radiusStyle(12, opts)}font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:#FFFFFF;text-align:center;">${esc(n.badge)}</td></tr></table></a></td>`;
     })
     .join("");
 
@@ -181,7 +181,8 @@ function bannerHtml(state) {
 function qrHtml(state, opts) {
   if (!opts.qrDataUrl) return "";
   const font = fontStack(state.design.font);
-  return `<tr><td style="padding-top:12px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:0 10px 0 0;"><img src="${opts.qrDataUrl}" width="72" height="72" alt="QR code" style="display:block;width:72px;height:72px;" /></td><td valign="middle" style="font-family:${font};font-size:${state.design.fontSize - 2}px;color:${state.design.text};">Scan to ${state.qr.mode === "vcard" ? "save my contact" : "visit my link"}</td></tr></table></td></tr>`;
+  const caption = state.qr.mode === "vcard" ? "save my contact" : state.qr.mode === "custom" ? "scan this code" : "visit my link";
+  return `<tr><td style="padding-top:12px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:0 10px 0 0;"><img src="${opts.qrDataUrl}" width="72" height="72" alt="QR code" style="display:block;width:72px;height:72px;" /></td><td valign="middle" style="font-family:${font};font-size:${state.design.fontSize - 2}px;color:${state.design.text};">Scan to ${caption}</td></tr></table></td></tr>`;
 }
 
 function disclaimerHtml(state) {
@@ -290,8 +291,13 @@ export function analyzeSignature(state, html) {
   const linkCount = (html.match(/<a /g) || []).length;
   if (linkCount > 12) add("info", `${linkCount} links in signature`, "Very link-heavy signatures can look promotional to spam filters.");
 
-  const imgWithoutAlt = (html.match(/<img (?![^>]*alt=)/g) || []).length;
-  if (imgWithoutAlt > 0) add("warning", `${imgWithoutAlt} image(s) missing alt text`, "Alt text is what recipients see while images load or stay blocked.");
+  // Photo/logo/QR images always render with a generated fallback alt (see
+  // identityHtml/qrHtml), so the only image whose alt text a user can
+  // actually leave blank is the banner — check the source field directly
+  // rather than scanning the already-defaulted HTML output.
+  if (state.sections.visible.banner && state.banner.src.trim() && !state.banner.alt.trim()) {
+    add("warning", "Banner image missing alt text", "Alt text is what recipients see while images load or stay blocked — describe what the banner says or promotes.");
+  }
 
   if (checks.length === 0) add("pass", "All checks passed", "This signature uses email-safe markup with no compatibility warnings.");
 

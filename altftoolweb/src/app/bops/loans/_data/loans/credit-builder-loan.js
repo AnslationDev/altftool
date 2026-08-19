@@ -207,7 +207,7 @@ export const creditBuilderLoan = {
   },
 
   seo: {
-    title: "Credit Builder Loans — Build Credit and Savings | AltFTool",
+    title: "Credit Builder Loans — Build Credit | AltFTool",
     description:
       "Build or rebuild credit with a credit builder loan. Make small monthly payments reported to the credit bureaus, then collect your savings when you finish.",
   },

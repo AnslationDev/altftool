@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Sparkles, Info, Copy, Download, CheckCircle2, Search, ArrowUpDown, Globe, Users, Map, TrendingUp } from "lucide-react";
+import { Sparkles, Info, Copy, Download, CheckCircle2, Search, Users, Map, TrendingUp } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const COUNTRIES = [
@@ -166,7 +166,6 @@ export default function ToolHome() {
   const [compareMode, setCompareMode] = useState(false);
   const [selected, setSelected] = useState([]);
   const [copied, setCopied] = useState(false);
-  const [viewMode, setViewMode] = useState("table");
 
   const filtered = useMemo(() => {
     let data = [...COUNTRIES];
@@ -178,6 +177,13 @@ export default function ToolHome() {
     data.sort(SORT_ORDERS[sortBy]);
     return data;
   }, [sortBy, continentFilter, search]);
+
+  const insights = useMemo(() => ({
+    mostPopulated: [...COUNTRIES].sort((a, b) => b.population - a.population)[0],
+    largestArea: [...COUNTRIES].sort((a, b) => b.area - a.area)[0],
+    highestGdp: [...COUNTRIES].sort((a, b) => b.gdp - a.gdp)[0],
+    highestHdi: COUNTRIES.filter((c) => c.hdi).sort((a, b) => b.hdi - a.hdi)[0],
+  }), []);
 
   const toggleCompare = (country) => {
     setSelected((prev) => {
@@ -211,10 +217,12 @@ World Facts Explorer — Educational tool
 
   const downloadReport = () => {
     const blob = new Blob([buildReportText()], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    link.href = url;
     link.download = `World_Facts_${sortBy}.txt`;
     link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -257,7 +265,11 @@ World Facts Explorer — Educational tool
             </button>
             <button onClick={copyReport} className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm font-semibold text-[var(--foreground)] transition-all hover:bg-[var(--muted)]">
               {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
-              {copied ? "Copied" : "Export"}
+              <span aria-live="polite">{copied ? "Copied" : "Export"}</span>
+            </button>
+            <button onClick={downloadReport} className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm font-semibold text-[var(--foreground)] transition-all hover:bg-[var(--muted)]">
+              <Download className="h-4 w-4" />
+              Download
             </button>
           </div>
         </section>
@@ -314,10 +326,31 @@ World Facts Explorer — Educational tool
                 </tr>
               </thead>
               <tbody>
+                {filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={9} className="px-4 py-8 text-center text-[var(--muted)]">
+                      No countries match your search{continentFilter !== "all" ? " and filter" : ""}. Try a different name or clear the filters.
+                    </td>
+                  </tr>
+                )}
                 {filtered.slice(0, 50).map((c, i) => {
                   const isSelected = selected.find((s) => s.country === c.country);
                   return (
-                    <tr key={`${c.country}-${i}`} onClick={() => compareMode && toggleCompare(c)} className={`border-t border-[var(--border)]/50 transition-all ${compareMode ? "cursor-pointer hover:bg-[var(--primary)]/5" : "hover:bg-[var(--muted)]/20"} ${isSelected ? "bg-[var(--primary)]/10 ring-1 ring-[var(--primary)]/30" : ""}`}>
+                    <tr
+                      key={`${c.country}-${i}`}
+                      onClick={() => compareMode && toggleCompare(c)}
+                      onKeyDown={(e) => {
+                        if (!compareMode) return;
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          toggleCompare(c);
+                        }
+                      }}
+                      tabIndex={compareMode ? 0 : undefined}
+                      role={compareMode ? "button" : undefined}
+                      aria-pressed={compareMode ? Boolean(isSelected) : undefined}
+                      className={`border-t border-[var(--border)]/50 transition-all ${compareMode ? "cursor-pointer hover:bg-[var(--primary)]/5 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/40" : "hover:bg-[var(--muted)]/20"} ${isSelected ? "bg-[var(--primary)]/10 ring-1 ring-[var(--primary)]/30" : ""}`}
+                    >
                       <td className="px-4 py-2.5 text-[var(--muted)]">{i + 1}</td>
                       <td className="px-4 py-2.5 font-semibold text-[var(--foreground)]">{c.flag} {c.country}</td>
                       <td className="px-4 py-2.5 text-[var(--foreground)]">{c.capital}</td>
@@ -346,23 +379,23 @@ World Facts Explorer — Educational tool
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-xs font-bold uppercase text-[var(--muted)]">Most Populated</p>
-              <p className="text-lg font-black text-[var(--foreground)] mt-1">{COUNTRIES.sort((a, b) => b.population - a.population)[0].flag} {COUNTRIES.sort((a, b) => b.population - a.population)[0].country}</p>
-              <p className="text-xs text-[var(--muted)]">{(COUNTRIES.sort((a, b) => b.population - a.population)[0].population / 1e9).toFixed(2)} billion</p>
+              <p className="text-lg font-black text-[var(--foreground)] mt-1">{insights.mostPopulated.flag} {insights.mostPopulated.country}</p>
+              <p className="text-xs text-[var(--muted)]">{(insights.mostPopulated.population / 1e9).toFixed(2)} billion</p>
             </div>
             <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-xs font-bold uppercase text-[var(--muted)]">Largest by Area</p>
-              <p className="text-lg font-black text-[var(--foreground)] mt-1">{COUNTRIES.sort((a, b) => b.area - a.area)[0].flag} {COUNTRIES.sort((a, b) => b.area - a.area)[0].country}</p>
-              <p className="text-xs text-[var(--muted)]">{COUNTRIES.sort((a, b) => b.area - a.area)[0].area.toLocaleString()} km²</p>
+              <p className="text-lg font-black text-[var(--foreground)] mt-1">{insights.largestArea.flag} {insights.largestArea.country}</p>
+              <p className="text-xs text-[var(--muted)]">{insights.largestArea.area.toLocaleString()} km²</p>
             </div>
             <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-xs font-bold uppercase text-[var(--muted)]">Highest GDP</p>
-              <p className="text-lg font-black text-[var(--foreground)] mt-1">{COUNTRIES.sort((a, b) => b.gdp - a.gdp)[0].flag} {COUNTRIES.sort((a, b) => b.gdp - a.gdp)[0].country}</p>
-              <p className="text-xs text-[var(--muted)]">${COUNTRIES.sort((a, b) => b.gdp - a.gdp)[0].gdp}B</p>
+              <p className="text-lg font-black text-[var(--foreground)] mt-1">{insights.highestGdp.flag} {insights.highestGdp.country}</p>
+              <p className="text-xs text-[var(--muted)]">${insights.highestGdp.gdp}B</p>
             </div>
             <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-xs font-bold uppercase text-[var(--muted)]">Highest HDI</p>
-              <p className="text-lg font-black text-[var(--foreground)] mt-1">{COUNTRIES.filter((c) => c.hdi).sort((a, b) => b.hdi - a.hdi)[0].flag} {COUNTRIES.filter((c) => c.hdi).sort((a, b) => b.hdi - a.hdi)[0].country}</p>
-              <p className="text-xs text-[var(--muted)]">{COUNTRIES.filter((c) => c.hdi).sort((a, b) => b.hdi - a.hdi)[0].hdi.toFixed(3)}</p>
+              <p className="text-lg font-black text-[var(--foreground)] mt-1">{insights.highestHdi.flag} {insights.highestHdi.country}</p>
+              <p className="text-xs text-[var(--muted)]">{insights.highestHdi.hdi.toFixed(3)}</p>
             </div>
           </div>
         </section>

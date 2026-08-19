@@ -150,7 +150,11 @@ export function isCorrect(item, response) {
 export function fillSentence(sentence, articleId) {
   if (typeof sentence !== "string") return "";
   if (articleId !== "none") {
-    return sentence.replace("___", ARTICLE_LABELS[articleId] || "___");
+    const filled = sentence.replace("___", ARTICLE_LABELS[articleId] || "___");
+    if (sentence.startsWith("___") && filled.length > 0) {
+      return filled[0].toUpperCase() + filled.slice(1);
+    }
+    return filled;
   }
   const stripped = sentence.replace("___ ", "");
   if (!sentence.startsWith("___") || stripped.length === 0) return stripped;

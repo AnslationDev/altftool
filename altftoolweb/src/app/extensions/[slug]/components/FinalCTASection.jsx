@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Chrome, ArrowUp, Share2, Check, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowUp, Share2, Check, Sparkles } from "lucide-react";
 import Image from "next/image";
 
 export default function FinalCTASection({ extension }) {
@@ -46,7 +46,7 @@ export default function FinalCTASection({ extension }) {
         </h2>
 
         <p className="text-sm md:text-base text-[var(--muted-foreground)] leading-relaxed">
-          Join thousands of users optimizing their digital workspace with AltFTool browser extensions. Free forever, no registration required.
+          Optimize your digital workspace with AltFTool browser extensions. Free forever, no registration required.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
@@ -69,17 +69,18 @@ export default function FinalCTASection({ extension }) {
           ) : (
             <button
               type="button"
-              onClick={handleScrollToTop}
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-[var(--primary-foreground)] bg-[var(--primary)] rounded-xl shadow-lg shadow-[var(--primary)]/25 hover:brightness-110 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/40"
+              disabled
+              aria-label="Install link not available for this extension"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-[var(--muted-foreground)] bg-[var(--muted)] border border-[var(--border)] rounded-xl cursor-not-allowed opacity-80"
             >
               <Image
                 src="/assets/Chrome_icon.svg.webp"
-                alt="Google Chrome"
+                alt=""
                 width={20}
                 height={20}
-                className="mr-2.5"
+                className="mr-2.5 opacity-60"
               />
-              <span>Install Extension</span>
+              <span>Install Link Not Available</span>
             </button>
           )}
 
@@ -112,11 +113,6 @@ export default function FinalCTASection({ extension }) {
         </div>
 
         <div className="pt-4 flex items-center justify-center gap-6 text-xs text-[var(--muted-foreground)]">
-          <span className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-[#0D9488]" />
-            <span>Safe & Verified</span>
-          </span>
-          <span>•</span>
           <span>Manifest V3 Ready</span>
           <span>•</span>
           <span>No Ads</span>

@@ -54,7 +54,7 @@ export default function TypingTest({ onComplete, beep }) {
   const renderPara = () => {
     return para.split("").map((ch, i) => {
       let cls = "text-[var(--muted-foreground)]";
-      if (i < typed.length) cls = typed[i] === ch ? "text-[var(--foreground)]" : "text-red-400 bg-red-400/20";
+      if (i < typed.length) cls = typed[i] === ch ? "text-[var(--foreground)]" : "text-[var(--danger-text)] bg-[var(--danger)]/20";
       if (i === typed.length) cls = "text-[var(--foreground)] bg-[var(--primary)]/30";
       return <span key={i} className={cls}>{ch}</span>;
     });

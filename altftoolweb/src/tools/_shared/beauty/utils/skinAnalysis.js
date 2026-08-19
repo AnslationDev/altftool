@@ -1,5 +1,20 @@
 "use client";
 
+// Blemish-pixel predicate shared by the scoring pass (analyzeAcne, below)
+// and the heatmap overlay drawn in acne-severity-analyzer/pages/index.jsx.
+// Both consumers must use this exact test so the red heatmap shown to users
+// always agrees with what was actually counted toward the score.
+export const ACNE_BLEMISH_THRESHOLD = { rMinusG: 18, rMinusB: 18, rMin: 75, luminanceMin: 40 };
+
+export function isBlemishPixel(r, g, b, luminance) {
+  return (
+    r > g + ACNE_BLEMISH_THRESHOLD.rMinusG &&
+    r > b + ACNE_BLEMISH_THRESHOLD.rMinusB &&
+    r > ACNE_BLEMISH_THRESHOLD.rMin &&
+    luminance > ACNE_BLEMISH_THRESHOLD.luminanceMin
+  );
+}
+
 export function analyzeAcne(imageData, region) {
   const { data, width, height } = imageData;
   let redSpots = 0;
@@ -16,9 +31,9 @@ export function analyzeAcne(imageData, region) {
       if (idx >= 0 && idx < data.length) {
         const r = data[idx], g = data[idx + 1], b = data[idx + 2];
         const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-        
+
         // Blemish detection heuristic (high red relative to other channels)
-        if (r > g + 18 && r > b + 18 && r > 75 && luminance > 40) {
+        if (isBlemishPixel(r, g, b, luminance)) {
           redSpots++;
         }
         totalPixels++;
@@ -38,13 +53,21 @@ export function analyzeAcne(imageData, region) {
   else if (spots > 10) severity = "Moderate";
   else if (spots > 2) severity = "Mild";
 
-  const confidence = 85 + Math.random() * 10;
+  // "Confidence" is not a real ML/statistical confidence score — it's a rough,
+  // illustrative estimate of how completely the padded face region could be
+  // sampled from the source photo, derived the same way analyzePigmentation
+  // below does it: sampled pixels (totalPixels) versus the pixel count the
+  // region's own geometry calls for. A region clipped by the image edges
+  // (e.g. a face very close to the frame) sampled fewer pixels than intended,
+  // so this number drops accordingly instead of always reading "high".
+  const expectedPixels = Math.max(0, endX - startX) * Math.max(0, endY - startY);
+  const confidence = expectedPixels > 0 ? Math.min(100, Math.round((totalPixels / expectedPixels) * 100)) : 0;
   const description = `The AI detected ${spots} blemish spots covering ${coverage}% of the analyzed skin region, indicating a ${severity.toLowerCase()} acne condition.`;
 
   return { spots, coverage, score, severity, confidence, description };
 }
 
-export function analyzePigmentation(imageData, region, categoryMask) {
+export function analyzePigmentation(imageData, region) {
   const { data, width, height } = imageData;
   const blockData = [];
   let totalLum = 0;
@@ -114,7 +137,16 @@ export function analyzePigmentation(imageData, region, categoryMask) {
   else if (variation > 18) severity = "Moderate";
   else if (variation > 8) severity = "Mild";
 
-  const confidence = 88 + Math.random() * 8;
+  // "Confidence" is not a real ML/statistical confidence score — it's a rough,
+  // illustrative estimate of how completely the padded face region could be
+  // sampled, derived from the actual block coverage (count) versus the number
+  // of 10x10 blocks the region geometry allows. Low coverage (e.g. the face
+  // region was clipped by the image edges) means fewer data points backed the
+  // variation/severity read above, so this number should drop accordingly.
+  const maxBlocksX = Math.max(1, Math.ceil((endX - step - startX) / step));
+  const maxBlocksY = Math.max(1, Math.ceil((endY - step - startY) / step));
+  const maxBlocks = maxBlocksX * maxBlocksY;
+  const confidence = Math.min(100, Math.round((count / maxBlocks) * 100));
   const description = `Skin tone variation score is ${variation}%, with an average luminance of ${Math.round(meanLum)}. The AI identified ${spots} minor hyperpigmented spots, indicating a ${severity.toLowerCase()} pigmentation level.`;
 
   return { variation, spots, confidence, score, severity, description, blockData };

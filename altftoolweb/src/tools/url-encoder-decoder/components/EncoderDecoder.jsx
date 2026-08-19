@@ -93,6 +93,7 @@ export default function EncoderDecoder() {
               <button
                 key={item.id}
                 type="button"
+                aria-pressed={mode === item.id}
                 onClick={() => setMode(item.id)}
                 className={`min-h-11 rounded-[8px] border px-3 py-2 text-left transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                   mode === item.id

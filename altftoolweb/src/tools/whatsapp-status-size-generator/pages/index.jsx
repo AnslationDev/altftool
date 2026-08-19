@@ -55,6 +55,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const imageRef = useRef(null);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     if (!imageUrl) return undefined;
@@ -120,9 +121,14 @@ export default function ToolHome() {
     if (!file) return;
     setExportError("");
     setExported(null);
+    const requestId = ++requestIdRef.current;
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
+      if (requestIdRef.current !== requestId) {
+        URL.revokeObjectURL(url);
+        return;
+      }
       imageRef.current = img;
       setImageUrl(url);
       setImageName(file.name.replace(/\.[^.]+$/, ""));
@@ -131,6 +137,7 @@ export default function ToolHome() {
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
+      if (requestIdRef.current !== requestId) return;
       setExportError("That file could not be read as an image. Try a PNG, JPEG or WebP.");
     };
     img.src = url;
@@ -185,6 +192,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    requestIdRef.current += 1;
     setPresetId(PRESETS[0].id);
     setFit("cover");
     setFormat(EXPORT_FORMATS[0].id);
@@ -354,6 +362,15 @@ export default function ToolHome() {
               ))}
             </select>
           </div>
+          {background === "transparent" && format === "image/jpeg" && (
+            <p
+              role="alert"
+              className="sm:col-span-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+            >
+              JPEG does not support transparency — the bars will render solid black instead. Switch
+              the export format to PNG or WebP to keep them transparent.
+            </p>
+          )}
           <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="wa-quality">
               Encoder quality ({quality}%)
@@ -391,7 +408,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Export size
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {plan.error ? dash : `${plan.target.width} × ${plan.target.height}`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -426,23 +443,33 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Source image", plan.error ? dash : `${plan.source.width} × ${plan.source.height} px (${plan.source.ratio})`],
             ["Scale applied", plan.error ? dash : `${NUM.format(plan.scalePercent)}%`],
             ["Cropped away", plan.error ? dash : `${NUM.format(plan.croppedPercent)}% of the scaled image`],
-            [
-              "Screen coverage",
-              plan.error || plan.screen.error
-                ? dash
-                : `${NUM.format(plan.screen.coveragePercent)}% of the status screen`,
-            ],
-            [
-              "Bars on screen",
-              plan.error || plan.screen.error
-                ? dash
-                : `${plan.screen.barVertical} px sides · ${plan.screen.barHorizontal} px top/bottom`,
-            ],
+            preset.onStatusScreen
+              ? [
+                  "Screen coverage",
+                  plan.error || plan.screen.error
+                    ? dash
+                    : `${NUM.format(plan.screen.coveragePercent)}% of the status screen`,
+                ]
+              : null,
+            preset.onStatusScreen
+              ? [
+                  "Bars on screen",
+                  plan.error || plan.screen.error
+                    ? dash
+                    : `${plan.screen.barVertical} px sides · ${plan.screen.barHorizontal} px top/bottom`,
+                ]
+              : null,
+            plan.fit === "contain"
+              ? [
+                  "Bars baked into export",
+                  plan.error ? dash : `${plan.bars.vertical} px sides · ${plan.bars.horizontal} px top/bottom`,
+                ]
+              : null,
             [
               "Text-safe area",
               plan.error || !preset.safeZone || plan.safe.error
@@ -454,7 +481,9 @@ export default function ToolHome() {
               clips.error ? dash : `${clips.clips} clip(s), last one ${NUM.format(clips.lastClipSeconds)}s`,
             ],
             ["Media ceiling", formatBytes(MAX_MEDIA_BYTES)],
-          ].map(([label, value]) => (
+          ]
+            .filter(Boolean)
+            .map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
               <dd className="text-right font-semibold">{value}</dd>
@@ -487,6 +516,17 @@ export default function ToolHome() {
             }`}
           >
             {plan.quality.message}
+          </p>
+        )}
+
+        {!plan.error && plan.distorted && (
+          <p
+            role="alert"
+            className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
+            Stretch fit scales width and height by different amounts, so the exported image will look
+            squashed or stretched. Switch to Fill or Fit if the source shape doesn&apos;t need to
+            change.
           </p>
         )}
 

@@ -102,18 +102,27 @@ export function computeBedMerit({
   const entranceShare = (entrancePercent * (100 - weight)) / 100;
   const merit = gradShare + entranceShare;
 
-  const ncteFloor = isEngineering ? NCTE_MIN_ENGINEERING_PERCENT : NCTE_MIN_GRADUATION_PERCENT;
-  const meetsNcteFloor = gradPercent >= ncteFloor;
-
   const round2 = (v) => Math.round(v * 100) / 100;
 
+  const ncteFloor = isEngineering ? NCTE_MIN_ENGINEERING_PERCENT : NCTE_MIN_GRADUATION_PERCENT;
+  // Compare against the same rounded percentage the UI displays, so the eligibility
+  // verdict never contradicts the number shown next to it at boundary values.
+  const meetsNcteFloor = round2(gradPercent) >= ncteFloor;
+
+  // Round the two shares first, then derive the displayed merit index as
+  // their sum, so the breakdown always adds up exactly to the headline
+  // number (rounding `merit` independently from `gradShare`/`entranceShare`
+  // could make the displayed figures disagree by a cent-level rounding gap).
+  const roundedGradShare = round2(gradShare);
+  const roundedEntranceShare = round2(entranceShare);
+
   return {
-    merit: round2(merit),
+    merit: round2(roundedGradShare + roundedEntranceShare),
     meritScale: MERIT_SCALE,
     gradPercent: round2(gradPercent),
     entrancePercent: round2(entrancePercent),
-    gradShare: round2(gradShare),
-    entranceShare: round2(entranceShare),
+    gradShare: roundedGradShare,
+    entranceShare: roundedEntranceShare,
     graduationWeight: weight,
     entranceWeight: 100 - weight,
     ncteFloor,

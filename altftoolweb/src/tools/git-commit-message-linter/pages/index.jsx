@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, ListChecks, RotateCcw } from "lucide-react";
 
 import { HEADER_LIMIT_OPTIONS, lintCommitMessage } from "../lib";
@@ -28,6 +28,9 @@ export default function ToolHome() {
   const [limitId, setLimitId] = useState(DEFAULTS.limitId);
   const [requireScope, setRequireScope] = useState(DEFAULTS.requireScope);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copiedTimeoutRef.current), []);
 
   const limit =
     HEADER_LIMIT_OPTIONS.find((o) => o.id === limitId) ?? HEADER_LIMIT_OPTIONS[0];
@@ -45,7 +48,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.fixed);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -132,7 +136,10 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

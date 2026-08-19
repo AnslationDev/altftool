@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "What is a good watts per kilogram for cycling?",
-      "For men, roughly 3.1 to 3.7 W/kg at threshold is a keen recreational cyclist, 4.3 and above is a strong club racer, and above 5.7 approaches professional level. The equivalent women's bands sit about 0.6 to 0.8 W/kg lower at each level.",
+      "For men, roughly 3.1 to 3.7 W/kg at threshold is a keen recreational cyclist, 4.3 and above is a strong club racer, and above 5.7 approaches professional level. The equivalent women's bands sit lower at each level, by about 0.4 to 0.7 W/kg, with the gap narrowing at the lower bands.",
     ],
     [
       "How do you calculate power to weight ratio?",

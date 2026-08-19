@@ -8,7 +8,7 @@ const seo = {
     "Read the Estimated score movement in points, the Today and After the change cards on the 300-900 scale with their bands, and the Where the points come from table scoring each of the five factors out of 100.",
   ],
   intro:
-    "This Credit Score Impact Simulator estimates how a specific change — paying a credit card down, applying for two more loans, or missing an EMI — could move your score on the 300–900 scale used by Indian bureaus. It weights the five factors bureaus publicly disclose: payment history at roughly 35%, credit utilisation 30%, length of credit history 15%, credit mix 10% and new credit or hard enquiries 10%. The result is an educational estimate for planning, not a reproduction of any bureau's proprietary model.",
+    "This Credit Score Impact Simulator estimates how a specific change — paying a credit card down, applying for two more loans, or missing an EMI — could move your score on the 300–900 scale used by Indian bureaus. It weights five factors using the widely cited FICO-style breakdown — payment history at roughly 35%, credit utilisation 30%, length of credit history 15%, credit mix 10% and new credit or hard enquiries 10% — used here as an illustrative proxy, since Indian bureaus do not publish their own exact scoring weights. The result is an educational estimate for planning, not a reproduction of any bureau's proprietary model.",
   useCases: [
     "Checking whether clearing INR 60,000 of card balance before applying for a home loan is worth doing first.",
     "Seeing the likely cost of three loan applications in one month versus spacing them out.",
@@ -17,12 +17,12 @@ const seo = {
   benefits: [
     ["Before and after view", "Two scores side by side with the point movement between them."],
     ["Factor breakdown", "See which of the five bureau factors is actually holding your score down."],
-    ["Published weightings", "Built on the factor weights bureaus disclose, not invented numbers."],
+    ["FICO-style weighting", "Built on the widely cited FICO factor breakdown used as an industry proxy, not invented numbers — bureaus themselves do not publish exact weights."],
   ],
   faqs: [
     [
       "What is a good credit score in India?",
-      "On the 300–900 CIBIL scale, 750 and above is generally treated as very good and gets the best loan pricing, 650–749 is good, 550–649 is fair, and below 550 is poor. Lenders set their own cut-offs.",
+      "On the 300–900 CIBIL scale, this tool treats 800 and above as excellent and 750–799 as very good — both bands get the best loan pricing — 650–749 as good, 550–649 as fair, and below 550 as poor. Lenders set their own cut-offs.",
     ],
     [
       "How much does credit utilisation affect a score?",

@@ -219,6 +219,17 @@ export function toISODate(stamp) {
   return new Date(stamp).toISOString().slice(0, 10);
 }
 
+// New Zealand local calendar date (matches the visitor's wall clock; do not
+// use toISOString() here, that returns the UTC date which lags NZ by up to a
+// full day).
+function localTodayISO() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 /** Calendar-correct month arithmetic, clamped to the end of a short month. */
 export function addMonthsISO(iso, months) {
   const stamp = parseISODate(iso);
@@ -279,7 +290,7 @@ export function checkIdpRequirement({
   const arrival = parseISODate(arrivalDate);
   if (arrival === null) return { error: "Enter a valid arrival date as year, month and day." };
 
-  const todayIso = today ?? toISODate(Date.now());
+  const todayIso = today ?? localTodayISO();
   const todayStamp = parseISODate(todayIso) ?? Date.now();
 
   let stayDays = null;

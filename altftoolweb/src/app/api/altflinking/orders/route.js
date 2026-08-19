@@ -7,7 +7,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }    from "@/lib/altflinking/firebaseAdmin";
-import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
+import { verifyToken, getUserRole, ok, err, isAdminRole, sanitizeOrder } from "@/lib/altflinking/authMiddleware";
 import { FieldValue }   from "firebase-admin/firestore";
 import { resolveOrderPrice } from "@/app/altflinking/lib/pricing";
 
@@ -29,16 +29,18 @@ export async function GET(request) {
   try {
     let query = db.collection("orders");
 
-    // RBAC: buyers see their own, publishers see orders on their listings, admins see all
+    // RBAC: buyers see their own, publishers see orders on their listings,
+    // admins see all — unknown/missing role is denied, not skipped
     if (role === "BUYER") {
       query = query.where("buyerId", "==", user.uid);
     } else if (role === "PUBLISHER") {
       query = query.where("publisherId", "==", user.uid);
+    } else if (!isAdminRole(role)) {
+      return err("Forbidden", 403);
     }
-    // ADMIN / SUPERADMIN — no filter, see all
 
     const snap = await query.orderBy("createdAt", "desc").limit(200).get();
-    const orders = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    const orders = snap.docs.map((d) => sanitizeOrder({ id: d.id, ...d.data() }, role));
 
     return ok(orders);
   } catch (e) {

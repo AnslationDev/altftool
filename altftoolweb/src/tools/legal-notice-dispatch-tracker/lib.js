@@ -70,10 +70,13 @@ export const DISPATCH_MODES = [
  * Cheque dishonour: under the proviso to Section 138 of the Negotiable
  * Instruments Act, 1881 the demand notice must be sent within 30 days of the
  * bank's return memo, the drawer has 15 days from receipt to pay, and a
- * complaint must be filed within one month of that 15-day period expiring.
+ * complaint must be filed within one calendar month of that 15-day period
+ * expiring — computed with `addMonths`, not a flat 30-day add, since a
+ * calendar month is not always 30 days.
  *
  * Government notice: Section 80 of the Code of Civil Procedure, 1908 requires
- * two months' notice before suing the government or a public officer.
+ * two calendar months' notice before suing the government or a public
+ * officer — also computed with `addMonths`, not a flat 60-day add.
  *
  * Consumer: Section 69 of the Consumer Protection Act, 2019 sets a two-year
  * limitation period from the date of the cause of action.
@@ -92,17 +95,18 @@ export const NOTICE_TYPES = [
     label: "Cheque dishonour demand (s.138 NI Act)",
     defaultReplyDays: 15,
     fixedReplyDays: true,
-    complaintWindowDays: 30,
+    complaintWindowMonths: 1,
     statute: "Section 138, Negotiable Instruments Act, 1881",
-    note: "The drawer gets 15 days from receipt of the notice to pay. A complaint must then be filed within one month of that period expiring.",
+    note: "The drawer gets 15 days from receipt of the notice to pay. A complaint must then be filed within one calendar month of that period expiring.",
   },
   {
     id: "government",
     label: "Notice to government or public officer (s.80 CPC)",
     defaultReplyDays: 60,
     fixedReplyDays: true,
+    replyPeriodMonths: 2,
     statute: "Section 80, Code of Civil Procedure, 1908",
-    note: "No suit may be instituted until two months have expired from delivery of the notice.",
+    note: "No suit may be instituted until two calendar months have expired from delivery of the notice.",
   },
   {
     id: "eviction",
@@ -172,6 +176,24 @@ export function addYears(date, years) {
   );
 }
 
+/**
+ * Add a whole number of calendar months, using the same "corresponding date,
+ * clamped to month length" rule as `addYears` above (e.g. 31 Jan + 1 month =
+ * 28/29 Feb, not 2/3 Mar). This is the calendar-month arithmetic that
+ * statutory "one month" / "two months" periods (s.138 NI Act proviso, s.80
+ * CPC) require — a flat +30 or +60 day count is not equivalent to it and can
+ * understate how much time has actually run.
+ */
+export function addMonths(date, months) {
+  const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + months, 1));
+  const daysInTarget = new Date(
+    Date.UTC(target.getUTCFullYear(), target.getUTCMonth() + 1, 0),
+  ).getUTCDate();
+  return new Date(
+    Date.UTC(target.getUTCFullYear(), target.getUTCMonth(), Math.min(date.getUTCDate(), daysInTarget)),
+  );
+}
+
 export function daysBetween(a, b) {
   return Math.round((b.getTime() - a.getTime()) / MS_PER_DAY);
 }
@@ -191,7 +213,9 @@ export function formatShortDate(value) {
 /**
  * Work out the state of one notice.
  *
- * @param {object} notice One row from the board.
+ * @param {object} notice One row from the board. `causeOfActionDate`
+ *   ("YYYY-MM-DD") is optional and, when supplied, anchors a consumer
+ *   notice's two-year limitation period instead of the dispatch date.
  * @param {Date} today    The date to evaluate against.
  * @returns {object} the row with computed fields, or with an `error` string.
  */
@@ -228,24 +252,45 @@ function evaluateNotice(notice, today) {
 
   const servedOn = delivered || addDays(dispatch, mode.assumedTransitDays);
   const servedBasis = delivered ? "actual" : "assumed";
-  const replyDeadline = addDays(servedOn, replyDays);
+  // Statutory periods expressed in calendar months (e.g. s.80 CPC's "two
+  // months") use the corresponding-date `addMonths` rule, not a flat day
+  // count — a calendar month is not always 30 days, so a flat-day add can
+  // understate how much time has actually run.
+  const replyDeadline = type.replyPeriodMonths
+    ? addMonths(servedOn, type.replyPeriodMonths)
+    : addDays(servedOn, replyDays);
   const daysToDeadline = daysBetween(today, replyDeadline);
 
   let complaintWindow = null;
-  if (type.complaintWindowDays) {
+  if (type.complaintWindowMonths) {
     const opens = addDays(replyDeadline, 1);
-    const closes = addDays(replyDeadline, type.complaintWindowDays);
+    // The one-calendar-month complaint window runs from its own start date
+    // (opens), not from replyDeadline — using replyDeadline here would land
+    // the close date one day short of a true calendar month from opens.
+    const closes = addMonths(opens, type.complaintWindowMonths);
     complaintWindow = {
       opens: toISODate(opens),
       closes: toISODate(closes),
-      daysToClose: daysBetween(today, closes),
     };
   }
 
   let limitation = null;
   if (type.limitationYears) {
-    const expires = addYears(dispatch, type.limitationYears);
-    limitation = { expires: toISODate(expires), daysLeft: daysBetween(today, expires) };
+    // Section 69 of the Consumer Protection Act, 2019 runs the two-year
+    // limitation from the date the cause of action arose, not from the date
+    // the pre-complaint notice was dispatched. Use the cause-of-action date
+    // when the user has entered one; only fall back to the dispatch date
+    // (which understates how much of the period has already run) when it is
+    // not available.
+    const causeOfAction = parseISODate(notice.causeOfActionDate);
+    const anchor = causeOfAction || dispatch;
+    const expires = addYears(anchor, type.limitationYears);
+    limitation = {
+      expires: toISODate(expires),
+      daysLeft: daysBetween(today, expires),
+      anchorDate: toISODate(anchor),
+      anchorBasis: causeOfAction ? "cause-of-action" : "dispatch-date-fallback",
+    };
   }
 
   let status = clean(notice.status) || "auto";
@@ -270,6 +315,11 @@ function evaluateNotice(notice, today) {
   }
   if (limitation && limitation.daysLeft < 90) {
     issues.push(`Only ${limitation.daysLeft} days left of the two-year limitation period.`);
+  }
+  if (limitation && limitation.anchorBasis === "dispatch-date-fallback") {
+    issues.push(
+      "No cause-of-action date entered — the limitation expiry is estimated from the dispatch date, which may overstate how much time is left.",
+    );
   }
 
   return {

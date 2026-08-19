@@ -9,9 +9,7 @@ import {
   History,
   Info,
   ArrowRightLeft,
-  Trash2,
-  Coffee,
-  Wheat
+  Trash2
 } from "lucide-react";
 import ConverterForm from "../components/ConverterForm";
 import UnitGuide from "../components/UnitGuide";
@@ -39,7 +37,10 @@ const KitchenUnitConverter = () => {
     ]);
   };
 
-  const clearHistory = () => setHistory([]);
+  const clearHistory = () => {
+    if (typeof window !== 'undefined' && !window.confirm("Clear all saved conversions? This can't be undone.")) return;
+    setHistory([]);
+  };
   const removeHistoryItem = (id) => setHistory(prev => prev.filter(item => item.id !== id));
 
   return (
@@ -120,7 +121,8 @@ const KitchenUnitConverter = () => {
                         </div>
                         <button
                           onClick={() => removeHistoryItem(item.id)}
-                          className="opacity-0 group-hover:opacity-100 p-1.5 text-muted hover:text-danger transition-all"
+                          aria-label={`Remove ${item.fromValue} ${item.fromUnit} to ${item.toValue} ${item.toUnit} from history`}
+                          className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 group-focus-within:opacity-100 p-1.5 text-muted hover:text-danger transition-all"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>

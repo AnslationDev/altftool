@@ -7,7 +7,6 @@ import {
   ABOUT_SECTION_TABS,
   ARRAY_FIELD_DEFAULTS,
   DEFAULT_ABOUT_PAGE_CONTENT,
-  ROOT_ARRAY_SECTIONS,
   saveAboutPageContent,
   seedAboutPageContent,
   subscribeAboutPageContent,
@@ -52,29 +51,21 @@ export default function CoozterAboutAdminPage() {
   }, []);
 
   const activeLabel = useMemo(() => ABOUT_SECTION_TABS.find((section) => section.key === activeSection)?.label || "About Section", [activeSection]);
-  const activeData = content[activeSection] || (ROOT_ARRAY_SECTIONS.has(activeSection) ? [] : {});
+  const activeData = content[activeSection] || {};
   const activeErrors = Object.keys(errors).filter((key) => key.startsWith(`${activeSection}.`)).length;
   const SectionComponent = SECTION_COMPONENTS[activeSection] || HeroSectionTab;
 
   function setSectionField(field, value) {
-    if (ROOT_ARRAY_SECTIONS.has(activeSection)) return;
     setContent((prev) => ({ ...prev, [activeSection]: { ...prev[activeSection], [field]: value } }));
     clearFieldError(`${activeSection}.${field}`);
   }
 
   function setSectionActive() {
-    if (ROOT_ARRAY_SECTIONS.has(activeSection)) return;
     setSectionField("isActive", activeData.isActive === false);
   }
 
   function updateArrayItem(arrayKey, index, field, value) {
     setContent((prev) => {
-      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
-        const rows = [...(prev[activeSection] || [])];
-        rows[index] = { ...rows[index], [field]: value };
-        return { ...prev, [activeSection]: rows };
-      }
-
       const rows = [...(prev[activeSection]?.[arrayKey] || [])];
       rows[index] = { ...rows[index], [field]: value };
       return { ...prev, [activeSection]: { ...prev[activeSection], [arrayKey]: rows } };
@@ -84,11 +75,6 @@ export default function CoozterAboutAdminPage() {
 
   function addArrayItem(arrayKey) {
     setContent((prev) => {
-      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
-        const rows = prev[activeSection] || [];
-        return { ...prev, [activeSection]: [...rows, { ...(ARRAY_FIELD_DEFAULTS[arrayKey] || {}), sortOrder: rows.length + 1, isActive: true }] };
-      }
-
       const rows = prev[activeSection]?.[arrayKey] || [];
       return {
         ...prev,
@@ -102,7 +88,6 @@ export default function CoozterAboutAdminPage() {
 
   function removeArrayItem(arrayKey, index) {
     setContent((prev) => {
-      if (ROOT_ARRAY_SECTIONS.has(activeSection)) return { ...prev, [activeSection]: (prev[activeSection] || []).filter((_, itemIndex) => itemIndex !== index) };
       return { ...prev, [activeSection]: { ...prev[activeSection], [arrayKey]: (prev[activeSection]?.[arrayKey] || []).filter((_, itemIndex) => itemIndex !== index) } };
     });
   }
@@ -170,7 +155,7 @@ export default function CoozterAboutAdminPage() {
           {ABOUT_SECTION_TABS.map((tab) => {
             const isCurrent = activeSection === tab.key;
             const tabErrors = Object.keys(errors).filter((key) => key.startsWith(`${tab.key}.`)).length;
-            const active = ROOT_ARRAY_SECTIONS.has(tab.key) ? (content[tab.key] || []).some((item) => item.isActive !== false) : content[tab.key]?.isActive !== false;
+            const active = content[tab.key]?.isActive !== false;
             return (
               <button key={tab.key} type="button" onClick={() => setActiveSection(tab.key)} className={`rounded-lg border p-3 text-left shadow-[var(--shadow-sm)] transition ${isCurrent ? "border-[var(--primary)] bg-[color-mix(in_srgb,var(--primary)_10%,var(--surface))]" : "border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-soft)]"}`}>
                 <span className="block text-sm font-bold text-[var(--foreground)]">{tab.label}</span>
@@ -187,7 +172,7 @@ export default function CoozterAboutAdminPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--muted)]">{activeLabel}</p>
                 <h2 className="mt-1 text-lg font-bold text-[var(--foreground)]">Editable Fields</h2>
               </div>
-              {!ROOT_ARRAY_SECTIONS.has(activeSection) ? <button type="button" onClick={setSectionActive} className={buttonClass("secondary")}>{activeData.isActive === false ? "Section Hidden" : "Section Active"}</button> : null}
+              <button type="button" onClick={setSectionActive} className={buttonClass("secondary")}>{activeData.isActive === false ? "Section Hidden" : "Section Active"}</button>
             </div>
 
             {loading ? <LoadingFields /> : <SectionComponent section={activeData} errors={errors} onFieldChange={setSectionField} onArrayAdd={addArrayItem} onArrayRemove={removeArrayItem} onArrayUpdate={updateArrayItem} />}

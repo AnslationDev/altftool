@@ -8,7 +8,7 @@ const seo = {
     "Read the estimated net with its effective per hour caption and the per-shift table, then Copy or Download gig-earnings-mileage-analyzer.txt.",
   ],
   intro:
-    "The Gig Earnings & Mileage Analyzer turns a list of shifts into a real hourly rate using net = (gross − business km × cost per km − other expenses) × (1 − tax reserve %), then divides that net by hours worked. You paste one line per shift as Date | gross | hours | business km | other expenses, set your vehicle cost per kilometre and the share you hold back for tax, and it returns a per-shift table plus a blended effective rate across every shift. It is aimed at delivery riders, rideshare drivers and any gig worker whose payout screen shows gross earnings and says nothing about fuel, wear or tax.",
+    "The Gig Earnings & Mileage Analyzer turns a list of shifts into a real hourly rate using net = (gross + tips − business km × cost per km − other expenses) × (1 − tax reserve %), then divides that net by hours worked. You paste one line per shift as Date | gross | hours | business km | other expenses | tips, set your vehicle cost per kilometre and the share you hold back for tax, and it returns a per-shift table plus a blended effective rate across every shift. It is aimed at delivery riders, rideshare drivers and any gig worker whose payout screen shows gross earnings and says nothing about fuel, wear or tax.",
   useCases: [
     "You drove 75 km on an 8-hour shift for a 4,200 payout and want to know what is actually left once fuel and vehicle wear at 8 per km and a 10% tax reserve come off.",
     "You are deciding whether long-distance orders are worth taking, so you enter a week of shifts and compare the net-per-hour column on high-km days against short-radius days.",
@@ -31,7 +31,7 @@ const seo = {
   faqs: [
     [
       "How is my effective hourly rate calculated?",
-      "Net for a shift is gross earnings minus (business km × your cost per km) minus other expenses, and that result is then reduced by your tax reserve percentage; net divided by hours gives the shift rate. The headline figure is total net across all shifts divided by total hours, so long low-paying shifts pull the blended rate down.",
+      "Net for a shift is gross earnings plus tips, minus (business km × your cost per km), minus other expenses, and that result is then reduced by your tax reserve percentage; net divided by hours gives the shift rate. The headline figure is total net across all shifts divided by total hours, so long low-paying shifts pull the blended rate down.",
     ],
     [
       "What should I use for cost per kilometre?",
@@ -39,7 +39,7 @@ const seo = {
     ],
     [
       "What format does the shift list need?",
-      "One shift per line, fields separated by pipes, in the order Date | gross earnings | total hours | business km | other expenses — for example 2026-07-20 | 4200 | 8 | 75 | 12. Missing numbers are treated as zero, and hours are floored at 0.01 so a mistyped zero cannot blow up the per-hour figure.",
+      "One shift per line, fields separated by pipes, in the order Date | gross earnings | total hours | business km | other expenses | tips included — for example 2026-07-20 | 4200 | 8 | 75 | 12 | 300. Missing numbers are treated as zero, and hours are floored at 0.01 so a mistyped zero cannot blow up the per-hour figure.",
     ],
     [
       "Does this tell me what tax I owe?",

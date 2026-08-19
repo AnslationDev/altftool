@@ -58,6 +58,11 @@ const CHIP_BTN =
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState("");
+  // Only the "offline" preset (1920x1080) renders inside the Twitch video
+  // player; the banner and panel presets are plain image uploads with no
+  // control bar and no 16:9 requirement, so the engine is told to skip
+  // those player-specific checks for them.
+  const [presetId, setPresetId] = useState("offline");
 
   const setField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -76,8 +81,9 @@ export default function ToolHome() {
         bodySize: Number(form.bodySize),
         renderWidth: Number(form.renderWidth),
         fileSizeMb: Number(form.fileSizeMb),
+        isPlayerCanvas: presetId === "offline",
       }),
-    [form],
+    [form, presetId],
   );
 
   const failed = Boolean(result.error);
@@ -96,6 +102,7 @@ export default function ToolHome() {
 
   const reset = () => {
     setForm(DEFAULTS);
+    setPresetId("offline");
     setCopied("");
   };
 
@@ -156,13 +163,21 @@ export default function ToolHome() {
               key={preset.id}
               type="button"
               className={CHIP_BTN}
-              onClick={() =>
+              aria-pressed={presetId === preset.id}
+              onClick={() => {
+                const isOffline = preset.id === "offline";
                 setForm((prev) => ({
                   ...prev,
                   width: String(preset.width),
                   height: String(preset.height),
-                }))
-              }
+                  // Only the offline screen sits inside the video player —
+                  // the banner and panel presets have no control bar and no
+                  // 16:9 requirement, so their reserved allowances are zero.
+                  controlBarShare: isOffline ? DEFAULTS.controlBarShare : "0",
+                  edgeTrimShare: isOffline ? DEFAULTS.edgeTrimShare : "0",
+                }));
+                setPresetId(preset.id);
+              }}
             >
               {preset.label}
             </button>
@@ -185,7 +200,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Each information block
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {failed ? DASH : `${NUM.format(result.cellWidth)} × ${NUM.format(result.cellHeight)}`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -251,7 +270,7 @@ export default function ToolHome() {
                   />
                   <text
                     x={cell.x + 24}
-                    y={cell.y + result.renderedHeadingPx + 40}
+                    y={cell.y + Math.min(Number(form.headingSize), cell.height / 2) + 24}
                     fontSize={Math.min(cell.height / 3, 72)}
                     fontFamily="Helvetica, Arial, sans-serif"
                     fontWeight="700"

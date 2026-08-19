@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Crop, RotateCcw } from "lucide-react";
 
 import { BLEED_PRESETS_MM, computePosterSetup } from "../lib";
@@ -75,6 +75,13 @@ export default function ToolHome() {
   const [ppiMode, setPpiMode] = useState(DEFAULTS.ppiMode);
   const [ppi, setPpi] = useState(DEFAULTS.ppi);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -138,7 +145,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -351,7 +359,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -370,7 +382,6 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy poster setup result"
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -442,7 +453,11 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <h2 className="text-base font-semibold">
           Minimum text sizes at{" "}
           {hasError ? DASH : `${NUM2.format(result.distanceM)} m (${NUM1.format(result.distanceFt)} ft)`}

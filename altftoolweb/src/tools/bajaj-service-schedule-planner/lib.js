@@ -76,9 +76,17 @@ export const ROUTINE_TASKS = [
 /** Additional check for liquid-cooled models. */
 export const LIQUID_COOLED_TASK = "Coolant level, radiator fins and fan operation";
 
-/** Build the consumable list for a cooling type. */
-export function consumableList(coolingType) {
-  return coolingType === "liquid" ? [...BASE_CONSUMABLES, COOLANT_CONSUMABLE] : BASE_CONSUMABLES;
+/**
+ * Build the consumable list for a cooling type. `firstKm` overrides the
+ * engine oil's first-change trigger with the caller's actual runtime value
+ * (planServiceSchedule's `firstKm` parameter) instead of always using the
+ * module-level FIRST_SERVICE_KM default baked into BASE_CONSUMABLES.
+ */
+export function consumableList(coolingType, firstKm = FIRST_SERVICE_KM) {
+  const base = BASE_CONSUMABLES.map((item) =>
+    item.key === "engineOil" ? { ...item, firstKm } : item,
+  );
+  return coolingType === "liquid" ? [...base, COOLANT_CONSUMABLE] : base;
 }
 
 const isNum = (value) => typeof value === "number" && Number.isFinite(value);
@@ -211,13 +219,17 @@ export function planServiceSchedule({
     return { error: "Parts price index should be between 0 and 500 percent." };
   }
 
-  const list = consumableList(coolingType);
+  const list = consumableList(coolingType, firstKm);
   const priceFactor = partsPriceIndex / 100;
   const kmPerDay = monthlyKm / DAYS_PER_MONTH;
   const services = [];
   let previousDueKm = 0;
   let totalCost = 0;
   let totalPartsCost = 0;
+  // Cost of only the not-yet-due visits, kept separate from totalCost (the
+  // full plan, including services already behind the odometer reading) —
+  // a prepaid package purchased today can only ever cover what's still ahead.
+  let upcomingCost = 0;
 
   for (let index = 1; index <= count; index += 1) {
     const dueKm = serviceDueKm(index, { firstKm, secondKm, intervalKm });
@@ -241,6 +253,8 @@ export function planServiceSchedule({
 
     totalCost += cost;
     totalPartsCost += partsCost;
+    const status = currentOdometerKm >= dueKm ? "done" : "upcoming";
+    if (status === "upcoming") upcomingCost += cost;
 
     services.push({
       index,
@@ -249,7 +263,7 @@ export function planServiceSchedule({
       dueDate,
       dueBasis: useKm ? "distance" : "time",
       isFree,
-      status: currentOdometerKm >= dueKm ? "done" : "upcoming",
+      status,
       parts,
       partsCost,
       labour,
@@ -260,7 +274,10 @@ export function planServiceSchedule({
   }
 
   const next = services.find((service) => service.status === "upcoming") || null;
-  const packageSaving = prepaidPackagePrice > 0 ? totalCost - prepaidPackagePrice : 0;
+  // Compare the package price against only the remaining/upcoming visits —
+  // services already done are sunk cost and irrelevant to whether a package
+  // bought NOW is worth it.
+  const packageSaving = prepaidPackagePrice > 0 ? upcomingCost - prepaidPackagePrice : 0;
 
   return {
     brand: BRAND,

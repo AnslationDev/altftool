@@ -58,7 +58,12 @@ export default function ToolInfo({ info, toolName }) {
 
       {Array.isArray(howToUse) && howToUse.length ? (
         <div className="afc-info-block">
-          <h2 className="afc-info-h"><ListChecks size={18} /> How to use it</h2>
+          {/* Named headings, not "How to use it": a retrieval chunk lifted out
+              of the page has to say which calculator it belongs to. This text
+              also has to match the HowTo JSON-LD name emitted by the route. */}
+          <h2 className="afc-info-h">
+            <ListChecks size={18} /> {toolName ? `How to use the ${toolName}` : "How to use it"}
+          </h2>
           <ol className="afc-steps-list">
             {howToUse.map((s, i) => <li key={i}>{s}</li>)}
           </ol>
@@ -76,7 +81,12 @@ export default function ToolInfo({ info, toolName }) {
 
       {Array.isArray(faqs) && faqs.length ? (
         <div className="afc-info-block">
-          <h2 className="afc-info-h"><HelpCircle size={18} /> Frequently asked questions</h2>
+          <h2 className="afc-info-h">
+            <HelpCircle size={18} />{" "}
+            {toolName
+              ? `Frequently asked questions about the ${toolName}`
+              : "Frequently asked questions"}
+          </h2>
           <div className="afc-faqs">
             {faqs.map((f, i) => (
               <details key={i} className="afc-faq">

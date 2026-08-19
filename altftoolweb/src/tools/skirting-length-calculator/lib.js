@@ -88,12 +88,18 @@ export function computeSkirting({
   const withWastageM = netRunM * (1 + wastagePercent / 100);
   const pieces = Math.ceil((withWastageM - 1e-9) / pieceLengthM);
   const purchasedLengthM = pieces * pieceLengthM;
-  const spareM = Math.max(0, purchasedLengthM - netRunM);
+  const spareM = Math.max(0, purchasedLengthM - withWastageM);
 
   // A plain rectangular room has four internal corners; each doorway leaves two
-  // exposed ends that need a returned (external mitred) end cap.
+  // exposed ends that need a returned (external mitred) end cap. The "extra run"
+  // input lets the user model an alcove or an L-shape by adding running length,
+  // but a single extra-metres figure doesn't tell us the actual shape (a simple
+  // straight extension, a boxed-in alcove and an L-shaped room all add
+  // different numbers of corners), so the corner count below still assumes a
+  // plain rectangle whenever extra run is used and callers should flag that.
   const internalCorners = 4;
   const externalEnds = doorCount * 2;
+  const cornerCountAssumesRectangle = extraRunM > 0;
 
   const surfaceAreaM2 = netRunM * (skirtingHeightMm / 1000);
   const fixings = Math.ceil(netRunM / FIXING_SPACING_M);
@@ -109,6 +115,7 @@ export function computeSkirting({
     spareM,
     internalCorners,
     externalEnds,
+    cornerCountAssumesRectangle,
     surfaceAreaM2,
     fixings,
     materialCost: purchasedLengthM * pricePerMetre,

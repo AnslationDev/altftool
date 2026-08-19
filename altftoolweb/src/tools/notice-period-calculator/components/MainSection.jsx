@@ -81,11 +81,24 @@ const NoticePeriodCalculator = () => {
     });
   };
 
-  const getNoticePeriodLabel = (months) => {
-    if (months >= 24) return '24 months (maximum legal requirement)';
-    if (months >= 12) return '12 months';
-    if (months >= 6) return '6 months';
-    return 'Minimum statutory period';
+  // Notice-month caps by employee type, matching the accrual formulas above.
+  const NOTICE_MONTH_CAPS = {
+    'full-time': 24,
+    'part-time': 12,
+    'contract': 6,
+    'executive': 6,
+  };
+
+  // Describes the notice-period figure without ever restating a different
+  // number than the headline: the accrual formulas produce continuous
+  // values, so a fixed-bucket subtitle (e.g. always "6 months") could
+  // contradict the exact headline number for almost any non-boundary input.
+  const getNoticePeriodLabel = (months, type) => {
+    const cap = NOTICE_MONTH_CAPS[type];
+    if (cap !== undefined && months >= cap) {
+      return `Capped at the ${cap}-month maximum`;
+    }
+    return 'Based on years of service';
   };
 
   const getComplianceColor = (note) => {
@@ -208,7 +221,7 @@ const NoticePeriodCalculator = () => {
                   <div className="text-xs text-[var(--muted-foreground)] uppercase tracking-wider mb-2">Notice Period</div>
                   <div className="text-2xl font-bold text-[var(--primary)]">{results.noticeMonths} months</div>
                   <div className="text-xs text-[var(--secondary-foreground)] mt-1">
-                    {getNoticePeriodLabel(results.noticeMonths)}
+                    {getNoticePeriodLabel(results.noticeMonths, results.employeeType)}
                   </div>
                 </div>
 

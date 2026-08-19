@@ -149,7 +149,7 @@ export default function ToolHome() {
         if (sum <= 0 || hipCm <= 30) {
           return fallback("Please verify waist, hip, and neck measurements.");
         }
-        const denom = 1.029669 - 0.35004 * Math.log10(sum) + 0.22100 * Math.log10(heightIn);
+        const denom = 1.29579 - 0.35004 * Math.log10(sum) + 0.22100 * Math.log10(heightIn);
         bf = (495 / denom) - 450;
       }
     } else if (method === "bmi") {
@@ -369,12 +369,14 @@ export default function ToolHome() {
             <div className="flex rounded-lg bg-card p-1 border border-border shadow-sm">
               <button
                 onClick={() => handleSystemChange("metric")}
+                aria-pressed={unitSystem === "metric"}
                 className={`rounded-md px-4 py-2 text-xs font-semibold ${unitSystem === "metric" ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
                 Metric (kg/cm)
               </button>
               <button
                 onClick={() => handleSystemChange("imperial")}
+                aria-pressed={unitSystem === "imperial"}
                 className={`rounded-md px-4 py-2 text-xs font-semibold ${unitSystem === "imperial" ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
                 US Units (lbs/in)
@@ -451,6 +453,7 @@ export default function ToolHome() {
                         <button
                           type="button"
                           onClick={() => setGender("male")}
+                          aria-pressed={gender === "male"}
                           className={`rounded-xl border py-2.5 text-center text-sm font-semibold ${
                             gender === "male"
                               ? "border-primary bg-primary text-white"
@@ -462,6 +465,7 @@ export default function ToolHome() {
                         <button
                           type="button"
                           onClick={() => setGender("female")}
+                          aria-pressed={gender === "female"}
                           className={`rounded-xl border py-2.5 text-center text-sm font-semibold ${
                             gender === "female"
                               ? "border-primary bg-primary text-white"
@@ -473,10 +477,11 @@ export default function ToolHome() {
                       </div>
                     </div>
                     <div>
-                      <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                      <label htmlFor="body-fat-age" className="mb-1.5 block text-xs font-medium text-muted-foreground">
                         Age <span className="text-muted-foreground">(years)</span>
                       </label>
                       <input
+                        id="body-fat-age"
                         type="number"
                         min={15}
                         max={100}
@@ -487,10 +492,11 @@ export default function ToolHome() {
                       />
                     </div>
                     <div>
-                      <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                      <label htmlFor="body-fat-weight" className="mb-1.5 block text-xs font-medium text-muted-foreground">
                         Total Weight <span className="text-primary font-bold">({unitSystem === "metric" ? "kg" : "lbs"})</span>
                       </label>
                       <input
+                        id="body-fat-weight"
                         type="number"
                         step="0.1"
                         value={weight}
@@ -501,10 +507,11 @@ export default function ToolHome() {
                       />
                     </div>
                     <div>
-                      <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                      <label htmlFor="body-fat-height" className="mb-1.5 block text-xs font-medium text-muted-foreground">
                         Height <span className="text-primary font-bold">({unitSystem === "metric" ? "cm" : "inches"})</span>
                       </label>
                       <input
+                        id="body-fat-height"
                         type="number"
                         step="0.1"
                         value={height}
@@ -526,6 +533,7 @@ export default function ToolHome() {
                     <button
                       type="button"
                       onClick={() => setMethod("navy")}
+                      aria-pressed={method === "navy"}
                       className={`rounded-xl border p-3 text-left ${
                         method === "navy"
                           ? "border-primary bg-primary/10 text-primary"
@@ -538,6 +546,7 @@ export default function ToolHome() {
                     <button
                       type="button"
                       onClick={() => setMethod("bmi")}
+                      aria-pressed={method === "bmi"}
                       className={`rounded-xl border p-3 text-left ${
                         method === "bmi"
                           ? "border-primary bg-primary/10 text-primary"
@@ -550,6 +559,7 @@ export default function ToolHome() {
                     <button
                       type="button"
                       onClick={() => setMethod("skinfold")}
+                      aria-pressed={method === "skinfold"}
                       className={`rounded-xl border p-3 text-left ${
                         method === "skinfold"
                           ? "border-primary bg-primary/10 text-primary"
@@ -569,17 +579,17 @@ export default function ToolHome() {
                         </div>
                         <div className="grid gap-4 sm:grid-cols-2">
                           <div>
-                            <label className="mb-1 block text-xs text-muted-foreground">Waist</label>
-                            <input type="number" step="0.1" value={waist} onChange={waistHandler} onBlur={waistBlur} placeholder={unitSystem === "metric" ? "88" : "34.5"} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
+                            <label htmlFor="body-fat-waist" className="mb-1 block text-xs text-muted-foreground">Waist</label>
+                            <input id="body-fat-waist" type="number" step="0.1" value={waist} onChange={waistHandler} onBlur={waistBlur} placeholder={unitSystem === "metric" ? "88" : "34.5"} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
                           </div>
                           <div>
-                            <label className="mb-1 block text-xs text-muted-foreground">Neck</label>
-                            <input type="number" step="0.1" value={neck} onChange={neckHandler} onBlur={neckBlur} placeholder={unitSystem === "metric" ? "38" : "15"} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
+                            <label htmlFor="body-fat-neck" className="mb-1 block text-xs text-muted-foreground">Neck</label>
+                            <input id="body-fat-neck" type="number" step="0.1" value={neck} onChange={neckHandler} onBlur={neckBlur} placeholder={unitSystem === "metric" ? "38" : "15"} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
                           </div>
                           {gender === "female" && (
                             <div className="sm:col-span-2">
-                              <label className="mb-1 block text-xs text-muted-foreground">Hip</label>
-                              <input type="number" step="0.1" value={hip} onChange={hipHandler} onBlur={hipBlur} placeholder={unitSystem === "metric" ? "100" : "39.5"} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
+                              <label htmlFor="body-fat-hip" className="mb-1 block text-xs text-muted-foreground">Hip</label>
+                              <input id="body-fat-hip" type="number" step="0.1" value={hip} onChange={hipHandler} onBlur={hipBlur} placeholder={unitSystem === "metric" ? "100" : "39.5"} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
                             </div>
                           )}
                         </div>
@@ -594,16 +604,16 @@ export default function ToolHome() {
                       <div className="space-y-4">
                         <div className="grid gap-3 sm:grid-cols-3">
                           <div>
-                            <label className="mb-1 block text-xs text-muted-foreground">{gender === "male" ? "Chest" : "Triceps"}</label>
-                            <input type="number" value={skinfold1} onChange={skinfoldHandler(setSkinfold1)} onBlur={skinfoldBlur(setSkinfold1, 15)} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
+                            <label htmlFor="body-fat-skinfold1" className="mb-1 block text-xs text-muted-foreground">{gender === "male" ? "Chest" : "Triceps"}</label>
+                            <input id="body-fat-skinfold1" type="number" value={skinfold1} onChange={skinfoldHandler(setSkinfold1)} onBlur={skinfoldBlur(setSkinfold1, 15)} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
                           </div>
                           <div>
-                            <label className="mb-1 block text-xs text-muted-foreground">{gender === "male" ? "Abdomen" : "Suprailiac"}</label>
-                            <input type="number" value={skinfold2} onChange={skinfoldHandler(setSkinfold2)} onBlur={skinfoldBlur(setSkinfold2, 20)} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
+                            <label htmlFor="body-fat-skinfold2" className="mb-1 block text-xs text-muted-foreground">{gender === "male" ? "Abdomen" : "Suprailiac"}</label>
+                            <input id="body-fat-skinfold2" type="number" value={skinfold2} onChange={skinfoldHandler(setSkinfold2)} onBlur={skinfoldBlur(setSkinfold2, 20)} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
                           </div>
                           <div>
-                            <label className="mb-1 block text-xs text-muted-foreground">Thigh</label>
-                            <input type="number" value={skinfold3} onChange={skinfoldHandler(setSkinfold3)} onBlur={skinfoldBlur(setSkinfold3, 18)} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
+                            <label htmlFor="body-fat-skinfold3" className="mb-1 block text-xs text-muted-foreground">Thigh</label>
+                            <input id="body-fat-skinfold3" type="number" value={skinfold3} onChange={skinfoldHandler(setSkinfold3)} onBlur={skinfoldBlur(setSkinfold3, 18)} className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary" />
                           </div>
                         </div>
                       </div>
@@ -662,7 +672,7 @@ export default function ToolHome() {
                               <td className="py-3 px-3">{item.method}</td>
                               <td className="py-3 px-3 font-bold">{item.bodyFatPercent}%</td>
                               <td className="py-3 px-3 text-right">
-                                <button onClick={() => deleteEntry(item.id)} className="text-muted-foreground hover:text-rose-400">
+                                <button onClick={() => deleteEntry(item.id)} aria-label={`Delete entry from ${item.date}`} className="text-muted-foreground hover:text-rose-400">
                                   <Trash2 className="h-3.5 w-3.5" />
                                 </button>
                               </td>

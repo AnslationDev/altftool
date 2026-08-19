@@ -241,7 +241,7 @@ export default function ServicesTab() {
                       type="button"
                       onClick={() => setPreviewImg(activeService.heroImage)}
                       title="Click to view full image"
-                      className="h-10 w-16 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                      className="h-10 w-16 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                     >
                       <img src={activeService.heroImage} alt="Hero Preview" className="w-full h-full object-cover" />
                     </button>
@@ -380,7 +380,7 @@ export default function ServicesTab() {
                       type="button"
                       onClick={() => setPreviewImg(activeService.framework.image)}
                       title="Click to view full image"
-                      className="h-10 w-16 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                      className="h-10 w-16 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                     >
                       <img src={activeService.framework.image} alt="Framework Preview" className="w-full h-full object-cover" />
                     </button>
@@ -520,7 +520,7 @@ export default function ServicesTab() {
                     <button
                       type="button"
                       onClick={() => removeFaq(idx)}
-                      className="text-red-500 hover:text-red-700 transition"
+                      className="text-[var(--danger)] hover:opacity-80 transition"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>

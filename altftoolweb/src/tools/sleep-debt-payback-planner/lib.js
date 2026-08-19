@@ -170,14 +170,15 @@ export function planSleepDebtPayback({
       extraHours: applied,
       nightSleepHours,
       // Wake time is held fixed; the whole shift is taken by going to bed earlier.
-      bedtimeMinutes: wakeMinutes - Math.round(nightSleepHours * MINUTES_PER_HOUR),
       bedtime: formatClock(wakeMinutes - Math.round(nightSleepHours * MINUTES_PER_HOUR)),
       remainingDebtHours: debtLeft,
     });
   }
 
-  const daysNeededAtCap = debtHours > 0 ? Math.ceil(debtHours / cappedExtra) : 0;
-  const singleLieInHours = debtHours; // what one catch-up night would have to absorb
+  // Nights needed if every recovery night used the fixed safe cap (not the
+  // user's own, possibly-lower, chosen extraPerNightHours) — this is what the
+  // "Nights needed at 2h a night" label on-screen actually claims to show.
+  const daysNeededAtCap = debtHours > 0 ? Math.ceil(debtHours / MAX_SAFE_EXTRA_PER_NIGHT_HOURS) : 0;
   const baselineBedtimeMinutes = wakeMinutes - Math.round(targetHours * MINUTES_PER_HOUR);
 
   return {
@@ -196,8 +197,6 @@ export function planSleepDebtPayback({
     remainingDebtHours: debtLeft,
     fullyCleared: debtLeft <= 0.0001,
     daysNeededAtCap,
-    singleLieInHours,
-    socialJetLagRisk: singleLieInHours > MAX_SAFE_EXTRA_PER_NIGHT_HOURS,
     baselineBedtime: formatClock(baselineBedtimeMinutes),
     wakeTime: formatClock(wakeMinutes),
     nightRows,

@@ -12,7 +12,7 @@ const seo = {
   useCases: [
     "Sizing the cash float for a long weekend in Dubai where the hotel and tours are prepaid but the souks and abras are not.",
     "Deciding whether to buy dirhams in India or change money at an exchange house in the UAE after landing.",
-    "Checking that a family trip's combined forex purchase stays inside the RBI limit of USD 3,000 in notes per traveller per visit.",
+    "Checking that each traveller's share of a family trip's forex purchase stays inside the RBI limit of USD 3,000 in notes per traveller per visit.",
   ],
   benefits: [
     ["Peg-aware", "Because AED is fixed to the dollar at 3.6725, the rupee rate you plan with is unlikely to be overtaken by a surprise move in the dirham."],

@@ -41,7 +41,7 @@ const AiToolDetailPage = ({ tool, allTools, onSelectTool }) => {
             <Icon className="h-7 w-7" />
           </span>
           <div>
-            <h1 className="support-detail-title">{tool.name}</h1>
+            <h2 className="support-detail-title">{tool.name}</h2>
             <p className="support-detail-heading">{tool.tagline}</p>
           </div>
         </div>

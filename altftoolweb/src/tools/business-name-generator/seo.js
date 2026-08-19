@@ -23,6 +23,11 @@ const seo = {
       "Heart any name to pin it to a Shortlisted panel and copy it in one click, so a 30-name batch narrows to a handful without a separate notes file.",
     ],
   ],
+  steps: [
+    "Pick an industry (or keep it general) and a naming style — Modern, Classic, Prefixed or Descriptive.",
+    "Set how many names to generate with the slider, then click \"Generate Business Names\".",
+    "Scan the list, heart any name to pin it to your Shortlisted panel, and copy a favorite to your clipboard.",
+  ],
   faqs: [
     [
       "How many names can I generate at once?",

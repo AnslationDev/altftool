@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Edit3, Eye, EyeOff, Image as ImageIcon, Loader2, Plus, Save, Search, Trash2, Upload, Users, X } from "lucide-react";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 import { emitAlert } from "@/lib/alertBus";
@@ -300,6 +300,9 @@ function MemberModal({ mode, member, members, onClose }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [slugEdited, setSlugEdited] = useState(Boolean(member?.slug));
+  // Paths removed from the form but not yet confirmed — actual Storage
+  // cleanup is deferred until save() succeeds, so Cancel never destroys data.
+  const pendingImageDeletes = useRef([]);
 
   function setField(key, value) {
     setForm((prev) => {
@@ -335,14 +338,12 @@ function MemberModal({ mode, member, members, onClose }) {
     }
   }
 
-  async function removeImage() {
-    const path = form.imagePath;
+  function removeImage() {
+    // Only clear the form locally — the Storage blob is deleted in save()
+    // once the member update/create actually succeeds, so clicking Cancel
+    // after this never leaves Firestore pointing at a deleted image.
+    if (form.imagePath) pendingImageDeletes.current.push(form.imagePath);
     setForm((prev) => ({ ...prev, image: "", imagePath: "" }));
-    try {
-      await deleteTeamImage(path);
-    } catch {
-      emitAlert({ type: "warning", message: "Image removed from form, but Storage cleanup failed." });
-    }
   }
 
   async function save() {
@@ -361,6 +362,17 @@ function MemberModal({ mode, member, members, onClose }) {
       } else {
         await createTeamMember(form);
         emitAlert({ type: "success", message: "Team member added." });
+      }
+      if (pendingImageDeletes.current.length) {
+        const paths = pendingImageDeletes.current;
+        pendingImageDeletes.current = [];
+        await Promise.all(
+          paths.map((path) =>
+            deleteTeamImage(path).catch(() => {
+              emitAlert({ type: "warning", message: "Member saved, but old photo cleanup failed." });
+            }),
+          ),
+        );
       }
       onClose();
     } catch (error) {

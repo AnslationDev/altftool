@@ -24,6 +24,13 @@ export const GAME_GENRE_BY_SLUG = {
   "sliding-puzzle": "puzzle",
   sudoku: "puzzle",
   "block-stacker": "puzzle",
+  "chess-puzzle-trainer": "puzzle",
+  "m2-blocks-game": "puzzle",
+  "periodic-table-game": "puzzle",
+  "rubiks-cube-algorithm-trainer": "puzzle",
+  "sudoku-solver": "puzzle",
+  "tetris-clone": "puzzle",
+  "watercolor-game": "puzzle",
 
   "aim-trainer": "arcade",
   "brick-breaker": "arcade",
@@ -36,11 +43,15 @@ export const GAME_GENRE_BY_SLUG = {
   "space-rocks": "arcade",
   "tap-glider": "arcade",
   "whack-a-mole": "arcade",
+  "dino-run": "arcade",
+  "multitasking-ability-test": "arcade",
 
   "daily-word-game": "word",
   hangman: "word",
   "typing-speed-test": "word",
   "word-search": "word",
+  "typing-speed-game": "word",
+  "word-scramble-game": "word",
 
   "chess-multiplayer": "board",
   "four-in-a-row": "board",
@@ -59,6 +70,16 @@ export const GAME_GENRE_BY_SLUG = {
   "insect-tracker": "casual",
   "secret-santa-pair-generator": "casual",
   "ultimate-wheel-spinner": "casual",
+  "card-picker": "casual",
+  "d-d-dice-roller": "casual",
+  "drinking-game-picker": "casual",
+  "friendship-challenge": "casual",
+  "never-have-i-ever": "casual",
+  "spin-the-bottle": "casual",
+  "team-generator": "casual",
+  "tournament-bracket-maker": "casual",
+  "truth-or-dare": "casual",
+  "truth-or-dare-generator": "casual",
 };
 
 export function getGameGenreKey(slug) {

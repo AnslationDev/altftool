@@ -96,7 +96,7 @@ function calculate(values) {
   const currentCost = clampNumber(values.currentCost, 0, 1000000000);
   const currentSavings = clampNumber(values.currentSavings, 0, 10000000000);
   const inflationRate = clampNumber(values.inflationRate, 0, 80);
-  const years = clampNumber(values.years, 1, 60);
+  const years = Math.round(clampNumber(values.years, 1, 60));
   const salaryGrowthRate = clampNumber(values.salaryGrowthRate, 0, 80);
   const investmentReturnRate = clampNumber(values.investmentReturnRate, 0, 100);
   const monthlyInvestment = clampNumber(values.monthlyInvestment, 0, 100000000);
@@ -354,7 +354,11 @@ export default function InflationImpactCalculator() {
             </p>
           </div>
 
-          <section className="mx-auto mt-5 grid w-full max-w-6xl grid-cols-2 gap-3 sm:mt-8 lg:grid-cols-4 xl:gap-5">
+          <section
+            className="mx-auto mt-5 grid w-full max-w-6xl grid-cols-2 gap-3 sm:mt-8 lg:grid-cols-4 xl:gap-5"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <MetricCard
               icon={TrendingUp}
               label="Inflated Cost"
@@ -530,7 +534,7 @@ export default function InflationImpactCalculator() {
           </section>
         </div>
 
-        <section className="mt-6 grid min-w-0 gap-6 xl:grid-cols-3">
+        <section className="mt-6 grid min-w-0 gap-6 xl:grid-cols-3" aria-live="polite" aria-atomic="true">
           <InsightCard
             icon={ShieldCheck}
             title={metrics.status.label}

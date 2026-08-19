@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   Battery,
@@ -34,6 +34,8 @@ const toNumber = (value) => {
 
 const clampMin = (value, min = 0) => Math.max(min, toNumber(value));
 
+const clampRange = (value, min, max) => Math.min(max, Math.max(min, toNumber(value)));
+
 const nextStandard = (value, sizes) => sizes.find((size) => size >= value) || null;
 
 const uid = () => `r${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -64,6 +66,13 @@ export default function ToolHome() {
   const [batteryAh, setBatteryAh] = useState(150);
   const [chargeCurrent, setChargeCurrent] = useState(15);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const catalog = useMemo(() => new Map(APPLIANCES.map((item) => [item.id, item])), []);
 
@@ -75,8 +84,12 @@ export default function ToolHome() {
           if (!spec) return null;
           const qty = Math.max(0, Math.round(clampMin(row.qty)));
           const hours = clampMin(row.hours);
-          const watts = qty * spec.watts;
-          return { ...row, spec, qty, hours, watts, wh: watts * hours };
+          const unitWatts =
+            row.watts !== undefined && row.watts !== null && row.watts !== ""
+              ? clampMin(row.watts, 0)
+              : spec.watts;
+          const watts = qty * unitWatts;
+          return { ...row, spec, qty, hours, unitWatts, watts, wh: watts * hours };
         })
         .filter(Boolean),
     [rows, catalog]
@@ -128,6 +141,7 @@ export default function ToolHome() {
       !recommendedAh && requiredAh > 0 ? Math.ceil(requiredAh / maxStandardAh) : 0;
     const chosenAh = clampMin(batteryAh, 1);
     const seriesCount = Math.max(1, Math.round(volts / 12));
+    const recommendedTotalCount = recommendedParallelCount * seriesCount;
     const parallelStrings = chosenAh > 0 ? Math.max(1, Math.ceil(requiredAh / chosenAh)) : 1;
     const totalBatteries = seriesCount * parallelStrings;
     const bankAh = chosenAh * parallelStrings;
@@ -145,6 +159,7 @@ export default function ToolHome() {
       recommendedAh,
       maxStandardAh,
       recommendedParallelCount,
+      recommendedTotalCount,
       chosenAh,
       seriesCount,
       parallelStrings,
@@ -196,7 +211,7 @@ export default function ToolHome() {
         "APPLIANCE LOAD",
         ...items.map(
           (item) =>
-            `  ${item.spec.name} × ${item.qty} @ ${item.spec.watts} W for ${num(item.hours, 1)} h = ${num(
+            `  ${item.spec.name} × ${item.qty} @ ${num(item.unitWatts)} W for ${num(item.hours, 1)} h = ${num(
               item.watts
             )} W / ${num(item.wh)} Wh`
         ),
@@ -219,7 +234,7 @@ export default function ToolHome() {
         `  Recommended standard size: ${
           battery.recommendedAh
             ? `${num(battery.recommendedAh)} Ah`
-            : `above ${num(battery.maxStandardAh)} Ah — needs ${battery.recommendedParallelCount} × ${num(battery.maxStandardAh)} Ah batteries in parallel`
+            : `above ${num(battery.maxStandardAh)} Ah — needs ${battery.recommendedTotalCount} × ${num(battery.maxStandardAh)} Ah batteries total (${battery.seriesCount} in series × ${battery.recommendedParallelCount} parallel)`
         }`,
         `  Bank: ${battery.totalBatteries} × 12 V ${num(battery.chosenAh)} Ah (${battery.seriesCount} in series × ${battery.parallelStrings} parallel) = ${num(battery.bankAh)} Ah at ${battery.volts} V`,
         `  Actual backup at ${num(load.totalW)} W: ${hoursLabel(battery.actualHours)}`,
@@ -233,8 +248,12 @@ export default function ToolHome() {
   const copyReport = async () => {
     const ok = await safeCopyText(report);
     if (!ok) return;
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    copyTimeoutRef.current = setTimeout(() => {
+      setCopied(false);
+      copyTimeoutRef.current = null;
+    }, 1400);
   };
 
   return (
@@ -260,7 +279,7 @@ export default function ToolHome() {
                 "Battery",
                 battery.recommendedAh
                   ? `${num(battery.recommendedAh)} Ah`
-                  : `${battery.recommendedParallelCount} × ${num(battery.maxStandardAh)} Ah`,
+                  : `${battery.recommendedTotalCount} × ${num(battery.maxStandardAh)} Ah`,
               ],
             ].map(([label, value]) => (
               <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3">
@@ -367,7 +386,18 @@ export default function ToolHome() {
                           </span>
                         )}
                       </td>
-                      <td className="p-2 text-[var(--muted-foreground)] tabular-nums">{item.spec.watts} W</td>
+                      <td className="p-2">
+                        <label className="block">
+                          <span className="sr-only">Watts each for {item.spec.name}</span>
+                          <input
+                            type="number"
+                            min="0"
+                            value={item.unitWatts}
+                            onChange={(event) => updateRow(item.key, { watts: Number(event.target.value) })}
+                            className={`w-20 ${smallInputClass}`}
+                          />
+                        </label>
+                      </td>
                       <td className="p-2">
                         <label className="block">
                           <span className="sr-only">Quantity of {item.spec.name}</span>
@@ -523,6 +553,7 @@ export default function ToolHome() {
 
               {load.surgeRisk && load.worst.item && (
                 <div
+                  role="alert"
                   className="mt-3 rounded-md border p-3 text-xs leading-5"
                   style={{ borderColor: "var(--anslation-ds-danger)" }}
                 >
@@ -573,6 +604,7 @@ export default function ToolHome() {
                     min="1"
                     value={chargeCurrent}
                     onChange={(event) => setChargeCurrent(Number(event.target.value))}
+                    onBlur={(event) => setChargeCurrent(clampMin(event.target.value, 0.1))}
                     className={`mt-2 ${inputClass}`}
                   />
                 </label>
@@ -602,7 +634,7 @@ export default function ToolHome() {
             </button>
           </div>
 
-          <div className="rounded-md bg-[var(--muted)] p-4">
+          <div className="rounded-md bg-[var(--muted)] p-4" aria-live="polite">
             <p className="text-sm font-semibold">
               Ah = (load W × backup hrs) ÷ (battery V × inverter efficiency × depth of discharge)
             </p>
@@ -658,6 +690,7 @@ export default function ToolHome() {
                 step="0.05"
                 value={efficiency}
                 onChange={(event) => setEfficiency(Number(event.target.value))}
+                onBlur={(event) => setEfficiency(clampRange(event.target.value, 0.1, 1))}
                 className={`mt-2 ${inputClass}`}
               />
             </label>
@@ -670,6 +703,7 @@ export default function ToolHome() {
                 step="0.05"
                 value={dod}
                 onChange={(event) => setDod(Number(event.target.value))}
+                onBlur={(event) => setDod(clampRange(event.target.value, 0.1, 1))}
                 className={`mt-2 ${inputClass}`}
               />
               <span className="mt-1 block text-xs text-[var(--muted-foreground)]">
@@ -710,8 +744,9 @@ export default function ToolHome() {
                 <span className="text-[var(--muted-foreground)]">
                   {num(battery.requiredAh, 1)} Ah needed is past the largest standard size (
                   {num(battery.maxStandardAh)} Ah). No single battery covers this — you would need{" "}
-                  {battery.recommendedParallelCount} × {num(battery.maxStandardAh)} Ah batteries wired in
-                  parallel (or a custom higher-capacity bank) to actually get this backup time.
+                  {battery.recommendedTotalCount} × {num(battery.maxStandardAh)} Ah batteries total (
+                  {battery.seriesCount} in series × {battery.recommendedParallelCount} parallel strings), or
+                  a custom higher-capacity bank, to actually get this backup time.
                 </span>
               </p>
             )}

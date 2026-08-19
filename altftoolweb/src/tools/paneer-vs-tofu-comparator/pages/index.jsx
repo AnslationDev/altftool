@@ -226,6 +226,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
+      <div aria-live="polite">
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -313,6 +314,7 @@ export default function ToolHome() {
           </div>
         </section>
       ) : null}
+      </div>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Composition varies by brand and by how the paneer or tofu was made — tofu that is not set

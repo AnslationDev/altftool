@@ -44,7 +44,7 @@ const GHOST_BTN =
 
 const TONE_CLASS = {
   success: "text-[var(--success)]",
-  warn: "text-[var(--primary)]",
+  warn: "text-[var(--warning)]",
   danger: "text-[var(--danger)]",
 };
 
@@ -103,6 +103,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the checklist? This clears every ticked control and cannot be undone.")
+    ) {
+      return;
+    }
     setTread(DEFAULTS.tread);
     setPsi(DEFAULTS.psi);
     setSpeed(DEFAULTS.speed);
@@ -246,10 +252,11 @@ export default function ToolHome() {
             </p>
             <p
               className={`mt-1 text-4xl font-semibold ${hasError ? "text-[var(--danger)]" : TONE_CLASS[result.tone]}`}
+              aria-live="polite"
             >
               {hasError ? DASH : `${NUM1.format(result.wet.total)} m`}
             </p>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            <p className="mt-1 text-sm text-[var(--muted-foreground)]" aria-live="polite">
               {hasError ? "Fix the input above to see the numbers." : result.verdict}
             </p>
           </div>

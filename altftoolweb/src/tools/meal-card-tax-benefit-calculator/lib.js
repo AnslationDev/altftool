@@ -37,8 +37,16 @@ export const SURCHARGE_RATES_PCT = [0, 10, 15, 25, 37];
  */
 export const NEW_REGIME_MAX_SURCHARGE_PCT = 25;
 
-/** Marginal slab rates an individual can face across either regime. */
-export const SLAB_RATES_PCT = [5, 10, 15, 20, 25, 30];
+/**
+ * Marginal slab rates an individual can face. The Old regime (Section
+ * 115BAC opt-out, with exemptions/deductions) only has 5/20/30% non-zero
+ * brackets; the New regime (default Section 115BAC) has a finer 5/10/15/
+ * 20/25/30% ladder. The two must stay regime-specific — offering 10/15/25%
+ * under the Old regime computes tax savings against a bracket that regime
+ * cannot produce.
+ */
+export const OLD_SLAB_RATES_PCT = [5, 20, 30];
+export const NEW_SLAB_RATES_PCT = [5, 10, 15, 20, 25, 30];
 
 export const REGIMES = [
   { id: "old", label: "Old regime (with exemptions)" },
@@ -115,8 +123,8 @@ export function computeMealCardBenefit({
   if (mealsPerWorkingDay < 0 || mealsPerWorkingDay > 3) {
     return { error: "Meals per working day should be between 0 and 3." };
   }
-  if (eligibleMonths <= 0 || eligibleMonths > 12) {
-    return { error: "Eligible months must be between 1 and 12." };
+  if (!Number.isInteger(eligibleMonths) || eligibleMonths <= 0 || eligibleMonths > 12) {
+    return { error: "Eligible months must be a whole number between 1 and 12." };
   }
   if (slabRatePct < 0 || slabRatePct > 50) {
     return { error: "The slab rate should be between 0% and 50%." };
@@ -134,7 +142,9 @@ export function computeMealCardBenefit({
   const months = Math.round(eligibleMonths);
 
   const exemptionAllowed = regime === "old";
-  const monthlyCeiling = monthlyExemptCeiling({ workingDaysPerMonth, mealsPerWorkingDay });
+  const monthlyCeiling = exemptionAllowed
+    ? monthlyExemptCeiling({ workingDaysPerMonth, mealsPerWorkingDay })
+    : 0;
   const annualCredit = monthlyCredit * months;
   const annualCeiling = exemptionAllowed ? monthlyCeiling * months : 0;
 

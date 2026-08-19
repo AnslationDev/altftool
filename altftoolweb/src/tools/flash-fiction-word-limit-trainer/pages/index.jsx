@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Target } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   LIMIT_PRESETS,
   MAX_LIMIT,
@@ -39,7 +40,7 @@ export default function ToolHome() {
   const [customLimit, setCustomLimit] = useState(String(DEFAULTS.customLimit));
   const [splitHyphens, setSplitHyphens] = useState(DEFAULTS.splitHyphens);
   const [text, setText] = useState(DEFAULTS.text);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const preset = LIMIT_PRESETS.find((item) => item.id === presetId) || null;
   const limit = preset ? preset.limit : Number(customLimit);
@@ -64,15 +65,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [report, preset]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("report", summary, { label: "Word budget report" });
   };
 
   const reset = () => {
@@ -80,7 +75,7 @@ export default function ToolHome() {
     setCustomLimit(String(DEFAULTS.customLimit));
     setSplitHyphens(DEFAULTS.splitHyphens);
     setText(DEFAULTS.text);
-    setCopied(false);
+    resetCopyState();
   };
 
   const barPercent = report.error ? 0 : report.barPercent;
@@ -212,14 +207,26 @@ export default function ToolHome() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <button type="button" onClick={copyResult} aria-label="Copy word budget report" className={GHOST_BTN}>
-                  {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                  {copied ? "Copied!" : "Copy report"}
+                <button
+                  type="button"
+                  onClick={copyResult}
+                  aria-label={isCopied("report") ? "Copied to clipboard" : "Copy word budget report"}
+                  className={GHOST_BTN}
+                >
+                  {isCopied("report") ? (
+                    <Check className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Copy className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {isCopied("report") ? "Copied!" : "Copy report"}
                 </button>
                 <button type="button" onClick={reset} aria-label="Reset the trainer" className={PRIMARY_BTN}>
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
             </div>
 

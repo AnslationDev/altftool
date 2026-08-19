@@ -304,10 +304,21 @@ export function detectRecords(root) {
     }
 
     if (repeatedName) {
+      // A tie means some other sibling name repeated exactly as many times as
+      // the one we picked (first-encountered wins) — its elements are left
+      // out of the rows entirely, so surface that instead of losing data silently.
+      const tiedNames = [...counts.entries()]
+        .filter(([name, count]) => name !== repeatedName && count === best)
+        .map(([name]) => name);
+      const warning =
+        tiedNames.length > 0
+          ? `<${tiedNames.join(">, <")}> repeated ${best} times too, the same as <${repeatedName}> — only <${repeatedName}> elements became rows, so the <${tiedNames.join(">, <")}> elements under <${node.name}> were left out.`
+          : undefined;
       return {
         records: kids.filter((kid) => kid.name === repeatedName),
         recordName: repeatedName,
         containerName: node.name,
+        ...(warning ? { warning } : {}),
       };
     }
 
@@ -318,10 +329,11 @@ export function detectRecords(root) {
     break;
   }
 
-  if (root.children.length > 0) {
-    return { records: root.children, recordName: root.children[0].name, containerName: root.name };
-  }
-  return { records: [root], recordName: root.name, containerName: root.name };
+  // No element name repeats anywhere in the chain, so there is no natural
+  // "row" — the node we drilled down to (or the root, if we never drilled)
+  // is a single logical record. Treat its own attributes/children as the
+  // FIELDS of that one record instead of turning each child into its own row.
+  return { records: [node], recordName: node.name, containerName: node.name };
 }
 
 /**
@@ -389,7 +401,7 @@ export function xmlToTable(xml, options = {}) {
   const parsed = parseXml(xml);
   if (parsed.error) return { error: parsed.error };
 
-  const { records, recordName } = detectRecords(parsed.root);
+  const { records, recordName, warning } = detectRecords(parsed.root);
   if (!records || records.length === 0) {
     return { error: "No repeating elements were found, so there are no rows to build." };
   }
@@ -422,6 +434,7 @@ export function xmlToTable(xml, options = {}) {
     recordName,
     recordCount: rows.length,
     elementCount: parsed.elementCount,
+    ...(warning ? { warning } : {}),
   };
 }
 

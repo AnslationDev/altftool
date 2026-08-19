@@ -88,8 +88,20 @@ export default function ToolHome() {
     });
   }, [source, settings]);
 
-  const errorMessage = loadError || result?.error || summaryStats?.error || "";
-  const hasError = Boolean(errorMessage);
+  // A failed file *selection* (loadError) must not invalidate an already-loaded,
+  // still-valid result: only a genuine problem with the CURRENT source (result/
+  // summaryStats error) should disable stats, Download and Copy. loadError is
+  // surfaced separately as a dismissible notice below.
+  const currentSourceError = result?.error || summaryStats?.error || "";
+  const hasError = Boolean(currentSourceError);
+
+  // Auto-clear the load-selection notice after a few seconds so a rejected file
+  // pick doesn't linger indefinitely over an otherwise-valid, still-rendered result.
+  useEffect(() => {
+    if (!loadError) return;
+    const timer = setTimeout(() => setLoadError(""), 6000);
+    return () => clearTimeout(timer);
+  }, [loadError]);
 
   // Paint the processed pixels onto the visible canvas.
   useEffect(() => {
@@ -230,6 +242,15 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const isSample = source?.name === "sample";
+    if (
+      !isSample &&
+      !window.confirm(
+        "Reset to the default sample image and settings? This discards your uploaded photo and cannot be undone."
+      )
+    ) {
+      return;
+    }
     setSettings(DEFAULTS);
     setLoadError("");
     setCopied(false);
@@ -403,12 +424,29 @@ export default function ToolHome() {
         </div>
       </section>
 
+      {loadError && (
+        <p
+          role="alert"
+          className="mt-6 flex items-start justify-between gap-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+        >
+          <span>{loadError}</span>
+          <button
+            type="button"
+            onClick={() => setLoadError("")}
+            aria-label="Dismiss this notice"
+            className="shrink-0 font-semibold underline"
+          >
+            Dismiss
+          </button>
+        </p>
+      )}
+
       {hasError && (
         <p
           role="alert"
           className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
         >
-          {errorMessage}
+          {currentSourceError}
         </p>
       )}
 

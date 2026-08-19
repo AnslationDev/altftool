@@ -5,6 +5,7 @@ import { Check, Copy, FileImage, RotateCcw } from "lucide-react";
 
 import {
   CONTENT_PROFILES,
+  MAX_GIF_FRAMES,
   MOTION_PROFILES,
   SIZE_BUDGETS,
   estimateGifSize,
@@ -83,7 +84,9 @@ export default function ToolHome() {
       `Estimated size: ${formatBytes(result.totalBytes)} (range ${formatBytes(result.lowEstimate)} – ${formatBytes(result.highEstimate)})`,
       `Uncompressed indexed data would be ${formatBytes(result.rawTotalBytes)}`,
       `Against a ${formatBytes(budget.bytes)} budget: ${withinBudget ? "fits" : "over"}`,
-      fitting.frames !== null ? `Frames that fit the budget at this size: ${INT.format(fitting.frames)}` : "",
+      fitting.frames !== null
+        ? `Frames that fit the budget at this size: ${fitting.frames >= MAX_GIF_FRAMES ? `${INT.format(MAX_GIF_FRAMES)}+ (capped — not playable beyond this)` : INT.format(fitting.frames)}`
+        : "",
       fitting.width !== null ? `Width that fits the budget at this frame count: ${INT.format(fitting.width)} px` : "",
     ]
       .filter(Boolean)
@@ -218,7 +221,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">Estimated file size</p>
@@ -256,7 +263,14 @@ export default function ToolHome() {
             ["Each frame after that", failed ? dash : formatBytes(result.laterFrameBytes)],
             ["Container and palette overhead", failed ? dash : formatBytes(result.containerBytes)],
             ["Playback length", failed ? dash : result.durationSeconds === null ? "Enter a frame rate" : `${NUM.format(result.durationSeconds)} s`],
-            ["Frames that fit the budget", failed || fitting.frames === null ? dash : INT.format(fitting.frames)],
+            [
+              "Frames that fit the budget",
+              failed || fitting.frames === null
+                ? dash
+                : fitting.frames >= MAX_GIF_FRAMES
+                  ? `${INT.format(MAX_GIF_FRAMES)}+ (capped — not playable beyond this)`
+                  : INT.format(fitting.frames),
+            ],
             ["Width that fits the budget", failed || fitting.width === null ? dash : `${INT.format(fitting.width)} px`],
           ].map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">

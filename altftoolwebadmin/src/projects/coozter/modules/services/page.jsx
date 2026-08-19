@@ -6,7 +6,6 @@ import { emitAlert } from "@/lib/alertBus";
 import {
   ARRAY_FIELD_DEFAULTS,
   DEFAULT_SERVICES_PAGE_CONTENT,
-  ROOT_ARRAY_SECTIONS,
   SERVICES_SECTION_TABS,
   saveServicesPageContent,
   seedServicesPageContent,
@@ -60,12 +59,11 @@ export default function CoozterServicesAdminPage() {
     () => SERVICES_SECTION_TABS.find((section) => section.key === activeSection)?.label || "Services Section",
     [activeSection],
   );
-  const activeData = content[activeSection] || (ROOT_ARRAY_SECTIONS.has(activeSection) ? [] : {});
+  const activeData = content[activeSection] || {};
   const activeErrors = Object.keys(errors).filter((key) => key.startsWith(`${activeSection}.`)).length;
   const SectionComponent = SECTION_COMPONENTS[activeSection] || HeroSectionTab;
 
   function setSectionField(field, value) {
-    if (ROOT_ARRAY_SECTIONS.has(activeSection)) return;
     setContent((prev) => ({
       ...prev,
       [activeSection]: {
@@ -77,18 +75,11 @@ export default function CoozterServicesAdminPage() {
   }
 
   function setSectionActive() {
-    if (ROOT_ARRAY_SECTIONS.has(activeSection)) return;
     setSectionField("isActive", activeData.isActive === false);
   }
 
   function updateArrayItem(arrayKey, index, field, value) {
     setContent((prev) => {
-      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
-        const rows = [...(prev[activeSection] || [])];
-        rows[index] = { ...rows[index], [field]: value };
-        return { ...prev, [activeSection]: rows };
-      }
-
       const rows = [...(prev[activeSection]?.[arrayKey] || [])];
       rows[index] = { ...rows[index], [field]: value };
       return {
@@ -104,14 +95,6 @@ export default function CoozterServicesAdminPage() {
 
   function addArrayItem(arrayKey) {
     setContent((prev) => {
-      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
-        const rows = prev[activeSection] || [];
-        return {
-          ...prev,
-          [activeSection]: [...rows, { ...(ARRAY_FIELD_DEFAULTS[arrayKey] || {}), sortOrder: rows.length + 1, isActive: true }],
-        };
-      }
-
       const rows = prev[activeSection]?.[arrayKey] || [];
       return {
         ...prev,
@@ -128,10 +111,6 @@ export default function CoozterServicesAdminPage() {
 
   function removeArrayItem(arrayKey, index) {
     setContent((prev) => {
-      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
-        return { ...prev, [activeSection]: (prev[activeSection] || []).filter((_, itemIndex) => itemIndex !== index) };
-      }
-
       const rows = (prev[activeSection]?.[arrayKey] || []).filter((_, itemIndex) => itemIndex !== index);
       return {
         ...prev,
@@ -251,9 +230,7 @@ export default function CoozterServicesAdminPage() {
             const isCurrent = activeSection === tab.key;
             const section = content[tab.key] || {};
             const tabErrors = Object.keys(errors).filter((key) => key.startsWith(`${tab.key}.`)).length;
-            const active = ROOT_ARRAY_SECTIONS.has(tab.key)
-              ? (content[tab.key] || []).some((item) => item.isActive !== false)
-              : section.isActive !== false;
+            const active = section.isActive !== false;
             return (
               <button
                 key={tab.key}
@@ -282,19 +259,17 @@ export default function CoozterServicesAdminPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--muted)]">{activeLabel}</p>
                 <h2 className="mt-1 text-lg font-bold text-[var(--foreground)]">Editable Fields</h2>
               </div>
-              {!ROOT_ARRAY_SECTIONS.has(activeSection) ? (
-                <button
-                  type="button"
-                  onClick={setSectionActive}
-                  className={`rounded-lg border px-3 py-2 text-sm font-semibold transition ${
-                    activeData.isActive === false
-                      ? "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]"
-                      : "border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[color-mix(in_srgb,var(--success)_10%,var(--surface))] text-[var(--success)]"
-                  }`}
-                >
-                  {activeData.isActive === false ? "Section Hidden" : "Section Active"}
-                </button>
-              ) : null}
+              <button
+                type="button"
+                onClick={setSectionActive}
+                className={`rounded-lg border px-3 py-2 text-sm font-semibold transition ${
+                  activeData.isActive === false
+                    ? "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]"
+                    : "border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[color-mix(in_srgb,var(--success)_10%,var(--surface))] text-[var(--success)]"
+                }`}
+              >
+                {activeData.isActive === false ? "Section Hidden" : "Section Active"}
+              </button>
             </div>
 
             {loading ? (

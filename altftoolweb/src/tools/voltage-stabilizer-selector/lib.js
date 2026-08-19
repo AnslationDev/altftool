@@ -100,7 +100,7 @@ export function selectStabilizer({
   if (watts > LIMITS.maxWatts) {
     return { error: `Above ${LIMITS.maxWatts} W you need a three-phase or industrial stabilizer.` };
   }
-  if (!(powerFactor > 0) || powerFactor > 1) {
+  if (!(powerFactor >= 0.1) || powerFactor > 1) {
     return { error: "Power factor must be between 0.1 and 1." };
   }
   if (!(marginFactor >= 1) || marginFactor > 4) {

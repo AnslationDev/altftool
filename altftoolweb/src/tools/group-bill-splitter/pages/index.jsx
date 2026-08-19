@@ -23,9 +23,9 @@ const seedMembers = [
 ];
 
 const seedExpenses = [
-  { id: "e1", description: "Hotel (2 nights)", amount: 4500, paidBy: "m1", splitAmong: [] },
-  { id: "e2", description: "Airport cab", amount: 900, paidBy: "m2", splitAmong: [] },
-  { id: "e3", description: "Dinner day 1", amount: 1800, paidBy: "m3", splitAmong: [] },
+  { id: "e1", description: "Hotel (2 nights)", amount: 4500, paidBy: "m1", splitAmong: ["m1", "m2", "m3"] },
+  { id: "e2", description: "Airport cab", amount: 900, paidBy: "m2", splitAmong: ["m1", "m2", "m3"] },
+  { id: "e3", description: "Dinner day 1", amount: 1800, paidBy: "m3", splitAmong: ["m1", "m2", "m3"] },
   { id: "e4", description: "Snacks", amount: 300, paidBy: "m2", splitAmong: ["m2", "m3"] },
 ];
 
@@ -90,15 +90,21 @@ function sanitizeState(parsed) {
         Number(expense.amount) > 0 &&
         memberIds.has(expense.paidBy)
     )
-    .map((expense) => ({
-      id: expense.id,
-      description: typeof expense.description === "string" ? expense.description : "Expense",
-      amount: Number(expense.amount),
-      paidBy: expense.paidBy,
-      splitAmong: Array.isArray(expense.splitAmong)
+    .map((expense) => {
+      const filteredSplit = Array.isArray(expense.splitAmong)
         ? expense.splitAmong.filter((id) => memberIds.has(id))
-        : [],
-    }));
+        : [];
+      // Legacy/blank splits meant "everyone" dynamically, which silently rewrote past
+      // expenses whenever membership changed. Freeze them to the current member set on
+      // load so the split (and the member-lock guarantee) stays fixed going forward.
+      return {
+        id: expense.id,
+        description: typeof expense.description === "string" ? expense.description : "Expense",
+        amount: Number(expense.amount),
+        paidBy: expense.paidBy,
+        splitAmong: filteredSplit.length ? filteredSplit : members.map((member) => member.id),
+      };
+    });
   return { members, expenses };
 }
 
@@ -161,8 +167,10 @@ export default function ToolHome() {
     expenses.forEach((expense) => {
       const value = Math.max(0, Number(expense.amount) || 0);
       if (!value || !balance.has(expense.paidBy)) return;
-      const explicit = expense.splitAmong.filter((id) => balance.has(id));
-      const shareIds = explicit.length ? explicit : members.map((member) => member.id);
+      // splitAmong is frozen at save time (see saveExpense) — an "Everyone" expense
+      // stores the concrete member ids it applied to, so it never silently re-splits
+      // against a membership list that has since changed.
+      const shareIds = expense.splitAmong.filter((id) => balance.has(id));
       if (!shareIds.length) return;
       total += value;
       balance.set(expense.paidBy, balance.get(expense.paidBy) + value);
@@ -238,12 +246,17 @@ export default function ToolHome() {
 
   const saveExpense = () => {
     if (!canSaveExpense) return;
+    // "Everyone" (an empty selection) is resolved to the concrete member list right now,
+    // at save time, so the split is frozen and won't silently change if members are added
+    // or removed later.
+    const explicitSplit = splitIds.filter((id) => members.some((member) => member.id === id));
+    const resolvedSplit = explicitSplit.length ? explicitSplit : members.map((member) => member.id);
     const entry = {
       id: editingId || makeId(),
       description: description.trim() || `Expense ${expenses.length + 1}`,
       amount: Number(amount),
       paidBy: paidBySafe,
-      splitAmong: splitIds.filter((id) => members.some((member) => member.id === id)),
+      splitAmong: resolvedSplit,
     };
     setExpenses((current) =>
       editingId
@@ -282,8 +295,13 @@ export default function ToolHome() {
   };
 
   const splitLabel = (expense) => {
-    if (!expense.splitAmong.length) return "Everyone";
-    return expense.splitAmong.map((id) => nameOf(id)).join(", ");
+    const ids = expense.splitAmong;
+    // Still labelled "Everyone" only while the frozen split happens to match every
+    // current member — once membership changes, the true (now partial) list is shown.
+    const isEveryone =
+      ids.length > 0 && ids.length === members.length && members.every((member) => ids.includes(member.id));
+    if (isEveryone) return "Everyone";
+    return ids.map((id) => nameOf(id)).join(", ") || "Everyone";
   };
 
   return (
@@ -297,7 +315,7 @@ export default function ToolHome() {
           <h1 className="text-4xl font-semibold leading-tight">Group Expense Splitter</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Log who paid for what on a trip or in a flat, see everyone&apos;s balance at a glance,
-            and settle up with the fewest possible payments. Everything is saved in your browser.
+            and settle up with a lean, low-transfer plan. Everything is saved in your browser.
           </p>
         </section>
 
@@ -423,6 +441,7 @@ export default function ToolHome() {
                     <button
                       type="button"
                       onClick={() => setSplitIds([])}
+                      aria-pressed={splitIds.length === 0}
                       className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
                         splitIds.length === 0
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -436,6 +455,7 @@ export default function ToolHome() {
                         key={member.id}
                         type="button"
                         onClick={() => toggleSplit(member.id)}
+                        aria-pressed={splitIds.includes(member.id)}
                         className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
                           splitIds.includes(member.id)
                             ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -540,7 +560,10 @@ export default function ToolHome() {
           </div>
 
           <div className="grid content-start gap-6">
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div
+              className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]"
+              aria-live="polite"
+            >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
                   Totals
@@ -625,7 +648,10 @@ export default function ToolHome() {
               )}
             </div>
 
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div
+              className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]"
+              aria-live="polite"
+            >
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
                 Settle up ({stats.plan.length}{" "}
                 {stats.plan.length === 1 ? "payment" : "payments"})
@@ -652,8 +678,8 @@ export default function ToolHome() {
                 </ol>
               )}
               <p className="mt-4 text-sm leading-6 text-[var(--muted-foreground)]">
-                The plan greedily matches the biggest debtor with the biggest creditor, so the
-                group settles in the minimum number of transfers.
+                The plan greedily matches the biggest debtor with the biggest creditor, settling
+                the group in at most one transfer fewer than the number of members.
               </p>
             </div>
           </div>

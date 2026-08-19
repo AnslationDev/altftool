@@ -178,7 +178,7 @@ export function computeCaffeinePlan({
   const dailyTotalMg = doseMg + other;
   const overDailyLimit = dailyTotalMg > EFSA_DAILY_LIMIT_MG;
   const overSingleDoseGuide = doseMg > EFSA_SINGLE_DOSE_MG;
-  const aboveErgogenicRange = mgPerKg > ERGOGENIC_MAX_MG_PER_KG;
+  const aboveErgogenicRange = mgPerKg > NO_EXTRA_BENEFIT_MG_PER_KG;
   const belowErgogenicRange = mgPerKg < ERGOGENIC_MIN_MG_PER_KG;
   const sleepRisk = remainingAtBedMg >= SLEEP_THRESHOLD_MG;
 

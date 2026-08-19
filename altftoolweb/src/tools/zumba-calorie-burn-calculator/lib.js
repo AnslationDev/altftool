@@ -114,6 +114,11 @@ export function computeZumbaBurn({
 
   const weightKg = weightUnit === "lb" ? weight * LB_TO_KG : weight;
   if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
+    if (weightUnit === "lb") {
+      const minLb = Math.round(MIN_WEIGHT_KG / LB_TO_KG);
+      const maxLb = Math.round(MAX_WEIGHT_KG / LB_TO_KG);
+      return { error: `Body weight should be between ${minLb} lb and ${maxLb} lb.` };
+    }
     return { error: `Body weight should be between ${MIN_WEIGHT_KG} kg and ${MAX_WEIGHT_KG} kg.` };
   }
   if (minutes <= 0) return { error: "Class length must be more than zero minutes." };

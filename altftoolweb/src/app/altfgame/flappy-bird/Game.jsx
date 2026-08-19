@@ -604,7 +604,12 @@ const FlappyBirdGame = () => {
             className="relative w-full h-full overflow-hidden select-none touch-none font-sans"
             onClick={actionJump}
         >
-            <canvas ref={canvasRef} className="block w-full h-full bg-[#70c5ce]" />
+            <canvas
+                ref={canvasRef}
+                className="block w-full h-full bg-[#70c5ce]"
+                role="application"
+                aria-label="Flappy Bird game canvas. Click, tap, or press Space to flap. Slip through the gaps between the pipes and keep your streak alive."
+            />
 
             {/* Controls */}
             <button

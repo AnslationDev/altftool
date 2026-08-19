@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Blend, Check, Copy, RotateCcw } from "lucide-react";
 
 import { ENDINGS, MAX_SOURCE_LETTERS, blendNames } from "../lib";
@@ -34,6 +34,9 @@ export default function ToolHome() {
   const [ending, setEnding] = useState(DEFAULTS.ending);
   const [minScore, setMinScore] = useState(DEFAULTS.minScore);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const result = useMemo(
     () => blendNames({ nameA, nameB, ending, minScore: Number(minScore) }),
@@ -55,7 +58,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -159,7 +163,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -178,8 +186,9 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
+              disabled={!summary}
               aria-label="Copy every blended name idea"
-              className={GHOST_BTN}
+              className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
             >
               {copied ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -221,7 +230,7 @@ export default function ToolHome() {
       ) : null}
 
       {!result.error && result.total > 0 ? (
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+        <ul className="mt-6 grid gap-3 sm:grid-cols-2" aria-live="polite" aria-atomic="true">
           {result.candidates.map((candidate) => (
             <li key={candidate.raw} className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-4">
               <div className="flex items-baseline justify-between gap-3">

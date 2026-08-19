@@ -311,7 +311,7 @@ export function estimateFare({
   if (bags > MAX_LUGGAGE_PIECES) {
     return { error: `Enter at most ${MAX_LUGGAGE_PIECES} pieces of luggage.` };
   }
-  if (surgeRaw < 1 || surgeRaw > MAX_SURGE) {
+  if (rate.surgeable && (surgeRaw < 1 || surgeRaw > MAX_SURGE)) {
     return {
       error: `Surge multiplier should be between 1.0 and ${MAX_SURGE.toFixed(1)} — Delhi's 2023 aggregator scheme caps it at twice the base fare.`,
     };

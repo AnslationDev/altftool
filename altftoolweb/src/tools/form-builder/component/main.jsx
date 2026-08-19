@@ -31,6 +31,7 @@ import TestMode from "./TestMode";
 import { downloadForm } from "../download/download";
 import { decodeForm } from "../utils/shareForm";
 import FieldSettingsPanel from "./FieldSettingsPanel";
+import FieldControl from "./FieldControl";
 
 const DEFAULT_FORM_THEME = {
   primaryColor: "#2563eb",
@@ -74,6 +75,10 @@ const FormBuilder = () => {
 
   // theme customizer
   const [theme, setTheme] = useState(DEFAULT_FORM_THEME);
+
+  // Files selected in the Live Preview's file-upload fields (kept out of
+  // livePreviewData, which only stores the filename string for validation).
+  const [liveUploadedFiles, setLiveUploadedFiles] = useState({});
 
   const fieldTypes = [
     { type: "text", label: "Text Input", icon: "📝" },
@@ -148,6 +153,8 @@ const FormBuilder = () => {
   };
 
   const removeField = (id) => {
+    setHistory((prev) => [...prev, formFields]);
+    setFuture([]);
     setFormFields(formFields.filter((field) => field.id !== id));
     setFields(fields.filter((f) => f.id !== id));
   };
@@ -162,11 +169,15 @@ const FormBuilder = () => {
       label: fieldToCopy.label + " (Copy)",
     };
 
+    setHistory((prev) => [...prev, formFields]);
+    setFuture([]);
     setFormFields((prev) => [...prev, newField]);
     setFields((prev) => [...prev, { id: newField.id, value: "" }]);
   };
 
   const updateField = (id, property, value) => {
+    setHistory((prev) => [...prev, formFields]);
+    setFuture([]);
     setFormFields(
       formFields.map((field) =>
         field.id === id ? { ...field, [property]: value } : field,
@@ -185,20 +196,24 @@ const FormBuilder = () => {
         return field;
       }),
     );
+  };
 
-    const addOption = (id) => {
-      setFormFields(
-        formFields.map((field) => {
-          if (field.id === id) {
-            return {
-              ...field,
-              options: [...field.options, `Option ${field.options.length + 1}`],
-            };
-          }
-          return field;
-        }),
-      );
-    };
+  const addOption = (id) => {
+    setFormFields((prev) =>
+      prev.map((field) => {
+        if (field.id === id) {
+          const currentOptions = field.options || [];
+          return {
+            ...field,
+            options: [
+              ...currentOptions,
+              `Option ${currentOptions.length + 1}`,
+            ],
+          };
+        }
+        return field;
+      }),
+    );
   };
 
   const removeOption = (id, optionIndex) => {
@@ -216,7 +231,8 @@ const FormBuilder = () => {
   };
 
   const validateField = (field, value) => {
-    if (field.required && !value) return "This field is required";
+    const isEmpty = Array.isArray(value) ? value.length === 0 : !value;
+    if (field.required && isEmpty) return "This field is required";
     if (
       field.type === "email" &&
       value &&
@@ -231,8 +247,15 @@ const FormBuilder = () => {
       return `Minimum ${field.minLength} characters required`;
     if (field.maxLength && value && value.length > parseInt(field.maxLength))
       return `Maximum ${field.maxLength} characters allowed`;
-    if (field.pattern && value && !new RegExp(field.pattern).test(value))
-      return "Invalid format";
+    if (field.pattern && value) {
+      let patternMatches = true;
+      try {
+        patternMatches = new RegExp(field.pattern).test(value);
+      } catch (e) {
+        return "Invalid pattern configured for this field";
+      }
+      if (!patternMatches) return "Invalid format";
+    }
     if (field.type === "number" && value) {
       if (field.min && parseFloat(value) < parseFloat(field.min))
         return `Minimum value is ${field.min}`;
@@ -250,6 +273,19 @@ const FormBuilder = () => {
 
       if (value !== originalValue) {
         return "Emails do not match";
+      }
+    }
+    // ✅ Confirm Password Match Validation (mirrors Confirm Email above)
+    if (field.isConfirmPassword && value) {
+      const originalField = formFields.find(
+        (f) => f.id === field.linkedFieldId,
+      );
+
+      const originalValue =
+        previewData[originalField?.id] || livePreviewData[originalField?.id];
+
+      if (value !== originalValue) {
+        return "Passwords do not match";
       }
     }
     return null;
@@ -303,7 +339,14 @@ const FormBuilder = () => {
     }
   };
 
-  const handleDragStart = (index) => setDraggedItem(index);
+  const handleDragStart = (index) => {
+    // Record pre-reorder state once, before the drag commits any splice,
+    // so a whole drag-to-reorder is a single undo step (not one per
+    // dragover event).
+    setHistory((prev) => [...prev, formFields]);
+    setFuture([]);
+    setDraggedItem(index);
+  };
   const handleDragOver = (e, index) => {
     e.preventDefault();
     if (draggedItem === null || draggedItem === index) return;
@@ -385,7 +428,11 @@ const FormBuilder = () => {
 
   // Auto Save
   useEffect(() => {
-    if (!isLoaded) return;
+    // Never autosave while viewing someone else's shared form link — the
+    // decoded share data is not the visitor's own form, and persisting it
+    // here would silently overwrite the visitor's real autosaved form in
+    // localStorage with zero confirmation.
+    if (!isLoaded || isSharedView) return;
     const formData = {
       formFields,
       formTitle,
@@ -406,7 +453,7 @@ const FormBuilder = () => {
       clearTimeout(showSaved);
       clearTimeout(timer);
     };
-  }, [formFields, formTitle, formDescription, isLoaded, theme]);
+  }, [formFields, formTitle, formDescription, isLoaded, theme, isSharedView]);
 
   //  generte form handler
   const handleGenerateAIForm = () => {
@@ -468,7 +515,13 @@ const FormBuilder = () => {
       </p>
       {/* Autosave  */}
       {autoSaved && (
-        <p className="text-green-500 text-sm text-center mt-2">Auto Saved </p>
+        <p
+          className="text-green-500 text-sm text-center mt-2"
+          role="status"
+          aria-live="polite"
+        >
+          Auto Saved{" "}
+        </p>
       )}
 
       {/* AI Form Input */}
@@ -694,9 +747,22 @@ const FormBuilder = () => {
                         <div
                           key={field.id}
                           draggable
+                          tabIndex={0}
+                          role="button"
+                          aria-pressed={selectedFieldId === field.id}
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedFieldId(field.id);
+                          }}
+                          onKeyDown={(e) => {
+                            // Ignore keydowns bubbling up from the nested
+                            // label input / duplicate / delete buttons —
+                            // only act when the card itself is focused.
+                            if (e.target !== e.currentTarget) return;
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              setSelectedFieldId(field.id);
+                            }
                           }}
                           onDragStart={() => handleDragStart(index)}
                           onDragOver={(e) => handleDragOver(e, index)}
@@ -719,14 +785,26 @@ const FormBuilder = () => {
 
                               <div className="flex items-center gap-2">
                                 <button
-                                  onClick={() => duplicateField(field.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    duplicateField(field.id);
+                                  }}
                                   className="p-2 hover:bg-blue-100 rounded-md"
                                 >
                                   <Copy size={16} className="text-blue-600" />
                                 </button>
 
                                 <button
-                                  onClick={() => removeField(field.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (
+                                      window.confirm(
+                                        `Delete "${field.label || "this field"}"? You can Undo right after if you change your mind.`,
+                                      )
+                                    ) {
+                                      removeField(field.id);
+                                    }
+                                  }}
                                   className="p-2 hover:bg-red-100 rounded-md"
                                 >
                                   <Trash2 size={16} className="text-red-600" />
@@ -772,47 +850,54 @@ const FormBuilder = () => {
             <div className="bg-(--card) p-4 sm:p-6 border border-(--border) w-full max-w-full overflow-hidden rounded-xl">
               <h2 className="text-xl font-semibold mb-4">Live Preview</h2>
               <form className="space-y-4">
-                {formFields.map((field) => (
-                  <div key={field.id}>
-                    <label className="block mb-2 text-sm sm:text-base font-medium ">
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-600 ml-1">*</span>
-                      )}
-                    </label>
-                    {field.type === "textarea" ? (
-                      <textarea
-                        value={livePreviewData[field.id] || ""}
-                        onChange={(e) =>
-                          handleLivePreviewChange(field.id, e.target.value)
+                {formFields.map((field) => {
+                  const fieldId = `live-${field.id}`;
+                  const errorId = `${fieldId}-error`;
+                  const hasError = !!errors[field.id];
+                  return (
+                    <div key={field.id}>
+                      <label
+                        htmlFor={fieldId}
+                        className="block mb-2 text-sm sm:text-base font-medium "
+                      >
+                        {field.label}
+                        {field.required && (
+                          <span className="text-red-600 ml-1" aria-hidden="true">
+                            *
+                          </span>
+                        )}
+                      </label>
+                      <FieldControl
+                        field={field}
+                        id={fieldId}
+                        value={livePreviewData[field.id]}
+                        onChange={(val) =>
+                          handleLivePreviewChange(field.id, val)
                         }
-                        placeholder={field.placeholder}
-                        className="w-full px-4 py-3 sm:py-3 text-base sm:text-lg border border-(--border) rounded-md"
-                        style={{
-                          borderRadius: `${theme.borderRadius}px`,
-                          fontFamily: theme.fontFamily,
+                        theme={theme}
+                        uploadedFile={liveUploadedFiles[field.id]}
+                        onFileChange={(file) => {
+                          setLiveUploadedFiles((prev) => ({
+                            ...prev,
+                            [field.id]: file,
+                          }));
+                          handleLivePreviewChange(field.id, file.name);
                         }}
-                        rows={3}
+                        ariaDescribedBy={hasError ? errorId : undefined}
+                        ariaInvalid={hasError}
                       />
-                    ) : (
-                      <input
-                        type={field.type}
-                        value={livePreviewData[field.id] || ""}
-                        onChange={(e) =>
-                          handleLivePreviewChange(field.id, e.target.value)
-                        }
-                        placeholder={field.placeholder}
-                        className="w-full px-3 py-2 border border-(--border) rounded-md"
-                        
-                      />
-                    )}
-                    {errors[field.id] && (
-                      <p className="text-red-600 text-sm mt-1">
-                        {errors[field.id]}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                      {hasError && (
+                        <p
+                          id={errorId}
+                          role="alert"
+                          className="text-red-600 text-sm mt-1"
+                        >
+                          {errors[field.id]}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
               </form>
             </div>
             {selectedFieldId && (
@@ -821,6 +906,9 @@ const FormBuilder = () => {
                 updateField={updateField}
                 formFields={formFields}
                 setFormFields={setFormFields}
+                updateOptions={updateOptions}
+                addOption={addOption}
+                removeOption={removeOption}
               />
             )}
             <AnalyticsPanel views={views} submissions={submissions} />

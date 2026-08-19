@@ -12,6 +12,23 @@ import {
 } from "lucide-react";
 import { GREETINGS } from "../data/greetings";
 
+// Maps the `language` field in data/greetings.js to a BCP-47 tag so the
+// read-aloud button uses a voice that can actually pronounce the script,
+// instead of always forcing en-US. Languages not listed here (mostly Latin
+// script) fall back to en-US.
+const LANGUAGE_VOICE_TAGS = {
+  Japanese: "ja-JP",
+  Mandarin: "zh-CN",
+  Hindi: "hi-IN",
+  Korean: "ko-KR",
+  Russian: "ru-RU",
+  Greek: "el-GR",
+  Arabic: "ar-SA",
+  Thai: "th-TH",
+  Hebrew: "he-IL",
+  Persian: "fa-IR",
+};
+
 export default function ToolHome() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(GREETINGS[0]);
@@ -25,6 +42,17 @@ export default function ToolHome() {
     } catch {
       /* ignore */
     }
+  }, []);
+
+  // Stop any in-progress speech synthesis when the tool unmounts, so
+  // navigating away mid-pronunciation doesn't leave the browser talking on
+  // an unrelated page.
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
   }, []);
 
   const persist = useCallback((next) => {
@@ -43,7 +71,8 @@ export default function ToolHome() {
       (g) =>
         g.country.toLowerCase().includes(q) ||
         g.language.toLowerCase().includes(q) ||
-        g.greeting.toLowerCase().includes(q)
+        g.greeting.toLowerCase().includes(q) ||
+        g.pronunciation.toLowerCase().includes(q)
     );
   }, [query]);
 
@@ -58,11 +87,11 @@ export default function ToolHome() {
     }
   }, [selected]);
 
-  const speak = useCallback((text) => {
+  const speak = useCallback((text, language) => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
+    u.lang = LANGUAGE_VOICE_TAGS[language] || "en-US";
     window.speechSynthesis.speak(u);
   }, []);
 
@@ -122,6 +151,7 @@ export default function ToolHome() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search country or language…"
+                aria-label="Search country or language"
                 className="w-full rounded-xl border border-(--border) bg-(--background) py-2.5 pl-9 pr-3 text-sm text-(--foreground) outline-none focus:border-(--primary) focus:shadow-[0_0_0_3px_rgba(20,184,166,0.25)] transition"
               />
             </div>
@@ -135,6 +165,7 @@ export default function ToolHome() {
                   <button
                     key={g.country}
                     onClick={() => setSelected(g)}
+                    aria-current={selected?.country === g.country ? "true" : undefined}
                     className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left transition ${
                       selected?.country === g.country
                         ? "border-(--primary) bg-(--muted)"
@@ -155,89 +186,89 @@ export default function ToolHome() {
           </div>
 
           {/* Detail */}
-          <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
-            {selected ? (
-              <div className="space-y-4">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="rounded bg-(--muted) px-2 py-1 text-[11px] font-bold text-(--muted-foreground)">
-                        {selected.flag}
-                      </span>
-                      <h2 className="text-lg font-bold text-(--foreground)">{selected.country}</h2>
-                    </div>
-                    <p className="mt-1 text-xs text-(--muted-foreground)">{selected.language}</p>
+          <div
+            className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm"
+            aria-live="polite"
+          >
+            <div className="space-y-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded bg-(--muted) px-2 py-1 text-[11px] font-bold text-(--muted-foreground)">
+                      {selected.flag}
+                    </span>
+                    <h2 className="text-lg font-bold text-(--foreground)">{selected.country}</h2>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={randomCountry}
-                      className="rounded-lg border border-(--border) bg-(--background) p-2 text-(--muted-foreground) hover:text-(--primary) transition"
-                      aria-label="Random country"
-                    >
-                      <Shuffle size={16} />
-                    </button>
-                    <button
-                      onClick={() => toggleFav(selected.country)}
-                      className={`rounded-lg border p-2 transition ${
-                        favorites.includes(selected.country)
-                          ? "border-amber-400 bg-amber-50 text-amber-500 dark:bg-amber-900/20"
-                          : "border-(--border) bg-(--background) text-(--muted-foreground) hover:text-(--primary)"
-                      }`}
-                      aria-label="Toggle favorite"
-                    >
-                      <Star size={16} fill={favorites.includes(selected.country) ? "currentColor" : "none"} />
-                    </button>
-                  </div>
+                  <p className="mt-1 text-xs text-(--muted-foreground)">{selected.language}</p>
                 </div>
-
-                <div className="rounded-xl border border-(--border) bg-(--background) p-4">
-                  <p className="text-3xl font-bold text-(--foreground)">{selected.greeting}</p>
-                  <div className="mt-2 flex items-center gap-3">
-                    <span className="font-mono text-sm text-(--primary)">/{selected.pronunciation}/</span>
-                    <button
-                      onClick={() => speak(selected.greeting)}
-                      className="p-1.5 text-(--muted-foreground) hover:text-(--primary) rounded-lg transition"
-                      aria-label="Pronounce greeting"
-                    >
-                      <Volume2 size={16} />
-                    </button>
-                  </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={randomCountry}
+                    className="rounded-lg border border-(--border) bg-(--background) p-2 text-(--muted-foreground) hover:text-(--primary) transition"
+                    aria-label="Random country"
+                  >
+                    <Shuffle size={16} />
+                  </button>
+                  <button
+                    onClick={() => toggleFav(selected.country)}
+                    className={`rounded-lg border p-2 transition ${
+                      favorites.includes(selected.country)
+                        ? "border-amber-600 bg-amber-50 text-amber-700 dark:border-amber-400 dark:bg-amber-900/20 dark:text-amber-400"
+                        : "border-(--border) bg-(--background) text-(--muted-foreground) hover:text-(--primary)"
+                    }`}
+                    aria-pressed={favorites.includes(selected.country)}
+                    aria-label={
+                      favorites.includes(selected.country) ? "Remove from favorites" : "Add to favorites"
+                    }
+                  >
+                    <Star size={16} fill={favorites.includes(selected.country) ? "currentColor" : "none"} />
+                  </button>
                 </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-(--border) bg-(--background) p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Formal</p>
-                    <p className="mt-1 text-sm font-semibold text-(--foreground)">{selected.formal}</p>
-                  </div>
-                  <div className="rounded-xl border border-(--border) bg-(--background) p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Informal</p>
-                    <p className="mt-1 text-sm font-semibold text-(--foreground)">{selected.informal}</p>
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-(--border) bg-(--background) p-3">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Common response</p>
-                  <p className="mt-1 text-sm font-semibold text-(--foreground)">{selected.response}</p>
-                </div>
-
-                <div className="rounded-xl border border-(--border) bg-(--muted) p-3">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Cultural note</p>
-                  <p className="mt-1 text-xs leading-relaxed text-(--foreground)">{selected.note}</p>
-                </div>
-
-                <button
-                  onClick={copyGreeting}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-2.5 text-xs font-bold text-(--primary-foreground) transition hover:opacity-90"
-                >
-                  <Copy className="h-4 w-4" />
-                  {copied ? "Copied!" : "Copy greeting"}
-                </button>
               </div>
-            ) : (
-              <p className="py-10 text-center text-sm text-(--muted-foreground)">
-                Select a country to see its greeting.
-              </p>
-            )}
+
+              <div className="rounded-xl border border-(--border) bg-(--background) p-4">
+                <p className="text-3xl font-bold text-(--foreground)">{selected.greeting}</p>
+                <div className="mt-2 flex items-center gap-3">
+                  <span className="font-mono text-sm text-(--primary)">/{selected.pronunciation}/</span>
+                  <button
+                    onClick={() => speak(selected.greeting, selected.language)}
+                    className="p-1.5 text-(--muted-foreground) hover:text-(--primary) rounded-lg transition"
+                    aria-label="Pronounce greeting"
+                  >
+                    <Volume2 size={16} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-xl border border-(--border) bg-(--background) p-3">
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Formal</p>
+                  <p className="mt-1 text-sm font-semibold text-(--foreground)">{selected.formal}</p>
+                </div>
+                <div className="rounded-xl border border-(--border) bg-(--background) p-3">
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Informal</p>
+                  <p className="mt-1 text-sm font-semibold text-(--foreground)">{selected.informal}</p>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-(--border) bg-(--background) p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Common response</p>
+                <p className="mt-1 text-sm font-semibold text-(--foreground)">{selected.response}</p>
+              </div>
+
+              <div className="rounded-xl border border-(--border) bg-(--muted) p-3">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Cultural note</p>
+                <p className="mt-1 text-xs leading-relaxed text-(--foreground)">{selected.note}</p>
+              </div>
+
+              <button
+                onClick={copyGreeting}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-2.5 text-xs font-bold text-(--primary-foreground) transition hover:opacity-90"
+              >
+                <Copy className="h-4 w-4" />
+                {copied ? "Copied!" : "Copy greeting"}
+              </button>
+            </div>
           </div>
         </div>
 

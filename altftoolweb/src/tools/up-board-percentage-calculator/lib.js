@@ -68,6 +68,9 @@ export function computeUpBoardResult({ level, marks }) {
   const totalObtained = parsed.reduce((sum, m) => sum + m, 0);
   const totalMax = scheme.subjects * MAX_MARKS_PER_SUBJECT;
   const percentage = (totalObtained / totalMax) * 100;
+  // Round first, then decide the division from the same rounded value that is
+  // actually displayed to the user, so the band never contradicts the headline.
+  const roundedPercentage = Math.round(percentage * 100) / 100;
 
   const passMark = (PASS_MARK_PERCENT / 100) * MAX_MARKS_PER_SUBJECT;
   const failedSubjects = parsed.filter((m) => m < passMark).length;
@@ -75,12 +78,12 @@ export function computeUpBoardResult({ level, marks }) {
 
   let division = "Fail";
   if (passed) {
-    const band = DIVISIONS.find((d) => percentage >= d.minPercent);
+    const band = DIVISIONS.find((d) => roundedPercentage >= d.minPercent);
     division = band ? band.label : "Fail";
   }
 
   return {
-    percentage: Math.round(percentage * 100) / 100,
+    percentage: roundedPercentage,
     totalObtained,
     totalMax,
     passed,

@@ -41,6 +41,7 @@ const DEFAULTS = {
   chargeless: String(DEFAULT_CHARGELESS_LENGTH_M),
   gramsPerM: String(DEFAULT_TOPUP_GRAMS_PER_METRE),
   gasPrice: "3000",
+  maxPipeLength: String(DEFAULT_MAX_PIPE_LENGTH_M),
 };
 
 const INPUT_CLASS =
@@ -74,6 +75,7 @@ export default function ToolHome() {
   const [chargeless, setChargeless] = useState(DEFAULTS.chargeless);
   const [gramsPerM, setGramsPerM] = useState(DEFAULTS.gramsPerM);
   const [gasPrice, setGasPrice] = useState(DEFAULTS.gasPrice);
+  const [maxPipeLength, setMaxPipeLength] = useState(DEFAULTS.maxPipeLength);
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(
@@ -94,7 +96,7 @@ export default function ToolHome() {
         chargelessLengthM: toNum(chargeless),
         topUpGramsPerMetre: toNum(gramsPerM),
         refrigerantPricePerKg: toNum(gasPrice),
-        maxPipeLengthM: DEFAULT_MAX_PIPE_LENGTH_M,
+        maxPipeLengthM: toNum(maxPipeLength),
         maxVerticalRiseM: DEFAULT_MAX_VERTICAL_RISE_M,
       }),
     [
@@ -112,22 +114,25 @@ export default function ToolHome() {
       chargeless,
       gramsPerM,
       gasPrice,
+      maxPipeLength,
     ],
   );
 
   const hasError = Boolean(result.error);
+  const gradeLabel = PIPE_GRADES.find((option) => option.value === grade)?.label ?? grade;
 
   const summary = useMemo(() => {
     if (hasError) return "";
     return [
       "AC Copper Pipe Cost Estimator",
+      `Copper pair size: ${gradeLabel} (reference only — make sure the rate below matches this size)`,
       `Copper run: ${m(toNum(pipeRun))} (${m(result.extraPipeM)} chargeable)`,
       ...result.items.map(([label, value]) => `${label}: ${money(value)}`),
       `Total: ${money(result.total)}`,
       `Extras over the standard installation: ${money(result.extraOverStandard)}`,
       ...result.warnings.map((w) => `Note: ${w}`),
     ].join("\n");
-  }, [hasError, result, pipeRun]);
+  }, [hasError, result, pipeRun, gradeLabel]);
 
   const copyResult = async () => {
     if (!summary) return;
@@ -156,6 +161,7 @@ export default function ToolHome() {
     setChargeless(DEFAULTS.chargeless);
     setGramsPerM(DEFAULTS.gramsPerM);
     setGasPrice(DEFAULTS.gasPrice);
+    setMaxPipeLength(DEFAULTS.maxPipeLength);
     setCopied(false);
   };
 
@@ -174,6 +180,7 @@ export default function ToolHome() {
     ["acp-chargeless", "Chargeless pipe length from the manual (m)", chargeless, setChargeless, "0.5"],
     ["acp-grams", "Top-up refrigerant (g per extra m)", gramsPerM, setGramsPerM, "1"],
     ["acp-gasprice", "Refrigerant price (₹ per kg)", gasPrice, setGasPrice, "100"],
+    ["acp-maxpipe", "Maximum pipe run from the manual (m)", maxPipeLength, setMaxPipeLength, "1"],
   ];
 
   return (
@@ -196,11 +203,11 @@ export default function ToolHome() {
       <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="mb-4">
           <label className={LABEL_CLASS} htmlFor="acp-grade">
-            Copper pair size for your capacity
+            Copper pair size for your capacity <span className="font-normal text-[var(--muted-foreground)]">(reference only)</span>
           </label>
           <select
             id="acp-grade"
-            className={`mt-2 ${INPUT_CLASS}`}
+            className={`mt-2 ${INPUT_CLASS} border-dashed`}
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
           >
@@ -211,7 +218,9 @@ export default function ToolHome() {
             ))}
           </select>
           <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-            Larger pairs cost more per metre — set the rate below to the price quoted for this size.
+            This selection does not change the numbers below — it is a reminder of which pair size
+            the rate you enter should match. Larger pairs cost more per metre, so set the copper
+            pair rate below to the price quoted for this size.
           </p>
         </div>
 
@@ -245,7 +254,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

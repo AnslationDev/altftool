@@ -33,6 +33,15 @@ export function StartNode({ data, selected }) {
         selected ? 'border-green-500 shadow-green-200 shadow-lg' : 'border-green-400'
       }`}
       onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      role="button"
+      aria-label="Double-click or press Enter to rename"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleDoubleClick();
+        }
+      }}
     >
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-green-500 !border-2 !border-white" />
       {isEditing ? (

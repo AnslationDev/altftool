@@ -25,7 +25,7 @@ const seo = {
     ],
     [
       "Animated transit",
-      "One button sweeps the alignment through the full range so the eclipse progresses from outside the shadow, through penumbral and partial, to maximum and out again.",
+      "One button sweeps the alignment through the full range so the eclipse progresses from outside the shadow, through partial, to maximum and out again — switch to Lunar mode first to also see the penumbral stage.",
     ],
   ],
   faqs: [

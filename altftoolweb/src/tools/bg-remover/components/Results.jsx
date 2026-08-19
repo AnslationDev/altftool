@@ -3,12 +3,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Instagram, Twitter, Linkedin, ChevronDown } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
+import { useAlert } from "@/shared/ui/AlertProvider";
 
 export default function ResultPreview({ image, onReset }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
   const dropdownRef = useRef(null);
+  const shareDialogRef = useRef(null);
+  const shareTriggerRef = useRef(null);
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -21,12 +25,56 @@ export default function ResultPreview({ image, onReset }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Dialog behaviour for the share modal: focus in on open, restore focus to the trigger on
+  // close, and close on Escape.
+  useEffect(() => {
+    if (!showShareModal) return undefined;
+
+    shareDialogRef.current?.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        setShowShareModal(false);
+        return;
+      }
+
+      if (e.key === "Tab" && shareDialogRef.current) {
+        const focusable = shareDialogRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      shareTriggerRef.current?.focus();
+    };
+  }, [showShareModal]);
+
   if (!image) return null;
 
   const downloadImage = (format) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = image;
+
+    img.onerror = () => {
+      showAlert("Failed to load the image for download", "error");
+    };
 
     img.onload = () => {
       const canvas = document.createElement("canvas");
@@ -45,6 +93,10 @@ export default function ResultPreview({ image, onReset }) {
       // ✅ LOGO WATERMARK
       const watermark = new Image();
       watermark.src = "/assets/logo3.png";
+
+      watermark.onerror = () => {
+        showAlert("Failed to load the watermark for download", "error");
+      };
 
       watermark.onload = () => {
         const scale = canvas.width * 0.12; // size relative to image
@@ -87,6 +139,10 @@ export default function ResultPreview({ image, onReset }) {
     img.crossOrigin = "anonymous";
     img.src = image;
 
+    img.onerror = () => {
+      showAlert("Failed to load the image for export", "error");
+    };
+
     img.onload = () => {
       const size = Math.min(img.width, img.height);
 
@@ -109,6 +165,10 @@ export default function ResultPreview({ image, onReset }) {
       // ✅ LOGO WATERMARK
       const watermark = new Image();
       watermark.src = "/assets/logo3.png";
+
+      watermark.onerror = () => {
+        showAlert("Failed to load the watermark for export", "error");
+      };
 
       watermark.onload = () => {
         const scale = size * 0.2;
@@ -201,6 +261,7 @@ export default function ResultPreview({ image, onReset }) {
           </button>
 
           <button
+            ref={shareTriggerRef}
             onClick={() => setShowShareModal(true)}
             className="bg-(--primary) px-6 py-2 rounded-md font-semibold text-sm sm:text-base text-white cursor-pointer"
           >
@@ -215,9 +276,16 @@ export default function ResultPreview({ image, onReset }) {
 
       {showShareModal && (
         <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 ">
-          
-          <div className=" bg-(--background) rounded-2xl p-7 shadow-2xl w-[320px] text-center animate-in fade-in zoom-in-95 duration-200">
-            
+
+          <div
+            ref={shareDialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Share your image"
+            tabIndex={-1}
+            className=" bg-(--background) rounded-2xl p-7 shadow-2xl w-[320px] text-center animate-in fade-in zoom-in-95 duration-200 focus:outline-none"
+          >
+
             <h3 className="font-semibold text-lg mb-2">
               Share your image
             </h3>

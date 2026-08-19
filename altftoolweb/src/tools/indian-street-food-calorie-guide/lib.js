@@ -106,11 +106,6 @@ export function foodGroups() {
   return seen;
 }
 
-/** Energy implied by the macros, using Atwater factors. */
-export function energyFromMacros({ protein, carbs, fat }) {
-  return protein * KCAL_PER_G_PROTEIN + carbs * KCAL_PER_G_CARB + fat * KCAL_PER_G_FAT;
-}
-
 /**
  * Total a plate of street food.
  *

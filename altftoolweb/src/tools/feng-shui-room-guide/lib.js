@@ -354,7 +354,7 @@ export function roomGuidance({ room, area } = {}) {
     harmony = "clash";
     mediator = mediatingElement(areaElement, roomElement);
     harmonyLabel = `${ELEMENT_INFO[areaElement].label} controls ${ELEMENT_INFO[roomElement].label}`;
-    advice = `The position works against the room's activity. Introduce ${ELEMENT_INFO[mediator].label}, which ${ELEMENT_INFO[areaElement].label.toLowerCase()} feeds and which in turn feeds ${ELEMENT_INFO[roomElement].label.toLowerCase()}, and keep the area's own colours to a supporting role rather than covering whole walls.`;
+    advice = `The position works against the room's activity. Introduce ${ELEMENT_INFO[mediator].label}, which ${ELEMENT_INFO[areaElement].label.toLowerCase()} feeds and which in turn feeds ${ELEMENT_INFO[roomElement].label.toLowerCase()}, and keep the area's own colours to accents rather than covering whole walls.`;
   }
 
   // Lead colour: the area's element whenever the room already feeds, matches or
@@ -383,16 +383,18 @@ export function roomGuidance({ room, area } = {}) {
     // below), so the mediator being introduced is the supporting colour.
     supportElement = mediator;
   } else {
-    // b-controls-a: the advice explicitly promises the area's own colours "a
-    // supporting role", so that is what has to render here.
-    supportElement = areaElement;
+    // b-controls-a: the mediator is the colour being introduced to break the
+    // clash, so it takes the supporting slot (mirrors how a-controls-b puts
+    // its mediator in supportElement above).
+    supportElement = mediator;
   }
 
-  // Reduce ("keep to accents only"): the element that controls the area's own
-  // element. In the a-controls-b clash this is, by definition, the room's own
-  // element (the aggressor) — which is exactly what the advice tells you to
-  // keep to accents, and is why leadElement above must not also be roomElement.
-  const reduceElement = controlledBy(areaElement);
+  // Reduce ("keep to accents only"): the aggressor element, pushed down to an
+  // accent. In a-controls-b that's the room's own element, which is exactly
+  // what controlledBy(areaElement) resolves to (the element controlling the
+  // area). In b-controls-a the aggressor is the area's own element instead,
+  // so it must be used directly rather than re-deriving it via controlledBy.
+  const reduceElement = relation === "b-controls-a" ? areaElement : controlledBy(areaElement);
 
   return {
     roomId: space.id,

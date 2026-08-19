@@ -133,7 +133,7 @@ export function computeCostPerVisit({
     dropInTotalCost,
     savingsVsDropIn,
     beatsDropIn: hasDropIn ? savingsVsDropIn > 0 : null,
-    band: valueBand(costPerVisit, dropInPrice),
+    band: valueBand(membershipOnlyPerVisit, dropInPrice),
   };
 }
 

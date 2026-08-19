@@ -225,7 +225,7 @@ export default function TransformShell({ tool }) {
         <div className="mt-5 flex items-center justify-between rounded-xl border border-(--info)/30 bg-(--info-soft)/50 px-4 py-3 text-xs text-(--foreground) animate-fade-in">
           <div className="flex items-center gap-2">
             <TriangleAlert className="h-4 w-4 shrink-0" />
-            <span>SVGO optimization is enabled by default. You can adjust SVGR options in Settings.</span>
+            <span>SVGO optimization is not applied — markup is converted as-is, attributes and comments included.</span>
           </div>
         </div>
       )}

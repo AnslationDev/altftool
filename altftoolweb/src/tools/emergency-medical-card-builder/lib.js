@@ -136,8 +136,18 @@ export function addMonthsIso(isoDate, months) {
   return `${year}-${pad(month + 1)}-${pad(day)}`;
 }
 
-function bandFor(score) {
-  return COMPLETENESS_BANDS.find((band) => score >= band.min) || COMPLETENESS_BANDS[COMPLETENESS_BANDS.length - 1];
+/**
+ * Pick the completeness band. A band whose floor is 90 or above claims every
+ * critical field is filled in, so that claim must not be handed out while any
+ * critical field is still missing — even if the recommended fields alone
+ * push the numeric score to 90+.
+ */
+function bandFor(score, missingCriticalCount) {
+  for (const band of COMPLETENESS_BANDS) {
+    if (band.min >= 90 && missingCriticalCount > 0) continue;
+    if (score >= band.min) return band;
+  }
+  return COMPLETENESS_BANDS[COMPLETENESS_BANDS.length - 1];
 }
 
 /**
@@ -235,7 +245,7 @@ export function buildEmergencyCard(input = {}) {
   push("PREFERRED HOSPITAL", input.preferredHospital);
   push("LANGUAGE", input.language);
   push("ADDRESS", input.address);
-  if (clean(input.doctorName)) {
+  if (clean(input.doctorName) || clean(input.doctorPhone)) {
     push("DOCTOR", [clean(input.doctorName), clean(input.doctorPhone)].filter(Boolean).join(" · "));
   }
   if (clean(input.insurer) || clean(input.policyNumber)) {
@@ -275,7 +285,7 @@ export function buildEmergencyCard(input = {}) {
     warnings.push("Add a second emergency contact in case the first one cannot be reached.");
   }
 
-  const band = bandFor(completeness);
+  const band = bandFor(completeness, missingCritical.length);
 
   return {
     completeness,

@@ -430,7 +430,9 @@ function GlitchHeadline({ headline, glitchWord }) {
   if (!word) {
     return <PreviewHeading lead={headline} className="text-2xl" />;
   }
-  const [before, after] = headline.split(word);
+  const splitIndex = headline.indexOf(word);
+  const before = headline.slice(0, splitIndex);
+  const after = headline.slice(splitIndex + word.length);
   return (
     <h3 className="text-2xl font-semibold leading-tight" style={{ color: HEX.fg }}>
       {before}

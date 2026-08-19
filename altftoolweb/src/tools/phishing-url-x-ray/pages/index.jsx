@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, Copy, RotateCcw, ScanSearch } from "lucide-react";
 
-import { analyseUrl, formatUrlReport } from "../lib";
+import { analyseUrl, formatUrlReport, SEVERITIES } from "../lib";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 font-mono text-sm text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -39,6 +39,14 @@ const SAMPLES = [
 export default function ToolHome() {
   const [url, setUrl] = useState(DEFAULT_URL);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(
+    () => () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    },
+    [],
+  );
 
   const result = useMemo(() => analyseUrl(url), [url]);
   const report = useMemo(() => formatUrlReport(result), [result]);
@@ -48,7 +56,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(report);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -129,14 +138,18 @@ export default function ToolHome() {
         </div>
       ) : (
         <>
-          <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <section
+            aria-live="polite"
+            role="region"
+            className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+          >
             <h2 className="text-base font-semibold">Findings</h2>
             <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
-              <span className={`rounded-md px-2 py-1 ${SEVERITY_CHIP.high}`}>High: {result.counts.high}</span>
-              <span className={`rounded-md px-2 py-1 ${SEVERITY_CHIP.medium}`}>
-                Medium: {result.counts.medium}
-              </span>
-              <span className={`rounded-md px-2 py-1 ${SEVERITY_CHIP.low}`}>Low: {result.counts.low}</span>
+              {SEVERITIES.map((severity) => (
+                <span key={severity} className={`rounded-md px-2 py-1 ${SEVERITY_CHIP[severity]}`}>
+                  {SEVERITY_WORD[severity]}: {result.counts[severity]}
+                </span>
+              ))}
             </div>
             <ul className="mt-4 space-y-2">
               {result.findings.map((finding) => (

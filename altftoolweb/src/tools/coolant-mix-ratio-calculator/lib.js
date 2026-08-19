@@ -90,8 +90,12 @@ export const PRODUCT_FORMS = [
 export const RECOMMENDED_MIN_PERCENT = 33;
 /** Above this heat transfer starts to fall away noticeably. Typical OEM ceiling. */
 export const RECOMMENDED_MAX_PERCENT = 60;
-/** Ethylene glycol freeze protection peaks near this concentration, then worsens. */
-export const EG_EUTECTIC_PERCENT = 68;
+/**
+ * Ethylene glycol freeze protection peaks near this concentration, then worsens.
+ * Matches the EG_FREEZE table's own minimum (interpolated point at 70%) so the
+ * warning never contradicts the freeze point shown for the same input.
+ */
+export const EG_EUTECTIC_PERCENT = 70;
 
 /* Antoine constants for water, valid 99-374 °C (pressure in mmHg). */
 const ANTOINE_A = 8.14019;
@@ -227,6 +231,10 @@ export function mixCoolant({
     warnings.push("With no cap pressure the system boils far sooner; a missing or weak cap is a common overheating cause.");
   }
 
+  // Round one side and derive the other by subtraction so the displayed ratio
+  // always sums to 100, even when targetPercent lands on an exact .5.
+  const glycolRatio = Math.round(targetPercent);
+
   return {
     coolantLabel: type.label,
     productLabel: form.label,
@@ -235,7 +243,7 @@ export function mixCoolant({
     targetPercent,
     productLitres: Math.round(productLitres * 100) / 100,
     waterLitres: Math.round(waterLitres * 100) / 100,
-    ratioText: `${Math.round(targetPercent)} : ${Math.round(100 - targetPercent)} glycol to water`,
+    ratioText: `${glycolRatio} : ${100 - glycolRatio} glycol to water`,
     freezePointC: Math.round(freeze * 10) / 10,
     boilPointAtmC: Math.round(boilAtm * 10) / 10,
     capRiseC: Math.round(capRise * 10) / 10,

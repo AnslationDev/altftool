@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Calculator, CheckCircle2, RefreshCw, Volume2, VolumeX, History, Trash2, ArrowLeft } from "lucide-react";
 
 export default function ToolHome() {
@@ -9,14 +9,20 @@ export default function ToolHome() {
   const [history, setHistory] = useState([]);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [shouldReset, setShouldReset] = useState(false);
+  const audioCtxRef = useRef(null);
 
   // Soft key click beep sound using Web Audio API
   const playClickSound = () => {
     if (!soundEnabled) return;
     try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      const ctx = new AudioContext();
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      // Reuse a single AudioContext across clicks instead of creating (and
+      // leaking) a new one on every keypress.
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContextClass();
+      }
+      const ctx = audioCtxRef.current;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -45,6 +51,16 @@ export default function ToolHome() {
     }
     setShouldReset(false);
 
+    if (key === ".") {
+      // Only block a second decimal point within the CURRENT operand, not
+      // the whole expression (which may already contain earlier operands
+      // with their own decimal points).
+      const currentOperand = display.split(" ").pop();
+      if (currentOperand.includes(".")) {
+        return;
+      }
+    }
+
     if (display === "0" && key !== ".") {
       setDisplay(key);
     } else {
@@ -59,8 +75,11 @@ export default function ToolHome() {
     // Check if double operator
     const lastChar = display.trim().slice(-1);
     if (["+", "-", "*", "/"].includes(lastChar)) {
-      // Replace last operator
-      setDisplay((prev) => prev.slice(0, -1) + op);
+      // Replace the last operator: operators are inserted as " op " (a
+      // space, the operator, a space), so strip the FULL trailing token —
+      // trailing space(s), then the operator character, then the space
+      // before it — before appending the new one with its own spacing.
+      setDisplay((prev) => prev.trimEnd().slice(0, -1).trimEnd() + " " + op + " ");
     } else {
       setDisplay((prev) => prev + " " + op + " ");
     }
@@ -225,7 +244,10 @@ export default function ToolHome() {
             <div className="w-full max-w-[340px] bg-card border border-border rounded-3xl p-5 shadow-lg space-y-4">
 
               {/* Screen Display */}
-              <div className="bg-slate-950 border border-slate-900 rounded-2xl p-4 text-right space-y-1 overflow-hidden min-h-[90px] flex flex-col justify-end">
+              <div
+                className="bg-slate-950 border border-slate-900 rounded-2xl p-4 text-right space-y-1 overflow-hidden min-h-[90px] flex flex-col justify-end"
+                aria-live="polite"
+              >
                 <div className="text-[10px] text-primary/70 font-mono font-bold truncate h-4">
                   {equation}
                 </div>
@@ -240,12 +262,13 @@ export default function ToolHome() {
                 {/* Row 1 */}
                 <button
                   onClick={handleClear}
-                  className="h-14 bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 rounded-2xl text-xs font-black uppercase transition-all"
+                  className="h-14 bg-danger-soft border border-danger text-danger hover:bg-danger-soft/80 rounded-2xl text-xs font-black uppercase transition-all"
                 >
                   AC
                 </button>
                 <button
                   onClick={handleBackspace}
+                  aria-label="Backspace"
                   className="h-14 bg-surface-soft border border-border text-foreground hover:bg-surface-soft/80 rounded-2xl text-sm flex items-center justify-center transition-all"
                 >
                   <ArrowLeft size={16} />
@@ -380,7 +403,7 @@ export default function ToolHome() {
                 {history.length > 0 && (
                   <button
                     onClick={() => setHistory([])}
-                    className="text-[10px] font-bold text-red-500 hover:underline flex items-center gap-1"
+                    className="text-[10px] font-bold text-danger hover:underline flex items-center gap-1"
                   >
                     <Trash2 size={10} /> Clear
                   </button>
@@ -399,6 +422,7 @@ export default function ToolHome() {
                       onClick={() => {
                         setDisplay(String(item.res));
                         setEquation(`${item.expr} =`);
+                        setShouldReset(true);
                       }}
                       className="p-3 bg-surface-soft border border-border/80 rounded-xl text-right font-mono text-xs cursor-pointer hover:border-primary/50 transition-all space-y-0.5"
                     >

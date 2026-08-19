@@ -422,7 +422,7 @@ export default function ToolHome() {
             "wanted",
             "Want to win",
             "The rule you expected to apply.",
-            hasError ? null : duelResult.wanted,
+            hasError ? null : duelResult.challenger,
           )}
         </section>
       ) : null}

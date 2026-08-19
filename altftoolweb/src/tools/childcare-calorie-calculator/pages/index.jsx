@@ -53,11 +53,12 @@ export default function ToolHome() {
         const sessionKcal = kcalPerMinute * minutes;
         const weeklyKcal = sessionKcal * sessionsPerWeek;
         const netKcal = Math.max(0, sessionKcal - (1 * 3.5 * weightKg * minutes) / 200);
+        const netWeeklyKcal = netKcal * sessionsPerWeek;
         return [
           `Intensity: ${met} MET`,
           `Burn rate: ${fmt(kcalPerMinute, 2)} kcal/min`,
           `Session burn: ${fmt(sessionKcal)} kcal gross (${fmt(netKcal)} kcal net)`,
-          `Weekly estimate: ${fmt(weeklyKcal)} kcal`,
+          `Weekly estimate: ${fmt(weeklyKcal)} kcal gross (${fmt(netWeeklyKcal)} kcal net)`,
           "This is a fitness estimate only; childcare effort varies heavily by age, lifting, stairs, and interruptions.",
         ].join("\n");
       }}

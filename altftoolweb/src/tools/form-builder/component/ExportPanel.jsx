@@ -1,25 +1,31 @@
 "use client";
 
 import React from "react";
+import { escapeHtml } from "../utils/escapeHtml";
 
 
 const ExportPanel = ({ formFields, exportType, setExportType }) => {
     const [copied, setCopied] = React.useState(false);
-    
+
   const generateCode = () => {
     //  Empty state fix
     if (!formFields || formFields.length === 0) {
       return "// Add fields to generate code ";
     }
 
+    // f.type/f.placeholder can come from a decoded share link (see
+    // utils/shareForm.js's decodeForm), so they're untrusted and must be
+    // HTML-escaped before landing in this generated markup.
     if (exportType === "html") {
       return `<form>
 ${formFields
   .map((f) => {
+    const safeType = escapeHtml(f.type);
+    const safePlaceholder = escapeHtml(f.placeholder);
     if (f.type === "textarea") {
-      return `<textarea placeholder="${f.placeholder || ""}"></textarea>`;
+      return `<textarea placeholder="${safePlaceholder}"></textarea>`;
     }
-    return `<input type="${f.type}" placeholder="${f.placeholder || ""}" />`;
+    return `<input type="${safeType}" placeholder="${safePlaceholder}" />`;
   })
   .join("\n")}
 </form>`;
@@ -31,10 +37,12 @@ ${formFields
     <form>
 ${formFields
   .map((f) => {
+    const safeType = escapeHtml(f.type);
+    const safePlaceholder = escapeHtml(f.placeholder);
     if (f.type === "textarea") {
-      return `      <textarea placeholder="${f.placeholder || ""}" />`;
+      return `      <textarea placeholder="${safePlaceholder}" />`;
     }
-    return `      <input type="${f.type}" placeholder="${f.placeholder || ""}" />`;
+    return `      <input type="${safeType}" placeholder="${safePlaceholder}" />`;
   })
   .join("\n")}
       <button type="submit">Submit</button>

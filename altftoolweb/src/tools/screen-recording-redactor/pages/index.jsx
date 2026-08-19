@@ -106,6 +106,14 @@ function chooseMimeType() {
   return MIME_CANDIDATES.find((type) => MediaRecorder.isTypeSupported(type)) || "";
 }
 
+function extensionFromMimeType(mimeType) {
+  const type = (mimeType || "").toLowerCase();
+  if (type.includes("webm")) return "webm";
+  if (type.includes("mp4")) return "mp4";
+  if (type.includes("ogg")) return "ogg";
+  return "webm";
+}
+
 function seekVideo(video, time) {
   return new Promise((resolve, reject) => {
     if (Math.abs(video.currentTime - time) < 0.01) {
@@ -132,71 +140,121 @@ function seekVideo(video, time) {
   });
 }
 
+// Chromium-family browsers commonly report video.duration as Infinity right after
+// "loadedmetadata" for blob URLs created from MediaRecorder output, because streamed
+// WebM/Matroska containers omit the Segment Duration element. The documented recovery
+// is to seek far past the end of the media and back to the start, which forces the
+// browser to resolve and cache the real duration from the container's cues.
+function recoverInfiniteDuration(video) {
+  return new Promise((resolve) => {
+    if (Number.isFinite(video.duration)) {
+      resolve();
+      return;
+    }
+    let settled = false;
+    let timer;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      video.removeEventListener("durationchange", handleDurationChange);
+      const restoreToStart = () => {
+        video.removeEventListener("seeked", restoreToStart);
+        resolve();
+      };
+      video.addEventListener("seeked", restoreToStart, { once: true });
+      try {
+        video.currentTime = 0;
+      } catch {
+        video.removeEventListener("seeked", restoreToStart);
+        resolve();
+      }
+    };
+    const handleDurationChange = () => {
+      if (Number.isFinite(video.duration)) finish();
+    };
+    video.addEventListener("durationchange", handleDurationChange);
+    timer = window.setTimeout(finish, 2_000);
+    try {
+      video.currentTime = 1e101;
+    } catch {
+      finish();
+    }
+  });
+}
+
+const REGION_DRAW_PRIORITY = { blur: 0, pixelate: 0, solid: 1 };
+
 function drawExportFrame(context, video, regions, scratchCanvas, solidColour) {
   const canvas = context.canvas;
   context.filter = "none";
   context.imageSmoothingEnabled = true;
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  activeRegionsAtTime(regions, video.currentTime).forEach((region) => {
-    const rectangle = regionToPixels(region, canvas.width, canvas.height);
-    if (rectangle.width <= 0 || rectangle.height <= 0) return;
+  activeRegionsAtTime(regions, video.currentTime)
+    .slice()
+    .sort(
+      (a, b) => (REGION_DRAW_PRIORITY[a.mode] ?? 0) - (REGION_DRAW_PRIORITY[b.mode] ?? 0),
+    )
+    .forEach((region) => {
+      const rectangle = regionToPixels(region, canvas.width, canvas.height);
+      if (rectangle.width <= 0 || rectangle.height <= 0) return;
 
-    if (region.mode === "solid") {
-      context.save();
-      context.fillStyle = solidColour;
-      context.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-      context.restore();
-      return;
-    }
+      if (region.mode === "solid") {
+        context.save();
+        context.fillStyle = solidColour;
+        context.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+        context.restore();
+        return;
+      }
 
-    if (region.mode === "blur") {
-      const blurRadius = Math.max(
-        8,
-        Math.round(Math.min(rectangle.width, rectangle.height) / 12),
+      if (region.mode === "blur") {
+        const blurRadius = Math.max(
+          8,
+          Math.round(Math.min(rectangle.width, rectangle.height) / 12),
+        );
+        context.save();
+        context.beginPath();
+        context.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+        context.clip();
+        context.filter = `blur(${blurRadius}px)`;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        context.restore();
+        return;
+      }
+
+      const sampleWidth = Math.max(1, Math.round(rectangle.width / 16));
+      const sampleHeight = Math.max(1, Math.round(rectangle.height / 16));
+      scratchCanvas.width = sampleWidth;
+      scratchCanvas.height = sampleHeight;
+      const scratch = scratchCanvas.getContext("2d");
+      scratch.imageSmoothingEnabled = true;
+      scratch.drawImage(
+        video,
+        rectangle.x,
+        rectangle.y,
+        rectangle.width,
+        rectangle.height,
+        0,
+        0,
+        sampleWidth,
+        sampleHeight,
       );
       context.save();
-      context.beginPath();
-      context.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-      context.clip();
-      context.filter = `blur(${blurRadius}px)`;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      context.imageSmoothingEnabled = false;
+      context.drawImage(
+        scratchCanvas,
+        0,
+        0,
+        sampleWidth,
+        sampleHeight,
+        rectangle.x,
+        rectangle.y,
+        rectangle.width,
+        rectangle.height,
+      );
       context.restore();
-      return;
-    }
-
-    const sampleWidth = Math.max(1, Math.round(rectangle.width / 16));
-    const sampleHeight = Math.max(1, Math.round(rectangle.height / 16));
-    scratchCanvas.width = sampleWidth;
-    scratchCanvas.height = sampleHeight;
-    const scratch = scratchCanvas.getContext("2d");
-    scratch.imageSmoothingEnabled = true;
-    scratch.drawImage(
-      video,
-      rectangle.x,
-      rectangle.y,
-      rectangle.width,
-      rectangle.height,
-      0,
-      0,
-      sampleWidth,
-      sampleHeight,
-    );
-    context.save();
-    context.imageSmoothingEnabled = false;
-    context.drawImage(
-      scratchCanvas,
-      0,
-      0,
-      sampleWidth,
-      sampleHeight,
-      rectangle.x,
-      rectangle.y,
-      rectangle.width,
-      rectangle.height,
-    );
-    context.restore();
-  });
+    });
 }
 
 function RegionStyle({ mode, selected }) {
@@ -248,6 +306,7 @@ export default function ScreenRecordingRedactor() {
   const [exportProgress, setExportProgress] = useState(0);
   const [outputUrl, setOutputUrl] = useState("");
   const [outputSize, setOutputSize] = useState(0);
+  const [outputExtension, setOutputExtension] = useState("webm");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -258,6 +317,7 @@ export default function ScreenRecordingRedactor() {
   const sourceUrlRef = useRef("");
   const outputUrlRef = useRef("");
   const recorderRef = useRef(null);
+  const finishHandlerRef = useRef(null);
   const exportStreamRef = useRef(null);
   const sourceCaptureRef = useRef(null);
   const animationFrameRef = useRef(0);
@@ -296,6 +356,15 @@ export default function ScreenRecordingRedactor() {
   };
 
   const resetWorkspace = () => {
+    if (
+      (sourceUrl || regions.length > 0) &&
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Start a new video? This clears the loaded video and every redaction region, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     if (isExporting) {
       cancelledRef.current = true;
       exportingRef.current = false;
@@ -348,9 +417,13 @@ export default function ScreenRecordingRedactor() {
     setMessage("Reading video metadata…");
   };
 
-  const handleLoadedMetadata = () => {
+  const handleLoadedMetadata = async () => {
     const video = videoRef.current;
     if (!video) return;
+    if (!Number.isFinite(video.duration)) {
+      await recoverInfiniteDuration(video);
+    }
+    if (videoRef.current !== video) return;
     const duration = Number.isFinite(video.duration) ? video.duration : 0;
     if (!duration || !video.videoWidth || !video.videoHeight) {
       setError("This video has no readable duration or frame dimensions.");
@@ -513,12 +586,20 @@ export default function ScreenRecordingRedactor() {
     sourceCaptureRef.current?.getTracks().forEach((track) => track.stop());
     exportStreamRef.current = null;
     sourceCaptureRef.current = null;
+    if (finishHandlerRef.current) {
+      videoRef.current?.removeEventListener("ended", finishHandlerRef.current);
+      finishHandlerRef.current = null;
+    }
   };
 
   const cancelExport = () => {
     if (!isExporting) return;
     cancelledRef.current = true;
     exportingRef.current = false;
+    if (finishHandlerRef.current) {
+      videoRef.current?.removeEventListener("ended", finishHandlerRef.current);
+      finishHandlerRef.current = null;
+    }
     videoRef.current?.pause();
     if (recorderRef.current?.state !== "inactive") {
       recorderRef.current.stop();
@@ -609,6 +690,7 @@ export default function ScreenRecordingRedactor() {
           outputUrlRef.current = url;
           setOutputUrl(url);
           setOutputSize(blob.size);
+          setOutputExtension(extensionFromMimeType(recorder.mimeType));
           setExportProgress(100);
           setMessage("Flattened WebM ready. Review it before deleting the original.");
         },
@@ -636,6 +718,7 @@ export default function ScreenRecordingRedactor() {
         drawExportFrame(context, video, regions, scratchCanvas, solidColour);
         if (recorder.state !== "inactive") recorder.stop();
       };
+      finishHandlerRef.current = finish;
       video.addEventListener("ended", finish, { once: true });
 
       setIsExporting(true);
@@ -660,7 +743,7 @@ export default function ScreenRecordingRedactor() {
     const stem = (file?.name || "screen-recording").replace(/\.[^.]+$/, "");
     const anchor = document.createElement("a");
     anchor.href = outputUrl;
-    anchor.download = `${stem}-redacted.webm`;
+    anchor.download = `${stem}-redacted.${outputExtension || "webm"}`;
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
@@ -839,7 +922,7 @@ export default function ScreenRecordingRedactor() {
                         drawingRef.current = null;
                         setDraft(null);
                       }}
-                      role="img"
+                      role="group"
                       aria-label="Video redaction drawing surface. Use Add centre region for keyboard-only editing."
                     >
                       {activeRegions.map((region) => (

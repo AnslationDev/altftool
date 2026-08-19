@@ -155,7 +155,7 @@ export const ISSUE_TYPES = [
     windowHours: 0,
     scope: "full",
     payout: "original",
-    evidence: "no evidence needed - the cancellation is on our own record",
+    evidence: "nothing - the cancellation is already on our own record",
   },
 ];
 
@@ -248,14 +248,18 @@ export function computeRefundEntitlement({
   if (goodwill < 0 || goodwill > MAX_GOODWILL_PERCENT) {
     return { error: `Goodwill uplift must be between 0% and ${MAX_GOODWILL_PERCENT}%.` };
   }
-  if (affected > order) {
-    return { error: "The value of the affected items cannot exceed the order value." };
-  }
   if (!REFUND_SCOPES.some((s) => s.id === scope)) {
     return { error: "Choose what the refund is measured against." };
   }
   if (!PAYOUT_MODES.some((p) => p.id === payout)) {
     return { error: "Choose how the customer is paid back." };
+  }
+  // Only "affected-items" scope actually reads `affected` into the refund
+  // base (see refundBase below), so this comparison must not reject "full"
+  // or "delivery-fee" calculations just because affectedItemsValue happens
+  // to exceed orderValue - that field is unused by those scopes.
+  if (scope === "affected-items" && affected > order) {
+    return { error: "The value of the affected items cannot exceed the order value." };
   }
   if (scope === "affected-items" && !(affected > 0)) {
     return { error: "Enter the value of the affected items to refund them." };
@@ -313,6 +317,21 @@ function windowSentence(hours) {
   const days = hours / 24;
   const whole = Number.isInteger(days) ? days : Math.round(days * 10) / 10;
   return `within ${whole} day${whole === 1 ? "" : "s"} of delivery`;
+}
+
+/**
+ * Clause-2 sentence for a single issue type. A zero-or-less reporting
+ * window (e.g. kitchen-cancel) cannot reuse the "report it ... Please keep
+ * {evidence}" template built for reportable windows: windowSentence(0)
+ * already says "without any report from you", so appending "report it"
+ * before it and "Please keep {evidence}" after it produced a
+ * self-contradictory, ungrammatical clause.
+ */
+function issueSentence(issue) {
+  if (issue.windowHours <= 0) {
+    return `- ${issue.label}: no report is needed from you - we will refund ${scopeSentence(issue.scope)}, ${payoutSentence(issue.payout)} as soon as the cancellation is recorded.`;
+  }
+  return `- ${issue.label}: report it ${windowSentence(issue.windowHours)} and we will refund ${scopeSentence(issue.scope)}, ${payoutSentence(issue.payout)}. Please keep ${issue.evidence}.`;
 }
 
 /**
@@ -438,12 +457,7 @@ export function buildRefundPolicy({
     },
     {
       title: "2. When you can ask for a refund",
-      body: chosen
-        .map(
-          (issue) =>
-            `- ${issue.label}: report it ${windowSentence(issue.windowHours)} and we will refund ${scopeSentence(issue.scope)}, ${payoutSentence(issue.payout)}. Please keep ${issue.evidence}.`,
-        )
-        .join("\n"),
+      body: chosen.map(issueSentence).join("\n"),
     },
     {
       title: "3. What counts as a late delivery",

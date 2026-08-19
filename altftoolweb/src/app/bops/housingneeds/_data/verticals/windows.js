@@ -27,6 +27,7 @@ const windows = {
   "headline": "Better windows start with the numbers on the label",
   "headlineAccent": "the numbers on the label",
   "subheadline": "The right replacement window balances glass performance, frame material, and installation method for your specific climate and openings. Understanding U-factor, SHGC, and full-frame versus insert installation is what separates a window that pays you back from one that merely looks new.",
+  "answer": "Replacement window performance is set by the numbers on the label — U-factor for heat loss, SHGC for solar heat gain — together with the frame material and the installation method, not by the brand name. Full-frame replacement removes the old frame so the opening can be flashed and insulated, while an insert replacement keeps the existing frame and gives up a little glass area; vinyl frames typically last 20-30 years against 30-50 for fiberglass or clad wood.",
   "heroPoints": [
     "U-factor and SHGC explained",
     "Full-frame and insert options",

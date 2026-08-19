@@ -8,7 +8,7 @@ const seo = {
     "Read the Beautified Output with its original and formatted byte sizes, then press Copy or Download to save formatted.php.",
   ],
   intro:
-    "PHP Beautifier Studio reformats PHP source in the browser using Prettier with the official @prettier/plugin-php parser, so the output follows the same deterministic rules a Prettier-based CI check would apply. You control indent width (2, 4 or 8 spaces, or tabs), print width (80, 120 or 160 characters), single versus double quotes and brace placement, and the formatted file can be copied or downloaded as formatted.php. If a snippet has a syntax error that Prettier refuses to parse, a built-in brace-and-semicolon fallback still re-indents it and tells you why, instead of returning nothing.",
+    "PHP Beautifier Studio reformats PHP source in the browser using Prettier with the official @prettier/plugin-php parser, so the output follows the same deterministic rules a Prettier-based CI check would apply. You control indent width (2, 4 or 8 spaces), print width (80, 120 or 160 characters), single versus double quotes and brace placement, and the formatted file can be copied or downloaded as formatted.php. If a snippet has a syntax error that Prettier refuses to parse, a built-in brace-and-semicolon fallback still re-indents it and tells you why, instead of returning nothing.",
   useCases: [
     "You inherit a legacy PHP file with mixed tabs and spaces and inconsistent brace placement, and want it normalised to 4-space indent and 1TBS before you start reading it.",
     "A pull request is failing a Prettier check and you want to see the exact formatted output for one file without installing Node modules on the machine you are on.",
@@ -38,8 +38,8 @@ const seo = {
       "No. Formatting only rewrites whitespace, line breaks and quote style — the parsed program is the same. The one thing to be careful about is quote style, since switching a double-quoted string to single quotes stops variable interpolation; Prettier accounts for this and leaves interpolating strings alone.",
     ],
     [
-      "What is the difference between 1TBS, Perl and Allman brace style?",
-      "1TBS keeps the opening brace on the same line as the statement, Allman puts it on its own new line beneath, and Perl style sits between the two. PSR-12, the widely used PHP standard, calls for the opening brace on the same line for control structures and on a new line for classes and methods.",
+      "What is the difference between the 1TBS and PER-CS brace styles?",
+      "1TBS keeps the opening brace on the same line as the statement everywhere, including classes and functions. PER-CS (PER Coding Style, formerly PSR-12, the widely used PHP standard) keeps the opening brace on the same line for control structures but moves it to its own new line for classes and functions.",
     ],
     [
       "Is my code sent to a server?",

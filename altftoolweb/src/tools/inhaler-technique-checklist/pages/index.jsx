@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, TriangleAlert, Wind } from "lucide-react";
 
 import {
@@ -33,6 +33,13 @@ export default function ToolHome() {
   const [deviceKey, setDeviceKey] = useState(DEFAULT_DEVICE);
   const [ticked, setTicked] = useState(() => allStepIds(DEFAULT_DEVICE));
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => scoreTechnique({ deviceKey, completedIds: ticked }),
@@ -78,7 +85,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -202,7 +210,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">

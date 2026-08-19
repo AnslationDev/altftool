@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarClock, Check, Copy, RotateCcw } from "lucide-react";
 
 import { planReading } from "../lib";
@@ -35,6 +35,13 @@ export default function ToolHome() {
   const [bufferPercent, setBufferPercent] = useState(DEFAULTS.bufferPercent);
   const [minutesPerPage, setMinutesPerPage] = useState(DEFAULTS.minutesPerPage);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -43,7 +50,7 @@ export default function ToolHome() {
         pagesDone: pagesDone.trim() === "" ? 0 : Number(pagesDone),
         startDate,
         targetDate,
-        daysOffPerWeek: daysOffPerWeek.trim() === "" ? Number.NaN : Number(daysOffPerWeek),
+        daysOffPerWeek: daysOffPerWeek.trim() === "" ? 0 : Number(daysOffPerWeek),
         bufferPercent: bufferPercent.trim() === "" ? 0 : Number(bufferPercent),
         minutesPerPage: minutesPerPage.trim() === "" ? Number.NaN : Number(minutesPerPage),
       }),
@@ -70,7 +77,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -239,7 +247,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

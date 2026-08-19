@@ -2,17 +2,9 @@
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import data from "../(data)/db.json";
-import { FeedbackSkeleton } from "../DealsPageSkeleton";
 import ManagedImage from "@/components/ui/ManagedImage";
 
 const Feedback = () => {
-
-  const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-  const timer = setTimeout(() => setLoading(false), 800);
-  return () => clearTimeout(timer);
-}, []);
 
   const feedback = data.feedback;
   const [index, setIndex] = useState(0);
@@ -79,8 +71,6 @@ useEffect(() => {
       setIndex(index - 1);
     }
   };
-
-  if (loading) return <FeedbackSkeleton />;
 
   return (
     <section className="section animate-slide-up">

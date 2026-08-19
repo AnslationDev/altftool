@@ -66,13 +66,18 @@ export function toStandardBase64(value) {
     }
     return { error: "\"=\" padding must appear only at the very end, and no more than two characters." };
   }
+  // How many '=' the input already carried, before it gets stripped below —
+  // needed so addedPadding can report the delta actually added, not the full
+  // recomputed count regardless of what padding was already present.
+  const originalPadding = (compact.match(/=+$/) || [""])[0].length;
   const folded = compact.replace(/-/g, "+").replace(/_/g, "/").replace(/=+$/, "");
   const remainder = folded.length % BASE64_CHARS_PER_GROUP;
   if (remainder === 1) {
     return { error: "Invalid Base64 length — a group can never be a single leftover character." };
   }
   const padding = remainder === 0 ? 0 : BASE64_CHARS_PER_GROUP - remainder;
-  return { standard: folded + "=".repeat(padding), addedPadding: padding };
+  const addedPadding = Math.max(0, padding - originalPadding);
+  return { standard: folded + "=".repeat(padding), addedPadding };
 }
 
 /** Standard → URL-safe. Padding is optional and normally dropped in URLs. */
@@ -149,6 +154,20 @@ export function convertBase64({ input, from, to, keepPadding = false } = {}) {
   }
   const fromKey = FORMATS.some((f) => f.key === from) ? from : "text";
   const toKey = FORMATS.some((f) => f.key === to) ? to : "base64url";
+  const detected = detectFormat(raw);
+
+  // A "mixed" input carries both standard (+/) and URL-safe (-_) characters,
+  // which can only happen if it is corrupted or concatenated from two
+  // different encodings — decoding it would silently fold both alphabets
+  // together into bytes that were never the original payload. Only applies
+  // when the input is actually being interpreted as Base64; plain text is
+  // free to contain any of these characters legitimately.
+  if (fromKey !== "text" && detected === "mixed") {
+    return {
+      error:
+        "Input mixes standard (+/) and URL-safe (-_) characters — this is likely corrupted or concatenated from two different encodings.",
+    };
+  }
 
   // Step 1 — get the raw bytes the payload represents.
   let bytes;
@@ -189,7 +208,7 @@ export function convertBase64({ input, from, to, keepPadding = false } = {}) {
     output,
     from: fromKey,
     to: toKey,
-    detected: detectFormat(raw),
+    detected,
     bytes: bytes.length,
     standard,
     urlSafe,

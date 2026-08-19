@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   Image,
   Upload,
@@ -65,6 +65,7 @@ export default function MainComponent() {
         previewUrl: URL.createObjectURL(f),
         convertedBlob: null,
         convertedUrl: null,
+        convertedFormat: null,
         convertedSize: null,
         status: "pending",
       });
@@ -72,6 +73,22 @@ export default function MainComponent() {
     if (valid.length) {
       setFiles((prev) => [...prev, ...valid]);
     }
+  }, []);
+
+  // Keep a ref in sync with the latest files so the unmount cleanup below can
+  // revoke every outstanding object URL without re-subscribing on each render.
+  const filesRef = useRef(files);
+  useEffect(() => {
+    filesRef.current = files;
+  }, [files]);
+
+  useEffect(() => {
+    return () => {
+      filesRef.current.forEach((f) => {
+        if (f.previewUrl) URL.revokeObjectURL(f.previewUrl);
+        if (f.convertedUrl) URL.revokeObjectURL(f.convertedUrl);
+      });
+    };
   }, []);
 
   const handleFileChange = (e) => {
@@ -136,11 +153,10 @@ export default function MainComponent() {
             const pdf = new jsPDF({ orientation, unit: "px", format: [fitWidth, fitHeight] });
             pdf.addImage(imgData, "JPEG", 0, 0, fitWidth, fitHeight);
             const blob = pdf.output("blob");
-            const convertedUrl = URL.createObjectURL(blob);
             resolve({
               ...item,
               convertedBlob: blob,
-              convertedUrl,
+              convertedFormat: format,
               convertedSize: blob.size,
               status: "done",
             });
@@ -152,12 +168,10 @@ export default function MainComponent() {
 
           canvas.toBlob(
             (blob) => {
-              const ext = format === "jpg" ? "jpg" : "png";
-              const convertedUrl = URL.createObjectURL(blob);
               resolve({
                 ...item,
                 convertedBlob: blob,
-                convertedUrl,
+                convertedFormat: format,
                 convertedSize: blob.size,
                 status: "done",
               });
@@ -192,7 +206,8 @@ export default function MainComponent() {
 
   const downloadSingle = (item) => {
     if (!item.convertedBlob) return;
-    const ext = format === "jpg" ? "jpg" : format === "pdf" ? "pdf" : "png";
+    const itemFormat = item.convertedFormat || format;
+    const ext = itemFormat === "jpg" ? "jpg" : itemFormat === "pdf" ? "pdf" : "png";
     const url = URL.createObjectURL(item.convertedBlob);
     const link = document.createElement("a");
     link.href = url;
@@ -208,9 +223,10 @@ export default function MainComponent() {
     if (doneFiles.length < 2) return;
 
     const zip = new JSZip();
-    const ext = format === "jpg" ? "jpg" : format === "pdf" ? "pdf" : "png";
 
     doneFiles.forEach((f) => {
+      const itemFormat = f.convertedFormat || format;
+      const ext = itemFormat === "jpg" ? "jpg" : itemFormat === "pdf" ? "pdf" : "png";
       zip.file(`${sanitizeFileName(f.name)}.${ext}`, f.convertedBlob);
     });
 
@@ -272,7 +288,10 @@ export default function MainComponent() {
         </div>
 
         {error && (
-          <div className="mt-3 flex items-center gap-2 p-3 rounded bg-red-500/10 text-red-500 text-sm">
+          <div
+            role="alert"
+            className="mt-3 flex items-center gap-2 p-3 rounded bg-red-500/10 text-red-500 text-sm"
+          >
             <AlertCircle className="h-4 w-4 shrink-0" />
             {error}
           </div>
@@ -340,21 +359,29 @@ export default function MainComponent() {
 
                 <button
                   onClick={() => removeFile(item.id)}
-                  className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition cursor-pointer"
+                  className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 focus:opacity-100 focus-visible:opacity-100 transition cursor-pointer"
                   title="Remove"
+                  aria-label={`Remove ${item.name}`}
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
 
                 {item.status === "done" && (
-                  <button
-                    onClick={() => downloadSingle(item)}
-                    className="mt-1 w-full py-1.5 rounded-md bg-(--primary) text-(--primary-foreground) text-xs font-medium flex items-center justify-center gap-1 cursor-pointer"
-                    title="Download"
-                  >
-                    <Download className="h-3.5 w-3.5" />
-                    Download
-                  </button>
+                  <>
+                    {item.convertedFormat && item.convertedFormat !== format && (
+                      <p className="mt-1 text-[10px] leading-tight text-amber-500">
+                        Converted as .{item.convertedFormat} — format changed since; reconvert to update.
+                      </p>
+                    )}
+                    <button
+                      onClick={() => downloadSingle(item)}
+                      className="mt-1 w-full py-1.5 rounded-md bg-(--primary) text-(--primary-foreground) text-xs font-medium flex items-center justify-center gap-1 cursor-pointer"
+                      title="Download"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      Download
+                    </button>
+                  </>
                 )}
               </div>
             ))}

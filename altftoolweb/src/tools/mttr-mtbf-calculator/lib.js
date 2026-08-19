@@ -78,7 +78,7 @@ export function computeReliability({ periodHours, failures, totalRepairHours }) 
       downtimeHours: 0,
       mtbfHours: null,
       mttrHours: null,
-      failureRatePerHour: 0,
+      failureRatePerHour: null,
       availability,
       availabilityPercent,
       nines: ninesOfAvailability(availability),

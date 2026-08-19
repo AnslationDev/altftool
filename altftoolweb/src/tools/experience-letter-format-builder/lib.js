@@ -239,7 +239,7 @@ export function buildExperienceLetter({
       paragraphs.push(`As on the date of this letter, ${settlement.join(" and ")}.`);
     }
   } else if (reason) {
-    paragraphs.push(`${nameWithTitle} left the organisation ${reason}.`);
+    paragraphs.push(`${nameWithTitle} left the organisation following ${reason}.`);
   }
 
   paragraphs.push(
@@ -279,7 +279,7 @@ export function buildExperienceLetter({
     { item: "Tenure stated in years and months", done: true },
     {
       item: documentType.id === "relieving" ? "Dues and property confirmed" : "Conduct or purpose stated",
-      done: documentType.id === "relieving" ? Boolean(duesSettled || propertyReturned) : Boolean(conduct.sentence) || documentType.id === "service",
+      done: documentType.id === "relieving" ? Boolean(duesSettled && propertyReturned) : Boolean(conduct.sentence) || documentType.id === "service",
     },
     { item: "Authorised signatory named", done: Boolean(signatory && signatoryRole) },
   ];

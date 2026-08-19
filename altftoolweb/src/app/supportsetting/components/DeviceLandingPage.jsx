@@ -102,7 +102,7 @@ const DeviceLandingPage = ({ device, settings, onSelectSetting, platformState, o
         <span className="support-device-landing-icon" style={{ "--device-accent": device.color }} aria-hidden="true">
           <Icon className="h-7 w-7" />
         </span>
-        <h1 className="support-hero-title">{device.name}</h1>
+        <h2 className="support-hero-title">{device.name}</h2>
         {hasGuides ? (
           <div className="support-device-landing-meta">
             <span className="support-device-landing-meta-item">

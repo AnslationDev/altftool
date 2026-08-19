@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Ruler } from "lucide-react";
 
-import { MEASUREMENT_STEPS, assessNeckCircumference, inchesToCm } from "../lib";
+import { MEASUREMENT_STEPS, assessNeckCircumference, cmToInches, inchesToCm } from "../lib";
 
 const DEFAULTS = {
   neck: "38",
@@ -52,6 +52,21 @@ export default function ToolHome() {
     setValues((current) => ({ ...current, [key]: value }));
   };
 
+  const changeUnit = (nextUnit) => {
+    setValues((current) => {
+      if (nextUnit === current.unit) return current;
+      const currentValue = toNumber(current.neck);
+      if (!Number.isFinite(currentValue)) {
+        return { ...current, unit: nextUnit };
+      }
+      const converted = nextUnit === "in" ? cmToInches(currentValue) : inchesToCm(currentValue);
+      if (!Number.isFinite(converted)) {
+        return { ...current, unit: nextUnit };
+      }
+      return { ...current, unit: nextUnit, neck: String(Math.round(converted * 10) / 10) };
+    });
+  };
+
   const reset = () => {
     setValues(DEFAULTS);
     setCopied(false);
@@ -84,6 +99,10 @@ export default function ToolHome() {
     }
   };
 
+  const heightFilled = String(values.heightCm ?? "").trim() !== "";
+  const weightFilled = String(values.weightKg ?? "").trim() !== "";
+  const partialBmiInputs = heightFilled !== weightFilled;
+
   const rows = hasError
     ? [
         ["Neck in cm", DASH],
@@ -95,7 +114,14 @@ export default function ToolHome() {
         ["Neck in cm", `${NUM1.format(result.neckCm)} cm`],
         ["Neck in inches", `${NUM1.format(result.neckInches)} in`],
         ["Flags met", `${result.metCount} of ${result.flags.length}`],
-        ["BMI", result.bmi ? `${NUM1.format(result.bmi)} · ${result.bmiCategory}` : "Skipped"],
+        [
+          "BMI",
+          result.bmi
+            ? `${NUM1.format(result.bmi)} · ${result.bmiCategory}`
+            : partialBmiInputs
+              ? "Skipped — enter both height and weight"
+              : "Skipped",
+        ],
       ];
 
   return (
@@ -126,7 +152,7 @@ export default function ToolHome() {
             <label className={LABEL_CLASS} htmlFor="neck-unit">
               Unit
             </label>
-            <select id="neck-unit" className={`mt-2 ${INPUT_CLASS}`} value={values.unit} onChange={(event) => update("unit", event.target.value)}>
+            <select id="neck-unit" className={`mt-2 ${INPUT_CLASS}`} value={values.unit} onChange={(event) => changeUnit(event.target.value)}>
               <option value="cm">Centimetres (cm)</option>
               <option value="in">Inches (in)</option>
             </select>
@@ -161,7 +187,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -216,8 +216,6 @@ export function computeDeadlines({ receivedAt, frameworks = [] } = {}) {
     rows,
     tightestAcknowledgement: earliest(withAck, "acknowledgeBy"),
     tightestResolution: earliest(withResolve, "resolveBy"),
-    appealWindowDays: GAC_APPEAL_DAYS,
-    appealDisposalDays: GAC_DISPOSAL_DAYS,
   };
 }
 

@@ -249,8 +249,12 @@ export const NAKSHATRAS = [
     name: "Shravana",
     deity: "Vishnu",
     symbol: "Three footprints / ear",
-    syllables: ["Ju", "Je", "Jo", "Gha"],
-    alt: ["Khi", "Khu", "Khe", "Kho"],
+    // `devanagari` below (खी, खू, खे, खो) is the script for Khi/Khu/Khe/Kho, so that
+    // set is kept as the primary `syllables` here (script must match the primary
+    // Roman syllables, as it does for every other nakshatra in this table); the
+    // Ju/Je/Jo/Gha variant some panchangs use is kept in `alt`.
+    syllables: ["Khi", "Khu", "Khe", "Kho"],
+    alt: ["Ju", "Je", "Jo", "Gha"],
     devanagari: ["खी", "खू", "खे", "खो"],
   },
   {
@@ -311,12 +315,21 @@ export function nakshatraLord(nakshatraNumber) {
  */
 export function splitLongitude(longitude) {
   const wrapped = ((longitude % ZODIAC_DEGREES) + ZODIAC_DEGREES) % ZODIAC_DEGREES;
-  const rashiIndex = Math.floor(wrapped / RASHI_SPAN_DEG);
+  let rashiIndex = Math.floor(wrapped / RASHI_SPAN_DEG);
   const within = wrapped - rashiIndex * RASHI_SPAN_DEG;
-  const degrees = Math.floor(within);
+  let degrees = Math.floor(within);
   // Round to the nearest minute; 3 deg 20 min padas are exact in minutes.
-  const minutes = Math.round((within - degrees) * 60);
-  if (minutes === 60) return { degrees: degrees + 1, minutes: 0, rashiIndex };
+  let minutes = Math.round((within - degrees) * 60);
+  if (minutes === 60) {
+    minutes = 0;
+    degrees += 1;
+    // A minute carry can push degrees to the 30 deg rashi boundary — roll over
+    // into the next rashi instead of reporting an impossible "30deg" reading.
+    if (degrees >= RASHI_SPAN_DEG) {
+      degrees -= RASHI_SPAN_DEG;
+      rashiIndex = (rashiIndex + 1) % RASHIS.length;
+    }
+  }
   return { degrees, minutes, rashiIndex };
 }
 

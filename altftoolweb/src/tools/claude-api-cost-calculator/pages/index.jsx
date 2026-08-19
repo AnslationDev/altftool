@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Calculator, Check, Copy, RotateCcw } from "lucide-react";
 
 import { CLAUDE_MODELS, DAYS_PER_MONTH, computeClaudeCost } from "../lib";
@@ -41,6 +41,13 @@ export default function ToolHome() {
   const [useBatch, setUseBatch] = useState(DEFAULTS.useBatch);
   const [rates, setRates] = useState(null); // null => preset for selected model
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const preset = CLAUDE_MODELS.find((m) => m.id === modelId) ?? CLAUDE_MODELS[0];
   const activeRates = rates ?? { input: String(preset.input), output: String(preset.output) };
@@ -56,8 +63,8 @@ export default function ToolHome() {
         requestsPerDay: requestsPerDay.trim() === "" ? Number.NaN : Number(requestsPerDay),
         inputTokens: inputTokens.trim() === "" ? Number.NaN : Number(inputTokens),
         outputTokens: outputTokens.trim() === "" ? Number.NaN : Number(outputTokens),
-        inputRate: Number(activeRates.input),
-        outputRate: Number(activeRates.output),
+        inputRate: String(activeRates.input).trim() === "" ? Number.NaN : Number(activeRates.input),
+        outputRate: String(activeRates.output).trim() === "" ? Number.NaN : Number(activeRates.output),
         cacheReadShare: cacheReadShare.trim() === "" ? 0 : Number(cacheReadShare),
         cacheWriteShare: cacheWriteShare.trim() === "" ? 0 : Number(cacheWriteShare),
         cacheTtl,
@@ -85,7 +92,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -199,7 +207,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -164,7 +164,27 @@ export function toBase(value, base, fractionDigits = DEFAULT_FRACTION_DIGITS) {
   let numerator = value.fracNum;
   const denominator = value.fracDen;
   let emitted = 0;
-  while (numerator > 0n && emitted < limit) {
+  // Two different things can stop fraction-digit generation, and the UI needs
+  // to tell them apart: the expansion may genuinely never terminate in this
+  // base (recurring), or it may simply need more digits than the current cap
+  // allows even though it does terminate (truncated). We detect "genuinely
+  // recurring" by watching for a remainder that has already appeared — once a
+  // remainder repeats, the digit sequence from that point on is guaranteed to
+  // repeat too, which is the standard long-division proof of periodicity.
+  const seenRemainders = new Map();
+  let recurring = false;
+  let truncated = false;
+  while (numerator > 0n) {
+    if (emitted >= limit) {
+      truncated = true;
+      break;
+    }
+    const remainderKey = numerator.toString();
+    if (seenRemainders.has(remainderKey)) {
+      recurring = true;
+      break;
+    }
+    seenRemainders.set(remainderKey, emitted);
     numerator *= bigBase;
     const digit = numerator / denominator;
     fracText += DIGITS[Number(digit)];
@@ -172,12 +192,17 @@ export function toBase(value, base, fractionDigits = DEFAULT_FRACTION_DIGITS) {
     emitted += 1;
   }
 
-  const truncated = numerator > 0n;
+  const exact = numerator === 0n;
   const sign = value.negative && (value.intValue > 0n || value.fracNum > 0n) ? "-" : "";
   return {
     text: `${sign}${intText}${fracText ? `.${fracText}` : ""}`,
+    // `truncated` now means specifically "display was cut off by the digit
+    // cap, with no proof either way of termination" — not "not exact".
     truncated,
-    exact: !truncated,
+    // `recurring` means the expansion is genuinely, provably non-terminating
+    // in this base (a repeating remainder was observed).
+    recurring,
+    exact,
   };
 }
 
@@ -264,6 +289,8 @@ export function convertAll({
       text: rendered.text,
       grouped: groupDigits(rendered.text, base),
       truncated: rendered.truncated,
+      recurring: rendered.recurring,
+      exact: rendered.exact,
     });
   }
 
@@ -275,7 +302,7 @@ export function convertAll({
     results,
     decimalText: decimal.error ? null : decimal.text,
     hasFraction: parsed.fracNum > 0n,
-    fractionExactIn: results.filter((row) => !row.truncated).map((row) => row.base),
+    fractionExactIn: results.filter((row) => row.exact).map((row) => row.base),
     ...facts,
   };
 }

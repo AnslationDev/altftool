@@ -108,7 +108,7 @@ export default function UploadBox({ processImage, isLoading }) {
         </section>
 
         {isLoading && (
-          <div className="text-center mt-5">
+          <div className="text-center mt-5" role="status" aria-live="polite">
             <p className="text-base font-medium animate-pulse">
               Removing background...
             </p>

@@ -442,6 +442,9 @@ export function buildAndroidChecklist({
   if (!Number.isFinite(version)) {
     return { error: "Enter the Android version as a number." };
   }
+  if (!Number.isInteger(version)) {
+    return { error: "Enter a whole Android version number." };
+  }
   if (version < MIN_VERSION || version > MAX_VERSION) {
     return {
       error: `Enter an Android version between ${MIN_VERSION} and ${MAX_VERSION}.`,

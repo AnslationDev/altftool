@@ -183,6 +183,18 @@ function baseDocuments(type) {
     });
   }
 
+  if (type.id === "statepsc") {
+    docs.push({
+      id: "domicile",
+      label: "Domicile or nativity certificate for the state",
+      pages: 1,
+      original: true,
+      copy: true,
+      detail:
+        "State posts accept the state's own category format, and often ask for a domicile or nativity certificate that central recruitments do not.",
+    });
+  }
+
   if (type.id === "ssb") {
     docs.push({
       id: "ssbSet",

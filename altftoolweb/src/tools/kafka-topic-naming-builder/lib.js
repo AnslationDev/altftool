@@ -121,12 +121,12 @@ export function validateTopicName(name) {
 }
 
 /** Normalise a version token to the vN form. */
-function normaliseVersion(raw) {
+function normaliseVersion(raw, sep = ".") {
   const text = String(raw ?? "").trim().toLowerCase();
   if (!text) return "";
-  const digits = text.replace(/[^0-9]/g, "");
-  if (!digits) return normaliseSegment(text, "lower");
-  return `v${String(Number(digits))}`;
+  const leadingDigits = text.match(/^\d+/);
+  if (!leadingDigits) return normaliseSegment(text, "lower", sep);
+  return `v${String(Number(leadingDigits[0]))}`;
 }
 
 /**
@@ -160,7 +160,7 @@ export function buildTopicNames({
     domain: normaliseSegment(domain, caseStyle, sep),
     entity: normaliseSegment(entity, caseStyle, sep),
     eventType: normaliseSegment(eventType, caseStyle, sep),
-    version: normaliseVersion(version),
+    version: normaliseVersion(version, sep),
   };
 
   if (!values.domain) return { error: "Enter a domain — the bounded context or owning team, such as orders or billing." };
@@ -203,9 +203,12 @@ export function buildTopicNames({
   const messageTypeInfo = MESSAGE_TYPES.find((item) => item.id === values.messageType) || null;
 
   const consumerGroup = [values.domain, values.entity, "consumer"].filter(Boolean).join("-");
-  const aclPrefix = template.tokens.includes("env")
-    ? [values.env, values.messageType, values.domain].filter(Boolean).join(sep) + sep
-    : [values.messageType, values.domain].filter(Boolean).join(sep) + sep;
+  // Derive the ACL prefix from the template's own token order (through "domain") so it always
+  // matches a real prefix of the generated topic name — templates that drop a leading segment
+  // (e.g. "lean", which has no messageType) must not have that segment hardcoded back in.
+  const domainIdx = template.tokens.indexOf("domain");
+  const prefixTokens = template.tokens.slice(0, domainIdx + 1);
+  const aclPrefix = prefixTokens.map((token) => values[token]).filter(Boolean).join(sep) + sep;
 
   const allNames = [topic, ...companions.map((item) => item.name)];
   const companionIssues = companions

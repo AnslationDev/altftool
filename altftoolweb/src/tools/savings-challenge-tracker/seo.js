@@ -8,7 +8,7 @@ const seo = {
     "Saved so far tracks against Final target, with Weeks marked, Current streak and Projected finish; Copy progress exports the summary.",
   ],
   intro:
-    "This is a tap-to-mark tracker for two savings habits: the classic 52-week challenge, where week n saves your base amount times n and the year totals base x 1,378, and a no-spend month calendar that counts the days you spent nothing. Choose a base amount and a style — increasing, flat or reverse — then tick each week or day as you follow through, and the grid keeps your running total, current streak, best streak and projected finish date. Everything is stored in this browser's localStorage, so the challenge survives a refresh without an account.",
+    "This is a tap-to-mark tracker for two savings habits: the classic 52-week challenge, where week n saves your base amount times n and the year totals base x 1,378, and a no-spend month calendar that counts the days you spent nothing. Choose a base amount and a style — increasing, flat or reverse — then tick each week or day as you follow through, and the grid keeps your running total, current streak and best streak — and for the 52-week challenge, a projected finish date. Everything is stored in this browser's localStorage, so the challenge survives a refresh without an account.",
   useCases: [
     "You want to start the 52-week challenge in January but the ramp to a large final week worries you, so you compare the increasing, flat and reverse styles before committing to one",
     "You have agreed a no-spend month with your partner and need a shared rule list of allowed essentials plus a day grid you can both point at when one of you wants a takeaway",

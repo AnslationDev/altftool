@@ -40,6 +40,9 @@ export const SUB_BLOCK_MAX_DATA = 255;
 export const MAX_PALETTE_COLOURS = 256;
 export const MIN_PALETTE_COLOURS = 2;
 
+/** Beyond this many frames, browsers won't reliably decode/play the GIF. */
+export const MAX_GIF_FRAMES = 20000;
+
 /** The estimate carries this much uncertainty either side, from LZW's content sensitivity. */
 export const ESTIMATE_TOLERANCE = 0.4;
 
@@ -142,7 +145,7 @@ export function estimateGifSize(input = {}) {
   if (!isPositive(width) || !isPositive(height)) return { error: "Width and height must both be greater than zero." };
   if (width > 20000 || height > 20000) return { error: "GIF stores dimensions in 16 bits, so each side has to be under 65,536 pixels — and anything over 20,000 is not a GIF anyone can play." };
   if (!Number.isFinite(frames) || frames < 1) return { error: "A GIF needs at least one frame." };
-  if (frames > 20000) return { error: "Over 20,000 frames is beyond what browsers will decode. Split the animation or cut the frame rate." };
+  if (frames > MAX_GIF_FRAMES) return { error: "Over 20,000 frames is beyond what browsers will decode. Split the animation or cut the frame rate." };
   if (!Number.isFinite(colours) || colours < MIN_PALETTE_COLOURS) return { error: `A GIF palette needs at least ${MIN_PALETTE_COLOURS} colours.` };
   if (colours > MAX_PALETTE_COLOURS) return { error: `GIF is limited to ${MAX_PALETTE_COLOURS} colours per palette. Reduce the palette or use a video format.` };
 
@@ -215,7 +218,7 @@ export function framesWithinBudget({ budgetBytes, ...settings }) {
   const remaining = budget - single.totalBytes;
   if (remaining < 0) return 0;
   if (!isPositive(single.laterFrameBytes)) return null;
-  return 1 + Math.floor(remaining / single.laterFrameBytes);
+  return Math.min(1 + Math.floor(remaining / single.laterFrameBytes), MAX_GIF_FRAMES);
 }
 
 /**

@@ -123,11 +123,16 @@ export default function ToolHome() {
   const translate = useCallback((text) => {
     const words = text.split(/(\s+)/);
     return words.map((word) => {
-      const cleaned = word.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const match = word.match(/^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$/);
+      const lead = match ? match[1] : "";
+      const core = match ? match[2] : word;
+      const trail = match ? match[3] : "";
+      const cleaned = core.toLowerCase().replace(/[^a-z0-9]/g, "");
       if (!cleaned) return word;
-      const punct = word.replace(/[a-zA-Z0-9]/g, "");
-      const emoji = EMOJI_MAP[cleaned];
-      if (emoji) return emoji + punct;
+      const emoji = Object.prototype.hasOwnProperty.call(EMOJI_MAP, cleaned)
+        ? EMOJI_MAP[cleaned]
+        : undefined;
+      if (emoji) return lead + emoji + trail;
       return word;
     }).join("");
   }, []);
@@ -181,7 +186,7 @@ export default function ToolHome() {
         <div className="space-y-6">
           <div className="rounded-2xl p-6 border surface-card">
             <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-bold" style={{ color: "var(--foreground)" }}>Input Text</label>
+              <label htmlFor="emoji-translator-input" className="text-sm font-bold" style={{ color: "var(--foreground)" }}>Input Text</label>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold" style={{ color: "var(--muted-foreground)" }}>Live</span>
                 <button
@@ -195,6 +200,7 @@ export default function ToolHome() {
               </div>
             </div>
             <textarea
+              id="emoji-translator-input"
               ref={textareaRef}
               value={input}
               onChange={(e) => {
@@ -263,6 +269,8 @@ export default function ToolHome() {
               )}
             </div>
             <div
+              aria-live="polite"
+              aria-atomic="true"
               className="w-full min-h-[100px] px-4 py-3 rounded-xl border text-xl leading-relaxed break-all transition-colors"
               style={{
                 background: "var(--background)",

@@ -6,8 +6,10 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   EXEMPT_PER_MEAL_INR,
+  NEW_REGIME_MAX_SURCHARGE_PCT,
+  NEW_SLAB_RATES_PCT,
+  OLD_SLAB_RATES_PCT,
   REGIMES,
-  SLAB_RATES_PCT,
   SURCHARGE_RATES_PCT,
   buildMonthlyRows,
 } from "../lib";
@@ -58,6 +60,23 @@ export default function ToolHome() {
   const [regime, setRegime] = useState(DEFAULTS.regime);
   const [showRows, setShowRows] = useState(false);
   const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
+
+  const slabOptions = regime === "new" ? NEW_SLAB_RATES_PCT : OLD_SLAB_RATES_PCT;
+  const surchargeOptions =
+    regime === "new"
+      ? SURCHARGE_RATES_PCT.filter((rate) => rate <= NEW_REGIME_MAX_SURCHARGE_PCT)
+      : SURCHARGE_RATES_PCT;
+
+  const handleRegimeChange = (nextRegime) => {
+    setRegime(nextRegime);
+    const nextSlabOptions = nextRegime === "new" ? NEW_SLAB_RATES_PCT : OLD_SLAB_RATES_PCT;
+    if (!nextSlabOptions.includes(toNumber(slab))) {
+      setSlab(String(nextSlabOptions[0]));
+    }
+    if (nextRegime === "new" && toNumber(surcharge) > NEW_REGIME_MAX_SURCHARGE_PCT) {
+      setSurcharge(String(NEW_REGIME_MAX_SURCHARGE_PCT));
+    }
+  };
 
   const result = useMemo(
     () =>
@@ -214,7 +233,7 @@ export default function ToolHome() {
               value={slab}
               onChange={(event) => setSlab(event.target.value)}
             >
-              {SLAB_RATES_PCT.map((rate) => (
+              {slabOptions.map((rate) => (
                 <option key={rate} value={String(rate)}>
                   {rate}%
                 </option>
@@ -231,7 +250,7 @@ export default function ToolHome() {
               value={surcharge}
               onChange={(event) => setSurcharge(event.target.value)}
             >
-              {SURCHARGE_RATES_PCT.map((rate) => (
+              {surchargeOptions.map((rate) => (
                 <option key={rate} value={String(rate)}>
                   {rate === 0 ? "No surcharge" : `${rate}%`}
                 </option>
@@ -246,7 +265,7 @@ export default function ToolHome() {
               id="meal-regime"
               className={`mt-2 ${INPUT_CLASS}`}
               value={regime}
-              onChange={(event) => setRegime(event.target.value)}
+              onChange={(event) => handleRegimeChange(event.target.value)}
             >
               {REGIMES.map((option) => (
                 <option key={option.id} value={option.id}>
@@ -278,7 +297,7 @@ export default function ToolHome() {
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
-                ? "Fix the highlighted input to see the result."
+                ? "Check the values above and try again."
                 : `${money(result.exemptAmount)} of the credit is exempt at ${pct(result.effectiveTaxRatePct)}`}
             </p>
           </div>
@@ -287,7 +306,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label={isCopied("result") ? "Copied meal card tax benefit result to clipboard" : "Copy meal card tax benefit result"}
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
               disabled={hasError}
             >
               {isCopied("result") ? (
@@ -297,7 +316,7 @@ export default function ToolHome() {
               )}
               {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

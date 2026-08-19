@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Trash2, TrendingUp } from "lucide-react";
 
 import { MAX_PERIODS, MIN_PERIODS, compareMarks } from "../lib";
@@ -33,6 +33,7 @@ const TREND_LABEL = {
 export default function ToolHome() {
   const [periods, setPeriods] = useState(DEFAULT_PERIODS);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   const result = useMemo(() => compareMarks({ periods }), [periods]);
   const hasError = Boolean(result.error);
@@ -80,11 +81,14 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const reset = () => {
     setPeriods(DEFAULT_PERIODS);
@@ -189,7 +193,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

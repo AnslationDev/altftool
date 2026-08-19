@@ -215,9 +215,17 @@ export function renderGlasses(ctx, style, face, options) {
 
   // --- Bridge ---
   if (styleKind !== 'rimless' && styleKind !== 'blue-light') {
+    // bridgeW (computed above from the Bridge slider) drives the half-gap
+    // between the two lenses at the nose. It is normalized against its own
+    // value at the slider default (bridgeWidth=50, where bridgeW / (eyeDist *
+    // 0.22 * s) === 1) so bridgeWidth=50 reproduces the original fixed gap
+    // exactly, while other values widen/narrow it proportionally.
+    const bridgeGapHalf = (eyeDist / 2 - lw * 0.45) * (bridgeW / (eyeDist * 0.22 * s));
+    const bridgeX1 = eyeCenter.x - bridgeGapHalf;
+    const bridgeX2 = eyeCenter.x + bridgeGapHalf;
     lctx.beginPath();
-    lctx.moveTo(lx + lw * 0.45, cy0 - lh * 0.05);
-    lctx.quadraticCurveTo(eyeCenter.x, cy0 - lh * 0.18, rx - lw * 0.45, cy0 - lh * 0.05);
+    lctx.moveTo(bridgeX1, cy0 - lh * 0.05);
+    lctx.quadraticCurveTo(eyeCenter.x, cy0 - lh * 0.18, bridgeX2, cy0 - lh * 0.05);
     lctx.stroke();
   }
 
@@ -265,7 +273,9 @@ export function renderGlasses(ctx, style, face, options) {
 
 function resolveFrame(frameColor, lighting) {
   if (!frameColor || frameColor === 'rgba(200,200,200,0.3)' || frameColor === 'transparent') {
-    return 'rgba(40,40,40,0.85)';
+    // Low-alpha light stroke so "Transparent" reads as rimless/clear,
+    // visually distinct from the opaque near-black "Black" swatch (#1a1a1a).
+    return 'rgba(220,220,220,0.35)';
   }
   if (frameColor.startsWith('rgba') || frameColor.startsWith('rgb')) return frameColor;
   const { r, g, b } = hexToRgb(frameColor);

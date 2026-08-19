@@ -144,17 +144,6 @@ export const BreakThisHabit = ({ habits }) => {
     return null;
   }
 
-  const categories = [...new Set(habits.map((h) => {
-    const iconLabel = Object.values(breakStrategies).flat().find((s) => h.name?.includes(s.text));
-    if (iconLabel) return iconLabel.icon;
-    
-    // Fallback to category name logic
-    const categoryName = h.name?.split(' ')[0] || '';
-    return Object.keys(breakStrategies).find((key) =>
-      categoryName.toLowerCase().includes(key.toLowerCase())
-    ) || 'Entertainment';
-  }))];
-
   const strategies = dynamicStrategies || breakStrategies[activeCategory] || breakStrategies.Coffee;
 
   return (

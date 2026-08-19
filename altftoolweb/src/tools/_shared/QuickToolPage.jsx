@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Copy, RotateCcw, Sparkles } from "lucide-react";
 
 const FIELD =
@@ -19,6 +19,13 @@ export default function QuickToolPage({
 }) {
   const [values, setValues] = useState(defaults);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const output = useMemo(() => {
     try {
@@ -32,9 +39,15 @@ export default function QuickToolPage({
 
   const copy = async () => {
     if (!output) return;
-    await navigator.clipboard?.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    try {
+      if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(output);
+      setCopied(true);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (

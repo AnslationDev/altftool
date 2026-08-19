@@ -74,6 +74,31 @@ function normalizePortfolioItem(payload) {
   };
 }
 
+function normalizePortfolioPage(payload) {
+  return {
+    meta: {
+      title: cleanText(payload?.meta?.title),
+      description: cleanText(payload?.meta?.description),
+    },
+    hero: {
+      eyebrow: cleanText(payload?.hero?.eyebrow),
+      title: cleanText(payload?.hero?.title),
+      highlight: cleanText(payload?.hero?.highlight),
+      description: cleanText(payload?.hero?.description),
+    },
+    detail: {
+      breadcrumb: cleanText(payload?.detail?.breadcrumb),
+      challengeHeading: cleanText(payload?.detail?.challengeHeading),
+      solutionHeading: cleanText(payload?.detail?.solutionHeading),
+      techHeading: cleanText(payload?.detail?.techHeading),
+      resultsHeading: cleanText(payload?.detail?.resultsHeading),
+      ctaLabel: cleanText(payload?.detail?.ctaLabel),
+      ctaHref: cleanText(payload?.detail?.ctaHref),
+      moreHeading: cleanText(payload?.detail?.moreHeading),
+    },
+  };
+}
+
 const portfolioItems = createCollectionCrudService(PORTFOLIO_PATH, { normalize: normalizePortfolioItem });
 const portfolioPage = createSingletonDocService(PAGE_PATH, DEFAULT_PORTFOLIO_PAGE);
 const cover = createImageUploader({ pathPrefix: `${PROJECT_ID}/portfolio/cover`, maxSizeMB: 8 });
@@ -85,7 +110,9 @@ export const deletePortfolioItem = portfolioItems.remove;
 export const togglePortfolioStatus = portfolioItems.toggleActive;
 
 export const subscribePortfolioPage = portfolioPage.subscribe;
-export const savePortfolioPage = portfolioPage.save;
+export async function savePortfolioPage(payload) {
+  await portfolioPage.save(normalizePortfolioPage(payload));
+}
 
 export const uploadPortfolioCover = cover.upload;
 export const deletePortfolioCover = cover.remove;

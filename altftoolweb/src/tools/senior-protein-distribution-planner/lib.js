@@ -41,7 +41,7 @@ export const PROTEIN_BANDS = {
   kidney: {
     label: "Reduced kidney function (not on dialysis)",
     low: 0.55, // KDOQI 2020, metabolically stable CKD 3-5 without dialysis
-    high: 0.8,
+    high: 0.6, // KDOQI 2020 - kept in sync with the source comment above and the FAQ/benefits copy
     note: "Restricted protein is a prescription, not a self-help target - the figures shown are the KDOQI range only.",
   },
 };

@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Print-aware output",
-      "Each swatch carries a CMYK build, a total ink coverage figure and a warning when it exceeds the stock's limit.",
+      "Each swatch carries a CMYK build and a total ink coverage figure, checked against a safety margin under the stock's limit that the curated metal and ground catalog is designed to stay within.",
     ],
     [
       "Deterministic variations",

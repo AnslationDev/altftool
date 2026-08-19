@@ -90,7 +90,6 @@ export const RISKY_SCRIPT_SCHEMES = {
   "filesystem:": "legacy scheme with the same problem as blob:",
   "http:": "any host on the internet, over a channel a network attacker can rewrite",
   "https:": "any host on the internet",
-  "*": "every host and scheme",
 };
 
 /**
@@ -220,7 +219,8 @@ export function analyseSourceList(values) {
       analysis.unquotedKeywords.push(value);
       return;
     }
-    if (value.startsWith("*.")) {
+    const schemeStripped = value.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "");
+    if (schemeStripped.startsWith("*.")) {
       analysis.wildcardHosts.push(value);
       analysis.hosts.push(value);
       return;
@@ -312,8 +312,8 @@ export function describePermissions(name, analysis, resolution) {
   }
   if (analysis.hasUnsafeInline) {
     lines.push(
-      analysis.hasNonceOrHash
-        ? "'unsafe-inline' is present but a nonce or hash is too, so CSP Level 3 browsers ignore it. Only browsers that predate nonce support honour it."
+      analysis.hasNonceOrHash || analysis.hasStrictDynamic
+        ? "'unsafe-inline' is present but a nonce, hash, or 'strict-dynamic' is too, so CSP Level 3 browsers ignore it. Only browsers that predate nonce support honour it."
         : "Any inline content, including a <script> tag an attacker injects.",
     );
   }
@@ -375,10 +375,30 @@ function auditScriptSources(name, resolution, analysis, add) {
     });
   }
 
-  if (analysis.hasUnsafeInline && !analysis.hasNonceOrHash) {
-    add("critical", `${label} allows 'unsafe-inline'`, `With 'unsafe-inline' and no nonce or hash, any inline <script> the attacker injects into the page executes. This is the single condition that reduces a CSP to no XSS protection at all.`, "Move inline scripts into files, or mark the legitimate ones with a per-response nonce.", label);
-  } else if (analysis.hasUnsafeInline && analysis.hasNonceOrHash) {
-    add("info", `${label} keeps 'unsafe-inline' as a legacy fallback`, "Because a nonce or hash is also present, CSP Level 3 browsers ignore 'unsafe-inline'. It only takes effect in browsers old enough to lack nonce support, which is the intended backwards-compatibility behaviour.", "Safe to leave. Remove it once you no longer support pre-2016 browsers.", label);
+  // script-src-attr governs inline event-handler attributes (onclick and
+  // friends), not <script> elements — per CSP Level 3, attribute content can
+  // only be exempted via a hash-source combined with 'unsafe-hashes'; a nonce
+  // or 'strict-dynamic' can never match it, even though their mere presence
+  // still suppresses 'unsafe-inline' in this directive per the spec's parsing
+  // algorithm. That mismatch needs its own copy so the risk description and
+  // the remediation advice stay accurate for this directive.
+  const isAttrDirective = name === "script-src-attr";
+  const hasWorkingAttrExemption = analysis.hasUnsafeHashes && analysis.hashes.length > 0;
+
+  if (analysis.hasUnsafeInline && !analysis.hasNonceOrHash && !analysis.hasStrictDynamic) {
+    if (isAttrDirective) {
+      add("critical", `${label} allows 'unsafe-inline'`, `With 'unsafe-inline' and no hash, any inline event-handler attribute (onclick and friends) the attacker injects into the page executes. ${label} governs inline event-handler attributes, not <script> elements.`, "Move handlers to addEventListener(), or allow-list the legitimate ones with 'unsafe-hashes' plus a matching hash of each handler's exact content.", label);
+    } else {
+      add("critical", `${label} allows 'unsafe-inline'`, `With 'unsafe-inline' and no nonce or hash, any inline <script> the attacker injects into the page executes. This is the single condition that reduces a CSP to no XSS protection at all.`, "Move inline scripts into files, or mark the legitimate ones with a per-response nonce.", label);
+    }
+  } else if (analysis.hasUnsafeInline && (analysis.hasNonceOrHash || analysis.hasStrictDynamic)) {
+    if (isAttrDirective && !hasWorkingAttrExemption) {
+      add("medium", `${label} 'unsafe-inline' is suppressed with no working replacement`, "A nonce, a hash without 'unsafe-hashes', or 'strict-dynamic' does suppress 'unsafe-inline' here per the CSP Level 3 parsing algorithm, but none of those sources can actually match inline event-handler attribute content — only 'unsafe-hashes' plus a matching hash can. The practical effect is every inline event handler gets blocked with no working substitute, which breaks onclick and friends rather than safely falling back.", "Move the handlers to addEventListener(), or replace the nonce/hash here with 'unsafe-hashes' plus a sha256/384/512 hash of each handler's exact content.", label);
+    } else if (isAttrDirective) {
+      add("info", `${label} keeps 'unsafe-inline' as a legacy fallback`, "Because 'unsafe-hashes' plus a matching hash is present, CSP Level 3 browsers exempt those specific inline event handlers and ignore 'unsafe-inline'. It only takes effect in browsers old enough to lack that support, which is the intended backwards-compatibility behaviour.", "Safe to leave. Remove it once you no longer support pre-2016 browsers.", label);
+    } else {
+      add("info", `${label} keeps 'unsafe-inline' as a legacy fallback`, "Because a nonce, hash, or 'strict-dynamic' is also present, CSP Level 3 browsers ignore 'unsafe-inline'. It only takes effect in browsers old enough to lack that support, which is the intended backwards-compatibility behaviour.", "Safe to leave. Remove it once you no longer support pre-2016 browsers.", label);
+    }
   }
 
   if (analysis.hasUnsafeEval) {
@@ -478,21 +498,26 @@ export function auditCsp(input) {
     if (meta.emptyValue && directive.values.length) {
       add("low", `"${directive.lower}" should carry no value`, `This directive is a flag; "${directive.values.join(" ")}" after it is not part of its grammar and is ignored.`, "Write it on its own.", directive.lower);
     }
-    if (directive.lower === "sandbox") {
+    if (directive.lower === "sandbox" && !directive.duplicate) {
       directive.values.forEach((token) => {
         if (!SANDBOX_TOKENS.includes(token.toLowerCase())) {
           add("medium", `Unknown sandbox token "${token}"`, "The token is not part of the HTML sandbox attribute vocabulary, so it grants nothing.", "Check it against the sandbox token list.", "sandbox");
         }
       });
     }
-    if (directive.lower === "require-trusted-types-for" && !directive.values.includes("'script'")) {
+    if (directive.lower === "require-trusted-types-for" && !directive.values.includes("'script'") && !directive.duplicate) {
       add("medium", "require-trusted-types-for is missing 'script'", "The only value this directive currently accepts is 'script'. Without it the directive enforces nothing.", "Write require-trusted-types-for 'script'.", "require-trusted-types-for");
     }
   });
 
   // Unquoted keywords are the classic silent failure: they parse as host names.
+  // A duplicate directive's content is entirely ignored by the browser (only the
+  // first occurrence is honoured — see the "appears more than once" finding
+  // above), so a mistake in the dead, later copy must never be analysed here:
+  // doing so would surface a phantom critical/high finding that can contradict
+  // the strength/verdict computed from the real, governing occurrence.
   parsed.directives.forEach((directive) => {
-    if (!directive.known) return;
+    if (!directive.known || directive.duplicate) return;
     const meta = DIRECTIVES[directive.lower];
     if (meta.tokenised || meta.emptyValue) return;
     const analysis = analyseSourceList(directive.values);
@@ -579,7 +604,7 @@ export function auditCsp(input) {
     strength = { key: "none", label: "No script restriction", detail: "The policy does not constrain script execution." };
   } else if (scriptEntry.analysis.hasNone) {
     strength = { key: "blocked", label: "All scripts blocked", detail: "script-src 'none' — nothing executes, including your own code." };
-  } else if (scriptEntry.analysis.hasUnsafeInline && !scriptEntry.analysis.hasNonceOrHash) {
+  } else if (scriptEntry.analysis.hasUnsafeInline && !scriptEntry.analysis.hasNonceOrHash && !scriptEntry.analysis.hasStrictDynamic) {
     strength = { key: "none", label: "No XSS protection", detail: "'unsafe-inline' with no nonce or hash means an injected <script> tag runs." };
   } else if (scriptEntry.analysis.hasNonceOrHash && scriptEntry.analysis.hasStrictDynamic) {
     strength = { key: "strict", label: "Strict, nonce-based", detail: "Nonce or hash plus 'strict-dynamic' — the shape recommended for a CSP that actually stops XSS." };
@@ -592,11 +617,19 @@ export function auditCsp(input) {
     scriptEntry.analysis.schemes.length === 0 &&
     !scriptEntry.analysis.hasSelf
   ) {
-    strength = {
-      key: "malformed",
-      label: "Malformed source list",
-      detail: "script-src is set but names no source a browser can use — usually because a keyword lost its quotes and was parsed as a host name.",
-    };
+    const looksMalformed =
+      scriptEntry.analysis.malformed.length > 0 || scriptEntry.analysis.unquotedKeywords.length > 0;
+    strength = looksMalformed
+      ? {
+          key: "malformed",
+          label: "Malformed source list",
+          detail: "script-src is set but names no source a browser can use — usually because a keyword lost its quotes and was parsed as a host name.",
+        }
+      : {
+          key: "no-source",
+          label: "No script source granted",
+          detail: "script-src's keywords (e.g. 'strict-dynamic' alone, or 'unsafe-eval' alone) grant no host, scheme, self, nonce or hash a <script> tag can actually load from.",
+        };
   } else {
     strength = { key: "allowlist", label: "Host allow-list only", detail: "Protection depends entirely on every allow-listed host staying trustworthy, and on none of them serving JSONP or AngularJS." };
   }

@@ -220,10 +220,31 @@ export function scoreManagers(answers = {}) {
   // projectType always grants points, so grandTotal > 0; guard anyway so share is total.
   const safeTotal = grandTotal > 0 ? grandTotal : 1;
 
+  // Rounding each manager's share independently (Math.round per entry) can let
+  // the four displayed percentages drift a point away from 100 in total,
+  // undermining the "transparent scoring" claim. Largest-remainder (Hare
+  // quota) rounding instead floors every share, then hands the leftover whole
+  // points to the entries with the biggest fractional remainder, so the
+  // four shares always sum to exactly 100.
+  const rawShares = MANAGER_IDS.map((id) => {
+    const raw = (totals[id] / safeTotal) * 100;
+    const base = Math.floor(raw);
+    return { id, base, remainder: raw - base };
+  });
+  const allocated = rawShares.reduce((sum, entry) => sum + entry.base, 0);
+  const remaining = Math.min(Math.max(100 - allocated, 0), rawShares.length);
+  const byRemainderDesc = [...rawShares].sort(
+    (a, b) => b.remainder - a.remainder || a.id.localeCompare(b.id),
+  );
+  const shareById = Object.fromEntries(rawShares.map((entry) => [entry.id, entry.base]));
+  for (let i = 0; i < remaining; i += 1) {
+    shareById[byRemainderDesc[i].id] += 1;
+  }
+
   const ranking = MANAGER_IDS.map((id) => ({
     ...MANAGERS[id],
     score: totals[id],
-    share: Math.round((totals[id] / safeTotal) * 100),
+    share: shareById[id],
     reasons: reasons[id],
   })).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 

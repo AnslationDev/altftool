@@ -797,7 +797,7 @@ export const toolMetaMap = {
   },
   "ai-object-counter": {
     "name": "AI Object Counter",
-    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 object categories with confidence scoring and visualization.",
+    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 COCO object categories with confidence scoring and visualization.",
     "category": [
       "AI Tools",
       "Image & Photo",
@@ -2141,7 +2141,7 @@ export const toolMetaMap = {
   },
   "baby-name-initial-combiner": {
     "name": "Baby Name Initial Combiner",
-    "description": "Blend two parents' names into new baby name ideas using eight syllable-splicing rules, each result scored for pronounceability and balance.",
+    "description": "Blend two parents' names into new baby name ideas using ten syllable-splicing rules, each result scored for pronounceability and balance.",
     "category": "Lifestyle",
     "icon": "blend",
     "iconColor": "text-[var(--primary)]"
@@ -2553,7 +2553,7 @@ export const toolMetaMap = {
   },
   "basic-calculator": {
     "name": "Basic Calculator",
-    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), memory storage, signs, and calculation history.",
+    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), signs, and calculation history.",
     "category": "Calculators",
     "topics": [
       "Math"
@@ -2805,7 +2805,7 @@ export const toolMetaMap = {
   },
   "bengali-probad-proverb-explorer": {
     "name": "Bengali Probad Explorer",
-    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and usage notes.",
+    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and English equivalents.",
     "category": "Education & Science",
     "icon": "scroll-text",
     "iconColor": "text-[var(--primary)]"
@@ -3069,7 +3069,7 @@ export const toolMetaMap = {
   },
   "birthday-poem-generator": {
     "name": "Birthday Poem Generator",
-    "description": "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes.",
+    "description": "Create a personalised birthday poem draft from a name, age, relationship, tone and a shared memory.",
     "category": "Text & Writing",
     "icon": "gift",
     "iconColor": "text-[var(--primary)]"
@@ -3413,7 +3413,7 @@ export const toolMetaMap = {
   },
   "body-fat-estimator": {
     "name": "Body Fat % Estimator",
-    "description": "A practical fitness and health tool for managing body fat percentage workflows efficiently.",
+    "description": "Estimate body fat with the Navy tape, BMI regression, or 3-site skinfold caliper method, then see the fat/lean mass split and a goal-weight planner.",
     "category": "Health & Fitness",
     "topics": [
       "Fitness",
@@ -4100,7 +4100,7 @@ export const toolMetaMap = {
   },
   "business-name-generator": {
     "name": "Business Name Generator",
-    "description": "Generate professional, creative business names with domain availability checks and logo style suggestions for your brand.",
+    "description": "Generate professional, creative business names for your brand, startup, or venture, with industry-aware word banks and four naming styles.",
     "category": [
       "Marketing & Social",
       "Business"
@@ -4280,7 +4280,7 @@ export const toolMetaMap = {
   },
   "calibration-curve-lod-loq-workbench": {
     "name": "Calibration Curve LOD/LOQ Workbench",
-    "description": "Enter calibration points to compute the linear fit, residuals, and confidence bands, then derive the LOD and LOQ.",
+    "description": "Enter calibration points to compute the linear fit, residuals, and R², then derive the LOD and LOQ.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -6320,7 +6320,7 @@ export const toolMetaMap = {
   },
   "coronary-artery-disease-risk-calculator": {
     "name": "Coronary Artery Disease Risk Calculator",
-    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using validated clinical risk calculators.",
+    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using simplified approximations of published risk equations, for educational purposes only.",
     "category": "Health & Fitness",
     "topics": [
       "Medical"
@@ -6375,7 +6375,7 @@ export const toolMetaMap = {
   },
   "cost-per-blog-post-ai-calculator": {
     "name": "Cost Per Blog Post AI Calculator",
-    "description": "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post.",
+    "description": "Estimate monthly AI content cost from your tool subscription plus editor time per post, and see the per-post price.",
     "category": "Calculators",
     "icon": "pen-line",
     "iconColor": "text-[var(--primary)]"
@@ -7011,7 +7011,7 @@ export const toolMetaMap = {
   },
   "cumulative-vs-noncumulative-fd": {
     "name": "Cumulative vs Non Cumulative FD Comparator",
-    "description": "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate.",
+    "description": "Compare a reinvestment fixed deposit with a monthly, quarterly, half-yearly or annual payout deposit, including the break-even reinvestment rate.",
     "category": "Finance Calculators",
     "icon": "arrow-left-right",
     "iconColor": "text-[var(--primary)]"
@@ -7603,7 +7603,7 @@ export const toolMetaMap = {
   },
   "debt-payoff-planner": {
     "name": "Debt Payoff Planner",
-    "description": "Compare Snowball vs Avalanche debt payoff methods. Find the fastest and most cost-effective way to become debt-free.",
+    "description": "See how long it takes to pay off a single debt balance and how much interest you'll pay, based on your minimum and extra monthly payments.",
     "category": [
       "Finance Calculators",
       "Productivity"
@@ -8013,7 +8013,7 @@ export const toolMetaMap = {
   },
   "device-sensor-calibration-checker": {
     "name": "Device Sensor Calibration Checker",
-    "description": "Sanity-check the bias in your device's accelerometer, gyroscope and magnetometer.",
+    "description": "Sanity-check the bias in your device's accelerometer and gyroscope.",
     "category": [
       "Developer",
       "Productivity"
@@ -10095,7 +10095,7 @@ export const toolMetaMap = {
   },
   "eway-bill-validity-calculator": {
     "name": "E-Way Bill Distance Validity Calculator",
-    "description": "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time.",
+    "description": "Work out e-way bill validity days and the exact expiry date from transport distance, cargo type and generation date.",
     "category": "Finance Calculators",
     "icon": "truck",
     "iconColor": "text-[var(--primary)]"
@@ -12816,7 +12816,7 @@ export const toolMetaMap = {
   },
   "group-trip-tip-splitter": {
     "name": "Group Trip Tip Splitter",
-    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in the fewest possible transfers.",
+    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in as few transfers as possible (at most one fewer than the number of travellers).",
     "category": "Finance Calculators",
     "icon": "users",
     "iconColor": "text-[var(--primary)]"
@@ -14980,7 +14980,7 @@ export const toolMetaMap = {
   },
   "inr-myr-mental-math-cheat-sheet": {
     "name": "INR to MYR Mental Math Cheat Sheet",
-    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a printable price ladder.",
+    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a price ladder to memorise.",
     "category": "Finance Calculators",
     "icon": "calculator",
     "iconColor": "text-[var(--primary)]"
@@ -16047,7 +16047,7 @@ export const toolMetaMap = {
   },
   "kebab-case-converter": {
     "name": "Kebab Case Converter",
-    "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug.",
+    "description": "Convert any phrase to kebab-case — plus snake_case and dot.case.",
     "category": "Developer",
     "icon": "case-sensitive",
     "iconColor": "text-amber-600"
@@ -17248,7 +17248,7 @@ export const toolMetaMap = {
   },
   "loanword-origin-finder-indian-english": {
     "name": "Indian English Loanword Finder",
-    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Tamil, Malayalam, Telugu and Bengali, with the route, era and how settled each etymology is.",
+    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Urdu, Tamil, Malayalam, Telugu, Marathi, Bengali and Odia, with the route, era and how settled each etymology is.",
     "category": "Education & Science",
     "icon": "globe",
     "iconColor": "text-[var(--primary)]"
@@ -17383,7 +17383,7 @@ export const toolMetaMap = {
   },
   "logo-similarity-checker": {
     "name": "Logo Similarity Checker",
-    "description": "Compare two logos using AI-powered visual analysis. Analyze shape, color, layout, and typography similarity entirely in your browser.",
+    "description": "Compare two logos using algorithm-powered visual analysis. Analyze shape, color, layout, and typography similarity entirely in your browser.",
     "category": [
       "Design & Color",
       "AI Tools",
@@ -21374,7 +21374,7 @@ export const toolMetaMap = {
   },
   "personal-data-flow-mapper": {
     "name": "Personal Data Flow Mapper",
-    "description": "Diagram how personal data flows from collection through storage and processors to deletion.",
+    "description": "Build a structured table of how personal data flows from collection through storage and processors to deletion.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -21713,7 +21713,7 @@ export const toolMetaMap = {
   },
   "pinterest-pin-size-generator": {
     "name": "Pinterest Pin Size Generator",
-    "description": "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks.",
+    "description": "Calculate standard, square, long and idea pin canvas sizes with a scale multiplier, safe-area CSS, feed-truncation checks and a crop estimate from your source image's dimensions.",
     "category": "Design & Color",
     "icon": "pin",
     "iconColor": "text-[var(--primary)]"
@@ -23992,7 +23992,7 @@ export const toolMetaMap = {
       "Web"
     ],
     "icon": "regex",
-    "iconColor": "text-blue-600"
+    "iconColor": "text-[var(--primary)]"
   },
   "relationship-adviser": {
     "name": "Relationship Adviser",
@@ -24938,7 +24938,7 @@ export const toolMetaMap = {
   },
   "rubiks-cube-algorithm-trainer": {
     "name": "Rubik's Cube Algorithm Trainer",
-    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an interactive 3D cube visualization.",
+    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an animated cube-net visualization.",
     "category": [
       "Education & Science",
       "Games"
@@ -26680,7 +26680,7 @@ export const toolMetaMap = {
   },
   "slow-speech-playback-trainer": {
     "name": "Slow Speech Playback Trainer",
-    "description": "Slow, loop and segment speech for practice while preserving the original pitch.",
+    "description": "Slow down and loop a full audio file for practice while preserving the original pitch.",
     "category": [
       "Developer",
       "Productivity"
@@ -27448,7 +27448,7 @@ export const toolMetaMap = {
   },
   "srt-to-vtt-converter": {
     "name": "SRT To VTT Converter",
-    "description": "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tags and encoding fixes.",
+    "description": "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tag conversion and BOM/line-ending cleanup.",
     "category": "Converters",
     "icon": "captions",
     "iconColor": "text-[var(--primary)]"
@@ -27497,7 +27497,7 @@ export const toolMetaMap = {
   },
   "ssl-certificate-inspector": {
     "name": "SSL Certificate Inspector Studio",
-    "description": "Real-time SSL certificate lookup, HTTPS validation, TLS detection, expiry monitoring, certificate chain viewing, and exportable security reports.",
+    "description": "Paste a PEM certificate or chain to decode its X.509 fields, check expiry and hostname matching, and validate chain order — entirely in your browser.",
     "category": "Developer",
     "icon": "shield-check",
     "iconColor": "text-cyan-600"
@@ -29206,16 +29206,13 @@ export const toolMetaMap = {
   "text-summarizer": {
     "name": "Text Summarizer",
     "description": "Summarize long text instantly into clear, concise key points.",
-    "category": "AI Tools",
-    "topics": [
-      "AI"
-    ],
+    "category": "Text & Writing",
     "icon": "file-text",
     "iconColor": "text-blue-700"
   },
   "text-to-ascii-art": {
     "name": "Text to ASCII Art",
-    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing, outline and drop shadow.",
+    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing and drop shadow.",
     "category": [
       "Fun",
       "Text & Writing"
@@ -29232,7 +29229,7 @@ export const toolMetaMap = {
   },
   "text-to-binary": {
     "name": "Text to Binary / Binary to Text",
-    "description": "Convert text to binary and binary back to text instantly. Each character is converted to its 8-bit binary representation.",
+    "description": "Convert text to binary and binary back to text instantly. ASCII/Latin-1 characters map to 8 bits each; higher code points use more bits.",
     "category": [
       "Developer",
       "Converters"
@@ -29806,7 +29803,7 @@ export const toolMetaMap = {
   },
   "topic-sentence-generator": {
     "name": "Topic Sentence Generator",
-    "description": "Turn a paragraph subject and controlling idea into six topic sentence patterns, then score your own sentence against seven checks.",
+    "description": "Turn a paragraph subject and controlling idea into several topic sentence patterns (more when you add a reason or a concession), then score your own sentence against seven checks.",
     "category": "Education & Science",
     "icon": "pen-line",
     "iconColor": "text-[var(--primary)]"
@@ -30439,7 +30436,7 @@ export const toolMetaMap = {
   },
   "two-line-shayari-composer": {
     "name": "Two-Line Shayari Composer",
-    "description": "Create a two-line shayari draft from mood, theme, language mix, rhyme and audience notes.",
+    "description": "Create a two-line shayari draft by choosing a mood/theme, a Hindi-English language mix, and an optional name to dedicate it to.",
     "category": "Text & Writing",
     "icon": "heart",
     "iconColor": "text-[var(--primary)]"
@@ -31470,7 +31467,7 @@ export const toolMetaMap = {
   },
   "video-frame-to-sprite-extractor": {
     "name": "Video Frame-to-Sprite Extractor",
-    "description": "Export selected video frames as a PNG sequence or a single sprite sheet.",
+    "description": "Export selected video frames as a single tiled sprite sheet PNG.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -31683,7 +31680,7 @@ export const toolMetaMap = {
   },
   "viral-thumbnail-maker": {
     "name": "Viral Thumbnail Maker",
-    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, customize text overlays, and download.",
+    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, add an optional headline woven into the AI prompt, and download.",
     "category": [
       "AI Tools",
       "Design & Color"
@@ -31922,7 +31919,7 @@ export const toolMetaMap = {
   },
   "vtt-to-srt-converter": {
     "name": "VTT To SRT Converter",
-    "description": "Convert WebVTT captions back to SubRip: strip cue settings, regions and styling tags, renumber cues and fix timing drift.",
+    "description": "Convert WebVTT captions back to SubRip: strip cue settings and regions, renumber cues, optionally flatten styling tags, and fix timing drift.",
     "category": "Converters",
     "icon": "subtitles",
     "iconColor": "text-[var(--primary)]"

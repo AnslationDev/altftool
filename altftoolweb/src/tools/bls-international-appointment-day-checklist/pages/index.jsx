@@ -20,6 +20,14 @@ const WHOLE = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 });
 const EM_DASH = "—";
 const whole = (value) => (Number.isFinite(value) ? WHOLE.format(value) : EM_DASH);
 
+// A long travel + contingency buffer can push leave-home (or arrive-by) two or more calendar
+// days before the appointment, not just "the previous day" - daysBefore comes from computeTiming.
+const dayQualifier = (daysBefore) => {
+  if (!daysBefore) return "";
+  if (daysBefore === 1) return " (previous day)";
+  return ` (${daysBefore} days earlier)`;
+};
+
 const DEFAULTS = {
   scheme: "spain",
   age: "32",
@@ -87,7 +95,10 @@ export default function ToolHome() {
     () =>
       buildChecklist({
         scheme,
-        age: Number(age),
+        // An emptied field must fail validation rather than silently becoming age 0 (which
+        // buildChecklist would treat as a minor applicant) - Number("") is 0, but Number(NaN
+        // source) is NaN, which the existing isNum() check already rejects with the right error.
+        age: age.trim() === "" ? NaN : Number(age),
         biometricsBooked,
         courierReturn,
         premiumService,
@@ -133,7 +144,7 @@ export default function ToolHome() {
     ];
     if (!timingFailed) {
       lines.push(
-        `Appointment ${timing.appointment} · at the centre by ${timing.arriveBy} · leave home by ${timing.leaveHomeBy}`,
+        `Appointment ${timing.appointment} · at the centre by ${timing.arriveBy}${dayQualifier(timing.arriveByDaysBefore)} · leave home by ${timing.leaveHomeBy}${dayQualifier(timing.daysBefore)}`,
       );
     }
     if (!copyFailed) {
@@ -406,7 +417,7 @@ export default function ToolHome() {
             <dd className="text-right font-semibold">
               {timingFailed
                 ? EM_DASH
-                : `${timing.arriveBy}${timing.arriveByPreviousDay ? " (previous day)" : ""}`}
+                : `${timing.arriveBy}${dayQualifier(timing.arriveByDaysBefore)}`}
             </dd>
           </div>
           <div className="flex items-center justify-between gap-4 py-2.5">
@@ -414,7 +425,7 @@ export default function ToolHome() {
             <dd className="text-right font-semibold">
               {timingFailed
                 ? EM_DASH
-                : `${timing.leaveHomeBy}${timing.previousDay ? " (previous day)" : ""}`}
+                : `${timing.leaveHomeBy}${dayQualifier(timing.daysBefore)}`}
             </dd>
           </div>
         </dl>

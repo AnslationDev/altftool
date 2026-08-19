@@ -43,8 +43,20 @@ export default function ThestylelifeNavbarPage() {
   useEffect(() => {
     const unsubSettings = subscribeNavbarSettings(
       (data) => {
-        setSettings(data);
-        setSavedSettings(data);
+        setSavedSettings((prevSaved) => {
+          setSettings((prevSettings) => {
+            const hasLocalEdits = JSON.stringify(prevSettings) !== JSON.stringify(prevSaved);
+            if (!hasLocalEdits) return data;
+            if (JSON.stringify(prevSettings) !== JSON.stringify(data)) {
+              emitAlert({
+                type: "warning",
+                message: "Navbar settings were updated elsewhere while you have unsaved changes. Your edits were kept — save to overwrite, or refresh to discard them.",
+              });
+            }
+            return prevSettings;
+          });
+          return data;
+        });
         setLoading(false);
       },
       () => {

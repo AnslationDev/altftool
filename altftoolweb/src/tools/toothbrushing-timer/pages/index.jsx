@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Pause, Play, RotateCcw, Timer } from "lucide-react";
 
 import {
@@ -60,19 +60,45 @@ export default function ToolHome() {
   const ok = !plan.error;
   const target = ok ? plan.totalSeconds : 0;
 
+  // Wall-clock timer: anchor to a real timestamp on start/resume instead of
+  // counting fired setInterval callbacks, so a backgrounded tab or locked
+  // screen (which browsers throttle/suspend) can't make the timer drift
+  // slower than real time. `elapsed` is re-derived from Date.now() on every
+  // tick and immediately resynced when the tab becomes visible again.
+  const timeBaseRef = useRef({ startedAtMs: 0, baseElapsedMs: 0 });
+
   useEffect(() => {
     if (!running || !ok) return undefined;
-    const id = setInterval(() => {
-      setElapsed((previous) => previous + 1);
-    }, 1000);
-    return () => clearInterval(id);
+    timeBaseRef.current = { startedAtMs: Date.now(), baseElapsedMs: elapsed * 1000 };
+    const tick = () => {
+      const { startedAtMs, baseElapsedMs } = timeBaseRef.current;
+      const elapsedMs = baseElapsedMs + (Date.now() - startedAtMs);
+      setElapsed(Math.min(target, Math.floor(elapsedMs / 1000)));
+    };
+    const id = setInterval(tick, 1000);
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") tick();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+    // `elapsed`/`target` are intentionally read once to seed the wall-clock
+    // baseline when a run starts; re-running per tick would defeat the fix.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, ok]);
 
   useEffect(() => {
     if (ok && elapsed >= target && running) setRunning(false);
   }, [ok, elapsed, target, running]);
 
-  const current = ok ? segmentAtSecond(plan.schedule, elapsed) : null;
+  // Gate the "active zone" on whether the session has actually started
+  // (running, or resumed with elapsed > 0) — not merely on `elapsed`, which
+  // is 0 both before Start is pressed and mid-session; without this guard
+  // the UI pre-highlights zone 1 as in-progress on every fresh mount.
+  const started = running || elapsed > 0;
+  const current = ok && started ? segmentAtSecond(plan.schedule, elapsed) : null;
   const finished = ok && elapsed >= target;
   const remaining = ok ? Math.max(0, target - elapsed) : 0;
   const zoneRemaining = current ? current.endSecond - elapsed : 0;

@@ -20,6 +20,7 @@ import {
 } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
+const QUALITY_NUM = new Intl.NumberFormat("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const DASH = "—";
 
 const INPUT_CLASS =
@@ -71,6 +72,14 @@ export default function ToolHome() {
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const generationRef = useRef(0);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const sourceFormat = useMemo(
     () => (file ? detectFormat(file.type) ?? detectFormat(file.name) : null),
@@ -128,6 +137,7 @@ export default function ToolHome() {
       return;
     }
 
+    const myGeneration = generationRef.current;
     setBusy(true);
     setError("");
     try {
@@ -187,6 +197,7 @@ export default function ToolHome() {
         }
       }
 
+      if (myGeneration !== generationRef.current) return;
       const url = URL.createObjectURL(blob);
       setResult((previous) => {
         if (previous?.url) URL.revokeObjectURL(previous.url);
@@ -220,13 +231,15 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    generationRef.current += 1;
     setFile(null);
     setOutputFormat("jpeg");
     setExtensionStyle("jpg");
@@ -426,7 +439,13 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy details"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset the converter" className={GHOST_BTN}>
+            <button
+              type="button"
+              onClick={reset}
+              disabled={busy}
+              aria-label="Reset the converter"
+              className={`${GHOST_BTN} disabled:opacity-50`}
+            >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
@@ -446,7 +465,9 @@ export default function ToolHome() {
             ["Dimensions", result && !error ? `${NUM.format(result.width)} × ${NUM.format(result.height)} px` : DASH],
             [
               "JPEG quality used",
-              result && !error && result.usedQuality !== null ? NUM.format(result.usedQuality) : DASH,
+              result && !error && result.usedQuality !== null
+                ? QUALITY_NUM.format(result.usedQuality)
+                : DASH,
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

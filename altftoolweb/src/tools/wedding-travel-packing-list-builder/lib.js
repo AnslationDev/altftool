@@ -5,7 +5,7 @@
  *
  * 1. ONE OUTFIT PER EVENT — every function is photographed, so outfits do not
  *    repeat across events. Total outfits = events + one casual set per two
- *    days of downtime + one travel outfit.
+ *    days of the trip + one travel outfit.
  *
  * 2. SHOES BY TIER, NOT BY EVENT — footwear is chosen per dress-code tier
  *    (formal, daytime function, party/dancing) plus one comfortable pair, so
@@ -153,6 +153,10 @@ export function outfitPlan({ events, days, outfitStyle }) {
   const casualOutfits = clamp(ceil(days / DAYS_PER_CASUAL_OUTFIT), 1, 8);
   const totalOutfits = eventCount + casualOutfits + 1;
   const totalGrams = eventGrams + casualOutfits * CASUAL_OUTFIT_G + TRAVEL_OUTFIT_G;
+  // The casual and travel outfits are always packed too, so the true
+  // heaviest single garment has to be compared against them as well, not
+  // just the selected function outfits.
+  heaviestGrams = Math.max(heaviestGrams, CASUAL_OUTFIT_G, TRAVEL_OUTFIT_G);
 
   return {
     chosen,
@@ -403,7 +407,6 @@ export function buildWeddingPackingList(input) {
   };
 
   const byGroup = new Map(GROUP_ORDER.map((name) => [name, []]));
-  let extrasItems = 0;
   let extrasGrams = 0;
 
   for (const item of CATALOG) {
@@ -411,7 +414,6 @@ export function buildWeddingPackingList(input) {
     const qty = Math.max(0, Math.round(item.qty(ctx)));
     if (qty === 0) continue;
     const grams = item.gramsEach * qty;
-    extrasItems += qty;
     extrasGrams += grams;
     byGroup.get(item.group).push({
       id: item.id,
@@ -450,31 +452,44 @@ export function buildWeddingPackingList(input) {
     ),
   );
 
-  const totalGrams = plan.totalGrams + extrasGrams;
-  const packedGrams = wearHeaviestOnTravel
-    ? Math.max(0, totalGrams - plan.heaviestGrams)
-    : totalGrams;
   const allowanceKg =
     bagPlan === "international" ? CHECKED_ALLOWANCE_KG.international : CHECKED_ALLOWANCE_KG.domestic;
+
+  // Every displayed weight below is derived from the SAME rounded figures
+  // that appear in the breakdown, so outfitKg + extrasKg always equals
+  // totalKg exactly, and allowanceKg - packedKg always equals spareKg
+  // exactly — rounding the raw unrounded totals independently let those
+  // sums drift apart by up to 0.1 kg.
+  const outfitKg = round1(plan.totalGrams / 1000);
+  const extrasKg = round1(extrasGrams / 1000);
+  // Adding the two already-rounded parts directly (rather than rounding
+  // the raw unrounded gram total separately) means this is the exact same
+  // value a caller gets back by re-adding outfitKg + extrasKg themselves.
+  const totalKg = outfitKg + extrasKg;
+  const heaviestOutfitKg = round1(plan.heaviestGrams / 1000);
+  const packedKg = wearHeaviestOnTravel
+    ? Math.max(0, totalKg - heaviestOutfitKg)
+    : totalKg;
 
   return {
     groups,
     events: plan.chosen,
-    styleLabel: plan.styleLabel,
     eventCount: plan.eventCount,
     totalOutfits: plan.totalOutfits,
     casualOutfits: plan.casualOutfits,
     formalOutfits,
     shoePairs,
-    totalItems: plan.totalOutfits + extrasItems,
-    outfitKg: round1(plan.totalGrams / 1000),
-    extrasKg: round1(extrasGrams / 1000),
-    totalKg: round1(totalGrams / 1000),
-    packedKg: round1(packedGrams / 1000),
-    heaviestOutfitKg: round1(plan.heaviestGrams / 1000),
+    outfitKg,
+    extrasKg,
+    totalKg,
+    packedKg,
+    heaviestOutfitKg,
     allowanceKg,
-    withinAllowance: packedGrams / 1000 <= allowanceKg,
-    spareKg: round1(allowanceKg - packedGrams / 1000),
+    withinAllowance: packedKg <= allowanceKg,
+    // Derived directly from allowanceKg and packedKg (both already settled
+    // above) rather than rounded independently, so allowanceKg - packedKg
+    // always equals spareKg exactly.
+    spareKg: allowanceKg - packedKg,
     bagPlan,
     days: Math.round(days),
   };

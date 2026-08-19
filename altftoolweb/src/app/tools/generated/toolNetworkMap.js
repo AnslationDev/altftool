@@ -14,7 +14,6 @@ export const TOOL_NETWORK_DESTINATIONS = {
   "dictionary-app": ["api.dictionaryapi.dev","api.datamuse.com","api.mymemory.translated.net"],
   "domain-checker": ["cloudflare-dns.com"],
   "email-validator": ["dns.google"],
-  "emoji-hub": ["self"],
   "financial-update": ["self"],
   "github-profile-finder": ["api.github.com"],
   "grammer-checker": ["api.languagetool.org"],

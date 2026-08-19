@@ -10,8 +10,10 @@
  *  1. Format-checks the number against India's National Numbering Plan:
  *     - Mobile: 10 digits, first digit 6, 7, 8 or 9.
  *     - Fixed line: STD code plus subscriber number, 10 digits once the trunk
- *       0 is removed. Level 1 is reserved for service codes, so Delhi's 11 is
- *       the only STD code that starts with a 1.
+ *       0 is removed. Delhi's 011 is not the only STD code that starts with a
+ *       1 — Noida (0120), Meerut (0121), Gurgaon (0124), Faridabad (0129),
+ *       Ludhiana (0161), Chandigarh (0172), Patiala (0175), Jalandhar (0181)
+ *       and Amritsar (0183) do too, alongside the traditional 2-5 range.
  *     - Toll-free: 1800 followed by 6 or 7 digits.
  *     - Short codes: 3-6 digits beginning with 1 (112, 1930, 139, 1915 ...).
  *     A format check proves the number is dialable, not that it is genuine —
@@ -152,6 +154,26 @@ export function classifyNumber(raw) {
     return { ok: true, kind: "shortCode", national: digits, display: digits, dial: digits };
   }
 
+  // Some STD codes (Ahmedabad 079, Bangalore 080...) start with the same
+  // digits (7-9) that mobile numbers use, so a bare 10-digit number in that
+  // range is genuinely ambiguous by pattern alone — there is no way to tell
+  // a mobile number from an STD code with its trunk 0 already stripped.
+  // When the caller typed the number in national format with its leading
+  // trunk 0 ("0" + STD code + subscriber), that leading zero is real
+  // evidence of a landline, so trust it and classify as fixed line before
+  // falling through to the mobile check. A bare 10-digit number with no
+  // leading 0 in this range is classified as mobile, as before — a
+  // documented limitation of format-only checking.
+  if (hadTrunkZero && /^[6-9]\d{9}$/.test(digits)) {
+    return {
+      ok: true,
+      kind: "fixed",
+      national: digits,
+      display: `0${digits}`,
+      dial: `+${COUNTRY_CODE}${digits}`,
+    };
+  }
+
   // Mobile: exactly 10 digits starting 6-9.
   if (/^[6-9]\d{9}$/.test(digits)) {
     return {
@@ -163,9 +185,12 @@ export function classifyNumber(raw) {
     };
   }
 
-  // Fixed line: 10 digits in total (STD code + subscriber). Level 1 is reserved
-  // for service codes, so the only STD code starting with 1 is Delhi's 11.
-  if (/^11\d{8}$/.test(digits) || /^[2-5]\d{9}$/.test(digits)) {
+  // Fixed line: 10 digits in total (STD code + subscriber). Several STD
+  // codes start with 1 (Noida 120, Meerut 121, Gurgaon 124, Faridabad 129,
+  // Ludhiana 161, Chandigarh 172, Patiala 175, Jalandhar 181, Amritsar 183),
+  // not just Delhi's 11 — the 1800 toll-free and 1xxx short-code patterns
+  // above are checked first, so they never reach this branch.
+  if (/^1\d{9}$/.test(digits) || /^[2-5]\d{9}$/.test(digits)) {
     return {
       ok: true,
       kind: "fixed",

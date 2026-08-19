@@ -69,7 +69,9 @@ export default function ToolHome() {
     [today, targetDate, windowDays, hoursPerDay],
   );
 
-  const scoringStage = stages.find((stage) => stage.marks > 0 && stage.minutes > 0);
+  const scoredStages = stages.filter((stage) => stage.marks > 0 && stage.minutes > 0);
+  const scoringStage =
+    (board.next && scoredStages.find((stage) => stage.id === board.next.id)) || scoredStages[0];
   const paper = useMemo(() => {
     if (!scoringStage) return { error: "This exam has no scored computer based test recorded." };
     const profile = stageQuestionProfile(scoringStage);
@@ -86,9 +88,29 @@ export default function ToolHome() {
   const boardOk = !board.error;
   const planOk = !plan.error;
 
+  const bannerMessage = board.error
+    ? board.error
+    : board.allPast
+      ? "All exam stages for this preset are in the past — pick a different exam or update the stage dates."
+      : plan.error || "";
+
   const changeExam = (nextId) => {
+    const nextStages = makeStages(nextId);
     setExamId(nextId);
-    setStages(makeStages(nextId));
+    setStages(nextStages);
+
+    const nextScoringStage = nextStages.find((stage) => stage.marks > 0 && stage.minutes > 0);
+    if (nextScoringStage) {
+      const profile = stageQuestionProfile(nextScoringStage);
+      if (!profile.error) {
+        setAttempts((prev) => {
+          const numeric = toNumber(prev);
+          return Number.isFinite(numeric) && numeric > profile.questions
+            ? String(profile.questions)
+            : prev;
+        });
+      }
+    }
   };
 
   const updateStageDate = (id, date) => {
@@ -133,6 +155,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the exam countdown? All entered stage dates and settings will be lost.")
+    ) {
+      return;
+    }
     setToday(toLocalISODate(new Date()));
     setExamId(RRB_EXAM_PRESETS[0].id);
     setStages(makeStages(RRB_EXAM_PRESETS[0].id));
@@ -237,16 +265,19 @@ export default function ToolHome() {
         </div>
       </section>
 
-      {board.error || plan.error ? (
+      {bannerMessage ? (
         <p
           role="alert"
           className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
         >
-          {board.error || plan.error}
+          {bannerMessage}
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

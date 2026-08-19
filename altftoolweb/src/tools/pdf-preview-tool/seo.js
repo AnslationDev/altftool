@@ -12,7 +12,7 @@ const seo = {
   benefits: [
     ["Whole document at a glance", "All pages render as thumbnails in one scrolling grid, so finding the page you want is a scan, not a page-by-page hunt."],
     ["Two render passes, not one", "Thumbnails render small for speed and any page you open re-renders at 2x scale, so detail is there when you need it and not before."],
-    ["True page proportions", "Thumbnails are laid out at the ISO A-series 1:1.414 aspect ratio, so pages look like pages rather than stretched boxes."],
+    ["No stretching or distortion", "Thumbnails sit in an ISO A-series-friendly 1:1.414 box, so A4 and other A-series pages show their true shape; other page sizes such as US Letter are fit inside with their own proportions preserved, never stretched to fill the box."],
   ],
   faqs: [
     [

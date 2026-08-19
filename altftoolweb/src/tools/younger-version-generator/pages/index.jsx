@@ -36,6 +36,11 @@ export default function ToolHome() {
   const fileInputRef = useRef(null);
 
   const processFile = async (file) => {
+    if (!file.type || !file.type.startsWith("image/")) {
+      setError("Please select an image file.");
+      return;
+    }
+
     if (file.size > 10 * 1024 * 1024) {
       setError("Image size exceeds the 10MB limit.");
       return;
@@ -63,155 +68,169 @@ export default function ToolHome() {
       const faceapi = await getFaceApi();
       const img = new Image();
       img.onload = async () => {
-        // Load face-api models
-        const MODEL_URL = "/models";
-        if (!faceapi.nets.tinyFaceDetector.params) {
-          await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-        }
-        if (!faceapi.nets.faceLandmark68Net.params) {
-          await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-        }
-
-        // Run inference
-        const detection = await faceapi
-          .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
-          .withFaceLandmarks();
-
-        let seed = 0;
-        if (detection && detection.landmarks) {
-          const pts = detection.landmarks.positions;
-          seed = pts.reduce((acc, p) => acc + p.x + p.y, 0);
-        } else {
-          // Fallback hash
-          let hash = 0;
-          for (let i = 0; i < fileName.length; i++) {
-            hash = (hash << 5) - hash + fileName.charCodeAt(i);
-            hash |= 0;
+        try {
+          // Load face-api models
+          const MODEL_URL = "/models";
+          if (!faceapi.nets.tinyFaceDetector.params) {
+            await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
           }
-          seed = Math.abs(hash + fileSize);
+          if (!faceapi.nets.faceLandmark68Net.params) {
+            await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+          }
+
+          // Run inference
+          const detection = await faceapi
+            .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks();
+
+          let seed = 0;
+          if (detection && detection.landmarks) {
+            const pts = detection.landmarks.positions;
+            // Landmark coordinates are floating point, so the raw sum can be
+            // non-integer. Floor it to a non-negative integer before it is
+            // used as an array index below (a fractional index resolves to
+            // `undefined`).
+            seed = Math.floor(Math.abs(pts.reduce((acc, p) => acc + p.x + p.y, 0)));
+          } else {
+            // Fallback hash
+            let hash = 0;
+            for (let i = 0; i < fileName.length; i++) {
+              hash = (hash << 5) - hash + fileName.charCodeAt(i);
+              hash |= 0;
+            }
+            seed = Math.abs(hash + fileSize);
+          }
+
+          const stage = STAGES_DETAILS[stageKey];
+
+          // Add subtle deviations based on landmark seed
+          const roundness = Math.min(99, Math.round(stage.roundness + (seed % 5) - 2));
+          const eyesFactor = Math.min(99, Math.round(stage.eyesFactor + (seed % 5) - 2));
+          const skinSmoothness = Math.min(99, Math.round(stage.skinSmoothness + (seed % 3)));
+
+          const personality = CHILD_PERSONALITIES[seed % CHILD_PERSONALITIES.length];
+          const game = CHILD_GAMES[(seed * 3) % CHILD_GAMES.length];
+
+          // Apply canvas smoothing and youth color grades
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const pixelData = imgData.data;
+          for (let i = 0; i < pixelData.length; i += 4) {
+            let r = pixelData[i];
+            let g = pixelData[i + 1];
+            let b = pixelData[i + 2];
+            // Boost exposure and warm tones
+            r = Math.min(255, r * 1.04 + 4);
+            g = Math.min(255, g * 1.04 + 4);
+            b = Math.min(255, b * 1.01);
+            pixelData[i] = r;
+            pixelData[i + 1] = g;
+            pixelData[i + 2] = b;
+          }
+          ctx.putImageData(imgData, 0, 0);
+
+          // Apply localized skin smoothing blur inside face landmarks bounds
+          if (detection && detection.landmarks) {
+            const pts = detection.landmarks.positions;
+            const xs = pts.map(p => p.x);
+            const ys = pts.map(p => p.y);
+            const xMin = Math.min(...xs);
+            const xMax = Math.max(...xs);
+            const yMin = Math.min(...ys);
+            const yMax = Math.max(...ys);
+
+            const centerX = (xMin + xMax) / 2;
+            const centerY = (yMin + yMax) / 2;
+            const radiusX = (xMax - xMin) * 0.65;
+            const radiusY = (yMax - yMin) * 0.75;
+
+            // Create temporary mask canvas
+            const faceMask = document.createElement("canvas");
+            faceMask.width = img.width;
+            faceMask.height = img.height;
+            const fmctx = faceMask.getContext("2d");
+
+            const grad = fmctx.createRadialGradient(centerX, centerY, radiusX * 0.4, centerX, centerY, radiusX);
+            grad.addColorStop(0, "rgba(255, 255, 255, 0.45)"); // max blur mix opacity
+            grad.addColorStop(1, "rgba(255, 255, 255, 0.0)"); // fade out at hairline/neck
+            fmctx.fillStyle = grad;
+
+            fmctx.beginPath();
+            fmctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
+            fmctx.fill();
+
+            // Create blurred copy of main canvas
+            const blurCanvas = document.createElement("canvas");
+            blurCanvas.width = img.width;
+            blurCanvas.height = img.height;
+            const bctx = blurCanvas.getContext("2d");
+            bctx.filter = "blur(8px)";
+            bctx.drawImage(canvas, 0, 0);
+
+            // Apply blurred pixels strictly inside the face oval path
+            const maskCanvas = document.createElement("canvas");
+            maskCanvas.width = img.width;
+            maskCanvas.height = img.height;
+            const mctx = maskCanvas.getContext("2d");
+            mctx.drawImage(faceMask, 0, 0);
+            mctx.globalCompositeOperation = "source-in";
+            mctx.drawImage(blurCanvas, 0, 0);
+
+            // Overlay onto main canvas
+            ctx.drawImage(maskCanvas, 0, 0);
+
+            // Draw rosy baby-cheek blush circles
+            const cheekRadius = Math.max(8, img.width * 0.045);
+            const leftCheekX = pts[36].x;
+            const leftCheekY = (pts[36].y + pts[48].y) / 2;
+            const rightCheekX = pts[45].x;
+            const rightCheekY = (pts[45].y + pts[54].y) / 2;
+
+            ctx.fillStyle = "rgba(244, 63, 94, 0.12)";
+            ctx.beginPath();
+            ctx.arc(leftCheekX, leftCheekY, cheekRadius, 0, 2 * Math.PI);
+            ctx.arc(rightCheekX, rightCheekY, cheekRadius, 0, 2 * Math.PI);
+            ctx.fill();
+          } else {
+            // Fallback global light blur when no face landmarks are detected
+            ctx.globalAlpha = 0.3;
+            const blurCanvas = document.createElement("canvas");
+            blurCanvas.width = img.width;
+            blurCanvas.height = img.height;
+            const bctx = blurCanvas.getContext("2d");
+            bctx.filter = "blur(6px)";
+            bctx.drawImage(canvas, 0, 0);
+            ctx.drawImage(blurCanvas, 0, 0);
+            ctx.globalAlpha = 1.0;
+          }
+
+          const simulatedImage = canvas.toDataURL("image/png");
+
+          setResult({
+            roundness,
+            eyesFactor,
+            skinSmoothness,
+            personality,
+            game,
+            stageLabel: stage.label,
+            simulatedImage,
+            matchedByAI: !!(detection && detection.landmarks)
+          });
+        } catch (err) {
+          console.error(err);
+          setError("An error occurred during younger version simulation. Please try again.");
+        } finally {
+          setAnalyzing(false);
         }
-
-        const stage = STAGES_DETAILS[stageKey];
-        
-        // Add subtle deviations based on landmark seed
-        const roundness = Math.min(99, Math.round(stage.roundness + (seed % 5) - 2));
-        const eyesFactor = Math.min(99, Math.round(stage.eyesFactor + (seed % 5) - 2));
-        const skinSmoothness = Math.min(99, Math.round(stage.skinSmoothness + (seed % 3)));
-
-        const personality = CHILD_PERSONALITIES[seed % CHILD_PERSONALITIES.length];
-        const game = CHILD_GAMES[(seed * 3) % CHILD_GAMES.length];
-
-        // Apply canvas smoothing and youth color grades
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const pixelData = imgData.data;
-        for (let i = 0; i < pixelData.length; i += 4) {
-          let r = pixelData[i];
-          let g = pixelData[i + 1];
-          let b = pixelData[i + 2];
-          // Boost exposure and warm tones
-          r = Math.min(255, r * 1.04 + 4);
-          g = Math.min(255, g * 1.04 + 4);
-          b = Math.min(255, b * 1.01);
-          pixelData[i] = r;
-          pixelData[i + 1] = g;
-          pixelData[i + 2] = b;
-        }
-        ctx.putImageData(imgData, 0, 0);
-
-        // Apply localized skin smoothing blur inside face landmarks bounds
-        if (detection && detection.landmarks) {
-          const pts = detection.landmarks.positions;
-          const xs = pts.map(p => p.x);
-          const ys = pts.map(p => p.y);
-          const xMin = Math.min(...xs);
-          const xMax = Math.max(...xs);
-          const yMin = Math.min(...ys);
-          const yMax = Math.max(...ys);
-
-          const centerX = (xMin + xMax) / 2;
-          const centerY = (yMin + yMax) / 2;
-          const radiusX = (xMax - xMin) * 0.65;
-          const radiusY = (yMax - yMin) * 0.75;
-
-          // Create temporary mask canvas
-          const faceMask = document.createElement("canvas");
-          faceMask.width = img.width;
-          faceMask.height = img.height;
-          const fmctx = faceMask.getContext("2d");
-
-          const grad = fmctx.createRadialGradient(centerX, centerY, radiusX * 0.4, centerX, centerY, radiusX);
-          grad.addColorStop(0, "rgba(255, 255, 255, 0.45)"); // max blur mix opacity
-          grad.addColorStop(1, "rgba(255, 255, 255, 0.0)"); // fade out at hairline/neck
-          fmctx.fillStyle = grad;
-          
-          fmctx.beginPath();
-          fmctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
-          fmctx.fill();
-
-          // Create blurred copy of main canvas
-          const blurCanvas = document.createElement("canvas");
-          blurCanvas.width = img.width;
-          blurCanvas.height = img.height;
-          const bctx = blurCanvas.getContext("2d");
-          bctx.filter = "blur(8px)";
-          bctx.drawImage(canvas, 0, 0);
-
-          // Apply blurred pixels strictly inside the face oval path
-          const maskCanvas = document.createElement("canvas");
-          maskCanvas.width = img.width;
-          maskCanvas.height = img.height;
-          const mctx = maskCanvas.getContext("2d");
-          mctx.drawImage(faceMask, 0, 0);
-          mctx.globalCompositeOperation = "source-in";
-          mctx.drawImage(blurCanvas, 0, 0);
-
-          // Overlay onto main canvas
-          ctx.drawImage(maskCanvas, 0, 0);
-
-          // Draw rosy baby-cheek blush circles
-          const cheekRadius = Math.max(8, img.width * 0.045);
-          const leftCheekX = pts[36].x;
-          const leftCheekY = (pts[36].y + pts[48].y) / 2;
-          const rightCheekX = pts[45].x;
-          const rightCheekY = (pts[45].y + pts[54].y) / 2;
-
-          ctx.fillStyle = "rgba(244, 63, 94, 0.12)";
-          ctx.beginPath();
-          ctx.arc(leftCheekX, leftCheekY, cheekRadius, 0, 2 * Math.PI);
-          ctx.arc(rightCheekX, rightCheekY, cheekRadius, 0, 2 * Math.PI);
-          ctx.fill();
-        } else {
-          // Fallback global light blur when no face landmarks are detected
-          ctx.globalAlpha = 0.3;
-          const blurCanvas = document.createElement("canvas");
-          blurCanvas.width = img.width;
-          blurCanvas.height = img.height;
-          const bctx = blurCanvas.getContext("2d");
-          bctx.filter = "blur(6px)";
-          bctx.drawImage(canvas, 0, 0);
-          ctx.drawImage(blurCanvas, 0, 0);
-          ctx.globalAlpha = 1.0;
-        }
-
-        const simulatedImage = canvas.toDataURL("image/png");
-
-        setResult({
-          roundness,
-          eyesFactor,
-          skinSmoothness,
-          personality,
-          game,
-          stageLabel: stage.label,
-          simulatedImage,
-          matchedByAI: !!(detection && detection.landmarks)
-        });
+      };
+      img.onerror = () => {
         setAnalyzing(false);
+        setError("Could not load the selected image.");
       };
       img.src = preview;
     } catch (err) {
@@ -223,9 +242,13 @@ export default function ToolHome() {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      processFile(e.dataTransfer.files[0]);
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!file) return;
+    if (!file.type || !file.type.startsWith("image/")) {
+      setError("Please select an image file.");
+      return;
     }
+    processFile(file);
   };
 
   const formatReportText = () => {
@@ -293,7 +316,10 @@ ${result.game}
         <div className="bg-card border border-border rounded-3xl shadow-xl overflow-hidden p-6 sm:p-8">
           
           {error && (
-            <div className="mb-6 p-4 border border-red-200 bg-red-50/50 dark:bg-red-950/20 dark:border-red-900 rounded-2xl text-sm text-red-800 dark:text-red-400">
+            <div
+              role="alert"
+              className="mb-6 p-4 border border-red-200 bg-red-50/50 dark:bg-red-950/20 dark:border-red-900 rounded-2xl text-sm text-red-800 dark:text-red-400"
+            >
               {error}
             </div>
           )}

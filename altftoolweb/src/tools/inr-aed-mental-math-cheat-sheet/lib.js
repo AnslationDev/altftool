@@ -181,7 +181,7 @@ function buildQuickRule(rate) {
   };
 }
 
-function buildTunedRule(rate, quick) {
+function buildTunedRule(rate, quick, unitSymbol) {
   let best = null;
   for (const percent of ADJUSTMENT_PERCENTS) {
     const ruleRate = quick.rate * (1 + percent / 100);
@@ -192,8 +192,12 @@ function buildTunedRule(rate, quick) {
   const steps = [...quick.steps];
   if (Math.abs(best.percent) > 1e-9) {
     const magnitude = round(Math.abs(best.percent), 2);
+    // The nudge is a percentage of the amount already converted into the target currency by the
+    // quick-rule multiply above, so the hint must name that target currency, not always rupees —
+    // otherwise the reverse (rupee-to-dirham) direction reads "about ₹X" while actually adjusting
+    // a dirham figure.
     steps.push(
-      `${best.percent > 0 ? "Add" : "Subtract"} ${num(magnitude)}% (about ₹${num(round(magnitude, 1))} on every ₹100)`,
+      `${best.percent > 0 ? "Add" : "Subtract"} ${num(magnitude)}% (about ${unitSymbol}${num(round(magnitude, 1))} on every ${unitSymbol}100)`,
     );
   }
 
@@ -293,10 +297,17 @@ function buildFractionRule(rate, quick) {
   };
 }
 
-/** Derive the three mental rules for one direction of a rate. */
-export function deriveRules(rate) {
+/**
+ * Derive the three mental rules for one direction of a rate.
+ *
+ * @param {number} rate the rate to approximate
+ * @param {string} [unitSymbol] currency symbol of the currency this rate converts *into*, used to
+ *   label the Tuned rule's percentage-nudge hint (e.g. "₹" for the forward, rupee-producing
+ *   direction; CURRENCY.symbol, "AED ", for the reverse, dirham-producing direction).
+ */
+export function deriveRules(rate, unitSymbol = "₹") {
   const quick = buildQuickRule(rate);
-  const tuned = buildTunedRule(rate, quick);
+  const tuned = buildTunedRule(rate, quick, unitSymbol);
   const fraction = buildFractionRule(rate, quick);
 
   const candidates = [quick];
@@ -390,13 +401,16 @@ export function buildCheatSheet({
     return { error: "Service charge, municipality fee and VAT must each be between 0% and 50%." };
   }
 
-  const forward = deriveRules(rate);
-  const reverse = deriveRules(1 / rate);
+  const forward = deriveRules(rate, "₹");
+  const reverse = deriveRules(1 / rate, CURRENCY.symbol);
 
   const priceLadder = CURRENCY.pricePoints.map((point) => {
     const exact = point.amount * rate;
     const quick = point.amount * forward.quick.rate;
     const tuned = point.amount * forward.tuned.rate;
+    // The actually-recommended rule (may be quick, tuned or fraction), used by the UI's
+    // generic "in your head" column instead of always assuming the tuned rule.
+    const rule = point.amount * forward.recommendedRate;
     return {
       amount: point.amount,
       note: point.note,
@@ -405,6 +419,8 @@ export function buildCheatSheet({
       tunedInr: round(tuned, 2),
       quickGapInr: round(quick - exact, 2),
       tunedGapInr: round(tuned - exact, 2),
+      ruleInr: round(rule, 2),
+      ruleGapInr: round(rule - exact, 2),
     };
   });
 

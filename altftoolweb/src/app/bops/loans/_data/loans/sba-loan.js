@@ -199,7 +199,7 @@ export const sbaLoan = {
   },
 
   seo: {
-    title: "SBA Loans — Government-Backed Business Financing | AltFTool",
+    title: "SBA Loans — Government-Backed Funding | AltFTool",
     description:
       "Compare SBA 7(a) and 504 loans: government-backed business financing with lower down payments, longer terms and competitive rates. See if you qualify today.",
   },

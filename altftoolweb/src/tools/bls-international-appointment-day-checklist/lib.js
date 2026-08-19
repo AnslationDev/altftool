@@ -597,12 +597,19 @@ export function computeTiming({ appointmentTime, travelMinutes, contingencyMinut
   const arriveByMinutes = appointment - ARRIVE_BEFORE_MINUTES;
   const leaveHomeMinutes = arriveByMinutes - travel - contingency;
 
+  // How many calendar days before the appointment date each time falls, not just whether it's
+  // "the previous day" - travel + contingency can push leave-home two or more days earlier.
+  const arriveByDaysBefore = arriveByMinutes < 0 ? Math.ceil(-arriveByMinutes / MINUTES_PER_DAY) : 0;
+  const daysBefore = leaveHomeMinutes < 0 ? Math.ceil(-leaveHomeMinutes / MINUTES_PER_DAY) : 0;
+
   return {
     appointment: formatClock(appointment),
     arriveBy: formatClock(arriveByMinutes),
     arriveByPreviousDay: arriveByMinutes < 0,
+    arriveByDaysBefore,
     leaveHomeBy: formatClock(leaveHomeMinutes),
     previousDay: leaveHomeMinutes < 0,
+    daysBefore,
     totalLeadMinutes: ARRIVE_BEFORE_MINUTES + travel + contingency,
   };
 }

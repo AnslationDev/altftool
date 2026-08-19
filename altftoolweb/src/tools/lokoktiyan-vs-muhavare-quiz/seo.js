@@ -10,7 +10,7 @@ const seo = {
   intro:
     "Muhavara vs Lokokti Quiz tests the one distinction Hindi language papers ask about most often: a muhavara is a phrase that only means something once it is built into a sentence, while a lokokti is a complete sentence that can be quoted as it stands and carries a general truth. Each round draws questions from a pool of 32 real examples and, after grading, explains why every line falls on the side it does. It is built for CBSE and state-board students, competitive-exam candidates and anyone teaching Hindi vyakaran.",
   useCases: [
-    "Revise the muhavara–lokokti distinction the night before a Hindi grammar paper with a timed set of ten questions.",
+    "Revise the muhavara–lokokti distinction the night before a Hindi grammar paper with a set of ten questions.",
     "Use a fixed round number in class so every student sees exactly the same questions in the same order.",
     "Check whether लोहे के चने चबाना is an idiom or a proverb, and read the grammatical reason rather than just the label.",
     "Build confidence on the four classification rules before attempting fill-in-the-blank and usage questions.",

@@ -81,6 +81,25 @@ export default function ToolHome() {
     setMaxSpacing(unit === "m" ? String(Math.round(preset.feet * 0.3048 * 100) / 100) : String(preset.feet));
   };
 
+  const FT_PER_M = 3.28084;
+
+  const convertValue = (value, fromUnit, toUnit) => {
+    if (fromUnit === toUnit) return value;
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return value;
+    const converted =
+      toUnit === "m" ? numeric / FT_PER_M : numeric * FT_PER_M;
+    return String(Math.round(converted * 100) / 100);
+  };
+
+  const handleUnitChange = (nextUnit) => {
+    if (nextUnit === unit) return;
+    setRunLength((value) => convertValue(value, unit, nextUnit));
+    setMaxSpacing((value) => convertValue(value, unit, nextUnit));
+    setFenceHeight((value) => convertValue(value, unit, nextUnit));
+    setUnit(nextUnit);
+  };
+
   const summary = useMemo(() => {
     if (failed) return "";
     return [
@@ -191,7 +210,7 @@ export default function ToolHome() {
               id="fp-unit"
               className={`mt-2 ${INPUT_CLASS}`}
               value={unit}
-              onChange={(event) => setUnit(event.target.value)}
+              onChange={(event) => handleUnitChange(event.target.value)}
             >
               <option value="ft">Feet</option>
               <option value="m">Metres</option>
@@ -352,7 +371,10 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

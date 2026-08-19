@@ -275,7 +275,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -327,7 +331,11 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-base font-semibold">Caption to publish</h2>
           <button
@@ -396,7 +404,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.warnings.length ? (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          aria-atomic="true"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <TriangleAlert className="h-4 w-4 text-[var(--danger)]" aria-hidden="true" />
             Worth checking before you post

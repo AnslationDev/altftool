@@ -80,6 +80,11 @@ export default function ToolHome() {
     if (hasError) return "";
     return [
       "Fever Fluid Replacement Calculator",
+      ...(result.infantUrgent
+        ? [
+            `URGENT: any fever of 38 °C or more in a baby under ${INFANT_URGENT_AGE_MONTHS} months needs same-day medical assessment. Do not manage this at home with fluids alone.`,
+          ]
+        : []),
       `Temperature: ${result.tempC} °C (${result.tempF} °F) for ${result.hoursFebrile} hours`,
       `Maintenance: ${NUM.format(result.baseMaintenanceMl)} ml/day — ${result.maintenanceRule}`,
       `Fever surcharge: +${result.surchargePct}% (${result.degreesAbove} °C above 37 °C)`,
@@ -155,10 +160,14 @@ export default function ToolHome() {
               inputMode="decimal"
               min="0"
               max="120"
-              step="1"
+              step="0.01"
+              placeholder="e.g. 0.25 for a 3-month-old"
               value={age}
               onChange={(event) => setAge(event.target.value)}
             />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Babies under 1: enter age as a decimal — 0.25 for 3 months, 0.5 for 6 months.
+            </p>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="ffr-weight">
@@ -191,8 +200,8 @@ export default function ToolHome() {
             />
           </div>
           <div>
-            <span className={LABEL_CLASS}>Temperature unit</span>
-            <div className="mt-2 flex gap-2">
+            <span id="ffr-unit-label" className={LABEL_CLASS}>Temperature unit</span>
+            <div role="group" aria-labelledby="ffr-unit-label" className="mt-2 flex gap-2">
               {["C", "F"].map((value) => (
                 <button
                   key={value}

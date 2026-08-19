@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Bike, Check, Copy, RotateCcw } from "lucide-react";
 import { BANDS, computePowerToWeight, formatDuration, massSweep } from "../lib";
 
@@ -40,6 +40,13 @@ export default function ToolHome() {
   const [elevation, setElevation] = useState(DEFAULTS.elevation);
   const [target, setTarget] = useState(DEFAULTS.target);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -54,6 +61,8 @@ export default function ToolHome() {
     [ftp, mass, sex, gradient, elevation, target],
   );
   const failed = Boolean(result.error);
+  const climbFailed = Boolean(result.climbError);
+  const targetFailed = Boolean(result.targetError);
 
   const sweep = useMemo(
     () => (failed ? [] : massSweep(toNumber(ftp), toNumber(mass))),
@@ -62,15 +71,20 @@ export default function ToolHome() {
 
   const summary = useMemo(() => {
     if (failed) return "";
+    const climbLine = result.climbError
+      ? `Climb estimate: ${result.climbError}`
+      : `Climbing VAM at ${NUM1.format(result.gradientPercent)}%: ${INT.format(result.vam)} vertical metres per hour\n${INT.format(result.elevationGainM)} m climb: ${formatDuration(result.climbHours)} at ${NUM1.format(result.climbSpeedKph)} km/h`;
+    const targetLine = result.targetError
+      ? `Target: ${result.targetError}`
+      : result.wattsForTarget === null
+        ? "No target set."
+        : `To hit ${NUM2.format(toNumber(target))} W/kg: ${INT.format(result.wattsForTarget)} W at this weight, or ${NUM1.format(result.massForTarget)} kg at this FTP`;
     return [
       "Cycling Power to Weight Calculator",
       `FTP ${INT.format(result.ftpWatts)} W at ${NUM1.format(result.massKg)} kg`,
       `Power to weight: ${NUM2.format(result.wattsPerKg)} W/kg (${result.band.label})`,
-      `Climbing VAM at ${NUM1.format(result.gradientPercent)}%: ${INT.format(result.vam)} vertical metres per hour`,
-      `${INT.format(result.elevationGainM)} m climb: ${formatDuration(result.climbHours)} at ${NUM1.format(result.climbSpeedKph)} km/h`,
-      result.wattsForTarget === null
-        ? "No target set."
-        : `To hit ${NUM2.format(toNumber(target))} W/kg: ${INT.format(result.wattsForTarget)} W at this weight, or ${NUM1.format(result.massForTarget)} kg at this FTP`,
+      climbLine,
+      targetLine,
     ].join("\n");
   }, [failed, result, target]);
 
@@ -79,13 +93,15 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setFtp(DEFAULTS.ftp);
     setMass(DEFAULTS.mass);
     setSex(DEFAULTS.sex);
@@ -222,8 +238,28 @@ export default function ToolHome() {
           {result.error}
         </p>
       ) : null}
+      {!failed && climbFailed ? (
+        <p
+          role="alert"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+        >
+          {result.climbError}
+        </p>
+      ) : null}
+      {!failed && targetFailed ? (
+        <p
+          role="alert"
+          className="mt-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+        >
+          {result.targetError}
+        </p>
+      ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -264,11 +300,11 @@ export default function ToolHome() {
             ],
             [
               "Climbing VAM",
-              failed ? DASH : `${INT.format(result.vam)} vertical m/h at ${NUM1.format(result.gradientPercent)}%`,
+              failed || climbFailed ? DASH : `${INT.format(result.vam)} vertical m/h at ${NUM1.format(result.gradientPercent)}%`,
             ],
-            ["Climb length along the road", failed ? DASH : `${NUM1.format(result.climbDistanceKm)} km`],
-            ["Time for that climb", failed ? DASH : formatDuration(result.climbHours)],
-            ["Speed on the climb", failed ? DASH : `${NUM1.format(result.climbSpeedKph)} km/h`],
+            ["Climb length along the road", failed || climbFailed ? DASH : `${NUM1.format(result.climbDistanceKm)} km`],
+            ["Time for that climb", failed || climbFailed ? DASH : formatDuration(result.climbHours)],
+            ["Speed on the climb", failed || climbFailed ? DASH : `${NUM1.format(result.climbSpeedKph)} km/h`],
             [
               "Watts for your target",
               failed || result.wattsForTarget === null

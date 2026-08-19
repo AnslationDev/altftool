@@ -6,7 +6,7 @@
   background: #fff;
   overflow-x: clip;
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Hide global Next.js elements on the pest-killer page */

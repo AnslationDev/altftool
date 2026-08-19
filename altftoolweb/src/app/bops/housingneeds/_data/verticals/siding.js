@@ -30,6 +30,7 @@ const siding = {
   "headline": "Siding that sheds water and holds its color",
   "headlineAccent": "holds its color",
   "subheadline": "Siding is a drainage system first and a finish second — what happens behind the panels decides whether a wall lasts decades or rots quietly. This guide covers the material choices, the details that actually keep water out, and the variables that move the price.",
+  "answer": "Siding is a drainage system first and a finish second: water that gets past the panels has to reach a weather-resistive barrier and drain back out, so flashing, house wrap and clearances decide how long a wall lasts more than the panel itself does. Typical service life runs about 20-40 years for vinyl, 25-40 for insulated vinyl, 20-30 for engineered wood and 30-50 for fiber cement, with local climate — hail, wildfire, moisture — usually deciding which premium is worth paying.",
   "heroPoints": [
     "Vinyl, fiber cement, engineered wood",
     "Weather barrier and flashing detailing",

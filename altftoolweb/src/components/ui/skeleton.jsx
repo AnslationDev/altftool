@@ -225,23 +225,6 @@ export function AcademyHeroSkeleton() {
       <div className="relative w-full aspect-[16/8] px-2 lg:px-4 xl:px-6 xl:aspect-[21/10]">
         <SkeletonBlock className="h-full w-full rounded-xl" />
       </div>
-
-      <div className="relative z-20 mx-auto hidden w-[99%] rounded-xl bg-blue-700 px-4 py-5 lg:-mt-18 lg:block lg:w-[90%] lg:px-10 lg:py-7 xl:w-[86%] xl:px-12 xl:py-8 2xl:w-[88%]">
-        <div className="grid grid-cols-2 gap-x-3 gap-y-5 lg:grid-cols-4 lg:gap-x-5 2xl:gap-x-6">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="flex items-center gap-3">
-              {index !== 0 ? (
-                <div className="hidden h-10 w-px shrink-0 bg-white/20 lg:block" />
-              ) : null}
-              <SkeletonBlock className="h-12 w-12 shrink-0 rounded-full bg-white/15" />
-              <div className="space-y-2">
-                <SkeletonBlock className="h-4 w-20 rounded-full bg-white/15" />
-                <SkeletonBlock className="h-3 w-28 rounded-full bg-white/10" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

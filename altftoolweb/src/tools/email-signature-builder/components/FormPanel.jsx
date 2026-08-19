@@ -105,6 +105,7 @@ function ImagePicker({ label, src, onSrc, square }) {
           value={src.startsWith("data:") ? "" : src}
           onChange={(e) => onSrc(e.target.value)}
           placeholder={src.startsWith("data:") ? "Uploaded image in use" : "https://…/image.png (recommended)"}
+          aria-label={label}
           className={INPUT_CLASS}
         />
         <button
@@ -147,7 +148,7 @@ function ColorField({ label, value, onChange }) {
       <label className={LABEL_CLASS}>{label}</label>
       <div className="flex items-center gap-2">
         <input type="color" value={value} onChange={(e) => onChange(e.target.value)} className="h-9 w-10 cursor-pointer rounded-md border border-(--border) bg-transparent p-0.5" aria-label={label} />
-        <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className={`${INPUT_CLASS} font-mono uppercase`} maxLength={7} />
+        <input type="text" value={value} onChange={(e) => onChange(e.target.value)} aria-label={label} className={`${INPUT_CLASS} font-mono uppercase`} maxLength={7} />
       </div>
     </div>
   );
@@ -237,12 +238,12 @@ export default function FormPanel({ state, setState }) {
           <ImagePicker label="Photo" src={state.photo.src} onSrc={(src) => patch("photo", { src })} square />
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className={LABEL_CLASS}>Size: {state.photo.size}px</label>
-              <input type="range" min={48} max={140} value={state.photo.size} onChange={(e) => patch("photo", { size: Number(e.target.value) })} className="w-full accent-(--primary)" />
+              <label htmlFor="esb-photo-size" className={LABEL_CLASS}>Size: {state.photo.size}px</label>
+              <input id="esb-photo-size" type="range" min={48} max={140} value={state.photo.size} onChange={(e) => patch("photo", { size: Number(e.target.value) })} className="w-full accent-(--primary)" />
             </div>
             <div>
-              <label className={LABEL_CLASS}>Shape</label>
-              <select value={state.photo.shape} onChange={(e) => patch("photo", { shape: e.target.value })} className={INPUT_CLASS}>
+              <label htmlFor="esb-photo-shape" className={LABEL_CLASS}>Shape</label>
+              <select id="esb-photo-shape" value={state.photo.shape} onChange={(e) => patch("photo", { shape: e.target.value })} className={INPUT_CLASS}>
                 <option value="circle">Circle</option>
                 <option value="rounded">Rounded corners</option>
                 <option value="square">Square</option>
@@ -257,12 +258,12 @@ export default function FormPanel({ state, setState }) {
           <ImagePicker label="Logo" src={state.logo.src} onSrc={(src) => patch("logo", { src })} />
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className={LABEL_CLASS}>Logo link (optional)</label>
-              <input type="url" value={state.logo.url} onChange={(e) => patch("logo", { url: e.target.value })} placeholder="https://company.com" className={INPUT_CLASS} />
+              <label htmlFor="esb-logo-url" className={LABEL_CLASS}>Logo link (optional)</label>
+              <input id="esb-logo-url" type="url" value={state.logo.url} onChange={(e) => patch("logo", { url: e.target.value })} placeholder="https://company.com" className={INPUT_CLASS} />
             </div>
             <div>
-              <label className={LABEL_CLASS}>Width: {state.logo.width}px</label>
-              <input type="range" min={60} max={220} value={state.logo.width} onChange={(e) => patch("logo", { width: Number(e.target.value) })} className="w-full accent-(--primary)" />
+              <label htmlFor="esb-logo-width" className={LABEL_CLASS}>Width: {state.logo.width}px</label>
+              <input id="esb-logo-width" type="range" min={60} max={220} value={state.logo.width} onChange={(e) => patch("logo", { width: Number(e.target.value) })} className="w-full accent-(--primary)" />
             </div>
           </div>
         </div>
@@ -299,18 +300,18 @@ export default function FormPanel({ state, setState }) {
       <Section icon={MousePointerClick} title="CTA button">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
-            <label className={LABEL_CLASS}>Button text</label>
-            <input type="text" value={state.cta.label} onChange={(e) => patch("cta", { label: e.target.value })} className={INPUT_CLASS} />
+            <label htmlFor="esb-cta-label" className={LABEL_CLASS}>Button text</label>
+            <input id="esb-cta-label" type="text" value={state.cta.label} onChange={(e) => patch("cta", { label: e.target.value })} className={INPUT_CLASS} />
           </div>
           <div>
-            <label className={LABEL_CLASS}>Button URL</label>
-            <input type="url" value={state.cta.url} onChange={(e) => patch("cta", { url: e.target.value })} placeholder="https://…" className={INPUT_CLASS} />
+            <label htmlFor="esb-cta-url" className={LABEL_CLASS}>Button URL</label>
+            <input id="esb-cta-url" type="url" value={state.cta.url} onChange={(e) => patch("cta", { url: e.target.value })} placeholder="https://…" className={INPUT_CLASS} />
           </div>
           <ColorField label="Background" value={state.cta.bg} onChange={(bg) => patch("cta", { bg })} />
           <ColorField label="Text color" value={state.cta.color} onChange={(color) => patch("cta", { color })} />
           <div className="sm:col-span-2">
-            <label className={LABEL_CLASS}>Corner radius: {state.cta.radius}px (Outlook shows square corners)</label>
-            <input type="range" min={0} max={24} value={state.cta.radius} onChange={(e) => patch("cta", { radius: Number(e.target.value) })} className="w-full accent-(--primary)" />
+            <label htmlFor="esb-cta-radius" className={LABEL_CLASS}>Corner radius: {state.cta.radius}px (Outlook shows square corners)</label>
+            <input id="esb-cta-radius" type="range" min={0} max={24} value={state.cta.radius} onChange={(e) => patch("cta", { radius: Number(e.target.value) })} className="w-full accent-(--primary)" />
           </div>
         </div>
       </Section>
@@ -340,16 +341,16 @@ export default function FormPanel({ state, setState }) {
           <ImagePicker label="Banner image" src={state.banner.src} onSrc={(src) => patch("banner", { src })} />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
-              <label className={LABEL_CLASS}>Banner link</label>
-              <input type="url" value={state.banner.url} onChange={(e) => patch("banner", { url: e.target.value })} placeholder="https://…" className={INPUT_CLASS} />
+              <label htmlFor="esb-banner-url" className={LABEL_CLASS}>Banner link</label>
+              <input id="esb-banner-url" type="url" value={state.banner.url} onChange={(e) => patch("banner", { url: e.target.value })} placeholder="https://…" className={INPUT_CLASS} />
             </div>
             <div>
-              <label className={LABEL_CLASS}>Alt text</label>
-              <input type="text" value={state.banner.alt} onChange={(e) => patch("banner", { alt: e.target.value })} className={INPUT_CLASS} />
+              <label htmlFor="esb-banner-alt" className={LABEL_CLASS}>Alt text</label>
+              <input id="esb-banner-alt" type="text" value={state.banner.alt} onChange={(e) => patch("banner", { alt: e.target.value })} className={INPUT_CLASS} />
             </div>
             <div>
-              <label className={LABEL_CLASS}>Width: {state.banner.width}px</label>
-              <input type="range" min={200} max={560} value={state.banner.width} onChange={(e) => patch("banner", { width: Number(e.target.value) })} className="w-full accent-(--primary)" />
+              <label htmlFor="esb-banner-width" className={LABEL_CLASS}>Width: {state.banner.width}px</label>
+              <input id="esb-banner-width" type="range" min={200} max={560} value={state.banner.width} onChange={(e) => patch("banner", { width: Number(e.target.value) })} className="w-full accent-(--primary)" />
             </div>
           </div>
         </div>
@@ -358,8 +359,8 @@ export default function FormPanel({ state, setState }) {
       <Section icon={QrCode} title="QR code">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
-            <label className={LABEL_CLASS}>QR contents</label>
-            <select value={state.qr.mode} onChange={(e) => patch("qr", { mode: e.target.value })} className={INPUT_CLASS}>
+            <label htmlFor="esb-qr-mode" className={LABEL_CLASS}>QR contents</label>
+            <select id="esb-qr-mode" value={state.qr.mode} onChange={(e) => patch("qr", { mode: e.target.value })} className={INPUT_CLASS}>
               <option value="website">My website URL</option>
               <option value="vcard">vCard (save my contact)</option>
               <option value="custom">Custom text / URL</option>
@@ -367,8 +368,8 @@ export default function FormPanel({ state, setState }) {
           </div>
           {state.qr.mode === "custom" && (
             <div>
-              <label className={LABEL_CLASS}>Custom value</label>
-              <input type="text" value={state.qr.custom} onChange={(e) => patch("qr", { custom: e.target.value })} className={INPUT_CLASS} />
+              <label htmlFor="esb-qr-custom" className={LABEL_CLASS}>Custom value</label>
+              <input id="esb-qr-custom" type="text" value={state.qr.custom} onChange={(e) => patch("qr", { custom: e.target.value })} className={INPUT_CLASS} />
             </div>
           )}
         </div>
@@ -387,8 +388,8 @@ export default function FormPanel({ state, setState }) {
       <Section icon={Palette} title="Design">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
-            <label className={LABEL_CLASS}>Font (email-safe)</label>
-            <select value={state.design.font} onChange={(e) => patch("design", { font: e.target.value })} className={INPUT_CLASS}>
+            <label htmlFor="esb-design-font" className={LABEL_CLASS}>Font (email-safe)</label>
+            <select id="esb-design-font" value={state.design.font} onChange={(e) => patch("design", { font: e.target.value })} className={INPUT_CLASS}>
               {EMAIL_SAFE_FONTS.map((f) => (
                 <option key={f.id} value={f.id}>
                   {f.label}
@@ -397,8 +398,8 @@ export default function FormPanel({ state, setState }) {
             </select>
           </div>
           <div>
-            <label className={LABEL_CLASS}>Layout</label>
-            <select value={state.design.layout} onChange={(e) => patch("design", { layout: e.target.value })} className={INPUT_CLASS}>
+            <label htmlFor="esb-design-layout" className={LABEL_CLASS}>Layout</label>
+            <select id="esb-design-layout" value={state.design.layout} onChange={(e) => patch("design", { layout: e.target.value })} className={INPUT_CLASS}>
               <option value="horizontal">Photo left</option>
               <option value="stacked">Photo on top</option>
               <option value="vertical-line">Accent line</option>
@@ -409,24 +410,24 @@ export default function FormPanel({ state, setState }) {
           <ColorField label="Accent color" value={state.design.accent} onChange={(accent) => patch("design", { accent })} />
           <ColorField label="Text color" value={state.design.text} onChange={(text) => patch("design", { text })} />
           <div>
-            <label className={LABEL_CLASS}>Font size: {state.design.fontSize}px</label>
-            <input type="range" min={11} max={17} value={state.design.fontSize} onChange={(e) => patch("design", { fontSize: Number(e.target.value) })} className="w-full accent-(--primary)" />
+            <label htmlFor="esb-design-font-size" className={LABEL_CLASS}>Font size: {state.design.fontSize}px</label>
+            <input id="esb-design-font-size" type="range" min={11} max={17} value={state.design.fontSize} onChange={(e) => patch("design", { fontSize: Number(e.target.value) })} className="w-full accent-(--primary)" />
           </div>
           <div>
-            <label className={LABEL_CLASS}>Line spacing: {state.design.lineHeight}</label>
-            <input type="range" min={1.2} max={2} step={0.1} value={state.design.lineHeight} onChange={(e) => patch("design", { lineHeight: Number(e.target.value) })} className="w-full accent-(--primary)" />
+            <label htmlFor="esb-design-line-height" className={LABEL_CLASS}>Line spacing: {state.design.lineHeight}</label>
+            <input id="esb-design-line-height" type="range" min={1.2} max={2} step={0.1} value={state.design.lineHeight} onChange={(e) => patch("design", { lineHeight: Number(e.target.value) })} className="w-full accent-(--primary)" />
           </div>
           <div>
-            <label className={LABEL_CLASS}>Divider</label>
-            <select value={state.design.divider} onChange={(e) => patch("design", { divider: e.target.value })} className={INPUT_CLASS}>
+            <label htmlFor="esb-design-divider" className={LABEL_CLASS}>Divider</label>
+            <select id="esb-design-divider" value={state.design.divider} onChange={(e) => patch("design", { divider: e.target.value })} className={INPUT_CLASS}>
               <option value="line">Solid line</option>
               <option value="dots">Dotted</option>
               <option value="none">None</option>
             </select>
           </div>
           <div>
-            <label className={LABEL_CLASS}>Signature width: {state.design.width}px</label>
-            <input type="range" min={360} max={640} step={10} value={state.design.width} onChange={(e) => patch("design", { width: Number(e.target.value) })} className="w-full accent-(--primary)" />
+            <label htmlFor="esb-design-width" className={LABEL_CLASS}>Signature width: {state.design.width}px</label>
+            <input id="esb-design-width" type="range" min={360} max={640} step={10} value={state.design.width} onChange={(e) => patch("design", { width: Number(e.target.value) })} className="w-full accent-(--primary)" />
           </div>
         </div>
       </Section>

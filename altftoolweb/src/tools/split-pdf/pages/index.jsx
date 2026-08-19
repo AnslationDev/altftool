@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Check, Copy, Download, FileText, RotateCcw } from "lucide-react";
 
-import { SPLIT_MODES, planPdfSplit } from "../lib";
+import { SPLIT_MODES, planPdfSplit, safeFileName } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-US");
 const DASH = "—";
@@ -71,7 +71,7 @@ export default function ToolHome() {
     try {
       const { PDFDocument } = await import("pdf-lib");
       const buffer = await file.arrayBuffer();
-      const doc = await PDFDocument.load(buffer, { ignoreEncryption: true });
+      const doc = await PDFDocument.load(buffer);
       const count = doc.getPageCount();
       if (count < 1) {
         setReadError("That PDF has no pages.");
@@ -83,7 +83,9 @@ export default function ToolHome() {
       const stem = file.name.replace(/\.[^.]+$/, "");
       if (stem) setBaseName(stem);
     } catch {
-      setReadError("Could not read that PDF. Password-protected files must be unlocked first.");
+      setReadError(
+        "This PDF is password-protected — remove the password before splitting. If it isn't encrypted, the file may be corrupted.",
+      );
     } finally {
       setBusy(false);
     }
@@ -111,9 +113,11 @@ export default function ToolHome() {
     setBusy(true);
     try {
       const { PDFDocument } = await import("pdf-lib");
-      const source = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+      const source = await PDFDocument.load(pdfBytes);
       const bytes = await buildPart(PDFDocument, source, part);
       saveBlob(bytes, part.filename);
+    } catch {
+      setReadError("This PDF is password-protected — remove the password before splitting.");
     } finally {
       setBusy(false);
     }
@@ -127,7 +131,7 @@ export default function ToolHome() {
         import("pdf-lib"),
         import("jszip"),
       ]);
-      const source = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+      const source = await PDFDocument.load(pdfBytes);
       const zip = new JSZip();
       for (const part of result.parts) {
         const bytes = await buildPart(PDFDocument, source, part);
@@ -137,9 +141,11 @@ export default function ToolHome() {
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = `${baseName || "document"}-split.zip`;
+      anchor.download = `${safeFileName(baseName)}-split.zip`;
       anchor.click();
       URL.revokeObjectURL(url);
+    } catch {
+      setReadError("This PDF is password-protected — remove the password before splitting.");
     } finally {
       setBusy(false);
     }
@@ -302,7 +308,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -367,7 +377,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError ? (
-        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <section
+          aria-live="polite"
+          role="status"
+          className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        >
           <h2 className="text-base font-semibold">Output files</h2>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[480px] text-left text-sm">

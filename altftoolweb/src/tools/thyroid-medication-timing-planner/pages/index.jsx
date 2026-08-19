@@ -118,11 +118,15 @@ export default function ToolHome() {
     setCopied(false);
   };
 
+  const noneChecked = !hasError && result.checkedCount === 0;
+
   const headline = hasError
     ? DASH
-    : result.allClear
-      ? "All gaps clear"
-      : `${result.failures.length} gap${result.failures.length === 1 ? "" : "s"} too short`;
+    : noneChecked
+      ? "No gaps checked yet"
+      : result.allClear
+        ? "All gaps clear"
+        : `${result.failures.length} gap${result.failures.length === 1 ? "" : "s"} too short`;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -238,13 +242,13 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
               Routine check
             </p>
             <p
               className={`mt-1 text-4xl font-semibold ${
-                hasError
+                hasError || noneChecked
                   ? "text-[var(--muted-foreground)]"
                   : result.allClear
                     ? "text-[var(--success)]"
@@ -256,7 +260,9 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see the check."
-                : `Tablet at ${result.doseLabel} · ${result.clearCount} of ${result.checkedCount} gaps meet the labelled separation`}
+                : noneChecked
+                  ? "Enter a time for at least one interaction below (coffee, calcium, iron, etc.) to check for gaps — nothing has been evaluated yet."
+                  : `Tablet at ${result.doseLabel} · ${result.clearCount} of ${result.checkedCount} gaps meet the labelled separation`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

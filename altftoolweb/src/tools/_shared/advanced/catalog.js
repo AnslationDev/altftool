@@ -75,7 +75,7 @@ export const advancedCatalog = {
     "id": 165,
     "slug": "video-frame-to-sprite-extractor",
     "name": "Video Frame-to-Sprite Extractor",
-    "description": "Selected frames ko PNG sequence ya sprite sheet me export kare.",
+    "description": "Export selected video frames as a single tiled sprite sheet PNG.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },
@@ -403,7 +403,7 @@ export const advancedCatalog = {
     "id": 206,
     "slug": "camera-color-eyedropper",
     "name": "Camera Color Eyedropper",
-    "description": "Live camera object ka approximate HEX/RGB color sample kare.",
+    "description": "Live camera object ka approximate RGB color sample kare.",
     "category": "Device Sensors & Hardware Diagnostics",
     "priority": "P2"
   },
@@ -475,7 +475,7 @@ export const advancedCatalog = {
     "id": 215,
     "slug": "device-sensor-calibration-checker",
     "name": "Device Sensor Calibration Checker",
-    "description": "Accelerometer, gyroscope aur magnetometer bias sanity-check kare.",
+    "description": "Accelerometer aur gyroscope bias sanity-check kare.",
     "category": "Device Sensors & Hardware Diagnostics",
     "priority": "P2"
   },

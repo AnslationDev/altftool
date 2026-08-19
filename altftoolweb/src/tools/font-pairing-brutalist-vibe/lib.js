@@ -303,7 +303,7 @@ export function computeBrutalistLayout({
     monoPx: mono,
     monoAdvanceEm: monoAdvance,
     displayAdvanceEm: displayAdvance,
-    headline: String(headline),
+    headline: String(headline).trim(),
     characters,
     columnPx: round(column, 3),
     columns,

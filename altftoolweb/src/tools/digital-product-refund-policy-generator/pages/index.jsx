@@ -290,8 +290,9 @@ export default function ToolHome() {
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">When you will still refund</h2>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          The four marked &ldquo;required&rdquo; cannot lawfully be switched off — a seller may not refuse
-          a refund for content that is faulty, undeliverable or not as described.
+          The {REFUND_EXCEPTIONS.filter((rule) => rule.always).length} marked &ldquo;required&rdquo; cannot
+          lawfully be switched off — a seller may not refuse a refund for content that is faulty,
+          undeliverable or not as described.
         </p>
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {REFUND_EXCEPTIONS.map((rule) => (
@@ -325,7 +326,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -373,7 +374,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && policy.warnings.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <TriangleAlert className="h-4 w-4 text-[var(--danger)]" aria-hidden="true" />
             Fix these before you publish

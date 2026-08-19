@@ -202,6 +202,7 @@ export function computeStudentLoan({
           totalPaid: accelerated.totalPaid,
           interestSaved: base.totalInterest - accelerated.totalInterest,
           monthsSaved: base.months - accelerated.months,
+          rows: accelerated.rows,
         }
       : null,
   };

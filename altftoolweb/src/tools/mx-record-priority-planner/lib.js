@@ -30,7 +30,12 @@ export function parseHostList(raw, label) {
   const hosts = String(raw)
     .split(/[\n,]+/)
     .map((s) => s.trim().toLowerCase())
-    .filter(Boolean);
+    .filter(Boolean)
+    // Normalize a single trailing dot (DNS zone-file FQDN notation) BEFORE any
+    // validation, so "192.168.1.1." can't dodge the IP-literal rejection and
+    // "mx1.example.com" / "mx1.example.com." are treated as the same host for
+    // de-dup and cross-tier overlap checks below.
+    .map((s) => s.replace(/\.$/, ""));
   for (const host of hosts) {
     if (IPV4_LIKE.test(host)) {
       return {

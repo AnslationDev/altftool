@@ -78,8 +78,6 @@ export default function ToolHome() {
     setCopied(false);
   };
 
-  const selectedRegions = REGION_PRESETS.filter((r) => regionIds.includes(r.id));
-
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
       <header className="mb-6">
@@ -183,7 +181,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -257,9 +259,9 @@ export default function ToolHome() {
                   <th scope="col" className="py-2 pr-3 font-semibold">
                     UTC
                   </th>
-                  {selectedRegions.map((region) => (
-                    <th key={region.id} scope="col" className="py-2 pr-3 font-semibold">
-                      {region.label.split(" (")[0]}
+                  {(result.matrix[0]?.entries ?? []).map((entry) => (
+                    <th key={entry.id} scope="col" className="py-2 pr-3 font-semibold">
+                      {entry.label.split(" (")[0]}
                     </th>
                   ))}
                 </tr>

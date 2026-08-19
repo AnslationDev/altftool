@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Timer } from "lucide-react";
 
 import { RUNTIME_TARGETS, formatDuration, parseDuration, targetSpeed } from "../lib";
@@ -29,6 +29,13 @@ const INT = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const setField = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
@@ -68,7 +75,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -83,7 +91,7 @@ export default function ToolHome() {
     ? ""
     : result.verdict.level === "extreme" || result.verdict.level === "hard"
       ? "text-[var(--danger)]"
-      : result.verdict.level === "brisk"
+      : result.verdict.level === "brisk" || result.verdict.level === "slow"
         ? "text-[var(--muted-foreground)]"
         : "text-[var(--success)]";
 
@@ -160,7 +168,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">Speed needed</p>
@@ -183,7 +191,10 @@ export default function ToolHome() {
           {[
             ["Speed as a percentage", failed ? dash : `${NUM.format(result.percent)}%`],
             ["Length after trimming, before speed", failed ? dash : formatDuration(result.remainingSeconds)],
-            ["Time removed overall", failed ? dash : formatDuration(Math.abs(result.timeChange))],
+            [
+              !failed && result.timeChange > 0 ? "Time added overall" : "Time removed overall",
+              failed ? dash : formatDuration(Math.abs(result.timeChange)),
+            ],
             ["Frames at the timeline rate", failed ? dash : result.outputFrames === null ? "Enter a frame rate" : INT.format(result.outputFrames)],
             ["Delivery rate", failed ? dash : result.effectiveWpm === null ? "Enter a word count" : `${INT.format(result.effectiveWpm)} words per minute`],
             ["Audio pitch shift if uncorrected", failed ? dash : `${NUM.format(result.pitchSemitones)} semitones`],

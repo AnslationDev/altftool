@@ -120,14 +120,18 @@ export function estimatePipingCost({
   const extraRefrigerantG = Math.max(0, pipeRunM - chargelessLengthM) * topUpGramsPerMetre;
   const refrigerantCost = (extraRefrigerantG / 1000) * refrigerantPricePerKg;
 
+  // Round each line item to the nearest rupee before summing, so the
+  // displayed Total always equals the sum of the displayed (whole-rupee)
+  // line items — independent per-line rounding at render time could
+  // otherwise make Total visibly disagree with the itemised list.
   const items = [
-    [`Extra copper pair (${extraPipeM.toFixed(1)} m beyond ${includedPipeM} m)`, pipeCost],
-    [`Extra drain pipe (${extraDrainM.toFixed(1)} m beyond ${includedDrainM} m)`, drainCost],
-    [`Extra interconnecting cable (${extraCableM.toFixed(1)} m)`, cableCost],
-    [`Core drilling (${coreHoles} hole${coreHoles === 1 ? "" : "s"})`, coreCost],
-    ["Outdoor unit stand or bracket", standCost],
-    [`Refrigerant top-up (${extraRefrigerantG.toFixed(0)} g)`, refrigerantCost],
-    ["Installation labour", installationBase],
+    [`Extra copper pair (${extraPipeM.toFixed(1)} m beyond ${includedPipeM} m)`, Math.round(pipeCost)],
+    [`Extra drain pipe (${extraDrainM.toFixed(1)} m beyond ${includedDrainM} m)`, Math.round(drainCost)],
+    [`Extra interconnecting cable (${extraCableM.toFixed(1)} m)`, Math.round(cableCost)],
+    [`Core drilling (${coreHoles} hole${coreHoles === 1 ? "" : "s"})`, Math.round(coreCost)],
+    ["Outdoor unit stand or bracket", Math.round(standCost)],
+    [`Refrigerant top-up (${extraRefrigerantG.toFixed(0)} g)`, Math.round(refrigerantCost)],
+    ["Installation labour", Math.round(installationBase)],
   ];
   const total = items.reduce((sum, [, value]) => sum + value, 0);
 
@@ -167,7 +171,7 @@ export function estimatePipingCost({
     refrigerantCost,
     items,
     total,
-    extraOverStandard: total - installationBase,
+    extraOverStandard: total - Math.round(installationBase),
     oilTraps,
     warnings,
   };

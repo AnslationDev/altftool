@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   BadgeIndianRupee,
@@ -46,6 +46,16 @@ const SAMPLE_DEBTS = [
 ];
 
 const COLORS = ["#2563eb", "#059669", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#f97316"];
+// Per-swatch text colour verified >=4.5:1 WCAG AA contrast against each COLORS background above.
+const COLOR_TEXT_CLASSES = [
+  "text-white",
+  "text-slate-950",
+  "text-slate-950",
+  "text-slate-950",
+  "text-slate-950",
+  "text-slate-950",
+  "text-slate-950",
+];
 
 function formatMoney(value, compact = false) {
   return new Intl.NumberFormat("en-IN", {
@@ -99,7 +109,6 @@ function simulatePayoff(rawDebts, extraPayment, method) {
   const minimumPayment = debts.reduce((sum, debt) => sum + debt.minPayment, 0);
   const totalStartBalance = debts.reduce((sum, debt) => sum + debt.balance, 0);
   const monthlyBudget = minimumPayment + clampNumber(extraPayment);
-  const totalMinimumDue = minimumPayment;
 
   if (!debts.length) {
     return {
@@ -118,7 +127,7 @@ function simulatePayoff(rawDebts, extraPayment, method) {
     };
   }
 
-  if (monthlyBudget <= 0 || totalMinimumDue <= 0) {
+  if (monthlyBudget <= 0) {
     return {
       method,
       feasible: false,
@@ -239,6 +248,17 @@ function getDebtFreeDate(months) {
 
 function buildSummary(activePlan, comparison, extraPayment) {
   const method = activePlan.method === "avalanche" ? "Avalanche" : "Snowball";
+  if (!activePlan.feasible) {
+    return [
+      "Debt Payoff Calculator Summary",
+      `Selected method: ${method}`,
+      `Extra monthly payment: ${formatMoney(extraPayment)}`,
+      `Monthly payoff budget: ${formatMoney(activePlan.monthlyBudget)}`,
+      `Debt-free timeline: not reached — ${activePlan.reason}`,
+      `Interest accrued without full payoff: ${formatMoney(activePlan.totalInterest)}`,
+      `Amount paid without full payoff: ${formatMoney(activePlan.totalPaid)}`,
+    ].join("\n");
+  }
   return [
     "Debt Payoff Calculator Summary",
     `Selected method: ${method}`,
@@ -330,6 +350,15 @@ export default function DebtPayoffCalculator() {
   const [method, setMethod] = useState("avalanche");
   const [newDebtName, setNewDebtName] = useState("");
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const comparison = useMemo(
     () => ({
@@ -384,6 +413,12 @@ export default function DebtPayoffCalculator() {
   };
 
   const resetPlan = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the plan back to the default debts? Your entered debts, extra payment, and method choice will be lost.")
+    ) {
+      return;
+    }
     setDebts(DEFAULT_DEBTS);
     setExtraPayment(15000);
     setMethod("avalanche");
@@ -398,9 +433,16 @@ export default function DebtPayoffCalculator() {
   };
 
   const copySummary = async () => {
-    await navigator.clipboard?.writeText(buildSummary(activePlan, comparison, extraPayment));
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
+    try {
+      await navigator.clipboard?.writeText(buildSummary(activePlan, comparison, extraPayment));
+      setCopied(true);
+      if (copyTimeoutRef.current) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
@@ -421,7 +463,11 @@ export default function DebtPayoffCalculator() {
                 estimate interest, and see the order to become debt-free.
               </p>
             </div>
-            <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+            <div
+              className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
                 Debt-free estimate
               </p>
@@ -437,12 +483,16 @@ export default function DebtPayoffCalculator() {
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+        <section
+          className="mt-6 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <MetricCard
             icon={WalletCards}
             label="Total Debt"
             value={formatMoney(totalBalance)}
-            detail={`${debts.length} active balances`}
+            detail={`${sanitizeDebts(debts).length} active balances`}
           />
           <MetricCard
             icon={BadgeIndianRupee}
@@ -515,6 +565,7 @@ export default function DebtPayoffCalculator() {
                   step="1000"
                   value={extraPayment}
                   onChange={(event) => setExtraPayment(Number(event.target.value))}
+                  aria-label="Extra monthly payment slider"
                   className="mt-3 w-full accent-[var(--primary)]"
                 />
                 <div className="mt-2 flex justify-between text-xs text-[var(--muted-foreground)]">
@@ -591,6 +642,7 @@ export default function DebtPayoffCalculator() {
                     value={newDebtName}
                     onChange={(event) => setNewDebtName(event.target.value)}
                     placeholder="New debt name"
+                    aria-label="New debt name"
                     className="h-11 w-full min-w-0 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   />
                   <button type="button" onClick={addDebt} className="btn-primary min-h-11 w-full whitespace-nowrap px-4 sm:w-auto">
@@ -611,6 +663,7 @@ export default function DebtPayoffCalculator() {
                         type="text"
                         value={debt.name}
                         onChange={(event) => updateDebt(debt.id, "name", event.target.value)}
+                        aria-label={`${debt.name || "Debt"} name`}
                         className="h-11 min-w-0 rounded-md border border-[var(--border)] bg-[var(--card)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                       />
                       <button
@@ -721,7 +774,7 @@ export default function DebtPayoffCalculator() {
                       className="flex min-w-0 items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--background)] p-3"
                     >
                       <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white"
+                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold ${COLOR_TEXT_CLASSES[index % COLOR_TEXT_CLASSES.length]}`}
                         style={{ backgroundColor: COLORS[index % COLORS.length] }}
                       >
                         {index + 1}

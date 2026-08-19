@@ -240,7 +240,7 @@ export default function ToolHome() {
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-base font-semibold">Meaning quiz</h2>
-          <p className="text-sm text-[var(--muted-foreground)]">
+          <p aria-live="polite" className="text-sm text-[var(--muted-foreground)]">
             {score.correct} / {score.attempted} correct · {score.accuracyPct}% accuracy
           </p>
         </div>

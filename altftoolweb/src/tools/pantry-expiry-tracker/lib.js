@@ -252,7 +252,7 @@ export function evaluateItem(item = {}, todayISO = "") {
   if (daysLeft === null) {
     return { error: `"${name}" needs a valid expiry date and a valid today's date (YYYY-MM-DD).` };
   }
-  const quantity = isNum(item.quantity) && item.quantity > 0 ? item.quantity : 1;
+  const quantity = isNum(item.quantity) && item.quantity >= 0 ? item.quantity : 1;
   const unitCost = isNum(item.unitCost) && item.unitCost >= 0 ? item.unitCost : 0;
   const status = statusForDaysLeft(daysLeft);
   return {

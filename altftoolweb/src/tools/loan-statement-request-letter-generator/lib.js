@@ -198,6 +198,20 @@ export function financialYearLabel(value) {
   return `FY ${startYear}-${endShort}`;
 }
 
+/**
+ * Financial year label covering a whole period, not just its end date.
+ * Returns a single "FY 2025-26" label when the period sits inside one
+ * Indian financial year, or a "FY 2020-21 to FY 2025-26" range when the
+ * period spans more than one, so a multi-year statement request is never
+ * mislabelled as a single financial year.
+ */
+export function financialYearRangeLabel(fromValue, toValue) {
+  const fromLabel = financialYearLabel(fromValue);
+  const toLabel = financialYearLabel(toValue);
+  if (!fromLabel || !toLabel) return toLabel || fromLabel || "";
+  return fromLabel === toLabel ? fromLabel : `${fromLabel} to ${toLabel}`;
+}
+
 const clean = (value) => String(value == null ? "" : value).trim().replace(/\s+/g, " ");
 
 const maskAccount = (accountNumber) => {
@@ -254,6 +268,9 @@ export function buildLoanStatementLetter(input) {
   if (from.year < 1980 || to.year > letterDate.year + 40) {
     return { error: "The statement period looks out of range - check the years you entered." };
   }
+  if (to.ordinal > letterDate.ordinal) {
+    return { error: "The requested period cannot end after the date on the letter." };
+  }
 
   const replyDaysRaw = data.replyDays == null || data.replyDays === "" ? 7 : Number(data.replyDays);
   if (!Number.isFinite(replyDaysRaw)) {
@@ -274,7 +291,7 @@ export function buildLoanStatementLetter(input) {
   const periodFromLong = formatLongDate(data.periodFrom);
   const periodToLong = formatLongDate(data.periodTo);
   const letterDateLong = formatLongDate(data.letterDate);
-  const financialYear = financialYearLabel(data.periodTo);
+  const financialYear = financialYearRangeLabel(data.periodFrom, data.periodTo);
 
   const addressee = branchName ? `The Branch Manager\n${bankName}\n${branchName}` : `The Branch Manager\n${bankName}`;
 
@@ -354,7 +371,7 @@ export function buildLoanStatementLetter(input) {
   }
   if (loanType.id === "home" && (requestType.id === "interest-certificate" || requestType.id === "all")) {
     notes.push(
-      `For ${financialYear}, keep the certificate with your return: interest on a self-occupied property is capped at Rs ${SECTION_24B_CAP.toLocaleString("en-IN")} under section 24(b) and principal repayment sits inside the Rs ${SECTION_80C_CAP.toLocaleString("en-IN")} section 80C ceiling.`,
+      `Keep the certificate with your return(s) for ${financialYear}: interest on a self-occupied property is capped at Rs ${SECTION_24B_CAP.toLocaleString("en-IN")} under section 24(b) and principal repayment sits inside the Rs ${SECTION_80C_CAP.toLocaleString("en-IN")} section 80C ceiling — both caps apply separately to each financial year, not to the whole period covered by this certificate, so split the figures by year before filing.`,
     );
   }
 

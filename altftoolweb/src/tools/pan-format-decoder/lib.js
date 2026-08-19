@@ -33,58 +33,47 @@ export const MAX_SEQUENCE = 9999;
 
 /**
  * Status of the holder, taken from the fourth character of the PAN.
- * `common` marks the ten codes that appear on almost every PAN in circulation.
  */
 export const PAN_HOLDER_TYPES = {
   P: {
     label: "Individual",
     description: "A natural person. The fifth character is the first letter of the surname.",
-    common: true,
   },
   C: {
     label: "Company",
     description: "A company registered under the Companies Act, including a one person company.",
-    common: true,
   },
   H: {
     label: "Hindu Undivided Family (HUF)",
     description: "A HUF, assessed separately from its members, with the karta signing for it.",
-    common: true,
   },
   F: {
     label: "Firm",
     description: "A partnership firm. Limited liability partnerships (LLPs) also carry this code — there is no separate LLP status code.",
-    common: true,
   },
   A: {
     label: "Association of Persons (AOP)",
     description: "Two or more persons joining for a common purpose, such as a housing society.",
-    common: true,
   },
   T: {
     label: "Trust",
     description: "A trust, including charitable and religious trusts registered under section 12A.",
-    common: true,
   },
   B: {
     label: "Body of Individuals (BOI)",
     description: "A group of individuals carrying on an activity without forming an association.",
-    common: true,
   },
   L: {
     label: "Local Authority",
     description: "A municipality, panchayat, cantonment board or similar local body.",
-    common: true,
   },
   J: {
     label: "Artificial Juridical Person",
     description: "A legal entity that fits none of the other statuses, such as a deity or a university.",
-    common: true,
   },
   G: {
     label: "Government",
     description: "A central or state government office or department.",
-    common: true,
   },
 };
 
@@ -168,14 +157,13 @@ export function decodePan(raw) {
   }
 
   const shapeOk = errors.length === 0 && PAN_REGEX.test(normalized);
-  const candidate = suggestionChars.join("");
-  const suggestion =
-    !shapeOk && candidate !== normalized && PAN_REGEX.test(candidate) ? candidate : null;
 
-  // A well-formed TAN is never a mistyped PAN, so say so and stop — but only once we know
-  // there isn't a more useful single-character fix back to a valid PAN (e.g. a digit typoed
-  // in the name-initial position, which is also TAN-shaped by coincidence).
-  if (!shapeOk && suggestion === null && TAN_REGEX.test(normalized)) {
+  // A well-formed TAN is never a mistyped PAN, so say so and stop. A TAN (4 letters, 5
+  // digits, 1 letter) and a PAN (5 letters, 4 digits, 1 letter) are mutually exclusive
+  // shapes except for a coincidental overlap at position 5, so matching TAN_REGEX here is
+  // dispositive on its own — it must not be deferred to whether a single-character PAN
+  // suggestion also happens to exist, or most real TANs slip past this check entirely.
+  if (!shapeOk && TAN_REGEX.test(normalized)) {
     return {
       input,
       normalized,
@@ -188,6 +176,10 @@ export function decodePan(raw) {
       parts: null,
     };
   }
+
+  const candidate = suggestionChars.join("");
+  const suggestion =
+    !shapeOk && candidate !== normalized && PAN_REGEX.test(candidate) ? candidate : null;
 
   if (!shapeOk) {
     return { input, normalized, valid: false, errors, warnings, suggestion, parts: null };
@@ -211,12 +203,6 @@ export function decodePan(raw) {
   if (sequenceNumber < MIN_SEQUENCE || sequenceNumber > MAX_SEQUENCE) {
     warnings.push(
       `The four-digit block runs from ${String(MIN_SEQUENCE).padStart(4, "0")} to ${MAX_SEQUENCE}, so "${sequence}" is outside the allotted range.`,
-    );
-  }
-
-  if (!holderType.common) {
-    warnings.push(
-      `"${holderTypeCode}" is a valid but uncommon status code — double-check it against the PAN card before relying on it.`,
     );
   }
 

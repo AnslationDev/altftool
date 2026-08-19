@@ -39,7 +39,7 @@ const seo = {
     ],
     [
       "How many bags of concrete do I need per fence post?",
-      "About two 80 lb bags for a 4×4 post in a 10.5 inch hole buried 24 inches — the annulus works out at roughly 1.03 cubic feet and an 80 lb bag yields 0.60. A 6×6 post in a 16.5 inch hole needs closer to four and a half bags, so post size drives concrete cost far more than fence length does.",
+      "About two 80 lb bags for a 4×4 post in a 10.5 inch hole buried 24 inches — the annulus works out at roughly 1.03 cubic feet and an 80 lb bag yields 0.60. A 6×6 post in a 16.5 inch hole needs about four and a quarter bags, so post size drives concrete cost far more than fence length does.",
     ],
     [
       "How wide should a post hole be?",

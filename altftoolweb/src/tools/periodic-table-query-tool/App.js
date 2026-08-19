@@ -61,13 +61,32 @@ const reactionDataset = {
   "H+O": { formula: "H2O", name: "Water", note: "Hydrogen and oxygen combine in a 2:1 ratio to form water." },
   "C+O": { formula: "CO2", name: "Carbon dioxide", note: "Carbon reacts with oxygen during combustion to form carbon dioxide." },
   "Fe+O": { formula: "Fe2O3", name: "Iron(III) oxide", note: "Iron and oxygen form rust-like iron oxide compounds." },
-  "H+Cl": { formula: "HCl", name: "Hydrogen chloride", note: "Hydrogen and chlorine form a polar covalent compound." },
+  "Cl+H": { formula: "HCl", name: "Hydrogen chloride", note: "Hydrogen and chlorine form a polar covalent compound." },
 };
 
 const shellCapacities = [2, 8, 18, 32, 32, 18, 8];
 const commonValence = { H: 1, O: 2, Na: 1, Cl: 1, C: 4, N: 3, Mg: 2, Ca: 2, Al: 3, F: 1, S: 2, K: 1 };
 
-const getShells = (atomicNumber) => {
+const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+const buildCompoundFormula = (leftSymbol, rightSymbol) => {
+  if (!leftSymbol || !rightSymbol) return "";
+  // Crisscross valence rule: left element's subscript = right element's valence, and vice versa,
+  // then reduce by the GCD so e.g. Mg(2)+O(2) simplifies from "Mg2O2" down to "MgO".
+  const leftCount = commonValence[rightSymbol] || 1;
+  const rightCount = commonValence[leftSymbol] || 1;
+  const divisor = gcd(leftCount, rightCount) || 1;
+  const reducedLeft = leftCount / divisor;
+  const reducedRight = rightCount / divisor;
+  return `${leftSymbol}${reducedLeft > 1 ? reducedLeft : ""}${rightSymbol}${reducedRight > 1 ? reducedRight : ""}`;
+};
+
+// Simplified Bohr-model shell filling: electrons are packed into each shell up to its
+// theoretical maximum capacity (2n^2) in strict sequential order. This does NOT follow the
+// real Aufbau/subshell-filling rules, so for many elements past argon it diverges from the
+// element's true electron configuration (already shown correctly via electronicConfiguration
+// elsewhere in this panel). Treat this as an illustrative approximation only, not a scientific
+// statement of the element's actual shell populations.
+const getApproximateBohrShells = (atomicNumber) => {
   let remaining = Number(atomicNumber) || 0;
   return shellCapacities.reduce((shells, capacity) => {
     if (remaining <= 0) return shells;
@@ -77,7 +96,14 @@ const getShells = (atomicNumber) => {
   }, []);
 };
 
-const getMassNumber = (element) => Math.round(Array.isArray(element.atomicMass) ? element.atomicMass[0] : Number(element.atomicMass) || element.atomicNumber);
+const getMassNumber = (element) => {
+  if (Array.isArray(element.atomicMass)) return Math.round(element.atomicMass[0]);
+  // atomicMass is often a precision-annotated string like "15.9994(3)"; Number() rejects that
+  // (returns NaN) because it requires the whole string to be a clean numeric literal, so we
+  // need parseFloat, which correctly reads the leading numeric portion.
+  const parsed = parseFloat(element.atomicMass);
+  return Math.round(Number.isFinite(parsed) ? parsed : element.atomicNumber);
+};
 const getNeutrons = (element) => Math.max(0, getMassNumber(element) - element.atomicNumber);
 const pairKey = (a, b) => [a, b].sort().join("+");
 const getReaction = (a, b) => reactionDataset[pairKey(a?.symbol, b?.symbol)];
@@ -101,12 +127,27 @@ const getAtomAccentColors = (hex = "06b6d4") => {
     glow: `rgba(${red}, ${green}, ${blue}, 0.24)`,
   };
 };
+const normalizeHexColor = (value, fallback = "06b6d4") => {
+  // data/elements.json stores some cpkHexColor values as bare numbers instead of strings
+  // (e.g. Fluorine's is 9e+51, Palladium's is 6985, Erbium's is 0), which are not valid
+  // 6-digit hex colors. Pad/validate before use, falling back to the tool's default accent.
+  const padded = String(value ?? "").padStart(6, "0").slice(0, 6);
+  return /^[0-9a-fA-F]{6}$/.test(padded) ? padded : fallback;
+};
+
+const groupLabel = (element) => {
+  if (element.group != null) return element.group;
+  if (element.groupBlock === "lanthanoid") return "Lanthanide (n/a)";
+  if (element.groupBlock === "actinoid") return "Actinide (n/a)";
+  return "N/A";
+};
+
 const getStateAtTemperature = (element, kelvin) => {
   const melting = Number(element.meltingPoint);
   const boiling = Number(element.boilingPoint);
   if (!melting && !boiling) return titleCase(element.standardState);
-  if (melting && kelvin < melting) return "Solid";
   if (boiling && kelvin >= boiling) return "Gas";
+  if (melting && kelvin < melting) return "Solid";
   return "Liquid";
 };
 
@@ -187,7 +228,7 @@ const AtomModelCanvas = ({ element, shells }) => {
       context.clearRect(0, 0, size, 260);
       const cx = size / 2;
       const cy = 130;
-      const nucleusHex = element.cpkHexColor || "06b6d4";
+      const nucleusHex = normalizeHexColor(element.cpkHexColor);
       const color = `#${nucleusHex}`;
       const textColor = getReadableTextColor(nucleusHex);
       const atomColors = getAtomAccentColors(nucleusHex);
@@ -285,7 +326,7 @@ export default function PeriodicTableQueryTool() {
   const visibleSet = useMemo(() => new Set(table.filteredElements.map((element) => element.atomicNumber)), [table.filteredElements]);
   const favoriteSet = useMemo(() => new Set(table.favorites), [table.favorites]);
   const selectedCategoryStyle = categoryStyles[table.selected.groupBlock] || "bg-cyan-500/10 text-cyan-500 border-cyan-500/25";
-  const selectedShells = useMemo(() => getShells(table.selected.atomicNumber), [table.selected.atomicNumber]);
+  const selectedShells = useMemo(() => getApproximateBohrShells(table.selected.atomicNumber), [table.selected.atomicNumber]);
   const reactionLeft = table.elements.find((element) => element.atomicNumber === Number(reactionA));
   const reactionRight = table.elements.find((element) => element.atomicNumber === Number(reactionB));
   const reaction = getReaction(reactionLeft, reactionRight);
@@ -343,6 +384,7 @@ export default function PeriodicTableQueryTool() {
                   if (event.key === "Enter" && table.filteredElements[0]) handleSelectElement(table.filteredElements[0].atomicNumber, "search");
                 }}
                 placeholder="Search by name, symbol, atomic number, or category"
+                aria-label="Search elements"
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-(--background) border border-(--border) outline-none focus:border-cyan-500/60 text-base"
               />
             </div>
@@ -389,7 +431,7 @@ export default function PeriodicTableQueryTool() {
                     key={element.atomicNumber}
                     element={element}
                     selected={element.atomicNumber === table.selected.atomicNumber}
-                    related={element.group === table.selected.group || element.period === table.selected.period}
+                    related={(element.group != null && element.group === table.selected.group) || element.period === table.selected.period}
                     visible={visibleSet.has(element.atomicNumber)}
                     favorite={favoriteSet.has(element.atomicNumber)}
                     onSelect={handleSelectElement}
@@ -399,7 +441,7 @@ export default function PeriodicTableQueryTool() {
             </div>
           </InfoCard>
 
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start" aria-live="polite">
             <InfoCard title="Element Detail Panel" icon={FlaskConical}>
               <div className={`rounded-2xl border p-5 mb-4 ${selectedCategoryStyle}`}>
                 <div className="flex items-start justify-between gap-4">
@@ -415,7 +457,7 @@ export default function PeriodicTableQueryTool() {
               </div>
               <DataRow label="Atomic Number" value={table.selected.atomicNumber} highlight />
               <DataRow label="Atomic Mass" value={table.selected.atomicMass} />
-              <DataRow label="Group / Period" value={`${table.selected.group} / ${table.selected.period}`} />
+              <DataRow label="Group / Period" value={`${groupLabel(table.selected)} / ${table.selected.period}`} />
               <DataRow label="State" value={titleCase(table.selected.standardState)} />
               <DataRow label="Electron Config" value={table.selected.electronicConfiguration} highlight />
               <DataRow label="Discovered" value={table.selected.yearDiscovered} />
@@ -423,6 +465,7 @@ export default function PeriodicTableQueryTool() {
                 <div>
                   <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">3D Atom Model Viewer</p>
                   <AtomModelCanvas element={table.selected} shells={selectedShells} />
+                  <p className="mt-2 text-xs text-(--muted-foreground)">Simplified Bohr-model illustration, not the element&apos;s true subshell structure — see Electron Config above.</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Element Uses</p>
@@ -451,9 +494,10 @@ export default function PeriodicTableQueryTool() {
               </div>
               <div className="mt-5 space-y-5">
                 <div>
-                  <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Electron Shell Visualization</p>
+                  <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Electron Shell Visualization (Simplified Bohr Model)</p>
                   <ShellDiagram shells={selectedShells} />
                   <p className="mt-2 text-sm font-bold text-(--muted-foreground)">Shell layout: {selectedShells.join(", ")}</p>
+                  <p className="mt-1 text-xs text-(--muted-foreground)">This is a simplified Bohr-model approximation (shells filled to capacity in order), not the element&apos;s true electron configuration shown above.</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Atomic Structure Diagram</p>
@@ -481,7 +525,13 @@ export default function PeriodicTableQueryTool() {
           <InfoCard title="Compare Elements" icon={Atom} className="lg:col-span-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
               {[0, 1].map((index) => (
-                <select key={index} value={table.compareNumbers[index]} onChange={(event) => table.updateCompare(index, event.target.value)} className="w-full px-4 py-3 rounded-xl bg-(--background) border border-(--border) outline-none focus:border-cyan-500/60 text-base font-bold">
+                <select
+                  key={index}
+                  value={table.compareNumbers[index]}
+                  onChange={(event) => table.updateCompare(index, event.target.value)}
+                  aria-label={index === 0 ? "Compare element, first slot" : "Compare element, second slot"}
+                  className="w-full px-4 py-3 rounded-xl bg-(--background) border border-(--border) outline-none focus:border-cyan-500/60 text-base font-bold"
+                >
                   {table.elements.map((element) => <option key={element.atomicNumber} value={element.atomicNumber}>{element.name} ({element.symbol})</option>)}
                 </select>
               ))}
@@ -535,6 +585,7 @@ export default function PeriodicTableQueryTool() {
                   key={index}
                   value={value}
                   onChange={(event) => (index === 0 ? setReactionA(event.target.value) : setReactionB(event.target.value))}
+                  aria-label={index === 0 ? "Reactant A" : "Reactant B"}
                   className="w-full px-4 py-3 rounded-xl bg-(--background) border border-(--border) outline-none focus:border-cyan-500/60 text-base font-bold"
                 >
                   {table.elements.map((element) => <option key={element.atomicNumber} value={element.atomicNumber}>{element.name} ({element.symbol})</option>)}
@@ -553,7 +604,7 @@ export default function PeriodicTableQueryTool() {
             <div className="mt-4 rounded-xl bg-(--background) border border-(--border) p-4">
               <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Compound Builder</p>
               <div className="text-3xl font-black text-cyan-500">
-                {reaction?.formula || `${reactionLeft?.symbol || ""}${commonValence[reactionRight?.symbol] > 1 ? commonValence[reactionRight?.symbol] : ""}${reactionRight?.symbol || ""}${commonValence[reactionLeft?.symbol] > 1 ? commonValence[reactionLeft?.symbol] : ""}`}
+                {reaction?.formula || buildCompoundFormula(reactionLeft?.symbol, reactionRight?.symbol)}
               </div>
               <p className="mt-2 text-sm text-(--muted-foreground)">Generated from predefined reactions first, then simple valence balancing for common elements.</p>
             </div>
@@ -572,6 +623,7 @@ export default function PeriodicTableQueryTool() {
                 step="10"
                 value={temperature}
                 onChange={(event) => setTemperature(Number(event.target.value))}
+                aria-label="Temperature in Kelvin"
                 className="w-full accent-cyan-500"
               />
               <div className="mt-5 grid grid-cols-3 gap-3">

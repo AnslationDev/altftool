@@ -129,15 +129,27 @@ export const SQL_CHECKS = [
   },
   {
     id: "subquery",
-    label: "Correlated subquery in SELECT or WHERE",
+    label: "Subquery present — check if it's correlated",
     test: /\(\s*select\b/i,
     finding:
-      "A subquery that references the outer row may be evaluated once per row. Ask whether it can become a join or a lateral join.",
+      "If this subquery references a column from the outer query, it may be evaluated once per row — worth checking in the plan. An uncorrelated subquery (for example a derived table in FROM) is usually evaluated once.",
   },
   {
     id: "unboundedDml",
     label: "UPDATE or DELETE with no WHERE",
-    test: /^\s*(?:update|delete)\b(?![\s\S]*\bwhere\b)/i,
+    test: {
+      // Scope the WHERE lookahead to just this statement, not the whole
+      // remaining input, so a WHERE inside a comment or a later statement
+      // doesn't suppress a genuinely unbounded UPDATE/DELETE.
+      test(fullText) {
+        const withoutComments = fullText.replace(/--[^\n]*/g, "");
+        if (!/^\s*(?:update|delete)\b/i.test(withoutComments)) return false;
+        const semicolonIndex = withoutComments.indexOf(";");
+        const statement =
+          semicolonIndex === -1 ? withoutComments : withoutComments.slice(0, semicolonIndex);
+        return !/\bwhere\b/i.test(statement);
+      },
+    },
     finding:
       "This statement has no WHERE clause and will touch every row in the table. Confirm that is intended before running it.",
   },
@@ -193,7 +205,14 @@ export function analyzeSql(sql) {
   const findings = [];
   for (const check of SQL_CHECKS) {
     if (!check.test.test(text)) continue;
-    if (check.negate && check.negate.test(text)) continue;
+    if (check.negate) {
+      // Scope the negate check to the substring from where `test` actually
+      // matched, so an unrelated match earlier or later in the text (e.g. a
+      // LIMIT inside a different clause) doesn't wrongly suppress a finding.
+      const match = typeof check.test.exec === "function" ? check.test.exec(text) : null;
+      const scopeFrom = match ? match.index : 0;
+      if (check.negate.test(text.slice(scopeFrom))) continue;
+    }
     findings.push({ id: check.id, label: check.label, finding: check.finding });
   }
 
@@ -223,7 +242,10 @@ export function scanPlan(planText, engine) {
   if (typeof planText !== "string" || planText.trim().length === 0 || !engine) {
     return { nodes: [], lines: 0 };
   }
-  const text = planText.slice(0, LIMITS.planChars.max);
+  // Scan the full pasted text — buildSqlExplainPrompt() embeds the full,
+  // untruncated planText in the prompt body, so the line/node counts reported
+  // here must be derived from that same full text or the two go out of sync.
+  const text = planText;
   const lower = text.toLowerCase();
   const nodes = engine.costlyNodes.filter((node) => lower.includes(node.toLowerCase()));
   return { nodes, lines: text.trim().split(/\r?\n/).length };

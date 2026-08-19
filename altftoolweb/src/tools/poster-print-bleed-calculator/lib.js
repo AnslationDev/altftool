@@ -189,6 +189,14 @@ export function computePosterSetup({
   if (viewingDistance <= 0) {
     return { error: "Viewing distance must be greater than zero." };
   }
+  // A caller passes `null`/`undefined` to mean "no manual override, use the
+  // auto band". Anything else (including a blank-field NaN, zero, or a
+  // negative number) means the user asked for manual mode with a bad value
+  // -- previously this was silently discarded and fell back to the auto
+  // band with no indication the override was ignored.
+  if (ppiOverride !== null && ppiOverride !== undefined && !(isNum(ppiOverride) && ppiOverride > 0)) {
+    return { error: "Enter a manual PPI greater than zero, or switch back to automatic." };
+  }
 
   const trimWmm = toMm(trimWidth, unit);
   const trimHmm = toMm(trimHeight, unit);
@@ -196,15 +204,16 @@ export function computePosterSetup({
   const safeMm = toMm(safeMargin, unit);
   const distanceMm = viewingDistance * DISTANCE_UNITS[distanceUnit];
 
-  if (trimWmm > 20000 || trimHmm > 20000) {
+  const docWmm = trimWmm + bleedMm * 2;
+  const docHmm = trimHmm + bleedMm * 2;
+
+  if (docWmm > 20000 || docHmm > 20000) {
     return { error: "Keep each side under 20 m — beyond that a poster is printed in panels." };
   }
   if (safeMm * 2 >= Math.min(trimWmm, trimHmm)) {
     return { error: "Safe margin is too large — it leaves no live area inside the trim." };
   }
 
-  const docWmm = trimWmm + bleedMm * 2;
-  const docHmm = trimHmm + bleedMm * 2;
   const safeWmm = trimWmm - safeMm * 2;
   const safeHmm = trimHmm - safeMm * 2;
 

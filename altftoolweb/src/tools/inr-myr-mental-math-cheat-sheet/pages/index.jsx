@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Calculator, Check, Copy, RotateCcw } from "lucide-react";
 
 import { CURRENCY, SHOPPING_ACCURACY_PERCENT, buildCheatSheet } from "../lib";
@@ -42,6 +42,9 @@ export default function ToolHome() {
   const [inrPerUnit, setInrPerUnit] = useState(DEFAULTS.inrPerUnit);
   const [amount, setAmount] = useState(DEFAULTS.amount);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const sheet = useMemo(() => buildCheatSheet({ inrPerUnit, amount }), [inrPerUnit, amount]);
 
@@ -66,7 +69,7 @@ export default function ToolHome() {
       "Price ladder:",
       ...sheet.priceLadder.map(
         (row) =>
-          `  ${CURRENCY.symbol}${row.amount} (${row.note}) = Rs ${row.exactInr} exact / Rs ${row.tunedInr} by rule`,
+          `  ${CURRENCY.symbol}${row.amount} (${row.note}) = Rs ${row.exactInr} exact / Rs ${row.recommendedInr} by rule`,
       ),
       "",
       "Notes in your wallet:",
@@ -79,7 +82,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -162,7 +166,13 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="my-result">
+      <section
+        className={`mt-6 ${CARD}`}
+        aria-labelledby="my-result"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2
@@ -172,7 +182,7 @@ export default function ToolHome() {
               {worked ? `${CURRENCY.symbol}${worked.amount} in your head` : "Rule to memorise"}
             </h2>
             <p className="mt-1 text-5xl font-semibold text-[var(--primary)]">
-              {ok && worked ? INR.format(worked.tunedInr) : ok ? recommended.label : DASH}
+              {ok && worked ? INR.format(worked.recommendedInr) : ok ? recommended.label : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
@@ -185,7 +195,6 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={!ok}
-              aria-label="Copy the cheat sheet"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -327,9 +336,9 @@ export default function ToolHome() {
                       <td className="py-2.5 pr-3 text-right font-semibold">
                         {INR.format(row.exactInr)}
                       </td>
-                      <td className="py-2.5 pr-3 text-right">{INR.format(row.tunedInr)}</td>
+                      <td className="py-2.5 pr-3 text-right">{INR.format(row.recommendedInr)}</td>
                       <td className="py-2.5 text-right text-[var(--muted-foreground)]">
-                        {INR_EXACT.format(row.tunedGapInr)}
+                        {INR_EXACT.format(row.recommendedGapInr)}
                       </td>
                     </tr>
                   ))}
@@ -410,7 +419,7 @@ export default function ToolHome() {
                       </td>
                       <td className="py-2.5 text-right text-[var(--muted-foreground)]">
                         {CURRENCY.symbol}
-                        {DEC2.format(row.quickUnits)}
+                        {DEC2.format(row.ruleUnits)}
                       </td>
                     </tr>
                   ))}

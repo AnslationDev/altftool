@@ -38,6 +38,9 @@ export async function generateMetadata() {
       "Stay updated with the latest news on technology, digital tools, software updates, and online trends with AltFTool News.",
     path: "/news",
     keywords: ["technology news", "digital tools news", "software updates", "online trends"],
+    // Syndicated wire-service headlines the original publishers own — kept out
+    // of the index (follow stays on so internal links still pass through).
+    noindex: true,
   });
 }
 

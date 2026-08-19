@@ -11,7 +11,7 @@ const seo = {
     "A down payment planner works out the monthly saving that puts the right amount of cash in your hands on the day you buy, not the day you plan. It inflates the property price to the purchase date, adds stamp duty and registration — costs a housing loan does not cover — compounds what you have already set aside, then solves the ordinary-annuity payment C = gap × i ÷ ((1+i)^n − 1) for the shortfall. It also checks the down payment against the RBI loan-to-value ceiling, which sets the legal minimum a bank can accept.",
   useCases: [
     "Planning a ₹80 lakh flat three years out and finding the true cash requirement once 7% stamp duty and registration are added.",
-    "Checking whether a 20% down payment is even permitted on a property above ₹75 lakh, where the RBI LTV ceiling is 75%.",
+    "Checking whether a 20% down payment is even permitted once the resulting loan pushes past the RBI's ₹75 lakh loan-size band, where the LTV ceiling drops to 75%.",
     "Comparing how much less you need to save each month if you push the purchase from three years out to five.",
   ],
   benefits: [

@@ -255,6 +255,20 @@ function countPhrase(haystack, phrase) {
   return count;
 }
 
+/**
+ * Count phrase occurrences. Single-word entries (e.g. "overall") use a
+ * \b-bounded regex like HEDGE_WORDS so they don't false-match inside a
+ * longer word (e.g. "overalls"); genuinely multi-word phrases keep the
+ * plain substring search since word boundaries do not apply the same way.
+ */
+function countPhraseOccurrences(haystack, phrase) {
+  if (!phrase.includes(" ")) {
+    const matches = haystack.match(new RegExp(`\\b${phrase}\\b`, "g"));
+    return matches ? matches.length : 0;
+  }
+  return countPhrase(haystack, phrase);
+}
+
 function perThousand(count, words) {
   if (!(words > 0)) return 0;
   return (count / words) * PER_THOUSAND;
@@ -292,7 +306,7 @@ export function scanDraft(text) {
   const phraseHits = [];
   let phraseCount = 0;
   for (const phrase of OVERUSED_PHRASES) {
-    const hits = countPhrase(lower, phrase);
+    const hits = countPhraseOccurrences(lower, phrase);
     if (hits > 0) {
       phraseHits.push({ phrase, hits });
       phraseCount += hits;
@@ -314,15 +328,26 @@ export function scanDraft(text) {
   const dashCount = (text.match(/[—–]/g) || []).length;
   const adverbCount = words.filter((word) => /ly$/i.test(word) && word.length > 4).length;
 
+  // Tally openers per paragraph (not across the whole draft) so a repeat
+  // only counts when the same opener actually recurs within one paragraph,
+  // matching the "vary-openers" checklist item's own "within a paragraph"
+  // wording.
   const openerTally = new Map();
-  for (const sentence of sentences) {
-    const first = splitWords(sentence)[0];
-    if (!first) continue;
-    const key = first.toLowerCase();
-    openerTally.set(key, (openerTally.get(key) || 0) + 1);
+  for (const paragraph of paragraphs) {
+    const paragraphTally = new Map();
+    for (const sentence of splitSentences(paragraph)) {
+      const first = splitWords(sentence)[0];
+      if (!first) continue;
+      const key = first.toLowerCase();
+      paragraphTally.set(key, (paragraphTally.get(key) || 0) + 1);
+    }
+    for (const [key, count] of paragraphTally.entries()) {
+      if (count >= THRESHOLDS.repeatedOpenerCount) {
+        openerTally.set(key, (openerTally.get(key) || 0) + count);
+      }
+    }
   }
   const repeatedOpeners = [...openerTally.entries()]
-    .filter(([, count]) => count >= THRESHOLDS.repeatedOpenerCount)
     .map(([word, count]) => ({ word, count }))
     .sort((a, b) => b.count - a.count || a.word.localeCompare(b.word));
 
@@ -333,15 +358,18 @@ export function scanDraft(text) {
     adverbPerThousand: perThousand(adverbCount, wordCount),
   };
 
+  // Every key here must correspond to a CHECKLIST item's `signal`, so a
+  // raised flag always pins a matching edit to the top of the checklist.
+  // adverbPerThousandWords and longMeanSentenceWords remain useful
+  // reference thresholds (still surfaced as raw stats below) but are not
+  // flagged here because no checklist item targets them specifically.
   const flags = {
     phrases: rates.phrasePerThousand > THRESHOLDS.phrasePerThousandWords,
     hedges: rates.hedgePerThousand > THRESHOLDS.hedgePerThousandWords,
     dashes: rates.dashPerThousand > THRESHOLDS.dashPerThousandWords,
-    adverbs: rates.adverbPerThousand > THRESHOLDS.adverbPerThousandWords,
     burstiness: sentenceStdDev < THRESHOLDS.lowBurstinessStdDev,
     openers: repeatedOpeners.length > 0,
     paragraphs: paragraphs.length >= 3 && paragraphStdDev < 1,
-    longSentences: meanSentenceWords > THRESHOLDS.longMeanSentenceWords,
   };
 
   const flagCount = Object.values(flags).filter(Boolean).length;
@@ -353,8 +381,8 @@ export function scanDraft(text) {
     meanSentenceWords,
     sentenceStdDev,
     paragraphStdDev,
-    shortestSentenceWords: Math.min(...sentenceLengths),
-    longestSentenceWords: Math.max(...sentenceLengths),
+    shortestSentenceWords: sentenceLengths.reduce((min, value) => Math.min(min, value), sentenceLengths[0]),
+    longestSentenceWords: sentenceLengths.reduce((max, value) => Math.max(max, value), sentenceLengths[0]),
     phraseCount,
     phraseHits,
     hedgeCount,

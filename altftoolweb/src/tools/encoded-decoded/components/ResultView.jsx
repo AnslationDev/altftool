@@ -124,7 +124,7 @@ const ResultView = ({ value, error, encodingType = "text" }) => {
         </div>
       </div>
 
-      <div className="mt-2 text-[10px] text-right text-(--foreground) opacity-40 uppercase tracking-widest font-bold">
+      <div aria-live="polite" aria-atomic="true" className="mt-2 text-[10px] text-right text-(--foreground) opacity-40 uppercase tracking-widest font-bold">
         {error ? (
           <span className="text-red-400">Invalid Input</span>
         ) : (

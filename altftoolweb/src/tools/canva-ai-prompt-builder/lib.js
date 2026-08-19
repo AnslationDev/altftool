@@ -273,7 +273,7 @@ export function splitList(value) {
   return out;
 }
 
-const clean = (value) => (typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "");
+export const clean = (value) => (typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "");
 
 /**
  * Compose a Canva design prompt.
@@ -327,6 +327,7 @@ export function buildCanvaPrompt({
   const safeVariants = Number.isFinite(variantCount)
     ? Math.min(10, Math.max(1, Math.round(variantCount)))
     : 3;
+  const variantsClamped = Number.isFinite(variantCount) && safeVariants !== variantCount;
 
   const style = STYLE_PRESETS.find((s) => s.id === styleId) || STYLE_PRESETS[0];
   const colours = splitList(brandColors);
@@ -341,6 +342,11 @@ export function buildCanvaPrompt({
   const physical = format.medium === "print" ? physicalSizeMm(format.width, format.height, format.dpi) : null;
 
   const warnings = [];
+  if (variantsClamped) {
+    warnings.push(
+      `${variantCount} option${variantCount === 1 ? "" : "s"} requested, but Canva prompts only support 1 to 10 — using ${safeVariants} instead.`,
+    );
+  }
   if (head && head.length > budget.headlineMax) {
     warnings.push(
       `Headline is ${head.length} characters. On a ${format.label} seen at ${budget.renderWidth} px wide, anything past about ${budget.headlineMax} characters drops below a readable size.`,

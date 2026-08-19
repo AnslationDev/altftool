@@ -41,6 +41,15 @@ export function IONode({ data, selected }) {
         border: selected ? '2px solid #8b5cf6' : '2px solid #a78bfa',
       }}
       onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      role="button"
+      aria-label="Double-click or press Enter to rename"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleDoubleClick();
+        }
+      }}
     >
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-purple-500 !border-2 !border-white" />
       {isEditing ? (

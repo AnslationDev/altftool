@@ -8,7 +8,7 @@ const seo = {
     "The \"Red-flag score\" out of 100 names a band from \"No strong signals found\" to \"Phishing - do not interact\", with every finding tagged Red flag, Caution, Note or Reassuring; \"Copy result\" copies the analysis.",
   ],
   intro:
-    "Account-locked messages are judged on two things: the registrable domain the link actually goes to, and whether the message asks for something Apple never asks for. This page checks both — sender and link domains against apple.com and icloud.com, and the wording against Apple's published position that it does not request passwords, verification codes or security answers by email, message or phone. It also covers the SMS, iMessage and cold-call versions of the same script, and the anatomy of the email itself, from the fake case number to the 24-hour deadline.",
+    "Account-locked messages are judged on two things: the registrable domain the link actually goes to, and whether the message asks for something Apple never asks for. This page checks both — sender and link domains against apple.com, icloud.com and Apple's other account domains, and the wording against Apple's published position that it does not request passwords, verification codes or security answers by email, message or phone. It also covers the SMS, iMessage and cold-call versions of the same script, and the anatomy of the email itself, from the fake case number to the 24-hour deadline.",
   useCases: [
     "An 'Apple ID locked' email lands and you want to check the button's real destination before tapping it.",
     "A parent or grandparent forwards a suspicious text and you need a plain explanation to send back.",
@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "Is the 'Your Apple ID has been locked' email real?",
-      "Almost always no. A genuine Apple ID hold is cleared from your own device or at iforgot.apple.com, and Apple's account mail comes from apple.com or icloud.com domains. Check the link's registrable domain — the part immediately before the first single slash — and if it is anything other than apple.com or icloud.com, delete the message.",
+      "Almost always no. A genuine Apple ID hold is cleared from your own device or at iforgot.apple.com, and Apple's account mail comes from apple.com or icloud.com domains. Check the link's registrable domain — the last two parts of the host, right before the first slash, not the whole host string — and if it is anything other than apple.com or icloud.com (or Apple's other account domains), delete the message.",
     ],
     [
       "What email address does Apple actually send from?",

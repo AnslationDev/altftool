@@ -18,10 +18,10 @@
  */
 
 export const DAYS_PER_YEAR = 365;
-export const WEEKS_PER_YEAR = 365 / 7;
+export const WEEKS_PER_YEAR = DAYS_PER_YEAR / 7;
 
-/** CEA CO2 Baseline Database for the Indian grid, combined margin ~0.71 kg/kWh. */
-export const GRID_CO2_KG_PER_KWH = 0.71;
+/** CEA CO2 Baseline Database Version 21.0 (Dec 2025), FY2023-24 Combined Margin, 0.757 kg CO2/kWh, for the Indian grid. */
+export const GRID_CO2_KG_PER_KWH = 0.757;
 
 /**
  * Fraction of the cooking phase the element is actually powered.
@@ -137,7 +137,10 @@ export function compareAirFryerAndOven({
     kwhSavedPerMeal,
     minutesSavedPerMeal,
     cheaperOption: savingPerMeal > 0 ? "air fryer" : savingPerMeal < 0 ? "oven" : "tie",
-    savingSharePct: ovenCost > 0 ? (savingPerMeal / ovenCost) * 100 : 0,
+    savingSharePct:
+      Math.max(airFryerCost, ovenCost) > 0
+        ? (Math.abs(savingPerMeal) / Math.max(airFryerCost, ovenCost)) * 100
+        : 0,
     mealsPerYear,
     savingPerMonth: (savingPerMeal * mealsPerYear) / 12,
     savingPerYear: savingPerMeal * mealsPerYear,

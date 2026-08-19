@@ -133,7 +133,7 @@ export function buildAgenda({
   if (items.length > MAX_AGENDA_ITEMS) {
     return { error: `An agenda is limited to ${MAX_AGENDA_ITEMS} items. Split the meeting instead.` };
   }
-  if (!isNum(attendees) || attendees < 1) {
+  if (!isNum(attendees) || !Number.isInteger(attendees) || attendees < 1) {
     return { error: "Attendee count must be a whole number of at least 1." };
   }
   if (!isNum(hourlyCost) || hourlyCost < 0) {

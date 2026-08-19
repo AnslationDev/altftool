@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Copy, Check, RefreshCw, Eye, EyeOff } from "lucide-react";
 
 const ADJECTIVES = [
@@ -90,10 +90,10 @@ const NOUNS = [
 const SYMBOLS = "!@#$%^&*";
 
 function getStrength(len) {
-  if (len < 6) return { label: "Weak", color: "#EF4444", pct: 20 };
-  if (len < 10) return { label: "Fair", color: "#F59E0B", pct: 45 };
-  if (len < 14) return { label: "Good", color: "#14B8A6", pct: 70 };
-  return { label: "Strong", color: "#10B981", pct: 95 };
+  if (len < 6) return { label: "Weak", color: "var(--danger)", pct: 20 };
+  if (len < 10) return { label: "Fair", color: "var(--warning)", pct: 45 };
+  if (len < 14) return { label: "Good", color: "var(--primary)", pct: 70 };
+  return { label: "Strong", color: "var(--success)", pct: 95 };
 }
 
 export default function ToolHome() {
@@ -110,7 +110,15 @@ export default function ToolHome() {
     const num = useNumbers ? String(Math.floor(Math.random() * 900) + 100) : "";
     const sym = useSymbols ? SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)] : "";
     let pw = adj + noun + num + sym;
-    if (pw.length > length) pw = pw.slice(0, length);
+    if (pw.length > length) {
+      pw = pw.slice(0, length);
+    } else if (pw.length < length) {
+      const padChars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" + (useSymbols ? SYMBOLS : "");
+      while (pw.length < length) {
+        pw += padChars[Math.floor(Math.random() * padChars.length)];
+      }
+    }
     setPassword(pw);
   }, [length, useNumbers, useSymbols]);
 
@@ -151,7 +159,7 @@ export default function ToolHome() {
         </div>
 
         <div className="rounded-2xl p-6 border space-y-6" style={{ background: "var(--card)", borderColor: "var(--border)" }}>
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <div className="relative">
               <input
                 type={showPw ? "text" : "password"}
@@ -162,17 +170,28 @@ export default function ToolHome() {
                 style={{ background: "var(--background)", borderColor: "var(--border)", color: "var(--foreground)" }}
               />
               <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
-                <button onClick={() => setShowPw(!showPw)} className="p-2 rounded-lg" style={{ color: "var(--muted-foreground)" }}>
+                <button
+                  onClick={() => setShowPw(!showPw)}
+                  aria-label={showPw ? "Hide password" : "Show password"}
+                  className="p-2 rounded-lg"
+                  style={{ color: "var(--muted-foreground)" }}
+                >
                   {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
-                <button onClick={handleCopy} disabled={!password} className="p-2 rounded-lg disabled:opacity-40" style={{ color: copied ? "var(--primary)" : "var(--muted-foreground)" }}>
+                <button
+                  onClick={handleCopy}
+                  disabled={!password}
+                  aria-label={copied ? "Copied" : "Copy password to clipboard"}
+                  className="p-2 rounded-lg disabled:opacity-40"
+                  style={{ color: copied ? "var(--primary)" : "var(--muted-foreground)" }}
+                >
                   {copied ? <Check size={18} /> : <Copy size={18} />}
                 </button>
               </div>
             </div>
           </div>
 
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
               <div className="h-full transition-all duration-500 rounded-full" style={{ width: `${strength.pct}%`, background: strength.color }} />
             </div>
@@ -198,6 +217,9 @@ export default function ToolHome() {
               <span className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>Numbers</span>
               <button
                 onClick={() => setUseNumbers(!useNumbers)}
+                role="switch"
+                aria-checked={useNumbers}
+                aria-label="Include numbers"
                 className={`w-10 h-5 rounded-full transition-colors relative ${useNumbers ? "" : ""}`}
                 style={{ background: useNumbers ? "var(--primary)" : "var(--border)" }}
               >
@@ -209,6 +231,9 @@ export default function ToolHome() {
               <span className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>Symbols</span>
               <button
                 onClick={() => setUseSymbols(!useSymbols)}
+                role="switch"
+                aria-checked={useSymbols}
+                aria-label="Include symbols"
                 className={`w-10 h-5 rounded-full transition-colors relative ${useSymbols ? "" : ""}`}
                 style={{ background: useSymbols ? "var(--primary)" : "var(--border)" }}
               >

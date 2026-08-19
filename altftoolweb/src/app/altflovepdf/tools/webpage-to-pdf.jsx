@@ -1,19 +1,17 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { PDFDocument } from "pdf-lib";
 import {
   Upload,
   X,
   Check,
   AlertCircle,
-  Camera,
   FileCode,
   Eye,
 } from "lucide-react";
+import DOMPurify from "dompurify";
 
 export default function WebpageToPdf() {
-  const [mode, setMode] = useState("website");
   const [file, setFile] = useState(null);
   const [rawHtml, setRawHtml] = useState("");
   const [size, setSize] = useState("a4");
@@ -25,12 +23,6 @@ export default function WebpageToPdf() {
   const [showPreview, setShowPreview] = useState(false);
 
   const fileInputRef = useRef(null);
-
-  const isExtensionAvailable =
-    typeof window !== "undefined" &&
-    typeof chrome !== "undefined" &&
-    chrome?.tabs &&
-    typeof chrome.tabs.captureVisibleTab === "function";
 
   useEffect(() => {
     return () => {
@@ -98,138 +90,6 @@ export default function WebpageToPdf() {
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
-    }
-  };
-
-  const getPdfPageSize = (imageWidth, imageHeight) => {
-    if (size === "a4") {
-      return orientation === "landscape"
-        ? { width: 841.89, height: 595.28 }
-        : { width: 595.28, height: 841.89 };
-    }
-
-    if (size === "letter") {
-      return orientation === "landscape"
-        ? { width: 792, height: 612 }
-        : { width: 612, height: 792 };
-    }
-
-    return {
-      width: imageWidth,
-      height: imageHeight,
-    };
-  };
-
-  const compilePdfFromImage = async (dataUrl, fileName) => {
-    setProgress(70);
-    setStatusText("Creating PDF from captured image...");
-
-    const base64 = dataUrl.split(",")[1];
-
-    if (!base64) {
-      throw new Error("Invalid image capture data.");
-    }
-
-    const binaryString = atob(base64);
-    const imageBytes = new Uint8Array(binaryString.length);
-
-    for (let i = 0; i < binaryString.length; i++) {
-      imageBytes[i] = binaryString.charCodeAt(i);
-    }
-
-    const pdfDoc = await PDFDocument.create();
-    const mimeType = dataUrl.slice(5, dataUrl.indexOf(";")).toLowerCase();
-
-    const embeddedImage = mimeType.includes("png")
-      ? await pdfDoc.embedPng(imageBytes)
-      : await pdfDoc.embedJpg(imageBytes);
-
-    const imageDims = embeddedImage.scale(1);
-    const pageSize = getPdfPageSize(imageDims.width, imageDims.height);
-
-    const page = pdfDoc.addPage([pageSize.width, pageSize.height]);
-
-    const scale = Math.min(
-      pageSize.width / imageDims.width,
-      pageSize.height / imageDims.height
-    );
-
-    const drawWidth = imageDims.width * scale;
-    const drawHeight = imageDims.height * scale;
-
-    page.drawImage(embeddedImage, {
-      x: (pageSize.width - drawWidth) / 2,
-      y: (pageSize.height - drawHeight) / 2,
-      width: drawWidth,
-      height: drawHeight,
-    });
-
-    setProgress(90);
-    setStatusText("Saving PDF file...");
-
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const downloadUrl = URL.createObjectURL(blob);
-
-    setResult({
-      name: fileName,
-      size: blob.size,
-      url: downloadUrl,
-    });
-
-    setProgress(100);
-    setStatusText("PDF ready.");
-  };
-
-  const handleCaptureExtension = async () => {
-    if (!isExtensionAvailable) {
-      setResult({
-        error:
-          "Active tab capture requires the companion Chrome Extension environment.",
-      });
-      return;
-    }
-
-    try {
-      setProcessing(true);
-      setProgress(15);
-      setStatusText("Capturing active browser tab...");
-      resetResult();
-
-      const tabDataUrl = await new Promise((resolve, reject) => {
-        chrome.tabs.captureVisibleTab(
-          null,
-          { format: "png", quality: 100 },
-          (imageUrl) => {
-            if (chrome.runtime?.lastError) {
-              reject(new Error(chrome.runtime.lastError.message));
-              return;
-            }
-
-            if (!imageUrl) {
-              reject(new Error("Unable to capture active tab."));
-              return;
-            }
-
-            resolve(imageUrl);
-          }
-        );
-      });
-
-      await compilePdfFromImage(tabDataUrl, "captured_tab.pdf");
-    } catch (err) {
-      console.error("Tab capture failed:", err);
-
-      setProgress(0);
-      setStatusText("");
-
-      setResult({
-        error:
-          err?.message ||
-          "Failed to capture the active tab. Please try again.",
-      });
-    } finally {
-      setProcessing(false);
     }
   };
 
@@ -302,6 +162,23 @@ export default function WebpageToPdf() {
         `;
       }
 
+      // SECURITY: this is fully untrusted, user-supplied HTML (pasted or
+      // uploaded). Sanitize it with DOMPurify BEFORE it ever touches the
+      // DOM. This is the primary defense — the iframe `sandbox` attribute
+      // below is defense-in-depth only, because html2pdf.js's own
+      // toContainer() step deep-clones the rendered content and re-inserts
+      // that clone directly into the TOP-LEVEL page's document.body before
+      // handing it to html2canvas, which bypasses any source-iframe
+      // sandboxing entirely. DOMPurify strips <script> tags, javascript:
+      // URLs, and every on*="" event-handler attribute (onerror, onload,
+      // onclick, ...), so no executable payload survives into either the
+      // iframe or html2pdf's later clone.
+      const sanitizedHtml = DOMPurify.sanitize(fullHtml, {
+        WHOLE_DOCUMENT: true,
+        FORCE_BODY: true,
+        FORBID_TAGS: ["script"],
+      });
+
       iframe = document.createElement("iframe");
       iframe.style.position = "fixed";
       iframe.style.left = "-10000px";
@@ -311,6 +188,13 @@ export default function WebpageToPdf() {
       iframe.style.border = "0";
       iframe.style.background = "#ffffff";
       iframe.style.visibility = "visible";
+      // Defense-in-depth: `allow-same-origin` (without `allow-scripts`)
+      // keeps the iframe's document same-origin so we can still read its
+      // DOM for html2canvas/html2pdf, while the sandbox disables ALL
+      // script execution inside it. Never add `allow-scripts` here — that
+      // combination would let any script reach window.parent with full
+      // same-origin access to this page's cookies/localStorage.
+      iframe.setAttribute("sandbox", "allow-same-origin");
 
       document.body.appendChild(iframe);
 
@@ -320,7 +204,7 @@ export default function WebpageToPdf() {
         iframe.onload = resolve;
         iframe.onerror = reject;
         iframeDoc.open();
-        iframeDoc.write(fullHtml);
+        iframeDoc.write(sanitizedHtml);
         iframeDoc.close();
       });
 
@@ -369,7 +253,7 @@ export default function WebpageToPdf() {
         },
         jsPDF: {
           unit: "mm",
-          format: size === "original" ? "a4" : size,
+          format: size,
           orientation,
           compress: true,
         },
@@ -422,45 +306,8 @@ export default function WebpageToPdf() {
 
   return (
     <div className="tool-workspace-inner">
-      <div
-        className="tab-group"
-        style={{
-          display: "flex",
-          gap: "10px",
-          marginBottom: "20px",
-          flexWrap: "wrap",
-        }}
-      >
-        <button
-          type="button"
-          className={`radio-btn ${mode === "website" ? "active" : ""}`}
-          onClick={() => {
-            setMode("website");
-            resetResult();
-          }}
-          disabled={processing}
-          style={{ flex: "1 1 220px", padding: "10px", fontWeight: "bold" }}
-        >
-          Website Mode
-        </button>
-
-        <button
-          type="button"
-          className={`radio-btn ${mode === "extension" ? "active" : ""}`}
-          onClick={() => {
-            setMode("extension");
-            resetResult();
-          }}
-          disabled={processing}
-          style={{ flex: "1 1 220px", padding: "10px", fontWeight: "bold" }}
-        >
-          Extension Mode
-        </button>
-      </div>
-
-      {mode === "website" ? (
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          {!file ? (
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        {!file ? (
             <>
               <>
 <div
@@ -586,93 +433,8 @@ export default function WebpageToPdf() {
             </div>
           )}
         </div>
-      ) : (
-        <div
-          className="options-card"
-          style={{
-            background: "var(--g50)",
-            padding: "20px",
-            borderRadius: "8px",
-            border: "1px solid var(--g200)",
-          }}
-        >
-          <h4 className="lbl" style={{ marginBottom: "12px" }}>
-            Chrome Extension Tab Capture
-          </h4>
 
-          <p
-            style={{
-              fontSize: "12.5px",
-              color: "var(--g500)",
-              marginBottom: "16px",
-              lineHeight: "1.5",
-            }}
-          >
-            Capture the current active browser tab and convert it into a local
-            PDF document.
-          </p>
-
-          {isExtensionAvailable ? (
-            <button
-              type="button"
-              className="btn btn-sec"
-              onClick={handleCaptureExtension}
-              disabled={processing}
-            >
-              <Camera size={14} />
-              {processing ? "Capturing..." : "Capture Active Tab"}
-            </button>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                background: "var(--err-bg, #fff5f5)",
-                border: "1px solid var(--err-border, #feb2b2)",
-                padding: "14px",
-                borderRadius: "8px",
-                alignItems: "flex-start",
-              }}
-            >
-              <AlertCircle
-                size={20}
-                style={{
-                  color: "var(--err, #e53e3e)",
-                  flexShrink: 0,
-                  marginTop: "2px",
-                }}
-              />
-
-              <div>
-                <strong
-                  style={{
-                    display: "block",
-                    color: "var(--err, #e53e3e)",
-                    fontSize: "14px",
-                    marginBottom: "4px",
-                  }}
-                >
-                  Requires Companion Extension
-                </strong>
-
-                <span
-                  style={{
-                    fontSize: "12.5px",
-                    color: "var(--g600)",
-                    lineHeight: "1.4",
-                  }}
-                >
-                  Active tab capture works only inside the companion Chrome
-                  Extension environment.
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {((mode === "website" && (file || rawHtml.trim())) ||
-        (mode === "extension" && isExtensionAvailable)) && (
+        {(file || rawHtml.trim()) && (
           <div
             className="options-card"
             style={{
@@ -698,23 +460,6 @@ export default function WebpageToPdf() {
             >
               <button
                 type="button"
-                className={`radio-btn ${size === "original" ? "active" : ""}`}
-                onClick={() => {
-                  setSize("original");
-                  resetResult();
-                }}
-                disabled={processing || mode === "website"}
-                title={
-                  mode === "website"
-                    ? "Original size is available only for tab capture mode."
-                    : ""
-                }
-              >
-                Original Size
-              </button>
-
-              <button
-                type="button"
                 className={`radio-btn ${size === "a4" ? "active" : ""}`}
                 onClick={() => {
                   setSize("a4");
@@ -738,42 +483,40 @@ export default function WebpageToPdf() {
               </button>
             </div>
 
-            {size !== "original" && (
-              <div
-                className="radio-group"
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  flexWrap: "wrap",
+            <div
+              className="radio-group"
+              style={{
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                type="button"
+                className={`radio-btn ${orientation === "portrait" ? "active" : ""
+                  }`}
+                onClick={() => {
+                  setOrientation("portrait");
+                  resetResult();
                 }}
+                disabled={processing}
               >
-                <button
-                  type="button"
-                  className={`radio-btn ${orientation === "portrait" ? "active" : ""
-                    }`}
-                  onClick={() => {
-                    setOrientation("portrait");
-                    resetResult();
-                  }}
-                  disabled={processing}
-                >
-                  Portrait Orientation
-                </button>
+                Portrait Orientation
+              </button>
 
-                <button
-                  type="button"
-                  className={`radio-btn ${orientation === "landscape" ? "active" : ""
-                    }`}
-                  onClick={() => {
-                    setOrientation("landscape");
-                    resetResult();
-                  }}
-                  disabled={processing}
-                >
-                  Landscape Orientation
-                </button>
-              </div>
-            )}
+              <button
+                type="button"
+                className={`radio-btn ${orientation === "landscape" ? "active" : ""
+                  }`}
+                onClick={() => {
+                  setOrientation("landscape");
+                  resetResult();
+                }}
+                disabled={processing}
+              >
+                Landscape Orientation
+              </button>
+            </div>
           </div>
         )}
 
@@ -875,7 +618,7 @@ export default function WebpageToPdf() {
               width: "100%",
               maxWidth: "1000px",
               height: "90%",
-              background: "#ffffff",
+              background: "var(--surface)",
               borderRadius: "12px",
               boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
               display: "flex",
@@ -916,7 +659,7 @@ export default function WebpageToPdf() {
               </button>
             </div>
             {/* PDF Embed / Iframe */}
-            <div style={{ flex: 1, position: "relative", background: "#f1f5f9" }}>
+            <div style={{ flex: 1, position: "relative", background: "var(--warm)" }}>
               <iframe
                 src={`${result.url}#toolbar=1`}
                 title="PDF Preview"

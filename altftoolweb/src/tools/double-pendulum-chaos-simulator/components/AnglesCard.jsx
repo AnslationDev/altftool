@@ -19,8 +19,8 @@ export default function AnglesCard({ pendingAngles, onAngleChange, onApply, onRa
         </h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
-        <Slider label="θ₁ (rad)" value={pendingAngles.theta1} min={-Math.PI} max={Math.PI} step={0.01} onChange={handleAngleChange('theta1')} />
-        <Slider label="θ₂ (rad)" value={pendingAngles.theta2} min={-Math.PI} max={Math.PI} step={0.01} onChange={handleAngleChange('theta2')} />
+        <Slider id="dp-theta1" label="θ₁ (rad)" value={pendingAngles.theta1} min={-Math.PI} max={Math.PI} step={0.01} onChange={handleAngleChange('theta1')} />
+        <Slider id="dp-theta2" label="θ₂ (rad)" value={pendingAngles.theta2} min={-Math.PI} max={Math.PI} step={0.01} onChange={handleAngleChange('theta2')} />
       </div>
       <div className="flex gap-3 mt-5 justify-center">
         <button
@@ -47,14 +47,15 @@ export default function AnglesCard({ pendingAngles, onAngleChange, onApply, onRa
   );
 }
 
-function Slider({ label, value, min, max, step, onChange }) {
+function Slider({ id, label, value, min, max, step, onChange }) {
   return (
     <div className="space-y-1">
       <div className="flex justify-between text-xs text-[var(--secondary-foreground)]">
-        <span>{label}</span>
+        <label htmlFor={id}>{label}</label>
         <span className="tabular-nums">{value.toFixed(2)}</span>
       </div>
       <input
+        id={id}
         type="range"
         min={min}
         max={max}

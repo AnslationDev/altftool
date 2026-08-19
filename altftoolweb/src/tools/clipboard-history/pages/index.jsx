@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Clock, Plus, Trash2, Clipboard, RefreshCw } from "lucide-react";
-import { Tabs, SearchInput, ToastHost, Toast, Button } from "@altftool/ui";
+import { Tabs, SearchInput, ToastHost, Toast, Button, ConfirmModal } from "@altftool/ui";
 
 import HistoryCard from "../components/HistoryCard";
 import HistoryStats from "../components/HistoryStats";
@@ -28,7 +28,11 @@ export default function ClipboardHistoryHome() {
   const [manualInput, setManualInput] = useState("");
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [showClearMenu, setShowClearMenu] = useState(false);
+  const [confirmClearAll, setConfirmClearAll] = useState(false);
   const clearMenuRef = useRef(null);
+  const clearTriggerRef = useRef(null);
+  const toastTimersRef = useRef(new Set());
+  const monitorErrorShownRef = useRef(false);
 
   // Load initial data
   useEffect(() => {
@@ -47,6 +51,14 @@ export default function ClipboardHistoryHome() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Clear any pending toast auto-dismiss timers on unmount
+  useEffect(() => {
+    return () => {
+      toastTimersRef.current.forEach((timerId) => clearTimeout(timerId));
+      toastTimersRef.current.clear();
+    };
+  }, []);
+
   const refreshHistory = useCallback(() => {
     setHistory(getHistory());
   }, []);
@@ -54,9 +66,11 @@ export default function ClipboardHistoryHome() {
   const addToast = useCallback((message, tone = "info") => {
     const id = Date.now().toString();
     setToasts((prev) => [...prev, { id, message, tone }]);
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
+      toastTimersRef.current.delete(timerId);
     }, 3000);
+    toastTimersRef.current.add(timerId);
   }, []);
 
   // ── Real-time clipboard monitoring via Clipboard API + visibility / focus ──
@@ -77,6 +91,11 @@ export default function ClipboardHistoryHome() {
     } catch (err) {
       if (source === "manual") {
         addToast("Permission denied. Paste content manually below.", "danger");
+      } else if (!monitorErrorShownRef.current) {
+        // Rate-limited to once per monitoring session so a denied-permission
+        // clipboard can't spam a toast on every focus/visibilitychange event.
+        monitorErrorShownRef.current = true;
+        addToast("Clipboard monitoring can't read your clipboard (permission denied). Use Capture or paste manually.", "danger");
       }
     }
   }, [refreshHistory, addToast]);
@@ -138,6 +157,7 @@ export default function ClipboardHistoryHome() {
     clearAll();
     refreshHistory();
     setShowClearMenu(false);
+    setConfirmClearAll(false);
     addToast("History cleared", "info");
   };
 
@@ -194,6 +214,7 @@ export default function ClipboardHistoryHome() {
               variant={isMonitoring ? "primary" : "secondary"}
               onClick={() => {
                 const next = !isMonitoring;
+                if (next) monitorErrorShownRef.current = false;
                 setIsMonitoring(next);
                 addToast(next ? "Monitoring ON — switch to any app and copy!" : "Monitoring paused", next ? "success" : "info");
               }}
@@ -215,24 +236,38 @@ export default function ClipboardHistoryHome() {
             </Button>
 
             {/* Clear menu */}
-            <div className="relative" ref={clearMenuRef}>
+            <div
+              className="relative"
+              ref={clearMenuRef}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  setShowClearMenu(false);
+                  clearTriggerRef.current?.focus();
+                }
+              }}
+            >
               <Button
+                ref={clearTriggerRef}
                 variant="secondary"
                 onClick={() => setShowClearMenu(!showClearMenu)}
                 className="gap-2 text-red-500 hover:border-red-300"
+                aria-haspopup="menu"
+                aria-expanded={showClearMenu}
               >
                 <Trash2 size={15} /> Clear
               </Button>
               {showClearMenu && (
-                <div className="absolute right-0 top-full z-10 mt-1 w-52 rounded-lg border border-[var(--border)] bg-[var(--card)] p-1 shadow-lg">
+                <div role="menu" className="absolute right-0 top-full z-10 mt-1 w-52 rounded-lg border border-[var(--border)] bg-[var(--card)] p-1 shadow-lg">
                   <button
+                    role="menuitem"
                     onClick={handleClearNonFavorites}
                     className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]"
                   >
                     Clear non-favorites
                   </button>
                   <button
-                    onClick={handleClearAll}
+                    role="menuitem"
+                    onClick={() => { setShowClearMenu(false); setConfirmClearAll(true); }}
                     className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
                   >
                     Clear everything
@@ -253,6 +288,7 @@ export default function ClipboardHistoryHome() {
             onChange={(e) => setManualInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) handleManualAdd(); }}
             placeholder="Paste or type anything here and press 'Add' — Ctrl+Enter to quick-add…"
+            aria-label="Manual clipboard entry"
             rows={2}
             className="flex-1 resize-none rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
           />
@@ -278,6 +314,9 @@ export default function ClipboardHistoryHome() {
 
         {/* ── History Grid ── */}
         <div className="mt-2">
+          <div aria-live="polite" className="sr-only">
+            {filteredHistory.length} {filteredHistory.length === 1 ? "entry" : "entries"} found
+          </div>
           {filteredHistory.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filteredHistory.map((entry) => (
@@ -318,6 +357,17 @@ export default function ClipboardHistoryHome() {
           />
         ))}
       </ToastHost>
+
+      <ConfirmModal
+        open={confirmClearAll}
+        onCancel={() => setConfirmClearAll(false)}
+        onConfirm={handleClearAll}
+        title="Clear everything?"
+        message="This will permanently delete your entire clipboard history, including favorites. This can't be undone."
+        confirmText="Clear everything"
+        cancelText="Cancel"
+        variant="danger"
+      />
     </main>
   );
 }

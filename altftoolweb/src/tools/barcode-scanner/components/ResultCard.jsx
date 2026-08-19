@@ -61,7 +61,7 @@ export default function ResultCard({ scan, error, onCopy, copied, onDownloadTxt,
       )}
 
       {scan && (
-        <>
+        <div role="status" aria-live="polite">
           <div className="flex flex-col gap-5 lg:flex-row">
             {/* Scanned image */}
             <div className="flex shrink-0 items-center justify-center self-start rounded-xl border border-border bg-background p-3 lg:w-56">
@@ -145,7 +145,7 @@ export default function ResultCard({ scan, error, onCopy, copied, onDownloadTxt,
               <FileCode2 aria-hidden="true" size={14} /> Export JSON
             </button>
           </div>
-        </>
+        </div>
       )}
     </section>
   );

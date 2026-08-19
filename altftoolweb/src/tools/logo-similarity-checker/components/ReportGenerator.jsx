@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { FileDown, Printer, Copy, Share2, Check, FileImage } from "lucide-react";
+import { saveAs } from "file-saver";
 import { exportAs } from "../utils/exporter";
 import toast from "react-hot-toast";
 
-export default function ReportGenerator({ results, paletteA, paletteB, geoA, geoB }) {
+export default function ReportGenerator({ results, paletteA, paletteB, geoA, geoB, targetRef }) {
   const [copied, setCopied] = useState(false);
+  const [capturing, setCapturing] = useState(false);
 
   const handlePDF = () => {
     if (!results) { toast.error("Run analysis first"); return; }
@@ -15,7 +17,22 @@ export default function ReportGenerator({ results, paletteA, paletteB, geoA, geo
   };
 
   const handlePNG = async () => {
-    toast.success("Report image captured");
+    if (!results) { toast.error("Run analysis first"); return; }
+    if (!targetRef?.current) { toast.error("Nothing to capture yet"); return; }
+    setCapturing(true);
+    try {
+      const { default: html2canvas } = await import("html2canvas");
+      const canvas = await html2canvas(targetRef.current, { scale: 2, useCORS: true, backgroundColor: null });
+      canvas.toBlob((blob) => {
+        if (!blob) { toast.error("Failed to capture report image"); return; }
+        saveAs(blob, "logo-similarity-report.png");
+        toast.success("Report image downloaded");
+      }, "image/png");
+    } catch (err) {
+      toast.error("Failed to capture report image");
+    } finally {
+      setCapturing(false);
+    }
   };
 
   const handlePrint = () => {
@@ -50,8 +67,8 @@ Generated: ${new Date().toLocaleString()}`;
         <button onClick={handlePDF} className="inline-flex items-center gap-1.5 rounded-lg border border-[--border] px-3 py-2 text-xs font-medium text-[--foreground] transition-colors hover:bg-[--surface-soft]">
           <FileDown className="h-4 w-4 text-red-500" />Download PDF
         </button>
-        <button onClick={handlePNG} className="inline-flex items-center gap-1.5 rounded-lg border border-[--border] px-3 py-2 text-xs font-medium text-[--foreground] transition-colors hover:bg-[--surface-soft]">
-          <FileImage className="h-4 w-4 text-green-500" />Download PNG
+        <button onClick={handlePNG} disabled={capturing} className="inline-flex items-center gap-1.5 rounded-lg border border-[--border] px-3 py-2 text-xs font-medium text-[--foreground] transition-colors hover:bg-[--surface-soft] disabled:opacity-50">
+          <FileImage className="h-4 w-4 text-green-500" />{capturing ? "Capturing…" : "Download PNG"}
         </button>
         <button onClick={handlePrint} className="inline-flex items-center gap-1.5 rounded-lg border border-[--border] px-3 py-2 text-xs font-medium text-[--foreground] transition-colors hover:bg-[--surface-soft]">
           <Printer className="h-4 w-4" />Print

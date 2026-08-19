@@ -45,6 +45,7 @@ export default function MainComponent() {
   const [generatedImages, setGeneratedImages] = useState([]);
   const [history, setHistory] = useState([]);
   const [genError, setGenError] = useState("");
+  const [partialNotice, setPartialNotice] = useState("");
 
   // Load history from localStorage
   useEffect(() => {
@@ -115,7 +116,7 @@ export default function MainComponent() {
         resolve(null);
       }, 40000);
 
-      img.onload = () => {
+      img.onload = async () => {
         clearTimeout(timeout);
         try {
           // Upscale to full 1280x720 on canvas
@@ -137,15 +138,33 @@ export default function MainComponent() {
             timestamp: new Date().toISOString(),
           });
         } catch {
-          resolve({
-            id: `${Date.now()}-${seed}`,
-            url,
-            topic,
-            style: selectedStyle,
-            color: selectedColor,
-            text: thumbnailText,
-            timestamp: new Date().toISOString(),
-          });
+          // Canvas draw/export failed (e.g. a CORS-tainted canvas). Fetch the
+          // same image as a blob so the fallback URL is a same-origin blob:
+          // URL — the raw cross-origin pollinations.ai URL would silently
+          // break the Download button's `download` attribute.
+          try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            resolve({
+              id: `${Date.now()}-${seed}`,
+              url: URL.createObjectURL(blob),
+              topic,
+              style: selectedStyle,
+              color: selectedColor,
+              text: thumbnailText,
+              timestamp: new Date().toISOString(),
+            });
+          } catch {
+            resolve({
+              id: `${Date.now()}-${seed}`,
+              url,
+              topic,
+              style: selectedStyle,
+              color: selectedColor,
+              text: thumbnailText,
+              timestamp: new Date().toISOString(),
+            });
+          }
         }
       };
 
@@ -166,6 +185,7 @@ export default function MainComponent() {
     setProgress(5);
     setGeneratedImages([]);
     setGenError("");
+    setPartialNotice("");
 
     const prompt = buildPrompt();
     const results = [];
@@ -210,6 +230,11 @@ export default function MainComponent() {
         const newHistory = [...results, ...history].slice(0, 20);
         setHistory(newHistory);
         saveHistory(newHistory);
+        if (results.length < 4) {
+          setPartialNotice(
+            `Generated ${results.length} of 4 — the image service dropped the rest. Try Regenerate for the remaining thumbnails.`,
+          );
+        }
       } else {
         setGenError(
           "We couldn't generate any thumbnails this time — the image service may be busy or unreachable. Please try again.",
@@ -252,10 +277,11 @@ export default function MainComponent() {
 
         {/* Video Topic */}
         <div>
-          <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+          <label htmlFor="thumb-topic" className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
             What is your video about?
           </label>
           <textarea
+            id="thumb-topic"
             rows={2}
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
@@ -266,10 +292,11 @@ export default function MainComponent() {
 
         {/* Thumbnail Text (optional) */}
         <div>
-          <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+          <label htmlFor="thumb-text" className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
             Text on thumbnail <span className="text-(--muted-foreground) font-normal normal-case">(optional)</span>
           </label>
           <input
+            id="thumb-text"
             type="text"
             value={thumbnailText}
             onChange={(e) => setThumbnailText(e.target.value)}
@@ -386,6 +413,17 @@ export default function MainComponent() {
         >
           <AlertTriangle className="w-4 h-4 shrink-0" />
           {genError}
+        </div>
+      )}
+
+      {/* Partial batch notice - shown when some but not all 4 images loaded */}
+      {!isGenerating && !genError && partialNotice && (
+        <div
+          role="alert"
+          className="mt-8 rounded-2xl border border-(--warning)/30 bg-(--warning)/10 p-4 text-sm text-(--warning-text) flex items-center gap-2"
+        >
+          <AlertTriangle className="w-4 h-4 shrink-0" />
+          {partialNotice}
         </div>
       )}
 

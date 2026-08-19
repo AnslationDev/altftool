@@ -27,6 +27,7 @@ const DEFAULTS = {
   routeId: "international",
   entryDate: "2026-10-15",
   passportExpiry: "2029-01-01",
+  documentType: "passport",
   nights: "5",
   adults: "2",
   children6to11: "0",
@@ -41,14 +42,14 @@ const usdFormat = new Intl.NumberFormat("en-US", {
   currency: "USD",
   maximumFractionDigits: 0,
 });
-const inrFormat = new Intl.NumberFormat("en-IN", {
-  style: "currency",
-  currency: "INR",
-  maximumFractionDigits: 0,
-});
+// The India route's fee is billed in Bhutanese ngultrum, not Indian rupees, and every
+// piece of copy for that route (lib.js, the page header below, seo.js) says "Nu.".
+// Intl's INR currency style would render "₹", which contradicts that copy, so this
+// route formats the plain number and prefixes the literal "Nu. " instead.
+const btnNumberFormat = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
-const money = (currency, value) =>
-  currency === "INR" ? inrFormat.format(value) : usdFormat.format(value);
+const money = (currencyLabel, value) =>
+  currencyLabel === "Nu." ? `Nu. ${btnNumberFormat.format(value)}` : usdFormat.format(value);
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
@@ -58,7 +59,7 @@ export default function ToolHome() {
   const setField = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
   const changeRoute = (routeId) => {
-    setForm((current) => ({ ...current, routeId }));
+    setForm((current) => ({ ...current, routeId, documentType: "passport" }));
     setHaveIds([]);
   };
 
@@ -80,6 +81,7 @@ export default function ToolHome() {
         waivedNights: form.waivedNights === "" ? 0 : Number(form.waivedNights),
         travellingOutsideThimphuParo: form.travellingOutsideThimphuParo,
         trekking: form.trekking,
+        documentType: form.documentType,
       }),
     [form],
   );
@@ -93,7 +95,7 @@ export default function ToolHome() {
 
   const summary = useMemo(() => {
     if (hasError) return "";
-    const cur = result.currency;
+    const cur = result.currencyLabel;
     return [
       "Bhutan Entry Requirement Checklist",
       `Route: ${result.route.label}`,
@@ -102,7 +104,9 @@ export default function ToolHome() {
       `SDF at ${money(cur, result.sdfRatePerNight)} per person per night: ${money(cur, result.sdfTotal)}`,
       `Visa application fee: ${money(cur, result.visaFeeTotal)}`,
       `Government charges total: ${money(cur, result.grandTotal)}`,
-      `Travel document must stay valid to ${result.passportMustBeValidUntil} (yours: ${result.passportExpiry})`,
+      result.documentValidityApplicable
+        ? `Travel document must stay valid to ${result.passportMustBeValidUntil} (yours: ${result.passportExpiry})`
+        : "Travel document: Election Commission voter ID (no expiry — the six-month rule does not apply)",
       `Readiness: ${readiness.have} of ${readiness.total} required items (${readiness.percent}%)`,
       "",
       ...result.warnings.map((warning) => `! ${warning}`),
@@ -137,7 +141,11 @@ export default function ToolHome() {
   };
 
   const chosenRoute = ROUTES.find((entry) => entry.id === form.routeId);
-  const currency = hasError ? (chosenRoute ? chosenRoute.currency : "USD") : result.currency;
+  const currencyLabel = hasError
+    ? chosenRoute
+      ? chosenRoute.currencyLabel
+      : "USD"
+    : result.currencyLabel;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -192,18 +200,48 @@ export default function ToolHome() {
               onChange={(event) => setField("entryDate", event.target.value)}
             />
           </div>
-          <div>
-            <label className={LABEL_CLASS} htmlFor="bt-passport">
-              Travel document expiry
-            </label>
-            <input
-              id="bt-passport"
-              type="date"
-              className={`mt-2 ${INPUT_CLASS}`}
-              value={form.passportExpiry}
-              onChange={(event) => setField("passportExpiry", event.target.value)}
-            />
-          </div>
+          {form.routeId === "india" ? (
+            <div>
+              <label className={LABEL_CLASS} htmlFor="bt-doc-type">
+                Travel document
+              </label>
+              <select
+                id="bt-doc-type"
+                className={`mt-2 ${INPUT_CLASS}`}
+                value={form.documentType}
+                onChange={(event) => setField("documentType", event.target.value)}
+              >
+                <option value="passport">Indian passport</option>
+                <option value="voterId">Election Commission voter ID</option>
+              </select>
+            </div>
+          ) : null}
+          {form.routeId === "india" && form.documentType === "voterId" ? (
+            <div>
+              <span className={LABEL_CLASS} id="bt-passport-label">
+                Travel document expiry
+              </span>
+              <p
+                aria-labelledby="bt-passport-label"
+                className={`mt-2 flex h-11 items-center rounded-md border border-[var(--border)] bg-[var(--muted)] px-3 text-sm text-[var(--muted-foreground)]`}
+              >
+                Not applicable — a Voter ID has no expiry date
+              </p>
+            </div>
+          ) : (
+            <div>
+              <label className={LABEL_CLASS} htmlFor="bt-passport">
+                Travel document expiry
+              </label>
+              <input
+                id="bt-passport"
+                type="date"
+                className={`mt-2 ${INPUT_CLASS}`}
+                value={form.passportExpiry}
+                onChange={(event) => setField("passportExpiry", event.target.value)}
+              />
+            </div>
+          )}
           <div>
             <label className={LABEL_CLASS} htmlFor="bt-nights">
               Nights in Bhutan
@@ -326,12 +364,12 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Government charges for the party
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {hasError ? DASH : money(currency, result.grandTotal)}
+              {hasError ? DASH : money(currencyLabel, result.grandTotal)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
@@ -380,27 +418,39 @@ export default function ToolHome() {
           {[
             [
               "SDF rate per person per night",
-              hasError ? DASH : money(currency, result.sdfRatePerNight),
+              hasError ? DASH : money(currencyLabel, result.sdfRatePerNight),
             ],
             [
               "Chargeable nights",
               hasError ? DASH : `${result.chargeableNights} of ${result.nights}`,
             ],
-            ["SDF for travellers aged 12+", hasError ? DASH : money(currency, result.sdfAdults)],
-            ["SDF for children 6 to 11", hasError ? DASH : money(currency, result.sdfChildren)],
-            ["SDF total", hasError ? DASH : money(currency, result.sdfTotal)],
-            ["Visa application fee", hasError ? DASH : money(currency, result.visaFeeTotal)],
+            [
+              "SDF for travellers aged 12+",
+              hasError ? DASH : money(currencyLabel, result.sdfAdults),
+            ],
+            [
+              "SDF for children 6 to 11",
+              hasError ? DASH : money(currencyLabel, result.sdfChildren),
+            ],
+            ["SDF total", hasError ? DASH : money(currencyLabel, result.sdfTotal)],
+            ["Visa application fee", hasError ? DASH : money(currencyLabel, result.visaFeeTotal)],
             [
               `Document valid to (${PASSPORT_VALIDITY_MONTHS}-month rule)`,
-              hasError ? DASH : result.passportMustBeValidUntil,
+              hasError
+                ? DASH
+                : result.documentValidityApplicable
+                  ? result.passportMustBeValidUntil
+                  : "Not applicable (Voter ID)",
             ],
             [
               "Document check",
               hasError
                 ? DASH
-                : result.passportOk
-                  ? "Passes"
-                  : `Short by ${result.passportShortfallDays} day(s)`,
+                : !result.documentValidityApplicable
+                  ? "Not applicable — Voter ID has no expiry"
+                  : result.passportOk
+                    ? "Passes"
+                    : `Short by ${result.passportShortfallDays} day(s)`,
             ],
             ["Licensed guide needed", hasError ? DASH : result.needsGuide ? "Yes" : "Not required"],
           ].map(([label, value]) => (
@@ -412,7 +462,10 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && (
-          <p className="mt-4 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
+          <p
+            aria-live="polite"
+            className="mt-4 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]"
+          >
             {result.verdict}
           </p>
         )}

@@ -33,7 +33,7 @@ export const HINT_PENALTY = 25;
 export const MAX_SCRAMBLE_ATTEMPTS = 12;
 
 export const DIFFICULTIES = [
-  { id: "easy", label: "Easy — 4 to 5 letters", timeLimitSeconds: 45 },
+  { id: "easy", label: "Easy — 5 letters", timeLimitSeconds: 45 },
   { id: "medium", label: "Medium — 6 to 7 letters", timeLimitSeconds: 60 },
   { id: "hard", label: "Hard — 8 letters or more", timeLimitSeconds: 90 },
 ];
@@ -91,9 +91,9 @@ export const WORD_BANK = {
     { word: "DICTIONARY", hint: "Book listing words and their meanings", category: "Language" },
     { word: "KNOWLEDGE", hint: "Facts and skills acquired by experience", category: "Learning" },
     { word: "ORCHESTRA", hint: "Large group of instrumental musicians", category: "Music" },
-    { word: "PYRAMID", hint: "Monument with a square base and triangular sides", category: "History" },
+    { word: "CATHEDRAL", hint: "Large and important church, seat of a bishop", category: "History" },
     { word: "SYMPHONY", hint: "Extended composition for full orchestra", category: "Music" },
-    { word: "VOLCANO", hint: "Mountain vent that erupts lava", category: "Geography" },
+    { word: "AVALANCHE", hint: "Mass of snow, ice and rock sliding down a mountain", category: "Geography" },
     { word: "WATERFALL", hint: "River falling from a height", category: "Nature" },
     { word: "LIGHTHOUSE", hint: "Tower with a light that warns ships", category: "Building" },
     { word: "ASTRONOMY", hint: "Study of stars, planets and space", category: "Science" },
@@ -166,13 +166,14 @@ export function buildRounds({ difficulty, count, seed }) {
   const bank = WORD_BANK[difficulty];
   if (!bank) return { error: "Choose easy, medium or hard." };
   if (!isNum(count) || count < 1) return { error: "Play at least one round." };
-  if (count > bank.length) {
+  const roundsRequested = Math.floor(count);
+  if (roundsRequested > bank.length) {
     return { error: `There are only ${bank.length} words at this level — pick ${bank.length} rounds or fewer.` };
   }
   if (!isNum(seed)) return { error: "The puzzle seed must be a number." };
 
   const order = shuffle(bank, seed);
-  const chosen = order.items.slice(0, Math.floor(count));
+  const chosen = order.items.slice(0, roundsRequested);
   const rounds = chosen.map((entry, index) => {
     const scrambled = scrambleWord(entry.word, seed + index * 104729);
     return {

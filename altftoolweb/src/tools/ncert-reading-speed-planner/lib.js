@@ -4,7 +4,7 @@
  * Plain scheduling arithmetic, all steps stated:
  *   calendar days   = days from start date to target date, both inclusive
  *   study days      = floor(calendar days x (7 - days off per week) / 7)
- *   effective days  = floor(study days x (1 - revision buffer %))
+ *   effective days  = study days - floor(study days x revision buffer % / 100)
  *   pages per day   = ceil(pages left / effective days)
  * Floors are used on days (you cannot study a fraction of a day you don't have)
  * and ceil on pages (finishing requires rounding the daily quota up).
@@ -67,8 +67,14 @@ export function planReading({
   if (!Number.isFinite(total) || total <= 0 || total > MAX_TOTAL_PAGES) {
     return { error: `Total pages must be between 1 and ${MAX_TOTAL_PAGES}.` };
   }
+  if (!Number.isInteger(total)) {
+    return { error: "Total pages must be a whole number." };
+  }
   if (!Number.isFinite(done) || done < 0) {
     return { error: "Pages already read cannot be negative." };
+  }
+  if (!Number.isInteger(done)) {
+    return { error: "Pages already read must be a whole number." };
   }
   if (done > total) {
     return { error: "Pages already read cannot exceed the total pages." };

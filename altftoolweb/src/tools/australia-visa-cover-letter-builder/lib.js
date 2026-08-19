@@ -199,8 +199,8 @@ export function buildAustraliaCoverLetter(input = {}) {
   }
 
   const budgetAud = Number(String(input.budgetAud ?? "").replace(/,/g, "").trim());
-  if (!Number.isFinite(budgetAud) || budgetAud < 0) {
-    return { error: "Enter the funds available for the trip as a number of Australian dollars (0 or more)." };
+  if (!Number.isFinite(budgetAud) || budgetAud <= 0) {
+    return { error: "Enter the funds available for the trip as a number of Australian dollars greater than 0." };
   }
 
   const applicantsRaw = String(input.applicants ?? "1").trim() || "1";

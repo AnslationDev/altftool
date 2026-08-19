@@ -16,10 +16,15 @@ const GHOST_BTN =
 const DASH = "—";
 
 const DEFAULT_EXAMS = [
-  { name: "SSC CGL Tier 1", start: "2026-09-10", end: "2026-09-18" },
-  { name: "IBPS PO Prelims", start: "2026-09-17", end: "2026-09-19" },
-  { name: "RRB NTPC CBT 1", start: "2026-09-21", end: "2026-09-21" },
+  { id: "default-ssc-cgl", name: "SSC CGL Tier 1", start: "2026-09-10", end: "2026-09-18" },
+  { id: "default-ibps-po", name: "IBPS PO Prelims", start: "2026-09-17", end: "2026-09-19" },
+  { id: "default-rrb-ntpc", name: "RRB NTPC CBT 1", start: "2026-09-21", end: "2026-09-21" },
 ];
+
+const makeExamId = () =>
+  typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `exam-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
 export default function ToolHome() {
   const [exams, setExams] = useState(DEFAULT_EXAMS);
@@ -50,14 +55,14 @@ export default function ToolHome() {
       return;
     }
     setFormError("");
-    setExams((prev) => [...prev, { name: name.trim(), start, end: end || start }]);
+    setExams((prev) => [...prev, { id: makeExamId(), name: name.trim(), start, end: end || start }]);
     setName("");
     setStart("");
     setEnd("");
   };
 
-  const removeExam = (targetName) => {
-    setExams((prev) => prev.filter((exam) => exam.name !== targetName));
+  const removeExam = (targetId) => {
+    setExams((prev) => prev.filter((exam) => exam.id !== targetId));
   };
 
   const summary = useMemo(() => {
@@ -262,7 +267,7 @@ export default function ToolHome() {
         ) : null}
 
         {!hasError && result.tightPairs.length > 0 ? (
-          <ul className="mt-4 space-y-2">
+          <ul role="status" aria-live="polite" className="mt-4 space-y-2">
             {result.tightPairs.map((pair) => (
               <li
                 key={`${pair.first}-${pair.second}`}
@@ -297,14 +302,14 @@ export default function ToolHome() {
               </thead>
               <tbody>
                 {result.timeline.map((exam) => (
-                  <tr key={exam.name} className="border-b border-[var(--border)] last:border-0">
+                  <tr key={exam.id} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">{exam.name}</td>
                     <td className="py-2 pr-3">{exam.start}</td>
                     <td className="py-2 pr-3">{exam.end}</td>
                     <td className="py-2 text-right">
                       <button
                         type="button"
-                        onClick={() => removeExam(exam.name)}
+                        onClick={() => removeExam(exam.id)}
                         aria-label={`Remove ${exam.name}`}
                         className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-[var(--danger)] transition hover:bg-[var(--muted)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       >

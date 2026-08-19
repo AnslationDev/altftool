@@ -197,7 +197,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" role="status" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -276,7 +276,7 @@ export default function ToolHome() {
               onChange={(event) => setTarget(event.target.value)}
             />
           </div>
-          <div className="flex flex-col justify-end">
+          <div className="flex flex-col justify-end" role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Filtration required
             </p>

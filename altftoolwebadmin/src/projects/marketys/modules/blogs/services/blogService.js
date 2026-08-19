@@ -1,4 +1,4 @@
-import { collection, getDocs, query, orderBy, limit, startAfter, doc, getDoc, addDoc, updateDoc, deleteDoc, where } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, limit, startAfter, doc, addDoc, updateDoc, deleteDoc, where } from "firebase/firestore";
 import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "marketys";
@@ -14,11 +14,6 @@ export async function listBlogs(pageSize = 50) {
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
-export async function getBlog(id) {
-  const d = await getDoc(doc(db, "projects", PROJECT_ID, COLLECTION, id));
-  return d.exists() ? { id: d.id, ...d.data() } : null;
-}
-
 export async function createBlog(data) {
   return addDoc(refs(), { ...data, createdAt: new Date(), updatedAt: new Date() });
 }
@@ -29,9 +24,4 @@ export async function updateBlog(id, data) {
 
 export async function deleteBlog(id) {
   return deleteDoc(doc(db, "projects", PROJECT_ID, COLLECTION, id));
-}
-
-export async function fetchBlogCount() {
-  const snap = await getDocs(refs());
-  return snap.size;
 }

@@ -162,9 +162,17 @@ export function selectRotationPattern({
   if (directional) return ROTATION_PATTERNS.sameSide;
 
   if (includeSpare) {
-    return driveType === "fwd"
-      ? ROTATION_PATTERNS.forwardCrossSpare
-      : ROTATION_PATTERNS.rearwardCrossSpare;
+    if (driveType === "fwd") return ROTATION_PATTERNS.forwardCrossSpare;
+    if (driveType === "awd") {
+      // AWD/4x4 has no dedicated five-position pattern of its own; it reuses
+      // the RWD/4x4 rearward-cross-with-spare pattern. Surface that explicitly
+      // instead of silently presenting it as an AWD-specific result.
+      return {
+        ...ROTATION_PATTERNS.rearwardCrossSpare,
+        note: "AWD/4x4 uses the same spare-inclusive pattern as rear wheel drive here: there is no separate five-position X-pattern for including a spare.",
+      };
+    }
+    return ROTATION_PATTERNS.rearwardCrossSpare;
   }
 
   if (driveType === "fwd") return ROTATION_PATTERNS.forwardCross;
@@ -238,6 +246,26 @@ export function planRotationSchedule({
   }
 
   const pattern = selectRotationPattern({ driveType, tyreType, staggered, includeSpare });
+
+  if (pattern.moves.length === 0) {
+    // Directional tread + staggered fitment: no safe rotation exists, so don't
+    // fabricate a future schedule, next-due figure, or labour cost for it.
+    return {
+      pattern,
+      events: [],
+      next: null,
+      notPossible: true,
+      limitedBy: null,
+      intervalDays: null,
+      intervalMonths: null,
+      effectiveIntervalKm: null,
+      horizonKm: null,
+      horizonMonths: null,
+      totalCost: 0,
+      rotationsPlanned: count,
+    };
+  }
+
   const kmPerDay = monthlyKm / DAYS_PER_MONTH;
   const daysForInterval = intervalKm / kmPerDay;
   const timeCapDays = ROTATION_INTERVAL_MONTHS_MAX * DAYS_PER_MONTH;

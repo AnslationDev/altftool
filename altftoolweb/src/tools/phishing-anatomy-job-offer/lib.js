@@ -350,7 +350,7 @@ export const LINK_RULES = {
 
 /**
  * Inspect one address. Returns the registrable domain, whether it belongs to a
- * bank domain on the official list, and each finding with its weight.
+ * job portal on the official list, and each finding with its weight.
  *
  * @param {string} rawUrl an address, defanged or not.
  */
@@ -499,7 +499,7 @@ export const MARKERS = [
     label: "Offers per-task earnings for likes, ratings, reviews or orders",
     weight: 12,
     category: "Advance fee",
-    test: (t) => /\b(complete (?:the )?tasks?|per task|like (?:the )?videos?|rate (?:the )?(?:hotels?|products?|apps?)|prepaid (?:orders?|tasks?)|daily commission|earn rs\.?\s?\d+ (?:per|daily|a day))\b/.test(t),
+    test: (t) => /\b(complete (?:the )?tasks?|per task|like (?:the )?videos?|rate (?:the )?(?:hotels?|products?|apps?)|prepaid (?:orders?|tasks?)|daily commission|earn rs\.?\s?\d+ (?:per|daily|a day))\b/.test(t.replace(/(\d),(?=\d)/g, "$1")),
     why: "The task-based job is the entry point of an investment scam: small payouts first, then a deposit that never comes back.",
   },
   {
@@ -559,7 +559,7 @@ export const MARKERS = [
     category: "Bait",
     test: (t) =>
       /\b(no experience (?:required|needed)|work from home|part[\s-]?time|freshers? (?:welcome|can apply)|\d\s*(?:-|to)?\s*\d?\s*hours? (?:daily|a day|per day))\b/.test(t) &&
-      /\b(?:rs\.?|inr|₹)\s?\d{4,7}\b/.test(t),
+      /\b(?:rs\.?|inr|₹)\s?\d{4,7}\b/.test(t.replace(/(\d),(?=\d)/g, "$1")),
     why: "The figure is set high enough to chase and low enough to sound survivable; the work described cannot pay it.",
   },
   {

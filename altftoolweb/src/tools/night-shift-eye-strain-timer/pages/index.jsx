@@ -351,7 +351,9 @@ export default function ToolHome() {
                         item.inLowWindow ? "text-[var(--danger)]" : "text-[var(--muted-foreground)]"
                       }`}
                     >
-                      {item.inLowWindow ? "Circadian low" : item.inWindDown ? "Wind-down" : DASH}
+                      {[item.inLowWindow && "Circadian low", item.inWindDown && "Wind-down"]
+                        .filter(Boolean)
+                        .join(" + ") || DASH}
                     </td>
                   </tr>
                 ))}

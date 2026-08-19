@@ -93,10 +93,10 @@ export const PRICING = [
 export const TOTAL_COMBINATIONS =
   AUDIENCES.length * PROBLEMS.length * MODELS.length * TWISTS.length * PRICING.length;
 
-/** Effort weights run 1..5, four scored parts (audience, model, twist, pricing)
- *  plus the problem, so raw scores run 5..25. */
-export const MIN_RAW_EFFORT = 5;
-export const MAX_RAW_EFFORT = 25;
+/** Effort weights: audience 1-5, problem 1-4, model 1-5, twist 2-5, pricing 1-4,
+ *  so the achievable raw total runs 6..23. */
+export const MIN_RAW_EFFORT = 6;
+export const MAX_RAW_EFFORT = 23;
 
 /** Labels for the 1-10 effort score. Thresholds are inclusive upper bounds. */
 export const EFFORT_BANDS = [

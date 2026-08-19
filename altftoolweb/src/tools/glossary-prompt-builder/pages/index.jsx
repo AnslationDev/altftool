@@ -277,7 +277,9 @@ export default function ToolHome() {
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see a result."
-                : `${NUM.format(result.totalFound)} candidates found, capped at your limit.`}
+                : result.termCount < result.totalFound
+                  ? `${NUM.format(result.totalFound)} candidates found, capped at your limit.`
+                  : `${NUM.format(result.totalFound)} candidates found.`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

@@ -1,4 +1,4 @@
-import { Home, Info, Sliders, Briefcase, FileText, Image, Inbox } from "lucide-react";
+import { Home, Info, Sliders, Briefcase, FileText, Image, Inbox, Building2, BarChart3 } from "lucide-react";
 
 const alphobiaConfig = {
   id: "alphobia",
@@ -11,6 +11,8 @@ const alphobiaConfig = {
     services: { label: "Services & FAQs", icon: Sliders },
     casestudies: { label: "Case Studies Catalog", icon: Briefcase, routeSegment: "case-studies" },
     insights: { label: "Insights & Guides", icon: FileText },
+    industries: { label: "Industries Served", icon: Building2 },
+    stats: { label: "Stats Configuration", icon: BarChart3 },
     assets: { label: "Assets & Library", icon: Image },
     contacts: { label: "Contacts & Leads", icon: Inbox },
   },

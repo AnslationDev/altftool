@@ -81,8 +81,14 @@ function calculateLoveScore(name1, name2) {
   else if (Math.abs(n1 - n2) <= 4) score += 6;
   else score -= 5;
 
-  if (s1 === s2) score += 15;
-  else if (Math.abs(s1 - s2) <= 2) score += 8;
+  // 0 is never a valid Pythagorean numerology number (the system only
+  // produces 1-9, 11, 22, 33) — it only shows up when a name has no vowels
+  // at all, meaning getSoulUrge has no real value to report. Treat it as
+  // "not applicable" rather than a genuine number two names can match on,
+  // so two unrelated vowel-less names don't get an undeserved match bonus.
+  const soulUrgeComparable = s1 !== 0 && s2 !== 0;
+  if (soulUrgeComparable && s1 === s2) score += 15;
+  else if (soulUrgeComparable && Math.abs(s1 - s2) <= 2) score += 8;
   else score += 2;
 
   const combined = (n1 + n2) % 9 || 9;
@@ -120,8 +126,11 @@ function calculateSoulmateScore(name1, name2) {
   else if (Math.abs(d1 - d2) <= 1) score += 15;
   else if (Math.abs(d1 - d2) <= 3) score += 8;
 
-  if (s1 === s2) score += 20;
-  else if (Math.abs(s1 - s2) <= 2) score += 10;
+  // See calculateLoveScore: 0 is not a real numerology value (it means the
+  // name had no vowels), so it must never be treated as a genuine match.
+  const soulUrgeComparable = s1 !== 0 && s2 !== 0;
+  if (soulUrgeComparable && s1 === s2) score += 20;
+  else if (soulUrgeComparable && Math.abs(s1 - s2) <= 2) score += 10;
 
   const total = d1 + d2 + s1 + s2;
   const masterCheck = [11, 22, 33].includes(total);
@@ -228,5 +237,7 @@ export function validateNames(name1, name2) {
   if (!name2 || !name2.trim()) errors.push("Please enter the second name.");
   if (name1 && name1.trim().length < 2) errors.push("First name must be at least 2 characters.");
   if (name2 && name2.trim().length < 2) errors.push("Second name must be at least 2 characters.");
+  if (name1 && name1.trim() && !/[a-zA-Z]/.test(name1)) errors.push("First name must contain at least one letter.");
+  if (name2 && name2.trim() && !/[a-zA-Z]/.test(name2)) errors.push("Second name must contain at least one letter.");
   return errors;
 }

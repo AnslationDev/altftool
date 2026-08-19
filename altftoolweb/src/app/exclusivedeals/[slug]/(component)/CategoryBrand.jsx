@@ -35,7 +35,7 @@ function CategoryBrand({ slug }) {
     <div className="max-w-7xl mx-auto my-8 sm:my-10 md:my-12 lg:my-16 px-4 sm:px-6">
       
       {/* Breadcrumb */}
-      <div className="text-xs sm:text-sm text-gray-400 mb-4 sm:mb-5 md:mb-6">
+      <div className="text-xs sm:text-sm text-(--muted-foreground) mb-4 sm:mb-5 md:mb-6">
         <Link href="/exclusivedeals">
           {`Home / ${activeCategory?.categoryName}/Store`}
         </Link>
@@ -44,7 +44,7 @@ function CategoryBrand({ slug }) {
       {/* Mobile Category Toggle */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden mb-4 flex items-center gap-2 px-4 py-2 bg-white border rounded-lg shadow-sm"
+        className="lg:hidden mb-4 flex items-center gap-2 px-4 py-2 bg-(--card) border border-(--border) rounded-lg shadow-sm"
       >
         {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
         <span className="text-sm font-medium">
@@ -60,8 +60,8 @@ function CategoryBrand({ slug }) {
             ${sidebarOpen ? "block" : "hidden"} lg:block
             relative z-50
             w-full lg:w-[22%]
-            bg-white rounded-lg sm:rounded-xl
-            border shadow-sm
+            bg-(--card) rounded-lg sm:rounded-xl
+            border border-(--border) shadow-sm
             p-4 sm:p-5
           `}
         >
@@ -77,8 +77,8 @@ function CategoryBrand({ slug }) {
                 className={`flex items-center gap-2 sm:gap-3 text-xs sm:text-sm w-full text-left p-2 rounded-md transition
                   ${
                     activeSlug === item.slug
-                      ? "bg-yellow-50 font-semibold text-black"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-(--primary-soft) font-semibold text-(--foreground)"
+                      : "text-(--muted-foreground) hover:bg-(--surface-soft)"
                   }
                 `}
               >
@@ -86,13 +86,13 @@ function CategoryBrand({ slug }) {
                   className={`w-3.5 h-3.5 sm:w-4 sm:h-4 border rounded-sm flex items-center justify-center
                     ${
                       activeSlug === item.slug
-                        ? "bg-yellow-400 border-yellow-400"
-                        : "border-gray-300"
+                        ? "bg-(--primary) border-(--primary)"
+                        : "border-(--border)"
                     }
                   `}
                 >
                   {activeSlug === item.slug && (
-                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white block" />
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-(--primary-foreground) block" />
                   )}
                 </span>
 
@@ -131,13 +131,13 @@ function CategoryBrand({ slug }) {
                     bg-(--background) rounded-2xl sm:rounded-3xl
                     h-28 sm:h-32 md:h-32
                     w-72 max-w-sm sm:w-64
-                    border border-gray-100 drop-shadow-2xl
+                    border border-(--border) drop-shadow-2xl
                     px-4 sm:px-5 md:px-6
                     py-4 sm:py-4.5 md:py-5
                   "
                 >
                   {/* Logo */}
-                  <div className="w-14 bg-white h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full border  border-(--foreground) flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 bg-(--card) h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full border  border-(--foreground) flex items-center justify-center flex-shrink-0">
                     <Image
                       src={item.brandLogo}
                       alt={item.brandName}
@@ -149,7 +149,7 @@ function CategoryBrand({ slug }) {
 
                   {/* Wishlist */}
                   <div className="absolute top-3 right-3">
-                    <HeartIcon size={22} className="text-yellow-400" />
+                    <HeartIcon size={22} className="text-(--muted-foreground)" />
                   </div>
 
                   {/* Text */}
@@ -158,7 +158,7 @@ function CategoryBrand({ slug }) {
                       {item.brandName}
                     </h3>
 
-                    <div className="w-36 md:w-24 h-[1px] border  border-gray-500 my-1" />
+                    <div className="w-36 md:w-24 h-[1px] border  border-(--border) my-1" />
 
                     <p className="text-xs sm:text-sm text-center text-(--foreground)">
                       {totalOffer(item.offers)} Offers
@@ -169,7 +169,7 @@ function CategoryBrand({ slug }) {
             ))
           ) : (
             <div className="w-full text-center py-12">
-              <p className="text-sm sm:text-base text-gray-500">
+              <p className="text-sm sm:text-base text-(--muted-foreground)">
                 No brands found
               </p>
             </div>

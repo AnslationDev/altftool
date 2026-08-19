@@ -58,15 +58,22 @@ export const spec = {
       }
     }
   ],
-  "note": "Timeline organizer only, not contract interpretation or legal advice. The signed wording controls; review territory, media, sublicensing, edits, AI use, name/likeness, termination, morality, indemnity, and payment."
+  "note": "Timeline organizer only, not contract interpretation or legal advice. The signed wording controls; review territory, media, sublicensing, edits, AI use, name/likeness, termination, morality, indemnity, and payment.",
+  "confirmReset": "Reset the contract rights timeline? This clears your pasted contract text and cannot be undone."
 },
   compute: (values) => {
-      const anchor = new Date(values.anchor + "T00:00:00");
-      const add = (days) => { const date = new Date(anchor); date.setDate(date.getDate() + Math.max(0, Number(days) || 0)); return date; };
-      const usageEnd = add(values.usage_days), exclusiveEnd = add(values.exclusive_days), notice = new Date(usageEnd); notice.setDate(notice.getDate() - Math.max(0, Number(values.notice_days) || 0));
+      // Anchor is parsed and walked forward/back entirely in UTC (explicit "Z"
+      // suffix on construction, plus the UTC-prefixed accessors below) so that
+      // construction and the final toISOString() formatting always agree,
+      // regardless of the runtime's local timezone. Mixing local-time
+      // construction/arithmetic with UTC-based formatting used to shift every
+      // output date by one day for any user in a positive UTC-offset timezone.
+      const anchor = new Date(values.anchor + "T00:00:00Z");
+      const add = (days) => { const date = new Date(anchor); date.setUTCDate(date.getUTCDate() + Math.max(0, Number(days) || 0)); return date; };
+      const usageEnd = add(values.usage_days), exclusiveEnd = add(values.exclusive_days), notice = new Date(usageEnd); notice.setUTCDate(notice.getUTCDate() - Math.max(0, Number(values.notice_days) || 0));
       const format = (date) => Number.isNaN(date.getTime()) ? "Invalid date" : date.toISOString().slice(0, 10);
       const text = String(values.terms || "").toLowerCase();
-      const signals = [["Paid usage", /paid|whitelist|boost/.test(text)], ["Exclusivity", /exclusiv|competitor/.test(text)], ["Renewal", /renew|extend/.test(text)], ["Territory", /territory|worldwide|country/.test(text)], ["Edits / derivatives", /edit|derivative|modify/.test(text)]];
+      const signals = [["Paid usage", /paid|whitelist|boost/.test(text)], ["Exclusivity", /exclusiv|competitor/.test(text)], ["Renewal", /renew|extend/.test(text)], ["Territory", /territory|worldwide|country/.test(text)], ["Edits / derivatives", /\bedit(s|ing|ed)?\b|\bderivative(s)?\b|\bmodify|\bmodification/.test(text)]];
       return { result: "Rights timeline from " + format(anchor), caption: signals.filter((row) => row[1]).length + " clause signal(s) found", rows: [["Usage end", format(usageEnd)], ["Exclusivity end", format(exclusiveEnd)], ["Renewal review", format(notice)]], table: { headers: ["Clause signal", "Mentioned"], rows: signals.map((row) => [row[0], row[1] ? "Yes" : "Not found"]) } };
     },
 };

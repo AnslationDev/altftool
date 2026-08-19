@@ -15,8 +15,9 @@
  */
 
 /**
- * IANA's RDAP bootstrap redirector. A GET to https://rdap.org/domain/<name>
- * follows the IANA bootstrap registry (RFC 9224) and redirects to the
+ * rdap.org — a public bootstrap redirector, independently run (not operated
+ * by IANA/ICANN). A GET to https://rdap.org/domain/<name> follows IANA's
+ * published TLD-to-RDAP-server mapping (RFC 9224) and redirects to the
  * authoritative RDAP server for that TLD.
  */
 export const RDAP_BOOTSTRAP_BASE = "https://rdap.org/domain/";
@@ -70,9 +71,6 @@ export const STATUS_MEANINGS = {
   private: "Registration details are withheld from public display.",
   removed: "The record has been removed from the registry.",
 };
-
-/** RDAP event names, in the order most people want to read them. */
-export const EVENT_ORDER = ["registration", "expiration", "last changed", "last update of RDAP database", "transfer", "deletion"];
 
 const isNonEmpty = (v) => typeof v === "string" && v.trim() !== "";
 
@@ -157,6 +155,22 @@ export function vcardValue(vcardArray, key) {
   return null;
 }
 
+/** Pull just the country out of an RDAP jCard 'adr' entry (its last non-empty structured field). */
+function vcardCountry(vcardArray) {
+  if (!Array.isArray(vcardArray) || !Array.isArray(vcardArray[1])) return null;
+  for (const entry of vcardArray[1]) {
+    if (Array.isArray(entry) && entry[0] === "adr") {
+      const value = entry[3];
+      if (Array.isArray(value)) {
+        const parts = value.filter((v) => typeof v === "string" && v.trim() !== "");
+        return parts.length ? parts[parts.length - 1].trim() : null;
+      }
+      if (typeof value === "string" && value.trim() !== "") return value.trim();
+    }
+  }
+  return null;
+}
+
 function collectEntities(entities, found = []) {
   if (!Array.isArray(entities)) return found;
   for (const entity of entities) {
@@ -212,7 +226,6 @@ export function parseRdapDomain(json) {
 
   return {
     domain: (json.ldhName || json.unicodeName || "").toLowerCase(),
-    unicodeName: isNonEmpty(json.unicodeName) ? json.unicodeName : null,
     handle: isNonEmpty(json.handle) ? json.handle : null,
     statuses: statuses.map((status) => ({ code: status, meaning: describeStatus(status) })),
     events,
@@ -222,13 +235,10 @@ export function parseRdapDomain(json) {
     registrar: registrarEntity ? vcardValue(registrarEntity.vcardArray, "fn") : null,
     registrarIanaId: ianaId,
     abuseEmail: abuseEntity ? vcardValue(abuseEntity.vcardArray, "email") : null,
-    abusePhone: abuseEntity ? vcardValue(abuseEntity.vcardArray, "tel") : null,
     registrant: registrantEntity ? vcardValue(registrantEntity.vcardArray, "fn") : null,
-    registrantCountry: registrantEntity ? vcardValue(registrantEntity.vcardArray, "adr") : null,
+    registrantCountry: registrantEntity ? vcardCountry(registrantEntity.vcardArray) : null,
     nameservers,
     dnssecSigned: json.secureDNS ? json.secureDNS.delegationSigned === true : null,
-    redacted: Array.isArray(json.redacted) ? json.redacted.length : 0,
-    noticeCount: Array.isArray(json.notices) ? json.notices.length : 0,
   };
 }
 

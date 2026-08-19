@@ -2,41 +2,41 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 
+/**
+ * The five reviews that used to be here — Jessica Hartman (Naples, FL),
+ * Marcus Williams (Denver, CO), Priya & Daniel Shah (Austin, TX), Eleanor
+ * Whitfield (Boston, MA), Carlos Mendoza (Phoenix, AZ) — were fabricated:
+ * invented names, invented quotes, real US cities picked to look plausible.
+ * See docs/BACKLINK_EXECUTION_KIT.md ("STOP — read before promoting
+ * anything").
+ *
+ * This component isn't rendered — see the comment in ../App.jsx — but it's
+ * kept as a scaffold for whenever there are real reviews, given with
+ * permission. That only holds if the placeholder data below never reads as a
+ * real person's endorsement, so it's generic copy rather than a disclaimer
+ * bolted onto invented names and quotes.
+ */
 const items = [
   {
-    name: "Jessica Hartman",
-    location: "Naples, FL",
+    name: "Example Reviewer",
+    location: "Sample City, ST",
     review:
-      "EliteShield transformed our coastal home into something out of a magazine. The crew was punctual, immaculate, and walked us through every detail. We could not be happier with the finished look.",
-    project: "Insulated Fiber Cement Install",
+      "Placeholder review text showing how a homeowner testimonial displays in this carousel. Swap in a real review once a customer has given permission.",
+    project: "Example Project Type",
   },
   {
-    name: "Marcus Williams",
-    location: "Denver, CO",
+    name: "Example Reviewer",
+    location: "Sample City, ST",
     review:
-      "After three quotes, EliteShield was the only company that treated our home like their own. Two storms later, not a single panel has budged. Genuinely the best contractor we've worked with.",
-    project: "Vinyl Siding Replacement",
+      "A second placeholder entry, to demonstrate the carousel rotating between reviews. Not a real customer or a real quote.",
+    project: "Example Project Type",
   },
   {
-    name: "Priya & Daniel Shah",
-    location: "Austin, TX",
+    name: "Example Reviewer",
+    location: "Sample City, ST",
     review:
-      "The project manager texted us photos every single day. Finished two days ahead of schedule and the warranty paperwork was registered before they pulled out of the driveway. Five stars.",
-    project: "Modern Farmhouse Composite",
-  },
-  {
-    name: "Eleanor Whitfield",
-    location: "Boston, MA",
-    review:
-      "Restoring a 1908 Victorian is no small task. EliteShield matched our historic trim profiles perfectly and the inspector said it's the cleanest envelope she has ever seen. Highly recommend.",
-    project: "Heritage Restoration",
-  },
-  {
-    name: "Carlos Mendoza",
-    location: "Phoenix, AZ",
-    review:
-      "Professional from quote to cleanup. They protected our landscaping, used drop cloths everywhere, and the foreman did a final walkthrough that caught two tiny details I would have missed.",
-    project: "Composite Siding Install",
+      "A third placeholder entry. Replace all of these with genuine, permissioned reviews before this component is ever re-enabled.",
+    project: "Example Project Type",
   },
 ];
 

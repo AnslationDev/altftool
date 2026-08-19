@@ -335,7 +335,7 @@ const HairCareGuide = () => {
                       {index + 1}
                     </span>
                     <div>
-                      <p className="font-bold text-sm sm:text-base text-black">{item.step}</p>
+                      <p className="font-bold text-sm sm:text-base text-(--foreground)">{item.step}</p>
                       <p className="text-xs sm:text-sm text-rose-600 font-medium">{item.product}</p>
                       <p className="text-xs sm:text-sm md:text-base text-(--muted-foreground) leading-relaxed">{item.desc}</p>
                     </div>
@@ -361,7 +361,7 @@ const HairCareGuide = () => {
                       {index + 1}
                     </span>
                     <div>
-                      <p className="font-bold text-sm sm:text-base text-black">{item.step}</p>
+                      <p className="font-bold text-sm sm:text-base text-(--foreground)">{item.step}</p>
                       <p className="text-xs sm:text-sm text-rose-600 font-medium">{item.product}</p>
                       <p className="text-xs sm:text-sm md:text-base text-(--muted-foreground) leading-relaxed">{item.desc}</p>
                     </div>

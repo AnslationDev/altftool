@@ -39,6 +39,7 @@ export default function ToolHome() {
     }
   });
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [previewWidth, setPreviewWidth] = useState(0);
 
   const css = useMemo(() => generateCss(settings), [settings]);
@@ -83,10 +84,15 @@ export default function ToolHome() {
   };
 
   const copyCss = async () => {
-    await navigator.clipboard.writeText(css);
-    setCopied(true);
-    saveHistory();
-    setTimeout(() => setCopied(false), 1400);
+    try {
+      await navigator.clipboard.writeText(css);
+      setCopied(true);
+      saveHistory();
+      setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 1800);
+    }
   };
 
   const downloadCss = () => {
@@ -131,7 +137,7 @@ export default function ToolHome() {
         </div>
         <div className="space-y-5 min-w-0">
           <Preview settings={settings} previewRef={previewRef} />
-          <CodePanel css={css} copied={copied} onCopy={copyCss} onDownload={downloadCss} />
+          <CodePanel css={css} copied={copied} copyFailed={copyFailed} onCopy={copyCss} onDownload={downloadCss} />
           <StatsHistory stats={stats} history={history} onApplyHistory={(item) => commit({ ...defaultSettings, ...item })} />
         </div>
       </div>

@@ -3,7 +3,7 @@ const seo = {
   metaDescription:
     "Five slots - audience, problem, delivery, differentiator, pricing - make 86,400 ideas, each with a 1-10 build-effort score and a reusable seed.",
   intro:
-    "The Random Startup Idea Generator builds a business concept by combining five independent slots — audience, problem, delivery model, differentiator and pricing model — into one of 86,400 distinct combinations. Each generated idea also gets a build-effort score from 1 to 10, calculated by adding the effort weight of each slot (1 for a form and a spreadsheet, 5 for regulated or marketplace work) and mapping the 5-to-25 raw total onto a 1-to-10 scale. It is a structured brainstorming prompt for founders, hackathon teams and product classes, not a market forecast.",
+    "The Random Startup Idea Generator builds a business concept by combining five independent slots — audience, problem, delivery model, differentiator and pricing model — into one of 86,400 distinct combinations. Each generated idea also gets a build-effort score from 1 to 10, calculated by adding the effort weight of each slot (1 for a form and a spreadsheet, 5 for regulated or marketplace work) and mapping the 6-to-23 raw total onto a 1-to-10 scale. It is a structured brainstorming prompt for founders, hackathon teams and product classes, not a market forecast.",
   useCases: [
     "Break a blank-page block at the start of a 48-hour hackathon by locking your team's delivery model and shuffling the other four slots.",
     "Run a product-management class exercise where each student defends one generated idea against its build-effort score.",
@@ -21,7 +21,7 @@ const seo = {
     ],
     [
       "What does the build-effort score actually measure?",
-      "It measures how hard the idea is to build and sell, not how good it is. Each of the five slots carries a weight from 1 to 5; the raw total runs 5 to 25 and is mapped linearly onto 1 to 10, where 1-3 is a weekend build and 9-10 means regulated, hardware-bound or marketplace-liquidity work.",
+      "It measures how hard the idea is to build and sell, not how good it is. Each of the five slots carries a weight from 1 to 5; the raw total runs 6 to 23 and is mapped linearly onto 1 to 10, where 1-3 is a weekend build and 9-10 means regulated, hardware-bound or marketplace-liquidity work.",
     ],
     [
       "Are these ideas validated or researched?",
@@ -34,7 +34,7 @@ const seo = {
   ],
   steps: [
     "Set the inputs: Lock the audience and Lock the delivery model both start on Surprise me and can be pinned to any one option, and Seed (the same seed rebuilds the same idea) is a number field running from 1 to 2147483647 that opens on 2026.",
-    "Press New idea to draw a fresh seed. The card rewrites itself immediately, headed Idea #N of 86,400, with the headline, the pitch, the build-effort score as N/10 next to its band label (Weekend build, Small team, one quarter, Funded build or Hard mode) and a breakdown of Audience, Problem, Delivery, Differentiator, Pricing and Raw effort weight shown as N of 25.",
+    "Press New idea to draw a fresh seed. The card rewrites itself immediately, headed Idea #N of 86,400, with the headline, the pitch, the build-effort score as N/10 next to its band label (Weekend build, Small team, one quarter, Funded build or Hard mode) and a breakdown of Audience, Problem, Delivery, Differentiator, Pricing and Raw effort weight shown as N of 23.",
     "Copy puts the headline, the pitch, all five slot labels and a Build effort line on the clipboard and the button reads Copied! for two seconds; Shortlist adds the idea to a Shortlist (last 8, kept in this tab only) table of Idea, Seed and Effort; Reset puts the seed back to 2026, clears both locks and empties the shortlist.",
   ],
 };

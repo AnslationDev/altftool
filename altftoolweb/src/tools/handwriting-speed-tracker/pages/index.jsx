@@ -153,7 +153,7 @@ export default function ToolHome() {
     const next = [
       ...sessions,
       {
-        id: `${sessions.length + 1}-${speed.wpm}-${speed.seconds}`,
+        id: crypto.randomUUID(),
         wpm: speed.wpm,
         lpm: speed.lpm,
         words: speed.words,
@@ -349,7 +349,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Handwriting speed
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? dash : `${NUM.format(speed.wpm)} wpm`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -473,6 +477,8 @@ export default function ToolHome() {
           </p>
         ) : (
           <p
+            aria-live="polite"
+            aria-atomic="true"
             className={`mt-4 rounded-md px-3 py-2 text-sm font-medium ${
               exam.canFinish
                 ? "bg-[var(--muted)] text-[var(--success)]"

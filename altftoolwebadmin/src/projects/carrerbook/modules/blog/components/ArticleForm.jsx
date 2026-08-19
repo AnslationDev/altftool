@@ -20,10 +20,10 @@ import {
   Type,
   UploadCloud,
   User,
-  Zap,
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import CareerBookBlogEditor from "./CareerBookBlogEditor";
+import CtaButtonPicker from "./CtaButtonPicker";
 import {
   EMPTY_ARTICLE,
   createBlogArticle,
@@ -57,6 +57,9 @@ export default function ArticleForm({ mode = "create", article = null }) {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [seoOpen, setSeoOpen] = useState(false);
   const [slugEdited, setSlugEdited] = useState(Boolean(article?.slug));
+  const draftKey = mode === "edit" && article?.id
+    ? `careerbook-blog-edit-${article.id}`
+    : "careerbook-blog-new";
 
   useEffect(() => {
     const unsub = subscribeBlogCategories(
@@ -240,9 +243,14 @@ export default function ArticleForm({ mode = "create", article = null }) {
             </Panel>
 
             <Panel title="Button Picker">
-              <button className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm">
-                <Zap className="h-4 w-4 text-amber-500" /> Insert CTA Button
-              </button>
+              <CtaButtonPicker
+                onInsert={(html) =>
+                  setField(
+                    "content",
+                    `${form.content || ""}${form.content?.trim() ? "\n\n" : ""}${html}`,
+                  )
+                }
+              />
             </Panel>
 
             <Panel title="Content">
@@ -250,7 +258,7 @@ export default function ArticleForm({ mode = "create", article = null }) {
                 <textarea value={form.excerpt} onChange={(event) => setField("excerpt", event.target.value)} rows={3} className={textareaClass} placeholder="Short blog summary..." />
               </Field>
               <Field label="Blog Content" error={errors.content}>
-                <CareerBookBlogEditor value={form.content} onChange={(value) => setField("content", value)} error={errors.content} />
+                <CareerBookBlogEditor value={form.content} onChange={(value) => setField("content", value)} error={errors.content} draftKey={draftKey} />
               </Field>
             </Panel>
 

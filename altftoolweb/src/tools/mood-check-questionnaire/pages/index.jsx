@@ -12,7 +12,7 @@ import {
   computeMoodScore,
 } from "../lib";
 
-const BLANK_RESPONSES = MOOD_ITEMS.map(() => 0);
+const BLANK_RESPONSES = MOOD_ITEMS.map(() => null);
 
 const CARD = "rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5";
 const LABEL = "block text-sm font-semibold text-[var(--foreground)]";
@@ -169,7 +169,7 @@ export default function ToolHome() {
         </div>
       )}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

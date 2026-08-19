@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "What does a ByteRange have to look like to pass?",
-      "It must be an array of 4 to 32 non-negative integers in offset-length pairs, with the first offset equal to zero, every length greater than zero, pairs ordered and non-overlapping, none extending past the end of the file, and exactly one gap between them matching the /Contents string.",
+      "It must be an array of exactly 4 non-negative integers — two offset-length pairs — with the first offset equal to zero, every length greater than zero, the pairs ordered and non-overlapping, neither extending past the end of the file, and the single gap between them matching the /Contents string exactly. The parser will read arrays with up to 32 integers before it separately reports them as malformed, but any array longer than 4 integers leaves more than one gap and so is always flagged invalid — 4 integers is the only length that can pass.",
     ],
     [
       "How big a PDF can I inspect, and how many signatures?",

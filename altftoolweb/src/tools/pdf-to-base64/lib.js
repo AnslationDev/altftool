@@ -111,10 +111,13 @@ export function inspectPdfBytes(bytes) {
   const empty = { isPdf: false, version: null, hasEofMarker: false, linearHint: false };
   if (!bytes || typeof bytes.length !== "number" || bytes.length < PDF_MAGIC.length) return empty;
 
+  // Per ISO 32000-1 section 7.5.2, the %PDF- marker may appear anywhere within the
+  // first 1024 bytes (e.g. after a scanner/uploader preamble), not only at offset 0.
   const head = bytesToLatin1(bytes, 0, 1024);
-  if (!head.startsWith(PDF_MAGIC)) return empty;
+  const magicIndex = head.indexOf(PDF_MAGIC);
+  if (magicIndex === -1) return empty;
 
-  const versionMatch = /^%PDF-(\d\.\d)/.exec(head);
+  const versionMatch = /^%PDF-(\d\.\d)/.exec(head.slice(magicIndex));
   const version = versionMatch ? versionMatch[1] : null;
   const tail = bytesToLatin1(bytes, bytes.length - EOF_SEARCH_BYTES, bytes.length);
 

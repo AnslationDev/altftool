@@ -55,7 +55,7 @@ const seo = {
     ],
     [
       "How are the days-until-renewal numbers counted?",
-      "As whole days from today's local midnight to the renewal date, rounded up. Past dates show as \"Xd overdue\", the current date shows \"Renews today\", and the soonest-renewing active plan with a date set fills the Next Renewal card. The dates are labels only — nothing rolls forward automatically and no reminders are sent.",
+      "As whole days from today's local midnight to the renewal date, rounded up. Past dates show as \"Xd overdue\", the current date shows \"Renews today\", and the Next Renewal card is filled by the soonest-renewing active plan whose date is today or later. If every active plan's renewal date has already passed, the card shows \"None\" even though dates are set. The dates are labels only — nothing rolls forward automatically and no reminders are sent.",
     ],
     [
       "Is this subscription cost tracker free?",

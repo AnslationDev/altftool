@@ -109,12 +109,21 @@ export function computeCyclingCommute({
 
   const weightKg = weightUnit === "lb" ? weight * LB_TO_KG : weight;
   if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
+    if (weightUnit === "lb") {
+      const minLb = round(MIN_WEIGHT_KG / LB_TO_KG);
+      const maxLb = round(MAX_WEIGHT_KG / LB_TO_KG);
+      return { error: `Body weight should be between ${minLb} lb and ${maxLb} lb.` };
+    }
     return { error: `Body weight should be between ${MIN_WEIGHT_KG} kg and ${MAX_WEIGHT_KG} kg.` };
   }
 
   const oneWayKm = distanceUnit === "mi" ? oneWayDistance * KM_PER_MILE : oneWayDistance;
   if (oneWayKm <= 0) return { error: "One-way distance must be more than zero." };
   if (oneWayKm > MAX_ONE_WAY_KM) {
+    if (distanceUnit === "mi") {
+      const maxMi = round(MAX_ONE_WAY_KM / KM_PER_MILE);
+      return { error: `One-way distance should be ${maxMi} mi or less.` };
+    }
     return { error: `One-way distance should be ${MAX_ONE_WAY_KM} km or less.` };
   }
   if (speedKmh < MIN_SPEED_KMH || speedKmh > MAX_SPEED_KMH) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Mail, RotateCcw } from "lucide-react";
 
 import { CADENCES, LIMITS, buildNewsletterPrompt, planNewsletter } from "../lib";
@@ -38,6 +38,13 @@ export default function ToolHome() {
   const [itemCount, setItemCount] = useState(DEFAULTS.itemCount);
   const [cadenceId, setCadenceId] = useState(DEFAULTS.cadenceId);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(() => {
     const plan = planNewsletter({ totalWords, itemCount, cadenceId });
@@ -53,13 +60,22 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset all fields to defaults? This clears your entered newsletter details and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setNewsletterName(DEFAULTS.newsletterName);
     setSegment(DEFAULTS.segment);
     setTheme(DEFAULTS.theme);
@@ -84,7 +100,7 @@ export default function ToolHome() {
         ["Opening note", `${NUM.format(plan.intro)} words`],
         [
           "Items",
-          `${plan.items} × ~${NUM.format(Math.round(plan.perItem))} words`,
+          `${plan.items} × ~${NUM.format(Math.floor(plan.perItem))} words`,
         ],
         ["Sign-off", `${NUM.format(plan.signoff)} words`],
         ["Subject line limit", "40 characters"],
@@ -237,7 +253,7 @@ export default function ToolHome() {
       ) : null}
 
       {!hasError && plan.warnings.length > 0 ? (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-6 space-y-2" aria-live="polite">
           {plan.warnings.map((warning) => (
             <li
               key={warning}

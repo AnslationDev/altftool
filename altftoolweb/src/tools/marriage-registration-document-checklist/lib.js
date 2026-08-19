@@ -352,7 +352,9 @@ export function buildChecklist({
   groups.push({
     title: "Witnesses",
     items: [
-      `${chosen.witnesses} witnesses must attend in person on the day of ${chosen.alreadySolemnised ? "registration" : "solemnisation"}`,
+      chosen.key === "hindu"
+        ? `Typically ${chosen.witnesses} witnesses (some states ask for two) must attend in person on the day of ${chosen.alreadySolemnised ? "registration" : "solemnisation"}`
+        : `${chosen.witnesses} witnesses must attend in person on the day of ${chosen.alreadySolemnised ? "registration" : "solemnisation"}`,
       "Identity proof and address proof for each witness",
       "One passport-size photograph of each witness, where the state form asks for it",
       "Witnesses should be adults who attended the marriage or know both parties",

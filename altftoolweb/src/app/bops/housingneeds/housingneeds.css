@@ -207,7 +207,7 @@
 .hn-app *::before,
 .hn-app *::after { box-sizing: border-box; }
 
-.hn-shell { display: flex; flex-direction: column; min-height: 100vh; }
+.hn-shell { display: flex; flex-direction: column; min-height: 100dvh; }
 
 .hn-wrap {
   width: 100%;
@@ -1266,32 +1266,9 @@
   min-height: calc(1.55em * 6); /* 6 lines: panels line up across the row */
 }
 
-/* Spec panel: stacked label/value pairs (label above value) so each value gets
-   the full card width instead of being squeezed into a narrow right column —
-   the layout that reads cleanly in the four-up cards. */
-.hn-option-meta {
-  margin: 0;
-  padding: 0.85rem 0.95rem;
-  border-radius: 12px;
-  background: var(--hn-accent-tint);
-  border: 1px solid var(--hn-accent-ring);
-}
-.hn-option-meta dt {
-  margin: 0 0 0.15rem;
-  font-size: 0.66rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--hn-accent);
-}
-.hn-option-meta dd {
-  margin: 0 0 0.7rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--hn-text);
-}
-.hn-option-meta dd:last-of-type { margin-bottom: 0; }
+/* The best-for / service-life pair that used to sit in a spec panel here now
+   lives in the section's comparison table (.hn-facts), so the cards carry the
+   explanation and the table carries the facts — stated once each. */
 
 .hn-option-consider-label {
   margin: 0 0 0.55rem;
@@ -2132,3 +2109,96 @@
   line-height: 1.55;
   color: var(--hn-muted);
 }
+
+/* ============================================================
+   Process list
+
+   `.hn-steps` is an <ol> now — the steps only mean anything in
+   order, and the element is what says so. The grid above is
+   unchanged; this only removes the list affordances a bare ol
+   would otherwise bring with it.
+   ============================================================ */
+.hn-steps {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   Facts table — option / best for / typical service life
+
+   A real <table> rather than styled divs: this triple is the most
+   quotable content on a guide, and rows are what make it legible
+   to a parser as well as a reader. The wrapper scrolls on narrow
+   screens so the page body never does.
+   ============================================================ */
+.hn-facts {
+  margin-top: 2.25rem;
+  overflow-x: auto;
+  border: 1px solid var(--hn-border);
+  border-radius: var(--hn-radius);
+  background: var(--hn-surface);
+  box-shadow: var(--hn-shadow-sm);
+}
+.hn-facts table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+.hn-facts caption {
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hn-muted);
+  border-bottom: 1px solid var(--hn-border);
+}
+.hn-facts th,
+.hn-facts td {
+  padding: 0.8rem 1.1rem;
+  vertical-align: top;
+  line-height: 1.55;
+  border-bottom: 1px solid var(--hn-border);
+}
+.hn-facts thead th {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hn-muted);
+  background: var(--hn-surface-2);
+  white-space: nowrap;
+}
+.hn-facts tbody th {
+  font-weight: 650;
+  color: var(--hn-text);
+}
+.hn-facts td { color: var(--hn-text-soft); }
+.hn-facts tbody tr:last-child th,
+.hn-facts tbody tr:last-child td { border-bottom: 0; }
+
+/* ============================================================
+   About this guide — publisher, scope, and the limits of it
+   ============================================================ */
+.hn-about { max-width: 52rem; }
+.hn-about-list {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.5rem 0 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+.hn-about-list li {
+  padding: 0.95rem 1.15rem;
+  border-radius: var(--hn-radius);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--hn-text-soft);
+}
+.hn-about-list strong { color: var(--hn-text); }

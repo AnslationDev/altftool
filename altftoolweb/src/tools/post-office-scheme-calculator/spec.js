@@ -88,13 +88,14 @@ export const spec = {
 },
   compute: (values) => {
       const principal = Math.max(0, Number(values.principal) || 0);
-      const rate = Math.max(0, Number(values.rate) || 0) / 100;
+      const ratePercent = Math.max(0, Number(values.rate) || 0);
+      const rate = ratePercent / 100;
       const years = Math.max(0.1, Number(values.years) || 0.1);
       const compounds = Math.max(1, Math.round(Number(values.compound) || 1));
       const maturity = principal * Math.pow(1 + rate / compounds, compounds * years);
       const monthly = principal * rate / 12;
       const money = (number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(number);
-      if (values.scheme === "mis") return { result: money(monthly) + " estimated monthly income", caption: rate * 100 + "% user-supplied rate", rows: [["Deposit", money(principal)], ["Annual income", money(monthly * 12)], ["Term income", money(monthly * 12 * years)], ["Principal returned separately", money(principal)]] };
+      if (values.scheme === "mis") return { result: money(monthly) + " estimated monthly income", caption: ratePercent + "% user-supplied rate", rows: [["Deposit", money(principal)], ["Annual income", money(monthly * 12)], ["Term income", money(monthly * 12 * years)], ["Principal returned separately", money(principal)]] };
       return { result: money(maturity) + " estimated maturity", caption: values.scheme === "kvp" ? "KVP-style compound estimate" : "NSC-style compound estimate", rows: [["Deposit", money(principal)], ["Estimated interest", money(maturity - principal)], ["Term", years + " years"], ["Compounding", compounds + "× / year"]] };
     },
 };

@@ -31,11 +31,11 @@ const seo = {
   faqs: [
     [
       "How much driveway sealer do I need for 1,000 square feet?",
-      "About 25 gallons — five 5-gallon pails — for two coats on an average asphalt surface. That is 1,000 ft² at roughly 75 ft² per gallon for the first coat (13.3 gallons) plus about 94 ft² per gallon for the second (10.7 gallons), before any waste allowance.",
+      "About 24 gallons — five 5-gallon pails, with roughly 1 gallon left over — for two coats on an average asphalt surface. That is 1,000 ft² at roughly 75 ft² per gallon for the first coat (13.3 gallons) plus about 94 ft² per gallon for the second (10.7 gallons), before any waste allowance.",
     ],
     [
       "How many square feet does a 5 gallon bucket of driveway sealer cover?",
-      "Around 375 square feet for one coat on average asphalt, or roughly 250 square feet if you are applying two coats. Pails often claim 'up to 500 sq ft', which assumes a smooth, tight surface and thin application; a porous or never-sealed driveway can drop coverage to about 50 square feet per gallon.",
+      "Around 375 square feet for one coat on average asphalt, or roughly 208 square feet if you are applying two coats (the second coat covers more per gallon, but you are buying enough gallons to cover the same footprint twice). Pails often claim 'up to 500 sq ft', which assumes a smooth, tight surface and thin application; a porous or never-sealed driveway can drop coverage to about 50 square feet per gallon.",
     ],
     [
       "Do I need one coat or two coats of driveway sealer?",

@@ -557,6 +557,15 @@ export function scoreChecklist(doneIds, profileId) {
     null
   );
 
+  // The static BANDS[].hint for "open"/"partial" names specific controls (Snap Map,
+  // Quick Add) that may already be closed even while the overall percent is low because
+  // other, unrelated controls are open. Below "strong" (70), swap in the actual worst
+  // axis instead of asserting a fixed claim that can be false for the current answers.
+  const bandHint =
+    (band.id === "open" || band.id === "partial") && worstAxis && worstAxis.total > 0
+      ? `Your biggest exposure right now: ${worstAxis.name} (${worstAxis.exposure}% still open).`
+      : band.hint;
+
   return {
     profile,
     earned: Math.round(earned * 100) / 100,
@@ -568,7 +577,7 @@ export function scoreChecklist(doneIds, profileId) {
     total: CHECKLIST.length,
     band: band.id,
     bandLabel: band.label,
-    bandHint: band.hint,
+    bandHint,
     remaining,
     missingCritical,
     axes,

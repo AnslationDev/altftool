@@ -8,7 +8,7 @@ const seo = {
     "Read 'Your programme' for contractions per session, per day and per week against the 24-a-day reference, then press 'Copy plan' for the summary or 'Reset all' to go back to the Building defaults.",
   ],
   intro:
-    "A Kegel exercise timer paces a pelvic floor muscle training session: it counts each squeeze, cues a full release of equal or longer length, tracks sets, and totals how many contractions you complete a day. The progression levels follow the standard supervised prescription used in continence physiotherapy — short 3 second holds at first, built up towards 10 second maximal holds over about three months. It is built for anyone doing pelvic floor work for bladder control, postnatal recovery or prostate surgery rehabilitation who wants the counting handled for them.",
+    "A Kegel exercise timer paces a pelvic floor muscle training session: it counts each squeeze, cues a full release, tracks sets, and totals how many contractions you complete a day. Each built-in progression level pairs its hold with a rest of equal or longer length, following the standard supervised prescription used in continence physiotherapy — short 3 second holds at first, built up towards 10 second maximal holds over about three months; custom hold/release values you type in yourself are not cross-checked against each other. It is built for anyone doing pelvic floor work for bladder control, postnatal recovery or prostate surgery rehabilitation who wants the counting handled for them.",
   useCases: [
     "Follow a 5 second hold and 5 second release routine three times a day without counting in your head.",
     "Check whether your current routine actually reaches the reference target of 24 contractions a day.",

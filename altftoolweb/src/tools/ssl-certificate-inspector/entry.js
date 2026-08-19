@@ -1,5 +1,5 @@
-import SslCertificateInspectorApp from "./App.js";
-
+"use client";
+import ToolHome from "./pages";
 export default function ToolEntry() {
-  return <SslCertificateInspectorApp />;
+  return <ToolHome />;
 }

@@ -1,49 +1,106 @@
 "use client";
 
 import QuickToolPage from "../../_shared/QuickToolPage";
+import { BUDGET_PRESETS, FORMATS, computeImageBudget, formatBytes } from "../lib";
 
 const fields = [
-  { key: "images", label: "Number of images", placeholder: "12", inputMode: "decimal" },
-  { key: "pageBudget", label: "Total image budget KB", placeholder: "1200", inputMode: "decimal" },
-  { key: "heroCount", label: "Hero/large images", placeholder: "2", inputMode: "decimal" },
-  { key: "format", label: "Target format", type: "select", options: [
-    { label: "WebP/AVIF", value: "WebP/AVIF" },
-    { label: "JPEG", value: "JPEG" },
-    { label: "PNG", value: "PNG" },
-  ] },
+  { key: "width", label: "Image display width (px)", placeholder: "800", inputMode: "decimal" },
+  { key: "height", label: "Image display height (px)", placeholder: "600", inputMode: "decimal" },
+  {
+    key: "dpr",
+    label: "Device pixel ratio",
+    type: "select",
+    options: [
+      { label: "1x", value: "1" },
+      { label: "2x (retina)", value: "2" },
+      { label: "3x", value: "3" },
+    ],
+  },
+  {
+    key: "format",
+    label: "Format to ship",
+    type: "select",
+    options: FORMATS.map((format) => ({ label: format.label, value: format.id })),
+  },
+  {
+    key: "pageBudgetKb",
+    label: "Total page weight budget",
+    type: "select",
+    options: BUDGET_PRESETS.map((preset) => ({ label: preset.label, value: String(preset.kb) })),
+  },
+  {
+    key: "overheadKb",
+    label: "Code + font weight already spent (KB)",
+    placeholder: "200",
+    inputMode: "decimal",
+  },
+  { key: "plannedCount", label: "Planned image count", placeholder: "12", inputMode: "decimal" },
+  {
+    key: "jpegBpp",
+    label: "Reference JPEG bits per pixel",
+    placeholder: "1.0",
+    inputMode: "decimal",
+    hint: "0.5 for flat/simple images, 1.5 for dense texture — 1.0 is a fair default.",
+  },
 ];
 
 const defaults = {
-  images: "12",
-  pageBudget: "1200",
-  heroCount: "2",
-  format: "WebP/AVIF",
+  width: "800",
+  height: "600",
+  dpr: "1",
+  format: "webp",
+  pageBudgetKb: "1000",
+  overheadKb: "200",
+  plannedCount: "12",
+  jpegBpp: "1.0",
 };
 
 function buildOutput(values) {
-  const images = Math.max(1, Number(values.images) || 1);
-  const budget = Math.max(1, Number(values.pageBudget) || 1000);
-  const hero = Math.min(images, Math.max(0, Number(values.heroCount) || 0));
-  const heroBudget = budget * 0.5;
-  const restBudget = budget - heroBudget;
-  const regular = Math.max(1, images - hero);
+  const result = computeImageBudget({
+    pageBudgetKb: Number(values.pageBudgetKb),
+    overheadKb: Number(values.overheadKb),
+    width: Number(values.width),
+    height: Number(values.height),
+    dpr: Number(values.dpr),
+    jpegBpp: Number(values.jpegBpp),
+    formatId: values.format,
+    plannedCount: Number(values.plannedCount),
+  });
 
-  return [
+  if (result.error) {
+    return `Unable to compute budget: ${result.error}`;
+  }
+
+  const lines = [
     "Image file-size budget",
-    `Format target: ${values.format || "WebP/AVIF"}`,
-    `Total image budget: ${budget.toFixed(0)} KB`,
-    `Hero images: ${hero} × ~${hero ? (heroBudget / hero).toFixed(0) : 0} KB`,
-    `Other images: ${images - hero} × ~${(restBudget / regular).toFixed(0)} KB`,
+    `Page weight budget: ${formatBytes(result.budgetBytes)}, minus ${formatBytes(result.overheadBytes)} of code/fonts = ${formatBytes(result.imageBudgetBytes)} left for images.`,
+    `${result.format.label} at ${values.width}x${values.height}px, DPR ${values.dpr}, ${values.jpegBpp} bpp reference: ~${formatBytes(result.perImageBytes)} per image.`,
+    `Planned ${result.plannedCount} images: ${formatBytes(result.plannedBytes)} total — ${
+      result.overBudget
+        ? `over budget by ${formatBytes(Math.abs(result.remainingBytes))}`
+        : `${formatBytes(result.remainingBytes)} left over`
+    }.`,
+    `Images that fit in the remaining budget at this size/format: ${result.fitsInBudget}.`,
     "",
-    "Performance tip: lazy-load non-hero images and provide explicit width/height to reduce layout shift.",
-  ].join("\n");
+    "How many fit per format (same size and DPR):",
+    ...result.formatComparison.map(
+      (entry) => `  ${entry.label}: ~${formatBytes(entry.bytes)} each, ${entry.fits} fit`
+    ),
+    "",
+    "Transfer time for the planned set (images + code/fonts):",
+    ...result.transfers.map(
+      (transfer) => `  ${transfer.label} (${transfer.kbps} kbps): ${transfer.secondsForPlanned.toFixed(1)}s`
+    ),
+  ];
+
+  return lines.join("\n");
 }
 
 export default function ImageFileSizeBudgetCalculatorPage() {
   return (
     <QuickToolPage
       title="Image File Size Budget Calculator"
-      description="Split a page image-weight budget across hero and supporting images."
+      description="Work out how many images of a given size, DPR and format fit inside a page weight budget, and how long the set takes to transfer."
       fields={fields}
       defaults={defaults}
       buildOutput={buildOutput}

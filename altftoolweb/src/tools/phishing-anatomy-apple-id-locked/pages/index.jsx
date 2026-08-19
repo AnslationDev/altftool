@@ -84,6 +84,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset to the worked example? This clears the message you entered and cannot be undone.")) {
+      return;
+    }
     setFromAddress(DEFAULTS.fromAddress);
     setLinkUrl(DEFAULTS.linkUrl);
     setBody(DEFAULTS.body);
@@ -193,7 +196,7 @@ export default function ToolHome() {
         )}
 
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-sm font-medium text-[var(--muted-foreground)]">Red-flag score</p>
             <p className={`text-4xl font-extrabold tabular-nums ${hasError ? "text-[var(--muted-foreground)]" : TONE_TEXT[result.tone]}`}>
               {hasError ? "—" : `${result.score}/100`}
@@ -205,7 +208,7 @@ export default function ToolHome() {
               type="button"
               onClick={copy}
               disabled={hasError}
-              aria-label="Copy the analysis to the clipboard"
+              aria-label={copied ? "Copied result" : "Copy result to the clipboard"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
@@ -231,7 +234,7 @@ export default function ToolHome() {
               </div>
             </dl>
 
-            <ul className="mt-5 grid gap-3">
+            <ul className="mt-5 grid gap-3" aria-live="polite" role="status">
               {result.findings.map((finding) => (
                 <li key={finding.title} className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3">
                   <div className="flex flex-wrap items-center gap-2">

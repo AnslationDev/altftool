@@ -152,6 +152,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all inputs to defaults? This clears your custom lead times and cannot be undone.")) {
+      return;
+    }
     setFlightTypeId(DEFAULT_FLIGHT_TYPE);
     setLeadInputs(leadsToStrings(getFlightType(DEFAULT_FLIGHT_TYPE)));
     setDepartureTime(TRIP_DEFAULTS.departureTime);

@@ -38,8 +38,9 @@ const toNumber = (raw) => {
 
 const dayLabel = (days) => {
   if (days === 0) return "Exam is today";
-  if (days < 0) return `${NUM0.format(Math.abs(days))} days ago`;
-  return `${NUM0.format(days)} days to go`;
+  const n = Math.abs(days);
+  const unit = n === 1 ? "day" : "days";
+  return days < 0 ? `${NUM0.format(n)} ${unit} ago` : `${NUM0.format(n)} ${unit} to go`;
 };
 
 export default function ToolHome() {
@@ -74,7 +75,9 @@ export default function ToolHome() {
   );
 
   const errorMessage = board.error || pace.error || "";
-  const ok = !errorMessage;
+  const boardOk = !board.error;
+  const paceOk = !pace.error;
+  const ok = boardOk && paceOk;
 
   const summary = useMemo(() => {
     if (!ok) return "";
@@ -136,7 +139,8 @@ export default function ToolHome() {
     setSubjects((rows) => rows.map((row) => (row.id === id ? { ...row, [key]: value } : row)));
   };
 
-  const headline = ok && pace.calendarDaysLeft >= 0 ? dayLabel(pace.calendarDaysLeft) : DASH;
+  const headline =
+    boardOk && pace.calendarDaysLeft >= 0 ? dayLabel(pace.calendarDaysLeft) : DASH;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -312,7 +316,7 @@ export default function ToolHome() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
-              {ok ? `${targetEvent.label} · ${targetEvent.date}` : "Countdown"}
+              {boardOk ? `${targetEvent.label} · ${targetEvent.date}` : "Countdown"}
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">{headline}</p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -347,24 +351,24 @@ export default function ToolHome() {
           {[
             [
               "Required pace",
-              ok && pace.unitsPerStudyDay !== null
+              paceOk && pace.unitsPerStudyDay !== null
                 ? `${NUM.format(pace.unitsPerStudyDay)} units per study day`
                 : DASH,
             ],
             [
               "Time you can give each unit",
-              ok && pace.hoursPerUnit !== null ? `${NUM.format(pace.hoursPerUnit)} hours` : DASH,
+              paceOk && pace.hoursPerUnit !== null ? `${NUM.format(pace.hoursPerUnit)} hours` : DASH,
             ],
             [
               "Syllabus finished",
-              ok
+              paceOk
                 ? `${NUM0.format(pace.unitsDone)} of ${NUM0.format(pace.unitsTotal)} units (${NUM.format(pace.percentDone)}%)`
                 : DASH,
             ],
-            ["Units still to cover", ok ? NUM0.format(pace.unitsLeft) : DASH],
-            ["First-pass days available", ok ? NUM0.format(pace.prepDays) : DASH],
-            ["Study days inside those", ok ? NUM0.format(pace.studyDays) : DASH],
-            ["Total study hours left", ok ? `${NUM0.format(pace.studyHours)} hours` : DASH],
+            ["Units still to cover", paceOk ? NUM0.format(pace.unitsLeft) : DASH],
+            ["First-pass days available", paceOk ? NUM0.format(pace.prepDays) : DASH],
+            ["Study days inside those", paceOk ? NUM0.format(pace.studyDays) : DASH],
+            ["Total study hours left", paceOk ? `${NUM0.format(pace.studyHours)} hours` : DASH],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -373,14 +377,14 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {ok ? (
+        {paceOk ? (
           <p className={`mt-4 text-sm font-semibold ${TONE_TEXT[pace.band.tone] || ""}`}>
             {pace.band.label} — <span className="font-normal">{pace.band.note}</span>
           </p>
         ) : null}
       </section>
 
-      {ok ? (
+      {boardOk ? (
         <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
           <h2 className="text-base font-semibold">Countdown board</h2>
           <div className="mt-3 overflow-x-auto">
@@ -415,7 +419,8 @@ export default function ToolHome() {
                       {row.error ? "Date needed" : dayLabel(row.days)}
                       {!row.error && row.days > 6 ? (
                         <span className="block text-xs font-normal text-[var(--muted-foreground)]">
-                          {NUM0.format(row.weeks)} weeks {NUM0.format(row.spareDays)} days
+                          {NUM0.format(row.weeks)} week{row.weeks === 1 ? "" : "s"}{" "}
+                          {NUM0.format(row.spareDays)} day{row.spareDays === 1 ? "" : "s"}
                         </span>
                       ) : null}
                     </td>
@@ -425,30 +430,34 @@ export default function ToolHome() {
             </table>
           </div>
 
-          <h3 className="mt-6 text-sm font-semibold">Subject progress</h3>
-          <ul className="mt-3 space-y-3">
-            {pace.perSubject.map((subject) => (
-              <li key={subject.id}>
-                <div className="flex items-center justify-between gap-3 text-sm">
-                  <span className="font-semibold">{subject.label}</span>
-                  <span className="text-[var(--muted-foreground)]">
-                    {NUM0.format(subject.done)}/{NUM0.format(subject.total)} ·{" "}
-                    {NUM.format(subject.percentDone)}%
-                  </span>
-                </div>
-                <div
-                  className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
-                  role="img"
-                  aria-label={`${subject.label} is ${NUM.format(subject.percentDone)} percent complete`}
-                >
-                  <span
-                    className="block h-full bg-[var(--primary)]"
-                    style={{ width: `${Math.max(0, Math.min(100, subject.percentDone))}%` }}
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
+          {paceOk ? (
+            <>
+              <h3 className="mt-6 text-sm font-semibold">Subject progress</h3>
+              <ul className="mt-3 space-y-3">
+                {pace.perSubject.map((subject) => (
+                  <li key={subject.id}>
+                    <div className="flex items-center justify-between gap-3 text-sm">
+                      <span className="font-semibold">{subject.label}</span>
+                      <span className="text-[var(--muted-foreground)]">
+                        {NUM0.format(subject.done)}/{NUM0.format(subject.total)} ·{" "}
+                        {NUM.format(subject.percentDone)}%
+                      </span>
+                    </div>
+                    <div
+                      className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
+                      role="img"
+                      aria-label={`${subject.label} is ${NUM.format(subject.percentDone)} percent complete`}
+                    >
+                      <span
+                        className="block h-full bg-[var(--primary)]"
+                        style={{ width: `${Math.max(0, Math.min(100, subject.percentDone))}%` }}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : null}
         </section>
       ) : null}
 

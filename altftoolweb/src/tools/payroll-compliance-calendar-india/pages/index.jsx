@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarCheck, Check, Copy, RotateCcw } from "lucide-react";
 
 import {
@@ -71,6 +71,9 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copiedTimeoutRef.current), []);
 
   const set = (key) => (event) => {
     const value = event.target.value;
@@ -113,7 +116,7 @@ export default function ToolHome() {
   const monthlyError = monthly.error || null;
   const delayError = delay.error || null;
 
-  const headlineDue = monthlyError ? null : monthly.items[0];
+  const headlineDue = monthlyError ? null : monthly.nextDue;
 
   const copyText = () => {
     if (monthlyError) return "";
@@ -147,7 +150,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
@@ -231,17 +235,21 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">
-          Next statutory deadline
-        </p>
-        <p className="text-3xl font-extrabold tracking-tight text-[var(--foreground)] sm:text-4xl">
-          {monthlyError ? "—" : headlineDue.dueDateLabel}
-        </p>
-        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          {monthlyError
-            ? "—"
-            : `${headlineDue.label} · ${monthly.wageMonthLabel} wages · FY ${monthly.financialYear}`}
-        </p>
+        <div aria-live="polite" aria-atomic="true">
+          <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">
+            Next statutory deadline
+          </p>
+          <p className="text-3xl font-extrabold tracking-tight text-[var(--foreground)] sm:text-4xl">
+            {monthlyError ? "—" : headlineDue ? headlineDue.dueDateLabel : "No upcoming deadline"}
+          </p>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            {monthlyError
+              ? "—"
+              : headlineDue
+                ? `${headlineDue.label} · ${monthly.wageMonthLabel} wages · FY ${monthly.financialYear}`
+                : "Every deadline in this cycle has already passed."}
+          </p>
+        </div>
 
         <dl className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="grid gap-0.5">
@@ -257,7 +265,7 @@ export default function ToolHome() {
               Days to next deadline
             </dt>
             <dd className="text-sm font-semibold text-[var(--foreground)]">
-              {monthlyError || headlineDue.daysRemaining === null
+              {monthlyError || !headlineDue || headlineDue.daysRemaining === null
                 ? "—"
                 : `${NUM.format(headlineDue.daysRemaining)} day(s)`}
             </dd>
@@ -469,7 +477,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <div>
+        <div aria-live="polite" aria-atomic="true">
           <p className="text-sm font-semibold text-[var(--muted-foreground)]">Extra cost of the delay</p>
           <p className="text-3xl font-extrabold tracking-tight text-[var(--foreground)] sm:text-4xl">
             {delayError ? "—" : INR.format(delay.total)}

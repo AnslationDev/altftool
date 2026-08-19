@@ -395,7 +395,10 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Flat artwork size to set up
             </p>
-            <p className="mt-1 text-3xl font-semibold text-[var(--primary)] sm:text-4xl">
+            <p
+              className="mt-1 text-3xl font-semibold text-[var(--primary)] sm:text-4xl"
+              aria-live="polite"
+            >
               {hasError ? DASH : dim(result.flatWidthMm, result.flatHeightMm)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -408,7 +411,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy wedding card print spec"
+              aria-label={copied ? "Copied" : "Copy wedding card print spec"}
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -431,7 +434,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Document size with bleed", hasError ? DASH : dim(result.docWidthMm, result.docHeightMm)],
             ["Safe area on each panel", hasError ? DASH : dim(result.safeWidthMm, result.safeHeightMm)],
@@ -442,6 +445,18 @@ export default function ToolHome() {
             [
               "Weight of one invitation",
               hasError ? DASH : `${NUM2.format(result.perInviteGrams)} g`,
+            ],
+            [
+              "- Card weight",
+              hasError ? DASH : `${NUM2.format(result.cardWeightG)} g`,
+            ],
+            [
+              "- Insert weight",
+              hasError ? DASH : `${NUM2.format(result.insertWeightG)} g`,
+            ],
+            [
+              "- Envelope weight",
+              hasError ? DASH : `${NUM2.format(result.envelopeWeightG)} g`,
             ],
             [
               "Thickness of one invitation",

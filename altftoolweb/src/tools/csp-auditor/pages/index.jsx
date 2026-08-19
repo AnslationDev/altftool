@@ -158,7 +158,7 @@ export default function ToolHome() {
         </div>
       ) : (
         <>
-          <section className={`mt-6 rounded-xl border p-4 sm:p-5 ${TONE_BG[result.verdict.tone]}`}>
+          <section aria-live="polite" aria-atomic="true" className={`mt-6 rounded-xl border p-4 sm:p-5 ${TONE_BG[result.verdict.tone]}`}>
             <h2 className={`text-lg font-semibold ${TONE_TEXT[result.verdict.tone]}`}>{result.verdict.label}</h2>
             <p className="mt-1 text-sm text-[var(--foreground)]">
               <span className="font-semibold">Script protection: {result.strength.label}.</span>{" "}

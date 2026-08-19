@@ -323,6 +323,7 @@ export function buildVolunteerAgreement({
     Array.isArray(selectedClauses) ? selectedClauses : [],
   );
   const clauses = CLAUSES.filter((clause) => clause.required || chosen.has(clause.key));
+  const safeguardingIncluded = chosen.has("safeguarding");
 
   const scheduleLines = [
     `Role: ${clean(roleTitle) || "Volunteer"}`,
@@ -373,7 +374,7 @@ export function buildVolunteerAgreement({
     ...(clean(governingCity)
       ? [
           `${clauses.length + (volunteerIsMinor ? 2 : 1)}. Understanding between the parties`,
-          `   This agreement records the understanding between the parties in good faith and is not intended to create a legally binding contract, except for the confidentiality and safeguarding obligations. Any dispute will be discussed first with the coordinator, and the courts at ${clean(governingCity)} will have jurisdiction over anything that remains.`,
+          `   This agreement records the understanding between the parties in good faith and is not intended to create a legally binding contract, except for the confidentiality${safeguardingIncluded ? " and safeguarding" : ""} obligations. Any dispute will be discussed first with the coordinator, and the courts at ${clean(governingCity)} will have jurisdiction over anything that remains.`,
           "",
         ]
       : []),

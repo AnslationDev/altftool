@@ -167,7 +167,12 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="pc-score">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-labelledby="pc-score"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p id="pc-score" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

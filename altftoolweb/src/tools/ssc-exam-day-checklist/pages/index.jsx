@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Ban, Check, Copy, IdCard, Printer, RotateCcw } from "lucide-react";
 
 import {
@@ -38,6 +38,9 @@ export default function ToolHome() {
   const [getReady, setGetReady] = useState(String(DEFAULTS.getReadyMinutes));
   const [checked, setChecked] = useState({});
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const timeline = useMemo(
     () =>
@@ -96,7 +99,7 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -225,7 +228,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -317,7 +324,7 @@ export default function ToolHome() {
             style={{ width: `${Math.max(0, Math.min(100, readiness.percent))}%` }}
           />
         </div>
-        <p className="mt-2 text-sm font-semibold">
+        <p aria-live="polite" className="mt-2 text-sm font-semibold">
           {readiness.ready ? (
             <span className="text-[var(--success)]">
               All entry-critical items ticked — {pct(readiness.percent)} of the list done.

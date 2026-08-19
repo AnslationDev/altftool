@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "What is my size in Europe if I wear a UK 12?",
-      "EU 40 — French 42, Italian 44, US 8 — sitting at roughly a 92 cm bust and a 76 cm waist. Italian sizing runs two numbers above the German-style EU number, which is why an Italian 44 and an EU 40 are the same garment.",
+      "EU 40 — French 42, Italian 44, US 8 — sitting at roughly a 92 cm bust and a 76 cm waist. Italian sizing runs four numbers above the German-style EU number, which is why an Italian 44 and an EU 40 are the same garment.",
     ],
     [
       "How do men's jacket sizes convert between the UK and Europe?",

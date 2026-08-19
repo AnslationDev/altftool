@@ -143,7 +143,7 @@ function convertHandlebarsToVbnet(code, variables) {
 
 function rewriteAssetPaths(code) {
   let rewrites = 0;
-  const output = code.replace(/\b(src|href|action)=("([^"]*)"|'([^']*)')/gi, (full, attr, quoted, doubleValue, singleValue) => {
+  const output = code.replace(/(?<![\w:-])(src|href|action)=("([^"]*)"|'([^']*)')/gi, (full, attr, quoted, doubleValue, singleValue) => {
     const value = doubleValue ?? singleValue ?? "";
     const quote = quoted?.[0] || '"';
 
@@ -209,6 +209,12 @@ function htmlToVbnet(input, options) {
     });
     lines.push("</script>");
     messages.push("VB.NET server variable block added.");
+  }
+
+  if (!options.addServerBlock && options.mustacheToServerEncode && variables.size > 0) {
+    warnings.push(
+      "Server block is off but the output still references converted variables — add the block back or declare these variables yourself, or the page won't compile."
+    );
   }
 
   if (/<script\b/i.test(html)) {
@@ -473,6 +479,14 @@ export default function HTMLVBNetConverter() {
                 key={key}
                 type="button"
                 onClick={() => {
+                  if (key === mode) return;
+                  const hasCustomContent = input !== SAMPLE_HTML && input !== SAMPLE_VBNET;
+                  if (hasCustomContent) {
+                    const confirmed = window.confirm(
+                      "Switching modes replaces the source code box with a sample and discards your current input. Continue?"
+                    );
+                    if (!confirmed) return;
+                  }
                   setMode(key);
                   setInput(key === "htmlToVbnet" ? SAMPLE_HTML : SAMPLE_VBNET);
                 }}
@@ -581,7 +595,11 @@ export default function HTMLVBNetConverter() {
               </div>
             </div>
 
-            <pre className="mt-5 max-h-[560px] min-h-[420px] overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 text-[var(--foreground)]">
+            <pre
+              aria-live="polite"
+              role="status"
+              className="mt-5 max-h-[560px] min-h-[420px] overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 text-[var(--foreground)]"
+            >
               <code>{output || "Converted output will appear here."}</code>
             </pre>
           </div>
@@ -597,7 +615,7 @@ export default function HTMLVBNetConverter() {
                   <p className="text-sm text-[var(--muted-foreground)]">Quick checklist from this conversion.</p>
                 </div>
               </div>
-              <ul className="mt-4 space-y-3">
+              <ul aria-live="polite" role="status" className="mt-4 space-y-3">
                 {result.messages.map((message) => (
                   <li key={message} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-100">
                     {message}
@@ -616,7 +634,7 @@ export default function HTMLVBNetConverter() {
                   <p className="text-sm text-[var(--muted-foreground)]">Items to check before shipping code.</p>
                 </div>
               </div>
-              <ul className="mt-4 space-y-3">
+              <ul aria-live="polite" role="status" className="mt-4 space-y-3">
                 {(result.warnings.length ? result.warnings : ["No risky VB.NET template issue detected in this pass."]).map((warning) => (
                   <li key={warning} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
                     {warning}

@@ -8,7 +8,6 @@ export const PREVIEW_LIMIT = 9000;
 export const SOURCE_ENCODINGS = [
   { label: "Auto Detect", value: "auto" },
   { label: "UTF-8", value: "utf-8" },
-  { label: "UTF-8 BOM", value: "utf-8" },
   { label: "UTF-16 LE", value: "utf-16le" },
   { label: "UTF-16 BE", value: "utf-16be" },
   { label: "Chinese Simplified (GB18030)", value: "gb18030" },
@@ -227,8 +226,22 @@ export function validateConversion(
 
 export function repairMojibake(text) {
   try {
-    if (Array.from(text).some((char) => char.codePointAt(0) > 0xff)) return text;
-    const bytes = Uint8Array.from(Array.from(text), (char) => char.codePointAt(0));
+    const chars = Array.from(text);
+    const bytes = new Uint8Array(chars.length);
+    for (let i = 0; i < chars.length; i += 1) {
+      const code = chars[i].codePointAt(0);
+      if (code <= 0xff) {
+        bytes[i] = code;
+      } else if (WINDOWS_1252_ENCODE.has(code)) {
+        // Chars above U+00FF only appear here when a UTF-8 byte was itself
+        // decoded as CP1252 (the classic smart-quote/dash mojibake pattern),
+        // so map back through the same table used by encodeWindows1252 to
+        // recover the original byte instead of truncating via ToUint8.
+        bytes[i] = WINDOWS_1252_ENCODE.get(code);
+      } else {
+        return text;
+      }
+    }
     return new TextDecoder("utf-8", { fatal: false }).decode(bytes);
   } catch {
     return text;

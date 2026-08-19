@@ -80,10 +80,10 @@ export default function Visualization({ imgA, imgB, results }) {
               <span className="text-xs text-[--muted] w-8">{opacity}%</span>
             </div>
           )}
-          <button onClick={() => setZoom(Math.min(3, zoom + 0.25))} className="rounded-lg p-1.5 text-[--muted] hover:bg-[--surface-soft]"><ZoomIn className="h-4 w-4" /></button>
-          <button onClick={() => setZoom(Math.max(0.5, zoom - 0.25))} className="rounded-lg p-1.5 text-[--muted] hover:bg-[--surface-soft]"><ZoomOut className="h-4 w-4" /></button>
+          <button onClick={() => setZoom(Math.min(3, zoom + 0.25))} aria-label="Zoom in" className="rounded-lg p-1.5 text-[--muted] hover:bg-[--surface-soft]"><ZoomIn className="h-4 w-4" /></button>
+          <button onClick={() => setZoom(Math.max(0.5, zoom - 0.25))} aria-label="Zoom out" className="rounded-lg p-1.5 text-[--muted] hover:bg-[--surface-soft]"><ZoomOut className="h-4 w-4" /></button>
           <span className="text-xs text-[--muted] w-10">{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setFullscreen(!fullscreen)} className="rounded-lg p-1.5 text-[--muted] hover:bg-[--surface-soft]">
+          <button onClick={() => setFullscreen(!fullscreen)} aria-label={fullscreen ? "Exit fullscreen" : "Toggle fullscreen"} className="rounded-lg p-1.5 text-[--muted] hover:bg-[--surface-soft]">
             {fullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
           </button>
         </div>

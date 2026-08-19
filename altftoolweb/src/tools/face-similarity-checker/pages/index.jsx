@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Sparkles,
   RefreshCw,
@@ -21,6 +21,8 @@ export default function FaceSimilarityCheckerApp() {
   const [result, setResult] = useState(null);
   const [sliderPos, setSliderPos] = useState(50);
   const [copied, setCopied] = useState(false);
+  const [uploadError, setUploadError] = useState({ A: null, B: null });
+  const sliderRef = useRef(null);
 
   // Settings
   const [settings, setSettings] = useState({
@@ -36,40 +38,73 @@ export default function FaceSimilarityCheckerApp() {
 
   const handleImageUpload = (key, file) => {
     if (!file) return;
+    setUploadError((prev) => ({ ...prev, [key]: null }));
     const reader = new FileReader();
     reader.onload = () => {
       if (key === "A") setFaceA(reader.result);
       if (key === "B") setFaceB(reader.result);
     };
+    reader.onerror = () => {
+      setUploadError((prev) => ({
+        ...prev,
+        [key]: "This file couldn't be read. Please choose a different image.",
+      }));
+      if (key === "A") setFaceA(null);
+      if (key === "B") setFaceB(null);
+    };
     reader.readAsDataURL(file);
+  };
+
+  // Invoked by VisualCanvas when the loaded data URL fails to decode as an image.
+  const handleImageDecodeError = useCallback((key) => {
+    setUploadError((prev) => ({
+      ...prev,
+      [key]: "This image couldn't be decoded. Please try a different file.",
+    }));
+    if (key === "A") setFaceA(null);
+    if (key === "B") setFaceB(null);
+  }, []);
+
+  // Stable per-slot callbacks so VisualCanvas's image-loading effect doesn't
+  // re-run (and redraw/reload) on every unrelated parent re-render (e.g. slider drags).
+  const handleImageErrorA = useCallback(() => handleImageDecodeError("A"), [handleImageDecodeError]);
+  const handleImageErrorB = useCallback(() => handleImageDecodeError("B"), [handleImageDecodeError]);
+
+  // Core comparison routine — used both by the Auto Compare effect and the manual Compare button.
+  const runComparison = () => {
+    if (!faceA || !faceB) return undefined;
+    setProcessing(true);
+    const timer = setTimeout(() => {
+      const seed = Math.abs((faceA.length % 35) - (faceB.length % 35));
+      const sim = Math.min(100, Math.max(12, 94 - seed * 2.1));
+
+      setResult({
+        similarity: Math.round(sim),
+        quality: {
+          sharpness: seed % 3 === 0 ? "Minor Blur" : "Sharp",
+          angle: seed % 2 === 0 ? "Centered" : "Tilted Left",
+          exposure: seed % 5 === 0 ? "Low Light" : "Balanced",
+          smile: seed % 2 === 0 ? "Smile Detected" : "Neutral Expression",
+          glasses: seed % 4 === 0 ? "Glasses Detected" : "No Occlusion",
+          eyes: "Visible",
+        },
+      });
+      setProcessing(false);
+    }, 1500);
+
+    return timer;
   };
 
   // Run Similarity Engine simulation
   useEffect(() => {
     if (faceA && faceB && settings.autoCompare) {
-      setProcessing(true);
-      const timer = setTimeout(() => {
-        const seed = Math.abs((faceA.length % 35) - (faceB.length % 35));
-        const sim = Math.min(100, Math.max(12, 94 - seed * 2.1));
-        
-        setResult({
-          similarity: Math.round(sim),
-          quality: {
-            sharpness: seed % 3 === 0 ? "Minor Blur" : "Sharp",
-            angle: seed % 2 === 0 ? "Centered" : "Tilted Left",
-            exposure: seed % 5 === 0 ? "Low Light" : "Balanced",
-            smile: seed % 2 === 0 ? "Smile Detected" : "Neutral Expression",
-            glasses: seed % 4 === 0 ? "Glasses Detected" : "No Occlusion",
-            eyes: "Visible",
-          },
-        });
-        setProcessing(false);
-      }, 1500);
-
+      const timer = runComparison();
       return () => clearTimeout(timer);
     } else if (!faceA || !faceB) {
       setResult(null);
     }
+    return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [faceA, faceB, settings.autoCompare]);
 
   const handleSwap = () => {
@@ -79,26 +114,60 @@ export default function FaceSimilarityCheckerApp() {
   };
 
   const handleClear = () => {
+    if (
+      (faceA || faceB || result) &&
+      !window.confirm("Clear both photos and the result? This cannot be undone.")
+    ) {
+      return;
+    }
     setFaceA(null);
     setFaceB(null);
     setResult(null);
+    setUploadError({ A: null, B: null });
   };
 
   const handlePrint = () => {
     window.print();
   };
 
+  // Mirrors the similarity bands used by TelemetryResult's on-screen labels.
+  const getConfidenceLabel = (similarity) => {
+    if (similarity > 85) return "High";
+    if (similarity > 60) return "Medium";
+    return "Low";
+  };
+
   const handleCopy = () => {
     if (!result) return;
-    navigator.clipboard.writeText(`Face Similarity Result: ${result.similarity}% Match. Confidence: High.`);
+    const confidence = getConfidenceLabel(result.similarity);
+    navigator.clipboard.writeText(`Face Similarity Result: ${result.similarity}% Match. Confidence: ${confidence}.`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSliderDrag = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const handleSliderDrag = (clientX) => {
+    const container = sliderRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * 100;
     setSliderPos(Math.min(100, Math.max(0, x)));
+  };
+
+  const handleSliderKeyDown = (e) => {
+    const step = e.shiftKey ? 10 : 5;
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      setSliderPos((prev) => Math.max(0, prev - step));
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      setSliderPos((prev) => Math.min(100, prev + step));
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setSliderPos(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setSliderPos(100);
+    }
   };
 
   return (
@@ -180,6 +249,17 @@ export default function FaceSimilarityCheckerApp() {
               </div>
             </div>
 
+            {/* Manual compare trigger — works regardless of the Auto Compare setting */}
+            <div className="pt-4 border-t border-(--border)">
+              <button
+                onClick={runComparison}
+                disabled={!faceA || !faceB || processing}
+                className="w-full py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" /> {processing ? "Comparing..." : "Compare Faces"}
+              </button>
+            </div>
+
             {/* Action buttons */}
             <div className="flex gap-3 pt-4 border-t border-(--border)">
               <button
@@ -187,7 +267,7 @@ export default function FaceSimilarityCheckerApp() {
                 disabled={!result}
                 className="flex-1 py-3 bg-(--surface) border-2 border-(--border) hover:border-teal-500 text-(--foreground) hover:text-teal-500 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md cursor-pointer"
               >
-                {copied ? "Copied!" : <><Copy className="w-4 h-4" /> Copy Link</>}
+                {copied ? "Copied!" : <><Copy className="w-4 h-4" /> Copy result</>}
               </button>
               <button
                 onClick={handlePrint}
@@ -207,7 +287,13 @@ export default function FaceSimilarityCheckerApp() {
               
               {/* Photo Box A */}
               <div className="space-y-4">
-                <VisualCanvas imageSrc={faceA} title="Biometric Face A" settings={settings} processing={processing} />
+                <VisualCanvas
+                  imageSrc={faceA}
+                  title="Biometric Face A"
+                  settings={settings}
+                  processing={processing}
+                  onImageError={handleImageErrorA}
+                />
                 <div className="flex gap-2">
                   <input
                     type="file"
@@ -223,11 +309,22 @@ export default function FaceSimilarityCheckerApp() {
                     Upload Photo A
                   </label>
                 </div>
+                {uploadError.A && (
+                  <p className="text-xs font-semibold text-red-500" role="alert">
+                    {uploadError.A}
+                  </p>
+                )}
               </div>
 
               {/* Photo Box B */}
               <div className="space-y-4">
-                <VisualCanvas imageSrc={faceB} title="Biometric Face B" settings={settings} processing={processing} />
+                <VisualCanvas
+                  imageSrc={faceB}
+                  title="Biometric Face B"
+                  settings={settings}
+                  processing={processing}
+                  onImageError={handleImageErrorB}
+                />
                 <div className="flex gap-2">
                   <input
                     type="file"
@@ -243,6 +340,11 @@ export default function FaceSimilarityCheckerApp() {
                     Upload Photo B
                   </label>
                 </div>
+                {uploadError.B && (
+                  <p className="text-xs font-semibold text-red-500" role="alert">
+                    {uploadError.B}
+                  </p>
+                )}
               </div>
 
             </div>
@@ -254,9 +356,17 @@ export default function FaceSimilarityCheckerApp() {
                   <Sliders className="w-4 h-4 text-teal-500" /> Before / After Slide Overlays
                 </h4>
                 <div
-                  className="relative w-full h-80 border-4 border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden cursor-ew-resize select-none bg-slate-950 shadow-inner group"
-                  onMouseMove={handleSliderDrag}
-                  onTouchMove={(e) => handleSliderDrag(e.touches[0])}
+                  ref={sliderRef}
+                  className="relative w-full h-80 border-4 border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden cursor-ew-resize select-none bg-slate-950 shadow-inner group focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  onMouseMove={(e) => handleSliderDrag(e.clientX)}
+                  onTouchMove={(e) => handleSliderDrag(e.touches[0].clientX)}
+                  role="slider"
+                  tabIndex={0}
+                  aria-valuenow={Math.round(sliderPos)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label="Before/after comparison position"
+                  onKeyDown={handleSliderKeyDown}
                 >
                   <img src={faceA} className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity" alt="Face A" />
                   <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ clipPath: `polygon(${sliderPos}% 0, 100% 0, 100% 100%, ${sliderPos}% 100%)` }}>

@@ -39,10 +39,25 @@ export default function AltfCalcToolPage() {
     }
   }, [activeTool, toolSlug, router, getToolLink]);
 
+  // Only reachable for a slug that is not in CALCULATORS — `activeTool` is
+  // resolved synchronously, so a real calculator never renders this. It said
+  // "Loading calculator…" and shipped no heading and no link, which is what an
+  // unknown slug served to a crawler while the effect above redirected the
+  // browser. Name the state and leave a crawlable way back.
   if (!activeTool) {
     return (
       <div className="afc-loading">
-        <p>Loading calculator…</p>
+        <h1>Calculator not found</h1>
+        <p>
+          This calculator does not exist.{" "}
+          {/* Not getToolLink("") — that ends in a slash, and
+              /altfcalculators/ 308s to /altfcalculators (verified live), so the
+              crawler would pay a hop before reaching the hub. */}
+          <Link href={isSubdir ? "/altfcalculators" : "/"}>
+            Browse all AltFTool calculators
+          </Link>
+          .
+        </p>
       </div>
     );
   }
@@ -154,7 +169,11 @@ export default function AltfCalcToolPage() {
             <div>
               <span className="afc-tool-chip">{activeTool.category}</span>
               <h1 className="afc-tool-title">{activeTool.name}</h1>
-              <p className="afc-tool-desc">{activeTool.desc}</p>
+              {/* Answer-first: one self-contained sentence directly under the
+                  h1 saying what this calculator computes. `summary` is written
+                  from the calculator's own info entry; `desc` is the short tile
+                  label and only stands in if a summary is missing. */}
+              <p className="afc-tool-desc">{activeTool.summary || activeTool.desc}</p>
             </div>
           </motion.section>
 

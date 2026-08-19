@@ -9,11 +9,13 @@ import React from 'react';
  * @param {string} [props.prefix] - Prefix text
  * @param {string} [props.className] - Additional CSS classes
  */
-export const Input = React.forwardRef(({ label, error, icon, prefix, className = '', ...props }, ref) => {
+export const Input = React.forwardRef(({ label, error, icon, prefix, className = '', id, ...props }, ref) => {
+  const generatedId = React.useId();
+  const inputId = id ?? generatedId;
   return (
     <div className="relative">
       {label && (
-        <label className="block text-sm font-medium text-(--secondary) mb-2">
+        <label htmlFor={inputId} className="block text-sm font-medium text-(--secondary) mb-2">
           {label}
         </label>
       )}
@@ -30,6 +32,7 @@ export const Input = React.forwardRef(({ label, error, icon, prefix, className =
         )}
         <input
           ref={ref}
+          id={inputId}
           className={`
             w-full border border-(--border) rounded-lg px-4 py-2 focus:ring-2 text-(--secondary) cursor-pointer
             transition-all duration-200

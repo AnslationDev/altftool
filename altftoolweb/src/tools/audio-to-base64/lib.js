@@ -250,13 +250,16 @@ export function formatBytes(bytes) {
   return `${(bytes / BYTES_PER_MIB).toFixed(2)} MB`;
 }
 
-/** Ready-to-paste snippets for the three places a data URL normally goes. */
+/**
+ * Ready-to-paste snippets for the three places a data URL normally goes.
+ * Uses the full data URL (not a truncated preview) so the generated code is
+ * actually paste-ready rather than a non-functional example.
+ */
 export function buildSnippets(dataUrl) {
   if (typeof dataUrl !== "string" || !dataUrl.startsWith("data:")) return [];
-  const short = dataUrl.length > 64 ? `${dataUrl.slice(0, 48)}…` : dataUrl;
   return [
-    { id: "html", label: "HTML", code: `<audio controls src="${short}"></audio>` },
-    { id: "css", label: "CSS", code: `--chime: url("${short}");` },
-    { id: "js", label: "JavaScript", code: `new Audio("${short}").play();` },
+    { id: "html", label: "HTML", code: `<audio controls src="${dataUrl}"></audio>` },
+    { id: "css", label: "CSS", code: `--chime: url("${dataUrl}");` },
+    { id: "js", label: "JavaScript", code: `new Audio("${dataUrl}").play();` },
   ];
 }

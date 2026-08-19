@@ -8,7 +8,7 @@ const seo = {
     "Read the 'Packed weight' total against the allowance, tick items off the grouped checklist, and press 'Copy list' for a plain-text version.",
   ],
   intro:
-    "This builder sizes a wedding trip by events rather than by days: one outfit per function, plus a casual set for every two days of downtime and one travel outfit. Footwear is chosen per dress-code tier instead of per event, so six functions still need at most four pairs. It then adds up the outfit weights — heavy ethnic wear runs about 2.2 kg for a ceremony outfit and 1.8 kg for a reception one — and checks the total against a 15 kg domestic or 23 kg international checked allowance.",
+    "This builder sizes a wedding trip by events rather than by days: one outfit per function, plus a casual set for every two days of the trip and one travel outfit. Footwear is chosen per dress-code tier instead of per event, so six functions still need at most four pairs. It then adds up the outfit weights — heavy ethnic wear runs about 2.2 kg for a ceremony outfit and 1.8 kg for a reception one — and checks the total against a 15 kg domestic or 23 kg international checked allowance.",
   useCases: [
     "Work out whether four functions of heavy ethnic wear will clear a 15 kg domestic allowance.",
     "See how much weight you save by wearing the heaviest outfit on the flight instead of packing it.",
@@ -22,7 +22,7 @@ const seo = {
   faqs: [
     [
       "How many outfits do I need for a wedding trip?",
-      "One per function, since events are photographed and outfits do not repeat, plus roughly one casual set per two days of downtime and one travel outfit. A four-function Indian wedding over four days therefore comes to about seven outfits in total.",
+      "One per function, since events are photographed and outfits do not repeat, plus roughly one casual set per two days of the trip and one travel outfit. A four-function Indian wedding over four days therefore comes to about seven outfits in total.",
     ],
     [
       "How much does a lehenga or sherwani weigh for baggage?",

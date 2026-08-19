@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, ScrollText } from "lucide-react";
 
 import {
@@ -66,6 +66,13 @@ export default function ToolHome() {
   const [titles, setTitles] = useState(DEFAULTS.titles);
   const [servers, setServers] = useState(DEFAULTS.servers);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const evaluation = useMemo(
     () =>
@@ -93,7 +100,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -247,7 +255,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Licence coverage
             </p>
@@ -268,7 +276,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copySummary}
-              aria-label="Copy the licence coverage summary"
+              aria-label={copied ? "Copied to clipboard" : "Copy the licence coverage summary"}
               className={GHOST_BTN}
               disabled={Boolean(evaluation.error)}
             >

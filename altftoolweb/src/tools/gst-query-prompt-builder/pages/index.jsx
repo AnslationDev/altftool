@@ -90,6 +90,7 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+  const isAnnualCadence = RETURN_DUE_RULES[form.returnType]?.cadence === "annual";
 
   const copyResult = async () => {
     if (hasError) return;
@@ -136,7 +137,7 @@ export default function ToolHome() {
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">GST Query Prompt Builder</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Frame a GST question for AI with citation and non-advisory guardrails baked in — plus a
-          section 22/24 registration check against the real Rs 40/20/10 lakh thresholds and the
+          section 22 registration check against the real Rs 40/20/10 lakh thresholds and the
           statutory return due dates.
         </p>
       </header>
@@ -301,7 +302,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl aria-live="polite" aria-atomic="true" className="mt-5 divide-y divide-[var(--border)] text-sm">
           {regRows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -313,7 +314,11 @@ export default function ToolHome() {
         <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
           Generated prompt
         </p>
-        <pre className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5">
+        <pre
+          aria-live="polite"
+          aria-atomic="true"
+          className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5"
+        >
           {hasError ? DASH : result.prompt}
         </pre>
       </section>
@@ -342,13 +347,25 @@ export default function ToolHome() {
             <label className={LABEL_CLASS} htmlFor="gq-month">
               Period month
             </label>
-            <select id="gq-month" className={`mt-2 ${INPUT_CLASS}`} value={form.periodMonth} onChange={set("periodMonth")}>
+            <select
+              id="gq-month"
+              className={`mt-2 ${INPUT_CLASS} disabled:cursor-not-allowed disabled:opacity-50`}
+              value={form.periodMonth}
+              onChange={set("periodMonth")}
+              disabled={isAnnualCadence}
+              aria-disabled={isAnnualCadence}
+            >
               {MONTH_OPTIONS.map(([value, label]) => (
                 <option key={value} value={String(value)}>
                   {label}
                 </option>
               ))}
             </select>
+            {isAnnualCadence ? (
+              <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+                Not applicable — annual returns use the financial-year start year only.
+              </p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="gq-year">
@@ -375,7 +392,7 @@ export default function ToolHome() {
             {dueDate.error}
           </p>
         ) : (
-          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm">
+          <p aria-live="polite" aria-atomic="true" className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm">
             <span className="text-[var(--muted-foreground)]">{dueDate.label} for {dueDate.periodLabel}: </span>
             <span className="font-semibold">{dueDate.dueDateLabel}</span>
             <span className="text-[var(--muted-foreground)]"> (statutory date; CBIC extensions not modelled)</span>

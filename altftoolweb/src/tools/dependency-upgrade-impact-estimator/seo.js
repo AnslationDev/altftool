@@ -30,7 +30,7 @@ const seo = {
     ],
     [
       "What score means I should be careful?",
-      "Anything above 65 is marked 'Review carefully' and everything at or below is marked 'Low friction'. In practice that threshold catches every major upgrade and every critical-package minor.",
+      "Anything above 65 is marked 'Review carefully' and everything at or below is marked 'Low friction'. In practice that threshold catches every major upgrade (68 for an ordinary package, 86 when it is framework-critical) and any downgrade, but a critical-package minor only scores 52 and still shows as 'Low friction' — read the changelog on those too if the package matters.",
     ],
     [
       "Does it read changelogs or check for breaking changes?",

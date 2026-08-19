@@ -8,7 +8,7 @@ const seo = {
     "'Export PNG' saves fake-chat-mockup.png at 2x the 430 px SVG; 'Export SVG' and the JSON button save fake-chat-mockup.svg and fake-chat-maker.json.",
   ],
   intro:
-    "The Fake Chat Maker builds mock messaging screenshots for storyboards, UI demos, scripts and social posts, in six interface styles — WhatsApp, Instagram, Telegram, iMessage, KakaoTalk and Discord. You write both sides of the conversation, set the names, avatars, timestamps, phone clock, battery level, read ticks and light or dark mode, and it renders a 430-pixel-wide phone frame you can export as SVG, as a PNG at 2x scale, or as JSON to reload later. It is a mockup builder, not an evidence generator: the labelling toggle is on by default and the tool warns you when you switch it off before a public export.",
+    "The Fake Chat Maker builds mock messaging screenshots for storyboards, UI demos, scripts and social posts, in six interface styles — WhatsApp, Instagram, Telegram, iMessage, KakaoTalk and Discord. You write both sides of the conversation, set the names, avatars, timestamps, phone clock, battery level, read ticks and light or dark mode, and it renders a 430-pixel-wide phone frame you can export as SVG, as a PNG at 2x scale, or as a JSON backup file of the conversation content and settings for your own reference or scripting. It is a mockup builder, not an evidence generator: the labelling toggle is on by default and the tool warns you when you switch it off before a public export.",
   useCases: [
     "You are storyboarding an app onboarding flow and need a believable conversation in the frame instead of lorem ipsum before the design review.",
     "You are writing a short film or comic where a text exchange drives the scene, and you want it rendered in a recognisable interface rather than described in stage directions.",
@@ -17,7 +17,7 @@ const seo = {
   benefits: [
     ["Six interfaces, properly styled", "Each template carries its own bubble colours, corner radius, header and read-receipt colour — Instagram's 18 px bubbles and blue ticks do not look like WhatsApp's 7.5 px green ones."],
     ["Vector first", "The frame is built as SVG, so the PNG is rasterised from it at double size and stays sharp on a retina screen or a projected slide."],
-    ["Reloadable projects", "Export the whole conversation and settings as JSON, or copy it as a plain-text script, so a mockup can be revised rather than rebuilt."],
+    ["Portable backup", "Export the whole conversation and settings as a JSON data file, or copy it as a plain-text script, so you have a record of the mockup outside the browser for reference or scripting — the live editor itself autosaves to local storage as you go."],
   ],
   faqs: [
     [

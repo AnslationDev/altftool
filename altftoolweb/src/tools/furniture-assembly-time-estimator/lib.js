@@ -192,6 +192,9 @@ export function estimateAssembly({
   const totalMinutes = workingMinutes + breakMinutes;
 
   const finish = addMinutesToClock(startTime, totalMinutes);
+  if (!finish) {
+    return { error: "Enter a valid start time." };
+  }
 
   return {
     itemLabel: preset.label,

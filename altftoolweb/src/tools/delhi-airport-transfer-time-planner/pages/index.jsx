@@ -397,7 +397,22 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      {!hasError && !result.converged && (
+        <p
+          role="status"
+          className="mt-6 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
+        >
+          This trip is long enough that the hour-by-hour traffic model could not settle on one
+          answer. The figures below stay internally consistent, but treat the departure time as
+          approximate — check a live map before you leave.
+        </p>
+      )}
+
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

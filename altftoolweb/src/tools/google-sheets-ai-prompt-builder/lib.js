@@ -214,6 +214,40 @@ export function parseSheetsRange(raw) {
   const rowValues = ends.map((end) => end.row).filter((row) => row !== null);
   const bothRows = rowValues.length === ends.length;
 
+  // A range with exactly one row number is only documented as start-anchored
+  // (A2:D — open end, runs to the bottom). If the row instead sits on the end
+  // token (A:E500) the meaning flips: the start is implicitly row 1 and the
+  // end row is known, so this is really a closed range, not an open one.
+  const endAnchoredOpenRange =
+    !bothRows && ends.length === 2 && rowValues.length === 1 && ends[0].row === null && ends[1].row !== null;
+
+  if (endAnchoredOpenRange) {
+    const startRow = 1;
+    const endRow = ends[1].row;
+    const rowCount = endRow - startRow + 1;
+    const cellCount = rowCount * columnCount;
+
+    if (cellCount > SHEETS_MAX_CELLS) {
+      return {
+        error: `That range is ${cellCount.toLocaleString("en-US")} cells; a whole Google Sheets spreadsheet only holds ${SHEETS_MAX_CELLS.toLocaleString("en-US")}.`,
+      };
+    }
+
+    return {
+      startColumn,
+      endColumn,
+      startColumnIndex,
+      endColumnIndex,
+      startRow,
+      endRow,
+      columnCount,
+      rowCount,
+      cellCount,
+      openEnded: false,
+      normalized: `${startColumn}${startRow}:${endColumn}${endRow}`,
+    };
+  }
+
   if (!bothRows) {
     // Open-ended: A:D, or A2:D. Row count runs to the bottom of the sheet.
     const startRow = rowValues.length === 1 ? Math.min(...rowValues) : 1;

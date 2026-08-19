@@ -212,7 +212,7 @@ function buildSummary(values, metrics) {
     `Monthly mortgage: ${formatMoney(metrics.monthlyMortgage)}`,
     `Net cash flow: ${formatMoney(metrics.netCashFlow)}`,
     `ROI: ${formatPercent(metrics.roi)}`,
-    `Break-even years: ${formatNumber(metrics.breakEvenYears)}`,
+    `Break-even years: ${Number.isFinite(metrics.breakEvenYears) ? formatNumber(metrics.breakEvenYears) : "Never"}`,
   ].join("\n");
 }
 
@@ -367,7 +367,7 @@ export default function RentalYieldCalculator() {
             </p>
           </div>
 
-          <div className="tool-card-grid mx-auto mt-8 w-full max-w-5xl">
+          <div className="tool-card-grid mx-auto mt-8 w-full max-w-5xl" aria-live="polite" role="status">
             <MetricCard
               icon={TrendingUp}
               label="Gross Yield"
@@ -392,7 +392,7 @@ export default function RentalYieldCalculator() {
           </div>
         </header>
 
-        <section className="mt-8 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+        <section className="mt-8 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4" aria-live="polite" role="status">
           <MetricCard
             icon={PiggyBank}
             label="ROI"
@@ -416,7 +416,7 @@ export default function RentalYieldCalculator() {
           <MetricCard
             icon={Shield}
             label="Break-even"
-            value={formatNumber(metrics.breakEvenYears) + " yrs"}
+            value={Number.isFinite(metrics.breakEvenYears) ? `${formatNumber(metrics.breakEvenYears)} yrs` : "Never"}
             detail={`Capital appreciation: ${formatMoney(metrics.capitalAppreciation)}`}
             tone="violet"
           />
@@ -447,12 +447,14 @@ export default function RentalYieldCalculator() {
                   value={values.downPayment}
                   onChange={(value) => updateValue("downPayment", value)}
                   suffix="₹"
+                  max={values.purchasePrice}
                 />
                 <Field
                   label="Loan Amount"
                   value={values.loanAmount}
                   onChange={(value) => updateValue("loanAmount", value)}
                   suffix="₹"
+                  max={values.purchasePrice}
                 />
                 <Field
                   label="Interest Rate"
@@ -483,6 +485,7 @@ export default function RentalYieldCalculator() {
                   value={values.monthlyRent}
                   onChange={(value) => updateValue("monthlyRent", value)}
                   suffix="₹"
+                  max={10000000}
                 />
                 <Field
                   label="Vacancy Rate"
@@ -506,30 +509,35 @@ export default function RentalYieldCalculator() {
                   value={values.maintenanceCost}
                   onChange={(value) => updateValue("maintenanceCost", value)}
                   suffix="₹"
+                  max={1000000}
                 />
                 <Field
                   label="Property Tax"
                   value={values.propertyTax}
                   onChange={(value) => updateValue("propertyTax", value)}
                   suffix="₹"
+                  max={1000000}
                 />
                 <Field
                   label="Insurance"
                   value={values.insurance}
                   onChange={(value) => updateValue("insurance", value)}
                   suffix="₹"
+                  max={1000000}
                 />
                 <Field
                   label="HOA Charges"
                   value={values.hoaCharges}
                   onChange={(value) => updateValue("hoaCharges", value)}
                   suffix="₹"
+                  max={1000000}
                 />
                 <Field
                   label="Repairs"
                   value={values.repairs}
                   onChange={(value) => updateValue("repairs", value)}
                   suffix="₹"
+                  max={1000000}
                 />
                 <Field
                   label="Management Fee"
@@ -544,12 +552,14 @@ export default function RentalYieldCalculator() {
                   value={values.utilities}
                   onChange={(value) => updateValue("utilities", value)}
                   suffix="₹"
+                  max={1000000}
                 />
                 <Field
                   label="Other Expenses"
                   value={values.otherExpenses}
                   onChange={(value) => updateValue("otherExpenses", value)}
                   suffix="₹"
+                  max={1000000}
                 />
               </div>
 
@@ -667,7 +677,7 @@ export default function RentalYieldCalculator() {
                   ["Monthly Cash Flow", formatMoney(metrics.monthlyCashFlow)],
                   ["ROI", formatPercent(metrics.roi)],
                   ["Cash-on-Cash ROI", formatPercent(metrics.cashOnCashRoi)],
-                  ["Break-even Years", formatNumber(metrics.breakEvenYears)],
+                  ["Break-even Years", Number.isFinite(metrics.breakEvenYears) ? formatNumber(metrics.breakEvenYears) : "Never"],
                 ].map(([label, value]) => (
                   <div key={label} className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
                     <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>

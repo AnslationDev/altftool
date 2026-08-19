@@ -79,6 +79,9 @@ export default function ToolHome() {
     if ([d, r].some((value) => Number.isNaN(value))) {
       return { error: "Enter valid numbers for the deposit and interest rate." };
     }
+    if (d % 1000 !== 0) {
+      return { error: "POMIS deposits must be in multiples of ₹1,000." };
+    }
     if (d < MIN_DEPOSIT) {
       return { error: `The minimum POMIS deposit is ${money(MIN_DEPOSIT)}.` };
     }
@@ -225,6 +228,11 @@ export default function ToolHome() {
       ) : (
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+            <span className="sr-only" role="status" aria-live="polite">
+              {!calc.error
+                ? `Monthly income: ${money2(calc.monthly)}. Quarterly: ${money2(calc.quarterly)}. Annual: ${money2(calc.annual)}.`
+                : ""}
+            </span>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

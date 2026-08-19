@@ -219,7 +219,7 @@ function MetricCard({ icon: Icon, label, value, detail, tone = "default" }) {
         </div>
         <div className="min-w-0">
           <p className="break-words text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
-          <p className="tool-money-value mt-1 text-[var(--foreground)]">{value}</p>
+          <p className="tool-money-value mt-1 text-[var(--foreground)]" aria-live="polite" aria-atomic="true">{value}</p>
           <p className="mt-1 break-words text-sm leading-5 text-[var(--muted-foreground)]">{detail}</p>
         </div>
       </div>
@@ -441,6 +441,7 @@ export default function MeetingCostCalculator() {
                   value={newRoleName}
                   onChange={(event) => setNewRoleName(event.target.value)}
                   placeholder="New role or team"
+                  aria-label="New role or team"
                   className="h-11 min-w-0 flex-1 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                 />
                 <button type="button" onClick={addRole} className="btn-primary sm:w-auto">

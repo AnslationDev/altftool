@@ -373,12 +373,18 @@ export function planCashBudget({
 
   /* --------------------------------------------------- statutory checks */
 
-  const cashUsdEquivalent = inrPerUsd > 0 ? cashMidInr / inrPerUsd : 0;
+  // RBI's note-carrying cap, the customs declaration threshold and the LRS/TCS
+  // threshold are all per resident traveller, not per trip, so the group's
+  // combined cash must be divided across travellers before it is compared
+  // against any of them.
+  const cashMidInrPerTraveller = travellers > 0 ? cashMidInr / travellers : cashMidInr;
+  const cashUsdEquivalent = inrPerUsd > 0 ? cashMidInrPerTraveller / inrPerUsd : 0;
   const overRbiNoteLimit = cashUsdEquivalent > RBI_CASH_NOTES_LIMIT_USD;
   const rbiHeadroomUnits =
     inrPerUnit > 0 ? (RBI_CASH_NOTES_LIMIT_USD * inrPerUsd) / inrPerUnit : 0;
 
-  const lrsAmountInr = cashGrossInr + (cardType.inLrs ? cardMidInr : 0);
+  const lrsAmountInr =
+    cashGrossInr / travellers + (cardType.inLrs ? cardMidInr / travellers : 0);
   const tcs = lrsTcs(lrsAmountInr, lrsAlreadyUsedInr);
 
   /* ------------------------------------------------------------ warnings */

@@ -133,7 +133,7 @@ export default function ExpertVideoView() {
           {/* ── Main ── */}
           <div className="lg:col-span-2 space-y-5">
             <article className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              {video.image && (
+              {video.thumbnailUrl && (
                 <div className="w-full h-64 sm:h-80 bg-gray-100 overflow-hidden">
                   <img
                     src={video.thumbnailUrl}

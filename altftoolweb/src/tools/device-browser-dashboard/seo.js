@@ -8,7 +8,7 @@ const seo = {
     "Press Copy report for a plain-text snapshot, or Re-scan after changing a browser setting to compare the two.",
   ],
   intro:
-    "This dashboard reports everything a web page can learn about your browser without asking permission: the browser and engine parsed from the user-agent string, the operating system, viewport and screen geometry, the privacy signals you send, and which of 23 web APIs are actually available. Detection matches the most specific user-agent token first — Edge before Chrome, Chrome before Safari — because every Chromium browser carries the earlier names in its UA. Everything runs locally; nothing is transmitted or stored.",
+    "This dashboard reports everything a web page can learn about your browser without asking permission: the browser and engine parsed from the user-agent string, the operating system, viewport and screen geometry, the privacy signals you send, and which of 20 web APIs are actually available. Detection matches the most specific user-agent token first — Edge before Chrome, Chrome before Safari — because every Chromium browser carries the earlier names in its UA. Everything runs locally; nothing is transmitted or stored.",
   useCases: [
     "Confirm what a tester's browser actually reports when a bug only reproduces on their machine",
     "Check whether a target device supports WebGL 2, WebGPU, SharedArrayBuffer or the Async Clipboard API before designing around them",
@@ -26,11 +26,11 @@ const seo = {
     ],
     [
       "What is Global Privacy Control and does it do anything?",
-      "GPC is a header and a JavaScript flag saying you opt out of the sale or sharing of your personal data. Unlike Do Not Track it has legal force in some jurisdictions — California's Attorney General and Colorado's privacy rules both treat it as a valid opt-out request — which is why it is weighted far more heavily here than DNT.",
+      "GPC is a header and a JavaScript flag saying you opt out of the sale or sharing of your personal data. Unlike Do Not Track it has legal force in some jurisdictions — California's Attorney General and Colorado's privacy rules both treat it as a valid opt-out request. This dashboard reports whether your browser exposes the flag, but the security score here is built only from secure-context, cross-origin isolation, cookie and Do Not Track signals — it does not currently weight GPC.",
     ],
     [
       "Can I stop sites from reading this information?",
-      "You can reduce it, not eliminate it. Firefox's resist-fingerprinting mode and Safari's protections round or omit screen size, deviceMemory and hardwareConcurrency; Chromium exposes all three. The single largest change is blocking third-party cookies, which is worth 25 of the 100 points in the score here.",
+      "You can reduce it, not eliminate it. Firefox's resist-fingerprinting mode and Safari's protections round or omit screen size, deviceMemory and hardwareConcurrency; Chromium exposes all three. Whether cookies are enabled at all is worth 10 of the 100 points in the security score here — this dashboard does not distinguish first-party from third-party cookie blocking.",
     ],
     [
       "Is the viewport the same as the screen size?",

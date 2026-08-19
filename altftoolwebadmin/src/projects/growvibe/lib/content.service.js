@@ -1,6 +1,5 @@
 import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import {
-  deleteObject,
   getDownloadURL,
   ref as storageRef,
   uploadBytesResumable,
@@ -69,14 +68,4 @@ export function uploadSectionImage(key, file, onProgress) {
       },
     );
   });
-}
-
-/** Best-effort delete of a previously uploaded storage object. */
-export async function deleteSectionImage(path) {
-  if (!path) return;
-  try {
-    await deleteObject(storageRef(storage, path));
-  } catch (error) {
-    // Object may already be gone; ignore.
-  }
 }

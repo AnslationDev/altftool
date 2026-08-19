@@ -91,7 +91,7 @@ export default function WorkloadAssessmentCards({
                           <span className="text-[var(--danger)]">•</span>
                           <span>
                             {gap.field === "acceleration"
-                              ? "Hardware GPU acceleration was not confirmed."
+                              ? `Hardware GPU acceleration was ${gap.available}.`
                               : `${gap.label}: ${gap.available} ${gap.unit} available; ${gap.required} ${gap.unit} required.`}
                           </span>
                         </li>

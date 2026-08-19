@@ -54,8 +54,8 @@ const seo = {
       "Four keys, pretty-printed with 2-space indentation: pattern (your expression as a string), flags (the enabled letters, e.g. \"gi\"), total (the match count) and matches — an array in which each entry has match (the matched text), index (zero-based start position) and groups (an array of captured values).",
     ],
     [
-      "Why does the page hang on a pattern like \\d* or a*?",
-      "Because a zero-length match doesn't advance the search position. With the global flag on, the tester loops exec() until it returns null, and a pattern that can match the empty string keeps matching at the same index forever. Require at least one character — use + instead of * , or anchor the pattern — or turn the global flag off.",
+      "What happens with a pattern like \\d* or a* that can match an empty string?",
+      "A zero-length match doesn't advance the search position on its own, so with the global flag on the tester manually moves one character ahead after any empty match before searching again — that's how it reports every position a pattern like a* matches (including the gaps between other characters) without ever getting stuck. If you only want matches with real content, require at least one character with + instead of *, or anchor the pattern.",
     ],
     [
       "How do I test an email or IP address regex quickly?",

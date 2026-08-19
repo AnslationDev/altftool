@@ -472,7 +472,7 @@ export function buildEtiquetteBriefing({
   const readinessPct = totalWeight > 0 ? Math.round((knownWeight / totalWeight) * 100) : 0;
 
   const shown = ranked.slice(0, maxItems);
-  const topMistakes = ranked.filter((rule) => !rule.known).slice(0, 5);
+  const topMistakes = shown.filter((rule) => !rule.known).slice(0, 5);
   const legalRisks = ranked.filter((rule) => rule.legal);
 
   const bySeverity = SEVERITIES.map((severity) => {

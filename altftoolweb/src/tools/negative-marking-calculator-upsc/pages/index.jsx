@@ -249,15 +249,21 @@ export default function ToolHome() {
             </label>
             <input
               id="upsc-target"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={`mt-2 ${INPUT_CLASS} ${isCsat ? "cursor-not-allowed opacity-50" : ""}`}
               type="number"
               inputMode="decimal"
               min="0"
               step="0.5"
               value={target}
+              disabled={isCsat}
+              aria-disabled={isCsat}
               onChange={(event) => setTarget(event.target.value)}
             />
-            <p className={HELP_CLASS}>Cutoffs are declared only after the result — use your own estimate.</p>
+            <p className={HELP_CLASS}>
+              {isCsat
+                ? "CSAT is qualifying-only, so a target score does not apply — the result below checks your expected score against the 33% qualifying bar instead."
+                : "Cutoffs are declared only after the result — use your own estimate."}
+            </p>
           </div>
         </div>
       </section>
@@ -271,7 +277,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

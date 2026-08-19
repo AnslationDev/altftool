@@ -4,15 +4,13 @@ import { Maximize2, Sparkles, SquareArrowOutUpRight, ThumbsUp } from "lucide-rea
 import CopyButton from "./CopyButton";
 
 const AVATAR_COLORS = [
-  "bg-rose-500",
-  "bg-orange-500",
-  "bg-amber-500",
-  "bg-emerald-500",
-  "bg-teal-500",
-  "bg-sky-500",
-  "bg-indigo-500",
-  "bg-violet-500",
-  "bg-fuchsia-500",
+  "bg-danger-soft",
+  "bg-warning-soft",
+  "bg-success-soft",
+  "bg-info-soft",
+  "bg-primary-soft",
+  "bg-secondary-soft",
+  "bg-accent-soft",
 ];
 
 function avatarColor(name = "") {
@@ -127,7 +125,7 @@ export default function PromptCard({ prompt, onOpen }) {
         <div className="mt-auto flex items-center justify-between border-t border-(--color-border) pt-3.5">
           <div className="flex min-w-0 items-center gap-2">
             <span
-              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white ${avatarColor(
+              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-(--color-foreground) ${avatarColor(
                 authorName
               )}`}
             >

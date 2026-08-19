@@ -97,9 +97,10 @@ export function formatExposure(seconds) {
   if (!isFiniteNumber(seconds) || seconds <= 0) return "—";
   if (seconds < 1) return `1/${Math.round(1 / seconds)} s`;
   if (seconds < 60) return `${seconds.toFixed(seconds < 10 ? 2 : 1)} s`;
-  const minutes = Math.floor(seconds / 60);
-  const rest = seconds - minutes * 60;
-  if (minutes < 60) return `${minutes} min ${rest.toFixed(0)} s`;
+  const totalRounded = Math.round(seconds);
+  const minutes = Math.floor(totalRounded / 60);
+  const rest = totalRounded - minutes * 60;
+  if (minutes < 60) return `${minutes} min ${rest} s`;
   const hours = Math.floor(minutes / 60);
   return `${hours} h ${minutes - hours * 60} min`;
 }

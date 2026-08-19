@@ -35,7 +35,11 @@ const seo = {
     ],
     [
       "How long does it take to get to IGI airport from Connaught Place?",
-      "About 16 km, which is roughly 25 minutes on clear roads and 40 to 50 minutes through the evening peak by cab. The Airport Express metro covers the same corridor without touching road traffic, so its journey time barely moves between 07:00 and 19:00 — which is why it wins in the peak and loses at 03:00.",
+      // 16 km by app-cab: journeyMinutes({distanceKm:16, mode:MODES['app-cab'], factor:1})
+      // = (16/45)*60 + 8 = 29.3 min -> "29 min". Re-check this figure by hand if
+      // MODES.app-cab's freeFlowKmh/fixedOverheadMinutes in lib.js ever change,
+      // since seo.js is loaded standalone and cannot import lib.js.
+      "About 16 km, which is roughly 29 minutes on clear roads and 40 to 50 minutes through the evening peak by cab. The Airport Express metro covers the same corridor without touching road traffic, so its journey time barely moves between 07:00 and 19:00 — which is why it wins in the peak and loses at 03:00.",
     ],
     [
       "When does check-in close for a flight from Delhi?",

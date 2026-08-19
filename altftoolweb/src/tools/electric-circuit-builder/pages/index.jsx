@@ -37,6 +37,9 @@ export default function ElectricCircuitBuilder() {
     power = voltage * totalI;
   }
 
+  // An open switch breaks the loop, so resistance is effectively infinite — not 0 Ω.
+  const totalRDisplay = isSwitchClosed ? `${totalR.toFixed(1)} Ω` : "∞ Ω (open)";
+
   // Bulb brightness scaling (0 to 1)
   const maxNormalPower = (24 * 24) / 10;
   const bulbBrightness = isSwitchClosed ? Math.min(power / maxNormalPower, 1) : 0;
@@ -47,21 +50,33 @@ export default function ElectricCircuitBuilder() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.scale(dpr, dpr);
-
-    const w = rect.width;
-    const h = rect.height;
-
     const marginX = 80;
     const marginY = 60;
-    const left = marginX;
-    const right = w - marginX;
-    const top = marginY;
-    const bottom = h - marginY;
+
+    let w = 0;
+    let h = 0;
+    let left = 0;
+    let right = 0;
+    let top = 0;
+    let bottom = 0;
+
+    const setupCanvas = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+
+      w = rect.width;
+      h = rect.height;
+      left = marginX;
+      right = w - marginX;
+      top = marginY;
+      bottom = h - marginY;
+    };
+
+    setupCanvas();
 
     const render = () => {
       ctx.clearRect(0, 0, w, h);
@@ -78,12 +93,13 @@ export default function ElectricCircuitBuilder() {
       ctx.closePath();
       ctx.stroke();
 
-      // Parallel branch if active
+      // Parallel branch if active — connects directly to the main loop's side wires
+      // so it forms a real parallel path instead of a floating segment.
       if (circuitType === "parallel") {
         const midY = (top + bottom) / 2;
         ctx.beginPath();
-        ctx.moveTo(left + (right - left) * 0.3, midY);
-        ctx.lineTo(right - (right - left) * 0.3, midY);
+        ctx.moveTo(left, midY);
+        ctx.lineTo(right, midY);
         ctx.stroke();
       }
 
@@ -215,7 +231,26 @@ export default function ElectricCircuitBuilder() {
     };
 
     render();
-    return () => cancelAnimationFrame(animRef.current);
+
+    // Re-run the sizing logic whenever the canvas's container is resized
+    // (window resize, responsive layout changes, etc.) so the circuit
+    // doesn't stay laid out for a stale size.
+    let resizeObserver;
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(() => setupCanvas());
+      resizeObserver.observe(canvas);
+    } else if (typeof window !== "undefined") {
+      window.addEventListener("resize", setupCanvas);
+    }
+
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      } else if (typeof window !== "undefined") {
+        window.removeEventListener("resize", setupCanvas);
+      }
+    };
   }, [voltage, r1, r2, isSwitchClosed, circuitType, totalI, power, bulbBrightness]);
 
   return (
@@ -293,7 +328,7 @@ export default function ElectricCircuitBuilder() {
               {/* DC Battery Voltage */}
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span>Battery Voltage ($V$)</span>
+                  <span>Battery Voltage (V)</span>
                   <span className="text-primary font-mono">{voltage} Volts</span>
                 </div>
                 <input
@@ -309,8 +344,8 @@ export default function ElectricCircuitBuilder() {
               {/* Resistor 1 */}
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span>Resistor $R_1$</span>
-                  <span className="text-primary font-mono">{r1} $\Omega$</span>
+                  <span>Resistor R₁</span>
+                  <span className="text-primary font-mono">{r1} Ω</span>
                 </div>
                 <input
                   type="range"
@@ -325,8 +360,8 @@ export default function ElectricCircuitBuilder() {
               {/* Bulb Resistance R2 */}
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span>Bulb Resistance $R_2$</span>
-                  <span className="text-primary font-mono">{r2} $\Omega$</span>
+                  <span>Bulb Resistance R₂</span>
+                  <span className="text-primary font-mono">{r2} Ω</span>
                 </div>
                 <input
                   type="range"
@@ -340,7 +375,10 @@ export default function ElectricCircuitBuilder() {
             </div>
 
             {/* Circuit Telemetry & Multimeter */}
-            <div className="rounded-xl border border-border bg-card p-5 space-y-3 shadow-sm">
+            <div
+              className="rounded-xl border border-border bg-card p-5 space-y-3 shadow-sm"
+              aria-live="polite"
+            >
               <h2 className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
                 <Activity className="w-4 h-4" /> Live Multimeter Readout
               </h2>
@@ -348,17 +386,17 @@ export default function ElectricCircuitBuilder() {
                 <div className="p-3 rounded-lg bg-surface-soft border border-border">
                   <div className="text-muted-foreground">Total Resistance</div>
                   <div className="text-base font-bold font-mono text-foreground mt-0.5">
-                    {totalR.toFixed(1)} $\Omega$
+                    {totalRDisplay}
                   </div>
                 </div>
                 <div className="p-3 rounded-lg bg-surface-soft border border-border">
-                  <div className="text-muted-foreground">Current ($I$)</div>
+                  <div className="text-muted-foreground">Current (I)</div>
                   <div className="text-base font-bold font-mono text-foreground mt-0.5">
                     {totalI.toFixed(2)} A
                   </div>
                 </div>
                 <div className="p-3 rounded-lg bg-surface-soft border border-border">
-                  <div className="text-muted-foreground">Power ($P$)</div>
+                  <div className="text-muted-foreground">Power (P)</div>
                   <div className="text-base font-bold font-mono text-foreground mt-0.5">
                     {power.toFixed(1)} W
                   </div>
@@ -376,7 +414,14 @@ export default function ElectricCircuitBuilder() {
           {/* Interactive Circuit Canvas (8 cols) */}
           <div className="lg:col-span-8 flex flex-col space-y-4">
             <div className="relative rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 min-h-[420px]">
-              <canvas ref={canvasRef} className="w-full h-full block" />
+              <canvas
+                ref={canvasRef}
+                role="img"
+                aria-label={`Circuit diagram: ${circuitType} circuit, switch ${
+                  isSwitchClosed ? "closed" : "open"
+                }, total resistance ${totalRDisplay}, current ${totalI.toFixed(2)} amps`}
+                className="w-full h-full block"
+              />
             </div>
 
             {/* Educational Notes */}
@@ -385,7 +430,7 @@ export default function ElectricCircuitBuilder() {
                 <Info className="w-4 h-4 text-primary" /> Educational Principles: Ohm's Law
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Current ($I$) is directly proportional to voltage ($V$) and inversely proportional to total resistance ($R$). In series circuits, resistances add ($R_eq = R_1 + R_2$). In parallel circuits, equivalent resistance drops ($1/R_eq = 1/R_1 + 1/R_2$).
+                Current (I) is directly proportional to voltage (V) and inversely proportional to total resistance (R). In series circuits, resistances add (Req = R₁ + R₂). In parallel circuits, equivalent resistance drops (1/Req = 1/R₁ + 1/R₂).
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 text-[11px] text-muted-foreground font-mono">
                 <div className="p-2 rounded bg-surface-soft">Ohm's Law: V = I × R</div>

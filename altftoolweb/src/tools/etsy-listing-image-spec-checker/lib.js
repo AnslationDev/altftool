@@ -152,14 +152,19 @@ export function checkEtsyImage({
           )}% of this image. Leave space around the subject or shoot wider so nothing important is cut.`,
   });
 
+  // Reuse the same crop-loss figure the thumbnail check uses, so the two
+  // checks can never disagree about whether this photo's shape is a problem.
+  const orientationWarn = loss != null && loss > CROP_WARN_PCT;
   checks.push({
     id: "orientation",
     label: "Orientation",
-    status: !isPrimary ? "pass" : orientation === "Portrait" ? "warn" : "pass",
+    status: !isPrimary ? "pass" : orientationWarn ? "warn" : "pass",
     detail: !isPrimary
       ? `${orientation} — orientation only matters for the first photo.`
-      : orientation === "Portrait"
-        ? `Portrait photos lose the most to the ${THUMBNAIL_RATIO_LABEL} thumbnail crop. A landscape or square first photo shows more of the product in search.`
+      : orientationWarn
+        ? orientation === "Portrait"
+          ? `Portrait photos lose the most to the ${THUMBNAIL_RATIO_LABEL} thumbnail crop. A landscape or square first photo shows more of the product in search.`
+          : `${orientation} still loses about ${loss.toFixed(1)}% to the ${THUMBNAIL_RATIO_LABEL} thumbnail crop. Leave space around the subject or shoot wider.`
         : `${orientation} works well with the ${THUMBNAIL_RATIO_LABEL} search thumbnail.`,
   });
 

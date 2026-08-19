@@ -27,6 +27,15 @@ export function DatabaseNode({ data, selected }) {
     <div
       className={`relative min-w-[120px] text-center transition-all`}
       onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      role="button"
+      aria-label="Double-click or press Enter to rename"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleDoubleClick();
+        }
+      }}
     >
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-cyan-500 !border-2 !border-white !top-[2px] !z-10" />
       <svg viewBox="0 0 120 80" className="w-[140px] h-[90px]">

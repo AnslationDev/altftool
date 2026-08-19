@@ -41,7 +41,7 @@ const ratePresets = [
   { label: "Healthcare 12%", value: 12 },
 ];
 
-const taxSlabs = [0, 5, 10, 15, 20, 30];
+const taxSlabs = [0, 5, 10, 15, 20, 25, 30];
 
 const everydayItems = [
   { label: "Veg thali", icon: Utensils, amount: 100 },
@@ -121,7 +121,7 @@ export default function ToolHome() {
       lines.push(
         `Mode: Future cost`,
         `Today's cost: ${formatINR(calc.amt)}`,
-        `Inflation: ${formatNumber(Number(rate) || 0)}% p.a. for ${calc.n} years`,
+        `Inflation: ${formatNumber(calc.r * 100)}% p.a. for ${calc.n} years`,
         `Future cost (${CURRENT_YEAR + calc.n}): ${formatINR(calc.future)} (${formatNumber(calc.factor, 2)}x today)`,
         `Formula: future cost = amount x (1 + rate)^years`
       );
@@ -129,14 +129,14 @@ export default function ToolHome() {
       lines.push(
         `Mode: Purchasing power`,
         `Amount today: ${formatINR(calc.amt)}`,
-        `Inflation: ${formatNumber(Number(rate) || 0)}% p.a. for ${calc.n} years`,
+        `Inflation: ${formatNumber(calc.r * 100)}% p.a. for ${calc.n} years`,
         `Buys only: ${formatINR(calc.deflated)} worth of today's goods in ${CURRENT_YEAR + calc.n}`,
         `Purchasing power lost: ${formatNumber(calc.lostPct)}%`,
         `Formula: value = amount / (1 + rate)^years`
       );
     } else {
       lines.push(
-        `Mode: Required return (to beat ${formatNumber(Number(rate) || 0)}% inflation after tax)`,
+        `Mode: Required return (to beat ${formatNumber(calc.r * 100)}% inflation after tax)`,
         `Tax slab: ${slab}%`,
         `Interest income (FD/RD) needs: ${formatNumber(calc.reqSlab, 2)}% pre-tax`,
         `Equity (12.5% LTCG) needs: ${formatNumber(calc.reqEquity, 2)}% pre-tax`,
@@ -145,11 +145,11 @@ export default function ToolHome() {
       );
     }
     if (calc.doubleYears) {
-      lines.push("", `Rule of 72: at ${formatNumber(Number(rate) || 0)}% inflation, prices double roughly every ${formatNumber(calc.doubleYears)} years.`);
+      lines.push("", `Rule of 72: at ${formatNumber(calc.r * 100)}% inflation, prices double roughly every ${formatNumber(calc.doubleYears)} years.`);
     }
     lines.push(
       "",
-      `Everyday impact at ${formatNumber(Number(rate) || 0)}%:`,
+      `Everyday impact at ${formatNumber(calc.r * 100)}%:`,
       ...everydayRows.map(
         (row) =>
           `  - ${row.label} ${formatINR(row.amount)} -> 5y ${formatINR(row.in5)} | 10y ${formatINR(row.in10)} | 20y ${formatINR(row.in20)}`
@@ -191,6 +191,7 @@ export default function ToolHome() {
                 <button
                   key={item.id}
                   type="button"
+                  aria-pressed={mode === item.id}
                   onClick={() => setMode(item.id)}
                   className={`rounded-md border px-3 py-3 text-left transition ${
                     mode === item.id
@@ -237,6 +238,7 @@ export default function ToolHome() {
                   <button
                     key={preset.label}
                     type="button"
+                    aria-pressed={Number(rate) === preset.value}
                     onClick={() => setRate(preset.value)}
                     className={`rounded-md border px-3 py-1.5 text-xs font-semibold transition ${
                       Number(rate) === preset.value
@@ -260,6 +262,16 @@ export default function ToolHome() {
                     onChange={(event) => setYears(Number(event.target.value))}
                     className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                   />
+                  {Number(years) > 60 && (
+                    <p className="mt-2 text-xs font-semibold text-[var(--anslation-ds-danger)]" role="status">
+                      Capped at 60 years for this calculation.
+                    </p>
+                  )}
+                  {Number(years) < 1 && (
+                    <p className="mt-2 text-xs font-semibold text-[var(--anslation-ds-danger)]" role="status">
+                      Minimum 1 year used for this calculation.
+                    </p>
+                  )}
                 </label>
               )}
 
@@ -297,6 +309,9 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={() => {
+                  if (typeof window !== "undefined" && !window.confirm("Reset all fields to defaults? Your entered values will be lost.")) {
+                    return;
+                  }
                   setMode("future");
                   setAmount(100000);
                   setRate(6);
@@ -341,7 +356,7 @@ export default function ToolHome() {
                   <div className="rounded-lg bg-[var(--muted)] p-5">
                     <p className="text-4xl font-semibold text-[var(--primary)]">{formatINR(calc.future)}</p>
                     <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                      what {formatINR(calc.amt)} today will cost after {calc.n} years at {formatNumber(Number(rate) || 0)}%
+                      what {formatINR(calc.amt)} today will cost after {calc.n} years at {formatNumber(calc.r * 100)}%
                     </p>
                   </div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[var(--muted-foreground)]">
@@ -355,7 +370,7 @@ export default function ToolHome() {
                 {calc.doubleYears && (
                   <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
                     <Clock className="h-4 w-4 text-[var(--primary)]" />
-                    Rule of 72: at {formatNumber(Number(rate) || 0)}%, prices double roughly every {formatNumber(calc.doubleYears)} years.
+                    Rule of 72: at {formatNumber(calc.r * 100)}%, prices double roughly every {formatNumber(calc.doubleYears)} years.
                   </p>
                 )}
                 <div className="mt-5 max-h-80 overflow-y-auto overflow-x-auto rounded-md border border-[var(--border)]">
@@ -388,7 +403,7 @@ export default function ToolHome() {
                 <div className="mt-4 rounded-lg bg-[var(--muted)] p-5">
                   <p className="text-4xl font-semibold text-[var(--primary)]">{formatINR(calc.deflated)}</p>
                   <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                    is all that {formatINR(calc.amt)} will buy (in today&apos;s goods) after {calc.n} years at {formatNumber(Number(rate) || 0)}%
+                    is all that {formatINR(calc.amt)} will buy (in today&apos;s goods) after {calc.n} years at {formatNumber(calc.r * 100)}%
                   </p>
                 </div>
                 <div className="mt-5 grid gap-4">
@@ -424,7 +439,7 @@ export default function ToolHome() {
                 {calc.doubleYears && (
                   <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
                     <Clock className="h-4 w-4 text-[var(--primary)]" />
-                    Rule of 72: at {formatNumber(Number(rate) || 0)}%, idle cash halves in value roughly every {formatNumber(calc.doubleYears)} years.
+                    Rule of 72: at {formatNumber(calc.r * 100)}%, idle cash halves in value roughly every {formatNumber(calc.doubleYears)} years.
                   </p>
                 )}
               </>
@@ -460,7 +475,7 @@ export default function ToolHome() {
                     ) : (
                       <TrendingDown className="h-4 w-4 text-[var(--anslation-ds-danger)]" />
                     )}
-                    Your FD at {formatNumber(calc.fd, 2)}% {fdBeats ? "beats" : "loses to"} {formatNumber(Number(rate) || 0)}% inflation
+                    Your FD at {formatNumber(calc.fd, 2)}% {fdBeats ? "beats" : "loses to"} {formatNumber(calc.r * 100)}% inflation
                   </p>
                   <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
                     After {slab}% tax it earns {formatNumber(calc.fdPost, 2)}% — a real return of{" "}
@@ -492,7 +507,7 @@ export default function ToolHome() {
 
         <section className="mt-6 rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
           <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
-            Everyday impact at {formatNumber(Number(rate) || 0)}% inflation
+            Everyday impact at {formatNumber(calc.r * 100)}% inflation
           </p>
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[560px] border-collapse text-sm">

@@ -8,7 +8,7 @@ const seo = {
     "Read the lockout score out of 100 with the Recommended address type, then the How each address type holds up table showing whether each keeps mail long enough and whether it is password-protected; Copy decision saves it.",
   ],
   intro:
-    "This explainer scores how much an account depends on receiving mail later — password resets, login codes, payment notices, receipts, longevity — and turns that score into a verdict on whether a disposable address is safe. It compares four kinds of address by the properties that actually decide the outcome: how long each keeps a delivered message, whether the inbox is readable without a password, whether it can be switched off after a leak, and whether signup forms reject it. Open 10-minute inboxes have no authentication at all, so any login code sitting in one is readable by anyone who types the same address.",
+    "This explainer scores how much an account depends on receiving mail later — password resets, login codes, payment notices, receipts, longevity — and turns that score into a verdict on whether a disposable address is safe. It compares four kinds of address by the properties that actually decide the outcome: how long each keeps a delivered message, whether the inbox is readable without a password, whether the address can still serve as your account-recovery inbox, and whether signup forms reject it. Open 10-minute inboxes have no authentication at all, so any login code sitting in one is readable by anyone who types the same address.",
   useCases: [
     "Decide in a few seconds whether a gated PDF download deserves a throwaway or an alias.",
     "Understand why a temporary address on a shopping order costs you the return window and the warranty.",

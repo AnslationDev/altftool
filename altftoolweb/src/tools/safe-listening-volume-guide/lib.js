@@ -67,7 +67,8 @@ export function nioshDailyHours(levelDb) {
  * @param {{levelDb:number, hoursPerDay:number, daysPerWeek:number, profile:"adult"|"sensitive"}} input
  * @returns {{error:string}|{
  *   referenceLevelDb:number, allowedWeeklyHours:number, allowedWeeklyHoursCapped:number,
- *   exceedsWeek:boolean, allowedDailyHours:number, nioshDailyHours:number,
+ *   exceedsWeek:boolean, allowedDailyHours:number, allowedDailyHoursCapped:number,
+ *   exceedsDay:boolean, nioshDailyHours:number,
  *   actualWeeklyHours:number, allowanceUsedPercent:number, withinAllowance:boolean,
  *   maxSafeLevelDb:number|null, safeHoursPerDayAtLevel:number,
  *   dbOverReference:number, band:string, headline:string
@@ -115,13 +116,19 @@ export function computeSafeListening({
   else band = "Far over the weekly allowance";
 
   const safeHoursPerDayAtLevel = allowed / daysPerWeek;
+  const allowedDailyHours = allowed / 7;
 
   return {
     referenceLevelDb,
     allowedWeeklyHours: allowed,
     allowedWeeklyHoursCapped: Math.min(allowed, HOURS_PER_WEEK),
     exceedsWeek: allowed > HOURS_PER_WEEK,
-    allowedDailyHours: allowed / 7,
+    allowedDailyHours,
+    // There are only 24 hours in a day — cap the equal-energy estimate at
+    // that physical bound the same way allowedWeeklyHoursCapped caps the
+    // weekly figure at HOURS_PER_WEEK.
+    allowedDailyHoursCapped: Math.min(allowedDailyHours, 24),
+    exceedsDay: allowedDailyHours > 24,
     nioshDailyHours: nioshDailyHours(levelDb),
     actualWeeklyHours,
     allowanceUsedPercent,
@@ -154,9 +161,20 @@ export function buildAllowanceTable(
   levels = [75, 80, 85, 90, 95, 100, 105, 110],
   referenceLevelDb = REFERENCE_LEVEL_ADULT_DB,
 ) {
-  return levels.map((level) => ({
-    level,
-    weeklyHours: allowedWeeklyHours(level, referenceLevelDb),
-    weeklyMinutes: allowedWeeklyHours(level, referenceLevelDb) * 60,
-  }));
+  return levels.map((level) => {
+    const weeklyHours = allowedWeeklyHours(level, referenceLevelDb);
+    const dailyHours = weeklyHours / 7;
+    return {
+      level,
+      weeklyHours,
+      weeklyMinutes: weeklyHours * 60,
+      // Capped to the physically possible bounds — a quiet level can
+      // otherwise compute to thousands of "allowed" hours in a single week.
+      weeklyHoursCapped: Math.min(weeklyHours, HOURS_PER_WEEK),
+      dailyHours,
+      dailyHoursCapped: Math.min(dailyHours, 24),
+      exceedsWeek: weeklyHours > HOURS_PER_WEEK,
+      exceedsDay: dailyHours > 24,
+    };
+  });
 }

@@ -3,34 +3,57 @@
 import React, { useState } from "react";
 import { Divide, Copy, Check, RefreshCw } from "lucide-react";
 
+const BASE_PATTERNS = { dec: /^[0-9]+$/, hex: /^[0-9a-fA-F]+$/, bin: /^[01]+$/ };
+
 export default function ToolHome() {
   const [input, setInput] = useState({ value: "255", base: "dec" });
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [copiedLabel, setCopiedLabel] = useState(null);
 
   const convert = () => {
-    let dec;
     const val = input.value.trim();
 
+    if (!BASE_PATTERNS[input.base].test(val)) {
+      setResult(null);
+      setError("Enter a valid whole number in the selected base — no fractions, signs, or invalid digits.");
+      return;
+    }
+
+    let dec;
     if (input.base === "dec") dec = parseInt(val, 10);
     else if (input.base === "hex") dec = parseInt(val, 16);
     else dec = parseInt(val, 2);
 
-    if (isNaN(dec) || dec < 0) return;
-    if (dec > 4294967295) return;
+    if (isNaN(dec) || dec < 0) {
+      setResult(null);
+      setError("Enter a valid whole number in the selected base — no fractions, signs, or invalid digits.");
+      return;
+    }
+    if (dec > 4294967295) {
+      setResult(null);
+      setError("Value is too large — the maximum accepted is 4,294,967,295 (32-bit unsigned range).");
+      return;
+    }
 
     const hex = dec.toString(16).toUpperCase();
+    const paddedHex = hex.padStart(Math.ceil(hex.length / 2) * 2, "0");
     const bin = dec.toString(2);
-    const nibbles = hex.split("").map((h) => ({
+    const nibbles = paddedHex.split("").map((h) => ({
       hex: h,
       bin: parseInt(h, 16).toString(2).padStart(4, "0"),
       dec: parseInt(h, 16),
     }));
 
-    setResult({ dec, hex: hex.padStart(Math.ceil(hex.length / 2) * 2, "0"), bin, nibbles });
+    setError(null);
+    setResult({ dec, hex: paddedHex, bin, nibbles });
   };
 
-  const copyBase = (text) => {
-    navigator.clipboard.writeText(text);
+  const copyBase = (text, label) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedLabel(label);
+      setTimeout(() => setCopiedLabel(null), 1500);
+    });
   };
 
   return (
@@ -95,10 +118,15 @@ export default function ToolHome() {
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-mono font-black text-foreground">{r.value}</span>
                         <button
-                          onClick={() => copyBase(r.value)}
+                          onClick={() => copyBase(r.value, r.label)}
+                          aria-label={`Copy ${r.label} value`}
                           className="p-1 rounded hover:bg-background transition"
                         >
-                          <Copy size={12} className="text-muted-foreground" />
+                          {copiedLabel === r.label ? (
+                            <Check size={12} className="text-primary" aria-hidden="true" />
+                          ) : (
+                            <Copy size={12} className="text-muted-foreground" aria-hidden="true" />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -121,8 +149,17 @@ export default function ToolHome() {
                 )}
               </>
             ) : (
-              <div className="bg-card border border-border rounded-2xl p-6 shadow-sm flex items-center justify-center min-h-[200px]">
-                <p className="text-xs text-muted-foreground">Enter a value and click Convert.</p>
+              <div
+                className="bg-card border border-border rounded-2xl p-6 shadow-sm flex items-center justify-center min-h-[200px]"
+                aria-live="polite"
+              >
+                {error ? (
+                  <p role="alert" className="text-xs font-medium text-danger">
+                    {error}
+                  </p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Enter a value and click Convert.</p>
+                )}
               </div>
             )}
           </div>

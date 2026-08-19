@@ -340,6 +340,7 @@ export default function FontLegibilityComparator() {
             {summary.characters.toLocaleString("en-US")} /{" "}
             {TYPOGRAPHY_LIMITS.textCharacters.toLocaleString("en-US")}{" "}
             characters
+            {summary.truncated ? " (truncated to the limit)" : ""}
           </span>
         </div>
       </section>
@@ -391,7 +392,7 @@ export default function FontLegibilityComparator() {
         </button>
       </div>
 
-      <section className="grid gap-6 lg:grid-cols-2" aria-live="polite">
+      <section className="grid gap-6 lg:grid-cols-2">
         <PreviewPanel
           label="View A"
           text={text}

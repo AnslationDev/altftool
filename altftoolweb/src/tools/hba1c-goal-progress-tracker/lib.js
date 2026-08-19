@@ -121,7 +121,7 @@ export function analyseHba1c({ readings, unit = "percent", targetValue }) {
     return { error: "Add at least one HbA1c result." };
   }
 
-  const targetPercent = toPercent(targetValue, unit);
+  const targetPercent = round1(toPercent(targetValue, unit));
   if (!Number.isFinite(targetPercent)) {
     return { error: "Enter the target your clinician agreed with you." };
   }
@@ -136,7 +136,7 @@ export function analyseHba1c({ readings, unit = "percent", targetValue }) {
     if (Number.isNaN(epoch)) {
       return { error: `Result ${i + 1} needs a valid date in YYYY-MM-DD form.` };
     }
-    const percent = toPercent(reading.value, unit);
+    const percent = round1(toPercent(reading.value, unit));
     if (!Number.isFinite(percent)) {
       return { error: `Result ${i + 1} needs a number.` };
     }

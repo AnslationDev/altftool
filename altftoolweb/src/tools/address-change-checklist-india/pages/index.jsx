@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, MapPin, RotateCcw } from "lucide-react";
 
 import {
@@ -51,6 +51,13 @@ export default function ToolHome() {
   const [profile, setProfile] = useState(DEFAULT_PROFILE);
   const [done, setDone] = useState([]);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => buildAddressChecklist({ moveDate, today, profile, done }),
@@ -88,7 +95,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(lines.join("\n").trim());
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -180,7 +188,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -283,8 +295,9 @@ export default function ToolHome() {
               role="alert"
               className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
             >
-              {NUM.format(result.lateCount)} statutory window has already closed. File as soon as you
-              can and ask the department about a late filing — penalties and procedures differ.
+              {NUM.format(result.lateCount)} statutory window{result.lateCount === 1 ? "" : "s"}{" "}
+              {result.lateCount === 1 ? "has" : "have"} already closed. File as soon as you can and
+              ask the department about a late filing — penalties and procedures differ.
             </p>
           ) : null}
         </section>

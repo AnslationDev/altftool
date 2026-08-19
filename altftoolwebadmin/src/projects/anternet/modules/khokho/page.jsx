@@ -42,6 +42,12 @@ const TABS = [
   { id: "leaderboard", label: "Leaderboard", set: "khokho_leaderboard" },
   { id: "banners", label: "Banners", col: "khokho_banners" },
   { id: "settings", label: "Settings", set: "khokho_settings" },
+  // Superseded by Arenas'/Live Streaming's nested Questions, but the API still
+  // accepts writes/deletes here and legacy Firestore docs may still exist —
+  // kept reachable so they aren't stranded outside the CMS entirely.
+  { id: "categories", label: "Categories (legacy)", col: "khokho_categories" },
+  { id: "questionbank", label: "Question Bank (legacy)", col: "khokho_questions" },
+  { id: "livequestions", label: "Live Questions (legacy)", col: "khokho_livequestions" },
 ];
 
 export default function Page() {

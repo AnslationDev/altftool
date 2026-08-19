@@ -213,7 +213,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Residual risk after verification
             </p>
@@ -253,15 +253,17 @@ export default function ToolHome() {
           </div>
         </div>
 
-        {!hasError && result.verificationOverdue ? (
-          <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
-            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>
-              This is a high-stakes ask and you have not confirmed it out of band yet. Verify before
-              you act, whatever the score says.
-            </span>
-          </p>
-        ) : null}
+        <div role="status" aria-live="polite" aria-atomic="true">
+          {!hasError && result.verificationOverdue ? (
+            <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+              <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>
+                This is a high-stakes ask and you have not confirmed it out of band yet. Verify before
+                you act, whatever the score says.
+              </span>
+            </p>
+          ) : null}
+        </div>
 
         <p className="mt-4 text-sm leading-6 text-[var(--muted-foreground)]">
           {hasError ? "Fix the selection above to see a verdict." : result.action}

@@ -88,9 +88,9 @@ export default function ToolHome() {
   const hasError = Boolean(result.error);
 
   const money = (value) =>
-    form.currencySymbol.trim().toUpperCase() === "INR"
+    (result.currencySymbol || "").toUpperCase() === "INR"
       ? INR.format(value)
-      : `${form.currencySymbol} ${NUM.format(value)}`;
+      : `${result.currencySymbol} ${NUM.format(value)}`;
 
   const copyResult = async () => {
     if (hasError) return;
@@ -544,7 +544,11 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="false"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

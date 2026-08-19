@@ -123,7 +123,8 @@ export const FONTS = [
 ];
 
 export const getRandomQuote = (category = "All", excludeId = null) => {
-  const filtered = category === "All" ? quotesDb : quotesDb.filter(q => q.category === category);
+  const safeCategory = typeof category === "string" ? category : "All";
+  const filtered = safeCategory === "All" ? quotesDb : quotesDb.filter(q => q.category === safeCategory);
   if (filtered.length === 0) return quotesDb[0];
   // Exclude current quote so it always changes
   const pool = filtered.length > 1 ? filtered.filter(q => q.id !== excludeId) : filtered;

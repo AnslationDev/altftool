@@ -579,7 +579,11 @@ export function firmwareAgeRisk(input) {
   }
 
   const days = Math.round((today - last) / MS_PER_DAY);
-  const missedChecks = Math.floor(days / CHECK_INTERVAL_DAYS);
+  // Stays aligned with the FIRMWARE_BANDS boundaries (90/180/365): 0 missed
+  // checks through the day "current" ends, incrementing exactly when the
+  // band advances, instead of the old floor(days / 90) which contradicted
+  // the "Up to date" band at the exact 90-day boundary.
+  const missedChecks = Math.max(0, Math.ceil(days / CHECK_INTERVAL_DAYS) - 1);
   const band = FIRMWARE_BANDS.find((entry) => days <= entry.maxDays) || FIRMWARE_BANDS[FIRMWARE_BANDS.length - 1];
   const daysUntilDue = Math.max(0, CHECK_INTERVAL_DAYS - days);
 

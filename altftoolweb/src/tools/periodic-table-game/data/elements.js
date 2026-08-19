@@ -12,10 +12,6 @@ const CATEGORIES = {
 };
 
 const DIFFICULTY_CATEGORIES = {
-  easy: [
-    "alkali metal", "alkaline earth metal", "nonmetal",
-    "halogen", "noble gas",
-  ],
   medium: [
     "alkali metal", "alkaline earth metal", "transition metal",
     "metal", "metalloid", "nonmetal", "halogen", "noble gas",

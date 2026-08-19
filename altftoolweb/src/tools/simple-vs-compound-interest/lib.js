@@ -124,7 +124,7 @@ export function compareInterest({
     difference: round2(difference),
     interestMultiple,
     // True only inside the first compounding period, where simple interest is marginally ahead.
-    simpleAheadAtEnd: difference < 0,
+    simpleAheadAtEnd: round2(difference) < 0,
     doublingYearsSimple: doublingSimple === null ? null : round2(doublingSimple),
     doublingYearsCompound: doublingCompound === null ? null : round2(doublingCompound),
     schedule,

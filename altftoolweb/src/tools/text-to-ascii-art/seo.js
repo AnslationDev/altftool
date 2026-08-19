@@ -8,14 +8,14 @@ const seo = {
     "The banner redraws from the 5 × 7 bitmap font as you type; check the \"Output size\" readout in characters, then press \"Copy result\" to put the art on the clipboard.",
   ],
   intro:
-    "This tool converts typed text into big ASCII banner letters — the block lettering you see at the top of a README, in a terminal login message or in an old BBS signature. Each character is drawn from a 5 by 7 bitmap font, the same glyph-cell proportion used by classic character LCD modules, which is why the letters stay readable at banner size. Because the letters come from a bitmap rather than fixed pre-drawn art, one font produces every style: change the ink character, keep only the boundary pixels for an outline, or overlay an offset copy for a drop shadow.",
+    "This tool converts typed text into big ASCII banner letters — the block lettering you see at the top of a README, in a terminal login message or in an old BBS signature. Each character is drawn from a 5 by 7 bitmap font, the same glyph-cell proportion used by classic character LCD modules, which is why the letters stay readable at banner size. Because the letters come from a bitmap rather than fixed pre-drawn art, one font produces every style: change the ink character, or overlay an offset copy for a drop shadow.",
   useCases: [
     "Put a project name in block letters at the top of a README or a shell script's help output.",
     "Generate a terminal message-of-the-day banner using the solid block character █ instead of #.",
     "Make a plain-text header for a chat message or a code comment where images are not allowed.",
   ],
   benefits: [
-    ["One font, many looks", "Solid, outline and drop-shadow styles all come from the same 5 × 7 bitmap."],
+    ["One font, many looks", "Solid and drop-shadow styles both come from the same 5 × 7 bitmap."],
     ["Any ink character", "Render with #, █, ▓, *, @, $ or any single character you type."],
     ["Alignment you can paste", "Fixed-width cells and optional trailing-space trimming keep the art aligned in monospaced text."],
   ],

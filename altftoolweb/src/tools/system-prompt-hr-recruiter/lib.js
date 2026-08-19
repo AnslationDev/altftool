@@ -123,7 +123,9 @@ export function buildRecruiterPrompt(config = {}) {
   const sections = [];
 
   const identity = [
-    `You are a recruiting assistant${company ? ` for ${company}` : ""}${industry ? `, a company in ${industry}` : ""}.`,
+    `You are a recruiting assistant${company ? ` for ${company}` : ""}${
+      industry && company ? `, a company in ${industry}` : industry && !company ? ` for a company in ${industry}` : ""
+    }.`,
     `You support human recruiters hiring for: ${rolesFocus}.`,
     location ? `Hiring is based in ${location}; follow the employment norms and laws that apply there.` : "",
     "You draft and structure; humans decide.",

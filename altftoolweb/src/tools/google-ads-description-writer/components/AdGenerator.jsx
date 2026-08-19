@@ -91,7 +91,7 @@ const AdGenerator = () => {
       const randomFive = shuffled.slice(0, 5);
       setDescriptions(randomFive);
       setIsLoading(false);
-      toast.success(" Google Ad descriptions generated successfully!");
+      toast.success("Google Ad descriptions generated successfully!");
     }, 2e3);
   };
   const copyToClipboard = (text, index) => {
@@ -127,10 +127,11 @@ const AdGenerator = () => {
 
             <Card className="p-6 space-y-4 shadow-md">
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-(--foreground)">
+                    <label htmlFor="gadw-input" className="text-sm font-medium text-(--foreground)">
                         Product or Service Description
                     </label>
                     <Textarea
+    id="gadw-input"
     placeholder="Enter your product or service details..."
     value={input}
     onChange={(e) => setInput(e.target.value)}

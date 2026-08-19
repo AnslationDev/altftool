@@ -26,9 +26,12 @@ const loadBmiTracker = () => {
     return { history: [], streak: 0 };
   }
 
-  const savedStreak = Number.parseInt(localStorage.getItem('bmiStreak') || '0', 10) || 0;
-  const lastDate = localStorage.getItem('lastCheckDate');
-  const today = new Date().toLocaleDateString();
+  let streak = 0;
+  try {
+    streak = Number.parseInt(localStorage.getItem('bmiStreak') || '0', 10) || 0;
+  } catch {
+    streak = 0;
+  }
 
   let history = [];
   try {
@@ -38,8 +41,28 @@ const loadBmiTracker = () => {
     history = [];
   }
 
+  return { history, streak };
+};
+
+// Advances the streak only when called from a real calculation (see calculate()),
+// so a "day streak" can't be earned just by loading the page. Guards every
+// localStorage call so a user with storage blocked (Safari private mode,
+// privacy extensions) still gets a working in-memory streak instead of a crash.
+const advanceStreak = (currentStreak) => {
+  if (typeof window === 'undefined') return currentStreak;
+
+  const today = new Date().toLocaleDateString();
+  let lastDate = null;
+  let savedStreak = currentStreak;
+  try {
+    lastDate = localStorage.getItem('lastCheckDate');
+    savedStreak = Number.parseInt(localStorage.getItem('bmiStreak') || '0', 10) || 0;
+  } catch {
+    return currentStreak;
+  }
+
   if (lastDate === today) {
-    return { history, streak: savedStreak };
+    return savedStreak;
   }
 
   const yesterday = new Date();
@@ -48,10 +71,14 @@ const loadBmiTracker = () => {
     ? savedStreak + 1
     : 1;
 
-  localStorage.setItem('bmiStreak', String(nextStreak));
-  localStorage.setItem('lastCheckDate', today);
+  try {
+    localStorage.setItem('bmiStreak', String(nextStreak));
+    localStorage.setItem('lastCheckDate', today);
+  } catch {
+    // Storage unavailable; keep the streak in-memory only for this session.
+  }
 
-  return { history, streak: nextStreak };
+  return nextStreak;
 };
 
 export default function ToolHome() {
@@ -67,8 +94,9 @@ export default function ToolHome() {
   const [result, setResult] = useState(null);
   const [errors, setErrors] = useState({});
   const [history, setHistory] = useState(initialTracker.history);
-  const [streak] = useState(initialTracker.streak);
+  const [streak, setStreak] = useState(initialTracker.streak);
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const badges = useMemo(() => {
     const earned = [];
@@ -96,6 +124,10 @@ export default function ToolHome() {
     const w = getWeightInKg();
     if (h < 50 || h > 300) newErrors.height = true;
     if (w < 10 || w > 500) newErrors.weight = true;
+    if (age !== '') {
+      const ageNum = Number(age);
+      if (!Number.isFinite(ageNum) || ageNum < 2 || ageNum > 120) newErrors.age = true;
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -161,9 +193,14 @@ export default function ToolHome() {
     };
 
     setResult(newResult);
+    setStreak((prev) => advanceStreak(prev));
     setHistory((prev) => {
       const nextHistory = [newResult, ...prev].slice(0, 10);
-      localStorage.setItem('bmiHistory', JSON.stringify(nextHistory));
+      try {
+        localStorage.setItem('bmiHistory', JSON.stringify(nextHistory));
+      } catch {
+        // Storage unavailable; history won't persist across reloads.
+      }
       return nextHistory;
     });
   };
@@ -205,10 +242,12 @@ Stay Healthy, Stay Fit!
     const reportText = buildReportText(result);
 
     const blob = new Blob([reportText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
+    link.href = url;
     link.download = `BMI_Report_${result.bmi}.txt`;
     link.click();
+    URL.revokeObjectURL(url);
   };
 
   const copyReport = async () => {
@@ -227,8 +266,8 @@ Stay Healthy, Stay Fit!
     } else {
       const success = await safeCopyText(text);
       if (success) {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1200);
+        setShared(true);
+        setTimeout(() => setShared(false), 1200);
       }
     }
   };
@@ -282,7 +321,7 @@ Stay Healthy, Stay Fit!
               
               {/* HEIGHT INPUT - UPDATED TOGGLE LOGIC */}
               <div className="space-y-3">
-                <label htmlFor="bmi-height-cm" className="text-sm font-semibold text-[var(--foreground)]">Height</label>
+                <label htmlFor={heightUnit === 'cm' ? 'bmi-height-cm' : undefined} className="text-sm font-semibold text-[var(--foreground)]">Height</label>
                 <div className="flex p-1 rounded-xl bg-[var(--muted)]">
                     <button type="button" onClick={() => setHeightUnit('cm')} aria-label="Use centimetres for height" className={`flex-1 min-h-[44px] py-1 text-xs font-bold rounded-lg transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${heightUnit === 'cm' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>CM</button>
                     <button type="button" onClick={() => setHeightUnit('ft')} aria-label="Use feet and inches for height" className={`flex-1 min-h-[44px] py-1 text-xs font-bold rounded-lg transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${heightUnit === 'ft' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>FT/IN</button>
@@ -310,19 +349,21 @@ Stay Healthy, Stay Fit!
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
-              <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" aria-label="Age in years" className="w-full px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
+              <input type="number" min="2" max="120" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" aria-label="Age in years" className={`w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 ${errors.age ? 'border-[var(--danger)]' : 'border-[var(--border)]'}`} />
               <select value={gender} onChange={(e) => setGender(e.target.value)} aria-label="Gender" className="w-full px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25">
                 <option value="">Gender</option><option value="male">Male</option><option value="female">Female</option>
               </select>
             </div>
             
-            {(errors.height || errors.weight) && (
+            {(errors.height || errors.weight || errors.age) && (
               <div role="alert" className="mb-4 rounded-xl border border-[var(--danger)]/30 bg-[var(--danger-soft)] px-4 py-3 text-sm font-semibold text-[var(--danger)]">
-                {errors.height && errors.weight
-                  ? 'Please enter a valid height (50-300 cm) and weight (10-500 kg).'
-                  : errors.height
-                    ? 'Please enter a valid height between 50 and 300 cm.'
-                    : 'Please enter a valid weight between 10 and 500 kg.'}
+                {(() => {
+                  const parts = [];
+                  if (errors.height) parts.push('height between 50–300 cm (about 1\'8"–9\'10")');
+                  if (errors.weight) parts.push('weight between 10–500 kg (about 22–1102 lbs)');
+                  if (errors.age) parts.push('age between 2 and 120');
+                  return `Please enter a valid ${parts.join(' and ')}.`;
+                })()}
               </div>
             )}
             <div className="flex gap-3">
@@ -339,7 +380,7 @@ Stay Healthy, Stay Fit!
 
         {/* RESULTS Section */}
         {result && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 motion-reduce:animate-none space-y-6">
+          <div role="status" aria-live="polite" className="animate-in fade-in slide-in-from-bottom-4 duration-500 motion-reduce:animate-none space-y-6">
             <div className="rounded-3xl shadow-lg p-8 border bg-[var(--card)] border-[var(--border)] flex flex-col md:flex-row items-center gap-8">
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-2xl font-bold mb-2 text-[var(--foreground)]">BMI Analysis Result</h3>
@@ -386,7 +427,7 @@ Stay Healthy, Stay Fit!
                 </button>
                 <button type="button" onClick={shareReport} aria-label="Share BMI result" className="flex-1 min-h-[44px] py-4 rounded-2xl bg-[var(--primary)] text-[var(--primary-foreground)] flex flex-col items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-all motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                   <Share2 className="w-6 h-6" />
-                  <span className="text-xs font-bold uppercase">Share Result</span>
+                  <span className="text-xs font-bold uppercase">{shared ? 'Link Copied' : 'Share Result'}</span>
                 </button>
               </div>
             </div>

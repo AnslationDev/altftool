@@ -77,8 +77,11 @@ export function apportionCounts(total, percents) {
     cursor += 1;
   }
   while (remainder < 0) {
-    counts[order[cursor % order.length].index] -= 1;
-    remainder += 1;
+    const idx = order[cursor % order.length].index;
+    if (counts[idx] > 0) {
+      counts[idx] -= 1;
+      remainder += 1;
+    }
     cursor += 1;
   }
   return counts;

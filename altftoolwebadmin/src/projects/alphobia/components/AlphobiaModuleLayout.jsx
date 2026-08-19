@@ -44,7 +44,7 @@ export default function AlphobiaModuleLayout({ children, title, subtitle }) {
             type="button"
             onClick={handleResetData}
             disabled={resetting}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold rounded-md bg-red-600 hover:bg-red-700 text-white transition disabled:opacity-50 shadow-sm cursor-pointer"
+            className="btn btn-danger flex items-center gap-2 px-3 py-1.5 text-xs font-bold shadow-sm disabled:opacity-50"
           >
             {resetting ? (
               <>

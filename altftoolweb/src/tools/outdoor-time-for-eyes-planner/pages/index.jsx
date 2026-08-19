@@ -242,7 +242,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Daylight per week
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {hasError ? DASH : `${NUM.format(plan.weeklyHours)} h`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

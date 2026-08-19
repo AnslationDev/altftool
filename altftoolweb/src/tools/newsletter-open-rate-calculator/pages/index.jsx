@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, MailOpen, RotateCcw } from "lucide-react";
 import { RATE_BASIS, compareToBenchmark, computeCampaignMetrics, countNeededForRate } from "../lib";
 
@@ -46,6 +46,9 @@ export default function ToolHome() {
   const [benchmark, setBenchmark] = useState(DEFAULTS.benchmark);
   const [targetOpenRate, setTargetOpenRate] = useState(DEFAULTS.targetOpenRate);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const metrics = useMemo(
     () =>
@@ -101,7 +104,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -207,7 +211,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

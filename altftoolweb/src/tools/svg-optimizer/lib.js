@@ -24,6 +24,13 @@
  *    with a sign, or with "." when the previous number already contains a ".". So
  *    "M 0.5 , 0.5 L 1.5 , -2.5" is rewritten as "M.5.5L1.5-2.5" — same path, fewer bytes.
  *
+ * 4b. Elliptical-arc flags. SVG 1.1 §8.3.1's elliptical-arc-argument grammar gives the
+ *    "A"/"a" command seven numbers per repetition (rx, ry, x-axis-rotation, large-arc-flag,
+ *    sweep-flag, x, y), but the two flags are each exactly one digit ("0" or "1") and the
+ *    grammar allows zero separator between them or before the following number — "1 1" may
+ *    be written "11". A generic "numbers are whitespace/comma separated" tokenizer misreads
+ *    that as the single number 11, so path data is parsed command-aware for "A"/"a".
+ *
  * 5. Empty containers. A <g> or <defs> with no children paints nothing (SVG 1.1 §5.2),
  *    so it is dropped.
  *
@@ -114,8 +121,19 @@ export const DEFAULT_ATTRIBUTE_VALUES = {
   "clip-path": "none",
   mask: "none",
   filter: "none",
-  overflow: "visible",
 };
+
+/**
+ * `overflow` is deliberately absent from DEFAULT_ATTRIBUTE_VALUES above: its initial value
+ * is "visible" per CSS Overflow, but the UA stylesheet that ships with every SVG renderer
+ * overrides that to "hidden" for exactly these six element types (the only ones `overflow`
+ * has any rendering effect on). "visible" is therefore never their default — stripping an
+ * explicit `overflow="visible"` on one of them silently re-enables clipping. Only an explicit
+ * `overflow="hidden"` on one of these six is truly redundant and safe to drop.
+ */
+// Lowercase to match the `lower` (child.name.toLowerCase()) comparison used in walk() below;
+// "foreignObject" is the real SVG element name, but comparisons here are case-insensitive.
+export const OVERFLOW_HIDDEN_BY_DEFAULT_ELEMENTS = ["svg", "symbol", "pattern", "marker", "image", "foreignobject"];
 
 /** Attributes holding a single user-space number that is safe to round. */
 export const NUMERIC_ATTRIBUTES = [
@@ -150,13 +168,27 @@ export const NUMERIC_ATTRIBUTES = [
 /** Attributes holding a whitespace/comma separated list of numbers. */
 export const NUMBER_LIST_ATTRIBUTES = ["viewBox", "points", "stroke-dasharray"];
 
+/**
+ * Attributes rounded to at least `PRECISION_FLOOR` decimals no matter how low the user sets
+ * the coordinate-precision slider. Unlike a coordinate, these carry visible meaning at values
+ * the slider can otherwise erase: opacity/fill-opacity/stroke-opacity/stop-opacity range over
+ * [0, 1], so precision 0 collapses e.g. 0.5 to 1 (fully opaque) or 0 (fully transparent), and
+ * stroke-width/font-size can round to 0 (invisible) or a visibly thicker/thinner value. The
+ * slider is meant to trade off sub-pixel coordinate precision for size, not to change what's
+ * drawn — so these are decoupled from it.
+ */
+const PRECISION_FLOOR_ATTRIBUTES = ["opacity", "fill-opacity", "stroke-opacity", "stop-opacity", "stroke-width", "font-size"];
+const PRECISION_FLOOR = 2;
+
 /** The single-letter path commands of SVG 1.1 §8.3. Note there is no "e" command. */
 const PATH_COMMAND_LETTERS = "MmZzLlHhVvCcSsQqTtAa";
 
-const PATH_TOKEN_RE = new RegExp(
-  `([${PATH_COMMAND_LETTERS}])|([-+]?(?:\\d*\\.\\d+|\\d+)(?:[eE][-+]?\\d+)?)`,
-  "g",
-);
+const COMMAND_LETTER_STICKY_RE = new RegExp(`[${PATH_COMMAND_LETTERS}]`, "y");
+/** Sticky (position-anchored) matchers used to hand-walk path data command-aware. */
+const NUMBER_STICKY_RE = /[-+]?(?:\d*\.\d+|\d+)(?:[eE][-+]?\d+)?/y;
+/** An elliptical-arc flag is exactly one digit; it may abut the next token with no separator. */
+const ARC_FLAG_STICKY_RE = /[01]/y;
+const SEPARATOR_STICKY_RE = /[\s,]*/y;
 
 const BARE_NUMBER_RE = /^[-+]?(?:\d*\.\d+|\d+)(?:[eE][-+]?\d+)?$/;
 
@@ -209,25 +241,77 @@ function needsSeparator(previous, next) {
   return true;
 }
 
-/** Rewrite a path `d` attribute with rounded numbers and minimal separators. */
+/**
+ * Rewrite a path `d` attribute with rounded numbers and minimal separators.
+ *
+ * Command-aware specifically for "A"/"a": its argument list repeats in groups of seven
+ * (rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y), and the two flag slots are
+ * parsed as exactly one digit each — never merged with an adjacent digit — regardless of
+ * whether a separator follows. Every other command's numbers are parsed generically, same
+ * as before.
+ */
 export function optimizePathData(d, precision) {
   if (typeof d !== "string" || d.trim() === "") return "";
   let out = "";
   let previousNumber = null;
-  let match;
-  PATH_TOKEN_RE.lastIndex = 0;
-  while ((match = PATH_TOKEN_RE.exec(d)) !== null) {
-    if (match[1]) {
-      out += match[1];
+  let currentCommand = null;
+  let argIndex = 0;
+  let i = 0;
+  const n = d.length;
+
+  const emit = (rendered) => {
+    if (rendered === null) return;
+    if (needsSeparator(previousNumber, rendered)) out += " ";
+    out += rendered;
+    previousNumber = rendered;
+  };
+
+  while (i < n) {
+    SEPARATOR_STICKY_RE.lastIndex = i;
+    const sep = SEPARATOR_STICKY_RE.exec(d);
+    if (sep && sep[0].length > 0) i = SEPARATOR_STICKY_RE.lastIndex;
+    if (i >= n) break;
+
+    COMMAND_LETTER_STICKY_RE.lastIndex = i;
+    const cmd = COMMAND_LETTER_STICKY_RE.exec(d);
+    if (cmd) {
+      out += cmd[0];
       previousNumber = null;
-    } else {
-      const rendered = formatNumber(Number(match[2]), precision);
-      if (rendered === null) continue;
-      if (needsSeparator(previousNumber, rendered)) out += " ";
-      out += rendered;
-      previousNumber = rendered;
+      currentCommand = cmd[0];
+      argIndex = 0;
+      i = COMMAND_LETTER_STICKY_RE.lastIndex;
+      continue;
     }
+
+    const isArcFlagSlot =
+      (currentCommand === "A" || currentCommand === "a") && (argIndex % 7 === 3 || argIndex % 7 === 4);
+
+    if (isArcFlagSlot) {
+      ARC_FLAG_STICKY_RE.lastIndex = i;
+      const flag = ARC_FLAG_STICKY_RE.exec(d);
+      if (flag) {
+        emit(flag[0]);
+        i = ARC_FLAG_STICKY_RE.lastIndex;
+        argIndex += 1;
+        continue;
+      }
+      // Malformed input (flag slot isn't "0"/"1"): fall through to generic number
+      // parsing below rather than looping forever on unparseable data.
+    }
+
+    NUMBER_STICKY_RE.lastIndex = i;
+    const num = NUMBER_STICKY_RE.exec(d);
+    if (!num || num[0] === "") {
+      // Unrecognized character (stray letter, malformed token): skip it so a bad
+      // input can't hang the loop, matching parseSvg's forgiving-by-design policy.
+      i += 1;
+      continue;
+    }
+    emit(formatNumber(Number(num[0]), precision));
+    i = NUMBER_STICKY_RE.lastIndex;
+    if (currentCommand === "A" || currentCommand === "a") argIndex += 1;
   }
+
   return out;
 }
 
@@ -387,10 +471,21 @@ export function collectReferencedIds(source) {
   const urlRe = /url\(\s*['"]?#([^)'"\s]+)['"]?\s*\)/g;
   const hrefRe = /(?:xlink:)?href\s*=\s*["']#([^"']+)["']/g;
   const beginRe = /(?:begin|end)\s*=\s*["']([A-Za-z_][\w:.-]*)\./g;
+  // Inline <style> blocks can target ids with a bare CSS id selector (#logo { ... }), which
+  // is a reference just like url(#id) or href="#id" — miss it and "Remove unreferenced ids"
+  // deletes an id the stylesheet still needs, breaking the styling it was meant to apply.
+  const styleBlockRe = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+  const cssIdSelectorRe = /#([A-Za-z_][\w-]*)/g;
   let m;
   while ((m = urlRe.exec(source)) !== null) ids.add(m[1]);
   while ((m = hrefRe.exec(source)) !== null) ids.add(m[1]);
   while ((m = beginRe.exec(source)) !== null) ids.add(m[1]);
+  let styleMatch;
+  while ((styleMatch = styleBlockRe.exec(source)) !== null) {
+    let idMatch;
+    cssIdSelectorRe.lastIndex = 0;
+    while ((idMatch = cssIdSelectorRe.exec(styleMatch[1])) !== null) ids.add(idMatch[1]);
+  }
   return ids;
 }
 
@@ -552,6 +647,15 @@ export function optimizeSvg(source, options = {}) {
         }
         if (
           opts.removeDefaultAttributes &&
+          name === "overflow" &&
+          OVERFLOW_HIDDEN_BY_DEFAULT_ELEMENTS.includes(lower) &&
+          value.trim() === "hidden"
+        ) {
+          removed.attributes += 1;
+          continue;
+        }
+        if (
+          opts.removeDefaultAttributes &&
           Object.prototype.hasOwnProperty.call(DEFAULT_ATTRIBUTE_VALUES, name) &&
           value.trim() === DEFAULT_ATTRIBUTE_VALUES[name]
         ) {
@@ -568,8 +672,12 @@ export function optimizeSvg(source, options = {}) {
         else if (NUMBER_LIST_ATTRIBUTES.includes(name)) next = optimizeNumberList(value, precision);
         else if (name === "transform" || name === "gradientTransform" || name === "patternTransform")
           next = optimizeTransform(value, precision);
-        else if (NUMERIC_ATTRIBUTES.includes(name) && BARE_NUMBER_RE.test(value.trim()))
-          next = formatNumber(Number(value.trim()), precision) ?? value;
+        else if (NUMERIC_ATTRIBUTES.includes(name) && BARE_NUMBER_RE.test(value.trim())) {
+          const attrPrecision = PRECISION_FLOOR_ATTRIBUTES.includes(name)
+            ? Math.max(precision, PRECISION_FLOOR)
+            : precision;
+          next = formatNumber(Number(value.trim()), attrPrecision) ?? value;
+        }
         else next = value.trim();
 
         attrs.push([name, next]);

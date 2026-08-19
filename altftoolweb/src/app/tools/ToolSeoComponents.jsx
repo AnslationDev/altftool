@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Star, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import Icon from "@/shared/ui/Icon";
 import { buildToolSeoContent } from "./toolSeoContent";
@@ -38,38 +38,51 @@ function getRelatedTools(slug, tool, limit = 6) {
     .slice(0, limit);
 }
 
+/**
+ * Alternative, compact rendering of the same per-tool SEO content.
+ *
+ * Currently referenced by nothing — every tool route renders <ToolSeoSection>
+ * instead. It is kept in sync with buildToolSeoContent() so that wiring it up
+ * later cannot reintroduce the two defects it used to carry: a second <h1> on a
+ * page that already has one, and a "Key Benefits" list bound to `benefits`, a
+ * field the builder has never returned.
+ */
 export function ToolSeoContentServer({ slug, tool }) {
   const seoContent = tool ? buildToolSeoContent(slug, tool) : null;
   if (!seoContent) return null;
 
   return (
-    <section className="mx-auto mt-8 w-full max-w-6xl border-y border-(--border) py-8">
+    <section
+      aria-label={`About ${seoContent.name}`}
+      className="mx-auto mt-8 w-full max-w-6xl border-y border-(--border) py-8"
+    >
       <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="space-y-4">
           <p className="text-xs font-bold uppercase tracking-wide text-(--primary)">Workflow Guide</p>
-          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-(--foreground) md:text-3xl">
-            {seoContent.name} Online Workspace
-          </h1>
-          <p className="text-sm leading-relaxed text-(--muted-foreground)">{seoContent.summary}</p>
-          
-          {seoContent.benefits && seoContent.benefits.length > 0 && (
-            <div className="pt-4 border-t border-(--border)">
-              <h3 className="text-sm font-semibold text-(--foreground) mb-2">Key Benefits</h3>
-              <ul className="space-y-2">
-                {seoContent.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-2 text-xs leading-5 text-(--muted-foreground)">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-(--primary)" />
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-(--foreground) md:text-3xl">
+            About {seoContent.name}
+          </h2>
+          {/* Answer-first: self-contained, quotable without the rest of the page. */}
+          <p className="text-sm leading-relaxed text-(--foreground)">{seoContent.answer}</p>
+
+          <div className="border-t border-(--border) pt-4">
+            <h3 className="mb-2 text-sm font-semibold text-(--foreground)">
+              {seoContent.headings.facts}
+            </h3>
+            <dl className="space-y-2">
+              {seoContent.facts.map((fact) => (
+                <div key={fact.label} className="flex gap-2 text-xs leading-5">
+                  <dt className="w-28 shrink-0 font-semibold text-(--foreground)">{fact.label}</dt>
+                  <dd className="text-(--foreground)">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           <div>
-            <h3 className="text-sm font-semibold text-(--foreground)">Use Cases</h3>
+            <h3 className="text-sm font-semibold text-(--foreground)">{seoContent.headings.why}</h3>
             <div className="mt-3 space-y-4">
               {seoContent.examples.map((example) => (
                 <div key={example.title} className="border-l-2 border-(--primary) pl-3">
@@ -81,7 +94,7 @@ export function ToolSeoContentServer({ slug, tool }) {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-(--foreground)">How To Use</h3>
+            <h3 className="text-sm font-semibold text-(--foreground)">{seoContent.headings.howTo}</h3>
             <ol className="mt-3 space-y-3">
               {seoContent.steps.map((step, index) => (
                 <li key={step} className="flex gap-2.5 text-xs leading-relaxed text-(--muted-foreground)">
@@ -95,7 +108,7 @@ export function ToolSeoContentServer({ slug, tool }) {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-(--foreground)">Frequently Asked Questions</h3>
+            <h3 className="text-sm font-semibold text-(--foreground)">{seoContent.headings.faq}</h3>
             <div className="mt-3 space-y-4">
               {seoContent.faqs.map((faq) => (
                 <div key={faq.question} className="space-y-1">
@@ -111,16 +124,19 @@ export function ToolSeoContentServer({ slug, tool }) {
   );
 }
 
+/** Also currently unreferenced — see the note on ToolSeoContentServer above. */
 export function RelatedToolsServer({ slug, tool }) {
   const relatedTools = getRelatedTools(slug, tool);
   if (!relatedTools.length) return null;
 
+  const toolName = tool?.name || formatCategoryLabel(slug);
+
   return (
-    <section className="mx-auto mt-8 w-full max-w-6xl">
+    <section aria-label={`Tools related to ${toolName}`} className="mx-auto mt-8 w-full max-w-6xl">
       <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-(--primary)">Explore More</p>
-          <h2 className="text-lg font-semibold text-(--foreground)">Related Tools & Utilities</h2>
+          <h2 className="text-lg font-semibold text-(--foreground)">Tools related to {toolName}</h2>
         </div>
         <Link href="/tools/all" className="rounded-[6px] text-sm font-semibold text-(--muted-foreground) transition-colors duration-150 hover:text-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
           Explore all tools

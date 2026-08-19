@@ -183,14 +183,14 @@ export const TEMPLATES = [
     id: "formal-health",
     tone: "formal",
     respectful: {
-      native: "దీర్ఘాయుష్షు, మంచి ఆరోగ్యం కలగాలని కోరుకుంటున్నాను. పుట్టినరోజు శుభాకాంక్షలు!",
+      native: "మీకు దీర్ఘాయుష్షు, మంచి ఆరోగ్యం కలగాలని కోరుకుంటున్నాను. పుట్టినరోజు శుభాకాంక్షలు!",
       roman:
-        "Dīrghāyuṣṣu, man̄ci ārōgyaṁ kalagālani kōrukuṇṭunnānu. Puṭṭinarōju śubhākāṅkṣalu!",
+        "Mīku dīrghāyuṣṣu, man̄ci ārōgyaṁ kalagālani kōrukuṇṭunnānu. Puṭṭinarōju śubhākāṅkṣalu!",
     },
     casual: {
-      native: "దీర్ఘాయుష్షు, మంచి ఆరోగ్యం కలగాలని కోరుకుంటున్నాను. పుట్టినరోజు శుభాకాంక్షలు!",
+      native: "నీకు దీర్ఘాయుష్షు, మంచి ఆరోగ్యం కలగాలని కోరుకుంటున్నాను. పుట్టినరోజు శుభాకాంక్షలు!",
       roman:
-        "Dīrghāyuṣṣu, man̄ci ārōgyaṁ kalagālani kōrukuṇṭunnānu. Puṭṭinarōju śubhākāṅkṣalu!",
+        "Nīku dīrghāyuṣṣu, man̄ci ārōgyaṁ kalagālani kōrukuṇṭunnānu. Puṭṭinarōju śubhākāṅkṣalu!",
     },
     english: "Wishing you a long life and good health. Happy birthday!",
   },

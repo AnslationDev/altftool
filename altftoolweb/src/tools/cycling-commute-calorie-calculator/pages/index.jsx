@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Bike, Check, Copy, RotateCcw } from "lucide-react";
 
 import { FUEL_TYPES, computeCyclingCommute } from "../lib";
@@ -50,6 +50,9 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [values, setValues] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const update = (key, value) => setValues((current) => ({ ...current, [key]: value }));
 
@@ -92,7 +95,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -328,7 +332,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -375,7 +383,11 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+      >
         <h2 className="text-base font-semibold">What the car journey would have cost</h2>
         <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
           {carRows.map(([label, value]) => (

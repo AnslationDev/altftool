@@ -312,8 +312,20 @@ export function SettingsCard({ eyebrow, title, defaults, subscribe, save, fields
     const unsub = subscribe(
       (data) => {
         const next = hydrate(fields, data);
-        setForm(next);
-        setSaved(next);
+        setSaved((prevSaved) => {
+          setForm((prevForm) => {
+            const hasLocalEdits = JSON.stringify(prevForm) !== JSON.stringify(prevSaved);
+            if (!hasLocalEdits) return next;
+            if (JSON.stringify(prevForm) !== JSON.stringify(next)) {
+              emitAlert({
+                type: "warning",
+                message: `${title} was updated elsewhere while you have unsaved changes. Your edits were kept — save to overwrite, or refresh to discard them.`,
+              });
+            }
+            return prevForm;
+          });
+          return next;
+        });
         setLoading(false);
       },
       () => {

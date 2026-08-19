@@ -235,12 +235,11 @@ const staticRoutes = [
   { path: "/playbuzz/quiz-play", priority: 0.45 },
   { path: "/windowswap/sendGift", priority: 0.45 },
   { path: "/trendingvids", priority: 0.7 },
-  { path: "/news", priority: 0.7 },
-  { path: "/news/headlines", priority: 0.6 },
-  { path: "/news/local", priority: 0.6 },
+  // /news, /news/headlines, /news/local, /news/topics and /news/trending are
+  // all noindex (client-loaded feeds, thin/syndicated server content) — see
+  // the exclusion note near the /news/[slug] loop below. Only /news/newsletter
+  // is indexable, so it is the sole /news/* entry kept here.
   { path: "/news/newsletter", priority: 0.48 },
-  { path: "/news/topics", priority: 0.6 },
-  { path: "/news/trending", priority: 0.6 },
   { path: "/deals", priority: 0.85 },
   { path: "/exclusivedeals", priority: 0.85 },
   { path: "/exclusivedeals/all-stores", priority: 0.75 },
@@ -612,7 +611,13 @@ async function buildSitemapEntries({
     }
   }
 
+  // A category with fewer than 4 games is a thin listing and is noindexed by
+  // src/app/altfgame/category/[name]/page.jsx (MIN_INDEXABLE_GAMES) — keep
+  // that threshold in sync here so a noindexed category never lands in the
+  // sitemap.
+  const MIN_INDEXABLE_GAME_CATEGORY_COUNT = 4;
   for (const category of altfNativeGameCategories) {
+    if (category.count < MIN_INDEXABLE_GAME_CATEGORY_COUNT) continue;
     pushUnique(entries, seen, `/altfgame/category/${category.slug}`, {
       priority: 0.58,
       changeFrequency: "monthly",

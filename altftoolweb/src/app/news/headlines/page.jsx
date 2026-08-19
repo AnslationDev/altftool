@@ -15,6 +15,9 @@ export async function generateMetadata() {
     description: "Scan the latest top headlines and important updates curated by AltFTool News.",
     path: "/news/headlines",
     keywords: ["top headlines", "latest news", "breaking news"],
+    // Syndicated wire-service headlines the original publishers own — kept out
+    // of the index (follow stays on so internal links still pass through).
+    noindex: true,
   });
 }
 

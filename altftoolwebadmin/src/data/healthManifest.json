@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-06T19:48:05.319Z",
+  "generatedAt": "2026-08-14T18:06:58.974Z",
   "tools": {
     "total": 3947,
     "healthy": 3947,
@@ -22,23 +22,23 @@
       "total": 3947,
       "score": 94,
       "counts": {
-        "working": 3865,
-        "api-required": 66,
-        "partial": 16,
+        "working": 3866,
+        "api-required": 64,
+        "partial": 17,
         "broken": 0
       },
       "automatedTests": 222,
       "automatedCoverage": 6,
-      "networkDependent": 66,
+      "networkDependent": 64,
       "envDependent": 4,
       "api": {
-        "tools": 67,
+        "tools": 65,
         "counts": {
           "configured": 0,
           "missing-config": 3,
-          "runtime-check": 64
+          "runtime-check": 62
         },
-        "providerCount": 18,
+        "providerCount": 16,
         "requiredEnvKeys": [
           "DATABASE_URL",
           "NEXT_PUBLIC_API_KEY",
@@ -53,7 +53,7 @@
         "providers": [
           {
             "name": "Runtime-provided endpoint",
-            "tools": 53,
+            "tools": 52,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [
@@ -62,7 +62,7 @@
           },
           {
             "name": "AltFTool API",
-            "tools": 9,
+            "tools": 8,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [
@@ -120,15 +120,6 @@
           },
           {
             "name": "api.github.com",
-            "tools": 1,
-            "requiredEnvKeys": [],
-            "missingEnvKeys": [],
-            "statuses": [
-              "runtime-check"
-            ]
-          },
-          {
-            "name": "api.upcitemdb.com",
             "tools": 1,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
@@ -215,19 +206,10 @@
             "statuses": [
               "missing-config"
             ]
-          },
-          {
-            "name": "world.openfoodfacts.org",
-            "tools": 1,
-            "requiredEnvKeys": [],
-            "missingEnvKeys": [],
-            "statuses": [
-              "runtime-check"
-            ]
           }
         ]
       },
-      "placeholderSignals": 16,
+      "placeholderSignals": 17,
       "unresolvedImports": 0,
       "priority": {
         "total": 51,
@@ -378,6 +360,33 @@
           "name": "Engineering Style Guide Generator",
           "category": "Generators",
           "route": "/tools/all/engineering-style-guide-generator",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "express-route-scaffold-generator",
+          "name": "Express Route Scaffold Generator",
+          "category": "Generators",
+          "route": "/tools/all/express-route-scaffold-generator",
           "status": "partial",
           "score": 60,
           "priority": false,
@@ -836,33 +845,6 @@
           "name": "API TESTER",
           "category": "Developer",
           "route": "/tools/all/api-tester",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "app-finder",
-          "name": "App Finder",
-          "category": "Business",
-          "route": "/tools/all/app-finder",
           "status": "api-required",
           "score": 80,
           "priority": false,

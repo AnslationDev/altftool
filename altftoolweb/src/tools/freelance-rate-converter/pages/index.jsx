@@ -161,6 +161,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset all fields to defaults? This clears your entered rate, costs, and salary details and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAmount(DEFAULTS.amount);
     setBasis(DEFAULTS.basis);
     setCurrency(DEFAULTS.currency);
@@ -315,6 +323,11 @@ export default function ToolHome() {
             <input id="fr-tax" className={`mt-2 ${INPUT_CLASS}`} type="number" inputMode="decimal" min="0" max="99" step="1" value={taxPercent} onChange={(e) => setTaxPercent(e.target.value)} />
           </div>
         </div>
+        {takeHome.error && !error ? (
+          <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+            {takeHome.error}
+          </p>
+        ) : null}
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Profit before tax", takeHome.error ? DASH : money.round(takeHome.profitBeforeTax)],
@@ -344,6 +357,11 @@ export default function ToolHome() {
             <input id="fr-oncost" className={`mt-2 ${INPUT_CLASS}`} type="number" inputMode="decimal" min="0" max="100" step="1" value={onCost} onChange={(e) => setOnCost(e.target.value)} />
           </div>
         </div>
+        {equivalent.error && !error ? (
+          <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+            {equivalent.error}
+          </p>
+        ) : null}
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Billings you need a year", equivalent.error ? DASH : money.round(equivalent.requiredAnnual)],

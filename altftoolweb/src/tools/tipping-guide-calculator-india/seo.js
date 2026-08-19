@@ -25,7 +25,7 @@ const seo = {
     ],
     [
       "Cash you can actually hand over",
-      "Fixed tips are rounded to sensible notes and the day's total is broken into Rs 10, 20, 50 and 100 notes.",
+      "Fixed tips are rounded to sensible notes and the day's total is broken into standard Indian currency notes.",
     ],
   ],
   faqs: [

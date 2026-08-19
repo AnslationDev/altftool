@@ -8,7 +8,7 @@ const seo = {
     "Tick documents off your generated list, then press 'Copy checklist' to take the ticked and unticked items with you.",
   ],
   intro:
-    "This checklist builder produces the document set an Indian insurer will ask for on a health, motor or life claim, adding conditional paperwork such as an FIR, implant sticker or post-mortem report only when your situation calls for it. It also applies the IRDAI settlement timelines — 15 days for a health reimbursement claim from the last necessary document, 30 days for a general insurance claim after the survey report, and 30 days for a life claim, extended to 120 days where an investigation is ordered. Claimants use it to assemble a complete file the first time instead of losing weeks to document queries.",
+    "This checklist builder produces the document set an Indian insurer will ask for on a health, motor or life claim, adding conditional paperwork such as an FIR, implant sticker or post-mortem report only when your situation calls for it. It also applies the IRDAI settlement timelines — 15 days for a health reimbursement claim from the last necessary document, 30 days for a general insurance claim from the last document you submit, and 30 days for a life claim, extended to 120 days where an investigation is ordered. Cashless health treatment runs on its own hour-based clock instead — decided within 1 hour for pre-authorisation and 3 hours for discharge. Claimants use it to assemble a complete file the first time instead of losing weeks to document queries.",
   useCases: [
     "Assembling a hospital reimbursement file that will not bounce back for a missing discharge summary or implant sticker",
     "Knowing exactly which police documents a vehicle theft claim needs before the non-traceable report arrives",
@@ -22,7 +22,7 @@ const seo = {
   faqs: [
     [
       "How long does an insurance company have to settle a claim in India?",
-      "Under the IRDAI master circular on health insurance, a reimbursement claim must be settled or rejected within 15 days of the last necessary document, with cashless authorisation decided within 1 hour of the request and discharge approval within 3 hours. A general insurance claim requiring a survey must be settled within 30 days of the surveyor's report, and a life claim within 30 days of receiving all documents.",
+      "Under the IRDAI master circular on health insurance, a reimbursement claim must be settled or rejected within 15 days of the last necessary document, with cashless authorisation decided within 1 hour of the request and discharge approval within 3 hours. A general insurance claim requiring a survey must typically be settled within 30 days of the last necessary document you submit (insurers usually need a surveyor's report first, but this tool's 30-day clock runs from your submission date, not a separate survey date), and a life claim within 30 days of receiving all documents.",
     ],
     [
       "What documents are needed for a health insurance reimbursement claim?",

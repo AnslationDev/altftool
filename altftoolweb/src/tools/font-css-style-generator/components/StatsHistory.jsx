@@ -5,7 +5,7 @@ export default function StatsHistory({ stats, history, onApplyHistory }) {
     <section className="font-css-card p-4 sm:p-5 space-y-5">
       <div>
         <h2 className="text-lg font-black text-[var(--foreground)]">Stats</h2>
-        <div className="font-css-stats-grid gap-3 mt-3">
+        <div className="font-css-stats-grid gap-3 mt-3" aria-live="polite" aria-atomic="true">
           {stats.map((stat) => (
             <div key={stat.label} className="rounded-2xl border border-cyan-400/15 bg-cyan-400/5 p-3 min-w-0 overflow-hidden">
               <p className="text-[10px] uppercase tracking-normal text-[var(--muted-foreground)] font-black leading-snug whitespace-nowrap">

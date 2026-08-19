@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, GraduationCap, RotateCcw } from "lucide-react";
 
 import {
@@ -21,6 +21,8 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
+const todayIso = () => new Date().toISOString().slice(0, 10);
+
 const DEFAULTS = {
   fullName: "Aarav Sharma",
   course: "B.Tech Computer Science",
@@ -37,15 +39,23 @@ const DEFAULTS = {
   contact: "+91 98765 43210",
   mode: "hybrid",
   tone: "professional",
-  startDate: "2026-06-01",
   durationWeeks: "8",
 };
 
 const DASH = "—";
 
 export default function ToolHome() {
-  const [form, setForm] = useState(DEFAULTS);
+  const [form, setForm] = useState(() => ({ ...DEFAULTS, startDate: todayIso() }));
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const setField = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -58,14 +68,17 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(what);
-      setTimeout(() => setCopied(""), 1500);
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
   };
 
   const reset = () => {
-    setForm(DEFAULTS);
+    setForm({ ...DEFAULTS, startDate: todayIso() });
     setCopied("");
   };
 
@@ -219,7 +232,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

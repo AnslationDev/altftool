@@ -70,7 +70,6 @@ const linksService = createCollectionCrudService(FOOTER_LINKS_PATH, { normalize:
 
 export const subscribeFooterSettings = settingsService.subscribe;
 export const saveFooterSettings = settingsService.save;
-export const resetFooterSettings = settingsService.reset;
 
 export const subscribeFooterLinks = linksService.subscribe;
 export const createFooterLink = linksService.create;

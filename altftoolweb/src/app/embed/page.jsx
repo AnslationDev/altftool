@@ -13,7 +13,7 @@ export async function generateMetadata() {
   // Derived, never hardcoded: the registry decides how many widgets exist.
   const count = getEmbeddableTools().length;
   return createPageMetadata({
-    title: "Free Embeddable Widgets — Calculators & Tools",
+    title: "Free Embeddable Widgets — Calculators, Converters & Resizers",
     description: `Add free calculators, developer format converters and exam photo resizers to your website with one copy-paste snippet. ${count} AltFTool widgets — no signup, no API key, fully responsive.`,
     path: "/embed",
     keywords: [

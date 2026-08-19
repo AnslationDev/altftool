@@ -42,17 +42,46 @@ export const spec = {
       }
     }
   ],
-  "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions."
+  "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions.",
+  "confirmReset": "Reset and clear both pasted policy versions? This cannot be undone."
 },
   compute: (values) => {
       const normalize = (line) => values.ignore_case ? line.trim().toLowerCase() : line.trim();
       const before = String(values.before || "").split(/\r?\n/).filter((line) => line.trim());
       const after = String(values.after || "").split(/\r?\n/).filter((line) => line.trim());
-      const beforeSet = new Set(before.map(normalize));
-      const afterSet = new Set(after.map(normalize));
-      const removed = before.filter((line) => !afterSet.has(normalize(line)));
-      const added = after.filter((line) => !beforeSet.has(normalize(line)));
-      const sensitive = [...added, ...removed].filter((line) => /collect|share|retain|delete|sell|consent|right|transfer|processor|cookie/i.test(line));
+      // Multiset (not Set) membership: a line that appears N times on one
+      // side and M times on the other must show |N-M| adds/removes, not be
+      // silently treated as unchanged just because the normalized text is
+      // present on both sides at least once.
+      const countLines = (lines) => {
+        const counts = new Map();
+        for (const line of lines) {
+          const key = normalize(line);
+          counts.set(key, (counts.get(key) || 0) + 1);
+        }
+        return counts;
+      };
+      const beforeCounts = countLines(before);
+      const afterCounts = countLines(after);
+      const removedSeen = new Map();
+      const removed = before.filter((line) => {
+        const key = normalize(line);
+        const deficit = (beforeCounts.get(key) || 0) - (afterCounts.get(key) || 0);
+        const seen = removedSeen.get(key) || 0;
+        if (seen >= deficit) return false;
+        removedSeen.set(key, seen + 1);
+        return true;
+      });
+      const addedSeen = new Map();
+      const added = after.filter((line) => {
+        const key = normalize(line);
+        const surplus = (afterCounts.get(key) || 0) - (beforeCounts.get(key) || 0);
+        const seen = addedSeen.get(key) || 0;
+        if (seen >= surplus) return false;
+        addedSeen.set(key, seen + 1);
+        return true;
+      });
+      const sensitive = [...added, ...removed].filter((line) => /\b(collect|share|retain|delete|sell|consent|right|transfer|processor|cookie)/i.test(line));
       const rowLimit = 100;
       const changeLines = [...added.map((line) => "+ " + line), ...removed.map((line) => "− " + line)];
       const truncated = changeLines.length > rowLimit;

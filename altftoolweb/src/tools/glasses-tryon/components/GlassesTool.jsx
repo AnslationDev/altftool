@@ -21,6 +21,14 @@ const STYLE_CATEGORIES = [
   { id: 'sun', label: 'Sunglasses' },
 ];
 
+// Only revoke URLs we actually created (blob: URLs from uploads/edits); a
+// data: URL (e.g. from paste or camera capture) is never ours to revoke.
+function revokeIfBlobUrl(url) {
+  if (url && typeof url === 'string' && url.startsWith('blob:')) {
+    URL.revokeObjectURL(url);
+  }
+}
+
 export default function GlassesTool() {
   const [image, setImage] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState('wayfarer');
@@ -42,8 +50,16 @@ export default function GlassesTool() {
   const { loading: faceLoading, error: faceError, faceData, faces, modelsReady, loadModels, detectFace, reset: resetFace } = useFaceDetection();
   const [processing, setProcessing] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
+  const previewGenerationRef = useRef(0);
+  const imageSrcRef = useRef(null);
+
+  // Multi-face detection surfaces the FaceSelector UI via the shared hook's
+  // internal 'MULTIPLE_FACES' sentinel; it is not a user-facing error message.
+  const displayFaceError = faceError === 'MULTIPLE_FACES' ? null : faceError;
 
   const handleImage = useCallback(async ({ src, file, img }) => {
+    revokeIfBlobUrl(imageSrcRef.current);
+    imageSrcRef.current = src;
     setImage({ src, file, img });
     setResultCanvas(null);
     setShowSlider(false);
@@ -57,10 +73,19 @@ export default function GlassesTool() {
     editedCanvas.toBlob((blob) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
+      revokeIfBlobUrl(imageSrcRef.current);
+      imageSrcRef.current = url;
       setImage(prev => ({ ...prev, src: url }));
+      // Rotate/flip/crop changes the image geometry, so any face detected
+      // against the pre-edit photo is now stale (wrong position/scale on
+      // the new canvas). Clear it and re-run detection against the edited
+      // image, the same flow a freshly uploaded photo goes through, so the
+      // auto-preview effect waits for fresh faceData before drawing glasses.
+      resetFace();
+      loadImage(url).then((img) => detectFace(img, { faceIndex: -1 }));
     });
     setShowEditor(false);
-  }, []);
+  }, [resetFace, detectFace]);
 
   const handleOpenEditor = useCallback(async () => {
     if (!image) return;
@@ -75,6 +100,7 @@ export default function GlassesTool() {
 
   const applyPreview = useCallback(async () => {
     if (!image || !faceData) return;
+    const generation = ++previewGenerationRef.current;
     setProcessing(true);
     try {
       const img = await loadImage(image.src);
@@ -90,6 +116,11 @@ export default function GlassesTool() {
         ...adjustments,
       });
 
+      // Last-dispatched-wins: discard this result if a newer applyPreview call
+      // has started since (e.g. from a rapid slider drag), so the canvas never
+      // regresses to a stale adjustment value.
+      if (generation !== previewGenerationRef.current) return;
+
       canvasRef.current = canvas;
       setResultCanvas(canvas);
       setShowSlider(true);
@@ -97,7 +128,7 @@ export default function GlassesTool() {
     } catch (err) {
       console.error('Preview error:', err);
     } finally {
-      setProcessing(false);
+      if (generation === previewGenerationRef.current) setProcessing(false);
     }
   }, [image, faceData, selectedStyle, selectedFrameColor, selectedLensColor, adjustments]);
 
@@ -107,8 +138,12 @@ export default function GlassesTool() {
 
   const handleDetect = useCallback(async (faceIndex = selectedFace) => {
     if (!image) return;
+    // ErrorCard's "Try Again" button calls onRetry(clickEvent) directly, so a
+    // stray SyntheticEvent can arrive here instead of a face index — guard
+    // against anything non-numeric rather than letting it silently coerce.
+    const idx = typeof faceIndex === 'number' ? faceIndex : -1;
     const img = await loadImage(image.src);
-    await detectFace(img, { faceIndex });
+    await detectFace(img, { faceIndex: idx });
   }, [image, detectFace, selectedFace]);
 
   const handleSelectFace = useCallback(async (index) => {
@@ -126,7 +161,12 @@ export default function GlassesTool() {
     if (!resultCanvas) return;
     setDownloading(true);
     try {
-      const scale = pickScale(resultCanvas.width, resultCanvas.height, 3840, Math.min(2, window.devicePixelRatio || 1));
+      // minDpr is intentionally 1: pickScale's minDpr floor forces an
+      // already-large photo (fit <= 1) up to that floor even when no
+      // upscaling is warranted. Passing 1 keeps the retina-upscale behavior
+      // for small photos (fit > 1 already exceeds a floor of 1) while
+      // letting large photos resolve to a neutral 1x instead of forced 2x.
+      const scale = pickScale(resultCanvas.width, resultCanvas.height, 3840, 1);
       const hiRes = scale > 1 ? createHiResCanvas(resultCanvas, scale) : resultCanvas;
       const mimeType = type === 'jpg' ? 'image/jpeg' : 'image/png';
       const blob = await getCanvasBlob(hiRes, mimeType, 0.95);
@@ -167,13 +207,13 @@ export default function GlassesTool() {
           <p className="text-sm text-muted-foreground">Try different glasses with AI-powered placement</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => { setImage(null); setResultCanvas(null); setShowSlider(false); setEditorCanvas(null); resetFace(); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
+          <button onClick={() => { revokeIfBlobUrl(imageSrcRef.current); imageSrcRef.current = null; setImage(null); setResultCanvas(null); setShowSlider(false); setEditorCanvas(null); resetFace(); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
           <button onClick={handleOpenEditor} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Edit Image</button>
         </div>
       </div>
 
       {faceLoading && <SkeletonLoader lines={3} />}
-      {faceError && <ErrorCard message={faceError} onRetry={handleDetect} />}
+      {displayFaceError && <ErrorCard message={displayFaceError} onRetry={handleDetect} />}
 
       {showEditor && editorCanvas ? (
         <ImageEditor canvas={editorCanvas} onApply={handleEditorApply} onCancel={() => setShowEditor(false)} />
@@ -253,7 +293,7 @@ export default function GlassesTool() {
           <div className="rounded-xl border border-[var(--border)] p-4 space-y-3">
             <h3 className="text-sm font-medium text-foreground">Lens</h3>
             <div className="flex flex-wrap gap-2">
-              {LENS_COLORS.slice(0, 8).map(c => (
+              {LENS_COLORS.map(c => (
                 <button key={c.name} onClick={() => setSelectedLensColor(c)}
                   className={`w-7 h-7 rounded-full border-2 transition-all ${selectedLensColor.name === c.name ? 'border-[var(--primary)] scale-110 shadow-md' : 'border-transparent hover:scale-105'}`}
                   style={{ background: c.value === 'gradient' ? 'linear-gradient(135deg, #3b82f6, #a855f7)' : c.value }}
@@ -275,6 +315,7 @@ export default function GlassesTool() {
               <div key={key} className="space-y-1">
                 <div className="flex justify-between text-xs text-muted-foreground"><span>{label}</span><span>{adjustments[key]}</span></div>
                 <input type="range" min={min} max={max} value={adjustments[key]} onChange={(e) => setAdjustments(p => ({ ...p, [key]: Number(e.target.value) }))}
+                  aria-label={label}
                   className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-[var(--border)] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--primary)] [&::-webkit-slider-thumb]:shadow-md" />
               </div>
             ))}

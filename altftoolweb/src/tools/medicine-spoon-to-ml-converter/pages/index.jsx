@@ -178,7 +178,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {form.direction === "spoons-to-ml" ? "Measured volume" : "Spoons needed"}
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">{headline}</p>
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">{headline}</p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
                 ? `Set an oral syringe to ${NUM1.format(result.millilitresRounded)} mL`
@@ -207,36 +207,38 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
-          {[
-            ["Exact volume", ok ? `${NUM3.format(result.millilitres)} mL` : DASH],
-            ["Rounded to a syringe mark", ok ? `${NUM1.format(result.millilitresRounded)} mL` : DASH],
-            ["In 5 mL medicine teaspoons", ok ? NUM3.format(result.medicineTeaspoons) : DASH],
-            ["In 15 mL tablespoons", ok ? NUM3.format(result.medicineTablespoons) : DASH],
-            ["In US fluid ounces", ok ? NUM3.format(result.usFluidOunces) : DASH],
-            [
-              "Dose delivered",
-              ok
-                ? result.doseMg !== null
-                  ? `${NUM2.format(result.doseMg)} mg`
-                  : "Add a label strength"
-                : DASH,
-            ],
-            [
-              "This spoon versus a 5 mL teaspoon",
-              ok
-                ? `${result.differenceFromMedicineTeaspoonPct >= 0 ? "+" : "−"}${NUM1.format(
-                    Math.abs(result.differenceFromMedicineTeaspoonPct),
-                  )}%`
-                : DASH,
-            ],
-          ].map(([label, figure]) => (
-            <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">{label}</dt>
-              <dd className="text-right font-semibold">{figure}</dd>
-            </div>
-          ))}
-        </dl>
+        <div aria-live="polite" aria-atomic="true">
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            {[
+              ["Exact volume", ok ? `${NUM3.format(result.millilitres)} mL` : DASH],
+              ["Rounded to a syringe mark", ok ? `${NUM1.format(result.millilitresRounded)} mL` : DASH],
+              ["In 5 mL medicine teaspoons", ok ? NUM3.format(result.medicineTeaspoons) : DASH],
+              ["In 15 mL tablespoons", ok ? NUM3.format(result.medicineTablespoons) : DASH],
+              ["In US fluid ounces", ok ? NUM3.format(result.usFluidOunces) : DASH],
+              [
+                "Dose delivered",
+                ok
+                  ? result.doseMg !== null
+                    ? `${NUM2.format(result.doseMg)} mg`
+                    : "Add a label strength"
+                  : DASH,
+              ],
+              [
+                "This spoon versus a 5 mL teaspoon",
+                ok
+                  ? `${result.differenceFromMedicineTeaspoonPct >= 0 ? "+" : "−"}${NUM1.format(
+                      Math.abs(result.differenceFromMedicineTeaspoonPct),
+                    )}%`
+                  : DASH,
+              ],
+            ].map(([label, figure]) => (
+              <div key={label} className="flex items-center justify-between gap-4 py-2.5">
+                <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                <dd className="text-right font-semibold">{figure}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
         {ok && (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">

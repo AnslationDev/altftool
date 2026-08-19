@@ -257,12 +257,12 @@ export default function ToolHome() {
         ? `Working hours at ${num1.format(hoursValue)} h/day: ${num1.format(
             result.workingDays * hoursValue
           )}`
-        : "Working hours: not calculated — hours per working day must be between 0 and 24.",
+        : `Working hours: not calculated — ${hoursResult.error}`,
       ...(result.holidayHits.length
         ? ["", "Holidays that fell on a working day:", ...result.holidayHits.map((hit) => `- ${hit.iso} ${hit.name}`)]
         : []),
     ].join("\n");
-  }, [endDate, hoursValid, hoursValue, includeEnd, result, startDate, weekend]);
+  }, [endDate, hoursResult, hoursValid, hoursValue, includeEnd, result, startDate, weekend]);
 
   const copied = isCopied("report");
 

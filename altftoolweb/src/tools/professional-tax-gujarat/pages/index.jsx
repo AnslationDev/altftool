@@ -5,6 +5,7 @@ import { Check, Coins, Copy, RotateCcw } from "lucide-react";
 
 import {
   ANNUAL_MAXIMUM,
+  ANNUAL_PT_CEILING,
   EXEMPTION_LIMIT,
   MARGINAL_RATES,
   MONTHLY_DUE_DAY,
@@ -103,9 +104,11 @@ export default function ToolHome() {
     ["Monthly deduction", failed ? DASH : money(result.monthlyTax)],
     ["Months counted", failed ? DASH : String(result.months)],
     ["Total professional tax", failed ? DASH : money(result.annualTax)],
+    ["Full twelve-month liability", failed ? DASH : money(result.fullYearTax)],
     ["Income tax saved under Section 16(iii)", failed ? DASH : money2(result.taxSaving)],
     ["Net cost after that saving", failed ? DASH : money2(result.netCost)],
     ["Gujarat annual maximum", money(ANNUAL_MAXIMUM)],
+    ["Constitutional annual ceiling (Article 276(2))", money(ANNUAL_PT_CEILING)],
   ];
 
   return (
@@ -214,7 +217,9 @@ export default function ToolHome() {
                 ? "Fix the highlighted input to see a result."
                 : result.liable
                   ? `${money(result.monthlyTax)} a month for ${result.months} month${result.months === 1 ? "" : "s"}`
-                  : `At or below ${money(EXEMPTION_LIMIT)} a month, so nothing is deducted.`}
+                  : result.exemptReason
+                    ? result.exemptReason
+                    : `At or below ${money(EXEMPTION_LIMIT)} a month, so nothing is deducted.`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

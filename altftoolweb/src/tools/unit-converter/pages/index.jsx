@@ -206,6 +206,12 @@ export default function UnitConverter() {
       CLEAR HISTORY
   ------------------------------------*/
   const handleClearHistory = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Clear all conversion history? This cannot be undone.")
+    ) {
+      return;
+    }
     clearHistory();
     setHistoryState([]);
     setRecent([]);
@@ -300,6 +306,7 @@ export default function UnitConverter() {
                   <button
                     key={cat}
                     onClick={() => setCategory(cat)}
+                    aria-pressed={category === cat}
                     className={`py-3 px-2 min-h-[44px] rounded-lg text-xs sm:text-lg sm:font-medium border border-(--border) cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${category === cat
                         ? "bg-(--primary) text-white"
                         : "bg-(--muted) text-(--foreground)"
@@ -406,7 +413,11 @@ export default function UnitConverter() {
                 </div>
 
                 {/* RESULT PANEL */}
-                <div className="p-4 rounded-xl bg-(--primary)/10 ring-1 ring-(--border)">
+                <div
+                  className="p-4 rounded-xl bg-(--primary)/10 ring-1 ring-(--border)"
+                  aria-live="polite"
+                  role="status"
+                >
                   <div className="font-medium text-(--muted-foreground)">
                     Conversion Result
                   </div>
@@ -504,7 +515,7 @@ export default function UnitConverter() {
               ) : (
                 <div>
                   <div className="max-h-100 overflow-y-auto no-scrollbar pr-3 space-y-3 mt-4">
-                    {[...history].reverse().map((item) => (
+                    {history.map((item) => (
                       <div
                         key={item.id}
                         className="p-3 rounded-lg bg-(--muted) border border-(--border) relative group"

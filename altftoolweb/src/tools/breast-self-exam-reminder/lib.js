@@ -163,7 +163,30 @@ export function buildExamSchedule({
     const todayDate = new Date(todayMs);
     let year = todayDate.getUTCFullYear();
     let month = todayDate.getUTCMonth();
-    if (todayDate.getUTCDate() > day) {
+
+    // Check whether the PREVIOUS month's occurrence window is still open
+    // first (e.g. a Feb 28 check whose 3-day window runs into March 1-2).
+    // Comparing today's day-of-month only against the CURRENT month's
+    // fixed day misses this: on March 1st, "today's date (1) > fixed day
+    // (28) + window - 1" is false, so the old logic never rolled forward,
+    // but it also never looked back to see that the Feb 28 window was
+    // still the one that should be reported as open.
+    let prevMonth = month - 1;
+    let prevYear = year;
+    if (prevMonth < 0) {
+      prevMonth = 11;
+      prevYear -= 1;
+    }
+    const prevMs = Date.UTC(prevYear, prevMonth, day);
+    const prevWindowEndMs = addDays(prevMs, WINDOW_LENGTH_DAYS - 1);
+
+    if (todayMs <= prevWindowEndMs) {
+      year = prevYear;
+      month = prevMonth;
+    } else if (todayDate.getUTCDate() > day + WINDOW_LENGTH_DAYS - 1) {
+      // Only roll over to next month once today is past the whole check
+      // window (fixed day through fixed day + WINDOW_LENGTH_DAYS - 1), not
+      // just past the window's first day.
       month += 1;
       if (month > 11) {
         month = 0;
@@ -174,10 +197,14 @@ export function buildExamSchedule({
     const dates = [];
     for (let index = 0; index < count; index += 1) {
       const ms = Date.UTC(year, month + index, day);
+      const windowEndMs = addDays(ms, WINDOW_LENGTH_DAYS - 1);
+      // If today is inside this occurrence's still-open window, report it
+      // as the current check rather than a stale window-start offset.
+      const isCurrentWindow = index === 0 && todayMs >= ms && todayMs <= windowEndMs;
       dates.push({
         date: toISODate(ms),
-        windowEnd: toISODate(addDays(ms, WINDOW_LENGTH_DAYS - 1)),
-        daysAway: daysBetween(todayMs, ms),
+        windowEnd: toISODate(windowEndMs),
+        daysAway: isCurrentWindow ? 0 : daysBetween(todayMs, ms),
       });
     }
 
@@ -225,19 +252,25 @@ export function buildExamSchedule({
   // day `periodLength`, i.e. start + (periodLength - 1) days.
   const firstExamMs = addDays(startMs, bleed - 1 + DAYS_AFTER_PERIOD_ENDS);
 
-  // Step forward whole cycles until the check date is today or later.
+  // Step forward whole cycles until the check window (start through
+  // start + WINDOW_LENGTH_DAYS - 1) has not yet fully elapsed, so a
+  // still-open window isn't skipped just because today is past its start day.
   let cursorMs = firstExamMs;
-  while (cursorMs < todayMs) {
+  while (addDays(cursorMs, WINDOW_LENGTH_DAYS - 1) < todayMs) {
     cursorMs = addDays(cursorMs, cycle);
   }
 
   const dates = [];
   for (let index = 0; index < count; index += 1) {
     const ms = addDays(cursorMs, cycle * index);
+    const windowEndMs = addDays(ms, WINDOW_LENGTH_DAYS - 1);
+    // If today is inside this occurrence's still-open window, report it
+    // as the current check rather than a stale window-start offset.
+    const isCurrentWindow = index === 0 && todayMs >= ms && todayMs <= windowEndMs;
     dates.push({
       date: toISODate(ms),
-      windowEnd: toISODate(addDays(ms, WINDOW_LENGTH_DAYS - 1)),
-      daysAway: daysBetween(todayMs, ms),
+      windowEnd: toISODate(windowEndMs),
+      daysAway: isCurrentWindow ? 0 : daysBetween(todayMs, ms),
     });
   }
 

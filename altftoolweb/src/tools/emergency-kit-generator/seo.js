@@ -8,7 +8,7 @@ const seo = {
     "Read the 'Water to store' litres, total kit weight per person and the itemised category lists with rotation due dates, then click 'Copy result'.",
   ],
   intro:
-    "An emergency kit list with the quantities worked out rather than left to you: water at 4 litres per person per day, the FEMA one-gallon figure rounded, food sized from 2,000 kcal an adult and 1,400 a child, and every other item scaled per person, per infant or per household. Choose a three-day go-bag or two weeks of home supplies, tick the hazards that apply where you live, and it returns the full list with weights and rotation dates.",
+    "An emergency kit list with the quantities worked out rather than left to you: water at 4 litres per person per day, the FEMA one-gallon figure rounded, food sized from 2,000 kcal an adult and 1,400 a child, and every other item scaled per person, per infant or per household. Choose a three-day go-bag or two weeks of home supplies, tick the hazards that apply where you live, and it returns the full list with weights, plus rotation reminders once you enter the date you packed it.",
   useCases: [
     "Packing a go-bag for a family with an infant, where formula and nappies change both the water and the volume",
     "Sizing home storage before a cyclone season or a monsoon when roads may be cut for days",

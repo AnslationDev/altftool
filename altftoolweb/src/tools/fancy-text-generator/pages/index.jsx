@@ -1,18 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Clipboard, Sparkles } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const maps = {
   bold: ["𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇", "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"],
   italic: ["𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻", "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡"],
-  script: ["𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏", "𝒜𝐵𝒞𝒟𝐸𝐹𝒢𝐻𝐼𝒥𝒦𝐿𝑀𝒩𝒪𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵"],
+  script: ["𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏", "𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵"],
   monospace: ["𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣", "𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉"],
 };
 
 function transform(text, style) {
-  if (style === "wide") return text.split("").join(" ");
+  if (style === "wide") return Array.from(text).join(" ");
   if (style === "bubble") return text.replace(/[a-z]/gi, (char) => `${char}\u20dd`);
   const [lower, upper] = maps[style].map((letters) => Array.from(letters));
   return text.replace(/[a-z]/gi, (char) => {
@@ -24,6 +24,9 @@ function transform(text, style) {
 export default function ToolHome() {
   const [text, setText] = useState("AltFTool");
   const [copied, setCopied] = useState("");
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copiedTimeoutRef.current), []);
 
   const variants = useMemo(
     () => [
@@ -39,7 +42,8 @@ export default function ToolHome() {
 
   const copyValue = async (label, value) => {
     setCopied((await safeCopyText(value)) ? label : "");
-    setTimeout(() => setCopied(""), 1000);
+    clearTimeout(copiedTimeoutRef.current);
+    copiedTimeoutRef.current = setTimeout(() => setCopied(""), 1000);
   };
 
   return (
@@ -61,7 +65,11 @@ export default function ToolHome() {
             <span className="text-sm font-semibold">Text</span>
             <input value={text} onChange={(event) => setText(event.target.value)} className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-lg outline-none focus:border-[var(--primary)]" />
           </label>
-          {copied && <p className="mt-3 text-sm font-semibold text-green-600">{copied} copied</p>}
+          {copied && (
+            <p role="status" className="mt-3 text-sm font-semibold text-[var(--success-text)]">
+              {copied} copied
+            </p>
+          )}
         </section>
 
         <section className="tool-card-grid">

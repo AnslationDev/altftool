@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { GripVertical } from "lucide-react";
 import { listDocs, saveDoc, removeDoc, reorderDocs } from "../lib/firebase";
-import { validate, validateVideoList, videoRowType } from "../lib/schemas";
+import { validate, validateVideoList, validateQuestionRows, videoRowType } from "../lib/schemas";
 import { Button, Modal, Field } from "./ui";
 
 const isVideoListField = (f) => f.type === "videolist";
@@ -123,6 +123,17 @@ export default function CollectionManager({ schema, lookups, notify }) {
       const rowErrs = validateVideoList(v[videoField.key]);
       if (Object.keys(rowErrs).length) {
         errs[videoField.key] = Object.entries(rowErrs).map(([i, msg]) => `Row ${Number(i) + 1}: ${msg}`).join(" · ");
+      }
+    }
+
+    // Cross-field rule for nested quiz-question rows (e.g. Arenas' Questions):
+    // each row's Correct Answer must exactly match one of its own options.
+    const questionListField = schema.fields.find((f) => f.type === "objectlist"
+      && f.item?.some((i) => i.key === "correctAnswer") && f.item?.some((i) => i.key === "options"));
+    if (questionListField) {
+      const rowErrs = validateQuestionRows(v[questionListField.key]);
+      if (Object.keys(rowErrs).length) {
+        errs[questionListField.key] = Object.entries(rowErrs).map(([i, msg]) => `Row ${Number(i) + 1}: ${msg}`).join(" · ");
       }
     }
 

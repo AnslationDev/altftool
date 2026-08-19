@@ -43,6 +43,10 @@ function reducer(state, action) {
   switch (action.type) {
     case "INIT": {
       const chess = initialState();
+      // A time control of 0 seconds means "Unlimited" (no clock), not an
+      // already-expired clock. Track that explicitly so TICK can skip the
+      // countdown/forfeit logic entirely for unlimited games.
+      const unlimited = action.timeControl === 0;
       return {
         ...state,
         phase: "playing",
@@ -57,6 +61,8 @@ function reducer(state, action) {
         result: null,
         resultReason: null,
         drawOffer: null,
+        unlimited,
+        timeControl: action.timeControl,
         clocks: { w: action.timeControl, b: action.timeControl },
       };
     }
@@ -89,15 +95,6 @@ function reducer(state, action) {
       return { ...state, selected: null, legalForSelected: [] };
     }
 
-    case "MOVE_TO": {
-      if (state.phase !== "playing" || state.selected == null) return state;
-      const targets = state.legalForSelected.filter((m) => m.to === action.sq);
-      if (!targets.length) return state;
-      const promo = targets.find((m) => m.promotion);
-      if (promo) return setPendingPromotion(state, promo);
-      return applyAndRecord(state, targets[0]);
-    }
-
     case "PROMOTION_PICK": {
       if (!state.pendingPromotion) return state;
       const base = state.pendingPromotion.base;
@@ -109,7 +106,7 @@ function reducer(state, action) {
       return { ...state, pendingPromotion: null };
 
     case "TICK": {
-      if (state.phase !== "playing" || state.result) return state;
+      if (state.phase !== "playing" || state.result || state.unlimited) return state;
       const turn = state.chess.turn;
       const remaining = state.clocks[turn] - action.delta;
       if (remaining <= 0) {
@@ -248,6 +245,8 @@ const initialReducerState = {
   result: null,
   resultReason: null,
   drawOffer: null,
+  unlimited: false,
+  timeControl: 0,
   clocks: { ...START_CLOCK },
 };
 
@@ -278,7 +277,6 @@ export function useChessGame() {
   }, []);
 
   const selectSquare = useCallback((sq) => dispatch({ type: "SELECT", sq }), []);
-  const moveTo = useCallback((sq) => dispatch({ type: "MOVE_TO", sq }), []);
   const pickPromotion = useCallback((piece) => dispatch({ type: "PROMOTION_PICK", piece }), []);
   const cancelPromotion = useCallback(() => dispatch({ type: "CANCEL_PROMOTION" }), []);
   const resign = useCallback((color) => dispatch({ type: "RESIGN", color }), []);
@@ -290,7 +288,6 @@ export function useChessGame() {
     state,
     startGame,
     selectSquare,
-    moveTo,
     pickPromotion,
     cancelPromotion,
     resign,

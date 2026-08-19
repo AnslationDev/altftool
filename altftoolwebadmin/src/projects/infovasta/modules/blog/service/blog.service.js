@@ -75,6 +75,28 @@ function normalizeArticle(payload) {
   };
 }
 
+function normalizeBlogPage(payload) {
+  return {
+    meta: {
+      title: cleanText(payload?.meta?.title),
+      description: cleanText(payload?.meta?.description),
+    },
+    hero: {
+      eyebrow: cleanText(payload?.hero?.eyebrow),
+      title: cleanText(payload?.hero?.title),
+      highlight: cleanText(payload?.hero?.highlight),
+      description: cleanText(payload?.hero?.description),
+    },
+    searchPlaceholder: cleanText(payload?.searchPlaceholder),
+    emptyText: cleanText(payload?.emptyText),
+    allLabel: cleanText(payload?.allLabel),
+    detail: {
+      backLabel: cleanText(payload?.detail?.backLabel),
+      moreHeading: cleanText(payload?.detail?.moreHeading),
+    },
+  };
+}
+
 const articles = createCollectionCrudService(ARTICLES_PATH, { normalize: normalizeArticle });
 const blogPage = createSingletonDocService(PAGE_PATH, DEFAULT_BLOG_PAGE);
 const cover = createImageUploader({ pathPrefix: `${PROJECT_ID}/blog/cover`, maxSizeMB: 8 });
@@ -86,7 +108,9 @@ export const deleteArticle = articles.remove;
 export const toggleArticleStatus = articles.toggleActive;
 
 export const subscribeBlogPage = blogPage.subscribe;
-export const saveBlogPage = blogPage.save;
+export async function saveBlogPage(payload) {
+  await blogPage.save(normalizeBlogPage(payload));
+}
 
 export const uploadBlogCover = cover.upload;
 export const deleteBlogCover = cover.remove;

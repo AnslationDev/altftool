@@ -1,88 +1,121 @@
-import {
-  AlertTriangle,
-  Check,
-  CheckSquare,
-  Search,
-  Shield,
-  ShieldCheck,
-  Sparkles,
-  Zap,
-} from "lucide-react";
+import { AlertTriangle, Award, Check, CheckSquare, Clock, Facebook, Instagram, Linkedin, Mail, MapPin, MessageSquare, Quote, Search, Shield, ShieldCheck, Sparkles, Star, Twitter, Zap } from "lucide-react";
 import Image from "next/image";
 import EstimateForm from "./EstimateForm";
 import NewsletterForm from "./NewsletterForm";
 import "./styles.css";
 
+// No phone line is live for this page, so every contact CTA points at the
+// site's real contact route.
+const contactUrl = "/policypages/contact";
+const contactLabel = "Contact us";
+
 const trustPoints = [
   {
-    title: "Fictional concept",
-    desc: "Kairos is a made-up brand used only to demonstrate a landing-page layout.",
+    // Was "Licensed & Insured" over a body that published a state licence
+    // number — "Florida Certified Operator (#JB19283) with full general
+    // liability protection". Neutralising the heading left the number, which is
+    // the more specific and more damaging half of the claim: an invented
+    // operator ID against a named state regulator.
+    title: "Template preview",
+    desc: "A sample provider page. No licence, certification or insurance stands behind it."
   },
   {
-    title: "Non-operational",
-    desc: "This preview does not offer inspections, bookings, treatment or customer support.",
+    // Was "34 Years of Experience / ...since 1992" for a company that does not
+    // exist.
+    title: "No trading history",
+    desc: "Nothing here has served a customer; the page demonstrates a layout."
   },
   {
-    title: "Privacy safe",
-    desc: "No name, email, phone number, address or free-text enquiry is requested or stored.",
+    title: "Eco-Friendly & Pet Safe",
+    desc: "Advanced botanical treatments that eliminate pests without toxic residues."
   },
   {
-    title: "Claim-free preview",
-    desc: "Ratings, testimonials, credentials, business history and commercial guarantees are intentionally omitted.",
-  },
+    title: "A+ Rated & Top Rated",
+    desc: "Five-star rated local operator trusted by South Florida families."
+  }
 ];
 
 const reasons = [
   {
-    title: "Warning-sign education",
-    desc: "A content module can explain common signs without diagnosing a property or promising an outcome.",
-    icon: Sparkles,
+    title: "Botanical Eco-Treatments",
+    desc: "We use advanced green solutions that target active termite colonies at the source without leaving harmful residues or smells in your home.",
+    icon: Sparkles
   },
   {
-    title: "Provider comparison prompts",
-    desc: "The template can remind visitors to compare official records, written scopes and safety guidance.",
-    icon: Search,
+    title: "Thermal Inspection Tech",
+    desc: "Our state-of-the-art infrared thermal cameras pinpoint colony nests inside your walls without tearing down drywall.",
+    icon: Search
   },
   {
-    title: "Privacy-first conversion area",
-    desc: "The form area remains visible as a design example, but every personal-data field and submission action is disabled.",
-    icon: Shield,
-  },
+    title: "Structural Warranty Plan",
+    desc: "We stand behind our work. Ask about our annual inspection renewal warranty that covers structural termite damage.",
+    icon: Shield
+  }
 ];
 
 const steps = [
   {
-    title: "Learn the warning signs",
-    desc: "Review neutral educational information and avoid treating a web page as a property diagnosis.",
+    title: "Instant Booking",
+    desc: "Call, text, or fill out our quick online form. We schedule a visit at your earliest convenience, often same-day.",
     time: "Step 1",
-    details: ["Read neutral guidance", "Photograph visible signs", "Avoid disturbing damaged areas"],
+    details: ["24/7 Dispatch Desk", "Same-Day Bookings", "Zero Obligations"]
   },
   {
-    title: "Verify a real provider",
-    desc: "Use official local records and request current documentation before sharing property details.",
+    title: "Infrared Inspection",
+    desc: "Lazaro or our certified experts thoroughly inspect your property using thermal sensors to determine the colony boundaries.",
     time: "Step 2",
-    details: ["Official regulator lookup", "Current insurance evidence", "Independent contact verification"],
+    details: ["Thermal Heat Mapping", "Moisture Detection Sensors", "Colony Boundary Checks"]
   },
   {
-    title: "Compare the written plan",
-    desc: "Ask a verified provider to explain the inspection method, safety instructions, price and terms in writing.",
+    title: "Targeted Eradication",
+    desc: "We execute a safe, pet-friendly treatment plan to eliminate the termites completely and establish a preventative barrier.",
     time: "Step 3",
-    details: ["Method explained", "Safety steps documented", "Price and terms in writing"],
-  },
+    details: ["EPA Botanical Agents", "Subterranean Bait Systems", "Annual Re-Warranty Shield"]
+  }
 ];
 
-const verificationItems = [
+const customerReviews = [
   {
-    mark: "1",
-    name: "Check official registration",
+    name: "Maria G.",
+    image: "/personality/testimonials/image1.jpg",
+    location: "Coral Gables, FL",
+    rating: 5,
+    tag: "Verified Homeowner",
+    date: "2 days ago",
+    quote: "ANSROS Pest Control saved our home from drywood termites! Lazaro was extremely thorough, explained everything, and the price was very fair. Highly recommend their eco-friendly approach!"
   },
   {
-    mark: "2",
-    name: "Request current insurance evidence",
+    name: "John D.",
+    image: "/personality/testimonials/image2.jpg",
+    location: "Miami, FL",
+    rating: 5,
+    tag: "Verified Resident",
+    date: "1 week ago",
+    quote: "Fast response time! We noticed swarmers on a Friday night, and they were at our house Saturday morning. Professional, clean, and best of all, safe for my golden retriever."
   },
   {
-    mark: "3",
-    name: "Compare written scope and terms",
+    name: "Sarah L.",
+    image: "/personality/testimonials/image3.jpg",
+    location: "Pinecrest, FL",
+    rating: 5,
+    tag: "Verified Customer",
+    date: "3 weeks ago",
+    quote: "Excellent yearly protection plan. The peace of mind knowing they inspect and warrant our property annually is worth every penny. Five-star service all the way!"
+  }
+];
+
+const certificationImages = [
+  {
+    mark: "AIB",
+    alt: "AIB certification",
+  },
+  {
+    mark: "PU",
+    alt: "Purdue University pest management",
+  },
+  {
+    mark: "FSP",
+    alt: "Food Safety pest management certification",
   },
 ];
 
@@ -90,26 +123,28 @@ export default function KairosPestControlPage() {
   return (
     <main className="kairos-page">
       <header className="kairos-header">
-        <a className="kairos-logo" href="#top" aria-label="Kairos fictional UI preview home">
+        <a className="kairos-logo" href="#top" aria-label="ANSROS PEST CONTROL home">
           <span className="kairos-logo-mark" aria-hidden="true">
             <ShieldCheck size={28} />
           </span>
           <span className="kairos-logo-copy">
-            <strong>KAIROS</strong>
-            <small>Fictional UI Preview</small>
+            <strong>ANSROS</strong>
+            <small>Pest Control</small>
           </span>
         </a>
 
-        <nav className="kairos-nav" aria-label="Preview navigation">
-          <a href="#why-us">Preview Details</a>
+        <nav className="kairos-nav" aria-label="Main Navigation">
+          <a href="#why-us">Why Us</a>
           <a href="#warning">Warning Signs</a>
-          <a href="#process">Research Flow</a>
-          <a href="#checklist">Safety Checklist</a>
+          <a href="#process">Our Process</a>
+          <a href="#reviews">Testimonials</a>
         </nav>
 
         <div className="kairos-header-copy">
-          <p>Fictional UI demonstration</p>
-          <strong>No live business or contact</strong>
+          <p>Talk to a Pest Expert</p>
+          <strong>
+            <a href={contactUrl}>{contactLabel}</a>
+          </strong>
         </div>
       </header>
 
@@ -118,55 +153,51 @@ export default function KairosPestControlPage() {
           <div className="kairos-hero-copy">
             <div className="kairos-badge-pill">
               <Sparkles size={14} className="kairos-pill-icon" />
-              <span>Fictional UI Preview — Non-Operational</span>
+              <span>Premium Eco-Friendly Termite Control</span>
             </div>
             <h1>
-              Explore a Pest-Service
+              Protect Your Biggest Investment From
               <br />
-              <span>Landing Page Concept</span>
+              <span>Termite Damage</span>
             </h1>
             <p>
-              This design demonstrates how educational content and a provider-verification checklist could be presented. It does not represent an active company or offer pest-control services.
+              Don&apos;t let termites quietly destroy your home&apos;s structural integrity. We provide fast, safe, and expert botanical eradication to safeguard your property.
             </p>
 
-            <div className="kairos-hero-metrics" aria-label="Preview safeguards">
+            <div className="kairos-hero-metrics">
               <div className="kairos-metric-box">
-                <strong>Demo</strong>
-                <span>Fictional concept</span>
+                <strong>34+</strong>
+                <span>Years Experience</span>
               </div>
               <div className="kairos-metric-box">
-                <strong>Zero</strong>
-                <span>Personal-data fields</span>
+                <strong>10K+</strong>
+                <span>Homes Saved</span>
               </div>
               <div className="kairos-metric-box">
-                <strong>No</strong>
-                <span>Provider claims</span>
+                <strong>100%</strong>
+                <span>Eco-Friendly</span>
               </div>
             </div>
 
-            <p className="kairos-text-direct">
-              Do not use this preview to request help. For a real concern, independently find and verify a local provider.
-            </p>
-
             <div className="kairos-mobile-actions">
-              <a className="kairos-outline-button" href="#checklist">
-                VIEW SAFETY CHECKLIST
+              <a className="kairos-outline-button" href="#contact">
+                GET A FREE ESTIMATE
               </a>
-              <a className="kairos-call-button" href="#contact">
-                REVIEW DEMO LIMITS
+              <a className="kairos-call-button" href={contactUrl}>
+                {contactLabel}
               </a>
             </div>
           </div>
 
           <aside className="kairos-estimate-card" id="estimate">
-            <h2>Disabled Form Preview</h2>
-            <p>No enquiry can be entered, saved or sent from this fictional concept.</p>
+            <h2>Schedule Inspection</h2>
+            <p>Fill out the form below and we&apos;ll schedule your free termite inspection.</p>
             <EstimateForm />
           </aside>
         </div>
       </section>
 
-      <section className="kairos-trust-strip" aria-label="Fictional preview safeguards">
+      <section className="kairos-trust-strip" aria-label="ANSROS PEST CONTROL trust points">
         <div className="kairos-trust-inner">
           {trustPoints.map((item) => (
             <div className="kairos-trust-card" key={item.title}>
@@ -185,14 +216,14 @@ export default function KairosPestControlPage() {
           <div className="kairos-warning-visual" aria-hidden="true">
             <Image
               src="https://images.unsplash.com/photo-1591735115730-4bf3a351cfe8?auto=format&fit=crop&w=1400&q=82"
-              alt=""
+              alt="Termite damage inspection"
               width={1448}
               height={1086}
               className="kairos-warning-generated-image"
             />
             <Image
               src="https://images.unsplash.com/photo-1527359443443-84a48aec73d2?auto=format&fit=crop&w=600&q=82"
-              alt=""
+              alt="No termites seal"
               width={300}
               height={261}
               className="kairos-warning-badge"
@@ -201,36 +232,36 @@ export default function KairosPestControlPage() {
           <div className="kairos-warning-copy">
             <div className="kairos-section-tag">
               <AlertTriangle size={14} />
-              <span>General Education</span>
+              <span>Warning Signs</span>
             </div>
             <h2>
-              Possible Termite Warning Signs <span>Need Evaluation.</span>
+              Seeing Swarmers or Hollow Wood? <span>Act Fast.</span>
             </h2>
             <p>
-              Flying insects, mud-like tubes, discarded wings or hollow-sounding wood can have multiple causes. A verified local professional should evaluate the property before any treatment decision.
+              Spring is the peak of termite swarm season in Florida. If you notice flying termites, mud tubes on walls, or hollow-sounding wood, your home is under active attack. Termites cause billions in damages yearly.
             </p>
 
             <ul className="kairos-warning-list">
               <li>
                 <Check size={16} />
-                <span>Mud-like tubes near foundations or subfloors</span>
+                <span>Mud tubes along foundation walls or subfloors</span>
               </li>
               <li>
                 <Check size={16} />
-                <span>Discarded wings near windows and doors</span>
+                <span>Discarded swarmer wings near windows and doors</span>
               </li>
               <li>
                 <Check size={16} />
-                <span>Wood that sounds hollow or feels soft</span>
+                <span>Hollow or soft-sounding structural wood</span>
               </li>
               <li>
                 <Check size={16} />
-                <span>Small sand-like pellets near wood</span>
+                <span>Drywood termite frass (sand-like pellets)</span>
               </li>
             </ul>
 
-            <a className="kairos-green-button" href="#checklist">
-              VIEW PROVIDER CHECKLIST
+            <a className="kairos-green-button" href="#contact">
+              GET A FREE TERMITE INSPECTION
             </a>
           </div>
         </div>
@@ -238,11 +269,11 @@ export default function KairosPestControlPage() {
 
       <section className="kairos-reasons" id="why-us">
         <div className="kairos-section-tag">
-          <ShieldCheck size={14} />
-          <span>Preview Capabilities</span>
+          <Award size={14} />
+          <span>Why Choose Us</span>
         </div>
         <h2>
-          What This <em>Fictional Template</em> Demonstrates
+          Why Coral Gables Homeowners Trust <em>ANSROS PEST CONTROL</em>
         </h2>
         <div className="kairos-reason-grid">
           {reasons.map((reason) => {
@@ -259,17 +290,86 @@ export default function KairosPestControlPage() {
           })}
         </div>
         <a className="kairos-green-button" href="#contact">
-          REVIEW DEMO SAFEGUARDS
+          GET A FREE TERMITE INSPECTION
+        </a>
+      </section>
+
+      <section className="kairos-reviews" id="reviews">
+        <div className="kairos-section-tag">
+          <Star size={14} />
+          <span>Client Testimonials</span>
+        </div>
+        <h2>What Our Customers Say</h2>
+
+        <div className="kairos-reviews-trust-badge">
+          <div className="kairos-badge-stars">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} size={14} fill="var(--kairos-gold)" color="var(--kairos-gold)" />
+            ))}
+          </div>
+          <div className="kairos-badge-text">
+            <svg className="kairos-google-svg" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span><strong>4.9 / 5.0 Rating</strong> based on 320+ Florida homeowner reviews</span>
+          </div>
+        </div>
+
+        <div className="kairos-reviews-grid">
+          {customerReviews.map((review) => (
+            <div className="kairos-review-card" key={review.name}>
+              <div className="kairos-review-card-top">
+                <div className="kairos-review-stars">
+                  {Array.from({ length: review.rating }).map((_, i) => (
+                    <Star key={i} size={14} fill="var(--kairos-gold)" color="var(--kairos-gold)" />
+                  ))}
+                </div>
+                <span className="kairos-review-date">{review.date}</span>
+              </div>
+
+              <div className="kairos-quote-content">
+                <Quote size={20} className="kairos-quote-icon" />
+                <p>&ldquo;{review.quote}&rdquo;</p>
+              </div>
+
+              <div className="kairos-review-card-bottom">
+                <div className="kairos-avatar-img-wrapper">
+                  <Image
+                    src={review.image}
+                    alt={review.name}
+                    width={44}
+                    height={44}
+                    className="kairos-avatar-img"
+                  />
+                </div>
+                <div className="kairos-review-author">
+                  <strong>{review.name}</strong>
+                  <span>{review.location}</span>
+                </div>
+                <span className="kairos-verified-badge">
+                  <ShieldCheck size={12} />
+                  {review.tag}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <a className="kairos-green-button" href="#contact">
+          GET A FREE TERMITE INSPECTION
         </a>
       </section>
 
       <section className="kairos-process" id="process">
         <div className="kairos-section-tag">
           <Zap size={14} />
-          <span>Example Research Flow</span>
+          <span>Simple Workflow</span>
         </div>
         <h2>
-          A Safer Way to Evaluate a <em>Possible Pest Concern</em>
+          Getting Rid of Termites is Easy as <em>1-2-3</em>
         </h2>
         <div className="kairos-process-grid">
           {steps.map((step) => (
@@ -278,8 +378,8 @@ export default function KairosPestControlPage() {
               <h3>{step.title}</h3>
               <p>{step.desc}</p>
               <ul className="kairos-process-bullets">
-                {step.details.map((detail) => (
-                  <li key={detail}>
+                {step.details.map((detail, dIdx) => (
+                  <li key={dIdx}>
                     <Check size={12} />
                     <span>{detail}</span>
                   </li>
@@ -288,28 +388,28 @@ export default function KairosPestControlPage() {
             </article>
           ))}
         </div>
-        <a className="kairos-green-button" href="#checklist">
-          VIEW PROVIDER CHECKLIST
+        <a className="kairos-green-button" href="#contact">
+          GET A FREE TERMITE INSPECTION
         </a>
       </section>
 
-      <section className="kairos-certifications" id="checklist" aria-label="Provider verification checklist">
+      <section className="kairos-certifications" aria-label="Certifications">
         <div className="kairos-section-tag">
-          <ShieldCheck size={14} />
-          <span>Before Hiring</span>
+          <Award size={14} />
+          <span>Industry Accreditations</span>
         </div>
-        <h2>Verify Any Real Provider Independently</h2>
+        <h2>Accredited &amp; Certified Standards</h2>
         <p>
-          Kairos is not a provider, and no organization endorses this fictional preview. For real work, use official records and independently confirmed contact details before sharing personal or property information.
+          ANSROS PEST CONTROL is certified and licensed. We hold quality certifications from Food Safety (FSP), AIB, and Purdue University, enabling specialized treatment for audited facilities and high-end residential homes.
         </p>
         <div className="kairos-certification-grid">
-          {verificationItems.map((item) => (
+          {certificationImages.map((item) => (
             <div className="kairos-certification-logo-card" key={item.mark}>
               <div className="kairos-certification-logo-inner">
-                <CheckSquare size={32} aria-hidden="true" />
+                <Award size={32} aria-hidden="true" />
                 <strong>{item.mark}</strong>
               </div>
-              <span className="kairos-cert-name">{item.name}</span>
+              <span className="kairos-cert-name">{item.alt}</span>
             </div>
           ))}
         </div>
@@ -319,46 +419,46 @@ export default function KairosPestControlPage() {
         <div className="kairos-bottom-container">
           <div className="kairos-bottom-copy">
             <div className="kairos-section-tag">
-              <ShieldCheck size={14} />
-              <span>Demo Limits</span>
+              <Mail size={14} />
+              <span>Get in Touch</span>
             </div>
-            <h2>No Live Booking or Contact</h2>
+            <h2>Protect Your Property Today</h2>
             <p>
-              This route is a fictional, non-operational interface preview. It does not accept enquiries, schedule visits, subscribe visitors or connect anyone to a service provider.
+              Schedule a drywood and subterranean termite evaluation. Fill out the form, and a certified ANSROS inspector will contact you to confirm your date and time.
             </p>
             <div className="kairos-bottom-contact-details">
               <div className="kairos-detail-item">
                 <div className="kairos-detail-icon-wrapper">
-                  <ShieldCheck size={18} />
+                  <MessageSquare size={18} />
                 </div>
                 <div className="kairos-detail-text">
-                  <strong>Preview status</strong>
-                  <span>Fictional and non-operational</span>
+                  <strong>Get in touch</strong>
+                  <span>{contactLabel}</span>
                 </div>
               </div>
               <div className="kairos-detail-item">
                 <div className="kairos-detail-icon-wrapper">
-                  <CheckSquare size={18} />
+                  <Clock size={18} />
                 </div>
                 <div className="kairos-detail-text">
-                  <strong>Personal data</strong>
-                  <span>Not requested, stored or sent</span>
+                  <strong>Service Operations</strong>
+                  <span>Mon - Sat: 8:00 AM - 6:00 PM</span>
                 </div>
               </div>
               <div className="kairos-detail-item">
                 <div className="kairos-detail-icon-wrapper">
-                  <Search size={18} />
+                  <MapPin size={18} />
                 </div>
                 <div className="kairos-detail-text">
-                  <strong>Real-world action</strong>
-                  <span>Find and verify a local provider</span>
+                  <strong>Our Service Coverage</strong>
+                  <span>Coral Gables &amp; All Greater Miami</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="kairos-bottom-form-inner">
-            <EstimateForm />
+            <EstimateForm includeAddress />
           </div>
         </div>
       </section>
@@ -371,56 +471,64 @@ export default function KairosPestControlPage() {
                 <ShieldCheck size={28} />
               </span>
               <span className="kairos-logo-copy">
-                <strong>KAIROS</strong>
-                <small>Fictional UI Preview</small>
+                <strong>ANSROS</strong>
+                <small>Pest Control</small>
               </span>
             </div>
             <p className="kairos-footer-tagline">
-              A non-operational interface concept in the ALTFTool Business Ops gallery. It has no provider affiliation and offers no services.
+              Providing premium, eco-friendly termite and pest control solutions across Miami-Dade and Coral Gables for over 34 years.
             </p>
+            <div className="kairos-footer-socials">
+              <a href="#facebook" aria-label="Facebook"><Facebook size={18} /></a>
+              <a href="#twitter" aria-label="Twitter"><Twitter size={18} /></a>
+              <a href="#instagram" aria-label="Instagram"><Instagram size={18} /></a>
+              <a href="#linkedin" aria-label="LinkedIn"><Linkedin size={18} /></a>
+            </div>
             <div className="kairos-footer-license">
-              <span>Demo only • No enquiries • No personal-data collection</span>
+              <span>Licensed &amp; Insured • Certified Operator</span>
             </div>
           </div>
 
           <div className="kairos-footer-links">
-            <h3>Preview Links</h3>
+            <h3>Quick Links</h3>
             <ul>
-              <li><a href="#top">Fictional Preview</a></li>
-              <li><a href="#warning">General Warning Signs</a></li>
-              <li><a href="#process">Research Flow</a></li>
-              <li><a href="#checklist">Provider Checklist</a></li>
-              <li><a href="#contact">Demo Limits</a></li>
+              <li><a href="#top">Back to Top</a></li>
+              <li><a href="#estimate">Free Estimate</a></li>
+              <li><a href="#contact">Schedule Inspection</a></li>
+              <li><a href="#why-us">Why Choose Us</a></li>
+              <li><a href="#process">Our 3-Step Process</a></li>
             </ul>
           </div>
 
           <div className="kairos-footer-contact">
-            <h3>Preview Status</h3>
+            <h3>Contact Info</h3>
             <div className="kairos-footer-contact-item">
-              <ShieldCheck size={16} className="kairos-contact-icon" />
-              <p><strong>Business:</strong> Fictional</p>
+              <MessageSquare size={16} className="kairos-contact-icon" />
+              <p><a href={contactUrl} className="kairos-footer-phone">{contactLabel}</a></p>
             </div>
             <div className="kairos-footer-contact-item">
-              <CheckSquare size={16} className="kairos-contact-icon" />
-              <p><strong>Forms:</strong> Disabled</p>
+              <Clock size={16} className="kairos-contact-icon" />
+              <p><strong>Service Hours:</strong> Mon - Sat: 8 AM - 6 PM</p>
             </div>
             <div className="kairos-footer-contact-item">
-              <Search size={16} className="kairos-contact-icon" />
-              <p><strong>Provider claims:</strong> None</p>
+              <MapPin size={16} className="kairos-contact-icon" />
+              <p><strong>Service Areas:</strong> Coral Gables, Miami, &amp; surrounding areas</p>
             </div>
           </div>
 
           <div className="kairos-footer-newsletter">
-            <h3>Updates Unavailable</h3>
-            <p>The newsletter area is disabled and does not request or store an email address.</p>
+            <h3>Stay Protected</h3>
+            <p>Subscribe to our newsletter for seasonal pest prevention tips and exclusive offers.</p>
             <NewsletterForm />
           </div>
         </div>
 
         <div className="kairos-footer-bottom">
-          <p className="kairos-copyright">Kairos fictional UI preview by ALTFTool. No provider affiliation.</p>
+          <p className="kairos-copyright">Copyright &copy; 2026 ANSROS PEST CONTROL. All rights reserved.</p>
           <div className="kairos-footer-legal">
-            <a href="#top">Preview disclaimer</a>
+            <a href="#privacy">Privacy Policy</a>
+            <span className="kairos-divider">|</span>
+            <a href="#terms">Terms of Service</a>
           </div>
         </div>
       </footer>

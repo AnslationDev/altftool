@@ -734,7 +734,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Developer"
     ],
-    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 object categories with confidence scoring and visualization."
+    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 COCO object categories with confidence scoring and visualization."
   },
   {
     "slug": "ai-passport-photo-maker",
@@ -2040,7 +2040,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Lifestyle"
     ],
-    "description": "Blend two parents' names into new baby name ideas using eight syllable-splicing rules, each result scored for pronounceability and balance."
+    "description": "Blend two parents' names into new baby name ideas using ten syllable-splicing rules, each result scored for pronounceability and balance."
   },
   {
     "slug": "baby-name-shortlist-voting-board",
@@ -2462,7 +2462,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), memory storage, signs, and calculation history."
+    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), signs, and calculation history."
   },
   {
     "slug": "basketball-calorie-burn-calculator",
@@ -2674,7 +2674,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Education & Science"
     ],
-    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and usage notes."
+    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and English equivalents."
   },
   {
     "slug": "bengali-word-of-the-day-builder",
@@ -2923,7 +2923,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Text & Writing"
     ],
-    "description": "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes."
+    "description": "Create a personalised birthday poem draft from a name, age, relationship, tone and a shared memory."
   },
   {
     "slug": "birthday-wishes-bengali",
@@ -3253,7 +3253,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Health & Fitness"
     ],
-    "description": "A practical fitness and health tool for managing body fat percentage workflows efficiently."
+    "description": "Estimate body fat with the Navy tape, BMI regression, or 3-site skinfold caliper method, then see the fat/lean mass split and a goal-weight planner."
   },
   {
     "slug": "body-fat-percentage-calculator",
@@ -3910,7 +3910,7 @@ export const TOOL_CATALOG = [
       "Marketing & Social",
       "Business"
     ],
-    "description": "Generate professional, creative business names with domain availability checks and logo style suggestions for your brand."
+    "description": "Generate professional, creative business names for your brand, startup, or venture, with industry-aware word banks and four naming styles."
   },
   {
     "slug": "business-name-numerology-checker",
@@ -4078,7 +4078,7 @@ export const TOOL_CATALOG = [
       "Education & Science",
       "Calculators"
     ],
-    "description": "Enter calibration points to compute the linear fit, residuals, and confidence bands, then derive the LOD and LOQ."
+    "description": "Enter calibration points to compute the linear fit, residuals, and R², then derive the LOD and LOQ."
   },
   {
     "slug": "calicut-university-cgpa-converter",
@@ -6056,7 +6056,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Health & Fitness"
     ],
-    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using validated clinical risk calculators."
+    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using simplified approximations of published risk equations, for educational purposes only."
   },
   {
     "slug": "corporate-tool",
@@ -6106,7 +6106,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post."
+    "description": "Estimate monthly AI content cost from your tool subscription plus editor time per post, and see the per-post price."
   },
   {
     "slug": "cost-per-content-calculator",
@@ -6734,7 +6734,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Finance Calculators"
     ],
-    "description": "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate."
+    "description": "Compare a reinvestment fixed deposit with a monthly, quarterly, half-yearly or annual payout deposit, including the break-even reinvestment rate."
   },
   {
     "slug": "cups-to-grams",
@@ -7296,7 +7296,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Productivity"
     ],
-    "description": "Compare Snowball vs Avalanche debt payoff methods. Find the fastest and most cost-effective way to become debt-free."
+    "description": "See how long it takes to pay off a single debt balance and how much interest you'll pay, based on your minimum and extra monthly payments."
   },
   {
     "slug": "debt-snowball-avalanche-planner",
@@ -7704,7 +7704,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Sanity-check the bias in your device's accelerometer, gyroscope and magnetometer."
+    "description": "Sanity-check the bias in your device's accelerometer and gyroscope."
   },
   {
     "slug": "diabetes-dashboard",
@@ -9719,7 +9719,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Finance Calculators"
     ],
-    "description": "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time."
+    "description": "Work out e-way bill validity days and the exact expiry date from transport distance, cargo type and generation date."
   },
   {
     "slug": "ews-certificate-eligibility-checker",
@@ -12373,7 +12373,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Finance Calculators"
     ],
-    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in the fewest possible transfers."
+    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in as few transfers as possible (at most one fewer than the number of travel"
   },
   {
     "slug": "group-veto-picker",
@@ -14476,7 +14476,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Finance Calculators"
     ],
-    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a printable price ladder."
+    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a price ladder to memorise."
   },
   {
     "slug": "inr-npr-mental-math-cheat-sheet",
@@ -15501,7 +15501,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug."
+    "description": "Convert any phrase to kebab-case — plus snake_case and dot.case."
   },
   {
     "slug": "kegel-exercise-timer",
@@ -16711,7 +16711,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Education & Science"
     ],
-    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Tamil, Malayalam, Telugu and Bengali, with the route, era and how settled each etymology is."
+    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Urdu, Tamil, Malayalam, Telugu, Marathi, Bengali and Odia, with the route, era and how settled each ety"
   },
   {
     "slug": "local-ai-data-egress-monitor",
@@ -16839,7 +16839,7 @@ export const TOOL_CATALOG = [
       "AI Tools",
       "Developer"
     ],
-    "description": "Compare two logos using AI-powered visual analysis. Analyze shape, color, layout, and typography similarity entirely in your browser."
+    "description": "Compare two logos using algorithm-powered visual analysis. Analyze shape, color, layout, and typography similarity entirely in your browser."
   },
   {
     "slug": "logo-slogan-generator-tool",
@@ -20643,7 +20643,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "Diagram how personal data flows from collection through storage and processors to deletion."
+    "description": "Build a structured table of how personal data flows from collection through storage and processors to deletion."
   },
   {
     "slug": "personal-incident-log",
@@ -20979,7 +20979,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Design & Color"
     ],
-    "description": "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks."
+    "description": "Calculate standard, square, long and idea pin canvas sizes with a scale multiplier, safe-area CSS, feed-truncation checks and a crop estimate from your source i"
   },
   {
     "slug": "pirate-name-generator",
@@ -24175,7 +24175,7 @@ export const TOOL_CATALOG = [
       "Education & Science",
       "Games"
     ],
-    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an interactive 3D cube visualization."
+    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an animated cube-net visualization."
   },
   {
     "slug": "rubric-prompt-builder",
@@ -25898,7 +25898,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Slow, loop and segment speech for practice while preserving the original pitch."
+    "description": "Slow down and loop a full audio file for practice while preserving the original pitch."
   },
   {
     "slug": "slug-generator",
@@ -26659,7 +26659,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Converters"
     ],
-    "description": "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tags and encoding fixes."
+    "description": "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tag conversion and BOM/line-ending cleanup."
   },
   {
     "slug": "ssc-application-document-checklist",
@@ -26715,7 +26715,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Real-time SSL certificate lookup, HTTPS validation, TLS detection, expiry monitoring, certificate chain viewing, and exportable security reports."
+    "description": "Paste a PEM certificate or chain to decode its X.509 fields, check expiry and hostname matching, and validate chain order — entirely in your browser."
   },
   {
     "slug": "stair-climbing-tracker",
@@ -28453,7 +28453,7 @@ export const TOOL_CATALOG = [
     "slug": "text-summarizer",
     "name": "Text Summarizer",
     "categories": [
-      "AI Tools"
+      "Text & Writing"
     ],
     "description": "Summarize long text instantly into clear, concise key points."
   },
@@ -28464,7 +28464,7 @@ export const TOOL_CATALOG = [
       "Fun",
       "Text & Writing"
     ],
-    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing, outline and drop shadow."
+    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing and drop shadow."
   },
   {
     "slug": "text-to-base64",
@@ -28481,7 +28481,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Converters"
     ],
-    "description": "Convert text to binary and binary back to text instantly. Each character is converted to its 8-bit binary representation."
+    "description": "Convert text to binary and binary back to text instantly. ASCII/Latin-1 characters map to 8 bits each; higher code points use more bits."
   },
   {
     "slug": "text-to-handwriting",
@@ -29059,7 +29059,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Education & Science"
     ],
-    "description": "Turn a paragraph subject and controlling idea into six topic sentence patterns, then score your own sentence against seven checks."
+    "description": "Turn a paragraph subject and controlling idea into several topic sentence patterns (more when you add a reason or a concession), then score your own sentence ag"
   },
   {
     "slug": "topup-vs-super-topup-simulator",
@@ -29720,7 +29720,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Text & Writing"
     ],
-    "description": "Create a two-line shayari draft from mood, theme, language mix, rhyme and audience notes."
+    "description": "Create a two-line shayari draft by choosing a mood/theme, a Hindi-English language mix, and an optional name to dedicate it to."
   },
   {
     "slug": "two-round-attempt-planner",
@@ -30759,7 +30759,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Export selected video frames as a PNG sequence or a single sprite sheet."
+    "description": "Export selected video frames as a single tiled sprite sheet PNG."
   },
   {
     "slug": "video-lecture-speed-planner",
@@ -30959,7 +30959,7 @@ export const TOOL_CATALOG = [
       "AI Tools",
       "Design & Color"
     ],
-    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, customize text overlays, and download"
+    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, add an optional headline woven into t"
   },
   {
     "slug": "visual-working-memory",
@@ -31173,7 +31173,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Converters"
     ],
-    "description": "Convert WebVTT captions back to SubRip: strip cue settings, regions and styling tags, renumber cues and fix timing drift."
+    "description": "Convert WebVTT captions back to SubRip: strip cue settings and regions, renumber cues, optionally flatten styling tags, and fix timing drift."
   },
   {
     "slug": "vtu-attendance-calculator",

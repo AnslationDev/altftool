@@ -16,7 +16,7 @@ export default function Features() {
       <FeatureCard
         icon={<ShieldCheck className="w-6 h-6 text-blue-400" />}
         title="Error Detection"
-        desc="Detects missing brackets and invalid syntax instantly, preventing you from deploying broken code."
+        desc="Flags invalid syntax the moment Prettier can't parse it, with the parser's own error message shown alongside the fallback output so you know it needs a second look before you ship it."
       />
       <FeatureCard
         icon={<Download className="w-6 h-6 text-amber-400" />}

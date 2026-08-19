@@ -32,6 +32,7 @@ export default function ToolHome() {
   const [org, setOrg] = useState(DEFAULTS.org);
   const [engine, setEngine] = useState(DEFAULTS.engine);
   const [copiedId, setCopiedId] = useState("");
+  const [copyError, setCopyError] = useState("");
 
   const result = useMemo(() => buildQueries({ name, handle, city, org }), [name, handle, city, org]);
   const ok = !result.error;
@@ -41,9 +42,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
+      setCopyError("");
       setTimeout(() => setCopiedId(""), 1500);
     } catch {
       setCopiedId("");
+      setCopyError(id);
     }
   };
 
@@ -54,6 +57,7 @@ export default function ToolHome() {
     setOrg(DEFAULTS.org);
     setEngine(DEFAULTS.engine);
     setCopiedId("");
+    setCopyError("");
   };
 
   const allText = ok ? toPlainText(result) : "";
@@ -163,7 +167,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -182,7 +186,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={() => copyText("all", allText)}
-              aria-label="Copy every built query"
+              aria-label={copiedId === "all" ? "Copied every built query" : "Copy every built query"}
               className={GHOST_BTN}
             >
               {copiedId === "all" ? (
@@ -198,6 +202,12 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+
+        {copyError === "all" ? (
+          <p role="alert" className="mt-3 text-xs font-medium text-[var(--danger)]">
+            Couldn&rsquo;t copy automatically &mdash; copy the text manually.
+          </p>
+        ) : null}
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
@@ -273,7 +283,11 @@ export default function ToolHome() {
                         <button
                           type="button"
                           onClick={() => copyText(entry.id, entry.query)}
-                          aria-label={`Copy the query for ${entry.title}`}
+                          aria-label={
+                            copiedId === entry.id
+                              ? `Copied the query for ${entry.title}`
+                              : `Copy the query for ${entry.title}`
+                          }
                           className={SMALL_BTN}
                         >
                           {copiedId === entry.id ? (
@@ -293,6 +307,11 @@ export default function ToolHome() {
                           Run it
                         </a>
                       </div>
+                      {copyError === entry.id ? (
+                        <p role="alert" className="mt-2 text-xs font-medium text-[var(--danger)]">
+                          Couldn&rsquo;t copy automatically &mdash; copy the text manually.
+                        </p>
+                      ) : null}
                     </li>
                   ))}
                 </ul>

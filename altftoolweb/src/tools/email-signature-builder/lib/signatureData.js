@@ -110,7 +110,7 @@ export const DEFAULT_STATE = {
     hours: "",
     tagline: "",
   },
-  photo: { src: "", size: 84, shape: "circle", position: "left" },
+  photo: { src: "", size: 84, shape: "circle" },
   logo: { src: "", url: "", width: 110 },
   socials: {},
   cta: { label: "Visit our website", url: "", bg: "#0F766E", color: "#FFFFFF", radius: 6 },

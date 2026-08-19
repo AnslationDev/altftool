@@ -17,7 +17,7 @@ const seo = {
   ],
   benefits: [
     ["Timed to your hormones", "Checks land after bleeding stops, when cyclical swelling and tenderness have settled."],
-    ["Twelve months at once", "A full year of dates in one list, ready to copy into a calendar."],
+    ["Twelve dates at once", "Twelve upcoming checks in one list, spaced to your own cycle and ready to copy into a calendar."],
     ["Routine you can repeat", "Five fixed steps, done the same way each month, so a change stands out."],
   ],
   faqs: [

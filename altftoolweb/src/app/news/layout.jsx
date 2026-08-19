@@ -32,11 +32,12 @@ export default function NewsLayout({ children }) {
   const isNewsHome = pathname === "/news";
   const isArticle = isArticlePage(pathname);
   const isFullWidth = isFullWidthPage(pathname);
+  const hasRails = !isNewsHome && !isArticle && !isFullWidth;
 
   return (
-    <div className="news-page w-full px-5 md:px-8 mb-[10px]">
-      <div className={`grid w-full grid-cols-1 gap-8 ${!isNewsHome && !isArticle && !isFullWidth ? "lg:grid-cols-[260px_1fr_300px] xl:grid-cols-[260px_1fr_300px]" : "mx-auto max-w-[1500px]"}`}>
-        {!isNewsHome && !isArticle && !isFullWidth && (
+    <div className="news-page w-full mb-[10px]">
+      <div className={`section section-wide grid grid-cols-1 gap-8 ${hasRails ? "lg:grid-cols-[260px_1fr_300px] xl:grid-cols-[260px_1fr_300px]" : ""}`}>
+        {hasRails && (
           <aside className="hidden lg:block">
             <div className="sticky top-6">
               <Sidebar />
@@ -50,7 +51,7 @@ export default function NewsLayout({ children }) {
           </div>
         </main>
 
-        {!isNewsHome && !isArticle && !isFullWidth && (
+        {hasRails && (
           <aside className="hidden xl:block">
             <div className="sticky top-6">
               <Ads />

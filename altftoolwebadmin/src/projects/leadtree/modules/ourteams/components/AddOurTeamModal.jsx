@@ -20,6 +20,7 @@ import {
 import React, { useState, useRef } from "react";
 import {
   createMember,
+  updateMember,
   uploadMemberProfileImage,
 } from "../our-team-services/OurTeamService";
 import { emitAlert } from "@/lib/alertBus";
@@ -101,8 +102,9 @@ function FormInput({ icon: Icon, error, iconColor, ...props }) {
 }
 
 /* ─ Main component ─ */
-const AddOurTeamModal = ({ onClose, onSubmit }) => {
+const AddOurTeamModal = ({ onClose, existingMember, onSaved }) => {
   const fileInputRef = useRef(null);
+  const isEditMode = !!existingMember;
 
   const [isOpen, setIsOpen] = useState(true);
   const handleClose = () => {
@@ -110,13 +112,18 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
     onClose?.();
   };
 
-  const [fields, setFields] = useState({ name: "", role: "", description: "" });
+  const [fields, setFields] = useState({
+    name: existingMember?.name || "",
+    role: existingMember?.role || "",
+    description: existingMember?.description || "",
+  });
   const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(existingMember?.profileImageUrl || null);
+  const [existingImageUrl, setExistingImageUrl] = useState(existingMember?.profileImageUrl || null);
   const [imageError, setImageError] = useState("");
   const [dragOver, setDragOver] = useState(false);
 
-  const [socialLinks, setSocialLinks] = useState([]);
+  const [socialLinks, setSocialLinks] = useState(existingMember?.socialLinks || []);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -144,9 +151,10 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
   };
 
   const removeImage = () => {
-    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    if (imageFile && imagePreview) URL.revokeObjectURL(imagePreview);
     setImageFile(null);
     setImagePreview(null);
+    setExistingImageUrl(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -189,7 +197,7 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
   /* ── Submit  */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errs = validate(fields, imageFile, null, socialLinks);
+    const errs = validate(fields, imageFile, existingImageUrl, socialLinks);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       return;
@@ -200,40 +208,57 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
 
     try {
 
-      let profileImageUrl = "";
-
-      const tempId = crypto.randomUUID();
+      // Use the real member id for edits so the image lives at the same
+      // storage path; generate a fresh id for brand-new members.
+      const memberId = existingMember?.id || crypto.randomUUID();
+      let profileImageUrl = existingImageUrl || "";
 
       if (imageFile) {
         profileImageUrl = await uploadMemberProfileImage({
           file: imageFile,
-          memberId: tempId,
+          memberId,
           onProgress: setUploadProgress,
           onTaskReady: setUploadTask,
         });
       }
 
-      // 2. Save member to Firestore
-      await createMember({
-        name: fields.name,
-        role: fields.role,
-        description: fields.description,
-        profileImageUrl,
-        socialLinks,
-        status: "active",
-      });
+      let saved;
+      if (isEditMode) {
+        // 2. Update existing member in Firestore
+        await updateMember(existingMember.id, {
+          name: fields.name,
+          role: fields.role,
+          description: fields.description,
+          profileImageUrl,
+          socialLinks,
+        });
+        saved = { ...existingMember, ...fields, profileImageUrl, socialLinks };
+      } else {
+        // 2. Save new member to Firestore
+        const refDoc = await createMember({
+          name: fields.name,
+          role: fields.role,
+          description: fields.description,
+          profileImageUrl,
+          socialLinks,
+          status: "active",
+        });
+        saved = { id: refDoc.id, ...fields, profileImageUrl, socialLinks, status: "active" };
+      }
 
-      // 3. Notify parent if needed
-      await onSubmit?.({ ...fields, profileImageUrl, socialLinks });
+      // 3. Notify parent so it can update its list without a reload
+      onSaved?.(saved);
 
       emitAlert({
         type: "success",
-        message: "Team member created successfully!",
+        message: isEditMode
+          ? "Team member updated successfully!"
+          : "Team member created successfully!",
       });
       setSuccess(true);
       setTimeout(() => handleClose(), 1200);
     } catch (err) {
-      console.error("Create member error:", err);
+      console.error("Save member error:", err);
       emitAlert({
         type: "error",
         message: "Something went wrong. Please try again.",
@@ -267,10 +292,12 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
         <div className="sticky top-0 z-10 bg-white border-b border-gray-100 px-7 py-4 flex items-center justify-between rounded-t-2xl">
           <div>
             <h2 className="text-[17px] font-bold text-gray-900 tracking-tight">
-              Add Team Member
+              {isEditMode ? "Edit Team Member" : "Add Team Member"}
             </h2>
             <p className="text-xs text-gray-400 mt-0.5">
-              Fill in the details below to create a new member profile.
+              {isEditMode
+                ? "Update this member's profile details below."
+                : "Fill in the details below to create a new member profile."}
             </p>
           </div>
           <button
@@ -520,7 +547,7 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
             {success && (
               <div className="flex items-center gap-1.5 text-sm text-green-600 font-medium">
                 <CheckCircle2 size={15} />
-                Member created!
+                {isEditMode ? "Member updated!" : "Member created!"}
               </div>
             )}
             {!success && <div />}
@@ -552,11 +579,11 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
                   </>
                 ) : success ? (
                   <>
-                    <CheckCircle2 size={15} /> Created!
+                    <CheckCircle2 size={15} /> {isEditMode ? "Saved!" : "Created!"}
                   </>
                 ) : (
                   <>
-                    <PlusCircle size={15} /> Create Member
+                    <PlusCircle size={15} /> {isEditMode ? "Save Changes" : "Create Member"}
                   </>
                 )}
               </button>

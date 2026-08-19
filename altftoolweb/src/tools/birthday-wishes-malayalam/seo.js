@@ -8,7 +8,7 @@ const seo = {
     "Tick 'Romanised' and 'English meaning' to show them under each message, check the 'Pronoun used', 'Opening line', 'Sign-off', 'Wordings available' and 'SMS length' rows, then press 'Copy all'.",
   ],
   intro:
-    "Malayalam Birthday Wishes Generator writes a complete Malayalam birthday message — opening line, wish and sign-off — from the relationship you pick and the tone you want. Malayalam separates നീ from നിങ്ങൾ, and adds താങ്കൾ for formal writing; the pronoun changes the possessive (നിന്റെ, നിങ്ങളുടെ, താങ്കളുടെ) and the dative (നിനക്ക്, നിങ്ങൾക്ക്, താങ്കൾക്ക്), so each wording is stored twice rather than patched, and the register is set automatically from the relationship. Wordings written for a parent, a partner, a child, a teacher or a manager are only offered to that relationship, so two people never get the same sentence with a different name pasted in. Every message comes with romanised Malayalam, an English meaning, and the number of SMS parts it needs.",
+    "Malayalam Birthday Wishes Generator writes a complete Malayalam birthday message — opening line, wish and sign-off — from the relationship you pick and the tone you want. Malayalam separates നീ from നിങ്ങൾ, and adds താങ്കൾ for formal writing; the pronoun changes the possessive (നിന്റെ, നിങ്ങളുടെ, താങ്കളുടെ) and the dative (നിനക്ക്, നിങ്ങൾക്ക്, താങ്കൾക്ക്), so each wording is stored twice rather than patched, and the register is set automatically from the relationship. Wordings written specifically for a parent, a partner, a child, a teacher or a manager are only offered to that relationship; the remaining general wordings are shared across relationships in the same register, so two people may see the same sentence with a different name in the salutation. Every message comes with romanised Malayalam, an English meaning, and the number of SMS parts it needs.",
   useCases: [
     "Send a manager, a teacher or an older relative a wish in the നിങ്ങൾ or താങ്കൾ form without accidentally sounding over-familiar.",
     "Write something light for a close friend or a younger sibling in the നീ form that still reads like natural Malayalam.",
@@ -25,7 +25,7 @@ const seo = {
     ],
     [
       "Wordings that match the relationship",
-      "A message for a parent, a partner, a child or a manager is written for that person, not reused from a single template.",
+      "A message for a parent, a partner, a child or a manager is written for that person when the wording is tagged for that relationship; about half the library is shared across relationships instead.",
     ],
   ],
   faqs: [

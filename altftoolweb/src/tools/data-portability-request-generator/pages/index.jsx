@@ -81,6 +81,9 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+  // Mirrors lib.js's gdprFamily check: Article 20(2) direct-transfer has no equivalent
+  // under CCPA or India's DPDP Act, so the option only makes sense for gdpr/uk-gdpr.
+  const isGdprFamily = regime === "gdpr" || regime === "uk-gdpr";
 
   const toggleCategory = (id) => {
     setCategories((current) =>
@@ -259,16 +262,18 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <label className="mt-4 flex min-h-11 cursor-pointer items-start gap-3 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm" htmlFor="port-direct">
-          <input
-            id="port-direct"
-            type="checkbox"
-            className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--primary)]"
-            checked={directTransfer}
-            onChange={(event) => setDirectTransfer(event.target.checked)}
-          />
-          <span>Ask for a direct controller-to-controller transfer under Article 20(2)</span>
-        </label>
+        {isGdprFamily ? (
+          <label className="mt-4 flex min-h-11 cursor-pointer items-start gap-3 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm" htmlFor="port-direct">
+            <input
+              id="port-direct"
+              type="checkbox"
+              className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--primary)]"
+              checked={directTransfer}
+              onChange={(event) => setDirectTransfer(event.target.checked)}
+            />
+            <span>Ask for a direct controller-to-controller transfer under Article 20(2)</span>
+          </label>
+        ) : null}
 
         <fieldset className="mt-5">
           <legend className="text-sm font-semibold">Categories you want exported</legend>
@@ -305,7 +310,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               They must reply by
             </p>

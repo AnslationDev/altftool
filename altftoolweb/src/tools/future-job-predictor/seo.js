@@ -8,7 +8,7 @@ const seo = {
     "Open the \"Fit Analytics\" tab for the five ranked careers with Salary range, Future Demand, Automation Risk and Est. Prep Time, or \"Study Roadmap\" for the missing skills and certification sequence.",
   ],
   intro:
-    "Future Job Predictor scores you against five forward-looking careers — AI & Prompt Engineer, Climate Restoration Architect, Cybersecurity Analyst Pro, UI & UX Designer and Space Operations Engineer — by rating ten skills on 0-100 sliders and picking your interests, personality traits and work preferences. Each career starts from a base match of 70 and moves by 0.15 points for every point your rating on its four required skills sits above or below 50, with a further +5 for a Remote or High Salary preference match, capped at 100. The ranked result comes with a skill-fit radar, a salary comparison chart, a four-stage roadmap and each role's automation-risk and demand figures.",
+    "Future Job Predictor scores you against five forward-looking careers — AI & Prompt Engineer, Climate Restoration Architect, Cybersecurity Analyst Pro, UI & UX Designer and Space Operations Engineer — by rating eleven skills on 0-100 sliders and picking your interests, personality traits and work preferences. Each career starts from a base match of 70 and moves by 0.15 points for every point your rating on its four required skills sits above or below 50, with a further +5 for a Remote or High Salary preference match and +1 for each selected interest that matches the career, capped at 100. The ranked result comes with a skill-fit radar, a salary comparison chart, a four-stage roadmap and each role's automation-risk and demand figures.",
   useCases: [
     "A final-year student deciding between a cybersecurity certificate and a design portfolio wants to see which of the two scores higher against their own skill ratings.",
     "Someone mid-career weighing a switch checks the automation-risk numbers side by side — 5 for Space Operations Engineer against 25 for UI & UX Designer — before committing to retraining.",
@@ -22,7 +22,7 @@ const seo = {
   faqs: [
     [
       "How is the career match score calculated?",
-      "Every career starts at 70. For each of its four required skills, the score moves by 0.15 for every point your slider sits above or below 50 — so rating all four at 100 adds 30 and takes the match to the 100 cap — and preferences for Remote or High Salary can add 5 each where the career qualifies.",
+      "Every career starts at 70. For each of its four required skills, the score moves by 0.15 for every point your slider sits above or below 50 — so rating all four at 100 adds 30 and takes the match to the 100 cap — and preferences for Remote or High Salary can add 5 each where the career qualifies. Each selected interest that matches the career's name, outlook, education path or required skills adds a further +1.",
     ],
     [
       "How long does it say each career takes to enter?",

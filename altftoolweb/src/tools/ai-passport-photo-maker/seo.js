@@ -21,7 +21,10 @@ const seo = {
     ],
     [
       "What resolution does a passport photo need?",
-      "300 dpi is the print standard, so a 35 × 45 mm photo needs at least 413 × 531 pixels and a 51 × 51 mm photo at least 603 × 603 pixels. Because cropping throws pixels away, start from an original of 1000 pixels or more on the short edge.",
+      // Sync note: these are minimum SOURCE sizes before cropping, from checkResolution()'s
+      // Math.ceil(mm -> px at 300 dpi) in lib.js — a touch larger than the 602 x 602 px final
+      // exported file size quoted above, which comes from computeGeometry()'s Math.round.
+      "300 dpi is the print standard, so before cropping, your original photo should be at least 414 × 532 pixels for a 35 × 45 mm photo, and at least 603 × 603 pixels for a 51 × 51 mm photo — both slightly bigger than the final exported file (602 × 602 px for the 51 × 51 mm size), since the crop rounds off a couple of pixels. Because cropping throws pixels away, start from an original of 1000 pixels or more on the short edge.",
     ],
     [
       "How many passport photos fit on a 4 × 6 inch sheet?",

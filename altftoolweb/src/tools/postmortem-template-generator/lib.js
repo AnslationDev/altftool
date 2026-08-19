@@ -21,6 +21,11 @@ export const OPTIONAL_SECTIONS = [
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
+/** Escape characters that would break a Markdown table cell. */
+function escapeCell(value) {
+  return String(value ?? "").replace(/\|/g, "\\|");
+}
+
 /** Non-negative integer minutes → "2h 15m" style label. */
 export function formatMinutes(totalMinutes) {
   if (!Number.isFinite(totalMinutes) || totalMinutes < 0) return null;
@@ -99,9 +104,9 @@ export function buildPostmortem({
     "| Field | Value |",
     "| --- | --- |",
     `| Date of incident | ${incidentDate} |`,
-    `| Severity | ${cleanSeverity} |`,
+    `| Severity | ${escapeCell(cleanSeverity)} |`,
     `| Impact duration | ${durationLabel} (${Math.round(duration)} minutes) |`,
-    `| Incident commander | ${cleanCommander} |`,
+    `| Incident commander | ${escapeCell(cleanCommander)} |`,
     "| Status | Draft |",
     "",
     "## Summary",
@@ -191,6 +196,10 @@ export function buildPostmortem({
   }
 
   const markdown = parts.join("\n");
-  const wordCount = markdown.split(/\s+/).filter(Boolean).length;
+  // Exclude bare markdown table-syntax tokens ("|", "---", ":--", etc.) so the
+  // displayed count approximates actual prose length rather than table markup.
+  const wordCount = markdown
+    .split(/\s+/)
+    .filter((token) => token !== "" && !/^[|:-]+$/.test(token)).length;
   return { markdown, wordCount };
 }

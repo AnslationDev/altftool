@@ -238,14 +238,16 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Republic Day number
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {hasError ? DASH : result.ordinalLabel}
-            </p>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {hasError
-                ? "Fix the options above to generate messages."
-                : `26 January ${result.year} · ${messages.length} message${messages.length === 1 ? "" : "s"} ready`}
-            </p>
+            <div aria-live="polite">
+              <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+                {hasError ? DASH : result.ordinalLabel}
+              </p>
+              <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+                {hasError
+                  ? "Fix the options above to generate messages."
+                  : `26 January ${result.year} · ${messages.length} message${messages.length === 1 ? "" : "s"} ready`}
+              </p>
+            </div>
           </div>
           <button
             type="button"

@@ -5,7 +5,12 @@ import { Check, Copy, RotateCcw, StarOff } from "lucide-react";
 import { PLATFORMS, REGIONS, TARGETS, buildRemovalPlan } from "../lib";
 
 const DASH = "—";
-const FALLBACK_DATE = "2026-01-01";
+
+function todayIso() {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -25,9 +30,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const now = new Date();
-    const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-    setStartedOn(local.toISOString().slice(0, 10));
+    setStartedOn(todayIso());
   }, []);
 
   const result = useMemo(
@@ -36,7 +39,7 @@ export default function ToolHome() {
         target,
         platform,
         region,
-        startedOn: startedOn || FALLBACK_DATE,
+        startedOn,
       }),
     [target, platform, region, startedOn],
   );
@@ -76,6 +79,7 @@ export default function ToolHome() {
     setTarget(DEFAULTS.target);
     setPlatform(DEFAULTS.platform);
     setRegion(DEFAULTS.region);
+    setStartedOn(todayIso());
     setCopied(false);
   };
 
@@ -185,7 +189,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -241,7 +249,11 @@ export default function ToolHome() {
       </section>
 
       {ok && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">Your plan</h2>
           <ol className="mt-3 space-y-3">
             {result.steps.map((step, index) => (

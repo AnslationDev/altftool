@@ -260,8 +260,9 @@ export function planBeachDay(input) {
 
   if (slots.length === 0) return { error: "No daylight slots fall inside that window." };
 
-  // Best contiguous run of the length you asked for.
-  const slotsNeeded = Math.max(1, Math.round(visitMinutes / SLOT_MINUTES));
+  // Best contiguous run of the length you asked for. Round up so the run always
+  // covers at least the requested visit length (rounding to nearest could shrink it).
+  const slotsNeeded = Math.max(1, Math.ceil(visitMinutes / SLOT_MINUTES));
   let best = null;
   for (let i = 0; i + slotsNeeded <= slots.length; i += 1) {
     const run = slots.slice(i, i + slotsNeeded);
@@ -269,6 +270,11 @@ export function planBeachDay(input) {
     if (!best || total > best.total) {
       best = { total, average: total / slotsNeeded, start: run[0].start, end: run[run.length - 1].end, run };
     }
+  }
+  if (!best) {
+    return {
+      error: "That visit length does not fit the available window at half-hour resolution. Shorten the visit or widen the window.",
+    };
   }
 
   const uvWindow = { from: solarNoon - 180, to: solarNoon + 180 };
@@ -314,7 +320,7 @@ export function planBeachDay(input) {
     windowEnd,
     slots,
     best,
-    bestBand: best ? bandForScore(best.average) : null,
+    bestBand: bandForScore(Math.round(best.average)),
     bestSlot,
     worstSlot,
     tideEventsToday: dayEvents,

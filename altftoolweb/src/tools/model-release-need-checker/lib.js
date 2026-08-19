@@ -254,7 +254,7 @@ export function checkReleaseNeed(input = {}) {
     notes.push(location.reason);
   }
 
-  if (propertyFeatured && location.propertyRisk) {
+  if (propertyFeatured) {
     raise(
       usage.commercial ? LEVEL_REQUIRED : LEVEL_RECOMMENDED,
       "Recognisable private property is the subject of the frame, which is what a property release covers.",

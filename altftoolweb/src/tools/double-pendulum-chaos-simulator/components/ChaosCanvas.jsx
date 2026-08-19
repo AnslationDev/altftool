@@ -305,10 +305,10 @@ export default function ChaosCanvas({ params, initialAngles, paused, restartKey,
       style={{
         height: '100%',
         background: `
-          radial-gradient(circle at 50% 0%, var(--primary)/8 0%, transparent 60%),
+          radial-gradient(circle at 50% 0%, color-mix(in oklab, var(--primary) 8%, transparent) 0%, transparent 60%),
           linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
           linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          var(--card)/70
+          color-mix(in oklab, var(--card) 70%, transparent)
         `,
         backgroundSize: '100% 100%, 25px 25px, 25px 25px, auto',
       }}

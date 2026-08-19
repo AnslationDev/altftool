@@ -105,7 +105,7 @@ export function checkPillionLoad({
     return { error: `Luggage entries must each be under ${MAX_LUGGAGE_KG} kg.` };
   }
   const kerbShare =
-    isNum(frontKerbShare) && frontKerbShare > 0.2 && frontKerbShare < 0.8
+    isNum(frontKerbShare) && frontKerbShare >= 0.2 && frontKerbShare <= 0.8
       ? frontKerbShare
       : DEFAULT_FRONT_KERB_SHARE;
 

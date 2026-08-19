@@ -225,6 +225,12 @@ export default function ToolHome() {
               />
               Carve out a pre-sleep milk, curd or casein feeding
             </label>
+            {ok && preSleep && !plan.preSleepApplied ? (
+              <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+                Daily total is too low to carve out a separate pre-sleep serving without leaving the
+                other meals under-dosed, so pre-sleep protein was not split out below.
+              </p>
+            ) : null}
           </div>
         </div>
       </section>
@@ -238,7 +244,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -151,7 +151,7 @@ export default function WorkspaceClient() {
     <div ref={rootRef} className="tradeon-root h-screen flex flex-col overflow-hidden" style={{ background: "var(--tdn-bg)" }}>
       {/* Toolbar */}
       <header className="tdn-topbar flex items-center gap-2 h-12 px-2 sm:px-3 shrink-0">
-        <Link href="/tradeon" className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Home" aria-label="Home">
+        <Link href="/tradeon" className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Home" aria-label="Home">
           <Home size={15} />
         </Link>
         <div className="hidden sm:block"><Logo mark size={26} wordmark={false} /></div>
@@ -192,7 +192,7 @@ export default function WorkspaceClient() {
         </button>
 
         <div className="relative hidden md:block">
-          <button onClick={() => setShowWatch((s) => !s)} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Watchlist" aria-label="Watchlist">
+          <button onClick={() => setShowWatch((s) => !s)} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Watchlist" aria-label="Watchlist">
             <Star size={15} />
           </button>
           {showWatch && (
@@ -220,14 +220,14 @@ export default function WorkspaceClient() {
           <MarketStatusBadge status={status} />
         </span>
 
-        <button onClick={saveWorkspace} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Save workspace" aria-label="Save workspace">
+        <button onClick={saveWorkspace} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Save workspace" aria-label="Save workspace">
           <Save size={15} style={{ color: savedAt ? "var(--tdn-up)" : undefined }} />
         </button>
-        <button onClick={resetWorkspace} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Reset workspace" aria-label="Reset workspace">
+        <button onClick={resetWorkspace} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Reset workspace" aria-label="Reset workspace">
           <RotateCcw size={15} />
         </button>
         <ThemeToggle />
-        <button onClick={toggleFullscreenBrowser} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Fullscreen" aria-label="Fullscreen">
+        <button onClick={toggleFullscreenBrowser} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Fullscreen" aria-label="Fullscreen">
           <Maximize size={15} />
         </button>
       </header>

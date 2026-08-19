@@ -33,6 +33,7 @@ export default function BmrCalculator() {
   const [copied, setCopied] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState("maintain");
   const [gaugeOffset, setGaugeOffset] = useState(125.6);
+  const [validationError, setValidationError] = useState("");
   const calculateTimeoutRef = useRef(null);
 
   // Clear any in-flight "premium loading" timer if the component unmounts
@@ -68,9 +69,21 @@ export default function BmrCalculator() {
     setGaugeOffset(125.6);
     setShowResult(false);
     setIsLoading(false);
+    setValidationError("");
   };
 
   const handleCalculate = () => {
+    const ageNum = parseFloat(age);
+    const weightNum = parseFloat(weight);
+    const heightNum =
+      unitSystem === "metric"
+        ? parseFloat(heightCm)
+        : (parseFloat(heightFt) || 0) * 12 + (parseFloat(heightIn) || 0);
+    if (!(ageNum > 0) || !(weightNum > 0) || !(heightNum > 0)) {
+      setValidationError("Enter an age, height and weight greater than zero before calculating.");
+      return;
+    }
+    setValidationError("");
     setIsLoading(true);
     if (calculateTimeoutRef.current) clearTimeout(calculateTimeoutRef.current);
     calculateTimeoutRef.current = setTimeout(() => {
@@ -89,8 +102,12 @@ export default function BmrCalculator() {
     }
     const cm = parseFloat(val) || 0;
     const totalInches = cm / 2.54;
-    const ft = Math.floor(totalInches / 12);
-    const inch = Math.round(totalInches % 12);
+    let ft = Math.floor(totalInches / 12);
+    let inch = Math.round(totalInches % 12);
+    if (inch === 12) {
+      ft += 1;
+      inch = 0;
+    }
     setHeightFt(ft || "");
     setHeightIn(inch || 0);
   };
@@ -201,16 +218,22 @@ export default function BmrCalculator() {
     gaugeDashOffset = 10;
   }
 
+  // Metric deltas are derived from this tool's own stated 7,700 kcal/kg convention
+  // (kcalPerDay = kgPerWeek * 7700 / 7) so the kg label matches the kcal number;
+  // imperial keeps 500/250 kcal since 3,500 kcal = 1 lb is exact for those.
+  const bigDelta = unitSystem === "metric" ? 550 : 500;
+  const smallDelta = unitSystem === "metric" ? 275 : 250;
+
   const calorieGoals = {
     lose_05: {
       label: unitSystem === "metric" ? "Lose 0.5 kg / week" : "Lose 1 lb / week",
-      value: Math.max(1200, finalTdee - 500),
+      value: Math.max(1200, finalTdee - bigDelta),
       colorClass: "text-emerald-600 dark:text-emerald-400 bg-emerald-50/40 border-emerald-250/20",
       radioColor: "border-emerald-500 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-0 focus:ring-1"
     },
     lose_025: {
       label: unitSystem === "metric" ? "Lose 0.25 kg / week" : "Lose 0.5 lb / week",
-      value: Math.max(1200, finalTdee - 250),
+      value: Math.max(1200, finalTdee - smallDelta),
       colorClass: "text-emerald-600 dark:text-emerald-400 bg-emerald-50/30 border-emerald-250/10",
       radioColor: "border-emerald-500 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-0 focus:ring-1"
     },
@@ -222,13 +245,13 @@ export default function BmrCalculator() {
     },
     gain_025: {
       label: unitSystem === "metric" ? "Gain 0.25 kg / week" : "Gain 0.5 lb / week",
-      value: finalTdee + 250,
+      value: finalTdee + smallDelta,
       colorClass: "text-amber-600 dark:text-amber-400 bg-amber-50/40 border-amber-250/20",
       radioColor: "border-amber-500 text-amber-500 focus:ring-amber-500 focus:ring-offset-0 focus:ring-1"
     },
     gain_05: {
       label: unitSystem === "metric" ? "Gain 0.5 kg / week" : "Gain 1 lb / week",
-      value: finalTdee + 500,
+      value: finalTdee + bigDelta,
       colorClass: "text-rose-600 dark:text-rose-400 bg-rose-50/40 border-rose-250/20",
       radioColor: "border-rose-500 text-rose-500 focus:ring-rose-500 focus:ring-offset-0 focus:ring-1"
     }
@@ -470,12 +493,13 @@ General Health Metrics:
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {/* Age */}
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Age</label>
+                <label htmlFor="bmr-age" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Age</label>
                 <div className="relative flex items-center">
                   <div className="absolute left-3.5 text-[var(--muted-foreground)]">
                     <Calendar className="w-4 h-4" />
                   </div>
                   <input
+                    id="bmr-age"
                     type="number"
                     min="1"
                     max="120"
@@ -489,9 +513,10 @@ General Health Metrics:
 
               {/* Gender */}
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Gender</label>
+                <label htmlFor="bmr-gender" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Gender</label>
                 <div className="relative flex items-center">
                   <select
+                    id="bmr-gender"
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
                     className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-3.5 py-2.5 text-xs font-bold appearance-none focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors cursor-pointer"
@@ -505,7 +530,7 @@ General Health Metrics:
 
               {/* Height */}
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Height</label>
+                <label htmlFor={unitSystem === "metric" ? "bmr-height-cm" : undefined} className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Height</label>
                 <div className="relative flex items-center">
                   <div className="absolute left-3.5 text-[var(--muted-foreground)]">
                     <Ruler className="w-4 h-4" />
@@ -513,6 +538,7 @@ General Health Metrics:
                   {unitSystem === "metric" ? (
                     <div className="w-full pl-10 relative flex items-center">
                       <input
+                        id="bmr-height-cm"
                         type="number"
                         min="1"
                         value={heightCm}
@@ -525,22 +551,26 @@ General Health Metrics:
                     <div className="w-full pl-10 grid grid-cols-2 gap-1.5">
                       <div className="relative flex items-center">
                         <input
+                          id="bmr-height-ft"
                           type="number"
                           min="1"
                           max="8"
                           value={heightFt}
                           onChange={(e) => handleFtChange(e.target.value)}
+                          aria-label="Height in feet"
                           className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-2 py-2.5 text-xs font-bold text-center focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                         />
                         <span className="absolute right-2 text-[9px] font-bold text-[var(--muted-foreground)]">ft</span>
                       </div>
                       <div className="relative flex items-center">
                         <input
+                          id="bmr-height-in"
                           type="number"
                           min="0"
                           max="11"
                           value={heightIn}
                           onChange={(e) => handleInChange(e.target.value)}
+                          aria-label="Height in inches"
                           className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-2 py-2.5 text-xs font-bold text-center focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                         />
                         <span className="absolute right-2 text-[9px] font-bold text-[var(--muted-foreground)]">in</span>
@@ -552,12 +582,13 @@ General Health Metrics:
 
               {/* Weight */}
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Weight</label>
+                <label htmlFor="bmr-weight" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Weight</label>
                 <div className="relative flex items-center">
                   <div className="absolute left-3.5 text-[var(--muted-foreground)]">
                     <Scale className="w-4 h-4" />
                   </div>
                   <input
+                    id="bmr-weight"
                     type="number"
                     min="1"
                     value={weight}
@@ -570,6 +601,15 @@ General Health Metrics:
                 </div>
               </div>
             </div>
+
+            {validationError && (
+              <p
+                role="alert"
+                className="rounded-xl bg-[var(--danger-soft)] px-4 py-3 text-xs font-bold text-[var(--danger)]"
+              >
+                {validationError}
+              </p>
+            )}
 
             {/* Calculate Button */}
             <button

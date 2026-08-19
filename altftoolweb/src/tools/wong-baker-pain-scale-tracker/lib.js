@@ -97,7 +97,6 @@ export function summarisePainLog(entries) {
       direction: "none",
       highPainCount: 0,
       highPainShare: null,
-      distribution: PAIN_LEVELS.map((level) => ({ ...level, count: 0, share: 0 })),
     };
   }
 
@@ -119,11 +118,6 @@ export function summarisePainLog(entries) {
   const change = previous ? Number(latest.level) - Number(previous.level) : null;
   const highPainCount = levels.filter((value) => value >= HIGH_PAIN_THRESHOLD).length;
 
-  const distribution = PAIN_LEVELS.map((level) => {
-    const count = levels.filter((value) => value === level.value).length;
-    return { ...level, count, share: (count / sorted.length) * 100 };
-  });
-
   return {
     count: sorted.length,
     sorted,
@@ -137,6 +131,5 @@ export function summarisePainLog(entries) {
     highPainCount,
     highPainShare: (highPainCount / sorted.length) * 100,
     highPainThreshold: HIGH_PAIN_THRESHOLD,
-    distribution,
   };
 }

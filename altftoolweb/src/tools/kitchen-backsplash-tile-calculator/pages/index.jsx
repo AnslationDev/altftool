@@ -81,6 +81,7 @@ export default function ToolHome() {
   const [thickness, setThickness] = useState(DEFAULTS.thickness);
   const [joint, setJoint] = useState(DEFAULTS.joint);
   const [copied, setCopied] = useState(false);
+  const [cabinetHeightError, setCabinetHeightError] = useState("");
 
   const result = useMemo(
     () =>
@@ -124,7 +125,13 @@ export default function ToolHome() {
 
   const applyCabinetHeight = () => {
     const derived = bandHeightFromCabinet(toNumber(cabinet));
-    if (!Number.isFinite(derived)) return;
+    if (!Number.isFinite(derived)) {
+      setCabinetHeightError(
+        `Cabinet height must be more than the ${COUNTER_HEIGHT_IN} in counter height.`,
+      );
+      return;
+    }
+    setCabinetHeightError("");
     setBand(String(derived));
   };
 
@@ -173,6 +180,7 @@ export default function ToolHome() {
     setThickness(DEFAULTS.thickness);
     setJoint(DEFAULTS.joint);
     setCopied(false);
+    setCabinetHeightError("");
   };
 
   const rows = [
@@ -265,6 +273,14 @@ export default function ToolHome() {
               Derive band height (counter at {COUNTER_HEIGHT_IN} in)
             </button>
           </div>
+          {cabinetHeightError && (
+            <p
+              role="alert"
+              className="sm:col-span-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+            >
+              {cabinetHeightError}
+            </p>
+          )}
           <div>
             <label className={LABEL} htmlFor="bs-hobw">
               Hob panel width (ft)
@@ -497,7 +513,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

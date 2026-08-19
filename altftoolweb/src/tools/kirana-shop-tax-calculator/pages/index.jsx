@@ -42,7 +42,7 @@ const TRADING_FIELDS = [
 
 const DEDUCTION_FIELDS = [
   ["deduction80C", "Section 80C (max 1,50,000)"],
-  ["deduction80D", "Section 80D health insurance"],
+  ["deduction80D", "Section 80D health insurance (self/family: 25,000; 50,000 if 60+)"],
 ];
 
 const DEFAULTS = {
@@ -290,7 +290,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Income tax payable ({ok ? (result.better === "new" ? "new regime" : "old regime") : "—"})
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {ok ? money(chosen.totalTax) : "—"}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -387,7 +387,13 @@ export default function ToolHome() {
             ],
             [
               "Advance tax",
-              ok ? (result.advanceTaxDue ? "Payable in four instalments" : "Not applicable — tax under 10,000") : "—",
+              ok
+                ? result.advanceTaxDue
+                  ? result.onPresumptive
+                    ? "Payable in full by 15 March (section 44AD presumptive)"
+                    : "Payable in four instalments"
+                  : "Not applicable — tax under 10,000"
+                : "—",
             ],
           ].map(([label, value]) => (
             <li

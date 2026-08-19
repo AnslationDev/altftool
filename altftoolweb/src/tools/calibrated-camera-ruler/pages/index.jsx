@@ -512,12 +512,20 @@ export default function ToolHome() {
               </div>
             </fieldset>
 
-            <div className="relative mt-4 overflow-hidden rounded-lg border border-[var(--border)]">
+            <p className="mt-3 text-xs text-[var(--muted-foreground)]">
+              Keyboard users: placing marks on the photo needs a mouse or touchscreen. Enter the
+              same pixel distances directly into the Reference length, Object length and Object
+              height fields above instead — they feed the identical measurement.
+            </p>
+
+            <div className="relative mt-2 overflow-hidden rounded-lg border border-[var(--border)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 ref={imageRef}
                 src={photo}
                 alt="Photo being measured"
+                aria-label="Photo being measured. Click or tap two points to mark a segment. Keyboard users: enter pixel distances directly into the Reference length, Object length and Object height fields instead."
+                tabIndex={0}
                 onLoad={onImageLoad}
                 onClick={onImageClick}
                 className="block w-full cursor-crosshair"

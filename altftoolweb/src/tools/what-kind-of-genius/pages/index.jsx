@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RotateCcw, Sparkles } from "lucide-react";
 
 const QUESTIONS = [
@@ -217,9 +217,16 @@ export default function ToolHome() {
   const [answers, setAnswers] = useState({});
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
+  const calcTimeoutRef = useRef(null);
 
   const answeredCount = Object.keys(answers).length;
   const total = QUESTIONS.length;
+
+  useEffect(() => {
+    return () => {
+      if (calcTimeoutRef.current) clearTimeout(calcTimeoutRef.current);
+    };
+  }, []);
 
   const handleAnswer = (qIndex, optIndex) => {
     const updated = { ...answers, [qIndex]: optIndex };
@@ -229,7 +236,7 @@ export default function ToolHome() {
       setStep(qIndex + 1);
     } else {
       setCalculating(true);
-      setTimeout(() => {
+      calcTimeoutRef.current = setTimeout(() => {
         const scores = { logical: 0, creative: 0, social: 0, physical: 0, natural: 0, introspective: 0 };
         Object.entries(updated).forEach(([qIdx, optIdx]) => {
           const q = QUESTIONS[parseInt(qIdx)];
@@ -248,6 +255,10 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (calcTimeoutRef.current) {
+      clearTimeout(calcTimeoutRef.current);
+      calcTimeoutRef.current = null;
+    }
     setStep(0);
     setAnswers({});
     setCalculating(false);
@@ -274,7 +285,7 @@ export default function ToolHome() {
             })
           }}
         />
-        <div className="text-center max-w-md">
+        <div className="text-center max-w-md" aria-live="polite" role="status">
           <div
             className="mx-auto mb-6 rounded-full p-4 inline-flex items-center justify-center"
             style={{ background: "var(--card)" }}
@@ -306,6 +317,15 @@ export default function ToolHome() {
           >
             Analyzing your responses...
           </p>
+          <button
+            type="button"
+            onClick={reset}
+            className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded"
+            style={{ color: "var(--muted-foreground)", "--tw-ring-color": "var(--primary)" }}
+          >
+            <RotateCcw size={14} />
+            Start over
+          </button>
         </div>
       </div>
     );
@@ -331,7 +351,7 @@ export default function ToolHome() {
             })
           }}
         />
-        <div className="max-w-xl mx-auto">
+        <div className="max-w-xl mx-auto" aria-live="polite" role="status">
           <div className="text-center mb-8">
             <h1
               className="text-3xl sm:text-4xl font-extrabold mb-2"
@@ -371,7 +391,7 @@ export default function ToolHome() {
             <div className="grid grid-cols-2 gap-3 mb-5">
               <div
                 className="p-4 rounded-xl"
-                style={{ background: "var(var(--background))" }}
+                style={{ background: "var(--background)" }}
               >
                 <p
                   className="text-[10px] font-black uppercase tracking-wider mb-2"
@@ -396,7 +416,7 @@ export default function ToolHome() {
               </div>
               <div
                 className="p-4 rounded-xl"
-                style={{ background: "var(var(--background))" }}
+                style={{ background: "var(--background)" }}
               >
                 <p
                   className="text-[10px] font-black uppercase tracking-wider mb-2"
@@ -424,7 +444,7 @@ export default function ToolHome() {
             <div
               className="p-4 rounded-xl mb-5 border"
               style={{
-                background: "var(var(--background))",
+                background: "var(--background)",
                 borderColor: "var(--border)",
               }}
             >
@@ -445,7 +465,7 @@ export default function ToolHome() {
             <div
               className="p-4 rounded-xl text-center italic mb-5 border"
               style={{
-                background: "var(var(--background))",
+                background: "var(--background)",
                 borderColor: "var(--border)",
                 color: "var(--muted-foreground)",
               }}
@@ -504,6 +524,15 @@ export default function ToolHome() {
             Discover your unique genius type based on your strengths and thinking
             style
           </p>
+          <button
+            type="button"
+            onClick={reset}
+            className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded"
+            style={{ color: "var(--muted-foreground)", "--tw-ring-color": "var(--primary)" }}
+          >
+            <RotateCcw size={14} />
+            Start over
+          </button>
         </div>
 
         <div className="mb-6">
@@ -519,6 +548,11 @@ export default function ToolHome() {
           <div
             className="h-2 rounded-full overflow-hidden"
             style={{ background: "var(--border)" }}
+            role="progressbar"
+            aria-valuenow={Math.round((answeredCount / total) * 100)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Question ${answeredCount + 1} of ${total}`}
           >
             <div
               className="h-full rounded-full transition-all duration-500 ease-out"
@@ -536,6 +570,8 @@ export default function ToolHome() {
             background: "var(--card)",
             borderColor: "var(--border)",
           }}
+          aria-live="polite"
+          role="status"
         >
           <h2
             className="text-lg font-bold mb-5 leading-relaxed"
@@ -550,16 +586,9 @@ export default function ToolHome() {
                 onClick={() => handleAnswer(step, i)}
                 className="w-full text-left p-3.5 rounded-xl border text-sm font-semibold transition-all hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                 style={{
-                  background:
-                    answers[step] === i
-                      ? "var(--primary)"
-                      : "var(var(--background))",
-                  borderColor:
-                    answers[step] === i
-                      ? "var(--primary)"
-                      : "var(--border)",
-                  color:
-                    answers[step] === i ? "var(--primary-foreground)" : "var(--foreground)",
+                  background: "var(--background)",
+                  borderColor: "var(--border)",
+                  color: "var(--foreground)",
                   "--tw-ring-color": "var(--primary)",
                 }}
               >

@@ -1,0 +1,173 @@
+# Merge Log — consolidating branches into `beta`
+
+Starting HEAD: 4b7c50007 (fix(tools): wave-69 audit fixes across 25 tools)
+Base: codex/main-reconcile-20260805
+
+Order: broad-consolidation branches first (reconcile/final/release/merge-all/finalize/preserve-all-work/integrate/canonical),
+then remaining candidates. Ancestor status re-checked immediately before each merge attempt.
+
+## IMPORTANT STRUCTURAL FINDING (discovered while processing `merge-one`)
+
+`git merge merge-one` failed immediately with `fatal: refusing to merge unrelated histories`.
+Investigation (`git rev-list --max-parents=0 <ref>` on every one of the 91 candidate branches) shows the
+91 candidates actually span **three unrelated git root commits**, not one:
+
+- **Family A** — root `c143ffd404...` — this is `beta`'s own history (same root as `origin/main` and
+  `codex/main-reconcile-20260805`). **22 branches.** These are genuine same-history candidates and were
+  processed normally per the workflow below.
+- **Family B** — root `00f88004c0...` ("Publish ALTFTool web app") — confirmed via
+  `git rev-list --max-parents=0 canonical-web/main` to be **exactly `canonical-web`'s root commit**, and
+  confirmed NOT an ancestor of `origin/main`. **62 branches.**
+- **Family C** — root `7ec6266b8d...` — confirmed via `git rev-list --max-parents=0 canonical-admin/main`
+  to be **exactly `canonical-admin`'s root commit**. **7 branches.**
+
+In other words, ~69 of the 91 "candidate" branches are not late-breaking unmerged work on top of the
+combined-repo history — they are entire parallel histories of the **out-of-scope legacy split repos**
+(`canonical-web` / `canonical-admin`), just parked as local/origin refs inside this repo's object database
+(their names — `codex/canonical-web-release-*`, `codex/canonical-admin-*`, `merge-one`, `merge-all`, etc. —
+match this). They have a completely different top-level layout (flat `src/` app, no `altftoolweb/` +
+`altftoolwebadmin/` npm-workspace split) and no common ancestor with `beta`. `git merge` refuses them
+outright; the only way to combine them at all would be `--allow-unrelated-histories`, which for 69 branches
+each importing an entire foreign repo tree is not a "conflict to resolve" — it is a full repo-architecture
+decision that must be made by a human, and it falls squarely under the explicit instruction to treat
+`canonical-web`/`canonical-admin` as out of scope.
+
+**Decision:** Family A (22 branches) processed normally below. Family B + Family C (69 branches total)
+are logged as `SKIPPED — needs human review` as a batch, not attempted with `--allow-unrelated-histories`.
+Full membership lists are at the bottom of this file.
+
+## Family A merges (same history as beta)
+
+- codex/reconcile-all-branches-20260806: merged, resolved 29 conflicts (files: altftoolweb/src/app/tools/generated/toolSeoMap.br [regenerated], altftoolweb/src/platform/registry/toolMetaMap.js [regenerated], altftoolweb/src/tools/ai-object-counter/tool.config.js, altftoolweb/src/tools/azerbaijan-entry-requirement-checklist/lib.js, altftoolweb/src/tools/base64-to-hex/seo.js, altftoolweb/src/tools/bio-link-page-builder/seo.js, altftoolweb/src/tools/birthday-wishes-tamil/lib.js, altftoolweb/src/tools/budget-planner/pages/index.jsx, altftoolweb/src/tools/cardiac-output-calculator/pages/index.jsx, altftoolweb/src/tools/chess-multiplayer/seo.js, altftoolweb/src/tools/codex-chat-transfer/components/Main.jsx, altftoolweb/src/tools/cpr-compression-rate-metronome/lib.js, altftoolweb/src/tools/cpr-compression-rate-metronome/pages/index.jsx, altftoolweb/src/tools/css-filter-effects/pages/index.jsx, altftoolweb/src/tools/diabetes-dashboard/components/{Dashboard,LogEntryForm,UserProfile}.jsx, altftoolweb/src/tools/diabetes-dashboard/pages/index.jsx, altftoolweb/src/tools/domain-expiry-renewal-planner/lib.js, altftoolweb/src/tools/emoji-hub/seo.js, altftoolweb/src/tools/lateral-entry-merit-calculator/lib.js, altftoolweb/src/tools/meeting-agenda-builder/tool.config.js, altftoolweb/src/tools/multi-country-clock/seo.js, altftoolweb/src/tools/pdf-preview-tool/pages/index.jsx [hand-merged both sides' unique logic: kept beta's pdfInstance-cleanup/race-guard refs + reconcile's dragActive handler refactor], altftoolweb/src/tools/personal-data-flow-mapper/spec.js, altftoolweb/src/tools/south-korea-visa-cover-letter-builder/{lib.js,pages/index.jsx}, altftoolweb/src/tools/speed-date-rotation-planner/spec.js, altftoolweb/src/tools/test-pyramid-ratio-planner/lib.js). Each conflict resolved by verifying against the surrounding non-conflicting (already auto-merged) code which side's variables/helpers/behavior the rest of the file actually depends on, not by arbitrary pick. Ran `npm --prefix altftoolweb run generate:registry` + `node altftoolwebadmin/scripts/generate-tool-slugs.mjs` to regenerate toolMetaMap.js/toolSeoMap.br/toolNetworkMap.js/toolCatalog.generated.js/toolSlugs.generated.js after resolving hand-written conflicts. Net diff: 3402 added, 586 modified, 26 deleted files (deletions are legacy route cleanup: bops/insurance, brandrating, buzzfeed, desktop, constellation-finder — all pre-existing on the reconcile branch's side, not something this merge introduced by mistake).
+- codex/final-reconcile-20260806: skipped, already ancestor
+- codex/main-reconcile-20260806-final: skipped, already ancestor
+- origin/codex/main-reconcile-20260805: skipped, already ancestor
+- codex/main-release-20260807: merged, resolved 4 conflicts (toolSeoMap.br regenerated; bio-link-page-builder/components/BioLinkBuilderClient.jsx kept ours — theirs referenced `var(--color-footer)`/`var(--color-on-media)`/`bg-footer`/`text-on-media` tokens that are not defined anywhere in the codebase, would render as broken/unstyled; metronome-practice-log/pages/index.jsx kept ours — adds a `copyTimeoutRef` guard theirs lacks, preventing overlapping-timeout races on rapid re-copy; text-summarizer/pages/index.jsx kept ours — theirs' extra `menuOpen` state was unused dead code, and ours' sentence-splitting fix is the more recent, better-commented rewrite of the same double-punctuation bug both sides were fixing)
+- seo/geo-current: merged, resolved 16 conflicts + removed 4 stray build-log files accidentally committed on this branch (build-final.log, build-og.log, build-og2.log, build-traffic.log). toolSeoMap.br regenerated. 3 AA add/add conflicts (embed/widget/WidgetShell.jsx, open-data/page.jsx, press/page.jsx) kept ours — near-identical single-sentence differences. academy/data/academies.js + academy/components/AcademyCard.jsx taken from theirs as a coherent pair — theirs adds real, carefully-sourced Play Store rating data (`playRating()` with app name/package/rating count and provenance notes, e.g. flagging that BYJU'S Play Store listing names its publisher as "Toppr") for every academy entry, replacing a broken Firestore-driven rating that defaulted missing ratings to a misleading "0". bops/housing-services/{bathroom-remodeling,kairos} taken from theirs — richer, still fully-disclosed demo content (comparison table, more forensic honesty fixes, e.g. catching an invented Florida contractor-licence *number* that a simpler fix would have missed). embed/{EmbedPicker.jsx,embedSnippet.js,page.jsx} hand-merged — kept ours' `activeSize`/`intro`/`createHowToJsonLd` (all load-bearing, referenced elsewhere in the same files) and ours' accurate "credit link is nofollow" comment (the actual code already hardcodes `rel="nofollow"`, confirmed also by the WidgetShell.jsx comment already in `beta`; theirs' comment claiming it "MUST stay followable" was already stale against the shipped behavior), but took theirs' `scrolling="yes"` → `overflow:hidden` modernization (removes a deprecated HTML4 iframe attribute) and theirs' more accurate embed-page title ("Calculators, Converters & Resizers" matches the real registry categories, confirmed via embedRegistry.js, vs ours' generic "Calculators & Tools"). ExtensionHero.jsx / siding EstimateForm.jsx / document-version-verifier extractDocumentText.js kept ours (conditional-render safety, consistency with the sibling siding-pros resolution, and a try/finally resource-cleanup guard theirs lacked). docs/BACKLINK_EXECUTION_KIT.md took theirs' addition — a genuinely important audit record of `/siding` briefly carrying false BBB/EPA/GAF/etc. certifications and being accidentally indexable; verified the critical fixes (noindex + sitemap exclusion, false-certification badges removed from Hero.jsx/TrustBar.jsx) are in fact live in the merged tree. **Follow-up flagged** (spawn_task `task_b88a8409`, not fixed in this pass — out of scope for a merge conflict, and identical/unfixed on both source branches): `altftoolweb/src/app/siding/components/Testimonials.jsx` still renders five fabricated named customer testimonials; the doc's claim that testimonials were removed from all three affected pages is not accurate for this one file.
+- seo/tool-titles-and-howto: merged, resolved 2 conflicts (toolSeoMap.br regenerated; privacy-settings-checklist-iphone/seo.js hand-merged — took theirs' new `title`/`metaDescription`/`steps` (HowTo) fields, which is this branch's whole purpose and landed cleanly across 3246 other tool seo.js files, but kept ours' "Nine controls are marked critical" wording over theirs' "Eight" — verified against `lib.js`, which has exactly 9 `"critical": true` entries). This branch's real payload was 3248 seo.js files gaining title/metaDescription/HowTo-steps content (24,178 lines added, 0 removed) — merged clean apart from the one file above.
+- codex/wave19-repair-20260803: merged, resolved 11 conflicts (legacy toolSeoMap.js deletion accepted; 3 admin report JSONs kept ours; 7 tool files kept ours — each a real fix theirs lacked: seedable-RNG testability in blog-post-ideas, a resetTokenRef race guard against stale async hash results in cybercrime-evidence-pack-builder, full-name capture avoiding same-first-name collisions in meeting-notes-prompt-builder, a "-0%" display bug fix in net-worth-tracker-tool, an accurate full-field reset warning in pinned-comment-generator, showing the final score on game over in snake-game, and a real dynamic error message plus a missing `hoursResult` dependency (stale-closure bug) in working-days-calculator)
+- origin/main: merged, resolved 2 conflicts (personal-data-flow-mapper/spec.js kept ours — handles rows with more segments than expected columns by folding overflow into the last column instead of silently truncating, plus a `values.required`-aware summary; privacy-policy-version-diff/spec.js hand-merged — ours' multiset/Map-based line diff is a real correctness fix over theirs' plain Set diff, which silently treats a line appearing a different number of times on each side as "unchanged" and would hide real content changes in a privacy-diff tool; kept that logic but added theirs' "Showing the first 100 of N changed lines" truncation notice on top, since ours lacked it)
+- codex/pre-main-sync-audit-20260803: merged, resolved 16 conflicts (toolSeoMap.br/toolMetaMap.js/toolNetworkMap.js regenerated; legacy uncompressed `toolSeoMap.js` deletion accepted, superseded by the .br brotli version; `lookouts/{page.jsx,lookouts.js,lookouts.css}` AA — kept ours, its 5-product LOOKOUTS_PRODUCTS list matches all 5 route folders that actually exist in the tree today (festival, top-discount-products, ai-bundles, free-ai-tool, ai-prompt-studio→imgprompt/studio) vs theirs' stale 2-product list; correspondingly kept ours' `sitemap.js` without adding a `/lookouts` entry since ours' lookouts page is still `noindex` — a later branch, `codex/lookouts-integration-20260807`, is still queued and may revisit this; `siteRoutes.js`/`AdvancedWorkbench.jsx` kept ours — fuller route table with the documented top3/top8/top11 404-quarantine reasoning, and async `command()` support needed by voiceprint-anonymizer; remaining 8 tool files kept ours — each had a real fix theirs lacked: OWASP CSV-injection escaping + delete confirmation in occasion-reminder, htmlFor/id label-input accessibility wiring in bmr-calculator, a truncation notice in consent-inventory-mapper, full useCopyToClipboard destructure (incl. `announcement` for screen readers) in senior-calorie-needs-calculator, English vs untranslated-Hindi description in ifsc-decoder-validator, a broader overdue condition in wheel-alignment-planner)
+- codex/integrate-claude-branches-20260727: SKIPPED — conflict too risky to auto-resolve, needs human review. `git merge` produced 3326 unmerged paths (2510 AA "both independently added" + 379 UD + 21 DU + 416 UU) against only **9** unique commits ahead of beta (`a298f4f3e` "feat: integrate Claude tool wave and web polish" down to `b5339f3e6` "fix(seo): escape sitemap XML"). That ratio — 9 commits producing 3326 conflicts — is itself the signal: this 2026-07-27 branch (the oldest Family-A candidate processed) is a from-scratch-diverged snapshot whose commit messages ("remove cloaked redirects, fake identities and invented attribution", "remove fabricated ratings, bylines, dates and deceptive flows", IndexNow submission, FAQPage/HowTo schema, sitemap XML escaping) describe exactly the same class of integrity/SEO fixes already verified present in a more complete form on `beta` throughout every other merge done in this session (see the preserve-all-work entry above: kym pollData.js, academy Hero.jsx, etc. already carry this same fix pattern one or more iterations further). Unlike the tools/* long tail on other branches, ~40 of the UU conflicts here are in `altftoolwebadmin` core security/auth surface (`(protected)/admin-management/*`, `(protected)/rbac/page.jsx`, `(protected)/security/page.jsx`, `components/security/SecurityGate.jsx`, `context/AuthContext.jsx`, `api/admin/{google-login,toggle-status,update}/route.js`) plus `package.json`/`package-lock.json` and several `scripts/*.mjs` build-gate files — high-blast-radius surface that at this conflict volume cannot be individually verified with the same rigor applied to the 150+ conflicts hand-checked in the codex/preserve-all-work-20260730 merge above. Aborted cleanly with `git merge --abort` (verified clean working tree afterward) rather than bulk-resolving unverified security-sensitive files. A human reviewer should decide whether to attempt this one at all — most or all of its real value looks already superseded, but that should be confirmed file-by-file for the admin surface specifically before any bulk "ours" resolution, not assumed.
+- codex/preserve-all-work-20260730: merged, resolved 253 conflicts (29 AA/DU/UD file-existence conflicts + 224 UU content conflicts). This is an old (2026-07-30) branch whose unique commits are wave-13..wave-21 tool-audit fixes plus two large "wip: checkpoint/preserve" squash commits — i.e. an early snapshot of the same audit lineage beta has since carried to wave-69 plus the just-merged reconcile-all-branches consolidation. Methodology: sampled ~40 conflicts across every distinct cluster (bops/*, tradeon/*, transform/*, job-offer-comparison-tool/*, platform/navigation/*, tools/_shared/*, and 15+ individual "app" content-site route trees) in full detail before applying any bulk resolution, specifically checking for hidden feature loss (per the workflow's "never silently delete real work" rule) by grepping for whether each side's unique symbols/helpers/props were actually referenced elsewhere in the already-non-conflicting parts of each file. Findings, consistently repeated across every sampled file: `beta` (ours) is essentially always the later, more complete state — it fixes real bugs theirs still has (an unanchored/single-label domain-validation regex in `src/app/api/altflinking/listings/route.js` that let trailing content through and rejected valid multi-level domains; a broken ESOP-value monthly/annual unit bug already independently fixed on both sides; a `text=='0'` vs `!formData.reading` glucose-reading falsy-zero bug class fixed the same way seen in the previous merge), removes fabricated content theirs still ships (invented poll vote percentages and invented fake commenter names in `app/kym/data/pollData.js`; fabricated "50,000+ Active Learners / 100+ Partners" stats in `app/academy/components/Hero.jsx` when the catalog only has 17 entries and no accounts/rating system exists at all), carries accessibility fixes theirs lacks (`navigationFocusPolicy.js` extraction with unit tests backing `Header.jsx`/`MobileNav.jsx`), and reflects a design-token migration (`text-(--foreground)` etc.) that the entire rest of the merged tree already uses. Two real exceptions were found and hand-merged rather than defaulting to "ours": (1) `altftoolweb/src/app/tradeon/components/chart/LWChart.jsx` — theirs added price-guide-line rendering (`spec.guides`) for the RSI/Stoch-RSI/ADX lower-panel indicators; verified `lib/candles.js` already populates `guides: [30,50,70]` etc. for exactly this purpose and it was going completely unrendered — ported the feature into ours using the already-established `pal.guide` token from the file's own sibling code path. (2) `altftoolweb/src/app/transform/_components/TransformShell.jsx` — theirs' SVGO status copy ("not applied") is factually correct against the actual transformer code (`svgo: false` in both `svg-to-jsx.js` and `svg-to-react-native.js`) while ours' copy ("enabled by default... adjust in Settings") was wrong and referenced a Settings option that doesn't exist — corrected the text while keeping ours' current design-token styling. Also hand-merged `altftoolweb/src/tools/pdf-preview-tool/components chart FullChartClient.jsx` region and `AssetDetailClient.jsx` (rejected an anchor-href fix bundled with a broken `shareAsset`/`Compare` button pair that referenced undefined state even in theirs' own full file — took only the anchor fix, left the non-functional buttons out) and applied theirs' 44px/`var(--anslation-ds-radius)` touch-target sizing uniformly (WCAG 2.5.5) alongside ours' fuller button set. File-existence (DU/UD/AA) conflicts were each individually verified via grep for real call-sites before deciding keep-vs-delete: kept `top9/components/{ContentArea,FeaturedList,Hero}.jsx` and three `top5/**/loading.jsx` (all live, imported/Next.js-special-file in use); accepted deletion of `altpintrest/components/landing/{ExploreCategories,InspirationGrid}.jsx`, `personality/components/PersonalityLoader.jsx`, `tools/bubble-text-generator/components.jsx` (all confirmed orphaned — not imported by their actual page assemblers), and 18 dead CSS/legacy-sharding files (`toolSeoShard0-9.js`, `buzzfeed/*`, `bops/insurance/auto-insurance.css`, `top9.css`, `random-si-generator-tool/index.css` — all zero-reference, superseded by the design-token/Tailwind migration or the single-file `toolSeoMap.br`). One process note: an early hand-edit on `tradeon/components/chart/FullChartClient.jsx` left a single stray `>>>>>>>` marker line behind (a genuine mistake, caught and fixed) — added a full-tree `git grep` marker scan as a hard gate before every commit for the rest of this job as a result. Ran `npm --prefix altftoolweb run generate:registry` + `node altftoolwebadmin/scripts/generate-tool-slugs.mjs` afterward for the generated registry/catalog files; the three admin report JSONs (healthManifest/routeQualityReport/toolReadinessReport) were resolved to ours' snapshot as-is rather than re-run (they are non-blocking point-in-time reports, not build inputs — noted here as "could be refreshed" but not required). Net diff: ~262 files modified, 88 deleted (all confirmed dead/superseded on inspection — skill-demand-analyzer, beauty-score, and other abandoned tool implementations, plus the legacy admin-console file renames also seen in the first merge), 8 added.
+- claude/recursing-austin-adafd8: skipped, already ancestor
+- seo/integrated-2026-07-27: merged, resolved 261 conflicts (26 AA/DU/UD + 235 UU). Key finding before resolving: `docs/SEO_GEO_HANDOVER.md` (theirs' own version, from this same branch) states this branch was superseded and its work cherry-picked onto what became `seo/geo-current` — which this session already merged into `beta` earlier. That explains why "ours" won almost every conflict here on inspection. 26 DU asset deletions (bops/housing-services pest-killer + plumber image assets, brandrating legacy assets) accepted as already-established dead-content cleanup; 1 UD (`extensions/[slug]/layout.jsx`) kept ours (actively modified on beta's side). Of the 8 AA conflicts, 6 kept ours (alternatives pages, oembed route — depends on ours' more advanced namespaced widget-id system in embedSnippet.js, brandrating catalog, prankSeo.js — ours adds a whole createToolJsonLd per-prank schema theirs lacks, and the handover doc itself) but **2 genuinely favored theirs**: `platform/seo/indexNow.js` and the paired `indexnow-key.txt/route.js` — theirs commits a documented-safe default IndexNow key (with reasoning for why an IndexNow key is not a secret) so the submit-to-Bing feature actually works, while ours required an `ALTFT_INDEXNOW_KEY` env var that is never set anywhere in `.env.example` or `amplify.yml` on either app — confirmed via grep — meaning ours' version of the feature is silently inert in production. Sampled every large-magnitude size anomaly among the 235 UU files before bulk-resolving the rest as ours: `PapercallInterceptor.jsx` (climatech, helios-solar), `PayPerCallOverlay.jsx` (plumber) and `ActionPopup.jsx` (window-replacement) all shrink to a few lines in ours — verified each is a *deliberate* no-op stub with a comment explaining it used to hijack real tel:/mailto: clicks into a fake "Sorry! No Result Found" popup, consistent with the fake-content-removal pattern seen throughout this session; `llms.txt/route.js` drops from 109 to 13 lines in ours — verified it's a refactor (logic moved into the already-larger `platform/seo/answerEngineManifest.js`'s exported `buildLlmsTxt()`), not a content loss. toolMetaMap.js/toolSeoMap.br/toolNetworkMap.js regenerated (no tool-catalog changes actually needed, run for consistency).
+- codex/fix-route-quality-sitemap-20260806: merged, resolved 3 conflicts (package.json, scripts/generate-route-quality-report.mjs, scripts/lib/rendered-sitemap.mjs — all kept ours; theirs' version of generate-route-quality-report.mjs was byte-identical to the merge base, i.e. it made no changes to that file at all, and ours' modular 4-lib-module architecture — rendered-route-policies/route-quality-policy/sitemap-coverage-policy, all already present from the reconcile-all-branches merge — is a clear superset)
+- codex/seo-strict-checker-fix-20260806: merged clean
+- codex/route-quality-memory-20260806: merged clean
+- seo/homepage-faq-schema: skipped, already ancestor
+- origin/claude/silly-shirley-5282cc: skipped, already ancestor
+- perf/embed-picker-payload: skipped, already ancestor
+- seo/aeo-integrity-and-answer-first: skipped, already ancestor
+- fix/sitemap-xml-escaping: skipped, already ancestor
+
+## Family B — canonical-web legacy history (SKIPPED, out of scope, needs human review)
+
+Root commit 00f88004c... = exact root of `canonical-web/main`. Unrelated history to `beta`
+(`git merge` refuses without `--allow-unrelated-histories`). Not attempted — see the structural
+finding above. 62 branches:
+
+- claude/sleepy-clarke-4e911e
+- codex/canonical-web-release-20260807
+- codex/lookouts-integration-20260807
+- codex/canonical-web-release-20260806
+- claude/eager-cerf-8e6b2d
+- merge-one
+- claude/peaceful-elgamal-ad78ef
+- codex/sanitizer-adversarial-20260806
+- codex/seo-ui-accuracy-fixes-20260806
+- codex/wave26-audited-port-20260806
+- standalone-notice
+- merge-all
+- codex/results-panel-wiring-port-20260806
+- claude/nifty-wilbur-c566cf
+- codex/firebase-blog-legacy-slug-fallback-20260806
+- codex/audit-main75e-safe-port-20260806
+- codex/dynamic-content-feeds-20260806
+- codex/atlas-schema-gate-20260806
+- codex/content-integrity-20260806
+- codex/review-wave22-final-20260806
+- codex/wave25-audited-port-20260806
+- codex/fix-amplify-standalone-gate-20260806
+- codex/canonical-web-wave31-release-20260806
+- codex/shrink-lexicon-artifact-20260806
+- codex/dynamic-suite-sitemaps-20260806
+- codex/port-tool-audits-20260806
+- codex/fix-detour-live-500-20260806
+- codex/amplify-artifact-reduction-20260806
+- codex/integrate-persona-suite-20260806
+- codex/sync-generated-tool-descriptions-20260806
+- cmp-check
+- codex/final-override-runtime-fixes-20260806
+- codex/amplify-memory-sigkill-20260806
+- codex/pre-final-rebase-20260806
+- codex/merge-all-web-branches-20260805-v2
+- codex/canonical-ranking-metadata-20260805
+- codex/web-release-audited-20260805
+- codex/release-all-web-branches-20260805
+- codex/finalize-all-branches-20260805
+- codex/artifact-registry-opt-20260805
+- codex/aws-amplify-web-20260803
+- codex/web-dependency-sync-20260804
+- more-branches
+- ai-explore-meta
+- codex/hard-404-web-20260803
+- codex/canonical-release-20260803
+- codex/canonical-release-20260803-final
+- raise-gate
+- soft404
+- t12
+- t6
+- fix-top11
+- release/audit2
+- release/lookouts-ready
+- release/weight
+- codex/canonical-repair-20260730
+- release/gsc-wave
+- codex/canonical-sync-bd7ac1ab9
+- release/gsc-wave-with-lookouts
+- codex/canonical-web-deploy-20260727
+- fix/seo-sitemap-and-structured-data
+- fix/seo-metadata-and-soft-404s
+
+## Family C — canonical-admin legacy history (SKIPPED, out of scope, needs human review)
+
+Root commit 7ec6266b8d... = exact root of `canonical-admin/main`. Unrelated history to `beta`. 7 branches:
+
+- codex/canonical-admin-release-20260806
+- codex/admin-sale-contract-fix-20260805
+- codex/canonical-admin-reconcile-20260804
+- codex/admin-security-sync-20260804
+- codex/hard-404-admin-20260803
+- codex/admin-tools-slugs-auth-20260803
+- codex/aws-amplify-admin-20260803
+
+## Sanity build (after all branch processing)
+
+Ran `npm run build:web` and `npm run build:admin` from repo root (per CLAUDE.md, both wrap
+`next build --webpack`).
+
+**First pass found two real defects introduced by this session's merges** (both fixed, see
+commit `f4fd351da`):
+1. `altftoolweb/src/app/personality/components/PersonalityLoader.jsx` — deleted during the
+   codex/preserve-all-work-20260730 merge as (believed) orphaned; it is actually imported by
+   `Categories.jsx`. Webpack failed with "Module not found". Restored the file from its last
+   known-good commit (`6abdaecdb`).
+2. `altftoolweb/src/app/tools/page.jsx` — a byte-identical duplicate pair of
+   `export const dynamic = "force-static"` / `export const revalidate = 86400`, left by a
+   silent (non-conflicting) 3-way auto-merge that concatenated both sides. Webpack failed with
+   "Identifier 'dynamic' has already been declared". Removed the duplicate. Swept the rest of
+   `altftoolweb/src` for the same duplicate-declaration signature — no other instances found
+   (3 other flagged files were false positives from `dynamicParams` prefix-matching `dynamic`).
+
+**Second pass, after both fixes:**
+- `npm run build:admin` — **PASS**. `✓ Compiled successfully in 21.4s`, full route manifest
+  printed, no errors.
+- `npm run build:web` — **FAILS**, but on a pre-existing, environment-specific issue unrelated
+  to any merge in this session: `next/font` cannot fetch `Noto Sans Devanagari` from
+  `fonts.gstatic.com` in `src/app/bazaar/components/BazaarShell.jsx` (network egress to Google
+  Fonts is blocked in this sandbox). Confirmed pre-existing: `git log 4b7c50007..HEAD -- 
+  .../BazaarShell.jsx` returns zero commits — this file was never touched by any merge done in
+  this session, and the failure is a network fetch error, not a syntax/logic defect. This would
+  not be expected to fail in a normal CI/Amplify environment with internet access. All actual
+  code-level errors surfaced by this build were the two listed above, both fixed.

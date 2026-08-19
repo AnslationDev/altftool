@@ -114,6 +114,14 @@ export default function VideoToWebp() {
     setEndTime(Math.min(readDuration, 5));
   }, []);
 
+  const onVideoError = useCallback(() => {
+    setDuration(0);
+    setDimensions({ width: 0, height: 0 });
+    setVideoUrl("");
+    setVideoName("");
+    setError("This file couldn't be played as a video — try a different file or format.");
+  }, []);
+
   const convert = useCallback(async () => {
     const video = videoRef.current;
     if (!video || !videoUrl) {
@@ -240,7 +248,8 @@ export default function VideoToWebp() {
           type="file"
           accept="video/*"
           onChange={(event) => handleFile(event.target.files?.[0] || null)}
-          className="h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] file:mr-3 file:rounded file:border-0 file:bg-[var(--primary)] file:px-3 file:py-1.5 file:text-[var(--primary-foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+          disabled={busy}
+          className="h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] file:mr-3 file:rounded file:border-0 file:bg-[var(--primary)] file:px-3 file:py-1.5 file:text-[var(--primary-foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:opacity-60"
         />
       </div>
 
@@ -250,6 +259,7 @@ export default function VideoToWebp() {
             ref={videoRef}
             src={videoUrl}
             onLoadedMetadata={onMetadata}
+            onError={onVideoError}
             preload="metadata"
             playsInline
             muted
@@ -274,7 +284,8 @@ export default function VideoToWebp() {
               setStartTime(Number(event.target.value));
               clearOutput();
             }}
-            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+            disabled={busy}
+            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:opacity-60"
           />
         </div>
 
@@ -292,7 +303,8 @@ export default function VideoToWebp() {
               setEndTime(Number(event.target.value));
               clearOutput();
             }}
-            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+            disabled={busy}
+            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:opacity-60"
           />
         </div>
 
@@ -307,7 +319,8 @@ export default function VideoToWebp() {
               setFps(Number(event.target.value));
               clearOutput();
             }}
-            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+            disabled={busy}
+            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:opacity-60"
           >
             {FPS_PRESETS.map((value) => (
               <option key={value} value={value}>
@@ -328,7 +341,8 @@ export default function VideoToWebp() {
               setTargetWidth(Number(event.target.value));
               clearOutput();
             }}
-            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+            disabled={busy}
+            className="h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:opacity-60"
           >
             {WIDTH_PRESETS.map((value) => (
               <option key={value} value={value}>
@@ -353,7 +367,8 @@ export default function VideoToWebp() {
               setQuality(Number(event.target.value));
               clearOutput();
             }}
-            className="h-11 w-full accent-[var(--primary)] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 focus-visible:outline-none"
+            disabled={busy}
+            className="h-11 w-full accent-[var(--primary)] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 focus-visible:outline-none disabled:opacity-60"
           />
         </div>
 
@@ -366,7 +381,8 @@ export default function VideoToWebp() {
               setLoopForever(event.target.checked);
               clearOutput();
             }}
-            className="h-5 w-5 accent-[var(--primary)] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 focus-visible:outline-none"
+            disabled={busy}
+            className="h-5 w-5 accent-[var(--primary)] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 focus-visible:outline-none disabled:opacity-60"
           />
           <label htmlFor="vtw-loop" className="text-sm font-medium text-[var(--foreground)]">
             Loop forever
@@ -408,7 +424,11 @@ export default function VideoToWebp() {
         </button>
       </div>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <p className="text-sm text-[var(--muted-foreground)]">Animated WebP size</p>
         <p className="mt-1 text-5xl font-semibold tracking-tight text-[var(--foreground)]">
           {shownError || !result ? DASH : formatBytes(result.byteLength)}

@@ -425,6 +425,16 @@ export function assessImageUse({
     );
   }
 
+  // 8. Keep the paper trail for the licence itself.
+  if (source.needsLicenceDocument) {
+    add(
+      "licence-document",
+      "Licence document or receipt on file",
+      "recommended",
+      "Keep a copy of the purchase receipt, licence agreement or written permission for this image somewhere you can find it again — you may need to produce it if the use is ever challenged.",
+    );
+  }
+
   const counts = STATUS_ORDER.reduce((acc, status) => {
     acc[status] = items.filter((item) => item.status === status).length;
     return acc;

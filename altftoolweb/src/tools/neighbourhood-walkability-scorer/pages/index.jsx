@@ -5,7 +5,6 @@ import { Check, Copy, Footprints, RotateCcw } from "lucide-react";
 
 import {
   CATEGORIES,
-  MAX_COUNT,
   MAX_WALK_MINUTES,
   TOTAL_WEIGHT,
   formatWalkabilityText,
@@ -27,7 +26,7 @@ const DEFAULT_AMENITIES = {
   grocery: { minutes: "6", count: "1" },
   restaurants: { minutes: "4", count: "8" },
   shopping: { minutes: "7", count: "4" },
-  coffee: { minutes: "5", count: "3" },
+  coffee: { minutes: "5", count: "2" },
   banks: { minutes: "8", count: "1" },
   parks: { minutes: "9", count: "1" },
   schools: { minutes: "11", count: "1" },
@@ -146,11 +145,14 @@ export default function ToolHome() {
                       type="number"
                       inputMode="numeric"
                       min="0"
-                      max={MAX_COUNT}
+                      max={category.subWeights.length}
                       step="1"
                       value={amenities[category.id].count}
                       onChange={(event) => setAmenity(category.id, "count", event.target.value)}
                     />
+                    <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
+                      Counts above {category.subWeights.length} do not add further points.
+                    </p>
                   </div>
                 )}
               </div>
@@ -250,7 +252,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Walkability score
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {result.error ? DASH : `${result.score}/100`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

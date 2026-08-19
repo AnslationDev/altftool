@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, RefreshCw, AlertCircle, Sparkles, ZoomIn, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import * as faceapi from "@vladmandic/face-api";
-import { analyzeAcne } from "@/tools/_shared/beauty/utils/skinAnalysis";
+import { analyzeAcne, isBlemishPixel } from "@/tools/_shared/beauty/utils/skinAnalysis";
 import { extractFaceBox } from "@/tools/_shared/beauty/utils/faceAnalysis";
 import BeautyUploader from "@/tools/_shared/beauty/components/BeautyUploader";
 import { ScoreBar, ConfidenceBadge, MetricGrid, DetailRow } from "@/tools/_shared/beauty/components/ResultCard";
@@ -60,6 +60,10 @@ export default function AcneSeverityAnalyzer() {
       const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0);
       canvasRef.current = canvas;
+      // The blob URL has done its job once it's painted onto the analysis
+      // canvas — it's never rendered as an <img src>, so release it now
+      // instead of leaking one blob URL per upload/reset.
+      URL.revokeObjectURL(src);
 
       const detection = await faceapi.detectAllFaces(canvas, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
       if (!detection || detection.length === 0 || !detection[0].landmarks) {
@@ -98,7 +102,7 @@ export default function AcneSeverityAnalyzer() {
           const idx = (py * canvas.width + px) * 4;
           const r = hd[idx], g = hd[idx + 1], b = hd[idx + 2];
           const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-          if (r > g + 15 && r > b + 15 && r > 70 && luminance > 40) {
+          if (isBlemishPixel(r, g, b, luminance)) {
             hd[idx] = 255; hd[idx + 1] = 50; hd[idx + 2] = 50;
             hd[idx + 3] = 160;
           }
@@ -118,7 +122,14 @@ export default function AcneSeverityAnalyzer() {
   }, []);
 
   const reset = useCallback(() => {
-    setImage(null);
+    setImage((prev) => {
+      // Defensive: the normal analysis path already revokes the blob URL
+      // right after it's drawn to the analysis canvas, but revoke again here
+      // in case reset() runs before that point (e.g. an early error).
+      // Revoking an already-revoked URL is a harmless no-op.
+      if (prev?.src) URL.revokeObjectURL(prev.src);
+      return null;
+    });
     setResult(null);
     setError(null);
     setLoading(false);
@@ -127,10 +138,15 @@ export default function AcneSeverityAnalyzer() {
     canvasRef.current = null;
   }, []);
 
+  // coverage is capped at 10 in analyzeAcne() (see skinAnalysis.js); render
+  // that ceiling honestly instead of showing a capped number as if it were
+  // an exact measurement.
+  const formatCoverage = (coverage) => (coverage >= 10 ? "10%+" : `${coverage}%`);
+
   const metrics = result
     ? [
         { label: "Detected Spots", value: result.spots },
-        { label: "Coverage", value: `${result.coverage}%` },
+        { label: "Coverage", value: formatCoverage(result.coverage) },
         { label: "Severity Score", value: `${result.score}%`, sub: result.severity },
       ]
     : [];
@@ -159,6 +175,7 @@ export default function AcneSeverityAnalyzer() {
             {error && (
               <motion.div
                 key="error"
+                role="alert"
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
@@ -206,6 +223,8 @@ export default function AcneSeverityAnalyzer() {
           {result && !loading && (
             <motion.div
               key="result"
+              role="status"
+              aria-live="polite"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
@@ -278,7 +297,7 @@ export default function AcneSeverityAnalyzer() {
                     <div className="p-4 space-y-1">
                       <DetailRow label="Severity" value={result.severity} color={SEVERITY_COLORS[result.severity]} />
                       <DetailRow label="Spots Detected" value={result.spots} />
-                      <DetailRow label="Coverage" value={`${result.coverage}%`} />
+                      <DetailRow label="Coverage" value={formatCoverage(result.coverage)} />
                       <DetailRow label="Score" value={`${result.score}%`} color="var(--primary)" />
                       <DetailRow label="Confidence" value={`${Math.round(result.confidence)}%`} color="var(--primary)" />
                     </div>

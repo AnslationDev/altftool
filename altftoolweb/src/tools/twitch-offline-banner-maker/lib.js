@@ -74,6 +74,12 @@ export function planOfflineScreen(options = {}) {
     bodySize = 34,
     renderWidth = TYPICAL_RENDER_WIDTH,
     fileSizeMb = 2.4,
+    // Only the 1920x1080 offline screen renders inside the Twitch video
+    // player, so only it needs the 16:9 letterbox check and the player
+    // control-bar allowance. The Profile banner (1200x480) and Channel
+    // panel (320x300) presets are plain image uploads with neither
+    // constraint; callers planning those should pass false.
+    isPlayerCanvas = true,
   } = options;
 
   const values = {
@@ -173,7 +179,7 @@ export function planOfflineScreen(options = {}) {
   const renderedBody = body * scale;
 
   const warnings = [];
-  if (Math.abs(w / h - CANVAS_RATIO) > 0.02) {
+  if (isPlayerCanvas && Math.abs(w / h - CANVAS_RATIO) > 0.02) {
     warnings.push(
       `This canvas is ${round(w / h, 2)}:1 but the Twitch player is 16:9. Export at ${CANVAS_WIDTH} × ${CANVAS_HEIGHT} so the banner is not letterboxed.`,
     );
@@ -197,7 +203,7 @@ export function planOfflineScreen(options = {}) {
       `${round(fileMb, 2)} MB is over Twitch's ${MAX_FILE_MB} MB limit for the offline banner. Export a JPEG at quality 80.`,
     );
   }
-  if (barShare === 0) {
+  if (isPlayerCanvas && barShare === 0) {
     warnings.push(
       "The control bar allowance is zero. Twitch draws player controls across the bottom of the offline screen, so keep the lower strip clear.",
     );

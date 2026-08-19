@@ -34,7 +34,7 @@ const seo = {
     ],
     [
       "How far apart should skirting be fixed to the wall?",
-      "Trade practice is a screw, nail or adhesive dab every 300–450 mm, with an extra fixing within 50 mm of each end and either side of a joint. This calculator uses 400 mm centres, so a 14 m run needs 36 fixings.",
+      "Trade practice is a screw, nail or adhesive dab every 300–450 mm, with an extra fixing within 50 mm of each end and either side of a joint. This calculator uses 400 mm centres, so a 14.1 m run needs 36 fixings.",
     ],
   ],
 };

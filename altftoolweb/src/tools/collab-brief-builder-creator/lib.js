@@ -227,7 +227,7 @@ export function buildCollabBrief(input = {}) {
     return { error: "Add a rate to at least one deliverable so the fee can be calculated." };
   }
 
-  const usageFee = (baseFee * usagePct) / 100;
+  const usageFee = months > 0 ? (baseFee * usagePct) / 100 : 0;
   const exclusivityFee = (baseFee * exclPct) / 100;
   const rushFee = (baseFee * rushPct) / 100;
   const subtotal = baseFee + usageFee + exclusivityFee + rushFee;
@@ -260,9 +260,11 @@ export function buildCollabBrief(input = {}) {
     months > 0
       ? `Brand may repost and, where agreed, run the content as paid media for ${months} month${months === 1 ? "" : "s"} from the go-live date, in ${territory.label}.`
       : `No paid-media or brand-channel usage is included. Any reuse is a separate agreement.`,
-    paidMedia
+    paidMedia && months > 0
       ? "Paid amplification (whitelisting / partnership ads) is included for the term above."
-      : "Paid amplification is NOT included; the brand may not run this as an ad without a new agreement.",
+      : months === 0
+        ? "Paid amplification is NOT included — no usage term has been granted, so there is no term for the brand to run this as an ad."
+        : "Paid amplification is NOT included; the brand may not run this as an ad without a new agreement.",
     exclusivity
       ? `Category exclusivity applies for the usage term: no competing brand in the same category during that period.`
       : "No category exclusivity — the creator may work with other brands, including competitors.",
@@ -286,6 +288,11 @@ export function buildCollabBrief(input = {}) {
   if (months > 0 && usagePct === 0) {
     warnings.push(
       `You are granting ${months} month(s) of usage with no uplift on the fee. Usage is the thing brands most often get for free.`,
+    );
+  }
+  if (months === 0 && usagePct > 0) {
+    warnings.push(
+      `A ${usagePct}% usage uplift is set but the usage term is 0 months, so it is not being charged. Set a usage term if paid-media or brand-channel usage is actually being granted.`,
     );
   }
   if (exclusivity && exclPct === 0) {

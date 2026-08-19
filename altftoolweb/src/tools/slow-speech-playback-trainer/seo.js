@@ -8,7 +8,7 @@ const seo = {
     "Play the audio and use the player's seek control to return to a difficult phrase; pitch preservation keeps the voice at its natural register.",
   ],
   intro:
-    "The Slow Speech Playback Trainer plays an audio file you already have at 0.35× to 1.25× speed with pitch preservation switched on, so slowed speech stays at its normal voice instead of dropping into a growl. It adds a loop toggle and uses the player's own seek control, which lets you sit on one difficult phrase and hear it repeatedly until it resolves. It is built for language learners, people with auditory processing difficulty, and anyone transcribing a fast or accented recording.",
+    "The Slow Speech Playback Trainer plays an audio file you already have at 0.35× to 1.25× speed with pitch preservation switched on, so slowed speech stays at its normal voice instead of dropping into a growl. It adds a loop toggle that replays the whole file from 0:00 every time it ends, so listening again without a manual rewind is one click away; isolating a single hard phrase still means dragging the seek bar back to it after each pass. It is built for language learners, people with auditory processing difficulty, and anyone transcribing a fast or accented recording.",
   useCases: [
     "A learner cannot catch a run of words in a native-speed podcast, so they drop to 0.6× and loop that stretch until the word boundaries separate.",
     "Someone transcribing an interview with a fast talker plays it at 0.75× so they can type at a steady pace instead of stopping every few seconds.",
@@ -17,7 +17,7 @@ const seo = {
   benefits: [
     ["Pitch stays where it belongs", "Playback uses the browser's pitch-preservation, so a voice slowed to 0.35× still sounds like that person rather than a deep drone."],
     ["Fine control at the slow end", "The rate moves in 0.05 steps from 0.35× to 1.25×, so you can find the point where speech is comprehensible instead of jumping between fixed 0.5× and 0.75× presets."],
-    ["Repeat without restarting", "Loop the file and seek to the hard passage, and it keeps coming back around rather than needing a manual rewind on every pass."],
+    ["Loop without a manual rewind", "Turn on loop and the file replays automatically from the start every time it ends, so hearing the whole recording again never needs the rewind button."],
   ],
   faqs: [
     [
@@ -30,7 +30,7 @@ const seo = {
     ],
     [
       "Can I loop just one difficult sentence?",
-      "Yes, using the loop toggle with the player's seek bar: turn loop on, drag to just before the phrase, and it will repeat from there each time the file ends. There is no separate A-B marker, so this is a manual segment loop rather than an automatic one.",
+      "Not automatically. The loop toggle replays the whole file from 0:00 every time it ends — it does not resume from wherever you last sought. To repeat one phrase, drag the seek bar back to it again after each loop finishes. There is no A-B marker or true segment loop yet, so this is a manual repeat rather than an automatic one.",
     ],
     [
       "Is my audio uploaded anywhere?",

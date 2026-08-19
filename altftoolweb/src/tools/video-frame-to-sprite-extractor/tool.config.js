@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Export selected video frames as a PNG sequence or a single sprite sheet.",
+  "description": "Export selected video frames as a single tiled sprite sheet PNG.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

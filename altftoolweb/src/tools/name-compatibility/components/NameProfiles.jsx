@@ -34,7 +34,7 @@ function ProfileCard({ label, profile }) {
           <span className="text-[var(--muted-foreground)]">Element:</span>
           <span className="font-semibold text-[var(--foreground)]">{profile.element}</span>
         </div>
-        <div className="p-2 bg-[var(--card)] border border(--border) rounded-lg">
+        <div className="p-2 bg-[var(--card)] border border-[var(--border)] rounded-lg">
           <span className="text-[var(--muted-foreground)] block mb-0.5">Trait: <span className="font-semibold text-[var(--foreground)]">{profile.numerology.trait}</span></span>
           <span className="text-[var(--muted-foreground)] leading-relaxed block">{profile.numerology.description}</span>
         </div>

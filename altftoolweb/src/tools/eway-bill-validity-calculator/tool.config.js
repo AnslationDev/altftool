@@ -3,7 +3,7 @@ const toolConfig = {
   name: "E-Way Bill Distance Validity Calculator",
   category: ["Finance Calculators"],
   description:
-    "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time.",
+    "Work out e-way bill validity days and the exact expiry date from transport distance, cargo type and generation date.",
   icon: "truck",
   iconColor: "text-[var(--primary)]",
 };

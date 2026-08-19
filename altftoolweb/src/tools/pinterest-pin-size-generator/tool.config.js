@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Pinterest Pin Size Generator",
   category: ["Design & Color"],
   description:
-    "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks.",
+    "Calculate standard, square, long and idea pin canvas sizes with a scale multiplier, safe-area CSS, feed-truncation checks and a crop estimate from your source image's dimensions.",
   icon: "pin",
   iconColor: "text-[var(--primary)]",
 };

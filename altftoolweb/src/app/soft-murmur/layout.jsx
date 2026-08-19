@@ -1,22 +1,12 @@
 import React from "react";
 
-export const metadata = {
-  title: "Ambient Sound Mixer - Create Relaxing Sounds for Focus, Sleep & Study",
-  description:
-    "Create your own relaxing ambient sound mix with rain, thunder, waves, wind, fire, birds, coffee shop noise, singing bowl, and white noise for study, sleep, and focus.",
-  keywords: [
-    "ambient sound mixer",
-    "relaxing sounds",
-    "rain sounds",
-    "white noise",
-    "sleep sounds",
-    "focus sounds",
-    "study sounds",
-    "meditation sounds",
-    "nature sound mixer",
-    "background noise generator",
-  ],
-};
+// No `metadata` export here on purpose.
+//
+// Next.js resolves metadata from the root down and the deepest segment wins, so
+// anything exported from this layout is silently overridden by page.jsx's
+// generateMetadata(). A good title/description/keywords block used to sit here
+// and never reached a single <head>. The canonical metadata for this route now
+// lives in page.jsx — add fields there, not here.
 
 export default function SoftMurmurLayout({ children }) {
   return <>{children}</>;

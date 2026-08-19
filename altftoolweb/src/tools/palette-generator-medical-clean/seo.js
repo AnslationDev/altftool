@@ -24,7 +24,7 @@ const seo = {
     ],
     [
       "Automatic text repair",
-      "Where a vivid status colour is too light to carry words, a darker sibling of the same hue is generated until it reaches 4.5:1.",
+      "Where a vivid status colour can't carry words, a repaired sibling of the same hue is generated until it reaches 4.5:1 — darker on a light interface, lighter on a dark one.",
     ],
   ],
   faqs: [

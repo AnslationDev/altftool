@@ -16,11 +16,21 @@ const iconMap = {
   Heart,
 };
 
+const frequencyLabels = {
+  daily: 'per day',
+  weekly: 'per week',
+  monthly: 'per month',
+  yearly: 'per year',
+};
+
 export const HabitItem = ({ habit, onDelete, index }) => {
-  const IconComponent = iconMap[habit.name.split(' ')[0]] || Coffee;
+  // Prefer the category icon chosen in the form; fall back to guessing from
+  // the habit name for older habits saved before that was tracked.
+  const IconComponent = iconMap[habit.icon] || iconMap[habit.name.split(' ')[0]] || Coffee;
   const monthlyCost = calculateMonthlyCost(habit.cost, habit.frequency);
   const yearlyCost = monthlyCost * 12;
   const fiveYearCost = yearlyCost * 5;
+  const frequencyLabel = frequencyLabels[habit.frequency] || 'per week';
 
   return (
     <motion.div
@@ -60,16 +70,11 @@ export const HabitItem = ({ habit, onDelete, index }) => {
 
                   <span className="flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
                     {habit.frequency === 'daily' ? (
-                      <>
-                        <Calendar className="w-3 h-3" />
-                        per day
-                      </>
+                      <Calendar className="w-3 h-3" />
                     ) : (
-                      <>
-                        <Repeat className="w-3 h-3" />
-                        per week
-                      </>
+                      <Repeat className="w-3 h-3" />
                     )}
+                    {frequencyLabel}
                   </span>
                 </div>
               </div>

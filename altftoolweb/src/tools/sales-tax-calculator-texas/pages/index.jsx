@@ -299,7 +299,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Total sales tax
             </p>
@@ -336,10 +336,13 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {copied ? "Copied Texas sales tax result to clipboard" : ""}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Taxable amount", hasError ? DASH : money(result.taxableBase)],
             ["Non-taxable amount", hasError ? DASH : money(result.nonTaxableTotal)],
@@ -407,7 +410,11 @@ export default function ToolHome() {
             {vehicle.error}
           </p>
         ) : (
-          <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
+          <dl
+            className="mt-4 divide-y divide-[var(--border)] text-sm"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {[
               ["Taxable value after trade-in", money(vehicle.taxableValue)],
               ["Motor vehicle sales tax (6.25%)", money(vehicle.tax)],

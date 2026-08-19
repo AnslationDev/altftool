@@ -33,8 +33,8 @@ const seo = {
       "Almost always a missing intermediate. Desktop browsers cache intermediates they have seen before, so a server that sends only the leaf still works there while a fresh device has nothing to build the path with. Paste the full bundle here — the chain check compares each certificate's issuer against the next one's subject.",
     ],
     [
-      "Can this tool check a live website's certificate?",
-      "No, and no browser-based tool can: no web API exposes the certificate a remote server presents on a TLS connection, so a live domain lookup has to run on a server. Fetch it yourself with openssl s_client -connect example.com:443 -showcerts and paste the PEM block here.",
+      "Do I need to paste the whole certificate chain, or just one certificate?",
+      "Either works. Paste just the leaf and you still get its subject, issuer, validity, key size and signature algorithm; paste the leaf followed by each intermediate (and optionally the root) and the tool also checks that every certificate's issuer matches the next one's subject, which is what catches a missing intermediate. Get the chain with openssl s_client -connect example.com:443 -showcerts, or export it from your browser's certificate viewer.",
     ],
   ],
 };

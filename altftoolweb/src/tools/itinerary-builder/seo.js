@@ -15,14 +15,14 @@ const seo = {
     "You are the one organising a group trip and need a clean day-wise plan to send round as Markdown or a CSV everyone can open in a spreadsheet",
   ],
   benefits: [
-    ["Overlaps are detected, not eyeballed", "Any activity whose start plus duration runs into the next slot on the same day is flagged on both cards."],
+    ["Overlaps are detected, not eyeballed", "Any activity whose start plus duration runs into a later slot on the same day is flagged on both cards, even when a shorter activity sits between them in the schedule."],
     ["Pace caps catch over-planned days", "A day's planned minutes are measured against the 5, 7 or 9 hour cap for your chosen pace, so cramming shows up before you travel."],
     ["Cost split three ways", "The same activity costs roll up into a trip total, a per-person share and a per-day average, plus a breakdown by category."],
   ],
   faqs: [
     [
       "How does it know two activities clash?",
-      "It compares each activity's end time — start plus duration in minutes — against the start time of the next activity on the same day, after sorting that day chronologically. If the end runs past the next start, both cards are marked as conflicting, so you can see which pair to move.",
+      "It sorts each day's activities chronologically, then compares every activity's end time — start plus duration in minutes — against the start time of every later activity that day, not only the one immediately after it. If an end time runs past a later start time, both cards are marked as conflicting, so a long block that overlaps a non-adjacent later activity is still caught, not just back-to-back pairs.",
     ],
     [
       "What do the relaxed, balanced and packed pace settings actually change?",

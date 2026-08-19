@@ -47,6 +47,7 @@ const DEFAULTS = {
   asOnDate: "2026-08-03",
   isBpl: false,
   wantsInspection: false,
+  lifeLiberty: false,
 };
 
 export default function ToolHome() {
@@ -67,6 +68,7 @@ export default function ToolHome() {
   const [asOnDate, setAsOnDate] = useState(DEFAULTS.asOnDate);
   const [isBpl, setIsBpl] = useState(DEFAULTS.isBpl);
   const [wantsInspection, setWantsInspection] = useState(DEFAULTS.wantsInspection);
+  const [lifeLiberty, setLifeLiberty] = useState(DEFAULTS.lifeLiberty);
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(
@@ -89,6 +91,7 @@ export default function ToolHome() {
         asOnDate,
         isBpl,
         wantsInspection,
+        lifeLiberty,
       }),
     [
       studentName,
@@ -108,6 +111,7 @@ export default function ToolHome() {
       asOnDate,
       isBpl,
       wantsInspection,
+      lifeLiberty,
     ],
   );
 
@@ -131,6 +135,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all fields? This clears your entered application details and cannot be undone.")) {
+      return;
+    }
     setStudentName(DEFAULTS.studentName);
     setAddress(DEFAULTS.address);
     setPhone(DEFAULTS.phone);
@@ -148,6 +155,7 @@ export default function ToolHome() {
     setAsOnDate(DEFAULTS.asOnDate);
     setIsBpl(DEFAULTS.isBpl);
     setWantsInspection(DEFAULTS.wantsInspection);
+    setLifeLiberty(DEFAULTS.lifeLiberty);
     setCopied(false);
   };
 
@@ -396,6 +404,16 @@ export default function ToolHome() {
             />
             Ask to inspect the file first
           </label>
+          <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm" htmlFor="sc-life-liberty">
+            <input
+              id="sc-life-liberty"
+              type="checkbox"
+              className="h-5 w-5 rounded border-[var(--border)] accent-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+              checked={lifeLiberty}
+              onChange={(event) => setLifeLiberty(event.target.checked)}
+            />
+            This request concerns a threat to life or personal liberty (48-hour reply period)
+          </label>
         </div>
       </section>
 
@@ -425,7 +443,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyApplication}
               disabled={hasError}
-              aria-label="Copy the RTI application"
+              aria-label={copied ? "Copied" : "Copy the RTI application"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -453,6 +471,7 @@ export default function ToolHome() {
             ["Reply due (Section 7(1))", hasError ? DASH : result.timeline.replyDue.long],
             ["First appeal by (Section 19(1))", hasError ? DASH : result.timeline.firstAppealBy.long],
             ["Appeal decided by", hasError ? DASH : result.timeline.faaDecisionDue.long],
+            ["Outer limit with recorded reasons", hasError ? DASH : result.timeline.faaExtendedDue.long],
             ["Second appeal by (Section 19(3))", hasError ? DASH : result.timeline.secondAppealBy.long],
             ["Application fee", hasError ? DASH : isBpl ? "Nil (Section 7(5))" : `Rs ${APPLICATION_FEE_INR}`],
           ].map(([label, value]) => (

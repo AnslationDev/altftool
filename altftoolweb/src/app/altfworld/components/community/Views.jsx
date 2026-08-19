@@ -36,7 +36,7 @@ export function RightSidebar() {
   return <aside className="right-sidebar">
     <section className="side-widget welcome-widget"><span className="mini-orbit">✦</span><Kicker>THIS WEEK IN ALTFWORLD</Kicker><h3>Make something a little more useful.</h3><p>Join a generous group of people sharing their work, questions, and hard-won notes.</p><Link href="/altfworld/about">How this community works <b>→</b></Link></section>
     <section className="side-widget"><div className="widget-heading"><h3>Trending now</h3><span>↗</span></div><ol className="trending-list">{community.threads.slice(0, 4).map((thread, index) => <li key={thread.slug}><span>{String(index + 1).padStart(2, "0")}</span><Link href={`/altfworld/forums/${thread.categorySlug}/general/${thread.slug}`}>{thread.title}</Link></li>)}</ol><Link className="widget-link" href="/altfworld/forums?view=latest">See what&apos;s new <b>→</b></Link></section>
-    <section className="side-widget online-widget"><div className="widget-heading"><h3><i className="live-dot" /> In the room</h3><span>•</span></div><strong>{community.stats.online}</strong><span>members online now</span><p><b>892</b> members · <b>392</b> guests</p><div className="avatar-line">{community.users.slice(0, 4).map((user) => <Avatar key={user.username} initials={user.initials} tone={user.tone} />)}<Link href="/altfworld/members">+ 1,280 others</Link></div></section>
+    <section className="side-widget online-widget"><div className="widget-heading"><h3><i className="live-dot" /> In the room</h3><span>•</span></div><strong>{community.stats.online}</strong><span>mock members online now</span><p><b>892</b> mock members · <b>392</b> mock guests</p><div className="avatar-line">{community.users.slice(0, 4).map((user) => <Avatar key={user.username} initials={user.initials} tone={user.tone} />)}<Link href="/altfworld/members">+ 1,280 others</Link></div></section>
     <div className="ad-placeholder"><span>COMMUNITY PARTNER</span><strong>A space for your next good idea.</strong><small>Display-only placement</small></div>
   </aside>;
 }
@@ -94,6 +94,18 @@ export function CategoryView({ slug }) {
   const renderedThreads = threads.length ? threads.slice(0, 12) : community.threads.slice(0, 3);
   return (
     <main className="site-shell app-page"><div className="breadcrumbs"><Link href="/altfworld/forums">Forums</Link><span>/</span><span>{category.name}</span></div><div className="three-column-layout"><ForumSidebar active={category.slug} /><section className="main-stream"><div className="thread-toolbar"><div><b>{category.threads.toLocaleString()} threads</b><span> · {category.posts.toLocaleString()} posts</span></div><button>Newest <span>⌄</span></button></div><ThreadList threads={renderedThreads} /><Pagination /></section><RightSidebar /></div></main>
+  );
+}
+
+export function SubcategoryView({ categorySlug, subcategorySlug }) {
+  const category = community.categories.find((item) => item.slug === categorySlug) ?? community.categories[0];
+  const subcategory = category.subcategories.find((item) => item.slug === subcategorySlug) ?? category.subcategories[0];
+  const subIndex = category.subcategories.findIndex((item) => item.slug === subcategory.slug);
+  const categoryThreads = community.threads.filter((thread) => thread.categorySlug === category.slug);
+  const threads = categoryThreads.filter((_, index) => index % category.subcategories.length === subIndex);
+  const renderedThreads = threads.length ? threads.slice(0, 12) : categoryThreads.slice(0, 3);
+  return (
+    <main className="site-shell app-page"><div className="breadcrumbs"><Link href="/altfworld/forums">Forums</Link><span>/</span><Link href={`/altfworld/forums/${category.slug}`}>{category.name}</Link><span>/</span><span>{subcategory.name}</span></div><div className="three-column-layout"><ForumSidebar active={category.slug} /><section className="main-stream"><div className="thread-toolbar"><div><b>{subcategory.threads.toLocaleString()} threads</b><span> · {subcategory.description}</span></div><button>Newest <span>⌄</span></button></div><ThreadList threads={renderedThreads} /><Pagination /></section><RightSidebar /></div></main>
   );
 }
 

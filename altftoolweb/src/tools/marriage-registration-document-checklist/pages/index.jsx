@@ -11,9 +11,11 @@ import {
   NATIONALITIES,
   SMA_OBJECTION_DAYS,
   SMA_RESIDENCE_DAYS,
+  SMA_SOLEMNISE_MONTHS,
   buildChecklist,
   checkAgeEligibility,
   computeSmaTimeline,
+  parseISODate,
 } from "../lib";
 
 const DASH = "—";
@@ -86,6 +88,21 @@ export default function ToolHome() {
 
   const ok = !checklist.error;
   const needsNotice = ok && checklist.requiresNotice;
+
+  // Under the Special Marriage Act, the marriage date entered above must fall
+  // after the section 7 objection window closes and before the section 14
+  // fresh-notice deadline. Neither the age check nor the SMA timeline compare
+  // against each other on their own, so this flags the mismatch explicitly.
+  const marriageDateWarning = useMemo(() => {
+    if (!needsNotice || timeline.error || !parseISODate(form.marriageDate)) return null;
+    if (form.marriageDate < timeline.earliestSolemnisation) {
+      return `The marriage date falls inside the still-open ${SMA_OBJECTION_DAYS}-day objection window — solemnisation is not permitted until ${prettyDate(timeline.earliestSolemnisation)}.`;
+    }
+    if (form.marriageDate > timeline.lastDateToSolemnise) {
+      return `The marriage date falls after the section 14 deadline of ${prettyDate(timeline.lastDateToSolemnise)} (${SMA_SOLEMNISE_MONTHS} calendar months from the notice) — a fresh notice will be required.`;
+    }
+    return null;
+  }, [needsNotice, timeline, form.marriageDate]);
 
   const toggleDone = (item) => (event) => {
     const checked = event.target.checked;
@@ -302,6 +319,14 @@ export default function ToolHome() {
               />
             </div>
           ) : null}
+          {marriageDateWarning ? (
+            <p
+              role="alert"
+              className="sm:col-span-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]"
+            >
+              {marriageDateWarning}
+            </p>
+          ) : null}
           <div className="sm:col-span-2">
             <label className="flex min-h-11 items-center gap-3 text-sm">
               <input
@@ -353,7 +378,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyChecklist}
-              aria-label="Copy the marriage registration checklist"
+              aria-label={copied ? "Checklist copied to clipboard" : "Copy the marriage registration checklist"}
               className={GHOST_BTN}
               disabled={!ok}
             >

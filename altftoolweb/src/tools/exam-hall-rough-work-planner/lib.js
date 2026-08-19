@@ -52,7 +52,7 @@ export function planRoughWork({
     return { error: "Enter a whole number of questions needing rough work (at least 1)." };
   }
   if (!Number.isFinite(reserved) || !Number.isInteger(reserved) || reserved < 0) {
-    return { error: "Reserved sides cannot be negative." };
+    return { error: "Reserved sides must be a whole number, 0 or more." };
   }
 
   const totalSides = sheetCount * sides;

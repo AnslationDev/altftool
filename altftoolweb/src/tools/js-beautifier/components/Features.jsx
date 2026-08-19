@@ -10,7 +10,7 @@ const faqItems = [
   {
     question: "Does it support modern ES6 syntax?",
     answer:
-      "Yes! The formatting engine handles arrow functions, template literals, imports, classes, and modern syntax elements.",
+      "Mostly. It reformats standard function, object, class, and control-flow syntax well, including arrow functions. It works on the text itself rather than parsing JavaScript into a syntax tree like Prettier does, so content inside template literals (backtick strings with ${...} interpolation) can come out misformatted. Treat the output as a reading aid for those cases.",
   },
   {
     question: "Is my source code sent to any servers?",
@@ -18,9 +18,9 @@ const faqItems = [
       "No. All parsing, indentation, and formatting operations are executed entirely client-side inside your browser, ensuring total privacy.",
   },
   {
-    question: "How do I choose between tabs and spaces?",
+    question: "How do I choose the indentation size?",
     answer:
-      "Use the configuration panel below the input box to customize your preferred indentation format (2 spaces, 4 spaces, or tabs).",
+      "Use the configuration panel below the input box to set your preferred indentation width: 2, 4, or 8 spaces.",
   },
 ];
 

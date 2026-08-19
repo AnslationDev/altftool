@@ -30,11 +30,11 @@ const seo = {
     ],
     [
       "How long does a commuter bicycle take to pay for itself?",
-      "Divide the purchase price by your net monthly saving. A ₹25,000 bicycle against a motorcycle commute saving ₹1,300 a month pays back in about 19 months; against a car or daily cab commute it usually pays back inside six months.",
+      "Divide the purchase price by your net monthly saving. A ₹25,000 bicycle against a motorcycle commute saving ₹1,300 a month pays back in about 19 months; against a car commute over the same distance it often pays back within six to eight months, faster still against a daily cab.",
     ],
     [
       "Does an electric scooter already save enough that cycling adds little?",
-      "Electric two-wheelers cut running costs to roughly ₹0.25 a kilometre in energy, so the fuel saving from switching to a bicycle is small. The remaining savings come from parking, tyres, servicing and battery depreciation, and the emissions saving depends on how carbon-intensive your electricity supply is — around 0.71 kg CO2 per kWh on the Indian grid average.",
+      "Electric two-wheelers cut running costs to roughly ₹0.23 a kilometre in energy, so the fuel saving from switching to a bicycle is small. The remaining savings come from parking, tyres, servicing and battery depreciation, and the emissions saving depends on how carbon-intensive your electricity supply is — around 0.71 kg CO2 per kWh on the Indian grid average.",
     ],
   ],
 };

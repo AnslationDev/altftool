@@ -312,7 +312,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -374,15 +378,26 @@ export default function ToolHome() {
           </div>
         )}
 
-        {!hasError && result.validation.valid && (
+        {!hasError && result.validation.valid && result.companionIssues.length === 0 && (
           <p className="mt-4 text-sm font-semibold text-[var(--success)]">
             Legal on any Kafka broker: charset, length and collision checks all pass.
           </p>
         )}
+
+        {!hasError && result.validation.valid && result.companionIssues.length > 0 && (
+          <div
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
+            The main topic name is legal, but {result.companionIssues.length === 1 ? "a companion topic" : "companion topics"} below
+            {" "}
+            {result.companionIssues.length === 1 ? "is" : "are"} not — see the issues listed under each one.
+          </div>
+        )}
       </section>
 
       {!hasError && result.companions.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
           <h2 className="text-base font-semibold">Companion topics</h2>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[320px] text-left text-sm">
@@ -393,15 +408,28 @@ export default function ToolHome() {
                 </tr>
               </thead>
               <tbody>
-                {result.companions.map((companion) => (
-                  <tr key={companion.name} className="border-b border-[var(--border)] last:border-0 align-top">
-                    <td className="py-2 pr-3 font-semibold">{companion.role}</td>
-                    <td className="py-2">
-                      <span className="break-all font-mono text-xs">{companion.name}</span>
-                      <span className="mt-1 block text-xs text-[var(--muted-foreground)]">{companion.why}</span>
-                    </td>
-                  </tr>
-                ))}
+                {result.companions.map((companion) => {
+                  const issue = result.companionIssues.find((item) => item.name === companion.name);
+                  return (
+                    <tr key={companion.name} className="border-b border-[var(--border)] last:border-0 align-top">
+                      <td className="py-2 pr-3 font-semibold">{companion.role}</td>
+                      <td className="py-2">
+                        <span className="break-all font-mono text-xs">{companion.name}</span>
+                        <span className="mt-1 block text-xs text-[var(--muted-foreground)]">{companion.why}</span>
+                        {issue && (
+                          <ul
+                            role="alert"
+                            className="mt-2 list-disc space-y-1 rounded-md bg-[var(--danger-soft)] px-3 py-2 pl-6 text-xs font-medium text-[var(--danger)]"
+                          >
+                            {issue.issues.map((message) => (
+                              <li key={message}>{message}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

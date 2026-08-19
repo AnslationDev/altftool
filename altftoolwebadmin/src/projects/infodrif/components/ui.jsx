@@ -213,7 +213,10 @@ export function TableSkeletonRows({ rows = 4, colSpan }) {
 /** Shared URL rule: a relative path, or an absolute http(s) URL. */
 export function isSafeUrl(value = "") {
   const url = String(value).trim();
-  if (url.startsWith("/")) return true;
+  // A leading "//" is protocol-relative: browsers resolve it to an
+  // arbitrary external origin, so it must NOT be treated as a safe
+  // same-site relative path.
+  if (url.startsWith("/") && !url.startsWith("//")) return true;
   try {
     const parsed = new URL(url);
     return parsed.protocol === "http:" || parsed.protocol === "https:";

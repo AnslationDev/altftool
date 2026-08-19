@@ -431,7 +431,7 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -443,7 +443,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Arrival and time zones</h2>
-        <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-3 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {timeRows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -475,7 +475,7 @@ export default function ToolHome() {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody aria-live="polite" role="status">
                 {result.schedule.map((slot) => (
                   <tr key={slot.hour} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">Hour {slot.hour}</td>

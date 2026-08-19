@@ -222,40 +222,44 @@ export default function CompressClient() {
                   {items.map((it) => {
                     const red = it.result ? percentChange(it.originalSize, it.result.size) : null;
                     return (
-                      <button
+                      <div
                         key={it.id}
-                        onClick={() => setSelected(it.id)}
-                        className="flex items-center gap-3 rounded-xl border p-2.5 text-left transition-colors"
+                        className="flex items-center gap-3 rounded-xl border p-2.5 transition-colors"
                         style={{
                           borderColor: selected === it.id ? "var(--ali-teal)" : "var(--ali-border)",
                           background: selected === it.id ? "var(--ali-grad-soft)" : "var(--ali-surface)",
                         }}
                       >
-                        <img src={it.url} alt="" className="h-12 w-12 shrink-0 rounded-lg object-cover ali-checker" />
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-sm font-medium">{it.file.name}</span>
-                          <span className="block text-xs" style={{ color: "var(--ali-muted)" }}>
-                            {formatBytes(it.originalSize)}
-                            {it.result && ` → ${formatBytes(it.result.size)}`}
+                        <button
+                          type="button"
+                          onClick={() => setSelected(it.id)}
+                          className="flex min-w-0 flex-1 items-center gap-3 text-left"
+                          aria-pressed={selected === it.id}
+                        >
+                          <img src={it.url} alt="" className="h-12 w-12 shrink-0 rounded-lg object-cover ali-checker" />
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-sm font-medium">{it.file.name}</span>
+                            <span className="block text-xs" style={{ color: "var(--ali-muted)" }}>
+                              {formatBytes(it.originalSize)}
+                              {it.result && ` → ${formatBytes(it.result.size)}`}
+                            </span>
                           </span>
-                        </span>
+                        </button>
                         {red != null && (
                           <span className="shrink-0 rounded-md px-2 py-1 text-xs font-semibold"
                             style={{ background: "var(--anslation-ds-success-soft,#dcf4e3)", color: "var(--anslation-ds-success,#14783e)" }}>
                             −{red}%
                           </span>
                         )}
-                        <span
-                          role="button"
-                          tabIndex={0}
-                          onClick={(e) => { e.stopPropagation(); removeItem(it.id); }}
-                          onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); removeItem(it.id); } }}
+                        <button
+                          type="button"
+                          onClick={() => removeItem(it.id)}
                           className="shrink-0 rounded-lg p-1.5 opacity-60 hover:opacity-100"
-                          aria-label="Remove"
+                          aria-label={`Remove ${it.file.name}`}
                         >
                           <Trash2 size={16} />
-                        </span>
-                      </button>
+                        </button>
+                      </div>
                     );
                   })}
                 </div>

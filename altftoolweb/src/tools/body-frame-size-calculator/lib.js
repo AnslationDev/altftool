@@ -180,6 +180,10 @@ export function computeBodyFrame({ sex, heightCm, wristCm, method = "wrist" } = 
 
   const idealWeightKg = hamwiIdealWeightKg(sex, heightCm, frame);
   const mediumWeightKg = hamwiIdealWeightKg(sex, heightCm, "medium");
+  // The Hamwi formula only produces a positive weight above a sex-specific height
+  // floor (roughly 107 cm for men, 100 cm for women); below that it is undefined.
+  // Callers must check this before formatting idealWeightKg/idealWeightLb/mediumWeightKg.
+  const weightAvailable = Number.isFinite(idealWeightKg) && Number.isFinite(mediumWeightKg);
 
   return {
     frame,
@@ -199,6 +203,7 @@ export function computeBodyFrame({ sex, heightCm, wristCm, method = "wrist" } = 
     ratioSmallAbove: thresholds.smallAbove,
     ratioLargeBelow: thresholds.largeBelow,
     extrapolated: sex === "male" && heightIn < MALE_TABLE_MIN_HEIGHT_IN,
+    weightAvailable,
     idealWeightKg,
     idealWeightLb: idealWeightKg * LB_PER_KG,
     mediumWeightKg,

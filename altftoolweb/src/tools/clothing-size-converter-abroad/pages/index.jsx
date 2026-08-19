@@ -175,7 +175,11 @@ export default function ToolHome() {
                   id="size-system"
                   className={`mt-2 ${INPUT_CLASS}`}
                   value={activeSystem}
-                  onChange={(event) => setSystem(event.target.value)}
+                  onChange={(event) => {
+                    const nextSystem = event.target.value;
+                    setSystem(nextSystem);
+                    setLabel(String(table[3][nextSystem]));
+                  }}
                 >
                   {systems.map((entry) => (
                     <option key={entry.key} value={entry.key}>
@@ -194,7 +198,7 @@ export default function ToolHome() {
                   value={label}
                   onChange={(event) => setLabel(event.target.value)}
                 >
-                  {table.map((row) => (
+                  {[...new Map(table.map((row) => [String(row[activeSystem]), row])).values()].map((row) => (
                     <option key={`${row.eu}-${row[activeSystem]}`} value={String(row[activeSystem])}>
                       {row[activeSystem]}
                     </option>
@@ -271,7 +275,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Ask for size ({targetLabel})
             </p>
-            <p className="mt-1 text-5xl font-semibold text-[var(--primary)]">
+            <p aria-live="polite" aria-atomic="true" className="mt-1 text-5xl font-semibold text-[var(--primary)]">
               {ok ? result.row[activeTarget] : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

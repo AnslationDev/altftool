@@ -276,11 +276,9 @@ export async function getBlogArticle(id) {
 
 export const subscribeBlogSettings = settingsService.subscribe;
 export const saveBlogSettings = settingsService.save;
-export const resetBlogSettings = settingsService.reset;
 
 export const subscribeBlogDetailSettings = detailService.subscribe;
 export const saveBlogDetailSettings = detailService.save;
-export const resetBlogDetailSettings = detailService.reset;
 
 export const subscribeBlogCategories = categoriesService.subscribe;
 export const createBlogCategory = categoriesService.create;

@@ -154,7 +154,12 @@ export function buildTypography(settings) {
 
 export function generateCss(settings) {
   const { fontSize, gradient, textShadow } = buildTypography(settings);
-  const lines = [
+  const fontUrl = getGoogleFontUrl(settings);
+  const lines = [];
+  if (fontUrl) {
+    lines.push(`@import url("${fontUrl}");`, "");
+  }
+  lines.push(
     ".generated-font-style {",
     `  font-family: ${getFontCss(settings.fontFamily)};`,
     `  font-size: ${fontSize};`,
@@ -164,7 +169,7 @@ export function generateCss(settings) {
     `  letter-spacing: ${settings.letterSpacing}px;`,
     `  line-height: ${settings.lineHeight};`,
     `  text-align: ${settings.textAlign};`,
-  ];
+  );
 
   if (settings.gradientEnabled) {
     lines.push(`  background-image: ${gradient};`, "  -webkit-background-clip: text;", "  background-clip: text;", "  color: transparent;");

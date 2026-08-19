@@ -30,7 +30,7 @@ const seo = {
     ],
     [
       "What are the main milestones after quitting?",
-      "The tracker follows the standard sequence: 20 minutes for heart rate and blood pressure, 12 hours for carbon monoxide clearing, 24 hours for heart attack risk starting to fall, 48 hours for taste and smell, 72 hours for easier breathing, 2 weeks to 3 months for circulation and lung function, then 1 year, 5 years, 10 years and 15 years for heart, stroke and cancer risk.",
+      "The tracker follows the standard sequence: 20 minutes for heart rate and blood pressure, 12 hours for carbon monoxide clearing, 24 hours for heart attack risk starting to fall, 48 hours for taste and smell, 72 hours for easier breathing, 2 weeks to 3 months for circulation and lung function, 1 to 9 months for coughing to ease as cilia regrow, then 1 year, 5 years, 10 years and 15 years for heart, stroke and cancer risk.",
     ],
     [
       "Is my quit date and spending saved if I close the tab?",

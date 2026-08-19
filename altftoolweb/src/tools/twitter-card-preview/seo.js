@@ -30,7 +30,7 @@ const seo = {
     ],
     [
       "Why is my Twitter card not showing an image?",
-      "The usual causes are a missing or misspelled twitter:card tag, an image URL that is relative or served over plain HTTP rather than HTTPS, an unsupported format, or an image over the 5 MB limit. This tool flags each of those as a blocking issue rather than a warning.",
+      "The usual causes are a missing or misspelled twitter:card tag, an image URL that is relative or served over plain HTTP rather than HTTPS, or an image over the 5 MB limit — this tool flags each of those as a blocking issue. An unsupported format (anything other than JPG, PNG, WEBP or GIF) is flagged as a non-blocking warning instead, since it does not by itself stop the card from validating.",
     ],
     [
       "Do I still need Open Graph tags if I have Twitter card tags?",

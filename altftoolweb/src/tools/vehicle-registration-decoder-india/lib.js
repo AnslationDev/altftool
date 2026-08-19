@@ -258,7 +258,17 @@ export function decodeRegistration(raw) {
     office = "a zonal office inside Delhi";
   }
   const serial = serialRaw.padStart(4, "0");
-  const before = approximateVehiclesBefore(series, serial);
+
+  // A three-letter group is a vehicle-class letter (private car, taxi, etc.)
+  // followed by the real two-letter series — e.g. Delhi's DL 8C AF 5010
+  // groups as RTO "8C" plus series "AF", not one continuous three-letter
+  // series. Split it here so the series-position estimate is computed from
+  // only the genuine series, and the canonical display groups the same way
+  // the explanatory note below describes.
+  const classCode = series.length === 3 ? series.slice(0, 1) : "";
+  const seriesForIndex = classCode ? series.slice(1) : series;
+  const rtoDisplay = classCode ? `${rtoRaw}${classCode}` : rtoRaw;
+  const before = approximateVehiclesBefore(seriesForIndex, serial);
 
   const notes = [];
   if (!office) {
@@ -271,9 +281,9 @@ export function decodeRegistration(raw) {
       "No letter series at all, which marks an early plate issued before the series letters were introduced.",
     );
   }
-  if (series.length === 3) {
+  if (classCode) {
     notes.push(
-      "Three letters usually means the first is a vehicle class code, the way Delhi writes DL 8C AF 5010 with C for a private car.",
+      `Three letters usually means the first is a vehicle class code, the way Delhi writes DL 8C AF 5010 with C for a private car — so ${classCode} is read with the RTO number (${rtoDisplay}) and ${seriesForIndex} is the actual letter series.`,
     );
   }
   if (/[IO]/.test(series)) {
@@ -285,23 +295,25 @@ export function decodeRegistration(raw) {
     kindLabel: "Standard state series",
     input: raw,
     compact,
-    canonical: [state, rtoRaw, series, serial].filter(Boolean).join(" "),
+    canonical: [state, rtoDisplay, seriesForIndex, serial].filter(Boolean).join(" "),
     state,
     stateName,
     rto: rtoRaw,
     office,
-    series,
+    series: seriesForIndex,
+    classCode,
     serial,
-    seriesPosition: seriesIndex(series),
+    seriesPosition: seriesIndex(seriesForIndex),
     approxIssuedBefore: before,
     fields: [
       ["State or union territory", `${state} — ${stateName}`],
       ["RTO office code", office ? `${rtoRaw} — ${office}` : `${rtoRaw} — office not in the shortlist`],
-      ["Letter series", series || "none"],
+      ...(classCode ? [["Vehicle class code", `${classCode} — grouped with the RTO number as ${rtoDisplay}`]] : []),
+      ["Letter series", seriesForIndex || "none"],
       ["Serial", serial],
     ],
-    story: series
-      ? `${state} is ${stateName} and ${rtoRaw} identifies the registering office. Series ${series} is number ${seriesIndex(series)} in the A, B … Z, AA, AB sequence, and each series carries serials 0001 to 9999 before the next one opens.`
+    story: seriesForIndex
+      ? `${state} is ${stateName} and ${rtoDisplay} identifies the registering office${classCode ? " and vehicle class" : ""}. Series ${seriesForIndex} is number ${seriesIndex(seriesForIndex)} in the A, B … Z, AA, AB sequence, and each series carries serials 0001 to 9999 before the next one opens.`
       : `${state} is ${stateName} and ${rtoRaw} identifies the registering office. This plate has no letter series, which places it early in that office's history.`,
     notes,
   };

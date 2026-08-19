@@ -18,7 +18,6 @@ export default function ToolHome() {
     category,
     searchQuery,
     favorites,
-    filteredFavorites,
     isFavorite,
     canGoPrevious,
     autoPlay,
@@ -35,13 +34,13 @@ export default function ToolHome() {
     removeFavorite,
     toggleAutoPlay,
     setShowFavorites,
+    selectJoke,
+    showToast,
   } = useJokeGenerator();
 
   const handleCopy = async () => {
     const ok = await copyJoke(currentJoke);
-    if (ok) {
-      /* toast handled by parent */
-    }
+    showToast(ok ? "Copied to clipboard" : "Copy failed — try again");
   };
 
   const handleShare = async () => {
@@ -90,6 +89,7 @@ export default function ToolHome() {
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search jokes by keyword..."
+              aria-label="Search jokes by keyword"
               className="w-full input pl-9 pr-8 py-2 text-sm"
             />
             {searchQuery && (
@@ -145,7 +145,11 @@ export default function ToolHome() {
 
         {/* Toast */}
         {toastMsg && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-lg bg-(--foreground) text-(--background) px-4 py-2 text-sm font-medium shadow-lg animate-in fade-in slide-in-from-bottom-2">
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-lg bg-(--foreground) text-(--background) px-4 py-2 text-sm font-medium shadow-lg animate-in fade-in slide-in-from-bottom-2"
+          >
             {toastMsg}
           </div>
         )}
@@ -156,9 +160,7 @@ export default function ToolHome() {
             favorites={favorites}
             onClose={() => setShowFavorites(false)}
             onRemove={removeFavorite}
-            onSelect={(joke) => {
-              /* handled internally */
-            }}
+            onSelect={selectJoke}
           />
         )}
 

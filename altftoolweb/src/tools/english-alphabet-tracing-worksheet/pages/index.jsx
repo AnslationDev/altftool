@@ -305,7 +305,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <div className="mt-1 flex flex-wrap items-start justify-between gap-3">
+        <div className="mt-1 flex flex-wrap items-start justify-between gap-3" aria-live="polite" aria-atomic="true">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Tracings in the set
@@ -340,7 +340,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Letters selected", ok ? `${sheet.letters.length} (${sheet.letters.join(" ")})` : DASH],
             ["Rows per page", ok ? String(sheet.rowsPerPage) : DASH],
@@ -359,7 +359,7 @@ export default function ToolHome() {
       </section>
 
       {ok && activePage ? (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5 print:hidden">
           <div className="flex flex-wrap items-center justify-between gap-3 print:hidden">
             <h2 className="text-base font-semibold">
               Page {activePage.index} of {sheet.pageCount}
@@ -461,6 +461,89 @@ export default function ToolHome() {
             </svg>
           </div>
         </section>
+      ) : null}
+
+      {ok ? (
+        <div className="hidden print:block">
+          {sheet.pages.map((pg) => (
+            <svg
+              key={pg.index}
+              viewBox={`0 0 ${sheet.page.width} ${sheet.page.height}`}
+              width="100%"
+              role="img"
+              aria-label={`Alphabet tracing page ${pg.index} covering ${pg.rows.map((row) => row.glyph).join(", ")}`}
+              className="mx-auto block h-auto w-full max-w-full bg-[var(--background)]"
+              style={pg.index < sheet.pageCount ? { pageBreakAfter: "always" } : undefined}
+            >
+              <rect
+                x="0"
+                y="0"
+                width={sheet.page.width}
+                height={sheet.page.height}
+                fill="var(--background)"
+              />
+              {pg.rows.map((row) => (
+                <g key={`${row.index}-${row.glyph}`}>
+                  {sheet.showRuling ? (
+                    <>
+                      <line
+                        x1={sheet.contentLeftMm}
+                        y1={row.topY}
+                        x2={sheet.contentRightMm}
+                        y2={row.topY}
+                        stroke="var(--border)"
+                        strokeWidth="0.2"
+                      />
+                      <line
+                        x1={sheet.contentLeftMm}
+                        y1={row.waistY}
+                        x2={sheet.contentRightMm}
+                        y2={row.waistY}
+                        stroke="var(--muted-foreground)"
+                        strokeWidth="0.22"
+                        strokeDasharray="2 2"
+                      />
+                      <line
+                        x1={sheet.contentLeftMm}
+                        y1={row.baselineY}
+                        x2={sheet.contentRightMm}
+                        y2={row.baselineY}
+                        stroke="var(--foreground)"
+                        strokeWidth="0.35"
+                      />
+                      <line
+                        x1={sheet.contentLeftMm}
+                        y1={row.bottomY}
+                        x2={sheet.contentRightMm}
+                        y2={row.bottomY}
+                        stroke="var(--border)"
+                        strokeWidth="0.2"
+                      />
+                    </>
+                  ) : null}
+                  {row.items.map((item) => (
+                    <text
+                      key={`${row.index}-${row.glyph}-${item.index}`}
+                      x={item.x}
+                      y={row.baselineY}
+                      textLength={row.glyphWidthMm}
+                      lengthAdjust="spacingAndGlyphs"
+                      fontFamily={FONT_STACK}
+                      fontSize={sheet.fontSizeMm}
+                      fill={item.solid ? "var(--muted-foreground)" : "none"}
+                      fillOpacity={item.solid ? 0.4 : 0}
+                      stroke={item.solid ? "none" : "var(--muted-foreground)"}
+                      strokeWidth={item.solid ? 0 : 0.3}
+                      strokeDasharray={item.dotted ? "1.4 1.4" : undefined}
+                    >
+                      {row.glyph}
+                    </text>
+                  ))}
+                </g>
+              ))}
+            </svg>
+          ))}
+        </div>
       ) : null}
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5 print:hidden">

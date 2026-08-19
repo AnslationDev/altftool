@@ -21,6 +21,12 @@ const GHOST_BTN =
 
 const DASH = "—";
 
+// A cleared field is "no value yet", not a real 0 measurement -- treating it
+// as NaN routes it through rateWorkSpot's generic "enter a number in every
+// field" message instead of a field-specific range error that misleadingly
+// implies the user typed a real out-of-range reading.
+const toNumber = (value) => (value === "" ? NaN : Number(value));
+
 const DEFAULTS = {
   name: "The café down the road",
   downloadMbps: "24",
@@ -85,20 +91,32 @@ export default function ToolHome() {
   const result = useMemo(
     () =>
       rateWorkSpot({
-        downloadMbps: Number(downloadMbps),
-        uploadMbps: Number(uploadMbps),
-        latencyMs: Number(latencyMs),
-        noiseDba: Number(noiseDba),
+        downloadMbps: toNumber(downloadMbps),
+        uploadMbps: toNumber(uploadMbps),
+        latencyMs: toNumber(latencyMs),
+        noiseDba: toNumber(noiseDba),
         plugs,
-        tableDepthCm: Number(tableDepthCm),
-        seatComfort: Number(seatComfort),
-        dwellMinutes: Number(dwellMinutes),
+        tableDepthCm: toNumber(tableDepthCm),
+        seatComfort: toNumber(seatComfort),
+        dwellMinutes: toNumber(dwellMinutes),
         toilet,
         water,
         quietCorner,
       }),
     [downloadMbps, uploadMbps, latencyMs, noiseDba, plugs, tableDepthCm, seatComfort, dwellMinutes, toilet, water, quietCorner],
   );
+
+  // Keep the last successfully computed rating visible while the user is
+  // mid-edit (e.g. clearing then retyping the Noise field passes through
+  // out-of-range intermediate values). Adjusting state during render (guarded
+  // so it only fires when the cached value is stale) is the pattern React
+  // recommends for this instead of an effect -- see "Adjusting state when a
+  // prop changes" in the React docs.
+  const [cachedResult, setCachedResult] = useState(() => (result.error ? null : result));
+  if (!result.error && cachedResult !== result) {
+    setCachedResult(result);
+  }
+  const displayResult = result.error ? cachedResult : result;
 
   const copyResult = async () => {
     const text = formatRatingText(result, name);
@@ -301,17 +319,21 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Work spot rating
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {result.error ? DASH : `${result.score}/100`}
+              {displayResult ? `${displayResult.score}/100` : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {result.error ? "Fix the input above to rate this café." : `${result.band.label} — ${result.band.note}`}
+              {displayResult ? `${displayResult.band.label} — ${displayResult.band.note}` : "Fix the input above to rate this café."}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -332,22 +354,26 @@ export default function ToolHome() {
           </div>
         </div>
 
-        {!result.error && (
+        {displayResult && (
           <div
             className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
             role="img"
-            aria-label={`Rating ${result.score} out of 100`}
+            aria-label={`Rating ${displayResult.score} out of 100`}
           >
-            <span className="block h-full bg-[var(--primary)]" style={{ width: `${result.score}%` }} />
+            <span className="block h-full bg-[var(--primary)]" style={{ width: `${displayResult.score}%` }} />
           </div>
         )}
       </section>
 
-      {!result.error && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      {displayResult && (
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">What you can actually do here</h2>
           <ul className="mt-3 space-y-3 text-sm">
-            {result.verdicts.map((verdict) => (
+            {displayResult.verdicts.map((verdict) => (
               <li
                 key={verdict.label}
                 className={`rounded-md px-3 py-3 ${
@@ -370,7 +396,7 @@ export default function ToolHome() {
         </section>
       )}
 
-      {!result.error && (
+      {displayResult && (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">Score breakdown</h2>
           <div className="mt-3 overflow-x-auto">
@@ -383,7 +409,7 @@ export default function ToolHome() {
                 </tr>
               </thead>
               <tbody>
-                {result.rows.map((row) => (
+                {displayResult.rows.map((row) => (
                   <tr key={row.id} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">{row.label}</td>
                     <td className="py-2 pr-3 text-right">{Math.round(row.points * 10) / 10}</td>
@@ -392,18 +418,18 @@ export default function ToolHome() {
                 ))}
                 <tr>
                   <td className="py-2 pr-3 font-semibold">Total</td>
-                  <td className="py-2 pr-3 text-right font-semibold">{result.score}</td>
+                  <td className="py-2 pr-3 text-right font-semibold">{displayResult.score}</td>
                   <td className="py-2 text-right text-[var(--muted-foreground)]">{TOTAL_WEIGHT}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          {result.weakest.length > 0 && (
+          {displayResult.weakest.length > 0 && (
             <div className="mt-4 rounded-md bg-[var(--muted)] px-3 py-3 text-sm">
               <p className="font-semibold">Weakest factors</p>
               <ul className="mt-2 space-y-1 text-[var(--muted-foreground)]">
-                {result.weakest.map((row) => (
+                {displayResult.weakest.map((row) => (
                   <li key={row.id}>
                     {row.label} — keeping {Math.round(row.subScore * 100)}% of its {row.weight} points.
                   </li>
@@ -412,9 +438,9 @@ export default function ToolHome() {
             </div>
           )}
 
-          {result.warnings.length > 0 && (
+          {displayResult.warnings.length > 0 && (
             <ul className="mt-4 space-y-2 text-xs leading-5 text-[var(--muted-foreground)]">
-              {result.warnings.map((warning) => (
+              {displayResult.warnings.map((warning) => (
                 <li key={warning} className="rounded-md bg-[var(--muted)] px-3 py-2">
                   {warning}
                 </li>

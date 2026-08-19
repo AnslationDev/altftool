@@ -113,8 +113,8 @@ export default function ToolHome() {
           "Pronoun used",
           `${REGISTERS.find((item) => item.id === result.register)?.pronoun || DASH} (${result.register})`,
         ],
-        ["Greeting line", result.salutation.native],
-        ["Sign-off", result.closing.native],
+        ["Greeting line", <span key="greeting" lang={LANGUAGE.iso}>{result.salutation.native}</span>],
+        ["Sign-off", <span key="closing" lang={LANGUAGE.iso}>{result.closing.native}</span>],
         ["Wordings available", `${result.delivered} of ${result.poolSize} matching wordings`],
         [
           "SMS length",
@@ -274,13 +274,20 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Your message
             </p>
-            <p className="mt-1 text-2xl font-semibold leading-snug text-[var(--primary)] sm:text-3xl">
+            <p
+              lang={featured ? LANGUAGE.iso : undefined}
+              className="mt-1 text-2xl font-semibold leading-snug text-[var(--primary)] sm:text-3xl"
+            >
               {featured ? featured.native : DASH}
             </p>
             <p className="mt-2 text-sm text-[var(--muted-foreground)]">
@@ -321,7 +328,7 @@ export default function ToolHome() {
       </section>
 
       {messages.length > 0 ? (
-        <section className="mt-6 space-y-3">
+        <section className="mt-6 space-y-3" aria-live="polite" aria-atomic="true">
           {messages.map((item) => (
             <article
               key={item.id}
@@ -347,9 +354,14 @@ export default function ToolHome() {
                   {copiedId === item.id ? "Copied!" : "Copy"}
                 </button>
               </div>
-              <p className="mt-3 whitespace-pre-line text-lg leading-8">{item.full}</p>
+              <p lang={LANGUAGE.iso} className="mt-3 whitespace-pre-line text-lg leading-8">
+                {item.full}
+              </p>
               {showRoman ? (
-                <p className="mt-3 whitespace-pre-line border-t border-[var(--border)] pt-3 text-sm text-[var(--muted-foreground)]">
+                <p
+                  lang={`${LANGUAGE.iso}-Latn`}
+                  className="mt-3 whitespace-pre-line border-t border-[var(--border)] pt-3 text-sm text-[var(--muted-foreground)]"
+                >
                   {item.fullRoman}
                 </p>
               ) : null}

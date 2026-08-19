@@ -397,6 +397,15 @@ export default function ToolHome() {
             </div>
           ))}
         </dl>
+
+        {!hasError && result.cornerCountAssumesRectangle ? (
+          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
+            The corner count above still assumes a plain rectangular room. You&apos;ve added extra
+            run for an alcove or an L-shape, and the actual number of mitred corners for that kind
+            of layout depends on the shape — a boxed-in alcove and an L-shaped room don&apos;t add
+            the same number of corners. Count corners on your own floor plan for cutting purposes.
+          </p>
+        ) : null}
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">

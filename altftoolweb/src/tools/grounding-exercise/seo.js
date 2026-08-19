@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "How long does the exercise take?",
-      "Usually two to five minutes, depending on how long you dwell on each sense. There is no timer forcing you forward — you move to the next sense when the current slots are filled, and the breath cue between steps runs a 10-second cycle you can repeat as many times as you want.",
+      "Usually two to five minutes, depending on how long you dwell on each sense. There is no timer forcing you forward, and blanks are allowed — you move to the next sense whenever you're ready, filled slots or not, and the breath cue between steps runs a 10-second cycle you can repeat as many times as you want.",
     ],
     [
       "What if I cannot smell or taste anything?",

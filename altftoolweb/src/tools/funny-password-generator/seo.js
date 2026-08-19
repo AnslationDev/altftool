@@ -8,7 +8,7 @@ const seo = {
     "Read the Weak, Fair, Good or Strong bar, then use the eye and copy icons beside the field.",
   ],
   intro:
-    "Funny Password Generator builds memorable passphrase-style passwords on a fixed pattern: a silly adjective, a noun, a three-digit number from 100 to 999, and one symbol from !@#$%^&* — producing results like \"WobblyPlatypus472$\". It draws from roughly 290 adjectives and 320 nouns, with a length slider from 6 to 30 characters that trims the result if the combination runs long. A built-in strength meter grades the output by length: Weak under 6, Fair under 10, Good under 14, and Strong at 14 characters or more.",
+    "Funny Password Generator builds memorable passphrase-style passwords on a fixed pattern: a silly adjective, a noun, a three-digit number from 100 to 999, and one symbol from !@#$%^&* — producing results like \"WobblyPlatypus472$\". It draws from roughly 290 adjectives and 320 nouns, with a length slider from 6 to 30 characters that the output always matches exactly: the tool trims the combination if it runs long and pads it with extra random characters if it comes up short. A built-in strength meter grades the output by length: Weak under 6, Fair under 10, Good under 14, and Strong at 14 characters or more.",
   useCases: [
     "Setting up a Wi-Fi guest password you will have to read aloud to visitors — \"SnazzyWaffle318!\" is far easier to dictate than a random character string.",
     "Creating a throwaway login for a forum or trial signup where you want something you can retype from memory without opening a password manager.",
@@ -16,13 +16,13 @@ const seo = {
   ],
   benefits: [
     ["Memorable by construction", "The adjective-noun-number-symbol pattern gives you a mental image to hang the password on, unlike a random character dump."],
-    ["Length is enforced, not suggested", "The slider caps the output at 6 to 30 characters and truncates anything longer, so the result always fits a site's field limit."],
+    ["Length is enforced, not suggested", "The slider sets an exact target: the tool truncates the assembled password if it runs long and pads it with extra random characters if it comes up short, so the output always matches your chosen length exactly — never over, never under."],
     ["Honest strength read-out", "The meter shows exactly where your chosen length falls against the Weak/Fair/Good/Strong thresholds instead of implying an unearned score."],
   ],
   faqs: [
     [
       "What pattern do the passwords follow?",
-      "Adjective + Noun + a random three-digit number (100-999) + a single symbol from !@#$%^&*. The number and symbol are optional toggles, and if the assembled password exceeds your chosen length it is cut from the end — which at short lengths can remove the symbol and digits.",
+      "Adjective + Noun + a random three-digit number (100-999) + a single symbol from !@#$%^&*. The number and symbol are optional toggles. If the assembled password exceeds your chosen length it is cut from the end — which at short lengths can remove the symbol and digits — and if it comes up short of your chosen length, random letters, digits, and (when symbols are enabled) symbols are appended until it matches exactly.",
     ],
     [
       "How long should I make the password?",

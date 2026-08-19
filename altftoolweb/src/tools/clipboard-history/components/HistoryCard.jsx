@@ -41,6 +41,7 @@ const TYPE_BG = {
 export default function HistoryCard({ entry, onDelete, onToggleFavorite, onCopy }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const menuRef = React.useRef(null);
+  const menuTriggerRef = React.useRef(null);
 
   React.useEffect(() => {
     function handleClickOutside(e) {
@@ -122,16 +123,30 @@ export default function HistoryCard({ entry, onDelete, onToggleFavorite, onCopy 
           </button>
 
           {/* Menu */}
-          <div className="relative" ref={menuRef}>
+          <div
+            className="relative"
+            ref={menuRef}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setMenuOpen(false);
+                menuTriggerRef.current?.focus();
+              }
+            }}
+          >
             <button
+              ref={menuTriggerRef}
               onClick={() => setMenuOpen(!menuOpen)}
               className="rounded-md p-1.5 text-[var(--muted-foreground)] hover:bg-[var(--muted)] transition-colors"
+              aria-haspopup="menu"
+              aria-expanded={menuOpen}
+              aria-label="More actions"
             >
               <MoreVertical size={15} />
             </button>
             {menuOpen && (
-              <div className="absolute right-0 bottom-full z-10 mb-1 w-40 rounded-lg border border-[var(--border)] bg-[var(--card)] p-1 shadow-lg">
+              <div role="menu" className="absolute right-0 bottom-full z-10 mb-1 w-40 rounded-lg border border-[var(--border)] bg-[var(--card)] p-1 shadow-lg">
                 <button
+                  role="menuitem"
                   onClick={() => { onCopy(entry.content); setMenuOpen(false); }}
                   className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]"
                 >
@@ -139,6 +154,7 @@ export default function HistoryCard({ entry, onDelete, onToggleFavorite, onCopy 
                 </button>
                 <div className="my-1 h-px bg-[var(--border)]" />
                 <button
+                  role="menuitem"
                   onClick={() => { onDelete(entry.id); setMenuOpen(false); }}
                   className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
                 >

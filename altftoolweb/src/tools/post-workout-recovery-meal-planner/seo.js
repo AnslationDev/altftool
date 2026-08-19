@@ -18,7 +18,7 @@ const seo = {
   benefits: [
     ["Per-dose protein, not daily totals", "Uses the 0.25-0.40 g/kg per-feeding rate capped at the 20-40 g band that research supports."],
     ["Refuelling urgency is factored in", "Rapid 1.2 g/kg/h carbohydrate only applies when the next session is under eight hours away."],
-    ["Real portions, solved exactly", "Both foods contribute protein and carbs, and the grams are solved so the pair lands on both targets."],
+    ["Real portions, solved exactly", "Both foods contribute protein and carbs, and the grams are solved so the pair lands on both targets wherever that's mathematically possible; a few protein-dense-but-carb-heavy combos are portioned to hit protein first, with carbs following as closely as the food allows."],
   ],
   faqs: [
     [

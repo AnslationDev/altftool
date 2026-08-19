@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Palette, RotateCcw } from "lucide-react";
 import {
   BRIGHT_LRV_THRESHOLD,
@@ -38,6 +38,9 @@ export default function ToolHome() {
   const [hemisphere, setHemisphere] = useState(DEFAULTS.hemisphere);
   const [depth, setDepth] = useState(DEFAULTS.depth);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copiedTimeoutRef.current), []);
 
   const palette = useMemo(
     () => buildRoomPalette({ mood, direction, hemisphere, depth }),
@@ -67,7 +70,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -139,7 +143,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -222,7 +226,7 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Light this room gets", error ? DASH : palette.direction.description],
+            ["Light this room gets", error ? DASH : palette.directionDescription],
             ["Wall to trim contrast", error ? DASH : `${num(palette.wallTrimContrast, 2)}:1`],
             ["Wall to accent contrast", error ? DASH : `${num(palette.wallAccentContrast, 2)}:1`],
             [

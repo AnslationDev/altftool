@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Info, RotateCcw, TrainFront } from "lucide-react";
 
 import {
@@ -60,6 +60,9 @@ export default function ToolHome() {
   const [flags, setFlags] = useState(DEFAULT_FLAGS);
   const [doneIds, setDoneIds] = useState([]);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const toggleFlag = (key) => setFlags((current) => ({ ...current, [key]: !current[key] }));
   const toggleDone = (id) =>
@@ -123,7 +126,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -252,7 +256,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               What the fee really costs you
             </p>
@@ -289,7 +293,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Fee per application", hasError ? DASH : money(result.fee.feeEach)],
             ["Refund per application on appearing", hasError ? DASH : money(result.fee.refundEach)],
@@ -306,7 +310,7 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && (
-          <div className="mt-4">
+          <div className="mt-4" aria-live="polite" aria-atomic="true">
             <div
               className="h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
               role="img"

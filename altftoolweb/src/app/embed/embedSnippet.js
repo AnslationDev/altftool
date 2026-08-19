@@ -194,8 +194,8 @@ export function buildSnippet(baseUrl, slug, name = "AltFTool widget") {
   return [
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `  title="${attr(iframeTitle(name))}"`,
-    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px"`,
-    `  loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px;overflow:hidden"`,
+    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
   ].join("\n");
 }
@@ -212,7 +212,7 @@ export function buildResponsiveSnippet(baseUrl, slug, name = "AltFTool widget") 
     `  <iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `    title="${attr(iframeTitle(name))}"`,
     `    style="display:block;width:100%;height:${height}px;border:0;border-radius:12px"`,
-    `    loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    `    loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     `  ${creditLine(baseUrl, slug)}`,
     `</div>`,
     `<style>@media (max-width:${EMBED_NARROW_BREAKPOINT}px){.altftool-embed iframe{height:${narrowHeight}px}}</style>`,
@@ -229,8 +229,8 @@ export function buildWordPressSnippet(baseUrl, slug, name = "AltFTool widget") {
     `<!-- wp:html -->`,
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `  title="${attr(iframeTitle(name))}"`,
-    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px"`,
-    `  loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px;overflow:hidden"`,
+    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
     `<!-- /wp:html -->`,
   ].join("\n");
@@ -255,7 +255,7 @@ export function buildOEmbedHtml(
     ` title="${attr(iframeTitle(name))}"`,
     ` width="${width}" height="${height}"`,
     ` style="border:0;border-radius:12px;max-width:100%"`,
-    ` loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    ` loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
   ].join("");
 }

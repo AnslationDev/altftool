@@ -1,9 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, Copy, RotateCcw, Tags } from "lucide-react";
 
-import { buildTagSet, LONG_TAG_CHARS, MAX_TAG_CHARS, parseGroups } from "../lib";
+import {
+  buildTagSet,
+  LONG_TAG_CHARS,
+  MAX_GROUPS,
+  MAX_TAG_CHARS,
+  MAX_TAGS_PER_GROUP,
+  parseGroups,
+} from "../lib";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -28,8 +35,9 @@ export default function ToolHome() {
   const [selected, setSelected] = useState(["Channel core", "Topic - colour", "Brand"]);
   const [budget, setBudget] = useState(String(MAX_TAG_CHARS));
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
-  const groups = useMemo(() => parseGroups(groupText), [groupText]);
+  const { groups, droppedGroups, groupsTruncated } = useMemo(() => parseGroups(groupText), [groupText]);
 
   const result = useMemo(
     () => buildTagSet({ groups, selected, maxChars: Number(budget) }),
@@ -37,6 +45,12 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const toggleGroup = (name) => {
     setSelected((current) =>
@@ -49,13 +63,17 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.tagString);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    if (groupText !== DEFAULT_GROUPS && !window.confirm("Reset the keyword groups back to the default example? Your edits will be lost.")) {
+      return;
+    }
     setGroupText(DEFAULT_GROUPS);
     setSelected(["Channel core", "Topic - colour", "Brand"]);
     setBudget(String(MAX_TAG_CHARS));
@@ -118,6 +136,20 @@ export default function ToolHome() {
           </fieldset>
         )}
 
+        {(droppedGroups > 0 || groupsTruncated > 0) && (
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
+          >
+            {droppedGroups > 0 &&
+              `${droppedGroups} group${droppedGroups === 1 ? "" : "s"} past the ${MAX_GROUPS}-group limit ${
+                droppedGroups === 1 ? "was" : "were"
+              } dropped. `}
+            {groupsTruncated > 0 &&
+              `${groupsTruncated} group${groupsTruncated === 1 ? "" : "s"} had tags cut down to the ${MAX_TAGS_PER_GROUP}-tag-per-group limit.`}
+          </p>
+        )}
+
         <div className="mt-4 sm:max-w-xs">
           <label className={LABEL_CLASS} htmlFor="tags-budget">
             Character budget
@@ -145,7 +177,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -196,7 +232,10 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.warnings.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+        >
           <h2 className="text-base font-semibold">Notes</h2>
           <ul className="mt-3 space-y-2 text-sm">
             {result.warnings.map((warning) => (
@@ -210,7 +249,10 @@ export default function ToolHome() {
       )}
 
       {!hasError && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+        >
           <h2 className="text-base font-semibold">Tags in this set</h2>
           <ul className="mt-3 flex flex-wrap gap-2">
             {result.included.map((entry) => (

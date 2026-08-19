@@ -64,10 +64,15 @@ function formatBytes(bytes = 0) {
 
 function formatTime(seconds = 0, withMs = false) {
   const safe = Math.max(0, Number.isFinite(seconds) ? seconds : 0);
-  const hours = Math.floor(safe / 3600);
-  const minutes = Math.floor((safe % 3600) / 60);
-  const secs = Math.floor(safe % 60);
-  const ms = Math.round((safe - Math.floor(safe)) * 1000);
+  let wholeSeconds = Math.floor(safe);
+  let ms = Math.round((safe - wholeSeconds) * 1000);
+  if (ms === 1000) {
+    wholeSeconds += 1;
+    ms = 0;
+  }
+  const hours = Math.floor(wholeSeconds / 3600);
+  const minutes = Math.floor((wholeSeconds % 3600) / 60);
+  const secs = Math.floor(wholeSeconds % 60);
   const base = [hours, minutes, secs]
     .map((part) => String(part).padStart(2, "0"))
     .join(":");
@@ -869,8 +874,8 @@ export default function MainComponent() {
 
           {(error || status) && (
             <div
-              role="status"
-              aria-live="polite"
+              role={error ? "alert" : "status"}
+              aria-live={error ? "assertive" : "polite"}
               className={`flex items-start gap-3 rounded-lg border p-4 ${
                 error
                   ? "border-(--danger) bg-(--danger-soft) text-(--danger)"
@@ -1068,7 +1073,7 @@ export default function MainComponent() {
               {trimMode === "precise" && (
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-medium text-(--foreground)">
+                    <label htmlFor="crf-slider" className="text-sm font-medium text-(--foreground)">
                       Re-encode quality
                     </label>
                     <span className="text-sm font-semibold text-(--foreground)">
@@ -1076,12 +1081,14 @@ export default function MainComponent() {
                     </span>
                   </div>
                   <input
+                    id="crf-slider"
                     type="range"
                     min="18"
                     max="32"
                     step="1"
                     value={crf}
                     onChange={(event) => setCrf(Number(event.target.value))}
+                    aria-valuetext={`CRF ${crf}, ${crf <= 22 ? "higher quality, larger file" : "lower quality, smaller file"}`}
                     className="w-full accent-[var(--primary)]"
                   />
                   <p className="mt-2 text-xs text-(--muted-foreground)">
@@ -1127,6 +1134,14 @@ export default function MainComponent() {
                 <button
                   type="button"
                   onClick={() => {
+                    if (
+                      typeof window !== "undefined" &&
+                      !window.confirm(
+                        "Start a new trim? Your trimmed clip hasn't been downloaded yet and will be lost.",
+                      )
+                    ) {
+                      return;
+                    }
                     clearResult();
                     setStatus("Result cleared. Ready for another trim.");
                   }}

@@ -96,7 +96,7 @@ export const TOOLS = [
     name: "Webpage → PDF",
     slug: "webpage-to-pdf",
     panelId: "web2pdf",
-    desc: "Convert web addresses or URLs into PDF documents.",
+    desc: "Convert a saved webpage (.html file or pasted HTML source) into a PDF document.",
     icon: "#s-globe",
     category: "Convert & Export",
     sidebarCategory: "Convert"

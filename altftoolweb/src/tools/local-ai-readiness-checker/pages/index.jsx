@@ -40,14 +40,21 @@ export default function LocalAiReadinessChecker() {
   );
   const [result, setResult] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
+  // True only while every field currently in `hardware` came from an
+  // auto-detect action and none of them has since been hand-edited.
+  const [specsAutoDetected, setSpecsAutoDetected] = useState(false);
 
   const report = useMemo(
-    () => (result?.ok ? buildReadinessReport(result) : null),
-    [result],
+    () =>
+      result?.ok
+        ? buildReadinessReport(result, { manuallyEntered: !specsAutoDetected })
+        : null,
+    [result, specsAutoDetected],
   );
 
   const updateHardware = (field, value) => {
     setHardware((current) => ({ ...current, [field]: value }));
+    setSpecsAutoDetected(false);
     setResult(null);
   };
 
@@ -63,6 +70,7 @@ export default function LocalAiReadinessChecker() {
   const reset = () => {
     setHardware(EMPTY_HARDWARE);
     setSelectedProfiles(WORKLOAD_PROFILES.map((profile) => profile.id));
+    setSpecsAutoDetected(false);
     setResult(null);
   };
 
@@ -83,6 +91,7 @@ export default function LocalAiReadinessChecker() {
       logicalCores: specs.logicalCores || 4,
       acceleration: specs.acceleration || "none",
     });
+    setSpecsAutoDetected(true);
     setResult(null);
   };
 
@@ -100,7 +109,8 @@ export default function LocalAiReadinessChecker() {
             const ua = nav.userAgent || "";
             let accel = "none";
             if (/Mac/i.test(ua)) accel = "metal";
-            else if (hasWebGpu) accel = "directml";
+            else if (/Win/i.test(ua) && hasWebGpu) accel = "directml";
+            else if (hasWebGpu) accel = "webgpu";
 
             handleApplyDetectedSpecs({
               ramGb: memory,
@@ -180,7 +190,7 @@ export default function LocalAiReadinessChecker() {
           <WorkloadAssessmentCards assessments={result.assessments} />
 
           {/* Recommended Local Models Grid */}
-          <ModelRecommendationsGrid hardware={hardware} />
+          <ModelRecommendationsGrid hardware={result.hardware} />
 
           {/* Framework Compatibility Matrix */}
           <FrameworkMatrix />

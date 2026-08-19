@@ -213,6 +213,8 @@ export default function ToolHome() {
                 className="min-h-32 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-relaxed outline-none transition-colors placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 spellCheck={false}
                 placeholder={`Enter a ${inputSystem.label.toLowerCase()} value...`}
+                aria-invalid={!parseResult.ok}
+                aria-describedby={!parseResult.ok ? "number-system-error" : undefined}
               />
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -237,7 +239,11 @@ export default function ToolHome() {
                 {copiedInput ? "Copied all" : "Copy all"}
               </button>
               {!parseResult.ok && (
-                <span className="text-sm font-medium text-[var(--anslation-ds-danger,#EF4444)]">
+                <span
+                  role="alert"
+                  id="number-system-error"
+                  className="text-sm font-medium text-[var(--anslation-ds-danger,#EF4444)]"
+                >
                   {parseResult.message}
                 </span>
               )}

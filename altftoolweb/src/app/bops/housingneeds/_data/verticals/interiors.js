@@ -27,6 +27,7 @@ const interiors = {
   "headline": "Walls, floors and finishes, done right",
   "headlineAccent": "done right",
   "subheadline": "Interior work is where small tolerances show — a texture patch that reads flat under raking light, a floor transition that telegraphs a subfloor hump, a sheen that highlights every roller lap. Understanding how drywall, paint, flooring, trim and lighting interact helps you sequence a project correctly and judge the finish quality you are paying for.",
+  "answer": "Interior remodeling covers drywall, paint, flooring, trim, cabinetry and lighting — the finishes where small tolerances show, such as a texture patch that reads flat under raking light or a floor transition that telegraphs a hump in the subfloor. Sequence decides the result as much as product choice does: dust-producing work first, then paint, then flooring and trim, and finish life ranges from about 10-25 years for luxury vinyl plank to 50+ years for porcelain tile.",
   "heroPoints": [
     "Texture and sheen matched to existing",
     "Dust-controlled sanding and prep",

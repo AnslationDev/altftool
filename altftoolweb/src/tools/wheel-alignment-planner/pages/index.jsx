@@ -45,7 +45,7 @@ const toNumber = (raw) => {
 };
 
 function ServiceCard({ title, service, score, needed }) {
-  const overdue = service.status === "overdue";
+  const overdue = service.status === "overdue" || needed;
   // The headline must reflect whichever limit (distance or time) is actually
   // driving the status — otherwise a car that is overdue purely on elapsed
   // time can show a reassuring "X,XXX km" headline next to an urgent badge.
@@ -387,7 +387,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

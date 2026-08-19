@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PaintRoller, RotateCcw } from "lucide-react";
 
 import {
@@ -63,6 +63,14 @@ export default function ToolHome() {
   const [ceilingHeight, setCeilingHeight] = useState(DEFAULTS.ceilingHeight);
   const [crewSize, setCrewSize] = useState(DEFAULTS.crewSize);
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -88,7 +96,7 @@ export default function ToolHome() {
       `Painted area: ${num(result.paintableArea)} sqft`,
       `Finish: ${result.gradeLabel}`,
       `Location: ${result.tierLabel}`,
-      `Labour rate: ${money2(result.ratePerSqft)} per sqft`,
+      `Labour rate: ${money2(result.effectiveRatePerSqft)} per sqft`,
       `Finish labour: ${money(result.finishCost)}`,
       `Putty labour: ${money(result.puttyCost)}`,
       `Height surcharge: ${money(result.heightSurcharge)}`,
@@ -102,9 +110,12 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      setCopyError("");
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+      setCopyError("Couldn't copy automatically — select and copy the summary text manually.");
     }
   };
 
@@ -118,6 +129,7 @@ export default function ToolHome() {
     setCeilingHeight(DEFAULTS.ceilingHeight);
     setCrewSize(DEFAULTS.crewSize);
     setCopied(false);
+    setCopyError("");
   };
 
   const rows = [
@@ -295,13 +307,13 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Total painter labour cost
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {failed ? DASH : money(result.totalLabourCost)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {failed
                 ? "Fix the highlighted input to see an estimate."
-                : `${money2(result.ratePerSqft)} per sqft over ${num(result.paintableArea)} sqft of surface`}
+                : `${money2(result.effectiveRatePerSqft)} per sqft over ${num(result.paintableArea)} sqft of surface`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -323,10 +335,19 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <p aria-live="polite" role="status" className="sr-only">
+              {copied ? "Painter labour estimate copied to clipboard." : ""}
+            </p>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        {copyError && (
+          <p role="alert" className="mt-2 text-xs font-medium text-[var(--danger)]">
+            {copyError}
+          </p>
+        )}
+
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

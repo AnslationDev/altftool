@@ -130,7 +130,7 @@ export function computeLawnSeed({
   }
 
   const areaM2 = areaValue * unit.toM2;
-  if (areaM2 > 400000) {
+  if (areaM2 > 100 * AREA_UNITS.find((u) => u.value === "acre").toM2) {
     return { error: "That is over 100 acres — this tool is built for lawns, not farm-scale sowing." };
   }
 
@@ -159,7 +159,7 @@ export function computeLawnSeed({
   if (use.value === "overseed") {
     notes.push("Scalp the lawn low and rake the surface first, or overseeded seed sits on thatch and never touches soil.");
   }
-  if (species.value === "bermuda" || species.value === "zoysia") {
+  if (["bermuda", "zoysia", "bahia", "centipede"].includes(species.value)) {
     notes.push("Warm-season seed needs soil above about 20°C to germinate, so sow after the ground has warmed.");
   }
   notes.push("Spread half the seed walking north-south and half east-west to avoid stripes.");

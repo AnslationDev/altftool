@@ -176,6 +176,11 @@ export function useSnakeGame() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      // Don't hijack keys while a form control has focus — otherwise Arrow/WASD
+      // presses meant to operate the Difficulty <select> (or any other input)
+      // get swallowed by the game instead of doing their native job.
+      const tag = event.target?.tagName;
+      if (tag === "SELECT" || tag === "INPUT" || tag === "TEXTAREA" || event.target?.isContentEditable) return;
       const keyMap = { ArrowUp: "up", w: "up", ArrowDown: "down", s: "down", ArrowLeft: "left", a: "left", ArrowRight: "right", d: "right" };
       const next = keyMap[event.key];
       if (!next) return;

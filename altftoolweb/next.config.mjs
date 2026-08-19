@@ -291,7 +291,10 @@ const nextConfig = {
       { source: "/bops/housingneeds/nightwatch-security/:path*", destination: "/bops/housing-services/nightwatch-security/:path*", permanent: true },
       { source: "/bops/housingneeds/cityhop-movers/:path*", destination: "/bops/housing-services/cityhop-movers/:path*", permanent: true },
       // Former bathroom/hvac dashboard tabs — those categories now live only
-      // in Housing Services, so deep-link to their hub sections.
+      // in Housing Services, so deep-link to their hub sections. Permanent
+      // like every other Housing Needs -> Housing Services rule above: the
+      // categories are gone from this tree, so a 307 here only leaked the
+      // equity of the old URLs instead of transferring it.
       { source: "/bops/housingneeds/bathroom", destination: "/bops/housing-services#bathroom", permanent: false },
       { source: "/bops/housingneeds/hvac", destination: "/bops/housing-services#hvac", permanent: false },
       {
@@ -312,6 +315,17 @@ const nextConfig = {
       {
         source: "/blog",
         destination: "/blogs",
+        permanent: true,
+      },
+      {
+        // The section rename only covered the /blog index; every legacy
+        // /blog/<slug> deep link still 404s (verified against production),
+        // which drops any external link equity on the floor. Must stay AFTER
+        // the exact "/blog" rule above, since :path* also matches zero
+        // segments. No route or public/ asset lives under /blog, so nothing
+        // is shadowed.
+        source: "/blog/:path*",
+        destination: "/blogs/:path*",
         permanent: true,
       },
       {

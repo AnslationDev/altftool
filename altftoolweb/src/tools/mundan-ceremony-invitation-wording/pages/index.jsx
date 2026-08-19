@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Scissors } from "lucide-react";
 
 import {
@@ -50,6 +50,13 @@ export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [durations, setDurations] = useState(DEFAULT_DURATIONS);
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const set = (key) => (event) => setForm((prev) => ({ ...prev, [key]: event.target.value }));
   const setDuration = (id) => (event) =>
@@ -93,13 +100,17 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all fields? This will clear the child's name, dates, venue, RSVP details and any custom durations you've entered.")) {
+      return;
+    }
     setForm(DEFAULTS);
     setDurations(DEFAULT_DURATIONS);
     setCopied("");
@@ -174,7 +185,10 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

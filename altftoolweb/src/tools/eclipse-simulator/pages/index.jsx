@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Sun, RotateCcw, Play, Pause, Sliders, Info, Eye } from "lucide-react";
+import { RotateCcw, Play, Pause, Sliders, Info } from "lucide-react";
 
 export default function EclipseSimulator() {
   const [eclipseType, setEclipseType] = useState("solar"); // 'solar' | 'lunar'
@@ -24,7 +24,7 @@ export default function EclipseSimulator() {
   let eclipseState = "None";
   if (absOffset < 5) {
     if (eclipseType === "solar") {
-      eclipseState = moonDist < 135 ? "Total Solar Eclipse" : "Annular Solar Eclipse";
+      eclipseState = moonDist < 130 ? "Total Solar Eclipse" : "Annular Solar Eclipse";
     } else {
       eclipseState = "Total Lunar Eclipse";
     }
@@ -64,6 +64,12 @@ export default function EclipseSimulator() {
     const cy = h / 2;
 
     ctx.clearRect(0, 0, w, h);
+
+    // Fixed dark space backdrop — play-area art, fixed on purpose (matches
+    // block-stacker's board-background convention) so the white Sun/Earth/Moon
+    // labels and legend text stay readable regardless of light/dark site theme.
+    ctx.fillStyle = "#0B1220";
+    ctx.fillRect(0, 0, w, h);
 
     // Sun on Left
     const sunX = 70;
@@ -204,6 +210,7 @@ export default function EclipseSimulator() {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => { setEclipseType("solar"); setAlignmentOffset(0); }}
+                    aria-pressed={eclipseType === "solar"}
                     className={`px-3 py-2 rounded-lg text-xs font-medium border text-center transition ${
                       eclipseType === "solar" ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
                     }`}
@@ -212,6 +219,7 @@ export default function EclipseSimulator() {
                   </button>
                   <button
                     onClick={() => { setEclipseType("lunar"); setAlignmentOffset(0); }}
+                    aria-pressed={eclipseType === "lunar"}
                     className={`px-3 py-2 rounded-lg text-xs font-medium border text-center transition ${
                       eclipseType === "lunar" ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
                     }`}
@@ -233,6 +241,7 @@ export default function EclipseSimulator() {
                   max="45"
                   value={alignmentOffset}
                   onChange={(e) => setAlignmentOffset(Number(e.target.value))}
+                  aria-label="Orbital alignment shift in millimeters"
                   className="w-full accent-primary"
                 />
               </div>
@@ -241,7 +250,7 @@ export default function EclipseSimulator() {
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
                   <span>Earth-Moon Distance</span>
-                  <span className="text-primary font-mono">{moonDist < 135 ? "Perigee (Near)" : "Apogee (Far)"}</span>
+                  <span className="text-primary font-mono">{moonDist < 130 ? "Perigee (Near)" : "Apogee (Far)"}</span>
                 </div>
                 <input
                   type="range"
@@ -249,13 +258,18 @@ export default function EclipseSimulator() {
                   max="160"
                   value={moonDist}
                   onChange={(e) => setMoonDist(Number(e.target.value))}
+                  aria-label="Earth-Moon distance"
                   className="w-full accent-primary"
                 />
               </div>
             </div>
 
             {/* Current State Telemetry Card */}
-            <div className="rounded-xl border border-border bg-card p-5 space-y-3 shadow-sm">
+            <div
+              className="rounded-xl border border-border bg-card p-5 space-y-3 shadow-sm"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <h2 className="text-base font-bold text-foreground">{eclipseState}</h2>
                 <span className={`text-xs font-bold ${absOffset < 5 ? "text-emerald-500" : "text-amber-500"}`}>
@@ -282,7 +296,12 @@ export default function EclipseSimulator() {
           {/* Ray Optics Canvas (8 cols) */}
           <div className="lg:col-span-8 flex flex-col space-y-4">
             <div className="relative rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 min-h-[420px]">
-              <canvas ref={canvasRef} className="w-full h-full block" />
+              <canvas
+                ref={canvasRef}
+                className="w-full h-full block"
+                role="img"
+                aria-label={`Diagram of ${eclipseState} ray geometry`}
+              />
             </div>
 
             {/* Educational Notes */}

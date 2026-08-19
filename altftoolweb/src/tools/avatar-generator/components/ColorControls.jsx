@@ -3,9 +3,35 @@
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
+// Matches a well-formed rgb or rrggbb hex color, with an optional leading
+// "#" (case-insensitive) — mirrors hexToRgb()'s own tolerance for a missing "#".
+const HEX_COLOR_RE = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
 // A single color control: preset swatches + expandable fine-picker.
 function ColorRow({ label, value, presets, onChange }) {
   const [open, setOpen] = useState(false);
+  // The hex text input keeps its own draft state so incomplete/invalid
+  // keystrokes (e.g. "#f1c" mid-type) never reach the committed color
+  // state — only a well-formed hex value is propagated via onChange.
+  const [hexText, setHexText] = useState(value);
+  // Re-sync the draft text when the committed color changes from elsewhere
+  // (preset click, color-picker drag, parent reset) — adjusted during
+  // render per React's guidance, rather than in an effect, to avoid an
+  // extra commit/render pass.
+  const [prevValue, setPrevValue] = useState(value);
+  if (value !== prevValue) {
+    setPrevValue(value);
+    setHexText(value);
+  }
+
+  const handleHexTextChange = (e) => {
+    const next = e.target.value;
+    setHexText(next);
+    if (HEX_COLOR_RE.test(next)) {
+      onChange(next.startsWith("#") ? next : `#${next}`);
+    }
+  };
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -39,8 +65,8 @@ function ColorRow({ label, value, presets, onChange }) {
           <HexColorPicker color={value} onChange={onChange} />
           <input
             type="text"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
+            value={hexText}
+            onChange={handleHexTextChange}
             aria-label={`${label} hex value`}
             className="mt-3 w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-(--primary)"
           />

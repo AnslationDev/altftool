@@ -328,24 +328,31 @@ export default function ToolHome() {
                   <th scope="col" className="py-2 pr-3 font-semibold">Year</th>
                   <th scope="col" className="py-2 pr-3 text-right font-semibold">Split total</th>
                   <th scope="col" className="py-2 pr-3 text-right font-semibold">Window total</th>
-                  <th scope="col" className="py-2 text-right font-semibold">Split ahead by</th>
+                  <th scope="col" className="py-2 text-right font-semibold">{cheaperLabel} ahead by</th>
                 </tr>
               </thead>
               <tbody>
-                {result.rows.map((row) => (
-                  <tr key={row.year} className="border-b border-[var(--border)] last:border-0">
-                    <td className="py-2 pr-3 font-semibold">{row.year}</td>
-                    <td className="py-2 pr-3 text-right">{money(row.splitCum)}</td>
-                    <td className="py-2 pr-3 text-right">{money(row.windowCum)}</td>
-                    <td
-                      className={`py-2 text-right font-semibold ${
-                        row.gap >= 0 ? "text-[var(--success)]" : "text-[var(--muted-foreground)]"
-                      }`}
-                    >
-                      {row.gap >= 0 ? money(row.gap) : `-${money(-row.gap)}`}
-                    </td>
-                  </tr>
-                ))}
+                {result.rows.map((row) => {
+                  // row.gap is windowCum - splitCum (positive = split ahead). Re-key it to
+                  // whichever option is cheaper overall, so the sign always matches the
+                  // dynamic header above instead of the fixed "Split ahead by" wording this
+                  // replaced.
+                  const aheadBy = result.cheaper === "split" ? row.gap : -row.gap;
+                  return (
+                    <tr key={row.year} className="border-b border-[var(--border)] last:border-0">
+                      <td className="py-2 pr-3 font-semibold">{row.year}</td>
+                      <td className="py-2 pr-3 text-right">{money(row.splitCum)}</td>
+                      <td className="py-2 pr-3 text-right">{money(row.windowCum)}</td>
+                      <td
+                        className={`py-2 text-right font-semibold ${
+                          aheadBy >= 0 ? "text-[var(--success)]" : "text-[var(--muted-foreground)]"
+                        }`}
+                      >
+                        {aheadBy >= 0 ? money(aheadBy) : `-${money(-aheadBy)}`}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

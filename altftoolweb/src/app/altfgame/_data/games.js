@@ -33,8 +33,14 @@ export function getGame(slug) {
 export const FEATURED = GAMES.filter((g) => g.featured);
 export const TRENDING = GAMES.filter((g) => g.trending);
 export const NEW_RELEASES = GAMES.filter((g) => g.isNew);
-export const POPULAR = [...GAMES].sort((a, b) => b.plays - a.plays);
-export const TOP_RATED = [...GAMES].sort((a, b) => b.rating - a.rating);
+
+// No play-count or rating data exists anywhere in this catalog (see
+// gameContent.js: "Nothing is invented — no review counts, no player
+// numbers, no awards"), so a real "most played" ranking can't be computed.
+// POPULAR reuses the hand-curated `featured` flag rather than fabricate a
+// popularity metric — it's a distinct editorial set from TRENDING, not an
+// alias of it.
+export const POPULAR = FEATURED;
 
 export function getByCategory(name) {
   return GAMES.filter((g) => g.category === name);
@@ -48,39 +54,33 @@ export function topCategories(n = 3) {
   return [...CATEGORIES].sort((a, b) => b.count - a.count).slice(0, n);
 }
 
-// Same-category games first; topped up with best-rated others so the
+// Same-category games first; topped up with other catalog games so the
 // section is never empty (some categories only have one game).
 export function getRelated(slug, limit = 8) {
   const game = GAME_MAP[slug];
   if (!game) return [];
   const sameCategory = GAMES.filter((g) => g.slug !== slug && g.category === game.category);
   if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
-  const fillers = TOP_RATED.filter(
+  const fillers = GAMES.filter(
     (g) => g.slug !== slug && g.category !== game.category
   );
   return [...sameCategory, ...fillers].slice(0, limit);
 }
 
-// Popular picks excluding the current game (play-page sidebar).
+// Catalog picks excluding the current game (play-page sidebar).
 export function getRecommended(slug, limit = 6) {
-  return POPULAR.filter((g) => g.slug !== slug).slice(0, limit);
+  return GAMES.filter((g) => g.slug !== slug).slice(0, limit);
 }
 
 // Personalised home recommendations: prefer categories the player has
-// favorited, skip games already favorited, then fill with top-rated.
+// favorited, skip games already favorited.
 export function getRecommendedFromFavorites(favoriteSlugs, limit = 8) {
   const favs = new Set(favoriteSlugs);
   const favCategories = new Set(
     [...favs].map((s) => GAME_MAP[s]?.category).filter(Boolean)
   );
   const score = (g) => (favCategories.has(g.category) ? 1 : 0);
-  return TOP_RATED.filter((g) => !favs.has(g.slug))
-    .sort((a, b) => score(b) - score(a) || b.rating - a.rating)
+  return GAMES.filter((g) => !favs.has(g.slug))
+    .sort((a, b) => score(b) - score(a))
     .slice(0, limit);
-}
-
-export function formatPlays(n) {
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-  if (n >= 1_000) return Math.round(n / 1_000) + "K";
-  return String(n);
 }

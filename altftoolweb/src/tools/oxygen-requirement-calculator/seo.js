@@ -16,7 +16,7 @@ const seo = {
   ],
   benefits: [
     ["Device comparison, not a single answer", "Five delivery devices are shown together with each one's flow range and resulting FiO2, so the trade-off between comfort and oxygen concentration is visible at once."],
-    ["Targets that change with the patient group", "Neonate, infant, child, adult and COPD each carry their own target saturation band, so the recommendation reflects the controlled-oxygen case rather than one universal number."],
+    ["Targets that change with the patient group", "Neonate, infant, child, adult and COPD each carry their own target saturation band, and the guidance text calls out the COPD controlled-oxygen case specifically, rather than applying one universal target to everyone."],
     ["Produces a documentable summary", "The report lists parameters, classification, device, flow, estimated FiO2 and the device comparison as plain text you can copy or download for teaching notes."],
   ],
   faqs: [

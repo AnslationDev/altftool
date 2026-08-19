@@ -22,7 +22,10 @@ const seo = {
   faqs: [
     [
       "How do I crop 16:9 footage to 9:16 without black bars?",
-      "Keep the full 1080-pixel height and cut the width to 607 pixels, which is 1080 x 9/16, then centre it at x 656. That keeps only about 32% of the original pixels, so shoot or reframe with the vertical crop in mind where possible.",
+      // 606, not the raw 1080 x 9/16 = 607.5: the calculator's default "snap to even pixels"
+      // setting rounds crop width down to an even number for 4:2:0 encoding. Keep this in
+      // sync with lib.js's computeCrop({sourceWidth:1920, sourceHeight:1080, targetWidth:9, targetHeight:16, align:true}).
+      "Keep the full 1080-pixel height and cut the width to 606 pixels, which is 1080 x 9/16 rounded down to the nearest even pixel, then centre it at x 656. That keeps only about 32% of the original pixels, so shoot or reframe with the vertical crop in mind where possible.",
     ],
     [
       "Why must the crop width and height be even numbers?",

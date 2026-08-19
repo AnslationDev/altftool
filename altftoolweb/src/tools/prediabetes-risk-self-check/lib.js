@@ -21,9 +21,9 @@
 
 /** ADA test: age in years -> points. */
 export const ADA_AGE_BANDS = [
-  { min: 0, max: 39, points: 0, label: "Under 40" },
-  { min: 40, max: 49, points: 1, label: "40 to 49" },
-  { min: 50, max: 59, points: 2, label: "50 to 59" },
+  { min: 0, max: 40, points: 0, label: "Under 40" },
+  { min: 40, max: 50, points: 1, label: "40 to 49" },
+  { min: 50, max: 60, points: 2, label: "50 to 59" },
   { min: 60, max: Infinity, points: 3, label: "60 or over" },
 ];
 
@@ -41,8 +41,8 @@ export const ADA_MAX_SCORE = 11;
 
 /** IDRS age bands (years). */
 export const IDRS_AGE_BANDS = [
-  { min: 0, max: 34, points: 0, label: "Under 35" },
-  { min: 35, max: 49, points: 20, label: "35 to 49" },
+  { min: 0, max: 35, points: 0, label: "Under 35" },
+  { min: 35, max: 50, points: 20, label: "35 to 49" },
   { min: 50, max: Infinity, points: 30, label: "50 or over" },
 ];
 

@@ -63,8 +63,8 @@ export default function ToolHome() {
         paidBy: indexOf.has(item.paidByKey) ? indexOf.get(item.paidByKey) : UNPAID,
       });
     }
-    return splitGroupTips({ people: names, items: parsed });
-  }, [people, items]);
+    return splitGroupTips({ people: names, items: parsed, currency: currencyCode });
+  }, [people, items, currencyCode]);
 
   const failed = Boolean(result.error);
 
@@ -87,8 +87,10 @@ export default function ToolHome() {
       result.settlements.forEach((settlement) => {
         lines.push(`  ${settlement.fromName} pays ${settlement.toName} ${money(settlement.amount)}`);
       });
-    } else {
+    } else if (result.potTotal === 0) {
       lines.push("", "Nothing to settle — everyone is square.");
+    } else {
+      lines.push("", "No transfers between travellers — but the kitty still needs collecting (see below).");
     }
     if (result.potTotal > 0) {
       lines.push("", `Still to collect into the kitty: ${money(result.potTotal)}`);
@@ -161,6 +163,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset to the demo data? Your entered travellers and tips will be lost.")) {
+      return;
+    }
     setPeople(DEFAULT_PEOPLE);
     setItems(DEFAULT_ITEMS);
     setNextKey(4);
@@ -356,7 +361,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -406,11 +411,16 @@ export default function ToolHome() {
 
       {!failed ? (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
             <h2 className="text-base font-semibold">Settle up</h2>
-            {result.settlements.length === 0 ? (
+            {result.settlements.length === 0 && result.potTotal === 0 ? (
               <p className="mt-3 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm font-medium text-[var(--success)]">
                 Nobody owes anybody — the group is already square.
+              </p>
+            ) : result.settlements.length === 0 ? (
+              <p className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]">
+                No transfers needed between travellers, but {money(result.potTotal)} is still owed into the
+                uncollected kitty — see below.
               </p>
             ) : (
               <ul className="mt-3 grid gap-2">
@@ -429,7 +439,7 @@ export default function ToolHome() {
             )}
           </section>
 
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
             <h2 className="text-base font-semibold">Per traveller</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[460px] text-left text-sm">

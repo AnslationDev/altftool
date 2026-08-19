@@ -253,7 +253,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <div className={`${PANEL} mt-4`}>
+        <div className={`${PANEL} mt-4`} aria-live="polite">
           {nextError ? (
             <p className={ERROR_BOX} role="alert">
               {nextError}
@@ -423,7 +423,7 @@ export default function ToolHome() {
           </button>
         </div>
 
-        <div className={`${PANEL} mt-4`}>
+        <div className={`${PANEL} mt-4`} aria-live="polite">
           {meetingError ? (
             <p className={ERROR_BOX} role="alert">
               {meetingError}
@@ -561,7 +561,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <div className={`${PANEL} mt-4`}>
+        <div className={`${PANEL} mt-4`} aria-live="polite">
           {checkError ? (
             <p className={ERROR_BOX} role="alert">
               {checkError}

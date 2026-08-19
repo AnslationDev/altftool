@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Home, RotateCcw } from "lucide-react";
 
 import { COMMON_PITCHES, MATERIAL_PRESETS, ROOF_TYPES, calculateRoofArea } from "../lib";
@@ -64,6 +64,9 @@ export default function ToolHome() {
   const [wastage, setWastage] = useState(DEFAULTS.wastage);
   const [price, setPrice] = useState(DEFAULTS.price);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copiedTimeoutRef.current), []);
 
   const result = useMemo(
     () =>
@@ -82,6 +85,7 @@ export default function ToolHome() {
   );
 
   const failed = Boolean(result.error);
+  const isFlat = roofType === "flat";
 
   const summary = useMemo(() => {
     if (failed) return "";
@@ -103,7 +107,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -230,20 +235,26 @@ export default function ToolHome() {
         </div>
 
         <h2 className="mt-6 text-base font-semibold">Pitch</h2>
-        <div className="mt-3 flex flex-wrap gap-2">
+        {isFlat && (
+          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+            Flat roofs use 0 pitch — the pitch inputs below are not used for this take-off.
+          </p>
+        )}
+        <div className={`mt-3 flex flex-wrap gap-2 ${isFlat ? "opacity-50" : ""}`}>
           {PITCH_MODES.map((mode) => (
             <button
               key={mode.id}
               type="button"
+              disabled={isFlat}
               aria-pressed={pitchMode === mode.id}
-              className={pitchMode === mode.id ? CHIP_ON : CHIP}
+              className={`${pitchMode === mode.id ? CHIP_ON : CHIP} disabled:cursor-not-allowed`}
               onClick={() => setPitchMode(mode.id)}
             >
               {mode.label}
             </button>
           ))}
         </div>
-        <div className="mt-4">
+        <div className={`mt-4 ${isFlat ? "opacity-50" : ""}`}>
           <label className={LABEL} htmlFor="ra-pitch">
             Pitch value
           </label>
@@ -255,16 +266,18 @@ export default function ToolHome() {
             min="0"
             step="0.5"
             value={pitch}
+            disabled={isFlat}
             onChange={(event) => setPitch(event.target.value)}
           />
         </div>
         {pitchMode === "ratio" && (
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className={`mt-3 flex flex-wrap gap-2 ${isFlat ? "opacity-50" : ""}`}>
             {COMMON_PITCHES.map((item) => (
               <button
                 key={item.label}
                 type="button"
-                className={CHIP}
+                disabled={isFlat}
+                className={`${CHIP} disabled:cursor-not-allowed`}
                 onClick={() => setPitch(String(item.riseIn12))}
               >
                 {item.label}
@@ -348,7 +361,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

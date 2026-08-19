@@ -81,6 +81,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset to the sample bookmarks? This clears all your entered rows and cannot be undone.")
+    ) {
+      return;
+    }
     setRows(DEFAULT_ROWS);
     setCopied(false);
     try {

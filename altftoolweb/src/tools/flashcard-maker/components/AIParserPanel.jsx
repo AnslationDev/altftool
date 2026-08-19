@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Sparkles, Wand2, Info, RefreshCcw, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { parseAIGeneratedCards } from "../utils/ai-parser";
@@ -7,13 +7,22 @@ export default function AIParserPanel({ onImport, onClose }) {
   const [text, setText] = useState("");
   const [previewCards, setPreviewCards] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const handleGenerate = () => {
     setIsGenerating(true);
-    setTimeout(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
       const cards = parseAIGeneratedCards(text);
       setPreviewCards(cards);
       setIsGenerating(false);
+      timeoutRef.current = null;
     }, 1200);
   };
 

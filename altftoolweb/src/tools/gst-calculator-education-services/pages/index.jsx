@@ -114,9 +114,11 @@ export default function ToolHome() {
           GST Calculator for Educational Services
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          School and degree-college fees are exempt; coaching, online courses and services supplied
-          to higher-education institutions are not. Pick the supply to see which side of
-          Notification 12/2017 it falls on and what the tax works out to.
+          School and degree-college fees are exempt; coaching and online courses are taxable, and
+          most support services (transport, catering, security, housekeeping) supplied to
+          higher-education institutions are taxable too — though admission and examination
+          services stay exempt at any level. Pick the supply to see which side of Notification
+          12/2017 it falls on and what the tax works out to.
         </p>
       </header>
 
@@ -197,7 +199,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -219,7 +225,7 @@ export default function ToolHome() {
                 ? "Fix the input above to see a result."
                 : result.exempt
                   ? "Exempt supply — no GST is charged"
-                  : `Taxable at ${result.rate}% under SAC 9992`}
+                  : `Taxable at ${result.rate}% — see SAC heading below`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

@@ -199,6 +199,8 @@ export default function ToolHome() {
               Current attendance
             </p>
             <p
+              aria-live="polite"
+              aria-atomic="true"
               className={`mt-1 text-4xl font-semibold ${
                 hasError
                   ? "text-[var(--primary)]"
@@ -209,7 +211,7 @@ export default function ToolHome() {
             >
               {hasError ? DASH : `${NUM.format(result.percent)}%`}
             </p>
-            <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">{statusLine}</p>
+            <p aria-live="polite" className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">{statusLine}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button

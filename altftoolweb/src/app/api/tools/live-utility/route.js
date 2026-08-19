@@ -33,6 +33,7 @@ const timeoutFetch = async (url, options = {}, timeout = 9000) => {
 };
 
 const number = (value, fallback) => {
+  if (value == null || String(value).trim() === "") return fallback;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
 };
@@ -221,15 +222,17 @@ async function handle(slug, params) {
     const domain = (query || "altftool.com").replace(/^https?:\/\//, "").split("/")[0];
     const data = await (await timeoutFetch(`https://rdap.org/domain/${encodeURIComponent(domain)}`)).json();
     const events = Object.fromEntries((data.events || []).map((event) => [event.eventAction, event.eventDate]));
+    const registrarEntity = (data.entities || []).find((entity) => entity.roles?.includes("registrar"));
+    const registrarName = registrarEntity?.vcardArray?.[1]?.find((field) => field?.[0] === "fn")?.[3];
     return {
       summary: data.ldhName || domain,
       source: data.links?.find((link) => link.rel === "self")?.href || "RDAP bootstrap service",
       rows: [
         ["Registration", events.registration || "Not supplied"],
         ["Expiration", events.expiration || "Not supplied"],
-        ["Last changed", events.lastChanged || "Not supplied"],
+        ["Last changed", events["last changed"] || "Not supplied"],
         ["Status", (data.status || []).join(", ") || "Not supplied"],
-        ["Registrar", (data.entities || []).find((entity) => entity.roles?.includes("registrar"))?.handle || "Not supplied"],
+        ["Registrar", registrarName || registrarEntity?.handle || "Not supplied"],
       ],
     };
   }
@@ -368,6 +371,7 @@ async function handle(slug, params) {
     return {
       summary: `AQI ${current.us_aqi ?? current.european_aqi ?? "unavailable"}`,
       source: "Open-Meteo Air Quality API using CAMS data",
+      readingTime: current.time || null,
       rows: Object.entries(current)
         .filter(([key]) => !["time", "interval"].includes(key))
         .map(([key, value]) => [key, value, data.current_units?.[key] || ""]),

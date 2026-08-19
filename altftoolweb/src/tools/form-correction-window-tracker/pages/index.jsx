@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Info, Lock, PencilLine, RotateCcw, TriangleAlert } from "lucide-react";
 
 import { BODIES, FIELDS, addDays, buildCorrectionPlan } from "../lib";
@@ -50,6 +50,7 @@ export default function ToolHome() {
   const [correctionsUsed, setCorrectionsUsed] = useState("0");
   const [movesToHigherFeeBand, setMovesToHigherFeeBand] = useState(false);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   // Move the calendar onto the visitor's clock after hydration, never during render.
   useEffect(() => {
@@ -57,6 +58,12 @@ export default function ToolHome() {
     setToday(now);
     setWindowStart(addDays(now, -1));
     setWindowEnd(addDays(now, 4));
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
   }, []);
 
   const toggleField = (id) =>
@@ -112,7 +119,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -259,7 +267,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

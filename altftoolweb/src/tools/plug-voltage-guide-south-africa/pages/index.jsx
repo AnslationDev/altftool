@@ -299,7 +299,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -309,7 +309,11 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && (
-          <ul className="mt-5 space-y-2 text-sm text-[var(--muted-foreground)]">
+          <ul
+            className="mt-5 space-y-2 text-sm text-[var(--muted-foreground)]"
+            role="status"
+            aria-live="polite"
+          >
             {result.actions.map((action) => (
               <li key={action} className="flex gap-2">
                 <span aria-hidden="true" className="text-[var(--primary)]">

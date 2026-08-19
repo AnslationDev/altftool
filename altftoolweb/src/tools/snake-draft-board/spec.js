@@ -31,7 +31,8 @@ export const spec = {
       "label": "Recorded selections",
       "type": "textarea",
       "default": "Asha | Item 1\nBen | Item 2",
-      "hint": "Player | selection"
+      "hint": "Player | selection",
+      "required": false
     }
   ],
   "presets": [
@@ -49,8 +50,9 @@ export const spec = {
   compute: (values) => {
       const players = String(values.players || "").split(/\r?\n/).map((x)=>x.trim()).filter(Boolean), rounds = Math.max(1,Math.round(Number(values.rounds)||1));
       const recorded = String(values.picks || "").split(/\r?\n/).map((line)=>line.split("|").map((x)=>x.trim())).filter((row)=>row[0]);
-      const order=[]; for(let round=1;round<=rounds;round+=1){ const list=round%2?players:[...players].reverse(); list.forEach((player)=>order.push([order.length+1,round,player,recorded[order.length]?.[1]||"Open",recorded[order.length]?.[0]&&recorded[order.length][0]!==player?"Player mismatch":"Ready"])); }
-      return { result: order.length+" total draft slots", caption: recorded.length+" selection(s) entered", table:{headers:["Pick","Round","Player","Selection","Check"],rows:order} };
+      const order=[]; for(let round=1;round<=rounds;round+=1){ const list=round%2?players:[...players].reverse(); list.forEach((player)=>order.push([order.length+1,round,player,recorded[order.length]?.[1]||"Open",recorded[order.length]?.[0]?(recorded[order.length][0]!==player?"Player mismatch":"Ready"):"Pending"])); }
+      const extra = recorded.length - order.length;
+      return { result: order.length+" total draft slots", caption: recorded.length+" selection(s) entered"+(extra>0?` — ${extra} extra selection(s) ignored (increase rounds or check the player list)`:""), table:{headers:["Pick","Round","Player","Selection","Check"],rows:order} };
     },
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, FileCode2, RotateCcw } from "lucide-react";
 
 import { DEFAULT_INDENT, INDENT_OPTIONS, processCss } from "../lib";
@@ -40,6 +40,13 @@ export default function ToolHome() {
   const [keepBang, setKeepBang] = useState(true);
   const [dropEmpty, setDropEmpty] = useState(true);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -56,7 +63,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.output);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
@@ -216,7 +224,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Rules", result.error ? DASH : numberFormat.format(result.rules)],
             ["Declarations", result.error ? DASH : numberFormat.format(result.declarations)],
@@ -239,7 +247,10 @@ export default function ToolHome() {
         <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
           <h2 className="text-base font-semibold text-[var(--foreground)]">Output</h2>
           <div className="mt-3 overflow-x-auto rounded-md bg-[var(--muted)] p-3">
-            <pre className="min-w-0 font-mono text-xs leading-5 text-[var(--foreground)]">
+            <pre
+              className="min-w-0 font-mono text-xs leading-5 text-[var(--foreground)]"
+              aria-live="polite"
+            >
               {result.output}
             </pre>
           </div>

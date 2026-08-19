@@ -22,7 +22,7 @@ const seo = {
   faqs: [
     [
       "How long does an end-of-tenancy clean take?",
-      "About 16 to 17 hours of work for a two-bedroom, two-bathroom flat done thoroughly, and roughly 7 to 8 hours for a studio. The kitchen alone is around four and a half hours because the oven takes over an hour and the fridge, cupboards and appliance seals each take another block. A professional team of two typically compresses that into a single day.",
+      "About 16 to 17 hours of work for a two-bedroom, two-bathroom flat done thoroughly, and roughly 9 to 11 hours for a studio with its one bathroom. The kitchen alone is around four and a half hours because the oven takes over an hour and the fridge, cupboards and appliance seals each take another block. A professional team of two typically compresses that into a single day.",
     ],
     [
       "What cleaning do landlords deduct from the deposit for most often?",

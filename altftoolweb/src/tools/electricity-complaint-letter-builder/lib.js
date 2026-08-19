@@ -128,6 +128,7 @@ export const COMPLAINT_TYPES = [
     addressee: "The Executive Engineer",
     ask: "correct the tariff category recorded against my connection and refund the excess recovered",
     needsReadings: false,
+    billedAmountRelevant: true,
     statutes: ["s.42(5)"],
   },
   {
@@ -136,6 +137,7 @@ export const COMPLAINT_TYPES = [
     addressee: "The Executive Engineer",
     ask: "withdraw the arrear demand, which is barred by limitation, and issue a fresh bill for the current period alone",
     needsReadings: false,
+    billedAmountRelevant: true,
     statutes: ["s.56(2)"],
   },
   {
@@ -144,6 +146,7 @@ export const COMPLAINT_TYPES = [
     addressee: "The Executive Engineer",
     ask: "withdraw the disconnection notice until the dispute is decided, and record my payment against the connection",
     needsReadings: false,
+    billedAmountRelevant: true,
     statutes: ["s.56(1)", "s.42(5)"],
   },
   {
@@ -420,6 +423,15 @@ export function buildElectricityComplaint({
       ? `The consumption billed is ${formatNumber(assessment.unitsVsAverage)}% of my usual monthly consumption, and nothing at the premises has changed to explain that.`
       : "";
 
+  // For complaint types that do not turn on a meter reading (e.g. wrong tariff, old
+  // arrears, a disconnection threat), the amount the bill demands is still the figure
+  // in dispute, so it belongs in the letter even though no "own working" total exists.
+  const billedNum = Number(billedAmount);
+  const billedAmountLine =
+    !type.needsReadings && type.billedAmountRelevant && Number.isFinite(billedNum) && billedNum > 0
+      ? `The bill in question demands ${formatINR(billedNum)}, which I dispute for the reasons above.`
+      : "";
+
   const arrearLines = assessment.arrear
     ? [
         `The bill carries an arrear of ${formatINR(Number(arrearAmount) || 0)} stated to have first become due on ${formatLongDate(arrearFirstDueISO)}.`,
@@ -470,6 +482,7 @@ export function buildElectricityComplaint({
     "",
     ...computedBlock,
     averageLine,
+    billedAmountLine,
     "",
     ...arrearLines,
     "",

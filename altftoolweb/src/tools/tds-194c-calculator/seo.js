@@ -34,7 +34,7 @@ const seo = {
     ],
     [
       "When is no TDS deducted on payments to a transporter?",
-      "Under section 194C(6) no tax is deducted from a contractor in the business of plying, hiring or leasing goods carriages who owns ten or fewer goods carriages at any time during the year and furnishes a declaration to that effect along with a PAN. The payment is still reported in the quarterly Form 26Q with the appropriate remark, and without a PAN the exemption fails and 20% applies.",
+      "Under section 194C(6) no tax is deducted from a contractor in the business of plying, hiring or leasing goods carriages who owns ten or fewer goods carriages at any time during the year and furnishes a declaration to that effect along with a PAN. The payment is still reported in the quarterly Form 26Q with the appropriate remark. Without a PAN the exemption fails and the payment falls back to the ordinary 194C thresholds at the 20% no-PAN rate under section 206AA once those thresholds are breached.",
     ],
   ],
 };

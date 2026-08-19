@@ -425,6 +425,8 @@ export default function BreakoutGame({ isPreview = false }) {
         <canvas
             ref={canvasRef}
             className="block w-full h-full touch-none cursor-crosshair"
+            role="application"
+            aria-label="Breakout game canvas. Move the paddle with the arrow keys or your mouse. Keep the ball in play and clear every brick."
             onTouchMove={(e) => {
                 // e.preventDefault(); // React handles this slightly differently, usually need CSS touch-action: none
                 inputRef.current.x = e.touches[0].clientX;

@@ -42,7 +42,7 @@ export const spec = {
       const headers = ["Invoice","Client","Issued","Due","Amount","Paid date / status","Agreed late-fee term","Evidence"];
       const rows = String(values.records || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => line.split("|").map((cell) => cell.trim()));
       const incomplete = rows.filter((row) => row.length < headers.length || row.slice(0, headers.length).some((cell) => !cell)).length;
-      return { result: rows.length + " structured record(s)", caption: values.complete ? incomplete + " incomplete row(s)" : headers.length + " tracked fields", rows: [["Complete", Math.max(0, rows.length - incomplete)], ["Needs review", incomplete], ["Columns", headers.length]], table: { headers, rows: rows.map((row) => headers.map((_, index) => row[index] || "—")).slice(0, 200) } };
+      return { result: rows.length + " structured record(s)", caption: values.complete ? incomplete + " incomplete row(s)" : headers.length + " tracked fields", rows: values.complete ? [["Complete", Math.max(0, rows.length - incomplete)], ["Needs review", incomplete], ["Columns", headers.length]] : [["Columns", headers.length]], table: { headers, rows: rows.map((row) => headers.map((_, index) => row[index] || "—")).slice(0, 200) } };
     },
 };
 

@@ -19,25 +19,25 @@ const DiffStats = ({ stats, diff, mode }) => {
   return (
     <div className="grid grid-cols-3 gap-4 mb-6">
       
-      <div className="bg-(--card) border border-green-200 rounded-lg p-4">
-        <div className="text-2xl font-bold text-green-700">
+      <div className="bg-(--card) border border-(--success)/30 rounded-lg p-4">
+        <div className="text-2xl font-bold text-(--success-text)">
           {stats.added}
         </div>
-        <div className="text-sm text-green-600">
+        <div className="text-sm text-(--success-text)">
           {label} Added
         </div>
       </div>
 
-      <div className="bg-(--card) border border-red-200 rounded-lg p-4">
-        <div className="text-2xl font-bold text-red-700">
+      <div className="bg-(--card) border border-(--danger)/30 rounded-lg p-4">
+        <div className="text-2xl font-bold text-(--danger-text)">
           {stats.deleted}
         </div>
-        <div className="text-sm text-red-600">
+        <div className="text-sm text-(--danger-text)">
           {label} Deleted
         </div>
       </div>
 
-      <div className="bg-(--card) border border-gray-200 rounded-lg p-4">
+      <div className="bg-(--card) border border-(--border) rounded-lg p-4">
         <div className="text-2xl font-bold text-(--foreground)">
           {stats.unchanged}
         </div>

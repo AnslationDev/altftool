@@ -32,7 +32,7 @@ const seo = {
   faqs: [
     [
       "How many calories does 45 minutes on a stationary bike burn?",
-      "For a 70 kg rider holding 150 W, the ACSM equation gives about 475 kcal gross and about 420 kcal net of resting metabolism over 45 minutes. At 100 W the same rider is closer to 345 kcal gross. Power, not time alone, drives the number.",
+      "For a 70 kg rider holding 150 W, the ACSM equation gives about 475 kcal gross and about 420 kcal net of resting metabolism over 45 minutes. At 100 W the same rider is closer to 353 kcal gross. Power, not time alone, drives the number.",
     ],
     [
       "How do I convert resistance level to watts?",

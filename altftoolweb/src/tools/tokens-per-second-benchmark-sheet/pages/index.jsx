@@ -82,6 +82,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (saved.length > 0 && !window.confirm("Reset inputs and clear all saved runs? This cannot be undone.")) {
+      return;
+    }
     setForm(DEFAULTS);
     setSaved([]);
     setCopied(false);
@@ -253,7 +256,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

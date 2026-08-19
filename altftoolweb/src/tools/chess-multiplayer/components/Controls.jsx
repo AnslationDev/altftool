@@ -24,7 +24,7 @@ export default function Controls({
   return (
     <div className="flex flex-wrap items-center gap-2">
       {!finished && !drawOffer && (
-        <button type="button" className={btn} onClick={onOfferDraw}>
+        <button type="button" className={btn} onClick={() => onOfferDraw(myColor)}>
           <Handshake size={16} /> Offer Draw
         </button>
       )}

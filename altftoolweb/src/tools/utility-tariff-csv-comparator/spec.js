@@ -49,7 +49,7 @@ export const spec = {
   compute: (values) => {
       const usage = new Map(String(values.usage || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => { const [label, kwh] = line.split("|").map((cell) => cell.trim()); return [label, Math.max(0, Number(kwh) || 0)]; })), tax = Math.max(0, Number(values.tax) || 0) / 100;
       const rows = String(values.tariffs || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => {
-        const [name, fixedRaw, ratesRaw] = line.split("|").map((cell) => cell.trim()), fixed = Math.max(0, Number(fixedRaw) || 0), rates = new Map(String(ratesRaw || "").split(",").map((pair) => { const [label, price] = pair.split(":").map((cell) => cell.trim()); return [label, Number(price) || 0]; }));
+        const [name, fixedRaw, ratesRaw] = line.split("|").map((cell) => cell.trim()), fixed = Math.max(0, Number(fixedRaw) || 0), rates = new Map(String(ratesRaw || "").split(",").map((pair) => pair.trim()).filter(Boolean).map((pair) => { const idx = pair.indexOf(":"); if (idx === -1) return null; const label = pair.slice(0, idx).trim(), price = pair.slice(idx + 1).trim(); return label && price !== "" && Number.isFinite(Number(price)) ? [label, Number(price)] : null; }).filter((entry) => entry !== null));
         const energy = [...usage.entries()].reduce((sum, [label, kwh]) => sum + kwh * (rates.get(label) || 0), 0), subtotal = fixed + energy, total = subtotal * (1 + tax);
         return [name || "Plan", fixed.toFixed(2), energy.toFixed(2), total.toFixed(2), [...usage.keys()].filter((label) => !rates.has(label)).join(", ") || "None"];
       }).sort((a, b) => Number(a[3]) - Number(b[3]));

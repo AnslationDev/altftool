@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { RotateCcw, Play, Pause, Sliders, Info } from "lucide-react";
 
 const PHASES = [
@@ -68,8 +68,13 @@ export default function MoonPhaseSimulator() {
     return () => observer.disconnect();
   }, []);
 
-  // Space View Canvas (Top Down Orbit)
-  useEffect(() => {
+  // Space View Canvas (Top Down Orbit) — drawing logic lives in a stable
+  // callback (ref'd by phaseAngle only; theme colors are re-read live at draw
+  // time) so it can be invoked both from the phaseAngle/theme effect below
+  // and from the ResizeObserver effect, which is what keeps the backing
+  // pixel buffer in sync when the container is resized instead of only ever
+  // re-syncing on the next phaseAngle/theme change.
+  const drawSpaceView = useCallback(() => {
     const canvas = canvasSpaceRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -155,11 +160,35 @@ export default function MoonPhaseSimulator() {
     ctx.strokeRect(-12, -12, 24, 24);
 
     ctx.restore();
+  }, [phaseAngle]);
 
-  }, [phaseAngle, themeTick]);
-
-  // As Seen From Earth View Canvas
   useEffect(() => {
+    drawSpaceView();
+  }, [drawSpaceView, themeTick]);
+
+  // Re-sync the backing pixel buffer to the container's current size on
+  // resize (e.g. a browser window resize), not just on the next phaseAngle
+  // or theme change — otherwise the canvas keeps rendering at a stale
+  // resolution (stretched/blurred) until the user happens to move the slider.
+  useEffect(() => {
+    const canvas = canvasSpaceRef.current;
+    const container = canvas?.parentElement;
+    if (!container || typeof ResizeObserver === "undefined") return undefined;
+    let rafId = null;
+    const observer = new ResizeObserver(() => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => drawSpaceView());
+    });
+    observer.observe(container);
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, [drawSpaceView]);
+
+  // As Seen From Earth View Canvas — same stable-callback + ResizeObserver
+  // pattern as the space view above.
+  const drawEarthView = useCallback(() => {
     const canvas = canvasEarthViewRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -208,8 +237,27 @@ export default function MoonPhaseSimulator() {
     ctx.beginPath();
     ctx.arc(cx, cy, rMoon, 0, Math.PI * 2);
     ctx.stroke();
-
   }, [phaseAngle]);
+
+  useEffect(() => {
+    drawEarthView();
+  }, [drawEarthView]);
+
+  useEffect(() => {
+    const canvas = canvasEarthViewRef.current;
+    const container = canvas?.parentElement;
+    if (!container || typeof ResizeObserver === "undefined") return undefined;
+    let rafId = null;
+    const observer = new ResizeObserver(() => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => drawEarthView());
+    });
+    observer.observe(container);
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, [drawEarthView]);
 
   return (
     <div className="min-h-screen bg-background text-foreground p-4 sm:p-6 lg:p-8">
@@ -313,7 +361,11 @@ export default function MoonPhaseSimulator() {
             </div>
 
             {/* Current Phase Telemetry Card */}
-            <div className="rounded-xl border border-border bg-card p-5 space-y-3 shadow-sm">
+            <div
+              className="rounded-xl border border-border bg-card p-5 space-y-3 shadow-sm"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <h2 className="text-lg font-bold text-foreground">{currentPhaseName}</h2>
                 <span className="text-xs font-bold font-mono text-primary">{illuminationPct}% Lit</span>

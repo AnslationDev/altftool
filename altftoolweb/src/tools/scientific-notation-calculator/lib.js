@@ -189,7 +189,8 @@ export function toEngineering(value, sigFigs = 6) {
   const shift = sci.exponent - engExponent; // 0, 1 or 2
   const coefficient = sci.coefficient * 10 ** shift;
   const digits = Math.trunc(Number(sigFigs));
-  const coefficientText = coefficient.toPrecision(digits);
+  const decimalPlaces = Math.max(digits - shift - 1, 0);
+  const coefficientText = coefficient.toFixed(decimalPlaces);
 
   return {
     coefficient,

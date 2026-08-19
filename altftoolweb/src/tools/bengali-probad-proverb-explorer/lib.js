@@ -465,13 +465,3 @@ export function quizScore({ attempted = 0, correct = 0 } = {}) {
     accuracyPct: Math.round((right / tried) * 100),
   };
 }
-
-/** How many proverbs sit in each theme — used for the browse summary. */
-export function countsByTheme() {
-  const counts = {};
-  for (const theme of THEMES) counts[theme] = 0;
-  for (const entry of PROVERBS) {
-    counts[entry.theme] = (counts[entry.theme] || 0) + 1;
-  }
-  return counts;
-}

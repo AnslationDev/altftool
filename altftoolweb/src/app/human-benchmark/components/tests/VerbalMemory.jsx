@@ -83,7 +83,7 @@ export default function VerbalMemory({ onComplete, beep }) {
         ))}</div>
       </div>
       <div className={`rounded-xl border bg-[var(--card)] flex items-center justify-center ${
-        lastFeedback==="correct"?"border-[var(--primary)]":lastFeedback==="wrong"?"border-[#c0392b]":"border-[var(--card-border)]"}`}
+        lastFeedback==="correct"?"border-[var(--primary)]":lastFeedback==="wrong"?"border-[var(--danger)]":"border-[var(--card-border)]"}`}
         style={{ height:220 }}>
         <div className="text-4xl font-black text-[var(--foreground)]">{currentWord}</div>
       </div>

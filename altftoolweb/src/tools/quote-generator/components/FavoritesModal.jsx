@@ -42,10 +42,12 @@ export default function FavoritesModal({
                   <p className="font-medium text-foreground text-sm line-clamp-2">"{fav.text}"</p>
                   <p className="text-xs text-muted-foreground mt-1">— {fav.author}</p>
                 </div>
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onRemoveFavorite(fav.id);
+                    if (window.confirm("Remove this quote from your favorites?")) {
+                      onRemoveFavorite(fav.id);
+                    }
                   }}
                   className="text-muted-foreground hover:text-rose-500 transition-colors p-1"
                   aria-label="Remove favorite"

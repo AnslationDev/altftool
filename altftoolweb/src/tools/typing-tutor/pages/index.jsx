@@ -45,12 +45,21 @@ const LESSONS = [
 ];
 
 const KEYBOARD_ROWS = [
+  ["1","2","3","4","5","6","7","8","9","0"],
   ["q","w","e","r","t","y","u","i","o","p","[","]","\\"],
   ["a","s","d","f","g","h","j","k","l",";","'"],
-  ["z","x","c","v","b","n","m",",",".","/"],
+  ["ShiftL","z","x","c","v","b","n","m",",",".","/","ShiftR"],
 ];
 
+const SHIFT_KEYS = new Set(["ShiftL", "ShiftR"]);
+
+const SHIFT_SYMBOL_MAP = {
+  "1":"!","2":"@","3":"#","4":"$","5":"%","6":"^","7":"&","8":"*","9":"(","0":")","/":"?",
+};
+
 const FINGER_MAP = {
+  "1":"left-pinky","2":"left-ring","3":"left-middle","4":"left-index","5":"left-index",
+  "6":"right-index","7":"right-index","8":"right-middle","9":"right-ring","0":"right-pinky",
   q:"left-pinky",a:"left-pinky",z:"left-pinky",
   w:"left-ring",s:"left-ring",x:"left-ring",
   e:"left-middle",d:"left-middle",c:"left-middle",
@@ -59,6 +68,7 @@ const FINGER_MAP = {
   i:"right-middle",k:"right-middle",",":"right-middle",
   o:"right-ring",l:"right-ring",".":"right-ring",
   p:"right-pinky",";":"right-pinky","/":"right-pinky","[":"right-pinky","]":"right-pinky","\\":"right-pinky","'":"right-pinky",
+  ShiftL:"left-pinky", ShiftR:"right-pinky",
 };
 
 const FINGER_COLORS = {
@@ -138,10 +148,13 @@ function KeyboardVisual({ targetKeys, lastKey }) {
         {KEYBOARD_ROWS.map((row, ri) => (
           <div key={ri} className="flex gap-1">
             {row.map((key) => {
-              const isActive = targetSet.has(key);
+              const isShiftKey = SHIFT_KEYS.has(key);
+              const displayKey = isShiftKey ? "Shift" : key;
+              const matchKey = isShiftKey ? "shift" : key;
+              const isActive = targetSet.has(matchKey) || targetSet.has(SHIFT_SYMBOL_MAP[key]);
               const finger = isActive ? FINGER_MAP[key] : null;
               const color = finger ? FINGER_COLORS[finger] : null;
-              const justPressed = lastKey === key;
+              const justPressed = lastKey === key || (isShiftKey && lastKey === "Shift");
               return (
                 <div
                   key={key}
@@ -151,10 +164,10 @@ function KeyboardVisual({ targetKeys, lastKey }) {
                     ${isActive ? "text-white shadow-sm" : "bg-[var(--surface-soft)] text-[var(--muted-foreground)] border border-[var(--border)]"}
                   `}
                   style={isActive ? { backgroundColor: color, borderColor: color } : {}}
-                  title={isActive && finger ? `${key.toUpperCase()} — ${FINGER_LABELS[finger]} finger` : key.toUpperCase()}
-                  aria-label={`Key ${key.toUpperCase()}${isActive ? ` — ${FINGER_LABELS[finger]} finger` : ""}`}
+                  title={isActive && finger ? `${displayKey.toUpperCase()} — ${FINGER_LABELS[finger]} finger` : displayKey.toUpperCase()}
+                  aria-label={`Key ${displayKey.toUpperCase()}${isActive ? ` — ${FINGER_LABELS[finger]} finger` : ""}`}
                 >
-                  {key}
+                  {displayKey}
                 </div>
               );
             })}
@@ -186,6 +199,7 @@ function LessonSelector({ lessons, progress, onSelect, difficultyFilter, setDiff
             key={d}
             type="button"
             onClick={() => setDifficultyFilter(d)}
+            aria-pressed={difficultyFilter === d}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               difficultyFilter === d
                 ? "bg-[var(--primary)] text-white shadow-sm"
@@ -203,6 +217,8 @@ function LessonSelector({ lessons, progress, onSelect, difficultyFilter, setDiff
             <button
               type="button"
               onClick={() => setExpanded(expanded === diff ? null : diff)}
+              aria-expanded={expanded === diff}
+              aria-controls={`lesson-panel-${diff}`}
               className="flex items-center justify-between w-full px-5 py-3 text-left font-bold text-[var(--foreground)] cursor-pointer hover:bg-[var(--surface-soft)] transition-colors"
             >
               <span className="inline-flex items-center gap-2">
@@ -213,7 +229,7 @@ function LessonSelector({ lessons, progress, onSelect, difficultyFilter, setDiff
               {expanded === diff ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </button>
             {expanded === diff && (
-              <div className="divide-y divide-[var(--border)]">
+              <div id={`lesson-panel-${diff}`} className="divide-y divide-[var(--border)]">
                 {ls.map((l) => {
                   const p = progress.lessons[l.id];
                   const completed = p?.completed;
@@ -313,7 +329,7 @@ function ProgressCharts({ progress }) {
                   className="w-full rounded-t-sm transition-all duration-200"
                   style={{
                     height: `${(h.wpm / maxWpm) * 100}%`,
-                    backgroundColor: h.accuracy >= 90 ? "var(--primary)" : h.accuracy >= 75 ? "#EAB308" : "#EF4444",
+                    backgroundColor: h.accuracy >= 90 ? "var(--success)" : h.accuracy >= 75 ? "var(--warning)" : "var(--danger)",
                     minHeight: "4px",
                   }}
                   title={`${h.wpm} WPM — ${h.accuracy}%`}
@@ -344,7 +360,7 @@ function ProgressCharts({ progress }) {
                   className="w-full rounded-t-sm"
                   style={{
                     height: `${h.accuracy}%`,
-                    backgroundColor: h.accuracy >= 90 ? "var(--primary)" : h.accuracy >= 75 ? "#EAB308" : "#EF4444",
+                    backgroundColor: h.accuracy >= 90 ? "var(--success)" : h.accuracy >= 75 ? "var(--warning)" : "var(--danger)",
                     minHeight: "4px",
                   }}
                   title={`${h.accuracy}%`}
@@ -364,11 +380,13 @@ function TabBar({ active, onChange }) {
     { id: "progress", label: "Progress", icon: BarChart3 },
   ];
   return (
-    <div className="flex gap-1 mb-6 bg-[var(--surface-soft)] p-1 rounded-xl w-fit mx-auto">
+    <div role="tablist" className="flex gap-1 mb-6 bg-[var(--surface-soft)] p-1 rounded-xl w-fit mx-auto">
       {tabs.map((t) => (
         <button
           key={t.id}
           type="button"
+          role="tab"
+          aria-selected={active === t.id}
           onClick={() => onChange(t.id)}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all cursor-pointer ${
             active === t.id
@@ -399,15 +417,14 @@ function HomeScreen({ lessons, progress, onStartLesson, difficultyFilter, setDif
 function LessonScreen({ lesson, progress, onComplete, onBack }) {
   const [typed, setTyped] = useState("");
   const [errors, setErrors] = useState(0);
-  const [totalKeystrokes, setTotalKeystrokes] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [lastKey, setLastKey] = useState(null);
-  const [wpmHistory, setWpmHistory] = useState([]);
 
   const inputRef = useRef(null);
-  const startTimeRef = useRef(null);
+  const lastKeyTimeoutRef = useRef(null);
+  const completeHeadingRef = useRef(null);
 
   const TEXT = lesson.text;
 
@@ -422,33 +439,14 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
   }, [correctChars, timeElapsed]);
 
   const accuracy = useMemo(
-    () => (totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 100),
-    [correctChars, totalKeystrokes],
+    () => (typed.length > 0 ? Math.round((correctChars / typed.length) * 100) : 100),
+    [correctChars, typed],
   );
 
   useEffect(() => {
     if (running) {
-      const interval = setInterval(() => {
-        setTimeElapsed((p) => p + 1);
-        setWpmHistory((prev) => [
-          ...prev,
-          {
-            wpm: Math.round(
-              (typed.split("").filter((c, i) => c === TEXT[i]).length / 5) /
-                ((timeElapsed + 1) / 60 || 1 / 60),
-            ),
-            accuracy:
-              totalKeystrokes > 0
-                ? Math.round(
-                    (typed.split("").filter((c, i) => c === TEXT[i]).length /
-                      totalKeystrokes) *
-                      100,
-                  )
-                : 100,
-          },
-        ]);
-      }, 1000);
-      return () => clearInterval(interval);
+      const id = setInterval(() => setTimeElapsed((p) => p + 1), 1000);
+      return () => clearInterval(id);
     }
   }, [running]);
 
@@ -465,7 +463,6 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
           if (removedChar !== expectedChar) {
             setErrors((p) => Math.max(p - 1, 0));
           }
-          setTotalKeystrokes((p) => Math.max(p - 1, 0));
         }
         return;
       }
@@ -476,16 +473,14 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
         e.preventDefault();
         if (e.key === "Shift") {
           setLastKey("Shift");
-          setTimeout(() => setLastKey(null), 150);
+          clearTimeout(lastKeyTimeoutRef.current);
+          lastKeyTimeoutRef.current = setTimeout(() => setLastKey(null), 150);
           return;
         }
 
-        if (!startTimeRef.current) {
-          startTimeRef.current = Date.now();
-        }
-
         setLastKey(e.key.toLowerCase());
-        setTimeout(() => setLastKey(null), 150);
+        clearTimeout(lastKeyTimeoutRef.current);
+        lastKeyTimeoutRef.current = setTimeout(() => setLastKey(null), 150);
 
         const index = typed.length;
         if (index < TEXT.length) {
@@ -494,7 +489,6 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
             setErrors((p) => p + 1);
           }
           setTyped((p) => p + e.key);
-          setTotalKeystrokes((p) => p + 1);
           setRunning(true);
         }
 
@@ -547,16 +541,19 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
     }
   }, [completed]);
 
+  useEffect(() => {
+    if (completed) completeHeadingRef.current?.focus();
+  }, [completed]);
+
+  useEffect(() => () => clearTimeout(lastKeyTimeoutRef.current), []);
+
   const resetLesson = useCallback(() => {
     setTyped("");
     setErrors(0);
-    setTotalKeystrokes(0);
     setTimeElapsed(0);
     setRunning(false);
     setCompleted(false);
     setLastKey(null);
-    setWpmHistory([]);
-    startTimeRef.current = null;
     inputRef.current?.focus({ preventScroll: true });
   }, []);
 
@@ -588,9 +585,8 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
           tabIndex={0}
           onKeyDown={handleKeyDown}
           className="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 sm:p-6 text-base sm:text-lg leading-relaxed font-mono select-none min-h-[100px] outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] cursor-text transition-all"
-          aria-label="Typing area"
-          role="textbox"
-          aria-multiline="false"
+          aria-label="Typing practice area. Not a standard text field: type the displayed text; only character keys and Backspace are handled."
+          role="application"
         >
           {TEXT.split("").map((char, i) => {
             let cls = "text-[var(--muted-foreground)]";
@@ -621,7 +617,7 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
               style={{
                 width: `${Math.min((typed.length / TEXT.length) * 100, 100)}%`,
                 backgroundColor:
-                  accuracy >= 90 ? "var(--primary)" : accuracy >= 75 ? "#EAB308" : "#EF4444",
+                  accuracy >= 90 ? "var(--success)" : accuracy >= 75 ? "var(--warning)" : "var(--danger)",
               }}
             />
           </div>
@@ -649,7 +645,7 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
         </div>
         <div className="border border-[var(--border)] rounded-xl bg-[var(--card)] p-3 sm:p-4 text-center">
           <p className="text-[10px] font-bold uppercase text-[var(--muted-foreground)] tracking-wider">Accuracy</p>
-          <p className={`text-2xl sm:text-3xl font-black ${accuracy >= 90 ? "text-green-500" : accuracy >= 75 ? "text-yellow-500" : "text-red-500"}`}>
+          <p className={`text-2xl sm:text-3xl font-black ${accuracy >= 90 ? "text-success" : accuracy >= 75 ? "text-warning" : "text-danger"}`}>
             {accuracy}%
           </p>
         </div>
@@ -660,9 +656,15 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
       </div>
 
       {completed && (
-        <div className="mt-6 border border-[var(--primary)]/30 bg-[var(--primary)]/5 rounded-xl p-6 text-center">
+        <div role="status" aria-live="polite" className="mt-6 border border-[var(--primary)]/30 bg-[var(--primary)]/5 rounded-xl p-6 text-center">
           <CheckCircle2 className="h-10 w-10 mx-auto mb-2 text-[var(--primary)]" />
-          <h3 className="text-xl font-black text-[var(--foreground)]">Lesson Complete!</h3>
+          <h3
+            ref={completeHeadingRef}
+            tabIndex={-1}
+            className="text-xl font-black text-[var(--foreground)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/40"
+          >
+            Lesson Complete!
+          </h3>
           <p className="text-sm text-[var(--muted-foreground)] mt-1">
             {wpm} WPM — {accuracy}% accuracy — {errors} errors
           </p>

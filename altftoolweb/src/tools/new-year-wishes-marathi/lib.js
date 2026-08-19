@@ -360,7 +360,7 @@ export function buildWishes({
   const nativeSalutation = useSalutation ? applyName(relationship.native, to) : "";
   const romanSalutation = useSalutation ? applyName(relationship.roman, to) : "";
   const englishSalutation = useSalutation ? applyName(relationship.english, to) : "";
-  const signature = from ? `— ${from}` : "";
+  const signature = from ? `- ${from}` : "";
 
   const items = matches.map((wish) => {
     const nativeBlock = joinLines([nativeSalutation, wish.native, signature]);

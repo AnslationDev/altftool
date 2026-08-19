@@ -283,7 +283,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -331,7 +335,12 @@ export default function ToolHome() {
             ["TDS already deducted this year", hasError ? DASH : money(result.tdsAlreadyDeducted)],
             ["Total TDS for the year", hasError ? DASH : money(result.totalTdsForYear)],
             ["Net amount payable to contractor", hasError ? DASH : money(result.netPayable)],
-          ].map(([label, value]) => (
+            !hasError && result.shortfallCarriedForward > 0
+              ? ["Shortfall still to recover", money(result.shortfallCarriedForward)]
+              : null,
+          ]
+            .filter(Boolean)
+            .map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
               <dd className="text-right font-semibold">{value}</dd>
@@ -343,6 +352,14 @@ export default function ToolHome() {
           <p className="mt-4 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm text-[var(--success)]">
             Headroom left this year: {money(result.annualHeadroom)} before the aggregate limit bites,
             and {money(result.singleHeadroom)} on a single bill.
+          </p>
+        ) : null}
+
+        {!hasError && result.shortfallCarriedForward > 0 ? (
+          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
+            This bill is smaller than the catch-up tax now due, so {money(result.shortfallCarriedForward)}{" "}
+            could not be withheld from it. Recover that shortfall from the payee directly or from the
+            next payment.
           </p>
         ) : null}
       </section>

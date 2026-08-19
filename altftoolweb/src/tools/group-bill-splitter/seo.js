@@ -8,7 +8,7 @@ const seo = {
     "Balances show who is owed and who owes, Settle up (N payments) lists each transfer as payer → payee → amount, and Copy settle-up plan copies the trip total, per-head share and every payment for a group chat.",
   ],
   intro:
-    "The Group Expense Splitter tracks who paid for what on a shared trip or in a flatshare, works out each person's net balance, and then reduces the tangle of debts to the smallest set of payments that clears it — repeatedly matching the largest debtor with the largest creditor until everyone is square. Every expense can be split across the whole group or only the people it applies to, so one person's late-night snack does not land on everyone's bill. It is for the person holding the receipts at the end of a trip who wants a payment list, not a spreadsheet.",
+    "The Group Expense Splitter tracks who paid for what on a shared trip or in a flatshare, works out each person's net balance, and then reduces the tangle of debts to a lean list of payments that clears it — repeatedly matching the largest debtor with the largest creditor until everyone is square, needing no more transfers than there are people in the group. Every expense can be split across the whole group or only the people it applies to, so one person's late-night snack does not land on everyone's bill. It is for the person holding the receipts at the end of a trip who wants a payment list, not a spreadsheet.",
   useCases: [
     "Four of you just got back from a weekend away: one paid the hotel, another the cab, a third dinner, and nobody wants to work out the chain of reimbursements by hand.",
     "Two flatmates ordered in while the third was away, so that bill splits two ways while rent and groceries split three — the per-expense participant list handles both in the same ledger.",
@@ -16,7 +16,7 @@ const seo = {
   ],
   benefits: [
     [
-      "Settles in the fewest transfers",
+      "Settles in at most n-1 transfers",
       "Instead of everyone paying everyone, the plan pairs the biggest debt with the biggest credit each round, so a group of n people never needs more than n−1 payments.",
     ],
     [

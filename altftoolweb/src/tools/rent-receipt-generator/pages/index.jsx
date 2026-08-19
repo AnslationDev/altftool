@@ -235,10 +235,12 @@ export default function ToolHome() {
                   onChange={(event) => setPan(event.target.value.toUpperCase())}
                   placeholder="ABCDE1234F"
                   maxLength={10}
+                  aria-invalid={!panValid}
+                  aria-describedby={panValid ? undefined : "rent-receipt-pan-error"}
                   className={`${inputClass} uppercase ${panValid ? "" : "border-[var(--anslation-ds-danger)]"}`}
                 />
                 {!panValid && (
-                  <span className="mt-1 block text-xs font-semibold text-[var(--anslation-ds-danger)]">
+                  <span id="rent-receipt-pan-error" className="mt-1 block text-xs font-semibold text-[var(--anslation-ds-danger)]">
                     PAN must look like ABCDE1234F (5 letters, 4 digits, 1 letter).
                   </span>
                 )}
@@ -340,12 +342,12 @@ export default function ToolHome() {
                 </button>
               </div>
               {receipts.clamped && (
-                <p className="mt-3 text-xs font-semibold text-[var(--anslation-ds-danger)]">
+                <p role="alert" className="mt-3 text-xs font-semibold text-[var(--anslation-ds-danger)]">
                   Long range selected — showing the first {MAX_MONTHS} months. Split larger periods into batches.
                 </p>
               )}
               {receipts.error ? (
-                <p className="mt-4 rounded-md bg-[var(--muted)] p-4 text-sm text-[var(--muted-foreground)]">{receipts.error}</p>
+                <p role="alert" className="mt-4 rounded-md bg-[var(--muted)] p-4 text-sm text-[var(--muted-foreground)]">{receipts.error}</p>
               ) : (
                 <div id="rent-receipt-print-area" className="mt-4 grid gap-4">
                   {receipts.list.map((receipt) => (

@@ -10,7 +10,7 @@ const seo = {
   intro:
     "A narration session estimator works out how long a script really occupies the booth, not just how long a clean read takes. It adds three things the raw read time hides: punch-and-roll retakes, costed as errors per hundred words multiplied by the seconds each correction takes; vocal rest, allowed as minutes per hour of voicing; and setup, which happens once per session rather than once per script. For voice artists quoting studio time, producers booking rooms and authors budgeting a self-narrated project.",
   useCases: [
-    "Quote a client a realistic booth block for a 5,000-word corporate script instead of the 33-minute read time.",
+    "Quote a client a realistic booth block for a 5,000-word corporate script instead of the 32-minute read time.",
     "See how many recording days a 90,000-word audiobook needs at four hours a day.",
     "Compare a familiar script against dense technical copy by changing only the error rate.",
     "Find out how many words fit into a single booked three-hour session before you split a job.",
@@ -23,11 +23,11 @@ const seo = {
   faqs: [
     [
       "How long does it take to record 1,000 words of narration?",
-      "About 6.5 minutes of clean read at 155 words per minute, but expect 15 to 25 minutes of booth time once retakes and rest are included. At 3 errors per hundred words and 20 seconds per punch-and-roll correction, 1,000 words alone adds 10 minutes of retakes.",
+      "About 6.5 minutes of clean read at 155 words per minute, but expect 30 to 40 minutes of booth time once retakes, rest and setup are included. At 3 errors per hundred words and 20 seconds per punch-and-roll correction, 1,000 words alone adds 10 minutes of retakes, and a once-per-session setup allowance adds more on top.",
     ],
     [
       "How many hours of narration can you record in a day?",
-      "Most professional narrators cap continuous work at 3 to 5 hours of booth time, which yields roughly 1.5 to 2.5 finished hours. Voice fatigue degrades consistency long before it becomes painful, and re-recording a tired session costs more time than stopping early.",
+      "Most professional narrators cap continuous work at 3 to 5 hours of booth time, which yields roughly 1 to 1.5 finished hours at a typical error rate — booth time runs about three times the finished read time once retakes, rest and setup are counted. Voice fatigue degrades consistency long before it becomes painful, and re-recording a tired session costs more time than stopping early.",
     ],
     [
       "What is punch and roll?",

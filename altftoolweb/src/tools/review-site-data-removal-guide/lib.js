@@ -176,11 +176,16 @@ export function buildRemovalPlan({ target, platform, region, startedOn } = {}) {
     reg.id === "india"
       ? `${INDIA_GRIEVANCE_DAYS} days under the IT Rules, 2021`
       : `${FOLLOW_UP_DAYS} days by convention — no published deadline`;
-  const erasureDays = reg.id === "gdpr" ? monthLengthDays(start, GDPR_RESPONSE_MONTHS) : grievanceDays;
+  // The erasure step addresses the platform's privacy contact separately from the
+  // grievance officer, so outside the GDPR's Article 12(3) deadline it does not have
+  // its own published statutory deadline — reuse the same follow-up convention as the
+  // "cache" and "search-pii" steps rather than re-citing the grievance officer's IT
+  // Rules, 2021 15-day SLA for this differently-addressed action.
+  const erasureDays = reg.id === "gdpr" ? monthLengthDays(start, GDPR_RESPONSE_MONTHS) : FOLLOW_UP_DAYS;
   const erasureBasis =
     reg.id === "gdpr"
       ? "one calendar month under Article 12(3) of the GDPR"
-      : grievanceBasis;
+      : `${FOLLOW_UP_DAYS} days by convention — no separate deadline published`;
 
   const steps = [];
 

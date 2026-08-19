@@ -93,7 +93,7 @@ export function PipesScreensaver() {
             >
               ×
             </button>
-            <h1 className="text-2xl font-black sm:text-3xl">3D Pipes Screensaver</h1>
+            <h2 className="text-2xl font-black sm:text-3xl">3D Pipes Screensaver</h2>
             <p className="mx-auto mt-5 max-w-2xl text-base font-bold leading-6">
               A golden oldie, the 3D Pipes screensaver draws tangled colored pipes on a dark background.
               Click the background to change the pipe flow, or go full screen for the classic prank look.
@@ -181,7 +181,7 @@ export function DvdBounce() {
       {showInfo ? (
         <section className="absolute inset-x-3 bottom-5 z-10 mx-auto max-w-[82rem] rounded-xl border-4 border-slate-500 bg-slate-200 p-3 text-center text-slate-900 shadow-2xl sm:bottom-8">
           <button onClick={() => setShowInfo(false)} className="absolute -right-4 -top-5 grid h-9 w-9 place-items-center rounded-full bg-red-500 text-2xl font-black text-black" aria-label="Close DVD info">×</button>
-          <h1 className="text-xl font-black">Bouncing DVD Logo ScreenSaver</h1>
+          <h2 className="text-xl font-black">Bouncing DVD Logo ScreenSaver</h2>
           <p className="mx-auto max-w-5xl text-base font-semibold">
             The DVD logo bounces around your screen and changes color. Can you spot it hitting the corner?
           </p>

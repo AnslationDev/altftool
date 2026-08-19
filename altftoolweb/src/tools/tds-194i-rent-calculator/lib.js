@@ -127,6 +127,10 @@ export function computeTds194I({
   };
 
   if (!payerCovered) {
+    const ibNote =
+      asset.id === "land-building"
+        ? " Section 194-IB may apply instead at 2% once monthly rent exceeds Rs 50,000."
+        : " Section 194-IB does not cover plant, machinery or equipment rent, so no TDS section requires an unaudited individual/HUF to deduct here.";
     return {
       ...base,
       appliedRate: 0,
@@ -138,7 +142,8 @@ export function computeTds194I({
       netForPeriod: annualRent,
       headroom: 0,
       reason:
-        "An individual or HUF whose accounts were not audited under section 44AB in the preceding year is outside section 194-I. Section 194-IB may apply instead at 2% once monthly rent exceeds Rs 50,000.",
+        "An individual or HUF whose accounts were not audited under section 44AB in the preceding year is outside section 194-I." +
+        ibNote,
     };
   }
 

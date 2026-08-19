@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Youtube } from "lucide-react";
 
 import {
@@ -42,6 +42,13 @@ export default function ToolHome() {
   const [runtimeMinutes, setRuntimeMinutes] = useState(DEFAULTS.runtimeMinutes);
   const [chapterCount, setChapterCount] = useState(DEFAULTS.chapterCount);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(() => {
     const plan = planScript({ runtimeMinutes, chapterCount });
@@ -57,7 +64,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -244,7 +252,7 @@ export default function ToolHome() {
         </ul>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

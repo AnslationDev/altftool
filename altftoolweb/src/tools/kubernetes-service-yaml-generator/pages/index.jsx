@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, FileCode, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { PROTOCOLS, SERVICE_TYPES, buildServiceYaml } from "../lib";
@@ -34,6 +34,13 @@ export default function ToolHome() {
   const [headless, setHeadless] = useState(DEFAULTS.headless);
   const [ports, setPorts] = useState(DEFAULTS.ports);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => buildServiceYaml({ name, namespace, type, selectorText, ports, headless }),
@@ -47,9 +54,19 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.yaml);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+    }
+  };
+
+  const handleTypeChange = (nextType) => {
+    setType(nextType);
+    if (nextType === "ClusterIP") {
+      // The nodePort field is hidden for ClusterIP; clear any stale value so it can't
+      // leave a validation error with no visible control left to fix it.
+      setPorts((prev) => prev.map((p) => (p.nodePort === "" ? p : { ...p, nodePort: "" })));
     }
   };
 
@@ -126,7 +143,7 @@ export default function ToolHome() {
               id="ksy-type"
               className={`mt-2 ${INPUT_CLASS}`}
               value={type}
-              onChange={(event) => setType(event.target.value)}
+              onChange={(event) => handleTypeChange(event.target.value)}
             >
               {SERVICE_TYPES.map((t) => (
                 <option key={t} value={t}>
@@ -297,12 +314,16 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <div className="mt-4 overflow-x-auto rounded-md bg-[var(--muted)] p-4">
+        <div
+          className="mt-4 overflow-x-auto rounded-md bg-[var(--muted)] p-4"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <pre className="font-mono text-sm leading-6">{hasError ? "—" : result.yaml}</pre>
         </div>
 
         {!hasError && result.warnings.length > 0 ? (
-          <ul className="mt-4 space-y-2 text-sm text-[var(--muted-foreground)]">
+          <ul className="mt-4 space-y-2 text-sm text-[var(--muted-foreground)]" aria-live="polite" aria-atomic="true">
             {result.warnings.map((warning) => (
               <li key={warning} className="rounded-md bg-[var(--muted)] px-3 py-2">
                 {warning}

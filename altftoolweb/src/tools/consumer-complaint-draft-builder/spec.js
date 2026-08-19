@@ -12,7 +12,7 @@ export const spec = {
   ],
   "icon": "shield-alert",
   "iconColor": "text-primary",
-  "confirmReset": "Reset all fields? This clears your Facts, Relief and Evidence text and cannot be undone.",
+  "confirmReset": "Reset all fields? This clears the consumer, business, transaction and amount details along with your Facts, Relief and Evidence text, and cannot be undone.",
   "fields": [
     {
       "key": "consumer",
@@ -75,7 +75,9 @@ export const spec = {
   "note": "Creates an organized draft, not legal advice or a guaranteed filing format. Confirm jurisdiction, limitation, pecuniary jurisdiction, portal requirements, and current consumer law."
 },
   compute: (values) => {
-      const money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Math.max(0, Number(values.amount) || 0));
+      const rawAmount = Number(values.amount);
+      const amountIsNegative = Number.isFinite(rawAmount) && rawAmount < 0;
+      const money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Math.max(0, rawAmount || 0));
       const sections = [
         "Complainant: " + values.consumer,
         "Opposite party: " + values.business,
@@ -86,7 +88,8 @@ export const spec = {
         "Evidence index: " + values.evidence,
         "Verification: dates, amounts, names, and annexures should be checked before submission.",
       ];
-      return { result: "Complaint draft organized", caption: sections.length + " review sections", rows: [["Consumer", values.consumer], ["Business", values.business], ["Amount", money], ["Purchase date", values.purchase]], list: sections };
+      const caption = (amountIsNegative ? "Amount paid can't be negative — showing " + money + "; please re-check the field. " : "") + sections.length + " review sections";
+      return { result: "Complaint draft organized", caption, rows: [["Consumer", values.consumer], ["Business", values.business], ["Amount", money], ["Purchase date", values.purchase]], list: sections };
     },
 };
 

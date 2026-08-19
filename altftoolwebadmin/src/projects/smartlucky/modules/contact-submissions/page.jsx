@@ -3,12 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2, Mail, Phone, MapPin, MessageSquare, Eye, Download, Trash2, Calendar } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
-import { getModuleDocRef } from "../shared/collectionService";
-import { getDoc, setDoc, serverTimestamp, doc } from "firebase/firestore";
-import { db } from "@/lib/firebaseFirestore";
-import { SMARTLUCKY_PROJECT_ROOT } from "@altftool/core/firebasePaths";
-
-const SUBMISSIONS_DOC = doc(db, ...SMARTLUCKY_PROJECT_ROOT, "contact", "submissions");
+import { fetchContactSubmissions, saveContactSubmissions } from "../shared/contactSubmissionsService";
 
 export default function ContactSubmissionsPage() {
   const [submissions, setSubmissions] = useState([]);
@@ -20,8 +15,8 @@ export default function ContactSubmissionsPage() {
     let active = true;
     (async () => {
       try {
-        const snap = await getDoc(SUBMISSIONS_DOC);
-        if (active) setSubmissions(snap.exists() ? (snap.data().items || []) : []);
+        const data = await fetchContactSubmissions();
+        if (active) setSubmissions(data);
       } catch (err) {
         if (active) emitAlert({ type: "error", title: "Load failed", message: err?.message });
       } finally {
@@ -36,7 +31,7 @@ export default function ContactSubmissionsPage() {
     setDeleting(id);
     try {
       const next = submissions.filter((s) => s.id !== id);
-      await setDoc(SUBMISSIONS_DOC, { items: next, updatedAt: serverTimestamp() }, { merge: true });
+      await saveContactSubmissions(next);
       setSubmissions(next);
       emitAlert({ type: "success", title: "Deleted", message: "Submission removed." });
     } catch (err) {
@@ -44,6 +39,29 @@ export default function ContactSubmissionsPage() {
     } finally {
       setDeleting(null);
     }
+  };
+
+  const handleExport = () => {
+    const csv = [
+      ["ID", "Name", "Email", "Company", "Phone", "Service", "Message", "Submitted At"],
+      ...submissions.map((s) => [
+        s.id,
+        s.name,
+        s.email,
+        s.company,
+        s.phone || "",
+        s.service,
+        (s.message || "").replace(/\n/g, " ").slice(0, 200),
+        s.submittedAt?.toDate ? s.submittedAt.toDate().toISOString() : new Date(s.submittedAt).toISOString(),
+      ]),
+    ].map((row) => row.map((v) => `"${String(v ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `contact-submissions-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const formatDate = (ts) => {
@@ -59,9 +77,14 @@ export default function ContactSubmissionsPage() {
   return (
     <div className="mx-auto w-full max-w-5xl px-4 pb-24 sm:px-6">
       <div className="sticky top-0 z-10 -mx-4 mb-5 border-b border-[var(--border)] bg-[var(--background)]/85 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6">
-        <div>
-          <h1 className="truncate text-lg font-extrabold text-[var(--foreground)] sm:text-xl">Contact Form Submissions</h1>
-          <p className="mt-0.5 text-xs text-[var(--muted)]">All form submissions from the Contact page.</p>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h1 className="truncate text-lg font-extrabold text-[var(--foreground)] sm:text-xl">Contact Form Submissions</h1>
+            <p className="mt-0.5 text-xs text-[var(--muted)]">All form submissions from the Contact page.</p>
+          </div>
+          <button onClick={handleExport} className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]">
+            <Download size={14} /> Export CSV
+          </button>
         </div>
       </div>
 

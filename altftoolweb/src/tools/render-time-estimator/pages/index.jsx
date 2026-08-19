@@ -341,7 +341,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -390,9 +394,11 @@ export default function ToolHome() {
               "Speed versus realtime",
               result.error
                 ? DASH
-                : result.fasterThanRealtime
-                  ? `${NUM2.format(1 / result.realtimeRatio)}x faster than realtime`
-                  : `${NUM2.format(result.realtimeRatio)}x slower than realtime`,
+                : result.renderSeconds === result.timelineSeconds
+                  ? "Matches realtime (1.00x)"
+                  : result.fasterThanRealtime
+                    ? `${NUM2.format(1 / result.realtimeRatio)}x faster than realtime`
+                    : `${NUM2.format(result.realtimeRatio)}x slower than realtime`,
             ],
             [
               "Timeline rendered per minute",

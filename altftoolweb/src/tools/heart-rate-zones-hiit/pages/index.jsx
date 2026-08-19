@@ -271,12 +271,13 @@ export default function ToolHome() {
             </label>
             <input
               id="hiit-reps"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={`mt-2 ${INPUT_CLASS} disabled:opacity-60`}
               type="number"
               inputMode="numeric"
               min="1"
               max="30"
               step="1"
+              disabled={!custom}
               value={reps}
               onChange={(event) => setReps(event.target.value)}
             />
@@ -365,7 +366,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

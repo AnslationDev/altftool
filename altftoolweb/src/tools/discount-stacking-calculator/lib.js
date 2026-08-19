@@ -178,9 +178,12 @@ export function priceStack(input = {}) {
   const cashback = Math.min(cashRaw, cashCapValue);
   const effective = payable - cashback;
 
-  // Baseline: the same basket with no offers at all.
-  const baseTax = ((subtotal + (taxOnShipping ? shippingCost : 0)) * taxPercent) / 100;
-  const baseline = subtotal + shippingCost + baseTax;
+  // Baseline: the same basket with no offers at all — shipping is still free
+  // if the raw subtotal alone clears the free-shipping threshold, same rule
+  // as Step 4 above.
+  const baselineShipping = subtotal >= freeAt ? 0 : shippingCost;
+  const baseTax = ((subtotal + (taxOnShipping ? baselineShipping : 0)) * taxPercent) / 100;
+  const baseline = subtotal + baselineShipping + baseTax;
   const saved = baseline - effective;
 
   // The penalty you would pay by letting the flat coupon go first.

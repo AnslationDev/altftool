@@ -307,7 +307,7 @@ export function buildVacDayPlan({
       { title: "Leave at home or in the car", items: leaveBehind },
       { title: "Know before you go", items: know },
     ],
-    totalItems: carry.length + wear.length + leaveBehind.length,
+    totalItems: carry.length + wear.length + leaveBehind.length + know.length,
   };
 }
 

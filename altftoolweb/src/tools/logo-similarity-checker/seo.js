@@ -1,3 +1,8 @@
+// NOTE: seo.js is loaded in isolation at build time and must not import from ./utils.
+// The weight percentages quoted below (pixel 20%, edge 20%, histogram 15%, complexity 20%,
+// symmetry 10%, aspect/brightness/contrast 5% each) are literal copies of the weights in
+// utils/imageAnalysis.js's computeAllSimilarity() overall-score formula — keep them in sync
+// if that formula's weights ever change.
 const seo = {
   title: "Logo Similarity Checker: 0-100 Score on 8 Signals",
   metaDescription:
@@ -30,7 +35,7 @@ const seo = {
     ],
     [
       "How is the overall similarity score calculated?",
-      "It is a weighted blend: pixel similarity 20%, Sobel edge similarity 20%, grayscale histogram intersection 15%, symmetry 10%, and 5% each for aspect ratio, brightness, contrast and complexity. Each component is computed on both images after they are resized so the longest side is 256 pixels.",
+      "It is a weighted blend: pixel similarity 20%, Sobel edge similarity 20%, grayscale histogram intersection 15%, complexity 20%, symmetry 10%, and 5% each for aspect ratio, brightness and contrast. Each component is computed on both images after they are resized so the longest side is 256 pixels.",
     ],
     [
       "Can this tell me whether a logo infringes a trademark?",

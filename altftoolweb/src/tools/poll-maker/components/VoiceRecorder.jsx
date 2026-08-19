@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {Mic, Square, Play} from "lucide-react";
 
 export default function VoiceRecorder() {
@@ -15,7 +15,15 @@ export default function VoiceRecorder() {
   const startRecording = async () => {
     try {
       setError("");
-      setAudioURL(null);
+      // Revoke the previous recording's object URL before replacing it,
+      // otherwise every re-recording leaks the earlier blob for the rest
+      // of the tab's lifetime (matches ImageUploader.jsx's pattern).
+      setAudioURL((prevUrl) => {
+        if (typeof prevUrl === "string" && prevUrl.startsWith("blob:")) {
+          URL.revokeObjectURL(prevUrl);
+        }
+        return null;
+      });
 
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -50,6 +58,16 @@ export default function VoiceRecorder() {
       setError("Mic access denied or not supported");
     }
   };
+
+  // Revoke the current recording's object URL when this component unmounts,
+  // otherwise the last blob for the session is never released.
+  useEffect(() => {
+    return () => {
+      if (typeof audioURL === "string" && audioURL.startsWith("blob:")) {
+        URL.revokeObjectURL(audioURL);
+      }
+    };
+  }, [audioURL]);
 
   const stopRecording = () => {
     if (mediaRecorderRef.current) {

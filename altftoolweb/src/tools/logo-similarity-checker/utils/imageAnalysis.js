@@ -27,6 +27,29 @@ export function getImageData(img, maxSize = 256) {
   return ctx.getImageData(0, 0, w, h);
 }
 
+// Letterbox an image into a fixed-size square canvas so two images of
+// different dimensions/aspect ratios end up as buffers with identical
+// width/height and stride. This is required before any comparison that
+// walks the pixel buffers by flat array index (pixelSimilarity,
+// edgeSimilarity via computeEdgeData), since otherwise index i in image A
+// does not correspond to the same (x, y) location as index i in image B.
+export function getAlignedImageData(img, canvasSize = 256) {
+  const canvas = document.createElement("canvas");
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+  const ctx = canvas.getContext("2d");
+  const w = img.naturalWidth || img.width;
+  const h = img.naturalHeight || img.height;
+  const scale = Math.min(canvasSize / w, canvasSize / h);
+  const drawW = Math.max(1, Math.round(w * scale));
+  const drawH = Math.max(1, Math.round(h * scale));
+  const offsetX = Math.round((canvasSize - drawW) / 2);
+  const offsetY = Math.round((canvasSize - drawH) / 2);
+  ctx.clearRect(0, 0, canvasSize, canvasSize);
+  ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+  return ctx.getImageData(0, 0, canvasSize, canvasSize);
+}
+
 export function toGrayscale(data) {
   const gray = new Uint8Array(data.width * data.height);
   for (let i = 0; i < data.data.length; i += 4) {
@@ -206,13 +229,20 @@ export function computeAllSimilarity(img1, img2, data1, data2) {
   const d1 = data1 || getImageData(img1, 256);
   const d2 = data2 || getImageData(img2, 256);
 
-  const edges1 = computeEdgeData(d1);
-  const edges2 = computeEdgeData(d2);
+  // pixelSimilarity/edgeSimilarity compare buffers by flat array index, so
+  // they require both images to share the same width/height/stride. d1/d2
+  // are each independently scaled to preserve their own aspect ratio and
+  // must NOT be used for these two metrics when the images differ in shape
+  // -- align them into a shared canvas first.
+  const aligned1 = getAlignedImageData(img1, 256);
+  const aligned2 = getAlignedImageData(img2, 256);
+  const edges1 = computeEdgeData(aligned1);
+  const edges2 = computeEdgeData(aligned2);
 
   const hist1 = normalizeHistogram(computeHistogram(d1));
   const hist2 = normalizeHistogram(computeHistogram(d2));
 
-  const pixelSim = pixelSimilarity(d1, d2);
+  const pixelSim = pixelSimilarity(aligned1, aligned2);
   const edgeSim = edgeSimilarity(edges1, edges2);
   const histSim = histogramIntersection(hist1, hist2);
   const aspectSim = aspectRatioSimilarity(img1, img2);
@@ -233,8 +263,7 @@ export function computeAllSimilarity(img1, img2, data1, data2) {
       brightSim * 0.05 +
       contrastSim * 0.05 +
       symSim * 0.10 +
-      compSim * 0.05 +
-      Math.max(0, 1 - Math.abs(comp1 - comp2) * 0.15)) * 100
+      compSim * 0.20) * 100
   );
 
   return {

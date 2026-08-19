@@ -28,6 +28,7 @@ const DEFAULTS = {
   maxGap: "7",
   startBell: true,
   endBell: true,
+  soundOn: true,
 };
 
 const INPUT_CLASS =
@@ -49,9 +50,14 @@ export default function ToolHome() {
   const [seed, setSeed] = useState(DEFAULT_SEED);
   const [soundOn, setSoundOn] = useState(true);
   const [running, setRunning] = useState(false);
+  const [started, setStarted] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
   const audioRef = useRef(null);
+  const lastPlayedRef = useRef(0);
+  const lastAnnouncedRef = useRef(0);
+  const startedAtRef = useRef(null);
 
   const schedule = useMemo(
     () =>
@@ -75,12 +81,19 @@ export default function ToolHome() {
 
   useEffect(() => {
     setRunning(false);
+    setStarted(false);
     setElapsed(0);
+    lastPlayedRef.current = 0;
+    lastAnnouncedRef.current = 0;
+    startedAtRef.current = null;
   }, [minutes, mode, interval, minGap, maxGap, startBell, endBell, seed]);
 
   useEffect(() => {
     if (!running || !ok) return undefined;
-    const id = setInterval(() => setElapsed((value) => value + TICK_MS / 1000), TICK_MS);
+    const id = setInterval(() => {
+      if (startedAtRef.current == null) return;
+      setElapsed((Date.now() - startedAtRef.current) / 1000);
+    }, TICK_MS);
     return () => clearInterval(id);
   }, [running, ok]);
 
@@ -89,11 +102,15 @@ export default function ToolHome() {
     if (finished) setRunning(false);
   }, [finished]);
 
+  // Bells rung so far, but only once the session has actually been started -
+  // otherwise a bell scheduled at t=0 would show as already rung pre-Start.
+  const displayRungCount = started && state ? state.rungCount : 0;
   const rungCount = state ? state.rungCount : 0;
 
   // Strike the bell whenever another one has been reached.
   useEffect(() => {
-    if (!running || !soundOn || rungCount === 0) return;
+    if (!running || !soundOn || rungCount === 0 || rungCount <= lastPlayedRef.current) return;
+    lastPlayedRef.current = rungCount;
     const ctx = audioRef.current;
     if (!ctx) return;
     try {
@@ -118,6 +135,21 @@ export default function ToolHome() {
     }
   }, [rungCount, running, soundOn]);
 
+  // Announce only discrete events (a bell rung, or the session finishing) to
+  // screen readers instead of the per-second countdown, which would otherwise
+  // re-announce roughly once a second for the whole session.
+  useEffect(() => {
+    if (!started) return;
+    if (finished) {
+      setAnnouncement("Session finished.");
+      return;
+    }
+    if (displayRungCount > 0 && displayRungCount > lastAnnouncedRef.current) {
+      lastAnnouncedRef.current = displayRungCount;
+      setAnnouncement(state && state.lastBellLabel ? `${state.lastBellLabel} rung.` : "Bell rung.");
+    }
+  }, [displayRungCount, finished, started, state]);
+
   useEffect(
     () => () => {
       const ctx = audioRef.current;
@@ -135,7 +167,16 @@ export default function ToolHome() {
     }
     const ctx = audioRef.current;
     if (ctx && ctx.state === "suspended" && typeof ctx.resume === "function") ctx.resume();
-    if (finished) setElapsed(0);
+    const baseElapsed = finished ? 0 : elapsed;
+    if (finished) {
+      setElapsed(0);
+      lastPlayedRef.current = 0;
+      lastAnnouncedRef.current = 0;
+    }
+    // Anchor to wall-clock time so the countdown self-corrects instead of
+    // drifting behind real time under timer throttling / event-loop delay.
+    startedAtRef.current = Date.now() - baseElapsed * 1000;
+    setStarted(true);
     setRunning(true);
   };
 
@@ -147,9 +188,15 @@ export default function ToolHome() {
     setMaxGap(DEFAULTS.maxGap);
     setStartBell(DEFAULTS.startBell);
     setEndBell(DEFAULTS.endBell);
+    setSoundOn(DEFAULTS.soundOn);
     setSeed(DEFAULT_SEED);
     setRunning(false);
+    setStarted(false);
     setElapsed(0);
+    lastPlayedRef.current = 0;
+    lastAnnouncedRef.current = 0;
+    startedAtRef.current = null;
+    setAnnouncement("");
     setCopied(false);
   };
 
@@ -366,7 +413,7 @@ export default function ToolHome() {
             <p className="mt-1 text-4xl font-semibold tabular-nums text-[var(--primary)]">
               {ok ? formatClock(state.remainingSeconds) : DASH}
             </p>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]" aria-live="polite">
+            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
                 ? state.done
                   ? "Session finished."
@@ -375,6 +422,9 @@ export default function ToolHome() {
                     : "No further bells."
                 : "Fix the settings to see the schedule"}
             </p>
+            <span className="sr-only" aria-live="polite" aria-atomic="true">
+              {announcement}
+            </span>
           </div>
           <div className="flex flex-wrap gap-2">
             {running ? (
@@ -430,7 +480,7 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Bells rung so far", ok ? `${state.rungCount} of ${schedule.totalBellCount}` : DASH],
+            ["Bells rung so far", ok ? `${displayRungCount} of ${schedule.totalBellCount}` : DASH],
             ["Pause bells in the session", ok ? `${schedule.pauseBellCount}` : DASH],
             ["Average gap", ok ? formatClock(schedule.averageGapSeconds) : DASH],
             [
@@ -467,9 +517,9 @@ export default function ToolHome() {
                     <td className="py-2 pr-3 font-semibold tabular-nums">{formatClock(bell.at)}</td>
                     <td className="py-2 pr-3">{bell.label}</td>
                     <td
-                      className={`py-2 text-right font-semibold ${index < state.rungCount ? "text-[var(--success)]" : "text-[var(--muted-foreground)]"}`}
+                      className={`py-2 text-right font-semibold ${index < displayRungCount ? "text-[var(--success)]" : "text-[var(--muted-foreground)]"}`}
                     >
-                      {index < state.rungCount ? "Rung" : "Waiting"}
+                      {index < displayRungCount ? "Rung" : "Waiting"}
                     </td>
                   </tr>
                 ))}

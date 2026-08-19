@@ -44,8 +44,7 @@ const HOLDER_TYPES = {
 function normalizePan(value) {
   return String(value || "")
     .toUpperCase()
-    .replace(/[^A-Z0-9]/g, "")
-    .slice(0, 10);
+    .replace(/[^A-Z0-9]/g, "");
 }
 
 function formatPan(value) {
@@ -69,7 +68,7 @@ function getIssues(normalized) {
     return issues;
   }
   if (normalized.length !== 10) issues.push("PAN must contain exactly 10 characters.");
-  if (!/^[A-Z]{0,5}/.test(normalized.slice(0, 5)) || /[^A-Z]/.test(normalized.slice(0, 5))) {
+  if (/[^A-Z]/.test(normalized.slice(0, 5))) {
     issues.push("First 5 characters must be letters.");
   }
   if (normalized.length >= 6 && /[^0-9]/.test(normalized.slice(5, 9))) {
@@ -223,7 +222,7 @@ function HolderPill({ item }) {
 }
 
 export default function PanFormatValidator() {
-  const [input, setInput] = useState("ABCDE1234F");
+  const [input, setInput] = useState("ABCPK1234F");
   const [bulkText, setBulkText] = useState(SAMPLE_PANS);
   const [mode, setMode] = useState("single");
 
@@ -279,7 +278,11 @@ export default function PanFormatValidator() {
                 <Sparkles className="h-4 w-4 shrink-0" />
                 <span className="min-w-0 truncate">India document utility</span>
               </span>
-              <span className={`inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${single.isValid ? "bg-emerald-500/10 text-emerald-600" : "bg-rose-500/10 text-rose-600"}`}>
+              <span
+                aria-live="polite"
+                role="status"
+                className={`inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${single.isValid ? "bg-emerald-500/10 text-emerald-600" : "bg-rose-500/10 text-rose-600"}`}
+              >
                 {single.isValid ? <ShieldCheck className="h-4 w-4 shrink-0" /> : <AlertTriangle className="h-4 w-4 shrink-0" />}
                 {single.isValid ? "Valid Format" : "Needs Fix"}
               </span>
@@ -327,7 +330,7 @@ export default function PanFormatValidator() {
                 <input
                   value={formatPan(input)}
                   onChange={(event) => setInput(normalizePan(event.target.value))}
-                  placeholder="ABCDE 1234 F"
+                  placeholder="ABCPK 1234 F"
                   maxLength={12}
                   className="h-14 w-full min-w-0 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-base font-black uppercase tracking-[0.08em] sm:text-xl sm:tracking-[0.16em] text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
@@ -359,7 +362,7 @@ export default function PanFormatValidator() {
             </div>
 
             <div className="tool-action-grid mt-6">
-              <button type="button" className="btn-secondary" onClick={() => (mode === "single" ? setInput("ABCDE1234F") : setBulkText(SAMPLE_PANS))}>
+              <button type="button" className="btn-secondary" onClick={() => (mode === "single" ? setInput("ABCPK1234F") : setBulkText(SAMPLE_PANS))}>
                 <RefreshCw className="h-4 w-4" />
                 Sample
               </button>
@@ -374,7 +377,7 @@ export default function PanFormatValidator() {
             </div>
           </section>
 
-          <section className="tool-card min-w-0 overflow-hidden">
+          <section className="tool-card min-w-0 overflow-hidden" aria-live="polite" role="status">
             <div className="mb-5 flex min-w-0 items-start justify-between gap-3">
               <div className="min-w-0">
                 <h2 className="break-words text-2xl font-black text-[var(--foreground)]">Result Details</h2>

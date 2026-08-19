@@ -34,7 +34,7 @@ const seo = {
     ],
     [
       "Should I enter the whole shift window or just my exam day?",
-      "Enter the full announced window until your admit card fixes the exact date, then edit the entry down to the single allotted day. That way potential clashes surface while you can still plan around them.",
+      "Enter the full announced window until your admit card fixes the exact date, then delete that entry and re-add it with only the single allotted day (the tool has add and remove actions, not in-place editing). That way potential clashes surface while you can still plan around them.",
     ],
   ],
 };

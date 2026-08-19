@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Ruler, RotateCcw } from "lucide-react";
 
 import {
@@ -48,6 +48,10 @@ const toNumber = (raw) => {
 
 const DASH = "—";
 
+// Ordinal position of each frame category, used to tell "adjacent" disagreement
+// (small vs medium, medium vs large) apart from "opposite extremes" (small vs large).
+const FRAME_ORDER = { small: 0, medium: 1, large: 2 };
+
 export default function ToolHome() {
   const [sex, setSex] = useState(DEFAULTS.sex);
   const [heightUnit, setHeightUnit] = useState(DEFAULTS.heightUnit);
@@ -58,6 +62,13 @@ export default function ToolHome() {
   const [wrist, setWrist] = useState(DEFAULTS.wrist);
   const [method, setMethod] = useState(DEFAULTS.method);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const result = useMemo(() => {
     const cm = resolveHeightCm({
@@ -81,7 +92,9 @@ export default function ToolHome() {
       `Frame from wrist + height table: ${FRAME_LABEL[result.wristFrame]}`,
       `Frame from height-to-wrist ratio ${NUM2.format(result.ratio)}: ${FRAME_LABEL[result.ratioFrame]}`,
       `Reported frame: ${result.frameLabel}`,
-      `Frame-adjusted ideal weight (Hamwi): ${NUM1.format(result.idealWeightKg)} kg (${NUM1.format(result.idealWeightLb)} lb)`,
+      result.weightAvailable
+        ? `Frame-adjusted ideal weight (Hamwi): ${NUM1.format(result.idealWeightKg)} kg (${NUM1.format(result.idealWeightLb)} lb)`
+        : "Frame-adjusted ideal weight (Hamwi): not available at this height",
     ].join("\n");
   }, [ok, result]);
 
@@ -90,7 +103,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -125,11 +139,14 @@ export default function ToolHome() {
     ],
     [
       "Frame-adjusted ideal weight",
-      ok
+      ok && result.weightAvailable
         ? `${NUM1.format(result.idealWeightKg)} kg · ${NUM1.format(result.idealWeightLb)} lb`
         : DASH,
     ],
-    ["Medium-frame reference weight", ok ? `${NUM1.format(result.mediumWeightKg)} kg` : DASH],
+    [
+      "Medium-frame reference weight",
+      ok && result.weightAvailable ? `${NUM1.format(result.mediumWeightKg)} kg` : DASH,
+    ],
   ];
 
   return (
@@ -291,7 +308,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -304,9 +325,17 @@ export default function ToolHome() {
               {ok
                 ? result.methodsAgree
                   ? "Both methods agree on this result."
-                  : `The other method reads ${FRAME_LABEL[
-                      method === "wrist" ? result.ratioFrame : result.wristFrame
-                    ].toLowerCase()} — you sit close to a boundary.`
+                  : (() => {
+                      const otherFrame =
+                        method === "wrist" ? result.ratioFrame : result.wristFrame;
+                      const otherLabel = FRAME_LABEL[otherFrame].toLowerCase();
+                      const distance = Math.abs(
+                        FRAME_ORDER[result.frame] - FRAME_ORDER[otherFrame]
+                      );
+                      return distance >= 2
+                        ? `The other method reads ${otherLabel} — the two methods disagree substantially, not just at a boundary.`
+                        : `The other method reads ${otherLabel} — you sit close to a boundary.`;
+                    })()
                 : "Fix the input above to see a result."}
             </p>
           </div>
@@ -350,6 +379,13 @@ export default function ToolHome() {
           <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-xs leading-5 text-[var(--warning)]">
             The published male wrist table only covers heights above 5 ft 5 in. The same band has
             been applied here, so treat the wrist-table result as an approximation.
+          </p>
+        )}
+
+        {ok && !result.weightAvailable && (
+          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-xs leading-5 text-[var(--warning)]">
+            The Hamwi ideal-weight formula does not produce a positive value at this height, so no
+            weight estimate is shown. The frame-size result above is unaffected.
           </p>
         )}
       </section>

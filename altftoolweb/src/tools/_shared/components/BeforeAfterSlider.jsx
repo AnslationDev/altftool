@@ -21,18 +21,20 @@ export default function BeforeAfterSlider({ beforeImage, afterCanvas, className 
     setSliderPos(Math.max(0, Math.min(100, (x / rect.width) * 100)));
   }, [isDragging]);
 
+  const handleUp = useCallback(() => setIsDragging(false), []);
+
   useEffect(() => {
     document.addEventListener('mousemove', handleMove);
-    document.addEventListener('mouseup', () => setIsDragging(false));
+    document.addEventListener('mouseup', handleUp);
     document.addEventListener('touchmove', handleMove, { passive: true });
-    document.addEventListener('touchend', () => setIsDragging(false));
+    document.addEventListener('touchend', handleUp);
     return () => {
       document.removeEventListener('mousemove', handleMove);
-      document.removeEventListener('mouseup', () => setIsDragging(false));
+      document.removeEventListener('mouseup', handleUp);
       document.removeEventListener('touchmove', handleMove);
-      document.removeEventListener('touchend', () => setIsDragging(false));
+      document.removeEventListener('touchend', handleUp);
     };
-  }, [handleMove]);
+  }, [handleMove, handleUp]);
 
   if (!beforeImage || !afterCanvas) return null;
 

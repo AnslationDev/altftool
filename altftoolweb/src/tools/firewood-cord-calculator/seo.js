@@ -39,7 +39,7 @@ const seo = {
     ],
     [
       "How much does a cord of firewood weigh?",
-      "Between roughly 2,300 lb for aspen and 5,100 lb for osage orange when seasoned to 20% moisture. Weight tracks heat content almost exactly, because oven-dry wood of every species releases close to the same energy per pound — about 6,400 BTU per pound at 20% moisture.",
+      "Between roughly 2,000 lb for cedar and 5,100 lb for osage orange when seasoned to 20% moisture. Weight tracks heat content almost exactly, because oven-dry wood of every species releases close to the same energy per pound — about 6,400 BTU per pound at 20% moisture.",
     ],
     [
       "Which firewood gives the most heat per cord?",

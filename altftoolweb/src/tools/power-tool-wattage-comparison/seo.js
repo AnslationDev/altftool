@@ -1,3 +1,8 @@
+// seo.js is loaded in isolation (no bundler) and must never import from ./lib —
+// so the compressor's motor type/surge figures below are hardcoded literals.
+// Sync source: lib.js TOOL_LIBRARY "compressor" entry (watts: 1500, motor:
+// "capacitor-start") and MOTOR_TYPES["capacitor-start"] (surgeFactor: 3.5),
+// giving a 5,250 W starting surge (1500 * 3.5). Re-check both if either changes.
 const seo = {
   title: "Power Tool Wattage: Will Your Generator Start It?",
   metaDescription:
@@ -30,7 +35,7 @@ const seo = {
     ],
     [
       "Why does my generator handle a heater but not a compressor?",
-      "Because a heater is resistive and has no inrush, while a compressor's induction motor demands five times its running power for the first second. A 2,000 W heat gun asks for exactly 2,000 W from the moment it switches on; a 1,500 W compressor asks for around 7,500 W at start, which is what stalls the engine.",
+      "Because a heater is resistive and has no inrush, while a compressor's capacitor-start motor demands around three and a half times its running power for the first second. A 2,000 W heat gun asks for exactly 2,000 W from the moment it switches on; a 1,500 W compressor asks for around 5,250 W at start, which is what stalls the engine.",
     ],
     [
       "How long will a battery inverter run a power tool?",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, FileJson2, RotateCcw } from "lucide-react";
 
 import { DEFAULT_YAML, INDENT_OPTIONS, convertYamlToJson } from "../lib";
@@ -22,16 +22,20 @@ export default function ToolHome() {
   const [yamlText, setYamlText] = useState(DEFAULT_YAML);
   const [indentId, setIndentId] = useState("2");
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   const result = useMemo(() => convertYamlToJson({ yamlText, indentId }), [yamlText, indentId]);
   const hasError = Boolean(result.error);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const copyResult = async () => {
     if (hasError) return;
     try {
       await navigator.clipboard.writeText(result.json);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -112,7 +116,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

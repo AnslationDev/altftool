@@ -340,7 +340,7 @@ export function buildStatePscChecklist({
   const reservedCategory = ["obc", "sc", "st"].includes(category.id);
   if (reservedCategory && homeState) {
     items.push({
-      id: "categoryCert",
+      id: `categoryCert-${category.id}`,
       label: `${category.label} certificate in this state's own format, valid on the closing date`,
       group: "Certificates",
       required: true,
@@ -367,7 +367,7 @@ export function buildStatePscChecklist({
     );
   }
 
-  if (claimsEws) {
+  if (claimsEws || category.id === "ews") {
     items.push({
       id: "ewsCert",
       label: "EWS income and asset certificate for the current financial year",
@@ -394,7 +394,7 @@ export function buildStatePscChecklist({
   }
 
   items.push({
-    id: "language",
+    id: `language-${commission.id}`,
     label: `Language requirement checked: ${commission.language}`,
     group: "Before you start",
     required: true,

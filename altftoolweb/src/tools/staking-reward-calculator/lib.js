@@ -123,14 +123,16 @@ export function computeStakingRewards({
   }
 
   const rewardTokens = finalTokens - principal;
+  // Restake branch: derive commission directly from the net reward actually
+  // earned, rather than diffing against a hypothetical no-commission balance
+  // (that hypothetical compounds the *gross* rate, which overstates commission
+  // kept by the validator relative to a true period-by-period model — see
+  // rewardTokens * commission / (100 - commission), which matches a discrete
+  // per-period simulation where commission is deducted before each period's
+  // net reward compounds).
   const commissionTokens = restake
-    ? principal * Math.pow(1 + nominal / n, n * t) - finalTokens
+    ? rewardTokens * (commission / (100 - commission))
     : principal * nominal * t - rewardTokens;
-
-  const perPeriodRate = effectiveNominal / n;
-  const dailyRewardTokens = restake
-    ? principal * (Math.pow(1 + perPeriodRate, n / DAYS_PER_YEAR) - 1)
-    : (principal * effectiveNominal) / DAYS_PER_YEAR;
 
   // Year-by-year balances (whole years within the horizon, plus the end point).
   const schedule = [];
@@ -153,14 +155,10 @@ export function computeStakingRewards({
     apr: nominal,
     effectiveApr: effectiveNominal,
     apy,
-    periodsPerYear: n,
     frequency: freq,
     restake,
     years: t,
-    dailyRewardTokens,
-    growthMultiple: finalTokens / principal,
     tokenPrice: price,
-    fiatPrincipal: principal * price,
     fiatFinal: finalTokens * price,
     fiatReward: rewardTokens * price,
     schedule,

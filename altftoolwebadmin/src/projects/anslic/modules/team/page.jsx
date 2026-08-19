@@ -111,8 +111,16 @@ function MemberModal({ member, nextOrder, saving, onClose, onSave }) {
     setUploadProgress(0);
     try {
       const uploaded = await uploadTeamMemberImage({ file, onProgress: setUploadProgress });
+      const oldPath = form.imagePath;
       setForm((prev) => ({ ...prev, imageUrl: uploaded.url, imagePath: uploaded.path }));
       setErrors((prev) => ({ ...prev, imageUrl: "" }));
+      if (oldPath) {
+        try {
+          await deleteTeamMemberImage(oldPath);
+        } catch {
+          emitAlert({ type: "warning", message: "New photo uploaded, but old photo cleanup failed." });
+        }
+      }
       emitAlert({ type: "success", message: "Photo uploaded." });
     } catch (error) {
       emitAlert({ type: "error", message: error?.message || "Photo upload failed." });

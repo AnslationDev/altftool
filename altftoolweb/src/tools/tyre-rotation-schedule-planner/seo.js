@@ -22,11 +22,11 @@ const seo = {
   faqs: [
     [
       "How often should tyres be rotated?",
-      "Every 8,000-10,000 km, or every six months if you drive that far in less time than that. The interval exists because driven and steered wheels wear far faster than the others, so swapping positions evens out tread depth across the set.",
+      "Every 8,000-10,000 km, or every six months, whichever comes first. The six-month cap is for low-mileage cars that would otherwise take longer than six months to cover that distance. The interval exists because driven and steered wheels wear far faster than the others, so swapping positions evens out tread depth across the set.",
     ],
     [
       "What is the correct rotation pattern for a front wheel drive car?",
-      "The forward cross: both front tyres move straight back, and the rear tyres cross over to the opposite front corner. Rear wheel drive and 4x4 vehicles use the mirror image, the rearward cross, where the rears move straight forward and the fronts cross to the rear.",
+      "The forward cross: both front tyres move straight back, and the rear tyres cross over to the opposite front corner. Rear wheel drive vehicles use the mirror image, the rearward cross, where the rears move straight forward and the fronts cross to the rear. All wheel drive and 4x4 vehicles typically use the X-pattern instead, where every tyre moves diagonally to the opposite corner.",
     ],
     [
       "Can directional tyres be rotated?",

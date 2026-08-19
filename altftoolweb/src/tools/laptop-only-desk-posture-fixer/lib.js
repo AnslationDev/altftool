@@ -132,9 +132,22 @@ export function analyseLaptopSetup({
   const seatedEyeHeight = seat + SITTING_EYE_RATIO * height;
   const seatedElbowHeight = seat + SITTING_ELBOW_RATIO * height;
 
+  const deskDelta = desk - seatedElbowHeight; // positive = desk above elbow height
+  const deskTooHigh = deskDelta > DESK_TOLERANCE_CM;
+  const deskTooLow = deskDelta < -DESK_TOLERANCE_CM;
+
+  // If the desk is too high, the "raise your chair" fix below raises the
+  // seat (and with it, the eye height) by deskDelta; if the desk is too low,
+  // the "lower your chair" fix lowers the seat by the same (negative)
+  // deskDelta. Either way, the riser and the post-fix gaze/load figures must
+  // target that rebased eye height, not the current one, so a user who
+  // follows both recommendations actually lands on target instead of
+  // overshooting or ending up short.
+  const eyeHeightForTarget = deskTooHigh || deskTooLow ? seatedEyeHeight + deskDelta : seatedEyeHeight;
+
   const screenTopAboveDesk = LAPTOP_BASE_THICKNESS_CM + screenVertical;
   const currentTopHeight = desk + screenTopAboveDesk;
-  const targetTopHeight = seatedEyeHeight - MONITOR_TOP_BELOW_EYE_CM;
+  const targetTopHeight = eyeHeightForTarget - MONITOR_TOP_BELOW_EYE_CM;
   const riserRaw = targetTopHeight - currentTopHeight;
   const riserCm = Math.max(0, riserRaw);
 
@@ -143,15 +156,12 @@ export function analyseLaptopSetup({
   const gazeNowDeg = (Math.atan(dropNow / distance) * 180) / Math.PI;
 
   const centreFixed = centreNow + riserCm;
-  const dropFixed = seatedEyeHeight - centreFixed;
+  const dropFixed = eyeHeightForTarget - centreFixed;
   const gazeFixedDeg = (Math.atan(dropFixed / distance) * 180) / Math.PI;
 
   const loadNow = cervicalLoadKg(gazeNowDeg);
   const loadFixed = cervicalLoadKg(gazeFixedDeg);
 
-  const deskDelta = desk - seatedElbowHeight; // positive = desk above elbow height
-  const deskTooHigh = deskDelta > DESK_TOLERANCE_CM;
-  const deskTooLow = deskDelta < -DESK_TOLERANCE_CM;
   const needsExternalKeyboard = riserCm > DESK_TOLERANCE_CM;
 
   const fixes = [];
@@ -164,7 +174,7 @@ export function analyseLaptopSetup({
   if (riserCm > 0) {
     fixes.push({
       title: `Raise the laptop by ${round1(riserCm)} cm`,
-      detail: `That puts the top of the screen at ${round1(targetTopHeight)} cm above the floor — about ${MONITOR_TOP_BELOW_EYE_CM} cm below your seated eye height of ${round1(seatedEyeHeight)} cm.`,
+      detail: `That puts the top of the screen at ${round1(targetTopHeight)} cm above the floor — about ${MONITOR_TOP_BELOW_EYE_CM} cm below your seated eye height${deskTooHigh ? " after raising your chair" : deskTooLow ? " after lowering your chair" : ""} of ${round1(eyeHeightForTarget)} cm.`,
     });
   } else {
     fixes.push({

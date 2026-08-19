@@ -32,6 +32,15 @@ export const PLANNING_TOLERANCE_FRACTION = 0.1;
 export const SUPPLY_MIN_V = MAINS_VOLTAGE_V * (1 - PLANNING_TOLERANCE_FRACTION); // 198 V
 export const SUPPLY_MAX_V = MAINS_VOLTAGE_V * (1 + PLANNING_TOLERANCE_FRACTION); // 242 V
 
+/**
+ * A device's printed voltage limit sitting within this many volts of the
+ * supply's planning floor/ceiling still has real headroom in practice —
+ * universal switch-mode supplies (the common "100-240V" label) are routinely
+ * engineered to tolerate well past their printed number — so only devices
+ * genuinely below this cushion are flagged as having little margin.
+ */
+export const TOLERANCE_RISK_MARGIN_V = 10;
+
 /** Sockets in use in Argentina. IRAM 2071/2073 covers the 10 A and 20 A patterns. */
 export const SOCKET_TYPES = [
   {
@@ -158,7 +167,8 @@ export function assessArgentinaPower({
       ? "step-down"
       : "step-up"
     : null;
-  const toleranceRisk = voltageOk && deviceMaxVoltageV < SUPPLY_MAX_V;
+  const toleranceRisk = voltageOk && deviceMaxVoltageV < SUPPLY_MAX_V - TOLERANCE_RISK_MARGIN_V;
+  const toleranceRiskLow = voltageOk && deviceMinVoltageV >= SUPPLY_MIN_V;
 
   const freq = String(deviceFrequency);
   const frequencyOk = freq === "both" || freq === "50";
@@ -197,6 +207,11 @@ export function assessArgentinaPower({
       `Plan for the supply drifting to about ${Math.round(SUPPLY_MAX_V)} V; your label stops at ${deviceMaxVoltageV} V, which leaves little margin.`,
     );
   }
+  if (toleranceRiskLow) {
+    actions.push(
+      `Plan for the supply sagging to about ${Math.round(SUPPLY_MIN_V)} V; your label needs at least ${deviceMinVoltageV} V, which leaves little margin.`,
+    );
+  }
   if (actions.length === 0) actions.push("Nothing to buy — plug it straight in.");
 
   let verdict;
@@ -214,6 +229,7 @@ export function assessArgentinaPower({
     converterNeeded,
     converterDirection,
     toleranceRisk,
+    toleranceRiskLow,
     frequencyOk,
     frequencyNote,
     currentA,

@@ -190,7 +190,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD_CLASS}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
               Etiquette readiness
             </p>
@@ -228,7 +228,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             [
               "Rules that apply to your trip",

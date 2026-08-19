@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/shared/ui/Button";
-import FileUploadPreview from "./FileUploadPreview";
+import FieldControl from "./FieldControl";
 
 const MultiStepForm = ({
   formFields,
@@ -22,74 +22,47 @@ const MultiStepForm = ({
   const step2Fields = formFields.slice(stepSize);
 
   const renderFields = (fields) =>
-    fields.map((field) => (
-      <div key={field.id}>
-        <label className="block mb-2">
-          {field.label}
-          {field.required && (
-            <span className="text-red-600 ml-1">*</span>
+    fields.map((field) => {
+      const fieldId = `msf-${field.id}`;
+      const errorId = `${fieldId}-error`;
+      const hasError = !!errors[field.id];
+      return (
+        <div key={field.id}>
+          <label htmlFor={fieldId} className="block mb-2">
+            {field.label}
+            {field.required && (
+              <span className="text-red-600 ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
+          </label>
+
+          <FieldControl
+            field={field}
+            id={fieldId}
+            value={previewData[field.id]}
+            onChange={(val) => handlePreviewChange(field.id, val)}
+            theme={theme}
+            uploadedFile={uploadedFiles[field.id]}
+            onFileChange={(file) => {
+              setUploadedFiles((prev) => ({
+                ...prev,
+                [field.id]: file,
+              }));
+              handlePreviewChange(field.id, file.name);
+            }}
+            ariaDescribedBy={hasError ? errorId : undefined}
+            ariaInvalid={hasError}
+          />
+
+          {hasError && (
+            <p id={errorId} role="alert" className="text-red-600 text-sm mt-1">
+              {errors[field.id]}
+            </p>
           )}
-        </label>
-        
-{field.type === "file" ? (
-  <>
-    <input
-      type="file"
-      onChange={(e) => {
-        const file = e.target.files[0];
-        if (file) {
-          setUploadedFiles((prev) => ({
-            ...prev,
-            [field.id]: file,
-          }));
-          handlePreviewChange(field.id, file.name);
-        }
-      }}
-      className="w-full px-3 py-2 border border-(--border) rounded-md"
-      style={{
-        borderRadius: `${theme.borderRadius}px`,
-        fontFamily: theme.fontFamily,
-      }}
-    />
-
-    {uploadedFiles[field.id] && (
-  <FileUploadPreview file={uploadedFiles[field.id]} />
-)}
-  </>
-) : field.type === "textarea" ? (
-  <textarea
-    value={previewData[field.id] || ""}
-    onChange={(e) =>
-      handlePreviewChange(field.id, e.target.value)
-    }
-    placeholder={field.placeholder}
-    className="w-full px-3 py-2 border border-(--border) rounded-md"
-    rows={3}
-  />
-) : (
-  <input
-    type={field.type}
-    value={previewData[field.id] || ""}
-    onChange={(e) =>
-      handlePreviewChange(field.id, e.target.value)
-    }
-    placeholder={field.placeholder}
-    className="w-full px-3 py-2 border border-(--border) rounded-md"
-    style={{
-      borderRadius: `${theme.borderRadius}px`,
-      fontFamily: theme.fontFamily,
-    }}
-  />
-)}
-       
-
-        {errors[field.id] && (
-          <p className="text-red-600 text-sm mt-1">
-            {errors[field.id]}
-          </p>
-        )}
-      </div>
-    ));
+        </div>
+      );
+    });
 
   return (
     <div className="space-y-6">
@@ -109,7 +82,9 @@ const MultiStepForm = ({
           {formFields.map((field) => (
             <p key={field.id}>
               <strong>{field.label}:</strong>{" "}
-              {previewData[field.id] || "-"}
+              {Array.isArray(previewData[field.id])
+                ? previewData[field.id].join(", ") || "-"
+                : previewData[field.id] || "-"}
             </p>
           ))}
         </div>

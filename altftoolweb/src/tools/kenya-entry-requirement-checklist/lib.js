@@ -180,26 +180,32 @@ function buildDocuments(context) {
     });
   }
 
-  documents.push({
-    id: "declaration",
-    label: "Kenya Revenue Authority passenger declaration filed online",
-    detail:
-      "Completed before arrival. It is separate from the eTA and catches people who assume the authorisation covers everything.",
-    required: true,
-  });
+  const isAirsideTransit = context.route.id === "transit-airside";
+
+  if (!isAirsideTransit) {
+    documents.push({
+      id: "declaration",
+      label: "Kenya Revenue Authority passenger declaration filed online",
+      detail:
+        "Completed before arrival. It is separate from the eTA and catches people who assume the authorisation covers everything.",
+      required: true,
+    });
+  }
   documents.push({
     id: "onward",
     label: "Confirmed return or onward ticket",
     detail: "Asked for by the airline and on arrival, and part of the eTA application.",
     required: true,
   });
-  documents.push({
-    id: "accommodation",
-    label: "Accommodation booking or your host's address",
-    detail:
-      "The eTA application asks for it and immigration can too. Safari itineraries usually cover this in one document.",
-    required: true,
-  });
+  if (!isAirsideTransit) {
+    documents.push({
+      id: "accommodation",
+      label: "Accommodation booking or your host's address",
+      detail:
+        "The eTA application asks for it and immigration can too. Safari itineraries usually cover this in one document.",
+      required: true,
+    });
+  }
 
   if (context.yellowFeverRisk) {
     documents.push({
@@ -338,7 +344,10 @@ export function buildKenyaChecklist({
 
   const adultCount = Number(adults);
   const childCount = Number(childrenUnder16);
-  if (!Number.isFinite(adultCount) || !Number.isFinite(childCount)) {
+  if (
+    !Number.isInteger(adultCount) ||
+    !Number.isInteger(childCount)
+  ) {
     return { error: "Enter the number of travellers as whole numbers." };
   }
   if (adultCount < 0 || childCount < 0) {
@@ -376,14 +385,20 @@ export function buildKenyaChecklist({
   const etaTotalUsd = round2(perAdultUsd * adultCount + perChildUsd * childCount);
 
   // eTA approval window: the authorisation must be used within 90 days of issue.
+  // Two distinct ways this can fail: arriving before the approval date (the
+  // eTA is not granted yet) or arriving after the 90-day window has lapsed
+  // (applied too early). Track them separately so the copy names the right one.
   let etaLastEntryDate = null;
   let etaStillValidOnArrival = null;
   let etaDaysMargin = null;
+  let etaNotYetApproved = false;
+  let etaWindowLapsed = false;
   if (route.needsEta && approval) {
     const lastEntry = addDays(approval, ETA_VALIDITY_DAYS);
     etaLastEntryDate = toIso(lastEntry);
-    etaStillValidOnArrival =
-      arrival.getTime() >= approval.getTime() && arrival.getTime() <= lastEntry.getTime();
+    etaNotYetApproved = arrival.getTime() < approval.getTime();
+    etaWindowLapsed = arrival.getTime() > lastEntry.getTime();
+    etaStillValidOnArrival = !etaNotYetApproved && !etaWindowLapsed;
     etaDaysMargin = daysBetween(arrival, lastEntry);
   }
 
@@ -408,7 +423,11 @@ export function buildKenyaChecklist({
       `This route admits you for ${route.maxStayDays} days and you plan ${wholeDays} — ${daysOverLimit} day(s) too many. Apply to extend inside Kenya rather than overstaying.`,
     );
   }
-  if (etaStillValidOnArrival === false) {
+  if (etaStillValidOnArrival === false && etaNotYetApproved) {
+    warnings.push(
+      `Your eTA approval date (${toIso(approval)}) is after your arrival date (${toIso(arrival)}) — you won't be approved in time. Check your application status or expedite it before you fly.`,
+    );
+  } else if (etaStillValidOnArrival === false && etaWindowLapsed) {
     warnings.push(
       `An eTA approved on ${toIso(approval)} can only be used up to ${etaLastEntryDate}. On your arrival date it would not be usable, so time the application rather than applying as early as possible.`,
     );
@@ -432,7 +451,11 @@ export function buildKenyaChecklist({
   const verdict = passportOk
     ? stayWithinLimit
       ? route.needsEta
-        ? `eTA cost USD ${etaTotalUsd.toLocaleString("en-US")} for ${partySize} traveller(s) — apply at least ${ETA_RECOMMENDED_LEAD_DAYS} days out.`
+        ? etaStillValidOnArrival === false
+          ? etaNotYetApproved
+            ? `Your eTA approval date (${toIso(approval)}) is after your arrival date — it won't be granted in time. Check or expedite your application.`
+            : `Your eTA approval on ${toIso(approval)} is not usable on your arrival date — it only covers entry up to ${etaLastEntryDate}.`
+          : `eTA cost USD ${etaTotalUsd.toLocaleString("en-US")} for ${partySize} traveller(s) — apply at least ${ETA_RECOMMENDED_LEAD_DAYS} days out.`
         : "No authorisation needed on this route — the rest of the checklist still applies."
       : "Planned stay is longer than this route allows."
     : "Passport validity fails the six-month rule — renew first.";

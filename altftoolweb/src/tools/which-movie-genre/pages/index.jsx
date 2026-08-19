@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RotateCcw, Sparkles } from "lucide-react";
 
 const QUESTIONS = [
@@ -153,9 +153,18 @@ export default function WhichMovieGenrePage() {
   const [answers, setAnswers] = useState([]);
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
+  const resultTimeoutRef = useRef(null);
 
   const totalQuestions = QUESTIONS.length;
   const progress = ((currentQuestion) / totalQuestions) * 100;
+
+  useEffect(() => {
+    return () => {
+      if (resultTimeoutRef.current) {
+        clearTimeout(resultTimeoutRef.current);
+      }
+    };
+  }, []);
 
   function handleSelect(optionIndex) {
     const newAnswers = [...answers, optionIndex];
@@ -165,11 +174,12 @@ export default function WhichMovieGenrePage() {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setCalculating(true);
-      setTimeout(() => {
+      resultTimeoutRef.current = setTimeout(() => {
         const finalResult = computeResult(newAnswers);
         setResult(finalResult);
         setCalculating(false);
         setStep("result");
+        resultTimeoutRef.current = null;
       }, 2000);
     }
   }
@@ -221,7 +231,7 @@ export default function WhichMovieGenrePage() {
           }}
         />
         <div style={styles.container}>
-          <div style={styles.resultCard}>
+          <div style={styles.resultCard} role="status" aria-live="polite">
             <div style={styles.resultHeader}>
               <Sparkles style={styles.resultIcon} />
               <h2 style={styles.resultTitle}>Your Genre Is {result.name}</h2>
@@ -255,7 +265,17 @@ export default function WhichMovieGenrePage() {
               <p style={styles.quoteText}>"{result.quote}"</p>
             </div>
 
-            <button onClick={handleRetake} style={styles.retakeButton}>
+            <button
+              onClick={handleRetake}
+              style={styles.retakeButton}
+              onFocus={(e) => {
+                e.currentTarget.style.outline = "2px solid var(--primary)";
+                e.currentTarget.style.outlineOffset = "2px";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.outline = "none";
+              }}
+            >
               <RotateCcw size={18} />
               <span>Take the Quiz Again</span>
             </button>
@@ -283,7 +303,7 @@ export default function WhichMovieGenrePage() {
           }}
         />
         <div style={styles.container}>
-          <div style={styles.calculatingCard}>
+          <div style={styles.calculatingCard} role="status" aria-live="polite">
             <div style={styles.calculatingAnimation}>
               <Sparkles style={styles.calculatingIcon} />
             </div>
@@ -321,7 +341,14 @@ export default function WhichMovieGenrePage() {
           </div>
 
           <div style={styles.progressContainer}>
-            <div style={styles.progressBar}>
+            <div
+              style={styles.progressBar}
+              role="progressbar"
+              aria-valuenow={currentQuestion}
+              aria-valuemin={0}
+              aria-valuemax={totalQuestions}
+              aria-label="Quiz progress"
+            >
               <div style={{ ...styles.progressFill, width: `${progress}%` }} />
             </div>
             <span style={styles.progressText}>{currentQuestion + 1} of {totalQuestions}</span>
@@ -337,6 +364,13 @@ export default function WhichMovieGenrePage() {
                   onClick={() => handleSelect(i)}
                   style={styles.optionButton}
                   aria-label={option.text}
+                  onFocus={(e) => {
+                    e.currentTarget.style.outline = "2px solid var(--primary)";
+                    e.currentTarget.style.outlineOffset = "2px";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.outline = "none";
+                  }}
                 >
                   {option.text}
                 </button>

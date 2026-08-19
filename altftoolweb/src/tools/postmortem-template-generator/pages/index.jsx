@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, ClipboardList, Copy, RotateCcw } from "lucide-react";
 
+import { safeCopyText } from "@/shared/utils/clipboard";
 import { OPTIONAL_SECTIONS, SEVERITY_OPTIONS, buildPostmortem } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-US");
@@ -40,6 +41,7 @@ export default function ToolHome() {
   const [actionItemCount, setActionItemCount] = useState(DEFAULTS.actionItemCount);
   const [sections, setSections] = useState(DEFAULTS.sections);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
 
   const result = useMemo(
     () =>
@@ -60,12 +62,14 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.markdown);
+    const ok = await safeCopyText(result.markdown);
+    if (ok) {
+      setCopyFailed(false);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
-    } catch {
+    } else {
       setCopied(false);
+      setCopyFailed(true);
     }
   };
 
@@ -79,6 +83,7 @@ export default function ToolHome() {
     setActionItemCount(DEFAULTS.actionItemCount);
     setSections(DEFAULTS.sections);
     setCopied(false);
+    setCopyFailed(false);
   };
 
   const toggleSection = (id) => {
@@ -239,6 +244,11 @@ export default function ToolHome() {
       ) : null}
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          {hasError
+            ? "Fix the input above to generate the template."
+            : `Generated document updated: ${NUM.format(result.wordCount)} words.`}
+        </div>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -252,13 +262,18 @@ export default function ToolHome() {
                 ? "Fix the input above to generate the template."
                 : "Copy the Markdown below into your wiki, doc tool or repository and fill in the italic prompts."}
             </p>
+            {copyFailed ? (
+              <p role="alert" className="mt-2 text-sm font-medium text-[var(--danger)]">
+                Copy failed — select and copy manually.
+              </p>
+            ) : null}
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the postmortem Markdown template"
+              aria-label={copied ? "Copied to clipboard" : "Copy the postmortem Markdown template"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (

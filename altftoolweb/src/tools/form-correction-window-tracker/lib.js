@@ -312,18 +312,17 @@ export function buildCorrectionPlan({
     );
   }
 
-  const editable = verdicts.filter((entry) => !entry.locked);
-
   return {
     body,
     state,
     charge,
     verdicts,
-    editable,
     lockedCount,
     warnings,
     notes: body.notes,
-    canActNow: state.status === "open" || state.status === "urgent",
+    // A day inside the window is not enough on its own — the next correction attempt
+    // also has to actually be permitted (maxCorrections not exhausted / not zero).
+    canActNow: (state.status === "open" || state.status === "urgent") && charge.allowed,
   };
 }
 

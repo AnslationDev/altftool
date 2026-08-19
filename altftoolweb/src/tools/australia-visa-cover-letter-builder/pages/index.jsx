@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Compass, Copy, RotateCcw } from "lucide-react";
 
 import {
@@ -57,6 +57,9 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const set = (key) => (event) => {
     const { value } = event.target;
@@ -72,7 +75,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.letter);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1600);
     } catch {
       setCopied(false);
     }
@@ -209,7 +213,7 @@ export default function ToolHome() {
           </div>
           <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="av-budget">Funds available (AUD)</label>
-            <input id="av-budget" className={`mt-2 ${INPUT_CLASS}`} type="number" min="0" value={form.budgetAud} onChange={set("budgetAud")} />
+            <input id="av-budget" className={`mt-2 ${INPUT_CLASS}`} type="number" min="1" value={form.budgetAud} onChange={set("budgetAud")} />
           </div>
           <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="av-ties">Ties to your home country</label>
@@ -224,7 +228,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -269,11 +273,15 @@ export default function ToolHome() {
             <dd className="mt-1 font-semibold">{hasError ? DASH : result.daysLeftUnder8558}</dd>
           </div>
           <div className="rounded-md border border-[var(--border)] p-3">
+            <dt className="text-[var(--muted-foreground)]">Condition 8558 window closes</dt>
+            <dd className="mt-1 font-semibold">{hasError ? DASH : result.condition8558WindowEnds}</dd>
+          </div>
+          <div className="rounded-md border border-[var(--border)] p-3">
             <dt className="text-[var(--muted-foreground)]">Funds per person per day</dt>
             <dd className="mt-1 font-semibold">{hasError ? DASH : AUD.format(result.perPersonPerDayAud)}</dd>
           </div>
           <div className="rounded-md border border-[var(--border)] p-3">
-            <dt className="text-[var(--muted-foreground)]">Lodged before departure</dt>
+            <dt className="text-[var(--muted-foreground)]">Lodged before arrival</dt>
             <dd className="mt-1 font-semibold">{hasError ? DASH : `${result.leadDays} days`}</dd>
           </div>
           <div className="rounded-md border border-[var(--border)] p-3">

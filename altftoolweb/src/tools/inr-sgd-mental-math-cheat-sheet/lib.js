@@ -385,15 +385,15 @@ export function buildCheatSheet({
   const priceLadder = CURRENCY.pricePoints.map((point) => {
     const exact = point.amount * rate;
     const quick = point.amount * forward.quick.rate;
-    const tuned = point.amount * forward.tuned.rate;
+    const rule = point.amount * forward.recommendedRate;
     return {
       amount: point.amount,
       note: point.note,
       exactInr: round(exact, 2),
       quickInr: round(quick, 2),
-      tunedInr: round(tuned, 2),
+      ruleInr: round(rule, 2),
       quickGapInr: round(quick - exact, 2),
-      tunedGapInr: round(tuned - exact, 2),
+      ruleGapInr: round(rule - exact, 2),
     };
   });
 
@@ -415,7 +415,7 @@ export function buildCheatSheet({
       amount: parsedAmount,
       exactInr: round(exact, 2),
       quickInr: round(parsedAmount * forward.quick.rate, 2),
-      tunedInr: round(parsedAmount * forward.tuned.rate, 2),
+      ruleInr: round(parsedAmount * forward.recommendedRate, 2),
       fractionInr: round(parsedAmount * forward.fraction.rate, 2),
       quickGapInr: round(parsedAmount * forward.quick.rate - exact, 2),
       till,

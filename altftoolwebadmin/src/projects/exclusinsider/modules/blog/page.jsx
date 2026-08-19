@@ -334,6 +334,10 @@ function ArticleModal({ mode, article, articles, onClose }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [slugTouched, setSlugTouched] = useState(mode === "edit");
+  // Storage paths staged for deletion — flushed only after a confirmed save,
+  // never eagerly, so hitting Cancel after Remove never orphans the live
+  // article's cover image (it still points at the un-deleted blob).
+  const [pendingRemovals, setPendingRemovals] = useState([]);
 
   function setField(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -384,14 +388,13 @@ function ArticleModal({ mode, article, articles, onClose }) {
     }
   }
 
-  async function removeImage() {
+  function removeImage() {
     const path = form.imagePath;
     setForm((prev) => ({ ...prev, image: "", imagePath: "" }));
-    try {
-      await deleteBlogCover(path);
-    } catch {
-      emitAlert({ type: "warning", message: "Image removed from form, but Storage cleanup failed." });
-    }
+    // Don't delete the Storage blob yet — the admin may still hit Cancel,
+    // which would leave the Firestore doc pointing at a deleted image.
+    // Stage it and only delete once the form is actually saved.
+    if (path) setPendingRemovals((prev) => [...prev, path]);
   }
 
   async function save() {
@@ -409,6 +412,15 @@ function ArticleModal({ mode, article, articles, onClose }) {
       } else {
         await createArticle(form);
         emitAlert({ type: "success", message: "Article added." });
+      }
+      if (pendingRemovals.length) {
+        await Promise.all(
+          pendingRemovals.map((path) =>
+            deleteBlogCover(path).catch(() => {
+              emitAlert({ type: "warning", message: "Article saved, but Storage cleanup failed for a removed image." });
+            }),
+          ),
+        );
       }
       onClose();
     } catch (error) {

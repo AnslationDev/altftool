@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Globe, Loader2, RotateCcw, Search } from "lucide-react";
 
 import {
@@ -46,6 +46,18 @@ export default function ToolHome() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // Generation counter: bumped whenever a lookup starts, the form is reset, or
+  // the inputs change, so a late-arriving response from a superseded request
+  // can be told apart from the one the user is currently waiting on.
+  const requestIdRef = useRef(0);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
+
   const cleaned = useMemo(() => normaliseDomain(input), [input]);
   const target = useMemo(() => rdapUrlFor(input, server), [input, server]);
 
@@ -60,12 +72,17 @@ export default function ToolHome() {
   async function lookup(event) {
     if (event) event.preventDefault();
     if (inputError) return;
+    const requestId = ++requestIdRef.current;
     setLoading(true);
     setLookupError("");
     setRecord(null);
     try {
       const response = await fetch(target.url, { headers: { Accept: "application/rdap+json" } });
       const text = await response.text();
+      // A newer lookup (or a reset, or an input edit) has started since this
+      // request was fired — drop this now-stale response instead of letting
+      // it overwrite whatever the user is looking at now.
+      if (requestIdRef.current !== requestId) return;
       let json = null;
       try {
         json = JSON.parse(text);
@@ -92,15 +109,18 @@ export default function ToolHome() {
       setRecord(parsed);
       setFetchedAtIso(new Date().toISOString());
     } catch {
+      if (requestIdRef.current !== requestId) return;
       setLookupError(
         "The lookup could not reach the RDAP server. Some registries do not send the CORS headers a browser needs — try the registry's own RDAP address in the advanced field, or check your connection.",
       );
     } finally {
-      setLoading(false);
+      if (requestIdRef.current === requestId) setLoading(false);
     }
   }
 
   function reset() {
+    requestIdRef.current += 1; // invalidate any lookup still in flight
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setInput(DEFAULTS.input);
     setServer(DEFAULTS.server);
     setRecord(null);
@@ -109,12 +129,23 @@ export default function ToolHome() {
     setCopied(false);
   }
 
+  function updateInput(value) {
+    requestIdRef.current += 1; // the in-flight lookup (if any) no longer matches this field
+    setInput(value);
+  }
+
+  function updateServer(value) {
+    requestIdRef.current += 1; // the in-flight lookup (if any) no longer matches this field
+    setServer(value);
+  }
+
   async function copyResult() {
     if (!record || record.error) return;
     try {
       await navigator.clipboard.writeText(recordToText(record, timeline));
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
@@ -128,7 +159,7 @@ export default function ToolHome() {
           WHOIS Lookup
         </h1>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          Queries the authoritative RDAP server for the TLD through the IANA bootstrap service, then explains every field.
+          Queries the authoritative RDAP server for the TLD through the public rdap.org bootstrap redirector, then explains every field.
         </p>
       </header>
 
@@ -137,13 +168,13 @@ export default function ToolHome() {
           <label className={LABEL_CLASS} htmlFor="wl-domain">
             Domain name
           </label>
-          <input id="wl-domain" className={`mt-1 ${INPUT_CLASS}`} value={input} onChange={(e) => setInput(e.target.value)} placeholder="example.com" autoComplete="off" spellCheck={false} />
+          <input id="wl-domain" className={`mt-1 ${INPUT_CLASS}`} value={input} onChange={(e) => updateInput(e.target.value)} placeholder="example.com" autoComplete="off" spellCheck={false} />
         </div>
         <div>
           <label className={LABEL_CLASS} htmlFor="wl-server">
             RDAP server (advanced — leave as the bootstrap unless a registry blocks it)
           </label>
-          <input id="wl-server" className={`mt-1 ${INPUT_CLASS}`} value={server} onChange={(e) => setServer(e.target.value)} spellCheck={false} />
+          <input id="wl-server" className={`mt-1 ${INPUT_CLASS}`} value={server} onChange={(e) => updateServer(e.target.value)} spellCheck={false} />
         </div>
 
         {inputError ? (
@@ -181,7 +212,7 @@ export default function ToolHome() {
       ) : null}
 
       {record && !error ? (
-        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <div className="mt-6 grid gap-4 lg:grid-cols-2" role="status" aria-live="polite" aria-atomic="true">
           <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
             <p className="text-sm text-[var(--muted-foreground)]">Registered with</p>
             <p className="text-3xl font-bold tracking-tight break-words text-[var(--foreground)]">{record.registrar ?? "Not disclosed"}</p>

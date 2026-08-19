@@ -660,7 +660,7 @@ export const LOANWORDS = [
   {
     id: "dinghy",
     word: "dinghy",
-    sourceLanguage: "Bengali / Hindi",
+    sourceLanguage: "Hindi / Bengali",
     sourceWord: "ডিঙি ḍiṅgī",
     sourceMeaning: "small river boat",
     route: "Bengali → English",
@@ -809,7 +809,7 @@ function haystack(entry) {
  * Results are sorted oldest first so the timeline reads chronologically.
  */
 export function searchLoanwords({
-  query = "",
+  query,
   language = "all",
   domain = "all",
   certainty = "all",
@@ -818,13 +818,18 @@ export function searchLoanwords({
   const safeDomain = domain === "all" || DOMAIN_IDS.has(domain) ? domain : "all";
   const safeCertainty =
     certainty === "all" || CERTAINTY_IDS.has(certainty) ? certainty : "all";
-  const tokens = normalise(query).split(" ").filter(Boolean);
+  // `query` is left undefined (not defaulted to "") so we can tell "no query
+  // argument was supplied at all" (browse-by-filters callers, which omit the
+  // key entirely) apart from "the caller passed an explicit, empty query"
+  // (a cleared search box). Only the latter should match zero words.
+  const queryProvided = query !== undefined;
+  const tokens = normalise(query ?? "").split(" ").filter(Boolean);
 
   const results = LOANWORDS.filter((entry) => {
     if (safeLanguage !== "all" && entry.sourceLanguage !== safeLanguage) return false;
     if (safeDomain !== "all" && entry.domain !== safeDomain) return false;
     if (safeCertainty !== "all" && entry.certainty !== safeCertainty) return false;
-    if (tokens.length === 0) return true;
+    if (tokens.length === 0) return !queryProvided;
     const hay = haystack(entry);
     return tokens.every((token) => hay.includes(token));
   }).sort((a, b) => a.firstUse - b.firstUse || a.word.localeCompare(b.word));

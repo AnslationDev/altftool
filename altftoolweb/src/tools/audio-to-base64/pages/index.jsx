@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Check, Copy, Download, Music, RotateCcw } from "lucide-react";
 
 import {
@@ -38,6 +38,7 @@ const int = (value) => (Number.isFinite(value) ? INT.format(value) : DASH);
 const num = (value) => (Number.isFinite(value) ? NUM.format(value) : DASH);
 
 export default function ToolHome() {
+  const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("");
   const [mimeType, setMimeType] = useState(SAMPLE_MIME);
   const [byteLength, setByteLength] = useState(null);
@@ -68,6 +69,10 @@ export default function ToolHome() {
       setFileError(
         `That file is ${formatBytes(file.size)}. Encode files up to ${formatBytes(MAX_FILE_BYTES)}.`,
       );
+      setFileName("");
+      setMimeType(SAMPLE_MIME);
+      setByteLength(null);
+      setDataUrl("");
       return;
     }
     setBusy(true);
@@ -77,6 +82,9 @@ export default function ToolHome() {
       const encoded = bytesToBase64(bytes);
       if (encoded.error) {
         setFileError(encoded.error);
+        setFileName("");
+        setMimeType(SAMPLE_MIME);
+        setByteLength(null);
         setDataUrl("");
         return;
       }
@@ -84,6 +92,9 @@ export default function ToolHome() {
       const wrapped = buildDataUrl({ base64: encoded.base64, mimeType: type });
       if (wrapped.error) {
         setFileError(wrapped.error);
+        setFileName("");
+        setMimeType(SAMPLE_MIME);
+        setByteLength(null);
         setDataUrl("");
         return;
       }
@@ -94,6 +105,10 @@ export default function ToolHome() {
       setCopied(false);
     } catch {
       setFileError("That file could not be read. Try a different one.");
+      setFileName("");
+      setMimeType(SAMPLE_MIME);
+      setByteLength(null);
+      setDataUrl("");
     } finally {
       setBusy(false);
     }
@@ -131,6 +146,7 @@ export default function ToolHome() {
     setFileError("");
     setInspectInput("");
     setCopied(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const preview =
@@ -156,6 +172,7 @@ export default function ToolHome() {
         </label>
         <input
           id="audio-file"
+          ref={fileInputRef}
           type="file"
           accept="audio/*"
           onChange={onFile}
@@ -217,6 +234,9 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy result"}
             </button>
+            <span aria-live="polite" role="status" className="sr-only">
+              {copied ? "Copied to clipboard." : ""}
+            </span>
             <button
               type="button"
               onClick={downloadText}
@@ -262,7 +282,7 @@ export default function ToolHome() {
       </section>
 
       {dataUrl && (
-        <section className={`mt-6 ${CARD}`}>
+        <section className={`mt-6 ${CARD}`} aria-live="polite">
           <h2 className="text-base font-semibold">Result</h2>
           <audio className="mt-3 w-full" controls src={dataUrl}>
             Your browser cannot play this audio format.

@@ -225,7 +225,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -288,7 +288,7 @@ export default function ToolHome() {
                 {session.blocks.map((block) => (
                   <tr key={block.label} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 whitespace-nowrap text-[var(--muted-foreground)]">
-                      {block.startClock ? `${block.startClock}–${block.endClock}` : `+${block.startOffset}`}
+                      {block.startClock ? `${block.startClock}–${block.endClock}` : `+${block.startOffset}–${block.endOffset}`}
                     </td>
                     <td className="py-2 pr-3">
                       <span className="font-semibold">{block.label}</span>

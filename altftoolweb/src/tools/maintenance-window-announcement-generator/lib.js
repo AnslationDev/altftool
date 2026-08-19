@@ -233,6 +233,28 @@ export function wallTimeToUtc(dateText, timeText, timeZone) {
   if (secondOffset !== firstOffset) {
     utcMs = naive - secondOffset * MS_PER_MINUTE;
   }
+
+  // A wall-clock time inside a DST "spring forward" gap never actually occurs in `timeZone`.
+  // The two-pass resolution above still returns *some* instant, but reading its wall-clock
+  // fields back out lands on a different hour/minute than what was asked for. Catch that
+  // instead of silently substituting a different instant.
+  const check = offsetFormatter(timeZone).formatToParts(new Date(utcMs));
+  const checkField = {};
+  for (const part of check) {
+    if (part.type !== "literal") checkField[part.type] = Number(part.value);
+  }
+  const wallMatches =
+    checkField.year === year &&
+    checkField.month === month &&
+    checkField.day === day &&
+    checkField.hour % HOURS_PER_DAY === hour &&
+    checkField.minute === minute;
+  if (!wallMatches) {
+    return {
+      error: `That local time does not exist in ${timeZone} — clocks skip forward there on this date. Pick a time before or after the gap.`,
+    };
+  }
+
   return { utcMs, offsetMinutes: zoneOffsetMinutes(utcMs, timeZone) };
 }
 

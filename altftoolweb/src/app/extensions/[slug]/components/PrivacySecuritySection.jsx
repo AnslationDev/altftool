@@ -30,7 +30,7 @@ export default function PrivacySecuritySection() {
     <section className="p-8 md:p-10 rounded-3xl bg-gradient-to-br from-[var(--card)] via-[var(--card)] to-[var(--muted)] border border-[var(--border)] shadow-sm space-y-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
         <div className="space-y-2 max-w-xl">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-[#0D9488] uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-[var(--primary)] uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
             <Shield className="w-3.5 h-3.5" />
             <span>Privacy & Security Guarantee</span>
           </div>
@@ -48,7 +48,7 @@ export default function PrivacySecuritySection() {
           const IconComp = item.icon;
           return (
             <div key={idx} className="space-y-2.5">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-[#0D9488] border border-emerald-500/20 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-[var(--primary)] border border-emerald-500/20 flex items-center justify-center">
                 <IconComp className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-bold text-[var(--foreground)]">

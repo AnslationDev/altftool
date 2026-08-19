@@ -252,7 +252,9 @@ export function spellingEase(rawName) {
     },
     {
       key: "vowelY",
-      label: vowelY ? "a y standing in for a vowel" : "no vowel y",
+      // points===0 items are filtered out below, so the falsy case never
+      // reaches the UI — the label only needs to cover the truthy case.
+      label: "a y standing in for a vowel",
       points: vowelY * PENALTY_VOWEL_Y,
     },
   ].filter((item) => item.points > 0);

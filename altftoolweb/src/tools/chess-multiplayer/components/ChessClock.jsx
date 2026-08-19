@@ -13,7 +13,7 @@ export default function ChessClock({ color, seconds, active, flagged }) {
           ? "border-(--primary) bg-(--primary)/10"
           : "border-(--border) bg-(--card)"
       }`}
-      aria-live="polite"
+      aria-label={`${color === "w" ? "White" : "Black"}'s clock`}
     >
       <div className="flex items-center gap-2">
         <span
@@ -32,6 +32,7 @@ export default function ChessClock({ color, seconds, active, flagged }) {
         className={`flex items-center gap-1.5 font-mono text-2xl font-bold tabular-nums ${
           flagged || low ? "text-red-600" : "text-(--foreground)"
         }`}
+        aria-hidden="true"
       >
         <Clock size={18} className="text-(--muted-foreground)" />
         {formatClock(seconds)}

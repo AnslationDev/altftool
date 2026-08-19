@@ -31,7 +31,7 @@ export const spec = {
     }
   ]
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—"; return { result: `clamp(${num(values.min)}px, ${num(values.vw)}vw, ${num(values.max)}px)`, caption: "responsive size", rows: [["Min", num(values.min) + "px"], ["Max", num(values.max) + "px"]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const min=num(values.min); const max=num(values.max); const vw=num(values.vw); if(!Number.isFinite(min)||!Number.isFinite(max)||!Number.isFinite(vw)) return { error: "Enter valid numbers for Min, Preferred and Max." }; if(min<0||max<0) return { error: "Min and Max should not be negative." }; if(max<min) return { error: "Max must be greater than or equal to Min." }; return { result: `clamp(${min}px, ${vw}vw, ${max}px)`, caption: "responsive size", rows: [["Min", min + "px"], ["Max", max + "px"]] }; },
 };
 
 export default spec;

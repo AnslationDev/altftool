@@ -478,17 +478,25 @@ function checkReferrer(headers) {
     ]);
   }
   const tokens = value.split(",").map((t) => t.trim().toLowerCase()).filter(Boolean);
-  const last = tokens[tokens.length - 1];
-  const notes = tokens.length > 1 ? [`Several policies listed; the browser uses the last one it understands, here "${last}".`] : [];
-  if (last === "unsafe-url") {
-    return makeCheck("referrer", "Referrer-Policy", "fail", 0, 10, "unsafe-url sends the full path and query to every destination, including plaintext ones.", notes);
+  let last = null;
+  for (let i = tokens.length - 1; i >= 0; i -= 1) {
+    if (tokens[i] === "unsafe-url" || STRICT_REFERRER.includes(tokens[i]) || WEAK_REFERRER.includes(tokens[i])) {
+      last = tokens[i];
+      break;
+    }
   }
-  if (STRICT_REFERRER.includes(last)) {
-    return makeCheck("referrer", "Referrer-Policy", "pass", 10, 10, `${last} — cross-origin requests never carry the path or query.`, notes);
-  }
-  if (WEAK_REFERRER.includes(last)) {
-    notes.push("This value still sends the origin (or more) cross-origin; strict-origin-when-cross-origin is the usual choice.");
-    return makeCheck("referrer", "Referrer-Policy", "partial", 5, 10, `${last} — a valid but loose policy.`, notes);
+  const notes = tokens.length > 1 && last !== null ? [`Several policies listed; the browser uses the last one it understands, here "${last}".`] : [];
+  if (last !== null) {
+    if (last === "unsafe-url") {
+      return makeCheck("referrer", "Referrer-Policy", "fail", 0, 10, "unsafe-url sends the full path and query to every destination, including plaintext ones.", notes);
+    }
+    if (STRICT_REFERRER.includes(last)) {
+      return makeCheck("referrer", "Referrer-Policy", "pass", 10, 10, `${last} — cross-origin requests never carry the path or query.`, notes);
+    }
+    if (WEAK_REFERRER.includes(last)) {
+      notes.push("This value still sends the origin (or more) cross-origin; strict-origin-when-cross-origin is the usual choice.");
+      return makeCheck("referrer", "Referrer-Policy", "partial", 5, 10, `${last} — a valid but loose policy.`, notes);
+    }
   }
   return makeCheck("referrer", "Referrer-Policy", "fail", 0, 10, `"${value}" is not a Referrer-Policy token, so the browser falls back to its default.`, notes);
 }
@@ -506,8 +514,20 @@ function checkPermissions(headers) {
   }
   const features = value.split(",").map((t) => t.trim()).filter(Boolean);
   const disabled = features.filter((f) => /=\s*\(\s*\)\s*$/.test(f)).map((f) => f.split("=")[0].trim());
+  const openGrant = features.filter((f) => {
+    const eq = f.indexOf("=");
+    const allow = eq >= 0 ? f.slice(eq + 1).trim() : "";
+    return allow === "*" || /\(\s*\*\s*\)/.test(allow) || /=\s*\*/.test(f);
+  });
+  if (!features.length) {
+    return makeCheck("permissions", "Permissions-Policy", "fail", 0, 5, "Present but empty — no features are listed, so nothing is actually constrained.", []);
+  }
   const notes = [`${features.length} feature${features.length === 1 ? "" : "s"} listed.`];
   if (disabled.length) notes.push(`Fully disabled: ${disabled.join(", ")}.`);
+  if (openGrant.length) {
+    notes.push(`Opened to * (any origin): ${openGrant.map((f) => f.split("=")[0].trim()).join(", ")}.`);
+    return makeCheck("permissions", "Permissions-Policy", "partial", 2, 5, "Present, but at least one feature is granted to * (any origin), which is close to not constraining it at all.", notes);
+  }
   return makeCheck("permissions", "Permissions-Policy", "pass", 5, 5, "Present — listed features are constrained for this document and its frames.", notes);
 }
 
@@ -556,7 +576,7 @@ function checkDisclosure(headers) {
   const found = [];
   for (const [key, label] of DISCLOSURE_HEADERS) {
     for (const value of valuesOf(headers, key)) {
-      const versioned = /\d/.test(value);
+      const versioned = key === "x-runtime" ? false : /\d/.test(value);
       found.push({ label, value, versioned });
     }
   }

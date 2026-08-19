@@ -283,7 +283,11 @@ export default function ToolHome() {
             </div>
           </section>
 
-          <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+            role="status"
+          >
             {calc.error ? (
               <div
                 role="alert"

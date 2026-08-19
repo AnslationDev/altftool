@@ -144,7 +144,7 @@ export default function ToolHome() {
       return { error: "Enter valid numbers for gross income and deductions." };
     }
     if (g < 0 || d < 0) return { error: "Amounts cannot be negative." };
-    if (g > 1000000000) return { error: "Enter a gross income below 100 crore." };
+    if (g >= 1000000000) return { error: "Enter a gross income below 100 crore." };
     if (d > g) return { error: "Old-regime deductions cannot exceed your gross income." };
 
     const exempt = BASIC_EXEMPTION[ageBand];
@@ -358,6 +358,12 @@ export default function ToolHome() {
             {money(calc.newStandard)} in the new regime.
           </p>
         )}
+        <div className="mt-4 flex justify-end">
+          <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />
+            Reset
+          </button>
+        </div>
       </section>
 
       {calc.error ? (
@@ -399,15 +405,6 @@ export default function ToolHome() {
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
                   {copied ? "Copied!" : "Copy result"}
-                </button>
-                <button
-                  type="button"
-                  onClick={reset}
-                  aria-label="Reset all inputs"
-                  className={PRIMARY_BTN}
-                >
-                  <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                  Reset
                 </button>
               </div>
             </div>

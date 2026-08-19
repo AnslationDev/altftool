@@ -440,11 +440,27 @@ function describeCodepoint(cp) {
     };
   }
   if (Object.prototype.hasOwnProperty.call(CONFUSABLES, cp)) {
+    const script = scriptOf(cp);
+    // Common-script typographic punctuation (curly quotes, em/en dashes, the
+    // various "." look-alikes) is not a cross-script impersonation — it stays
+    // in the CONFUSABLES table so skeleton folding still normalises it, but it
+    // does not belong in the same high-risk bucket as an actual Cyrillic/Greek
+    // look-alike letter, and the verdict banner would otherwise contradict
+    // this same table by calling the text clean while marking it high risk.
+    if (script === "Common") {
+      return {
+        category: "confusable",
+        name: `Common look-alike for "${CONFUSABLES[cp]}"`,
+        risk: "low",
+        note: `Ordinary typographic punctuation. It renders like "${CONFUSABLES[cp]}" but is a distinct codepoint, so an exact-text comparison treats it as different.`,
+        replacement: CONFUSABLES[cp],
+      };
+    }
     return {
       category: "confusable",
-      name: `${scriptOf(cp)} look-alike for "${CONFUSABLES[cp]}"`,
+      name: `${script} look-alike for "${CONFUSABLES[cp]}"`,
       risk: "high",
-      note: `This is ${scriptOf(cp)}, not Latin. It renders almost identically to "${CONFUSABLES[cp]}" but compares as a completely different string.`,
+      note: `This is ${script}, not Latin. It renders almost identically to "${CONFUSABLES[cp]}" but compares as a completely different string.`,
       replacement: CONFUSABLES[cp],
     };
   }
@@ -516,8 +532,17 @@ export function analyzeBidi(text) {
     if (BIDI_CLOSERS.has(cp)) {
       const expected = cp === 0x2069 ? [0x2066, 0x2067, 0x2068] : [0x202a, 0x202b, 0x202d, 0x202e];
       const index = [...stack].reverse().findIndex((open) => expected.includes(open));
-      if (index === -1) unmatchedClosers += 1;
-      else stack.splice(stack.length - 1 - index, 1);
+      if (index === -1) {
+        unmatchedClosers += 1;
+      } else if (cp === 0x2069) {
+        // UAX #9 X6a: a POP DIRECTIONAL ISOLATE discards everything opened
+        // inside the isolate it closes (any embedding/override left dangling
+        // there), not just the isolate initiator itself — otherwise a
+        // correctly-closed isolate is over-reported as unterminated.
+        stack.splice(stack.length - 1 - index);
+      } else {
+        stack.splice(stack.length - 1 - index, 1);
+      }
     }
   }
 
@@ -554,7 +579,10 @@ const TRIM_PUNCTUATION = /^[\s"'`([{<,;:!?]+|[\s"'`)\]}>,;:!?.]+$/g;
  * it would read as once every look-alike is folded to Latin.
  */
 export function analyzeTokens(text) {
-  const raw = String(text == null ? "" : text).split(/\s+/);
+  // Split on plain ASCII whitespace only, not the \s class: \s also matches
+  // NBSP (U+00A0) and the BOM (U+FEFF), which would silently break a token
+  // apart at exactly the deceptive character this tool exists to catch.
+  const raw = String(text == null ? "" : text).split(/[\t\n\r ]+/);
   const tokens = [];
   const seen = new Set();
 
@@ -603,7 +631,10 @@ export function extractHosts(text) {
   const source = String(text == null ? "" : text);
   const candidates = new Set();
 
-  for (const piece of source.split(/\s+/)) {
+  // See analyzeTokens() above: split on explicit ASCII whitespace only, so an
+  // NBSP or BOM embedded in a hostname stays part of the same candidate token
+  // instead of silently splitting it out of the report.
+  for (const piece of source.split(/[\t\n\r ]+/)) {
     let token = piece.replace(TRIM_PUNCTUATION, "");
     if (!token) continue;
     token = token.replace(/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//, "");

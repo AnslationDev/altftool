@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, Copy, FileVideo, RotateCcw } from "lucide-react";
 
 import {
@@ -58,6 +58,13 @@ export default function ToolHome() {
   const [startLesson, setStartLesson] = useState(DEFAULTS.startLesson);
   const [outline, setOutline] = useState(DEFAULTS.outline);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -82,7 +89,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(files.map((file) => file.name).join("\n"));
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -260,7 +268,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -300,7 +312,7 @@ export default function ToolHome() {
               "Longest name",
               hasError ? DASH : `${NUM.format(result.longestBytes)} of ${MAX_FILENAME_BYTES} bytes`,
             ],
-            ["Duplicate names", hasError ? DASH : NUM.format(result.duplicates.length)],
+            ["Duplicate names", hasError ? DASH : NUM.format(result.duplicateFileCount)],
             ["Warnings", hasError ? DASH : NUM.format(result.warningCount)],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
@@ -312,7 +324,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">Generated names</h2>
           <div className="mt-3 max-h-96 overflow-y-auto overflow-x-auto">
             <ol className="min-w-max space-y-1 font-mono text-xs leading-6">

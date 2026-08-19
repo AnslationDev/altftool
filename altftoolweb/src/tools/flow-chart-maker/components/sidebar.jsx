@@ -78,7 +78,7 @@ const nodeTypes = [
   },
 ];
 
-export function Sidebar() {
+export function Sidebar({ onAddNode }) {
   const onDragStart = (event, nodeType, label) => {
     event.dataTransfer.setData('application/reactflow-type', nodeType);
     event.dataTransfer.setData('application/reactflow-label', label);
@@ -97,6 +97,20 @@ export function Sidebar() {
             key={node.type}
             draggable
             onDragStart={(e) => onDragStart(e, node.type, node.label)}
+            onClick={onAddNode ? () => onAddNode(node.type, node.label) : undefined}
+            tabIndex={onAddNode ? 0 : undefined}
+            role={onAddNode ? 'button' : undefined}
+            aria-label={onAddNode ? `Add ${node.label} node to canvas` : undefined}
+            onKeyDown={
+              onAddNode
+                ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onAddNode(node.type, node.label);
+                    }
+                  }
+                : undefined
+            }
             className={`flex items-center gap-3 p-3 rounded-xl border ${node.border} ${node.bg} ${node.hoverBg} cursor-grab active:cursor-grabbing transition-all duration-200 hover:shadow-md group`}
           >
             <div className="opacity-40 group-hover:opacity-70 transition-opacity">

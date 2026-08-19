@@ -13,12 +13,31 @@ import {
   Link2,
 } from "lucide-react";
 
+// Strip trailing sentence punctuation a URL would never legitimately end
+// with (e.g. the comma in "...docs, it's great!"), without touching a
+// meaningful trailing slash or other path/query characters.
+const stripTrailingPunctuation = (url) => url.replace(/[.,;:!?]+$/, "");
+
+// Escape HTML-significant characters so pasted text can never inject markup
+// into the generated HTML export.
+const escapeHtml = (value) =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+// Escape characters that would break out of Markdown link syntax `[text](url)`.
+const escapeMarkdownLinkText = (value) => String(value).replace(/[[\]()]/g, "\\$&");
+
 export default function MainComponent() {
   const [inputText, setInputText] = useState("");
   const [exportFormat, setExportFormat] = useState("markdown");
   const [outputText, setOutputText] = useState("");
   const [parsedLinks, setParsedLinks] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -45,7 +64,7 @@ Google Search: https://google.com`;
 
     // Match all http/https URLs in the input text
     const urlRegex = /https?:\/\/[^\s"'<>\(\)]+/gi;
-    const matches = inputText.match(urlRegex) || [];
+    const matches = (inputText.match(urlRegex) || []).map(stripTrailingPunctuation);
 
     if (matches.length === 0) {
       setError("No valid HTTP or HTTPS links could be found in the pasted content.");
@@ -60,12 +79,16 @@ Google Search: https://google.com`;
       try {
         hostname = new URL(url).hostname.replace("www.", "");
       } catch (err) {}
-      
-      // Try to find a custom label near the URL (e.g. "Label: https://...")
+
+      // Try to find a custom label near the URL (e.g. "Label: https://...").
+      // Match against each line's own extracted URLs (not raw substring
+      // containment) so a URL that is a text-prefix of a longer URL on an
+      // earlier line doesn't inherit that earlier line's label.
       const lines = inputText.split("\n");
       let foundLabel = "";
       for (const line of lines) {
-        if (line.includes(url)) {
+        const lineUrls = (line.match(urlRegex) || []).map(stripTrailingPunctuation);
+        if (lineUrls.includes(url)) {
           const partBefore = line.split(url)[0].trim().replace(/[:\-]+/g, "").trim();
           if (partBefore && partBefore.length < 50) {
             foundLabel = partBefore;
@@ -86,12 +109,15 @@ Google Search: https://google.com`;
     // Format output
     if (exportFormat === "markdown") {
       const markdown = linksList
-        .map((link) => `- [${link.title}](${link.url})`)
+        .map((link) => `- [${escapeMarkdownLinkText(link.title)}](${link.url})`)
         .join("\n");
       setOutputText(markdown);
     } else if (exportFormat === "html") {
       const html = `<ul>\n${linksList
-        .map((link) => `  <li><a href="${link.url}" target="_blank">${link.title}</a></li>`)
+        .map(
+          (link) =>
+            `  <li><a href="${escapeHtml(link.url)}" target="_blank">${escapeHtml(link.title)}</a></li>`,
+        )
         .join("\n")}\n</ul>`;
       setOutputText(html);
     } else if (exportFormat === "json") {
@@ -101,10 +127,20 @@ Google Search: https://google.com`;
     setSuccess(`Transpiled ${linksList.length} unique tabs successfully!`);
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(outputText);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+  const handleCopy = async () => {
+    if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 2000);
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(outputText);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 2000);
+    }
   };
 
   const handleDownload = () => {
@@ -135,12 +171,19 @@ Google Search: https://google.com`;
 
       {/* Alerts */}
       {success && (
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm flex items-center justify-between">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm flex items-center justify-between"
+        >
           <span>{success}</span>
         </div>
       )}
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm flex items-center justify-between">
+        <div
+          role="alert"
+          className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm flex items-center justify-between"
+        >
           <span>{error}</span>
         </div>
       )}
@@ -238,7 +281,7 @@ Google Search: https://google.com`;
                   className="inline-flex items-center gap-1 px-3 py-1.5 border border-(--border) hover:border-teal-500 rounded text-xs font-semibold text-teal-600 dark:text-teal-400 bg-(--page) transition-colors cursor-pointer"
                 >
                   {isCopied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
-                  {isCopied ? "Copied" : "Copy Log"}
+                  {isCopied ? "Copied" : copyFailed ? "Copy failed" : "Copy Log"}
                 </button>
                 <button
                   onClick={handleDownload}

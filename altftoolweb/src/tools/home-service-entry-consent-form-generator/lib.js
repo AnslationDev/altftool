@@ -246,7 +246,16 @@ export function buildHomeServiceEntryConsent(input = {}) {
     warnings.push("With zero notice required, either side can cancel on the doorstep. Most trades expect a working day's notice both ways.");
   }
   if (labour.billedMinutes > jobMinutes) {
-    warnings.push(`The quote bills ${labour.billedMinutes} minutes for a ${Math.round(jobMinutes)}-minute job because of the minimum charge and the ${incrementMinutes}-minute rounding block.`);
+    const roundedOnly = Math.ceil(jobMinutes / incrementMinutes) * incrementMinutes;
+    const minimumApplied = labour.billedMinutes > roundedOnly;
+    const roundingApplied = roundedOnly > jobMinutes;
+    const reasons = [
+      minimumApplied && "the minimum charge",
+      roundingApplied && `the ${incrementMinutes}-minute rounding block`,
+    ]
+      .filter(Boolean)
+      .join(" and ");
+    warnings.push(`The quote bills ${labour.billedMinutes} minutes for a ${Math.round(jobMinutes)}-minute job because of ${reasons}.`);
   }
 
   const sections = [

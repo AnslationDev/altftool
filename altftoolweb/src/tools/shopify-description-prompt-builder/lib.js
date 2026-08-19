@@ -207,6 +207,9 @@ export function buildShopifyPrompt({
   if (handle.truncated) {
     warnings.push(`The URL handle was truncated to ${HANDLE_MAX_CHARS} characters.`);
   }
+  if (!handle.handle) {
+    warnings.push("The product title didn't produce any URL-safe characters — you'll need to set the handle manually in Shopify.");
+  }
 
   const blocks = [
     section("ROLE", [
@@ -214,9 +217,9 @@ export function buildShopifyPrompt({
     ]),
     section("PRODUCT", [
       `Title: ${title}`,
-      brand ? `Brand: ${brand.trim()}` : "",
-      collection ? `Collection: ${String(collection).trim()}` : "",
-      buyer ? `Buyer: ${String(buyer).trim()}` : "",
+      String(brand).trim() ? `Brand: ${String(brand).trim()}` : "",
+      String(collection).trim() ? `Collection: ${String(collection).trim()}` : "",
+      String(buyer).trim() ? `Buyer: ${String(buyer).trim()}` : "",
       `URL handle: ${handle.handle}`,
     ]),
     section(

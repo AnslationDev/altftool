@@ -2,17 +2,18 @@
 import React, { useRef, useEffect } from "react";
 import { UserCircle } from "lucide-react";
 
-export default function VisualCanvas({ imageSrc, title, settings, processing }) {
+export default function VisualCanvas({ imageSrc, title, settings, processing, onImageError }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (!imageSrc) return;
+    if (!imageSrc) return undefined;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return undefined;
     const ctx = canvas.getContext("2d");
     const img = new Image();
-    img.src = imageSrc;
+    let cancelled = false;
     img.onload = () => {
+      if (cancelled) return;
       // Fit image into canvas container
       const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
       const x = (canvas.width - img.width * scale) / 2;
@@ -34,11 +35,6 @@ export default function VisualCanvas({ imageSrc, title, settings, processing }) 
         ctx.strokeStyle = "#14B8A6"; // Teal Box
         ctx.lineWidth = 3;
         ctx.strokeRect(centerX - faceW / 2, centerY - faceH / 2, faceW, faceH);
-
-        // Draw corner brackets
-        ctx.fillStyle = "#14B8A6";
-        ctx.font = "bold 10px monospace";
-        ctx.fillText("BIOMETRIC ALIGNED [99%]", centerX - faceW / 2, centerY - faceH / 2 - 8);
       }
 
       // 2. Draw Facial Landmarks (Eyes, Nose, Mouth, Eyebrows)
@@ -99,7 +95,16 @@ export default function VisualCanvas({ imageSrc, title, settings, processing }) 
         ctx.stroke();
       }
     };
-  }, [imageSrc, settings, processing]);
+    img.onerror = () => {
+      if (cancelled) return;
+      if (onImageError) onImageError();
+    };
+    img.src = imageSrc;
+
+    return () => {
+      cancelled = true;
+    };
+  }, [imageSrc, settings, processing, onImageError]);
 
   return (
     <div className="bg-(--surface) border border-(--border) p-5 rounded-2xl shadow-lg flex flex-col items-center relative overflow-hidden backdrop-blur-md bg-opacity-80">

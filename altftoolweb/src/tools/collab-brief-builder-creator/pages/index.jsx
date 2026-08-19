@@ -524,7 +524,12 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -606,7 +611,12 @@ export default function ToolHome() {
       </section>
 
       {!hasError && brief.warnings.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">Before you send this</h2>
           <ul className="mt-3 space-y-2">
             {brief.warnings.map((warning) => (

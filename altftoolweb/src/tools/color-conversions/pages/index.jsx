@@ -244,6 +244,32 @@ function isValidColor(str) {
   return false;
 }
 
+// Format-aware validation: checks the string against the wrapper syntax for
+// the SPECIFIC field being edited, instead of sniffing the format from the
+// string's own shape. This stops a bare digit string typed into a non-hex
+// field (e.g. "500" in the HSV field) from being silently reinterpreted as
+// a HEX color just because it happens to match the hex character class.
+function isValidColorForFormat(str, formatId) {
+  if (!str || !str.trim()) return false;
+  const s = str.trim();
+  switch (formatId) {
+    case "hex":
+      return /^#?[0-9a-fA-F]{3,8}$/.test(s) && parseHex(s) !== null;
+    case "rgb":
+    case "rgba":
+      return /^rgba?\(/i.test(s) && parseRgb(s) !== null;
+    case "hsl":
+    case "hsla":
+      return /^hsla?\(/i.test(s) && parseHsl(s) !== null;
+    case "hsv":
+      return /^hsv\(/i.test(s) && parseHsv(s) !== null;
+    case "cmyk":
+      return /^cmyk\(/i.test(s) && parseCmyk(s) !== null;
+    default:
+      return false;
+  }
+}
+
 function autoParse(str) {
   if (!str || !str.trim()) return null;
   const s = str.trim();
@@ -349,6 +375,7 @@ function SwatchPreview({ r, g, b, a }) {
           style={{ backgroundColor: textColor === "#000000" ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.65)", color: textColor }}
         >
           {hex}
+          {colorName && <span className="mt-0.5 block text-xs font-semibold opacity-80">{colorName}</span>}
         </div>
       </div>
 
@@ -413,6 +440,7 @@ function FormatCard({ format, r, g, b, a, activeId, onEdit, copiedId, onCopy }) 
         type="text"
         value={value}
         onChange={(e) => onEdit(e.target.value, format.id)}
+        aria-label={`${format.label} color value`}
         className={`h-10 w-full rounded-lg border bg-[var(--background)] px-3 font-mono text-sm outline-none transition-colors focus:shadow-[var(--anslation-ds-focus-ring)] ${
           isActive
             ? "border-[var(--primary)]"
@@ -446,6 +474,7 @@ export default function ToolHome() {
   const [input, setInput] = useState("#14B8A6");
   const [activeFormat, setActiveFormat] = useState("hex");
   const [copiedId, setCopiedId] = useState(null);
+  const [formatError, setFormatError] = useState(null);
 
   // Decoded RGB/A states representing parsed model
   const [r, setR] = useState(20);
@@ -496,12 +525,17 @@ export default function ToolHome() {
 
   const handleEdit = useCallback((val, formatId) => {
     setActiveFormat(formatId);
-    if (isValidColor(val)) {
+    if (!val || !val.trim()) {
+      setFormatError(null);
+      return;
+    }
+    if (isValidColorForFormat(val, formatId)) {
+      setFormatError(null);
       setInput(val);
     } else {
-      if (!val || !val.trim()) return;
-      const p = autoParse(val);
-      if (p) setInput(val);
+      // Invalid for the format the user is actually editing — do not fall
+      // through and reinterpret it as a different format (e.g. hex).
+      setFormatError(val);
     }
   }, []);
 
@@ -513,6 +547,7 @@ export default function ToolHome() {
   const handleReset = useCallback(() => {
     setInput("#14B8A6");
     setActiveFormat("hex");
+    setFormatError(null);
   }, []);
 
   return (
@@ -556,6 +591,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="255" value={r}
                   onChange={(e) => updateFromRGB(Number(e.target.value), g, b)}
+                  aria-label="Red"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-red-500"
                 />
               </div>
@@ -568,6 +604,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="255" value={g}
                   onChange={(e) => updateFromRGB(r, Number(e.target.value), b)}
+                  aria-label="Green"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-green-500"
                 />
               </div>
@@ -580,6 +617,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="255" value={b}
                   onChange={(e) => updateFromRGB(r, g, Number(e.target.value))}
+                  aria-label="Blue"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-blue-500"
                 />
               </div>
@@ -597,6 +635,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="360" value={hslValues.h}
                   onChange={(e) => updateFromHSL(Number(e.target.value), hslValues.s, hslValues.l)}
+                  aria-label="Hue"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-teal-500"
                 />
               </div>
@@ -609,6 +648,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="100" value={hslValues.s}
                   onChange={(e) => updateFromHSL(hslValues.h, Number(e.target.value), hslValues.l)}
+                  aria-label="Saturation"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-teal-500"
                 />
               </div>
@@ -621,6 +661,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="100" value={hslValues.l}
                   onChange={(e) => updateFromHSL(hslValues.h, hslValues.s, Number(e.target.value))}
+                  aria-label="Lightness"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-teal-500"
                 />
               </div>
@@ -633,6 +674,7 @@ export default function ToolHome() {
                 <input
                   type="range" min="0" max="1" step="0.01" value={a}
                   onChange={(e) => updateFromRGB(r, g, b, Number(e.target.value))}
+                  aria-label="Alpha / Opacity"
                   className="w-full h-1 bg-(--border) rounded-lg appearance-none cursor-pointer accent-teal-500"
                 />
               </div>
@@ -642,10 +684,13 @@ export default function ToolHome() {
         </section>
 
         {/* Input parse error alert */}
-        {!parsed && input && (
-          <section className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
+        {((!parsed && input) || formatError) && (
+          <section
+            role="alert"
+            className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]"
+          >
             <p className="text-center text-sm font-medium text-[var(--anslation-ds-danger,#EF4444)]">
-              Could not parse &ldquo;{input}&rdquo;. Try a format like #FF0000, rgb(255, 0, 0), hsl(0, 100%, 50%), or hsv(0, 100%, 100%).
+              Could not parse &ldquo;{formatError ?? input}&rdquo;. Try a format like #FF0000, rgb(255, 0, 0), hsl(0, 100%, 50%), or hsv(0, 100%, 100%).
             </p>
           </section>
         )}

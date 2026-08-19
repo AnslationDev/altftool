@@ -27,11 +27,6 @@ const Description = () => {
       description:
         "Instantly see updates while editing to ensure your flow works exactly as planned.",
     },
-    {
-      title: "Download & Share",
-      description:
-        "Export your completed flowchart as a PDF and share it with your team or clients easily.",
-    },
   ];
 
   return (

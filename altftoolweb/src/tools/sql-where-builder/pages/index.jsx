@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Database, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { CONNECTORS, DIALECTS, OPERATORS, VALUE_TYPES, buildWhereClause } from "../lib";
@@ -51,6 +51,13 @@ export default function ToolHome() {
   const [table, setTable] = useState(DEFAULT_TABLE);
   const [conditions, setConditions] = useState(DEFAULT_CONDITIONS);
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => buildWhereClause({ conditions, dialectId, table }),
@@ -73,7 +80,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
@@ -316,7 +324,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               WHERE clause
             </p>
-            <p className="mt-2 overflow-x-auto font-mono text-lg leading-7 font-semibold text-[var(--primary)]">
+            <p
+              className="mt-2 overflow-x-auto font-mono text-lg leading-7 font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? DASH : result.whereClause}
             </p>
           </div>
@@ -377,7 +389,11 @@ export default function ToolHome() {
                 {copied === "sql" ? "Copied!" : "Copy"}
               </button>
             </div>
-            <pre className="mt-3 overflow-x-auto rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5">
+            <pre
+              className="mt-3 overflow-x-auto rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {result.sql}
             </pre>
           </div>
@@ -399,11 +415,19 @@ export default function ToolHome() {
                 {copied === "param" ? "Copied!" : "Copy"}
               </button>
             </div>
-            <pre className="mt-3 overflow-x-auto rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5">
+            <pre
+              className="mt-3 overflow-x-auto rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {result.parameterisedClause}
             </pre>
             <p className="mt-3 text-xs font-semibold text-[var(--muted-foreground)]">Parameters</p>
-            <pre className="mt-1 overflow-x-auto rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5">
+            <pre
+              className="mt-1 overflow-x-auto rounded-md bg-[var(--muted)] p-3 font-mono text-xs leading-5"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {JSON.stringify(result.params)}
             </pre>
           </div>

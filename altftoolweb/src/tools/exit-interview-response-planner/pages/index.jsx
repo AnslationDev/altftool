@@ -180,7 +180,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -273,7 +277,7 @@ export default function ToolHome() {
             {plan.error}
           </p>
         ) : (
-          <div className="mt-4 grid gap-4">
+          <div aria-live="polite" aria-atomic="true" className="mt-4 grid gap-4">
             {plan.answers.map((entry) => (
               <div key={entry.id} className="rounded-md border border-[var(--border)] p-4">
                 <p className="text-sm font-semibold">{entry.question}</p>

@@ -277,6 +277,15 @@ export function computeArrivalPlan({
   if (terminalLeadMinutes === processLeadMinutes && processLeadMinutes >= checkInLeadMinutes) {
     governedBy = "your own queue, walking and buffer estimates";
   }
+  // NOTE: with the current JOURNEY_TYPES constants, checkInLeadMinutes (55 for
+  // domestic, 70 for international - see checkInClosesMinutes + TERMINAL_ENTRY_MINUTES
+  // + COUNTER_JOIN_MARGIN_MINUTES above) is always smaller than recommendedLeadMinutes
+  // (120 / 180), so this branch cannot currently fire: the bag-drop cut-off always
+  // falls comfortably inside the airport's advised reporting time. It is kept as a
+  // genuine safety check (a future constants tweak, or an airline with a much
+  // longer bag-drop cut-off, could make it binding) rather than deleted, but the
+  // seo.js copy has been corrected to describe today's actual behaviour instead of
+  // claiming this branch is the usual outcome.
   if (
     terminalLeadMinutes === checkInLeadMinutes &&
     checkInLeadMinutes > processLeadMinutes &&
@@ -360,6 +369,8 @@ export function computeArrivalPlan({
     gateCloseMinutes,
     leaveByDayOffset: dayOffset(leaveByMinutes),
     arriveTerminalDayOffset: dayOffset(arriveTerminalMinutes),
+    checkInCloseDayOffset: dayOffset(checkInCloseMinutes),
+    gateCloseDayOffset: dayOffset(gateCloseMinutes),
     steps,
     warnings,
   };

@@ -13,6 +13,13 @@ const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 const money = (value) => INR.format(Number.isFinite(value) ? value : 0);
 const pct = (value) => `${NUM.format(Number.isFinite(value) ? value : 0)}%`;
 
+/** Formats effectiveAnnualRate()'s result, including its null/Infinity sentinels. */
+const formatApr = (value) => {
+  if (value === null) return "Undefined - fees and insurance exceed the amount you'd receive";
+  if (!Number.isFinite(value) || value >= 1000000) return "Extremely high - over 1,000,000% per year";
+  return pct(value);
+};
+
 const DEFAULTS = {
   amount: 500000,
   rate: 13,
@@ -47,16 +54,33 @@ export function computeEmi(principal, annualRate, months) {
 /**
  * Effective annual cost: the rate at which the EMI stream discounts back to the
  * cash actually received (loan minus fees deducted upfront). Solved by bisection.
+ *
+ * Returns:
+ *  - a finite percentage for a normal, well-defined cost
+ *  - `null` when fees + insurance meet or exceed the loan amount, so there is no
+ *    positive amount disbursed to discount the EMI stream against (cost is undefined,
+ *    not "0%")
+ *  - `Infinity` when the true monthly rate is so far beyond any realistic bound that
+ *    it can't be bracketed even after extending the search range (saturated, not a
+ *    precise-looking but wrong plateau value)
  */
 export function effectiveAnnualRate(netDisbursed, emi, months) {
-  if (!(netDisbursed > 0) || !(emi > 0) || !(months > 0)) return 0;
+  if (!(emi > 0) || !(months > 0)) return 0;
+  if (!(netDisbursed > 0)) return null;
   if (emi * months <= netDisbursed) return 0;
   const pv = (monthlyRate) => {
     if (monthlyRate <= 0) return emi * months;
     return (emi * (1 - Math.pow(1 + monthlyRate, -months))) / monthlyRate;
   };
   let low = 0;
-  let high = 1; // 100% per month is a safe upper bound
+  let high = 1; // 100% per month starting bound
+  let expansions = 0;
+  const MAX_EXPANSIONS = 30; // doubling 30x reaches a monthly rate far past any real-world case
+  while (pv(high) > netDisbursed && expansions < MAX_EXPANSIONS) {
+    high *= 2;
+    expansions += 1;
+  }
+  if (pv(high) > netDisbursed) return Infinity;
   for (let i = 0; i < 200; i += 1) {
     const mid = (low + high) / 2;
     if (pv(mid) > netDisbursed) low = mid;
@@ -166,7 +190,7 @@ export default function ToolHome() {
       `Processing fee${gstOnFee ? " (incl. 18% GST)" : ""}: ${money(calc.fee)}`,
       `Amount credited to your account: ${money(calc.netDisbursed)}`,
       `Total cost of the loan: ${money(calc.totalCost)}`,
-      `Effective annual cost: ${pct(calc.apr)}`,
+      `Effective annual cost: ${formatApr(calc.apr)}`,
     ].join("\n");
   }, [calc, rate, gstOnFee]);
 
@@ -326,7 +350,11 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            aria-live="polite"
+            role="status"
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -374,7 +402,7 @@ export default function ToolHome() {
                 ["Insurance / other upfront charges", money(calc.insurance)],
                 ["Net amount credited to you", money(calc.netDisbursed)],
                 ["Total cost of borrowing (interest + charges)", money(calc.totalCost)],
-                ["Effective annual cost of the loan", pct(calc.apr)],
+                ["Effective annual cost of the loan", formatApr(calc.apr)],
               ].map(([label, value]) => (
                 <div key={label} className="flex items-center justify-between gap-4 py-2.5">
                   <dt className="text-[var(--muted-foreground)]">{label}</dt>

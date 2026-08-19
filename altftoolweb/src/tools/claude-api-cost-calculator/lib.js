@@ -9,9 +9,11 @@
  *  - Message Batches API: 50% of standard prices.
  *
  * Preset rates below are Anthropic's published first-party API prices (mid-2026):
- * Opus-tier $5/$25, Sonnet-tier $3/$15 (Sonnet 5 launched with an introductory
- * $2/$10 rate), Haiku 4.5 $1/$5. Prices change with model releases, so every
- * preset is editable in the UI.
+ * Opus-tier $5/$25, Sonnet-tier $3/$15 (Claude Sonnet 5 is on an introductory
+ * $2/$10 rate through 2026-08-31, then reverts to $3/$15), Haiku 4.5 $1/$5.
+ * Prices change with model releases, so every preset is editable in the UI —
+ * keep the claude-sonnet-5 preset and the seo.js FAQ pricing answer in sync
+ * with this comment when the intro period ends.
  *
  * Pure arithmetic on the supplied rates.
  */
@@ -37,7 +39,7 @@ export const DAYS_PER_MONTH = 30;
 export const CLAUDE_MODELS = [
   { id: "claude-opus-5", label: "Claude Opus 5", input: 5.0, output: 25.0 },
   { id: "claude-opus-4-8", label: "Claude Opus 4.8", input: 5.0, output: 25.0 },
-  { id: "claude-sonnet-5", label: "Claude Sonnet 5", input: 3.0, output: 15.0 },
+  { id: "claude-sonnet-5", label: "Claude Sonnet 5", input: 2.0, output: 10.0 },
   { id: "claude-sonnet-4-6", label: "Claude Sonnet 4.6", input: 3.0, output: 15.0 },
   { id: "claude-haiku-4-5", label: "Claude Haiku 4.5", input: 1.0, output: 5.0 },
   { id: "custom", label: "Custom rates…", input: 3.0, output: 15.0 },

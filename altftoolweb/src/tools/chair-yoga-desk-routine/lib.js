@@ -1,11 +1,12 @@
 /**
  * Chair yoga routine builder for desk breaks.
  *
- * Hold lengths follow the usual static-stretch guidance of roughly 20-30 seconds
- * per position, held to mild tension rather than pain, which is the range the
- * ACSM flexibility recommendation for adults uses (10-30 seconds, 2-3 times a
- * week or more). The eye break uses the 20-20-20 rule: every 20 minutes look at
- * something about 20 feet (6 m) away for 20 seconds.
+ * Base hold lengths across the pose library run roughly 20-45 seconds per
+ * position, held to mild tension rather than pain, in line with the ACSM
+ * flexibility recommendation for adults (10-30 seconds, 2-3 times a week or
+ * more); holds can then grow up to 60 seconds (see MAX_HOLD_SECONDS) to fill
+ * a longer break. The eye break uses the 20-20-20 rule: every 20 minutes look
+ * at something about 20 feet (6 m) away for 20 seconds.
  *
  * Informational movement guidance, not physiotherapy.
  */

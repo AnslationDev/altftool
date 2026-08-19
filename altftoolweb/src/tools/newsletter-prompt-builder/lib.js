@@ -143,7 +143,7 @@ export function planNewsletter({ totalWords, itemCount, cadenceId } = {}) {
   const warnings = [];
   if (perItem < MIN_ITEM_WORDS) {
     warnings.push(
-      `Each item gets only ${Math.round(perItem)} words — below about ${MIN_ITEM_WORDS} an item is just a link. Use fewer items or a longer email.`,
+      `Each item gets only ${Math.floor(perItem)} words — below about ${MIN_ITEM_WORDS} an item is just a link. Use fewer items or a longer email.`,
     );
   }
   if (total > cadence.recommendedMaxWords) {

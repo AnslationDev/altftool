@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import { Check, ClipboardList, Copy, RotateCcw } from "lucide-react";
 
 import {
+  CASHLESS_DISCHARGE_HOURS,
+  CASHLESS_PREAUTH_HOURS,
   CLAIM_SCENARIOS,
   CONDITION_LABELS,
   SECTION_45_YEARS,
@@ -62,7 +64,11 @@ export default function ToolHome() {
       `Intimation: ${checklist.intimation}`,
     ];
     if (deadline && !deadline.error) {
-      lines.push(`Last document submitted ${deadline.submitted} — settlement due by ${deadline.deadline} (${deadline.basis}).`);
+      lines.push(
+        deadline.deadline
+          ? `Last document submitted ${deadline.submitted} — settlement due by ${deadline.deadline} (${deadline.basis}).`
+          : deadline.basis,
+      );
     }
     return lines.join("\n");
   }, [ok, checklist, items, ticked, scenarioId, deadline]);
@@ -79,6 +85,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (doneCount > 0 && !window.confirm("Reset the checklist? This clears every document you've ticked off.")) {
+      return;
+    }
     setScenarioId(DEFAULT_SCENARIO);
     setConditions({ prePost: true });
     setSubmitted("");
@@ -216,7 +225,7 @@ export default function ToolHome() {
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
               {ok ? checklist.total : DASH}
             </p>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            <p className="mt-1 text-sm text-[var(--muted-foreground)]" aria-live="polite">
               {ok
                 ? `${checklist.baseCount} always needed · ${checklist.extraCount} extra for your situation · ${doneCount} ticked off`
                 : "Choose a claim type to build the list."}
@@ -255,15 +264,17 @@ export default function ToolHome() {
           />
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["When to intimate the claim", ok ? checklist.intimation : DASH],
             [
               "Settlement deadline for the insurer",
               deadline && !deadline.error
-                ? `${deadline.deadline} (${deadline.basis})`
+                ? (deadline.deadline ? `${deadline.deadline} (${deadline.basis})` : deadline.basis)
                 : ok
-                  ? `${checklist.settlementDays} days from the last document — add a date above for the exact day`
+                  ? (checklist.settlementDays != null
+                      ? `${checklist.settlementDays} days from the last document — add a date above for the exact day`
+                      : `Decided within ${CASHLESS_PREAUTH_HOURS} hour (pre-authorisation) or ${CASHLESS_DISCHARGE_HOURS} hours (final discharge) — not a day-based deadline`)
                   : DASH,
             ],
           ].map(([label, value]) => (

@@ -294,6 +294,11 @@ export default function ToolHome() {
                 ? "Fix the input above to see the plan."
                 : `${plan.pagesPerSet} pages a set, ${plan.sets} ${plan.sets === 1 ? "set" : "sets"}, about ${money(plan.cost)} at the shop.`}
             </p>
+            <div aria-live="polite" aria-atomic="true" className="sr-only">
+              {hasError
+                ? errorMessage
+                : `${plan.totalPages} photocopies to make, about ${money(plan.cost)}, ${readiness.percent} percent of documents ready.`}
+            </div>
           </div>
           <div className="flex flex-wrap gap-2">
             <button

@@ -10,6 +10,11 @@ export default function VisualEnvironment({ soundsState, timeOfDay }) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     let animationFrameId;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
@@ -838,7 +843,9 @@ export default function VisualEnvironment({ soundsState, timeOfDay }) {
         ctx.fillRect(0, height * 0.5 - 5, width, 10);
       }
 
-      animationFrameId = requestAnimationFrame(draw);
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(draw);
+      }
     };
 
     draw();

@@ -30,6 +30,14 @@ function findEscapeCharacter(lines) {
   return "\\";
 }
 
+/**
+ * A BuildKit heredoc opener at the end of a completed instruction line, e.g. the
+ * trailing `<<EOF`, `<<-EOF`, or `<<~"EOF"` in `RUN <<EOF`. Captures the terminator word.
+ */
+const HEREDOC_OPENER = /<<-?~?\s*(['"]?)([A-Za-z_]\w*)\1\s*$/;
+/** Only these instructions take a BuildKit heredoc body. */
+const HEREDOC_KEYWORDS = /^(?:RUN|COPY|ADD)\b/i;
+
 function toLogicalInstructions(input) {
   const physicalLines = input.replace(/\r\n?/g, "\n").split("\n");
   if (physicalLines.length > DOCKERFILE_LIMITS.maxPhysicalLines) {
@@ -41,12 +49,15 @@ function toLogicalInstructions(input) {
   const instructions = [];
   let buffer = "";
   let startLine = 0;
+  let index = 0;
 
-  physicalLines.forEach((rawLine, index) => {
+  while (index < physicalLines.length) {
+    const rawLine = physicalLines[index];
     const lineNumber = index + 1;
+    index += 1;
     const trimmed = rawLine.trim();
-    if (!buffer && (!trimmed || trimmed.startsWith("#"))) return;
-    if (buffer && (!trimmed || trimmed.startsWith("#"))) return;
+    if (!buffer && (!trimmed || trimmed.startsWith("#"))) continue;
+    if (buffer && (!trimmed || trimmed.startsWith("#"))) continue;
     if (!buffer) startLine = lineNumber;
 
     const trailingPattern =
@@ -58,6 +69,38 @@ function toLogicalInstructions(input) {
     buffer += `${buffer ? " " : ""}${fragment.trim()}`;
 
     if (!continues) {
+      const heredocMatch = buffer.match(HEREDOC_OPENER);
+      if (heredocMatch && HEREDOC_KEYWORDS.test(buffer)) {
+        const terminator = heredocMatch[2];
+        const bodyLines = [];
+        let closed = false;
+        while (index < physicalLines.length) {
+          const bodyRaw = physicalLines[index];
+          index += 1;
+          if (bodyRaw.trim() === terminator) {
+            closed = true;
+            break;
+          }
+          bodyLines.push(bodyRaw);
+        }
+        if (!closed) {
+          // Unterminated heredoc: flag it explicitly instead of silently treating
+          // the unclosed body as scanned.
+          instructions.push({
+            keyword: "UNKNOWN",
+            argument: "",
+            line: startLine,
+            unterminated: true,
+          });
+          buffer = "";
+          continue;
+        }
+        // Fold the heredoc body into this same logical instruction's argument so the
+        // existing curl|bash and package-pin checks scan it instead of it being split
+        // into spurious top-level "instructions".
+        buffer += `\n${bodyLines.join("\n")}`;
+      }
+
       const match = buffer.match(/^([a-z]+)\s+(.*)$/is);
       if (match) {
         instructions.push({
@@ -74,7 +117,7 @@ function toLogicalInstructions(input) {
       }
       buffer = "";
     }
-  });
+  }
 
   if (buffer) {
     instructions.push({
@@ -483,6 +526,17 @@ export function analyzeDockerfile(input) {
           finalStage.number,
           "Final stage does not declare USER",
           "The runtime user depends on the base image. Confirm it explicitly and use the least privilege required by the application.",
+        ),
+      );
+    } else if (finalUser.value.includes("$")) {
+      add(
+        makeFinding(
+          "review",
+          "final-stage-user-variable",
+          finalUser.line,
+          finalStage.number,
+          "Final stage USER is supplied through a variable",
+          "Resolve the build-time value separately to confirm whether the runtime user is root or a scoped non-root account.",
         ),
       );
     } else if (

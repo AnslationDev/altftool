@@ -135,7 +135,9 @@ export function formatDate(isoDate, format) {
   const monthNum = Number(month);
   const dayNum = Number(day);
   if (monthNum < 1 || monthNum > 12) return { error: "Sample date has an impossible month." };
-  if (dayNum < 1 || dayNum > 31) return { error: "Sample date has an impossible day." };
+  // Day 0 of the following month is the last real day of this month (handles leap years).
+  const daysInMonth = new Date(Date.UTC(Number(year), monthNum, 0)).getUTCDate();
+  if (dayNum < 1 || dayNum > daysInMonth) return { error: "Sample date has an impossible day." };
   if (format === "YYYY-MM-DD") return { value: `${year}-${month}-${day}` };
   if (format === "YYYYMM") return { value: `${year}${month}` };
   if (format === "YYMMDD") return { value: `${year.slice(2)}${month}${day}` };
@@ -264,6 +266,12 @@ export function buildNamingConvention({
   }
   const primary = `${primaryBase}.${extension}`;
 
+  // Tokens that actually contributed a non-empty segment to `primary`, in the
+  // user's chosen order. The displayed pattern and "Token order" list must be
+  // built from this set (not the full `activeKeys`) or they promise a token
+  // that the example filename above them has silently dropped for being blank.
+  const primaryKeys = activeKeys.filter((key) => Boolean(resolve(key)));
+
   const folderPath = String(folder ?? "").trim();
   const validation = validateFilename(primary, { folderPathLength: folderPath ? folderPath.length + 1 : 0 });
 
@@ -273,7 +281,7 @@ export function buildNamingConvention({
     return { ...asset, filename: file, check: validateFilename(file, { folderPathLength: folderPath ? folderPath.length + 1 : 0 }) };
   }).filter((row) => row.filename);
 
-  const pattern = `${activeKeys
+  const pattern = `${primaryKeys
     .map((key) => (key === "version" ? `v{nn}` : `{${key}}`))
     .join(caseStyle === "camel" || caseStyle === "pascal" ? "" : sep)}.{ext}`;
 
@@ -299,7 +307,7 @@ export function buildNamingConvention({
     "",
     "## Token order",
     "",
-    ...activeKeys.map((key, index) => {
+    ...primaryKeys.map((key, index) => {
       const token = TOKENS.find((t) => t.key === key);
       return `${index + 1}. **${token.label}** — ${token.hint}`;
     }),

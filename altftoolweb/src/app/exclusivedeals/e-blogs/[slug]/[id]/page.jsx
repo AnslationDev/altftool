@@ -16,6 +16,21 @@ function findPost(categorySlug, postSlug) {
   );
 }
 
+// compactBrandedTitle clips whatever it is given to fit, so a heading longer
+// than 49 characters (the budget once " | AltFTool" is appended) shipped as a
+// machine-cut fragment: "…Are Using Entertainment to | AltFTool",
+// "…Changing Wellness | AltFTool". These are shorter titles for exactly those
+// posts, so the tag ends on a whole phrase. The <h1> keeps the full heading;
+// only the SERP title is condensed. Any post whose heading already fits is
+// absent here and passes through unchanged.
+const SEO_TITLES = {
+  "top-fashion-trends-online-shopping": "Fashion Trends Shaping Online Shopping",
+  "entertainment-ecommerce-growth": "How Entertainment Drives E-Commerce Sales",
+  "ecommerce-growth-hacks": "E-Commerce Growth Hacks for Online Stores",
+  "online-health-stores-wellness": "How Online Health Stores Changed Wellness",
+  "online-grocery-shopping-future": "Why Online Grocery Is the Future of Food",
+};
+
 export async function generateMetadata({ params }) {
   const { slug, id } = await params;
   const post = findPost(slug, id);
@@ -46,7 +61,7 @@ export async function generateMetadata({ params }) {
     : [`${post.category} deals`, `${post.category} shopping guide`];
 
   return createPageMetadata({
-    title: compactBrandedTitle(post.heading),
+    title: compactBrandedTitle(SEO_TITLES[post.slug] || post.heading),
     description,
     path: `/exclusivedeals/e-blogs/${slug}/${id}`,
     image: post.image,

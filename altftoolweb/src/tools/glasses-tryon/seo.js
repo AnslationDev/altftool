@@ -7,7 +7,7 @@ const seo = {
     "The Glasses Try-On tool places 20 frame styles onto a photo of your face using the face-api.js TinyFaceDetector (416px input, 0.4 score threshold) and its 68-point facial landmark model, both running on TensorFlow.js in your browser. From those landmarks it measures your eye centres and interpupillary distance — lens width is set to 0.95 × the eye distance — and estimates head pose (roll from the eye line, yaw from nose deviation, pitch from forehead-to-chin compression) so the frames rotate and foreshorten with your head instead of sitting flat on top of the image. The frames themselves are drawn as Canvas 2D vector paths on a separate layer, then feathered and composited with a soft contact shadow on the nose and cheeks. The detection models are static files served from this site, and your photo is only ever read into a local canvas — it is never uploaded to a server.",
   useCases: [
     "Compare frame shapes before ordering eyewear online — put aviator, wayfarer, cat-eye and round on the exact same photo and flip between them.",
-    "See how a frame colour and lens tint combination reads on your face: black, silver, gold, brown, white or clear frames with blue, brown, green, grey or mirrored-style lens fills.",
+    "See how a frame colour and lens tint combination reads on your face: black, silver, gold, brown, white or transparent frames with clear, black, transparent, blue, brown, green, grey or purple lens fills.",
     "Make profile pictures and social images with tinted or gradient lenses, then export at up to 4K and share straight from your phone.",
   ],
   benefits: [

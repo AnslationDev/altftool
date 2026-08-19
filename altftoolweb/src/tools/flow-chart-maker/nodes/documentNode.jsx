@@ -29,7 +29,19 @@ export function DocumentNode({ data, selected }) {
   }, [label, data]);
 
   return (
-    <div className="relative min-w-[130px] text-center" onDoubleClick={handleDoubleClick}>
+    <div
+      className="relative min-w-[130px] text-center"
+      onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      role="button"
+      aria-label="Double-click or press Enter to rename"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleDoubleClick();
+        }
+      }}
+    >
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-rose-500 !border-2 !border-white !z-10" />
       <svg viewBox="0 0 130 90" className="w-[150px] h-[95px]">
         <path

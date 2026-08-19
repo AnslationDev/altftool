@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { getToolBySlug } from "../../_lib/manifest";
 import { runTransform, getServerSample, getServerOptions } from "../../_lib/registry";
 
@@ -11,7 +12,10 @@ const MAX_TRANSFORM_INPUT_CHARS = 200_000;
 /**
  * GET /transform/api/[slug] — metadata for the shell (sample + option schema).
  */
-export async function GET(_request, { params }) {
+export async function GET(request, { params }) {
+  const limited = enforceRateLimit(NextResponse, request, { limit: 60, scope: "transform:get", windowMs: 60_000 });
+  if (limited) return limited;
+
   const { slug } = await params;
   const tool = getToolBySlug(slug);
   if (!tool) {
@@ -24,8 +28,16 @@ export async function GET(_request, { params }) {
 /**
  * POST /transform/api/[slug] — run the converter. Body: { input, options }.
  * Always returns a TransformResult ({ ok, output|error }).
+ *
+ * These converters (TS compiler, quicktype-core, graphql-codegen, svgr,
+ * JSON-LD canonicalization, ...) are CPU-intensive and unauthenticated, so
+ * this is rate-limited per IP to keep one visitor from tying up the event
+ * loop for everyone else.
  */
 export async function POST(request, { params }) {
+  const limited = enforceRateLimit(NextResponse, request, { limit: 12, scope: "transform:post", windowMs: 60_000 });
+  if (limited) return limited;
+
   const { slug } = await params;
   const tool = getToolBySlug(slug);
   if (!tool) {

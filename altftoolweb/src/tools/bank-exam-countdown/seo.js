@@ -11,7 +11,7 @@ const seo = {
     "This countdown board tracks every stage of a bank recruitment cycle — preliminary exam, main exam, interview or language test — from the dates you enter, and shows the gap between each one so the switch from prelims practice to mains preparation is planned rather than improvised. It also prices the two numbers that decide a bank result: the seconds per question a sectionally timed paper allows, and the attempts a target cutoff needs once one fourth negative marking is deducted. Stage structures are pre-filled for IBPS PO and Clerk, SBI PO and Clerk, RBI Grade B and RBI Assistant.",
   useCases: [
     "Seeing how many days sit between the IBPS PO prelims and the mains so the descriptive paper is not left to the last week",
-    "Checking that 22 planned attempts in a 30 question English section leaves 54 seconds per question rather than the 40 the paper assumes",
+    "Checking the speed budget table shows 40 seconds per question in a 30 question English section but only about 34 seconds per question in a 35 question Quantitative Aptitude section, even though both are locked to the same 20 minute clock",
     "Working out whether a 55 mark sectional cutoff is reachable at 85 percent accuracy or needs more attempts than the paper has questions",
   ],
   benefits: [

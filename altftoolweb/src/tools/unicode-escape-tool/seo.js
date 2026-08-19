@@ -6,7 +6,7 @@ const seo = {
     "Read the Result pane — ASCII stays untouched while characters above code 127 become four-hex-digit \\uXXXX escapes (emoji become surrogate pairs) — and press Copy.",
   ],
   intro:
-    "The Unicode Escape Tool converts every non-ASCII character in your text — anything above code point 127 — into a \\uXXXX escape with four lowercase hex digits, and reverses the same escapes back into readable characters. Escaping leaves plain ASCII untouched, so \"Café\" becomes \"Caf\\u00e9\" and nothing else in the string changes. It is the form JavaScript, JSON and Java source files use, so the output pastes straight into code that has to survive an ASCII-only pipeline.",
+    "The Unicode Escape Tool converts every non-ASCII character in your text — anything above code point 127 — into \\uXXXX escapes with four lowercase hex digits each, and reverses the same escapes back into readable characters. Most characters produce a single escape, but anything outside the Basic Multilingual Plane (emoji and other characters above U+FFFF) produces two, one per UTF-16 surrogate half. Escaping leaves plain ASCII untouched, so \"Café\" becomes \"Caf\\u00e9\" and nothing else in the string changes. It is the form JavaScript, JSON and Java source files use, so the output pastes straight into code that has to survive an ASCII-only pipeline.",
   useCases: [
     "A build step or legacy log system mangles accented characters, so you escape the strings in your locale file to \\uXXXX and let the runtime decode them.",
     "You received a JSON payload full of \\u00e9 and \\u2019 sequences and want to read what it actually says before deciding whether the encoding is broken.",

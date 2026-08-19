@@ -27,7 +27,7 @@ const seo = {
   faqs: [
     [
       "How long must a real estate agent keep client KYC documents?",
-      "Reporting entities under India's Prevention of Money-Laundering Act must preserve records of transactions and client identity for five years, so documents attached to a completed deal have a fixed keep-until date. Real estate agents above the notified turnover threshold fall inside that regime; documents from enquiries that never became transactions have no such duty and should be deleted once their purpose ends.",
+      "Reporting entities under India's Prevention of Money-Laundering Act must preserve records of transactions and client identity for five years, so documents attached to a completed deal have a fixed keep-until date. This calculator assumes your agency is a reporting entity and applies that duty to every completed deal; documents from enquiries that never became transactions have no such duty and should be deleted once their purpose ends.",
     ],
     [
       "Can an estate agent keep a photocopy of a client's Aadhaar card?",

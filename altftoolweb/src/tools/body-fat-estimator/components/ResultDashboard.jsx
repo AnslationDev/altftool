@@ -29,7 +29,7 @@ export default function ResultDashboard({
 
         {calculationResult.valid ? (
           <div className="mt-6 space-y-6">
-            <div className="text-center">
+            <div className="text-center" aria-live="polite" aria-atomic="true">
               <div className="text-xs text-[var(--secondary-foreground)] font-medium">Estimated Body Fat Percentage</div>
               <div className="mt-1 flex items-baseline justify-center gap-1">
                 <span className="text-5xl font-black tracking-tight text-[var(--foreground)]">
@@ -64,7 +64,7 @@ export default function ResultDashboard({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3" aria-live="polite" aria-atomic="true">
               <div className="rounded-xl bg-[var(--background)]/50 p-3 border border-[var(--card-border)] text-center">
                 <span className="text-[11px] text-[var(--secondary-foreground)] block">Fat Mass</span>
                 <span className="text-lg font-bold text-amber-400 block mt-0.5">

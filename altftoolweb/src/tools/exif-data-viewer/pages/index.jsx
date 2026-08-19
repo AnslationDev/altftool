@@ -57,6 +57,13 @@ function readValue(view, tiffStart, entryOffset, littleEndian) {
   const byteLength = (typeSizes[type] || 1) * count;
   const valueOffset = byteLength <= 4 ? entryOffset + 8 : tiffStart + view.getUint32(entryOffset + 8, littleEndian);
 
+  // `count` is read straight from file bytes and can be as large as 4294967295.
+  // Refuse to allocate/loop with it unless the declared value actually fits in
+  // the remaining buffer, otherwise a corrupted/crafted file can hang the tab.
+  if (valueOffset < 0 || valueOffset + byteLength > view.byteLength) {
+    return `Type ${type}, ${count} value(s) (malformed entry, out of range)`;
+  }
+
   if (type === 2) return readAscii(view, valueOffset, count);
   if (type === 3) {
     const values = Array.from({ length: count }, (_, index) => view.getUint16(valueOffset + index * 2, littleEndian));
@@ -78,8 +85,16 @@ function readValue(view, tiffStart, entryOffset, littleEndian) {
   return `Type ${type}, ${count} value(s)`;
 }
 
-function readIfd(view, tiffStart, offset, littleEndian, names = tagNames) {
+const MAX_IFD_DEPTH = 10;
+
+function readIfd(view, tiffStart, offset, littleEndian, names = tagNames, visited = new Set(), depth = 0) {
   const rows = [];
+
+  // Guard against a self-referential or overly deep chain of GPS/Exif SubIFD
+  // pointers (0x8825 / 0x8769) recursing forever on a crafted file.
+  if (depth > MAX_IFD_DEPTH || visited.has(offset)) return rows;
+  visited.add(offset);
+
   const entries = view.getUint16(tiffStart + offset, littleEndian);
 
   for (let index = 0; index < entries; index += 1) {
@@ -90,11 +105,11 @@ function readIfd(view, tiffStart, offset, littleEndian, names = tagNames) {
     rows.push({ tag, name, value });
 
     if (tag === 0x8825 && Number.isFinite(Number(value))) {
-      rows.push(...readIfd(view, tiffStart, Number(value), littleEndian, gpsTagNames));
+      rows.push(...readIfd(view, tiffStart, Number(value), littleEndian, gpsTagNames, visited, depth + 1));
     }
 
     if (tag === 0x8769 && Number.isFinite(Number(value))) {
-      rows.push(...readIfd(view, tiffStart, Number(value), littleEndian, tagNames));
+      rows.push(...readIfd(view, tiffStart, Number(value), littleEndian, tagNames, visited, depth + 1));
     }
   }
 
@@ -138,6 +153,7 @@ export default function ToolHome() {
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
   const previewUrlRef = useRef("");
+  const requestIdRef = useRef(0);
 
   const importantRows = useMemo(
     () => rows.filter((row) => ["Camera make", "Camera model", "Original date", "ISO speed", "F-number", "Focal length"].includes(row.name)),
@@ -152,6 +168,8 @@ export default function ToolHome() {
 
   const handleFile = async (file) => {
     if (!file) return;
+    const requestId = (requestIdRef.current += 1);
+
     setFileInfo({ name: file.name, size: file.size, type: file.type || "Unknown" });
     setRows([]);
     setError("");
@@ -163,8 +181,11 @@ export default function ToolHome() {
 
     try {
       const buffer = await file.arrayBuffer();
-      setRows(parseExif(buffer));
+      const parsedRows = parseExif(buffer);
+      if (requestIdRef.current !== requestId) return;
+      setRows(parsedRows);
     } catch (parseError) {
+      if (requestIdRef.current !== requestId) return;
       setError(parseError.message);
     }
   };
@@ -189,7 +210,7 @@ export default function ToolHome() {
               <UploadCloud className="h-10 w-10 text-[var(--primary)]" />
               <span className="mt-3 text-sm font-semibold">Upload JPEG image</span>
               <span className="mt-1 text-xs text-[var(--muted-foreground)]">Metadata is parsed in your browser</span>
-              <input type="file" accept="image/jpeg,image/jpg" className="hidden" onChange={(event) => handleFile(event.target.files?.[0])} />
+              <input type="file" accept="image/jpeg,image/jpg" className="sr-only" onChange={(event) => handleFile(event.target.files?.[0])} />
             </label>
 
             {preview && (
@@ -219,7 +240,7 @@ export default function ToolHome() {
 
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             {error ? (
-              <p className="rounded-lg bg-amber-50 p-4 text-sm text-amber-800 dark:bg-amber-950/30 dark:text-amber-200">{error}</p>
+              <p role="alert" className="rounded-lg bg-amber-50 p-4 text-sm text-amber-800 dark:bg-amber-950/30 dark:text-amber-200">{error}</p>
             ) : null}
 
             {importantRows.length ? (

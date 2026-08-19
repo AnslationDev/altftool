@@ -230,7 +230,7 @@ export function assessMonsoonReadiness({
     wet,
     extraMetres,
     extraPercent,
-    treadRemainingPct: Math.max(0, treadRemainingPct),
+    treadRemainingPct: Math.min(100, Math.max(0, treadRemainingPct)),
     legalTread,
     aquaplaneKmh,
     aquaplaneMargin,

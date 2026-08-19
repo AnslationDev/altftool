@@ -87,7 +87,7 @@ export default function ToolHome() {
       `Overhead ${overhead}%, utilisation ${utilisation}%`,
       `Effective throughput: ${NUM2.format(result.effectiveMbps)} Mbps (${NUM2.format(result.effectiveMBps)} MB/s)`,
       `Estimated upload time: ${formatDuration(result.seconds)} (${NUM0.format(result.seconds)} seconds)`,
-      `Best case with zero overhead: ${formatDuration(result.theoreticalSeconds)}`,
+      `Best case at full line rate: ${formatDuration(result.theoreticalSeconds)}`,
     ].join("\n");
   }, [result, size, sizeUnit, speed, speedUnit, overhead, utilisation]);
 
@@ -254,7 +254,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

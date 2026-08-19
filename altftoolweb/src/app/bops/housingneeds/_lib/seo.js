@@ -3,6 +3,7 @@ import { getHnCategory } from "@/app/bops/housingneeds/_data/categories";
 import { HN_BASE, HN_BRAND, hnVerticalUrl } from "../_data/site";
 import {
   absoluteUrl,
+  createArticleJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
@@ -60,6 +61,47 @@ export function buildServiceMetadata(categorySlug, pageSlug) {
     follow: true,
     pageType: "business-ops-preview",
   });
+}
+
+/**
+ * Article JSON-LD for a vertical guide.
+ *
+ * These pages are long-form editorial guides, so Article is the honest type.
+ * Three deliberate omissions:
+ *
+ *   - No datePublished / dateModified. The content files carry no authored
+ *     date, and stamping the build time would be a fabricated freshness
+ *     signal. Add real dates to _data/verticals/*.js and pass them through
+ *     here if the content ever gains an editorial calendar.
+ *   - No named author. There is no real byline in the data, so authorship
+ *     stays with the AltFTool Organization entity (createArticleJsonLd's
+ *     default) rather than inventing a person.
+ *   - No image beyond the site default. The hero photos are remote URLs that
+ *     absoluteUrl() would mangle, and a wrong image URL is worse than none.
+ *
+ * publisher resolves by @id to the single site-wide Organization node, so the
+ * guide attaches to the same entity as every other page.
+ */
+export function buildArticleJsonLd(slug) {
+  const vertical = getVertical(slug);
+  if (!vertical) return null;
+
+  const article = createArticleJsonLd({
+    path: hnVerticalUrl(vertical.slug),
+    headline: vertical.seo.title,
+    description: vertical.seo.description,
+  });
+  if (!article) return null;
+
+  return {
+    ...article,
+    // The same self-contained paragraph the page renders under its h1.
+    abstract: vertical.answer || undefined,
+    about: { "@type": "Thing", name: vertical.name },
+    articleSection: `${HN_BRAND} guides`,
+    inLanguage: "en",
+    isAccessibleForFree: true,
+  };
 }
 
 /**

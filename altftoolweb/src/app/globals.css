@@ -53,6 +53,7 @@ html[data-theme="light"] {
   --danger-text: var(--anslation-ds-danger-text);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
+  --danger-text: var(--anslation-ds-danger-text);
   --success: var(--anslation-ds-success);
   --success-soft: var(--anslation-ds-success-soft);
   --success-text: var(--anslation-ds-success-text);
@@ -112,6 +113,7 @@ html[data-theme="dark"] {
   --danger-text: var(--anslation-ds-danger-text);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
+  --danger-text: var(--anslation-ds-danger-text);
   --success: var(--anslation-ds-success);
   --success-soft: var(--anslation-ds-success-soft);
   --success-text: var(--anslation-ds-success-text);

@@ -55,7 +55,7 @@ const seo = {
     ],
     [
       "What do the four toggles actually do?",
-      "Show Facial Landmarks and Show Face Boxes draw the cyan markers and teal alignment box over each photo at standard face proportions — they are a positioning guide, not detected features. Auto Compare re-runs the comparison as soon as the second photo loads, and High Accuracy Mode is a display preference that does not change the reported percentage.",
+      "Show Facial Landmarks and Show Face Boxes draw the cyan markers and teal alignment box over each photo at standard face proportions — they are a positioning guide, not detected features. Auto Compare re-runs the comparison as soon as the second photo loads. High Accuracy Mode is not currently wired to any visible effect — toggling it does not change the reported percentage, the overlays, or anything else on screen.",
     ],
     [
       "Does it work on a phone?",

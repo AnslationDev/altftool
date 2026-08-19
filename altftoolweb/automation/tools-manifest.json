@@ -4568,7 +4568,7 @@
     },
     {
       "slug": "gzip-encryption",
-      "name": "Gzip Encryption & Decryption",
+      "name": "Gzip Compression & Decompression",
       "category": [
         "Developer Tools"
       ],

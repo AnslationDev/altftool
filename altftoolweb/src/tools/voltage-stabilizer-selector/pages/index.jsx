@@ -250,14 +250,16 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Buy this stabilizer
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {ok ? `${NUM1.format(result.recommendedKva)} kVA` : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
-                ? result.chosenRange
-                  ? `Working range ${result.chosenRange.label}`
-                  : "No standard domestic working range covers your voltage swing."
+                ? result.oversizedRequirement
+                  ? `Exceeds the ${NUM.format(result.recommendedVa)} VA domestic ceiling — use a commercial/industrial unit.`
+                  : result.chosenRange
+                    ? `Working range ${result.chosenRange.label}`
+                    : "No standard domestic working range covers your voltage swing."
                 : "Fix the inputs above to see a result."}
             </p>
           </div>
@@ -288,7 +290,10 @@ export default function ToolHome() {
             ["Load in VA (watts / power factor)", ok ? `${NUM.format(result.loadVa)} VA` : DASH],
             ["Required capacity with margin", ok ? `${NUM.format(result.requiredVa)} VA` : DASH],
             ["Standard size chosen", ok ? `${NUM.format(result.recommendedVa)} VA` : DASH],
-            ["Spare capacity", ok ? `${NUM1.format(result.headroomPct)}%` : DASH],
+            [
+              ok && result.oversizedRequirement ? "Shortfall" : "Spare capacity",
+              ok ? `${NUM1.format(result.headroomPct)}%` : DASH,
+            ],
             [
               `Output current at ${NOMINAL_VOLTAGE} V`,
               ok ? `${NUM2.format(result.outputCurrent)} A` : DASH,
@@ -310,7 +315,13 @@ export default function ToolHome() {
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
-              <dd className="text-right font-semibold">{value}</dd>
+              <dd
+                className={`text-right font-semibold ${
+                  ok && result.oversizedRequirement && label === "Shortfall" ? "text-[var(--danger)]" : ""
+                }`}
+              >
+                {value}
+              </dd>
             </div>
           ))}
         </dl>

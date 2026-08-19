@@ -212,7 +212,7 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
             <button onClick={() => setWatching((w) => !w)} className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs" style={watching ? { color: "var(--tdn-amber)", borderColor: "color-mix(in srgb, var(--tdn-amber) 40%, transparent)" } : undefined} aria-label={watching ? "Remove from watchlist" : "Add to watchlist"}>
               <Star size={14} fill={watching ? "var(--tdn-amber)" : "none"} /> <span className="hidden sm:inline">{watching ? "Watching" : "Watchlist"}</span>
             </button>
-            <a href="#prediction" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Gauge size={14} /> <span className="hidden sm:inline">Signal model</span></a>
+            <a href="#predictions" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Gauge size={14} /> <span className="hidden sm:inline">Signal model</span></a>
           </div>
         </div>
       </div>
@@ -297,7 +297,7 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
           </section>
 
           {/* PREDICTION & ANALYSIS */}
-          <section id="prediction" className="tdn-card p-4">
+          <section id="predictions" className="tdn-card p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="flex items-center gap-2 text-sm font-bold" style={{ color: "var(--tdn-fg-strong)" }}><Gauge size={15} style={{ color: "var(--tdn-iris-2)" }} /> Prediction &amp; Analysis</span>
               <span className="text-xs font-bold px-2.5 py-1 rounded-lg" style={{ color: SIGNAL_COLOR[p.signal], background: `color-mix(in srgb, ${SIGNAL_COLOR[p.signal]} 14%, transparent)` }}>{p.signal} · {p.confidence}% confidence</span>

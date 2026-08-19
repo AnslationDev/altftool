@@ -254,6 +254,15 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Restart
             </button>
+            <button
+              type="button"
+              onClick={reset}
+              aria-label="Reset pattern, count length and session length to defaults"
+              className={GHOST_BTN}
+            >
+              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+              Reset
+            </button>
           </div>
         </div>
 
@@ -330,6 +339,10 @@ export default function ToolHome() {
             [
               "Time those rounds take",
               hasError || plan.error ? DASH : formatDuration(plan.usedSeconds),
+            ],
+            [
+              "Leftover after full rounds",
+              hasError || plan.error ? DASH : formatDuration(plan.leftoverSeconds),
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

@@ -21,7 +21,7 @@ const seo = {
     ],
     [
       "All four sizes side by side",
-      "Max resolution, HD, standard and medium render together as live previews, so you can see immediately which sizes the video actually has before you commit to one.",
+      "Max resolution, standard, high quality and medium render together as live previews, so you can see immediately which sizes the video actually has before you commit to one.",
     ],
     [
       "Copy the URL or open the file",
@@ -34,8 +34,8 @@ const seo = {
       "YouTube serves four standard stills per video: maxresdefault at 1280x720, sddefault at 640x480, hqdefault at 480x360 and mqdefault at 320x180. All four are shown here as previews with their direct URLs.",
     ],
     [
-      "Why is the max resolution thumbnail blank for some videos?",
-      "Because maxresdefault only exists when the video was uploaded at 720p or higher. Older or low-resolution uploads simply have no 1280x720 file, so that preview stays empty while HD, standard and medium still load.",
+      "Why does the max resolution thumbnail look wrong for some videos?",
+      "Because maxresdefault only exists when the video was uploaded at 720p or higher. Older or low-resolution uploads don't have a 1280x720 file, so YouTube serves a small, low-resolution placeholder image at that URL instead of leaving it empty — it will look blurry or pixelated when stretched to fill the preview card, while standard, high quality and medium still load normally.",
     ],
     [
       "Can I get the thumbnail from a YouTube Shorts link?",

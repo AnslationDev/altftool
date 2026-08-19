@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRightLeft, Check, Copy, RotateCcw } from "lucide-react";
 
 import { CURRENCY, SHOPPING_ACCURACY_PERCENT, buildCheatSheet } from "../lib";
@@ -50,6 +50,9 @@ export default function ToolHome() {
   const [rate, setRate] = useState(DEFAULTS.rate);
   const [amount, setAmount] = useState(DEFAULTS.amount);
   const [copied, setCopied] = useState(false);
+  const copyTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimer.current), []);
 
   const sheet = useMemo(() => buildCheatSheet({ inrPerUnit: rate, amount }), [rate, amount]);
   const hasError = Boolean(sheet.error);
@@ -60,6 +63,21 @@ export default function ToolHome() {
   const recommended = hasError
     ? null
     : rules.find((rule) => rule.id === sheet.forward.recommendedId);
+  // The headline and summary must show the worked value for whichever rule the
+  // engine actually recommends, not always the quick rule — the two can differ.
+  const recommendedWorkedInr = hasError
+    ? null
+    : recommended.id === "fraction"
+      ? sheet.worked?.fractionInr
+      : recommended.id === "tuned"
+        ? sheet.worked?.tunedInr
+        : sheet.worked?.quickInr;
+  const reverseRules = hasError
+    ? []
+    : [sheet.reverse.quick, sheet.reverse.tuned, sheet.reverse.fraction];
+  const reverseRecommended = hasError
+    ? null
+    : reverseRules.find((rule) => rule.id === sheet.reverse.recommendedId);
 
   const summary = useMemo(() => {
     if (hasError) return "";
@@ -68,7 +86,7 @@ export default function ToolHome() {
       `Rate used: Rs ${NUM2.format(sheet.rate)} per 1 ${CURRENCY.code} (Rs 1 = ${NUM2.format(sheet.unitsPerRupee)} ${CURRENCY.code})`,
       `Rule to memorise (${recommended.label}): ${recommended.steps.join(" -> ")}`,
       `Accuracy: ${signedPct(recommended.errorPercent)} against the exact rate`,
-      `Going back: ${sheet.reverse.quick.steps.join(" -> ")}`,
+      `Going back: ${reverseRecommended.steps.join(" -> ")}`,
       "",
       "Price ladder",
       ...sheet.priceLadder.map(
@@ -79,18 +97,19 @@ export default function ToolHome() {
     if (sheet.worked) {
       lines.push(
         "",
-        `${CURRENCY.symbol}${FOREIGN.format(sheet.worked.amount)} = ${INR2.format(sheet.worked.exactInr)} exact, ${INR2.format(sheet.worked.quickInr)} in your head`,
+        `${CURRENCY.symbol}${FOREIGN.format(sheet.worked.amount)} = ${INR2.format(sheet.worked.exactInr)} exact, ${INR2.format(recommendedWorkedInr)} in your head`,
       );
     }
     return lines.join("\n");
-  }, [hasError, sheet, recommended]);
+  }, [hasError, sheet, recommended, reverseRecommended, recommendedWorkedInr]);
 
   const copyResult = async () => {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -196,7 +215,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -208,7 +231,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the rate above to see the cheat sheet."
-                : `In your head you would say ${money(sheet.worked?.quickInr)} — ${signedPct(sheet.forward.quick.errorPercent)} out.`}
+                : `In your head you would say ${money(recommendedWorkedInr)} — ${signedPct(recommended.errorPercent)} out.`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -272,7 +295,7 @@ export default function ToolHome() {
             </p>
             <h3 className="mt-5 text-sm font-semibold">Going the other way (₹ to {CURRENCY.code})</h3>
             <p className="mt-1.5 text-sm text-[var(--muted-foreground)]">
-              {sheet.reverse.quick.steps.join(" → ")} ({signedPct(sheet.reverse.quick.errorPercent)})
+              {reverseRecommended.steps.join(" → ")} ({signedPct(reverseRecommended.errorPercent)})
             </p>
           </>
         )}

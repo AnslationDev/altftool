@@ -25,9 +25,6 @@
 /** PMLA record-retention period, in years, for a reporting entity. */
 export const PMLA_RETENTION_YEARS = 5;
 
-/** Turnover from which a real estate agent is a notified reporting entity under PMLA (INR). */
-export const PMLA_AGENT_TURNOVER_THRESHOLD_INR = 2000000;
-
 /** Practical grace period before deleting documents with no statutory duty. Not statutory. */
 export const PURPOSE_GRACE_DAYS = 30;
 
@@ -201,7 +198,14 @@ function toIso(ts) {
 
 function addYears(ts, years) {
   const d = new Date(ts);
-  return Date.UTC(d.getUTCFullYear() + years, d.getUTCMonth(), d.getUTCDate());
+  const targetYear = d.getUTCFullYear() + years;
+  const month = d.getUTCMonth();
+  const day = d.getUTCDate();
+  if (month === 1 && day === 29) {
+    const isLeap = (targetYear % 4 === 0 && targetYear % 100 !== 0) || targetYear % 400 === 0;
+    if (!isLeap) return Date.UTC(targetYear, 1, 28);
+  }
+  return Date.UTC(targetYear, month, day);
 }
 
 function addDays(ts, days) {

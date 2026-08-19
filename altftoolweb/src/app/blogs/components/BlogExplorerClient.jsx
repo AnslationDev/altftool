@@ -68,21 +68,6 @@ const SORT_TABS = [
   { value: "trending", label: "Trending" },
 ];
 
-function isFirebaseBlogImage(src) {
-  const value = String(src || "").trim();
-  if (!value || value.startsWith("/")) return false;
-
-  try {
-    const url = new URL(value);
-    return (
-      url.hostname === "firebasestorage.googleapis.com" &&
-      /\/o\/blogs(?:%2f|%252f|\/)/i.test(url.pathname)
-    );
-  } catch {
-    return false;
-  }
-}
-
 function getBlogImageSrc(src) {
   const value = String(src || "").trim();
   if (!value) return BLOG_IMAGE_FALLBACK;
@@ -379,7 +364,6 @@ function FeaturedHeroCarousel({ posts }) {
             src={getBlogImageSrc(post.image)}
             alt=""
             fill
-            unoptimized={isFirebaseBlogImage(post.image)}
             loading="eager"
             fetchPriority="high"
             sizes="(max-width: 1024px) 100vw, 44vw"
@@ -627,7 +611,6 @@ function FeaturedPickCard({ post, featured = false }) {
           src={getBlogImageSrc(post.image)}
           alt={post.imageAlt || post.heading}
           fill
-          unoptimized={isFirebaseBlogImage(post.image)}
           sizes={
             featured
               ? "(max-width: 1024px) 100vw, 66vw"
@@ -708,7 +691,6 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
           src={getBlogImageSrc(post.image)}
           alt=""
           fill
-          unoptimized={isFirebaseBlogImage(post.image)}
           sizes="144px"
           onError={handleBlogImageError}
           className="object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none motion-reduce:transform-none"
@@ -785,7 +767,6 @@ function PopularArticlesWidget({ posts, onViewAll, eagerImageSources }) {
                 src={getBlogImageSrc(post.image)}
                 alt=""
                 fill
-                unoptimized={isFirebaseBlogImage(post.image)}
                 sizes="56px"
                 loading={
                   eagerImageSources?.has(getBlogImageSrc(post.image))

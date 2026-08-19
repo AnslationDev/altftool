@@ -25,12 +25,12 @@ const Features = () => {
     {
       title: "Privacy Focused",
       description:
-        "Your expense data stays in your browser. No data storage, no tracking — complete privacy guaranteed.",
+        "Your habit and cost tracking data stays in your browser's local storage. The optional AI suggestion features send habit names and computed totals to a third-party AI service when you use them.",
     },
     {
       title: "No Backend Required",
       description:
-        "Runs entirely on the frontend using JavaScript. No servers, no APIs — lightweight and efficient.",
+        "Core habit tracking and cost calculations run entirely on the frontend using JavaScript. The optional AI suggestion features call a third-party AI API (Puter) when used.",
     },
   ];
 

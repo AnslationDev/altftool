@@ -19,55 +19,32 @@ export function detectContentType(text) {
   // Email detection
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return "email";
 
-  // JSON detection
+  // Number detection (must run before JSON detection: JSON.parse also accepts bare
+  // scalar literals like "42", which we want classified as "number", not "json")
+  if (/^[\d\s,.\-+%$€£¥]+$/.test(trimmed) && trimmed.length < 50) return "number";
+
+  // JSON detection — only tag actual objects/arrays as JSON. JSON.parse() also
+  // accepts bare scalars ("true", "false", "null", numbers); those should fall
+  // through to the other checks below instead of being misclassified as JSON.
   try {
-    JSON.parse(trimmed);
-    return "json";
+    const parsed = JSON.parse(trimmed);
+    if (typeof parsed === "object" && parsed !== null) return "json";
   } catch (_) {}
 
   // Code detection (heuristic: contains common code patterns)
   const codePatterns = [
     /^\s*(function|const|let|var|class|import|export|return|if|for|while|=>)\s/m,
-    /[{};]\s*$/m,
+    /[{};]\s*$/,
     /^\s*<[a-z][^>]*>/im,
     /^\s*(def |class |import |from |print\()/m,
     /^\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)\s/im,
   ];
   if (codePatterns.some((re) => re.test(trimmed))) return "code";
 
-  // Number detection
-  if (/^[\d\s,.\-+%$€£¥]+$/.test(trimmed) && trimmed.length < 50) return "number";
-
   // Color hex detection
   if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(trimmed)) return "color";
 
   return "text";
-}
-
-export function getTypeIcon(type) {
-  const map = {
-    url: "link",
-    email: "mail",
-    code: "code-2",
-    json: "braces",
-    number: "hash",
-    color: "palette",
-    text: "type",
-  };
-  return map[type] || "type";
-}
-
-export function getTypeBadgeTone(type) {
-  const tones = {
-    url: "blue",
-    email: "purple",
-    code: "orange",
-    json: "green",
-    number: "teal",
-    color: "pink",
-    text: "neutral",
-  };
-  return tones[type] || "neutral";
 }
 
 export function getHistory() {
@@ -99,7 +76,9 @@ export function addEntry(text) {
   const deduplicated = history.filter((item) => item.content !== trimmed);
 
   const newEntry = {
-    id: Date.now().toString(),
+    id: typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
     content: trimmed,
     type: detectContentType(trimmed),
     timestamp: new Date().toISOString(),

@@ -293,10 +293,14 @@ export function formatDuration(seconds) {
   if (seconds == null || seconds === "") return "—";
   const value = Number(seconds);
   if (!Number.isFinite(value) || value < 0) return "—";
-  const whole = Math.floor(value);
+  // Round to the nearest tenth of a second first so a rounded-up remainder
+  // (e.g. 59.95 -> "60.0") carries into minutes/hours instead of displaying
+  // an impossible ":60.0".
+  const rounded = Math.round(value * 10) / 10;
+  const whole = Math.floor(rounded);
   const hours = Math.floor(whole / 3600);
   const minutes = Math.floor((whole % 3600) / 60);
-  const secs = value - hours * 3600 - minutes * 60;
+  const secs = rounded - hours * 3600 - minutes * 60;
   const secText = `${secs < 10 ? "0" : ""}${secs.toFixed(1)}`;
   return hours > 0 ? `${hours}:${String(minutes).padStart(2, "0")}:${secText}` : `${minutes}:${secText}`;
 }

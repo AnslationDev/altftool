@@ -110,7 +110,7 @@ export default function ToolHome() {
           <h1 className="text-2xl font-bold text-[var(--foreground)]">Text to ASCII Art</h1>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Turn a word into big banner letters built from a {GLYPH_WIDTH} × {GLYPH_HEIGHT}
-            {" "}bitmap font. Pick the ink character, spacing and outline or shadow styling.
+            {" "}bitmap font. Pick the ink character, spacing and drop-shadow styling.
           </p>
         </div>
       </header>

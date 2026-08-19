@@ -11,9 +11,12 @@ const REVEAL_DELAY_MS = 2000;
 // Hold the "check your inbox" confirmation for a beat before collapsing back.
 const SUCCESS_HOLD_MS = 2200;
 
+// Perks have to describe what the email actually delivers. The previous pair
+// promised a vetted local-pro network and exclusive limited-time offers;
+// neither exists, so both are gone.
 const HERO_PERKS = [
-  "Free quotes from vetted, licensed local pros",
-  "Exclusive limited-time offers + honest cost ranges",
+  "A free 12-month home maintenance calendar",
+  "Plain-English guides to what each job involves",
 ];
 
 /**

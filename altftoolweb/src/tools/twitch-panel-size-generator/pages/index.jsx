@@ -54,6 +54,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const imageRef = useRef(null);
+  const selectionRef = useRef(0);
 
   useEffect(() => {
     if (!imageUrl) return undefined;
@@ -85,8 +86,8 @@ export default function ToolHome() {
   const sizeSet = useMemo(() => requiredSizeSet(preset.id), [preset]);
 
   const exportedWeight = useMemo(
-    () => (exported ? weightCheck({ bytes: exported.bytes, maxBytes: preset.maxBytes }) : null),
-    [exported, preset],
+    () => (exported ? weightCheck({ bytes: exported.bytes, maxBytes: exported.maxBytes }) : null),
+    [exported],
   );
 
   const summary = useMemo(() => {
@@ -111,11 +112,13 @@ export default function ToolHome() {
   const handleFile = (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
+    const mySelection = ++selectionRef.current;
     setExportError("");
     setExported(null);
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
+      if (selectionRef.current !== mySelection) return;
       imageRef.current = img;
       setImageUrl(url);
       setImageName(file.name.replace(/\.[^.]+$/, ""));
@@ -124,6 +127,7 @@ export default function ToolHome() {
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
+      if (selectionRef.current !== mySelection) return;
       setExportError("That file could not be read as an image. Try a PNG, JPEG or WebP.");
     };
     img.src = url;
@@ -141,13 +145,17 @@ export default function ToolHome() {
       if (!ctx) throw new Error("no-context");
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-      if (background !== "transparent") {
-        ctx.fillStyle = background;
+      const chosen = EXPORT_FORMATS.find((item) => item.id === format) ?? EXPORT_FORMATS[0];
+      // JPEG has no alpha channel — a "transparent" fill would silently flatten to
+      // opaque black, so fall back to a white backing fill for that combination.
+      const effectiveBackground =
+        chosen.id === "image/jpeg" && background === "transparent" ? "white" : background;
+      if (effectiveBackground !== "transparent") {
+        ctx.fillStyle = effectiveBackground;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
       ctx.drawImage(img, plan.draw.x, plan.draw.y, plan.draw.width, plan.draw.height);
 
-      const chosen = EXPORT_FORMATS.find((item) => item.id === format) ?? EXPORT_FORMATS[0];
       const blob = await new Promise((resolve) =>
         canvas.toBlob(resolve, chosen.id, Number(quality) / 100),
       );
@@ -160,7 +168,7 @@ export default function ToolHome() {
       anchor.download = filename;
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
-      setExported({ bytes: blob.size, filename });
+      setExported({ bytes: blob.size, filename, maxBytes: preset.maxBytes });
     } catch {
       setExportError("The browser could not render that export. Try a smaller source image.");
     }
@@ -318,6 +326,11 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+            {background === "transparent" && format === "image/jpeg" && (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                JPEG has no transparency — a white background will be used instead.
+              </p>
+            )}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="twitch-format">
@@ -408,7 +421,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Source image", plan.error ? dash : `${plan.source.width} × ${plan.source.height} px (${plan.source.ratio})`],
             ["Scale applied", plan.error ? dash : `${NUM.format(plan.scalePercent)}%`],

@@ -11,6 +11,7 @@ import {
   DEVICE,
   GROUPS,
   PROFILES,
+  effectiveWeight,
   firmwareAgeRisk,
   scoreChecklist,
   toIsoDate,
@@ -167,7 +168,7 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="rh-score">
+      <section className={`mt-6 ${CARD}`} aria-labelledby="rh-score" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p
@@ -265,7 +266,9 @@ export default function ToolHome() {
             <ol className="mt-2 space-y-1 text-sm">
               {score.nextActions.map((item) => (
                 <li key={item.id} className="flex gap-2">
-                  <span className="font-semibold text-[var(--primary)]">+{item.weight}</span>
+                  <span className="font-semibold text-[var(--primary)]">
+                    +{NUM.format(effectiveWeight(item, score.profile))}
+                  </span>
                   <span>{item.title}</span>
                 </li>
               ))}
@@ -421,7 +424,7 @@ export default function ToolHome() {
                             </span>
                           ) : null}
                           <span className="text-[11px] font-semibold text-[var(--muted-foreground)]">
-                            +{item.weight} &middot; {item.axis}
+                            +{NUM.format(effectiveWeight(item, score.profile))} &middot; {item.axis}
                           </span>
                         </span>
                         <span className="mt-1 block text-sm leading-6 text-[var(--muted-foreground)]">

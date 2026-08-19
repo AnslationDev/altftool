@@ -66,7 +66,7 @@ export default function ToolHome() {
         end = Math.max(start + 1, end);
       }
 
-      if (removeOverlaps && idx > 0) {
+      if (removeOverlaps && inRange && idx > 0) {
         const minGap = Number(minGapMs) || 0;
         if (start < prevEnd + minGap) {
           start = prevEnd + minGap;
@@ -228,7 +228,11 @@ Shift and stretch timings quickly.`
       <div className="max-w-6xl mx-auto bg-(--card) rounded-2xl shadow-xl border border-(--border) overflow-hidden py-5">
         <div className="p-6 space-y-6">
           <Actions onLoadDemo={applyDemo} onCopyOutput={copyOutput} onDownload={downloadOutput} />
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && (
+            <p role="alert" className="text-red-500 text-sm">
+              {error}
+            </p>
+          )}
 
           <Editors input={input} output={output} onChangeInput={setInput} />
 
@@ -276,12 +280,14 @@ Shift and stretch timings quickly.`
                 value={findText}
                 onChange={(e) => setFindText(e.target.value)}
                 placeholder="Find text or regex pattern"
+                aria-label="Find text or regex pattern"
                 className="px-3 py-2 rounded-lg border border-(--border) bg-(--card) focus:outline-none focus:ring-2 focus:ring-(--primary)"
               />
               <input
                 value={replaceText}
                 onChange={(e) => setReplaceText(e.target.value)}
                 placeholder="Replace with"
+                aria-label="Replace with"
                 className="px-3 py-2 rounded-lg border border-(--border) bg-(--card) focus:outline-none focus:ring-2 focus:ring-(--primary)"
               />
             </div>
@@ -290,16 +296,22 @@ Shift and stretch timings quickly.`
                 value={prefixText}
                 onChange={(e) => setPrefixText(e.target.value)}
                 placeholder="Prefix each cue (optional)"
+                aria-label="Prefix each cue"
                 className="px-3 py-2 rounded-lg border border-(--border) bg-(--card)"
               />
               <input
                 value={suffixText}
                 onChange={(e) => setSuffixText(e.target.value)}
                 placeholder="Suffix each cue (optional)"
+                aria-label="Suffix each cue"
                 className="px-3 py-2 rounded-lg border border-(--border) bg-(--card)"
               />
             </div>
-            {regexError && <p className="text-red-500 text-sm mb-2">{regexError}</p>}
+            {regexError && (
+              <p role="alert" className="text-red-500 text-sm mb-2">
+                {regexError}
+              </p>
+            )}
             <div className="flex flex-wrap gap-2">
               <button onClick={() => setUseRegex((v) => !v)} className={`px-3 py-2 rounded-lg border ${useRegex ? "bg-(--primary) text-white border-(--primary)" : "border-(--border)"}`}>
                 {useRegex ? "Regex: ON" : "Regex: OFF"}

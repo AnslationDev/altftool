@@ -48,6 +48,7 @@ function sourcesFromJson(value) {
 
 function sourcesFromText(text) {
   const sources = [];
+  let hitLimit = false;
   for (const line of text.split(/\r?\n/)) {
     const clean = line.trim();
     if (!clean) continue;
@@ -56,9 +57,12 @@ function sourcesFromText(text) {
     );
     if (match) sources.push(safeSource(match[1], match[2]));
     else sources.push(safeSource(sources.length + 1, clean));
-    if (sources.length >= MAX_SOURCES) break;
+    if (sources.length >= MAX_SOURCES) {
+      hitLimit = true;
+      break;
+    }
   }
-  return sources.filter(Boolean);
+  return { sources: sources.filter(Boolean), hitLimit };
 }
 
 export function parseSources(source) {
@@ -71,6 +75,7 @@ export function parseSources(source) {
 
   let sources;
   let format = "text";
+  let hitLimit = false;
   if (/^[{[]/.test(trimmed)) {
     try {
       sources = sourcesFromJson(JSON.parse(trimmed));
@@ -83,16 +88,23 @@ export function parseSources(source) {
       };
     }
   } else {
-    sources = sourcesFromText(trimmed);
+    const textResult = sourcesFromText(trimmed);
+    sources = textResult.sources;
+    hitLimit = textResult.hitLimit;
   }
 
   const deduped = [];
   const seen = new Set();
-  for (const item of sources) {
+  let dedupHitLimit = false;
+  for (let i = 0; i < sources.length; i += 1) {
+    const item = sources[i];
     if (seen.has(item.normalizedId)) continue;
     seen.add(item.normalizedId);
     deduped.push(item);
-    if (deduped.length >= MAX_SOURCES) break;
+    if (deduped.length >= MAX_SOURCES) {
+      dedupHitLimit = i < sources.length - 1;
+      break;
+    }
   }
 
   return {
@@ -101,21 +113,23 @@ export function parseSources(source) {
     sources: deduped,
     truncated:
       raw.length > bounded.length ||
+      hitLimit ||
       sources.length > MAX_SOURCES ||
-      deduped.length >= MAX_SOURCES,
+      dedupHitLimit,
   };
 }
 
 function splitClaims(answer) {
-  return String(answer || "")
+  const claims = String(answer || "")
     .slice(0, MAX_INPUT_CHARACTERS)
     .split(/\r?\n/)
     .flatMap((line) => {
+      const isHeading = /^\s*#{1,6}\s+/.test(line);
       const clean = line
         .replace(/^\s*(?:[-*+]|\d+[.)])\s+/, "")
         .replace(/^\s*#{1,6}\s+/, "")
         .trim();
-      if (!clean) return [];
+      if (!clean || isHeading) return [];
       return clean.split(/(?<=[.!?])\s+(?=[A-Z0-9"'([{])/u);
     })
     .map((sentence) => sentence.trim())
@@ -131,8 +145,9 @@ function splitClaims(answer) {
         !withoutCitations.endsWith("?") &&
         !/^(?:sources?|references?|citations?)\s*:/iu.test(withoutCitations)
       );
-    })
-    .slice(0, MAX_CLAIMS);
+    });
+
+  return { claims: claims.slice(0, MAX_CLAIMS), hitLimit: claims.length > MAX_CLAIMS };
 }
 
 function splitReferenceList(value) {
@@ -168,7 +183,7 @@ export function checkCitationCoverage(answerSource, retrievalSource) {
   if (!parsedSources.ok) return { ...parsedSources, claims: [] };
 
   const sourceIds = new Set(parsedSources.sources.map((source) => source.normalizedId));
-  const claimSentences = splitClaims(rawAnswer);
+  const { claims: claimSentences, hitLimit: claimsHitLimit } = splitClaims(rawAnswer);
   const claims = claimSentences.map((text, index) => {
     const citationIds = extractCitationIds(text);
     const recognizedIds = citationIds.filter((id) => sourceIds.has(normalizeId(id)));
@@ -211,7 +226,7 @@ export function checkCitationCoverage(answerSource, retrievalSource) {
     truncated:
       parsedSources.truncated ||
       rawAnswer.length > MAX_INPUT_CHARACTERS ||
-      claimSentences.length >= MAX_CLAIMS,
+      claimsHitLimit,
   };
 }
 

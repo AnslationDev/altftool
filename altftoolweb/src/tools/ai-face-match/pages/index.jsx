@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Upload, X, RefreshCw, Copy, Download, Info, Check, Sparkles, Eye, UserCheck } from "lucide-react";
+import { Upload, X, RefreshCw, Copy, Download, Info, Check, Sparkles, Eye, UserCheck, TriangleAlert } from "lucide-react";
 import { getFaceApi } from "../../emotion-detector/services/faceApiClient";
 import { getFaceDetectionError } from "../lib/faceDetectionState";
 
@@ -235,6 +235,8 @@ ${verdict.text}
     setName2("");
     setResult(null);
     setError("");
+    if (fileInputRef1.current) fileInputRef1.current.value = "";
+    if (fileInputRef2.current) fileInputRef2.current.value = "";
   };
 
   return (
@@ -276,6 +278,7 @@ ${verdict.text}
                   value={name1}
                   onChange={(e) => setName1(e.target.value)}
                   placeholder="Subject 1 Name (Optional)"
+                  aria-label="Subject 1 name (optional)"
                   className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition text-sm"
                 />
                 <input
@@ -283,6 +286,7 @@ ${verdict.text}
                   value={name2}
                   onChange={(e) => setName2(e.target.value)}
                   placeholder="Subject 2 Name (Optional)"
+                  aria-label="Subject 2 name (optional)"
                   className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition text-sm"
                 />
               </div>
@@ -298,7 +302,10 @@ ${verdict.text}
                       <img src={photo1.src} alt="Subject 1" className="w-full h-full object-cover" />
                       <button
                         type="button"
-                        onClick={() => setPhoto1(null)}
+                        onClick={() => {
+                          setPhoto1(null);
+                          if (fileInputRef1.current) fileInputRef1.current.value = "";
+                        }}
                         aria-label="Remove photo 1"
                         className="absolute top-3 right-3 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition"
                       >
@@ -345,7 +352,10 @@ ${verdict.text}
                       <img src={photo2.src} alt="Subject 2" className="w-full h-full object-cover" />
                       <button
                         type="button"
-                        onClick={() => setPhoto2(null)}
+                        onClick={() => {
+                          setPhoto2(null);
+                          if (fileInputRef2.current) fileInputRef2.current.value = "";
+                        }}
                         aria-label="Remove photo 2"
                         className="absolute top-3 right-3 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition"
                       >
@@ -402,10 +412,27 @@ ${verdict.text}
               <p className="text-sm text-muted-foreground mt-2">Computing facial landmarks Euclidean distance and geometry.</p>
             </div>
           ) : (
-            <div className="space-y-8">
-              
+            <div className="space-y-8" role="status" aria-live="polite">
+
+              {!result.matchedByAI && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-3 rounded-2xl border border-warning bg-warning-soft p-4 text-sm text-foreground"
+                >
+                  <TriangleAlert className="text-warning flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                  <div>
+                    <p className="font-bold">No face detected — this is a placeholder, not a real comparison</p>
+                    <p className="mt-1 text-muted-foreground">
+                      We could not detect a face in one or both photos, so the score and breakdown below are a
+                      placeholder derived from the file names, not an actual AI facial comparison. Try clearer,
+                      front-facing photos with good lighting and re-run the comparison.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Verdict Gauge */}
-              <div className="text-center space-y-4">
+              <div className={`text-center space-y-4 ${!result.matchedByAI ? "opacity-60 grayscale" : ""}`}>
                 <div className="relative inline-flex items-center justify-center">
                   <svg className="w-32 h-32 transform -rotate-90">
                     <circle
@@ -436,24 +463,32 @@ ${verdict.text}
                 <div className="space-y-1">
                   <h3 className={`text-xl font-bold ${getVerdict(result.score).color}`}>
                     {getVerdict(result.score).label}
+                    {!result.matchedByAI ? " (Placeholder)" : ""}
                   </h3>
                   <p className="text-sm text-muted-foreground font-medium">
-                    Similarity index of compared subjects
+                    {result.matchedByAI
+                      ? "Similarity index of compared subjects"
+                      : "Placeholder index — no face was detected, so this is not a real similarity score"}
                   </p>
                 </div>
               </div>
 
               {/* Verdict Text Description */}
-              <div className="bg-[var(--anslation-ds-soft)] rounded-2xl p-5 border border-border">
+              <div
+                className={`bg-[var(--anslation-ds-soft)] rounded-2xl p-5 border border-border ${!result.matchedByAI ? "opacity-60" : ""}`}
+              >
                 <p className="text-sm text-foreground leading-relaxed">
-                  {getVerdict(result.score).text}
+                  {result.matchedByAI
+                    ? getVerdict(result.score).text
+                    : "No description is generated for a placeholder result — this text only reflects a real facial comparison."}
                 </p>
               </div>
 
               {/* Landmarks Breakdown */}
-              <div className="space-y-4">
+              <div className={`space-y-4 ${!result.matchedByAI ? "opacity-60 grayscale" : ""}`}>
                 <h4 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                   <Sparkles size={14} className="text-teal-500" /> Symmetry Breakdown
+                  {!result.matchedByAI ? " (placeholder)" : ""}
                 </h4>
                 <div className="bg-card rounded-2xl p-5 border border-border space-y-4 shadow-sm">
                   <div className="space-y-1">

@@ -48,7 +48,7 @@ export default function ScoreBar({ score, streak, lastEvent }) {
         </div>
         <p className="font-black font-primary text-2xl mb-1">
           <span className="text-orange-500">{streak}</span>
-          <span className="text-sm font-semibold text-(--muted-foreground) ml-1">sessions</span>
+          <span className="text-sm font-semibold text-(--muted-foreground) ml-1">{streak === 1 ? "day" : "days"}</span>
         </p>
         <p className="text-xs text-(--muted-foreground) font-secondary">
           {streak === 0 && "Start your first session!"}

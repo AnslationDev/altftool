@@ -172,15 +172,15 @@ function generateId() {
 }
 
 function getContrastText(hex) {
-  if (typeof hex !== "string") return "var(--color-footer)";
+  if (typeof hex !== "string") return "#0f172a";
   const clean = hex.replace("#", "");
-  if (clean.length !== 6) return "var(--color-footer)";
+  if (clean.length !== 6) return "#0f172a";
   const r = parseInt(clean.slice(0, 2), 16);
   const g = parseInt(clean.slice(2, 4), 16);
   const b = parseInt(clean.slice(4, 6), 16);
-  if ([r, g, b].some((channel) => Number.isNaN(channel))) return "var(--color-footer)";
+  if ([r, g, b].some((channel) => Number.isNaN(channel))) return "#0f172a";
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance > 0.6 ? "var(--color-footer)" : "var(--color-on-media)";
+  return luminance > 0.6 ? "#0f172a" : "#ffffff";
 }
 
 export default function BioLinkBuilderClient() {
@@ -426,7 +426,7 @@ export default function BioLinkBuilderClient() {
           <div
             role="status"
             aria-live="polite"
-            className="mb-5 flex items-center gap-2.5 rounded-2xl border border-info/30 bg-info-soft px-4 py-3 text-sm font-bold text-info-text"
+            className="mb-5 flex items-center gap-2.5 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 dark:bg-cyan-400/[0.08] px-4 py-3 text-sm font-bold text-cyan-800 dark:text-cyan-200"
           >
             <Sparkles className="h-4 w-4 shrink-0" />
             <span className="break-words">{notice}</span>
@@ -844,11 +844,7 @@ function PreviewPhone({ project, preset, publicUrl, unframed = false }) {
                     ? { backgroundColor: accent, borderColor: accent, color: accentText }
                     : isOutline
                     ? { backgroundColor: "transparent", borderColor: accent, borderWidth: "2px", color: preset.text }
-                    : {
-                        backgroundColor: "color-mix(in srgb, var(--color-on-media) 14%, transparent)",
-                        borderColor: "color-mix(in srgb, var(--color-on-media) 28%, transparent)",
-                        color: preset.text,
-                      }),
+                    : { backgroundColor: "rgba(255,255,255,0.14)", borderColor: "rgba(255,255,255,0.28)", color: preset.text }),
                   ...(link.featured ? { boxShadow: `0 0 0 2px ${accent}80` } : {}),
                 };
                 const iconColor = isSolid ? accentText : accent;
@@ -861,7 +857,7 @@ function PreviewPhone({ project, preset, publicUrl, unframed = false }) {
                     className="flex items-center gap-3 border px-4 py-3.5 backdrop-blur-xl transition-transform hover:-translate-y-0.5 min-w-0"
                     style={linkStyle}
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-footer/10">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black/10">
                       <PlatformIcon className="h-4 w-4" style={{ color: iconColor }} />
                     </span>
                     <span className="min-w-0 flex-1 text-left">
@@ -876,7 +872,7 @@ function PreviewPhone({ project, preset, publicUrl, unframed = false }) {
               })}
             </div>
           ) : (
-            <div className="mt-7 rounded-3xl border border-dashed border-on-media/25 p-5 text-center text-xs font-black uppercase tracking-widest text-on-media/50">
+            <div className="mt-7 rounded-3xl border border-dashed border-white/25 p-5 text-center text-xs font-black uppercase tracking-widest text-white/50">
               Add links to see them here
             </div>
           )}

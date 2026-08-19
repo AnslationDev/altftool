@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "How long can a video file name be?",
-      "A single file name is limited to 255 bytes on ext4 and 255 characters on APFS and NTFS, and the full path is capped separately (260 characters on Windows unless long paths are enabled). Accented and non-Latin characters use two to four bytes each, so a name that looks short can still hit the limit.",
+      "A single file name is limited to 255 bytes on ext4 and 255 characters on APFS and NTFS, and the full path is capped separately (260 characters on Windows unless long paths are enabled). Non-Latin scripts such as Chinese, Japanese, Korean, Cyrillic or Arabic are kept as-is in the generated name and use two to four UTF-8 bytes per character, so a name that looks short can still hit the limit. Accented Latin letters such as é, ü or ñ are normalised to their unaccented base letter (e, u, n) in the generated name, so they do not add extra bytes.",
     ],
   ],
 };

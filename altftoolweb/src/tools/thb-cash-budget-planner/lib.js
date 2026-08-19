@@ -70,6 +70,7 @@ export const CURRENCY = {
   defaultCashMarkupPct: 1.5,
   defaultOneOffCash: 0,
   defaultAtmWithdrawal: 20000,
+  defaultLocalAtmFeeUnits: 220,
   spendStyles: [
     { id: "budget", label: "Budget", perDay: 900 },
     { id: "mid", label: "Mid-range", perDay: 2000 },
@@ -256,6 +257,7 @@ export function planCashBudget({
   cardTypeId = "credit",
   atmWithdrawalSize = CURRENCY.defaultAtmWithdrawal,
   atmFeeInr = 200,
+  localAtmFeeUnits = CURRENCY.defaultLocalAtmFeeUnits,
   lrsAlreadyUsedInr = 0,
 } = {}) {
   const cardType = CARD_TYPES.find((entry) => entry.id === cardTypeId);
@@ -302,6 +304,9 @@ export function planCashBudget({
   if (!isNum(atmFeeInr) || atmFeeInr < 0) {
     return { error: "The ATM fee must be zero or more." };
   }
+  if (!isNum(localAtmFeeUnits) || localAtmFeeUnits < 0) {
+    return { error: `The local ATM operator's fee must be zero or more, in ${CURRENCY.code}.` };
+  }
   if (!isNum(lrsAlreadyUsedInr) || lrsAlreadyUsedInr < 0) {
     return { error: "LRS already used this year must be zero or more." };
   }
@@ -339,13 +344,18 @@ export function planCashBudget({
 
   // Drawing the same notes from an ATM at the destination instead: the card's
   // foreign-currency markup applies to the withdrawal, GST applies to that
-  // markup, and each withdrawal carries a flat issuer fee that also bears GST.
+  // markup, each withdrawal carries a flat issuer fee that also bears GST, and
+  // the destination bank's own local operator fee (charged in the local
+  // currency, not subject to Indian GST) is added on top of that.
   const withdrawals = cashToCarry > 0 ? Math.ceil(cashToCarry / atmWithdrawalSize) : 0;
   const atmMarkupInr = (cashMidInr * cardMarkupPct) / 100;
   const atmMarkupGstInr = (atmMarkupInr * GST_RATE_PCT) / 100;
   const atmFeeBaseInr = withdrawals * atmFeeInr;
   const atmFeeGstInr = (atmFeeBaseInr * GST_RATE_PCT) / 100;
-  const atmTotalInr = cashMidInr + atmMarkupInr + atmMarkupGstInr + atmFeeBaseInr + atmFeeGstInr;
+  const localAtmFeeInr = localAtmFeeUnits * inrPerUnit;
+  const localAtmFeeTotalInr = withdrawals * localAtmFeeInr;
+  const atmTotalInr =
+    cashMidInr + atmMarkupInr + atmMarkupGstInr + atmFeeBaseInr + atmFeeGstInr + localAtmFeeTotalInr;
   const cheaperCashRoute = atmTotalInr < cashAllInInr ? "atm" : "changer";
   const cashRouteSavingInr = Math.abs(atmTotalInr - cashAllInInr);
 
@@ -456,6 +466,7 @@ export function planCashBudget({
 
     atmWithdrawals: withdrawals,
     atmFeesInr: round0(atmFeeBaseInr + atmFeeGstInr),
+    localAtmFeesInr: round0(localAtmFeeTotalInr),
     atmTotalInr: round0(atmTotalInr),
     cheaperCashRoute,
     cashRouteSavingInr: round0(cashRouteSavingInr),

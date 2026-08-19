@@ -209,7 +209,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Items needing attention
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {hasError ? DASH : summary.needsAttention}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -240,7 +240,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Already expired", hasError ? DASH : `${summary.counts.expired} items`],
             ["Use today", hasError ? DASH : `${summary.counts.today} items`],

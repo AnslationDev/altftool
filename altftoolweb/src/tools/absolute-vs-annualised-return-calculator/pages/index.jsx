@@ -68,13 +68,13 @@ export default function ToolHome() {
 
     if (mode === "absolute-to-annual") {
       if (Number.isNaN(abs)) return { error: "Enter a valid absolute return." };
-      if (abs <= -100) return { error: "An absolute return of -100% or lower means the value is wiped out." };
+      if (abs < -100) return { error: "An absolute return lower than -100% means the value would be negative, which isn't possible." };
       if (abs > 1e7) return { error: "Absolute return is unrealistically large." };
       absolutePct = abs;
       annualPct = toAnnualised(abs, totalYears);
     } else {
       if (Number.isNaN(ann)) return { error: "Enter a valid annualised return." };
-      if (ann <= -100) return { error: "An annualised return of -100% or lower wipes out the investment." };
+      if (ann < -100) return { error: "An annualised return lower than -100% wipes out more than the entire investment, which isn't possible." };
       if (ann > 1000) return { error: "Annualised return should be 1000% or less." };
       annualPct = ann;
       absolutePct = toAbsolute(ann, totalYears);
@@ -284,7 +284,7 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section role="status" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

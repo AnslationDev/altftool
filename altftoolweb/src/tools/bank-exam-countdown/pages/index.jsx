@@ -217,7 +217,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -339,7 +343,11 @@ export default function ToolHome() {
       ) : null}
 
       {speed.error ? null : (
-        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <section
+          className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+          aria-live="polite"
+          role="status"
+        >
           <h2 className="text-base font-semibold">Speed budget — {speedStage.label}</h2>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Sectional timing means unused minutes in one section cannot be carried into the next.
@@ -387,7 +395,11 @@ export default function ToolHome() {
         </section>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <h2 className="text-base font-semibold">Attempts needed to clear a cutoff</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>

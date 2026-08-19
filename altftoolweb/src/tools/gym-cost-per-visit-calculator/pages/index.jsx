@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, IndianRupee, RotateCcw } from "lucide-react";
 import { PLAN_TERMS, attendanceTable, computeCostPerVisit, findTerm } from "../lib";
 
@@ -53,6 +53,15 @@ export default function ToolHome() {
   const [visitsPerWeek, setVisitsPerWeek] = useState(DEFAULTS.visitsPerWeek);
   const [dropInPrice, setDropInPrice] = useState(DEFAULTS.dropInPrice);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const term = findTerm(termId);
 
@@ -93,7 +102,10 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -265,7 +277,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

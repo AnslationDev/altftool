@@ -321,15 +321,27 @@ export default function ToolHome() {
           </p>
         ) : (
           <>
-            <div className="mt-4">
-              <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
-                Tightest acknowledgement deadline
-              </p>
-              <p className="mt-1 text-2xl font-semibold text-[var(--primary)] sm:text-3xl">
-                {deadlines.tightestAcknowledgement
-                  ? prettyDateTime(deadlines.tightestAcknowledgement.acknowledgeBy)
-                  : DASH}
-              </p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
+                  Tightest acknowledgement deadline
+                </p>
+                <p className="mt-1 text-2xl font-semibold text-[var(--primary)] sm:text-3xl">
+                  {deadlines.tightestAcknowledgement
+                    ? prettyDateTime(deadlines.tightestAcknowledgement.acknowledgeBy)
+                    : DASH}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
+                  Tightest resolution deadline
+                </p>
+                <p className="mt-1 text-2xl font-semibold text-[var(--primary)] sm:text-3xl">
+                  {deadlines.tightestResolution
+                    ? prettyDateTime(deadlines.tightestResolution.resolveBy)
+                    : DASH}
+                </p>
+              </div>
             </div>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full min-w-[420px] text-left text-sm">
@@ -366,10 +378,12 @@ export default function ToolHome() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
-              A complainant may appeal a Grievance Officer&apos;s decision to a Grievance Appellate
-              Committee within {GAC_APPEAL_DAYS} days under Rule 3A of the IT Rules, 2021.
-            </p>
+            {frameworks.includes("itRules") || frameworks.includes("itUrgent") ? (
+              <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
+                A complainant may appeal a Grievance Officer&apos;s decision to a Grievance Appellate
+                Committee within {GAC_APPEAL_DAYS} days under Rule 3A of the IT Rules, 2021.
+              </p>
+            ) : null}
           </>
         )}
       </section>

@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "What is the fastest way to make a GIF smaller?",
-      "Cut the dimensions first — size scales with the pixel count, so halving both width and height removes about three quarters of the data. After that, reduce the frame rate, then cut the palette, then turn dithering off, which alone typically removes around a quarter of the compressed size because dithering adds noise that LZW cannot match.",
+      "Cut the dimensions first — size scales with the pixel count, so halving both width and height removes about three quarters of the data. After that, reduce the frame count (frame rate alone doesn't shrink a GIF — it only changes playback speed, unless dropping it also drops frames), then cut the palette, then turn dithering off, which alone typically removes around a quarter of the compressed size because dithering adds noise that LZW cannot match.",
     ],
     [
       "Why is my GIF far larger than the estimate?",

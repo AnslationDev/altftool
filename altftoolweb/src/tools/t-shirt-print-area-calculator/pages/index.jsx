@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Ruler, RotateCcw } from "lucide-react";
 import {
+  COLLAR_DROP_ADULT,
+  COLLAR_DROP_YOUTH,
   GARMENT_SIZES,
   MIN_ACCEPTABLE_DPI,
   PLATEN_SIZES,
@@ -10,6 +12,7 @@ import {
   buildSizeRun,
   checkResolution,
   computePrintArea,
+  findSize,
   resolvePlacements,
 } from "../lib";
 
@@ -49,9 +52,37 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [values, setValues] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
+
+  // Tracks whether the user has manually edited the collar-drop field. While
+  // untouched, changing the garment size resyncs collar drop to the
+  // youth/adult convention (lib.js's own default logic) instead of leaving
+  // it stuck at whatever size was selected first.
+  const [collarDropTouched, setCollarDropTouched] = useState(false);
 
   const setField = (key) => (event) =>
     setValues((prev) => ({ ...prev, [key]: event.target.value }));
+
+  const handleSizeChange = (event) => {
+    const nextSizeKey = event.target.value;
+    setValues((prev) => {
+      if (collarDropTouched) return { ...prev, sizeKey: nextSizeKey };
+      const nextSize = findSize(nextSizeKey);
+      const nextCollarDrop = nextSize?.youth ? COLLAR_DROP_YOUTH : COLLAR_DROP_ADULT;
+      return { ...prev, sizeKey: nextSizeKey, collarDrop: String(nextCollarDrop) };
+    });
+  };
+
+  const handleCollarDropChange = (event) => {
+    setCollarDropTouched(true);
+    setValues((prev) => ({ ...prev, collarDrop: event.target.value }));
+  };
 
   const options = useMemo(
     () => ({
@@ -107,7 +138,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -116,6 +148,7 @@ export default function ToolHome() {
   const reset = () => {
     setValues(DEFAULTS);
     setCopied(false);
+    setCollarDropTouched(false);
   };
 
   return (
@@ -145,7 +178,7 @@ export default function ToolHome() {
               id="ts-size"
               className={`mt-2 ${INPUT_CLASS}`}
               value={values.sizeKey}
-              onChange={setField("sizeKey")}
+              onChange={handleSizeChange}
             >
               {GARMENT_SIZES.map((size) => (
                 <option key={size.key} value={size.key}>
@@ -213,7 +246,7 @@ export default function ToolHome() {
               min="0"
               step="0.25"
               value={values.collarDrop}
-              onChange={setField("collarDrop")}
+              onChange={handleCollarDropChange}
             />
           </div>
           <div>
@@ -274,7 +307,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

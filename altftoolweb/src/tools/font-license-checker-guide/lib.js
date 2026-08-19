@@ -203,11 +203,34 @@ export function evaluateFontLicence({
   const unknown = uses.filter((id) => !known.has(id));
   if (unknown.length > 0) return { error: `Unrecognised use: ${unknown[0]}.` };
 
-  if (![workstations, monthlyPageviews, titles, servers].every(isCount)) {
-    return { error: "Workstation, pageview, title and server counts cannot be negative or blank." };
+  const selected = new Set(uses);
+  const neededMeters = new Set(
+    USE_CASES.filter((useCase) => selected.has(useCase.id)).map((useCase) => useCase.meter),
+  );
+
+  // Only validate the numeric fields whose meter is actually referenced by a
+  // selected use case — a blank/irrelevant field (e.g. servers, when nothing
+  // selected touches METER.SERVERS) must not block the whole evaluation.
+  const meterChecks = [
+    [METER.WORKSTATIONS, workstations, "workstation"],
+    [METER.PAGEVIEWS, monthlyPageviews, "pageview"],
+    [METER.TITLES, titles, "title"],
+    [METER.SERVERS, servers, "server"],
+  ];
+  const invalidLabels = meterChecks
+    .filter(([meter, value]) => neededMeters.has(meter) && !isCount(value))
+    .map(([, , label]) => label);
+  if (invalidLabels.length > 0) {
+    return { error: `Enter a valid ${invalidLabels.join(", ")} count — it can't be negative or blank.` };
   }
 
-  const selected = new Set(uses);
+  // Any meter not referenced by a selected use case is irrelevant to this
+  // evaluation; default it to 0 instead of trusting a stale/blank value.
+  const safeWorkstations = neededMeters.has(METER.WORKSTATIONS) ? workstations : 0;
+  const safeMonthlyPageviews = neededMeters.has(METER.PAGEVIEWS) ? monthlyPageviews : 0;
+  const safeTitles = neededMeters.has(METER.TITLES) ? titles : 0;
+  const safeServers = neededMeters.has(METER.SERVERS) ? servers : 0;
+
   const results = USE_CASES.filter((useCase) => selected.has(useCase.id)).map((useCase) => {
     const rule = licence.rules[useCase.id];
     const [verdict, note] = rule || [
@@ -230,32 +253,40 @@ export function evaluateFontLicence({
   );
 
   const requirements = [];
-  const usesMeter = (meter) => results.some((row) => row.meter === meter);
+  // Only rows where a metered purchase is genuinely part of complying — a use that's
+  // already PERMITTED needs nothing bought, one that's CONDITIONAL is free under the
+  // licence (just subject to a non-monetary condition like keeping notice text), and
+  // one that's PROHIBITED can't be fixed by buying more of the meter, so none of
+  // those should surface a fabricated "declare this" purchase number. Only SEPARATE
+  // (needs a paid add-on licence) genuinely requires a metered count.
+  const meteredVerdicts = new Set([VERDICT.SEPARATE]);
+  const usesMeter = (meter) =>
+    results.some((row) => row.meter === meter && meteredVerdicts.has(row.verdict));
   if (usesMeter(METER.WORKSTATIONS)) {
     requirements.push({
       label: "Desktop seats to licence",
-      value: `${workstations} workstation${workstations === 1 ? "" : "s"}`,
+      value: `${safeWorkstations} workstation${safeWorkstations === 1 ? "" : "s"}`,
       note: "Count every machine the files are installed on, including freelancers and printers.",
     });
   }
   if (usesMeter(METER.PAGEVIEWS)) {
     requirements.push({
       label: "Webfont tier to cover",
-      value: `${monthlyPageviews.toLocaleString("en-US")} pageviews / month`,
+      value: `${safeMonthlyPageviews.toLocaleString("en-US")} pageviews / month`,
       note: "Webfont licences are metered on monthly pageviews across every domain you serve.",
     });
   }
   if (usesMeter(METER.TITLES)) {
     requirements.push({
       label: "App or ebook titles",
-      value: `${titles} title${titles === 1 ? "" : "s"}`,
+      value: `${safeTitles} title${safeTitles === 1 ? "" : "s"}`,
       note: "App and ePub licences are normally priced per title, not per company.",
     });
   }
   if (usesMeter(METER.SERVERS)) {
     requirements.push({
       label: "Servers rendering the font",
-      value: `${servers} server${servers === 1 ? "" : "s"}`,
+      value: `${safeServers} server${safeServers === 1 ? "" : "s"}`,
       note: "Count every instance that generates text on demand, including autoscaled workers.",
     });
   }

@@ -158,6 +158,13 @@ export default function ToolHome() {
     [pension, interest, otherIncome, d80c, d80d, d80ttb, otherDeductions]
   );
 
+  // Section 80D's Rs 1,00,000 ceiling only applies when the assessee themselves is a
+  // senior citizen (60+) with a senior-citizen-parent premium on top. A "Below 60"
+  // filer without that senior-citizen status is capped at the base self/family rate of
+  // Rs 25,000 — using the lower, always-defensible figure here rather than guessing
+  // whether their parents are also senior citizens (which this form doesn't ask).
+  const d80dCap = ageGroup === "below60" ? 25000 : 100000;
+
   const error = useMemo(() => {
     const entries = Object.entries(numbers);
     if (entries.some(([, value]) => !Number.isFinite(value))) {
@@ -167,10 +174,14 @@ export default function ToolHome() {
       return "Amounts cannot be negative. Enter 0 where an item does not apply.";
     }
     if (numbers.d80c > 150000) return "Section 80C deduction is capped at Rs 1,50,000.";
-    if (numbers.d80d > 100000) return "Section 80D deduction cannot exceed Rs 1,00,000.";
+    if (numbers.d80d > d80dCap) {
+      return ageGroup === "below60"
+        ? "Section 80D deduction cannot exceed Rs 25,000 below age 60 (the Rs 1,00,000 senior-citizen ceiling does not apply)."
+        : "Section 80D deduction cannot exceed Rs 1,00,000.";
+    }
     if (numbers.d80ttb > 50000) return "Section 80TTB deduction is capped at Rs 50,000 for senior citizens.";
     return "";
-  }, [numbers]);
+  }, [numbers, ageGroup, d80dCap]);
 
   const result = useMemo(() => {
     if (error) return null;
@@ -180,7 +191,10 @@ export default function ToolHome() {
     const oldStandard = salaried ? Math.min(50000, numbers.pension) : 0;
     const newStandard = salaried ? Math.min(75000, numbers.pension) : 0;
 
-    const chapterVia = numbers.d80c + numbers.d80d + numbers.d80ttb + numbers.otherDeductions;
+    // Section 80TTB (interest deduction up to Rs 50,000) is a senior-citizen-only
+    // provision; a "Below 60" filer is not entitled to it, so it never counts here.
+    const effectiveD80ttb = ageGroup === "below60" ? 0 : numbers.d80ttb;
+    const chapterVia = numbers.d80c + numbers.d80d + effectiveD80ttb + numbers.otherDeductions;
     const oldTaxable = Math.max(0, grossTotal - oldStandard - chapterVia);
     const newTaxable = Math.max(0, grossTotal - newStandard);
 
@@ -376,7 +390,7 @@ export default function ToolHome() {
               </div>
               <div>
                 <label className={labelClass} htmlFor="sc-80d">
-                  Section 80D health insurance
+                  Section 80D health insurance (max {money(d80dCap)})
                 </label>
                 <input
                   id="sc-80d"
@@ -388,15 +402,24 @@ export default function ToolHome() {
               </div>
               <div>
                 <label className={labelClass} htmlFor="sc-80ttb">
-                  Section 80TTB interest (max {money(50000)})
+                  Section 80TTB interest {ageGroup === "below60" ? "(60+ only)" : `(max ${money(50000)})`}
                 </label>
                 <input
                   id="sc-80ttb"
-                  className={inputClass}
+                  className={`${inputClass} disabled:cursor-not-allowed disabled:bg-[var(--muted)] disabled:text-[var(--muted-foreground)]`}
                   inputMode="numeric"
                   value={d80ttb}
                   onChange={(event) => setD80ttb(event.target.value)}
+                  disabled={ageGroup === "below60"}
+                  aria-describedby={ageGroup === "below60" ? "sc-80ttb-note" : undefined}
                 />
+                {ageGroup === "below60" ? (
+                  <p id="sc-80ttb-note" className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    Not available below age 60. Savings-account interest may qualify for the separate
+                    Section 80TTA deduction (up to Rs 10,000) — enter it under &ldquo;Other
+                    deductions&rdquo; if it applies to you.
+                  </p>
+                ) : null}
               </div>
               <div>
                 <label className={labelClass} htmlFor="sc-other-ded">
@@ -448,17 +471,19 @@ export default function ToolHome() {
             <h2 className="text-base font-semibold">Estimated tax</h2>
             {result ? (
               <>
-                <p className="mt-3 text-sm text-[var(--muted-foreground)]">
-                  Lowest tax — {result.better === "new" ? "new regime" : "old regime"}
-                </p>
-                <p className="text-4xl font-bold tracking-tight text-[var(--primary)]">
-                  {money(winner.total)}
-                </p>
-                <p className="mt-1 text-sm text-[var(--success)]">
-                  {result.saving > 0
-                    ? `Saves ${money(result.saving)} versus the other regime`
-                    : "Both regimes cost the same"}
-                </p>
+                <div aria-live="polite" aria-atomic="true">
+                  <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+                    Lowest tax — {result.better === "new" ? "new regime" : "old regime"}
+                  </p>
+                  <p className="text-4xl font-bold tracking-tight text-[var(--primary)]">
+                    {money(winner.total)}
+                  </p>
+                  <p className="mt-1 text-sm text-[var(--success)]">
+                    {result.saving > 0
+                      ? `Saves ${money(result.saving)} versus the other regime`
+                      : "Both regimes cost the same"}
+                  </p>
+                </div>
 
                 <dl className="mt-5 space-y-2 text-sm">
                   <Row label="Gross total income" value={money(result.grossTotal)} />

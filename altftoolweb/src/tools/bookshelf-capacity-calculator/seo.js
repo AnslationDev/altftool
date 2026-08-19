@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "How much weight can a bookshelf hold?",
-      "A shelf full of hardbacks carries about 20 kg per metre of length; art and coffee-table books can reach 60 kg per metre. The limiting factor is usually stiffness rather than strength — the board bows long before it breaks.",
+      "A shelf full of hardbacks carries about 20 kg per metre of length; art and coffee-table books can reach 67 kg per metre. The limiting factor is usually stiffness rather than strength — the board bows long before it breaks.",
     ],
     [
       "What is the maximum span for a bookshelf before it sags?",

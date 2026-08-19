@@ -23,9 +23,17 @@ export default function MainSection() {
     setFavorites(getFavorites());
   }, []);
 
-  const html = useMemo(
+  const previewHtml = useMemo(
     () => renderSignatureHtml(state, { outlookMode: client === "outlook", qrDataUrl }),
     [state, client, qrDataUrl],
+  );
+
+  // Copy/download always export the canonical (non-Outlook) markup so the
+  // currently-selected preview tab never silently strips styling (e.g.
+  // border-radius) from what the user takes away with them.
+  const exportHtml = useMemo(
+    () => renderSignatureHtml(state, { outlookMode: false, qrDataUrl }),
+    [state, qrDataUrl],
   );
 
   // Auto-save to recents once the user has a name filled in and stops editing.
@@ -67,7 +75,8 @@ export default function MainSection() {
           <div className="xl:sticky xl:top-4">
             <PreviewPanel
               state={state}
-              html={html}
+              html={previewHtml}
+              exportHtml={exportHtml}
               client={client}
               onClientChange={setClient}
               darkPreview={darkPreview}

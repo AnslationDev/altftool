@@ -1,5 +1,5 @@
 "use client"
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import DropdownSelector from '../components/DropdownSelector';
 import InputArea from '../components/InputArea';
 import ResultView from '../components/ResultView';
@@ -11,6 +11,18 @@ import Features from '../components/Features';
 export default function ToolHome() {
     const [inputText, setInputText] = useState('');
     const [encodingType, setEncodingType] = useState('base64-encode');
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const params = new URLSearchParams(window.location.search);
+        const data = params.get('data');
+        const type = params.get('type');
+        if (data) {
+            try { setInputText(decodeURIComponent(escape(atob(data)))); } catch { /* ignore malformed link */ }
+        }
+        if (type) setEncodingType(type);
+    }, []);
+
     const { outputText, error } = useMemo(() => {
         if (!inputText) return { outputText: '', error: '' };
 

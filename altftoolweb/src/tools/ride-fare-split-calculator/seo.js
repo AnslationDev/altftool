@@ -17,7 +17,7 @@ const seo = {
   benefits: [
     ["Segment-wise, not guesswork", "Cuts the route at every drop and shares each stretch only among the riders still in the car."],
     ["Fixed charges handled separately", "Base fare, tolls and parking are divided equally instead of being loaded onto the longest ride."],
-    ["Shares always add up", "Whole-rupee amounts are rounded by the largest remainder method, so the total matches the fare paid."],
+    ["Shares always add up", "Whole-rupee amounts are rounded by the largest remainder method, so the total always reconciles to the rounded fare."],
   ],
   faqs: [
     [

@@ -19,8 +19,8 @@ const seo = {
       "Compounds the yearly outlay at your chosen return rate so you see the gap between money spent and money grown.",
     ],
     [
-      "A comparable impact score",
-      "Rates each habit out of 100 from health, stress, productivity and relationship impact plus its cost and time load, so several habits can be ranked against each other.",
+      "A single habit impact score",
+      "Scores the first habit in your list up to a maximum of 72 points from health, stress, productivity and relationship impact plus its cost and time load, giving you an at-a-glance severity read rather than a side-by-side ranking.",
     ],
   ],
   faqs: [
@@ -34,11 +34,11 @@ const seo = {
     ],
     [
       "How is the habit impact score calculated?",
-      "It is out of 100. Health, stress, productivity and relationship impacts are each scored low/medium/high as 8, 16 or 24 and averaged, then a cost component worth up to 24 points and a time component worth up to 24 points are added on top.",
+      "It has a maximum of 72 points. Health, stress, productivity and relationship impacts are each scored low/medium/high as 8, 16 or 24 and averaged (up to 24 points), then a cost component worth up to 24 points and a time component worth up to 24 points are added on top.",
     ],
     [
       "Where is my habit data stored?",
-      "In your browser's local storage on this device only, under a single key, so the list survives a page reload but is never uploaded. Clearing site data or opening the page in a different browser starts you with an empty list.",
+      "Your tracked habits, costs and calculations stay in your browser's local storage on this device only, under a single key, so the list survives a page reload but that data is never uploaded to a server. The exception is the AI-generated suggestions in Time Lost Calculator, Break This Habit and Future Loss Visualization — when those sections load, your habit names and computed totals are sent to Puter's third-party AI API to generate the suggestion text shown there. Clearing site data or opening the page in a different browser starts you with an empty list.",
     ],
   ],
   steps: [

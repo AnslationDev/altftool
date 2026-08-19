@@ -14,7 +14,7 @@ import {
 } from "../lib";
 
 const DEFAULTS = {
-  name: "அருண்",
+  name: "Arun",
   relationshipId: "friend",
   register: "auto",
   tone: "any",
@@ -153,8 +153,12 @@ export default function ToolHome() {
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="அருண்"
+              placeholder="Arun"
             />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Names aren&apos;t auto-transliterated. Type in Tamil script for the Tamil wording, or
+              spell it in Latin letters (e.g. Arun) so the romanised wording reads correctly too.
+            </p>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="ta-relationship">
@@ -274,7 +278,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -321,7 +329,7 @@ export default function ToolHome() {
       </section>
 
       {messages.length > 0 ? (
-        <section className="mt-6 space-y-3">
+        <section className="mt-6 space-y-3" aria-live="polite">
           {messages.map((item) => (
             <article
               key={item.id}

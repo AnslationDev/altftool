@@ -104,6 +104,29 @@ const CREATOR_SLUGS = new Set([
   "short-video-hook-marker",
   "sponsored-disclosure-placement-checker",
 ]);
+// Every SensorLab slug whose readings are built via the shared `append()`
+// helper (setReadings((current) => [...current.slice(-199), row])) appends
+// newest-last, so its ResultTable must read the tail (mostRecent) or every
+// reading past the 100th becomes permanently invisible. Excludes the only
+// SENSOR_SLUGS members that don't feed readings through `append()`:
+// animated-qr-file-beam, dead-pixel-screen-test, multi-touch-tester.
+const MOST_RECENT_READING_SLUGS = new Set([
+  "chromatic-instrument-tuner",
+  "local-sound-event-logger",
+  "headphone-balance-test",
+  "calibrated-camera-ruler",
+  "camera-color-eyedropper",
+  "led-pwm-flicker-detector",
+  "gps-speedometer",
+  "road-roughness-logger",
+  "digital-level-inclinometer",
+  "digital-compass",
+  "surface-vibration-recorder",
+  "device-sensor-calibration-checker",
+]);
+// sampleCamera() appends a fixed 5-cell [timestamp, R, G, B, rgb()] row for
+// every slug in this set (see the "Sample" button branch of SensorLab).
+const CAMERA_RGB_SLUGS = new Set(["calibrated-camera-ruler", "camera-color-eyedropper", "led-pwm-flicker-detector"]);
 
 export default function AdvancedWorkbench({ slug }) {
   const meta = advancedCatalog[slug] || {
@@ -324,15 +347,62 @@ const mediaOptions = {
     label: "Sampling",
     choices: ["1 frame/second", "1 frame/2 seconds", "1 frame/5 seconds"],
     extension: "png",
-    command: (input, output, choice) => [
-      "-i",
-      input,
-      "-vf",
-      `fps=1/${choice.includes("5") ? 5 : choice.includes("2") ? 2 : 1},scale=240:-1,tile=5x5`,
-      "-frames:v",
-      "1",
-      output,
-    ],
+    // tile=5x5 always needs 25 sampled frames to fill the sheet. A source
+    // shorter than (25 * interval) seconds runs out of frames before the
+    // grid is full, and ffmpeg silently pads the remaining tiles with solid
+    // black rather than erroring — so a too-short source used to produce a
+    // mostly-black sprite sheet with no warning. We probe the real duration
+    // with ffprobe (same pattern as voiceprint-anonymizer above) and refuse
+    // to run rather than hand back a result that looks broken. `ffmpeg` is
+    // passed in as an extra 6th argument by the MediaLab runner below;
+    // every other entry in this file still declares `command` with 3-5
+    // params and simply ignores it, so this is scoped to this one tool.
+    command: async (input, output, choice, _second, _fontPath, ffmpeg) => {
+      const interval = choice.includes("5") ? 5 : choice.includes("2") ? 2 : 1;
+      const requiredSeconds = interval * 25;
+      let duration = null;
+      if (ffmpeg?.ffprobe) {
+        const probeOutput = "video-frame-to-sprite-extractor-probe.txt";
+        try {
+          await ffmpeg.ffprobe([
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            input,
+            "-o",
+            probeOutput,
+          ]);
+          const bytes = await ffmpeg.readFile(probeOutput);
+          const text =
+            typeof bytes === "string" ? bytes : new TextDecoder().decode(bytes);
+          const parsed = parseFloat(text.trim());
+          if (Number.isFinite(parsed) && parsed > 0) duration = parsed;
+        } catch {
+          // If the probe fails for any reason (unusual container, older
+          // core build, etc.) skip the duration check rather than blocking
+          // a conversion that might otherwise be fine.
+        } finally {
+          await ffmpeg.deleteFile(probeOutput).catch(() => {});
+        }
+      }
+      if (duration !== null && duration < requiredSeconds) {
+        throw new Error(
+          `This video is only about ${Math.round(duration)}s long, but "${choice}" needs at least ${requiredSeconds}s of footage to fill the 5×5 sprite grid without blank tiles. Pick a shorter sampling interval or a longer source video.`,
+        );
+      }
+      return [
+        "-i",
+        input,
+        "-vf",
+        `fps=1/${interval},scale=240:-1,tile=5x5`,
+        "-frames:v",
+        "1",
+        output,
+      ];
+    },
   },
   "voiceprint-anonymizer": {
     accept: "audio/*",
@@ -858,10 +928,19 @@ function LiveLab({ slug }) {
             <div>
               <p className="text-xl font-semibold">{data.summary}</p>
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                Updated {new Date(data.updatedAt).toLocaleString()}
+                Updated {new Date(data.readingTime || data.updatedAt).toLocaleString()}
               </p>
             </div>
-            <ResultTable rows={data.rows || []} />
+            <ResultTable
+              rows={data.rows || []}
+              headers={
+                slug === "pin-code-region-lookup"
+                  ? ["Post office", "Branch type", "District", "State", "Circle", "Delivery status"]
+                  : slug === "aqi-live-dashboard"
+                    ? ["Reading", "Value", "Unit"]
+                    : undefined
+              }
+            />
             {data.note && <Notice>{data.note}</Notice>}
             {data.source && (
               <p className="break-all text-xs text-[var(--muted-foreground)]">
@@ -916,7 +995,11 @@ function ResultTable({ rows, mostRecent = false, headers }) {
 // is that a dead (unpowered) pixel stays black against it, so if these were
 // theme tokens they'd invert in dark mode and hide the exact defect the tool
 // exists to reveal. Intentionally NOT semantic tokens — see wave-18 audit.
-const screenPatterns = ["bg-black", "bg-red-600", "bg-green-600", "bg-blue-600", "bg-white"];
+// The colour fields must also be pure saturated primaries (not Tailwind's
+// red-600/green-600/blue-600, which carry non-zero values in the "wrong"
+// channels) so a pixel that vanishes on one field but shows on another
+// genuinely isolates which sub-pixel is failing — see wave-58 audit.
+const screenPatterns = ["bg-black", "bg-[#ff0000]", "bg-[#00ff00]", "bg-[#0000ff]", "bg-white"];
 
 function SensorLab({ slug }) {
   const [active, setActive] = useState(false);
@@ -929,16 +1012,22 @@ function SensorLab({ slug }) {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
   const overlayRef = useRef(null);
+  const exitButtonRef = useRef(null);
   const cleanupRef = useRef(() => {});
 
   const append = useCallback((row) => {
     setReadings((current) => [...current.slice(-199), row]);
   }, []);
 
+  // Unmount-only safety net. This must NOT depend on [camera]: start()/stop()
+  // already reassign cleanupRef.current synchronously at the right moments
+  // to tear down whichever stream is actually live, so a [camera]-triggered
+  // cleanup fired the teardown for the just-acquired stream before any
+  // consumer (sampleCamera) could read a live frame from it. cleanupRef is a
+  // ref, so cleanupRef.current?.() is always correct even with no deps.
   useEffect(() => () => {
     cleanupRef.current?.();
-    camera?.getTracks().forEach((track) => track.stop());
-  }, [camera]);
+  }, []);
 
   // Move focus into the full-screen overlay as soon as it mounts so a
   // keyboard-only user (no working pointer yet, e.g. testing a fresh
@@ -968,6 +1057,9 @@ function SensorLab({ slug }) {
     stop();
     setMessage("");
     setReadings([]);
+    // A fresh run must always begin on the dark/black field, not wherever
+    // an earlier run's pattern index was left after an early exit.
+    setPattern(0);
     try {
       if (slug === "headphone-balance-test") {
         const context = new AudioContext();
@@ -1095,9 +1187,18 @@ function SensorLab({ slug }) {
         return;
       }
       if (["digital-level-inclinometer", "digital-compass"].includes(slug)) {
-        if (typeof DeviceOrientationEvent?.requestPermission === "function")
-          await DeviceOrientationEvent.requestPermission();
-        const listener = (event) =>
+        if (typeof DeviceOrientationEvent?.requestPermission === "function") {
+          const permission = await DeviceOrientationEvent.requestPermission();
+          if (permission !== "granted") {
+            setMessage("Orientation access was declined, so this browser does not expose readings.");
+            return;
+          }
+        }
+        const listener = (event) => {
+          if (event.alpha == null && event.beta == null && event.gamma == null) {
+            setMessage("This device is not exposing orientation data, so readings cannot be recorded.");
+            return;
+          }
           append([
             new Date().toISOString(),
             Number(event.alpha || 0).toFixed(2),
@@ -1105,17 +1206,41 @@ function SensorLab({ slug }) {
             Number(event.gamma || 0).toFixed(2),
             slug === "digital-compass" ? `${Number(360 - (event.webkitCompassHeading ?? event.alpha ?? 0)).toFixed(1)}°` : `${Math.hypot(event.beta || 0, event.gamma || 0).toFixed(2)}°`,
           ]);
+        };
         window.addEventListener("deviceorientation", listener);
         cleanupRef.current = () => window.removeEventListener("deviceorientation", listener);
         setActive(true);
         return;
       }
       if (["surface-vibration-recorder", "device-sensor-calibration-checker"].includes(slug)) {
-        if (typeof DeviceMotionEvent?.requestPermission === "function")
-          await DeviceMotionEvent.requestPermission();
+        if (typeof DeviceMotionEvent?.requestPermission === "function") {
+          const permission = await DeviceMotionEvent.requestPermission();
+          if (permission !== "granted") {
+            setMessage("Motion access was declined, so this browser does not expose readings.");
+            return;
+          }
+        }
+        // A declined-but-silent permission or hardware with no motion sensor
+        // both surface the same way: no devicemotion event, or one whose axis
+        // data is entirely null. Without this check, `a?.x || 0` etc. below
+        // would quietly render that as a real "0.000, 0.000, 0.000" reading,
+        // indistinguishable from a genuinely flat sensor.
+        let sawReading = false;
+        const noSensorTimer = setTimeout(() => {
+          if (!sawReading) {
+            setMessage("This device does not appear to expose a motion sensor: no readings arrived after starting.");
+          }
+        }, 3000);
         const listener = (event) => {
           const a = event.accelerationIncludingGravity;
           const r = event.rotationRate;
+          if (a == null && r == null) {
+            clearTimeout(noSensorTimer);
+            setMessage("This device does not appear to expose a motion sensor: readings came back empty.");
+            return;
+          }
+          sawReading = true;
+          clearTimeout(noSensorTimer);
           append([
             new Date().toISOString(),
             Number(a?.x || 0).toFixed(3),
@@ -1125,7 +1250,10 @@ function SensorLab({ slug }) {
           ]);
         };
         window.addEventListener("devicemotion", listener);
-        cleanupRef.current = () => window.removeEventListener("devicemotion", listener);
+        cleanupRef.current = () => {
+          clearTimeout(noSensorTimer);
+          window.removeEventListener("devicemotion", listener);
+        };
         setActive(true);
         return;
       }
@@ -1144,6 +1272,66 @@ function SensorLab({ slug }) {
     }
   };
 
+  // Full-screen modal focus trap for the dead-pixel test: without this, Tab
+  // can carry a keyboard user past "Exit test" onto the site's global
+  // header/footer links rendered elsewhere in the DOM, and Escape stops
+  // working the moment focus leaves the overlay's own subtree because the
+  // overlay's own onKeyDown only ever sees events that bubble through it.
+  // A capture-phase document listener catches Escape/Tab regardless of
+  // where focus is, and the header/footer are marked inert so they briefly
+  // leave the accessibility tree and tab order while the overlay is active.
+  useEffect(() => {
+    if (!(slug === "dead-pixel-screen-test" && active)) return undefined;
+
+    const header = document.getElementById("main-header");
+    const footer = document.querySelector("footer");
+    const setInert = (element, value) => {
+      if (!element) return;
+      if (value) {
+        element.setAttribute("inert", "");
+        element.setAttribute("aria-hidden", "true");
+      } else {
+        element.removeAttribute("inert");
+        element.removeAttribute("aria-hidden");
+      }
+    };
+    setInert(header, true);
+    setInert(footer, true);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        stop();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const overlay = overlayRef.current;
+      const exitButton = exitButtonRef.current;
+      if (!overlay || !exitButton) return;
+      const cycle = [overlay, exitButton];
+      const currentIndex = cycle.indexOf(document.activeElement);
+      if (currentIndex === -1) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const nextIndex = event.shiftKey
+        ? (currentIndex - 1 + cycle.length) % cycle.length
+        : (currentIndex + 1) % cycle.length;
+      cycle[nextIndex].focus();
+    };
+    document.addEventListener("keydown", handleKeyDown, true);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown, true);
+      setInert(header, false);
+      setInert(footer, false);
+    };
+    // stop() only touches refs/setState via closures that stay valid for the
+    // lifetime of this effect, so it's intentionally left out of the deps —
+    // this should install once per overlay session, not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, active]);
+
   const sampleCamera = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -1161,6 +1349,8 @@ function SensorLab({ slug }) {
       <div
         ref={overlayRef}
         tabIndex={0}
+        role="dialog"
+        aria-modal="true"
         aria-label={`Dead pixel test pattern ${pattern + 1} of ${screenPatterns.length}. Press Enter or Space for the next pattern, or Escape to exit.`}
         className={`fixed inset-0 z-50 ${screenPatterns[pattern]} cursor-pointer focus-visible:outline-none focus-visible:ring-[4px] focus-visible:ring-[var(--primary)]`}
         onClick={() => setPattern((value) => (value + 1) % screenPatterns.length)}
@@ -1174,7 +1364,12 @@ function SensorLab({ slug }) {
           }
         }}
       >
-        <button type="button" className="absolute right-4 top-4 rounded-md border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[var(--foreground)]" onClick={(event) => { event.stopPropagation(); stop(); }}>
+        <button
+          ref={exitButtonRef}
+          type="button"
+          className="absolute right-4 top-4 rounded-md border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[var(--foreground)]"
+          onClick={(event) => { event.stopPropagation(); stop(); }}
+        >
           Exit test
         </button>
       </div>
@@ -1242,8 +1437,16 @@ function SensorLab({ slug }) {
           <>
             <ResultTable
               rows={readings}
-              mostRecent={["chromatic-instrument-tuner", "local-sound-event-logger"].includes(slug)}
-              headers={slug === "local-sound-event-logger" ? ["Timestamp", "RMS", "Frequency (Hz)", "Note"] : undefined}
+              mostRecent={MOST_RECENT_READING_SLUGS.has(slug)}
+              headers={
+                slug === "local-sound-event-logger"
+                  ? ["Timestamp", "RMS", "Frequency (Hz)", "Note"]
+                  : CAMERA_RGB_SLUGS.has(slug)
+                    ? ["Timestamp", "R", "G", "B", "RGB"]
+                    : slug === "device-sensor-calibration-checker"
+                      ? ["Timestamp", "Accel X (m/s²)", "Accel Y (m/s²)", "Accel Z (m/s²)", "Rotation rate (°/s)"]
+                      : undefined
+              }
             />
             {!readings.length && !camera && slug !== "multi-touch-tester" && (
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
@@ -1273,7 +1476,7 @@ function CreatorLab({ slug }) {
       : slug === "short-video-hook-marker"
         ? "00:00.000 | Hook | Opening claim\n00:02.500 | Beat | Visual change\n00:07.000 | Review | Evidence on screen"
         : slug === "vertical-video-safe-zone-previewer"
-          ? "Top safe-zone: clear of platform UI\nBottom safe-zone: caption/controls not obstructed\nObstructions found: none"
+          ? "Top safe-zone: [describe]\nBottom safe-zone: [describe]\nObstructions found: [list, or 'none observed — confirm before publishing']"
           : "Sponsored partnership with Example Brand",
   );
   const [file, setFile] = useState(null);
@@ -1295,8 +1498,19 @@ function CreatorLab({ slug }) {
       doc.text("Creator media kit", 18, 24);
       doc.setFontSize(11);
       const lines = doc.splitTextToSize(text, 170);
-      doc.text(lines, 18, 38);
-      doc.text("Generated locally with ALTFTool · Verify all metrics and permissions.", 18, 275);
+      const footer = "Generated locally with ALTFTool · Verify all metrics and permissions.";
+      const lineHeight = (11 * doc.getLineHeightFactor() * 25.4) / 72;
+      let y = 38;
+      for (const line of lines) {
+        if (y > 265) {
+          doc.text(footer, 18, 275);
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(line, 18, y);
+        y += lineHeight;
+      }
+      doc.text(footer, 18, 275);
       doc.save("altftool-media-kit.pdf");
       setMessage("Media-kit PDF downloaded.");
       return;
@@ -1336,28 +1550,37 @@ function CreatorLab({ slug }) {
       </Section>
       <Section>
         <h2 className="text-lg font-semibold">Preview</h2>
-        <div className="relative mt-4 aspect-[9/16] max-h-[36rem] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
-          {file && file.type.startsWith("image/") && previewUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={previewUrl} alt="Uploaded creator preview" className="absolute inset-0 h-full w-full object-cover" />
-          )}
-          {file && file.type.startsWith("video/") && previewUrl && (
-            <video
-              src={previewUrl}
-              controls
-              muted
-              loop
-              playsInline
-              aria-label="Uploaded creator preview"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-          <div className="absolute inset-x-4 top-16 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Top safe-zone boundary</div>
-          <div className="absolute inset-x-4 bottom-28 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Caption / controls obstruction review</div>
-          {slug === "sponsored-disclosure-placement-checker" && (
-            <div className="absolute left-4 top-4 rounded-md bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--foreground)] shadow-md">{text}</div>
-          )}
-        </div>
+        {slug === "influencer-media-kit-builder" ? (
+          <div className="relative mt-4 aspect-[210/297] max-h-[36rem] overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--card)] p-4">
+            <p className="text-sm font-semibold text-[var(--foreground)]">Creator media kit</p>
+            <pre className="mt-2 whitespace-pre-wrap break-words font-sans text-xs leading-5 text-[var(--muted-foreground)]">
+              {text}
+            </pre>
+          </div>
+        ) : (
+          <div className="relative mt-4 aspect-[9/16] max-h-[36rem] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
+            {file && file.type.startsWith("image/") && previewUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={previewUrl} alt="Uploaded creator preview" className="absolute inset-0 h-full w-full object-cover" />
+            )}
+            {file && file.type.startsWith("video/") && previewUrl && (
+              <video
+                src={previewUrl}
+                controls
+                muted
+                loop
+                playsInline
+                aria-label="Uploaded creator preview"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
+            <div className="absolute inset-x-4 top-16 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Top safe-zone boundary</div>
+            <div className="absolute inset-x-4 bottom-28 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Caption / controls obstruction review</div>
+            {slug === "sponsored-disclosure-placement-checker" && (
+              <div className="absolute left-4 top-4 rounded-md bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--foreground)] shadow-md">{text}</div>
+            )}
+          </div>
+        )}
       </Section>
     </div>
   );

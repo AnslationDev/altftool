@@ -99,16 +99,20 @@ function evaluateCard(card, monthlySpend) {
   const valuePerBlock = pointsPerBlock * pointValue;
   let breakEvenMonthlySpend = null;
   let breakEvenReachable = true;
+  let breakEvenUnreachableReason = null;
   if (valueToRecover === 0) {
     breakEvenMonthlySpend = 0;
   } else if (valuePerBlock <= 0) {
     breakEvenReachable = false;
+    breakEvenUnreachableReason = "zero-value";
   } else {
     const blocksNeededPerMonth = Math.ceil(valueToRecover / 12 / valuePerBlock);
     const maxBlocksPerMonth =
       monthlyCap > 0 ? Math.floor(monthlyCap / pointsPerBlock) : Infinity;
-    if (blocksNeededPerMonth > maxBlocksPerMonth) breakEvenReachable = false;
-    else breakEvenMonthlySpend = blocksNeededPerMonth * block;
+    if (blocksNeededPerMonth > maxBlocksPerMonth) {
+      breakEvenReachable = false;
+      breakEvenUnreachableReason = "cap-exceeded";
+    } else breakEvenMonthlySpend = blocksNeededPerMonth * block;
   }
 
   return {
@@ -136,6 +140,7 @@ function evaluateCard(card, monthlySpend) {
     breakEvenAnnualSpend:
       breakEvenMonthlySpend === null ? null : round0(breakEvenMonthlySpend * 12),
     breakEvenReachable,
+    breakEvenUnreachableReason,
     worthKeeping: netValue > 0,
   };
 }

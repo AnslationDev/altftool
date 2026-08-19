@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -421,7 +421,7 @@ function PrivacyTab({ data }) {
             </div>
           ))}
           {!data.fingerprint.signals.length ? (
-            <p className="text-sm font-semibold text-(--muted-foreground)">Scan complete hone ke baad signals yahan dikhenge.</p>
+            <p className="text-sm font-semibold text-(--muted-foreground)">Signals will appear here once the scan completes.</p>
           ) : null}
         </div>
       </Panel>
@@ -463,21 +463,33 @@ export default function DeviceDashboardEntry() {
   const { data, loading, error, refresh } = useSystemData();
   const [activeTab, setActiveTab] = useState("overview");
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
   const reportText = useMemo(() => createTextReport(data), [data]);
   const compatibilityTone = scoreTone(data.scores.compatibility);
   const securityTone = scoreTone(data.scores.security);
   const surfaceTone = fingerprintTone(data.scores.fingerprint);
 
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) window.clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
+
+  const scheduleCopiedReset = () => {
+    if (copiedTimeoutRef.current) window.clearTimeout(copiedTimeoutRef.current);
+    copiedTimeoutRef.current = window.setTimeout(() => setCopied(false), 1800);
+  };
+
   const handleCopyJson = async () => {
     const success = await copyToClipboard(JSON.stringify(data, null, 2));
     setCopied(success);
-    window.setTimeout(() => setCopied(false), 1800);
+    scheduleCopiedReset();
   };
 
   const handleCopyReport = async () => {
     const success = await copyToClipboard(reportText);
     setCopied(success);
-    window.setTimeout(() => setCopied(false), 1800);
+    scheduleCopiedReset();
   };
 
   const renderTab = () => {
@@ -540,7 +552,7 @@ export default function DeviceDashboardEntry() {
       <section className="mt-8 grid gap-4 2xl:grid-cols-[1.25fr_0.75fr]">
         <Panel title="Environment Intelligence Panel" eyebrow="Last scan" icon={MonitorSmartphone}>
           <p className="max-w-3xl text-sm leading-relaxed text-(--muted-foreground)">
-            Saara detection browser ke andar hota hai. Data server par send nahi hota. Use this panel for quick debugging before releasing browser-heavy features.
+            All detection happens in your browser. Nothing is sent to a server. Use this panel for quick debugging before releasing browser-heavy features.
           </p>
           <div className="tool-card-grid mt-5">
             <StatTile label="Scanned" value={formatDate(data.summary.scannedAt)} icon={Radar} />
@@ -603,15 +615,19 @@ export default function DeviceDashboardEntry() {
         </div>
       ) : null}
 
-      <nav className="tool-tab-grid mt-6 rounded-lg border border-(--border) bg-(--card) p-2" aria-label="Dashboard sections">
+      <nav className="tool-tab-grid mt-6 rounded-lg border border-(--border) bg-(--card) p-2" aria-label="Dashboard sections" role="tablist">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           return (
             <button
               key={tab.id}
+              id={`dashboard-tab-${tab.id}`}
               className={activeTab === tab.id ? "btn-primary w-full" : "btn-secondary w-full"}
               onClick={() => setActiveTab(tab.id)}
               type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls="dashboard-tabpanel"
             >
               <Icon />
               {tab.label}
@@ -620,7 +636,9 @@ export default function DeviceDashboardEntry() {
         })}
       </nav>
 
-      <div className="mt-6">{renderTab()}</div>
+      <div className="mt-6" id="dashboard-tabpanel" role="tabpanel" aria-live="polite" aria-labelledby={`dashboard-tab-${activeTab}`}>
+        {renderTab()}
+      </div>
     </main>
   );
 }

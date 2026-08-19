@@ -238,19 +238,32 @@ export default function ToolHome() {
       {hasError ? null : (
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-            <h2 className="text-base font-semibold">vars.yml / vault.yml split</h2>
-            <div className="mt-3 grid gap-4 lg:grid-cols-2">
-              <div className="overflow-x-auto">
+            <h2 className="text-base font-semibold">
+              {result.strategy === "encrypt-string" ? "vars.yml" : "vars.yml / vault.yml split"}
+            </h2>
+            {result.strategy === "encrypt-string" ? (
+              <div className="mt-3 overflow-x-auto">
                 <pre className="min-w-[280px] rounded-md bg-[var(--muted)] p-4 font-mono text-xs leading-5 text-[var(--foreground)]">
                   {result.varsSnippet}
                 </pre>
-              </div>
-              <div className="overflow-x-auto">
-                <pre className="min-w-[280px] rounded-md bg-[var(--muted)] p-4 font-mono text-xs leading-5 text-[var(--foreground)]">
+                <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
                   {result.vaultSnippet}
-                </pre>
+                </p>
               </div>
-            </div>
+            ) : (
+              <div className="mt-3 grid gap-4 lg:grid-cols-2">
+                <div className="overflow-x-auto">
+                  <pre className="min-w-[280px] rounded-md bg-[var(--muted)] p-4 font-mono text-xs leading-5 text-[var(--foreground)]">
+                    {result.varsSnippet}
+                  </pre>
+                </div>
+                <div className="overflow-x-auto">
+                  <pre className="min-w-[280px] rounded-md bg-[var(--muted)] p-4 font-mono text-xs leading-5 text-[var(--foreground)]">
+                    {result.vaultSnippet}
+                  </pre>
+                </div>
+              </div>
+            )}
           </section>
 
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">

@@ -59,11 +59,23 @@ export default function ToolHome() {
   };
 
   const clearAll = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Clear all ticks? This will untick every checklist item and cannot be undone.")
+    ) {
+      return;
+    }
     setDone([]);
     setCopied(false);
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the checklist? This clears every ticked setting and cannot be undone.")
+    ) {
+      return;
+    }
     setDone(DEFAULT_DONE.slice());
     setProfileId(PROFILES[0].id);
     setTarget("90");
@@ -167,7 +179,11 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="ios-score">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-labelledby="ios-score"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p id="ios-score" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -269,7 +285,7 @@ export default function ToolHome() {
       </section>
 
       {hasScore ? (
-        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite">
           <h2 className="text-base font-semibold">Remaining exposure by area</h2>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Weighted for the {score.profile.name.toLowerCase()} profile. A longer bar means more is still open.

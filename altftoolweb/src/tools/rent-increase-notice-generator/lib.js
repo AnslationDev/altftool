@@ -126,7 +126,12 @@ export function computeRentRevision(input) {
     reviseDeposit = true,
   } = input || {};
 
-  const numbers = [currentRent, increasePercent, newRentAmount, noticeMonths, depositHeld];
+  const numbers = [
+    currentRent,
+    mode === "amount" ? newRentAmount : increasePercent,
+    noticeMonths,
+    depositHeld,
+  ];
   if (numbers.some((value) => typeof value !== "number" || !Number.isFinite(value))) {
     return { error: "Enter valid numbers for rent, revision and deposit." };
   }
@@ -259,7 +264,9 @@ export function buildRentIncreaseNotice(result, details) {
   }
   lines.push("");
   lines.push(
-    `This notice is given ${result.noticeDays} days in advance of the effective date, in keeping with the ${result.noticeMonths}-month written notice required before a revised rent becomes due.`,
+    result.compliant
+      ? `This notice is given ${result.noticeDays} days in advance of the effective date, in keeping with the ${result.noticeMonths}-month written notice required before a revised rent becomes due.`
+      : `This notice is given ${result.noticeDays} days in advance of the effective date, which is ${result.shortfallDays} day${result.shortfallDays === 1 ? "" : "s"} short of the ${result.noticeMonths}-month written notice required before a revised rent becomes due.`,
   );
   if (result.depositTopUp > 0) {
     lines.push("");

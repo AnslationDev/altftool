@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Video } from "lucide-react";
 
 import { DEFAULT_WPM, FORMATS, TONES, generateHooks, reviewHook } from "../lib";
@@ -24,6 +24,7 @@ export default function ToolHome() {
   const [wpm, setWpm] = useState(String(DEFAULT_WPM));
   const [customHook, setCustomHook] = useState("Most AI business advice is backwards.");
   const [copied, setCopied] = useState("");
+  const copyTimeoutRef = useRef(null);
 
   const hooks = useMemo(
     () =>
@@ -46,11 +47,18 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(id);
-      setTimeout(() => setCopied(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(""), 1500);
     } catch {
       setCopied("");
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const reset = () => {
     setTopic("AI automation");
@@ -129,64 +137,66 @@ export default function ToolHome() {
         </div>
       </section>
 
-      {hooks.error ? (
-        <p role="alert" className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
-          {hooks.error}
-        </p>
-      ) : (
-        <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_340px]">
-          <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Generated hooks</p>
-                <h2 className="mt-1 text-2xl font-semibold">{hooks.fitCount}/{hooks.total} fit the {hooks.budgetSeconds}s budget</h2>
+      <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_340px]">
+        <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          {hooks.error ? (
+            <p role="alert" className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+              {hooks.error}
+            </p>
+          ) : (
+            <>
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Generated hooks</p>
+                  <h2 className="mt-1 text-2xl font-semibold">{hooks.fitCount}/{hooks.total} fit the {hooks.budgetSeconds}s budget</h2>
+                </div>
+                <button className={GHOST_BTN} type="button" onClick={reset}>
+                  <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                  Reset
+                </button>
               </div>
-              <button className={GHOST_BTN} type="button" onClick={reset}>
-                <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                Reset
-              </button>
-            </div>
-            <div className="mt-4 space-y-3">
-              {hooks.hooks.map((hook) => (
-                <article key={hook.id} className="rounded-lg bg-[var(--surface-soft)] p-4">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">{hook.name} · {hook.seconds}s · {hook.words} words</p>
-                      <p className="mt-2 text-lg font-semibold">{hook.text}</p>
+              <div className="mt-4 space-y-3" aria-live="polite" aria-atomic="true">
+                {hooks.hooks.map((hook) => (
+                  <article key={hook.id} className="rounded-lg bg-[var(--surface-soft)] p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">{hook.name} · {hook.seconds}s · {hook.words} words</p>
+                        <p className="mt-2 text-lg font-semibold">{hook.text}</p>
+                      </div>
+                      <button className={PRIMARY_BTN} type="button" onClick={() => copyText(hook.id, hook.text)}>
+                        {copied === hook.id ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+                        {copied === hook.id ? "Copied" : "Copy"}
+                      </button>
                     </div>
-                    <button className={PRIMARY_BTN} type="button" onClick={() => copyText(hook.id, hook.text)}>
-                      {copied === hook.id ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                      {copied === hook.id ? "Copied" : "Copy"}
-                    </button>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-[var(--muted-foreground)]">{hook.rationale}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <aside className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
-            <label className={LABEL_CLASS} htmlFor="vh-review">Review your hook</label>
-            <textarea id="vh-review" className="mt-2 min-h-28 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none" value={customHook} onChange={(event) => setCustomHook(event.target.value)} />
-            {review.error ? (
-              <p className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">{review.error}</p>
-            ) : (
-              <div className="mt-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Verdict</p>
-                <h3 className={review.fits ? "mt-1 text-xl font-semibold text-[var(--success)]" : "mt-1 text-xl font-semibold text-[var(--warning)]"}>{review.verdict}</h3>
-                <p className="mt-2 text-sm text-[var(--muted-foreground)]">{review.words} words · {review.seconds}s · score {review.score}/{review.maxScore}</p>
-                {review.issues.length > 0 && (
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--muted-foreground)]">
-                    {review.issues.map((issue) => (
-                      <li key={issue}>• {issue}</li>
-                    ))}
-                  </ul>
-                )}
+                    <p className="mt-3 text-sm leading-6 text-[var(--muted-foreground)]">{hook.rationale}</p>
+                  </article>
+                ))}
               </div>
-            )}
-          </aside>
-        </section>
-      )}
+            </>
+          )}
+        </div>
+
+        <aside className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <label className={LABEL_CLASS} htmlFor="vh-review">Review your hook</label>
+          <textarea id="vh-review" className="mt-2 min-h-28 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none" value={customHook} onChange={(event) => setCustomHook(event.target.value)} />
+          {review.error ? (
+            <p className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">{review.error}</p>
+          ) : (
+            <div className="mt-4" aria-live="polite" aria-atomic="true">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">Verdict</p>
+              <h3 className={review.fits ? "mt-1 text-xl font-semibold text-[var(--success)]" : "mt-1 text-xl font-semibold text-[var(--warning)]"}>{review.verdict}</h3>
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">{review.words} words · {review.seconds}s · score {review.score}/{review.maxScore}</p>
+              {review.issues.length > 0 && (
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--muted-foreground)]">
+                  {review.issues.map((issue) => (
+                    <li key={issue}>• {issue}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </aside>
+      </section>
     </main>
   );
 }

@@ -137,12 +137,23 @@ function separatorChar(separatorId) {
   return found ? found.char : "-";
 }
 
-/** Clean an extension: no dots, no illegal characters, lower case. */
+/**
+ * Clean an extension: leading dot dropped (typing ".pdf" is a common habit,
+ * not an error), illegal/control characters stripped, lower cased — but
+ * internal dots are kept so compound extensions like "tar.gz" or "min.js"
+ * survive intact instead of being merged into "targz" / "minjs".
+ * @returns {{value:string, hadInvalidChars:boolean}}
+ */
 export function normaliseExtension(raw) {
-  return String(raw ?? "")
+  let text = String(raw ?? "").trim();
+  if (text.startsWith(".")) text = text.slice(1);
+
+  const cleaned = text
     .replace(CONTROL_CHARS, "")
-    .replace(/[^0-9A-Za-z]/g, "")
-    .toLowerCase();
+    .replace(ILLEGAL_FILENAME_CHARS, "")
+    .replace(/[^0-9A-Za-z.]/g, "");
+
+  return { value: cleaned.toLowerCase(), hadInvalidChars: cleaned !== text };
 }
 
 /**
@@ -244,7 +255,10 @@ export function buildFileName({
     warnings.push(`"${base}" is a reserved Windows device name — add another part.`);
   }
 
-  const ext = normaliseExtension(extension);
+  const { value: ext, hadInvalidChars: extHadInvalidChars } = normaliseExtension(extension);
+  if (extHadInvalidChars) {
+    warnings.push('Removed characters not allowed in a file extension: \\ / : * ? " < > |');
+  }
   const suffix = ext ? `.${ext}` : "";
 
   if (base.length + suffix.length > MAX_FILENAME_LENGTH) {

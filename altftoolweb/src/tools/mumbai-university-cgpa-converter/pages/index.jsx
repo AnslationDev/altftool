@@ -217,7 +217,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Percentage
             </p>
@@ -257,7 +257,11 @@ export default function ToolHome() {
             ["Class on this percentage", awarded.error ? DASH : awarded.label],
             [
               "Range this formula can produce",
-              ruleId === "cbcgs" ? "11% at CGPA 0 to 82% at CGPA 10" : "0% to 100%",
+              ruleId === "cbcgs"
+                ? "11% at CGPA 0 to 82% at CGPA 10"
+                : ruleId === "ugc"
+                  ? "0% to 95%"
+                  : "0% to 100%",
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
@@ -335,25 +339,33 @@ export default function ToolHome() {
             {fromMarks.error}
           </p>
         ) : (
-          <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
-            {[
-              ["Aggregate percentage", pct(fromMarks.percent)],
-              ["Total marks obtained", num(fromMarks.totalObtained)],
-              ["Total marks out of", num(fromMarks.totalMax)],
-              [
-                "Class on that percentage",
-                (() => {
-                  const c = classForPercentage(fromMarks.percent);
-                  return c.error ? DASH : c.label;
-                })(),
-              ],
-            ].map(([label, value]) => (
-              <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-                <dt className="text-[var(--muted-foreground)]">{label}</dt>
-                <dd className="text-right font-semibold">{value}</dd>
-              </div>
-            ))}
-          </dl>
+          <>
+            {fromMarks.counted < markRows.length ? (
+              <p aria-live="polite" className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--foreground)]">
+                {markRows.length - fromMarks.counted} semester(s) with missing or invalid values were
+                excluded from this total.
+              </p>
+            ) : null}
+            <dl aria-live="polite" aria-atomic="true" className="mt-4 divide-y divide-[var(--border)] text-sm">
+              {[
+                ["Aggregate percentage", pct(fromMarks.percent)],
+                ["Total marks obtained", num(fromMarks.totalObtained)],
+                ["Total marks out of", num(fromMarks.totalMax)],
+                [
+                  "Class on that percentage",
+                  (() => {
+                    const c = classForPercentage(fromMarks.percent);
+                    return c.error ? DASH : c.label;
+                  })(),
+                ],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between gap-4 py-2.5">
+                  <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                  <dd className="text-right font-semibold">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </>
         )}
       </section>
 
@@ -422,18 +434,26 @@ export default function ToolHome() {
             {fromCourses.error}
           </p>
         ) : (
-          <p className="mt-4 text-sm text-[var(--muted-foreground)]">
-            CGPA is{" "}
-            <span className="font-semibold text-[var(--foreground)]">{num(fromCourses.cgpa)}</span>{" "}
-            from {num(fromCourses.totalCredits)} credits, converting to{" "}
-            <span className="font-semibold text-[var(--foreground)]">
-              {(() => {
-                const out = cgpaToPercentage(fromCourses.cgpa, ruleId);
-                return out.error ? DASH : pct(out.percent);
-              })()}
-            </span>
-            .
-          </p>
+          <>
+            {fromCourses.counted < courses.length ? (
+              <p aria-live="polite" className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--foreground)]">
+                {courses.length - fromCourses.counted} course(s) with missing or invalid values were
+                excluded from this total.
+              </p>
+            ) : null}
+            <p aria-live="polite" aria-atomic="true" className="mt-4 text-sm text-[var(--muted-foreground)]">
+              CGPA is{" "}
+              <span className="font-semibold text-[var(--foreground)]">{num(fromCourses.cgpa)}</span>{" "}
+              from {num(fromCourses.totalCredits)} credits, converting to{" "}
+              <span className="font-semibold text-[var(--foreground)]">
+                {(() => {
+                  const out = cgpaToPercentage(fromCourses.cgpa, ruleId);
+                  return out.error ? DASH : pct(out.percent);
+                })()}
+              </span>
+              .
+            </p>
+          </>
         )}
       </section>
 
@@ -463,7 +483,7 @@ export default function ToolHome() {
             {reverse.error}
           </p>
         ) : (
-          <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+          <p aria-live="polite" aria-atomic="true" className="mt-3 text-sm text-[var(--muted-foreground)]">
             That corresponds to a CGPA of{" "}
             <span className="font-semibold text-[var(--foreground)]">{num(reverse.cgpa)}</span>.
           </p>

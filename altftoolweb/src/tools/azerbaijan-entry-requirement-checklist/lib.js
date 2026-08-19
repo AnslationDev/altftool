@@ -416,7 +416,7 @@ export function buildAzerbaijanChecklist({
     needsRegistration,
     registrationDeadline: toIso(registrationDeadline),
     travellers: partySize,
-    children: childCount,
+    children: Math.round(childCount),
     visaFeePerPersonUsd: route.feeUsd,
     visaFeeTotalUsd,
     feeUnknown,

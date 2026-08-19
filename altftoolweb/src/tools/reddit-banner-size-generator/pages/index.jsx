@@ -97,7 +97,12 @@ export default function ToolHome() {
     const url = URL.createObjectURL(file);
     const el = new Image();
     el.onload = () => {
-      setImage({ element: el, width: el.naturalWidth, height: el.naturalHeight, name: file.name, url });
+      setImage((prev) => {
+        if (prev && prev.url && prev.url.startsWith("blob:")) {
+          URL.revokeObjectURL(prev.url);
+        }
+        return { element: el, width: el.naturalWidth, height: el.naturalHeight, name: file.name, url };
+      });
       setManualW(String(el.naturalWidth));
       setManualH(String(el.naturalHeight));
     };
@@ -150,9 +155,17 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (image && !window.confirm("Reset? This discards your uploaded image and custom dimensions.")) {
+      return;
+    }
     setPresetId("banner-384");
     setBannerH("384");
-    setImage(null);
+    setImage((prev) => {
+      if (prev && prev.url && prev.url.startsWith("blob:")) {
+        URL.revokeObjectURL(prev.url);
+      }
+      return null;
+    });
     setManualW("2400");
     setManualH("600");
     setShowSafe(true);
@@ -310,7 +323,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={Boolean(report.error)}
-              aria-label="Copy the Reddit banner report"
+              aria-label={copied ? "Copied" : "Copy the Reddit banner report"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
@@ -442,7 +455,8 @@ export default function ToolHome() {
                     <th scope="col" className="py-2 pr-3 font-semibold">Slot</th>
                     <th scope="col" className="py-2 pr-3 text-right font-semibold">Rendered</th>
                     <th scope="col" className="py-2 pr-3 text-right font-semibold">Scale</th>
-                    <th scope="col" className="py-2 text-right font-semibold">Min stroke in source</th>
+                    <th scope="col" className="py-2 pr-3 text-right font-semibold">Min stroke in source</th>
+                    <th scope="col" className="py-2 text-right font-semibold">Smallest readable label text</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -453,7 +467,8 @@ export default function ToolHome() {
                       <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
                         {NUM1.format(row.shrink * 100)}%
                       </td>
-                      <td className="py-2 text-right">{NUM1.format(row.minSourceStroke)} px</td>
+                      <td className="py-2 pr-3 text-right">{NUM1.format(row.minSourceStroke)} px</td>
+                      <td className="py-2 text-right">{NUM1.format(row.minSourceTextPx)} px</td>
                     </tr>
                   ))}
                 </tbody>

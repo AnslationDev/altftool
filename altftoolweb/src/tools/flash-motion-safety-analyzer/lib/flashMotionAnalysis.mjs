@@ -498,7 +498,15 @@ export function buildSampleTimes(durationInput, sampleRateInput) {
     }
     times.push(round(Math.min(time, finalTime), 6));
   }
-  if (finalTime - times.at(-1) > 0.001) {
+  // 0.0025s: must stay safely above seekVideo's own "already close enough,
+  // skip seeking" fast path (pages/index.jsx, <= 0.002s). A lower threshold
+  // here used to let this final sample land inside that fast-path window, so
+  // the browser skipped the seek, video.currentTime stayed identical to the
+  // previous sample, and ingest() below threw on the resulting non-increasing
+  // timestamp — aborting an otherwise-successful scan deterministically for a
+  // recurring range of video durations. See flash-motion-safety-analyzer
+  // wave-57 audit finding 12.
+  if (finalTime - times.at(-1) > 0.0025) {
     if (times.length >= FLASH_MOTION_LIMITS.maxSampledFrames) {
       throw new RangeError(
         `Sampling would exceed ${FLASH_MOTION_LIMITS.maxSampledFrames.toLocaleString("en-US")} frames.`,
@@ -691,11 +699,22 @@ export function createFlashMotionAnalyzer({
   return {
     ingest({ rgba, timeMs: timeMsInput } = {}) {
       const timeMs = finiteNumber(timeMsInput);
-      if (
-        !Number.isFinite(timeMs) ||
-        timeMs < 0 ||
-        (previousTimeMs !== null && timeMs <= previousTimeMs)
-      ) {
+      if (!Number.isFinite(timeMs) || timeMs < 0) {
+        throw new RangeError(
+          "Sample timestamps must be finite, non-negative, and increasing.",
+        );
+      }
+      if (previousTimeMs !== null && timeMs <= previousTimeMs) {
+        // Defense in depth alongside the buildSampleTimes threshold fix above:
+        // a browser's seek-precision fast path can still land the *actual*
+        // video time within ~2ms of the previous sample even when a distinct
+        // time was requested. That is a harmless duplicate/near-duplicate
+        // frame carrying no new information, not a real ordering bug — skip
+        // it instead of aborting the whole scan. Anything further out of
+        // order still throws, since that would be a genuine caller bug.
+        if (previousTimeMs - timeMs <= 2) {
+          return;
+        }
         throw new RangeError(
           "Sample timestamps must be finite, non-negative, and increasing.",
         );

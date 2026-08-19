@@ -259,7 +259,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={failed}
-              aria-label="Copy payback result"
+              aria-label={copied ? "Copied" : "Copy payback result"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -284,9 +284,9 @@ export default function ToolHome() {
         {!failed && (
           <p
             className={`mt-4 rounded-md px-3 py-2 text-sm font-medium ${
-              result.noSaving || !result.paysBackWithinLife
-                ? "bg-[var(--danger-soft)] text-[var(--danger)]"
-                : "bg-[var(--success-soft)] text-[var(--success)]"
+              result.isGoodDeal
+                ? "bg-[var(--success-soft)] text-[var(--success)]"
+                : "bg-[var(--danger-soft)] text-[var(--danger)]"
             }`}
           >
             {result.verdict}

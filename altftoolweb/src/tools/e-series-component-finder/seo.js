@@ -8,7 +8,7 @@ const seo = {
     "Read the 'nearest E<n> value' with its % error, the Target / Nearest below / Nearest above rows and the Candidate / Error % table of six, then Copy or Download.",
   ],
   intro:
-    "E-Series Component Finder takes a calculated target value for a resistor, capacitor or inductor and returns the nearest value that actually exists in the E6, E12, E24, E48 or E96 preferred-number series, along with the percentage error you incur by using it. It generates the series the way the IEC 60063 standard defines it — as a geometric progression of 10^(n/series) across each decade, rounded to two significant figures for E6 through E24 and three for E48 and E96 — then ranks the six closest candidates and shows the nearest value below and above your target. It is for anyone who has just solved a divider or filter equation and needs a part they can genuinely order.",
+    "E-Series Component Finder takes a calculated target value for a resistor, capacitor or inductor and returns the nearest value that actually exists in the E6, E12, E24, E48 or E96 preferred-number series, along with the percentage error you incur by using it. It generates the series the way the IEC 60063 standard defines it — using the standard's own published per-decade mantissa tables (two significant figures for E6, E12 and E24; three for E48 and E96), not an approximated geometric-progression formula — then ranks the six closest candidates and shows the nearest value below and above your target. It is for anyone who has just solved a divider or filter equation and needs a part they can genuinely order.",
   useCases: [
     "Your voltage-divider maths says 4,720 Ω and you need to know which E24 resistor to actually buy and how far off that puts the output.",
     "A design must move from E24 to E96 because the reference divider needs tighter tolerance, and you want to see how much the error shrinks before committing to the more expensive parts.",
@@ -31,7 +31,7 @@ const seo = {
   faqs: [
     [
       "What are the E-series values?",
-      "They are the standard preferred component values defined in IEC 60063, spaced logarithmically so each decade is divided into equal ratio steps: 6 values in E6, 12 in E12, 24 in E24, 48 in E48 and 96 in E96. The nth value in a series is 10^(n/series) scaled to the decade, which is why E12 runs 1.0, 1.2, 1.5, 1.8, 2.2 and so on.",
+      "They are the standard preferred component values defined in IEC 60063, spaced logarithmically so each decade is divided into equal ratio steps: 6 values in E6, 12 in E12, 24 in E24, 48 in E48 and 96 in E96. Each series divides a decade into equal ratio steps of 10^(n/series), but IEC 60063 then publishes standardized mantissas close to — not always the naive rounding of — that raw ratio (2 significant figures for E6/E12/E24, 3 for E48/E96), which is why E12 runs 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2 rather than a plain rounding of the unrounded powers of ten.",
     ],
     [
       "Which E-series matches which tolerance?",
@@ -39,6 +39,7 @@ const seo = {
     ],
     [
       "What is the closest E24 resistor to 4.72 kΩ?",
+      // Sync note: matches spec.js compute({ target: 4720, series: "24" }) => 4700, -0.4237% error.
       "4.7 kΩ, which is an E24 value and sits about 0.42% below the 4,720 Ω target. The tool shows that error figure directly, along with the next value up so you can see the cost of rounding the other way.",
     ],
     [

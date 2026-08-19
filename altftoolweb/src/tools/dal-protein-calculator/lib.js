@@ -133,6 +133,9 @@ export function computeDalServing({
     proteinPer100Kcal: energyKcal > 0 ? (proteinG / energyKcal) * 100 : 0,
   };
 
+  if (bodyWeightKg !== undefined && !isNum(bodyWeightKg)) {
+    return { error: "Body weight must be a number." };
+  }
   if (isNum(bodyWeightKg)) {
     if (bodyWeightKg < MIN_WEIGHT_KG || bodyWeightKg > MAX_WEIGHT_KG) {
       return { error: `Body weight should be between ${MIN_WEIGHT_KG} kg and ${MAX_WEIGHT_KG} kg.` };

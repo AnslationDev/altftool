@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import {
   ClipboardList,
   FileText,
@@ -71,9 +71,9 @@ const ACTION_PATTERNS = [
 
 const DECISION_PATTERNS = [
   /decision[:\s]+(.+)/gi,
-  /agreed\s+(?:that\s+)?(.+)/gi,
-  /decided\s+(?:to\s+|that\s+)?(.+)/gi,
-  /concluded\s+(?:that\s+)?(.+)/gi,
+  /agreed[\s,.:;]*(?:that\s+)?(.+)/gi,
+  /decided[\s,.:;]*(?:to\s+|that\s+)?(.+)/gi,
+  /concluded[\s,.:;]*(?:that\s+)?(.+)/gi,
   /moving\s+forward[,\s]+(.+)/gi,
   /going\s+with\s+(.+)/gi,
 ];
@@ -131,12 +131,19 @@ export function extractOwners(text) {
   return owners;
 }
 
+// Strips leading dash/divider characters (e.g. the em dash left behind by a
+// "Key point — ..." cue) and trailing sentence punctuation that a greedy
+// capture group pulls in along with the real text.
+function cleanCapturedText(text) {
+  return text.replace(/^[—\-–:\s]+/, "").replace(/[.,;]+$/, "").trim();
+}
+
 export function extractDeadlines(text) {
   const deadlines = [];
   for (const pattern of DEADLINE_PATTERNS) {
     let match;
     while ((match = pattern.exec(text)) !== null) {
-      const dateText = (match[1] || match[0]).trim();
+      const dateText = cleanCapturedText((match[1] || match[0]).trim());
       if (dateText && !deadlines.includes(dateText)) deadlines.push(dateText);
     }
   }
@@ -152,6 +159,18 @@ export function assignContext(allLines) {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
+    // Decisions are checked before the generic action patterns so a line
+    // explicitly cued with "Decision:"/"Agreed"/etc. isn't swallowed by the
+    // modal-verb action pattern (will/need to/must/should) just because the
+    // decision text itself happens to contain one of those words.
+    const matchedDecisions = extractMatches(trimmed, DECISION_PATTERNS, { firstMatchOnly: true });
+    if (matchedDecisions.length > 0) {
+      for (const match of matchedDecisions) {
+        decisions.push({ text: match.text, source: trimmed });
+      }
+      continue;
+    }
+
     const matchedActions = extractMatches(trimmed, ACTION_PATTERNS, { firstMatchOnly: true });
     if (matchedActions.length > 0) {
       for (const match of matchedActions) {
@@ -162,18 +181,10 @@ export function assignContext(allLines) {
       continue;
     }
 
-    const matchedDecisions = extractMatches(trimmed, DECISION_PATTERNS);
-    if (matchedDecisions.length > 0) {
-      for (const match of matchedDecisions) {
-        decisions.push({ text: match.text, source: trimmed });
-      }
-      continue;
-    }
-
-    const matchedKeyPoints = extractMatches(trimmed, KEY_POINT_INDICATORS);
+    const matchedKeyPoints = extractMatches(trimmed, KEY_POINT_INDICATORS, { firstMatchOnly: true });
     if (matchedKeyPoints.length > 0) {
       for (const match of matchedKeyPoints) {
-        keyPoints.push({ text: match.text, source: trimmed });
+        keyPoints.push({ text: cleanCapturedText(match.text), source: trimmed });
       }
       continue;
     }
@@ -184,7 +195,7 @@ export function assignContext(allLines) {
       !trimmed.startsWith("Date:") &&
       !trimmed.startsWith("Attendees:") &&
       !trimmed.startsWith("Meeting adjourned") &&
-      !trimmed.match(/^\w+:\s*(?:Let's|We should|I think|Maybe|What about|Sounds)/i)
+      !trimmed.match(/^@?\w+:\s*(?:Let's|We should|I think|Maybe|What about|Sounds)/i)
     ) {
       keyPoints.push({ text: trimmed, source: trimmed });
     }
@@ -303,6 +314,13 @@ export default function MeetingTranscriptActionExtractor() {
   const [transcript, setTranscript] = useState("");
   const [extracted, setExtracted] = useState(null);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const hasTranscript = transcript.trim().length > 0;
   const hasResults = extracted !== null;
@@ -350,7 +368,11 @@ export default function MeetingTranscriptActionExtractor() {
     const ok = await safeCopyText(summary);
     if (ok) {
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1400);
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = window.setTimeout(() => {
+        setCopied(false);
+        copyTimeoutRef.current = null;
+      }, 1400);
     }
   }, [extracted]);
 
@@ -423,7 +445,7 @@ export default function MeetingTranscriptActionExtractor() {
         </section>
 
         {hasResults && (
-          <>
+          <div aria-live="polite">
             <div className="mt-6 flex flex-wrap gap-3">
               <button type="button" onClick={handleCopySummary} className="btn-primary">
                 <Copy className="h-4 w-4" />
@@ -493,7 +515,7 @@ export default function MeetingTranscriptActionExtractor() {
                 {stats.actions} action item{stats.actions !== 1 ? "s" : ""} · {stats.decisions} decision{stats.decisions !== 1 ? "s" : ""} · {stats.keyPoints} key point{stats.keyPoints !== 1 ? "s" : ""} · {stats.owners} unique owner{stats.owners !== 1 ? "s" : ""}
               </p>
             </div>
-          </>
+          </div>
         )}
 
         {!hasTranscript && !hasResults && (

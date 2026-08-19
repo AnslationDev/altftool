@@ -60,7 +60,7 @@ export const spec = {
       const authHeader = `Basic ${encodedAuth}`;
       return {
          result: authHeader,
-         rows: [['Username', username], ['Password', '********'], ['Realm', realm], ['Authorization Header', authHeader]]
+         rows: [['Username', username], ['Password', password ? '********' : '(empty)'], ['Realm', realm], ['Authorization Header', authHeader]]
       };
    },
 };

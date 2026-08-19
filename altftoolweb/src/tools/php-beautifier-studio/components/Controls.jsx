@@ -45,8 +45,7 @@ export default function Controls({ settings, setSettings, clearAll, onUpload }) 
         <Field label="Brace Style">
           <select value={settings.braceStyle} onChange={(e) => set("braceStyle", e.target.value)} className="w-full rounded-xl border border-(--border) bg-(--background) px-4 py-2.5 text-sm outline-none transition-all focus:border-indigo-500 text-(--foreground)">
             <option value="1tbs">1TBS (Same line)</option>
-            <option value="perlx">Perl (New line)</option>
-            <option value="allman">Allman</option>
+            <option value="per-cs">PER-CS / PSR-12 (New line for classes &amp; functions)</option>
           </select>
         </Field>
       </div>

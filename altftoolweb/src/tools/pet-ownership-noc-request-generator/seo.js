@@ -15,7 +15,7 @@ const seo = {
     "A tenant regularising an existing pet by filing the licence and vaccination certificate with the society office",
   ],
   benefits: [
-    ["Readiness score before you send", "Weights licence and vaccination highest and lists exactly which commitments are still uncovered."],
+    ["Readiness score before you send", "Weights licence, vaccination and waste clean-up highest and lists exactly which commitments are still uncovered."],
     ["Booster date computed, not guessed", "Takes the last anti-rabies dose and the annual interval to flag a certificate that is overdue or due within 30 days."],
     ["Cooperative tone, correct position", "States the AWBI circular's position once, then offers to comply with every reasonable conduct rule."],
   ],

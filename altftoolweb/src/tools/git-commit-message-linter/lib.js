@@ -118,7 +118,7 @@ export function lintCommitMessage({ message, headerMax = HEADER_MAX_DEFAULT, req
         });
       }
       if (/^[A-Z]/.test(subject)) {
-        warnings.push({
+        errors.push({
           rule: "subject-case",
           text: "config-conventional expects the subject to start lower-case (no sentence-case).",
         });
@@ -144,18 +144,15 @@ export function lintCommitMessage({ message, headerMax = HEADER_MAX_DEFAULT, req
     const firstContent = rest.findIndex((l) => l.trim() !== "");
     if (firstContent !== -1) {
       hasBody = true;
-      if (firstContent !== 1 || lines[1].trim() !== "") {
-        // Either no blank line (firstContent === 0) or content preceded oddly.
-        if (lines[1].trim() !== "") {
-          errors.push({
-            rule: "body-leading-blank",
-            text: "Body must begin one blank line after the description (Conventional Commits §6).",
-          });
-        }
+      if (lines[1].trim() !== "") {
+        warnings.push({
+          rule: "body-leading-blank",
+          text: "Body must begin one blank line after the description (Conventional Commits §6).",
+        });
       }
       rest.forEach((line, i) => {
         if (line.length > BODY_LINE_MAX) {
-          warnings.push({
+          errors.push({
             rule: "body-max-line-length",
             text: `Line ${i + 2} is ${line.length} characters — commitlint's default limit is ${BODY_LINE_MAX}.`,
           });
@@ -165,16 +162,23 @@ export function lintCommitMessage({ message, headerMax = HEADER_MAX_DEFAULT, req
     }
   }
 
-  // Build a suggested fix when the header parsed at least partially.
+  // Build a suggested fix when the header parsed at least partially. Skip it
+  // when the type isn't a recognised conventional type (there's no honest
+  // type to guess) or when a scope is required but missing (there's no
+  // honest scope to invent) — an unchanged/still-broken "fix" is worse than
+  // no suggestion.
+  const typeRecognized = Boolean(match) && CONVENTIONAL_TYPES.includes(type.toLowerCase());
+  const scopeSatisfied =
+    !requireScope || (match && scope && String(scope).trim() !== "");
   let fixed = null;
-  if (match) {
-    const fixedType = CONVENTIONAL_TYPES.includes(type.toLowerCase()) ? type.toLowerCase() : "feat";
+  if (match && typeRecognized && scopeSatisfied) {
+    const fixedType = type.toLowerCase();
     const cleanScope = scope && String(scope).trim() !== "" ? `(${String(scope).trim()})` : "";
     let fixedSubject = (subject || "change")
       .trim()
       .replace(/ {2,}/g, " ")
       .replace(/\.+$/, "");
-    if (/^[A-Z][a-z]/.test(fixedSubject)) {
+    if (/^[A-Z]/.test(fixedSubject)) {
       fixedSubject = fixedSubject[0].toLowerCase() + fixedSubject.slice(1);
     }
 

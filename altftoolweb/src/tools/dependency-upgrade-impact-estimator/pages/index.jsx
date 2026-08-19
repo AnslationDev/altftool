@@ -20,15 +20,18 @@ lucide-react 0.562.0`;
 
 function parseVersion(value = "") {
   const match = String(value).match(/(\d+)\.(\d+)\.(\d+)/);
-  return match ? match.slice(1).map(Number) : [0, 0, 0];
+  return match ? match.slice(1).map(Number) : null;
 }
 
 function changeType(current, target) {
-  const [currentMajor, currentMinor, currentPatch] = parseVersion(current);
-  const [targetMajor, targetMinor, targetPatch] = parseVersion(target);
-  if (targetMajor > currentMajor) return "major";
-  if (targetMinor > currentMinor) return "minor";
-  if (targetPatch > currentPatch) return "patch";
+  const currentParts = parseVersion(current);
+  const targetParts = parseVersion(target);
+  if (!currentParts || !targetParts) return "unknown";
+  const [currentMajor, currentMinor, currentPatch] = currentParts;
+  const [targetMajor, targetMinor, targetPatch] = targetParts;
+  if (targetMajor !== currentMajor) return targetMajor > currentMajor ? "major" : "downgrade";
+  if (targetMinor !== currentMinor) return targetMinor > currentMinor ? "minor" : "downgrade";
+  if (targetPatch !== currentPatch) return targetPatch > currentPatch ? "patch" : "downgrade";
   return "same";
 }
 
@@ -54,7 +57,10 @@ export default function DependencyUpgradeImpactEstimatorPage() {
       const rows = Object.entries(dependencies).map(([name, current]) => {
         const target = targets[name] || current;
         const type = changeType(current, target);
-        const base = { same: 0, patch: 12, minor: 34, major: 68 }[type];
+        if (type === "unknown") {
+          return { name, current, target, type, score: null, critical: critical.has(name) };
+        }
+        const base = { same: 0, patch: 12, minor: 34, major: 68, downgrade: 68 }[type];
         const score = Math.min(100, base + (critical.has(name) ? 18 : 0));
         return { name, current, target, type, score, critical: critical.has(name) };
       });
@@ -64,8 +70,9 @@ export default function DependencyUpgradeImpactEstimatorPage() {
     }
   }, [packageText, targetText]);
 
-  const averageRisk = analysis.rows.length
-    ? Math.round(analysis.rows.reduce((total, row) => total + row.score, 0) / analysis.rows.length)
+  const scoredRows = analysis.rows.filter((row) => typeof row.score === "number");
+  const averageRisk = scoredRows.length
+    ? Math.round(scoredRows.reduce((total, row) => total + row.score, 0) / scoredRows.length)
     : 0;
   const majorCount = analysis.rows.filter((row) => row.type === "major").length;
 
@@ -91,8 +98,12 @@ export default function DependencyUpgradeImpactEstimatorPage() {
         </Card>
       </section>
 
-      {!analysis.ok ? <Card className="p-4 text-sm">Parse error: {analysis.error}</Card> : (
-        <section className="grid gap-4 lg:grid-cols-[0.35fr_0.65fr]">
+      {!analysis.ok ? (
+        <Card className="p-4 text-sm" role="alert">
+          Parse error: {analysis.error}
+        </Card>
+      ) : (
+        <section className="grid gap-4 lg:grid-cols-[0.35fr_0.65fr]" aria-live="polite" aria-atomic="true">
           <div className="grid gap-4">
             <Card className="p-4">
               <p className="flex items-center gap-2 text-sm font-semibold text-(--muted-foreground)"><TrendingUp className="h-4 w-4" /> Average risk</p>
@@ -114,7 +125,9 @@ export default function DependencyUpgradeImpactEstimatorPage() {
                     <p className="font-semibold">{row.name}</p>
                     <p className="mt-1 text-xs text-(--muted-foreground)">{row.current} → {row.target} · {row.type}{row.critical ? " · critical package" : ""}</p>
                   </div>
-                  <Badge tone={row.score > 65 ? "neutral" : "success"}>{row.score > 65 ? "Review carefully" : "Low friction"}</Badge>
+                  <Badge tone={row.type === "unknown" ? "warning" : row.score > 65 ? "neutral" : "success"}>
+                    {row.type === "unknown" ? "Could not parse version — review manually" : row.score > 65 ? "Review carefully" : "Low friction"}
+                  </Badge>
                 </div>
               ))}
             </div>

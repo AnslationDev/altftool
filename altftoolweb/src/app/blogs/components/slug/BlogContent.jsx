@@ -5,6 +5,7 @@ import BlogFaqSection from "./BlogFaqSection";
 import BlogInlineBlogLinks from "./BlogInlineBlogLinks";
 import BlogInlineToolCards from "./BlogInlineToolCards";
 import BlogSources from "./BlogSources";
+import { hasInlineFaqBlock } from "./blogAnswerFirst";
 import { enhanceArticleInternalLinks, sanitizeArticleInternalLinks } from "../../utils/internalLinks";
 
 function splitAfterParagraphs(html = "", paragraphCount = 2) {
@@ -80,8 +81,9 @@ export default function BlogContent({
   cleanedContent = linkedContent.html;
   const shouldInsertTools = relatedTools.length > 0;
   const shouldInsertBlogLinks = relatedPosts.length > 0;
-  const hasInlineFaqBlock = /FAQ_WRAPPER|FAQ_ITEM|FAQ Start/i.test(cleanedContent);
-  const shouldInsertFaqs = faqItems.length > 0 && !hasInlineFaqBlock;
+  // Same detection the page uses when deciding which FAQs are visible enough
+  // to describe in FAQPage schema — keep the two in sync.
+  const shouldInsertFaqs = faqItems.length > 0 && !hasInlineFaqBlock(cleanedContent);
   const [introContent, remainingContent] = shouldInsertTools
     ? splitAfterParagraphs(cleanedContent, 2)
     : [cleanedContent, ""];

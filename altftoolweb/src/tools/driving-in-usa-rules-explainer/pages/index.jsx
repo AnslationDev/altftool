@@ -5,6 +5,8 @@ import { CarFront, Check, Copy, RotateCcw, TriangleAlert, Wine } from "lucide-re
 
 import {
   COUNTRY,
+  EQUIPMENT,
+  KEY_RULES,
   LICENCE_ORIGINS,
   STATES,
   assessTrip,
@@ -303,7 +305,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             ["Which side of the road", `Drive on the ${COUNTRY.driveSide} · ${COUNTRY.steeringWheelSide}-hand-drive cars`],
             ["Speeds are posted in", `${COUNTRY.speedUnit} — miles per hour, not km/h`],
@@ -313,7 +315,14 @@ export default function ToolHome() {
             ["International Driving Permit", ok ? (trip.permit.needsIdp ? "Carry one with your licence" : "Not required") : DASH],
             ["Why this alcohol limit", ok ? trip.alcohol.reason : DASH],
             ["What happens if you exceed it", ok ? trip.alcohol.penalty : DASH],
-            ["Highest speed limit in this state", ok ? `${trip.state.maxMph} mph` : DASH],
+            [
+              "Highest speed limit in this state",
+              ok
+                ? `${trip.state.maxMph} mph${
+                    trip.state.notableMaxMph ? ` (${trip.state.notableMaxMph} mph on one specific toll road — see the speed table below)` : ""
+                  }`
+                : DASH,
+            ],
             ["Emergency number", COUNTRY.emergencyNumbers.map(([number, use]) => `${number} — ${use}`).join(" · ")],
             ["Tolls", COUNTRY.tolls],
             ["Fuel", COUNTRY.fuelNote],
@@ -565,7 +574,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             [
               "Pure alcohol consumed",
@@ -596,7 +605,7 @@ export default function ToolHome() {
           What has to be in the car
         </h2>
         <ul className="mt-3 space-y-3 text-sm">
-          {(trip.equipment ?? []).map(([item, detail]) => (
+          {EQUIPMENT.map(([item, detail]) => (
             <li key={item}>
               <span className="font-semibold">{item}</span>
               <span className="block text-[var(--muted-foreground)]">{detail}</span>
@@ -610,7 +619,7 @@ export default function ToolHome() {
           Rules that catch visitors out
         </h2>
         <ul className="mt-3 space-y-3 text-sm">
-          {(trip.keyRules ?? []).map(([title, detail]) => (
+          {KEY_RULES.map(([title, detail]) => (
             <li key={title}>
               <span className="font-semibold">{title}</span>
               <span className="block text-[var(--muted-foreground)]">{detail}</span>

@@ -120,7 +120,7 @@ export const TONES = [
 ];
 
 /* ------------------------------------------------------------------ *
- * Wording banks. Tokens: {name} {exam} {days}
+ * Wording banks. Tokens: {name} {exam} {days} {relWord}
  * ------------------------------------------------------------------ */
 
 const PACKS = {
@@ -451,6 +451,45 @@ const EXAM_BY_LANG = {
   },
 };
 
+/**
+ * Short relationship-flavoured word substituted into RELATIONSHIP_LINES below
+ * via the {relWord} token, keyed by the same ids as RELATIONSHIPS. This is
+ * what makes the "They are your ___" selector actually change the generated
+ * message instead of only relabelling a caption.
+ */
+const RELATIONSHIP_WORDS = {
+  en: { child: "parent", sibling: "sibling", friend: "friend", student: "teacher", relative: "family" },
+  hinglish: {
+    child: "parent",
+    sibling: "bhai-behen",
+    friend: "dost",
+    student: "teacher",
+    relative: "family",
+  },
+  hi: { child: "माता-पिता", sibling: "भाई-बहन", friend: "दोस्त", student: "शिक्षक", relative: "परिवार" },
+  mr: { child: "आई-वडील", sibling: "भाऊ-बहीण", friend: "मित्र", student: "शिक्षक", relative: "कुटुंब" },
+  bn: { child: "বাবা-মা", sibling: "ভাই-বোন", friend: "বন্ধু", student: "শিক্ষক", relative: "পরিবার" },
+  gu: { child: "માતા-પિતા", sibling: "ભાઈ-બહેન", friend: "મિત્ર", student: "શિક્ષક", relative: "કુટુંબ" },
+  ta: {
+    child: "பெற்றோர்",
+    sibling: "உடன்பிறப்பு",
+    friend: "நண்பர்",
+    student: "ஆசிரியர்",
+    relative: "குடும்பம்",
+  },
+};
+
+/** One extra line per language naming the sender's relationship to the student. */
+const RELATIONSHIP_LINES = {
+  en: "This note comes from your {relWord}, cheering you on.",
+  hinglish: "Yeh sandesh aapke {relWord} ki taraf se hai, poori shubhkamnaon ke saath.",
+  hi: "यह संदेश आपके {relWord} की ओर से है, पूरी शुभकामनाओं के साथ।",
+  mr: "हा संदेश तुमच्या {relWord} कडून आहे, मनापासून शुभेच्छांसह.",
+  bn: "এই বার্তা তোমার {relWord}-এর পক্ষ থেকে, আন্তরিক শুভকামনা সহ।",
+  gu: "આ સંદેશ તમારા {relWord} તરફથી છે, પૂરી શુભેચ્છાઓ સાથે.",
+  ta: "இந்த செய்தி உங்கள் {relWord} சார்பாக, முழு நல்வாழ்த்துகளுடன்.",
+};
+
 /* ------------------------------------------------------------------ *
  * Compose
  * ------------------------------------------------------------------ */
@@ -507,6 +546,9 @@ export function buildExamWishes({
   const examEntry = EXAMS.find((item) => item.id === exam) ?? EXAMS[0];
   const toneId = TONES.some((item) => item.id === tone) ? tone : "motivating";
   const relEntry = RELATIONSHIPS.find((item) => item.id === relationship) ?? RELATIONSHIPS[0];
+  const relWords = RELATIONSHIP_WORDS[language] ?? RELATIONSHIP_WORDS.en;
+  const relWord = relWords[relEntry.id] ?? RELATIONSHIP_WORDS.en[relEntry.id] ?? "";
+  const relationshipLine = RELATIONSHIP_LINES[language] ?? RELATIONSHIP_LINES.en;
 
   const student = clean(name);
   if (!student) return { error: "Add the name of the student you are writing to." };
@@ -554,12 +596,14 @@ export function buildExamWishes({
     exam: examName,
     sender: senderName,
     days: daysLeft == null ? "" : String(Math.max(0, daysLeft)),
+    relWord,
   };
 
   const variants = [];
   for (let step = 0; step < wanted; step += 1) {
     const parts = [
       fill(pack.greeting, tokens),
+      fill(relationshipLine, tokens),
       fill(rotate(pack.openings, openOffset, step), tokens),
     ];
     if (daysLeft != null) {

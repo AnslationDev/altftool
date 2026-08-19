@@ -3,7 +3,7 @@ const seo = {
   metaDescription:
     "Type once and get six Unicode variants — bold, italic, script, monospace, wide and bubble — as real characters that paste into bios, usernames and posts.",
   intro:
-    "The Fancy Text Generator rewrites whatever you type into six styled variants at once — bold, italic, script, monospace, wide-spaced and bubble — by substituting each A–Z letter with its counterpart in Unicode's Mathematical Alphanumeric Symbols block, so the result is real text rather than an image or a font. Every variant updates as you type and each has its own copy button. It is for people writing social bios, usernames, video titles and post headings in apps that strip normal formatting.",
+    "The Fancy Text Generator rewrites whatever you type into six styled variants at once — bold, italic, script and monospace substitute each A–Z letter with its counterpart in Unicode's Mathematical Alphanumeric Symbols block (plus a few Letterlike Symbols gap-fillers for script), wide inserts a space between every character, and bubble follows each letter with a combining enclosing circle — so the result is real text rather than an image or a font. Every variant updates as you type and each has its own copy button. It is for people writing social bios, usernames, video titles and post headings in apps that strip normal formatting.",
   useCases: [
     "Your Instagram bio has no bold option and you want the first line to stand out, so you paste it in, copy the bold variant, and drop the styled characters straight into the bio field.",
     "You are naming a Discord or gaming profile and want it visually distinct from a hundred plain-text names, so you compare script and monospace side by side before picking one.",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, TimerReset } from "lucide-react";
 
 import { PERIOD_PRESETS, computeReliability } from "../lib";
@@ -32,6 +32,13 @@ export default function ToolHome() {
   const [failures, setFailures] = useState(DEFAULTS.failures);
   const [totalRepairHours, setTotalRepairHours] = useState(DEFAULTS.totalRepairHours);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => computeReliability({ periodHours, failures, totalRepairHours }),
@@ -49,7 +56,7 @@ export default function ToolHome() {
       `Total downtime: ${NUM.format(result.downtimeHours)} h`,
       `MTBF: ${result.mtbfHours === null ? "n/a (no failures)" : `${NUM.format(result.mtbfHours)} h`}`,
       `MTTR: ${result.mttrHours === null ? "n/a (no failures)" : `${NUM.format(result.mttrHours)} h`}`,
-      `Failure rate: ${RATE.format(result.failureRatePerHour)} per hour`,
+      `Failure rate: ${result.failureRatePerHour === null ? "n/a (no failures)" : `${RATE.format(result.failureRatePerHour)} per hour`}`,
       `Availability: ${PCT.format(result.availabilityPercent)}%`,
     ].join("\n");
   }, [hasError, result]);
@@ -59,7 +66,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -89,7 +97,10 @@ export default function ToolHome() {
           "MTTR (mean time to repair)",
           result.mttrHours === null ? "n/a — no failures" : `${NUM.format(result.mttrHours)} h`,
         ],
-        ["Failure rate λ", `${RATE.format(result.failureRatePerHour)} / hour`],
+        [
+          "Failure rate λ",
+          result.failureRatePerHour === null ? "n/a — no failures" : `${RATE.format(result.failureRatePerHour)} / hour`,
+        ],
         ["Uptime in window", `${NUM.format(result.uptimeHours)} h`],
         ["Downtime in window", `${NUM.format(result.downtimeHours)} h`],
       ];
@@ -185,7 +196,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

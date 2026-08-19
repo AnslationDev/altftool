@@ -1354,7 +1354,14 @@ export default function LevelDevil() {
 
           <div className="ld-stage-wrap">
             {toast && <div className="ld-toast">{toast}</div>}
-            <canvas ref={canvasRef} className="ld-canvas" width={CANVAS_W} height={CANVAS_H} />
+            <canvas
+              ref={canvasRef}
+              className="ld-canvas"
+              width={CANVAS_W}
+              height={CANVAS_H}
+              role="application"
+              aria-label="Level Devil game canvas. Move with arrow keys or A/D, jump with Space, Up, or W. Reach the door without getting caught by disappearing platforms, hidden spikes, and reversed controls."
+            />
 
             <div className="ld-touch-layer">
               <div className="ld-touch-side">

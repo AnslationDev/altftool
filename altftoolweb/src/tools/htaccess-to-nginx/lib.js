@@ -133,6 +133,19 @@ export function mapApacheVariables(text) {
   });
 }
 
+/**
+ * %{NAME:VALUE}-shaped variables that aren't the already-handled %{HTTP:header} form (for
+ * example %{ENV:REDIRECT_STATUS} or %{LA-U:REMOTE_USER}) have no NGINX embedded-variable
+ * equivalent and must not be passed through into emitted config untranslated.
+ */
+const UNMAPPABLE_VARIABLE_RE = /%\{(?!HTTP:)[A-Za-z0-9_-]+:[A-Za-z0-9_-]+\}/i;
+
+/** Find the first %{...} reference that mapApacheVariables cannot translate, if any. */
+export function findUnmappableVariable(text) {
+  const match = UNMAPPABLE_VARIABLE_RE.exec(String(text));
+  return match ? match[0] : null;
+}
+
 /** Apache backreferences %1..%9 (from RewriteCond) become NGINX $1..$9 from the last regex. */
 function mapCondBackreferences(text) {
   return String(text).replace(/%([1-9])/g, "$$$1");
@@ -339,10 +352,18 @@ export function convertHtaccess(source, options = {}) {
       }
 
       case "rewritecond": {
+        const test = args[1] || "";
+        const unmappableVariable = findUnmappableVariable(test);
+        if (unmappableVariable) {
+          pushWarning(
+            `Apache environment variable ${unmappableVariable} has no direct NGINX equivalent — this condition was not translated.`,
+          );
+        }
         pendingConds.push({
-          test: args[1] || "",
+          test,
           pattern: args[2] || "",
           flags: args[3] || "",
+          unmappable: Boolean(unmappableVariable),
         });
         continue;
       }
@@ -353,6 +374,14 @@ export function convertHtaccess(source, options = {}) {
         const flags = parseRewriteFlags(args[3] || "");
         const conds = pendingConds;
         pendingConds = [];
+
+        // A condition that references an untranslatable variable (e.g. %{ENV:...}) can't be
+        // safely folded into this rule — routing the whole rule to the unsupported/comment
+        // path is more honest than emitting a rewrite with a silently dropped condition.
+        if (conds.some((cond) => cond.unmappable)) {
+          unsupported.push(line);
+          continue;
+        }
 
         // 1. HTTPS redirect idiom.
         if (conds.length === 1 && isHttpsOffCond(conds[0]) && /^https:\/\//i.test(substitution)) {
@@ -410,6 +439,28 @@ export function convertHtaccess(source, options = {}) {
           if (conds.length > 0) {
             pushWarning(
               `The RewriteCond lines in front of "${pattern}" were dropped: a ${flags.F ? "403" : "410"} became a location block, which cannot carry them. Re-add them by hand.`,
+            );
+          }
+          continue;
+        }
+
+        // Method-preserving redirect codes (307, 308, 303, or any other explicit code besides
+        // 301/302) have no equivalent in NGINX's rewrite ... permanent/redirect flags, which are
+        // hardcoded to 301/302. "return <code> <url>;" is the mechanically correct equivalent, so
+        // emit it as its own location, the same way [F]/[G] become their own return above.
+        if (flags.R && flags.R !== true && flags.R !== "301" && flags.R !== "302") {
+          locationBlocks.push({
+            kind: "location",
+            selector: `location ~ ${nginxPattern}`,
+            lines: [`return ${flags.R} ${target};`],
+          });
+          directiveCount += 1;
+          pushWarning(
+            `[R=${flags.R}] preserves the request method, which NGINX's rewrite ... redirect/permanent flags cannot do (they only emit 301/302), so it became its own location with return ${flags.R}.`,
+          );
+          if (conds.length > 0) {
+            pushWarning(
+              `The RewriteCond lines in front of "${pattern}" were dropped: an [R=${flags.R}] redirect became a location block, which cannot carry them. Re-add them by hand.`,
             );
           }
           continue;
@@ -600,16 +651,23 @@ export function convertHtaccess(source, options = {}) {
       }
 
       case "deny": {
-        const target = args[args.length - 1];
-        emit(`deny ${target === "all" ? "all" : target};`);
-        directiveCount += 1;
+        // "Deny from" can list several space-separated hosts on one line (mod_access, Apache 2.2);
+        // NGINX's "deny" only takes one address, so each host needs its own directive.
+        const targets = args[1]?.toLowerCase() === "from" ? args.slice(2) : args.slice(1);
+        for (const target of targets) {
+          emit(`deny ${target === "all" ? "all" : target};`);
+          directiveCount += 1;
+        }
         continue;
       }
 
       case "allow": {
-        const target = args[args.length - 1];
-        emit(`allow ${target === "all" ? "all" : target};`);
-        directiveCount += 1;
+        // Same multi-host rule as "Deny from" above applies to "Allow from".
+        const targets = args[1]?.toLowerCase() === "from" ? args.slice(2) : args.slice(1);
+        for (const target of targets) {
+          emit(`allow ${target === "all" ? "all" : target};`);
+          directiveCount += 1;
+        }
         continue;
       }
 
@@ -620,7 +678,14 @@ export function convertHtaccess(source, options = {}) {
         } else if (kind === "all") {
           emit("allow all;");
         } else if (kind === "ip") {
-          emit(`allow ${args.slice(2).join(" ")};`);
+          // "Require ip" can list several addresses/CIDRs on one line; NGINX's "allow" only
+          // takes one argument, so each address needs its own directive.
+          const addresses = args.slice(2);
+          for (const address of addresses) {
+            emit(`allow ${address};`);
+          }
+          directiveCount += addresses.length;
+          continue;
         } else if (kind === "valid-user") {
           emit('auth_basic "Restricted";');
         } else {

@@ -7,7 +7,7 @@ const NAVBAR_ITEMS_PATH = ["projects", PROJECT_ID, "navbarItems"];
 
 export const DEFAULT_NAVBAR_SETTINGS = {
   logoType: "text",
-  logoText: "ANSLIC",
+  logoText: "Campaignastra",
   logoImageUrl: "",
   logoImagePath: "",
   contactCtaLabel: "Contact",

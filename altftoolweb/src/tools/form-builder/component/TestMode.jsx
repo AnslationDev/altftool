@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/shared/ui/Button";
+import FieldControl from "./FieldControl";
 
 const TestMode = ({
   formFields,
@@ -10,6 +11,7 @@ const TestMode = ({
   theme,
 }) => {
   const [testData, setTestData] = useState({});
+  const [uploadedFiles, setUploadedFiles] = useState({});
   const [tips, setTips] = useState([]);
 
   const handleChange = (field, value) => {
@@ -56,48 +58,47 @@ const TestMode = ({
       <h2 className="subheading mb-4"> Test Mode</h2>
 
       <form className="space-y-6">
-        {formFields.map((field) => (
-          <div key={field.id}>
-            <label className="block mb-2">
-              {field.label}
-              {field.required && (
-                <span className="text-red-600 ml-1">*</span>
-              )}
-            </label>
+        {formFields.map((field) => {
+          const fieldId = `test-${field.id}`;
+          const errorId = `${fieldId}-error`;
+          const hasError = !!errors[field.id];
+          return (
+            <div key={field.id}>
+              <label htmlFor={fieldId} className="block mb-2">
+                {field.label}
+                {field.required && (
+                  <span className="text-red-600 ml-1" aria-hidden="true">
+                    *
+                  </span>
+                )}
+              </label>
 
-            {field.type === "textarea" ? (
-              <textarea
-                value={testData[field.id] || ""}
-                onChange={(e) =>
-                  handleChange(field, e.target.value)
-                }
-                placeholder={field.placeholder}
-                className="w-full px-3 py-2 border border-(--border) rounded-md"
-                rows={3}
-              />
-            ) : (
-              <input
-                type={field.type}
-                value={testData[field.id] || ""}
-                onChange={(e) =>
-                  handleChange(field, e.target.value)
-                }
-                placeholder={field.placeholder}
-                className="w-full px-3 py-2 border border-(--border) rounded-md"
-                style={{
-                  borderRadius: `${theme.borderRadius}px`,
-                  fontFamily: theme.fontFamily,
+              <FieldControl
+                field={field}
+                id={fieldId}
+                value={testData[field.id]}
+                onChange={(val) => handleChange(field, val)}
+                theme={theme}
+                uploadedFile={uploadedFiles[field.id]}
+                onFileChange={(file) => {
+                  setUploadedFiles((prev) => ({
+                    ...prev,
+                    [field.id]: file,
+                  }));
+                  handleChange(field, file.name);
                 }}
+                ariaDescribedBy={hasError ? errorId : undefined}
+                ariaInvalid={hasError}
               />
-            )}
 
-            {errors[field.id] && (
-              <p className="text-red-600 text-sm mt-1">
-                {errors[field.id]}
-              </p>
-            )}
-          </div>
-        ))}
+              {hasError && (
+                <p id={errorId} role="alert" className="text-red-600 text-sm mt-1">
+                  {errors[field.id]}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </form>
 
       {/* Generate Tips Button */}

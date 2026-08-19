@@ -165,18 +165,17 @@ export default function ToolHome() {
   const [isLoading, setIsLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [gaugeValue, setGaugeValue] = useState(0);
-  const [entries, setEntries] = useState([
-    { date: "May 1", bodyFat: 23.6 },
-    { date: "May 15", bodyFat: 22.0 },
-    { date: "Jun 1", bodyFat: 20.5 },
-    { date: "Jun 15", bodyFat: 19.8 },
-    { date: "Jul 1", bodyFat: 19.2 },
-  ]);
+  // Starts empty — no seeded/example history. Real entries are added via the
+  // "Add New Entry" modal (see setEntries call below) and persist only for
+  // this session (see Finding 1 audit fix).
+  const [entries, setEntries] = useState([]);
   const [showAddEntryModal, setShowAddEntryModal] = useState(false);
   const [newEntryVal, setNewEntryVal] = useState("");
+  const [newEntryError, setNewEntryError] = useState("");
 
   const calculateTimerRef = useRef(null);
   const scrollTimerRef = useRef(null);
+  const resultsHeadingRef = useRef(null);
 
   useEffect(
     () => () => {
@@ -300,7 +299,11 @@ export default function ToolHome() {
   }, [active, measures.weightKg]);
 
   const band = active === null ? null : bandFor(bands, active);
-  const clampedTarget = clamp(toNum(targetBodyFat), 3, 60);
+  // Bounds match the number input and range slider's advertised min/max (5-30)
+  // below, so the displayed target always matches the value actually used in
+  // the goal math (previously this used 3-60, which could desync from the
+  // 5-30 widgets — see Finding 5 audit fix).
+  const clampedTarget = clamp(toNum(targetBodyFat), 5, 30);
 
   const goal = useMemo(() => {
     if (active === null || !composition || measures.weightKg <= 0) return null;
@@ -326,6 +329,7 @@ export default function ToolHome() {
   // that has been closed so far — a distinct measure from the raw point change
   // shown in the "Change" stat above it.
   const progressToGoalPercent = useMemo(() => {
+    if (entries.length === 0) return null;
     const start = entries[0].bodyFat;
     const current = active !== null ? active : entries[entries.length - 1].bodyFat;
     if (start === clampedTarget) return 100;
@@ -398,6 +402,7 @@ export default function ToolHome() {
       setShowResult(true);
       scrollTimerRef.current = setTimeout(() => {
         document.getElementById("results-section")?.scrollIntoView({ behavior: "smooth" });
+        resultsHeadingRef.current?.focus();
       }, 100);
     }, 750);
   };
@@ -442,18 +447,18 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
               <Activity className="w-3.5 h-3.5" />
               Body Composition
             </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-800">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--foreground)]">
               Body Fat Percentage Calculator
             </h1>
-            <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-xl">
+            <p className="text-[var(--foreground)] text-sm md:text-base leading-relaxed max-w-xl">
               Get accurate body fat % using proven methods. See where you stand, track progress, and hit your goal.
             </p>
           </div>
 
           {/* Right Side: Live Interactive Body Composition Card */}
-          <div className="bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-5 shadow-lg shadow-slate-100/50 flex items-center gap-6 z-10 w-full md:w-auto md:min-w-[380px]">
+          <div className="bg-[var(--card)]/80 backdrop-blur-md border border-[var(--border)]/50 rounded-2xl p-5 shadow-lg flex items-center gap-6 z-10 w-full md:w-auto md:min-w-[380px]">
             {/* SVG Silhouette Visualizer */}
-            <div className="relative w-24 h-24 rounded-full border border-slate-100 bg-slate-50/50 flex items-center justify-center shrink-0">
+            <div className="relative w-24 h-24 rounded-full border border-[var(--border)] bg-[var(--muted)]/50 flex items-center justify-center shrink-0">
               {/* Circular segment progress */}
               <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                 <circle
@@ -493,25 +498,25 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
             {/* Metrics List */}
             <div className="grid grid-cols-2 gap-x-6 gap-y-3.5 flex-1">
               <div>
-                <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Lean Mass</span>
-                <span className="text-sm font-black text-slate-800 block">
+                <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Lean Mass</span>
+                <span className="text-sm font-black text-[var(--foreground)] block">
                   {composition ? `${formatNumber(toMassUnit(composition.leanKg, massUnit), 1)} ${massUnit}` : "--"}
                 </span>
               </div>
               <div>
-                <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Fat Mass</span>
-                <span className="text-sm font-black text-slate-800 block">
+                <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Fat Mass</span>
+                <span className="text-sm font-black text-[var(--foreground)] block">
                   {composition ? `${formatNumber(toMassUnit(composition.fatKg, massUnit), 1)} ${massUnit}` : "--"}
                 </span>
               </div>
               <div>
-                <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Body Fat</span>
+                <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Body Fat</span>
                 <span className="text-sm font-black text-amber-600 block">
                   {active !== null ? `${formatNumber(active, 1)}%` : "--"}
                 </span>
               </div>
               <div>
-                <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">BMI</span>
+                <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">BMI</span>
                 <span className="text-sm font-black text-blue-600 block">
                   {results.bmi !== null ? formatNumber(results.bmi, 1) : "--"}
                 </span>
@@ -522,19 +527,19 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
         <section className="mt-6 grid grid-cols-1 gap-6 max-w-6xl mx-auto w-full">
           {!isLoading && !showResult && (
-            <div className="bg-white border border-slate-200/60 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 w-full">
+            <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-6 md:p-8 shadow-sm space-y-6 w-full">
             {/* Header info */}
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
               <div className="flex items-center gap-2.5">
                 <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                   1
                 </span>
-                <h2 className="text-base font-bold text-slate-700">Enter Your Details</h2>
+                <h2 className="text-base font-bold text-[var(--foreground)]">Enter Your Details</h2>
               </div>
               <button
                 type="button"
                 onClick={reset}
-                className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-slate-600 transition-colors"
+                className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 Reset All
@@ -547,21 +552,21 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
               <div className="space-y-6">
                 {/* Method selector */}
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Estimation Method</label>
+                  <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Estimation Method</label>
                   <div className="grid grid-cols-1 gap-3">
                     <button
                       type="button"
                       onClick={() => setMethod("navy")}
                       className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${
                         method === "navy"
-                          ? "bg-white border-emerald-500 text-emerald-600 shadow-sm"
-                          : "bg-slate-50/50 border-slate-200/80 text-slate-500 hover:bg-slate-50"
+                          ? "bg-[var(--card)] border-emerald-500 text-emerald-600 shadow-sm"
+                          : "bg-[var(--muted)]/50 border-[var(--border)]/80 text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                       }`}
                     >
                       <span className="p-2 rounded-lg bg-emerald-50 text-emerald-600 font-bold text-base">📏</span>
                       <div>
                         <span className="block text-xs font-black uppercase tracking-wider">US Navy Tape Method</span>
-                        <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">Circumference based</span>
+                        <span className="block text-[10px] text-[var(--muted-foreground)] font-semibold mt-0.5">Circumference based</span>
                       </div>
                     </button>
 
@@ -570,14 +575,14 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       onClick={() => setMethod("bmi")}
                       className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${
                         method === "bmi"
-                          ? "bg-white border-emerald-500 text-emerald-600 shadow-sm"
-                          : "bg-slate-50/50 border-slate-200/80 text-slate-500 hover:bg-slate-50"
+                          ? "bg-[var(--card)] border-emerald-500 text-emerald-600 shadow-sm"
+                          : "bg-[var(--muted)]/50 border-[var(--border)]/80 text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                       }`}
                     >
                       <span className="p-2 rounded-lg bg-emerald-50 text-emerald-600 font-bold text-base">⚖️</span>
                       <div>
                         <span className="block text-xs font-black uppercase tracking-wider">BMI (Deurenberg)</span>
-                        <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">No tape needed</span>
+                        <span className="block text-[10px] text-[var(--muted-foreground)] font-semibold mt-0.5">No tape needed</span>
                       </div>
                     </button>
                   </div>
@@ -585,7 +590,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                 {/* Gender selector */}
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Gender</label>
+                  <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Gender</label>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
@@ -596,7 +601,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border text-xs font-bold transition-all ${
                         gender === "male"
                           ? "bg-[#10b981] border-[#10b981] text-white shadow-md shadow-emerald-500/10"
-                          : "bg-slate-50/50 border-slate-200/80 text-slate-500 hover:bg-slate-50"
+                          : "bg-[var(--muted)]/50 border-[var(--border)]/80 text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                       }`}
                     >
                       <User className="w-3.5 h-3.5" />
@@ -611,22 +616,22 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border text-xs font-bold transition-all ${
                         gender === "female"
                           ? "bg-[#10b981] border-[#10b981] text-white shadow-md shadow-emerald-500/10"
-                          : "bg-slate-50/50 border-slate-200/80 text-slate-500 hover:bg-slate-50"
+                          : "bg-[var(--muted)]/50 border-[var(--border)]/80 text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
                       }`}
                     >
                       <User className="w-3.5 h-3.5" />
                       Female
                     </button>
                   </div>
-                  <p className="text-[9px] text-slate-400 font-medium pl-0.5">
+                  <p className="text-[9px] text-[var(--muted-foreground)] font-medium pl-0.5">
                     Formulas use sex-specific constants for accuracy
                   </p>
                 </div>
 
                 {/* Units Selection */}
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Units</label>
-                  <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-xl border border-slate-200/40 max-w-xs">
+                  <label className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Units</label>
+                  <div className="grid grid-cols-2 p-1 bg-[var(--muted)] rounded-xl border border-[var(--border)]/40 max-w-xs">
                     <button
                       type="button"
                       onClick={() => {
@@ -635,8 +640,8 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       }}
                       className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                         lengthUnit === "cm" && massUnit === "kg"
-                          ? "bg-white text-emerald-600 shadow-sm border border-emerald-500/10"
-                          : "text-slate-500 hover:text-slate-700"
+                          ? "bg-[var(--card)] text-emerald-600 shadow-sm border border-emerald-500/10"
+                          : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
                       }`}
                     >
                       Metric (cm, kg)
@@ -649,8 +654,8 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       }}
                       className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                         lengthUnit === "in" && massUnit === "lb"
-                          ? "bg-white text-emerald-600 shadow-sm border border-emerald-500/10"
-                          : "text-slate-500 hover:text-slate-700"
+                          ? "bg-[var(--card)] text-emerald-600 shadow-sm border border-emerald-500/10"
+                          : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
                       }`}
                     >
                       Imperial (in, lb)
@@ -665,7 +670,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 <div className="grid grid-cols-3 gap-3">
                   {/* Age */}
                   <div className="space-y-1.5">
-                    <label htmlFor="bf-age" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Age</label>
+                    <label htmlFor="bf-age" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Age</label>
                     <div className="relative flex items-center">
                       <input
                         id="bf-age"
@@ -674,15 +679,15 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         max="120"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
-                        className="w-full bg-slate-50/50 border border-slate-200/80 rounded-xl px-2.5 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                        className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-2.5 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                       />
-                      <span className="absolute right-2 text-[8px] font-black text-slate-400 uppercase">Yrs</span>
+                      <span className="absolute right-2 text-[8px] font-black text-[var(--muted-foreground)] uppercase">Yrs</span>
                     </div>
                   </div>
 
                   {/* Height */}
                   <div className="space-y-1.5">
-                    <label htmlFor="bf-height" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Height</label>
+                    <label htmlFor="bf-height" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Height</label>
                     <div className="relative flex items-center">
                       <input
                         id="bf-height"
@@ -690,15 +695,15 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         step="0.1"
                         value={height}
                         onChange={(e) => setHeight(e.target.value)}
-                        className="w-full bg-slate-50/50 border border-slate-200/80 rounded-xl px-2.5 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                        className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-2.5 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                       />
-                      <span className="absolute right-2 text-[8px] font-black text-slate-400 uppercase">{lengthUnit}</span>
+                      <span className="absolute right-2 text-[8px] font-black text-[var(--muted-foreground)] uppercase">{lengthUnit}</span>
                     </div>
                   </div>
 
                   {/* Weight */}
                   <div className="space-y-1.5">
-                    <label htmlFor="bf-weight" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Weight</label>
+                    <label htmlFor="bf-weight" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Weight</label>
                     <div className="relative flex items-center">
                       <input
                         id="bf-weight"
@@ -706,9 +711,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         step="0.1"
                         value={weight}
                         onChange={(e) => setWeight(e.target.value)}
-                        className="w-full bg-slate-50/50 border border-slate-200/80 rounded-xl px-2.5 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                        className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-2.5 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                       />
-                      <span className="absolute right-2 text-[8px] font-black text-slate-400 uppercase">{massUnit}</span>
+                      <span className="absolute right-2 text-[8px] font-black text-[var(--muted-foreground)] uppercase">{massUnit}</span>
                     </div>
                   </div>
                 </div>
@@ -718,41 +723,41 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   <div className={`grid grid-cols-1 gap-3 ${gender === "female" ? "grid-cols-3" : "grid-cols-2"}`}>
                     {/* Neck */}
                     <div className="space-y-1.5">
-                      <label htmlFor="bf-neck" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Neck ({lengthUnit})</label>
+                      <label htmlFor="bf-neck" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Neck ({lengthUnit})</label>
                       <input
                         id="bf-neck"
                         type="number"
                         step="0.1"
                         value={neck}
                         onChange={(e) => setNeck(e.target.value)}
-                        className="w-full bg-slate-50/50 border border-slate-200/80 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                        className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                       />
                     </div>
 
                     {/* Waist */}
                     <div className="space-y-1.5">
-                      <label htmlFor="bf-waist" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Waist ({lengthUnit})</label>
+                      <label htmlFor="bf-waist" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Waist ({lengthUnit})</label>
                       <input
                         id="bf-waist"
                         type="number"
                         step="0.1"
                         value={waist}
                         onChange={(e) => setWaist(e.target.value)}
-                        className="w-full bg-slate-50/50 border border-slate-200/80 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                        className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                       />
                     </div>
 
                     {/* Hips (Female Only) */}
                     {gender === "female" && (
                       <div className="space-y-1.5">
-                        <label htmlFor="bf-hip" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Hips ({lengthUnit})</label>
+                        <label htmlFor="bf-hip" className="text-[11px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider block">Hips ({lengthUnit})</label>
                         <input
                           id="bf-hip"
                           type="number"
                           step="0.1"
                           value={hip}
                           onChange={(e) => setHip(e.target.value)}
-                          className="w-full bg-slate-50/50 border border-slate-200/80 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                          className="w-full bg-[var(--muted)]/50 border border-[var(--border)]/80 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                         />
                       </div>
                     )}
@@ -762,9 +767,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 {/* Presets Row */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Quick Presets</span>
-                    <span className="text-[9px] font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer transition-colors">
-                      + Save Preset
+                    <span className="text-[10px] font-bold text-[var(--muted-foreground)] uppercase tracking-wider">Quick Presets</span>
+                    <span className="text-[9px] font-bold text-[var(--muted-foreground)]">
+                      Save Preset (coming soon)
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
@@ -773,7 +778,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         key={preset.label}
                         type="button"
                         onClick={() => applyPreset(preset)}
-                        className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-[10px] font-bold text-slate-600 hover:bg-slate-50 hover:border-emerald-500/30 transition-all"
+                        className="px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[10px] font-bold text-[var(--foreground)] hover:bg-[var(--muted)] hover:border-emerald-500/30 transition-all"
                       >
                         {preset.label}
                       </button>
@@ -782,7 +787,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 </div>
 
                 {/* Calculate / Action Button */}
-                <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="space-y-2 pt-2 border-t border-[var(--border)]">
                   <button
                     type="button"
                     onClick={handleCalculateClick}
@@ -791,7 +796,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     <Activity className="w-4 h-4" />
                     Calculate Body Fat %
                   </button>
-                  <p className="text-[9px] text-slate-400 font-medium text-center">
+                  <p className="text-[9px] text-[var(--muted-foreground)] font-medium text-center">
                     Your data is used only in your browser.
                   </p>
                 </div>
@@ -802,11 +807,11 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
             {/* Loader Spinner */}
             {isLoading && (
-              <div className="bg-white border border-slate-200/60 rounded-3xl p-12 shadow-sm flex flex-col items-center justify-center space-y-6 max-w-6xl mx-auto animate-pulse">
+              <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-12 shadow-sm flex flex-col items-center justify-center space-y-6 max-w-6xl mx-auto animate-pulse">
                 <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
                 <div className="text-center space-y-2">
-                  <h3 className="text-base font-bold text-slate-700">Analyzing Body Composition...</h3>
-                  <p className="text-xs text-slate-400 font-medium max-w-xs">
+                  <h3 className="text-base font-bold text-[var(--foreground)]">Analyzing Body Composition...</h3>
+                  <p className="text-xs text-[var(--muted-foreground)] font-medium max-w-xs">
                     Computing subcutaneous fat distribution and lean mass percentages using {method === "navy" ? "Navy Tape" : "BMI Deurenberg"} equations.
                   </p>
                 </div>
@@ -815,24 +820,30 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
             {/* Results Section Dashboard */}
             {!isLoading && showResult && (
-              <div className="grid gap-6 max-w-6xl mx-auto w-full" id="results-section">
+              <div className="grid gap-6 max-w-6xl mx-auto w-full" id="results-section" aria-live="polite">
 
                 {/* Custom Results Card */}
-                <div className="bg-white border border-slate-200/60 rounded-3xl p-5 md:p-6 shadow-sm space-y-4 w-full animate-fadeIn">
+                <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 md:p-6 shadow-sm space-y-4 w-full animate-fadeIn">
 
                   {/* Header row */}
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
                     <div className="flex items-center gap-2.5">
                       <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs animate-bounce">
                         2
                       </span>
-                      <h2 className="text-base font-bold text-slate-700">Your Results</h2>
+                      <h2
+                        ref={resultsHeadingRef}
+                        tabIndex={-1}
+                        className="text-base font-bold text-[var(--foreground)] outline-none"
+                      >
+                        Your Results
+                      </h2>
                     </div>
                     <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => setShowResult(false)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border)] text-xs font-bold text-[var(--foreground)] hover:bg-[var(--muted)] transition-all hover:scale-105 active:scale-95"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
                         Back
@@ -840,7 +851,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <button
                         type="button"
                         onClick={copyReport}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border)] text-xs font-bold text-[var(--foreground)] hover:bg-[var(--muted)] transition-all hover:scale-105 active:scale-95"
                       >
                         <Copy className="w-3.5 h-3.5" />
                         {copied ? "Copied" : "Copy"}
@@ -848,7 +859,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <button
                         type="button"
                         onClick={downloadReport}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border)] text-xs font-bold text-[var(--foreground)] hover:bg-[var(--muted)] transition-all hover:scale-105 active:scale-95"
                       >
                         <Download className="w-3.5 h-3.5" />
                         Download
@@ -874,7 +885,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         <h3 className="text-4xl md:text-5xl font-black text-emerald-600 tracking-tight transition-all duration-700 hover:scale-105">
                           {formatNumber(active, 1)}%
                         </h3>
-                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+                        <span className="text-[10px] text-[var(--muted-foreground)] font-bold uppercase tracking-wider block">
                           Body Fat Percentage
                         </span>
                         {band && (
@@ -938,8 +949,8 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         <div className="grid grid-cols-5 text-center max-w-sm mx-auto gap-1">
                           {bands.map((b) => (
                             <div key={b.id} className="space-y-0.5">
-                              <span className="text-[9px] font-bold text-slate-700 block leading-tight">{b.label}</span>
-                              <span className="text-[8px] font-bold text-slate-400 block">{b.range}</span>
+                              <span className="text-[9px] font-bold text-[var(--foreground)] block leading-tight">{b.label}</span>
+                              <span className="text-[8px] font-bold text-[var(--muted-foreground)] block">{b.range}</span>
                             </div>
                           ))}
                         </div>
@@ -954,12 +965,12 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                         {/* Fat Mass */}
                         <div className="bg-amber-50/20 border border-amber-100/40 p-4 rounded-xl flex items-center gap-3">
-                          <div className="p-2.5 rounded-lg bg-white border border-amber-100/20 text-amber-500">
+                          <div className="p-2.5 rounded-lg bg-[var(--card)] border border-amber-100/20 text-amber-500">
                             <Flame className="w-4.5 h-4.5" />
                           </div>
                           <div>
-                            <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Fat Mass</span>
-                            <span className="text-sm font-black text-slate-700 block mt-0.5">
+                            <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Fat Mass</span>
+                            <span className="text-sm font-black text-[var(--foreground)] block mt-0.5">
                               {composition ? `${formatNumber(toMassUnit(composition.fatKg, massUnit), 1)} ${massUnit}` : "--"}
                             </span>
                           </div>
@@ -967,12 +978,12 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                         {/* Lean Mass */}
                         <div className="bg-emerald-50/20 border border-emerald-100/40 p-4 rounded-xl flex items-center gap-3">
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-100/20 text-emerald-600">
+                          <div className="p-2.5 rounded-lg bg-[var(--card)] border border-emerald-100/20 text-emerald-600">
                             <span className="text-base font-bold">💪</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Lean Mass</span>
-                            <span className="text-sm font-black text-slate-700 block mt-0.5">
+                            <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Lean Mass</span>
+                            <span className="text-sm font-black text-[var(--foreground)] block mt-0.5">
                               {composition ? `${formatNumber(toMassUnit(composition.leanKg, massUnit), 1)} ${massUnit}` : "--"}
                             </span>
                           </div>
@@ -980,17 +991,17 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                         {/* BMI */}
                         <div className="bg-blue-50/20 border border-blue-100/40 p-4 rounded-xl flex items-center gap-3">
-                          <div className="p-2.5 rounded-lg bg-white border border-blue-100/20 text-blue-500">
+                          <div className="p-2.5 rounded-lg bg-[var(--card)] border border-blue-100/20 text-blue-500">
                             <Activity className="w-4.5 h-4.5" />
                           </div>
                           <div>
-                            <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">BMI</span>
+                            <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">BMI</span>
                             <div className="flex items-center gap-2 mt-0.5">
-                              <span className="text-sm font-black text-slate-700">
+                              <span className="text-sm font-black text-[var(--foreground)]">
                                 {results.bmi !== null ? formatNumber(results.bmi, 1) : "--"}
                               </span>
                               {results.bmi !== null && (
-                                <span className="text-[8px] font-bold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-md uppercase">
+                                <span className="text-[8px] font-bold bg-[var(--muted)] text-[var(--muted-foreground)] px-1.5 py-0.5 rounded-md uppercase">
                                   {results.bmi < 18.5 ? "Underweight" : results.bmi < 25 ? "Normal" : results.bmi < 30 ? "Overweight" : "Obese"}
                                 </span>
                               )}
@@ -1000,48 +1011,38 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                         {/* Health Category */}
                         <div className="bg-amber-50/20 border border-amber-100/40 p-4 rounded-xl flex items-center gap-3">
-                          <div className="p-2.5 rounded-lg bg-white border border-amber-100/20 text-amber-500">
+                          <div className="p-2.5 rounded-lg bg-[var(--card)] border border-amber-100/20 text-amber-500">
                             <span className="text-base font-bold">🛡️</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Health Category</span>
+                            <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Health Category</span>
                             <span className="text-sm font-black text-amber-600 block mt-0.5">
                               {band?.label || "--"}
                             </span>
-                            <span className="text-[9px] text-slate-400 font-semibold block">
+                            <span className="text-[9px] text-[var(--muted-foreground)] font-semibold block">
                               {gender === "male" ? "Men" : "Women"}: {band?.range || "--"}
                             </span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Confidence Card */}
-                      <div className="bg-emerald-50/30 border border-emerald-100/40 p-4.5 rounded-xl flex items-start gap-3 mt-4">
-                        <span className="text-lg text-emerald-500">🛡️</span>
-                        <div>
-                          <span className="text-xs font-black text-emerald-800 block">Confidence: High</span>
-                          <span className="text-[10px] text-emerald-700/80 font-bold block mt-0.5">
-                            Based on {method === "navy" ? "US Navy tape method" : "BMI Deurenberg method"} calculations
-                          </span>
-                        </div>
-                      </div>
                     </>
                   )}
                 </div>
 
                 {/* 3 Body Composition Overview Card */}
                 {active !== null && composition && (
-                  <div className="bg-white border border-slate-200/60 rounded-3xl p-5 md:p-6 shadow-sm space-y-5 w-full animate-fadeIn">
+                  <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 md:p-6 shadow-sm space-y-5 w-full animate-fadeIn">
 
                     {/* Header row */}
-                    <div className="border-b border-slate-100 pb-3">
+                    <div className="border-b border-[var(--border)] pb-3">
                       <div className="flex items-center gap-2.5">
                         <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           3
                         </span>
-                        <h2 className="text-base font-bold text-slate-700">Body Composition Overview</h2>
+                        <h2 className="text-base font-bold text-[var(--foreground)]">Body Composition Overview</h2>
                       </div>
-                      <p className="text-[11px] text-slate-400 font-bold mt-1">Breakdown of your body composition</p>
+                      <p className="text-[11px] text-[var(--muted-foreground)] font-bold mt-1">Breakdown of your body composition</p>
                     </div>
 
                     {/* Progress bar and Donut layout row */}
@@ -1049,7 +1050,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                       {/* Left: Horizontal breakdown bar */}
                       <div className="w-full flex-1 space-y-4">
-                        <div className="h-6 flex rounded-lg overflow-hidden border border-slate-200/40">
+                        <div className="h-6 flex rounded-lg overflow-hidden border border-[var(--border)]/40">
                           <div
                             style={{ width: `${active}%` }}
                             className="bg-amber-500 flex items-center justify-center text-[10px] font-black text-white transition-all duration-[1000ms] ease-out"
@@ -1070,7 +1071,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       </div>
 
                       {/* Right: Donut visualization chart */}
-                      <div className="flex items-center gap-4.5 bg-slate-50/50 border border-slate-100 rounded-2xl p-3">
+                      <div className="flex items-center gap-4.5 bg-[var(--muted)]/50 border border-[var(--border)] rounded-2xl p-3">
                         <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 60 60">
                           {/* Grey background circle */}
                           <circle
@@ -1105,7 +1106,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                             className="transition-all duration-[1000ms] ease-out"
                           />
                         </svg>
-                        <div className="space-y-1 text-[10px] font-bold text-slate-500">
+                        <div className="space-y-1 text-[10px] font-bold text-[var(--muted-foreground)]">
                           <div className="flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                             <span>Fat Mass: {formatNumber(toMassUnit(composition.fatKg, massUnit), 1)} {massUnit} ({formatNumber(active, 1)}%)</span>
@@ -1124,67 +1125,67 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                       {/* Ideal Body Fat */}
                       <div className="bg-amber-50/20 border border-amber-100/40 p-3 rounded-xl flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white border border-amber-100/20 text-amber-500 shrink-0">
+                        <div className="p-2 rounded-lg bg-[var(--card)] border border-amber-100/20 text-amber-500 shrink-0">
                           <Target className="w-4 h-4" />
                         </div>
                         <div>
-                          <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Ideal Fat</span>
-                          <span className="text-xs font-black text-slate-700 block mt-1">{clampedTarget}%</span>
-                          <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">Your target</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider leading-none">Ideal Fat</span>
+                          <span className="text-xs font-black text-[var(--foreground)] block mt-1">{clampedTarget}%</span>
+                          <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-none mt-0.5">Your target</span>
                         </div>
                       </div>
 
                       {/* Fat to Lose */}
                       <div className="bg-emerald-50/20 border border-emerald-100/40 p-3 rounded-xl flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white border border-emerald-100/20 text-emerald-500 shrink-0">
+                        <div className="p-2 rounded-lg bg-[var(--card)] border border-emerald-100/20 text-emerald-500 shrink-0">
                           <Flame className="w-4 h-4" />
                         </div>
                         <div>
-                          <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Fat to Lose</span>
-                          <span className="text-xs font-black text-slate-700 block mt-1">
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider leading-none">Fat to Lose</span>
+                          <span className="text-xs font-black text-[var(--foreground)] block mt-1">
                             {goal && !goal.reached ? `${formatNumber(toMassUnit(goal.fatLossKg, massUnit), 1)} ${massUnit}` : "—"}
                           </span>
-                          <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">To reach target</span>
+                          <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-none mt-0.5">To reach target</span>
                         </div>
                       </div>
 
                       {/* Weight at Goal */}
                       <div className="bg-blue-50/20 border border-blue-100/40 p-3 rounded-xl flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white border border-blue-100/20 text-blue-500 shrink-0">
+                        <div className="p-2 rounded-lg bg-[var(--card)] border border-blue-100/20 text-blue-500 shrink-0">
                           <Activity className="w-4 h-4" />
                         </div>
                         <div>
-                          <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Goal Weight</span>
-                          <span className="text-xs font-black text-slate-700 block mt-1">
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider leading-none">Goal Weight</span>
+                          <span className="text-xs font-black text-[var(--foreground)] block mt-1">
                             {goal && !goal.reached ? `${formatNumber(toMassUnit(goal.targetWeightKg, massUnit), 1)} ${massUnit}` : "—"}
                           </span>
-                          <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">At target fat</span>
+                          <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-none mt-0.5">At target fat</span>
                         </div>
                       </div>
 
                       {/* Muscle to Gain */}
-                      <div className="bg-slate-50/40 border border-slate-200/40 p-3 rounded-xl flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white border border-slate-200/20 text-slate-400 shrink-0">
+                      <div className="bg-[var(--muted)]/40 border border-[var(--border)]/40 p-3 rounded-xl flex items-center gap-2">
+                        <div className="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)]/20 text-[var(--muted-foreground)] shrink-0">
                           💪
                         </div>
                         <div>
-                          <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Muscle to Gain</span>
-                          <span className="text-xs font-black text-slate-700 block mt-1">—</span>
-                          <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">Not needed</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider leading-none">Muscle to Gain</span>
+                          <span className="text-xs font-black text-[var(--foreground)] block mt-1">—</span>
+                          <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-none mt-0.5">Not needed</span>
                         </div>
                       </div>
 
                       {/* Goal Timeline */}
                       <div className="bg-amber-50/20 border border-amber-100/40 p-3 rounded-xl flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white border border-amber-100/20 text-amber-500 shrink-0">
+                        <div className="p-2 rounded-lg bg-[var(--card)] border border-amber-100/20 text-amber-500 shrink-0">
                           ⏱️
                         </div>
                         <div>
-                          <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Timeline</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider leading-none">Timeline</span>
                           <span className="text-xs font-black text-emerald-600 block mt-1">
                             {goal && !goal.reached ? `${Math.ceil(goal.fastWeeks)}–${Math.ceil(goal.slowWeeks)} weeks` : "—"}
                           </span>
-                          <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">Estimated</span>
+                          <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-none mt-0.5">Estimated</span>
                         </div>
                       </div>
 
@@ -1199,18 +1200,18 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                   {/* Card #4: Method Comparison */}
-                  <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
+                  <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2.5">
                         <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           4
                         </span>
-                        <h2 className="text-base font-bold text-slate-700">Method Comparison</h2>
+                        <h2 className="text-base font-bold text-[var(--foreground)]">Method Comparison</h2>
                       </div>
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs text-left border-collapse">
                           <thead>
-                            <tr className="border-b border-slate-100 text-slate-400 font-bold">
+                            <tr className="border-b border-[var(--border)] text-[var(--muted-foreground)] font-bold">
                               <th className="py-2">Method</th>
                               <th className="py-2">Body Fat %</th>
                               <th className="py-2">Difference</th>
@@ -1218,13 +1219,13 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                             </tr>
                           </thead>
                           <tbody>
-                            <tr className="border-b border-slate-50 font-bold text-slate-700">
+                            <tr className="border-b border-[var(--border)] font-bold text-[var(--foreground)]">
                               <td className="py-3 text-emerald-600">US Navy Tape (You)</td>
                               <td className="py-3">{results.navy !== null ? `${formatNumber(results.navy, 1)}%` : "—"}</td>
-                              <td className="py-3 text-slate-400">—</td>
+                              <td className="py-3 text-[var(--muted-foreground)]">—</td>
                               <td className="py-3 text-emerald-500">★★★★★</td>
                             </tr>
-                            <tr className="font-bold text-slate-700">
+                            <tr className="font-bold text-[var(--foreground)]">
                               <td className="py-3">BMI (Deurenberg)</td>
                               <td className="py-3">{results.bmiBased !== null ? `${formatNumber(results.bmiBased, 1)}%` : "—"}</td>
                               <td className="py-3 text-amber-600">
@@ -1238,31 +1239,32 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         </table>
                       </div>
                     </div>
-                    <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex items-center gap-2 mt-2">
+                    <div className="bg-[var(--muted)]/50 border border-[var(--border)] rounded-xl p-3 flex items-center gap-2 mt-2">
                       <span className="text-xs">💡</span>
-                      <span className="text-[10px] text-slate-500 font-semibold leading-relaxed">
+                      <span className="text-[10px] text-[var(--muted-foreground)] font-semibold leading-relaxed">
                         Both methods are accurate. Small differences are normal.
                       </span>
                     </div>
                   </div>
 
                   {/* Card #5: Progress Tracker */}
-                  <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
+                  <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
                           <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                             5
                           </span>
-                          <h2 className="text-base font-bold text-slate-700">Progress Tracker</h2>
+                          <h2 className="text-base font-bold text-[var(--foreground)]">Progress Tracker</h2>
                         </div>
 
                       </div>
 
                       {/* Line chart & current stats row */}
+                      {entries.length > 0 ? (
                       <div className="flex items-stretch gap-4 mt-3">
                         {/* Line Chart */}
-                        <div className="flex-1 bg-slate-50/30 border border-slate-100 rounded-2xl p-2 flex flex-col justify-between h-36">
+                        <div className="flex-1 bg-[var(--muted)]/30 border border-[var(--border)] rounded-2xl p-2 flex flex-col justify-between h-36">
                           <div className="relative w-full h-28">
                             <svg className="w-full h-full" viewBox="0 0 240 100" preserveAspectRatio="none">
                               {/* Grid lines */}
@@ -1273,7 +1275,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                               {/* Plot line */}
                               <path
                                 d={entries.map((e, idx) => {
-                                  const x = idx * (220 / (entries.length - 1)) + 10;
+                                  const x = idx * (220 / (entries.length - 1 || 1)) + 10;
                                   const y = 80 - ((e.bodyFat - 15) / 15) * 60;
                                   return `${idx === 0 ? "M" : "L"} ${x} ${y}`;
                                 }).join(" ")}
@@ -1285,7 +1287,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                               {/* Dot markers */}
                               {entries.map((e, idx) => {
-                                const x = idx * (220 / (entries.length - 1)) + 10;
+                                const x = idx * (220 / (entries.length - 1 || 1)) + 10;
                                 const y = 80 - ((e.bodyFat - 15) / 15) * 60;
                                 return (
                                   <g key={idx} className="group cursor-pointer">
@@ -1297,7 +1299,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                             </svg>
                           </div>
                           {/* X Axis Labels */}
-                          <div className="flex justify-between text-[8px] font-bold text-slate-400 px-1">
+                          <div className="flex justify-between text-[8px] font-bold text-[var(--muted-foreground)] px-1">
                             {entries.map((e, idx) => (
                               <span key={idx}>{e.date}</span>
                             ))}
@@ -1306,21 +1308,21 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                         {/* Metrics Column */}
                         <div className="w-28 space-y-1.5 flex flex-col justify-center">
-                          <div className="bg-slate-50/50 border border-slate-100/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-slate-500">
+                          <div className="bg-[var(--muted)]/50 border border-[var(--border)]/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-[var(--muted-foreground)]">
                             <span>Start</span>
-                            <span className="text-slate-700 font-extrabold">{entries[0].bodyFat}%</span>
+                            <span className="text-[var(--foreground)] font-extrabold">{entries[0].bodyFat}%</span>
                           </div>
-                          <div className="bg-slate-50/50 border border-slate-100/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-slate-500">
+                          <div className="bg-[var(--muted)]/50 border border-[var(--border)]/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-[var(--muted-foreground)]">
                             <span>Current</span>
-                            <span className="text-slate-700 font-extrabold">{active !== null ? `${formatNumber(active, 1)}%` : `${entries[entries.length - 1].bodyFat}%`}</span>
+                            <span className="text-[var(--foreground)] font-extrabold">{active !== null ? `${formatNumber(active, 1)}%` : `${entries[entries.length - 1].bodyFat}%`}</span>
                           </div>
-                          <div className="bg-slate-50/50 border border-slate-100/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-slate-500">
+                          <div className="bg-[var(--muted)]/50 border border-[var(--border)]/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-[var(--muted-foreground)]">
                             <span>Change</span>
                             <span className="text-emerald-600 font-extrabold">
                               {active !== null ? `${formatNumber(active - entries[0].bodyFat, 1)}%` : `${formatNumber(entries[entries.length - 1].bodyFat - entries[0].bodyFat, 1)}%`}
                             </span>
                           </div>
-                          <div className="bg-slate-50/50 border border-slate-100/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-slate-500">
+                          <div className="bg-[var(--muted)]/50 border border-[var(--border)]/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-[var(--muted-foreground)]">
                             <span>Progress</span>
                             <span className="text-emerald-600 font-extrabold">
                               {formatNumber(progressToGoalPercent, 0)}%
@@ -1329,11 +1331,22 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         </div>
 
                       </div>
+                      ) : (
+                        <div className="mt-3 flex h-36 flex-col items-center justify-center gap-1.5 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--muted)]/30 p-4 text-center">
+                          <span className="text-xs font-bold text-[var(--foreground)]">
+                            Add your first entry to start tracking progress
+                          </span>
+                          <span className="text-[10px] font-semibold text-[var(--muted-foreground)]">
+                            Your saved entries will appear here as a chart.
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <button
                       type="button"
                       onClick={() => {
                         setNewEntryVal(active ? formatNumber(active, 1) : "19.2");
+                        setNewEntryError("");
                         setShowAddEntryModal(true);
                       }}
                       className="w-full py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100/80 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5"
@@ -1345,21 +1358,21 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 </div>
 
                 {/* Card #6: Goal Planner */}
-                <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4">
+                <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 shadow-sm space-y-4">
                   <div className="flex items-center gap-2.5">
                     <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                       6
                     </span>
-                    <h2 className="text-base font-bold text-slate-700">Goal Planner</h2>
+                    <h2 className="text-base font-bold text-[var(--foreground)]">Goal Planner</h2>
                   </div>
-                  <p className="text-[11px] text-slate-400 font-bold">Set your target and get a personalized plan</p>
+                  <p className="text-[11px] text-[var(--muted-foreground)] font-bold">Set your target and get a personalized plan</p>
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
 
                     {/* Target Inputs & Slider */}
                     <div className="lg:col-span-1 space-y-3">
                       <div className="flex items-center justify-between">
-                        <label htmlFor="bf-target" className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Target Body Fat %</label>
+                        <label htmlFor="bf-target" className="text-[11px] font-black text-[var(--muted-foreground)] uppercase tracking-wider">Target Body Fat %</label>
                         <div className="relative w-20 flex items-center">
                           <input
                             id="bf-target"
@@ -1368,9 +1381,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                             max="30"
                             value={targetBodyFat}
                             onChange={(e) => setTargetBodyFat(e.target.value)}
-                            className="w-full bg-slate-50/60 border border-slate-200/60 rounded-xl px-2.5 py-1.5 text-xs font-black text-center focus:outline-none focus:border-emerald-500 focus:bg-white"
+                            className="w-full bg-[var(--muted)]/60 border border-[var(--border)]/60 rounded-xl px-2.5 py-1.5 text-xs font-black text-center focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)]"
                           />
-                          <span className="absolute right-2.5 text-[10px] font-bold text-slate-400">%</span>
+                          <span className="absolute right-2.5 text-[10px] font-bold text-[var(--muted-foreground)]">%</span>
                         </div>
                       </div>
                       <input
@@ -1380,9 +1393,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         max="30"
                         value={targetBodyFat}
                         onChange={(e) => setTargetBodyFat(e.target.value)}
-                        className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                        className="w-full h-1.5 bg-[var(--muted)] rounded-lg appearance-none cursor-pointer accent-emerald-600"
                       />
-                      <div className="flex justify-between text-[8px] font-bold text-slate-400">
+                      <div className="flex justify-between text-[8px] font-bold text-[var(--muted-foreground)]">
                         <span>5%</span>
                         <span>10%</span>
                         <span>15%</span>
@@ -1395,37 +1408,37 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     {/* target metrics grid cards */}
                     <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-3">
                       {/* Fat to Lose */}
-                      <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl">
-                        <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Fat to Lose</span>
+                      <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl">
+                        <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Fat to Lose</span>
                         <span className="text-sm font-black text-emerald-600 block mt-1.5">
                           {goal && !goal.reached ? `${formatNumber(toMassUnit(goal.fatLossKg, massUnit), 1)} ${massUnit}` : "—"}
                         </span>
                       </div>
 
                       {/* Weight at Goal */}
-                      <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl">
-                        <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Weight at Goal</span>
-                        <span className="text-sm font-black text-slate-700 block mt-1.5">
+                      <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl">
+                        <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Weight at Goal</span>
+                        <span className="text-sm font-black text-[var(--foreground)] block mt-1.5">
                           {goal && !goal.reached ? `${formatNumber(toMassUnit(goal.targetWeightKg, massUnit), 1)} ${massUnit}` : "—"}
                         </span>
                       </div>
 
                       {/* Weekly Loss Target */}
-                      <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl">
-                        <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Weekly Loss Target</span>
-                        <span className="text-sm font-black text-slate-700 block mt-1.5">
+                      <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl">
+                        <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Weekly Loss Target</span>
+                        <span className="text-sm font-black text-[var(--foreground)] block mt-1.5">
                           {formatNumber(toMassUnit(measures.weightKg * 0.005, massUnit), 1)} - {formatNumber(toMassUnit(measures.weightKg * 0.01, massUnit), 1)} {massUnit}
                         </span>
-                        <span className="text-[8px] text-slate-400 font-semibold block leading-tight mt-0.5">(0.5-1% of body weight)</span>
+                        <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-tight mt-0.5">(0.5-1% of body weight)</span>
                       </div>
 
                       {/* Estimated Time */}
-                      <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl">
-                        <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Estimated Time</span>
+                      <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl">
+                        <span className="text-[9px] text-[var(--muted-foreground)] font-bold block uppercase tracking-wider">Estimated Time</span>
                         <span className="text-sm font-black text-emerald-600 block mt-1.5">
                           {goal && !goal.reached ? `${Math.ceil(goal.fastWeeks)}–${Math.ceil(goal.slowWeeks)} weeks` : "—"}
                         </span>
-                        <span className="text-[8px] text-slate-400 font-semibold block leading-tight mt-0.5">Sustainable pace</span>
+                        <span className="text-[8px] text-[var(--muted-foreground)] font-semibold block leading-tight mt-0.5">Sustainable pace</span>
                       </div>
                     </div>
 
@@ -1435,69 +1448,74 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 {/* Row 7: How to Take Measurements and Why It Matters side by side */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                  {/* Card #7: How to Take Measurements */}
-                  <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
+                  {/* Card #7: How to Take Measurements — only applies to the tape-based
+                      Navy method; the BMI method needs no tape measurements at all. */}
+                  {method === "navy" && (
+                  <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2.5">
                         <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           7
                         </span>
-                        <h2 className="text-base font-bold text-slate-700">How to Take Measurements</h2>
+                        <h2 className="text-base font-bold text-[var(--foreground)]">How to Take Measurements</h2>
                       </div>
-                      <p className="text-[10px] text-slate-400 font-bold">Get accurate results with these tips</p>
+                      <p className="text-[10px] text-[var(--muted-foreground)] font-bold">Get accurate results with these tips</p>
 
                       <div className="grid grid-cols-2 gap-2.5">
-                        <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl space-y-1">
+                        <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl space-y-1">
                           <span className="text-xs">🥦</span>
-                          <span className="text-[10px] font-black text-slate-700 block">Neck</span>
-                          <span className="text-[9px] text-slate-400 font-semibold leading-relaxed block">
+                          <span className="text-[10px] font-black text-[var(--foreground)] block">Neck</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-semibold leading-relaxed block">
                             Measure just below the larynx (Adam's apple).
                           </span>
                         </div>
-                        <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl space-y-1">
+                        <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl space-y-1">
                           <span className="text-xs">👖</span>
-                          <span className="text-[10px] font-black text-slate-700 block">Waist</span>
-                          <span className="text-[9px] text-slate-400 font-semibold leading-relaxed block">
+                          <span className="text-[10px] font-black text-[var(--foreground)] block">Waist</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-semibold leading-relaxed block">
                             Measure at the narrowest point, above the navel.
                           </span>
                         </div>
-                        <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl space-y-1">
+                        {gender === "female" && (
+                        <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl space-y-1">
                           <span className="text-xs">🍑</span>
-                          <span className="text-[10px] font-black text-slate-700 block">Hips ({gender === "female" ? "Women" : "Men"})</span>
-                          <span className="text-[9px] text-slate-400 font-semibold leading-relaxed block">
+                          <span className="text-[10px] font-black text-[var(--foreground)] block">Hips (Women)</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-semibold leading-relaxed block">
                             Measure at the widest part of your hips.
                           </span>
                         </div>
-                        <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl space-y-1">
+                        )}
+                        <div className="bg-[var(--muted)]/50 border border-[var(--border)]/80 p-3 rounded-xl space-y-1">
                           <span className="text-xs">📐</span>
-                          <span className="text-[10px] font-black text-slate-700 block">Every Measurement</span>
-                          <span className="text-[9px] text-slate-400 font-semibold leading-relaxed block">
+                          <span className="text-[10px] font-black text-[var(--foreground)] block">Every Measurement</span>
+                          <span className="text-[9px] text-[var(--muted-foreground)] font-semibold leading-relaxed block">
                             Keep tape level, snug but not tight. Exhale normally.
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex items-center gap-2 mt-2">
+                    <div className="bg-[var(--muted)]/50 border border-[var(--border)] rounded-xl p-3 flex items-center gap-2 mt-2">
                       <span className="text-xs">💡</span>
-                      <span className="text-[10px] text-slate-500 font-semibold leading-relaxed">
+                      <span className="text-[10px] text-[var(--muted-foreground)] font-semibold leading-relaxed">
                         Measure in the morning, before eating or drinking, for best results.
                       </span>
                     </div>
                   </div>
+                  )}
 
                   {/* Card #8: Why It Matters */}
-                  <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
+                  <div className="bg-[var(--card)] border border-[var(--border)]/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2.5">
                         <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           8
                         </span>
-                        <h2 className="text-base font-bold text-slate-700">Why It Matters</h2>
+                        <h2 className="text-base font-bold text-[var(--foreground)]">Why It Matters</h2>
                       </div>
-                      <p className="text-[10px] text-slate-400 font-bold">Benefits of knowing your body fat %</p>
+                      <p className="text-[10px] text-[var(--muted-foreground)] font-bold">Benefits of knowing your body fat %</p>
 
                       <div className="flex gap-4 items-center">
-                        <div className="flex-1 space-y-2 text-[10px] font-bold text-slate-500">
+                        <div className="flex-1 space-y-2 text-[10px] font-bold text-[var(--muted-foreground)]">
                           <div className="flex items-center gap-2">
                             <span className="text-emerald-500">✔</span>
                             <span>Better understand your fitness level</span>
@@ -1562,21 +1580,21 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
             aria-modal="true"
             aria-labelledby="bf-add-entry-title"
             onClick={(event) => event.stopPropagation()}
-            className="bg-white border border-slate-200/80 rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 animate-scaleUp"
+            className="bg-[var(--card)] border border-[var(--border)]/80 rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 animate-scaleUp"
           >
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 id="bf-add-entry-title" className="text-sm font-bold text-slate-700">Add Progress Entry</h3>
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+              <h3 id="bf-add-entry-title" className="text-sm font-bold text-[var(--foreground)]">Add Progress Entry</h3>
               <button
                 type="button"
                 onClick={() => setShowAddEntryModal(false)}
                 aria-label="Close"
-                className="text-slate-400 hover:text-slate-600 text-xl font-bold transition-colors"
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-xl font-bold transition-colors"
               >
                 <span aria-hidden="true">×</span>
               </button>
             </div>
             <div className="space-y-2">
-              <label htmlFor="bf-new-entry" className="text-[11px] font-black text-slate-500 uppercase tracking-wider block">Body Fat %</label>
+              <label htmlFor="bf-new-entry" className="text-[11px] font-black text-[var(--muted-foreground)] uppercase tracking-wider block">Body Fat %</label>
               <div className="relative flex items-center">
                 <input
                   id="bf-new-entry"
@@ -1585,19 +1603,29 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   min="3"
                   max="60"
                   value={newEntryVal}
-                  onChange={(e) => setNewEntryVal(e.target.value)}
-                  className="w-full bg-slate-50/60 border border-slate-200/60 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+                  onChange={(e) => {
+                    setNewEntryVal(e.target.value);
+                    if (newEntryError) setNewEntryError("");
+                  }}
+                  aria-invalid={newEntryError ? "true" : undefined}
+                  aria-describedby={newEntryError ? "bf-new-entry-error" : undefined}
+                  className="w-full bg-[var(--muted)]/60 border border-[var(--border)]/60 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500 focus:bg-[var(--card)] transition-colors"
                   placeholder="e.g. 19.2"
                   autoFocus
                 />
-                <span className="absolute right-3.5 text-[10px] font-bold text-slate-400">%</span>
+                <span className="absolute right-3.5 text-[10px] font-bold text-[var(--muted-foreground)]">%</span>
               </div>
+              {newEntryError && (
+                <p id="bf-new-entry-error" role="alert" className="text-[10px] font-bold text-[var(--danger)]">
+                  {newEntryError}
+                </p>
+              )}
             </div>
             <div className="flex gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => setShowAddEntryModal(false)}
-                className="flex-1 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-500 hover:bg-slate-50 transition-all"
+                className="flex-1 py-2 rounded-xl border border-[var(--border)] text-xs font-bold text-[var(--muted-foreground)] hover:bg-[var(--muted)] transition-all"
               >
                 Cancel
               </button>
@@ -1605,11 +1633,14 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 type="button"
                 onClick={() => {
                   const num = parseFloat(newEntryVal);
-                  if (!isNaN(num) && num > 0) {
-                    const today = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" });
-                    setEntries([...entries, { date: today, bodyFat: num }]);
-                    setShowAddEntryModal(false);
+                  if (isNaN(num) || num < 3 || num > 60) {
+                    setNewEntryError("Enter a value between 3% and 60%.");
+                    return;
                   }
+                  const today = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                  setEntries([...entries, { date: today, bodyFat: num }]);
+                  setNewEntryError("");
+                  setShowAddEntryModal(false);
                 }}
                 className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all"
               >

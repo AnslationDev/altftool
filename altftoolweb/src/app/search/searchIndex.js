@@ -277,12 +277,36 @@ export async function searchAltFTool(query) {
 
   const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
   const index = await getGlobalSearchIndex();
-  const matches = index
+  let matches = index
     .map((entry) => ({
       entry,
       score: scoreEntry(entry, normalizedQuery, tokens),
     }))
-    .filter((result) => result.score !== null)
+    .filter((result) => result.score !== null);
+
+  // scoreEntry requires EVERY token to appear, so one bad token zeroes the
+  // whole search: "bmi calculater" found nothing although "bmi" matches
+  // dozens of pages. Typo'd queries are exactly what arrives from the 404
+  // page's recovery link (the query is built from a misspelled URL) and from
+  // real people. When the strict pass finds nothing and there is more than
+  // one token, retry requiring any token, ranked by how many matched — the
+  // strict pass still wins whenever it has results, so precise queries are
+  // ranked exactly as before.
+  if (!matches.length && tokens.length > 1) {
+    matches = index
+      .map((entry) => {
+        const hits = tokens.filter((token) => entry.searchable.includes(token));
+        if (!hits.length) return { entry, score: null };
+        const score = hits.reduce(
+          (sum, token) => sum + (scoreEntry(entry, token, [token]) ?? 0),
+          hits.length * 60,
+        );
+        return { entry, score };
+      })
+      .filter((result) => result.score !== null);
+  }
+
+  matches = matches
     .sort(
       (left, right) =>
         right.score - left.score ||

@@ -192,16 +192,28 @@ export function estimateMuseumVisit(input) {
 
     // Rest breaks are scheduled per hour of *gallery* time (viewing + transit),
     // matching the forward model's own rule — but here gallery time is itself
-    // what's left after rest is carved out of the fixed budget, so solve for
-    // the fixed point instead of deriving break count from the pre-subtraction
-    // pool (which can straddle an hour boundary rest removal would erase).
+    // what's left after rest is carved out of the fixed budget: spending an
+    // hour of gallery time earns a break, and that break itself eats into the
+    // same budget. Re-substituting (budget -> breaks -> smaller budget ->
+    // fewer breaks -> bigger budget -> ...) is a fixed-point iteration that
+    // can oscillate between two values forever, so solve it directly instead:
+    // find the largest number of complete "hour of gallery + its break"
+    // cycles that fit, then spend whatever is left of the current cycle.
     const restBreaksFor = (budgetMinutes) =>
       restMinutes > 0 ? Math.floor(Math.max(0, budgetMinutes) / FATIGUE_BREAK_INTERVAL_MIN) : 0;
-    let galleryBudgetMinutes = Math.max(0, afterFixed);
-    for (let i = 0; i < 10; i += 1) {
-      const nextBudget = afterFixed - restBreaksFor(galleryBudgetMinutes) * restMinutes;
-      if (nextBudget === galleryBudgetMinutes) break;
-      galleryBudgetMinutes = nextBudget;
+    let galleryBudgetMinutes;
+    if (restMinutes <= 0 || afterFixed <= 0) {
+      galleryBudgetMinutes = Math.max(0, afterFixed);
+    } else {
+      const cycleMinutes = FATIGUE_BREAK_INTERVAL_MIN + restMinutes;
+      const fullCycles = Math.floor(afterFixed / cycleMinutes);
+      const bandFloor = fullCycles * FATIGUE_BREAK_INTERVAL_MIN;
+      const bandCeiling = (fullCycles + 1) * FATIGUE_BREAK_INTERVAL_MIN;
+      const budgetCeiling = afterFixed - fullCycles * restMinutes;
+      // budgetCeiling can reach into (or past) the next hour boundary, but
+      // spending into that hour would earn one more break than the budget
+      // allows, so cap one minute short of it rather than overshooting.
+      galleryBudgetMinutes = Math.max(bandFloor, Math.min(budgetCeiling, bandCeiling - 1));
     }
     const restAllowance = restBreaksFor(galleryBudgetMinutes) * restMinutes;
     const viewingBudgetSeconds = galleryBudgetMinutes * 60 - transitSeconds;
@@ -230,7 +242,10 @@ export function estimateMuseumVisit(input) {
       let highlightsPossible;
       if (highlightCount > 0 && viewingBudgetSeconds < highlightTimeNeeded) {
         highlightsPossible = highlightSecs > 0 ? Math.floor(viewingBudgetSeconds / highlightSecs) : highlightCount;
-        objectsPossible = highlightsPossible;
+        // Time left over after the partial highlights still buys ordinary-pace
+        // objects rather than being discarded.
+        const leftoverSeconds = viewingBudgetSeconds - highlightsPossible * highlightSecs;
+        objectsPossible = highlightsPossible + Math.floor(leftoverSeconds / perObject);
       } else {
         highlightsPossible = highlightCount;
         const remainingSeconds = viewingBudgetSeconds - highlightTimeNeeded;

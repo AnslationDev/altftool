@@ -40,6 +40,7 @@ export function parseTapeReading(raw) {
   text = text
     .replace(/[′’]/g, "'")
     .replace(/[″”]/g, '"')
+    .replace(/(\d)(feet|foot|ft|inches|inch|in)\b/g, "$1 $2")
     .replace(/\bfeet\b|\bfoot\b|\bft\b/g, "'")
     .replace(/\binches\b|\binch\b|\bin\b/g, '"')
     .replace(/[–—]/g, "-");
@@ -170,7 +171,7 @@ export function convertReading({ value, mode, denominator = 16 }) {
   const feetInches = toFeetInches(inches, denominator);
   if (feetInches.error) return feetInches;
 
-  const ladder = TAPE_DENOMINATORS.map((den) => {
+  const ladder = TAPE_DENOMINATORS.filter((den) => den <= denominator).map((den) => {
     const snapped = toFraction(inches, den);
     return {
       denominator: den,

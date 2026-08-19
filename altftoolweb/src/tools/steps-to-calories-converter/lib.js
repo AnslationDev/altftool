@@ -35,7 +35,6 @@ export const STEP_LENGTH_FACTOR = { male: 0.415, female: 0.413 };
 /** Unit conversions (exact definitions). */
 export const KG_PER_LB = 0.45359237;
 export const KM_PER_MILE = 1.609344;
-export const CM_PER_INCH = 2.54;
 
 /** Plausible input bounds so a typo produces a message rather than a number. */
 export const MIN_HEIGHT_CM = 100;

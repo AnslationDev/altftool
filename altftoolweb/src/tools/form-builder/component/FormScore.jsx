@@ -35,7 +35,7 @@ const FormScore = ({ formFields }) => {
   }, [formFields]);
 
   return (
-    <div className="text-center mt-2">
+    <div className="text-center mt-2" role="status" aria-live="polite">
       <p className="text-sm font-medium">
        Form Quality:{" "}
         <span className="font-bold">{score}%</span>

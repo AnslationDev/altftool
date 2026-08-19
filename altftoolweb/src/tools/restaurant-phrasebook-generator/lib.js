@@ -300,10 +300,11 @@ export function formatPhrasebook(book, format = "card") {
     output = [
       `# ${title}`,
       "",
-      "| English | In language | Say it as |",
-      "| --- | --- | --- |",
+      "| English | In language | Say it as | Note |",
+      "| --- | --- | --- | --- |",
       ...book.phrases.map(
-        (phrase) => `| ${phrase.english} | ${phrase.script} | ${phrase.needsRomanisation ? phrase.roman : "—"} |`,
+        (phrase) =>
+          `| ${phrase.english} | ${phrase.script} | ${phrase.needsRomanisation ? phrase.roman : "—"} | ${phrase.note || "—"} |`,
       ),
     ].join("\n");
   } else {

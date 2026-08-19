@@ -63,6 +63,16 @@ export function fullyDecode(value, maxLayers) {
 const SCHEME_RE = /^([A-Za-z][A-Za-z0-9+.-]*):([\s\S]*)$/;
 
 /**
+ * WHATWG "special" schemes. Per the URL Standard (and every real browser),
+ * these ALWAYS get authority/host parsing, no matter how many (including
+ * zero) leading "/" or "\" characters follow the scheme colon — all of
+ * "https:evil.example", "https:/evil.example", "https:\evil.example" etc.
+ * resolve to host "evil.example". Custom app schemes (myapp:, intent:, ...)
+ * are not "special" and keep the strict exact-"//" authority check below.
+ */
+const SPECIAL_SCHEMES = new Set(["http", "https", "ws", "wss", "ftp", "file"]);
+
+/**
  * Split a URI without using the WHATWG URL parser, which rejects or rewrites
  * the very shapes worth inspecting (intent://, bare custom schemes, backslashes
  * in the authority).
@@ -93,7 +103,17 @@ export function parseUri(input) {
   let authority = "";
   let path = rest;
   let hasAuthority = false;
-  if (/^\/\//.test(rest) || /^\\\\/.test(rest)) {
+  if (SPECIAL_SCHEMES.has(scheme)) {
+    // Special scheme: consume ALL leading "/" and "\" (any count, any mix,
+    // including zero) before parsing the authority — matches real browsers.
+    hasAuthority = true;
+    let i = 0;
+    while (i < rest.length && (rest[i] === "/" || rest[i] === "\\")) i += 1;
+    const after = rest.slice(i);
+    const slash = after.search(/[/\\]/);
+    authority = slash === -1 ? after : after.slice(0, slash);
+    path = slash === -1 ? "" : after.slice(slash);
+  } else if (/^\/\//.test(rest) || /^\\\\/.test(rest)) {
     hasAuthority = true;
     const after = rest.slice(2);
     const slash = after.search(/[/\\]/);

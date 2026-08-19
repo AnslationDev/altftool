@@ -261,7 +261,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -271,7 +271,11 @@ export default function ToolHome() {
               {result.error ? dash : result.stats.total}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {result.error ? dash : `${result.stats.outsideEea} outside the EEA · ${result.stats.countryCount} countries`}
+              {result.error
+                ? dash
+                : `${result.stats.outsideEea} outside the EEA · ${result.stats.countryCount} countries${
+                    result.stats.unknownLocation > 0 ? ` · ${result.stats.unknownLocation} location unknown` : ""
+                  }`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -301,7 +305,7 @@ export default function ToolHome() {
       </section>
 
       {!result.error && result.warnings.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <AlertTriangle className="h-4 w-4 text-[var(--warning)]" aria-hidden="true" />
             Gaps to close
@@ -340,7 +344,11 @@ export default function ToolHome() {
             ))}
           </div>
           <div className="mt-3 overflow-x-auto">
-            <pre className="min-w-full whitespace-pre-wrap break-words rounded-md bg-[var(--muted)] p-4 text-xs leading-6 text-[var(--foreground)]">
+            <pre
+              aria-live="polite"
+              aria-atomic="true"
+              className="min-w-full whitespace-pre-wrap break-words rounded-md bg-[var(--muted)] p-4 text-xs leading-6 text-[var(--foreground)]"
+            >
               {output}
             </pre>
           </div>

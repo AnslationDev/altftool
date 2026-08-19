@@ -18,6 +18,9 @@ export const MIN_TOKEN_LENGTH = 8;
 /** A decode is reported only if this share of the result is printable text. */
 export const PRINTABLE_THRESHOLD = 0.85;
 
+/** A decode is rejected if more than this share of its bytes were invalid UTF-8. */
+export const MAX_INVALID_BYTE_SHARE = 0.1;
+
 /** How many times a result that is itself encoded will be decoded again. */
 export const MAX_ROUNDS = 4;
 
@@ -129,7 +132,7 @@ export function printableRatio(text) {
   let printable = 0;
   for (const ch of value) {
     const code = ch.codePointAt(0);
-    if (code === 9 || code === 10 || code === 13 || (code >= 0x20 && code !== 0x7f)) printable += 1;
+    if (code === 9 || code === 10 || code === 13 || (code >= 0x20 && code !== 0x7f && code !== 0xfffd)) printable += 1;
   }
   return printable / Array.from(value).length;
 }
@@ -159,7 +162,7 @@ export function decodeToken(token) {
 
     const { text, invalid } = bytesToText(attempt.bytes);
     const ratio = printableRatio(text);
-    if (!text || ratio < PRINTABLE_THRESHOLD || invalid > attempt.bytes.length / 4) break;
+    if (!text || ratio < PRINTABLE_THRESHOLD || invalid > attempt.bytes.length * MAX_INVALID_BYTE_SHARE) break;
 
     layers.push({ encoding: attempt.variant, text, bytes: attempt.bytes.length });
     current = text.trim();

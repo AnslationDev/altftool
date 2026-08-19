@@ -210,17 +210,25 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Allowed listening at this level
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {ok ? formatHours(result.allowedWeeklyHours) : DASH}
+              {ok
+                ? result.exceedsWeek
+                  ? `${formatHours(result.allowedWeeklyHoursCapped)} (physical maximum)`
+                  : formatHours(result.allowedWeeklyHours)
+                : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {ok ? "per week, before the sound allowance is used up" : "Fix the inputs above to see a result"}
+              {ok
+                ? result.exceedsWeek
+                  ? `There are only 168 hours in a week — the equal-energy formula alone would suggest ${formatHours(result.allowedWeeklyHours)}.`
+                  : "per week, before the sound allowance is used up"
+                : "Fix the inputs above to see a result"}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -282,7 +290,11 @@ export default function ToolHome() {
             ],
             [
               "Safe listening per day at this level",
-              ok ? formatHours(result.allowedDailyHours) : DASH,
+              ok
+                ? result.exceedsDay
+                  ? `${formatHours(result.allowedDailyHoursCapped)} (physical maximum)`
+                  : formatHours(result.allowedDailyHours)
+                : DASH,
             ],
             [
               "Highest level that still fits your habit",
@@ -326,9 +338,15 @@ export default function ToolHome() {
               {table.map((row) => (
                 <tr key={row.level} className="border-b border-[var(--border)] last:border-0">
                   <td className="py-2 pr-3 font-semibold">{row.level} dB(A)</td>
-                  <td className="py-2 pr-3 text-right">{formatHours(row.weeklyHours)}</td>
+                  <td className="py-2 pr-3 text-right">
+                    {row.exceedsWeek
+                      ? `${formatHours(row.weeklyHoursCapped)} (max)`
+                      : formatHours(row.weeklyHours)}
+                  </td>
                   <td className="py-2 text-right text-[var(--muted-foreground)]">
-                    {formatHours(row.weeklyHours / 7)}
+                    {row.exceedsDay
+                      ? `${formatHours(row.dailyHoursCapped)} (max)`
+                      : formatHours(row.dailyHours)}
                   </td>
                 </tr>
               ))}

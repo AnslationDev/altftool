@@ -1,8 +1,13 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Clipboard, FileDown } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 import Features from "./Feature";
+
+// Defense-in-depth cap on how many matches a single global-flag pass can
+// collect, so a pattern that keeps matching (e.g. because it can match a
+// zero-length string) can never turn into an unbounded loop.
+const MAX_GLOBAL_MATCHES = 10000;
 
 export default function App() {
   const [pattern, setPattern] = useState(
@@ -60,20 +65,31 @@ export default function App() {
   ];
 
   const regexResult = useMemo(() => {
-    if (!pattern || !testString) return { error: "", matches: [] };
+    if (!pattern) return { error: "", matches: [] };
+
+    const flagString = Object.entries(flags)
+      .filter(([_, enabled]) => enabled)
+      .map(([flag]) => flag)
+      .join("");
+
+    // Compile independently of whether there's any text to test against, so
+    // an invalid pattern is always reported even with an empty test string.
+    let regex;
+    try {
+      regex = new RegExp(pattern, flagString);
+    } catch (e) {
+      return { error: e.message, matches: [] };
+    }
+
+    if (!testString) return { error: "", matches: [] };
 
     try {
-      const flagString = Object.entries(flags)
-        .filter(([_, enabled]) => enabled)
-        .map(([flag]) => flag)
-        .join("");
-
-      const regex = new RegExp(pattern, flagString);
       const results = [];
       let match;
 
       if (flags.g) {
         const globalRegex = new RegExp(pattern, flagString);
+        let iterations = 0;
         while ((match = globalRegex.exec(testString)) !== null) {
           results.push({
             match: match[0],
@@ -81,6 +97,13 @@ export default function App() {
             groups: match.slice(1),
             input: match.input,
           });
+          // A zero-length match (e.g. from a*, \d*) doesn't move lastIndex on
+          // its own, which would otherwise loop forever at the same index.
+          if (match[0] === "") {
+            globalRegex.lastIndex += 1;
+          }
+          iterations += 1;
+          if (iterations >= MAX_GLOBAL_MATCHES) break;
         }
       } else {
         match = regex.exec(testString);
@@ -111,10 +134,19 @@ export default function App() {
     [flags, matches, pattern],
   );
 
+  const copyTimeoutRef = useRef(null);
+
   const copyReport = async () => {
     setCopied(await safeCopyText(matchReport));
-    setTimeout(() => setCopied(false), 1200);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopied(false), 1200);
   };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const downloadReport = () => {
     const url = URL.createObjectURL(new Blob([matchReport], { type: "application/json;charset=utf-8" }));
@@ -337,6 +369,8 @@ export default function App() {
                   <div
                     className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-lg"
                     style={{ backgroundColor: "var(--muted)" }}
+                    aria-live="polite"
+                    aria-atomic="true"
                   >
                     <div>
                       <div
@@ -458,6 +492,8 @@ export default function App() {
                     borderColor: "var(--border)",
                     borderWidth: "2px",
                   }}
+                  aria-live="polite"
+                  aria-atomic="true"
                 >
                   {highlightedText}
                 </div>
@@ -524,13 +560,13 @@ export default function App() {
                           <div className="mt-1 space-y-1">
                             {match.groups.map(
                               (group, i) =>
-                                group && (
+                                group !== undefined && (
                                   <div
                                     key={i}
                                     className="text-sm font-mono"
                                     style={{ color: "var(--muted-foreground)" }}
                                   >
-                                    [{i + 1}]: {group}
+                                    [{i + 1}]: {group === "" ? "(empty match)" : group}
                                   </div>
                                 ),
                             )}

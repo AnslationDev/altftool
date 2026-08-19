@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, ShieldCheck, TriangleAlert, Github } from "lucide-react";
 
 import {
@@ -29,6 +29,13 @@ export default function ToolHome() {
   const [done, setDone] = useState(() => DEFAULT_DONE.slice());
   const [target, setTarget] = useState("90");
   const [copied, setCopied] = useState(false);
+  const copiedTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+    };
+  }, []);
 
   const score = useMemo(() => scoreChecklist(done), [done]);
   const plan = useMemo(
@@ -74,7 +81,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+      copiedTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -97,7 +105,7 @@ export default function ToolHome() {
 
       <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="score-heading">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p id="score-heading" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Hardening score
             </p>
@@ -113,7 +121,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the security checklist result"
+              aria-label={copied ? "Copied to clipboard" : "Copy the security checklist result"}
               className={GHOST_BTN}
             >
               {copied ? (
@@ -217,31 +225,33 @@ export default function ToolHome() {
           </div>
         </div>
 
-        {plan.error ? (
-          <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
-            {plan.error}
-          </p>
-        ) : plan.reached ? (
-          <p className="mt-4 flex items-center gap-2 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm font-medium text-[var(--success)]">
-            <ShieldCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
-            Target already met.
-          </p>
-        ) : (
-          <div className="mt-4">
-            <p className="text-sm text-[var(--muted-foreground)]">
-              {plan.steps.length} more control{plan.steps.length === 1 ? "" : "s"} takes you to{" "}
-              <span className="font-semibold text-[var(--foreground)]">{plan.projectedPercent}%</span>.
+        <div aria-live="polite" aria-atomic="true">
+          {plan.error ? (
+            <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+              {plan.error}
             </p>
-            <ul className="mt-2 space-y-1 text-sm">
-              {plan.steps.map((item) => (
-                <li key={item.id} className="flex gap-2">
-                  <span className="font-semibold text-[var(--primary)]">+{item.weight}</span>
-                  <span>{item.title}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          ) : plan.steps.length === 0 ? (
+            <p className="mt-4 flex items-center gap-2 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm font-medium text-[var(--success)]">
+              <ShieldCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
+              Target already met.
+            </p>
+          ) : (
+            <div className="mt-4">
+              <p className="text-sm text-[var(--muted-foreground)]">
+                {plan.steps.length} more control{plan.steps.length === 1 ? "" : "s"} takes you to{" "}
+                <span className="font-semibold text-[var(--foreground)]">{plan.projectedPercent}%</span>.
+              </p>
+              <ul className="mt-2 space-y-1 text-sm">
+                {plan.steps.map((item) => (
+                  <li key={item.id} className="flex gap-2">
+                    <span className="font-semibold text-[var(--primary)]">+{item.weight}</span>
+                    <span>{item.title}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </section>
 
       <section className="mt-6 space-y-4">

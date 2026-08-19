@@ -304,7 +304,7 @@ export function buildRrbChecklist(input = {}) {
 
   if (category.id !== "ur") {
     documents.push({
-      id: "categoryCert",
+      id: `categoryCert-${category.id}`,
       label: `${category.label} certificate in the format the CEN prescribes`,
       required: true,
     });

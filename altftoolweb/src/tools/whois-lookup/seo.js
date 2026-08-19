@@ -8,7 +8,7 @@ const seo = {
     "Read Registered with plus Created, Expires, Last changed, Domain age, Days to expiry, Registry handle, IANA registrar ID, DNSSEC, the registrar abuse contact and the Registrant line, alongside the explained Status codes and Nameservers, then press Copy result.",
   ],
   intro:
-    "WHOIS Lookup shows who a domain is registered with, when it was created, when it expires and what state the registry has it in. It queries RDAP — the Registration Data Access Protocol defined in RFC 9082 and RFC 9083, which ICANN made mandatory for gTLD registries and registrars and which replaced port-43 WHOIS — through the IANA bootstrap redirector at rdap.org, then translates the raw JSON, including every EPP status code, into plain English. Useful for developers, domain buyers and anyone checking a domain before trusting it.",
+    "WHOIS Lookup shows who a domain is registered with, when it was created, when it expires and what state the registry has it in. It queries RDAP — the Registration Data Access Protocol defined in RFC 9082 and RFC 9083, which ICANN made mandatory for gTLD registries and registrars and which replaced port-43 WHOIS — through the public rdap.org bootstrap redirector, which follows IANA's published TLD-to-RDAP-server mapping (RFC 9224), then translates the raw JSON, including every EPP status code, into plain English. Useful for developers, domain buyers and anyone checking a domain before trusting it.",
   useCases: [
     "Checking how old a domain is before trusting an email or invoice that came from it — a domain registered last week is a red flag.",
     "Confirming that clientTransferProhibited is set on your own domain so it cannot be moved without your registrar's involvement.",
@@ -17,7 +17,7 @@ const seo = {
   benefits: [
     ["Status codes explained", "Every EPP code, from clientHold to redemptionPeriod, is shown with what it actually means for the domain."],
     ["Age and expiry maths", "Registration and expiry timestamps are turned into domain age in days and days remaining, all in UTC."],
-    ["Straight from the registry", "The query goes to the authoritative RDAP server for the TLD via IANA's bootstrap service — no third-party data reseller in between."],
+    ["Straight from the registry", "The query goes to the authoritative RDAP server for the TLD via the public rdap.org bootstrap redirector, which follows IANA's published TLD-to-RDAP-server mapping (RFC 9224) — it only issues a redirect and never touches or relays the actual registration data."],
   ],
   faqs: [
     [

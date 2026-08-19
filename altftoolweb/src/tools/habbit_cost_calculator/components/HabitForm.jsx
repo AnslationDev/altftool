@@ -9,14 +9,16 @@ import Button from './ui/Button';
 import Input from './ui/Input';
 import Select from './ui/Select';
 
+// `key` must match an iconMap key in HabitItem.jsx so the saved habit's icon
+// can be looked up directly instead of guessed from the habit name.
 const iconOptions = [
-  { icon: Coffee, label: 'Coffee' },
-  { icon: Utensils, label: 'Food' },
-  { icon: ShoppingBag, label: 'Shopping' },
-  { icon: Car, label: 'Transport' },
-  { icon: Film, label: 'Entertainment' },
-  { icon: Music, label: 'Subscriptions' },
-  { icon: Heart, label: 'Health' },
+  { icon: Coffee, key: 'Coffee', label: 'Coffee' },
+  { icon: Utensils, key: 'Utensils', label: 'Food' },
+  { icon: ShoppingBag, key: 'ShoppingBag', label: 'Shopping' },
+  { icon: Car, key: 'Car', label: 'Transport' },
+  { icon: Film, key: 'Film', label: 'Entertainment' },
+  { icon: Music, key: 'Music', label: 'Subscriptions' },
+  { icon: Heart, key: 'Heart', label: 'Health' },
 ];
 
 export const HabitForm = () => {
@@ -29,6 +31,10 @@ export const HabitForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [expandAdvanced, setExpandAdvanced] = useState(false);
+  // Tracks whether the user has ever opened "Show Impact Assessment" for this
+  // entry (unlike expandAdvanced, this doesn't flip back to false if they
+  // collapse it again) so we only submit impact ratings the user actually set.
+  const [hasOpenedAdvanced, setHasOpenedAdvanced] = useState(false);
   const [healthImpact, setHealthImpact] = useState('low');
   const [stressImpact, setStressImpact] = useState('low');
   const [productivityImpact, setProductivityImpact] = useState('low');
@@ -69,10 +75,14 @@ export const HabitForm = () => {
         name: name.trim(),
         cost: parseFloat(cost),
         frequency,
-        healthImpact,
-        stressImpact,
-        productivityImpact,
-        relationshipImpact,
+        icon: iconOptions[selectedIcon].key,
+        // Only record impact ratings if the user actually opened the
+        // (optional) Impact Assessment section -- otherwise the defaulted
+        // 'low' values would count as a real, submitted assessment.
+        healthImpact: hasOpenedAdvanced ? healthImpact : undefined,
+        stressImpact: hasOpenedAdvanced ? stressImpact : undefined,
+        productivityImpact: hasOpenedAdvanced ? productivityImpact : undefined,
+        relationshipImpact: hasOpenedAdvanced ? relationshipImpact : undefined,
         timeSpentPerDay: parseFloat(timeSpentPerDay) || 0,
         years: parseInt(years) || 1,
       });
@@ -89,6 +99,7 @@ export const HabitForm = () => {
       setTimeSpentPerDay('');
       setYears('1');
       setExpandAdvanced(false);
+      setHasOpenedAdvanced(false);
       setIsSubmitting(false);
       setShowSuccess(true);
 
@@ -248,7 +259,10 @@ export const HabitForm = () => {
           {/* Toggle Advanced Button */}
           <motion.button
             type="button"
-            onClick={() => setExpandAdvanced(!expandAdvanced)}
+            onClick={() => {
+              setExpandAdvanced(!expandAdvanced);
+              setHasOpenedAdvanced(true);
+            }}
             className="w-full flex items-center justify-center gap-2 text-sm text-(--primary) hover:text-(--primary) py-2 rounded-lg hover:bg-(--primary)/10 transition-colors"
           >
             {expandAdvanced ? 'Hide' : 'Show'} Impact Assessment

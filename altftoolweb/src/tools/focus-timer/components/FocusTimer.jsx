@@ -74,10 +74,10 @@ export default function FocusTimer({
 
   const applyCustom = () => {
     const f = Number(customFocus);
-    const b = Number(customBreak);
+    const b = Math.max(0, Number(customBreak) || 0);
     if (f > 0) {
       setFocusMinutes(f);
-      setBreakMinutes(b || 0);
+      setBreakMinutes(b);
       setSeconds(f * 60);
       setPhase("focus");
     }
@@ -146,6 +146,7 @@ export default function FocusTimer({
       const startNextSession = setTimeout(() => {
         setAutoCountdown(null);
         setIsRunning(true);
+        setJustCompleted(false);
       }, 0);
       return () => clearTimeout(startNextSession);
     }

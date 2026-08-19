@@ -17,7 +17,7 @@ const seo = {
   benefits: [
     ["Correct precedence", "Multi-condition OR groups are wrapped in parentheses automatically, so AND/OR mixing never changes meaning silently."],
     ["Five parameter styles", "Inline literals, ?, $n, :name and @name markers cover SQLite, JDBC, PostgreSQL, Oracle and SQL Server."],
-    ["Injection-safe literals", "Text values are escaped with SQL-standard '' doubling, and column names are validated before they are emitted."],
+    ["SQL-standard quote escaping", "Text values are escaped with SQL-standard '' quote-doubling and column names are validated before they are emitted. A value containing a backslash is flagged with a warning to use a bind parameter instead, since some engines' backslash-escaping in string literals falls outside plain '' escaping."],
   ],
   faqs: [
     [

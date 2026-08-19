@@ -58,12 +58,13 @@ const InputArea = ({ value, onChange, onClear, encodingType = "text" }) => {
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <label className="block text-(--foreground) text-2xl font-semibold mt-[-40]">Input Text</label>
+      <label htmlFor="encoded-decoded-input" className="block text-(--foreground) text-2xl font-semibold mt-[-40]">Input Text</label>
 
       {/* Container matching your DropdownSelector logic */}
       <div className="relative w-full text-(--foreground) border border-(--border) rounded-2xl p-1.5  overflow-hidden bg-(--card) backdrop-blur-sm">
         
         <textarea
+          id="encoded-decoded-input"
           className="relative z-10 w-full min-h-60 p-4 pb-20 bg-transparent text-2xl  font-light text-(--foreground) focus:outline-none resize-none transition-all placeholder:text-gray-500/50"
           placeholder="Enter or paste text here..."
           value={value}

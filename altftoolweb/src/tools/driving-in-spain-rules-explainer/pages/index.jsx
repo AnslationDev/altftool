@@ -269,7 +269,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -479,7 +479,7 @@ export default function ToolHome() {
         )}
       </section>
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="es-alcohol">
+      <section className={`mt-6 ${CARD}`} aria-live="polite" role="status" aria-labelledby="es-alcohol">
         <h2 id="es-alcohol" className="flex items-center gap-2 text-base font-semibold">
           <Wine className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
           Morning-after estimate
@@ -609,7 +609,7 @@ export default function ToolHome() {
               "Same figure in Spanish units",
               bac.error ? DASH : `${NUM.format(bac.gramsPerLitre)} g per litre of blood`,
             ],
-            ["Estimated breath alcohol", bac.error ? DASH : `${NUM.format(bac.breathMgPerL)} mg/l`],
+            ["Estimated breath alcohol", bac.error ? DASH : `${BAC.format(bac.breathMgPerL)} mg/l`],
             [
               "Criminal range (over 0.60 mg/l)",
               bac.error ? DASH : bac.criminalRange ? "Yes — Código Penal art. 379.2" : "No",

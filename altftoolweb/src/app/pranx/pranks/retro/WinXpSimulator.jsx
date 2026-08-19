@@ -65,7 +65,7 @@ export function WinXpSimulator() {
             ))}
           </aside>
           <section className="overflow-hidden p-6">
-            <h1 className="text-3xl font-black text-slate-700">Online Windows XP Simulator</h1>
+            <h2 className="text-3xl font-black text-slate-700">Online Windows XP Simulator</h2>
             <p className="mt-4 font-semibold">Online Windows XP simulator that runs in your web browser. Activate full screen and play with fake windows.</p>
             <div className="mt-8 flex items-center gap-5">
               <span className="text-6xl font-black text-blue-500">1.</span>

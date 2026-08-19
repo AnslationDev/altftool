@@ -100,7 +100,7 @@ export default function ToolHome() {
       <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className={CARD}>
           <div className="flex items-start justify-between gap-4">
-            <div>
+            <div aria-live="polite" aria-atomic="true">
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                 Hardening score
               </p>
@@ -114,7 +114,14 @@ export default function ToolHome() {
             </div>
             <ShieldCheck className="h-10 w-10 text-[var(--primary)]" aria-hidden="true" />
           </div>
-          <div className="mt-5 h-3 w-full overflow-hidden rounded-full bg-[var(--muted)]">
+          <div
+            className="mt-5 h-3 w-full overflow-hidden rounded-full bg-[var(--muted)]"
+            role="progressbar"
+            aria-valuenow={score.error ? 0 : score.percent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Hardening score"
+          >
             <span
               className="block h-full bg-[var(--primary)]"
               style={{ width: `${score.error ? 0 : score.percent}%` }}
@@ -135,7 +142,7 @@ export default function ToolHome() {
             </div>
           </dl>
           {score.capped ? (
-            <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
+            <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
               <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
               <span>
                 Score is capped at {CRITICAL_CAP_PERCENT}% until every critical SIM, PIN and
@@ -197,7 +204,7 @@ export default function ToolHome() {
                       <span className="flex flex-wrap items-center gap-2 font-bold">
                         {item.title}
                         {item.critical ? (
-                          <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-xs text-[var(--danger)]">
+                          <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-xs text-[var(--danger-text)]">
                             Critical
                           </span>
                         ) : null}

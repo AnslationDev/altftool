@@ -208,28 +208,6 @@ export function planDeclutter({
     };
   });
 
-  const totals = byArea.reduce(
-    (acc, a) => ({
-      items: acc.items + a.items,
-      keep: acc.keep + a.keepCount,
-      sell: acc.sell + a.sellCount,
-      donate: acc.donate + a.donateCount,
-      bin: acc.bin + a.binCount,
-      sorting: acc.sorting + a.sortingMinutes,
-      listing: acc.listing + a.listingMinutes,
-      setup: acc.setup + a.setupMinutes,
-    }),
-    { items: 0, keep: 0, sell: 0, donate: 0, bin: 0, sorting: 0, listing: 0, setup: 0 },
-  );
-
-  const donationTrips = Math.ceil(totals.donate / ITEMS_PER_DONATION_TRIP);
-  const disposalTrips = Math.ceil(totals.bin / ITEMS_PER_DISPOSAL_TRIP);
-  const logisticsMinutes =
-    donationTrips * DONATION_TRIP_MINUTES + disposalTrips * DISPOSAL_TRIP_MINUTES;
-
-  const workMinutes = totals.setup + totals.sorting + totals.listing;
-  const totalMinutes = workMinutes + logisticsMinutes;
-
   // Fill sessions sequentially from the ordered queue of categories.
   const queue = byArea.map((a) => ({ id: a.id, label: a.label, remaining: a.totalMinutes }));
   const sessions = [];
@@ -257,10 +235,51 @@ export function planDeclutter({
     });
   }
 
+  // The guard stops the loop for pathologically large inputs. When that
+  // happens the queue still has categories the schedule never reached at
+  // all — drop those from the summary entirely instead of letting the
+  // totals claim work that was never actually placed into a session.
+  const truncated = cursor < queue.length;
+  const remainingById = new Map(queue.map((q) => [q.id, q.remaining]));
+  const droppedAreas = truncated
+    ? byArea.filter((a) => (remainingById.get(a.id) ?? 0) >= a.totalMinutes - 0.01)
+    : [];
+  const scheduledByArea = truncated
+    ? byArea.filter((a) => !droppedAreas.includes(a))
+    : byArea;
+
+  const totals = scheduledByArea.reduce(
+    (acc, a) => ({
+      items: acc.items + a.items,
+      keep: acc.keep + a.keepCount,
+      sell: acc.sell + a.sellCount,
+      donate: acc.donate + a.donateCount,
+      bin: acc.bin + a.binCount,
+      sorting: acc.sorting + a.sortingMinutes,
+      listing: acc.listing + a.listingMinutes,
+      setup: acc.setup + a.setupMinutes,
+    }),
+    { items: 0, keep: 0, sell: 0, donate: 0, bin: 0, sorting: 0, listing: 0, setup: 0 },
+  );
+
+  const donationTrips = Math.ceil(totals.donate / ITEMS_PER_DONATION_TRIP);
+  const disposalTrips = Math.ceil(totals.bin / ITEMS_PER_DISPOSAL_TRIP);
+  const logisticsMinutes =
+    donationTrips * DONATION_TRIP_MINUTES + disposalTrips * DISPOSAL_TRIP_MINUTES;
+
+  const workMinutes = totals.setup + totals.sorting + totals.listing;
+  const totalMinutes = workMinutes + logisticsMinutes;
+
   const lastSession = sessions[sessions.length - 1];
   const estimatedRevenue = listSellItems ? totals.sell * price : 0;
 
   const warnings = [];
+  if (truncated) {
+    const droppedLabels = droppedAreas.map((a) => a.label).join(", ");
+    warnings.push(
+      `This plan is too large to schedule in full — it would need more than ${GUARD_LIMIT.toLocaleString("en-IN")} sessions, so the totals below only cover the ${sessions.length.toLocaleString("en-IN")} sessions actually generated. ${droppedAreas.length} categor${droppedAreas.length === 1 ? "y" : "ies"} could not be scheduled at all (${droppedLabels}). Reduce the item counts or increase minutes per session to fit the whole plan.`,
+    );
+  }
   if (listSellItems && totals.listing > totals.sorting) {
     warnings.push(
       `Listing ${totals.sell} items for sale takes ${formatMinutes(totals.listing)}, which is longer than sorting the whole house (${formatMinutes(totals.sorting)}). At ${SELL_LISTING_MINUTES_PER_ITEM} minutes an item that only pays if the items are worth listing — donating the low-value half will finish the job far sooner.`,
@@ -278,15 +297,16 @@ export function planDeclutter({
   }
 
   return {
-    byArea,
+    byArea: scheduledByArea,
     sessions,
+    truncated,
     totalItems: totals.items,
     keepCount: totals.keep,
     sellCount: totals.sell,
     donateCount: totals.donate,
     binCount: totals.bin,
     releaseCount: totals.items - totals.keep,
-    keepPercent: round(keep, 1),
+    keepPercent: totals.items > 0 ? round((totals.keep / totals.items) * 100, 1) : round(keep, 1),
     sortingMinutes: round(totals.sorting),
     listingMinutes: round(totals.listing),
     setupMinutes: round(totals.setup),

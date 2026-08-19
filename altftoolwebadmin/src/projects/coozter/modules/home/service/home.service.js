@@ -14,6 +14,8 @@ export const HOME_SECTION_TABS = [
   { key: "marketingChannelsSection", label: "Marketing Channels" },
   { key: "processSection", label: "Process Section" },
   { key: "servicesPreviewSection", label: "Services Preview" },
+  { key: "blogPreviewSection", label: "Blog Preview" },
+  { key: "contactCtaSection", label: "Contact CTA" },
 ];
 
 export const DEFAULT_HOME_PAGE_CONTENT = {

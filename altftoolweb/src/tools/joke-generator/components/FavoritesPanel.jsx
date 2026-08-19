@@ -67,6 +67,7 @@ export default function FavoritesPanel({ favorites, onClose, onRemove, onSelect 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search favorites..."
+            aria-label="Search favorites"
             className="w-full input px-3 py-2 text-sm"
           />
         </div>

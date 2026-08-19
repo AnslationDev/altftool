@@ -300,11 +300,19 @@ export function planWardrobe({
   );
   add("Waterproof shoes or boots", monsoon || needsBoots ? 1 : 0, monsoon ? "Streets flood during jangma downpours" : "Ice and snow underfoot");
   add("Compact umbrella", wet ? 1 : 0, "Convenience-store umbrellas are cheap but flimsy");
-  add("Scarf or neck warmer", needsScarf ? 1 : 0, "Wind chill is the difference between cold and unbearable");
+  add(
+    "Scarf or neck warmer",
+    needsScarf ? 1 : 0,
+    coldDays ? "Wind chill is the difference between cold and unbearable" : "Included at your request",
+  );
   add("Hat and gloves", freezingNights ? 1 : 0, "Below-freezing nights are normal this month");
   add("Smart shirt", needsSmart || needsFormal ? 1 : 0, "Korean nightlife and offices dress sharply");
   add("Smart trousers", needsSmart || needsFormal ? 1 : 0, "Gangnam doors and meeting rooms");
-  add("Dress shoes", needsFormal ? 1 : 0, "Polished shoes, ideally without laces");
+  add(
+    "Dress shoes",
+    needsFormal || needsSmart ? 1 : 0,
+    needsFormal ? "Polished shoes, ideally without laces" : "Clean dark shoes for Gangnam doors",
+  );
   add("Slip-on walking shoes", 1, shoesOff ? "You will take these off a dozen times a day" : "Cities are walked");
   add("KF94 masks (pack)", dustSeason ? 1 : 0, "Spring yellow dust and fine particulate episodes; KF94 filters at least 94% of 0.4 µm particles");
   add("Hair tie and toiletries pouch", bathhouse ? 1 : 0, "Everything else at a jjimjilbang is issued or rented");
@@ -323,6 +331,9 @@ export function planWardrobe({
   else if (needsSmart) requirements.push("Smart shoes and a decent shirt for Gangnam doors");
   if (needsBoots) requirements.push("Waterproof, grippy footwear");
   if (needsLayer) requirements.push("A carryable layer — interiors are heated or chilled hard");
+  if (needsClosed && !needsFormal && !needsSmart) {
+    requirements.push("Closed-toe shoes — sandals or flip-flops won't do here");
+  }
 
   const warnings = [];
   if (totalKg > CABIN_BAG_LIMIT_KG) {

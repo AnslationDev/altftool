@@ -5,13 +5,23 @@ import { Upload, Sparkles } from "lucide-react";
 export default function BeautyUploader({ onImage }) {
   const fileInputRef = useRef(null);
   const [dragActive, setDragActive] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   const processFile = useCallback((file) => {
     if (!file) return;
+    if (!file.type || !file.type.startsWith("image/")) {
+      setUploadError("That file isn't an image. Please choose a PNG, JPG or similar image file.");
+      return;
+    }
+    setUploadError(null);
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
       onImage({ src: url, img });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      setUploadError("Couldn't load that image. Try a different file.");
     };
     img.src = url;
   }, [onImage]);
@@ -41,18 +51,33 @@ export default function BeautyUploader({ onImage }) {
     }
   }, [processFile]);
 
+  const triggerBrowse = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      triggerBrowse();
+    }
+  }, [triggerBrowse]);
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label="Upload a photo: drag and drop, or press Enter to browse files"
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDrop={handleDrop}
-      className={`relative border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 ${
+      className={`relative border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--background) ${
         dragActive
           ? "border-(--primary) bg-(--primary)/5"
           : "border-(--border) hover:border-(--primary)/50 bg-(--card)"
       }`}
-      onClick={() => fileInputRef.current?.click()}
+      onClick={triggerBrowse}
+      onKeyDown={handleKeyDown}
     >
       <input
         ref={fileInputRef}
@@ -77,6 +102,11 @@ export default function BeautyUploader({ onImage }) {
           <Sparkles className="w-3.5 h-3.5 text-(--primary)" />
           Best results with natural lighting and no makeup/filters
         </div>
+        {uploadError && (
+          <p role="alert" className="text-sm font-medium text-(--danger-text)">
+            {uploadError}
+          </p>
+        )}
       </div>
     </div>
   );

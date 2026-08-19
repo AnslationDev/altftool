@@ -227,7 +227,11 @@ export default function SvgOptimizerPage() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <p className="text-sm text-[var(--muted-foreground)]">Size saved</p>
         <p className="mt-1 text-4xl leading-tight font-semibold text-[var(--foreground)]">
           {hasError ? DASH : `${percentFmt.format(result.savedPercent)}%`}
