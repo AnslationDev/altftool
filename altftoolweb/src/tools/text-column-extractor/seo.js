@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Column Extractor: cut -f for Pasted CSV & Logs",
+  title: "Text Column Extractor: cut -f for CSV & Logs",
   metaDescription:
     "Pull columns out of pasted CSV, TSV or fixed-width text — RFC 4180 quotes, ranges like 2,4-6, -1 for the last column, up to 200,000 lines in-browser.",
   steps: [

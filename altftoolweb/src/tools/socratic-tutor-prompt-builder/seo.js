@@ -1,5 +1,5 @@
 const seo = {
-  title: "Socratic Tutor AI Prompt with a Graded Hint Ladder",
+  title: "Socratic Tutor AI Prompt with a Hint Ladder",
   metaDescription:
     "Build an AI tutor prompt that asks one guiding question per turn, escalates a 2-5 rung hint ladder, and uses Paul's six Socratic question categories.",
   steps: [

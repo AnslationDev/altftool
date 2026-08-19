@@ -1,5 +1,5 @@
 const seo = {
-  title: "Dutch BTW Calculator: 21% and 9%, Reverse VAT, KOR",
+  title: "Dutch BTW Calculator: 21% & 9%, Reverse VAT, KOR",
   metaDescription:
     "Add or reverse Dutch BTW at 21%, 9% or 0%: net, BTW and gross to the cent, a BTW-aangifte payable line and the EUR 20,000 KOR turnover check.",
   steps: [

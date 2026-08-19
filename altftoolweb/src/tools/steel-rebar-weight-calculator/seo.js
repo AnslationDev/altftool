@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rebar Weight Calculator: d²/162 kg per Metre & Total",
+  title: "Rebar Weight Calculator: d²/162 kg per Metre",
   metaDescription:
     "Turn a bar bending schedule into kg and tonnes with the d²/162 unit weight, lap and wastage allowance, stock bar count and steel cost.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "XML to JSON Converter: Arrays, @_ Attribute Prefix",
+  title: "XML to JSON Converter: Arrays, @_ Prefix",
   metaDescription:
     "Convert XML to JSON in the browser: repeated tags become arrays, attributes take an @_ prefix, mixed text sits under #text. CDATA and entities decoded.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Term Insurance Cover Calculator: Needs-Based, India",
+  title: "Term Insurance Cover Calculator for India",
   metaDescription:
     "Sizes cover from income replacement, loans and children's goals, minus liquid assets and existing cover, rounded up to the ₹5 lakh slabs insurers sell.",
   steps: [

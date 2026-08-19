@@ -1,5 +1,5 @@
 const seo = {
-  title: "OMR Roll Number Grid Practice with Scanner Grading",
+  title: "OMR Roll Number Practice with Scanner Grading",
   metaDescription:
     "Bubble a random 4-15 digit roll number into a 0-9 OMR grid and get scanner-style grading: blanks, wrong digits and double marks flagged, with a timer.",
   steps: [

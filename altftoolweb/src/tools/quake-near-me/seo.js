@@ -1,5 +1,5 @@
 const seo = {
-  title: "Quake Near Me: Recent USGS Earthquakes by Distance",
+  title: "Quake Near Me: USGS Earthquakes by Distance",
   metaDescription:
     "Enter coordinates or use device location to list USGS-catalogued quakes of magnitude 2.5+ within 500 km, with haversine distance in km.",
   steps: [

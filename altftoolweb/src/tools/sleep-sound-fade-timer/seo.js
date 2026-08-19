@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Sound Fade Timer: Brown Noise, Rain, Surf & Fan",
+  title: "Sleep Sound Fade Timer: Fades to Silence",
   metaDescription:
     "Plays brown noise, steady rain, ocean surf or fan hum, then fades to silence over your chosen curve — synthesised in-browser with the Web Audio API.",
   steps: [

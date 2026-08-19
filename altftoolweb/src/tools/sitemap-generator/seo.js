@@ -1,5 +1,5 @@
 const seo = {
-  title: "XML Sitemap Generator: Build & Download sitemap.xml",
+  title: "XML Sitemap Generator: Download sitemap.xml",
   metaDescription:
     "Add page URLs with lastmod, changefreq and priority, watch the sitemaps.org 0.9 XML update live, then copy it or download sitemap.xml for your site root.",
   steps: [

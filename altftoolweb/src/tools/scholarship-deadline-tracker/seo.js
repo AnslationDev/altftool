@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scholarship Deadline Tracker — Days Left per Window",
+  title: "Scholarship Deadline Tracker: Days Left",
   steps: [
     "Fill each deadline row with the scholarship or task name, an optional 'Opens' date and its 'Closes' date, adding more rows with 'Add deadline'.",
     "Set 'Count days from' (defaults to today) and the closing-soon horizon in days (default 7) to control how each deadline is classified.",

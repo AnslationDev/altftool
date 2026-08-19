@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sprint Capacity Calculator: Hours a Team Can Commit",
+  title: "Sprint Capacity Calculator: Hours to Commit",
   metaDescription:
     "Net capacity = (headcount × days − holidays − leave) × hours, minus ceremony overhead. See per-person hours and utilisation before committing a backlog.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Swim Pace Calculator — Per-100 Splits & Predictions",
+  title: "Swim Pace Calculator — Per-100 Splits",
   metaDescription:
     "Convert any swim into pace per 100, 50 and 25, speed in m/s and time per pool length — with Riegel race predictions at a swim-specific 1.03 exponent.",
   steps: [

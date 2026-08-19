@@ -1,5 +1,5 @@
 const seo = {
-  title: "Referrer Policy Chooser: See the Exact Referer Sent",
+  title: "Referrer Policy Chooser: See the Referer Sent",
   metaDescription:
     "Enter a source and destination URL and see the Referer header all eight Referrer-Policy values send, with downgrade rules and risky query keys flagged.",
   steps: [

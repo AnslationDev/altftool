@@ -1,5 +1,5 @@
 const seo = {
-  title: "Printable SSC OMR Practice Sheet — CGL/CHSL Pattern",
+  title: "SSC OMR Practice Sheet — CGL/CHSL Pattern",
   metaDescription:
     "Print an SSC-style OMR answer sheet — A–D bubbles, four Tier-I parts of 25 questions, a 0–9 roll number grid and the real 2-mark / −0.50 marking scheme.",
   steps: [

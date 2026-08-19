@@ -1,5 +1,5 @@
 const seo = {
-  title: "Two Wheeler Loan EMI Calculator with LTV & Interest",
+  title: "Two Wheeler Loan EMI Calculator: LTV & Interest",
   metaDescription:
     "Turn a bike's on-road price, down payment and 6-60 month tenure into a reducing-balance EMI — with LTV, total interest and an income comfort check.",
   steps: [

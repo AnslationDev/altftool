@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sports Current Affairs Tracker for SSC & Bank Exams",
+  title: "Sports Current Affairs Tracker: SSC & Bank Exams",
   metaDescription:
     "Log tournament, winner, runner-up, venue and year in a searchable, sortable revision table. Saved in your browser, exportable as CSV in one click.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Series Content Calendar – Dated Episode Plan",
+  title: "Video Series Content Calendar: Dated Episodes",
   metaDescription:
     "Turn a start date, weekly cadence and topic list into dated episode slots with rotating formats; blank slots are flagged and export as spreadsheet rows.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roof Pitch Calculator: Rise in 12, Degrees, Percent",
+  title: "Roof Pitch Calculator: Rise in 12, Degrees, %",
   metaDescription:
     "Convert roof pitch between rise-in-12, degrees, percent and 1-in-n, with slope factor, hip factor, rafter lengths and a minimum-pitch check.",
   steps: [

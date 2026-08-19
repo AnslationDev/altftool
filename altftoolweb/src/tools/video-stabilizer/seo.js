@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Stabilizer: Fix Shaky Footage in Your Browser",
+  title: "Video Stabilizer: Fix Shaky Clips in Your Browser",
   metaDescription:
     "Smooth shaky clips with FFmpeg's deshake filter run as WebAssembly in your browser — light, medium or strong correction, MP4 output, no upload.",
   steps: [

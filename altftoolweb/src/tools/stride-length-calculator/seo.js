@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stride Length Calculator – Cadence, Steps or Height",
+  title: "Stride Length Calculator: Cadence, Steps, Height",
   metaDescription:
     "Work out running stride and step length from watch cadence and pace, a counted step test, or height — plus steps per km and per mile.",
   steps: [

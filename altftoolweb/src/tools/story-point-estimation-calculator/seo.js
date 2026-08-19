@@ -1,5 +1,5 @@
 const seo = {
-  title: "Story Points to Hours Calculator Using Team Velocity",
+  title: "Story Points to Hours Calculator: Team Velocity",
   metaDescription:
     "Convert story points to hours from your team's own rate — sprint person-hours divided by velocity — with a confidence range and sprints needed.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "SVG to PNG, JPEG or WebP Converter - Scale up to 16x",
+  title: "SVG to PNG, JPEG or WebP Converter",
   metaDescription:
     "Paste SVG markup and rasterise it to PNG, JPEG or WebP on a browser canvas at 0.1-16x scale - scripts stripped, exact pixel size shown before export.",
   steps: [

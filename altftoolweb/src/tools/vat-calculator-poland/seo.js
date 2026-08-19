@@ -1,5 +1,5 @@
 const seo = {
-  title: "Poland VAT Calculator – Netto/Brutto at 23%, 8%, 5%",
+  title: "Poland VAT Calculator: Netto/Brutto 23%, 8%, 5%",
   metaDescription:
     "Convert prices between netto and brutto at 23%, 8% or 5% VAT, test the PLN 200,000 exemption limit and flag split-payment invoices over PLN 15,000.",
   steps: [

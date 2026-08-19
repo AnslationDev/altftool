@@ -1,5 +1,5 @@
 const seo = {
-  title: "Teen Protein Calculator: DRI Targets for Ages 9-18",
+  title: "Teen Protein Calculator: DRI Targets, Ages 9-18",
   metaDescription:
     "Daily protein for a 9-18 year old from the IOM DRIs — 0.95 g/kg at 9-13, 0.85 at 14-18 — raised for sport and checked against the 10-30% energy AMDR.",
   steps: [

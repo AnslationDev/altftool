@@ -1,5 +1,5 @@
 const seo = {
-  title: "State PSC Exam Countdown: Prelims, Mains, Interview",
+  title: "State PSC Countdown: Prelims, Mains, Interview",
   metaDescription:
     "Enter UPPSC, BPSC, MPPSC or another commission's notified dates for days, weeks, the prelims-to-mains gap and study hours at your daily rate.",
   steps: [

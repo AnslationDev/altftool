@@ -1,5 +1,5 @@
 const seo = {
-  title: "ROAS Calculator with Break-Even ROAS & Profit Check",
+  title: "ROAS Calculator: Break-Even ROAS & Profit",
   metaDescription:
     "Revenue ÷ spend is only half the story — enter your margin to get break-even ROAS (3.33× at 30%), estimated profit, ROI and CPA/CPC/AOV/CR.",
   steps: [

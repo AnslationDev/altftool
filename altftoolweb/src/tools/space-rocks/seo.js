@@ -1,5 +1,5 @@
 const seo = {
-  title: "Space Rocks: Asteroid-Style Shooter in Your Browser",
+  title: "Space Rocks: Asteroid-Style Browser Shooter",
   metaDescription:
     "Thrust-and-drift asteroid shooter: rocks split from large to small for 20, 50 and 100 points, waves add rocks and speed, keyboard or touch controls.",
   steps: [

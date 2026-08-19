@@ -1,5 +1,5 @@
 const seo = {
-  title: "IVA Calculator Italy: 22% Scorporo and Forfettario",
+  title: "IVA Calculator Italy: 22% Scorporo & Forfettario",
   metaDescription:
     "Add IVA or scorporate a gross total at 22%, 10%, 5% or 4%: imponibile, IVA and totale to the centesimo, plus the EUR 85,000 forfettario check.",
   steps: [

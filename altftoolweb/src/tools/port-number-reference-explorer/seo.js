@@ -1,5 +1,5 @@
 const seo = {
-  title: "Port Number Lookup — TCP/UDP Services & IANA Ranges",
+  title: "Port Number Lookup: TCP/UDP & IANA Ranges",
   metaDescription:
     "Search TCP and UDP ports by number or service name; every port is classed per RFC 6335 as well-known (0-1023), registered or dynamic.",
   steps: [

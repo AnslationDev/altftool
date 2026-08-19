@@ -1,5 +1,5 @@
 const seo = {
-  title: "requirements.txt Generator with PEP 508 Validation",
+  title: "requirements.txt Generator: PEP 508 Validation",
   metaDescription:
     "Build a pip requirements.txt row by row — pins, extras and environment markers validated against PEP 508/440, with warnings for unpinned packages.",
   steps: [

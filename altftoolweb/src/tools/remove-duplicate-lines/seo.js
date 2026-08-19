@@ -1,5 +1,5 @@
 const seo = {
-  title: "Remove Duplicate Lines – Keep First, Preserve Order",
+  title: "Remove Duplicate Lines: Keep First, Keep Order",
   metaDescription:
     "Delete repeated lines from text, keeping the first occurrence in original order. Whole-line exact matching with an optional Ignore case toggle.",
   steps: [

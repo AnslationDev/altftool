@@ -1,5 +1,5 @@
 const seo = {
-  title: "BSNL Router Hardening Checklist: Score 17 Settings",
+  title: "BSNL Router Hardening Checklist: 17 Settings",
   metaDescription:
     "Work through 17 BSNL ONT/ADSL steps — admin/admin accounts, Telnet, TR-069, WPS, UPnP — scored 0-100 with the band capped while criticals stay open.",
   steps: [

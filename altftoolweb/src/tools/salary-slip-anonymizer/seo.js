@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salary Slip Anonymizer: Redact Payslip PDF Locally",
+  title: "Salary Slip Anonymizer: Redact PDF Locally",
   metaDescription:
     "Draw boxes over payslip details, then rebuild the file rasterized so no text layer survives. PDF, PNG, JPEG and more up to 40 MB, all in your browser.",
   steps: [

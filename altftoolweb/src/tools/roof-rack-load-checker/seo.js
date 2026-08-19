@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roof Rack Load Checker: Limits, Payload & Stability",
+  title: "Roof Rack Load & Stability Checker",
   metaDescription:
     "Takes the lower of your handbook dynamic roof load and the rack rating, subtracts bars and box, then checks GVM payload, NHTSA rollover and fuel cost.",
   steps: [

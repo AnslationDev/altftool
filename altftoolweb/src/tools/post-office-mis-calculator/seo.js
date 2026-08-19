@@ -1,5 +1,5 @@
 const seo = {
-  title: "Post Office MIS Calculator: Monthly Income & Limits",
+  title: "Post Office MIS Calculator: Income & Limits",
   metaDescription:
     "Monthly POMIS income from deposit x rate / 1200, capped at Rs 9 lakh single or Rs 15 lakh joint, with 5-year interest and the 2%/1% exit penalty.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Summits and Reports Tracker for Exam Current Affairs",
+  title: "Summits & Reports Tracker for Current Affairs",
   metaDescription:
     "Log summit/report, publisher, host, year and India's rank in a sortable, searchable table saved in your browser; copy rows as CSV for exam revision.",
   steps: [

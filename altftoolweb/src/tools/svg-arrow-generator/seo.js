@@ -1,5 +1,5 @@
 const seo = {
-  title: "SVG Arrow Generator - Curved Bezier Arrows to Copy",
+  title: "SVG Arrow Generator - Curved Bezier Arrows",
   metaDescription:
     "Set two points and a bow height to draw a quadratic Bezier arrow with a tangent-aligned head. Uses currentColor; copy the full SVG or just the path.",
   steps: [

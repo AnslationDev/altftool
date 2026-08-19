@@ -1,5 +1,5 @@
 const seo = {
-  title: "Power to Weight Ratio Calculator: PS/tonne & 0-100",
+  title: "Power to Weight Ratio Calculator: PS/tonne",
   metaDescription:
     "Peak power ÷ mass in PS/tonne, kW/tonne, bhp/tonne, W/kg and kg per PS, at kerb and laden weight, plus a 0-to-target-speed estimate capped by traction.",
   steps: [

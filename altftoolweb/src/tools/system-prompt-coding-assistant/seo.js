@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coding Assistant System Prompt Builder & Token Cost",
+  title: "Coding Assistant System Prompt Builder",
   metaDescription:
     "Assemble a system prompt from your stack, style guide, test policy and hard rules - ordered role, context, rules, output - with a live token estimate.",
   steps: [

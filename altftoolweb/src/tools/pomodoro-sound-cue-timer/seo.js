@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pomodoro Timer with Sound Cues at Each Phase Change",
+  title: "Pomodoro Timer with a Sound Cue at Each Change",
   metaDescription:
     "Runs 25/5 or your own focus and break lengths, playing a two- or three-note cue at each change and four notes at the end, made with the Web Audio API.",
   steps: [

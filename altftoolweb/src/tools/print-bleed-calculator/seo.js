@@ -1,5 +1,5 @@
 const seo = {
-  title: "Print Bleed Calculator: Trim, Safe Area, Slug in mm",
+  title: "Print Bleed Calculator: Trim, Safe Area, Slug",
   metaDescription:
     "Enter a trim size and get artboard, bleed, trim, safe area and slug in mm, inches, points and pixels at your DPI. 3 mm ISO and 1/8 in US presets.",
   steps: [

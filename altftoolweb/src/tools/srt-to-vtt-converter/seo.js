@@ -1,5 +1,5 @@
 const seo = {
-  title: "SRT to VTT Converter with Timing Offset - No Upload",
+  title: "SRT to VTT Converter with Timing Offset",
   metaDescription:
     "Converts SubRip to WebVTT in your browser: adds the WEBVTT header, swaps comma timestamps for full stops, shifts cue timing in ms and downloads a .vtt.",
   steps: [

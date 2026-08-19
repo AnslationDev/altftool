@@ -1,5 +1,5 @@
 const seo = {
-  title: "PostgreSQL Connection String Builder (URI and DSN)",
+  title: "PostgreSQL Connection String Builder (URI & DSN)",
   metaDescription:
     "Build a libpq postgresql:// URI and matching keyword/value DSN with sslmode, connect_timeout, search_path and pool settings — passwords percent-encoded.",
   steps: [

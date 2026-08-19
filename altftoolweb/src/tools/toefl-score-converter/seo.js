@@ -1,5 +1,5 @@
 const seo = {
-  title: "TOEFL to IELTS Score Converter (ETS Linking Table)",
+  title: "TOEFL to IELTS Converter (ETS Linking Table)",
   metaDescription:
     "Add your four TOEFL iBT sections (0-30 each) to get the 0-120 total, ETS performance levels and the IELTS band from the ETS linking table (94-101 = 7.0).",
   steps: [

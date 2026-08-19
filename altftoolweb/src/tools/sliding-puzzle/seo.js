@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sliding Puzzle - Free 15 Puzzle Online, 3x3 to 5x5",
+  title: "Sliding Puzzle: 15 Puzzle, 3x3 to 5x5",
   metaDescription:
     "Play the classic 15 puzzle on 3x3, 4x4 or 5x5 boards. Every shuffle is parity-checked so it is solvable, with move and time counters and a best per size.",
   steps: [

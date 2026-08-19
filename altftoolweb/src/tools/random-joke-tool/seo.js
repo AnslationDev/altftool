@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Joke Generator — 48 Clean Jokes, No Repeats",
+  title: "Random Joke Generator: 48 Jokes, No Repeats",
   metaDescription:
     "48 clean setup-and-punchline jokes in six categories — dad, tech, animals, food, work, school — with no repeats until a pool empties. Works offline.",
   steps: [

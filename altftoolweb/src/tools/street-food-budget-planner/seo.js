@@ -1,5 +1,5 @@
 const seo = {
-  title: "Street Food Budget Planner for Trips & Splurge Meals",
+  title: "Street Food Budget Planner: Trips & Splurge Meals",
   metaDescription:
     "Build a trip food budget from daily street meals, café stops, snacks and drinks — and see how many splurge dinners fit, costing only the price difference.",
   steps: [

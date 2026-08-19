@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Thumbnail Downloader — All 4 Sizes with URLs",
+  title: "YouTube Thumbnail Downloader: All 4 Sizes & URLs",
   metaDescription:
     "Paste any YouTube link — watch, youtu.be, Shorts or embed — to preview all four thumbnail sizes with direct img.youtube.com image URLs.",
   steps: [

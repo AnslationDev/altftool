@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Hygiene Checklist: 16 Habits Ranked by Impact",
+  title: "Sleep Hygiene Checklist: 16 Habits, Ranked",
   metaDescription:
     "Score 16 habits across bedroom, daytime and in-bed behaviour, then turn your bedtime into caffeine, alcohol, meal and wind-down cut-off clock times.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pressure Cooker Time Converter: Whistles & Minutes",
+  title: "Pressure Cooker Converter: Whistles & Minutes",
   metaDescription:
     "Divides conventional time by 3 (4 for tender veg) and estimates whistles at 3.5 minutes each, with a chart of 18 Indian dishes and altitude scaling.",
   steps: [

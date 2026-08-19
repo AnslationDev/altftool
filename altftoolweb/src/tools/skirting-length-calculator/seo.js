@@ -1,5 +1,5 @@
 const seo = {
-  title: "Skirting Board Calculator — Pieces, Corners & Cost",
+  title: "Skirting Board Calculator: Pieces, Corners & Cost",
   metaDescription:
     "Room perimeter minus doorways, plus a cutting allowance, rounded to whole factory lengths — with corner counts, fixings at 400 mm centres and cost.",
   steps: [

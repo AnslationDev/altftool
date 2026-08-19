@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rashi Finder: Your Zodiac Sign from a Date of Birth",
+  title: "Rashi Finder: Zodiac Sign from Date of Birth",
   intro:
     "Rashi Finder matches your date of birth against the twelve zodiac date ranges — Mesha 21 March to 19 April, Vrishabh 20 April to 20 May, and so on through Meen — and returns the rashi name in Sanskrit and English along with its element, keyword traits, a lucky number from 1 to 60, a lucky colour and time, and a partner compatibility score. Everything is derived from the birth date itself, so the same date always returns the same profile. Your rashi and its traits come from the birth date alone, in your browser. The daily reading beside them is fetched from the third-party horoscope service aztro.sameerkumar.website, so that part needs a connection and is not ours. It is written for entertainment and cultural curiosity, not for prediction or decision-making.",
   useCases: [

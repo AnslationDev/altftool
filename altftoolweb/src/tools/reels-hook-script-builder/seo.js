@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reels Hook Script Builder with 3-Second Word Budget",
+  title: "Reels Hook Builder: 3-Second Word Budget",
   metaDescription:
     "Writes hook lines in six styles and checks each against the words you can speak in the hook window — 8 words at 160 wpm in 3s — plus a timed beat sheet.",
   steps: [

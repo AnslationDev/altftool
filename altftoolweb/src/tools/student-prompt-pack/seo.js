@@ -1,5 +1,5 @@
 const seo = {
-  title: "Student Prompt Pack: 9 AI Study Prompts to Fill In",
+  title: "Student Prompt Pack: 9 Fill-In AI Study Prompts",
   metaDescription:
     "9 fill-in-the-blank prompts for the Feynman technique, active recall, spaced repetition and examiner marking — they make the model quiz you, not write.",
   steps: [

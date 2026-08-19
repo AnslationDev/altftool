@@ -1,5 +1,5 @@
 const seo = {
-  title: "Zalgo Text Generator with Three Corruption Sliders",
+  title: "Zalgo Text Generator: Three Corruption Sliders",
   metaDescription:
     "Stack up to 20 combining marks above, 10 through and 20 below each character with separate sliders and five presets — spaces and line breaks survive.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Punctuation Practice Drill - Commas to Dashes Quiz",
+  title: "Punctuation Practice Drill: Commas to Dashes",
   metaDescription:
     "Multiple-choice punctuation quiz across commas, semicolons, apostrophes, colons, quotation marks and dashes - every answer reveals the exact rule tested.",
   steps: [

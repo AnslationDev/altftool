@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kerala Professional Tax Calculator: Half-Year Slabs",
+  title: "Kerala Professional Tax Half-Year Slab Calculator",
   metaDescription:
     "Place each half year's income on Kerala's nine-band slab — Rs 120 to Rs 1,250 — for the annual total, the monthly split and the Rs 2,500 yearly ceiling.",
   steps: [

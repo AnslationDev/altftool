@@ -1,5 +1,5 @@
 const seo = {
-  title: "WhatsApp Status Size Generator: 1080 x 1920 Exporter",
+  title: "WhatsApp Status Size Generator: 1080 x 1920",
   metaDescription:
     "Export status images at 1080x1920 (9:16) with a safe-zone preview for WhatsApp's overlays, and plan the 60-second clip split for longer videos.",
   steps: [

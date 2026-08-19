@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shopify Product Description Prompt Builder & Handle",
+  title: "Shopify Product Description Prompt Builder",
   metaDescription:
     "Builds one prompt for description, SEO title, meta description and alt text, checks the 320-char meta field, and generates the Shopify URL handle.",
   steps: [

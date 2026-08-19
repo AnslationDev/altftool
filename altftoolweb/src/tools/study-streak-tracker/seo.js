@@ -1,5 +1,5 @@
 const seo = {
-  title: "Study Streak Tracker with Streak Freezes & Adherence",
+  title: "Study Streak Tracker with Freezes & Adherence",
   metaDescription:
     "Paste your daily study hours and a goal to see current and longest streaks, with 0-3 streak freezes per rolling 7 days and an honest goal-adherence rate.",
   steps: [

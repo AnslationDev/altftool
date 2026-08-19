@@ -1,5 +1,5 @@
 const seo = {
-  title: "Position Size Calculator from Stop Loss and Risk %",
+  title: "Position Size Calculator from Stop Loss & Risk %",
   metaDescription:
     "Enter capital, entry, stop loss and risk (0.5-3% presets or a fixed rupee amount) to get the share count, margin needed and exact loss if the stop is hit.",
   steps: [

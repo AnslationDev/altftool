@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tournament Bracket Maker – Single Elimination Draws",
+  title: "Tournament Bracket Maker: Single Elimination",
   metaDescription:
     "Paste up to 64 players one per line and get a full knockout draw — standard or random seeding, automatic byes to top seeds, and a copy-ready text bracket.",
   steps: [

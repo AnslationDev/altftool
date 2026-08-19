@@ -1,5 +1,5 @@
 const seo = {
-  title: "Speech Timing Calculator - Words to Minutes by Pace",
+  title: "Speech Timing Calculator: Words to Minutes",
   metaDescription:
     "Paste your script, pick a pace from 100 wpm ceremonial to 190 wpm fast, add slide and pause overhead, and see if the talk fits your target minutes.",
   steps: [

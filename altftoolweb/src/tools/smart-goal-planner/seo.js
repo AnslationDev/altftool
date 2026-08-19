@@ -1,5 +1,5 @@
 const seo = {
-  title: "SMART Goal Planner: Score Out of 100 and Pace Check",
+  title: "SMART Goal Planner: Score Out of 100 & Pace Check",
   metaDescription:
     "Scores a goal 20 points per SMART criterion, then compares the pace you have actually held with the rate needed to hit the target by the deadline.",
   steps: [

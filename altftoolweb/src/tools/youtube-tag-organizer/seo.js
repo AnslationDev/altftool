@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Tag Organizer — Dedupe & Fit 500 Characters",
+  title: "YouTube Tag Organizer: Dedupe & Fit 500 Chars",
   metaDescription:
     "Dedupes pasted tags, groups them broad, specific and long-tail, and trims to YouTube's 500-character field, counting commas and quotes like the API does.",
   steps: [

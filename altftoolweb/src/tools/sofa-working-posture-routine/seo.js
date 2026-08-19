@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sofa Working Posture: Cushion Sizes and Stint Plan",
+  title: "Sofa Working Posture: Cushion Sizes & Stint Plan",
   metaDescription:
     "Scores your couch setup on seven checks, then gives back and seat cushion thickness in cm from your height and a 15-45 minute stint limit.",
   steps: [

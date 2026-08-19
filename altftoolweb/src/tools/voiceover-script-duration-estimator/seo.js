@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voiceover Script Duration Estimator with Pause Time",
+  title: "Voiceover Script Duration Estimator with Pauses",
   metaDescription:
     "Paste a script or a word count, pick a pace from 100 to 175 wpm, and get runtime including pauses plus the words to cut to hit a 30-second spot.",
   steps: [

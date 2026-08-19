@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Engagement Rate Calculator by Views or Reach",
+  title: "Video Engagement Rate Calculator",
   metaDescription:
     "Divide likes, comments, shares and saves by views, impressions or followers, plus view-through rate, average percentage viewed and watch time.",
   steps: [

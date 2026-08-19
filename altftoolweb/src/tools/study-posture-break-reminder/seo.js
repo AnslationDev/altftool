@@ -1,5 +1,5 @@
 const seo = {
-  title: "Study Break Timer – 20-20-20 Eye & Posture Reminders",
+  title: "Study Break Timer: 20-20-20 Eye & Posture Breaks",
   metaDescription:
     "Plan 20-20-20 eye breaks, posture resets and hourly stand-up breaks across a study session, merged into one timeline with a live next-break countdown.",
   steps: [

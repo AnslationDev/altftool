@@ -1,5 +1,5 @@
 const seo = {
-  title: "Render vs Railway Pricing Calculator — Monthly Cost",
+  title: "Render vs Railway Monthly Cost Calculator",
   metaDescription:
     "Price one workload both ways: Render's fixed instance tiers vs Railway's $20/vCPU + $10/GB-RAM metering, with egress, disk and plan credits included.",
   steps: [

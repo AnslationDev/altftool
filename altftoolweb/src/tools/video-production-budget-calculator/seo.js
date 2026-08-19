@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Production Budget Calculator with GST and Fee",
+  title: "Video Production Budget Calculator with GST",
   metaDescription:
     "Crew day rates, gear rental, post hours and flat costs, then contingency, production fee and 18% GST. Shows cost per finished minute and shoot day.",
   steps: [

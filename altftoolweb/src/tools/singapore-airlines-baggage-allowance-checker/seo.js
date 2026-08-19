@@ -1,5 +1,5 @@
 const seo = {
-  title: "Singapore Airlines Baggage: 115 cm Cabin, 25-50 kg",
+  title: "Singapore Airlines Baggage Allowance: 25-50 kg",
   metaDescription:
     "Checks your bags against SQ's 7 kg 115 cm cabin rule and either the 25-50 kg weight allowance or the 2 x 23 kg Americas piece concept.",
   steps: [

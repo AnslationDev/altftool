@@ -1,5 +1,5 @@
 const seo = {
-  title: "Screen Recording Redactor: Blur or Cover, Baked In",
+  title: "Screen Recording Redactor: Blur or Cover Boxes",
   metaDescription:
     "Cover parts of a screen recording with timed solid, blur or pixelate boxes, then export a flattened WebM locally — the hidden pixels leave the file.",
   steps: [

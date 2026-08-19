@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tip Calculator with Bill Split and Round-Up Shares",
+  title: "Tip Calculator with Bill Split & Round-Up Shares",
   metaDescription:
     "Work out the tip and each person's share for up to 50 people, round shares up to the next rupee, and see the effective tip percentage it creates.",
   steps: [

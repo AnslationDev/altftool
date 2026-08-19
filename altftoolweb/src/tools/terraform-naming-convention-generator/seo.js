@@ -1,5 +1,5 @@
 const seo = {
-  title: "Terraform Naming Convention Generator + Locals Block",
+  title: "Terraform Naming Convention Generator",
   metaDescription:
     "Build a {org}-{app}-{env}-{region}-{type} standard, check names against S3, Lambda, IAM, Azure storage and GCS limits, and copy a Terraform locals block.",
   steps: [

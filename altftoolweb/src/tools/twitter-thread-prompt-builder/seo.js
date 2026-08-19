@@ -1,5 +1,5 @@
 const seo = {
-  title: "Twitter/X Thread Prompt Builder with 280-Char Math",
+  title: "Twitter/X Thread Prompt Builder: 280-Char Math",
   metaDescription:
     "Builds an AI prompt for a numbered X thread on the real 280-character budget per post — minus numbering overhead and 23 characters for a t.co link.",
   steps: [

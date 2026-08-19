@@ -1,5 +1,5 @@
 const seo = {
-  title: "Study Break Ratio Planner: 25/5, 50/10, 52/17, 90/20",
+  title: "Study Break Planner: 25/5, 50/10, 52/17, 90/20",
   metaDescription:
     "Enter your focus span and available minutes; get the best-fit protocol — 25/5, 50/10, 52/17 or 90/20 — as a block schedule that never ends on a break.",
   steps: [

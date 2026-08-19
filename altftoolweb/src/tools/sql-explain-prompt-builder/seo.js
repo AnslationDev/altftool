@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL EXPLAIN Prompt Builder: Read a Slow Query Plan",
+  title: "SQL EXPLAIN Prompt Builder: Read a Query Plan",
   metaDescription:
     "Flags non-sargable predicates and costly plan nodes, then writes a prompt for a node-by-node plan read and costed fixes. PostgreSQL, MySQL, SQL Server.",
   steps: [

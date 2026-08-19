@@ -1,5 +1,5 @@
 const seo = {
-  title: "Professional Tax Calculator Karnataka (2023 Slabs)",
+  title: "Professional Tax Calculator Karnataka (2023)",
   metaDescription:
     "Karnataka PT since April 2023: nil below Rs 25,000 a month, flat Rs 200 at or above it, capped at Rs 2,400 a year — prorated for part-year work.",
   steps: [

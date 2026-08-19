@@ -1,5 +1,5 @@
 const seo = {
-  title: "Florida Sales Tax Calculator with $5,000 Surtax Cap",
+  title: "Florida Sales Tax Calculator: $5,000 Surtax Cap",
   metaDescription:
     "6% state tax on the full price, county surtax on only the first $5,000 per item. Pick a county or enter the DR-15DSS rate. Freight taxable by default.",
   steps: [

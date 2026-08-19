@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube Privacy Checklist: 26 Settings to Lock Down",
+  title: "YouTube Privacy Checklist: 26 Settings",
   metaDescription:
     "Scores 26 YouTube settings — private subscriptions and playlists, history retention, public comment history, ad data and channel access.",
   steps: [

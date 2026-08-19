@@ -1,5 +1,5 @@
 const seo = {
-  title: "VTU Attendance Calculator: the 85% Rule per Subject",
+  title: "VTU Attendance Calculator: the 85% Rule",
   metaDescription:
     "Check each course against VTU's 85% rule: classes you can still miss, exact consecutive classes needed to recover, and the 75% condonation band.",
   steps: [

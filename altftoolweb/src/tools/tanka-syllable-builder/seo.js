@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tanka Syllable Builder: Plan 5-7-5-7-7 Line Drafts",
+  title: "Tanka Syllable Builder: Plan 5-7-5-7-7 Drafts",
   metaDescription:
     "Plan a five-line tanka around the 5-7-5-7-7 pattern: paste draft lines, theme and images, then copy a structured working note for revision.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Two Round Exam Strategy Planner – Per-Question Pace",
+  title: "Two Round Exam Planner: Per-Question Pace",
   metaDescription:
     "Split working time between a full first sweep and a second pass over flagged questions — get the seconds-per-question pace each round demands.",
   steps: [

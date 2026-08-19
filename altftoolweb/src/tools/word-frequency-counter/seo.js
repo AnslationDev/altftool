@@ -1,5 +1,5 @@
 const seo = {
-  title: "Word Frequency Counter with Spreadsheet-Ready Output",
+  title: "Word Frequency Counter: Spreadsheet-Ready Output",
   metaDescription:
     "Paste text and get every word ranked by how often it appears, as tab-separated count-and-word lines that drop straight into Excel or Sheets.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Date Regex Library: ISO 8601, DD/MM/YYYY, Log Times",
+  title: "Date Regex Library: ISO 8601, DD/MM/YYYY, Logs",
   metaDescription:
     "Seven copy-ready date/time regexes — ISO 8601, RFC 3339, DD/MM and MM/DD, clock times, syslog and Apache CLF — with live testing and range checks.",
   steps: [

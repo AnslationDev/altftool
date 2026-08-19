@@ -1,5 +1,5 @@
 const seo = {
-  title: "Electricity Meter Update Scam: SMS Red-Flag Checker",
+  title: "Electricity Meter Update Scam: SMS Red Flags",
   metaDescription:
     "Scores the disconnection SMS on 12 red flags and tests its deadline against the 15 clear days' notice Section 56(1) of the Electricity Act requires.",
   steps: [

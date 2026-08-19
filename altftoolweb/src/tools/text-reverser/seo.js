@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Reverser: Flip Characters, Words or Line Order",
+  title: "Text Reverser: Characters, Words or Line Order",
   metaDescription:
     "Reverse text four ways — whole-string characters, word order, letters inside each word, or line order — then copy it or download reversed-text.txt.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Slow Motion FPS Calculator: Speed %, Shutter Angle",
+  title: "Slow Motion FPS Calculator: Speed & Shutter Angle",
   metaDescription:
     "Enter capture and timeline fps for the slow-motion factor, editor speed %, shutter speed from your shutter angle, and the stops of light it costs.",
   steps: [

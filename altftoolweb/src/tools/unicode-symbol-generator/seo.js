@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unicode Symbol Copy and Paste: 548 Signs in 9 Sets",
+  title: "Unicode Symbol Copy & Paste: 548 Signs in 9 Sets",
   metaDescription:
     "Click a tile to copy the literal character, not an HTML entity. 548 symbols in 9 sets, including 76 box-drawing pieces and 49 Greek letters.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thesis Outline Prompt Builder: 6-Chapter Word Plan",
+  title: "Thesis Outline Prompt Builder: 6-Chapter Plan",
   metaDescription:
     "Split a thesis word count across six chapters (10/25/20/20/15/10%) and build an AI outline prompt that traces every research question through them.",
   steps: [

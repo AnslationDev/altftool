@@ -1,5 +1,5 @@
 const seo = {
-  title: "Therapy Notes Tracker — Private In-Browser Journal",
+  title: "Therapy Notes Tracker: Private In-Browser Journal",
   metaDescription:
     "A two-field log for therapy sessions and homework, saved only in your browser's local storage — searchable, with JSON export and import. No account.",
   steps: [

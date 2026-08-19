@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sublet Permission Request Letter for Indian Tenants",
+  title: "Sublet Permission Letter for Indian Tenants",
   metaDescription:
     "Drafts a tenant's consent request citing section 108(j) of the Transfer of Property Act and Model Tenancy Act s.8, with a dated reply deadline.",
   steps: [

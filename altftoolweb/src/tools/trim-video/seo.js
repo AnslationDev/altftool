@@ -1,5 +1,5 @@
 const seo = {
-  title: "Trim Video Online in Your Browser with FFmpeg WASM",
+  title: "Trim Video in Your Browser with FFmpeg WASM",
   metaDescription:
     "Cut a section from a video with FFmpeg in your browser - no upload. Lossless stream copy or frame-exact H.264 re-encode, downloaded as trimmed.mp4.",
   steps: [

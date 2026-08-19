@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stop Loss & Target Calculator by Risk-Reward Ratio",
+  title: "Stop Loss & Target Calculator: Risk-Reward Ratio",
   metaDescription:
     "Entry price plus a 1:2 or custom risk-reward ratio gives exact stop and target prices for long or short trades, rupee risk and the break-even win rate.",
   steps: [

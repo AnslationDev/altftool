@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Repeater: Repeat Text Up to 10,000 Times Online",
+  title: "Text Repeater: Repeat Text Up to 10,000 Times",
   metaDescription:
     "Repeat a word, line or block up to 10,000 times, joined by a new line, space, comma or nothing. The output rebuilds as you type, ready to copy.",
   steps: [

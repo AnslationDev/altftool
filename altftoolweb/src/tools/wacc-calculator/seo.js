@@ -1,5 +1,5 @@
 const seo = {
-  title: "WACC Calculator: Equity and After-Tax Debt Weights",
+  title: "WACC Calculator: Equity & After-Tax Debt Weights",
   metaDescription:
     "Work out WACC from the market values of equity and debt with (E/V)Re + (D/V)Rd(1-t), and see both weights, after-tax debt cost and each contribution.",
   steps: [

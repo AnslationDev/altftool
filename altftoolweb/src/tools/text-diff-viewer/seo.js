@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Diff Viewer with Word-Level Change Highlights",
+  title: "Text Diff Viewer with Word-Level Highlights",
   metaDescription:
     "Compare two drafts side by side with changed words highlighted inside edited lines - similarity and churn percentages, version history, markdown export.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Online To-Do List with Starred Tasks Pinned on Top",
+  title: "To-Do List with Starred Tasks Pinned on Top",
   metaDescription:
     "Free browser to-do list: star tasks to pin them on top, filter by All, Active, Important or Completed, edit inline. Saved to local storage, no account.",
   steps: [

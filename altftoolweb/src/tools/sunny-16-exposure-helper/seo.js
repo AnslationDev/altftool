@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sunny 16 Calculator — Aperture & Shutter from Light",
+  title: "Sunny 16 Calculator — Aperture & Shutter Pairs",
   metaDescription:
     "Pick the lighting condition and ISO to get exact and nearest full-stop aperture and shutter pairs from EV = log2(N²/t), plus equivalent exposures.",
   steps: [

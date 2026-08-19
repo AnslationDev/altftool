@@ -1,5 +1,5 @@
 const seo = {
-  title: "Word Search Puzzles Online: 4 Themes, 3 Grid Sizes",
+  title: "Word Search Puzzles: 4 Themes, 3 Grid Sizes",
   metaDescription:
     "Play a freshly generated word search — Animals, Countries, Fruits & Food or Technology — on 8×8, 12×12 or 15×15 grids with a timer and saved best times.",
   steps: [

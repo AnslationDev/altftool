@@ -1,5 +1,5 @@
 const seo = {
-  title: "Redis Connection URL Builder (redis:// & rediss://)",
+  title: "Redis URL Builder (redis:// & rediss://)",
   metaDescription:
     "Build redis:// or rediss:// URLs with DB index, ACL username and percent-encoded password, plus a matching redis-cli -u test command.",
   steps: [
