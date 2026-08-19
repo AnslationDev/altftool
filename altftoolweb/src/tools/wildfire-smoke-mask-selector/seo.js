@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wildfire Smoke Mask Selector: OSHA Protection Factors",
+  title: "Wildfire Mask Selector: OSHA Protection Factors",
   metaDescription:
     "From PM2.5 or AQI, shows the exposure behind an N95, PAPR or full facepiece using OSHA factors, and how long you can stay out. Cloth gets no credit.",
   steps: [

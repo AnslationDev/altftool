@@ -1,5 +1,5 @@
 const seo = {
-  title: "PM Vishwakarma Eligibility: 18 Trades, ₹2 Lakh Loan",
+  title: "PM Vishwakarma Eligibility: 18 Trades, ₹2L Loan",
   metaDescription:
     "Test your craft against the 18 notified trades and the age, family and prior-loan rules, then price the ₹15,000 toolkit voucher, stipend and 5% loan.",
   steps: [

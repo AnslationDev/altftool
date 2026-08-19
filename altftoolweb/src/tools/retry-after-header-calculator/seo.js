@@ -1,5 +1,5 @@
 const seo = {
-  title: "Retry-After Calculator: delay-seconds or HTTP-date",
+  title: "Retry-After Calculator: Seconds or HTTP-date",
   metaDescription:
     "Build an RFC 9110 Retry-After value in both forms, IMF-fixdate in GMT and whole seconds, with the 429/503 backoff table and a parser check.",
   steps: [

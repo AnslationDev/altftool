@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bill Split Calculator India: GST, Service Charge, Tip",
+  title: "Bill Split Calculator: GST, Service Charge, Tip",
   metaDescription:
     "Applies 5% or 18% GST on food plus service charge, keeps alcohol on state VAT and the tip untaxed, then splits equally or by what each person ordered.",
   steps: [

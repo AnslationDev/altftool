@@ -1,5 +1,5 @@
 const seo = {
-  title: "Service Mesh Comparison: Istio, Linkerd, Consul, Cilium",
+  title: "Service Mesh Comparison with Weighted Scoring",
   metaDescription:
     "Weight feature breadth, operational simplicity, resource efficiency and VM support 0-5, then see Istio, Linkerd, Consul and Cilium ranked out of 100.",
   steps: [

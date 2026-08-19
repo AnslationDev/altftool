@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blog Title Generator — How-To, Listicle & Bold Ideas",
+  title: "Blog Title Generator: How-To/Listicle/Bold Ideas",
   metaDescription:
     "Type a keyword, pick How-to, Listicle or Bold, and get four template headlines with your keyword title-cased inside — listicle counts stay odd, 5 to 13.",
   intro:

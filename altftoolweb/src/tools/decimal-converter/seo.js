@@ -1,5 +1,5 @@
 const seo = {
-  title: "Decimal Converter: Fractions, Percents, Mixed Numbers",
+  title: "Decimal Converter: Fractions, Percents & More",
   metaDescription:
     "Converts across eight modes with the working shown: fractions reduce by GCD, and repeating decimals print as 0.(3) or 0.(142857), not 0.333.",
   intro:

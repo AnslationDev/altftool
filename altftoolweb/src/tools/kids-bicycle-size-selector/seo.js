@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids Bike Size by Inseam: Wheel Size + Saddle Height",
+  title: "Kids Bike Size: Wheel Size + Saddle Height",
   metaDescription:
     "Match a child's inseam to 12–26 inch wheels, get three saddle heights from feet-flat to full extension, and see how many months the size will fit.",
   steps: [

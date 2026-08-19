@@ -1,5 +1,5 @@
 const seo = {
-  title: "Changesets Config Generator: .changeset/config.json",
+  title: "Changesets Config Generator",
   metaDescription:
     "Build .changeset/config.json with changelog-github, npm access, base branch, fixed and linked groups, ignore list and updateInternalDependencies.",
   steps: [

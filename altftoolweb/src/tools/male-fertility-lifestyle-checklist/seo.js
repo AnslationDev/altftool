@@ -1,5 +1,5 @@
 const seo = {
-  title: "Male Fertility Checklist: 19 Habits, 88-Day Recheck",
+  title: "Male Fertility Checklist: 19 Habits/88-Day Retest",
   metaDescription:
     "Scores 19 evidence-weighted habits linked to semen quality and sets a re-test date one 88-day sperm cycle away, with the WHO 2021 reference limits.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "CAT Exam Day Checklist: Slot Clock and Section Locks",
+  title: "CAT Exam Day Checklist: Slot Clock, Section Locks",
   metaDescription:
     "Turn your CAT slot into a clock: reporting, gate close and the minute VARC, DILR and QA each lock, plus seconds per question and a net score at +3 / -1.",
   steps: [

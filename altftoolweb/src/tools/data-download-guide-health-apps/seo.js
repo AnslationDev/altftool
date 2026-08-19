@@ -1,5 +1,5 @@
 const seo = {
-  title: "Health App Data Export Guide + Record Count Estimate",
+  title: "Health App Data Export Guide + Record Estimate",
   metaDescription:
     "Choose the categories, enter wear hours, and see the heart-rate, activity and sleep record counts in a health export — and which are GDPR Art. 9 data.",
   steps: [

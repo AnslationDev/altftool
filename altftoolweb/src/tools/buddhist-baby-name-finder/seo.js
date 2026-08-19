@@ -1,5 +1,5 @@
 const seo = {
-  title: "Buddhist Baby Name Finder — Pali, Sanskrit, Tibetan",
+  title: "Buddhist Baby Name Finder: Pali/Sanskrit/Tibetan",
   metaDescription:
     "Search Pali, Sanskrit and Tibetan Buddhist names by meaning, gender, letter or length — each entry shows the word's literal sense, origin and syllables.",
   steps: [

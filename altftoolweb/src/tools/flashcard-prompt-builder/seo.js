@@ -1,5 +1,5 @@
 const seo = {
-  title: "Flashcard Prompt Builder – Anki-Ready AI Card Decks",
+  title: "Flashcard Prompt Builder: Anki-Ready AI Decks",
   metaDescription:
     "Build an AI prompt for one-fact-per-card decks — basic Q&A, term-definition or Anki cloze — output as tab-separated lines; decks over 40 cards auto-batch.",
   steps: [

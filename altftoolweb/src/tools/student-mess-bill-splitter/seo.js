@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mess Bill Splitter — Fixed Costs Equal, Food by Days",
+  title: "Mess Bill Splitter: Fixed Equal, Food by Days",
   metaDescription:
     "Split a hostel mess bill fairly: cook, gas and wifi equally; food by days present at a per-day rate. Shares reconcile to the exact bill.",
   steps: [

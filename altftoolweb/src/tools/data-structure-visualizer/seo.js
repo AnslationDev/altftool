@@ -1,5 +1,5 @@
 const seo = {
-  title: "Data Structure Visualizer: Stack, Queue, Tree, List",
+  title: "Data Structure Visualizer: Stack/Queue/Tree/List",
   metaDescription:
     "Build an array, stack, queue, linked list or binary tree box by box, with TOP, FRONT and REAR labels and each structure's own O(1) or O(n) costs.",
   steps: [

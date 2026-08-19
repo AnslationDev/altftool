@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ugadi & Gudi Padwa Wishes in Telugu, Kannada, Marathi",
+  title: "Ugadi/Gudi Padwa Wishes: Telugu, Kannada, Marathi",
   metaDescription:
     "Generate Ugadi and Gudi Padwa greetings in Telugu, Kannada, Marathi, Hindi or English, matched to family, friends or work, with SMS parts counted.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "River Quiz: 50 World Rivers, 4 Modes, Timed Rounds",
+  title: "River Quiz: 50 Rivers, 4 Modes, Timed Rounds",
   metaDescription:
     "Timed quiz on 50+ major rivers: name the continent, country, length range or river. Easy is 10 questions at 25s, Expert 40 at 8s, with streak scoring.",
   steps: [

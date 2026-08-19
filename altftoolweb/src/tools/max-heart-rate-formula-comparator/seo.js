@@ -1,5 +1,5 @@
 const seo = {
-  title: "Max Heart Rate Formulas: 220-Age vs Tanaka & Gulati",
+  title: "Max Heart Rate Formulas: 220-Age, Tanaka, Gulati",
   metaDescription:
     "Run Fox, Astrand, Inbar, Tanaka, Gellish, Gulati and Nes on one age and see the spread, each estimate's ±10 bpm band and the zone anchors.",
   steps: [

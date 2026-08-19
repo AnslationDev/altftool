@@ -1,5 +1,5 @@
 const seo = {
-  title: "Practical Exam Prep Checklist: Record, Viva, Lab Day",
+  title: "Practical Exam Prep Checklist",
   metaDescription:
     "21-item checklist across record/journal, experiments, viva and exam-day logistics, with a readiness percentage per section and the weakest one flagged.",
   steps: [

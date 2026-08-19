@@ -1,5 +1,5 @@
 const seo = {
-  title: "QTc Calculator: Bazett, Fridericia, Framingham, Hodges",
+  title: "QTc Calculator from QT and Heart Rate",
   metaDescription:
     "Enter QT in ms and heart rate to get Bazett, Fridericia, Framingham and Hodges QTc side by side, checked against male, female and child reference bands.",
   steps: [

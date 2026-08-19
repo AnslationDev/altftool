@@ -1,5 +1,5 @@
 const seo = {
-  title: "Card Number Regex by Network: Visa, Mastercard, Amex",
+  title: "Card Number Regex: Visa, Mastercard, Amex",
   metaDescription:
     "Copy card-format regex for Visa, Mastercard (incl. 2221-2720), Amex, RuPay, Discover, JCB and Diners, with ISO 7813 grouping and last-4 masking.",
   steps: [

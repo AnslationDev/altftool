@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ask Your Own Documents: Cited Excerpts, No Cloud Model",
+  title: "Ask Your Own Docs: Cited Excerpts, No Cloud Model",
   metaDescription:
     "Index up to 8 local files (PDF, DOCX, TXT, MD, CSV, JSON) and get BM25-ranked excerpts with source and section cited. Nothing is generated or uploaded.",
   steps: [

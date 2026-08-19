@@ -1,5 +1,5 @@
 const seo = {
-  title: "DND India: Build Your 1909 Command, Check the Caller",
+  title: "DND India: Build Your 1909 Command, Check Caller",
   metaDescription:
     "Pick from the 7 TRAI categories to build the exact SMS for 1909, read a 140-series number, and check the 3-day complaint window.",
   steps: [

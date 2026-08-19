@@ -1,5 +1,5 @@
 const seo = {
-  title: "VFS Global Appointment Checklist + Leave-Home Time",
+  title: "VFS Appointment Checklist + Leave-Home Time",
   metaDescription:
     "Build a carry, wear and leave-behind list for your VFS centre visit — scheme-aware, with biometric age rules and a leave-home time from your slot.",
   steps: [

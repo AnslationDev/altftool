@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pinterest Pin Sizes: 1000×1500, 1000×1000, 1080×1920",
+  title: "Pinterest Pin Sizes 1000×1500 1000×1000 1080×1920",
   metaDescription:
     "Get canvas dimensions for standard 2:3 (1000×1500), square and idea/story pins, with scaled exports, safe-area size and ready-to-paste CSS.",
   steps: [

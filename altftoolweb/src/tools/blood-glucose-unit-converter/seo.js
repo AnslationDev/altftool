@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blood Glucose Converter: mg/dL to mmol/L (18.0182)",
+  title: "Blood Glucose Converter: mg/dL to mmol/L",
   metaDescription:
     "Convert a blood sugar reading with the 18.0182 factor and see the ADA fasting, 2-hour or random band it lands in. 126 mg/dL = 7.0 mmol/L.",
   steps: [

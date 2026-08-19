@@ -1,5 +1,5 @@
 const seo = {
-  title: "Supabase Pricing Calculator — Pro Plan Bill Estimate",
+  title: "Supabase Pricing Calculator: Pro Bill Estimate",
   metaDescription:
     "Estimate a Supabase Pro bill — $25 base, $10 compute credit and per-unit overages for database, egress, storage, MAU and edge functions beyond quota.",
   steps: [

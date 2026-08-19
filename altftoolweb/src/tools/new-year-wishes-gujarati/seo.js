@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gujarati New Year Wishes: Bestu Varas & Saal Mubarak",
+  title: "Gujarati New Year Wishes",
   metaDescription:
     "Bestu Varas and 1 January greetings in Gujarati script, Roman transliteration and English, with each message's real 70-character SMS length.",
   steps: [
