@@ -1,5 +1,5 @@
 const seo = {
-  title: "Marketing Consent Checkbox Copy: One Box Per Channel",
+  title: "Marketing Consent Checkbox Copy: One Per Channel",
   metaDescription:
     "Generates unticked, per-channel consent labels for email, SMS, WhatsApp, push or post, states the messages-per-year, and flags bundled or required boxes.",
   steps: [

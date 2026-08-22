@@ -1,4 +1,12 @@
 const seo = {
+  title: "Small Caps Text Generator: Copy-Paste Unicode",
+  metaDescription:
+    "Swap the 26 Latin letters for Unicode small-capital lookalikes you can paste into bios and posts - numbers, emoji and punctuation pass through unchanged.",
+  steps: [
+    "Type or paste your text into the Input box - uppercase and lowercase letters both map to the same small-cap glyph.",
+    "The Result pane converts live: each of the 26 Latin letters becomes its Unicode small capital (x stays x and q becomes ǫ), while digits, emoji and punctuation pass through.",
+    "Click Copy and paste the ꜱᴍᴀʟʟ ᴄᴀᴘꜱ output anywhere - it is real Unicode text, so the styling survives apps that strip formatting.",
+  ],
   intro:
     "The Small Caps Generator rewrites ordinary text as ꜱᴍᴀʟʟ ᴄᴀᴘꜱ by swapping each of the 26 Latin letters for its Unicode small-capital lookalike, so the result is real characters you can paste anywhere rather than an image or a font. It is aimed at people styling a social bio, a display name or a post headline on platforms that strip formatting. Digits, emoji, punctuation and spacing pass through untouched, so \"launch day 2026\" keeps its numbers intact.",
   useCases: [

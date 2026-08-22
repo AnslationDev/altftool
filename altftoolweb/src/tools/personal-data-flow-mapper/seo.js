@@ -1,5 +1,5 @@
 const seo = {
-  title: "Personal Data Flow Mapper: 7-Column Flow Inventory",
+  title: "Personal Data Flow Mapper: 7-Column Inventory",
   metaDescription:
     "Turn pipe-separated lines into a table of step, source, data, purpose, destination, retention rule and control, then flag rows missing a column.",
   intro:

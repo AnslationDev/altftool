@@ -1,4 +1,12 @@
 const seo = {
+  title: "Supabase Pricing Calculator: Pro Bill Estimate",
+  metaDescription:
+    "Estimate a Supabase Pro bill — $25 base, $10 compute credit and per-unit overages for database, egress, storage, MAU and edge functions beyond quota.",
+  steps: [
+    "Enter expected \"Database size (GB)\", \"Egress / bandwidth per month (GB)\", \"File storage (GB)\", \"Monthly active auth users\" and \"Edge function invocations per month\".",
+    "Choose a \"Compute instance\" — from \"Micro — 1 GB RAM, 2-core (shared)\" at $10 up to \"4XL — 64 GB RAM, 16-core\".",
+    "Read the estimated monthly Pro bill with each overage line beyond the Pro quotas, the yearly figure and whether usage still fits the Free tier, then click \"Copy result\".",
+  ],
   intro:
     "This estimator projects a monthly Supabase bill by applying the published Pro plan pricing model: a $25 base fee, a $10 compute credit, and per-unit overage rates for database space, egress, file storage, monthly active users and edge function invocations beyond the included quotas. It is built for developers and founders sizing a side project or production app who want to know whether they fit the Free tier and what growth will cost before it lands on the invoice.",
   useCases: [

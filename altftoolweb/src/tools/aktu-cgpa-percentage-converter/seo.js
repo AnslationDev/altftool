@@ -1,4 +1,12 @@
 const seo = {
+  title: "AKTU CGPA to Percentage: (CGPA − 0.75) × 10 Rule",
+  metaDescription:
+    "Apply AKTU's own (CGPA − 0.75) × 10 rule both ways, combine semester SGPAs credit-weighted, and see your division band — 8.0 CGPA reads as 72.5%.",
+  steps: [
+    "Pick a mode under 'What do you want to convert?' — CGPA to %, % to CGPA or SGPA to CGPA — and enter 'Your CGPA (0 to 10)' or 'Your percentage (0 to 100)'.",
+    "In SGPA to CGPA mode, enter each semester's credits and SGPA with 'Add semester' for more rows; tick 'All papers cleared in the first attempt' for the Honours check.",
+    "Read the converted figure with the '(CGPA − 0.75) × 10' formula row and your division band, then press 'Copy result' to copy it with the formula named.",
+  ],
   intro:
     "This converter applies Dr. A.P.J. Abdul Kalam Technical University's own equivalence — percentage = (CGPA − 0.75) × 10 — to turn an AKTU CGPA into the percentage that placement portals and eligibility forms ask for, so a CGPA of 8.0 reads as 72.5%. It also inverts the formula for forms that want a CGPA, combines semester SGPAs credit-weighted into a CGPA, and shows the division band (Honours, First or Second) the ordinances attach to your figure.",
   useCases: [

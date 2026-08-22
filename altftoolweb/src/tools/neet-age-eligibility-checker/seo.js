@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET Age Limit Checker: 17 Years by 31 December",
+  metaDescription:
+    "Check the NEET (UG) 17-years-by-31-December rule against your date of birth: exact age on the cutoff, day margin, and the latest DOB that still qualifies.",
+  steps: [
+    "Enter your Date of birth and the Year of admission to MBBS/BDS — the check runs against 31 December of that admission year.",
+    "Read the verdict on the 17-year rule — Eligible or Not eligible — with your age in years, months and days on the cutoff and the exact day margin either way.",
+    "Note the latest eligible date of birth shown for that admission year, then click Copy result to save the full summary.",
+  ],
   intro:
     "This checker applies the NEET (UG) minimum-age rule — 17 years of age completed on or before 31 December of the year of admission, as laid down in the Graduate Medical Education Regulations — to your exact date of birth. It returns your age in years, months and days on the cutoff, the precise day margin by which you pass or miss the rule, and the latest date of birth that still qualifies for your admission year.",
   useCases: [

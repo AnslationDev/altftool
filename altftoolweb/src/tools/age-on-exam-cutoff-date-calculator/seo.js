@@ -1,5 +1,5 @@
 const seo = {
-  title: "Age on Cutoff Date Calculator for Exam Eligibility",
+  title: "Age on Cutoff Date Calculator: Exam Eligibility",
   metaDescription:
     "Get your exact age in years, months and days on any exam's crucial date and test it against minimum and maximum limits with the day margin shown.",
   steps: [

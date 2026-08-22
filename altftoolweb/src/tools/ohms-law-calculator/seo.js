@@ -1,4 +1,7 @@
 const seo = {
+  title: "Ohm's Law Calculator — Solve V, I or R plus Power",
+  metaDescription:
+    "Enter any two of voltage, current and resistance to get the third from V = I x R, plus power in watts — volts, amps, ohms and watts shown together.",
   intro:
     "The Ohm's Law Calculator solves V = I × R for whichever of voltage, current or resistance you leave blank, then reports the power dissipated as P = V × I. Fill in any two of the three fields and it returns the missing quantity plus a full breakdown in volts, amps, ohms and watts. It is built for electronics hobbyists, students and anyone sizing a resistor or checking whether a supply can carry a load.",
   useCases: [

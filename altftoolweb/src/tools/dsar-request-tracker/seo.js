@@ -1,5 +1,5 @@
 const seo = {
-  title: "DSAR Request Tracker: Deadlines & Overdue Day Counts",
+  title: "DSAR Request Tracker: Deadlines & Overdue Days",
   metaDescription:
     "Paste one DSAR per line as ID, received date, deadline days, status, owner — get each due date plus days left or days overdue at your review date.",
   steps: [

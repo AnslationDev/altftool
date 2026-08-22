@@ -1,5 +1,5 @@
 const seo = {
-  title: "Animated QR File Beam: Send a File Across an Air Gap",
+  title: "Animated QR File Beam: Cross an Air Gap",
   metaDescription:
     "Split a file up to 256 KiB into numbered QR frames, loop them on screen, and rebuild it on another device's camera. CRC-32 verified, no server, no upload.",
   steps: [

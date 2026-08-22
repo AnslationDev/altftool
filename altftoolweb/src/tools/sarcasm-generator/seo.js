@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sarcasm Generator: Hand-Written Comebacks",
+  metaDescription:
+    "Pick Work, Social, Family, Tech or General and draw one of 40 hand-written deadpan one-liners - no AI, just a curated deck with copy and favourites.",
+  steps: [
+    "Pick a context tab — Work, Social, Family, Tech or General — each backed by its own eight hand-written lines.",
+    "Press Generate Sarcasm (or the refresh icon on the result card) to draw one of the 40 retorts at random from that context's deck.",
+    "Copy the line to your clipboard, or heart it into the Favorite Responses list, which holds up to 20 lines until the tab closes.",
+  ],
   intro:
     "This is a sarcastic comeback picker that draws a random line from a hand-written set of 40 retorts, split into eight lines each for five situations: Work, Social, Family, Tech and General. Pick the context, hit generate, and you get one dry one-liner you can copy straight to the clipboard or heart to keep in a favourites list. There is no model and no prompt box — it is a curated deck, so the humour is written rather than predicted.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do You Need an IDP in New Zealand? 12-Month Window",
+  title: "Do You Need an IDP in New Zealand? 12-Month Rule",
   metaDescription:
     "Dates the 12-month window from your last arrival, says whether your licence needs an IDP or English translation, and whether conversion needs a test.",
   steps: [

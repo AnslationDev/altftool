@@ -1,4 +1,12 @@
 const seo = {
+  title: "Story Prompt Generator by Genre, Tone & Seed",
+  metaDescription:
+    "Generate 1-12 story prompts as full loglines — protagonist, want, obstacle, setting, stakes, twist, first line and a word target — from ten genre packs.",
+  steps: [
+    "Pick a Genre, Tone, 'Character type' and 'Target length' (Drabble ~100 words up to Long short story ~7,500 words), set 'How many prompts' (1-12) and optionally a 'Seed (same seed, same prompts)'.",
+    "Press 'Shuffle' for a fresh seed — each prompt card shows a logline plus Character, Want, Obstacle, Setting, Stakes, 'Twist to aim at', the word target and a 'Try opening with' first line.",
+    "Press 'Copy' on a single card or 'Copy all' for the whole batch; 'Reset' returns to the default mystery genre and seed 1.",
+  ],
   intro:
     "A story prompt generator that builds each idea as a complete logline — protagonist, want, obstacle, setting and stakes — rather than a one-line 'what if'. Choose from ten genre packs, eight tones and twelve character types, and every prompt also names a reversal to aim at, a first line and a word target (100, 750, 3,500 or 7,500 words). Writers use it to break a blank page, run timed sprints, or set exercises for a workshop.",
   useCases: [

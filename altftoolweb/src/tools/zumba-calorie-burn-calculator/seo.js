@@ -1,4 +1,12 @@
 const seo = {
+  title: "Zumba Calories Burned Calculator by Class Format",
+  metaDescription:
+    "MET-based calories for six Zumba formats - Gold (5.0) to STRONG HIIT (9.0) - with net-of-resting figures and a Keytel heart-rate cross-check.",
+  steps: [
+    "Enter your Body weight (kg or lb) and the Class length (minutes), or tap one of the 30 / 45 / 55 / 60 min presets.",
+    "Choose the Class format — six options from Zumba Gold (5.0 MET) to STRONG Nation / HIIT (9.0 MET) — and optionally tick 'Also estimate from my average heart rate' with your bpm, age and sex.",
+    "Read 'Calories burned in class' with the net-of-resting-metabolism figure and the Keytel 2005 heart-rate estimate beside it, then press Copy result.",
+  ],
   intro:
     "The Zumba Calorie Burn Calculator converts a class length and format into calories using the ACSM MET equation, kcal/min = MET x 3.5 x kg / 200. Formats are separated because a Zumba Gold class (about 5 MET) and a STRONG Nation HIIT class (about 9 MET) are nearly twice apart in energy cost, and an optional heart-rate mode applies the Keytel et al. (2005) equation so you can cross-check the MET figure against what your watch recorded.",
   useCases: [

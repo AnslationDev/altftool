@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep CSV Analyzer for Oura, Whoop and Fitbit Exports",
+  title: "Sleep CSV Analyzer for Oura, Whoop and Fitbit",
   metaDescription:
     "Paste one night per line — date, sleep minutes, efficiency, resting HR, HRV — for averages plus each night's sleep measured against your own mean.",
   intro:

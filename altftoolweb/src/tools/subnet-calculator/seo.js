@@ -1,5 +1,5 @@
 const seo = {
-  title: "Subnet Calculator: CIDR to Network, Broadcast, Hosts",
+  title: "CIDR Subnet Calculator: Network, Broadcast, Hosts",
   metaDescription:
     "Enter an IPv4 address and prefix for the network and broadcast address, first and last usable host, host count, binary view and RFC 3021 /31 handling.",
   steps: [

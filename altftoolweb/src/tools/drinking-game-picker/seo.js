@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Drinking Game Picker: 48 Games",
+  metaDescription:
+    "Spin up one of 48 drinking games across classic, card, challenge, social, couples and penalty sets — each with player count, duration and a dare prompt.",
+  steps: [
+    "Choose a category tab — Classic Games, Card Games, Challenges, Social, Couples or Penalties — or tick Penalty mode for a single consequence instead of a full game.",
+    "Press Pick a Game to spin through the eight games in that set; each result card shows minimum players and typical duration.",
+    "Take the picked game with its random challenge prompt, hit Skip to respin, star favourites, and review the History panel, which keeps the last 50 picks.",
+  ],
   intro:
     "Drinking Game Picker randomly selects a game from 48 options grouped into six categories — classic, card, challenge, social, couples and penalty — and pairs it with one of 20 dare-style prompts. Each game card shows the minimum number of players and how long a round typically runs, so a group can pick something that fits the people and the time they have. It is for hosts who want the deciding done for them instead of scrolling a list while everyone waits.",
   useCases: [

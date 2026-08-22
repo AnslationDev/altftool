@@ -1,4 +1,12 @@
 const seo = {
+  title: "Laminate Flooring Calculator: Packs & Underlay",
+  metaDescription:
+    "Sizes a laminate job's three orders — packs of planks with wastage, underlay rolls and beading less doorways — plus the 10 mm expansion gap and cost.",
+  steps: [
+    "Enter Room length (ft), Room width (ft) and Doorway width, no beading (ft), then set a Wastage allowance (%) — chips preset 8% straight lay up to 20% herringbone.",
+    "Set Plank length (mm), Plank width (mm), Planks per pack and Price per pack (INR) — or tap a preset like 1215 x 195 mm — plus underlay roll and beading piece sizes and prices.",
+    "Read Packs of laminate to buy with underlay rolls, beading pieces, the expansion gap and total material cost; a warning flags a last row under 60 mm, and Copy result exports the take-off.",
+  ],
   intro:
     "This calculator sizes the three separate orders a laminate job needs: planks by the pack, underlay by the roll and beading by the length. Planks come from floor area divided by the area of one plank, multiplied by a wastage allowance and rounded up to whole packs; beading comes from the wall perimeter minus the doorways. It also states the expansion gap a floating floor needs — 10 mm around the perimeter, and 12 mm once the longest run passes about 8 metres.",
   useCases: [

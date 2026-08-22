@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teen WhatsApp Privacy Checklist for Parents",
+  metaDescription:
+    "A checklist of WhatsApp settings that cut stranger contact for teens — group adds, silenced unknown callers, two-step PIN — each with its exact menu path.",
+  steps: [
+    "Set the teen's Age (13-19), pick the Phone (Android or iPhone) and choose how they use groups, from 'Barely uses groups' to large groups of strangers.",
+    "Work through the Essential, Recommended and Optional checklists — each item names its exact path, like Settings > Privacy > Calls > Silence unknown callers.",
+    "Watch the Privacy coverage score and the 'Routes a stranger could still use' list shrink as you tick items; Copy plan copies the remaining steps with their menu paths.",
+  ],
   intro:
     "This guide lists the WhatsApp privacy settings that measurably reduce contact from strangers — group-add permission, silenced unknown callers, profile photo and status audience, two-step verification and live-location auditing — filtered to the phone a teenager uses and how they use groups. Each step names the exact menu path and the specific route it closes, and the checklist scores how much of that surface is covered. WhatsApp's minimum age is 13.",
   useCases: [

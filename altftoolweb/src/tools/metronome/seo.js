@@ -1,5 +1,5 @@
 const seo = {
-  title: "Online Metronome — 30-260 BPM, Tap Tempo, Subdivisions",
+  title: "Metronome: 30-260 BPM, Tap Tempo, Subdivisions",
   metaDescription:
     "Web Audio metronome from 30 to 260 BPM with 2/4, 3/4, 4/4 and 6/8 time, eighth to sixteenth subdivisions, tap tempo and an accented downbeat.",
   steps: [

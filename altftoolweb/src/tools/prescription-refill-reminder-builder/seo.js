@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prescription Refill Reminder and Fill Date Builder",
+  title: "Prescription Refill Reminder & Fill Date Builder",
   metaDescription:
     "Turn quantity dispensed, daily dose and repeats into every fill date plus a reminder 5 days early, with fills past the expiry flagged.",
   steps: [

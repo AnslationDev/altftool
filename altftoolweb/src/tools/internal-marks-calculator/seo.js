@@ -1,5 +1,5 @@
 const seo = {
-  title: "Internal Marks Calculator: Weighted Sessional Total",
+  title: "Internal Marks Calculator: Weighted Total",
   metaDescription:
     "Each component contributes (scored ÷ max) × weight% × internal max. Add your tests, assignments and attendance to get the exact and rounded internal.",
   steps: [

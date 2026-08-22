@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marks Percentage Calculator with CBSE Grade Bands",
+  metaDescription:
+    "Enter obtained and maximum marks per subject to get your aggregate percentage, CBSE-style A1-E grade band, and any subjects below your pass mark.",
+  steps: [
+    "Enter Marks obtained and Maximum marks for each subject — click Add subject for more rows and set the Pass mark per subject (%), default 33.",
+    "The aggregate updates live as total obtained divided by total maximum times 100, with a per-subject percentage bar and pass flag.",
+    "Read the A1-E grade band and the subjects-below-pass-mark count, then click Copy result for a text report of the full breakdown.",
+  ],
   "intro": "Marks Percentage Calculator turns your subject-wise scores into an aggregate percentage in one step: it adds up every subject's obtained marks, adds up every subject's maximum marks, and divides one by the other. It also shows each subject's individual percentage, flags any subject below your pass mark, and maps the aggregate onto CBSE-style A1-to-E grade bands. Built for school and college students checking board results, semester marksheets, or internal assessments.",
   "useCases": [
     "Work out your CBSE or state board aggregate the moment the marksheet is out, before the school publishes the percentage.",

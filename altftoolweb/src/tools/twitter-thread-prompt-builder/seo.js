@@ -1,4 +1,12 @@
 const seo = {
+  title: "Twitter/X Thread Prompt Builder: 280-Char Math",
+  metaDescription:
+    "Builds an AI prompt for a numbered X thread on the real 280-character budget per post — minus numbering overhead and 23 characters for a t.co link.",
+  steps: [
+    "Describe the thread in \"What the thread teaches or argues\", set \"Target reader\", \"Number of posts\" (3–25), one of five \"Hook style\" patterns and a \"CTA for the final post\".",
+    "Tick \"Final post includes a link\" to subtract the flat 23-character t.co cost — the plan shows numbering overhead and the content budget per post out of 280 characters.",
+    "Copy the finished drafting prompt from \"Generated prompt\" with \"Copy prompt\".",
+  ],
   intro:
     "The Twitter Thread Prompt Builder computes the real per-post character budget for a numbered X thread — the 280-character standard limit minus the 'n/total' numbering overhead, minus the flat 23 characters t.co charges for any link — and writes an AI drafting prompt around it. Choose the post count, one of five hook styles and a single CTA, and the prompt enforces one idea per post with each post quotable on its own.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Writing Sprint Timer with Words-Per-Minute Tracking",
+  title: "Writing Sprint Timer with WPM Tracking",
   metaDescription:
     "Run 25/5 Pomodoro writing sprints with a long break after every fourth, log words per sprint, and see your wpm and how many sprints your target needs.",
   steps: [

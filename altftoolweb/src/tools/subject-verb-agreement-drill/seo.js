@@ -1,5 +1,5 @@
 const seo = {
-  title: "Subject Verb Agreement Drill: 48 Hard-Case Questions",
+  title: "Subject Verb Agreement Drill: 48 Hard Cases",
   metaDescription:
     "Practise only the cases that trip people up: intervening phrases, or and nor subjects, each and none, quantities and nouns that only look plural.",
   steps: [

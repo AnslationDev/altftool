@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hedge Spacing Calculator: How Many Plants",
+  metaDescription:
+    "Convert run length and plant spacing into the exact number to order, for single or staggered double rows, with spares and 12 species distances built in.",
+  steps: [
+    "Enter \"Hedge length\" and \"Plant spacing\" in metres/cm or feet/inches, pick one of 12 species in \"Hedging species\" (each loads its nursery spacing), and choose \"Single row\" or \"Double staggered row\".",
+    "Set \"Spares to order (%)\" and \"Price per plant\" — the run is split into equal gaps with a plant at each end.",
+    "Read \"Plants to order\" with the spacing actually used, plant cost, compost litres and mulch volume, then click \"Copy result\".",
+  ],
   intro:
     "A hedge spacing calculator converts a run length and a nursery planting distance into the number of plants to order, using gaps = round(length ÷ spacing) and plants = gaps + 1 so there is a plant at each end. It covers single rows and staggered double rows, adds a spares allowance, and reports the spacing actually achieved once the run is divided evenly. Spacing figures for twelve common hedging species are built in.",
   useCases: [

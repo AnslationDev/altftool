@@ -1,4 +1,12 @@
 const seo = {
+  title: "VTU SGPA Calculator: CIE & SEE Marks (2021-22)",
+  metaDescription:
+    "Enter CIE out of 50 and SEE out of 100 per course; the tool scales SEE to 50, applies VTU's 40/35/40 pass rules, grades each course and computes SGPA.",
+  steps: [
+    "For each course enter CIE / internal marks (out of 50), SEE / external marks (out of 100) and Credits, using Add course for up to 15 rows.",
+    "The tool scales SEE to 50, applies VTU's 40% CIE, 35% SEE and 40% overall pass minima, and grades each total on the 10-point scale.",
+    "Read the SGPA out of 10 with a per-course table showing grade and Pass or Fail with the exact rule broken, then click Copy result.",
+  ],
   intro:
     "This calculator computes a VTU SGPA directly from internal (CIE) and external (SEE) marks: it scales the 100-mark SEE to 50, adds the 50-mark CIE, grades the total on VTU's 10-point absolute scale (O = 10 at 90+, down to P = 4 at 40) and applies SGPA = Σ(Ci × Gi) ÷ ΣCi. It follows the 2021/2022 B.E. scheme, including the pass rules of 40% in CIE, 35% in SEE independently and 40% overall, so a failed course is graded F at 0 points automatically.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "DSC Requirement Checker: Which Filings Need Class 3",
+  title: "DSC Requirement Checker: Filings Needing Class 3",
   metaDescription:
     "Says which of your MCA, income tax, GST, DGFT and e-tender filings need a Class 3 DSC and which accept EVC, citing the rule behind each answer.",
   steps: [

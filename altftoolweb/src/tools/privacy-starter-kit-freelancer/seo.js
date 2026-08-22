@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelancer Privacy Checklist and Blast-Radius Score",
+  title: "Freelancer Privacy Checklist & Blast-Radius Score",
   metaDescription:
     "Seventeen weighted controls across accounts, devices, file sharing, contracts and invoicing, plus how many client datasets one stolen login reaches.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI ROI Calculator: Hours Saved vs Tool Cost",
+  metaDescription:
+    "Work out whether an AI tool pays for itself: active seats × hours saved × loaded rate vs cost, with break-even hours and monthly and annual net benefit.",
+  steps: [
+    "Enter Licensed seats, Cost per seat per month ($) and any Other monthly cost such as API usage or training.",
+    "Set Hours saved per user per week, the Loaded hourly rate ($/hour) and the Adoption rate (% of seats actively using it).",
+    "Read the monthly ROI percentage with annual net benefit and break-even hours per user per week, then click Copy result.",
+  ],
   intro:
     "The AI ROI Calculator applies the standard return-on-investment formula — ROI = (value − cost) ÷ cost — to an AI tool subscription, where value is active seats × hours saved per user per week × 4.33 weeks per month × the loaded hourly rate. It also computes the break-even point: how many hours each active user must save per week just to cover the licence. It is built for team leads and finance reviewers deciding whether to buy, renew or expand an AI tool.",
   useCases: [

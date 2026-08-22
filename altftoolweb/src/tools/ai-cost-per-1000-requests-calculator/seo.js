@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Cost Per 1000 Requests Calculator",
+  metaDescription:
+    "Convert $/million-token rates into cost per request, per 1,000 and per month — with retries, prompt-cache hits and a five-tier price comparison.",
+  steps: [
+    "Fill the Request profile: 'Input tokens per request', 'Output tokens per request', 'Retry rate (%)' and 'Requests per month'.",
+    "Enter your Rates (USD per 1M tokens) — Input rate, Output rate, Cached input rate and 'Prompt cache hit rate (%)' — or tap a tier chip from Frontier to Nano to fill them.",
+    "Read the 'Cost per 1,000 requests' headline with per-request, monthly and annual rows plus the 'Same request across price tiers' table, then click 'Copy result'.",
+  ],
   intro:
     "This calculator converts per-million-token AI pricing into the number engineers actually budget with: cost per 1,000 requests. The formula is (input tokens x input rate + output tokens x output rate) / 1,000,000 per request, adjusted for the share of input served from a prompt cache and for billed retries — then compared side by side across five capability tiers from frontier to nano so you can see what stepping down a model tier saves.",
   useCases: [

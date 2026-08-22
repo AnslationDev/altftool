@@ -1,5 +1,5 @@
 const seo = {
-  title: "Puja Room Planner: Shrine Size & Platform Height in mm",
+  title: "Puja Room Planner: Shrine Size & Platform Height",
   metaDescription:
     "Size a home mandir from your idols: shrine width and depth in mm, platform height that puts the deity's face at your eye level, plus seating depth.",
   steps: [

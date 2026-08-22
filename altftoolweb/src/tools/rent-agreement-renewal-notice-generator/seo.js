@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rent Renewal Notice Generator: 11-Month Term & Rent",
+  title: "Rent Renewal Notice Generator: 11-Month Term",
   metaDescription:
     "Draft a tenancy renewal intimation with the new term dates, escalated rent, deposit top-up capped at the Model Tenancy Act limit, and a reply deadline.",
   steps: [

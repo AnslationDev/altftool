@@ -1,5 +1,5 @@
 const seo = {
-  title: "Editing Time Estimator: Post Hours by Task, Not Ratio",
+  title: "Editing Time Estimator: Post Hours by Task",
   metaDescription:
     "Adds up ingest, review, assembly, grade, graphics, mix and export from raw and finished runtime, then adds 15% of the base edit per revision round.",
   steps: [

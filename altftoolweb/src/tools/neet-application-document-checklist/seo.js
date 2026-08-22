@@ -1,4 +1,12 @@
 const seo = {
+  title: "NEET UG Application Document Checklist & Fee",
+  metaDescription:
+    "Every NTA NEET UG registration item — photo specs, the 4-30 KB signature scan, category certificates and your fee slab — in one tick-off checklist.",
+  steps: [
+    "Choose your Candidate category and tick PwBD or NRI / OCI under Applies to you — only the certificates your own claim needs appear.",
+    "Tick off each item, from the white-background passport photo (JPG 10 KB to 200 KB) to the signature scan at 4 KB to 30 KB.",
+    "Watch Checklist progress and Application fee (India centres), then press Copy status to copy the done count and remaining required items.",
+  ],
   intro:
     "This checklist covers every detail, document and upload the NTA NEET (UG) registration requires — the passport-size and postcard-size photographs, the 4 KB to 30 KB signature scan, category certificates and the fee slab for your category. It adapts to the candidate profile, so an OBC-NCL, EWS, SC/ST, PwBD or NRI candidate sees exactly the certificates their claim needs, and tracks how many required items remain before the form can be filed on neet.nta.nic.in.",
   useCases: [

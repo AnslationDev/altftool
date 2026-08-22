@@ -1,4 +1,10 @@
 const seo = {
+  title: "Scholarship Deadline Tracker: Days Left",
+  steps: [
+    "Fill each deadline row with the scholarship or task name, an optional 'Opens' date and its 'Closes' date, adding more rows with 'Add deadline'.",
+    "Set 'Count days from' (defaults to today) and the closing-soon horizon in days (default 7) to control how each deadline is classified.",
+    "Read the 'Next deadline' countdown with open / closing soon / not open / closed counts and per-row days left, then hit 'Copy result' for a text summary.",
+  ],
   intro:
     "The Scholarship Deadline Tracker computes the exact number of days left on every scholarship application window, renewal and document deadline you enter, and sorts them by urgency. It classifies each entry as open, closing soon, not yet open or closed using plain calendar-day arithmetic from a reference date you control, so students juggling NSP, state-portal and college deadlines can see at a glance what needs attention this week.",
   useCases: [

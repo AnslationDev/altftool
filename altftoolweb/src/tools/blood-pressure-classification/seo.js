@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blood Pressure Categories: ACC/AHA vs ESC/ESH 2018",
+  title: "Blood Pressure Category: ACC/AHA vs ESC/ESH 2018",
   metaDescription:
     "Name the category for a reading under ACC/AHA 2017 or ESC/ESH 2018 — 130/80 is Stage 1 under one and High Normal under the other. Keeps your last 30.",
   steps: [

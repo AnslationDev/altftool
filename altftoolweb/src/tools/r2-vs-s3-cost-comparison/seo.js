@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloudflare R2 vs Amazon S3 Cost Calculator",
+  metaDescription:
+    "Compare monthly cost at list prices: R2 $0.015/GB with $0 egress vs S3 $0.023/GB plus tiered egress from $0.09/GB, with request pricing mapped correctly.",
+  steps: [
+    "Enter Data stored (GB), Served to the internet (GB/month), and monthly Writes and Reads in millions of operations.",
+    "Toggle 'Apply R2's monthly free tier' (10 GB storage, 1M Class A and 10M Class B operations) to model steady state or worst case.",
+    "Read the line-item table — storage, requests, egress and total for each provider — see which is cheaper by how much, and click Copy result.",
+  ],
   intro:
     "This tool compares the monthly cost of storing and serving the same data on Cloudflare R2 versus Amazon S3 Standard, using published list prices: R2 at $0.015/GB-month with $0 egress against S3 at $0.023/GB-month plus internet data-transfer-out starting at $0.09/GB after 100 GB free. Request pricing is mapped correctly — R2 Class A/B operations against S3 PUT and GET rates — so download-heavy and write-heavy profiles both get an honest answer.",
   useCases: [

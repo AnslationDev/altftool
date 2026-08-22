@@ -1,4 +1,7 @@
 const seo = {
+  title: "Binary Learning Tool: Converter, Bits & Quiz",
+  metaDescription:
+    "Convert decimal to binary (padded to 8 bits) and back, see each bit over its 128–1 place value, then quiz yourself on random numbers from 0 to 255.",
   intro:
     "The Binary Learning Tool teaches base-2 by converting between decimal and binary and then showing the answer as eight labelled bit boxes weighted 128, 64, 32, 16, 8, 4, 2 and 1, so you can see which powers of two add up to your number. A built-in quiz asks you to write a random value from 0 to 255 in binary and grades it instantly. It suits school and college students meeting number bases for the first time, and anyone revising for a computer-science exam.",
   useCases: [

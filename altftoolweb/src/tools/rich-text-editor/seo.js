@@ -1,4 +1,12 @@
 const seo = {
+  title: "Online Rich Text Editor with Live HTML Output",
+  metaDescription:
+    "TipTap WYSIWYG editor: bold, H1-H3, lists, quotes, code blocks, alignment, links and images by URL — the HTML Output pane updates as you type.",
+  steps: [
+    "Write in the editor and format with the toolbar — Bold, Italic, Underline, Strikethrough, Heading 1-3, lists, Blockquote, Code Block, four alignments, plus Add Link and Add Image via URL prompts.",
+    "Toggle 'Read-Only Mode' to hide the toolbar and preview the document as a reader sees it; the same button switches back to Edit Mode.",
+    "Select and copy the markup from the 'HTML Output' panel below the editor — it shows the generated HTML live as you type.",
+  ],
   intro:
     "This is a WYSIWYG rich text editor built on TipTap that shows the semantic HTML it produces in a live pane below the writing area, so you can format visually and copy the markup out. It covers bold, italic, underline and strikethrough, H1–H3 headings, bullet and ordered lists, blockquotes, code blocks, four text alignments, links and images by URL. A read-only toggle hides the toolbar and renders the same content as it would appear once published.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram 2FA Setup Guide: 13-Step Checklist",
+  metaDescription:
+    "Work through 13 Instagram security controls: authenticator 2FA, backup codes, session cleanup, each with its exact menu path and a weighted score.",
+  steps: [
+    "Tick off the 13 controls you have completed, from 'Use a password that is unique to Instagram' to signing out old sessions; each card shows its exact path, such as Accounts Center -> Password and security.",
+    "Watch the Hardening score: it stays capped at 69% until all four Critical controls (unique password, recovery contact details, authenticator-app 2FA, backup codes) are done.",
+    "Work through the 'Next best actions' panel, which ranks the three highest-weight remaining controls, then press Copy result for a plain-text summary of your score.",
+  ],
   intro:
     "This Instagram 2FA setup guide is a browser-side hardening checklist for accounts that need protection from password leaks, SIM swaps, phishing DMs, connected-app abuse and forgotten sessions. It scores the controls that matter most: unique password, current recovery details, authenticator-app 2FA, backup codes, SMS removal, login alerts, session cleanup and linked-account review.",
   useCases: [

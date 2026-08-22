@@ -1,5 +1,5 @@
 const seo = {
-  title: "India Hosting Cost Comparison: VPS vs Cloud in Rupees",
+  title: "India Hosting Cost Comparison: VPS vs Cloud",
   metaDescription:
     "Price one workload as VPS, hourly cloud and managed hosting in rupees, with the 730-hour month, egress above free allowance and 18% GST included.",
   steps: [

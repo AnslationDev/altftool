@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gujarati Word of the Day with Meaning & Streak",
+  metaDescription:
+    "One Gujarati word per date in Gujarati script with transliteration, meaning and a translated example sentence. 40-word deck, browser-local streak.",
+  steps: [
+    "Pick a date in the Date field (it defaults to today) — the 40-word deck's card for that date shows the Gujarati script word, its transliteration, meaning and example sentence.",
+    "Press \"Mark as revised\" to log the day — the streak panel counts your current streak, longest streak and days revised in your browser's local storage.",
+    "Click \"Copy card\" to copy the card as text ending in \"Card N of 40\", or search the deck by script, transliteration or meaning.",
+  ],
   intro:
     "Gujarati Word of the Day shows one Gujarati word per calendar date, with the ગુજરાતી spelling, a Roman transliteration, the meaning and a complete example sentence translated into English. The card is computed from the date itself rather than chosen at random, so a family, a class or a WhatsApp group all see the same word on the same day. Days you mark as revised are counted into a streak stored only in your browser.",
   useCases: [

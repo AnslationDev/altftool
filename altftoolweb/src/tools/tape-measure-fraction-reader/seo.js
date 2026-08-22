@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tape Measure Fraction Reader: 3/8 in to mm and Back",
+  title: "Tape Measure Fraction Reader: 3/8 in to mm & Back",
   metaDescription:
     "Type 5 3/8, 3/16 or 6 ft 2 1/2 in for decimal inches, mm, cm and metres, or snap a metric size to the nearest 1/16, 1/32 or 1/64 mark and see the error.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Refactor Prompt Builder: Fowler Names + Guardrails",
+  title: "Refactor Prompt Builder: Fowler + Guardrails",
   metaDescription:
     "Names the Fowler refactorings to apply and writes hard constraints — identical outputs, frozen API, untouched tests — plus a complexity target.",
   steps: [

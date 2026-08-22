@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Rate Limit Header Designer – IETF & X-RateLimit-*",
+  title: "API Rate Limit Header Designer: IETF & Legacy",
   metaDescription:
     "Design RateLimit and RateLimit-Policy or legacy X-RateLimit headers, plus a 429 with Retry-After and an RFC 9457 problem+json body, ready to copy.",
   steps: [

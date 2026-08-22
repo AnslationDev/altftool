@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gaming PC Electricity Cost & PSU Size Calculator",
+  metaDescription:
+    "Turn GPU and CPU watts into wall-socket draw through PSU efficiency, then get the monthly bill at your tariff plus a suggested PSU size.",
+  steps: [
+    "Enter GPU board power / TGP, CPU package power limit and platform watts, or tap a preset from Entry (60-class) to Flagship (90-class).",
+    "Pick your 80 PLUS rating under Power supply efficiency rating, then set Hours per day under load and the Electricity tariff (INR per kWh).",
+    "Read the Estimated monthly electricity cost, wall draw under load in watts and the Suggested PSU size, then use Copy result to share it.",
+  ],
   intro:
     "This calculator turns a gaming PC's parts list into a wall-socket power figure and a monthly electricity bill. It sums GPU board power, CPU package power and platform draw under a chosen workload, divides by the power supply's efficiency to get true socket draw, then prices gaming, idle and sleep hours separately at your tariff. PSU efficiency uses the 80 PLUS thresholds at 50 percent load — 82 percent for White up to 94 percent for Titanium.",
   useCases: [

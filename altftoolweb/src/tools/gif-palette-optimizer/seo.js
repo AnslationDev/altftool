@@ -1,5 +1,5 @@
 const seo = {
-  title: "GIF Palette Optimizer: 64, 128 or 256 Colour Output",
+  title: "GIF Palette Optimizer: 64, 128 or 256 Colours",
   metaDescription:
     "Shrink a GIF or video clip with FFmpeg's two-pass palettegen and paletteuse at 15 fps and 960 px wide, running as WebAssembly in your own browser.",
   steps: [

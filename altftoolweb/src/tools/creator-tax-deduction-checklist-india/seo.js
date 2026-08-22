@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creator Tax Deductions India: Section 32 Depreciation",
+  title: "Creator Tax Deductions India: Sec 32 Depreciation",
   metaDescription:
     "Sorts creator spending into section 37(1) revenue expenses and section 32 capital assets at 40%, 15% or 10%, with business-use share and GST/audit flags.",
   steps: [

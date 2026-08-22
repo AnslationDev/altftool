@@ -114,6 +114,39 @@ export function isKnownTransformPagePath(pathname) {
   );
 }
 
+/**
+ * Every known Support Settings path (excluding the bare /supportsetting home),
+ * built from the same sets isKnownSupportSettingPath validates against — so
+ * the sitemap can never list a path the route guard would reject, and the
+ * existing manifest CI test covers this list for free. Roughly 850 paths;
+ * cheap to build (pure string concatenation over already-loaded sets).
+ */
+export function listKnownSupportSettingPaths() {
+  const paths = [];
+  for (const [platform, settings] of Object.entries(SUPPORT_PLATFORM_SETTINGS)) {
+    paths.push(`${SUPPORT_SETTING_BASE_PATH}/${platform}`);
+    for (const category of SUPPORT_PLATFORM_CATEGORIES) {
+      paths.push(`${SUPPORT_SETTING_BASE_PATH}/${platform}/category/${category}`);
+    }
+    for (const setting of settings) {
+      paths.push(`${SUPPORT_SETTING_BASE_PATH}/${platform}/${setting}`);
+    }
+  }
+  for (const [device, settings] of Object.entries(SUPPORT_DEVICE_SETTINGS)) {
+    paths.push(`${SUPPORT_SETTING_BASE_PATH}/${device}`);
+    for (const setting of settings) {
+      paths.push(`${SUPPORT_SETTING_BASE_PATH}/${device}/${setting}`);
+    }
+  }
+  for (const topic of SUPPORT_HELP_TOPICS) {
+    paths.push(`${SUPPORT_SETTING_BASE_PATH}/help/${topic}`);
+  }
+  for (const tool of SUPPORT_AI_TOOLS) {
+    paths.push(`${SUPPORT_SETTING_BASE_PATH}/ai-tools/${tool}`);
+  }
+  return paths;
+}
+
 export const SUPPORT_SETTING_ROUTE_COUNT =
   1 +
   Object.values(SUPPORT_PLATFORM_SETTINGS).reduce(

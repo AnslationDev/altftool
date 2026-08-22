@@ -1,4 +1,12 @@
 const seo = {
+  title: "DNS Record Generator — A, AAAA, CNAME, TXT, SRV",
+  metaDescription:
+    "Generate validated BIND zone-file lines for A, AAAA, CNAME, TXT, SRV and ALIAS records — IP syntax, label limits, TTL range and apex-CNAME checks.",
+  steps: [
+    "Pick a Record type — A, AAAA, CNAME, TXT, SRV or ALIAS — then fill in 'Name (host / owner)' and TTL (seconds).",
+    "Enter the value the type asks for (IPv4 address, IPv6 address, target hostname or text value); SRV adds Priority, Weight and Port fields.",
+    "Copy record grabs the validated zone-file line, with a Type/Name/TTL/Record data breakdown for panels that use separate fields.",
+  ],
   intro:
     "This generator produces syntactically valid DNS records — A, AAAA, CNAME, TXT, SRV and ALIAS — in RFC 1035 zone-file format, validating every field before it emits a line. It checks IPv4 and IPv6 address syntax, the 63-character label and 255-character name limits, the RFC 2181 TTL range, RFC 2782 SRV structure, and blocks illegal patterns like a CNAME at the zone apex. It is for developers and admins who edit zones by hand or paste records into a hosting panel.",
   useCases: [

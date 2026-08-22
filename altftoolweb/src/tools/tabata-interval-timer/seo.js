@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tabata Timer: 20/10 x 8 Rounds with Custom Sets",
+  metaDescription:
+    "Run the classic 20s/10s x 8 Tabata or set custom work, rest, rounds and sets - session length and work-to-rest ratio computed before you press Start.",
+  steps: [
+    "Set Work (seconds), Rest (seconds), Rounds per set, Sets, rest between sets and the prep countdown — or tap a preset such as 'Classic Tabata 20/10 x8'.",
+    "Press Start to run the timer; it counts down each phase and shows the set, round and session time left, with Pause and Restart.",
+    "Check the total session length, total working time and work-to-rest ratio in the plan table, or press 'Copy plan' for the summary.",
+  ],
   intro:
     "The Tabata protocol is eight rounds of 20 seconds of maximal work separated by 10 seconds of rest — exactly four minutes, at a 2:1 work-to-rest ratio. This timer runs that structure with a prep countdown and optional extra sets, and reports total working time, total rest and the work-to-rest ratio whenever you change the intervals. It comes from Izumi Tabata's 1996 study on Japanese speed skaters, where the work bouts were performed at about 170 percent of VO2max.",
   useCases: [

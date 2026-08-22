@@ -1,4 +1,12 @@
 const seo = {
+  title: "Zalgo Text Generator: Three Corruption Sliders",
+  metaDescription:
+    "Stack up to 20 combining marks above, 10 through and 20 below each character with separate sliders and five presets — spaces and line breaks survive.",
+  steps: [
+    "Type or paste up to 20,000 characters into the Normal Input Text box, or click Load Creepy Sample.",
+    "Drag the Stack Upwards (0-20), Stack Middle (0-10) and Stack Downwards (0-20) sliders, or click a preset like Maximum Corruption or Ascending Glitch.",
+    "The Corrupted Zalgo Output box redraws about 120 ms after each change; click Copy to put the glitched Unicode text on your clipboard.",
+  ],
   intro:
     "The Zalgo Text Generator corrupts any text by stacking Unicode combining diacritical marks onto each character — up to 20 above, 10 through and 20 below, drawn at random from pools of 56, 5 and 47 marks. Three sliders control each direction independently, so you can go from a light shimmer to text that bleeds several lines into its neighbours. Spaces, tabs and line breaks are left untouched, so your layout survives even at maximum corruption.",
   useCases: [

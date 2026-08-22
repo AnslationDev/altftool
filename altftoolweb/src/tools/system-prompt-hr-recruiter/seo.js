@@ -1,5 +1,5 @@
 const seo = {
-  title: "HR Recruiter System Prompt Builder (Fairness Rules)",
+  title: "HR Recruiter System Prompt Builder",
   metaDescription:
     "Builds an AI recruiting assistant system prompt with protected-characteristic and proxy bans, GDPR-style privacy rules and a humans-decide safeguard.",
   steps: [

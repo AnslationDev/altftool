@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fever Temperature Converter: C, F, K by Measuring Site",
+  title: "Fever Temperature Converter: C, F, K by Site",
   metaDescription:
     "Convert a reading between Celsius, Fahrenheit and Kelvin, then check it against that site's fever threshold: 38.0 rectal, 37.8 oral, 37.2 armpit.",
   steps: [

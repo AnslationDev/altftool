@@ -1,5 +1,5 @@
 const seo = {
-  title: "Series and Parallel DC Circuit Simulator With Ohm's Law",
+  title: "Series & Parallel DC Circuit Simulator",
   metaDescription:
     "Set 1-48 V and two 1-100 ohm resistors, wire them in series or parallel, open the switch: resistance, current and power update with the electron flow.",
   steps: [

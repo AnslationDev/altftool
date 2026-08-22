@@ -1,5 +1,5 @@
 const seo = {
-  title: "Solar System Explorer: Animated Orbits, Planet Data",
+  title: "Solar System Explorer: Orbits & Planet Data",
   metaDescription:
     "Watch all eight planets orbit at their real periods, from Mercury's 88 days to Neptune's 164.8 years, with radius, mass, gravity and temperature cards.",
   steps: [

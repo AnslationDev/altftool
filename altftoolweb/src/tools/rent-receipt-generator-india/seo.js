@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rent Receipt Generator: PAN, Revenue Stamp, 194-IB",
+  title: "Rent Receipt Generator: PAN, Stamp, 194-IB",
   metaDescription:
     "Builds monthly HRA rent receipts with the amount in words, and flags the Re 1 stamp above ₹5,000 cash, landlord PAN above ₹1 lakh and 194-IB TDS.",
   steps: [

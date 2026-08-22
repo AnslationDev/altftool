@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Repeater: Repeat Text Up to 10,000 Times",
+  metaDescription:
+    "Repeat a word, line or block up to 10,000 times, joined by a new line, space, comma or nothing. The output rebuilds as you type, ready to copy.",
+  steps: [
+    "Type or paste the text into the Input box — a multi-line block repeats as one unit.",
+    "Set Times (clamped to a maximum of 10,000) and pick a Separator: New line, Space, Comma or None.",
+    "The Result pane rebuilds as you type; click Copy to take the repeated text.",
+  ],
   intro:
     "Type a word, line or block of text, set how many copies you want, and this tool joins that many repetitions together with the separator you choose — a new line, a space, a comma or nothing at all. The count is clamped to a maximum of 10,000 repetitions, and the output rebuilds as you type so you can copy it straight out. It is the quickest way to produce padded filler, repeated list rows or a long block of the same string without holding down paste.",
   useCases: [

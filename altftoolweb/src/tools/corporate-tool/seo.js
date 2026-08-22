@@ -1,5 +1,5 @@
 const seo = {
-  title: "Business Software Directory: 39 Tools, 10 Categories",
+  title: "Business Software Directory: 39 Tools",
   metaDescription:
     "Browse 39 business software products across 10 categories — Slack, Jira, Salesforce, QuickBooks — each labelled Subscription, Premium or Pay-as-you-go.",
   intro:

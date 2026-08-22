@@ -1,4 +1,12 @@
 const seo = {
+  title: "JEE Main Exam Day Checklist & Reporting Time",
+  metaDescription:
+    "Tick off admit card, self-declaration and photo ID, get leave-home and gate-closing times for either shift, and project marks under +4/−1 marking.",
+  steps: [
+    "Pick your Shift — Shift 1 (morning, 09:00) or Shift 2 (afternoon, 15:00) — and enter travel, buffer and get-ready minutes.",
+    "Tick the 'Documents, dress and bag' checklist, where entry-critical items are tracked separately ('Tick everything' fills all at once).",
+    "Read the backwards timeline — leave home, be at the centre, the 30-minute gate close — plus projected marks under +4/−1, then 'Copy result' or 'Print'.",
+  ],
   intro:
     "This checklist covers everything a JEE Main candidate must carry, wear and plan on exam day — the printed admit card with self-declaration, one passport photograph, an original photo ID — and works a reporting timeline backwards from the shift start using the 30-minute gate-closing rule from the NTA Information Bulletin. It also projects marks from an attempt plan under the +4/−1 scheme across the 75-question, 300-mark paper.",
   useCases: [

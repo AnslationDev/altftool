@@ -1,4 +1,12 @@
 const seo = {
+  title: "Assamese New Year & Bihu Wishes with SMS Count",
+  metaDescription:
+    "Bohag Bihu and 1 January greetings in Assamese script with Roman transliteration, English meaning and exact SMS parts under the 70-character UCS-2 rule.",
+  steps: [
+    "Choose the Occasion - 'Bohag Bihu / Rongali Bihu (Assamese new year)' or '1 January (Natun bosor)' - plus Tone, Who is it for and Script (Assamese, Roman or both), with optional recipient and sender names.",
+    "Pick a greeting from All matching greetings using 'Feature this' - each shows the message, its English meaning and its character and SMS-part counts.",
+    "Check the featured greeting's SMS alphabet and billable parts (Assamese script bills as UCS-2 at 70 characters per part) and click Copy greeting.",
+  ],
   intro:
     "This generator builds Assamese new year greetings by joining a customary salutation, a message from a curated bank of Bohag Bihu and 1 January wishes, and your sign-off. Each greeting is shown in Assamese script, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It is for anyone who wants correct Assamese wording for elders, friends or business contacts rather than a forwarded image.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Credit Line Generator: 9 Styles + IPTC Fields",
+  title: "Image Credit Line Generator: 9 Styles + IPTC",
   metaDescription:
     "Write a photo credit in wire, magazine, caption, museum or academic style, then fill Creator, Credit Line, Source and Copyright Notice separately.",
   steps: [

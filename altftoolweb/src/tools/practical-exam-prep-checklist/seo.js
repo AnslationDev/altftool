@@ -1,4 +1,12 @@
 const seo = {
+  title: "Practical Exam Prep Checklist",
+  metaDescription:
+    "21-item checklist across record/journal, experiments, viva and exam-day logistics, with a readiness percentage per section and the weakest one flagged.",
+  steps: [
+    "Tick preparation items off across the four sections: Record / journal, Experiments & apparatus, Viva voce and Exam day.",
+    "Watch each section's progress bar and the Overall readiness percentage update, with the weakest section named so you know where to work next.",
+    "Press Copy summary to paste the per-section readiness snapshot into notes or a study-group chat; Reset returns the list to its starting state.",
+  ],
   intro:
     "This checklist tracks practical (lab) exam preparation across the four things examiners actually assess: the signed record or journal, the experiments and apparatus, the viva voce, and exam-day logistics. Tick the 21 items off and the tool computes a readiness percentage per section and overall, flagging the weakest section to work on next. It is built for school board practicals (physics, chemistry, biology, computer science) and university lab exams alike.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Behind Image: Photo Blended Over Your Headline",
+  title: "Text Behind Image: Blend a Photo Over Text",
   metaDescription:
     "Sandwich uppercase text between two copies of your photo, blended in multiply mode. Colour, 10-100% opacity and 48-240 px size, composed in the browser.",
   steps: [

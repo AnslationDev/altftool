@@ -1,4 +1,12 @@
 const seo = {
+  title: "Decision Wheel — Weighted Spinner with Live Odds",
+  metaDescription:
+    "Weighted random picker: write 'Pizza x3' for a triple slice, spin up to 60 entries, remove winners for giveaways and compare true odds with results.",
+  steps: [
+    "Type up to 60 entries in the Entries box, one per line, adding a weight like 'Pizza x3' for a triple-width slice (weights 1-100).",
+    "Tick 'Remove each winner from the next draw' for giveaways, then press 'Spin' — a seeded mulberry32 draw turns the wheel.",
+    "The winner and its exact chance appear above the 'Odds and results' table of expected vs actual percentages; 'Copy results' exports the draw history.",
+  ],
   intro:
     "A decision wheel is a weighted random picker: every entry gets a slice of the circle proportional to its weight, so the chance of it winning is exactly its weight divided by the total of all weights. This one draws from a seeded mulberry32 generator, which means the same seed always produces the same winner and a draw can be checked afterwards. Use it for picking lunch, choosing who presents first, or running a small giveaway.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Metadata Risk Checklist — What MP4s Reveal",
+  metaDescription:
+    "Tick the signals in your MP4/MOV — GPS, capture time, device, voices — and get a 0-100 exposure score for each sharing channel. Not a file scanner.",
+  steps: [
+    "Choose a 'Sharing channel' — Public social upload, Work chat or shared drive, Email attachment, Legal / compliance evidence, or Messaging app compressed video.",
+    "Tick the checkboxes for signals your video may carry — GPS coordinates, creation time and timezone, camera model, voices, reflections, subtitle tracks — grouped by container tags, content and tracks.",
+    "Read the exposure score out of 100 with its band, how many selected signals survive the channel, and the top fixes, then click 'Copy summary' for the cleanup checklist.",
+  ],
   intro:
     "The Video Metadata Risk Explainer shows what an MP4 or QuickTime video can reveal before you share it: capture time, GPS tags, device model, filename, editing app, embedded thumbnails, subtitles, voices, reflections and background location clues. The score changes by sharing channel because social apps often transcode video while email, shared drives and evidence uploads may keep the original file.",
   useCases: [

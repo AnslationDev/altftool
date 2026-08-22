@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pixar Style Generator: Photo to 512px 3D Character",
+  title: "Pixar Style Generator: Photo to 3D Character",
   metaDescription:
     "Turns a photo or image URL into a 512x512 PNG character render, then tunes it with emboss (0-6px), bloom (0-45px) and vibrancy (1x-2.2x) sliders.",
   steps: [

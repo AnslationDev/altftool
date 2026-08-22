@@ -1,5 +1,5 @@
 const seo = {
-  title: "When to Leave for BOM: Mumbai Airport Time Planner",
+  title: "When to Leave for BOM: Mumbai Airport Planner",
   metaDescription:
     "Work back from your BOM departure through bag-drop close, gate close and the 2h/3h reporting advice; Metro Line 3 skips the congestion factor.",
   steps: [

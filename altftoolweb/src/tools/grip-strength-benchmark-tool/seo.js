@@ -1,5 +1,5 @@
 const seo = {
-  title: "Grip Strength Benchmark vs EWGSOP2, AWGS, FNIH Cut-offs",
+  title: "Grip Strength Benchmark vs EWGSOP2, AWGS, FNIH",
   metaDescription:
     "Check a dynamometer reading against the EWGSOP2, AWGS and FNIH sarcopenia cut-offs, age-band norms, left-right asymmetry and grip divided by BMI.",
   steps: [

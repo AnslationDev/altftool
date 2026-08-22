@@ -1,5 +1,5 @@
 const seo = {
-  title: "Portfolio Maker: One-Page Layout From a Short Form",
+  title: "Portfolio Maker: One-Page Layout From a Form",
   metaDescription:
     "Fill in name, bio, up to three projects and four skills, press Generate Portfolio, and preview a one-page layout with gradient hero and project cards.",
   intro:

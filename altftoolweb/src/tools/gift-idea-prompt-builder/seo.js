@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Gift Idea Prompt Builder: Budget & Lead Time",
+  metaDescription:
+    "Build an AI gift-idea prompt that sticks to your real budget — tax and shipping reserve, per-person share, lead-time check and an under-3 safety flag.",
+  steps: [
+    "Fill in Who is it for?, Recipient age, Interests and Avoid, plus the Total budget, Currency, Recipients and Tax/shipping reserve % fields.",
+    "Set the Today and Occasion date fields to compute lead time, pick the Occasion, and tick Preferred categories.",
+    "Review the Per person, Main gift, Lead time and Prompt size cards above the generated prompt, then click Copy prompt to paste it into your AI chat.",
+  ],
   intro:
     "The Gift Idea Prompt Builder divides a gift budget into a reserve for tax and shipping, a per-recipient share, and a split between the main gift and a small extra, then writes an AI prompt that keeps the suggestions inside those figures. Give it both dates and it also counts the whole days of lead time left and tells the model which delivery options are still realistic. If the recipient is under three, it adds the US CPSC small-parts rule to the prompt.",
   useCases: [

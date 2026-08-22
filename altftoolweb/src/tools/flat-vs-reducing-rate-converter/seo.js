@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flat vs Reducing Interest Rate Converter",
+  metaDescription:
+    "Turns a quoted flat rate into the reducing-balance rate with the same EMI - 8% flat over 5 years is about 14% reducing - and shows the total interest gap.",
+  steps: [
+    "Choose the direction with the \"Convert\" toggle — \"Flat → reducing\" or \"Reducing → flat\" — then enter the Loan amount (INR), Tenure (0.5 to 40 years, with 1/2/3/5/7-year preset buttons) and the quoted rate (% per year).",
+    "The converter computes the EMI from your quote and bisection-solves for the rate on the other basis that produces exactly the same EMI.",
+    "Read the \"True reducing-balance rate\" (or equivalent flat rate) with monthly EMI, total interest and \"What the flat quote hides\" — the extra paid versus a genuine reducing loan; \"Copy result\" exports the comparison.",
+  ],
   intro:
     "A flat interest rate charges interest on the full original principal for the entire tenure, while a reducing-balance rate charges it only on what you still owe. This converter turns a quoted flat rate into the reducing-balance rate that produces the same EMI, which is the only way to compare a flat-rate offer against a normal bank loan.",
   useCases: [

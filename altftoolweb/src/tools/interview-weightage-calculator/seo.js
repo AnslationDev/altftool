@@ -1,5 +1,5 @@
 const seo = {
-  title: "Interview Weightage Calculator: UPSC, IBPS PO, SBI PO",
+  title: "Interview Weightage Calculator: UPSC & Bank PO",
   metaDescription:
     "Combine written and interview marks under UPSC 1750:275, IBPS PO 80:20 or SBI PO 75:25, and see how many written marks one interview mark is worth.",
   steps: [

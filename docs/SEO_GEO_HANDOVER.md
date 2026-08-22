@@ -132,6 +132,11 @@ scoped. If you write this claim again, scope it.
    the date it was checked, so ageing is visible rather than silent — but they
    need a refresh pass every few months.
 
+7. **Activate Bing/IndexNow.** All the code is shipped but dormant — it is
+   console work only (set `ALTFT_INDEXNOW_KEY` in Amplify, add the site to
+   Bing Webmaster Tools, run the bulk script after deploys). Full operator
+   checklist: `docs/BING_INDEXNOW_ACTIVATION.md`.
+
 ---
 
 ## 5. Known limits of this work

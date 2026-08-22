@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloud Budget Alert Planner: Forecast & Thresholds",
+  metaDescription:
+    "Turn monthly budget and month-to-date spend into a run-rate forecast, the 50/85/100% alert ladder GCP and AWS default to, and the day each alert fires.",
+  steps: [
+    "Enter your \"Monthly budget (USD)\", \"Spend so far this month (USD)\", \"Day of the month today (days elapsed)\" and \"Days in this month\".",
+    "Read the \"Forecast month-end spend\" card with daily run rate, remaining budget, projected overspend, the day the budget exhausts and the safe daily spend from tomorrow.",
+    "Check the \"Recommended alert ladder\" table — 50%, 85% and 100% actual-spend alerts with dollar amounts and projected fire days, plus the 100%-forecast trigger — then click \"Copy plan\".",
+  ],
   intro:
     "This planner turns a monthly cloud budget and your month-to-date spend into a concrete alert plan: a linear run-rate forecast of month-end spend, the 50% / 85% / 100% actual-spend alert ladder that GCP Billing budgets and the AWS Budgets template default to, and the day of the month each alert would fire at your current pace. It is for engineers and FinOps owners who want alerts that catch overspend mid-month, not on the invoice.",
   useCases: [

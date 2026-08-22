@@ -1,5 +1,5 @@
 const seo = {
-  title: "Water Meter Reading Tracker: Litres Per Day & Leaks",
+  title: "Water Meter Reading Tracker: Litres/Day & Leaks",
   metaDescription:
     "Turns dated meter readings into litres per day and per person, flags a period over 30% above your median, and costs it at your tariff.",
   steps: [

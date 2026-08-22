@@ -1,4 +1,12 @@
 const seo = {
+  title: "Classic Minesweeper: Beginner to Expert 16x30",
+  metaDescription:
+    "Classic Minesweeper with safe first click, chording and flag mode. Beginner 9x9/10 mines to Expert 16x30/99, with per-difficulty best times.",
+  steps: [
+    "Pick a board with the Beginner, Intermediate or Expert difficulty pills (9x9 with 10 mines, 16x16 with 40, or 16x30 with 99), then tap any tile — mines are placed only after your first tap, so it is always safe.",
+    "Tap to reveal tiles; right-click, long-press or switch on \"Flag mode\" to plant flags, and tap a satisfied number to chord-clear its remaining neighbours. Keyboard: arrows or WASD move, Space or Enter reveals, F flags, P pauses.",
+    "Clear every safe tile to win — the Mines, Time and Best counters track the game, and the \"Board cleared in Xs!\" banner with its \"Play again\" button records a new best time per difficulty.",
+  ],
   intro:
     "This is classic Minesweeper at the three standard board sizes: Beginner 9x9 with 10 mines, Intermediate 16x16 with 40, and Expert 16x30 with 99. Mines are placed only after your first click, so the opening move can never explode, and zero-tiles flood-fill outward the way the original does. It supports right-click and long-press flagging, chording on satisfied numbers, full keyboard play, and it keeps your best time per difficulty.",
   useCases: [

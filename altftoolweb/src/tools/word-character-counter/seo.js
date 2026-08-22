@@ -1,4 +1,12 @@
 const seo = {
+  title: "Word & Character Counter with Reading Time",
+  metaDescription:
+    "Count words, characters with and without spaces, sentences, paragraphs and lines as you type, plus reading time at 225 wpm and speaking time at 150 wpm.",
+  steps: [
+    "Type or paste into the Text input box — every figure updates as you type, and a Sample button loads demo text.",
+    "Read the ten tiles — Words, Characters, No spaces, Sentences, Paragraphs, Lines, Read time, Speak time, Avg word, Longest — plus the Top terms chips.",
+    "Click Copy summary for all figures, or Download report to save altftool-text-report.txt with the source text attached.",
+  ],
   intro:
     "This counter measures a block of text ten ways at once — words, characters with and without spaces, sentences, paragraphs, lines, average word length, longest word, and reading and speaking time at 225 and 150 words per minute. Paste a draft and every figure updates as you type, alongside the eight most repeated meaningful terms with their counts. The whole set can be copied as a summary or downloaded as a text report with the source text attached.",
   useCases: [

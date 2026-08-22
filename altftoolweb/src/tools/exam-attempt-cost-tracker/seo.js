@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Attempt Cost Tracker: UPSC, JEE, NEET & CA",
+  metaDescription:
+    "Log form fees, coaching, test series, books, travel and stay for every attempt to see the grand total, average per attempt and biggest cost head.",
+  steps: [
+    "Fill the seven cost heads for each attempt — Application / form fee, Coaching / classes, Test series / mocks, Books / material, Travel to centre, Stay / lodging and Other (INR).",
+    "Click Add attempt for every extra sitting and give each one a label; Remove attempt drops one from the totals.",
+    "Read the Total spent across attempts, the average per attempt and the head-wise share table, then click Copy result for the summary.",
+  ],
   intro:
     "The Exam Attempt Cost Tracker totals what each attempt at a competitive exam actually cost — application fee, coaching, test series, books, travel to the centre, lodging and everything else — then computes the grand total, the average per attempt, and which cost head consumed the most money. It is built for aspirants of exams like UPSC, JEE, NEET, CA or banking who make multiple attempts and want the real number behind each one, not a guess.",
   useCases: [

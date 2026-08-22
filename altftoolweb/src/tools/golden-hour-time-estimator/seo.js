@@ -1,5 +1,5 @@
 const seo = {
-  title: "Golden Hour Calculator: Blue Hour, Sunrise, Twilight",
+  title: "Golden Hour, Blue Hour, Sunrise & Twilight Times",
   metaDescription:
     "Exact clock times for golden hour (sun 6° above to 4° below the horizon), blue hour, sunrise, sunset and all three twilights, from NOAA equations.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Data Deletion Proof Log: 7-Column Erasure Evidence",
+  title: "Data Deletion Proof Log: 7-Column Evidence",
   metaDescription:
     "Paste one pipe-separated line per system — Request ID, System, Scope, Action, Completed at, Evidence, Reviewer — and see which rows miss a column.",
   steps: [

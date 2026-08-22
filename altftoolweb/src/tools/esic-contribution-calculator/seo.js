@@ -1,4 +1,12 @@
 const seo = {
+  title: "ESIC Contribution Calculator: 0.75% + 3.25% Split",
+  metaDescription:
+    "Work out employee (0.75%) and employer (3.25%) ESIC shares from monthly wages, prorated by payable days, with a Rs 21,000 wage-ceiling coverage check.",
+  steps: [
+    "Enter Monthly gross wages, Wage ceiling, Employee rate (%), Employer rate (%), Payable days and Days in month — defaults are 0.75%, 3.25% and a Rs 21,000 ceiling.",
+    "The Contribution result panel prorates wages by payable days and shows coverage, employee share, employer share, total contribution and effective statutory load.",
+    "Click 'Copy summary' for a payroll note with the coverage verdict and each share in rupees.",
+  ],
   intro:
     "Estimate ESIC employee and employer contribution amounts for an Indian salary month. Enter gross wages, contribution days and wage ceiling details to see whether ESIC applies and how the employee 0.75% and employer 3.25% rates add up.",
   useCases: [

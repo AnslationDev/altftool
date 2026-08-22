@@ -1,4 +1,12 @@
 const seo = {
+  title: "IPU CGPA to Percentage Converter: (CGPA−0.75)×10",
+  metaDescription:
+    "Converts GGSIPU CGPA to percentage with the notified (CGPA − 0.75) × 10 formula, runs in reverse, and shows your division band. An 8.2 CGPA is 74.5%.",
+  steps: [
+    "Pick the Direction — 'CGPA → percentage' or 'Percentage → CGPA' — or click 'Swap direction' to flip it.",
+    "Type your CGPA (0 – 10) or percentage (0 – 100); the (CGPA − 0.75) × 10 formula is applied instantly as you type.",
+    "Read the equivalent value, the formula applied and your division band against the division table, then click 'Copy result' for a one-line summary.",
+  ],
   intro:
     "This converter turns a GGSIPU (Guru Gobind Singh Indraprastha University) CGPA into its equivalent percentage using the university's notified linear formula: Percentage = (CGPA − 0.75) × 10. It is built for IPU students preparing job applications, higher-study forms and scholarship paperwork that ask for marks in percentage rather than CGPA, and it also runs the formula in reverse to recover the CGPA behind a stated percentage.",
   useCases: [

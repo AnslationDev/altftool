@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSONL Train/Validation/Test Splitter with Seed",
+  metaDescription:
+    "Paste JSONL, set train/validation/test percentages and a seed: a seeded Fisher-Yates shuffle makes the split reproducible and counts sum to the total.",
+  steps: [
+    "Paste your JSONL dataset (one JSON object per line), then set Train %, Validation % and Test % — the default is 80/10/10 — and a random seed.",
+    "Tick 'Shuffle before splitting (seeded Fisher–Yates)' and, for messy data, 'Skip lines that are not valid JSON'.",
+    "Download train.jsonl, validation.jsonl and test.jsonl (or copy each split); the same input and seed always reproduce the exact same split.",
+  ],
   intro:
     "This tool splits a JSONL dataset into train, validation and test files using a seeded Fisher–Yates shuffle, so the same seed always reproduces the exact same split. Split sizes are apportioned with the largest-remainder method, so the three counts always add up to the full record count. It is built for anyone preparing fine-tuning or evaluation data who wants a reproducible split without writing a script.",
   useCases: [

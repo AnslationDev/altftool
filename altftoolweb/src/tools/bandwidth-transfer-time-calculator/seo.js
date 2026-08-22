@@ -1,4 +1,12 @@
 const seo = {
+  title: "File Transfer Time Calculator: Mbps, GB, GiB",
+  metaDescription:
+    "Divide size in bits by link rate and efficiency to get transfer time — bits vs bytes handled, GB and GiB kept separate, overhead shown beside ideal.",
+  steps: [
+    "Enter the data size and pick a size unit — decimal GB/TB (1000-based) and binary GiB/TiB (1024-based) are separate options.",
+    "Enter the link speed with its unit (bit/s up to Gbit/s, or MB/s and GB/s) and set 'Protocol efficiency (%)' — 90 is the default; 100 gives the theoretical minimum.",
+    "Read the estimated transfer time with effective MB/s throughput, plus the ideal-time and added-by-overhead rows; 'Copy result' copies the summary.",
+  ],
   intro:
     "This calculator computes file transfer time as size in bits divided by effective link rate — the formula time = (bytes × 8) ÷ (bit rate × efficiency) — converting correctly between bits and bytes and between decimal (GB, powers of 1000) and binary (GiB, powers of 1024) units. It is for anyone planning a backup window, cloud migration, video upload or dataset sync who wants to know whether the move takes minutes, hours or days at their line speed.",
   useCases: [

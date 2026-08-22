@@ -1,4 +1,12 @@
 const seo = {
+  title: "Service Account Key Rotation Planner (CIS 90-Day)",
+  metaDescription:
+    "Turn a key's last rotation date into a dated zero-downtime cutover plan — notify, create, disable, delete — checked against the CIS 90-day ceiling.",
+  steps: [
+    "Set \"Current key created / last rotated on\" and \"Rotation period (days)\" — cadences over 90 days are flagged against CIS AWS Benchmark 1.14.",
+    "Fill in the \"Overlap window (days both keys valid)\", \"Notice to owners before due date (days)\" and \"Keys managed on this cadence\" fields.",
+    "Read the \"Next rotation due\" date and the dated Cutover schedule — notify, create, deploy, disable, delete — then click \"Copy plan\".",
+  ],
   intro:
     "This planner turns a key's last rotation date and your chosen cadence into a dated, zero-downtime cutover schedule: notify owners, create the new key, deploy and verify during an overlap window, disable the old key on the due date, and delete it after a quarantine period. It applies the CIS AWS Foundations Benchmark ceiling of rotating access keys every 90 days or less, and works equally for AWS IAM access keys, GCP service account keys and Azure client secrets.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blood Pressure Checker – ACC/AHA Categories & Trends",
+  title: "Blood Pressure Checker: ACC/AHA Categories",
   metaDescription:
     "Log systolic and diastolic readings, see each labelled Normal, Elevated, Stage 1 or Stage 2, and plot both on one trend chart. Data stays in the page.",
   intro:

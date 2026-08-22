@@ -1,5 +1,5 @@
 const seo = {
-  title: "Credit Card Minimum Payment Trap Calculator With GST",
+  title: "Credit Card Minimum Payment Calculator With GST",
   metaDescription:
     "Simulates a card balance month by month with 18% GST on interest, showing months to clear on the minimum due against a fixed or 3, 6 or 12-month payoff.",
   intro:

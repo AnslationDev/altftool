@@ -1,5 +1,5 @@
 const seo = {
-  title: "Logo & Slogan Generator: 5-7 Taglines from a Brief",
+  title: "Logo & Slogan Generator: 5-7 Taglines",
   metaDescription:
     "Enter a brand name (80 chars) and a positioning line (500 chars) and get 5-7 distinct taglines, numbering stripped. Rate limited to 8 runs a minute.",
   intro:

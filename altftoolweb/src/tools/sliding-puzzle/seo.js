@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sliding Puzzle: 15 Puzzle, 3x3 to 5x5",
+  metaDescription:
+    "Play the classic 15 puzzle on 3x3, 4x4 or 5x5 boards. Every shuffle is parity-checked so it is solvable, with move and time counters and a best per size.",
+  steps: [
+    "Choose a board size - 3x3, 4x4 or 5x5 - and press Start to deal a shuffle that has passed the inversion-parity check, so every board you get is solvable.",
+    "Slide tiles by tapping any tile in the blank's row or column (the whole segment shifts in one tap), or use the Arrow keys / WASD to move the blank; Space starts and pauses the game.",
+    "Solve the board to see your moves and time on the Solved! screen - a New best moves! badge appears when you beat your stored best for that size - then hit Play again.",
+  ],
   intro:
     "The Sliding Puzzle is the classic 15 puzzle: numbered tiles in a grid with one empty cell, which you slide into order with the blank finishing bottom-right. It offers 3x3, 4x4 and 5x5 boards, and every shuffle is run through the inversion-parity check and corrected if needed, so you are never dealt one of the arrangements that cannot be solved. Moves and time are counted, and your lowest move count for each board size is kept separately.",
   useCases: [

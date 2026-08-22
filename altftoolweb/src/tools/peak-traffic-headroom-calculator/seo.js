@@ -1,5 +1,5 @@
 const seo = {
-  title: "Peak Traffic Headroom Calculator: Size Servers for Spikes",
+  title: "Peak Traffic Headroom Calculator: Server Sizing",
   metaDescription:
     "Project sale-day peak req/s from baseline x peak ratio x spike x growth, then get the instance count at your target utilization plus N+1 redundancy.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "No Dues Certificate Format and RBI 30-Day Deadline",
+  title: "No Dues Certificate Format & RBI 30-Day Deadline",
   metaDescription:
     "Draft the lender's no dues certificate or the borrower's request, date the RBI 30-day document release deadline, and price delay at ₹5,000 a day.",
   steps: [

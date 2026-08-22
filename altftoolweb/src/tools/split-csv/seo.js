@@ -1,4 +1,12 @@
 const seo = {
+  title: "Split CSV into Files by Rows or Column Value",
+  metaDescription:
+    "Split a CSV by max rows per file, equal parts, or one file per column value. The header repeats in every part; download files singly or as a ZIP.",
+  steps: [
+    "Upload a .csv file or paste into the 'CSV content' box, pick a Delimiter (Auto-detect, comma, semicolon, tab or pipe) and tick 'First row is a header'.",
+    "Choose a 'Split mode' — 'Max rows per file', 'Equal number of files' or 'One file per column value' (capped at 500 output files) — and set the output file name prefix.",
+    "Download each part (named like prefix-part-1.csv) from the Parts table, or click 'Download ZIP' to save every file in one archive.",
+  ],
   intro:
     "Split CSV breaks one large comma-separated file into several smaller CSV files that each open cleanly in Excel, Google Sheets or a database importer. It parses the file with RFC 4180 rules, so quoted fields containing commas or line breaks are never cut in half, and it repeats the header row at the top of every output part. Use it when an upload limit, a row cap or a per-region hand-off means one file has to become many.",
   useCases: [

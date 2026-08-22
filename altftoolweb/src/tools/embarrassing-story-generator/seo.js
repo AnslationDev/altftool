@@ -1,4 +1,12 @@
 const seo = {
+  title: "Embarrassing Story Generator with 6 Cringe Themes",
+  metaDescription:
+    "Pick School, Work, Dating, Family, Social or Random and generate one of 30 fictional cringe stories. Heart favourites (up to 20) and copy in a tap.",
+  steps: [
+    "Pick a theme chip — School, Work, Dating, Family, Social or Random.",
+    "Click Generate Story to draw one of the 30 hand-written stories (5 per theme) at random.",
+    "Copy it with the copy button, re-roll with the refresh icon, or heart it into the Favorite Stories list, which holds up to 20 for the session.",
+  ],
   intro:
     "The Embarrassing Story Generator picks a short, cringe-worthy anecdote at random from a hand-written collection sorted into six themes — School, Work, Dating, Family, Social and Random. Pick a theme, hit generate, and you get one first-person story you can copy, re-roll or heart into a favourites list of up to 20. Every story is fiction written for laughs, not a real submitted confession.",
   useCases: [

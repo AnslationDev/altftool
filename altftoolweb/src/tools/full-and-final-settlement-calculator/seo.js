@@ -1,4 +1,12 @@
 const seo = {
+  title: "Full & Final Settlement Calculator with Gratuity",
+  metaDescription:
+    "Itemise your India F&F: unpaid salary days, leave encashment on Basic+DA, 15/26 gratuity with the 20 lakh cap, minus notice recovery, loans and TDS.",
+  steps: [
+    "Enter Monthly gross salary and Monthly Basic + DA, unpaid salary days, leave days to encash, and completed years and months of service.",
+    "Add pending bonus, reimbursements, notice shortfall days, loans and other deductions, and pick a 30-day or 26-working-day per-day basis.",
+    "Read the Net full & final payable with itemised earnings and deductions — a negative result is flagged as money you'd owe — or Copy result.",
+  ],
   intro:
     "The Full and Final Settlement Calculator adds up everything owed when you leave a job and subtracts what the company recovers. It works out unpaid salary days at your per-day rate, leave encashment on Basic + DA, statutory gratuity using the 15/26 formula from the Payment of Gratuity Act, plus pending bonus and reimbursements — then nets off notice shortfall, advances and TDS. Use it to sanity-check the F&F sheet HR sends you before you sign it.",
   useCases: [

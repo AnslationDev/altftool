@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gain Staging Calculator: dBFS to dBu, dBV and Volts",
+  title: "Gain Staging Calculator: dBFS to dBu, dBV & Volts",
   metaDescription:
     "Convert one level between dBFS, dBu, dBV, volts RMS and percent under EBU R68, SMPTE RP155 or ARD alignment, with the gain move to hit a target dBFS.",
   steps: [

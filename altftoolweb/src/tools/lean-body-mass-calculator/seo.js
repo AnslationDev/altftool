@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lean Body Mass Calculator: Boer, James & Hume + FFMI",
+  title: "Lean Body Mass Calculator: Boer, James & Hume",
   metaDescription:
     "Split weight into lean and fat mass from a known body fat % or the Boer, James and Hume formulas, with FFMI and a 1.6-2.2 g/kg protein range.",
   steps: [

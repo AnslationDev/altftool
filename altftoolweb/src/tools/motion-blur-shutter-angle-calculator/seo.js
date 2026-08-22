@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shutter Angle to Shutter Speed Calculator (180° Rule)",
+  title: "Shutter Angle to Speed Calculator (180° Rule)",
   metaDescription:
     "Convert shutter angle to speed at any frame rate (180° at 24 fps = 1/48 s), see the stops from the 180° rule, and get flicker-safe angles for 50/60 Hz.",
   steps: [

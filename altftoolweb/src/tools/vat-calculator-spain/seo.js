@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spain VAT Calculator (IVA 21%, 10%, 4% + Recargo)",
+  metaDescription:
+    "Add or remove Spanish IVA at 21%, 10% or 4%, see base, cuota and total, and apply the recargo de equivalencia (5.2%, 1.4%, 0.5%) for retailers.",
+  steps: [
+    "Switch between 'Add IVA' and 'Remove IVA', then enter the base imponible or the total (IVA incluido) amount.",
+    "Choose the 'Tipo de IVA' — Tipo general 21%, reducido 10%, superreducido 4%, 0% or a custom rate — and tick 'Apply recargo de equivalencia' when invoicing a retailer on that regime.",
+    "Read the base imponible, cuota de IVA, recargo and 'Total factura' rows, compare the same base at every Spanish rate, then click 'Copy result'.",
+  ],
   intro:
     "This calculator works out Spanish IVA in either direction: it multiplies a base imponible by 1.21 at the tipo general, or divides a gross total by 1.21 to recover the base and the cuota. The 10% tipo reducido and 4% superreducido bands set out in articles 90 and 91 of Ley 37/1992 are one click away, and an optional recargo de equivalencia adds the 5.2%, 1.4% or 0.5% retailer surcharge to the same base.",
   useCases: [

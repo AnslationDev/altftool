@@ -1,4 +1,12 @@
 const seo = {
+  title: "Speech Timing Calculator: Words to Minutes",
+  metaDescription:
+    "Paste your script, pick a pace from 100 wpm ceremonial to 190 wpm fast, add slide and pause overhead, and see if the talk fits your target minutes.",
+  steps: [
+    "Paste your script into the \"Script text\" box and choose a \"Delivery pace\" — eight presets from Ceremonial / eulogy at 100 wpm to Fast delivery at 190 wpm, or select Custom pace and type a Custom WPM.",
+    "Add overhead in the Slides, \"Seconds per slide\" (default 8) and \"Extra pause seconds\" fields, then set your \"Target minutes\".",
+    "Read the Estimated total time with the word and character count, the speaking-versus-overhead split, the target word budget (how many words to cut or add) and a per-pace comparison; \"Copy summary\" exports the estimate.",
+  ],
   intro:
     "The Speech Timing Calculator converts a script word count into speaking time using delivery pace, slide-change overhead, planned pauses and a target length. It also compares the same script across every common speaking speed it supports — ceremonial, technical, conversational, keynote, audiobook, TED-style, podcast and fast delivery.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base58 Encoder & Decoder (Bitcoin Alphabet)",
+  metaDescription:
+    "Convert UTF-8 text to and from raw Base58 with the Bitcoin alphabet, using BigInt so long values stay exact. Raw Base58 only — not Base58Check or WIF.",
   intro:
     "The Base58 Encoder converts ordinary UTF-8 text to and from raw Base58 using the Bitcoin alphabet. It treats the UTF-8 bytes as one big integer and repeatedly divides with BigInt so long values stay exact. The alphabet is 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz; 0, O, I and l are omitted to reduce visual ambiguity. This is raw Base58, not Base58Check, WIF, encryption, or a wallet-key recovery tool.",
   useCases: [

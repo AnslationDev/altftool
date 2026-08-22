@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flashcard Prompt Builder: Anki-Ready AI Decks",
+  metaDescription:
+    "Build an AI prompt for one-fact-per-card decks — basic Q&A, term-definition or Anki cloze — output as tab-separated lines; decks over 40 cards auto-batch.",
+  steps: [
+    "Enter a Deck topic, set the Number of cards (1–500) and optionally paste Source notes so cards are limited to that material.",
+    "Pick a Card format — Basic question → answer, Term → definition or Cloze deletion — and keep 'Tab-separated output for Anki import' ticked.",
+    "Click Copy prompt; decks over 40 cards are split into near-equal batches so no AI response truncates mid-deck.",
+  ],
   intro:
     "The Flashcard Prompt Builder creates an AI prompt that outputs a clean, importable flashcard deck — one fact per card, in basic Q&A, term-definition or Anki cloze format. The card rules follow the minimum information principle from SuperMemo's Twenty Rules of Formulating Knowledge, and output is tab-separated front/back lines that import directly into Anki. Decks over 40 cards are automatically split into batches so no response gets truncated.",
   useCases: [

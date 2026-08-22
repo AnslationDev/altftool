@@ -1,4 +1,12 @@
 const seo = {
+  title: "XML Sitemap Generator: Download sitemap.xml",
+  metaDescription:
+    "Add page URLs with lastmod, changefreq and priority, watch the sitemaps.org 0.9 XML update live, then copy it or download sitemap.xml for your site root.",
+  steps: [
+    "Enter a page in 'Page URL Address' (https:// is added if you leave the protocol off) and set its Crawling Priority, Change Frequency and Last Modified Date.",
+    "Press 'Add URL to Sitemap' — the page joins the Configured Pages list and the XML in the File Preview updates live.",
+    "Press Copy to grab the XML, or Download to save it as sitemap.xml for your site root.",
+  ],
   intro:
     "The Sitemap Generator builds a valid XML sitemap against the sitemaps.org 0.9 schema, writing a <url> block for each page with its <loc>, <lastmod> date, <changefreq> and <priority>. You add URLs one at a time — the protocol is filled in as https:// if you leave it off — watch the XML update live, then copy it or download it as sitemap.xml to drop at your site root. It suits small and mid-sized sites and hand-built pages where no CMS is emitting a sitemap for you.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gujarati New Year Wishes",
+  metaDescription:
+    "Bestu Varas and 1 January greetings in Gujarati script, Roman transliteration and English, with each message's real 70-character SMS length.",
+  steps: [
+    "Choose the Occasion (Bestu Varas or 1 January), Tone, Who is it for and Script (Gujarati script only, Roman transliteration only, or Gujarati + Roman), and optionally add the Recipient name and Your name.",
+    "Browse All matching greetings — each card shows the message, its English meaning, character count and SMS parts — and press Feature this on the one you want.",
+    "Check the SMS alphabet, Billable units and SMS parts readout for the featured greeting, then click Copy greeting (or a card's own Copy button).",
+  ],
   intro:
     "This generator assembles Gujarati new year greetings from a customary salutation, a message chosen from a curated bank of Bestu Varas and 1 January wishes, and your sign-off. Each greeting appears in Gujarati script, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It is for anyone who wants correct Gujarati wording for elders, friends or business contacts instead of a forwarded image.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paleo Macro Calculator: Protein, Fat, Carbs from BMR",
+  title: "Paleo Macro Calculator: Protein, Fat, Carbs",
   metaDescription:
     "Mifflin-St Jeor BMR and activity to calories, protein set per kg, fat as a share of energy, carbs as the remainder — then converted to grams of food.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian PIN Code Lookup: District, State and Circle",
+  title: "Indian PIN Code Lookup: District, State & Circle",
   metaDescription:
     "Enter a six-digit PIN and get every post office under it with branch type, district, state, postal circle and delivery status, plus source and timestamp.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maze Muncher — Arcade Game with Four Smart Ghosts",
+  metaDescription:
+    "Clear a 19x21 maze while four ghosts with different chase styles hunt you. Pellets 10 pts, power pellets 50, frightened ghosts 200. Keys, WASD or swipe.",
+  steps: [
+    "Click 'Start game' or press Space — you begin with 3 lives on the 19x21 maze.",
+    "Steer with the arrow keys, WASD, a swipe on the board or the on-screen pad; grab a power pellet to make the ghosts edible for 8 seconds at 200 points each.",
+    "Clear every pellet to advance a level — Score, Best, Level and Lives show above the board, and your best score is saved in this browser.",
+  ],
   intro:
     "Maze Muncher is a browser maze arcade game on a hand-designed 19x21 grid where you clear every pellet while four ghosts with different chase behaviours hunt you down. Pellets are worth 10 points, power pellets 50, and each ghost you catch during the 8-second frightened window is worth 200. You start with 3 lives, steer with arrow keys, WASD, a swipe or the on-screen pad, and both you and the ghosts get faster on every level you clear.",
   useCases: [

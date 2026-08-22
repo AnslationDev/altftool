@@ -1,4 +1,12 @@
 const seo = {
+  title: "SMPTE Timecode to Seconds Converter (Drop-Frame)",
+  metaDescription:
+    "Convert HH:MM:SS:FF to real seconds and frame numbers at 23.976-60 fps, with SMPTE drop-frame rules and exact 1000/1001 NTSC rates — both directions.",
+  steps: [
+    "Choose 'Timecode → seconds' or 'Seconds → timecode' and pick the frame rate — 23.976 through 60 fps, drop-frame or non-drop.",
+    "Type the timecode as HH:MM:SS:FF (one-click presets like 01:00:00;00 included) or the duration in seconds; illegal drop-frame labels are rejected.",
+    "Read the real elapsed seconds, frame number and pulldown drift versus the literal digits, then click 'Copy result'.",
+  ],
   intro:
     "SMPTE timecode counts frames, not seconds, so converting HH:MM:SS:FF to a duration means turning the label into a frame number and dividing by the true frame rate. This converter does both directions at 23.976 through 60 fps, applies the SMPTE ST 12-1 drop-frame rule (skip two frame numbers at the start of every minute except every tenth, four at 59.94), and divides by the exact 1000/1001 NTSC rate rather than the rounded one.",
   useCases: [

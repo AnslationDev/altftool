@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lateral Entry Merit Calculator: LEET, ECET, JELET",
+  metaDescription:
+    "Weigh diploma percentage against your LEET/ECET/JELET score for a merit index out of 100, with the AICTE 45% (40% reserved) diploma floor checked.",
+  steps: [
+    "Enter your diploma aggregate marks obtained and maximum, plus your entrance score (LEET / ECET / JELET) and its maximum marks.",
+    "Set 'Weight given to diploma marks (%)' or use a preset — 'Entrance exam only (LEET, ECET, JELET)', 'Diploma marks only' or '50 : 50 mixed formula' — and tick reserved category for the 40% floor.",
+    "Read the merit index out of 100 with each component's weighted contribution and the AICTE eligibility floor check, then press 'Copy result'.",
+  ],
   intro:
     "This calculator computes a lateral-entry (diploma-to-second-year B.Tech) merit index as a weighted average of diploma percentage and entrance-exam percentage on a 100-point scale — the model behind LEET, ECET and JELET rank lists as well as diploma-merit admissions. It also checks the AICTE eligibility floor of 45% marks in the diploma (40% for reserved categories where the state allows). It is for diploma holders planning direct second-year engineering admission.",
   useCases: [

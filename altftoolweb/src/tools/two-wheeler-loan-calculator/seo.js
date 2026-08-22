@@ -1,4 +1,12 @@
 const seo = {
+  title: "Two Wheeler Loan EMI Calculator: LTV & Interest",
+  metaDescription:
+    "Turn a bike's on-road price, down payment and 6-60 month tenure into a reducing-balance EMI — with LTV, total interest and an income comfort check.",
+  steps: [
+    "Enter the On-road price (INR), Down payment (INR), Interest rate (% per year) and a Tenure (months) between 6 and 60.",
+    "Add the Processing / documentation fee (INR) and, optionally, Your monthly income (INR) for the affordability check.",
+    "Read the reducing-balance monthly EMI with loan-to-value (LTV), total interest and the comfortable/manageable/stretched income flag, then click Copy result.",
+  ],
   intro:
     "This Two Wheeler Loan Calculator turns a bike or scooter's on-road price into a monthly EMI, using the reducing-balance formula lenders apply. It shows the loan-to-value ratio after your down payment, the total interest over tenures of 12 to 60 months, the processing fee, and the full cost of owning the vehicle. An optional income field flags whether the EMI is comfortable or stretched.",
   useCases: [

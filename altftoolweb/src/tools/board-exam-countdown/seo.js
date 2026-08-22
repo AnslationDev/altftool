@@ -1,4 +1,12 @@
 const seo = {
+  title: "Board Exam Countdown: Study Days Between Papers",
+  metaDescription:
+    "Enter your Class 10 or 12 datesheet to see days to each paper, free study days between papers, and the theory marks a target percentage demands.",
+  steps: [
+    "Pick your \"Class and stream\" preset and set each paper's date under \"Paper dates from your datesheet\" — clear a date to leave that paper out.",
+    "Set \"Study hours on a free day\", and optionally a Subject, \"Target overall percentage\" and the internal or practical marks secured.",
+    "Read \"Days to the first paper\", the Datesheet view's free days and study hours before each paper, and the theory marks needed, then click \"Copy result\".",
+  ],
   intro:
     "This countdown turns a Class 10 or Class 12 board datesheet into the numbers that matter: days to each paper and the free study days sitting between papers, counting out the exam days themselves. It is built for CBSE and state-board students planning a paper-by-paper revision schedule, and it also inverts the percentage formula to show the theory marks a target percentage demands once internal or practical marks are locked in, against the 33% pass requirement.",
   useCases: [

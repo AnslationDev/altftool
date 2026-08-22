@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sprint Capacity Calculator: Hours to Commit",
+  metaDescription:
+    "Net capacity = (headcount × days − holidays − leave) × hours, minus ceremony overhead. See per-person hours and utilisation before committing a backlog.",
+  steps: [
+    "Enter 'Team size', 'Sprint working days' (10 for a two-week sprint), 'Working hours per day', 'Public holidays in the sprint', 'Planned leave (total person-days)' and the ceremony + support overhead percentage (default 15%).",
+    "'Net sprint capacity' recomputes live in hours, with rows for gross, holiday and leave person-days, the overhead deduction, net person-days, per-person capacity and 'Utilisation of theoretical max'.",
+    "Press 'Copy result' for the line-by-line breakdown or 'Reset' for the 5-person, 10-day, 8-hour defaults.",
+  ],
   intro:
     "This calculator computes a scrum team's real sprint capacity using the standard formula: (headcount × working days − public holidays − planned leave) × hours per day, minus an overhead percentage for ceremonies, support and interruptions. It is built for scrum masters and engineering managers running sprint planning who need an honest hours figure — not the theoretical maximum — before the team commits to a sprint backlog.",
   useCases: [

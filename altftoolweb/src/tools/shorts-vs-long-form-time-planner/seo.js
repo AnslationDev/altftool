@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shorts vs Long Form Planner: Best Weekly Time Split",
+  title: "Shorts vs Long Form Planner: Weekly Time Split",
   metaDescription:
     "Splits your weekly production hours between Shorts and long videos by testing every whole-piece combination, then reports revenue or views per hour.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Running Cadence & Stride Length Calculator",
+  metaDescription:
+    "Turn a 30-second step count into steps per minute, step and stride length, a metronome BPM, and safe +5% and +10% cadence targets at the same speed.",
+  steps: [
+    "Choose How are you measuring? - Count steps over a timed window or I already know my cadence - then fill in Steps counted, the Counting window (seconds), your Height (cm) and your pace per km; tick I counted one foot only if you tracked a single leg.",
+    "Read the live result: cadence in spm with its band, Strides per minute, a Metronome setting in BPM, Step length in cm, Stride length in metres and Step length as % of height.",
+    "Check the Progression targets at the same speed table for the +5% and +10% cadence steps with their metronome BPM and shortened step length, then press Copy result for a text summary or Reset to start over.",
+  ],
   intro:
     "The Running Cadence Calculator converts a timed step count into steps per minute, then derives step length and stride length from your running pace using step length = speed in metres per minute divided by cadence. It also sets 5% and 10% progression targets at the same speed, the increments used in clinical gait-retraining work on running load. Aimed at runners checking whether they overstride and wanting a metronome number to work with.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gmail 2FA Setup: 2-Step Verification & Passkeys",
+  metaDescription:
+    "A local checklist for Google 2-Step Verification: authenticator, passkeys or security keys, the 10 backup codes, SMS removal and a recovery test.",
+  steps: [
+    "Choose your Device path (Web browser, Android, or iPhone or iPad) and filter the checklist by Stage, from 'Before you start' to 'Set up recovery'.",
+    "Tick each step as you complete it inside your own Google Account; the weighted Hardening score, the Critical counter and the 'Do next' card update as you go.",
+    "Press Copy summary for a text report of your score and next action, and weigh authenticator codes against passkeys in the Second-factor comparison table.",
+  ],
   intro:
     "This local checklist walks through the practical Gmail and Google Account hardening flow: recovery details, 2-Step Verification, authenticator apps, passkeys or security keys, backup codes, SMS removal, app-password cleanup and a recovery test. It does not connect to Google, ask for a password, or store backup codes; it only tracks which safety steps you tick in the browser.",
   useCases: [

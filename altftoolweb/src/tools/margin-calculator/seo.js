@@ -1,4 +1,7 @@
 const seo = {
+  title: "Profit Margin Calculator: Margin, Markup & Profit",
+  metaDescription:
+    "Enter cost and selling price to get gross margin, cash profit and the equivalent markup — 60 and 100 gives a 40% margin and 66.67% markup.",
   intro:
     "The Profit Margin Calculator takes a cost and a selling price and returns the gross margin as (price minus cost) divided by price, alongside the cash profit and the equivalent markup, which divides the same profit by cost instead. Enter 60 and 100 and you get a 40 percent margin, 40 in profit and a 66.67 percent markup — the two percentages that people most often confuse. It is for anyone pricing a product, checking a quote or sanity-testing a supplier deal.",
   useCases: [

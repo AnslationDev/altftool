@@ -1,4 +1,12 @@
 const seo = {
+  title: "Threads Image Size: 1080x1350 & 1080x1080",
+  metaDescription:
+    "Resize posts to the 1080 px width Threads serves — 1080x1350 portrait, 1080x1080 square, 1080x566 landscape — and preview the crop outside 1.91:1 to 4:5.",
+  steps: [
+    "Pick a shape under '1. Choose the post shape' — Portrait post 1080x1350, Square post 1080x1080 or Landscape post 1080x566.",
+    "Add a PNG, JPEG or WebP with the Image file input, then set Fit mode, Carousel slides (1-20) and Encoder quality (40-100%).",
+    "Click Export to download the resized image named like photo-1080x1350.jpg, or Copy spec for the crop-and-size report.",
+  ],
   intro:
     "This tool exports Threads post images at the 1080 pixel width the feed serves and checks your shape against the supported aspect range, which runs from 1.91:1 landscape down to 4:5 portrait. Anything outside that range is centre-cropped by Threads, so the tool states exactly what percentage of the frame survives and what the cropped result will be. Carousel planning up to the 20-item limit and PNG, JPEG or WebP encoding all happen in the browser.",
   useCases: [

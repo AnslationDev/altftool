@@ -1,5 +1,5 @@
 const seo = {
-  title: "Wood Screw Size Selector: Gauge, Length, Pilot Hole",
+  title: "Wood Screw Selector: Gauge, Length, Pilot Hole",
   metaDescription:
     "Two board thicknesses give the screw gauge and length, pilot and clearance hole, countersink diameter and minimum end and edge distances.",
   steps: [

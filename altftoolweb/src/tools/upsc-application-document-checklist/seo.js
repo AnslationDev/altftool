@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPSC Application Checklist: OTR to Fee Payment",
+  metaDescription:
+    "Category-aware UPSC application checklist: OTR, photo ID, matriculation certificate, scans and the Rs 100 fee or exemption, with progress tracking.",
+  steps: [
+    "Choose your Candidate category (General / Unreserved, EWS, OBC non-creamy layer, SC or ST) and tick the Applies to you flags so only the certificates your claim needs appear.",
+    "Work through the sections — One-Time Registration (OTR), identity records, Scans to upload, category certificates, and Choices and fee — ticking each prepared item.",
+    "Watch Checklist progress and the Application fee row (Rs 100, or Nil when exempt), then press Copy status to list the required items still missing.",
+  ],
   intro:
     "This checklist tracks every certificate, scan and decision the UPSC One-Time Registration (OTR) and online application require, from the matriculation certificate that fixes your name and date of birth to the Rs 100 fee or its exemption. It adapts to your category — OBC non-creamy-layer, EWS, SC/ST and PwBD candidates each see the certificate their claim needs — and shows how many required items are still missing before you open the form on upsconline.nic.in.",
   useCases: [

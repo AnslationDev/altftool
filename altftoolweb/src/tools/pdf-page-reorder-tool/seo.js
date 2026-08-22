@@ -1,4 +1,7 @@
 const seo = {
+  title: "PDF Page Reorder: Drag Thumbnails, Text Intact",
+  metaDescription:
+    "Drag PDF page thumbnails into a new order and download reordered.pdf. Pages are copied intact in your browser — no upload, no re-rasterising.",
   intro:
     "PDF Page Reorder renders every page of a PDF as a thumbnail you can drag into a new sequence, then rebuilds the document in that order and hands you a reordered.pdf to download. Pages are re-copied one by one from the original file, so text, vectors and fonts stay intact rather than being flattened into images. The thumbnails are only a preview, rendered client-side at low scale for speed.",
   useCases: [

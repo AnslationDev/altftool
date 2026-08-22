@@ -1,4 +1,12 @@
 const seo = {
+  title: "Person in News Tracker for Exam Current Affairs",
+  metaDescription:
+    "Log who was appointed as what and when — person, role, organisation, date — in a sortable table saved in your browser, with one-click CSV export.",
+  steps: [
+    "Fill the 'Add an entry' form — Person, 'Role / appointment', Organisation, Date and a one-line 'Why in news' — then click 'Add entry'.",
+    "Use 'Search the table' to filter by name, role or organisation, and click any column header to sort ascending or descending (dates sort chronologically).",
+    "Click 'Copy CSV' to copy the visible rows as CSV; entries persist in your browser's localStorage between visits.",
+  ],
   intro:
     "This tracker is a structured revision table for appointment and personality questions in competitive-exam current affairs: each row records the person, their role or appointment, the organisation, the date and a one-line reason they were in the news. Built for SSC, banking, UPSC prelims and state PSC aspirants, it is searchable, sortable by any column, stored only in your browser, and exportable as CSV.",
   useCases: [

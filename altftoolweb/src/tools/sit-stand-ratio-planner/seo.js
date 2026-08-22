@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sit-Stand Desk Planner: Clock-Timed Rotation Blocks",
+  title: "Sit-Stand Desk Planner: Timed Rotation Blocks",
   metaDescription:
     "Turns your workday, seated meeting hours and standing target into timed blocks, against the BJSM 2-to-4-hour advice and the 60-minute posture rule.",
   steps: [

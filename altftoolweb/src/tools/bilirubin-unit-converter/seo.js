@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bilirubin mg/dL to µmol/L Converter (Factor 17.1)",
+  metaDescription:
+    "Convert total and direct bilirubin between mg/dL and µmol/L with the 17.1 factor; indirect value and direct fraction are worked out automatically.",
+  steps: [
+    "Choose the 'Unit on the report (applies to both values)' — mg/dL or micromol/L (µmol/L).",
+    "Enter 'Total bilirubin' and, if the report lists it, 'Direct bilirubin (blank to skip)'.",
+    "Read the converted total, the indirect (unconjugated) value in both units and the 'Direct fraction of total' percentage with its band note, then press 'Copy result'.",
+  ],
   intro:
     "The Bilirubin Unit Converter changes total and direct bilirubin between mg/dL and micromoles per litre using the factor 17.1, which follows from bilirubin's molar mass of 584.66 g/mol. It also subtracts direct from total to give the indirect (unconjugated) value and works out the direct fraction, the ratio clinicians use to separate conjugated from unconjugated hyperbilirubinaemia. mg/dL is used in the US and India, µmol/L across the UK, Europe, Canada and Australia.",
   useCases: [

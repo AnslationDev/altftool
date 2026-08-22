@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tournament Bracket Maker: Single Elimination",
+  metaDescription:
+    "Paste up to 64 players one per line and get a full knockout draw — standard or random seeding, automatic byes to top seeds, and a copy-ready text bracket.",
+  steps: [
+    "Type or paste up to 64 players or teams into the Entrants box, one per line — in seeded modes the first name is seed 1.",
+    "Pick a Seeding method — Standard seeding (1 v lowest), Random draw or As typed — and optionally tick the third-place play-off checkbox.",
+    "Read the round-by-round fixtures with byes marked as automatic advances, then click Copy bracket to paste every match as plain text.",
+  ],
   intro:
     "The Tournament Bracket Maker turns a list of players or teams into a complete single-elimination draw, with rounds, match numbers and automatic byes. It pads the field to the next power of two and uses standard snake seeding — the rule that pairs seed 1 with the lowest seed and keeps seeds 1 and 2 apart until the final. It suits club organisers, teachers and anyone running an office or gaming tournament who wants a printable bracket in seconds.",
   useCases: [

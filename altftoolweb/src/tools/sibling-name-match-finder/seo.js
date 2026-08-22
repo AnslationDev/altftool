@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sibling Name Match Finder: Names Scored out of 100",
+  title: "Sibling Name Match Finder: Scored out of 100",
   metaDescription:
     "Enter your older child's name and get sibling names scored on origin, syllables, ending and length, with confusable spellings removed.",
   steps: [

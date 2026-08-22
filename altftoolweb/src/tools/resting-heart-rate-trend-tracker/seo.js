@@ -1,5 +1,5 @@
 const seo = {
-  title: "Resting Heart Rate Tracker: 7-Day Average & Baseline",
+  title: "Resting Heart Rate Tracker: 7-Day Average",
   metaDescription:
     "Log morning pulse readings to see a 7-day rolling average, a 28-day personal baseline, deviation in bpm and a least-squares trend per week.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "API Key Rotation Planner: 90-Day Cadence",
+  metaDescription:
+    "Turn a key's creation date and exposure level into rotation due dates with a dual-key overlap window and a six-step revocation runbook (NIST SP 800-57).",
+  steps: [
+    "Pick a 'Key exposure level' preset — each sets the rotation interval in days — and enter 'Key created / last rotated on'.",
+    "Adjust 'Rotation interval (days)' and the 'Dual-key overlap window (days)' both keys stay valid during a swap.",
+    "Read 'Next rotation due' with its status, the 'Rotate on' / 'Revoke old key by' schedule and the six-step revocation runbook, then press 'Copy plan'.",
+  ],
   intro:
     "This planner turns an API key's creation date and exposure level into a concrete rotation schedule: the next due date, a dual-key overlap window, and a six-step revocation runbook. It applies the cryptoperiod concept from NIST SP 800-57 and the 90-day rotation baseline that AWS and Google Cloud publish for long-lived access keys. It is built for developers and small teams running OpenAI, Anthropic or other AI API keys without a dedicated secrets-management platform.",
   useCases: [

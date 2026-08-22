@@ -1,5 +1,5 @@
 const seo = {
-  title: "Language Exchange Planner: Equal Tandem Time Blocks",
+  title: "Language Exchange Planner: Equal Time Blocks",
   metaDescription:
     "Halves the talking time so both partners get identical minutes, then prints an agenda with clock times and three topic cards at your level.",
   steps: [

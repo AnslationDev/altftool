@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mediterranean Diet Macros in Olive Oil Tablespoons",
+  title: "Mediterranean Diet Macros in Olive Oil Tbsp",
   metaDescription:
     "Mifflin-St Jeor calories split 35-40% fat and 15-18% protein, with the fat budget in tablespoons of olive oil and PREDIMED's 30 g nut serving.",
   steps: [

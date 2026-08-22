@@ -1,5 +1,5 @@
 const seo = {
-  title: "Time Zone Explorer — Live Clocks for 39 World Cities",
+  title: "Time Zone Explorer — Live Clocks for 39 Cities",
   metaDescription:
     "Compare live clocks across 39 cities with UTC offsets, DST badges and hour differences from your home city — then copy or download a plain-text report.",
   steps: [

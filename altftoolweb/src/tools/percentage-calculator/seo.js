@@ -1,5 +1,5 @@
 const seo = {
-  title: "Percentage Calculator: Percent Of, Ratio and Change",
+  title: "Percentage Calculator: Percent Of, Ratio & Change",
   metaDescription:
     "Three modes: what is X% of Y, X is what % of Y, and change from old to new. Each answer prints the formula behind it, with 10/25/50% alongside.",
   steps: [

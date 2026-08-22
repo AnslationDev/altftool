@@ -1,4 +1,12 @@
 const seo = {
+  title: "PostCSS Config Generator: Plugins in Order",
+  metaDescription:
+    "Generate postcss.config.mjs, .js or .postcssrc.json with import, nesting, preset-env, autoprefixer and cssnano in order, plus the install command.",
+  steps: [
+    "Tick the plugins you need - postcss-import, postcss-preset-env, autoprefixer, cssnano - choose a Nesting plugin (W3C postcss-nesting or Sass-style postcss-nested) and an Output format: postcss.config.mjs, postcss.config.js or .postcssrc.json.",
+    "Fine-tune with the preset-env stage (0-4), a Browserslist override, and the Minify only when NODE_ENV === \"production\" checkbox so development output stays readable.",
+    "Press Copy config to copy the generated file - the panel shows the exact filename, the plugin chain in run order, redundancy warnings, and the npm install command for your selection.",
+  ],
   intro:
     "This generator produces a ready-to-use PostCSS configuration file — postcss.config.mjs, postcss.config.js or .postcssrc.json — in the object-plugin syntax read by postcss-load-config, the loader used by Next.js, Vite and the PostCSS CLI. It orders postcss-import, nesting, postcss-preset-env, autoprefixer and cssnano correctly for the pipeline, and can gate minification behind NODE_ENV === \"production\" so development builds stay readable.",
   useCases: [

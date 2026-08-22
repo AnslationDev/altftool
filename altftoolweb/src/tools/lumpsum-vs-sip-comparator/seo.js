@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lumpsum vs SIP Calculator: Equal-Money Match",
+  metaDescription:
+    "Compare a one-time lumpsum against a monthly SIP at the same return — the SIP can auto-match the lumpsum total — with a year-by-year corpus table.",
+  steps: [
+    "Enter the Lumpsum amount (₹), Investment period (years) and Expected return (% per year) — up to 50 years and 30%.",
+    "Leave 'Spread the same total money across the SIP' ticked to auto-set the instalment, or untick it and type your own Monthly SIP (₹).",
+    "See which corpus is bigger and by how much, check the Growth year by year table, and click Copy result for the full comparison.",
+  ],
   "intro": "Lumpsum vs SIP Comparator puts a one-time investment head to head with a monthly SIP over the same period and the same expected return. By default it splits the lumpsum into equal monthly instalments so both routes invest exactly the same money, then shows each final corpus, the gain and the money multiple. It is for investors sitting on a bonus, maturity amount or windfall who are deciding between investing it all at once and staggering it.",
   "useCases": [
     "Decide whether to invest a Rs 6 lakh bonus at once or as a Rs 5,000 monthly SIP for 10 years.",

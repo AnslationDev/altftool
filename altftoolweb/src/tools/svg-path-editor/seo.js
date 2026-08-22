@@ -1,5 +1,5 @@
 const seo = {
-  title: "SVG Path Editor: Edit d Commands, True Bounding Box",
+  title: "SVG Path Editor: d Commands & True Bounding Box",
   metaDescription:
     "Parses all ten SVG path commands, converts absolute to relative, minifies, moves and scales, and solves Bezier extrema for a box that hugs the curve.",
   steps: [

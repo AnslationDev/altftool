@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cent to Square Feet: 1 Cent = 435.6 Sq Ft",
+  metaDescription:
+    "1 cent = 435.6 sq ft exactly. Convert cent, ground, ankanam, guntha, are, acre and hectare, price land from a rate per cent, and split equal shares.",
+  steps: [
+    "Choose 'An area' or 'Length × width' under Start from, then enter the value and its unit — cent, ground, ankanam, guntha, are, acre or hectare.",
+    "Optionally add a Rate (₹) and the unit it is quoted per to price the parcel, and set Number of shares to split it equally.",
+    "Read the exact square feet (1 cent = 435.6 sq ft), the full unit table and per-unit rates, then click Copy result.",
+  ],
   intro:
     "A cent is one hundredth of an acre, which makes it exactly 435.6 square feet or 40.4686 square metres. This converter moves a parcel between cent, square feet, square metres, ankanam, ground, guntha, are, acre and hectare, all derived from the 43,560 sq ft acre and the exact 0.3048 m foot. It also converts a rate quoted per cent into the rate per square foot or per ground, and divides a parcel into equal shares.",
   useCases: [

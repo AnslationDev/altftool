@@ -1,5 +1,5 @@
 const seo = {
-  title: "West Bengal Board Percentage Calculator: Madhyamik & HS",
+  title: "West Bengal Board Percentage Calculator",
   metaDescription:
     "Madhyamik marks out of 700 with WBBSE letter grades; HS out of 500 with the best-five rule applied and the dropped elective named.",
   steps: [

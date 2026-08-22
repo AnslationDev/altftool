@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indoor Humidity Guide: Dew Point & Mould Risk",
+  metaDescription:
+    "Get a target humidity band from the EPA/ASHRAE 30-50% baseline, plus your dew point, humidity at the coldest surface and grams of water to add or remove.",
+  steps: [
+    "Enter \"Room temperature (°C)\", \"Relative humidity now (%)\", \"Coldest surface temperature (°C)\" and \"Room volume (m³)\".",
+    "Tick what applies under \"What matters in this room?\" — each concern tightens the 30-50% EPA/ASHRAE target band.",
+    "Read the dew point, absolute humidity in g/m³, \"Humidity at the coldest surface\" against the 80% mould criterion, and \"Water to add\" or remove in grams; click \"Copy result\".",
+  ],
   intro:
     "The Indoor Humidity Comfort Guide builds a target relative humidity band from the EPA and ASHRAE baseline of 30% to 50%, tightened by whatever applies in your room — dust mite allergy, a history of damp, dry skin, wooden instruments. It then runs the psychrometrics: dew point from the Magnus equation, absolute humidity in grams per cubic metre, and the relative humidity right at your coldest surface, which is where mould actually starts once it stays above 80%.",
   useCases: [

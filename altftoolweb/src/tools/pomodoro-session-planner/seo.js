@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pomodoro Session Planner: Focus Blocks & Breaks",
+  metaDescription:
+    "Enter a start time, your available window and a 25/5 or 50/10 rhythm; get every focus block and break as clock times, plus leftover minutes.",
+  steps: [
+    "Set Start time and the Window (hours) and Window (minutes) fields, then type your own lengths or tap a preset — Classic 25 / 5, Deep work 50 / 10 or Short bursts 15 / 3.",
+    "The plan rebuilds live, scheduling only sessions that finish inside the window and trimming a break rather than letting it overrun.",
+    "Read Sessions that fit, total focus and break time and the clock-time schedule, then click Copy result to copy the plan as text.",
+  ],
   "intro": "Pomodoro Session Planner fits focus sessions and breaks into the time you actually have. Give it a start time, a window such as three hours, and your preferred rhythm — 25/5 classic, 50/10 deep work, or your own — and it builds the full schedule with clock times, showing how many focus blocks fit, when each long break lands, and how much time is left over. Useful for study blocks, writing sprints and anyone planning a morning of deep work before the calendar fills up.",
   "useCases": [
     "Plan a three-hour revision block so you know exactly how many 25-minute sessions fit before lunch.",

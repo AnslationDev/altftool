@@ -1,5 +1,5 @@
 const seo = {
-  title: "Decluttering Prompt Builder: Four-Box, 20/20, KonMari",
+  title: "Decluttering Prompts: Four-Box, 20/20, KonMari",
   metaDescription:
     "Pick a room, a decision rule and your session length to get a zone-by-zone AI prompt plus the number of sessions the clear-out will take.",
   steps: [

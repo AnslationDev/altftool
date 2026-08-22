@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unit Circle Explorer: (cos θ, sin θ) and Exact Surds",
+  title: "Unit Circle Explorer: (cos θ, sin θ), Exact Surds",
   metaDescription:
     "Enter an angle in degrees or radians and see the point (cos θ, sin θ), reference angle and all six ratios, with exact surds at the 16 special angles.",
   steps: [

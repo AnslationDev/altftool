@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ballet Class Calorie Burn Calculator (MET by Segment)",
+  title: "Ballet Calorie Burn Calculator (MET by Segment)",
   metaDescription:
     "Split a ballet class into barre, centre, allegro and pointe minutes and get kcal per segment, class total and weekly vigorous minutes from real METs.",
   steps: [

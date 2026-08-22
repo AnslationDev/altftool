@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tip Calculator with Bill Split & Round-Up Shares",
+  metaDescription:
+    "Work out the tip and each person's share for up to 50 people, round shares up to the next rupee, and see the effective tip percentage it creates.",
+  steps: [
+    "Enter the Bill amount (₹), then pick a Quick tip button from 5% to 25% or drag the Custom tip slider anywhere from 0% to 30%.",
+    "Set Split between (people) with the plus and minus buttons — up to 50 — and switch on Round up per-person total for whole-rupee shares.",
+    "Read the Each person pays figure with the tip amount and the effective tip after round-up, then hit Copy summary to paste the split into your group chat.",
+  ],
   intro:
     "Tip Calculator works out the tip, the total and each person's share from a rupee bill amount, using tip = bill × tip% ÷ 100 and per person = (bill + tip) ÷ people. It is for the moment the bill lands and someone has to divide it — quick tip buttons from 5% to 25%, a 0–30% slider, and a split of up to 50 people. Turn on round-up and each share is rounded to the next whole rupee, with the effective tip percentage that creates shown back to you.",
   useCases: [

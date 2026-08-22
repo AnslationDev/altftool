@@ -1,4 +1,12 @@
 const seo = {
+  title: "Savings Goal Tracker: Date You Hit Your Target",
+  metaDescription:
+    "Enter target, balance and monthly saving to get the date you hit the goal, 25/50/75% milestone dates, and the monthly top-up a deadline needs.",
+  steps: [
+    "Enter your Savings target (₹), Saved so far (₹), Adding each month (₹) and the Return on the balance (% per year), with an optional Deadline date to test.",
+    "Set the Counting from date — there is no Calculate button; the countdown, progress bar and 25/50/75% Milestone dates table update as you type.",
+    "Read the 'You hit the target on' date and, if you set a deadline, the 'Monthly amount that lands on time' in Against your deadline, then press Copy result.",
+  ],
   intro:
     "This tracker answers one question exactly: on what date does a savings goal get met? It solves the future-value-of-an-annuity equation, FV = A(1+i)^n + C[((1+i)^n − 1)/i], for n — the number of months — using your current balance A, monthly contribution C and monthly return i, then converts n into a calendar date and marks the 25%, 50% and 75% points. Add a deadline and it works backwards to the monthly amount that lands on that date.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Website Screenshot Tool – URL to PNG, JPG or GIF",
+  metaDescription:
+    "Paste a URL (https:// added for you) and capture the page at a 1024x768 desktop viewport as PNG, JPG or GIF, saved as screenshot-domain-date.",
+  steps: [
+    "Enter the address in the Website URL field — https:// is added automatically if you leave it off — and choose 'PNG (Best Quality)', 'JPG (Smaller Size)' or 'GIF (Animated)' under Image Format.",
+    "Click Capture Screenshot; the page is rendered at a fixed 1024x768 desktop viewport with caching disabled, so the capture is always fresh.",
+    "Click Download Image to save it as screenshot-<domain>-<YYYY-MM-DD> in your chosen format, or Copy URL to grab the capture link.",
+  ],
   intro:
     "This screenshot tool renders any public web page at a 1024x768 desktop viewport and returns it as a downloadable PNG, JPG, or animated GIF. You paste a URL — the protocol is added for you if you leave it off — and get back a full-page capture you can download or link to. It is built for people who need a picture of a live site without installing a browser extension or opening DevTools.",
   useCases: [

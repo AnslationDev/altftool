@@ -1,5 +1,5 @@
 const seo = {
-  title: "Number Tracing Worksheets in mm: Latin or Devanagari",
+  title: "Number Tracing Worksheets: Latin or Devanagari",
   metaDescription:
     "Set digit height in millimetres and get digits per row, numbers per page and the sheet count before printing. Latin 0-9 or Devanagari ०-९.",
   steps: [

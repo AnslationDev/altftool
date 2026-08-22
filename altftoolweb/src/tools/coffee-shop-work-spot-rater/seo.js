@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coffee Shop Work Spot Rater: Score Out of 100",
+  metaDescription:
+    "Rate a café as a workspace from nine measurements — upload speed, latency, noise in dB(A), sockets, seating — with hard pass/fail gates for video calls.",
+  steps: [
+    "Enter measured \"Download\", \"Upload\" and \"Latency\" (the form notes 1.2 Mbps upload covers a 720p call) plus \"Noise at your table\" in dB(A).",
+    "Describe the room — \"Power sockets\", \"Usable table depth\", seat, \"How long you can sit\" — and tick \"Toilet available\", \"Free drinking water\" or \"Corner or booth for calls\".",
+    "Read the score out of 100, the pass/fail verdicts under \"What you can actually do here\" and the weakest factors, then click \"Copy rating\".",
+  ],
   intro:
     "Scores a café out of 100 as a place to work, from nine measurements weighted by how much each one actually decides the day: download and upload speed, latency, noise in dB(A), sockets, table depth, seating, how long you can stay, and whether there is a toilet. It then applies hard gates rather than a single number — a café can score well overall and still fail 'video calls' because its upload sits under the 1.2 Mbps a 720p call needs or the room runs past 65 dB(A).",
   useCases: [

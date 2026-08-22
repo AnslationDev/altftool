@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Filter Generator with Live Before/After Preview",
+  title: "CSS Filter Generator with Before/After Preview",
   metaDescription:
     "Tune blur, brightness, contrast, grayscale, hue-rotate and more on an image, compare with a draggable split, and copy only the CSS values you changed.",
   intro:

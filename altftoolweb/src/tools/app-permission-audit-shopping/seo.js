@@ -1,5 +1,5 @@
 const seo = {
-  title: "Shopping App Permission Audit: Score 0-100 & Revoke List",
+  title: "Shopping App Permission Audit & Revoke List",
   metaDescription:
     "Scores the 17 permissions and settings a shopping app holds, 0-100, ranks what to revoke first, and names each Android manifest permission.",
   steps: [

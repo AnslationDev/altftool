@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brokerage Charges Calculator: STT, GST, Net P&L",
+  metaDescription:
+    "Itemises STT/CTT, exchange, SEBI, stamp duty and 18% GST for delivery, intraday and F&O trades — with net P&L after costs and the break-even move.",
+  steps: [
+    "Pick a segment — Equity delivery, Equity intraday, Equity / index futures or Equity / index options — then enter Quantity, Buy price (INR) and Sell price (INR).",
+    "Model your broker's plan with Flat brokerage per order (INR), Brokerage as % of turnover and the Maximum brokerage per order cap (0 = no cap).",
+    "Read the itemised STT/CTT, exchange, SEBI, stamp duty and 18% GST lines with net P&L in hand and the break-even move, then click Copy result.",
+  ],
   intro:
     "The Brokerage and Charges Calculator shows exactly what a trade costs in India once brokerage, STT/CTT, exchange transaction charges, SEBI turnover fees, stamp duty, 18% GST and DP charges are added up. Pick equity delivery, intraday, futures or options, enter your buy and sell prices, and it returns the total charges, net profit after costs and the price move you need just to break even.",
   useCases: [

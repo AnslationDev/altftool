@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Content Disclosure Generator for Publishers",
+  metaDescription:
+    "Build an AI-use disclosure saying what the AI did, who reviewed it and who is accountable — five assistance levels plus FTC-style placement guidance.",
+  steps: [
+    "Pick a Content type and one of five How AI was used levels, from Research and summarisation only to Largely AI-generated.",
+    "Optionally name the AI tools and reviewer, and tick 'A human reviewed, fact-checked and approved the final content' if it is true.",
+    "Copy the finished disclosure with its Suggested label and Where to place it tip using the Copy statement button.",
+  ],
   intro:
     "The AI Content Disclosure Generator produces a ready-to-publish statement declaring how AI was used in an article, report, newsletter or marketing piece — what the AI did, whether a human reviewed it, and who holds editorial responsibility. Its structure mirrors what transparency frameworks such as Article 50 of the EU AI Act and FTC 'clear and conspicuous' disclosure guidance expect. It is built for content teams, publishers and agencies formalising an AI-use policy.",
   useCases: [

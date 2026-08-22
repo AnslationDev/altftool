@@ -1,5 +1,5 @@
 const seo = {
-  title: "Facebook 2FA Setup Guide: Accounts Center Checklist",
+  title: "Facebook 2FA Setup: Accounts Center Checklist",
   metaDescription:
     "Step-by-step Facebook 2FA checklist for security key, authenticator app or SMS, with a readiness score that flags unsaved recovery codes and SMS fallback.",
   steps: [

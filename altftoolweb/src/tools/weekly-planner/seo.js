@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weekly Planner: 7-Day Time Blocks with Clash Alerts",
+  title: "Weekly Planner: 7-Day Time Blocks & Clash Alerts",
   metaDescription:
     "Block out a Monday or Sunday week, see each day's load against your 08:00-22:00 window, and get overlapping blocks flagged. Saved in-browser.",
   steps: [

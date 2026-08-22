@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Sleep Routine Planner: Bedtime from Wake Time",
+  title: "Senior Sleep Planner: Bedtime from Wake Time",
   metaDescription:
     "Works backwards from a fixed wake time to set lights out, the wind-down hour, an 8-hour caffeine cut-off and a nap capped at 30 minutes, done by 3 pm.",
   steps: [

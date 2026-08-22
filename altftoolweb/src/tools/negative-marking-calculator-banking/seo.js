@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Exam Negative Marking Calculator (0.25 Penalty)",
+  title: "Bank Exam Negative Marking Calculator (0.25)",
   metaDescription:
     "Scores IBPS and SBI prelims section by section with the one-fourth penalty, and shows marks lost, net score and where the cutoff sits.",
   steps: [

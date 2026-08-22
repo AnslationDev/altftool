@@ -1,4 +1,12 @@
 const seo = {
+  title: "OMR Sheet Transfer Time Planner for NEET & SSC",
+  metaDescription:
+    "Reserve the right minutes for OMR bubbling: questions × seconds per bubble plus a safety buffer gives the exact clock minute to stop solving.",
+  steps: [
+    "Enter 'Exam duration (minutes)' and 'Answers to transfer', set 'Seconds per bubble' (default 4) and the 'Safety buffer' (default 25%), then pick a 'Transfer strategy' — one batch at the end, batches after each section, or bubbling after every question.",
+    "The plan recomputes live: 'Reserve for OMR transfer', raw bubbling time plus buffer, time left for solving, seconds per question while solving, and the 'Stop solving at' minute mark on the exam clock.",
+    "Press 'Copy result' for the text plan or 'Reset' for the 180-minute, 180-question defaults; the section strategy adds a 'Number of batches' field with per-batch size and time.",
+  ],
   intro:
     "This planner computes how much of an OMR-based exam to reserve for transferring answers from the question booklet to the answer sheet, using transfer time = questions × seconds per bubble × (1 + safety buffer). It is built for NEET, SSC, board and state-exam candidates who solve on rough work first, and it returns the exact clock minute to stop solving, the time left per question, and batch sizes for section-wise transfer.",
   useCases: [

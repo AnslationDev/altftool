@@ -1,4 +1,12 @@
 const seo = {
+  title: "CAGR Calculator with Doubling Time & Growth Path",
+  metaDescription:
+    "Enter start value, end value and years (or two dates) to get CAGR, absolute return, growth multiple, doubling time and a year-by-year growth path.",
+  steps: [
+    "Enter the Starting value and Ending value, pick a currency (INR, USD, EUR or GBP) and set 'Period entered as' to number of years or start and end dates.",
+    "Type the Holding period (years) — or pick the two dates — and the CAGR recomputes instantly; there is no calculate button.",
+    "Read the CAGR with absolute return, growth multiple, years to double and the 'Smooth growth path' year-by-year table, then click 'Copy result'.",
+  ],
   intro:
     "CAGR is the single constant yearly rate that would carry a starting value to an ending value over a given period, calculated as (end ÷ start)^(1 ÷ years) − 1. This calculator returns that rate along with the absolute return, the growth multiple, and the number of years the money would take to double at the same pace. Investors, founders and analysts use it to compare holdings of different sizes and holding periods on one scale.",
   useCases: [

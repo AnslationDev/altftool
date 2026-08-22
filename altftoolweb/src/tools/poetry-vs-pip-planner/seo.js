@@ -1,5 +1,5 @@
 const seo = {
-  title: "Poetry vs pip vs uv vs conda: Ranked for Your Project",
+  title: "Poetry vs pip vs uv vs conda: Ranked for You",
   metaDescription:
     "Score uv, Poetry, pip + pip-tools and conda against your project's lockfile, publishing, binary and CI-speed needs. Every point maps to a stated reason.",
   steps: [

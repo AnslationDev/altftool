@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Loan Calculator: Monthly Payment & Total Interest",
+  title: "Car Loan Calculator: Monthly Payment & Interest",
   metaDescription:
     "Enter price, down payment, rate and term: get the monthly instalment plus amount financed, total interest and total cost. 0% offers handled.",
   intro:

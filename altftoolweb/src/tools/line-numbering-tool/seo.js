@@ -1,4 +1,12 @@
 const seo = {
+  title: "Add Line Numbers to Text — Start at Any Number",
+  metaDescription:
+    "Paste text and every line gets a sequential \"1. \" prefix instantly, blank lines included. Start counting at 0, 1 or any offset you choose.",
+  steps: [
+    "Paste or type your text in the Input box, or click 'Load sample' — the numbered Result appears live as you type, with no run button.",
+    "Set 'Start at' to change the first line's number (default 1) — begin at 0 for arrays or mid-sequence to continue an earlier numbered list.",
+    "Read the Result panel, where every line — blank ones included — is prefixed with a number, period and space, and click Copy to grab the numbered text.",
+  ],
   intro:
     "Line Numbering Tool prefixes every line of pasted text with a sequential number and a full stop — \"1. \", \"2. \", \"3. \" — counting up one per line from whatever starting number you set, which defaults to 1. It splits on newlines and numbers every line including blank ones, so the numbering always matches the line positions in the original text. Useful whenever you need to reference specific lines by number rather than by quoting them.",
   useCases: [

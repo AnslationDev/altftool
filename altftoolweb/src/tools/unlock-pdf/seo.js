@@ -1,4 +1,12 @@
 const seo = {
+  title: "Unlock PDF in Your Browser: Remove Known Password",
+  metaDescription:
+    "Enter the password you already have and download a decrypted copy — RC4 40/128-bit and AES-256, files up to 100 MB, nothing uploaded.",
+  steps: [
+    "Choose the password-protected PDF (up to 100 MB; RC4 40/128-bit and AES-256 supported) and type the user or owner password that opens it.",
+    "Click Remove password — the file is decrypted in the browser tab, so neither the PDF nor the password is uploaded anywhere.",
+    "Click Download unlocked PDF to save the copy named <original>-unlocked.pdf, or Copy summary for the algorithm removed, page count and output size.",
+  ],
   intro:
     "Unlock PDF removes the encryption from a password-protected PDF you can already open, producing a copy with no password on it. It decrypts the document using the standard security handler defined in ISO 32000 — RC4 40-bit and 128-bit for older files, AES-256 for PDF 2.0 files — and accepts either the user password or the owner password, exactly as the specification requires. Everything runs in your browser, so the file and the password are never uploaded.",
   useCases: [

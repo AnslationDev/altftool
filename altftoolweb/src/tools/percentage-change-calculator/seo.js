@@ -1,4 +1,12 @@
 const seo = {
+  title: "Percentage Change Calculator: Increase/Decrease",
+  metaDescription:
+    "Enter an original and new value to get the signed % change via ((new − original) ÷ original) × 100, plus absolute change and the value ratio.",
+  steps: [
+    "Type the Original Value and New Value in the Inputs panel — the result recalculates as you type.",
+    "Read the signed percentage (e.g. +25.00%) with its Increase, Decrease or No Change label; an Original Value of 0 shows a dash instead of a number.",
+    "Check the breakdown cards — Absolute Change, Value Ratio (e.g. 1.25×) and Change Amount — and click Copy for the full summary.",
+  ],
   intro:
     "This calculator finds the percentage change between two numbers using ((new value − original value) ÷ original value) × 100, and labels the result an increase, a decrease or no change. Alongside the percentage it reports the absolute change and the ratio of new to original, rounded to two decimals. Useful whenever you need to say how much something moved rather than just what it moved to.",
   useCases: [

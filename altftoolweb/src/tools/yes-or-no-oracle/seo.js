@@ -1,4 +1,12 @@
 const seo = {
+  title: "Yes or No Oracle: Weighted Random Answers",
+  metaDescription:
+    "Ask any yes/no question and get one of 30 fortune-teller phrases after a 2-second reveal — weighted 45% yes, 40% no, 15% hazy — with your last 20 asks.",
+  steps: [
+    "Type your question into the Your Question box.",
+    "Press Ask the Oracle — after a 2-second 'Consulting the Cosmos' reveal, a random draw lands yes 45%, no 40% or undecided 15% and picks one of 30 phrasings.",
+    "Read the colour-coded verdict card, and press History to review up to your last 20 questions and answers.",
+  ],
   intro:
     "The Yes or No Oracle is a random answer generator that replies to any yes/no question you type with one of 30 fortune-teller phrases, weighted 45% yes, 40% no and 15% undecided. It is built for anyone who wants a coin flip with more personality — a two-second reveal animation, a colour-coded verdict, and a running log of your last 20 questions. The draw is a plain Math.random() call in your browser, so it is entertainment, not prediction.",
   useCases: [

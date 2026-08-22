@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cache Hit Ratio Calculator with AMAT Latency Model",
+  title: "Cache Hit Ratio Calculator with AMAT Latency",
   metaDescription:
     "Turn cache hits and misses into hit ratio, AMAT effective latency, speedup and the requests per second that still reach your backend.",
   steps: [

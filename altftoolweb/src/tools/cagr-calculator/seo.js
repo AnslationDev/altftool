@@ -1,4 +1,7 @@
 const seo = {
+  title: "CAGR Calculator: Annual Growth Rate & Total Gain",
+  metaDescription:
+    "Applies CAGR = (final/initial)^(1/years) − 1 to report the annual rate plus total growth, growth multiple and absolute gain. Negative CAGR supported.",
   intro:
     "Compound annual growth rate is the single steady yearly rate that would take a starting value to an ending value over a given period, and this calculator applies the standard formula CAGR = (final ÷ initial)^(1 ÷ years) − 1. Alongside the annual rate it reports the total growth percentage, the multiple your money grew by, and the absolute gain. It is for anyone comparing investments, revenue lines or fund returns that ran for different lengths of time.",
   useCases: [

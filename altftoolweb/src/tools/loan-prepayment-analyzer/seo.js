@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prepay Loan or Invest? Break-Even Return Calculator",
+  title: "Prepay Loan or Invest? Break-Even Calculator",
   metaDescription:
     "Weighs interest saved by prepaying against the same money invested to the loan's original end date, and solves the break-even annual return.",
   steps: [

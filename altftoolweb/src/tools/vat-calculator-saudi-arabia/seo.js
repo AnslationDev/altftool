@@ -1,4 +1,12 @@
 const seo = {
+  title: "VAT Calculator Saudi Arabia with 15% & 5% Rates",
+  metaDescription:
+    "Split 15% Saudi VAT from a riyal price with the 3/23 fraction or add it to a net amount, plus line discounts, 5% legacy rate and ZATCA thresholds.",
+  steps: [
+    "Choose the Direction — Remove VAT for a tax-inclusive price or Add VAT for a net one — then enter the unit price in SAR, Quantity and Line discount (%).",
+    "Pick the VAT rate: 15% standard (from 1 July 2020), 5% legacy (Jan 2018 - Jun 2020) or 0% zero-rated supply.",
+    "Read the taxable amount, VAT and total including VAT — the discount is applied before tax — then press Copy result.",
+  ],
   intro:
     "This calculator splits Saudi VAT out of a tax-inclusive riyal price and adds it to a net price, using the standard 15% rate that has applied since 1 July 2020. Reverse extraction uses the fraction 15/115, which simplifies to 3/23, so an SAR 1,150 invoice contains exactly SAR 150 of VAT on an SAR 1,000 taxable amount. Line discounts, the legacy 5% rate for invoices dated between January 2018 and June 2020, and the ZATCA registration thresholds are all built in.",
   useCases: [

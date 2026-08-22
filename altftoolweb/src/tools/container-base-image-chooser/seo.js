@@ -1,5 +1,5 @@
 const seo = {
-  title: "Container Base Image Chooser: Alpine vs Distroless",
+  title: "Container Base Image Picker: Alpine vs Distroless",
   metaDescription:
     "Answer three questions on libc, shell and CA certs to get the smallest workable base image, from 0 MB scratch to 117 MB debian, with reject reasons.",
   steps: [

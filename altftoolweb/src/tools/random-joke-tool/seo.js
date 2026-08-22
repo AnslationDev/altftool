@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Joke Generator: 48 Jokes, No Repeats",
+  metaDescription:
+    "48 clean setup-and-punchline jokes in six categories — dad, tech, animals, food, work, school — with no repeats until a pool empties. Works offline.",
+  steps: [
+    "Pick a Category — Dad jokes, Tech & programming, Animals, Food, Work & office or School & science — and set Punchline to 'Hide until I tap' for a delayed reveal.",
+    "Press 'Another joke' to draw an unseen joke; 'Reveal the punchline' shows the hidden line when you are ready.",
+    "Watch 'Unseen left' and Pool status count down the category's 8 jokes before it restarts; Copy grabs the setup and punchline.",
+  ],
   intro:
     "The Random Joke Generator serves one clean, hand-picked joke at a time from a built-in set of 48 setup-and-punchline jokes across six categories: dad jokes, tech, animals, food, work and school. It runs entirely in your browser with no API call, so it works offline and never sends anything anywhere. Every pick is driven by a seed, and the tool tracks which jokes you have already seen so a category will not repeat until you have worked through all 8 of its jokes.",
   useCases: [

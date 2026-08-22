@@ -1,5 +1,5 @@
 const seo = {
-  title: "Treadmill Calorie Calculator (ACSM Equations, Incline)",
+  title: "Treadmill Calorie Calculator (ACSM, Incline)",
   metaDescription:
     "Enter weight, speed, incline and minutes; the ACSM walking and running equations give gross and net kcal, METs, VO2 and distance covered.",
   steps: [

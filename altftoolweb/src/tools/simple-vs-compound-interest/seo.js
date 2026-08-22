@@ -1,4 +1,12 @@
 const seo = {
+  title: "Simple vs Compound Interest - Year-by-Year Gap",
+  metaDescription:
+    "Runs P(1+rt) against P(1+r/m)^mt on the same inputs - rupee gap, effective annual rate for each compounding frequency, doubling times and a yearly table.",
+  steps: [
+    "Enter Principal (INR), Annual rate (%) and Period in years (up to 100), and choose 'Compounding on the compound side' from Annually down to Daily.",
+    "Compare the two cards - simple-interest maturity against compound maturity - with the rupee difference headlined and the effective annual rate shown against the nominal.",
+    "Read the years-to-double rows for both methods and the Year by year table's Gap column, then click Copy result.",
+  ],
   intro:
     "This comparator runs the same principal, rate and period through both interest formulas — simple interest as P(1 + rt) and compound interest as P(1 + r/m)^(mt) — and reports the rupee gap between them. It supports annual, half-yearly, quarterly, monthly and daily compounding, states the effective annual rate that each frequency produces, and gives the exact doubling period under each method: 1/r for simple interest and ln 2 / ln(1 + EAR) for compound.",
   useCases: [

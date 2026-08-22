@@ -1,5 +1,5 @@
 const seo = {
-  title: "YouTube URL Parser: Video ID, Clean Link, Chapters",
+  title: "YouTube URL Parser: ID, Clean Link, Chapters",
   metaDescription:
     "Pull the 11-character video id out of any YouTube URL, strip si= and utm_ tracking, rebuild nocookie embeds, and check title, hashtag and chapter rules.",
   steps: [

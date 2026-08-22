@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Quality Checker: 9 Metrics, 0-100 Score & Grade",
+  title: "Image Quality Checker: 9 Metrics, 0-100 Score",
   metaDescription:
     "Scores sharpness, noise, exposure, white balance and five more from real pixels, weighting sharpness 20%, with histograms and a downloadable report.",
   steps: [

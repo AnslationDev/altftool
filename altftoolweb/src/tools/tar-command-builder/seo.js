@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tar Command Builder with Correct Flag Order",
+  metaDescription:
+    "Assemble GNU tar commands to create, extract or list archives — compression, --exclude placement, -C and quoting handled, every flag explained.",
+  steps: [
+    "Pick a Mode (Create, Extract or List), name the \"Archive file\" and choose Compression — \"Auto (from file extension)\" reads the filter from the filename.",
+    "Add \"Paths to archive (one per line)\" or the -C directory, \"Exclude patterns (one per line)\", and toggles like \"Verbose (-v)\" or \"Preserve permissions (-p)\".",
+    "Copy the assembled GNU tar line with \"Copy command\" and check the \"What each flag does\" table beneath it.",
+  ],
   intro:
     "This builder assembles a ready-to-run GNU tar command for creating, extracting or listing an archive, with the compression filter, exclude patterns and quoting worked out for you. It follows the flag semantics documented in GNU tar 1.35, including the rule that --exclude must appear before the member names and that -C changes directory for everything after it. Useful for anyone who writes backup scripts occasionally and re-reads the man page every time.",
   useCases: [

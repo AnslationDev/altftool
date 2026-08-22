@@ -1,5 +1,5 @@
 const seo = {
-  title: "Royalty Split Waterfall Calculator: Fees to Payouts",
+  title: "Royalty Split Waterfall Calculator",
   metaDescription:
     "Runs gross receipts past the distributor fee and recoupable balance, then splits the pool in whole cents so payouts reconcile exactly.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Terraform Naming Convention Generator",
+  metaDescription:
+    "Build a {org}-{app}-{env}-{region}-{type} standard, check names against S3, Lambda, IAM, Azure storage and GCS limits, and copy a Terraform locals block.",
+  steps: [
+    "Enter your Organisation / team code and Workload / application, then pick Environment, Region code and Separator (or untick 'Include a region token').",
+    "Check the results table - every generated name shows its length against the platform cap, such as 63 characters for S3 buckets and 24 for Azure storage accounts.",
+    "Copy the ready-to-paste snippet under 'Terraform locals block', or click Copy result for the pattern, name list and locals together.",
+  ],
   intro:
     "This generator produces a consistent Terraform resource naming standard of the form {org}-{app}-{env}-{region}-{type} and validates every generated name against real platform limits, such as the 63-character S3 bucket rule and the 24-character lowercase-only Azure storage account rule. It is built for platform and DevOps engineers who want one naming convention that works across AWS, Azure and Google Cloud without hitting provider errors at apply time.",
   useCases: [

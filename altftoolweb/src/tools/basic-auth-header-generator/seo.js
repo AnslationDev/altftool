@@ -1,4 +1,7 @@
 const seo = {
+  title: "Basic Auth Header Generator (Base64)",
+  metaDescription:
+    "Builds the full 'Basic <base64>' Authorization header from username:password, masks the password, and copies only the finished header. HTTPS only.",
   intro:
     "The Basic Auth Header Generator joins username and password with a colon, encodes that string as UTF-8 bytes, Base64-encodes the bytes, and prefixes the result with Basic. It rejects a colon in the username, masks and does not persist the password, and copies only the finished header. The optional realm is a display-only reference for a server challenge and is never encoded into the client credential.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gratitude Journal Builder: Three Good Things Daily",
+  title: "Gratitude Journal Builder: Three Good Things",
   metaDescription:
     "Write three good things and why each happened — the researched format — with a rotating daily prompt, streak tracking and a monthly review you can copy.",
   steps: [

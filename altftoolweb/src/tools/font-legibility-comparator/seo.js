@@ -1,5 +1,5 @@
 const seo = {
-  title: "Font Legibility Comparator: WCAG 1.4.12 Spacing Test",
+  title: "Font Legibility Comparator: WCAG 1.4.12 Spacing",
   metaDescription:
     "Set the same text under two local font stacks, sizes and measures, apply the WCAG 1.4.12 spacing values to view B, and export a settings-only JSON.",
   steps: [

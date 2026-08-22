@@ -1,5 +1,5 @@
 const seo = {
-  title: "Silly Mistake Tracker for Mock Tests: Marks-Lost Trend",
+  title: "Silly Mistake Tracker: Mock Test Marks-Lost Trend",
   metaDescription:
     "Log avoidable errors per mock in six categories — misreads, calc slips, wrong bubbles — and see marks lost, your worst category and first-to-latest trend.",
   steps: [

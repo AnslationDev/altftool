@@ -1,5 +1,5 @@
 const seo = {
-  title: "PDF to Base64 Data URL Converter — 25 MiB In-Browser",
+  title: "PDF to Base64 Converter: 25 MiB In-Browser",
   metaDescription:
     "Encode a PDF (up to 25 MiB) into a data:application/pdf;base64 URL in your browser. The %PDF- header is checked first and the exact size shown.",
   steps: [

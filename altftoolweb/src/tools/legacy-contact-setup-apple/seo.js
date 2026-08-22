@@ -1,5 +1,5 @@
 const seo = {
-  title: "Apple Legacy Contact Setup: Eligibility & Checklist",
+  title: "Apple Legacy Contact: Eligibility & Checklist",
   metaDescription:
     "Check the iOS 15.2 / two-factor requirements, plan the access key handover for up to 5 contacts, and see the 3-year window's end date and exclusions.",
   steps: [

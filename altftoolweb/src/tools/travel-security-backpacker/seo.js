@@ -1,5 +1,5 @@
 const seo = {
-  title: "Backpacker Security Checklist: 24 Measures, 6 Domains",
+  title: "Backpacker Security Checklist: 24 Measures",
   metaDescription:
     "Score hostel theft, device, account, document, payment and personal-safety cover across 24 measures, then get the cheapest kit plan inside your budget.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "RTO Learner's Licence Mock Test: 20 Questions, 20 Min",
+  title: "RTO Learner's Licence Mock Test: 20 Questions",
   metaDescription:
     "A timed 20-question paper drawn from 141 Indian learner's-licence questions — 20 minutes, 12 correct to pass, an explanation on every answer.",
   intro:

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nginx Gzip & Brotli Compression Config Generator",
+  metaDescription:
+    "Generate nginx gzip and brotli directives with real module defaults, tuned levels and MIME lists — and no duplicate text/html warning.",
+  steps: [
+    "Tick Enable gzip and Enable brotli, then set gzip_comp_level (1-9, default 1, recommended 6) and brotli_comp_level (0-11, recommended 5).",
+    "Choose MIME type groups (Text & CSS, JavaScript, JSON & manifests, XML & feeds, SVG images) and a minimum response size in bytes — nginx's default is 20, 256+ recommended.",
+    "Click Copy config to grab the generated http/server-block snippet, then validate with nginx -t and reload; text/html is deliberately left out of the type lists.",
+  ],
   intro:
     "This generator writes ready-to-paste nginx compression directives from the ngx_http_gzip_module and ngx_brotli modules — gzip on, gzip_comp_level, gzip_min_length, gzip_types and their brotli equivalents — from a set of checkboxes. It knows the real defaults (gzip level 1, minimum length 20 bytes, brotli level 6), keeps text/html out of the type lists to avoid nginx's duplicate MIME type warning, and flags settings that waste CPU for negligible size gains.",
   useCases: [

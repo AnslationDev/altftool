@@ -1,5 +1,5 @@
 const seo = {
-  title: "EV Battery Degradation Analyzer: kWh Lost per 10,000 km",
+  title: "EV Battery Degradation: kWh Lost per 10,000 km",
   metaDescription:
     "Paste dated capacity readings (date | usable kWh | range | odometer) and track state of health as % of new, with kWh lost per 10,000 km driven.",
   steps: [

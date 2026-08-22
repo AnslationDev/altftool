@@ -1,4 +1,12 @@
 const seo = {
+  title: "Facebook Cover Photo Size & Safe Zone Calculator",
+  metaDescription:
+    "Exact Facebook cover sizes — Page 1640×624, profile 851×315, group, event — plus the safe zone that survives both the desktop and mobile crop.",
+  steps: [
+    "Pick a Cover type: Page cover (2x), Personal profile cover, Group cover or Event cover.",
+    "Enter your artwork's Source width and Source height in pixels.",
+    "Read the Upload size and ratio, the Safe zone in px and as % of upload, and a sharp/soft/poor quality verdict for your source.",
+  ],
   intro:
     "Facebook Cover Size Generator works out the region of a cover photo that survives both the desktop crop and the mobile app crop, then exports the image at the correct upload size. Facebook fills each display box with a centred cover crop, so a 851 x 315 profile cover keeps only its central 560 px across both views, and a 1640 x 624 Page cover keeps about 1109 px. Designers and page owners get a measured safe zone instead of guessing where a headline will get cut.",
   useCases: [

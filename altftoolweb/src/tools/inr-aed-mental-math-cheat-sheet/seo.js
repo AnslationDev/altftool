@@ -1,5 +1,5 @@
 const seo = {
-  title: "AED to INR Mental Math: Rules You Can Do at a Till",
+  title: "AED to INR Mental Math You Can Do at a Till",
   metaDescription:
     "Turn today’s rupee-dirham rate into a head calculation: add a zero, times 7, divide by 3 (70/3). Each rule’s error shows as a % of the exact answer.",
   steps: [

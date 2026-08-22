@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bengali Proverbs (Probad) with Meanings & a Quiz",
+  metaDescription:
+    "30 Bengali probad with transliteration, literal translation, real meaning, Bangla gloss and honest English equivalents — searchable, plus a 4-option quiz.",
+  steps: [
+    "Filter the 30 proverbs by Theme or type into 'Search proverb, transliteration or meaning' (e.g. greed, বাঘ, tãti).",
+    "Browse each entry's transliteration, literal translation, figurative meaning, Bangla gloss and English equivalent where one exists, or press Copy on the 'Probad of the day' card.",
+    "Answer the four-option 'Meaning quiz' and press 'Next proverb'; the header tracks correct / attempted and your accuracy percentage.",
+  ],
   intro:
     "Bengali Probad Explorer is a searchable collection of 30 Bengali proverbs, each shown with a transliteration, a strictly literal translation, the meaning it carries in real use, a Bangla gloss and the closest English proverb where one honestly exists. A probad is a complete saying quoted unchanged, while a bagdhara is the phrase-level idiom that has to be fitted into a sentence. A seeded four-option quiz draws both the question and its distractors from the same set.",
   useCases: [

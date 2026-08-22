@@ -1,4 +1,12 @@
 const seo = {
+  title: "IELTS Speaking Timer: Part 2 Cue Cards",
+  metaDescription:
+    "Practise IELTS Speaking to the real clock: Part 2 gives exactly 1 minute of cue-card prep then stops the long turn at 2 minutes, like the examiner.",
+  steps: [
+    "Choose the 'Speaking part' — Part 2 shows a cue card with a topic and four 'You should say' prompts ('New card' shuffles it), while Parts 1 and 3 list sample questions.",
+    "Press 'Start' when you begin preparing or speaking — the countdown runs phase by phase, showing time remaining in the current phase and in the whole part, and finishes with 'Time is up — in the test the examiner would stop you here.'",
+    "Press 'Copy summary' for the session log (part, cue card topic, elapsed time and current phase) or 'Reset' to return to Part 2 at zero.",
+  ],
   intro:
     "This timer replicates the IELTS Speaking test format defined by IELTS: Part 1 interview (4–5 minutes), Part 2 long turn with exactly 1 minute of cue-card preparation followed by up to 2 minutes of speaking, and Part 3 discussion (4–5 minutes). It includes practice cue cards in the standard four-prompt format and counts down phase by phase, so candidates rehearse to the same clock the examiner uses in the 11–14 minute test.",
   useCases: [

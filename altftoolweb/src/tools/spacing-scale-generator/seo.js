@@ -1,5 +1,5 @@
 const seo = {
-  title: "Spacing Scale Generator: Modular Steps on a 4px Grid",
+  title: "Spacing Scale Generator: Modular Steps, 4px Grid",
   metaDescription:
     "Multiply a base step by a typographic ratio, snap every value to a 1, 2, 4 or 8px grid, and copy the px and rem tokens as CSS custom properties.",
   steps: [

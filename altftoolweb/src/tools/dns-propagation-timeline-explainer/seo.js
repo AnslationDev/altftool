@@ -1,4 +1,12 @@
 const seo = {
+  title: "DNS Propagation Timeline — TTL Change Wait Time",
+  metaDescription:
+    "Enter a record's TTL for the worst-case wait before a DNS change shows everywhere — RFC 1035/2308 caching maths instead of the '24 to 48 hours' guess.",
+  steps: [
+    "Choose the change — Changing an existing record, Adding a brand-new record, or Deleting a record.",
+    "Enter the TTL in seconds or tap a preset — 5 min (300), 1 hour (3600) or 24 hours (86400); new records also take a Negative-cache TTL from the zone's SOA.",
+    "Read 'Worst case until fully visible', the governing cache window and the t+ milestone timeline with its caveats; Copy timeline copies the plan.",
+  ],
   intro:
     "This explainer computes the worst-case window before a DNS change becomes visible everywhere, using the actual caching rules: resolvers hold the old answer for up to the record's previous TTL (RFC 1035), and 'name does not exist' answers are held for the negative-cache TTL from the zone's SOA record (RFC 2308). It is for developers and site owners planning a migration or launch who want a real timeline instead of the vague '24 to 48 hours' folklore.",
   useCases: [

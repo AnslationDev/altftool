@@ -1,5 +1,5 @@
 const seo = {
-  title: "Maharashtra Professional Tax Calculator — Monthly Slabs",
+  title: "Maharashtra Professional Tax Calculator",
   metaDescription:
     "Enter a monthly salary to get the slab, the Rs 200 monthly and Rs 300 February deductions, and the Rs 2,500 yearly total. Women exempt up to Rs 25,000.",
   steps: [

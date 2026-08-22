@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calories Burned Lifting Weights: MET by Set and Rest",
+  title: "Calories Burned Lifting Weights: MET by Set, Rest",
   metaDescription:
     "Times working sets, rest and warm-up separately at 3.5-6.0, 1.5 and 2.3 MET from the 2011 Compendium, using the ACSM equation. Gross and net kcal.",
   steps: [

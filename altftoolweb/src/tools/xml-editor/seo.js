@@ -1,5 +1,5 @@
 const seo = {
-  title: "XML Formatter and Minifier with Line-Number Errors",
+  title: "XML Formatter & Minifier with Line-Number Errors",
   metaDescription:
     "Pretty-print or minify XML in your browser. A mismatched tag is named with its line number, and comments, CDATA and the declaration survive.",
   intro:

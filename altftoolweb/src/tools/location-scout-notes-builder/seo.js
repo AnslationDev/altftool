@@ -1,5 +1,5 @@
 const seo = {
-  title: "Location Scout Notes: Sun Angle, Golden Hour, Score",
+  title: "Location Scout: Sun Angle, Golden Hour, Score",
   metaDescription:
     "Log a recce with NOAA sun elevation and bearing at your shoot time, golden and blue hour windows, and a weighted score across eight criteria.",
   steps: [

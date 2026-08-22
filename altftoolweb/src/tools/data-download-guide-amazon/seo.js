@@ -1,5 +1,5 @@
 const seo = {
-  title: "Download Your Amazon Data: Categories, Size & Timeline",
+  title: "Download Your Amazon Data: Categories & Size",
   metaDescription:
     "Plan an Amazon data request: pick categories, estimate archive size from your usage, and catch the confirmation email that quietly cancels requests.",
   intro:

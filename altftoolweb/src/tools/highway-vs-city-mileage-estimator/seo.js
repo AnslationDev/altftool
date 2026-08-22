@@ -1,5 +1,5 @@
 const seo = {
-  title: "City + Highway Mileage: True Combined km/l Calculator",
+  title: "City + Highway Mileage: Combined km/l Calculator",
   metaDescription:
     "Blends city and highway km/l with the fuel-weighted harmonic mean — the simple average overstates economy — and prices your monthly litres in rupees.",
   steps: [

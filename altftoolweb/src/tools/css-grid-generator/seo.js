@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Grid Generator: Per-Track fr/auto/px Sizing",
+  metaDescription:
+    "Set 1-8 columns and rows, click each track to cycle 1fr, 2fr, auto or fixed px, tune gaps 0-40px, then copy the CSS or download it with an HTML scaffold.",
   intro:
     "The CSS Grid Generator builds a grid-template-columns / grid-template-rows rule by letting you set the column and row count, then click each individual track to cycle its size through 1fr, 2fr, auto and a fixed pixel value. Row and column gaps are set separately, so the output uses the two-value gap shorthand (row then column). Copy the CSS on its own, or download a file that pairs it with a ready-made HTML scaffold of numbered grid items.",
   useCases: [

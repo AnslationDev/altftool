@@ -1,5 +1,5 @@
 const seo = {
-  title: "Retirement Corpus Calculator: Inflation-Adjusted SIP",
+  title: "Retirement Corpus Calculator and Monthly SIP",
   metaDescription:
     "Inflates today's expenses to your retirement year, then discounts the drawdown at the real return to give the corpus and the monthly SIP that funds it.",
   steps: [

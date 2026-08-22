@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ryanair Baggage Checker: 40x20x25 cm Free Bag Size",
+  title: "Ryanair Baggage Checker: 40x20x25 cm Free Bag",
   metaDescription:
     "Test each bag against Ryanair's limits: 40 x 20 x 25 cm free under-seat, 55 x 40 x 20 cm Priority cabin bag, and 10 kg or 20 kg hold bags.",
   steps: [

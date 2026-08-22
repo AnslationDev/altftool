@@ -1,5 +1,5 @@
 const seo = {
-  title: "Handwriting Speed Test: Words & Letters Per Minute",
+  title: "Handwriting Speed Test: Words & Letters/Minute",
   metaDescription:
     "Time a copy task and get words per minute, letters per minute and seconds per word, then check it against an exam word target and time limit.",
   steps: [

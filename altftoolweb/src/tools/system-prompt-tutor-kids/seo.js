@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids AI Tutor System Prompt Builder (Child-Safe)",
+  metaDescription:
+    "Generate a child-safe AI tutor system prompt with an age band (5-7, 8-10, 11-13), allowed subjects and seven safety rules like trusted-adult referral.",
+  steps: [
+    "Pick the Age band (required) - Ages 5-7, 8-10 or 11-13 - and a Teaching style such as Guide with questions (Socratic), then tick the Subjects the tutor may teach and the seven Safety rules like Never ask for personal data and Refer sensitive issues to a trusted adult.",
+    "The prompt assembles live with an estimated token count, and any protection you untick is flagged under Safety gaps to close so removing a rule is a visible choice.",
+    "Review the full text under Your system prompt and press Copy prompt to paste it into your AI assistant - the prompt is assembled in your browser and sent nowhere.",
+  ],
   intro:
     "This builder creates a child-safe system prompt for an AI tutor: an age-matched reading level (5–7, 8–10 or 11–13), a fixed list of allowed subjects, and non-negotiable safety rules — no personal-data collection (aligned with COPPA's under-13 protections), safe-topic boundaries and referral of any sensitive disclosure to a trusted adult. It is for parents, teachers and edtech builders configuring an AI tutor a child will actually talk to.",
   useCases: [

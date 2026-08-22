@@ -1,4 +1,12 @@
 const seo = {
+  title: "Belly Dance Calorie Calculator (4.5 MET)",
+  metaDescription:
+    "Estimate calories burned belly dancing by style — class, drills, drum solo or cardio — with veil, cane or sword load and a minutes-to-goal readout.",
+  steps: [
+    "Enter your body weight (kg or lb) and 'Time dancing (minutes)' — the field accepts 1 to 300 minutes.",
+    "Pick 'What kind of session' (each option shows its MET, from 'Slow isolation drills and technique' to 'Fitness-style cardio belly dance'), a 'Prop carried' such as the 0.3 kg silk veil or 1.2 kg balance sword, and an optional 'Calorie goal'.",
+    "Read 'Calories burned' in kcal plus the kcal/min rate, the 'Extra from the prop' and 'Minutes needed for your calorie goal', then press 'Copy result'.",
+  ],
   intro:
     "The Belly Dance Calorie Calculator estimates the energy cost of a class, drill session or drum solo using the ACSM relationship kcal/min = MET x 3.5 x kg / 200. Belly dance is named directly inside the Compendium of Physical Activities entry for ethnic and cultural dancing at 4.5 MET, and the other levels here — slow drills, tribal fusion, drum solo and fitness-format classes — are scaled around that anchor, with veil, cane and sword work adding their own small load.",
   useCases: [

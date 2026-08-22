@@ -1,4 +1,12 @@
 const seo = {
+  title: "Odia New Year Wishes: Pana Sankranti & SMS",
+  metaDescription:
+    "Pana Sankranti and 1 January wishes in Odia script, Roman transliteration and English, with correct salutations and 70-character SMS part counts.",
+  steps: [
+    "Pick the Occasion — 'Pana Sankranti (Odia new year, 14 April)' or '1 January (Inraji nua barsa)' — plus a tone and who the greeting is for.",
+    "Choose the Script (Odia script only, Roman transliteration only, or Odia + Roman) and add optional recipient and sender names.",
+    "Press 'Copy greeting' for the featured wish, or 'Feature this'/'Copy' on any match — each shows the English meaning, character count and SMS parts.",
+  ],
   intro:
     "This generator assembles Odia new year greetings from a customary salutation, a message chosen from a curated bank of Pana Sankranti and 1 January wishes, and your sign-off. Each greeting is shown in Odia script, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It suits anyone who wants correct Odia wording for elders, friends or business contacts rather than a forwarded image.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GTU CGPA to Percentage Converter: (CPI−0.5)×10",
+  metaDescription:
+    "Convert GTU SPI, CPI or CGPA to percentage with the credit-system rule (CPI − 0.5) × 10, build SPI from AA–FF grades, or reverse a cut-off.",
+  steps: [
+    "Choose the Regulation, pick 'Index to percentage' or 'Percentage to index', and enter your 'SPI, CPI or CGPA (out of 10)' or your 'Percentage of marks'.",
+    "Rebuild a missing number below: pick AA–FF grade codes and credits under 'SPI from subject grades', or roll semesters together under 'CPI from semester SPIs' with 'Add subject' and 'Add semester'.",
+    "Read the equivalent figure with its formula written out and the 'Credits carrying a backlog' row, then click 'Copy result'.",
+  ],
   intro:
     "This converter reads Gujarat Technological University's performance indices as marks. GTU prints an SPI for each semester and a CPI across them, both on a 10 point scale, and under the credit system introduced for the 2009 admission batch the equivalence is percentage = (CPI - 0.5) x 10. Build the SPI from AA to FF subject grades, roll the semesters into a CPI, then convert - or reverse the rule to find the index a stated cut-off needs.",
   useCases: [

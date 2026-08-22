@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nintendo Switch Parental Controls Setup Planner",
+  metaDescription:
+    "Get the right restriction preset for your child's age plus a play-time limit the app accepts — 15 minutes to 6 hours in 15-minute steps — as a checklist.",
+  steps: [
+    "Enter your child's age (3-17), pick the console — Nintendo Switch/OLED/Lite or Switch 2 — how they play with others, and the daily play allowance you want in minutes.",
+    "The planner suggests the Child, Pre-Teen or Teen preset and rounds your allowance onto the app's grid of 15 minutes to 6 hours in 15-minute steps.",
+    "Work through the Essential, Recommended and Optional checklist — each step names its screen — ticking items as done; the coverage % updates and Copy plan exports it.",
+  ],
   intro:
     "This planner produces a Nintendo Switch parental-controls setup for one child: which restriction preset to pick, the daily play-time figure the Parental Controls app will actually accept, and the eShop, communication, VR and social-posting switches that go with it. The app sets play-time limits from 15 minutes to 6 hours in 15-minute steps, so any allowance you have in mind is rounded onto that grid for you. Each step names the screen it lives on.",
   useCases: [

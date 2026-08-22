@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trip Fuel Cost Calculator: Split Per Person",
+  metaDescription:
+    "Distance, mileage and pump price give litres burned, total cost with tolls and each person's share. Works in km or miles, km/l, l/100 km or mpg.",
+  steps: [
+    "Enter the Trip distance in Kilometres or Miles, your Fuel efficiency in km/l, l/100 km or miles per US or UK gallon, and the Fuel price; tick Round trip to double the distance.",
+    "Add Tolls, parking (Rs) and set People sharing (1 to 100) so extras are included before the per-person split.",
+    "Read the Total trip cost with Fuel needed in litres, cost per km and 'Each person pays', then press Copy result for the full breakdown.",
+  ],
   "intro": "Fuel Cost Trip Calculator estimates what a drive will cost in petrol or diesel. Give it the distance, your vehicle's mileage and the pump price and it works out the litres burned, the total spend including tolls, the cost per kilometre and each passenger's share. Distance can be in kilometres or miles, and mileage can be entered as km/l, l/100 km or miles per US or UK gallon.",
   "useCases": [
     "Budget a road trip before you leave and see whether it beats the train fare.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST Late Fee Calculator with Interest under Section 50",
+  title: "GST Late Fee Calculator: Section 50 Interest",
   metaDescription:
     "Per-day late fee for GSTR-1, GSTR-3B and GSTR-9 with turnover-linked caps, plus 18% Section 50 interest on tax paid late in cash.",
   steps: [

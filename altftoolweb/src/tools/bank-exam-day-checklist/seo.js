@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Exam Day Checklist: IBPS & SBI Documents",
+  metaDescription:
+    "Call letter, photo ID and its photocopy, photos - plus a leave-home time worked back from the reporting deadline and 0.25 negative-marking maths.",
+  steps: [
+    "Enter the Reporting time on the call letter (24-hour), the Exam start time, and your Travel time to the centre, Safety buffer and Time to get ready at home in minutes.",
+    "Tick off the Documents and desk items list — items like the call letter and ID photocopy carry an entry-critical badge — or use Tick everything / Clear.",
+    "Read the Leave home by time and the Prelims attempt maths (100 questions, one-fourth penalty per wrong answer), then Copy result or Print the checklist.",
+  ],
   intro:
     "This checklist covers what IBPS and SBI candidates must carry on exam day — the printed call letter, an original photo ID plus a photocopy of it for submission at the desk, and photographs identical to the uploaded one — and builds a leave-home timeline backwards from the reporting deadline printed on the call letter. It also projects a prelims score under the one-fourth negative marking rule across the 100-question, 60-minute paper.",
   useCases: [

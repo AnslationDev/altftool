@@ -1,4 +1,12 @@
 const seo = {
+  title: "Image to PDF Converter: One Page per Image",
+  metaDescription:
+    "Merge JPG, PNG, WebP and GIF images into one PDF in your browser — each image becomes a page at its own pixel size, saved as images_merged.pdf.",
+  steps: [
+    "Click or drag images into the dropzone — JPG, JPEG, PNG, WEBP, GIF and other browser-readable image formats are accepted.",
+    "Review the Selected Files list and remove any with the trash button; pages appear in the order the files were added.",
+    "Click Download PDF Document to build the PDF with pdf-lib and save it as images_merged.pdf, one image per page at its own pixel size.",
+  ],
   intro:
     "Image to PDF Converter merges JPG, PNG, WebP and other browser-readable images into a single PDF, giving each image its own page sized exactly to that image's pixel dimensions so nothing is scaled or cropped. Each file is re-encoded to JPEG at quality 0.95 over a white background before being embedded, which flattens transparency instead of leaving black boxes. The whole document is assembled with pdf-lib inside the page, so scans and receipts never leave your device.",
   useCases: [

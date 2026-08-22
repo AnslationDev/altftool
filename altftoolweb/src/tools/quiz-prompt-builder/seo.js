@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Quiz Prompt Builder – Exact Difficulty Mix & Answer Key",
+  title: "AI Quiz Prompt Builder with Difficulty Mix",
   metaDescription:
     "Turn a topic and an easy/medium/hard percentage mix into a paste-ready AI quiz prompt — exact question counts, 4 formats, MCQ options and an answer key.",
   steps: [

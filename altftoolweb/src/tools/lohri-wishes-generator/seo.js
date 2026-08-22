@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lohri Wishes in Punjabi, Hindi & English (13 Jan)",
+  metaDescription:
+    "Lohri greetings in Gurmukhi, Roman Punjabi, Hindi and English — first-Lohri wishes for a baby or newlyweds — with SMS part counts and a countdown.",
+  steps: [
+    "Choose the Language — Punjabi (Gurmukhi), Punjabi (Roman), Hindi or English — and the Occasion, including 'Baby's first Lohri' and 'First Lohri after marriage'; personalise with 'Their name' and 'Sign off as'.",
+    "Set 'How many messages (1-8)' and press 'Shuffle wording' to draw a different set of greetings.",
+    "Copy a single greeting or press 'Copy all'; each message shows its characters and SMS parts (GSM-7 or UCS-2), and the 'Next Lohri' row counts the days from your 'Count down from' date.",
+  ],
   intro:
     "The Lohri Wishes Generator writes greetings for 13 January in Gurmukhi Punjabi, Roman Punjabi, Hindi and English, sorted by occasion — family, friends, colleagues, a caption, and the two big ones, a baby's first Lohri and a couple's first Lohri after marriage. It also counts the days to the next 13 January from any date you enter, and reports the SMS part count for each message, since Gurmukhi and Devanagari are sent as UCS-2 at 70 characters per part instead of 160.",
   useCases: [

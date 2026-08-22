@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base64 to File: Decode and Save with the Right Extension",
+  title: "Base64 to File Decoder with the Right Extension",
   metaDescription:
     "Decode a Base64 string or data: URL, identify the file from its magic number across 30+ signatures, and save it with the correct extension.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pre Matric Scholarship Eligibility Checker for NSP",
+  title: "Pre Matric Scholarship Checker for NSP",
   metaDescription:
     "Check class, category and family income against all five central pre-matric schemes — SC, ST, PM-YASASVI, minority and hazardous occupations.",
   steps: [

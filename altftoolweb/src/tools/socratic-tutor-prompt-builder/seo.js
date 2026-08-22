@@ -1,4 +1,12 @@
 const seo = {
+  title: "Socratic Tutor AI Prompt with a Hint Ladder",
+  metaDescription:
+    "Build an AI tutor prompt that asks one guiding question per turn, escalates a 2-5 rung hint ladder, and uses Paul's six Socratic question categories.",
+  steps: [
+    "Enter the Subject and optional \"Topic or problem\", pick a \"Student level\" (Primary / middle school, High school, Undergraduate or Adult self-learner) and set \"Hint ladder rungs (2–5)\".",
+    "Tick the six Socratic question categories from Paul's taxonomy and choose whether to \"Allow revealing the full solution once every hint rung has been used\".",
+    "Read the \"Generated prompt\" panel and click \"Copy prompt\", then paste it as the first message or system prompt of a new AI chat.",
+  ],
   intro:
     "The Socratic Tutor Prompt Builder creates an AI tutoring prompt that teaches by asking one guiding question per turn instead of stating answers. Its questioning moves come from Richard Paul's six-category taxonomy of Socratic questions, and stuck students are helped through a graded 2-5 rung hint ladder that escalates one step at a time. Parents, teachers and self-learners get a tutor that builds reasoning rather than dependence.",
   useCases: [

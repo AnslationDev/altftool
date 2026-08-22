@@ -1,5 +1,5 @@
 const seo = {
-  title: "Scooter vs Bike Total Cost of Ownership Calculator",
+  title: "Scooter vs Bike Ownership Cost Calculator",
   metaDescription:
     "Price both two-wheelers on depreciation, fuel, servicing, tyres and insurance, and find the kilometres a year where the cheaper one flips.",
   steps: [

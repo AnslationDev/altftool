@@ -1,4 +1,5 @@
 const seo = {
+  title: "Pinterest Pin Size Calculator: 6 Canvas Presets",
   intro:
     "This calculator sizes a Pinterest pin canvas from six official presets — standard 1000x1500, square 1000x1000, long/infographic 1000x2100, idea pin 1080x1920, board cover and profile photo — applies your export scale and safe-area inset, and checks the result against Pinterest's own feed rule: pins taller than about 1:2.1 height-to-width get cut off in the scroll. Enter your source artwork's pixel dimensions to see the crop percentage and scale for the fit mode you pick, and enter a planned export file size to check it against Pinterest's 20 MB pin upload limit. Everything runs from the numbers you type — no image file is uploaded or stored.",
   useCases: [

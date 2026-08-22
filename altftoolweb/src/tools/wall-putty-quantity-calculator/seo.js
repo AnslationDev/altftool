@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wall Putty Quantity Calculator: Kg, Bags, Water",
+  metaDescription:
+    "Convert wall and ceiling area into putty kilos, bags to buy and gauging water litres, using published coverage of 20-22 sq ft per kg in two coats.",
+  steps: [
+    "Enter room length, width and wall height in feet — or switch to 'I know the area' — deduct doors and windows, and tick 'Putty the ceiling too' if needed.",
+    "Pick the putty type and surface condition, set the number of coats, a wastage allowance and your price in INR per kg.",
+    "Read the kilos required, the 'Least material bought' vs 'Fewest bags to carry' buying options and the gauging water litres, then click Copy result.",
+  ],
   intro:
     "The Wall Putty Quantity Calculator converts a room's wall and ceiling area into kilos of putty, bags to buy and litres of gauging water. It works from the coverage manufacturers actually publish — 20-22 sq ft per kg in two coats for white-cement wall putty, and 30-35 sq ft per kg for ready-mix acrylic putty — then adjusts for gypsum, uneven or rough plaster. Useful for homeowners checking a painter's material list and for contractors pricing a job.",
   useCases: [

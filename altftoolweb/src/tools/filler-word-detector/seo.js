@@ -1,5 +1,5 @@
 const seo = {
-  title: "Filler Word Detector: Cut Very, Just and Padding Phrases",
+  title: "Filler Word Detector: Cut Padding Words & Phrases",
   metaDescription:
     "Marks intensifiers, hedges, filler adverbs and wordy phrases in your prose, scores filler per 100 words and returns a stripped draft.",
   steps: [

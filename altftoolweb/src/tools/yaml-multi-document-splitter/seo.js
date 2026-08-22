@@ -1,4 +1,12 @@
 const seo = {
+  title: "YAML Multi-Document Splitter for Kubernetes",
+  metaDescription:
+    "Split a YAML stream at its --- markers, validate each document, name Kubernetes docs kind-name, and recombine. Block-scalar separators stay intact.",
+  steps: [
+    "Paste the stream into the 'Multi-document YAML' box — a --- inside a block scalar is treated as text, not a split point.",
+    "Set the fallback file-name prefix and extension, and keep 'Name files from kind and metadata.name' ticked for Kubernetes manifests.",
+    "Copy each document with its suggested file name (a Service named web becomes service-web.yaml), or copy the recombined stream and summary.",
+  ],
   intro:
     "A YAML multi document splitter breaks a single YAML stream into its individual documents at the `---` markers defined by the YAML 1.2 specification, then validates and names each one. It is built for anyone holding a bundled Kubernetes manifest, a Docker Compose override set or a CI pipeline file that has grown into one long stream. Separators that appear inside a block scalar (`|` or `>`) are treated as literal text, so a document is never cut in the wrong place.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rolling Returns Calculator for NAV & Index Series",
+  metaDescription:
+    "Paste a NAV or index series and roll a 1-25 year window over every start date: average, median, best and worst CAGR, plus hit rate above your hurdle.",
+  steps: [
+    "Paste NAV or index values, oldest first (comma, space or newline separated), and pick the observation frequency — Monthly, Quarterly or Yearly.",
+    "Set the rolling window in years (0.5 to 25, or the 1/3/5/7-year preset buttons) and a 'Compare against (% per year)' hurdle.",
+    "Read the average, median, best and worst rolling CAGR, how many windows lost money or beat your hurdle, then press 'Copy result'.",
+  ],
   intro:
     "The Rolling Returns Calculator takes a NAV or index series and slides a fixed window — one year, three years, five years — across every possible start point, annualising each window with the CAGR formula. Instead of one flattering point-to-point number, you get the average, median, best and worst experience across all overlapping periods, plus how often the fund cleared your hurdle rate. It is the honest way to judge consistency rather than luck of the start date.",
   useCases: [

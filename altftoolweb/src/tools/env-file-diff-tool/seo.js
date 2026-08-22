@@ -1,4 +1,12 @@
 const seo = {
+  title: ".env Diff: Missing, Extra & Changed Variables",
+  metaDescription:
+    "Paste two .env files to see every variable only in A, only in B, or changed — compared after dotenv parsing, so FOO=bar equals FOO=\"bar\". Runs locally.",
+  steps: [
+    "Paste one .env into File A (e.g. staging or .env.example) and the other into File B (e.g. production).",
+    "Read the diff table: every variable badged Only in A, Only in B or Changed, with values compared after dotenv parsing so quoting differences don't count.",
+    "Check the duplicate-keys warning (last assignment wins, per dotenv), then click Copy report for the text summary.",
+  ],
   intro:
     "This tool compares two .env files and lists every variable that is missing, extra or changed between them. It parses both files with standard dotenv rules — comments, export prefixes, quoting and escape sequences — so it reports real configuration drift rather than cosmetic formatting differences. It is built for developers reconciling staging against production, or a teammate's .env against .env.example.",
   useCases: [

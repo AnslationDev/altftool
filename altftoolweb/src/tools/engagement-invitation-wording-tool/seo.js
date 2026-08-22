@@ -1,5 +1,5 @@
 const seo = {
-  title: "Roka, Sagai & Engagement Invitation Wording Generator",
+  title: "Roka, Sagai & Engagement Invitation Wording",
   metaDescription:
     "Writes roka, sagai, tilak or engagement invitation text in English, Hindi or Hinglish, with side-correct phrasing and the weekday checked.",
   steps: [

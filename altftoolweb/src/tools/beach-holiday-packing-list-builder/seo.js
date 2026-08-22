@@ -1,5 +1,5 @@
 const seo = {
-  title: "Beach Packing List Sized by Days, Heat and Laundry",
+  title: "Beach Packing List by Days, Heat & Laundry",
   metaDescription:
     "Garment counts come from your trip length and laundry interval, the sunscreen volume from the full dose, and the total weighed against your allowance.",
   steps: [

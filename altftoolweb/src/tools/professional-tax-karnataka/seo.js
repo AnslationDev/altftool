@@ -1,4 +1,12 @@
 const seo = {
+  title: "Professional Tax Calculator Karnataka (2023)",
+  metaDescription:
+    "Karnataka PT since April 2023: nil below Rs 25,000 a month, flat Rs 200 at or above it, capped at Rs 2,400 a year — prorated for part-year work.",
+  steps: [
+    "Enter your Monthly salary or wage (INR) and the Months employed in Karnataka this year (1-12).",
+    "Tick the Notified exemption box if you are a senior citizen aged 60 or above or have a permanent physical disability.",
+    "Read the Professional tax payable, your row in the Karnataka slab table and the Section 16(iii) deductible amount, then click Copy result.",
+  ],
   intro:
     "This calculator returns the professional tax deductible in Karnataka for a monthly salary under the Karnataka Tax on Professions, Trades, Callings and Employments Act, 1976, as amended with effect from 1 April 2023. The state now has only two bands: nil below Rs 25,000 a month and a flat Rs 200 a month at or above it, capped at Rs 2,400 for a full year. It is useful for Bengaluru payroll teams and employees checking the PT line on a payslip.",
   useCases: [

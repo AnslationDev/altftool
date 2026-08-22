@@ -1,5 +1,5 @@
 const seo = {
-  title: "When to Leave for Kochi Airport (COK): Transfer Plan",
+  title: "When to Leave for Kochi Airport (COK)",
   metaDescription:
     "Works back from your COK departure through hour-by-hour Kochi traffic, Terminal 1 or 3 formalities and the Aluva metro leg to the minute you leave.",
   steps: [

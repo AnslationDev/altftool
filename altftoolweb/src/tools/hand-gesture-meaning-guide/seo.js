@@ -1,4 +1,12 @@
 const seo = {
+  title: "Offensive Hand Gestures by Country",
+  metaDescription:
+    "Tick your destinations and see which of 17 common gestures turn insulting or change meaning there, with a safer alternative and a worldwide lookup.",
+  steps: [
+    "Tick your destinations under 'Where are you going?' — 17 regions grouped by shared gesture conventions rather than geography alone.",
+    "Review 'What to avoid, and what to do instead': each flagged gesture shows its local reading, where it is flagged, and an 'Instead' replacement.",
+    "Use 'Look up one gesture worldwide' to see how all 17 regions read a single gesture, and press 'Copy list' for the full warning summary.",
+  ],
   intro:
     "This guide maps 17 everyday hand gestures against 17 cultural regions and tells you which ones change meaning or become insulting at your destination. Pick the places on your itinerary and it returns only the gestures that are flagged there, what each one actually says locally, and a safer way to make the same point. It is built for travellers, expats and anyone presenting to an international audience who would rather not learn this the hard way.",
   useCases: [

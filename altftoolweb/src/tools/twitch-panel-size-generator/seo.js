@@ -1,5 +1,5 @@
 const seo = {
-  title: "Twitch Panel Size Generator: 320px Panels & Emote Sizes",
+  title: "Twitch Panel Size Generator: 320px & Emote Sizes",
   metaDescription:
     "Export Twitch panels (320px wide, 300px/2.9MB cap), sub badges, emotes, banner and 1920x1080 offline art at exact sizes - resized in your browser.",
   steps: [

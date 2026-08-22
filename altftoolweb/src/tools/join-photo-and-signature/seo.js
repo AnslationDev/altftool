@@ -1,5 +1,5 @@
 const seo = {
-  title: "Join Photo & Signature to an Exact Pixel and KB Size",
+  title: "Join Photo & Signature to Exact Pixel & KB Size",
   metaDescription:
     "Stack a passport photo above a signature at 350x525 or another exam size, and bisect JPEG quality until the file lands inside your KB window.",
   steps: [

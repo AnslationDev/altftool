@@ -1,5 +1,5 @@
 const seo = {
-  title: "Which Fantasy House Am I? A 10-Question Sorting Quiz",
+  title: "Which Fantasy House Am I? 10-Question Quiz",
   metaDescription:
     "Ten questions score courage, ambition, curiosity, loyalty, resilience and secrecy across six houses - four classics plus Valoria and Umbra.",
   steps: [

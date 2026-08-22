@@ -1,4 +1,12 @@
 const seo = {
+  title: "Music Ducking Calculator: dB Under Voice",
+  metaDescription:
+    "Set how many dB the music bed sits under the voiceover and get the exact level, gain change and fader percentage, plus the power-summed mix level.",
+  steps: [
+    "Enter the 'Voiceover level (dBFS or LUFS)' and 'Music bed level when open (dB)', or pick a delivery standard from the 'Delivery target' dropdown to set the voice level and ceiling.",
+    "Set 'Separation wanted (dB)' by hand or from a separation preset chip.",
+    "Read 'Duck the music bed to' in dB, the 'Fader multiplier while ducked' percentage and 'Headroom to the ceiling', then press 'Copy result'.",
+  ],
   intro:
     "This calculator works out the level a music bed should be ducked to so it sits a chosen number of decibels below the voiceover, then power-sums the two to show where the combined mix lands. It uses the standard decibel relationships — amplitude ratio 10^(dB/20) for the fader move and 10·log10 power summing for the mix — so the answers match what a meter will read. Podcasters, video editors and radio producers use it to set an intro duck without guessing at the fader.",
   useCases: [

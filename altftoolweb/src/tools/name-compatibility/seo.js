@@ -1,5 +1,5 @@
 const seo = {
-  title: "Name Compatibility Calculator - Numerology Match Score",
+  title: "Name Compatibility Calculator: Numerology Score",
   metaDescription:
     "Two names give Pythagorean Name, Soul Urge, Personality and Destiny numbers, plus love, friendship, soulmate and business scores. Fun, not science.",
   steps: [

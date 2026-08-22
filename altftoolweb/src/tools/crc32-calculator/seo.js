@@ -1,4 +1,7 @@
 const seo = {
+  title: "CRC32 Calculator: IEEE 802.3, Hex & Decimal",
+  metaDescription:
+    "Computes the zip/gzip/PNG CRC-32 (polynomial 0xEDB88320, init and XOR 0xFFFFFFFF) of text, shown as eight hex digits and unsigned decimal with length.",
   intro:
     "This calculator computes the CRC-32 checksum of text using the standard IEEE 802.3 variant — reversed polynomial 0xEDB88320, initial value 0xFFFFFFFF, final XOR of 0xFFFFFFFF — the same algorithm used by zip, gzip and PNG. It returns the 32-bit result as eight hex digits, as an unsigned decimal, and reports the input length, so \"hello world\" gives 0x0d4a1185. It is for developers verifying a checksum by hand rather than trusting a value copied out of a log.",
   useCases: [

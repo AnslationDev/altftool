@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Break Planner: 25/5, 50/10, 52/17, 90/20",
+  metaDescription:
+    "Enter your focus span and available minutes; get the best-fit protocol — 25/5, 50/10, 52/17 or 90/20 — as a block schedule that never ends on a break.",
+  steps: [
+    "Enter your Honest focus span (5-180 minutes) — how long attention actually holds — and Time available today (15-720 minutes).",
+    "The tool selects the longest documented protocol your span sustains: Pomodoro 25/5, 50/10, DeskTime's 52/17 or the ultradian 90/20.",
+    "Read the block-by-block schedule with start times, study-share percentage and a timeline bar — any final break is dropped — then click Copy plan.",
+  ],
   intro:
     "This tool picks the study-to-break ratio that fits your real attention span, choosing among four documented protocols — Pomodoro 25/5, university-style 50/10, DeskTime's observed 52/17, and the ultradian-aligned 90/20 — by selecting the longest work block your focus span can sustain. It then lays the ratio across your available time as a start-time schedule that never ends on a break. It is for students who know they need breaks but keep guessing at when.",
   useCases: [

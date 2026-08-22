@@ -1,5 +1,5 @@
 const seo = {
-  title: "Thailand Tourist Visa Cover Letter Builder (e-Visa)",
+  title: "Thailand Visa Cover Letter Builder (e-Visa)",
   metaDescription:
     "Write a Thai e-Visa cover letter and check the dates that matter: the 60-day permitted-to-stay stamp, THB 20,000/40,000 funds rule and any overstay fine.",
   steps: [

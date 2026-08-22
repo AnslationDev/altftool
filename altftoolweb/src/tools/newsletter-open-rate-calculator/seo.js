@@ -1,5 +1,5 @@
 const seo = {
-  title: "Newsletter Open Rate Calculator: Opens vs Delivered",
+  title: "Newsletter Open Rate Calculator: Opens/Delivered",
   metaDescription:
     "Open, click, click-to-open, bounce, unsubscribe and complaint rates on their correct bases, plus an open rate with privacy-proxy opens removed.",
   steps: [

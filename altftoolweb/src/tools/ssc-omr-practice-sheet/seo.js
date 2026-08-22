@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC OMR Practice Sheet — CGL/CHSL Pattern",
+  metaDescription:
+    "Print an SSC-style OMR answer sheet — A–D bubbles, four Tier-I parts of 25 questions, a 0–9 roll number grid and the real 2-mark / −0.50 marking scheme.",
+  steps: [
+    "Pick a \"Paper pattern\" — \"SSC CGL Tier-I style — 100 questions (4 parts × 25)\", the CHSL equivalent, or the classic 200-question layout.",
+    "Set \"Roll number columns\" to any whole number between 4 and 15 to match your exam's roll number length.",
+    "Click \"Print sheet\" to print the A–D bubble sheet with part-wise question blocks and the 0–9 roll grid, or \"Copy summary\" for the marks and negative-marking scheme.",
+  ],
   intro:
     "This tool prints an SSC-style OMR practice answer sheet with A to D bubbles, part-wise question blocks and a roll number digit grid. It follows the Staff Selection Commission Tier-I structure — 100 questions in four parts of 25 for CGL and CHSL (2 marks each, 0.50 negative per wrong answer) — plus the classic 200-question paper-era layout. Aspirants taking offline mock tests use it to practise disciplined bubbling and answer transfer before attempting the real exam.",
   useCases: [

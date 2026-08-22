@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tenant Notice to Vacate: Rent & Deposit Settlement",
+  title: "Tenant Notice to Vacate: Rent & Deposit",
   metaDescription:
     "Checks your handover date against the agreement's notice period, prices part-month rent at monthly x 12 / 365, and nets the deposit into one figure.",
   steps: [

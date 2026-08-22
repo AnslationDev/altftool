@@ -1,5 +1,5 @@
 const seo = {
-  title: "Parsi Baby Names: Yazatas, Shahnameh, Calendar Roj",
+  title: "Parsi Baby Names: Yazata, Shahnameh, Calendar Roj",
   steps: [
     "Set Gender, Source in the tradition, Language of origin and Syllables, or type into Search name or meaning (the placeholder suggests fire, sun, victory, Shahnameh) and pick a Starting letter.",
     "Set Names to show to control how long the shortlist runs, then press Shuffle to draw a different slice of the same matches when the current set stops yielding candidates.",

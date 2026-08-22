@@ -1,5 +1,5 @@
 const seo = {
-  title: "Market Session Clock: NSE, London, New York, Tokyo",
+  title: "Market Hours Clock: NSE, London, New York, Tokyo",
   metaDescription:
     "See whether NSE 09:15-15:30, London 08:00-16:30, New York 09:30-16:00, Tokyo and Hong Kong are inside regular hours right now.",
   steps: [

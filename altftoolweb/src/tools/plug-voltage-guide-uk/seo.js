@@ -1,5 +1,5 @@
 const seo = {
-  title: "UK Plug and Voltage Guide: Type G, 230V, Fuse Size",
+  title: "UK Plug & Voltage Guide: Type G, 230V, Fuse Size",
   metaDescription:
     "The UK runs 230 V, 50 Hz on BS 1363 type G sockets. Enter your plug and label voltage to see if an adapter is enough, plus the BS 1362 fuse to fit.",
   steps: [

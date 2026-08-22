@@ -1,5 +1,5 @@
 const seo = {
-  title: "Third Party Insurance Premium by cc or kW, with GST",
+  title: "Third Party Insurance Premium by cc or kW",
   metaDescription:
     "Notified motor third party rates from 1 June 2022 by engine cc or EV motor kW, plus the Rs 375 owner-driver cover and 18% GST for the amount payable.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "How Much USD Cash to Carry: RBI Limit, GST and TCS",
+  title: "How Much USD Cash to Carry: RBI Limit, GST & TCS",
   metaDescription:
     "Split a US trip between notes and card, priced with the changer markup, GST on forex, the USD 3,000 RBI note limit and the LRS TCS threshold.",
   steps: [

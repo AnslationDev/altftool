@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kenya eTA Checklist: Cost, 90 Days and Passport Rule",
+  title: "Kenya eTA Checklist: Cost, 90 Days, Passport Rule",
   metaDescription:
     "Prices the Kenya eTA (USD 30 plus processing) for your party, checks the 90-day approval window against your arrival date and the 6-month passport rule.",
   steps: [

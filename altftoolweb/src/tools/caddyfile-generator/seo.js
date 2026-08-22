@@ -1,4 +1,12 @@
 const seo = {
+  title: "Caddyfile Generator for Caddy v2",
+  metaDescription:
+    "Build a Caddy v2 site block from a form - reverse proxy or file server, encode zstd gzip, security headers, guarded HSTS, www redirect and access logs.",
+  steps: [
+    "Enter the Site address (example.com, app.example.com, or :8080 for plain HTTP) and pick the Serve mode — reverse proxy with an Upstream (app server), or static files with a Web root.",
+    "Toggle 'encode zstd gzip' compression, baseline security headers, the www redirect, access logging to /var/log/caddy/, HSTS with its max-age in seconds, and the SPA fallback try_files {path} /index.html.",
+    "The site block renders live with a directive count; press Copy Caddyfile, save it as Caddyfile, and validate with caddy validate.",
+  ],
   intro:
     "This generator assembles a complete Caddy v2 Caddyfile site block from a form — reverse proxy or static file server, encode zstd gzip compression, baseline security headers, optional HSTS, a www-to-apex redirect and file-based access logging. It follows the Caddyfile conventions from the official docs, including automatic HTTPS for hostname addresses and the try_files {path} /index.html fallback pattern for single-page applications.",
   useCases: [

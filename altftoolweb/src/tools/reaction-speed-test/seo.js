@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reaction Speed Test: Your Click Time in Milliseconds",
+  title: "Reaction Speed Test: Click Time in Milliseconds",
   metaDescription:
     "Click when the screen turns green after a random 2-5 s wait. Graded Elite under 150 ms to over 350 ms, with best and average over your last 10 attempts.",
   steps: [

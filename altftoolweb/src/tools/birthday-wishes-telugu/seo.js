@@ -1,4 +1,12 @@
 const seo = {
+  title: "Birthday Wishes in Telugu: Casual & Respectful",
+  metaDescription:
+    "Telugu birthday messages written separately for నువ్వు and మీరు, with romanised Telugu, an English meaning and the SMS parts each wish needs.",
+  steps: [
+    "Pick Who is it for? and a Tone, set How many messages (1-6), and optionally add Their name and Sign it from.",
+    "Leave Politeness on Automatic or force the నువ్వు or మీరు form, and tick Show romanised Telugu for a transliteration.",
+    "Use Other wordings to reshuffle, then Copy one wish or Copy all — each message shows its tone and SMS segment count.",
+  ],
   intro:
     "Telugu Birthday Wishes Generator writes a complete Telugu birthday message — greeting line, wish and sign-off — from the relationship you choose and the tone you want. Telugu separates నువ్వు from మీరు, and that choice changes the possessive (నీ versus మీ) and the verb ending, so each wording is stored in both registers instead of being patched. Every message arrives with romanised Telugu, an English meaning and the number of SMS parts it needs.",
   useCases: [

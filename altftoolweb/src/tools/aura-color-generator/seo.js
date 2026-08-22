@@ -1,4 +1,7 @@
 const seo = {
+  title: "Aura Color Generator from Your Photo or Name",
+  metaDescription:
+    "Reads your photo's dominant hue in-browser (never uploaded), maps it to one of eight aura bands with a reading and five-colour palette. Names work too.",
   intro:
     "This aura colour generator finds the dominant hue of a photo using a saturation-weighted hue histogram in HSL colour space, then maps that hue to one of eight aura bands with a playful reading and a five-colour palette. With no photo, it hashes a name with FNV-1a so the same name always returns the same aura. The colour science is real; the aura reading is entertainment.",
   useCases: [

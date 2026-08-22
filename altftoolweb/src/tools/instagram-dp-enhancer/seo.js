@@ -1,5 +1,5 @@
 const seo = {
-  title: "Instagram DP Maker — Circle Crop, Filters & Story Ring",
+  title: "Instagram DP Maker: Circle Crop & Story Ring",
   metaDescription:
     "Crop any photo to Instagram's circle at 1080x1080, add the orange-to-purple ring plus 8 filters, and export a PNG — all in your browser.",
   steps: [

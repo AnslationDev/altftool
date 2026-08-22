@@ -1,4 +1,12 @@
 const seo = {
+  title: "Position Size Calculator from Stop Loss & Risk %",
+  metaDescription:
+    "Enter capital, entry, stop loss and risk (0.5-3% presets or a fixed rupee amount) to get the share count, margin needed and exact loss if the stop is hit.",
+  steps: [
+    "Enter Trading capital (INR), Entry price (INR) and Stop loss price (INR), plus the Leverage / margin multiplier (1x-50x) and Lot size (1 for cash equity).",
+    "Set \"Risk per trade set as\" to \"% of capital\" — with 0.5%, 1%, 2% and 3% preset chips — or switch to \"Fixed rupee amount\" and type the rupees you will risk.",
+    "Read the position size in shares with position value, margin needed and \"Actual loss if stopped out\"; \"How the number is built\" shows the budget ÷ risk-per-share arithmetic, and \"Copy result\" exports the summary.",
+  ],
   intro:
     "Position size is the number of shares to buy so that, if your stop loss is hit, you lose only the amount of capital you decided to risk. It is derived from three inputs — account size, the percentage of it you are willing to risk on one trade, and the distance from your entry price to your stop — and it is what keeps a run of losing trades survivable.",
   useCases: [

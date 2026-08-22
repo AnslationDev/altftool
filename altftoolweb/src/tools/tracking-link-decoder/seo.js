@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tracking Link Decoder: Strip utm, gclid, fbclid & mc_eid",
+  title: "Tracking Link Decoder: Strip utm, gclid & fbclid",
   metaDescription:
     "Names each of 99 tracking parameters in a URL, flags the 39 that identify one person, keeps 50 functional keys, and copies a clean link.",
   intro:

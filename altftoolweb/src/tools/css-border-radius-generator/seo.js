@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Border Radius Generator with 8-Value Blob Mode",
+  title: "CSS Border Radius Generator: 8-Value Blob Mode",
   metaDescription:
     "Sliders for the four-corner shorthand and the eight-value slash syntax that makes blobs, previewed on four backdrops - copy or download the .css.",
   intro:

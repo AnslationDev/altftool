@@ -1,5 +1,5 @@
 const seo = {
-  title: "Indian English Loanwords: 61 Words and Their Roots",
+  title: "Indian English Loanwords: 61 Words & Their Roots",
   metaDescription:
     "Trace 61 English words to Sanskrit, Hindi, Tamil and more: original word, literal meaning, route into English and era, disputed cases flagged.",
   steps: [

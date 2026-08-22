@@ -1,5 +1,5 @@
 const seo = {
-  title: "Feng Shui by Room and Bagua Area: Elements, Colours",
+  title: "Feng Shui by Room & Bagua Area: Elements, Colours",
   metaDescription:
     "Place a room in the bagua and see how the two elements meet, the mediating element for a clash, the colour split and the commanding-position rules.",
   steps: [

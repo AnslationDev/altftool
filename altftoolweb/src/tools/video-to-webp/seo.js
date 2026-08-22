@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video to Animated WebP Converter — In Your Browser",
+  title: "Video to Animated WebP Converter in Your Browser",
   metaDescription:
     "Converts a video segment to a looping animated WebP in the browser — pick start/end, 5–30 fps and width up to 800 px; max 60 s and 600 frames per file.",
   steps: [

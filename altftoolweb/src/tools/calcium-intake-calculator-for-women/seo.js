@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calcium Intake Calculator for Women — RDA by Age",
+  metaDescription:
+    "IOM targets by age — 1,000 mg at 19–50, 1,200 mg from 51 — plus vitamin D, upper limits, and a food tally showing how close your day's servings get.",
+  steps: [
+    "Enter Age (years) and pick a Life stage — General, Pregnant, Breastfeeding or After menopause.",
+    "Under 'What did you eat today?', type the day's servings for each listed food; every item shows its serving size and approximate milligrams of calcium.",
+    "Read your daily calcium target with the progress bar, the Still to find gap, vitamin D targets and upper limits, and the top-up foods that would close the gap; Copy result copies it all.",
+  ],
   intro:
     "This calculator gives the daily calcium and vitamin D a woman needs at her age and life stage, then tallies what a real day of food actually delivers against it. The targets are the Institute of Medicine dietary reference intakes: 1300 mg of calcium through ages 9 to 18, 1000 mg from 19 to 50, and 1200 mg from 51 onward, alongside 600 IU of vitamin D up to age 70 and 800 IU after. It also shows the gap in milligrams and which everyday foods would close it.",
   useCases: [

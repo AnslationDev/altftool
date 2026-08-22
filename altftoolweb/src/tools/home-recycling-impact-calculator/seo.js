@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Recycling Calculator: CO2, Energy, Water",
+  metaDescription:
+    "Enter weekly kg of aluminium, plastic, paper and glass to see yearly CO2, energy and water saved — with a capture rate for loads that never get recycled.",
+  steps: [
+    "Enter the kg per week for each material row, from Aluminium cans and foil to Glass bottles and jars — each row shows the share of new-production energy it saves.",
+    "Set the Capture rate (%) for what really reaches a recycler (default 85) and optionally Household electricity (units a month) for context.",
+    "Read CO2 avoided a year with its car-km equivalent, energy in kWh and water in litres, plus a per-material ranking; Copy result copies the summary and Edit exposes the per-kg saving factors.",
+  ],
   intro:
     "Recycling saves energy because making a product from used material skips the mining, refining and long-distance transport that virgin material needs. This calculator multiplies what your household puts out each week by per-kilogram lifecycle saving factors for energy, water and greenhouse gases, applies a realistic capture rate for what actually gets reprocessed, and shows the annual total alongside comparisons like kilometres of car driving avoided.",
   useCases: [

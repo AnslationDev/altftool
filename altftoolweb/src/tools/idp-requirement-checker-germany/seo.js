@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do You Need an IDP in Germany? Section 29 FeV Check",
+  title: "Do You Need an IDP in Germany? Section 29 FeV",
   metaDescription:
     "Answers from Section 29 FeV: EU and EEA licences need nothing, others need an IDP or sworn translation — and dates the six-month residence clock.",
   steps: [

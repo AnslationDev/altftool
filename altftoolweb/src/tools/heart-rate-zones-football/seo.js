@@ -1,5 +1,5 @@
 const seo = {
-  title: "Football Heart Rate Zones in bpm with 4 x 4 Intervals",
+  title: "Football Heart Rate Zones in bpm + 4x4 Intervals",
   metaDescription:
     "Turn your age or measured max HR into five football zones in bpm, each with the drill that hits it, plus the 4 x 4 minute interval session at 90-95%.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "HIIT & Tabata Timer: 20/10 x 8, EMOM, Boxing Rounds",
+  title: "HIIT & Tabata Timer: 20/10x8, EMOM, Boxing Rounds",
   metaDescription:
     "Interval timer with Tabata 20/10 x 8, EMOM 60s and boxing presets, rounds and sets, and a 1245 Hz work tone. Phases run on absolute clock deadlines.",
   intro:

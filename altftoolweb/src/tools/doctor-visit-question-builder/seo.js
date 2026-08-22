@@ -1,5 +1,5 @@
 const seo = {
-  title: "Doctor Visit Question Builder: SOCRATES and Ask Me 3",
+  title: "Doctor Visit Question Builder: SOCRATES, Ask Me 3",
   metaDescription:
     "Answer the eight SOCRATES symptom questions in advance, rank your questions, and see how many actually fit a 10-minute appointment slot.",
   steps: [

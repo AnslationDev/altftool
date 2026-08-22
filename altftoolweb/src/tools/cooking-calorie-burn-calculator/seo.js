@@ -1,5 +1,5 @@
 const seo = {
-  title: "Calories Burned Cooking: MET Values by Kitchen Stage",
+  title: "Calories Burned Cooking: MET Values by Stage",
   metaDescription:
     "Six kitchen stages priced at compendium MET values, times your body weight: kcal/min = MET x 3.5 x kg / 200. Shows gross and net-of-resting calories.",
   steps: [

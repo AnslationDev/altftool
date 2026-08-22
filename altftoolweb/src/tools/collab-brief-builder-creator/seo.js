@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creator Collab Brief Builder – GST, TDS & Usage Rights",
+  title: "Collab Brief Builder: GST, TDS & Usage Rights",
   metaDescription:
     "Build an influencer collab brief: deliverables with rates, dated milestones, usage rights, and a fee stack that adds 18% GST and deducts TDS correctly.",
   steps: [

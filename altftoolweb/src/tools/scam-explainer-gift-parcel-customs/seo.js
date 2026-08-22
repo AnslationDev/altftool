@@ -1,5 +1,5 @@
 const seo = {
-  title: "Gift Parcel Customs Fee Scam: Score It, Check the Duty",
+  title: "Gift Parcel Customs Fee Scam: Score & Duty Check",
   metaDescription:
     "Score the parcel-stuck-at-customs demand on 12 weighted red flags and compare it with real Indian duty - gifts up to Rs 5,000 CIF are exempt.",
   steps: [

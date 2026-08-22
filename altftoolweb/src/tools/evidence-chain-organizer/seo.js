@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chain of Custody Log with SHA-256 Event Hash Chain",
+  title: "Chain of Custody Log with SHA-256 Hash Chain",
   metaDescription:
     "Register items with SHA-256 or SHA-512 digests, log custody events with offset timestamps, and export canonical JSON plus an optional hash chain.",
   steps: [

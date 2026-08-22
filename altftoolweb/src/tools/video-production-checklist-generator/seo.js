@@ -1,5 +1,5 @@
 const seo = {
-  title: "Video Production Checklist Generator with Time Estimates",
+  title: "Video Production Checklist Generator",
   metaDescription:
     "Builds pre-production, shoot-day and post checklists from your shooting and editing ratios, with a call-sheet timeline and contingency buffer.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Habit Cost Calculator: 1, 5, 10 and 50-Year Totals",
+  title: "Habit Cost Calculator: 1, 5, 10 & 50-Year Totals",
   metaDescription:
     "Normalises any habit to a monthly cost, projects 1, 5, 10 and 50-year totals compounded at your chosen rate, and converts daily time into hours.",
   intro:

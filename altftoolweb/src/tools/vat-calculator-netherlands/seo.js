@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dutch BTW Calculator: 21% & 9%, Reverse VAT, KOR",
+  metaDescription:
+    "Add or reverse Dutch BTW at 21%, 9% or 0%: net, BTW and gross to the cent, a BTW-aangifte payable line and the EUR 20,000 KOR turnover check.",
+  steps: [
+    "Toggle Add BTW or Reverse BTW, enter the amount and pick the BTW-tarief — hoog 21%, laag 9%, nultarief or a custom rate.",
+    "Read bedrag exclusief BTW, the BTW amount and bedrag inclusief BTW, including the BTW share of the gross price.",
+    "Net BTW charged on sales against voorbelasting in the BTW-aangifte panel, test turnover against the EUR 20,000 KOR limit, then click Copy result.",
+  ],
   intro:
     "This calculator adds Dutch BTW to a net amount or reverses it out of a gross one at the 21% hoog tarief, the 9% laag tarief or the nultarief. Adding tax multiplies by 1.21; the reverse calculation divides by 1.21, which means the BTW inside a standard-rated gross price is 21/121 of it, about 17.36%. It also nets output BTW against voorbelasting for a return period and checks the 20,000 EUR KOR turnover limit.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "OMR Roll Number Practice with Scanner Grading",
+  metaDescription:
+    "Bubble a random 4-15 digit roll number into a 0-9 OMR grid and get scanner-style grading: blanks, wrong digits and double marks flagged, with a timer.",
+  steps: [
+    "Set \"Number of digits (4–15)\" and press \"New roll number\" for a fresh roll number to practise.",
+    "Bubble the shown roll number into the 0–9 grid, one column per digit, then press \"Check my grid\".",
+    "Read your accuracy with wrong, blank and multiple-mark columns flagged the way an OMR scanner rejects them, plus the time taken; \"Copy result\" copies the score.",
+  ],
   intro:
     "This interactive trainer simulates the roll number bubble grid on an OMR answer sheet: one 0–9 column per digit, graded the way an optical scanner reads it — a correct single mark scores, a blank column reads as no digit, and a double-marked column is rejected. Exam candidates for NEET, SSC, board exams and other OMR-based tests use it to build the muscle memory to encode their roll number quickly and without errors.",
   useCases: [

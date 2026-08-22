@@ -1,4 +1,12 @@
 const seo = {
+  title: "Skirting Board Calculator: Pieces, Corners & Cost",
+  metaDescription:
+    "Room perimeter minus doorways, plus a cutting allowance, rounded to whole factory lengths — with corner counts, fixings at 400 mm centres and cost.",
+  steps: [
+    "Enter \"Room length (m)\" and \"Room width (m)\", the \"Number of doorways\" with each doorway's width, and any extra runs or skirting-free openings.",
+    "Pick the \"Length of one piece\" — 2.4 m, 2.44 m (8 ft), 3 m or 3.66 m (12 ft) — plus \"Skirting height (mm)\", \"Cutting allowance (%)\" and the price per running metre.",
+    "Read \"Skirting to buy\" in whole pieces with the net run in metres and running feet, corners to mitre, fixings at 400 mm centres and material cost; \"Copy result\" exports it.",
+  ],
   intro:
     "This calculator turns a room's dimensions into the running length of skirting you have to buy: perimeter = 2 × (length + width), minus every doorway and floor-level opening, plus a cutting allowance for mitres, divided into whole factory lengths. It also reports the corner count, the fixings needed at 400 mm centres and the surface area to paint or polish. It suits homeowners checking a carpenter's quote and anyone ordering MDF, PVC or wooden skirting by the piece.",
   useCases: [

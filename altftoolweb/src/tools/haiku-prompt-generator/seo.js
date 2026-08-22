@@ -1,4 +1,12 @@
 const seo = {
+  title: "Haiku Prompt Generator: Kigo & 5-7-5 Checker",
+  metaDescription:
+    "Get real saijiki season words with a grounding image, a contrast and a cut point, then count your draft's syllables line by line against 5-7-5.",
+  steps: [
+    "Pick a Season from the five saijiki seasons, set How many prompts, and press Shuffle for a fresh random draw — the Seed repeats a draw exactly.",
+    "Work from each prompt's kigo, Grounding image, Juxtapose with pairing and Where to cut suggestion; Copy all grabs every prompt at once.",
+    "Type your three lines into the Draft pad and watch the per-line syllable counts scored against the 5-7-5 pattern.",
+  ],
   intro:
     "A haiku prompt generator built on the two things that actually define the form: a kigo (季語, season word) drawn from the Japanese saijiki, and a toriawase — two images set against each other and separated by a cut. It serves real season words for all five saijiki seasons, including New Year, and pairs each with a grounding image, a contrasting image and a suggested cut point, then counts the syllables in your draft line by line against 5-7-5.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "D&D Dice Roller: Roll 1-10 Dice from d2 to d1000",
+  metaDescription:
+    "Roll 1 to 10 dice with any 2-1000 sides - d6, d20, d100, even d7 - and see every face plus the total. Reroll the same pool in one click.",
   intro:
     "This D&D dice roller rolls up to 10 dice with any whole-number size from 2 to 1000 faces — d4, d6, d8, d10, d12, d20, d100 or an unusual d7 — and prints every individual face plus the total. A seeded browser pseudorandom generator makes it useful for casual sessions without claiming cryptographic or independently auditable randomness.",
   useCases: [

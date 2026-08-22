@@ -1,5 +1,5 @@
 const seo = {
-  title: "Blameless Postmortem Template Generator in Markdown",
+  title: "Blameless Postmortem Template Generator: Markdown",
   metaDescription:
     "Enter incident title, date, severity and duration for a Markdown postmortem: metadata, timeline, root cause, optional 5 Whys and an action-item table.",
   steps: [

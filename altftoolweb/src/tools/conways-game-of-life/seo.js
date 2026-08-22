@@ -1,5 +1,5 @@
 const seo = {
-  title: "Conway's Game of Life: Draw, Step, Run to 30 gen/s",
+  title: "Conway's Game of Life: Draw, Step, Run",
   metaDescription:
     "Draw cells by dragging, single-step one generation, or run at 1-30 generations a second. Live generation and population counts; edges do not wrap.",
   intro:

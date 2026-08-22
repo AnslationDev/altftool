@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cite ChatGPT or Any AI Tool in APA 7, MLA 9, Chicago",
+  title: "Cite ChatGPT or AI Tools in APA 7, MLA 9, Chicago",
   metaDescription:
     "Build an APA 7, MLA 9 or Chicago note citation for a generative AI tool, with the matching in-text form and a journal-style acknowledgement sentence.",
   steps: [

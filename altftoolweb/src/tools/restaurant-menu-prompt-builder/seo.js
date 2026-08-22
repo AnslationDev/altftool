@@ -1,5 +1,5 @@
 const seo = {
-  title: "Menu Prompt Builder with EU 14 / US 9 Allergen Check",
+  title: "Menu Prompt Builder: EU 14 / US 9 Allergens",
   metaDescription:
     "Build a menu-writing prompt and screen ingredients against the EU's 14 allergens, the US's 9 or the Codex list — each flag names the trigger word.",
   steps: [

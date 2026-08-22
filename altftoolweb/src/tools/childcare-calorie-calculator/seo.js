@@ -1,5 +1,5 @@
 const seo = {
-  title: "Childcare Calorie Calculator: 2.0–4.0 MET, Gross & Net",
+  title: "Childcare Calorie Calculator: 2.0–4.0 MET",
   metaDescription:
     "Calories burned looking after children from MET x 3.5 x kg / 200 — five intensities from 2.0 to 4.0 MET, with net calories and a weekly total.",
   steps: [

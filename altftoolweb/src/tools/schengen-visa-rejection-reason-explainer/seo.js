@@ -1,5 +1,5 @@
 const seo = {
-  title: "Schengen Visa Refusal: What Each Annex VI Box Means",
+  title: "Schengen Visa Refusal: Annex VI Boxes Explained",
   metaDescription:
     "Decodes the boxes ticked on the standard Annex VI refusal form, names the Visa Code article behind each, and lists what to fix before you reapply.",
   steps: [

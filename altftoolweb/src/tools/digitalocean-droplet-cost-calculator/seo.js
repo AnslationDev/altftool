@@ -1,4 +1,12 @@
 const seo = {
+  title: "DigitalOcean Cost Calculator: Droplets, Bandwidth",
+  metaDescription:
+    "Whole-bill estimate: Basic droplets billed at 1/672 per hour, volumes $0.10/GB, snapshots $0.06/GB, $12 load balancers and $0.01/GB bandwidth overage.",
+  steps: [
+    "Pick a 'Droplet plan (Basic, regular SSD)', the Number of droplets and 'Hours each droplet runs (672 = full month)'.",
+    "Add block storage volume GB, snapshot GB, load balancer nodes and monthly outbound transfer — allowances pool account-wide, overage bills at $0.01/GB.",
+    "Read the estimated monthly bill with per-line droplet, volume, snapshot, load balancer and bandwidth costs, then click Copy result.",
+  ],
   intro:
     "This calculator estimates a full monthly DigitalOcean bill by combining Basic droplet prices with block storage at $0.10/GB, snapshots at $0.06/GB, load balancers at $12 per node and the $0.01/GB bandwidth overage that applies beyond the pooled transfer allowance. It is built for developers and small teams who run a few droplets and want the whole invoice — not just the headline droplet price — before they scale.",
   useCases: [

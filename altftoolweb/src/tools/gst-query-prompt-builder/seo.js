@@ -1,5 +1,5 @@
 const seo = {
-  title: "GST Prompt Builder for AI, with CGST Act Citations",
+  title: "GST Prompt Builder for AI: CGST Act Citations",
   metaDescription:
     "Frames a GST question for AI with citations required, checks the Rs 40/20/10 lakh registration thresholds and gives GSTR-1 and GSTR-3B due dates.",
   steps: [

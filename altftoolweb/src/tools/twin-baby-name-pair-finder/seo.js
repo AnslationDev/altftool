@@ -1,5 +1,5 @@
 const seo = {
-  title: "Twin Baby Name Pair Finder — Score Any Pair Out of 100",
+  title: "Twin Baby Name Pair Finder — Scored Out of 100",
   metaDescription:
     "Score two names out of 100 on shared initial, rhyme, syllables, length and distinctness, and browse curated twin pairs matched by sound or meaning.",
   steps: [

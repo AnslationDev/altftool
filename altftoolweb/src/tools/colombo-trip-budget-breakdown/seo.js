@@ -1,5 +1,5 @@
 const seo = {
-  title: "Colombo Trip Budget: Service Charge, SSCL and VAT Added",
+  title: "Colombo Trip Budget: Service Charge, SSCL & VAT",
   metaDescription:
     "Prices a Colombo trip in LKR and rupees, compounding 10% service charge, 2.5% SSCL and 18% VAT (1.3305x) onto quoted room and restaurant prices.",
   steps: [

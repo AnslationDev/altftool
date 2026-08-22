@@ -1,4 +1,12 @@
 const seo = {
+  title: "Time Complexity Cheat Sheet: Big-O for Algorithms",
+  metaDescription:
+    "Best, average and worst-case time and space for sorting, searching, data structures and graph algorithms, per CLRS, with growth counts to n = 1,000,000.",
+  steps: [
+    "Type an algorithm or Big-O class into the Search box (placeholder 'quicksort, hash, O(n log n)…') or narrow the Category select to Sorting, Searching, Data structures or Graph algorithms.",
+    "The 'Matching entries' table refilters as you type — no lookup button — listing Best, Average, Worst and Space for every match, plus a growth table of operation counts at n = 10, 100, 1,000 and 1,000,000.",
+    "Press 'Copy table' to copy the visible rows as a Markdown table, or 'Reset' to clear the search text and category filter.",
+  ],
   intro:
     "This reference tool looks up the best, average and worst-case time complexity — plus auxiliary space — for the sorting algorithms, search algorithms, data structures and graph algorithms that appear in coding interviews, following the canonical analyses in CLRS (Introduction to Algorithms). Search by name, filter by category, and compare growth classes with a table of approximate operation counts from n = 10 to n = 1,000,000.",
   useCases: [

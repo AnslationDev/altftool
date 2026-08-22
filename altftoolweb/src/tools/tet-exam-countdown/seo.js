@@ -1,4 +1,12 @@
 const seo = {
+  title: "TET Exam Countdown & CTET 90-Mark Score Check",
+  metaDescription:
+    "Count days to CTET or a state TET, weight section readiness by question share, and see expected marks against the 90-mark (60%) qualifying line.",
+  steps: [
+    "Enter the exam date from the board's notice, pick Paper I or a Paper II variant, and set study hours per day plus an optional latest full-mock score out of 150.",
+    "Rate each section's readiness 0-100% — each is weighted by its question count — and tick the 55% relaxed qualifying threshold if it applies to you.",
+    "Read the days-to-exam count, weighted readiness, expected marks out of 150 and the marks gap to the qualifying line, then click Copy result.",
+  ],
   intro:
     "This countdown tracks the days to CTET or a state TET and turns a paper-wise prep tracker into an expected score: each section's readiness is weighted by its share of the paper's 150 questions, then compared against the NCTE qualifying line of 60% (90 marks) for general candidates or 55% with relaxation. It follows the CTET structure — Paper I for classes 1–5, Paper II for classes 6–8, each 150 questions, 150 marks, 150 minutes, no negative marking.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Proxy Editing Storage Calculator for ProRes Workflows",
+  title: "Proxy Editing Storage Calculator for ProRes",
   metaDescription:
     "Sizes originals, proxies, render previews and cache separately, from ProRes rates scaled by pixel count. Only originals multiply across backups.",
   intro:

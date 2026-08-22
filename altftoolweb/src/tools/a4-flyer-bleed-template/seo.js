@@ -1,4 +1,12 @@
 const seo = {
+  title: "A4 Flyer Bleed Template: 3 mm Bleed & Crop Marks",
+  metaDescription:
+    "Set up A4, A5 or DL flyer artboards with 3 mm bleed, 5 mm safe area, crop marks and fold panels, then copy the spec or download an SVG guide layer.",
+  steps: [
+    "Choose a Paper size (A3, A4, A5, A6 or DL 99 x 210 mm), Orientation and a Fold such as Roll / letter tri-fold (3 panels).",
+    "Adjust Bleed per edge (mm), Safe margin per edge (mm) and Resolution (ppi) — the defaults are 3 mm, 5 mm and 300 ppi.",
+    "Read the artboard size in mm and pixels, then click Copy spec or the SVG button to download a guide named like a4-portrait-none-bleed-template.svg.",
+  ],
   intro:
     "A4 Flyer Bleed Template turns an ISO 216 paper size into a print-ready artboard: trim size, a 3 mm bleed on every edge, a safe area for type, crop marks and fold panel positions. Pixel dimensions come from the definition of the inch — pixels = millimetres ÷ 25.4 × resolution — so an A4 page at 300 ppi resolves to the familiar 2480 × 3508 px trim area inside a 2551 × 3579 px bleed canvas. Made for designers setting up a flyer, leaflet or brochure before artwork starts.",
   useCases: [

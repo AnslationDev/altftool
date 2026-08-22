@@ -1,5 +1,5 @@
 const seo = {
-  title: "Investor Risk Profile Quiz: 10 Questions, Score /100",
+  title: "Investor Risk Profile Quiz: 10 Questions",
   metaDescription:
     "Score 10 weighted questions out of 100 and land in Conservative, Moderate, Active Growth or Aggressive Speculator, each with an illustrative mix.",
   steps: [

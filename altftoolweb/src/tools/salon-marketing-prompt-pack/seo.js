@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salon Marketing Prompts: Instagram, WhatsApp, Reviews",
+  title: "Salon Marketing Prompt Pack: 4 Prompts to Copy",
   metaDescription:
     "Name your salon type, offer and audience, then copy four prompts: Instagram captions, a WhatsApp broadcast, a Google Business post and review replies.",
   steps: [

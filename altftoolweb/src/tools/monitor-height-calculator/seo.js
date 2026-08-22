@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monitor Height Calculator: Screen Height Above Floor",
+  title: "Monitor Height Calculator: Screen Above Floor",
   metaDescription:
     "Top, centre and bottom of your screen in cm above the floor, from eye height, diagonal and aspect ratio — plus how far to raise or lower it.",
   steps: [

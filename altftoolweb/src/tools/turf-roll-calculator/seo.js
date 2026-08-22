@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turf Roll Calculator: Rolls, Pallets & Cost",
+  metaDescription:
+    "Enter lawn size in metres or feet, add 5-15% trim wastage and get whole rolls to order, pallet count, spare turf and total cost with delivery and labour.",
+  steps: [
+    "Choose Metres or Feet and either 'Length x width' or 'I know the area', then enter the lawn size and the Coverage of one roll; a Roll size preset like 'Turf roll 1.64 m x 0.61 m' fills it for you.",
+    "Set Trim wastage (%) with the Typical wastage chips at 5%, 10% or 15%, plus Price per roll, Rolls per pallet, Delivery charge and Laying labour.",
+    "Read 'Turf rolls to order' (rounded up to whole rolls), the pallet count, spare turf left over and the total delivered cost, then press Copy result.",
+  ],
   intro:
     "A turf roll calculator converts a lawn measurement into the number of sod rolls to order, using order area = measured area × (1 + trim wastage %) and rounding up to whole rolls. It is built for homeowners and landscapers pricing a new lawn, and it also reports pallets, spare turf and the delivered cost. Standard cut turf rolls measure 1.64 m × 0.61 m and lay exactly 1 m² each.",
   useCases: [

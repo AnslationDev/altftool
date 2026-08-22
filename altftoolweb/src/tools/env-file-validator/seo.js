@@ -1,4 +1,12 @@
 const seo = {
+  title: ".env File Validator: Syntax, Quotes, Duplicates",
+  metaDescription:
+    "Paste a .env file to catch unclosed quotes, duplicate keys and invalid names, with line numbers and dotenv vs docker --env-file portability warnings.",
+  steps: [
+    "Paste your file into the '.env contents' textarea (an example with a duplicate DATABASE_URL and an unclosed quote loads by default).",
+    "The linter reruns on every keystroke, separating hard errors from dotenv / POSIX shell / docker --env-file portability warnings.",
+    "Read the verdict with error, warning, variable and line counts — each issue tagged 'severity · line N' — then click 'Copy report'.",
+  ],
   intro:
     "This tool lints a .env file line by line, reporting syntax errors, unclosed quotes, duplicate keys, invalid variable names and multiline values before they break a deployment. Because the .env format has no single standard, it validates against both the dotenv (npm) parsing rules and the stricter POSIX name rule [A-Za-z_][A-Za-z0-9_]* used by shells and docker --env-file, flagging every construct the parsers treat differently.",
   useCases: [

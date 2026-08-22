@@ -1,5 +1,5 @@
 const seo = {
-  title: "Coolant Mix Ratio Calculator: Litres, Freeze & Boil",
+  title: "Coolant Mix Ratio Calculator: Freeze & Boil",
   metaDescription:
     "Exact coolant and distilled water litres for your system capacity and target glycol %, with the freeze point and the boil point under cap pressure.",
   steps: [

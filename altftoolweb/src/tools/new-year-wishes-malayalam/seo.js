@@ -1,4 +1,12 @@
 const seo = {
+  title: "Malayalam New Year Wishes for Vishu & Chingam 1",
+  metaDescription:
+    "Vishu, Chingam 1 and January greetings in Malayalam script with Roman transliteration, English meaning and exact SMS length (70 chars per UCS-2 part).",
+  steps: [
+    "Pick the Occasion (Vishu, Chingam 1 or 1 January), Tone, Who is it for and Script, and optionally type the recipient's and your name.",
+    "Browse All matching greetings — each shows the Malayalam text, English meaning, character count and SMS parts — and press Feature this on the one you want.",
+    "Press Copy greeting to copy the featured message; the panel shows its billable units against the 70-character UCS-2 SMS limit.",
+  ],
   intro:
     "This generator builds Malayalam new year greetings by joining a customary salutation, a message from a curated bank of Vishu, Chingam 1 and 1 January wishes, and your sign-off. Each greeting is shown in Malayalam script, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It is for anyone who wants correct Malayalam wording for elders, friends or business contacts rather than a forwarded image.",
   useCases: [

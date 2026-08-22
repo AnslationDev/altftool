@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monthly Fuel Budget Planner: Petrol, Diesel and CNG",
+  title: "Monthly Fuel Budget Planner: Petrol, Diesel & CNG",
   metaDescription:
     "Costs up to 10 vehicles at once from monthly km and mileage, then works out the kilometres to cut to fit inside your fuel cap.",
   steps: [

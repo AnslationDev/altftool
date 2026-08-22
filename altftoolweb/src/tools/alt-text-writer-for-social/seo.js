@@ -1,5 +1,5 @@
 const seo = {
-  title: "Social Alt Text Writer: LinkedIn 120, X 1,000 Limits",
+  title: "Social Alt Text Writer: LinkedIn & X Limits",
   metaDescription:
     "Scores a draft against the platform field limit and the 125-character screen reader guideline, flagging \"image of\", file names, hashtags and emoji.",
   steps: [

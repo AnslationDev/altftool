@@ -1,5 +1,5 @@
 const seo = {
-  title: ".gitattributes Generator: text=auto, LFS and binary",
+  title: ".gitattributes Generator: text=auto, LFS & binary",
   metaDescription:
     "Build a .gitattributes with the exact git syntax: text=auto, the binary macro, filter=lfs diff=lfs merge=lfs -text, export-ignore and custom diff drivers.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Organ Donor Registration Checklist: Opt-In vs Opt-Out",
+  title: "Organ Donor Checklist: Opt-In vs Opt-Out",
   metaDescription:
     "Pick your country to see its consent system and registry — India, UK, US, Canada, Australia, Spain — then track registration and the family conversation.",
   steps: [

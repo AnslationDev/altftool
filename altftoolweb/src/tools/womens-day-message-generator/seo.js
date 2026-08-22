@@ -1,4 +1,12 @@
 const seo = {
+  title: "Women's Day Message Generator: Wishes by Tone",
+  metaDescription:
+    "Generate 8 March Women's Day messages for family or colleagues — pick tone and length, get up to 8 distinct wordings to copy and edit.",
+  steps: [
+    "Type the recipient's name (optional), then choose the audience — Family & friends or Colleagues & team — a Heartfelt, Empowering, Professional or Playful tone, and a Short, Medium or Long length.",
+    "Set 'How many messages (1-8)', tick 'Add hashtags' to append #InternationalWomensDay tags, and press 'Shuffle wording' to draw a different set from the fixed library.",
+    "Copy any message with its own Copy button or press 'Copy all'; each card shows its word count and the panel reports how many distinct wordings are available.",
+  ],
   intro:
     "This generator assembles complete International Women's Day messages from a curated library of openings, body lines and sign-offs, filtered by audience, tone and length. Choose whether the message is for family and friends or for colleagues, pick a heartfelt, empowering, professional or playful register, and get several distinct wordings you can copy and edit. International Women's Day falls on 8 March every year and has been observed by the United Nations since 1975.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AC Tonnage Calculator: BTU Load, Not a Rule of Thumb",
+  title: "AC Tonnage Calculator: Real BTU Heat Load",
   metaDescription:
     "Size a room AC by adding real heat load — 34 BTU/sq ft, 600 per person, 165 per sq ft of sunlit glass — then compare 3, 4 and 5 star running costs.",
   intro:

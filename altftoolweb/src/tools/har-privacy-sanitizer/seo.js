@@ -1,5 +1,5 @@
 const seo = {
-  title: "HAR File Sanitizer - Strip Cookies, Tokens and Bodies",
+  title: "HAR File Sanitizer: Strip Cookies, Tokens, Bodies",
   metaDescription:
     "Remove Authorization and Cookie headers, tokens in URLs and request or response bodies from a HAR before you share it. Runs locally; 15M-character cap.",
   steps: [

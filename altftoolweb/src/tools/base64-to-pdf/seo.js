@@ -1,5 +1,5 @@
 const seo = {
-  title: "Base64 to PDF: Decode, Preview and Verify the File",
+  title: "Base64 to PDF: Decode, Preview and Verify",
   metaDescription:
     "Decode a Base64 string or data:application/pdf URL back to a PDF, preview it in-browser, and check the %PDF header, startxref and %%EOF.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Crop to Aspect Ratio Calculator with ffmpeg Crop Filter",
+  title: "Crop to Aspect Ratio Calculator with ffmpeg",
   metaDescription:
     "Get the largest crop that fits a target ratio — width, height and offsets snapped to even pixels for 4:2:0 video, plus a ready ffmpeg crop string.",
   steps: [

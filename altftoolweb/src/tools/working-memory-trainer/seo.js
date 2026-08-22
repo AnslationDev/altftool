@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dual N-Back Working Memory Trainer (Adaptive)",
+  metaDescription:
+    "Adaptive dual n-back: 20 scored trials, press A for position and L for spoken-letter matches; 80%+ raises the n-level, under 50% lowers it.",
+  steps: [
+    "Choose Single N-Back (Visual) or Dual N-Back (Visual + Audio), set the N-Level with the + and - buttons, then click Start Session.",
+    "During the 20 scored trials, press A when the grid position matches the one from n steps back and L when the spoken letter does.",
+    "Review your % score with Position and Audio hits, misses and false alarms — scoring 80% or higher raises the n-level shown on the Continue button.",
+  ],
   intro:
     "This is a dual n-back trainer: a square lights up on a 3x3 grid while a letter is spoken, and you press A when the position repeats the one from n steps back and L when the letter does. A session runs 20 scored trials with stimuli shown for 500 ms every 2.5 seconds and roughly 30% of trials set as targets, then scores you as hits minus false alarms over the number of targets. Score 80% or better and it moves you up an n-level; drop below 50% and it steps you back down.",
   useCases: [

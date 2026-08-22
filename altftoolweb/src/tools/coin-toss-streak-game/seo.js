@@ -1,4 +1,7 @@
 const seo = {
+  title: "Coin Toss Streak Game — Longest Run in 20 Flips",
+  metaDescription:
+    "Flip 20 fair coins at once and see the longest run of heads or tails. The full H/T sequence and count show how often streaks of 5+ appear by pure chance.",
   intro:
     "The Coin Toss Streak Game flips 20 fair coins in one go and reports the longest run of the same face, along with the full H/T sequence in two blocks of ten and the heads-versus-tails count. It exists to make one point visible: streaks are ordinary. Press regenerate as many times as you like and watch how often a run of four, five or six shows up in a sequence that is genuinely 50/50.",
   useCases: [

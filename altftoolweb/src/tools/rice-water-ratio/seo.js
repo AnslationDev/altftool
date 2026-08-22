@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rice Water Ratio Chart: 13 Grains, 3 Cooking Methods",
+  title: "Rice Water Ratio Chart: 13 Grains, 3 Methods",
   metaDescription:
     "Basmati 1:1.5, jasmine 1:1.25 — exact water for 13 grains by open pot, pressure cooker or rice cooker, with cooked yield and servings.",
   steps: [

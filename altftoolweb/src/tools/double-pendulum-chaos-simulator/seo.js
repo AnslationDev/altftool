@@ -1,5 +1,5 @@
 const seo = {
-  title: "Double Pendulum Simulator – RK4 Chaos You Can Watch",
+  title: "Double Pendulum Simulator: RK4 Chaos",
   metaDescription:
     "Runge-Kutta double pendulum with live sliders for mass, length, gravity and damping, plus a comparison mode offset by 0.001 rad to make chaos visible.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Calculator Australia: Add or Remove 10% GST",
+  metaDescription:
+    "Add 10% GST or take it out with the ATO divide-by-11 rule, map the result to BAS labels G1, 1A and 1B, and check the $75,000 registration threshold.",
+  steps: [
+    "Toggle 'Add GST' or 'Remove GST', enter the price, and pick a GST treatment — 'Taxable (10%)', 'GST-free (0%)' or 'Input taxed (0%)'.",
+    "The result recomputes live: price excluding GST, the GST amount, price including GST and the 'One eleventh of the inclusive price' check, while the BAS section turns sales (G1) and purchases (G11) into 1A, 1B and the 7A/7B net.",
+    "Press 'Copy result' for a text summary, and check 'Do I need to register for GST?' against the $75,000 threshold ($150,000 for not-for-profits).",
+  ],
   intro:
     "This calculator adds Australia's 10% GST to a price or takes it back out using the ATO's divide-by-11 rule. Adding GST multiplies the exclusive price by 1.1; removing it divides the inclusive price by 11 to get the tax, because one eleventh of a GST-inclusive amount is exactly the GST. It also builds a BAS summary — G1 total sales, 1A GST on sales, 1B GST credits on purchases — and checks the $75,000 registration threshold.",
   useCases: [

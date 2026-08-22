@@ -1,5 +1,5 @@
 const seo = {
-  title: "GCP Cloud Run Cost Calculator (Free Tier & Concurrency)",
+  title: "GCP Cloud Run Cost Calculator with Free Tier",
   metaDescription:
     "Estimate a Cloud Run monthly bill at Tier 1 rates after the 180k vCPU-s, 360k GiB-s and 2M request free tier, modelling concurrency and warm instances.",
   steps: [

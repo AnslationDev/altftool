@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bihu Wishes Generator: Rongali, Bhogali & Kongali",
+  metaDescription:
+    "Bihu greetings for the right festival — Rongali, Bhogali or Kongali — in Assamese script, Roman Assamese, English or Hindi, with a day countdown.",
+  steps: [
+    "Choose Which Bihu? — Rongali (Bohag), Bhogali (Magh) or Kongali (Kati), each shown with its typical date — plus the language and who it's for.",
+    "Set how many messages (1-4), optional recipient and sign-off names, and a Count down from date for the days-to-festival figure.",
+    "Click Shuffle wording for other versions and Copy all to take them; each greeting shows its characters and SMS parts, and Rongali lists the seven days.",
+  ],
   intro:
     "The Bihu Wishes Generator writes greetings for the correct Bihu, because Assam keeps three of them: Rongali or Bohag Bihu in mid-April, which is the Assamese new year; Bhogali or Magh Bihu in mid-January, the harvest feast; and Kongali or Kati Bihu in mid-October, the austere one. Messages come in Assamese script, Roman Assamese, English and Hindi, split by audience, with the seven-day Rongali calendar and a rough countdown to the next observance.",
   useCases: [

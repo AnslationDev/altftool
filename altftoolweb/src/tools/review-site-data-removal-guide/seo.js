@@ -1,5 +1,5 @@
 const seo = {
-  title: "Remove Your Personal Data From Review Sites: A Plan",
+  title: "Remove Personal Data From Review Sites: A Plan",
   metaDescription:
     "Pick what to remove and where you live, and get a dated escalation ladder — one month under GDPR Article 12(3), 15 days under India's IT Rules 2021.",
   steps: [

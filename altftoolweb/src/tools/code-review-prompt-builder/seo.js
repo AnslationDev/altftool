@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Code Review Prompt Builder with OWASP Checklists",
+  title: "Code Review Prompt Builder with OWASP Checklists",
   metaDescription:
     "Builds a review prompt with correctness, OWASP Top 10, performance and style checklists, blocker to nit severities, and a 400-LOC review-size split.",
   steps: [

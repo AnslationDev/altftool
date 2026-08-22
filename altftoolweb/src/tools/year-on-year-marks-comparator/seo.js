@@ -1,4 +1,12 @@
 const seo = {
+  title: "Year-on-Year Marks Comparator with Trend Analysis",
+  metaDescription:
+    "Convert each year's marks to a percentage, see the point change between periods, and get an improving or declining verdict from a fitted trend line.",
+  steps: [
+    "Enter each period's name, marks obtained and maximum marks — different maximums compare fairly because every period becomes a percentage — and press 'Add period' for up to 12 rows.",
+    "Read the percentage bar for each period with its change from the previous one shown in percentage points.",
+    "Check the overall trend — Improving, Stable or Declining from the least-squares slope — plus best and weakest periods and the next-period projection, then press 'Copy result'.",
+  ],
   intro:
     "This tool compares marks across years or semesters by converting each period to a percentage and reporting the change between consecutive periods in percentage points. It then fits an ordinary least-squares trend line (percentage against period number) to classify your trajectory as improving, stable or declining. It is built for students and parents who want to see whether performance is genuinely trending up, not just bouncing around a single good or bad result.",
   useCases: [

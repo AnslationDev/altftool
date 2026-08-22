@@ -1,4 +1,12 @@
 const seo = {
+  title: "Poland VAT Calculator: Netto/Brutto 23%, 8%, 5%",
+  metaDescription:
+    "Convert prices between netto and brutto at 23%, 8% or 5% VAT, test the PLN 200,000 exemption limit and flag split-payment invoices over PLN 15,000.",
+  steps: [
+    "Choose Netto → Brutto or Brutto → Netto, enter the amount and pick the Stawka VAT (23%, 8%, 5%, 0% or a custom rate).",
+    "Read the kwota netto, VAT and kwota brutto breakdown with the split-payment note, and compare the same net price at every Polish rate.",
+    "Enter Annual sales, excluding tax and Months trading this year to test the art. 113 zwolnienie podmiotowe, then click Copy result.",
+  ],
   intro:
     "This calculator converts Polish prices between netto and brutto at the 23% stawka podstawowa and the 8% and 5% reduced rates set by the ustawa o VAT. Adding tax multiplies the net figure by 1.23; the reverse calculation — the metoda w stu — divides the gross figure by 1.23, so the VAT inside a standard-rated price is 23/123 of it. It also tests the PLN 200,000 art. 113 exemption limit and flags invoices above PLN 15,000 gross that may need split payment.",
   useCases: [

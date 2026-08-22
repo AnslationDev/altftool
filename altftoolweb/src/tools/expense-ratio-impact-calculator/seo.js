@@ -1,4 +1,7 @@
 const seo = {
+  title: "Expense Ratio Calculator: Direct vs Regular",
+  metaDescription:
+    "Compare two mutual fund expense ratios on a SIP or lumpsum — regular vs direct — and see the corpus lost, a zero-cost benchmark and the yearly gap.",
   "intro": "Expense Ratio Impact Calculator shows the money a mutual fund's annual charge quietly removes from your corpus over a long holding period. Enter a SIP or lumpsum, a gross return, and two expense ratios — typically a regular plan against its direct plan — and it compares the final corpus under each, plus a zero-cost benchmark. Because the fee is charged on the whole portfolio every year, the loss compounds far beyond the headline percentage.",
   "useCases": [
     "See what switching a 20-year SIP from a 1.75% regular plan to a 0.6% direct plan is worth.",

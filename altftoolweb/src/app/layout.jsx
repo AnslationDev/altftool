@@ -26,6 +26,7 @@ import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
 import {
   createOrganizationJsonLd,
+  createSiteNavigationJsonLd,
   createWebsiteJsonLd,
   siteConfig,
 } from "@/platform/seo/generateMetadata";
@@ -293,7 +294,11 @@ export default async function RootLayout({ children }) {
         <ProductionAdSenseScript enabled={shouldLoadGoogleAds} />
         <JsonLd
           id="altftool-site-schema"
-          data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
+          data={[
+            createOrganizationJsonLd(),
+            createWebsiteJsonLd(),
+            createSiteNavigationJsonLd(),
+          ]}
         />
 
         {/* Resolve the theme before the first byte of <body> is parsed.

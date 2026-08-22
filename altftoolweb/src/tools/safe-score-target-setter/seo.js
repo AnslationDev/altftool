@@ -1,5 +1,5 @@
 const seo = {
-  title: "Safe Score Target Setter: Cutoff Buffer + Attempt Plan",
+  title: "Safe Score Target Setter: Cutoff Buffer & Plan",
   metaDescription:
     "Turn past cutoffs into a target: their standard deviation times the z value for 80-99% confidence, then an attempt plan under negative marking.",
   steps: [

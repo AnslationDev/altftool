@@ -1,5 +1,5 @@
 const seo = {
-  title: "UAE IDP Requirement Checker: Tourist vs Residence Visa",
+  title: "UAE IDP Checker: Tourist vs Residence Visa",
   metaDescription:
     "Says whether the UAE expects an International Driving Permit with your licence, and why a residence visa stops both being accepted at all.",
   steps: [

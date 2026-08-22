@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Locker Cost Estimator - Rent, GST, RBI Liability Cap",
+  title: "Bank Locker Cost Estimator: Rent, GST, RBI Cap",
   metaDescription:
     "Price a bank locker over the years you will hold it: rent plus 18% GST, the 3-year term deposit blocked, and the gap above RBI's 100x-rent liability cap.",
   steps: [

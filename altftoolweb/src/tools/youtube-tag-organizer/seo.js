@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Tag Organizer: Dedupe & Fit 500 Chars",
+  metaDescription:
+    "Dedupes pasted tags, groups them broad, specific and long-tail, and trims to YouTube's 500-character field, counting commas and quotes like the API does.",
+  steps: [
+    "Paste your list into 'Your tags (commas or new lines)', add 'Brand / channel terms (kept first)' and pick a Video type.",
+    "Watch characters used against the 500-character tags field — commas and the quotes around multi-word tags are counted, as the YouTube Data API does.",
+    "Check the mix against the video-type target and the 'Kept tags, in order' list, then click Copy tags.",
+  ],
   intro:
     "YouTube Tag Organizer takes a pasted tag list, removes case-insensitive duplicates, groups every tag as brand, broad, specific or long-tail, and trims the set to YouTube's 500-character tags field. It counts characters the way the YouTube Data API does — the commas between tags count, and any tag containing a space is wrapped in quotes that count too — so the number you see is the number the field will actually use.",
   useCases: [

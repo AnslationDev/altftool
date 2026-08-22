@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Diff Tool — Compare & Export Unified Diff",
+  metaDescription:
+    "Line-by-line diff with the LCS algorithm: added and removed lines, similarity %, and a unified diff you can copy. Handles up to 2,000 lines per side.",
+  steps: [
+    "Paste the two versions into the Original and Changed boxes — up to 2,000 lines per side.",
+    "Tick Ignore letter case or Ignore whitespace changes if needed, and set Context lines in the unified diff (0–20, default 3).",
+    "Read the similarity score with lines added and removed, check the colour-coded Line by line table, and click Copy diff for the ---/+++/@@ unified diff.",
+  ],
   intro:
     "A text diff tool compares two versions of a document line by line and reports exactly which lines were added, removed or left alone. This one computes the longest common subsequence with the Hunt-McIlroy dynamic program — the same idea behind diff(1) — so the edit script it produces is minimal, and it can export the result as a unified diff that `git apply` and `patch` both understand. It handles up to 2,000 lines per side and runs entirely in your browser.",
   useCases: [

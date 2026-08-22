@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hip Hop Dance Calories: Full-Out Runs vs Marking",
+  metaDescription:
+    "Estimates a session's burn by pricing full-out run-throughs at the style's MET (5.5-9.0) and marking time at 2.8 MET, with kcal per run and per hour.",
+  steps: [
+    "Enter body weight (kg or lb), total studio time in minutes, your number of full-out run-throughs and the length of one run in seconds.",
+    "Pick what the routine demands — from grooves at 5.5 MET up to breaking/power moves at 9.0 MET; marking time in between is priced at 2.8 MET.",
+    "Read the session's kcal split between run-throughs and marking, plus calories per run-through and the non-stop hourly rate, then click Copy result.",
+  ],
   intro:
     "The Hip Hop Dance Calorie Calculator estimates the energy cost of a choreography or freestyle session by splitting studio time into full-out run-throughs and the marking, counting and listening in between. Run-throughs are priced at the Compendium of Physical Activities MET value for the style — 5.5 for grooves up to 9.0 for breaking — and marking at 2.8 MET, then converted with kcal/min = MET x 3.5 x kg / 200.",
   useCases: [

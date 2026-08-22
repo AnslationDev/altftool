@@ -1,4 +1,12 @@
 const seo = {
+  title: "Domain Expiry Date Lookup via RDAP Records",
+  metaDescription:
+    "Look up a domain's registration, expiry and last-changed dates plus EPP status codes and registrar handle straight from the registry's RDAP record.",
+  steps: [
+    "Type the domain into the Lookup field — a pasted URL is trimmed down to its bare host name.",
+    "Press Get current result to fetch the domain's record from the RDAP registry service.",
+    "Read the Registration, Expiration, Last changed, Status and Registrar rows — fields a registry omits show as Not supplied.",
+  ],
   intro:
     "Domain Expiry Radar looks up a domain in the RDAP registry system and reports its registration, expiration and last-changed dates alongside its EPP status codes and registrar handle. Enter a domain name and the tool queries the RDAP bootstrap service, pulls the registry's own event records, and lays them out as plain rows. It is built for anyone who needs the authoritative expiry date from the registry rather than a scraped or cached WHOIS copy.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hostel vs PG Calculator: Deposit & Upfront Cash",
+  metaDescription:
+    "Compare hostel vs PG over your stay: rent, mess, utilities and commute per month plus one-time charges, with refundable deposits shown as locked-up cash.",
+  steps: [
+    "Set Planned stay (months) and fill both the Hostel and PG panels in INR: Rent / fee, Mess / food, Electricity-wifi-laundry, Commute, non-refundable one-time charges and the refundable security deposit.",
+    "Read the Difference over the stay figure and its verdict (e.g. 'The hostel works out cheaper'), with a table of monthly recurring, total, effective per month and upfront cash needed including deposit.",
+    "Click Copy result for a plain-text summary of both options, or Reset to restore the default numbers.",
+  ],
   intro:
     "This comparator computes the true total cost of a college hostel versus a paying-guest (PG) stay over your planned duration: monthly rent, food, utilities and commute multiplied by the months, plus non-refundable one-time charges like admission fees and brokerage. Refundable security deposits are reported separately as locked-up cash rather than cost, so students and parents can see both which option is cheaper and how much money each needs on day one.",
   useCases: [

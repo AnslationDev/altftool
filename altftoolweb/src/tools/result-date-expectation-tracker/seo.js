@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Result Date Predictor from Past Cycle Gaps",
+  metaDescription:
+    "Enter your exam date and past exam-to-result gaps in days; get earliest, median-likely and latest result dates, plus whether checking today makes sense.",
+  steps: [
+    "Pick the exam date (this cycle) and type past exam-to-result gaps in days, comma separated — e.g. 34, 41, 38; one past cycle is enough.",
+    "Read the projected window — earliest, most likely (median) and latest expected dates, each with its +days offset — alongside the average past gap.",
+    "Check the status line for whether today is before, inside or past the expected window, then click Copy result.",
+  ],
   intro:
     "This tracker projects when an exam result is realistically due by adding the minimum, median and maximum exam-to-result gaps from past cycles to this cycle's exam date. The median is used for the 'most likely' date because it resists a single delayed outlier year. It is for aspirants tired of refreshing result pages — the tracker says whether today is before, inside or past the historically expected window.",
   useCases: [

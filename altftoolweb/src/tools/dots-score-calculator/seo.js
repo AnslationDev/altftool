@@ -1,4 +1,12 @@
 const seo = {
+  title: "DOTS Score Calculator (Powerlifting, kg or lb)",
+  metaDescription:
+    "Enter bodyweight, squat, bench and deadlift in kg or lb to get your DOTS coefficient and score, plus the totals behind 300-600 DOTS targets.",
+  steps: [
+    "Choose the Coefficient set — Men (40–210 kg) or Women (40–150 kg) — and Kilograms or Pounds under Units.",
+    "Enter Bodyweight, Squat, Bench press and Deadlift; the score recomputes as you type.",
+    "Read the DOTS score with its coefficient, lift split and the 'Totals behind each DOTS target' table for 300-600, then press Copy result.",
+  ],
   intro:
     "DOTS — Dynamic Objective Team Scoring — converts a powerlifting total into a bodyweight-adjusted score using the coefficient 500 ÷ (Ax⁴ + Bx³ + Cx² + Dx + E), where x is bodyweight in kilograms. Tim Konertz designed it as a raw-lifting replacement for Wilks, and it is the score OpenPowerlifting and several federations now publish. Enter bodyweight and the three lifts in kilograms or pounds to get the coefficient, the score and the total needed for common targets.",
   useCases: [

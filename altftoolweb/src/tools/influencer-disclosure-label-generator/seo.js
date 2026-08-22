@@ -1,5 +1,5 @@
 const seo = {
-  title: "Influencer Disclosure Label Generator: ASCI, FTC, ASA",
+  title: "Influencer Disclosure Generator: ASCI, FTC & ASA",
   metaDescription:
     "Get the exact ad label for ASCI, FTC, ASA or EU rules by platform and deal type, with placement, on-screen duration and a truncation check.",
   steps: [

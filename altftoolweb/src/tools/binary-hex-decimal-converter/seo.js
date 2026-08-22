@@ -1,5 +1,5 @@
 const seo = {
-  title: "Binary, Hex & Decimal Converter with BigInt Precision",
+  title: "Binary, Hex & Decimal Converter (BigInt-Exact)",
   metaDescription:
     "Type a number in any base and see decimal, binary, 0x hex, the Unicode character and bit length at once — BigInt-exact beyond 64 bits.",
   intro:

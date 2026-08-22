@@ -1,4 +1,7 @@
 const seo = {
+  title: "Business Days Calculator — Weekdays Between Dates",
+  metaDescription:
+    "Count Mon-Fri working days between two dates, both endpoints included, with total and weekend day counts shown. Holidays not deducted.",
   intro:
     "This calculator counts the working days between two dates by walking the calendar one day at a time and keeping every Monday through Friday, discarding Saturday and Sunday. Both the start date and the end date are counted, so a Monday-to-Friday range returns 5 business days, not 4. Alongside the working-day figure it shows the total calendar days in the range and how many of those were weekend days.",
   useCases: [

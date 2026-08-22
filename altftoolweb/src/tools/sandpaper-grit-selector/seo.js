@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sandpaper Grit Selector — Sequence + FEPA/CAMI",
+  metaDescription:
+    "Builds your grit progression from surface condition to finish — max 1.65× particle-size steps — with FEPA-CAMI conversion, sheets and sanding time.",
+  steps: [
+    "Pick the Material, 'Condition it is in now' and 'What goes on afterwards' — the finish sets the stopping grit.",
+    "Enter Area to sand (m²), 'Minutes per m², per grit' and how many m² one sheet or disc lasts.",
+    "Get the P-grit sequence with CAMI equivalents and particle sizes in µm, plus total minutes and sheets, then press Copy result.",
+  ],
   intro:
     "Generates the grit progression for a sanding job from the state of the surface to the finish going on top of it. The sequence is built from abrasive particle size rather than habit: each step drops the average particle diameter by no more than 1.65 times and skips at most one grade, which is what produces the familiar 80-120-180-220 run. It also converts between the FEPA (P-prefixed) and CAMI grit standards, which agree up to about 220 and diverge badly after it.",
   useCases: [

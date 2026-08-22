@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bengali Word of the Day: 30-Word Deck",
+  metaDescription:
+    "One Bengali word a day from a 30-word deck — script, spoken-style romanisation, meaning and example sentence, with a streak saved only in your browser.",
+  steps: [
+    "Pick any date in the Date field, or move with the Previous day and Next day buttons — the 30-word deck is fixed by calendar date.",
+    "Study the card's Bengali script, romanisation, part of speech, meaning and example sentence, then press Mark studied to extend your streak.",
+    "Click Copy card to copy the full word card; the streak counter is saved only in this browser's local storage.",
+  ],
   "intro": "A Bengali word-of-the-day deck of 30 curated words, each with its Bengali script spelling, a romanised reading that reflects how the word is actually pronounced, the part of speech, an example sentence and a note on usage. The word is chosen by the calendar date rather than at random, so everyone studying on a given day sees the same card and you can move to any date. A streak counter is stored only in your browser.",
   "useCases": [
     "Learn the Bengali words that have no clean English equivalent, such as অভিমান and মায়া.",

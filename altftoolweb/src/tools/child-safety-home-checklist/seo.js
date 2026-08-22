@@ -1,5 +1,5 @@
 const seo = {
-  title: "Childproofing Checklist by Age with Readiness Score",
+  title: "Childproofing Checklist by Age + Readiness Score",
   metaDescription:
     "Filters home-safety items to your child's age and your stairs, balcony or water storage, then scores readiness with critical hazards counted triple.",
   steps: [

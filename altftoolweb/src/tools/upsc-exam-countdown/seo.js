@@ -1,5 +1,5 @@
 const seo = {
-  title: "UPSC Prelims & Mains Countdown with Study-Hour Budget",
+  title: "UPSC Prelims & Mains Countdown with Study Hours",
   metaDescription:
     "A live countdown to UPSC Prelims or Mains, total study hours at your daily target, and the dates when 25/50/75/90% of prep time will be gone.",
   steps: [

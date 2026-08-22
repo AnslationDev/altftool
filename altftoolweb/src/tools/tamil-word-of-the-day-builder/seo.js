@@ -1,4 +1,10 @@
 const seo = {
+  title: "Tamil Word of the Day: Script & Romanised Reading",
+  steps: [
+    "Pick any date in the \"Date\" field or move with the \"Previous day\" / \"Next day\" buttons — each date maps to one card from the curated 30-word Tamil deck.",
+    "Study the card — Tamil-script headword, romanisation, part of speech, meaning, note and an \"In a sentence\" example — then press \"Mark studied\" to update the streak kept only in this browser.",
+    "Press \"Copy card\" to copy the card as text, check \"The next 7 days\" preview table, or search the deck by word, romanisation or meaning.",
+  ],
   "intro": "A Tamil word-of-the-day deck of 30 curated words, each with its Tamil script spelling, a romanised reading, the part of speech, an example sentence and a note on the root or a related classical usage. The card is selected by the calendar date rather than at random, so the same date always yields the same word. A streak counter is stored in your own browser.",
   "useCases": [
     "Add one precise Tamil word a day rather than working through an undifferentiated vocabulary list.",

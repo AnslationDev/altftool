@@ -1,5 +1,5 @@
 const seo = {
-  title: "Testosterone Lifestyle Checklist: 17 Habits Scored",
+  title: "Testosterone Lifestyle Checklist: 17 Habits",
   metaDescription:
     "Score 17 evidence-weighted habits — sleep, waist, training, diet, alcohol, stress — into a percent with category breakdown and top gaps. Not a blood test.",
   steps: [

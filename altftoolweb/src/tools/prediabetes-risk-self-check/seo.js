@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prediabetes Risk Self-Check: ADA/CDC Score and IDRS",
+  title: "Prediabetes Risk Self-Check: ADA/CDC Score & IDRS",
   metaDescription:
     "One set of answers scores the seven-item ADA/CDC risk test out of 11 and the Indian Diabetes Risk Score out of 100, with every point shown.",
   steps: [

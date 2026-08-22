@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Copilot Prompt Builder for 13 Languages",
+  metaDescription:
+    "Turns a coding task into a goal-inputs-output-constraints-example Copilot prompt as a comment block with a function stub, in 13 languages.",
+  steps: [
+    "Describe 'The task (one task only)', pick one of 13 languages from JavaScript through SQL and Shell/Bash, and name the function.",
+    "Add Inputs, the Output / return value, Constraints one per line and an 'Example input → output', then pick the Prompt style — inline comment or Copilot Chat.",
+    "The comment-block prompt with a signature stub renders live, with warnings for compound or underspecified tasks; click 'Copy result'.",
+  ],
   intro:
     "This builder turns a plain-English coding task into a structured GitHub Copilot prompt — goal, inputs, expected output, one constraint per line, then a concrete example — rendered as a comment block in your language's syntax with a function stub to complete from. The structure follows GitHub's published prompt-engineering guidance for Copilot: set context first, keep to a single task, and steer with an input → output example.",
   useCases: [

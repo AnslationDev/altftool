@@ -1,5 +1,5 @@
 const seo = {
-  title: "Service Bond Calculator: Pro-Rata Exit Cost & Probation",
+  title: "Service Bond Calculator: Pro-Rata Exit Cost",
   metaDescription:
     "What leaving a bank or government job early costs: pro-rata bond = amount x months remaining / bond period, or full recovery. Plus DoPT probation rules.",
   steps: [

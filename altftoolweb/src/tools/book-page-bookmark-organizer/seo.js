@@ -1,5 +1,5 @@
 const seo = {
-  title: "Book Page Organizer — Topic Index Across Your Books",
+  title: "Book Page Organizer: Topic Index Across Books",
   metaDescription:
     "Log topic, book and page range for every reference and get one sorted index — grouped by topic, ordered by book and start page — saved in your browser.",
   steps: [

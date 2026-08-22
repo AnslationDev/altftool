@@ -1,4 +1,12 @@
 const seo = {
+  title: "Malayalam Word of the Day with Meaning & Streak",
+  metaDescription:
+    "One Malayalam word per date in script with ISO 15919 transliteration, meaning and example sentence. 40-word deck, browser-local revision streak.",
+  steps: [
+    "Pick a date in the Date field (it defaults to today) — the 40-word deck's card for that date shows the Malayalam script word, its ISO 15919 transliteration, meaning and example sentence.",
+    "Press \"Mark as revised\" to log the day — the Revision streak panel counts current streak, longest streak and days revised in your browser's local storage.",
+    "Click \"Copy card\" to copy the card as text ending in \"Card N of 40\", or search the deck by script, transliteration or meaning.",
+  ],
   intro:
     "Malayalam Word of the Day gives one Malayalam word for each calendar date, showing the മലയാളം script form, an ISO 15919 transliteration, the meaning and an example sentence with an English translation. Because the word is derived from the date rather than picked at random, two people studying on the same day always land on the same card. A browser-local streak counter records the consecutive days you actually revised.",
   useCases: [

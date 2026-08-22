@@ -1,4 +1,7 @@
 const seo = {
+  title: "Magic 8 Ball: Ask a Yes/No Question & Shake",
+  metaDescription:
+    "Type a yes/no question and shake for one of 13 classic replies - six affirmative, three non-committal, four negative - each an independent random draw.",
   intro:
     "Magic 8 Ball is a digital version of the classic fortune-telling toy: type a yes-or-no question, shake, and it returns one of 13 stock replies picked uniformly at random. Six are affirmative, three are non-committal, and four are negative, so every shake is an independent draw with no memory of what came before. It is a novelty and a party game, not a decision-making system.",
   useCases: [

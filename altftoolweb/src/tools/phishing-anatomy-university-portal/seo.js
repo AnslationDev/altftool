@@ -1,5 +1,5 @@
 const seo = {
-  title: "University Portal Phishing: Read the Link Right to Left",
+  title: "University Phishing: Read the Link Right to Left",
   metaDescription:
     "Splits a student-portal link into scheme, subdomain, registrable domain and path, marks the part that decides where you land, and never fetches it.",
   steps: [

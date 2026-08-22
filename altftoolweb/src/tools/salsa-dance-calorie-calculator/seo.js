@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salsa Calorie Calculator — Counted Song by Song",
+  metaDescription:
+    "Prices the songs you danced at your style's MET value (3.0 bachata to 7.8 performance) and off-floor time at 1.6 MET, so breaks are not overcounted.",
+  steps: [
+    "Enter \"Body weight\" in kg or lb and choose a \"Salsa style / intensity\" from bachata (3.0 MET) up to performance rehearsal (7.8 MET).",
+    "Fill \"Songs actually danced\", \"Average song length (minutes)\" and \"Total time at class/social (minutes)\" — remaining off-floor minutes are priced at 1.6 MET.",
+    "Read gross and net kcal with calories per song, floor share and average MET, then press \"Copy result\".",
+  ],
   intro:
     "The Salsa Dance Calorie Calculator works out the energy cost of a class or social by counting the songs you actually danced rather than the hours you were in the room. Dancing minutes are priced at the Compendium of Physical Activities MET value for your style — 3.0 for slow bachata up to 7.8 for fast performance work — and the remaining time at 1.6 MET for standing and talking, using kcal/min = MET x 3.5 x kg / 200.",
   useCases: [

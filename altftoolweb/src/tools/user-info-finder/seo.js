@@ -1,5 +1,5 @@
 const seo = {
-  title: "User Info Finder: Search Your Own CSV or JSON List",
+  title: "User Info Finder: Search Your Own CSV or JSON",
   metaDescription:
     "Not a people-search. Paste your own CSV, TSV or JSON export and query it with field:value, quoted phrases and -exclusions, all inside the browser.",
   steps: [

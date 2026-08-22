@@ -1,5 +1,5 @@
 const seo = {
-  title: "Staking Reward Calculator — APR to APY After Commission",
+  title: "Staking Reward Calculator — APR to APY",
   metaDescription:
     "Turns an advertised APR into effective APY and end balance, deducting validator commission before compounding at your payout frequency.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Job Offer Comparison: Weight Salary vs Remote & Growth",
+  title: "Job Offer Comparison: Salary vs Remote & Growth",
   metaDescription:
     "Score competing offers on weights you set: salary, remote, growth, stability, learning. Remote scores 100, hybrid 60, on-site 20; ESOP over a 4-year vest.",
   steps: [

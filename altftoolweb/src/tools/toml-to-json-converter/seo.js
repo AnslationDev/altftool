@@ -1,5 +1,5 @@
 const seo = {
-  title: "TOML to JSON Converter (Strict TOML v1.0.0 Parser)",
+  title: "TOML to JSON Converter (Strict TOML v1.0.0)",
   metaDescription:
     "Convert Cargo.toml, pyproject.toml or any TOML v1.0.0 to JSON — dotted keys, arrays of tables and date-times handled; parse errors report the line.",
   steps: [

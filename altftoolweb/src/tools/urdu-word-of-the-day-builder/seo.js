@@ -1,4 +1,12 @@
 const seo = {
+  title: "Urdu Word of the Day: Nastaliq Deck of 30",
+  metaDescription:
+    "A 30-word Urdu deck fixed by date: Nastaliq script, Roman Urdu reading, meaning, example sentence and origin note, with a browser-saved streak.",
+  steps: [
+    "Pick a date in the Date field or use the Previous day / Next day buttons — the 30-word deck is keyed to the calendar date, so each date maps to one word.",
+    "Study the Nastaliq headword with its Roman reading, meaning, example sentence and Arabic-or-Persian origin note, then press Mark studied to grow the streak.",
+    "Click Copy card to copy the card as text; the streak is kept only in this browser's local storage.",
+  ],
   "intro": "An Urdu word-of-the-day deck of 30 curated words, each shown in Nastaliq script with a Roman Urdu reading, the part of speech, an example sentence and a note on its Arabic or Persian origin. The word is fixed by the calendar date rather than chosen at random, so the same date always shows the same word and you can move to any past or future day. A streak counter is kept in your own browser.",
   "useCases": [
     "Learn the Persian and Arabic vocabulary that carries most of Urdu's formal and poetic register.",

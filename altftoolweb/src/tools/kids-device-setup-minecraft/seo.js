@@ -1,4 +1,12 @@
 const seo = {
+  title: "Minecraft Parental Controls Checklist by Age",
+  metaDescription:
+    "Answer age, edition and play style to get the exact Xbox privacy, Realm, chat and spending settings with menu paths, plus a weighted coverage score.",
+  steps: [
+    "Enter the player's age (3-17), pick the edition — Bedrock or Java — and how they play, from solo or split-screen to public community servers.",
+    "Work through the Essential, Recommended and Optional steps; each names the exact menu path, and ticking a step updates the weighted coverage score.",
+    "Press 'Copy plan' to copy the checklist with your coverage percentage and the steps still to do, ready to hand to the other parent.",
+  ],
   intro:
     "This planner turns a child's age, Minecraft edition and play style into the specific list of Xbox privacy, Realm, chat and spending settings that apply to them, and scores how much of that list is done. Minecraft itself has few safety controls — most of the protection lives in the Microsoft account it signs into, so the checklist covers both the game menus and account.xbox.com. Built for parents who want the menu paths rather than general advice.",
   useCases: [

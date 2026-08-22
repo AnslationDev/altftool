@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hangman Word Game: 240 Words in Four Categories",
+  metaDescription:
+    "Guess the hidden word before six wrong letters end the round — 240 words across Animals, Countries, Fruits & Food and Technology, with hints and streaks.",
+  steps: [
+    "Pick a category — Animals, Countries, Fruits & Food, Technology or \"All categories\" — and press \"Start game\".",
+    "Guess letters by typing or tapping the on-screen keyboard; six wrong letters end the round, and the \"Hint\" button (2 per round, -15 pts each) reveals one letter.",
+    "Win to score 20 points plus 10 per remaining life, keep your streak alive round to round, and press Enter for the next word.",
+  ],
   intro:
     "Hangman is the classic word game where you guess a hidden word one letter at a time and six wrong letters end the round. This version draws from 240 words across four categories — Animals, Countries, Fruits & Food and Technology — or mixes all of them, and scores each win at 20 points plus 10 for every life you still had, minus 15 for each hint you spent. It tracks your streak and your best score, and works with either the on-screen keys or a physical keyboard.",
   useCases: [

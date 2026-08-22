@@ -1,5 +1,5 @@
 const seo = {
-  title: "Form D Attendance Register Format for Any Wage Month",
+  title: "Form D Attendance Register Format: Any Wage Month",
   metaDescription:
     "One column per calendar day with leap years handled, weekly offs marked WO, holidays PH, the code legend printed, and CSV for Excel or Google Sheets.",
   steps: [

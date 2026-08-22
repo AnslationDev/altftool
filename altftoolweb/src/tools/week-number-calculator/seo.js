@@ -1,5 +1,5 @@
 const seo = {
-  title: "Week Number Calculator: ISO-8601 Week for Any Date",
+  title: "Week Number Calculator: ISO-8601 for Any Date",
   metaDescription:
     "Get the ISO-8601 week number and week-year for any date, plus the Monday and Sunday that bound it, the day of year, month and quarter.",
   steps: [

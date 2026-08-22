@@ -1,5 +1,5 @@
 const seo = {
-  title: "Leh Ladakh Trip Budget: Per Person and Per Day Cost",
+  title: "Leh Ladakh Trip Budget: Per Person & Per Day",
   metaDescription:
     "Costs the taxi per vehicle, not per head, separates rest days from touring days, and adds the Inner Line Permit levies. Splits by person and by day.",
   steps: [

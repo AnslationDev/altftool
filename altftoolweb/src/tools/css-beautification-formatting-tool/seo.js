@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Beautifier and Minifier with Syntax Validation",
+  title: "CSS Beautifier & Minifier with Syntax Validation",
   metaDescription:
     "Re-indent CSS at 2 spaces, 4 spaces or tabs, get the minified string and the byte saving, and see missing braces, semicolons and duplicate properties.",
   intro:

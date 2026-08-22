@@ -1,5 +1,5 @@
 const seo = {
-  title: "Recipe Scaler: Servings or Pan Size, in Real Fractions",
+  title: "Recipe Scaler: Servings or Pan Size, in Fractions",
   metaDescription:
     "Scales ingredients by servings or pan area, an 8-inch to 9-inch round is 1.27x, into 1 1/2 style fractions, and flags salt, spice, leavening and eggs.",
   steps: [

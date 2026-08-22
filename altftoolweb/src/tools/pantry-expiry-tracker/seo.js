@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pantry Expiry Tracker: USDA FoodKeeper",
+  metaDescription:
+    "List fridge, freezer and cupboard items, sort by days left with USDA FoodKeeper shelf lives, and see the money at risk in your reminder window.",
+  steps: [
+    "Set 'Today's date' and 'Remind me this many days ahead', then click 'Add item' and give each food a Name, 'Food type', 'Stored in' location and 'Use by' date.",
+    "Press 'Use FoodKeeper shelf life' to fill the use-by date from USDA storage times for that food and location, and add Quantity and 'Unit cost (INR)' to price it.",
+    "Read 'Items needing attention', the 'Use-first order' table sorted by days left, and the value at risk or already lost, then click 'Copy list'.",
+  ],
   intro:
     "The Pantry Expiry Tracker sorts everything in your kitchen by days remaining and tells you what to cook first, using the storage times published in the USDA FoodKeeper database maintained by the Food Safety and Inspection Service. It also prices the problem: the value of food expiring inside your reminder window, and the value already lost. Built for anyone who keeps finding forgotten spinach at the back of the fridge.",
   useCases: [

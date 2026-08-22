@@ -1,5 +1,5 @@
 const seo = {
-  title: "Moving Checklist Generator: Dated 8-Week Countdown",
+  title: "Moving Checklist Generator: 8-Week Countdown",
   metaDescription:
     "Turns your moving date into dated tasks at 56, 42, 28, 21, 14 and 7 days out, moving day, and 3 and 14 days after — filtered to renting, pets, kids.",
   steps: [

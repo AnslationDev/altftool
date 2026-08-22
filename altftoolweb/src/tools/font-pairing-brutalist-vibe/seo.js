@@ -1,5 +1,5 @@
 const seo = {
-  title: "Brutalist Font Pairing: Grotesk + Monospace Combos",
+  title: "Brutalist Font Pairing: Grotesk + Monospace",
   metaDescription:
     "Eight heavy grotesk + monospace pairings, the px size that fills a container edge to edge, ch-based column counts and copy-ready CSS with font imports.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Why Your Malaysia eVISA Was Rejected, and How to Fix It",
+  title: "Malaysia eVISA Rejection Reasons & Fixes",
   metaDescription:
     "Match your eVISA refusal to the Immigration Act 1959/63 provision behind it, and see which defects are a same-week fix.",
   steps: [

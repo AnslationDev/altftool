@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Study Timer: Reading, Checkpoints, Review",
+  metaDescription:
+    "Split a study block like a real paper: 15 min reading, a solving phase with checkpoints every 30 min, and a protected review buffer at the end.",
+  steps: [
+    "Set the session length, reading/planning time, final review buffer and checkpoint interval, or tap a preset like 'Board / JEE-style paper — 3 hours'.",
+    "Press Start; the timer walks through the Read & plan, Deep work and Review phases and shows the next pacing checkpoint minute.",
+    "Watch the phase countdown and progress bar, pause any time, and use 'Copy status' to export elapsed time, remaining time and checkpoint minutes.",
+  ],
   intro:
     "This timer structures a long study block exactly like a written exam: a reading-and-planning phase (defaulting to the 15 minutes of question-paper reading time CBSE gives), a deep-work solving phase with pacing checkpoints every fixed interval, and a protected review buffer at the end. It is built for students rehearsing 3-hour papers under real time pressure and for anyone whose study sessions collapse without external structure.",
   useCases: [

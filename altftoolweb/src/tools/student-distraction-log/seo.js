@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Distraction Log – Rate per Hour & Time Lost",
+  metaDescription:
+    "Tally distractions by category for one study session to get interruptions per hour, minutes lost (3 min per event by default) and top 3 triggers.",
+  steps: [
+    "Enter your 'Study session length (minutes)' and adjust 'Minutes lost per distraction' — the default is a conservative 3 minutes.",
+    "Tally how many times each category happened — Phone notifications / checking, Noise around you, Mind wandering / daydreaming and the rest.",
+    "Read interruptions per hour, estimated minutes lost as a share of the session and your ranked top three triggers with a fix for each, then click Copy result.",
+  ],
   intro:
     "This log turns a tally of study-session distractions into three actionable numbers: your interruption rate per hour, your top three triggers ranked by frequency, and an estimate of time lost computed as distraction count times an adjustable per-event cost (3 minutes by default). It is for students who feel a session 'disappeared' and want to see, in numbers, exactly where the time went.",
   useCases: [

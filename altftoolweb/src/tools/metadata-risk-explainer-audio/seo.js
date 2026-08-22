@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Metadata Risk: What MP3, M4A & WAV Reveal",
+  metaDescription:
+    "Tick the tags, timestamps, GPS titles and audible clues in a voice note, pick a sharing channel, and see an exposure score of what actually survives.",
+  steps: [
+    "Choose a Sharing channel — Public social audio/video post, Work chat or shared drive, Email attachment, Podcast / public download, or Messaging voice note.",
+    "Tick which of the 9 signals your recording carries, from artist/title tags and location titles or GPS tags to speaker voices and ambient location sounds.",
+    "Read the exposure score out of 100 with how many selected signals survive that channel and a fix for each, then click 'Copy summary'.",
+  ],
   intro:
     "The Audio Metadata Risk Explainer shows what MP3, M4A voice notes and WAV files can reveal before you share them: artist/title tags, timestamps, recorder app, device model, GPS or location titles, filenames, embedded artwork, transcript tracks, voices and ambient sounds.",
   useCases: [

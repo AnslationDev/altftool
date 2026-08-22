@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emoji Letter Generator: 4 Unicode Letter Styles A-Z",
+  title: "Emoji Letter Generator: 4 Unicode Styles A-Z",
   metaDescription:
     "Turns typed letters into regional indicator, negative squared, positive squared or bubble symbols, space-separated so pairs never combine into a flag.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Audio Bit Depth Size Calculator for WAV & PCM Files",
+  title: "Audio Bit Depth Size Calculator for WAV & PCM",
   metaDescription:
     "Get the exact size of uncompressed PCM audio from sample rate, bit depth, channels and duration — plus bitrate, size per hour and the 4 GiB WAV limit.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bash Script Scaffold: Strict Mode & Traps",
+  metaDescription:
+    "Generate a bash skeleton with set -Eeuo pipefail, ERR and EXIT traps, getopts parsing, logging and an optional flock guard against overlapping runs.",
+  steps: [
+    "Enter a Script file name, One-line description and Required commands — each command gets a command -v check — and choose the Shebang.",
+    "Tick the Safety features you want: strict mode (set -Eeuo pipefail), the ERR trap, the EXIT cleanup trap with mktemp -d, log()/die() helpers, the flock guard and -v/-n flags.",
+    "Review the generated script and its line count, then click Copy script to copy the ready-to-edit skeleton.",
+  ],
   intro:
     "This generator produces a complete bash script skeleton with the \"unofficial strict mode\" (set -Eeuo pipefail and a newline-tab IFS), an ERR trap that reports the failing line, an EXIT cleanup trap around mktemp -d, getopts option parsing, timestamped logging and an optional flock(1) guard against overlapping runs. It is built for sysadmins and developers who want every new script to start from a safe, ShellCheck-friendly base instead of a bare shebang.",
   useCases: [

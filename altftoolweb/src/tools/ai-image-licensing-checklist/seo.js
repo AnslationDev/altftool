@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Image Commercial Use Checklist: 8 Rights Questions",
+  title: "AI Image Commercial Use Checklist: 8 Questions",
   metaDescription:
     "Score an AI image on licence tier, likeness, trademarks and copyrightability across 8 questions — high-risk items weigh double and can block publishing.",
   steps: [

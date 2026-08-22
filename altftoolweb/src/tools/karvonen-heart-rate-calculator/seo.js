@@ -1,5 +1,5 @@
 const seo = {
-  title: "Karvonen Heart Rate Zone Calculator (Heart Rate Reserve)",
+  title: "Karvonen Heart Rate Reserve Zone Calculator",
   metaDescription:
     "Enter resting heart rate plus age or a measured max to get five Karvonen training zones in bpm, using Tanaka, Fox, Gulati or Nes for max HR.",
   steps: [

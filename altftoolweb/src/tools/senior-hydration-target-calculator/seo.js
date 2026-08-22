@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Hydration Calculator: 30 mL/kg, 1,500 mL Floor",
+  title: "Senior Hydration Calculator: 30 mL/kg Target",
   metaDescription:
     "Daily fluid target for an older adult at 30 mL/kg with a 1,500 mL floor, plus fever, heat and activity add-ons and the EFSA drinks comparison.",
   steps: [

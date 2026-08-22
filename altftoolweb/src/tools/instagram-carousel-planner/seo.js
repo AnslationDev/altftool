@@ -1,4 +1,12 @@
 const seo = {
+  title: "Instagram Carousel Planner — Slide Roles",
+  metaDescription:
+    "Plan 2-20 Instagram carousel slides with hook-to-CTA roles, word budgets and read time, and see how many viewers your swipe rate leaves on the last slide.",
+  steps: [
+    "Enter your Carousel topic, a slide count from 2 to 20 and the Swipe-through rate per slide (%) from your Instagram insights.",
+    "Set Words on a standard point slide and tick Include a recap slide or Include a call-to-action slide.",
+    "Read the projected completion rate and the per-slide reach bars in the slide-by-slide plan, then click Copy plan to brief a designer.",
+  ],
   intro:
     "Instagram Carousel Planner turns a slide count and a swipe-through rate into a finished slide-by-slide plan with roles, word budgets, read time and projected retention. It assigns every position a job — hook, promise, points, recap, call to action — then models drop-off geometrically, so if s is the share of viewers who swipe once, s^(n-1) reach slide n. Read time uses 238 words per minute, the mean silent reading rate reported by Brysbaert (2019).",
   useCases: [

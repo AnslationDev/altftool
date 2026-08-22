@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ceiling Fan Electricity Cost & BLDC Payback",
+  metaDescription:
+    "Watts x hours x days x your INR tariff prices the fans you run, then shows months until a BLDC swap pays back. Speed buttons apply the cube affinity law.",
+  steps: [
+    "Enter Current fan power at full speed (watts) — or tap a preset chip — plus BLDC fan power, Number of fans, Running hours per day, Months of the year the fans run and your Electricity tariff (INR per kWh).",
+    "Optionally tap Speed 1-5 to set the Load factor by the cube affinity law (only valid for fans with electronic speed control).",
+    "Read the BLDC upgrade payback in months, with yearly costs, savings and the 5- and 10-year net position, then press Copy result.",
+  ],
   intro:
     "This calculator prices the electricity your ceiling fans use — watts divided by 1000, times hours per day, times days of use, times your tariff — and then works out the simple payback period on replacing them with BLDC fans. Payback is net upgrade cost divided by the annual saving, with no discounting. It also applies the fan affinity law, where power falls with the cube of speed, so you can price a fan that mostly runs at a lower setting.",
   useCases: [

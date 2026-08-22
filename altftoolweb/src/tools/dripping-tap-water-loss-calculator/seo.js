@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dripping Tap Calculator: Litres & Rupees Lost",
+  metaDescription:
+    "Count drips for a minute or time a 1-litre fill — see litres lost per day, month and year, cost at your water rate, and geyser units for hot leaks.",
+  steps: [
+    "Choose how you measured the leak — 'Counted drips per minute' or 'Timed a 1 litre fill' — and enter the count or seconds plus your Water cost (₹ per kilolitre).",
+    "Tick 'This is a hot water tap' to add the geyser's temperature rise, heater efficiency and electricity tariff to the estimate.",
+    "Read the litres lost per day, month and year with the total yearly cost in rupees, then click Copy result.",
+  ],
   intro:
     "A dripping tap water loss calculator converts a drip count into litres using the USGS figure of 15,140 drips per US gallon — 0.25 mL per drip — so every drip per minute works out to 0.36 litres a day. Enter the drips you counted in one minute, or the seconds a faster leak takes to fill a one-litre bottle, and it reports the loss per day, month and year in litres, in rupees at your water rate, and in geyser units if the leak is on the hot line.",
   useCases: [

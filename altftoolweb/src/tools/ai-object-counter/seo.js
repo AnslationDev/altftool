@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Object Counter: Count 80 COCO Classes in Browser",
+  title: "AI Object Counter: 80 COCO Classes in Browser",
   metaDescription:
     "Runs COCO-SSD via TensorFlow.js in your tab to box and tally 80 object classes; re-threshold from 10-95% without re-detecting. Images never uploaded.",
   intro:

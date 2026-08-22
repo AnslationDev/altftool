@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dating App Permission Audit with Privacy Score",
+  metaDescription:
+    "Score a dating app's precise location, background location, contacts, all-photos and tracking grants 0-100, with the safest setting change for each.",
+  steps: [
+    "Type the App name and tick the 10 permission and profile settings the dating app holds — precise location, background location, all photos/videos, contacts, ad ID, broad profile discovery — or load the 'Typical dating app' preset.",
+    "Check the privacy score out of 100 and its band from 'Minimal exposure' to 'Severe exposure', with the heaviest risks listed alongside a practical fix for each.",
+    "Press 'Copy summary' for a text checklist of the score, granted-item count and top fixes.",
+  ],
   intro:
     "The Dating App Permission Audit scores location, background location, all-photos access, contacts, camera, microphone, notifications, tracking and profile discovery settings for dating apps. It explains which grants are optional and which ones can expose home, work, routines, social graph or private photos.",
   useCases: [

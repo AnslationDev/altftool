@@ -1,5 +1,5 @@
 const seo = {
-  title: "Do You Need an IDP to Drive in France? Licence Checker",
+  title: "IDP Checker: Do You Need One to Drive in France?",
   metaDescription:
     "Six questions tell you if France expects an IDP with your licence, citing the arrete du 12 janvier 2012, plus the date a resident's licence expires.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emergency Medical Card Builder (Wallet ID-1 Size)",
+  metaDescription:
+    "Build a wallet ID-1 card (85.6 × 53.98 mm) with allergies, medicines, blood group and ICE contacts — completeness-scored, nothing leaves your browser.",
+  steps: [
+    "Fill in Full name, Date of birth and Blood group, then list Allergies, Conditions and Current medicines and doses — one item per line.",
+    "Add up to 4 ICE contacts with the Add contact button and set the Reviewed on date.",
+    "Check the Card completeness score and missing critical fields, then Copy card and print the preview at 100% scale to trim at ID-1 size.",
+  ],
   intro:
     "An emergency medical card is a wallet-size summary of the facts a paramedic needs in the first sixty seconds: your name, blood group, allergies, diagnoses, current medicines and who to phone. This builder lays those fields out on a standard ID-1 card (85.60 × 53.98 mm, the same size as a bank card), scores how complete the card is, and shows which red-cell donor groups match your blood type. Everything is computed in your browser, so nothing you type is uploaded.",
   useCases: [

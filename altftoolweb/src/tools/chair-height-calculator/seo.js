@@ -1,5 +1,5 @@
 const seo = {
-  title: "Chair Height Calculator from Popliteal Knee Height",
+  title: "Chair Height Calculator: Popliteal Knee Height",
   metaDescription:
     "Floor-to-knee-crease height plus your heel thickness gives seat height, seat depth, the matching desk height and the footrest a fixed desk forces on you.",
   steps: [

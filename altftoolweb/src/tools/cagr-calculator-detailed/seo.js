@@ -1,4 +1,12 @@
 const seo = {
+  title: "CAGR Calculator with Doubling Time & Yearly Path",
+  metaDescription:
+    "Compound annual growth rate from start value, end value and a years-and-months duration — with absolute return, doubling time and a year-wise path.",
+  steps: [
+    "Enter \"Start value (₹)\", \"End value (₹)\" and the holding period as \"Duration — years\" plus \"Duration — months\" (0–11), or tap an example like \"10L to 25L in 7y 6m\".",
+    "The CAGR appears instantly alongside absolute return, growth multiple, simple annual average, doubling time and a Rule of 72 estimate.",
+    "Check the \"Year-wise path at this CAGR\" table and the 3-, 5- and 10-year projections, then press \"Copy result\".",
+  ],
   "intro": "CAGR Calculator Detailed turns a start value, an end value and a holding period into the compound annual growth rate — the single steady yearly rate that would have taken you from one to the other. Alongside the CAGR it shows absolute return, the growth multiple, the doubling time and a year-wise path at that constant rate. Useful for comparing mutual funds, stocks, property or business revenue over unequal periods.",
   "useCases": [
     "Compare a stock held for 7 years 6 months against a fund held for 3 years on an annualised basis.",

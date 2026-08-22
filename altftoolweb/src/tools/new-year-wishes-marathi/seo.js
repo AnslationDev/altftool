@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marathi New Year Wishes: Gudhi Padwa & SMS",
+  metaDescription:
+    "Gudhi Padwa and 1 January greetings in Devanagari and Roman script with English meaning, plus each message's real SMS length and parts.",
+  steps: [
+    "Choose the Occasion — Gudhi Padwa (Marathi new year) or 1 January (Ingraji navvarsha) — with a Tone, who it is for, and optional recipient and sender names.",
+    "Pick a Script: Devanagari only, Roman transliteration only, or Devanagari + Roman.",
+    "Read the greeting with its English meaning and SMS parts count, then click Copy greeting — or Feature this on any match in the list below.",
+  ],
   intro:
     "This generator builds Marathi new year greetings by joining a customary salutation, a message from a curated bank of Gudhi Padwa and 1 January wishes, and your sign-off. Each greeting is shown in Devanagari, in Roman transliteration and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It suits anyone who wants correct Marathi wording for elders, friends or business contacts rather than a forwarded image.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "What Kind of Genius Are You? 10-Question Type Quiz",
+  title: "What Kind of Genius Are You? 10-Question Quiz",
   metaDescription:
     "A 10-question quiz that scores six thinking styles — Logical, Creative, Social, Physical, Natural, Introspective — and returns strengths and blind spots.",
   steps: [

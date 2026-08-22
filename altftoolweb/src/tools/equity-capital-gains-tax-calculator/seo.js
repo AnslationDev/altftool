@@ -1,4 +1,12 @@
 const seo = {
+  title: "Equity Capital Gains Tax Calculator (LTCG & STCG)",
+  metaDescription:
+    "Enter buy and sell dates and the tool decides short or long term, applies the Rs 1,25,000 LTCG exemption, 4% cess and pre-2018 grandfathering.",
+  steps: [
+    "Enter Quantity, Buy price and Sell price per unit, and the Buy date and Sell date; the holding period decides short term or long term (more than 12 months) for you.",
+    "Adjust the editable STCG (20%) and LTCG (12.5%) rates, the LTCG exemption limit and 'Exemption already used', and add the FMV on 31 Jan 2018 for pre-Feb-2018 grandfathered buys.",
+    "Read the tax payable with 4% cess, the taxable gain after exemption and the net gain after tax, then press Copy result for a line-by-line summary.",
+  ],
   "intro": "Equity Capital Gains Tax Calculator works out the tax on a listed equity share or equity mutual fund sale. It reads your buy and sell dates to decide short term or long term, applies the annual LTCG exemption, adds 4% cess, and handles grandfathering for holdings bought before 1 February 2018. Rates and the exemption limit are editable so the tool stays correct as rules change.",
   "useCases": [
     "Check the tax on a stock sold after two years, including how much of the annual LTCG exemption it uses up.",

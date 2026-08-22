@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Actions Cron Builder — Local Time to UTC",
+  metaDescription:
+    "Turn a local time into the UTC cron GitHub's on.schedule needs — day-of-week shifts across midnight handled — with a preview in 6 timezones.",
+  steps: [
+    "Pick a Frequency (every N minutes, hourly, daily, weekly or monthly) and enter the local hour, minute and your fixed timezone offset.",
+    "For weekly runs toggle the Sun-Sat local weekday buttons; the UTC cron expression and on.schedule YAML rebuild as you change values.",
+    "Click 'Copy result' for the YAML snippet, and check the 'When your team sees it run' preview plus warnings about 00:00 UTC and on-the-hour slots.",
+  ],
   intro:
     "This builder converts a local wall-clock time into the UTC cron expression GitHub Actions actually requires for on.schedule triggers, using POSIX 5-field cron syntax. It handles the part people get wrong by hand: when the UTC conversion crosses midnight it shifts the day-of-week field too, so a Monday 02:00 IST job correctly becomes 30 20 * * 0 (Sunday in UTC). A preview table shows the run time for teammates in six timezones.",
   useCases: [

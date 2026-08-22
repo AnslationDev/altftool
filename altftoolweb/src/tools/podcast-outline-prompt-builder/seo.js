@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Outline Prompt Builder: Timed Segments",
+  metaDescription:
+    "Splits a 5-240 minute runtime into cold open, intro, timed segments and outro, warns when questions get under 2 minutes, and writes the outline prompt.",
+  steps: [
+    "Enter the show name, episode topic and audience, pick a Format (interview, solo, co-hosted or narrative), and set Runtime (5-240 minutes), Segments (1-10) and Questions per segment.",
+    "Toggle 'Start with a 45-second cold-open teaser clip'; the plan recomputes minutes per question and warns when each gets under 2 minutes.",
+    "Review the timed episode plan — cold open, intro, segments, outro with its start time — and the generated prompt, then click 'Copy prompt'.",
+  ],
   intro:
     "The Podcast Outline Prompt Builder splits an episode runtime into timed blocks — an optional 45-second cold open, a 60-second intro, evenly-timed segments and a 90-second outro — and writes an AI outline prompt with those timestamps embedded. For interview formats it also divides each segment's time across your planned questions and warns when a question gets less than the realistic 2-3 minutes an answer plus follow-up takes.",
   useCases: [

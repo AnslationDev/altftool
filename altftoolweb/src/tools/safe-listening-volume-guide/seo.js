@@ -1,5 +1,5 @@
 const seo = {
-  title: "Safe Headphone Volume: dB to Weekly Listening Hours",
+  title: "Safe Headphone Volume: dB to Listening Hours",
   metaDescription:
     "Convert a dB(A) level into safe listening hours using the WHO-ITU H.870 allowance of 80 dB(A) for 40 hours a week, or 75 dB(A) for children.",
   steps: [

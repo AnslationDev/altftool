@@ -1,5 +1,5 @@
 const seo = {
-  title: "CAC Calculator: Per-Channel Cost and LTV:CAC Ratio",
+  title: "CAC Calculator: Per-Channel Cost & LTV:CAC Ratio",
   metaDescription:
     "Works out CAC per marketing channel and blended, grades your LTV:CAC ratio against the 3:1 benchmark, and exports the breakdown as CSV.",
   intro:

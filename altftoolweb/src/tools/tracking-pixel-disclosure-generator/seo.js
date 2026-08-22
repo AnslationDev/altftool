@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tracking Pixel Disclosure Generator for Privacy Policies",
+  title: "Tracking Pixel Disclosure Generator",
   metaDescription:
     "Tick the pixels your site loads and get disclosure text, a vendor table with cookie names and purposes, and a real opt-out list.",
   steps: [

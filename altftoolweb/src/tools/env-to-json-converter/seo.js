@@ -1,4 +1,10 @@
 const seo = {
+  title: ".env to JSON Converter: Nesting & Type Coercion",
+  steps: [
+    "Pick '.env → JSON' or 'JSON → .env' in the Direction select, then paste your file into the '.env contents' (or 'JSON object') box — a sample with DB__HOST, PORT and a quoted \"1.10\" loads by default.",
+    "Tick 'Coerce types (true/false, numbers, null)' and 'Nest keys on the delimiter (DB__HOST → DB.HOST)', or change the 'Nesting delimiter' from the default __.",
+    "Read the converted output with its 'Entries converted' count, then click 'Copy result' to put the JSON or .env text on the clipboard.",
+  ],
   intro:
     "This tool converts a dotenv (.env) file into JSON and converts JSON back into .env lines, with two optional transforms: type coercion (unquoted true, false, null and numeric strings become real JSON types) and nesting on a delimiter (DB__HOST becomes db.host, the double-underscore convention used by ASP.NET Core configuration and nconf). Values that were quoted in the .env are always preserved as strings.",
   useCases: [

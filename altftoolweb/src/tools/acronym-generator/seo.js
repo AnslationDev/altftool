@@ -1,5 +1,5 @@
 const seo = {
-  title: "Acronym Generator: Phrase to Initials, or Backronym",
+  title: "Acronym Generator: Initials or Backronym",
   metaDescription:
     "Takes the first letter of every word in your phrase, or expands letters into a backronym from a tech, business, creative or health word list.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Section 44ADA Calculator: 50% Presumptive Income Tax",
+  title: "Section 44ADA Calculator: 50% Presumptive Income",
   steps: [
     "Enter Digital gross receipts (INR) and Cash gross receipts (INR), then pick the new or old tax regime and your age.",
     "Add any Chapter VI-A deductions, and the actual profit from your books if you want the section 44AB(d) audit warning.",

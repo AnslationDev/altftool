@@ -1,5 +1,5 @@
 const seo = {
-  title: "Smart Lock Security Checklist and Code-Guess Timer",
+  title: "Smart Lock Security Checklist & Code-Guess Timer",
   metaDescription:
     "Sixteen weighted controls across app account, keypad codes, door hardware and offline fallback, plus how long a code survives guessing under your lockout.",
   steps: [

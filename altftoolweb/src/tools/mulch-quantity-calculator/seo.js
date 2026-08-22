@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mulch Calculator: Bags, Cubic Yards & Bulk Cost",
+  metaDescription:
+    "Enter bed size and mulch depth to get volume in cu ft, cu yd, m³ and litres — plus bag count, bag-vs-bulk cost at your prices, and weight in kg.",
+  steps: [
+    "Choose Feet & inches or Metres & cm, pick Rectangular bed, Circular bed or 'I know the area', and enter the bed dimensions.",
+    "Set the Mulch depth (in or cm), your Bag size, the Price per bag (₹) and the Bulk price (₹ per cu yd or m³).",
+    "Read the volume in cubic feet, cubic yards, cubic metres and litres with bags to buy, bag-vs-bulk cost and approximate weight in kg, then click Copy result.",
+  ],
   intro:
     "A mulch quantity calculator multiplies bed area by mulch depth to give the volume you need, then converts it into bags, cubic yards, cubic metres and litres. It is aimed at gardeners and landscapers deciding between stacked bags and a loose bulk load. Extension services recommend 5–10 cm (2–4 in) of organic mulch on beds, and the calculator uses that depth as the driver of the whole result.",
   useCases: [

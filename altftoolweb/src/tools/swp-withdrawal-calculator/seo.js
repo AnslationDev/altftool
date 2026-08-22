@@ -1,4 +1,12 @@
 const seo = {
+  title: "SWP Calculator: How Long Will Your Corpus Last?",
+  metaDescription:
+    "Month-by-month SWP simulation: enter corpus, monthly withdrawal, return and annual step-up to see exactly when the money runs out — or never does.",
+  steps: [
+    "Enter your Investment corpus (₹), Monthly withdrawal (₹), Expected return (% per year) and an optional Annual step-up (%).",
+    "The simulator applies growth first and the withdrawal second for every month, up to a 100-year cap.",
+    "Read how long the corpus lasts, the never-ending withdrawal limit and the year-by-year balance table, then click Copy result.",
+  ],
   "intro": "SWP Withdrawal Calculator shows how long a mutual fund corpus can fund a Systematic Withdrawal Plan once you fix the monthly payout and an expected rate of return. It simulates every month — growth first, then the withdrawal — so you see the exact number of payouts, the total cash taken out, and whatever balance survives. It is built for retirees, FIRE planners and anyone converting a lumpsum into a monthly income.",
   "useCases": [
     "Check whether a Rs 50 lakh retirement corpus can pay Rs 30,000 a month for 25 years.",

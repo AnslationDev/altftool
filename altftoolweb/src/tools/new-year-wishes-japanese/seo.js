@@ -1,5 +1,5 @@
 const seo = {
-  title: "Japanese New Year Wishes: Nengajo Text with Romaji",
+  title: "Japanese New Year Wishes: Nengajo with Romaji",
   metaDescription:
     "Build a nengajo in keigo, polite or casual Japanese, with Hepburn romaji and English. Checks matsunouchi dates and the Reiwa era line before you send.",
   steps: [

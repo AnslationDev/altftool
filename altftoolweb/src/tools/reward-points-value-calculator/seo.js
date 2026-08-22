@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reward Points Value Calculator: Rupees per Point, GST",
+  title: "Reward Points Value Calculator: Rupees per Point",
   metaDescription:
     "Value a point as rupees received ÷ points surrendered, apply the spend block and cap, subtract the fee plus 18% GST, and rank cards by net return.",
   steps: [

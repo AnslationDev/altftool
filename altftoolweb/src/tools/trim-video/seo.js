@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trim Video in Your Browser with FFmpeg WASM",
+  metaDescription:
+    "Cut a section from a video with FFmpeg in your browser - no upload. Lossless stream copy or frame-exact H.264 re-encode, downloaded as trimmed.mp4.",
+  steps: [
+    "Choose a file under 'Video file (MP4, MOV, WebM)' and type the start and end times in seconds or mm:ss.",
+    "Pick 'Fast (stream copy, no re-encode)' or 'Precise (re-encode with H.264)' — with a CRF 14-32 quality slider — then press 'Trim video'.",
+    "Press 'Download clip' to save trimmed.mp4 (or trimmed-reencoded.mp4), or 'Copy details' for the exact ffmpeg command used.",
+  ],
   intro:
     "Trim Video cuts a chosen section out of a video file entirely inside your browser, using FFmpeg compiled to WebAssembly, so the footage is never uploaded to a server. You set a start and end time and it builds the standard FFmpeg command — seeking with -ss and cutting a duration with -t — in either fast stream-copy mode (-c copy, no quality loss) or a precise H.264 re-encode. It is for anyone who needs one clip out of a long recording without installing an editor.",
   useCases: [

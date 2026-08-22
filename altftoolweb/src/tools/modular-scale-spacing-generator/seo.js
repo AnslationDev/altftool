@@ -1,5 +1,5 @@
 const seo = {
-  title: "Modular Spacing Scale Generator: CSS, Tailwind, JSON",
+  title: "Modular Scale Generator: CSS, Tailwind, JSON",
   metaDescription:
     "Build spacing from base × ratio^n — minor third to golden ratio — snap to a 4 or 8 pt grid, and export rem tokens as CSS, Tailwind, SCSS or JSON.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Private Journal in Your Browser - No Account",
+  metaDescription:
+    "Write diary entries that stay in your browser's localStorage - full-text search across titles and bodies, JSON export and import, nothing uploaded.",
+  steps: [
+    "Type your entry into the Entry title and Journal entry fields at the top of the workspace.",
+    "Click Add record - the entry is saved to this browser's localStorage and listed under Saved records, where the Search records box matches titles and bodies together.",
+    "Click Export JSON to download encrypted-private-journal.json as a backup, and use Import JSON on another machine (import replaces the current list).",
+  ],
   intro:
     "The Encrypted Private Journal keeps diary entries — a title and a body per entry — in this browser's own localStorage, with full-text search across everything you have written and JSON export for backup. There is no account, no sync and no server: nothing you type is transmitted, which is what makes it private. Privacy here comes from the data never leaving the device, not from a passphrase, so treat it as a personal notebook on a machine only you use.",
   useCases: [

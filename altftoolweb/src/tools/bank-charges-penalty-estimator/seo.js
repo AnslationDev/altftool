@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Charges Calculator: Balance Penalty and ATM Fees",
+  title: "Bank Charges Calculator: Penalty & ATM Fees",
   metaDescription:
     "A year of Indian savings-account cost: the RBI percentage-of-shortfall penalty, ATM uses past the free limit, return charges and 18% GST.",
   steps: [

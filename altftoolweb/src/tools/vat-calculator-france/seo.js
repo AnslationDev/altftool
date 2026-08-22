@@ -1,4 +1,12 @@
 const seo = {
+  title: "France VAT Calculator: 20%, 10%, 5.5% TVA Rates",
+  metaDescription:
+    "Convert HT to TTC and back at France's 20%, 10%, 5.5% and 2.1% TVA rates or a custom rate, and check the article 293 B franchise en base thresholds.",
+  steps: [
+    "Choose the direction with the HT → TTC / TTC → HT toggle and enter the Montant HT or Montant TTC.",
+    "Pick the Taux de TVA — the 20%, 10%, 5.5% or 2.1% band, or Custom rate for Corsica and the overseas départements.",
+    "Read Montant HT, TVA and Montant TTC with the TVA fraction of the TTC price and press Copy result; the Franchise en base panel checks your annual turnover against the art. 293 B thresholds.",
+  ],
   intro:
     "This calculator converts a French price between HT (hors taxes) and TTC (toutes taxes comprises) at any of the four TVA rates: 20% taux normal, 10% intermédiaire, 5.5% réduit and 2.1% particulier. Adding TVA multiplies the HT figure by 1 + taux; removing it divides the TTC figure by the same factor, so a 120 EUR TTC invoice at 20% is 100 EUR HT plus 20 EUR of tax. It also checks the franchise en base thresholds of article 293 B of the CGI.",
   useCases: [

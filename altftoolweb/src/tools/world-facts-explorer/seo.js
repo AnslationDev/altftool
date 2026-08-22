@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compare 121 Countries by Population, GDP & HDI",
+  metaDescription:
+    "Sortable table of 121 countries with population, area, GDP and HDI. Filter by continent, search capitals, and pin up to 5 countries side by side.",
+  steps: [
+    "Search countries or capitals, choose a Sort (Population, Area, GDP, HDI) and filter to one continent.",
+    "Press Compare Mode and click table rows to pin up to 5 countries — the Comparison panel lines up all four metrics side by side.",
+    "Press Export to copy a plain-text report of the top 20 under your current sort and filter, plus any comparison you built.",
+  ],
   intro:
     "World Facts Explorer is a searchable table of 121 countries carrying population, land area in square kilometres, nominal GDP in billions of US dollars, Human Development Index, capital city and continent. Sort by any of the four metrics, filter to one continent, search by country or capital, and pin up to five countries side by side to compare them directly. The current view — the top 20 plus any comparison — can be copied or downloaded as a plain-text report.",
   useCases: [

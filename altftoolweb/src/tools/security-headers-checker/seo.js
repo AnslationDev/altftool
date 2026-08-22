@@ -1,5 +1,5 @@
 const seo = {
-  title: "Security Headers Checker: Grade a Pasted curl -I Response",
+  title: "Security Headers Checker: Grade curl -I Responses",
   metaDescription:
     "Reads header values, not just names: HSTS max-age, CSP directives, cookie flags and COOP/CORP, scored on a printed rubric. No request to your site.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Online Notepad with Autosave and TXT Export",
+  metaDescription:
+    "A plain-text notepad that autosaves every keystroke to your browser's local storage, counts words, characters and lines, and exports as a .txt file.",
+  steps: [
+    "Start typing in the note area — every change to the note and its \"Note title\" autosaves to your browser's localStorage.",
+    "Watch the words, characters and lines counters update live as you write.",
+    "Click \"Export\" to download the note as a .txt file named after your title (note.txt if empty), or \"Clear\" to empty the body after a confirmation.",
+  ],
   intro:
     "The Online Notepad is a plain-text scratchpad that writes every keystroke straight to your browser's localStorage, so the note and its title are still there when you come back to the tab. A live counter tracks words, characters and lines as you type, and Export saves the text as a .txt file named after your title. It is for the notes that are too small to deserve a document and too important to lose in a chat window.",
   useCases: [

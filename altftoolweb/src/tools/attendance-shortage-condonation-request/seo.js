@@ -1,5 +1,5 @@
 const seo = {
-  title: "Attendance Condonation Letter & 75% Shortfall Maths",
+  title: "Attendance Condonation Letter & 75% Shortfall",
   metaDescription:
     "Get your exact attendance percentage, how many classes short of 75% you are, and how many more would fix it — then draft the condonation request.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Shoot Gear Packing List: Battery & Cards",
+  metaDescription:
+    "Describe your shoot and get a gear checklist with calculated battery counts, card capacity in GB, backup storage, pack weight and watt-hours for flying.",
+  steps: [
+    "Pick a Shoot type and fill in Rolling record time (minutes), Minutes per battery, Recording bitrate (Mbps) and Card size (GB) - or tap a bitrate preset like 4K H.265, ~100 Mbps - then tick conditions such as Outdoors or on location, After dark, Mains power available or Travelling by air.",
+    "Read the live results: Total pack weight in kg, Batteries to pack (with the per-body count), Footage on the day in GB, Cards to pack, Backup storage needed, and the Battery watt-hours for flying panel that converts voltage and mAh to Wh.",
+    "Tick off items in each gear section as you pack, then press Copy list for a plain-text checklist with the battery, card and weight numbers - the button reads Copied! - or Reset to restore the defaults.",
+  ],
   intro:
     "This packing list works out the two things creators actually get wrong — power and storage — then builds the gear list around them. Batteries come from ceil(record minutes × safety factor ÷ battery runtime) with a two-battery floor, and card capacity from GB = Mbps × minutes × 60 ÷ 8 ÷ 1000, so a 100 Mbps camera recording for an hour needs 45 GB. It also totals the pack weight and converts battery capacity to watt-hours for airline rules.",
   useCases: [

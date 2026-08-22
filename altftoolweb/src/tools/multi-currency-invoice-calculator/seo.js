@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multi-Currency Invoice Calculator with Your Own Rates",
+  title: "Multi-Currency Invoice Calculator: Your Own Rates",
   metaDescription:
     "Convert each invoice line at the rate you were quoted, round to ISO 4217 minor units, and see the tax, bank spread, fixed fee and net you receive.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "AED Cash Budget Planner: Dubai Cash vs Card in Rupees",
+  title: "AED Cash Budget Planner: Dubai Cash vs Card",
   metaDescription:
     "Split a UAE trip budget into dirham notes and card spend, priced in rupees with the changer markup, GST, TCS and the USD 3,000 RBI cash limit.",
   steps: [

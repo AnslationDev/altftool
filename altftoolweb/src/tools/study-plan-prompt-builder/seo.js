@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Plan Prompt Builder: Spaced Repetition",
+  metaDescription:
+    "Paste syllabus topics and an exam date to get an AI prompt for a day-by-day plan: 1-3-7-14-30 day spaced reviews plus a final mixed-review block.",
+  steps: [
+    "Paste your Syllabus topics — one per line (up to 60), set First study day and Exam date, then Study days per week (1–7) and Hours per study day (0.5–12).",
+    "Optionally list Weaker topics to weight more; the builder computes your study days, first-pass days, the 1-3-7-14-30 day review intervals and the final review block.",
+    "Click Copy prompt to copy the Generated prompt into your AI chat; the stats table shows days until the exam, total study hours and the review intervals used.",
+  ],
   intro:
     "The Study Plan Prompt Builder converts a syllabus, a start date and an exam date into an AI prompt for a day-by-day spaced study schedule. It computes your real study-day budget from days-per-week availability, applies the standard expanding 1-3-7-14-30 day spaced-repetition review ladder, and reserves roughly 15% of study days as a final mixed-review block. Students get a plan grounded in distributed-practice research instead of a vague cramming timetable.",
   useCases: [

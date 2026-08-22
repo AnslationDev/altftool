@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Sound Fade Timer: Fades to Silence",
+  metaDescription:
+    "Plays brown noise, steady rain, ocean surf or fan hum, then fades to silence over your chosen curve — synthesised in-browser with the Web Audio API.",
+  steps: [
+    "Pick a Sound — Brown noise, Steady rain, Ocean surf or Fan hum — then set Total play time (minutes) (1-480), Fade length (minutes) (1-120), Volume (%), Fade curve and Start time.",
+    "Press Play: the loop is synthesised with the Web Audio API, holds steady, then follows your Logarithmic, Linear or S-curve fade.",
+    "Watch the Until silence countdown and Silent at clock time over the level chart; Copy plan copies the timer settings.",
+  ],
   intro:
     "Sleep Sound Fade Timer plays brown noise, rain, ocean surf or fan hum at a steady level while you fall asleep, then fades it to complete silence over a fade time you set. You choose the curve: a logarithmic fade drops an equal number of decibels each minute, which the ear hears as perfectly even, while linear and S-curve fades feel different in the last few minutes. Everything is synthesised in the browser, so it runs offline and no audio file is downloaded.",
   useCases: [

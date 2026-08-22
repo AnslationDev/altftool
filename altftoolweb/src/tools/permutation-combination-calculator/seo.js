@@ -1,4 +1,7 @@
 const seo = {
+  title: "Permutation & Combination Calculator (nPr & nCr)",
+  metaDescription:
+    "Enter n and r to get nPr and nCr side by side — 8 choose 3 gives 336 permutations but 56 combinations. Rejects r > n instead of a bogus number.",
   intro:
     "This calculator returns both permutations and combinations for choosing r items from n, using nPr = n! ÷ (n − r)! when order matters and nCr = n! ÷ (r! × (n − r)!) when it does not. Enter the two whole numbers and it shows each count side by side, so you can see how much the ordering assumption changes the answer. Aimed at students working through counting problems and anyone sizing up how many arrangements or selections actually exist.",
   useCases: [

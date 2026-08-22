@@ -1,5 +1,5 @@
 const seo = {
-  title: "Meal Plan Prompt Builder With Mifflin-St Jeor Macros",
+  title: "Meal Plan Prompt Builder: Mifflin-St Jeor Macros",
   metaDescription:
     "Turns Mifflin-St Jeor calories, protein and fat grams, a per-serving budget and named allergen exclusions into one AI meal-planning prompt.",
   steps: [

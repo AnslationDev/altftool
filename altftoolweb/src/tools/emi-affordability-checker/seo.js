@@ -1,5 +1,5 @@
 const seo = {
-  title: "EMI Affordability Check: FOIR and Rate-Rise Stress Test",
+  title: "EMI Affordability Check: FOIR & Rate Stress Test",
   metaDescription:
     "Computes the reducing-balance EMI, puts your FOIR against a ceiling you choose, shows the surplus after essentials, and re-prices 2 points higher.",
   steps: [

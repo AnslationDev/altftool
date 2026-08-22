@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI YouTube Thumbnail Maker: 4 Concepts at 1280x720",
+  title: "AI YouTube Thumbnail Maker: 4 Concepts, 1280x720",
   metaDescription:
     "Turn a video topic into four AI thumbnail concepts from 8 style presets and 6 colour palettes, exported as 1280x720 JPEG — the size YouTube asks for.",
   steps: [

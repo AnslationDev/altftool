@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bulk Find and Replace with Regex & Match Counts",
+  metaDescription:
+    "Run many find-and-replace rules over text in one pass — regex with $1 capture groups, case and whole-word options, and a live match count per rule.",
+  steps: [
+    "Paste your text into \"Original text\" and fill each rule's \"Find\" and \"Replace with\" fields; \"Add rule\" chains more rules that run top to bottom.",
+    "Toggle \"Use regular expressions\" (with $1 capture groups), \"Case sensitive\" or \"Whole words only\" — each rule shows its live match count.",
+    "Read the replaced text in \"Result\" with the \"Total replacements\" count, then \"Copy result\" or \"Apply to input\" to run another pass.",
+  ],
   "intro": "Bulk Find and Replace applies as many search-and-replace rules as you need to a block of text in a single pass, showing the match count for every rule and the total number of replacements. Switch on regular expressions for patterns and $1 capture groups, or keep it literal so characters like . and ? are matched exactly. Case sensitivity and whole-word matching are one click away, and everything runs in your browser.",
   "useCases": [
     "Swap an old company name, product name and support address across a whole email template at once.",

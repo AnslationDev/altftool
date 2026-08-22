@@ -1,4 +1,12 @@
 const seo = {
+  title: "DMARC Record Generator — RFC 7489 TXT Builder",
+  metaDescription:
+    "Build the _dmarc TXT record with p, sp, pct, rua/ruf, alignment and fo tags validated to RFC 7489, plus rollout warnings before you enforce.",
+  steps: [
+    "Enter your Domain and set Policy (p), Subdomain policy (sp), Percentage sampled (pct, 0-100) and the rua/ruf report addresses.",
+    "Choose DKIM alignment (adkim), SPF alignment (aspf) and tick any Failure reporting options (fo) — the record rebuilds as you type.",
+    "Copy record puts the _dmarc host name and quoted v=DMARC1 value on the clipboard, with a per-tag breakdown and rollout warnings below.",
+  ],
   intro:
     "This generator builds the DMARC TXT record defined by RFC 7489 — the v=DMARC1 policy string published at _dmarc.yourdomain — with every tag validated: policy (p), subdomain policy (sp), sampling percentage (pct 0-100), aggregate and forensic report addresses (rua/ruf), SPF and DKIM alignment modes (aspf/adkim) and failure options (fo). It is for domain owners and email admins rolling out DMARC enforcement or fixing a record their mail provider flagged as invalid.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Query String Parser: Decode URL Parameters",
+  metaDescription:
+    "Paste a query string to get one decoded key = value line per parameter — URLSearchParams decodes %20 and +, and repeated keys keep separate lines.",
+  steps: [
+    "Paste the query string into the Input box — a leading ? is stripped automatically, so you can copy straight from the address bar.",
+    "The Result pane re-parses on every keystroke through URLSearchParams, decoding %20, %2F and + exactly as a server would.",
+    "Read one 'key = value' line per parameter — repeated keys like tags=a&tags=b stay on separate lines — then click Copy.",
+  ],
   intro:
     "The Query String Parser splits a URL query string into one readable \"key = value\" line per parameter, using the browser's own URLSearchParams so percent-encoding is decoded and \"+\" becomes a space exactly as a real server would read it. A leading \"?\" is stripped for you, so you can paste straight from the address bar, and the output updates as you type. It is for developers and marketers picking apart a long tracking or callback URL without writing a throwaway script.",
   useCases: [

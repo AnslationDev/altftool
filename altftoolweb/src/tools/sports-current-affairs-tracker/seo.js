@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sports Current Affairs Tracker: SSC & Bank Exams",
+  metaDescription:
+    "Log tournament, winner, runner-up, venue and year in a searchable, sortable revision table. Saved in your browser, exportable as CSV in one click.",
+  steps: [
+    "Fill in Tournament, Winner and Year (Sport, Runner-up and Venue / host are optional) and click Add result.",
+    "Use 'Search the table' to filter rows, or click a column header to sort by Tournament, Winner, Runner-up, Venue / host or Year.",
+    "Click Copy CSV to export the visible rows; the table itself persists in this browser's localStorage.",
+  ],
   intro:
     "This tracker is a structured revision table for the sports questions in competitive-exam current affairs: each row records the tournament, sport, winner, runner-up, venue and year — the exact fields exam questions pair against each other. Built for SSC, banking, railway and state PSC aspirants, it is searchable, sortable by any column, stored only in your browser, and exportable as CSV.",
   useCases: [

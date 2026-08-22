@@ -1,5 +1,5 @@
 const seo = {
-  title: "Curtain Thermal Savings Estimator: Watts, kWh, Payback",
+  title: "Curtain Thermal Savings Estimator: kWh & Payback",
   metaDescription:
     "Splits window gain into solar (area x SHGC x irradiance) and conducted (area x U x delta T), applies the curtain attenuation, divides by the AC COP.",
   steps: [

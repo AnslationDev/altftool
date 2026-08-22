@@ -1,5 +1,5 @@
 const seo = {
-  title: "Driving in Switzerland: Vignette, Limits & Via Sicura Line",
+  title: "Driving in Switzerland: Vignette & Via Sicura",
   metaDescription:
     "Swiss speed limits, the CHF 40 motorway vignette and 0.5/0.1 per-mille alcohol limits, plus the exact speed where Via Sicura makes speeding a crime.",
   steps: [

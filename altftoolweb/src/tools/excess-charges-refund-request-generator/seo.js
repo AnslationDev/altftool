@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Charge Refund Letter: GST + RBI Escalation Dates",
+  title: "Bank Charge Refund Letter: GST + RBI Escalation",
   metaDescription:
     "Totals wrongly levied bank or card fees with 18% GST and drafts a refund letter carrying the 30-day reply deadline and Ombudsman filing cut-off.",
   steps: [

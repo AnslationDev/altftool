@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creative Brief Generator: 13-Section Agency Format",
+  title: "Creative Brief Generator: 13-Section Format",
   metaDescription:
     "Fill thirteen sections of a one-page agency brief, get a weighted completeness score, a single-minded proposition check, and copy as text or Markdown.",
   steps: [

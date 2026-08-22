@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subject Strength Radar Chart for Exam Marks",
+  metaDescription:
+    "Plot 3-10 subjects on a radar chart, each scored as a % of its own maximum marks. See your strongest and weakest subjects and how balanced you are.",
+  steps: [
+    "Enter each subject's Marks obtained and Maximum marks — 3 to 10 subjects, added with the Add subject button.",
+    "Read the radar chart, where every score is plotted as a percentage of its own maximum so unequal totals share one scale.",
+    "Check the Balance across subjects grade with strongest, weakest, spread and standard deviation, then click Copy result.",
+  ],
   intro:
     "This tool plots subject-wise marks on a radar (spider) chart by normalising every score to a percentage of its own maximum, so unequal totals like 100-mark and 80-mark papers share one scale. It also computes the standard deviation of your percentages to grade how balanced your profile is, and names your strongest and weakest subjects. It is meant for students planning revision time and for parents and mentors reviewing a report card at a glance.",
   useCases: [

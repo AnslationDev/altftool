@@ -1,5 +1,5 @@
 const seo = {
-  title: "ACT Composite Score Calculator (Classic & Enhanced)",
+  title: "ACT Composite Score Calculator: Classic/Enhanced",
   metaDescription:
     "Average your 1-36 section scores into the ACT Composite with ACT's half-up rounding — 31.5 becomes 32 — for classic and enhanced 2025 formats.",
   steps: [

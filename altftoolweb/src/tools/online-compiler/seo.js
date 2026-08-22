@@ -1,5 +1,5 @@
 const seo = {
-  title: "Online HTML, CSS & JavaScript Compiler with Live Preview",
+  title: "Online HTML, CSS & JS Compiler with Live Preview",
   metaDescription:
     "Write HTML, CSS and JS in a Monaco editor; the sandboxed preview re-renders 600 ms after you stop typing. Console panel included, export as a .zip.",
   steps: [

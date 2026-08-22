@@ -1,5 +1,5 @@
 const seo = {
-  title: "Punjabi Akhaan: 24 Proverbs in Gurmukhi with Meanings",
+  title: "Punjabi Akhaan: 24 Gurmukhi Proverbs & Meanings",
   metaDescription:
     "Search 24 Punjabi proverbs in Gurmukhi with Roman transliteration, the literal image, how each is really used, and the closest English saying.",
   steps: [

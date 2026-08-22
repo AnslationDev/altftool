@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloudflare Workers Cost Calculator (Paid + KV)",
+  metaDescription:
+    "Estimate the $5 Workers Paid plan bill from monthly requests and CPU-ms, plus Workers KV reads, writes, lists and storage — egress is free.",
+  steps: [
+    "Enter Worker requests (millions/month) and Average CPU time per request (ms) — only CPU time bills; waiting on fetch() is free.",
+    "Add any Workers KV usage: reads, writes, deletes and list operations in millions per month, plus KV stored data (GB).",
+    "Read the estimated monthly bill itemised into base plan, request and CPU-time overage and KV lines, then click Copy result.",
+  ],
   intro:
     "This calculator estimates a Cloudflare Workers Paid plan bill: $5/month base including 10 million requests and 30 million CPU-milliseconds, with overage at $0.30 per million requests and $0.02 per million CPU-ms, plus Workers KV metering ($0.50 per million reads, $5 per million writes, $0.50 per GB-month stored beyond the included allowances). It is for developers moving APIs and edge logic onto Workers who want to see the bill before the traffic arrives.",
   useCases: [

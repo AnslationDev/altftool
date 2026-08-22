@@ -1,5 +1,5 @@
 const seo = {
-  title: "Quotation Cover Letter Builder with GST and Validity",
+  title: "Quotation Cover Letter Builder: GST & Validity",
   metaDescription:
     "Prices your line items, takes the discount off the subtotal, then charges GST on the net, and writes the covering note with a validity date.",
   steps: [

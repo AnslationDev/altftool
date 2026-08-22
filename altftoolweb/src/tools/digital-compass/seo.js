@@ -1,4 +1,5 @@
 const seo = {
+  title: "Digital Compass Online - Heading Log in Degrees",
   intro:
     "This is a browser compass that reads your device's orientation sensor and logs a heading in degrees, along with the raw alpha, beta and gamma angles behind it, each row timestamped. On iOS it uses the webkitCompassHeading value the magnetometer supplies; elsewhere it falls back to the alpha rotation of the DeviceOrientation event. It only runs after you tap start and grant sensor permission, and the readings stay on the phone — nothing is transmitted.",
   useCases: [

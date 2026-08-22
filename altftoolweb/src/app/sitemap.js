@@ -99,6 +99,7 @@ import {
   getLatestArticles as getFactNetArticles,
 } from "@/app/fact-net/data/factNetData";
 import { TEMPLATES as socialMockupTemplates } from "@/app/prank-socialmedia/lib/templates";
+import { listKnownSupportSettingPaths } from "@/platform/navigation/exactRouteManifest";
 import { getAllKymRoutes } from "@/app/kym/components/KymGenericPage";
 import { isKymIndexable } from "@/app/kym/data/indexPolicy";
 import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
@@ -1210,6 +1211,21 @@ async function buildSitemapEntries({
     pushUnique(entries, seen, "/prompts/seedream-5-pro", {
       priority: 0.7,
       changeFrequency: "weekly",
+    });
+  }
+
+  // Support Settings deep links (~850) — enumerated from the same exact-route
+  // manifest the request guard validates against, so nothing here can 404 or
+  // redirect. Setting/device/AI-tool paths server-render their article (see
+  // supportsetting/[...slug]/serverArticle.jsx). The four bare platform paths
+  // (/supportsetting/windows etc.) are valid landing views but resolve no
+  // single record, so they get generic metadata only — still worth listing as
+  // hubs. The four /help/* utility pages stay client-only and are left out.
+  for (const path of listKnownSupportSettingPaths()) {
+    if (path.startsWith("/supportsetting/help/")) continue;
+    pushUnique(entries, seen, path, {
+      priority: 0.5,
+      changeFrequency: "monthly",
     });
   }
 

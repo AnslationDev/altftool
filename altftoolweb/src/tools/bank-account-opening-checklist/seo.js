@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bank Account KYC Document Checklist for India (RBI)",
+  title: "Bank Account KYC Checklist for India (RBI)",
   metaDescription:
     "Pick the account type and KYC route and get the papers the RBI Master Direction requires — savings, BSBDA, Small Account, salary, minor, NRE and NRO.",
   steps: [

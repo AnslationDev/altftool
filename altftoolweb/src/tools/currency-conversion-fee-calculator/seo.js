@@ -1,4 +1,12 @@
 const seo = {
+  title: "Currency Conversion Fee Calculator (Markup + GST)",
+  metaDescription:
+    "See what a foreign card payment really costs in INR: rate markup, cross-currency fee, GST under Rule 32(2)(b), and the effective rate you actually got.",
+  steps: [
+    "Enter the Transaction amount, pick one of 10 currencies (USD, EUR, GBP, AED, SGD, AUD, CAD, JPY, CHF, THB) and type the Mid-market rate in INR.",
+    "Choose 'How you are paying' — Credit card abroad, Debit card abroad, Forex prepaid card, Bank / net banking or Cash at a money changer — or set a custom Exchange rate markup (%), Cross-currency / card fee (%) and flat INR fee.",
+    "Read the 'You actually pay' total with the effective INR rate, the GST breakdown under Rule 32(2)(b) and the 'Same amount, other payment methods' comparison table, then click 'Copy result'.",
+  ],
   intro:
     "The advertised exchange rate is rarely what you pay. A card or bank transaction abroad adds a markup over the interbank rate, a percentage forex or cross-currency fee, and GST on that fee — this calculator adds all three so you can see the effective rate you actually received and what the spread cost you.",
   useCases: [

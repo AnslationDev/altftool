@@ -1,5 +1,5 @@
 const seo = {
-  title: "Weight-Loss Protein Calculator (1.2-2.0 g/kg Floor)",
+  title: "Weight-Loss Protein Calculator (1.2-2 g/kg Floor)",
   metaDescription:
     "Find the daily protein floor that protects lean mass in a deficit, using adjusted body weight above BMI 30 and comparing it to the 0.8 g/kg RDA.",
   steps: [

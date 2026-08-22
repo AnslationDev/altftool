@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vietnam E-Visa Cover Letter Builder with Date Checks",
+  title: "Vietnam E-Visa Cover Letter Builder: Date Checks",
   metaDescription:
     "Drafts the e-visa letter and works out valid-from/valid-to dates, the 90-day maximum, the US$25 or US$50 fee and a three-working-day decision date.",
   steps: [

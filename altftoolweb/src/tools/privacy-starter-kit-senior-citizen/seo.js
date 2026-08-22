@@ -1,5 +1,5 @@
 const seo = {
-  title: "Senior Scam-Safety Checklist: 16 Steps, Large Type",
+  title: "Senior Scam-Safety Checklist: 16 Large-Type Steps",
   metaDescription:
     "Tick off sixteen large-type steps against OTP, screen-sharing and UPI scams, and see how much your daily transfer limit still puts at risk.",
   steps: [

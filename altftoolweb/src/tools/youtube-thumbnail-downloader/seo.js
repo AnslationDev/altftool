@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Thumbnail Downloader: All 4 Sizes & URLs",
+  metaDescription:
+    "Paste any YouTube link — watch, youtu.be, Shorts or embed — to preview all four thumbnail sizes with direct img.youtube.com image URLs.",
+  steps: [
+    "Paste a YouTube link — watch, youtu.be, Shorts or embed URL — or a bare 11-character video ID into the 'YouTube URL or video ID' box.",
+    "Confirm the detected ID on the 'Video ID:' line; the four previews (Max resolution, HD, Standard, Medium) load live from img.youtube.com.",
+    "On any size card, click 'Copy' for the direct image URL or 'Open' to load the raw thumbnail JPG in a new tab and save it.",
+  ],
   intro:
     "The YouTube Thumbnail Downloader pulls the 11-character video ID out of any YouTube link and shows you the four thumbnail sizes YouTube stores for it — maxresdefault, hqdefault, sddefault and mqdefault — as live previews with copyable direct image URLs. It accepts watch, youtu.be, Shorts and embed links, or a bare video ID. Each result is the image straight from img.youtube.com, so what you preview is exactly what you copy or open.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Post-Quantum Migration Inventory: RSA to ML-KEM Scan",
+  title: "Post-Quantum Migration Inventory: RSA to ML-KEM",
   metaDescription:
     "Scan pasted code, config or certificate metadata for RSA, EC, DSA, DH, TLS and ML-KEM or ML-DSA names. Reports counts and line numbers, not the text.",
   steps: [

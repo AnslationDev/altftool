@@ -1,4 +1,12 @@
 const seo = {
+  title: "Etsy Photo Size & 4:3 Thumbnail Crop Checker",
+  metaDescription:
+    "Check an Etsy photo against the 2000 px rule, JPG/PNG/GIF formats and the 10-photo limit — and see the exact % the 4:3 search thumbnail crops away.",
+  steps: [
+    "Enter the photo's Width (px), Height (px), File size (MB) and File type — JPG, PNG, GIF, WebP, HEIC or TIFF — plus how many photos the listing already has, or tap a preset like '4:3 landscape' or 'Square'.",
+    "Tick 'This is the first photo (the one cropped for search results)' if the image will lead the listing — the 4:3 crop and orientation checks apply only to that photo.",
+    "Read the verdict — 'Listing-ready', 'Usable, but the thumbnail suffers' or 'Fix before you list' — with the exact percentage the 4:3 thumbnail trims and the photo slots left, then hit 'Copy report'.",
+  ],
   intro:
     "This checker tests an Etsy listing photo against the guidance in Etsy's Seller Handbook: at least 2000 px on the shortest side so the enlarged view stays sharp, JPG, GIF or PNG file types, a maximum of 10 photos per listing, and the 4:3 crop Etsy applies to the first photo in search results. Because that crop is where most sellers lose part of their product, the tool reports the exact percentage of your image the thumbnail discards.",
   useCases: [

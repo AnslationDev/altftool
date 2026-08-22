@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sunny 16 Calculator — Aperture & Shutter Pairs",
+  metaDescription:
+    "Pick the lighting condition and ISO to get exact and nearest full-stop aperture and shutter pairs from EV = log2(N²/t), plus equivalent exposures.",
+  steps: [
+    "Pick the Lighting condition from the list and enter your ISO (preset values offered, any number accepted).",
+    "Choose 'Shutter from aperture' or 'Aperture from shutter' under Solve for, set the fixed value, and add exposure compensation in stops if needed.",
+    "Read 'Set your camera to' — the nearest full-stop pair beside the exact figure and rounding error — plus the equivalent-exposures table; 'Copy result' copies it.",
+  ],
   intro:
     "Sunny 16 Exposure Helper converts a described lighting condition and an ISO into a working aperture and shutter speed using the APEX definition EV = log2(N²/t), with EV shifted for sensitivity by log2(ISO/100). Bright sun sits at EV 15 for ISO 100, and each softer condition on the list is exactly one stop down from the one above it. It is aimed at film shooters, fully manual cameras and anyone whose meter has failed mid-shoot.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Oven Temperature Converter: °C, °F & Gas Mark",
+  metaDescription:
+    "Type in any box - Celsius, Fahrenheit, fan C or gas mark - and the rest update live, with heat-zone guidance and a full gas mark 1/4-10 reference chart.",
+  steps: [
+    "Type a temperature into any of the four linked fields - Celsius (conventional oven), Fahrenheit, Fan / convection (°C) or the Gas mark dropdown - or tap a Common settings preset such as Cakes & bakes 180°C or Pizza 250°C.",
+    "Watch the other three values update instantly using °F = °C x 9/5 + 32 and fan = conventional - 20°C, while the marker places your setting on the 100-280°C heat-zone scale from Very cool to Extremely hot.",
+    "Press Copy to put the full report - conventional, fan, gas mark and zone - on the clipboard (the button reads Copied), or look up any setting in the Full gas mark reference table covering marks 1/4 through 10.",
+  ],
   intro:
     "The Oven Temperature Converter links Celsius, Fahrenheit, fan/convection Celsius and British gas marks in one live set of fields, using °F = °C × 9/5 + 32, fan °C = conventional °C − 20, and gas mark = (°F − 250) / 25 for marks 1 and above. Type into any box and the other three update, along with the heat zone the setting falls in and what that zone is good for. It is for anyone cooking from recipes written for a different country's oven.",
   useCases: [

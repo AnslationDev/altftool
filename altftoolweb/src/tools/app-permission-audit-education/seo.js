@@ -1,5 +1,5 @@
 const seo = {
-  title: "Education App Permission Audit - Camera, Mic, Proctoring",
+  title: "Education App Permission Audit: Camera & Mic",
   metaDescription:
     "Score a learning or proctoring app across 17 permissions. Camera, mic and screen capture are judged session-scoped; accessibility and overlay are not.",
   steps: [

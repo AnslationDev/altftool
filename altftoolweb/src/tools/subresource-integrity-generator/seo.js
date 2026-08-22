@@ -1,5 +1,5 @@
 const seo = {
-  title: "SRI Hash Generator — SHA-256/384/512 Integrity Tags",
+  title: "SRI Hash Generator: SHA-256/384/512 Tags",
   metaDescription:
     "Hashes your file's exact bytes in-browser with Web Crypto and outputs the integrity attribute plus a ready script or link tag with crossorigin set.",
   intro:

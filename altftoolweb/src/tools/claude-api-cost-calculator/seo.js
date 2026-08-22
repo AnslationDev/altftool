@@ -1,4 +1,12 @@
 const seo = {
+  title: "Claude API Cost Calculator: Cache & Batch Pricing",
+  metaDescription:
+    "Project monthly Claude API spend from requests and tokens - Opus, Sonnet and Haiku presets, 0.1x cache reads, 1.25x/2x writes and the 50% batch discount.",
+  steps: [
+    "Choose a Model (loads preset rates) — Opus at $5/$25, Sonnet at $3/$15 or Haiku 4.5 at $1/$5 per million tokens, every rate editable — then enter Requests per day and average input and output tokens per request.",
+    "Model the billing extras: 'Input served from cache (%)' for 0.1x cache reads, the Cache TTL write premium of 1.25x (5 minutes) or 2x (1 hour), and the Message Batches API (50% discount) checkbox.",
+    "Read the Estimated monthly spend over a 30-day month, with per-request, per-1,000-request, daily and yearly costs and the monthly saving from caching, then press Copy result.",
+  ],
   intro:
     "This calculator projects Anthropic Claude API spend from requests per day and average input and output tokens per request, priced at each model's per-1M-token rates. It models Claude's full billing surface: prompt-cache reads at roughly 0.1x the input rate, cache writes at a 1.25x (5-minute TTL) or 2x (1-hour TTL) premium, and the Message Batches API's 50% discount — with every rate editable so estimates track the live pricing page.",
   useCases: [

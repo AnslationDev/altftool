@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marathi Birthday Wishes with Romanisation",
+  metaDescription:
+    "Full Marathi birthday messages in the correct तू or तुम्ही form, with romanised text, English meaning and the SMS part count for each wish.",
+  steps: [
+    "Pick who it is for from 11 relationships (friend, mother, manager, teacher and more), a tone, the Politeness register (तू, तुम्ही or Automatic) and 1-6 messages.",
+    "Optionally add their name, a Sign it from name, and tick Show romanised Marathi; use Other wordings to reshuffle.",
+    "Read each message with its English meaning and SMS segment count (Devanagari is UCS-2: 70 chars single, 67 per part), then Copy one or Copy all.",
+  ],
   intro:
     "Marathi Birthday Wishes Generator builds a full Marathi birthday message — greeting line, wish and sign-off — from the relationship you choose and the tone you want. Marathi separates तू from तुम्ही, and that choice changes the possessive (तुझं versus तुमचं) and the verb agreement, so each wording is stored in both registers instead of being patched. Every message arrives with romanised Marathi, an English meaning and the number of SMS parts it will take.",
   useCases: [

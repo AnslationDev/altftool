@@ -1,5 +1,5 @@
 const seo = {
-  title: "Attention Span Test: A-not-X CPT in 1, 2 or 5 Minutes",
+  title: "Attention Span Test: A-not-X CPT in the Browser",
   metaDescription:
     "A browser Continuous Performance Task: letters flash for 250 ms, press space for all but X. Get accuracy, reaction time, omission and commission errors.",
   intro:

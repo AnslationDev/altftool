@@ -1,4 +1,12 @@
 const seo = {
+  title: "Swim Pace Calculator — Per-100 Splits",
+  metaDescription:
+    "Convert any swim into pace per 100, 50 and 25, speed in m/s and time per pool length — with Riegel race predictions at a swim-specific 1.03 exponent.",
+  steps: [
+    "Enter the \"Distance\" and \"Time (m:ss or h:mm:ss)\" — 400 in 6:00, say — or tap a preset from 100 to 1500.",
+    "Choose your \"Pool length\" — 25 m, 50 m, 25 yd or 33.3 m — and set the \"Fatigue exponent for predictions\" (1.03 by default).",
+    "Read the pace per 100, 50 and 25, speed and time per length, plus Riegel-predicted times for pool and triathlon distances; \"Copy result\" exports the summary.",
+  ],
   intro:
     "Swim pace is time per 100, calculated as total time multiplied by 100 and divided by the distance swum — a 400 in 6:00 is a pace of 1:30 per 100. This calculator returns that pace along with per-50 and per-25 splits, speed in metres per second, the number of lengths in your pool and the time each length takes. It then predicts times at 50 through 1500 and at triathlon swim distances using Riegel's endurance equation with a swim-appropriate fatigue exponent of 1.03.",
   useCases: [

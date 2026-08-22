@@ -1,4 +1,12 @@
 const seo = {
+  title: "Add or Subtract Days, Weeks, Months from a Date",
+  metaDescription:
+    "Move any date by years, months, weeks or days — end-of-month-safe arithmetic, a business-day mode that skips weekends, plus ISO week and day of year.",
+  steps: [
+    "Pick the \"Starting date\", choose \"Add\" or \"Subtract\", and fill in Years, Months, Weeks and Days — or tap a quick chip like \"+90 days\" or \"+6 months\".",
+    "Optionally tick \"Count business days only (skip Saturdays and Sundays)\" — then only the Days field applies and weekends are stepped over.",
+    "Read the \"Resulting date\" with its ISO date, ISO week, day of year, weekday-or-weekend and leap-year rows, then click \"Copy result\".",
+  ],
   "intro": "Date Add Subtract Calculator moves any date forwards or backwards by a mix of years, months, weeks and days and shows the exact resulting date with its weekday, ISO week number and day of year. Month arithmetic is end-of-month safe, so 31 January plus one month correctly lands on the last day of February rather than spilling into March. A business-day mode steps over Saturdays and Sundays for deadline and turnaround calculations.",
   "useCases": [
     "Find the exact expiry date when a document, warranty or visa is valid for 90 days or 6 months.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "UK VAT Calculator: Add or Remove VAT at 20%, 5% or 0%",
+  title: "UK VAT Calculator: Add or Remove at 20%, 5%, 0%",
   metaDescription:
     "Adds VAT to a net price or strips it from a gross one at 20%, 5% or 0%, with the HMRC VAT fraction and the 90,000 pound threshold check.",
   steps: [

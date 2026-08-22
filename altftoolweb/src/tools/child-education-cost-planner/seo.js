@@ -1,4 +1,12 @@
 const seo = {
+  title: "Child Education Cost Planner: Future Fees & SIP",
+  metaDescription:
+    "Inflate each academic year's fee to the year it is paid, see the corpus needed on admission day, and the monthly SIP or lumpsum that closes the gap.",
+  steps: [
+    "Enter 'Annual fee today (₹)', 'Course duration (years)', 'Child's age now' and 'Age when course starts' — or load a preset like 'Engineering in India (4 yrs)' or 'Overseas masters (2 yrs)'.",
+    "Set 'Education inflation (% p.a.)', 'Expected return (% p.a.)' and 'Already saved for this goal (₹)'; every academic year's fee is inflated to the year it is actually paid.",
+    "Read the 'Monthly SIP needed', corpus needed on admission day, shortfall and the 'Year-wise fee at the time of payment' table, then click 'Copy plan'.",
+  ],
   "intro": "Child Education Cost Planner projects what a course costing today's fees will actually cost when your child enrols, inflating every academic year separately at your education inflation rate. It then works out the corpus you need on admission day and the monthly SIP — or one-time lumpsum — that closes the gap after your existing savings grow. Built for parents planning school, undergraduate or overseas education goals.",
   "useCases": [
     "Work out the SIP needed today to fund a four-year engineering degree twelve years from now.",

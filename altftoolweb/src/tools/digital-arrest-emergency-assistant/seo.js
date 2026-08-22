@@ -1,5 +1,5 @@
 const seo = {
-  title: "Digital Arrest Scam: 7-Step Checklist & Notes File",
+  title: "Digital Arrest Scam: 7-Step Checklist & Notes",
   metaDescription:
     "Indian law has no digital arrest. Work the seven immediate steps, log 11 incident fields and 8 evidence types, then download a local .txt notes file.",
   steps: [

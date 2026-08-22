@@ -1,5 +1,5 @@
 const seo = {
-  title: "Random Startup Idea Generator: 86,400 Combinations",
+  title: "Random Startup Idea Generator: 86,400 Ideas",
   metaDescription:
     "Five slots - audience, problem, delivery, differentiator, pricing - make 86,400 ideas, each with a 1-10 build-effort score and a reusable seed.",
   intro:

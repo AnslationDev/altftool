@@ -1,5 +1,5 @@
 const seo = {
-  title: "Breastfeeding Session Log: Feeds, Gaps & Side Split",
+  title: "Breastfeeding Log: Feeds, Gaps & Side Split",
   metaDescription:
     "Log each feed's start time, side and minutes; get total time at the breast, start-to-start gaps, longest overnight stretch and the left/right split.",
   steps: [

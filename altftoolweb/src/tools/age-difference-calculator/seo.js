@@ -1,4 +1,12 @@
 const seo = {
+  title: "Age Difference Calculator: Years, Months and Days",
+  metaDescription:
+    "Exact age gap between two birth dates in years, months and days, plus total days, weeks and months — calendar-accurate with leap years handled.",
+  steps: [
+    "Enter each person's name (optional) and \"Date of birth\" — the order does not matter, and \"Swap the two people\" flips the entries.",
+    "Optionally set \"Show ages as of\" to today or any past or future date to see how old each person is on that day.",
+    "Read the \"Age difference\" in years, months and days, with total days, weeks, months and decimal years below it, then click \"Copy result\".",
+  ],
   "intro": "Age Difference Calculator works out the exact gap between two dates of birth in years, months and days, and backs it up with the total days, weeks and months between them. It counts calendar-style — full years first, then whole months, then the leftover days — so leap years and 28-to-31 day months are handled correctly instead of being averaged away. You can also pick any reference date to see how old each person is on that day.",
   "useCases": [
     "Check the exact age gap between siblings, partners or classmates rather than rounding to whole years.",

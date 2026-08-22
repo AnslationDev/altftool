@@ -1,5 +1,5 @@
 const seo = {
-  title: "Prayer Meet Invitation Wording, With the Day Counted",
+  title: "Prayer Meet Invitation Wording, Day Counted",
   metaDescription:
     "Write shok sabha, uthala, tehravin, chehlum or barsi notices in English, Hinglish, Hindi, Marathi or Gujarati. The observance date is counted for you.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Kids Hydration Reminder: School-Day Water Schedule",
+  title: "Kids Hydration Reminder: School-Day Schedule",
   metaDescription:
     "A timed school-day drinking schedule from EFSA intake values for ages 2-17, plus AAP activity fluid per 20 minutes and the bottle refills to pack.",
   steps: [

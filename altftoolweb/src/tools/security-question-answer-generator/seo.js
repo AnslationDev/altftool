@@ -1,5 +1,5 @@
 const seo = {
-  title: "Security Question Answer Generator with Entropy Bits",
+  title: "Security Question Answer Generator with Entropy",
   metaDescription:
     "Builds false but recordable answers as a passphrase, short story or random string, and reports each one's entropy in bits and possible-answer count.",
   steps: [

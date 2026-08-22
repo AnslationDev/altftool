@@ -1,4 +1,7 @@
 const seo = {
+  title: "Convert Seconds to Days, Hours, Minutes & Seconds",
+  metaDescription:
+    "Type a number of seconds and get a compact duration — 90061 becomes 1d 1h 1m 1s — with a Days, Hours, Minutes and Seconds breakdown.",
   intro:
     "Duration Calculator converts a raw number of seconds into days, hours, minutes and seconds — 90,061 seconds becomes 1d 1h 1m 1s. It divides by the fixed constants 86,400 seconds per day, 3,600 per hour and 60 per minute, then shows both the compact string and a breakdown row for each unit. It is built for developers and analysts reading durations out of logs, APIs, video metadata or database columns that store elapsed time as a plain integer.",
   useCases: [

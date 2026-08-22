@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stamp Duty & Property Registration Charge Estimator",
+  title: "Stamp Duty & Registration Charge Estimator",
   metaDescription:
     "Add up stamp duty, cess, registration fee and its state cap, scanning and franking on the higher of agreement value or circle rate, plus 194-IA TDS.",
   steps: [

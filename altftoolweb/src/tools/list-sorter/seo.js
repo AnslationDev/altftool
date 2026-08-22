@@ -1,5 +1,5 @@
 const seo = {
-  title: "List Sorter: Sort A-Z, by Number, Length or Random",
+  title: "List Sorter: A-Z, by Number, Length or Random",
   metaDescription:
     "Sort a pasted list A-Z, by numeric value, by length, reversed or shuffled. Split on newline, comma, semicolon or pipe, then download sorted-list.txt.",
   steps: [

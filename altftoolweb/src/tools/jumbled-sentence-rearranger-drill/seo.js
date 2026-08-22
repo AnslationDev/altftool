@@ -1,4 +1,12 @@
 const seo = {
+  title: "Jumbled Sentence Drill: Rearrange, Learn Rules",
+  metaDescription:
+    "Tap word tiles to rebuild a scrambled sentence at Easy, Medium or Hard level; checking names the first misplaced word and the grammar rule behind it.",
+  steps: [
+    "Choose a Difficulty — All levels, Easy, Medium or Hard — and note the Question counter showing your place in the sentence bank.",
+    "Tap the Word tiles in order to build the line under Your sentence, then press Check answer (Clear line or Reshuffle restarts the attempt).",
+    "Read the feedback — the first word out of place, the correct answer and its grammar rule — and track Session accuracy or click Copy result.",
+  ],
   intro:
     "Jumbled Sentence Rearranger Drill scrambles a correct English sentence into word tiles and asks you to rebuild it, then marks the attempt word by word and names the grammar rule that fixes the order. The bank covers 24 sentences across three levels, from basic subject-verb-object patterns up to inversion after 'not only' and 'no sooner ... than'. Answers are matched case-insensitively, so the capital letter on the first word is not a free clue.",
   useCases: [

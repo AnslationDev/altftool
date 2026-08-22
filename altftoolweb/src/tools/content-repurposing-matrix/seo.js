@@ -1,4 +1,12 @@
 const seo = {
+  title: "Content Repurposing Matrix & Publishing Calendar",
+  metaDescription:
+    "Turn one long video into a counted plan — clips, carousels, threads, blog, newsletter — with production hours and a dated publishing calendar.",
+  steps: [
+    "Enter 'Source video runtime (minutes)' (1–600), 'Key moments marked', 'Average clip length (seconds)' and an 'Effort multiplier (1 = standard)' for your editing pace.",
+    "Tick your Output channels — Vertical clips (Shorts / Reels / TikTok), Carousel, Quote graphics, X thread, Blog article, Newsletter issue and more — then set 'Publish per week' and a 'First publish date'.",
+    "Read 'Assets from this one video' with total production hours, review 'The matrix' counts and the dated Publishing calendar, then click 'Copy plan'.",
+  ],
   intro:
     "Content Repurposing Matrix converts one long video into a counted production plan: every output channel derives its asset count from a fixed rule — one per video, or one per N key moments up to a cap — and each asset carries a minute estimate that adds up to total production hours. It then spreads the finished assets across a publishing calendar at the cadence you set, spacing them evenly inside each week from a start date you choose.",
   useCases: [

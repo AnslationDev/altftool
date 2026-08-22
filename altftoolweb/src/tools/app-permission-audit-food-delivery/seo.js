@@ -1,5 +1,5 @@
 const seo = {
-  title: "Food Delivery App Permission Audit: 15 Permissions",
+  title: "Food Delivery App Permission Audit: 15 Items",
   metaDescription:
     "Score a food or grocery app across 15 weighted permissions. Background location counts as optional, and SMS or contacts access is flagged to revoke.",
   steps: [

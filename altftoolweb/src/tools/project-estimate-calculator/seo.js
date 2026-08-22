@@ -1,4 +1,12 @@
 const seo = {
+  title: "Project Estimate Calculator: Cost & Delivery Date",
+  metaDescription:
+    "Turn task hours into a quote - per-task costs, a priced contingency buffer, and a weekday delivery date from the hours you can really give each week.",
+  steps: [
+    "List the work under Tasks — press Add task and give each row a name and Hours (the defaults model a website build: Discovery and planning, Design, Build, Testing and revisions).",
+    "Set Hourly rate (INR), Contingency buffer (%), Hours available per week and a Start date; the estimate recalculates as you type.",
+    "Read the 'Quote this project at' total with the per-task Hours/Share/Cost table and the weekdays-only Estimated delivery date, then press Copy result.",
+  ],
   "intro": "Project Estimate Calculator turns a task list into a quote and a delivery date. Enter the hours you expect each piece of work to take, set your hourly rate and a contingency buffer, and it returns the cost before and after the buffer, the total hours, and a finish date based on the hours you can actually give the project each week. Built for freelancers, agencies and studios who need a defensible number rather than a gut-feel figure.",
   "useCases": [
     "Price a website build by breaking it into discovery, design, build and testing hours.",

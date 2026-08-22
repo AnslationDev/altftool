@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hidden Talent Finder – Joke Talent From Your Name",
+  metaDescription:
+    "Type a first name, pick a birth month, and a fixed hash picks one of ten joke talents — same input, same result every time. An icebreaker, not a quiz.",
+  steps: [
+    "Enter a name in the \"Your First Name\" field and choose a \"Birth Month\" from the twelve-month dropdown.",
+    "Click \"Reveal My Talent\" — a character hash of your name plus the month number, taken modulo ten, picks one of the ten talents.",
+    "Read the \"Your Hidden Talent Is\" card with its one-line description, then click \"Try Another Name\" to reset and rerun.",
+  ],
   intro:
     "The Hidden Talent Finder turns your name and birth month into one of ten joke talents — Snack Alchemist, Chaos Coordinator, Human Lie Detector and friends — using a fixed character hash of your name added to the month number and taken modulo ten. It is entertainment, not a personality assessment: the result is a deterministic lookup, so the same name and month always land on the same talent. Good for a group chat, a party icebreaker or a slow afternoon.",
   useCases: [

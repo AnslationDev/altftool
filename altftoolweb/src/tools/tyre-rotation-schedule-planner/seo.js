@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tyre Rotation Planner: Dates, Interval and Pattern",
+  title: "Tyre Rotation Planner: Dates, Interval & Pattern",
   metaDescription:
     "Plan rotation dates from your odometer and monthly km with the six-month cap, and get the right pattern: forward cross, rearward cross, X or same-side.",
   steps: [

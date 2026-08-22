@@ -1,5 +1,5 @@
 const seo = {
-  title: "Money Habit Score: 11 Checks Against Real Benchmarks",
+  title: "Money Habit Score: 11 Checks Against Benchmarks",
   metaDescription:
     "Score eleven saving, spending and planning habits out of 100 against the 20% savings rate, 3-6 month emergency fund, 40% EMI cap and 10x term cover.",
   steps: [

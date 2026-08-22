@@ -1,5 +1,5 @@
 const seo = {
-  title: "Water Weight Fluctuation Explainer: Sodium, Carbs, Alcohol",
+  title: "Water Weight Fluctuation: Sodium, Carbs, Alcohol",
   metaDescription:
     "Split an overnight scale swing into sodium, glycogen and alcohol effects — plus the calorie imbalance the same number would need if it were fat.",
   steps: [

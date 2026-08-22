@@ -1,5 +1,5 @@
 const seo = {
-  title: "Appliance Electricity Cost Calculator: Watts to Units",
+  title: "Appliance Electricity Cost Calculator",
   steps: [
     "Press a Quick Presets chip — Air Conditioner 1500 W, Refrigerator 250 W, Ceiling Fan 75 W, LED Bulb 12 W — or type your own Appliance Name and Power (Watts).",
     "Fill Usage (Hrs/Day), Quantity and Rate (₹/kWh), which opens at 8.0, then press Add Appliance to put the row in the list.",

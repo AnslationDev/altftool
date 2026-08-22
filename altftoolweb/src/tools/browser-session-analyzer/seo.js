@@ -1,5 +1,5 @@
 const seo = {
-  title: "Browser Tab Session Analyzer: Duplicates and Domains",
+  title: "Browser Tab Analyzer: Duplicates & Domains",
   metaDescription:
     "Paste a tab list, CSV or JSON export: duplicate URLs matched past ?utm_ and #anchors, 14 domain categories, and health, focus and clutter scores.",
   intro:

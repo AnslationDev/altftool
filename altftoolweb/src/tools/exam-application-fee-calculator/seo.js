@@ -1,5 +1,5 @@
 const seo = {
-  title: "Exam Application Fee Calculator - SSC, UPSC, RRB, IBPS",
+  title: "Exam Fee Calculator: SSC, UPSC, RRB, IBPS",
   metaDescription:
     "Total fees for SSC, UPSC, RRB, IBPS, SBI and CTET with each exam's own concession rules, bank charges and the refundable RRB portion netted out.",
   steps: [

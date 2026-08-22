@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Foreclosure Calculator: Savings vs Charges",
+  metaDescription:
+    "Work out what closing a loan early really saves: interest left minus the foreclosure charge and 18% GST, plus a foreclose-vs-invest comparison.",
+  steps: [
+    "Enter the Outstanding principal (₹), Interest rate (% per year), Remaining tenure (months) and Foreclosure charge (% of principal), ticking Add 18% GST on the foreclosure charge if it applies.",
+    "Set Return if you invest the money instead (% per year) to power the foreclose-now-vs-invest comparison.",
+    "Read the Net savings figure and the Pay today to close the loan amount, then click Copy result to copy the summary.",
+  ],
   "intro": "Loan Foreclosure Savings Calculator works out what closing a loan early actually saves you. It derives your EMI from the outstanding principal, rate and remaining months, totals the interest still to be paid, then subtracts the lender's foreclosure charge and the 18% GST on that fee. A second view compares foreclosing with keeping the loan and investing the same money, so borrowers with a maturing FD or bonus can decide with numbers instead of instinct.",
   "useCases": [
     "Check whether closing a Rs 8 lakh personal loan with 36 EMIs left is worth a 2% foreclosure fee.",

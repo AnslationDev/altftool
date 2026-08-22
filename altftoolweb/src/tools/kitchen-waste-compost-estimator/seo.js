@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compost Calculator: Browns & Yield from Scraps",
+  metaDescription:
+    "Enter your weekly kitchen waste to get the browns needed for a ~30:1 C:N blend, realistic compost yield, bin size and landfill waste diverted.",
+  steps: [
+    "Enter 'Kitchen waste a week (kg)' and pick what the waste mostly is — mixed kitchen scraps, vegetable peel, coffee grounds or grass clippings — each option showing its C:N ratio.",
+    "Choose the brown material you can add (dry leaves 60:1, shredded paper 170:1, cardboard 350:1 …), a target starting C:N near 30, and the weeks a batch takes to mature.",
+    "Read the finished-compost-per-year headline plus the browns to add each week, the greens-to-browns blend by dry weight, bin volume in litres and waste diverted, then hit 'Copy result'.",
+  ],
   intro:
     "Composting kitchen waste is a mass balance: water evaporates, roughly half the dry organic matter is respired away as CO2 by the microbes, and what remains is finished compost at around 40% moisture. This estimator runs that balance on your weekly waste, and first solves the carbon-to-nitrogen blend — kitchen scraps sit near 20:1 and a pile works best near 30:1, so it calculates exactly how much dry brown material to add by weight.",
   useCases: [

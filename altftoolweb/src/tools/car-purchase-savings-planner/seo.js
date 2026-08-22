@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Loan 20/4/10 Rule Check & Down Payment Planner",
+  title: "Car Loan 20/4/10 Rule & Down Payment Planner",
   metaDescription:
     "Work out the monthly saving for a 20% down payment, test the EMI against the 20/4/10 rule, and see ownership cost after India Motor Tariff resale.",
   steps: [

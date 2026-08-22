@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weighted Test Score Calculator for Unit Tests",
+  metaDescription:
+    "Combine unequal unit tests into one score by the weighted mean of percentages — weight a half-yearly 2× and see each test's exact mark contribution.",
+  steps: [
+    "Enter each test's \"Marks scored\" and \"Out of (maximum)\" — the defaults show two 25-mark unit tests and an 80-mark half-yearly — and set \"Final score out of\".",
+    "Give each test a \"Weight (relative)\" (1, 1, 2 makes the half-yearly count double) and use \"Add test\" or \"Remove\" to match your term's tests.",
+    "Read \"Final subject score\" with its percentage and each test's share of the final in marks, then click \"Copy result\" for the full breakdown.",
+  ],
   intro:
     "This calculator combines unit test scores of different sizes into one final subject score using the weighted mean of percentages: final = Σ(weight × scored ÷ max) ÷ Σweight, scaled to your chosen maximum. Weights are relative — a half-yearly with weight 2 counts double a unit test with weight 1 — so it mirrors how schools and colleges actually merge unequal tests. Each test's effective share of the final and its exact mark contribution are shown alongside the total.",
   useCases: [

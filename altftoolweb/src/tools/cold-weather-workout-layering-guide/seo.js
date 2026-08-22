@@ -1,5 +1,5 @@
 const seo = {
-  title: "What to Wear for Cold Workouts — Wind Chill Layer Guide",
+  title: "What to Wear for Cold Workouts: Wind Chill Guide",
   metaDescription:
     "Enter temperature, wind and session type to get NWS wind-chill maths, a dressing temperature, frostbite exposure time and a layer for every body zone.",
   steps: [

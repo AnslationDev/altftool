@@ -1,5 +1,5 @@
 const seo = {
-  title: "Live Caption Overlay: 18-54px Captions from Your Mic",
+  title: "Live Caption Overlay: 18-54px Mic Captions",
   metaDescription:
     "Turns mic speech into large captions via the browser's own Web Speech Recognition API — English (India, US, UK) or Hindi, 18-54px, nothing saved.",
   steps: [

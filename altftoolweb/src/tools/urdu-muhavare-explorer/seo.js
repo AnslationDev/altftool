@@ -1,5 +1,5 @@
 const seo = {
-  title: "Urdu Muhavare Explorer: 30 Idioms, Meanings & Quiz",
+  title: "Urdu Muhavare Explorer: 30 Idioms & Quiz",
   metaDescription:
     "Browse 30 Urdu muhavare in Nastaliq with Roman transliteration, literal sense, meanings in Urdu and English, example sentences and a four-option quiz.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Hypothermia Checklist: Swiss HT I-IV Field Staging",
+  title: "Hypothermia Checklist: Swiss HT I-IV Staging",
   metaDescription:
     "Stage a casualty HT I to HT IV from what you can see, get the rewarming steps in order, the time back to 35 C and the wind chill. Not medical advice.",
   steps: [

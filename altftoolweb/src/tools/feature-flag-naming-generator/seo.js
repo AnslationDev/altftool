@@ -1,4 +1,12 @@
 const seo = {
+  title: "Feature Flag Name Generator: Expiry & Lint Rules",
+  metaDescription:
+    "Build a flag key from type prefix, team, description and expiry date — linted for negative names and keys over 64 characters, in six case conventions.",
+  steps: [
+    "Describe what the flag gates and the owning team, then pick a Flag type — release toggle, experiment, operational kill switch or permission gate — and an optional planned removal date.",
+    "Choose a Case convention (kebab-case, snake_case, camelCase, PascalCase, SCREAMING_SNAKE or dot.case) and toggle the type-prefix and team segments; the key regenerates on every change.",
+    "Copy the finished flag key with 'Copy result', review lint warnings for negative or vague names and keys over 64 characters, or copy any variant from the 'Every case convention' table.",
+  ],
   intro:
     "This generator builds a consistent feature flag key from four parts — a type prefix (release, exp, ops or perm), the owning team, what the flag gates, and a planned removal date for temporary flags. It follows Pete Hodgson's feature-toggle taxonomy and the naming guidance published by LaunchDarkly, Unleash and Flagsmith, and lints the result for negative names, vague words and keys over 64 characters, in any of six case conventions.",
   useCases: [

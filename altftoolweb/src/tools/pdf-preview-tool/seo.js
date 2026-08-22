@@ -1,4 +1,7 @@
 const seo = {
+  title: "PDF Previewer: View Every Page Without Acrobat",
+  metaDescription:
+    "Renders every PDF page as thumbnails with PDF.js in your browser, and re-renders any page at 2x for an HD preview. Look-only: no upload, no conversion.",
   intro:
     "PDF Previewer renders every page of a PDF as a contact sheet of thumbnails in the browser and re-renders any page you click at 2x scale in a full-size viewer. It uses the PDF.js rendering engine on a canvas, so you can read a document without installing Acrobat or handing the file to an online viewer. Nothing is saved or converted — it is a look-only inspector.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Linux Signals: Numbers, Exit Codes, PID 1",
+  metaDescription:
+    "Look up all 31 signal(7) signals by number, name or keyword — default action, catchability, 128+N exit code, kill command, and PID 1 container notes.",
+  steps: [
+    "Type a signal number, name or keyword — e.g. 9, SIGTERM, ctrl+c or seccomp — into the \"Signal number, name or keyword\" field, or tap a quick chip such as SIGKILL or SIGSEGV.",
+    "Read the Best match card: the signal's default action, whether it is catchable/blockable, the 128+N shell exit code when fatal, and the kill -N command to send it.",
+    "Click \"Copy result\" to copy the signal summary, or click any name in the \"All 31 standard signals\" table to load that signal's details.",
+  ],
   intro:
     "This explorer documents all 31 standard Linux signals from the signal(7) man page — number, default action (terminate, core dump, ignore, stop or continue), whether the signal can be caught, and the 128+N exit code a shell reports when it kills a process. It is written for developers and SREs debugging killed processes, container shutdowns and CI failures, including PID 1 behaviour that makes docker stop hang on naive entrypoints.",
   useCases: [

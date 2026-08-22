@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vaporwave Text Generator: 4 Full-Width Unicode Styles",
+  title: "Vaporwave Text Generator: 4 Full-Width Styles",
   metaDescription:
     "Maps every ASCII character to its full-width Unicode twin and renders Full-Width, Wide Spaced, Aesthetic and Vaporwave at once, with copy buttons.",
   steps: [

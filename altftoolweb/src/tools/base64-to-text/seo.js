@@ -1,17 +1,17 @@
 const seo = {
-  title: "Base64 to Text Decoder with URL-Safe and Padding Fix",
+  title: "Base64 to Text Decoder: URL-Safe & Padding Fix",
   metaDescription:
     "Decode Base64 to UTF-8 in the browser with atob: missing = padding restored, base64url - and _ handled, MIME line breaks and data: headers stripped.",
   intro:
-    "Base64 to Text converts a Base64 string back into the characters it encodes, using the standard alphabet from RFC 4648 §4 and — once URL-safe Base64 support is ticked — the URL-safe variant from §5. It repairs missing `=` padding, strips the line breaks that MIME Base64 inserts every 76 characters, unwraps a leading data: URL header, decodes the bytes as UTF-8, and names the check that failed when a string is rejected. It is for developers reading a JWT payload, a webhook body, an HTTP Basic header or a config value that arrived encoded.",
+    "Base64 to Text converts a Base64 string back into the characters it encodes, reading the standard alphabet from RFC 4648 §4 and the URL-safe variant from §5 with nothing to switch on — - and _ are folded back automatically. It repairs missing `=` padding, strips the line breaks that MIME Base64 inserts every 76 characters, unwraps a leading data: URL header, decodes the bytes as UTF-8 (or UTF-16 when a byte-order mark says so), and names the check that failed when a string is rejected. It is for developers reading a JWT payload, a webhook body, an HTTP Basic header or a config value that arrived encoded.",
   useCases: [
-    "Read the claims inside the middle segment of a JWT — tick URL-safe Base64 support first, because that segment uses - and _ with the padding stripped",
+    "Read the claims inside the middle segment of a JWT — that segment uses - and _ with the padding stripped, and both are handled automatically",
     "Decode an `Authorization: Basic` header to confirm which username a failing integration is actually sending",
     "Check what a Base64 value in a Kubernetes Secret or a CI environment variable really contains before rotating it",
   ],
   benefits: [
     ["Padding fixed automatically", "JWT and URL-safe payloads drop the `=` characters; this tool restores them instead of failing."],
-    ["Says why the input failed", "Detect invalid Base64 catches a 4n+1 length, characters outside the alphabet, and URL-safe - or _ while that option is off, printing the reason under the input box."],
+    ["Says why the input failed", "A 4n+1 length reports “Invalid length — a Base64 group can never be a single leftover character.”, a symbol outside the alphabet is quoted back at you by name, and a payload decoding past 8 MB is refused — each reason printed under the input box."],
     ["Nothing is transmitted", "Tokens and secrets are decoded locally with the browser's own `atob`, so they never reach a server or a log."],
   ],
   faqs: [
@@ -21,7 +21,7 @@ const seo = {
     ],
     [
       "Why does my JWT fail in other Base64 decoders?",
-      "Because JWTs use base64url (RFC 4648 §5): `+` becomes `-`, `/` becomes `_`, and the trailing `=` padding is removed entirely, as required by RFC 7515 §2. A decoder expecting standard Base64 rejects that. This tool always re-adds the 1 or 2 padding characters, and converts the alphabet once URL-safe Base64 support is on — leave it off and it stops with “URL-safe characters (- _) detected”.",
+      "Because JWTs use base64url (RFC 4648 §5): `+` becomes `-`, `/` becomes `_`, and the trailing `=` padding is removed entirely, as required by RFC 7515 §2. A decoder expecting standard Base64 rejects that. This tool re-adds the 1 or 2 padding characters and folds - and _ back to + and / on its own, so a JWT segment pastes straight in with nothing to switch on.",
     ],
     [
       "Is Base64 the same as encryption?",

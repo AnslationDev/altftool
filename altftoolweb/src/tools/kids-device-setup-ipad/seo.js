@@ -1,5 +1,5 @@
 const seo = {
-  title: "iPad Study Setup: Guided Access and Homework Blocks",
+  title: "iPad Study Setup: Guided Access & Homework Blocks",
   metaDescription:
     "iPadOS has no home multi-user profiles, so shared and personal iPads differ. Get the right steps plus a block schedule with 20-20-20 eye breaks.",
   steps: [

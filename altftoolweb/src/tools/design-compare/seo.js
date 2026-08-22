@@ -1,4 +1,12 @@
 const seo = {
+  title: "Design Compare: Overlay & Diff Two UI Screenshots",
+  metaDescription:
+    "Put two images side by side, behind a before/after slider or in a difference overlay where matching pixels go black — with synced zoom, grid and export.",
+  steps: [
+    "Drop or browse a PNG, JPEG, WebP or GIF into each of the \"Design A\" and \"Design B\" dropzones — each shows its pixel size, file size and format.",
+    "Pick \"Side by side\", \"Before / after\" or \"Overlay\", then use the Opacity and Slider ranges, the Grid and Diff toggles, and the Zoom buttons (0.5x to 3x).",
+    "Click \"Download view\" to save the current comparison as design-compare-view.html, or \"Reset view\" to start over.",
+  ],
   intro:
     "Design Compare puts two images side by side, behind a before/after slider, or stacked as a variable-opacity overlay so you can see exactly where they differ. It adds a difference blend mode that turns identical pixels black and leaves mismatches glowing, a 24-pixel alignment grid, synced zoom from 0.5x to 3x, and panning across both images at once. It is for designers and front-end developers settling the question of whether a build actually matches the mockup.",
   useCases: [

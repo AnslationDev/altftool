@@ -1,5 +1,5 @@
 const seo = {
-  title: "Resume Privacy Scanner: Redact PAN, Aadhaar, Salary",
+  title: "Resume Privacy Scanner: PAN, Aadhaar, Salary",
   metaDescription:
     "Paste résumé text to flag Aadhaar, PAN, passport, DOB and salary lines, score exposure and copy a redacted version. Nothing leaves your browser.",
   steps: [

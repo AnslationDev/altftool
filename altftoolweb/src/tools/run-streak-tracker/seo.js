@@ -1,4 +1,12 @@
 const seo = {
+  title: "Run Streak Tracker with the USRSA One-Mile Rule",
+  metaDescription:
+    "Log dated runs to see your live and record streaks, longest gap and 30-day consistency. The one-mile (1.609 km) qualifying threshold is editable.",
+  steps: [
+    "Under \"Log a run\", pick the Date, enter the Distance (km), set the \"Qualifying distance per day (km)\" threshold — 1.609 km is the official one-mile minimum — and click \"Add to log\".",
+    "Read the \"Current streak\" card and its rows: longest streak, ran today, qualifying days, total distance, consistency over the last 30 days, longest gap and next milestone.",
+    "Scan the \"Last 30 days\" squares — filled means a qualifying day, faded means a run under the threshold — and click \"Copy result\" for a text summary; the log is saved in this browser.",
+  ],
   intro:
     "A run streak is a set of consecutive calendar days on which you completed at least one qualifying run, and the US Running Streak Association sets that minimum at one mile (1.609 km) per day. This tracker takes a log of dated runs and returns the live streak, the record streak, the longest gap between runs and a 30-day consistency percentage. The threshold is editable, so a club or personal rule of 3 km or 5 km works just as well.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ansible Inventory File Builder: INI & YAML",
+  metaDescription:
+    "Type groups, hosts and vars in INI style — [group:children], [group:vars], ranges like web[01:05] — and copy a validated inventory as INI or YAML.",
+  steps: [
+    "Type your spec into the 'Inventory spec' box in INI style — [group] headers, [group:children] nesting, [group:vars] blocks and host ranges like web[01:05].",
+    "Pick the Output format: 'YAML (inventory.yml)' or 'INI (hosts)'; validation flags non key=value variables, self-referencing groups and circular :children chains as you type.",
+    "Read the stats — Groups, Hosts (ranges expanded), Child links, Variables — then click 'Copy result' to copy the generated inventory.",
+  ],
   intro:
     "This builder turns a plain INI-style spec into a validated Ansible inventory in both INI and YAML formats, complete with groups, [group:children] nesting, [group:vars] blocks and per-host variables. It follows the structure in Ansible's official inventory guide, expands numeric host ranges like web[01:05], and flags undefined child groups, duplicate hosts and circular children before ansible-inventory ever sees the file.",
   useCases: [

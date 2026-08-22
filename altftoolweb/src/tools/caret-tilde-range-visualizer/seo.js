@@ -1,4 +1,12 @@
 const seo = {
+  title: "Caret vs Tilde: npm Ranges on a Number Line",
+  metaDescription:
+    "See what ^ and ~ really allow: the npm desugaring drawn as a number line of allowed and blocked versions, with the stricter 0.x caret rules.",
+  steps: [
+    "Pick the Operator (^ or ~) and type a 'Base version', or tap a preset — 1.2.3, 0.2.3, 0.0.3 or 2.0.0.",
+    "Read the 'Allowed window' comparators and the 'Version number line', which marks each neighbouring version allowed or blocked with the base version highlighted.",
+    "Check 'Lowest allowed version' (inclusive) and 'First blocked version' (the exclusive bound), then press 'Copy result' for the range, comparators and rule.",
+  ],
   intro:
     "This visualizer draws the allowed update window of a caret (^) or tilde (~) semver range on a number line, marking each neighbouring version as allowed or blocked. It applies the node-semver desugaring npm uses: ^1.2.3 means >=1.2.3 <2.0.0, ~1.2.3 means >=1.2.3 <1.3.0, and the caret tightens on 0.x versions (^0.2.3 stops at 0.3.0, ^0.0.3 allows only itself). Developers reviewing dependency ranges see at a glance exactly where the window opens and where it slams shut.",
   useCases: [

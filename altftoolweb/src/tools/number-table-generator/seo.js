@@ -1,4 +1,12 @@
 const seo = {
+  title: "Multiplication Table Generator: Any Range 1-100",
+  metaDescription:
+    "Print times tables from x1 to x10 for any range of numbers 1-100, shade multiples of a number you pick, and copy any table as plain text lines.",
+  steps: [
+    "Set 'Start Number (1–100)' and 'End Number (1–100)' — the default range 1 to 12 prints twelve times tables side by side.",
+    "Type a number into 'Highlight Multiples Of' (e.g. 5) to shade every product divisible by it across all the tables.",
+    "Click Copy on any table's header to place its ten lines, formatted like '7 × 3 = 21', on the clipboard as plain text.",
+  ],
   intro:
     "The Number Table Generator prints multiplication tables for every number in a range you choose, each running from ×1 to ×10, with any start and end between 1 and 100. A highlight field shades every product that is a multiple of a number you name, so patterns like the multiples of 5 or 9 show up across all the tables at once. Each table has its own copy button that puts the ten lines on your clipboard as plain text, ready to paste into a worksheet.",
   useCases: [

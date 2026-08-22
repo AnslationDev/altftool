@@ -1,5 +1,5 @@
 const seo = {
-  title: "Glassmorphism CSS Generator With Live Blur Preview",
+  title: "Glassmorphism CSS Generator With Blur Preview",
   metaDescription:
     "Tune backdrop blur to 40px, radius and rgba opacities over a dark blob scene, then copy the six-line .glass-card rule or download the CSS file.",
   steps: [

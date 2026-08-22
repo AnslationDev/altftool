@@ -1,5 +1,5 @@
 const seo = {
-  title: "ASCVD & Framingham 10-Year Coronary Risk Calculator",
+  title: "ASCVD & Framingham 10-Year Risk Calculator",
   metaDescription:
     "Run one profile through the 2013 ACC/AHA Pooled Cohort Equations and the Framingham point score. Ages 20-79. Educational, not a diagnosis.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Osmania University CGPA to Percentage Converter",
+  metaDescription:
+    "Convert Osmania CGPA to percentage with the CBCS rule (CGPA − 0.5) × 10, reverse it for cut-offs, and roll semester SGPAs into a credit-weighted CGPA.",
+  steps: [
+    "Pick the Conversion convention — CBCS rule: (CGPA - 0.5) x 10 or Direct scaling: CGPA x 10 — and the direction: CGPA to percentage or Percentage to CGPA.",
+    "Enter your CGPA or SGPA (out of 10), or the Percentage of marks, and read the equivalent figure with its class and the cut-offs cleared.",
+    "Use Add semester to roll SGPA and Credits rows into a Credit weighted CGPA, then click Copy result to copy the conversion.",
+  ],
   intro:
     "This converter turns an Osmania University CGPA into the equivalent percentage of marks using the half point offset written into its CBCS regulations: percentage = (CGPA - 0.5) x 10. It reverses the same rule so you can see the CGPA a 60% or 70% cut-off demands, and it rolls semester SGPAs into a credit weighted CGPA when no consolidated memo has been issued yet. A straight ten-times option is included for the older schemes that print an unoffset figure.",
   useCases: [

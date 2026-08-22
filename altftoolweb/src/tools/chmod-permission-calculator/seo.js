@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chmod Calculator — Octal 755 to rwxr-xr-x & Back",
+  metaDescription:
+    "Convert chmod modes between octal (755) and symbolic (rwxr-xr-x) with a checkbox grid, setuid/setgid/sticky bits and warnings for risky modes.",
+  steps: [
+    "Type a \"Numeric (octal) mode\" like 755 or a \"Symbolic mode\" like rwxr-xr-x — the two fields stay in sync as you type.",
+    "Or tick the Read / Write / Execute grid per class plus the \"Setuid (4)\", \"Setgid (2)\" and \"Sticky (1)\" boxes, or tap a common-mode chip.",
+    "Read the ready-to-run chmod command with its per-class description and risk warnings, then click \"Copy result\".",
+  ],
   intro:
     "This calculator converts Unix file permissions between numeric octal form (755) and symbolic rwx form (rwxr-xr-x), using the POSIX weights read=4, write=2, execute=1 for each of owner, group and others, plus the setuid (4), setgid (2) and sticky (1) bits in a leading fourth digit. It is built for Linux and macOS users setting modes with chmod who want to see exactly what a number grants — with warnings for risky combinations like world-writable or setuid files.",
   useCases: [

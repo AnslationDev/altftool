@@ -1,4 +1,10 @@
 const seo = {
+  title: "Unicode Escape Converter: Text to \\uXXXX and Back",
+  steps: [
+    "Paste text into the Input box — the sample 'Café ☕' is preloaded, and 'Load sample' restores it.",
+    "Set Mode to Escape or Unescape; the conversion runs live with no convert button.",
+    "Read the Result pane — ASCII stays untouched while characters above code 127 become four-hex-digit \\uXXXX escapes (emoji become surrogate pairs) — and press Copy.",
+  ],
   intro:
     "The Unicode Escape Tool converts every non-ASCII character in your text — anything above code point 127 — into \\uXXXX escapes with four lowercase hex digits each, and reverses the same escapes back into readable characters. Most characters produce a single escape, but anything outside the Basic Multilingual Plane (emoji and other characters above U+FFFF) produces two, one per UTF-16 surrogate half. Escaping leaves plain ASCII untouched, so \"Café\" becomes \"Caf\\u00e9\" and nothing else in the string changes. It is the form JavaScript, JSON and Java source files use, so the output pastes straight into code that has to survive an ASCII-only pipeline.",
   useCases: [

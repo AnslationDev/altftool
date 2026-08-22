@@ -1,5 +1,5 @@
 const seo = {
-  title: "Australia Plug & Voltage Guide: Adapter or Converter?",
+  title: "Australia Plug & Voltage: Adapter or Converter?",
   metaDescription:
     "Check any device against Australia's 230 V 50 Hz AS/NZS 3112 sockets: adapter vs converter verdict, current drawn, and the 10-32 A outlet it needs.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Home Loan Tax Benefit Calculator: 80C + 24(b) by Year",
+  title: "Home Loan Tax Benefit Calculator: 80C + 24(b)",
   metaDescription:
     "Splits your EMI into principal and interest for any loan year, then applies the ₹1.5 lakh 80C cap, the ₹2 lakh 24(b) cap and 80EEA.",
   steps: [

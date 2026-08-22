@@ -1,4 +1,12 @@
 const seo = {
+  title: "Snoring Frequency Log: Nightly 0-3 Severity",
+  metaDescription:
+    "Rate each night's snoring 0-3 with position and triggers - weekly snoring rate, loud-night share and with/without trigger comparisons for a GP visit.",
+  steps: [
+    "For each night set the Date, Snoring loudness (0 None to 3 Very loud), Main sleep position (Back, Side, Stomach or Mixed) and any trigger chips, using Add night to extend the log.",
+    "Tick 'Witnessed breathing pause or gasping' where it happened - those nights are counted separately because they are a sleep-apnoea screening item.",
+    "Read the Snoring rate, the Week by week table and the trigger With/Without/Diff averages, then click Copy result for a summary to bring to a GP.",
+  ],
   intro:
     "The Snoring Frequency Log turns a nightly 0-3 loudness rating into a weekly snoring rate, an average severity score and a with-versus-without comparison for each trigger you tick. Weeks are grouped by ISO calendar week (Monday start), and a night counts as 'loud' at level 2 or above — snoring audible through a closed bedroom door. It is built for anyone told they snore who wants two weeks of structured evidence before a GP or sleep-clinic appointment.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Language Learning Flashcards with SM-2 Spaced Repetition",
+  title: "Language Flashcards with SM-2 Spaced Repetition",
   metaDescription:
     "Vocabulary flashcards scheduled by the SM-2 algorithm: rate 0-5, ease starts at 2.5 with a 1.3 floor. Bulk-import lists, export sets as JSON.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "File Name Sanitiser for Portal Uploads (POSIX-Safe)",
+  title: "File Name Sanitiser for Portals (POSIX-Safe)",
   metaDescription:
     "Rewrite a file name into the POSIX portable set - letters, digits, dot, hyphen, underscore. Fixes spaces, accents and CON/PRN names, keeps the extension.",
   steps: [

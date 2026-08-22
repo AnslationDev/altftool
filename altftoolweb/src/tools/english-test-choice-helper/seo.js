@@ -1,5 +1,5 @@
 const seo = {
-  title: "IELTS vs TOEFL vs PTE vs Duolingo: Which Test to Book",
+  title: "IELTS vs TOEFL vs PTE vs Duolingo: Which to Book",
   metaDescription:
     "Ranks IELTS, TOEFL iBT, PTE Academic and Duolingo for your route by cost, speed and home testing. Tests not valid for your visa route are excluded.",
   steps: [

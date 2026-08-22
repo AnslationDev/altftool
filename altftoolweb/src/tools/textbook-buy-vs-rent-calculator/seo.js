@@ -1,4 +1,12 @@
 const seo = {
+  title: "Textbook Buy vs Rent Calculator with Break-Even",
+  metaDescription:
+    "Compare buying a textbook net of resale value against per-term rent plus fees, and get the break-even number of terms where buying starts to win.",
+  steps: [
+    "Enter Price to buy and Expected resale value after the course, plus Rent per term and how many terms you need the book (1-24).",
+    "Add Non-refundable rental fees; the Refundable rental deposit is reported as locked-up cash, not counted as rental cost.",
+    "Read the verdict with the cost difference and break-even terms of use, or click Copy result.",
+  ],
   intro:
     "This calculator compares the net cost of buying a textbook — purchase price minus what you expect to resell it for — against renting it per term for as long as your course needs it, including non-refundable rental fees. It also computes the break-even point (net buying cost ÷ rent per term): use the book for more terms than that and buying wins. Built for students deciding between the campus bookshop, a rental service and the second-hand market.",
   useCases: [

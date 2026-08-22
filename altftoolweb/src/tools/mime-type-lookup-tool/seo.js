@@ -1,4 +1,12 @@
 const seo = {
+  title: "MIME Type Lookup: Extension to Content-Type",
+  metaDescription:
+    "Two-way lookup across 60 common web MIME types: the exact Content-Type for an extension, every extension for a type, plus charset and gzip guidance.",
+  steps: [
+    "Choose a direction under 'Look up by' — 'File extension → MIME type' or 'MIME type → extensions' — and type a query such as .png or application/json.",
+    "Read the matched Content-Type with its extensions, charset badge and whether gzip or Brotli wire compression helps.",
+    "Click Copy on an entry to take its Content-Type details; sample chips like woff2 and text/html fill the query instantly.",
+  ],
   intro:
     "This tool maps a file extension to its correct MIME type — the Content-Type value a server should send — and, in reverse, lists every conventional extension for a given MIME type. Mappings follow the IANA Media Types registry with charset guidance from RFC 6838, so developers configuring servers, upload validators or CDNs get the exact header value plus a note on whether gzip or Brotli compression is worth applying.",
   useCases: [

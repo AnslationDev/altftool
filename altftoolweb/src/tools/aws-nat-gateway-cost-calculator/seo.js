@@ -1,4 +1,12 @@
 const seo = {
+  title: "AWS NAT Gateway Cost Calculator — Hourly + Per-GB",
+  metaDescription:
+    "Sum NAT gateway hourly charges ($0.045/h), $0.045/GB data processing and tiered internet egress into one monthly total with effective cost per GB.",
+  steps: [
+    "Enter the number of NAT gateways (usually one per AZ), hours running per month (730 is a full month) and the GB of data processed per month.",
+    "Set 'Of which exits to the internet (GB)' — 0 if traffic stays inside AWS — so tiered data-transfer-out is added after the 100 GB free allowance.",
+    "Read the true monthly NAT cost split into hourly charges, $0.045/GB processing and internet egress, plus the effective cost per GB moved, then hit 'Copy result'.",
+  ],
   intro:
     "This calculator computes the true monthly cost of AWS NAT gateways as hourly charge + data processing + internet egress, using the published us-east-1 rates of $0.045 per gateway-hour and $0.045 per GB processed, plus tiered EC2 data-transfer-out starting at $0.09/GB. It is for platform and FinOps engineers who keep finding NAT as a surprise top-five line on the AWS bill and want to see which of the three components is driving it.",
   useCases: [

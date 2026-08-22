@@ -1,5 +1,5 @@
 const seo = {
-  title: "Influencer Media Kit Builder — One-Page PDF Export",
+  title: "Influencer Media Kit Builder: One-Page PDF",
   metaDescription:
     "Type your reach, average views, engagement rate and contact lines, then Build PDF media kit for a one-page file made in your browser, not uploaded.",
   steps: [

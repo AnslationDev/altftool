@@ -1,5 +1,5 @@
 const seo = {
-  title: "Data Lens — CSV Profiler: Outliers, Nulls, Cleanup",
+  title: "Data Lens CSV Profiler: Outliers, Nulls, Cleanup",
   metaDescription:
     "Profile a CSV in the browser: per-column type, missing counts, duplicate rows, 1.5×IQR outliers, correlations — then clean it and download the CSV back.",
   intro:

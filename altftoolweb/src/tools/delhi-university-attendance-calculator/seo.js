@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delhi University Attendance Calculator (66.67%)",
+  metaDescription:
+    "Check each DU paper against Ordinance VII's two-thirds rule with exact integer maths — see lectures you can still miss or the exact recovery run you need.",
+  steps: [
+    "Enter \"Lectures delivered\" and \"Attended\" for each paper, using \"Add paper\" for up to 20 papers — the two-thirds rule binds every paper separately.",
+    "Check each row's \"Eligible\" or \"Short\" status against the 66.67% line, judged with exact integer arithmetic.",
+    "Read \"Can still miss\" for safe skips or \"Attend in a row to recover\" for the exact consecutive-lecture run, then click \"Copy result\".",
+  ],
   intro:
     "This calculator tracks Delhi University attendance paper by paper against the two-thirds rule of Ordinance VII — a student must attend at least 2/3 (66.67%) of the lectures delivered in each paper to be eligible for the semester examination. Because 2/3 is an exact fraction, the tool uses exact integer arithmetic: eligibility is 3 × attended ≥ 2 × held, safe misses are (3 × attended − 2 × held) ÷ 2, and the recovery run is 2 × held − 3 × attended lectures in a row.",
   useCases: [

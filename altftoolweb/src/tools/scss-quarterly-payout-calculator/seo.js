@@ -1,5 +1,5 @@
 const seo = {
-  title: "SCSS Calculator: Quarterly Interest Payout and TDS",
+  title: "SCSS Calculator: Quarterly Interest Payout & TDS",
   metaDescription:
     "Works out the SCSS quarterly cheque as deposit x rate / 4, plus five-year interest, Section 194A TDS position and Rule 9 premature-closure cost.",
   steps: [

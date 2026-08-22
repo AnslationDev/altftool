@@ -1,4 +1,12 @@
 const seo = {
+  title: "Content Creator Prompt Pack with Word Budgets",
+  metaDescription:
+    "Build AI prompts for hooks, scripts, titles or repurposing plans with a word budget from runtime × pace, plus real platform caption and hashtag limits.",
+  steps: [
+    "Pick a deliverable under 'What do you want written?' — Hook variants, Full script, Titles and thumbnail text, Repurposing plan or Description and chapters — and type your Video topic.",
+    "Choose the Platform, a Speaking pace from 120 to 200 wpm and the Target runtime (seconds), or tap a 15s–90s preset; audience, angle and call to action are optional.",
+    "Check the Script word budget and the platform's title, caption and hashtag limits, then click Copy prompt to copy the prompt shown under 'Your prompt'.",
+  ],
   intro:
     "Content Creator Prompt Pack turns a topic, a target runtime and a speaking pace into a complete AI prompt for hooks, full scripts, titles and thumbnail text, descriptions with chapters, or a repurposing plan. The word budget is calculated directly from runtime and pace using words = seconds ÷ 60 × words-per-minute, so the script the AI returns actually fits the cut. Each prompt also carries the target platform's published title, caption and hashtag limits.",
   useCases: [

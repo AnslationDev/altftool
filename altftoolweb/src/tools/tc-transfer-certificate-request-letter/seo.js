@@ -1,5 +1,5 @@
 const seo = {
-  title: "TC Request Letter for School with RTE Section 5(3)",
+  title: "TC Request Letter for School, RTE Section 5(3)",
   metaDescription:
     "Builds a transfer certificate application from admission number, class, reason and date needed, citing RTE section 5(3) only for classes I to VIII.",
   steps: [

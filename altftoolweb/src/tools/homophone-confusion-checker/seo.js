@@ -1,5 +1,5 @@
 const seo = {
-  title: "Homophone Checker: Their/There, Affect/Effect & 41 Sets",
+  title: "Homophone Checker: 41 Confusable Sets",
   metaDescription:
     "Paste text to catch 32 certain homophone errors like 'their is' and 'should of', and flag every word from 41 confusable sets — all in your browser.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Study Break Stretch Plan: Desk Stretches Every 50 Minutes",
+  title: "Study Break Stretch Plan Every 50 Minutes",
   metaDescription:
     "Enter your study day length and get rotating three-stretch desk breaks every 50 minutes, with 15-20 s holds inside the ACSM 10-30 second guideline.",
   steps: [

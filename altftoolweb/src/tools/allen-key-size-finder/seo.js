@@ -1,5 +1,5 @@
 const seo = {
-  title: "Allen Key Size Chart: Metric to Imperial Clearance",
+  title: "Allen Key Size Chart: Metric to Imperial",
   metaDescription:
     "Grades every hex key swap by clearance: under 1% is the same tool, over 3% rounds the socket. Fastener sizes from ISO 4762, 7380, 4026 and ASME B18.3.",
   steps: [

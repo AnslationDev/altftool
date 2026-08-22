@@ -1,4 +1,12 @@
 const seo = {
+  title: "Absolute vs Annualised Return (CAGR) Converter",
+  metaDescription:
+    "Convert a total point-to-point gain into CAGR or back, for any period in years and months — with final value, value multiple and doubling time.",
+  steps: [
+    "Pick a conversion direction: \"Absolute → Annualised\" or \"Annualised → Absolute\".",
+    "Enter the return %, the holding period in years and months (0 to 11), and \"Amount invested (INR)\".",
+    "Read the converted CAGR or total return with final value, value multiple and doubling time; click \"Copy result\" for the summary.",
+  ],
   intro:
     "This calculator converts an absolute (point-to-point) return into an annualised return — the CAGR — and converts it back the other way. Enter the total percentage gain and how long you held the investment in years and months, and it shows the compounded annual rate, the final value, the value multiple and the doubling time. It is built for anyone comparing a fund fact sheet, a fixed deposit and a property sale that all quote returns on different bases.",
   useCases: [

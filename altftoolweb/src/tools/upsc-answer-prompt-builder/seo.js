@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPSC Mains Answer Writing AI Prompt Builder",
+  metaDescription:
+    "Turn any UPSC Mains question into an AI practice prompt with the real 150/250-word limits, the 0.72 min-per-mark time budget and an examiner evaluation.",
+  steps: [
+    "Paste your Mains question, pick the Paper, Question format and Directive word, and tick Ask for current-affairs enrichment or Ask for examiner-style evaluation as needed.",
+    "The builder shows the exam's real arithmetic - the Word limit for the marks, the Exam-time budget at 0.72 min per mark, the Writing speed needed and the Intro / body / conclusion word split.",
+    "Review the Generated prompt and press Copy prompt to paste it into your AI assistant; Reset restores the sample Finance Commission question and defaults.",
+  ],
   intro:
     "This builder turns a UPSC Mains question into a structured AI practice prompt using the exam's real parameters: 150-word 10-markers and 250-word 15-markers inside a 250-mark, 180-minute paper — which works out to 0.72 minutes per mark — plus the conventional 15/70/15 intro-body-conclusion split. It is for Civil Services aspirants who want model answers and examiner-style feedback that respect the actual constraints of the answer booklet.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eye Strain Study Planner with 20-20-20 Breaks",
+  metaDescription:
+    "Splits a study session into alternating screen and paper blocks with 20-second eye breaks every 20 minutes marked inside each screen block.",
+  steps: [
+    "Enter Total study time (minutes) (25-720), Block length (minutes) (15-120), Share of blocks on screen (%) and Rest between blocks (minutes).",
+    "Check Screen time in this plan and the totals table, adjusting the screen share until the screen minutes suit you — screen blocks are spread evenly, not stacked.",
+    "Follow the Block sequence of Screen and Paper blocks with the 20-second eye micro-breaks marked in each screen block; Copy plan puts it on the clipboard.",
+  ],
   intro:
     "This planner splits a study session into alternating screen and paper blocks — spread evenly through the day — and marks a 20-20-20 eye micro-break inside every screen block. It applies the American Academy of Ophthalmology's 20-20-20 rule and optometric advice to alternate close screen work with non-screen tasks. It is built for students who study partly from a laptop or tablet and partly from books, and want the screen exposure rationed instead of clumped.",
   useCases: [

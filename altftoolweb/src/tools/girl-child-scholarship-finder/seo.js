@@ -1,5 +1,5 @@
 const seo = {
-  title: "Girl Child Scholarships: NSIGSE, Pragati, Kanyashree",
+  title: "Girl Child Scholarship Finder",
   metaDescription:
     "Matches your study level, family income, community and state against 8 girl-only schemes, and names the rule that blocked each one that misses.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Paint Cost per Sq Ft Calculator India: Material + Labour",
+  title: "Paint Cost per Sq Ft India: Material + Labour",
   metaDescription:
     "Splits a painter's per-sq-ft quote into paint, primer, putty and labour, compares three emulsion tiers and finds the cheapest 1-20 L pack mix.",
   steps: [

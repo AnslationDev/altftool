@@ -1,5 +1,5 @@
 const seo = {
-  title: "Freelancer Prompt Pack: 9 Fill-in-the-Blank Prompts",
+  title: "Freelancer Prompt Pack: 9 Fill-in-the-Blanks",
   metaDescription:
     "Nine fill-in-the-blank AI prompts for proposals, three-tier pricing, scope-creep replies, invoice chasing and rate rises. Built in your browser.",
   steps: [

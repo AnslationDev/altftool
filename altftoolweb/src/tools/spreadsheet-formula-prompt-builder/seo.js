@@ -1,5 +1,5 @@
 const seo = {
-  title: "Spreadsheet Formula Prompt Builder for Excel & Sheets",
+  title: "Spreadsheet Formula Prompt Builder: Excel, Sheets",
   metaDescription:
     "Turn a pasted header row into real A1 column letters and bounded ranges, then build an AI prompt tied to Excel 365, 2019, Sheets or Calc.",
   steps: [

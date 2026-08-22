@@ -1,4 +1,12 @@
 const seo = {
+  title: "Timeline Builder - Colour-Coded Project Timelines",
+  metaDescription:
+    "Turn dated events into an alternating visual timeline: eight colour presets, manual ordering, copy as numbered text or download timeline.json.",
+  steps: [
+    "Fill Date and Title (both required) plus a description in the Add Event form and pick one of the eight colour swatches (Teal to Slate), then press Add.",
+    "Reorder entries with the Move event up / Move event down arrows — events keep your order rather than being date-sorted — and edit or delete any row.",
+    "Export with Copy for a numbered plain-text list or the JSON button, which downloads timeline.json; the summary bar tracks Total Events, Date Range and Milestones.",
+  ],
   intro:
     "Timeline Builder turns a list of dated events into an alternating left-right visual timeline, with each entry carrying a date, title, description and one of eight preset colours. It is for anyone who needs a roadmap, project history or event schedule they can show to other people rather than describe in a paragraph. A summary bar counts the events, shows the earliest-to-latest date range, and flags how many titles read as milestones.",
   useCases: [

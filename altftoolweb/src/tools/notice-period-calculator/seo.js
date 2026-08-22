@@ -1,5 +1,5 @@
 const seo = {
-  title: "Notice Period & Severance Calculator by Employment Type",
+  title: "Notice Period & Severance Calculator",
   metaDescription:
     "A planning model: notice months and severance from years worked and monthly salary, with separate rates for full-time, part-time, contract and executive.",
   steps: [

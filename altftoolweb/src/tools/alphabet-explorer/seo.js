@@ -1,5 +1,5 @@
 const seo = {
-  title: "Alphabet Explorer: 19 Scripts, Character by Character",
+  title: "Alphabet Explorer: 19 Scripts, Letter by Letter",
   metaDescription:
     "Latin, Greek, Cyrillic, Arabic, Hangul, Thai and 13 more scripts, each letter with its name, pronunciation, U+ code point and an example word.",
   intro:

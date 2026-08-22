@@ -1,4 +1,12 @@
 const seo = {
+  title: "MySQL Connection String Builder",
+  metaDescription:
+    "Enter host, port, charset, TLS mode and timeout once — get a mysql:// URI, a go-sql-driver DSN and a Connector/J JDBC URL with correct parameter names.",
+  steps: [
+    "Fill in Host, Port (blank = default 3306), Database (schema) name, and the optional User and Password fields.",
+    "Set Character set, an IANA Time zone, the TLS / SSL mode, Connect timeout in seconds and the parseTime=true Go DSN checkbox.",
+    "Copy whichever output your driver expects — URI (Node mysql2 / SQLAlchemy style), Go DSN (go-sql-driver/mysql) or JDBC URL (Connector/J).",
+  ],
   intro:
     "This builder turns one set of MySQL connection details into three correctly formatted strings: a mysql:// URI (Node mysql2 / SQLAlchemy style), a Go DSN in go-sql-driver/mysql's user:pass@tcp(host:port)/db grammar, and a JDBC URL for Connector/J. Charset, IANA time zone, TLS mode, connect timeout and pool limit are mapped to each driver's own parameter names — including the ssl-mode → tls translation the Go driver needs. Everything is generated locally in the browser.",
   useCases: [

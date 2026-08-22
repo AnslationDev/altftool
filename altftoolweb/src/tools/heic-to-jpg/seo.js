@@ -1,4 +1,12 @@
 const seo = {
+  title: "HEIC to JPG Converter: Batch, PNG & PDF Output",
+  metaDescription:
+    "Convert iPhone HEIC/HEIF photos to JPG, PNG or one-page PDF in your browser — batch queue, 10-100 quality slider, per-file downloads or one ZIP.",
+  steps: [
+    "Drop .heic or .heif files onto the 'Choose HEIC Files' area (multiple files allowed); each queued photo shows its name and size.",
+    "Pick JPG, PNG or PDF under 'Output Format', set the 'Image Compression Quality' slider (10-100%), then click 'Convert HEIC to JPG' (or PNG/PDF).",
+    "Save each converted image with its 'Download' button, or click 'Download All as ZIP' to get the whole batch in one archive.",
+  ],
   intro:
     "This converter decodes Apple's HEIC and HEIF photos in the browser and re-encodes them as JPG, PNG or a one-page PDF, with a quality slider from 10 to 100 controlling the JPEG compression level. Drop in a whole camera roll at once, convert the batch, then download files individually or as a single ZIP. It is for anyone who has iPhone photos that Windows, an older editor, a web upload form or a print shop refuses to open.",
   useCases: [

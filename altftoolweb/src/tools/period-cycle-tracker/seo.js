@@ -1,5 +1,5 @@
 const seo = {
-  title: "Period Tracker: Next 3 Periods, Fertile Window Dates",
+  title: "Period Tracker: Next 3 Periods & Fertile Window",
   metaDescription:
     "Predict your next three periods, the 7-day fertile window and ovulation (14 days before the next period). Logs stay in your browser; not contraception.",
   steps: [

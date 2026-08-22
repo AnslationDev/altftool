@@ -1,4 +1,12 @@
 const seo = {
+  title: "Percentage of Total Calculator with Remainder",
+  metaDescription:
+    "Solve X is what % of Y, what is X% of Y, and X is Y% of what — with the remainder shown in amount and percent, and zero-total errors explained.",
+  steps: [
+    "Pick a mode: 'X is what % of Y?', 'What is X% of Y?' or 'X is Y% of what?'.",
+    "Fill the two known fields — 'Part (the smaller number)', 'Percentage (%)' or 'Total (the whole)'; thousands separators and stray spaces are tolerated.",
+    "Read the headline answer with the remaining amount, remaining percentage and the formula used, then click 'Copy result'.",
+  ],
   "intro": "The Percentage of Total Calculator answers the question \"X is what percent of Y?\" and shows the remainder alongside it, so you see both the share and what is left. Two reverse modes cover the other unknowns: what a given percentage of a total comes to, and what total a known part represents a given percentage of. It suits marks out of a maximum, spend against a budget, one line item inside a larger figure, or any share-of-whole check.",
   "useCases": [
     "Convert a score of 45 out of 180 into a percentage for a mark sheet or report card.",

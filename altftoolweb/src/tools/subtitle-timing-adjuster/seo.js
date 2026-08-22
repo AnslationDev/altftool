@@ -1,4 +1,12 @@
 const seo = {
+  title: "SRT Timing Adjuster: Shift, Scale & Fix FPS Drift",
+  metaDescription:
+    "Shift SRT subtitles by milliseconds, scale by percent, or convert 23.976 to 25 fps drift — with cue-range targeting, overlap fixes and SRT/VTT export.",
+  steps: [
+    "Paste your subtitle file into the Input SRT box, or click Load Demo SRT to try three sample cues.",
+    "Set Offset ms (+/-), Scale % or a source-to-target fps conversion such as 23.976 to 25, optionally confined to a start and end cue index.",
+    "Check the QA counts for overlaps and cues over 20 characters per second, then click Download Adjusted SRT (saved as adjusted-subtitles.srt) or Download WebVTT.",
+  ],
   intro:
     "The Subtitle Timing Adjuster re-times an SRT file by applying a millisecond offset, a percentage speed scale, or a frame-rate ratio such as 23.976 to 25 fps, to every cue or only to a chosen cue range. It parses standard hh:mm:ss,mmm timecodes, recalculates them, and rewrites a clean, renumbered SRT you can paste straight back into your player or editor. Editors and fansubbers use it when captions drift or arrive out of sync with a re-encoded video.",
   useCases: [

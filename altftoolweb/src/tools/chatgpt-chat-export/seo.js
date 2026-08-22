@@ -1,4 +1,7 @@
 const seo = {
+  title: "Export ChatGPT Chats to PDF, DOCX & Markdown",
+  metaDescription:
+    "Convert a saved ChatGPT conversation to PDF, DOCX, Markdown, HTML, JSON, TXT or CSV — parsed and exported entirely in your browser, nothing uploaded.",
   intro:
     "This tool turns saved ChatGPT text into a readable document: it parses message roles and content, detects fenced code and Markdown tables, and writes the conversation as PDF, DOCX, Markdown, HTML, JSON, TXT or CSV. It accepts JSON exports, Markdown, plain text, HTML and CSV, or content pasted straight into the page. Formatting support varies by output: DOCX, Markdown and HTML keep the richest detected structure, while PDF is a plain message-text layout.",
   useCases: [

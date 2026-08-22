@@ -1,5 +1,5 @@
 const seo = {
-  title: "USA Visa Cost Estimator: MRV, SEVIS and Rupee Total",
+  title: "USA Visa Cost Estimator: MRV, SEVIS & Rupee Total",
   metaDescription:
     "MRV USD 185-315 by class, the SEVIS I-901 fee, reciprocity and card markup, added up per applicant in rupees at the exchange rate you set.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "HRA Exemption: Metro 50% vs Non-Metro 40% (Rule 2A)",
+  title: "HRA Exemption: Metro 50% vs Non-Metro 40%",
   metaDescription:
     "Runs Rule 2A twice on the same salary to show the 50% metro cap against 40% elsewhere, which of the three limits binds, and the tax the gap is worth.",
   steps: [

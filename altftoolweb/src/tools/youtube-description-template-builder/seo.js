@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Description Template with Chapter Checker",
+  metaDescription:
+    "Assemble a reusable description — summary, chapters, links, disclosures, hashtags — checked live against the 5,000-char limit and chapter rules.",
+  steps: [
+    "Write the Opening summary and enter Chapters one per line as '0:00 Title', plus Links one per line as 'Label | https://...'.",
+    "Add hashtags (max 15) and tick disclosure checkboxes — Paid promotion / sponsorship, Affiliate links, Gifted product or Altered or synthetic media.",
+    "Clear anything under Checks to fix — first timestamp 0:00, at least 3 chapters of 10+ seconds — then press Copy description.",
+  ],
   intro:
     "YouTube Description Template Builder assembles a complete, reusable description — summary, chapters, links, credits, disclosures and hashtags — and validates it against YouTube's own rules while you type. It enforces the 5,000-character description limit, the chapter requirements (first timestamp at 0:00, at least three chapters, each running 10 seconds or longer) and the 15-hashtag ceiling above which YouTube ignores every hashtag on the video.",
   useCases: [

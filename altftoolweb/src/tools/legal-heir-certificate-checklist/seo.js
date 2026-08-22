@@ -1,5 +1,5 @@
 const seo = {
-  title: "Legal Heir vs Succession Certificate: Which You Need",
+  title: "Legal Heir vs Succession Certificate",
   metaDescription:
     "See which assets need a legal heir certificate, succession certificate, probate or letters of administration, with Class I shares and the court fee.",
   steps: [

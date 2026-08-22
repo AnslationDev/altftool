@@ -1,4 +1,12 @@
 const seo = {
+  title: "Remove Extra Spaces: Collapse Spaces & Tabs",
+  metaDescription:
+    "Paste text and every run of spaces or tabs collapses to one space, with each line trimmed at both ends. Line breaks stay, so your paragraphs keep shape.",
+  steps: [
+    "Paste your text into the Input box, or press Load sample to try a line padded with too many spaces.",
+    "The cleanup runs live as you type: runs of spaces and tabs inside each line collapse to a single space and both ends of every line are trimmed, while line breaks stay untouched.",
+    "Read the cleaned text in the Result panel, where the line count matches your input, and press Copy to grab it.",
+  ],
   intro:
     "Remove Extra Spaces collapses every run of spaces and tabs inside a line down to a single space, then trims the leading and trailing whitespace off each line. Line breaks are left alone, so the shape of your document survives while the messy spacing inside it disappears. It is the quick fix for text that came out of a PDF, a scraped web page, or a spreadsheet cell with padded values.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Detailing Cost Calculator: Wax vs Ceramic vs PPF",
+  title: "Car Detailing Cost Calculator: Wax/Ceramic/PPF",
   metaDescription:
     "Compares wax, sealant, Teflon, ceramic, graphene and PPF on cost per year over the years you keep the car, with the same routine washing in every row.",
   steps: [

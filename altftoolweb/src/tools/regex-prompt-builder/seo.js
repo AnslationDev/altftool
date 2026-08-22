@@ -1,5 +1,5 @@
 const seo = {
-  title: "Regex Prompt Builder: Turn Examples into AI Prompts",
+  title: "Regex Prompt Builder: Turn Examples into Prompts",
   metaDescription:
     "Turn must-match and must-not-match examples into a regex prompt with a verified test table, for JavaScript, PCRE2, Python re, RE2/Go or POSIX ERE.",
   steps: [

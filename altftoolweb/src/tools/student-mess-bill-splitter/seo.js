@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mess Bill Splitter: Fixed Equal, Food by Days",
+  metaDescription:
+    "Split a hostel mess bill fairly: cook, gas and wifi equally; food by days present at a per-day rate. Shares reconcile to the exact bill.",
+  steps: [
+    "Enter the 'Total bill for the period (INR)' and the 'Fixed charges within the bill (INR)' — cook's salary, gas, wifi; enter 0 to split everything by days.",
+    "List each roommate with their 'Days present' (0–366), using 'Add roommate' and Remove to match your flat.",
+    "Read the 'Per-day food rate' and each member's Fixed share, Food share and Pays columns — shares total the exact bill — then click 'Copy result'.",
+  ],
   intro:
     "This splitter divides a shared mess or grocery bill the way hostel messes do: fixed charges like the cook's salary, gas and wifi are split equally among all roommates, while the food (variable) portion is divided in proportion to each person's days present. Each share is computed as fixed ÷ members plus per-day rate × days, rounded to the paisa with the remainder settled on the last member so the shares always add up to the exact bill.",
   useCases: [

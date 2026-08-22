@@ -1,5 +1,5 @@
 const seo = {
-  title: "Creative Commons License Picker: CC BY, SA, NC, ND",
+  title: "Creative Commons License Picker: BY, SA, NC, ND",
   metaDescription:
     "Answer two questions — commercial use and adaptations — to get the right CC 4.0 license, what reusers may do, and attribution in plain text and HTML.",
   steps: [

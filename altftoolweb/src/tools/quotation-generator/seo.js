@@ -1,5 +1,5 @@
 const seo = {
-  title: "Quotation Generator with GST, Discounts & Validity",
+  title: "Quotation Generator: GST, Discounts, Validity",
   metaDescription:
     "Price a client quote with per-line discounts and GST slabs, an overall discount, IGST or CGST+SGST, an advance-balance split and a validity date.",
   steps: [

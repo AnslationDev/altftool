@@ -1,5 +1,5 @@
 const seo = {
-  title: "Caption Emoji Density Checker: Emoji per 100 Words",
+  title: "Caption Emoji Density Checker (per 100 Words)",
   metaDescription:
     "Counts emoji as grapheme clusters and flags runs over 2, more than 5 in a caption, over 10 per 100 words, mid-sentence emoji and a leading emoji.",
   steps: [

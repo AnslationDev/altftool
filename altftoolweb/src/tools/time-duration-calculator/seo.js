@@ -1,4 +1,12 @@
 const seo = {
+  title: "Time Duration Calculator: Hours Between Two Times",
+  metaDescription:
+    "Hours between two times as h:mm, decimal hours and total minutes — overnight shifts handled, unpaid breaks deducted, rounding to 5, 6, 15 or 30 minutes.",
+  steps: [
+    "Enter a \"Start time\" and \"End time\", plus any \"Unpaid break (minutes)\" and \"Extra full days between\" — or tap a Quick example like \"Night shift 22:00 to 06:00\".",
+    "Pick a \"Rounding\" option: Exact (1 minute), or nearest 5, 6 (0.1 h), 15 or 30 minutes — an end time earlier than the start is automatically treated as the next day.",
+    "Read the Duration in hours and minutes with decimal hours, total minutes, total seconds and share of an 8-hour day, then click \"Copy result\".",
+  ],
   "intro": "Time Duration Calculator measures the exact gap between two clock times and returns it three ways: hours and minutes, decimal hours, and total minutes. It handles overnight periods automatically, deducts unpaid breaks, and can round to the nearest 5, 6, 15 or 30 minutes — the increments payroll and billing systems actually use. Useful for shift workers, freelancers filling timesheets, and anyone converting 8h 45m into 8.75 hours.",
   "useCases": [
     "Convert a 09:15 to 17:40 shift with a 30-minute lunch into decimal hours for a payroll form.",

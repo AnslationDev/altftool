@@ -1,5 +1,5 @@
 const seo = {
-  title: "ZIP Archive Surgeon: Remove Files Without Unzipping",
+  title: "ZIP Surgeon: Remove Files Without Unzipping",
   metaDescription:
     "Lists every ZIP entry with size and CRC32 status, drops the entries you name, and downloads altftool-rebuilt.zip — rebuilt in your browser.",
   steps: [

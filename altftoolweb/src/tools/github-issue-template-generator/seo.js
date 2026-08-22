@@ -1,4 +1,12 @@
 const seo = {
+  title: "GitHub Issue Template Generator — Issue Form YAML",
+  metaDescription:
+    "Build GitHub issue form YAML with required-field validation, labels and title prefixes — bug, feature and support presets for .github/ISSUE_TEMPLATE/.",
+  steps: [
+    "Pick a Template type — Bug report, Feature request or Support question — then edit the template name, description, default title prefix, labels and assignees.",
+    "For bug reports, toggle fields such as 'Require a duplicate-search checkbox', the affected version, an operating-system dropdown and shell-rendered log output.",
+    "Click Copy YAML and save the file at the shown path, e.g. .github/ISSUE_TEMPLATE/bug_report.yml; interactive and required field counts sit above the preview.",
+  ],
   intro:
     "This tool generates GitHub issue form YAML — the structured template format stored in .github/ISSUE_TEMPLATE/ that replaces free-text issues with validated fields like dropdowns, required textareas and checkboxes. It follows GitHub's documented issue-forms schema (name, description and body are mandatory; validations.required enforces a field). Maintainers get bug reports with reproduction steps and versions attached instead of one-line complaints.",
   useCases: [

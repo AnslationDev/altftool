@@ -1,5 +1,5 @@
 const seo = {
-  title: "UAE Dress Code & Packing Planner by Month and Emirate",
+  title: "UAE Dress Code & Packing Planner by Emirate",
   metaDescription:
     "Pick your month, emirate and venues — Sheikh Zayed Grand Mosque, malls, beaches, souks — for a packing count and the coverage rule each place expects.",
   steps: [

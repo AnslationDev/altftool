@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Script Prompt Builder with Timed Chapters",
+  metaDescription:
+    "Turn a runtime into a full script prompt: word count at 150 wpm, a 15-second hook, timed chapters and retention beats every ~45 seconds.",
+  steps: [
+    "Describe the video in 'What the video is about' and 'Who is watching', then set 'Runtime (minutes)' and 'Chapters' — the defaults are a 10-minute video with 5 chapters.",
+    "Pick a 'Video style' (Tutorial, Explainer, List or Story) and optionally add a 'CTA for the outro' and an extra instruction for the model.",
+    "Review the plan rows — 15 s hook, per-chapter word budgets, retention beats every ~45 s — and click 'Copy prompt' to copy the generated script prompt.",
+  ],
   intro:
     "The YouTube Script Prompt Builder converts a target runtime into a full script prompt: word count at the standard 150 words-per-minute narration pace, a 15-second hook, timed chapters with per-chapter word budgets, retention beats every ~45 seconds and a 20-second outro with a single CTA. It is built for creators and video teams who script before they shoot and want the draft to actually fit the runtime.",
   useCases: [

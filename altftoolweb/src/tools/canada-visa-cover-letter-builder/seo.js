@@ -1,5 +1,5 @@
 const seo = {
-  title: "Canada Visa Letter of Explanation Builder + Fee Total",
+  title: "Canada Visa Letter of Explanation Builder + Fees",
   metaDescription:
     "Draft an IMM 5257 letter of explanation and total the IRCC fees: CAD 100 per person capped at CAD 500, biometrics CAD 85 capped at CAD 170.",
   steps: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Grade Percentage Calculator: Marks & Weightings",
+  metaDescription:
+    "Find what a percentage of a total comes to — 15% of 200 is 30 — plus the value with that amount added and subtracted, for weightings and grace marks.",
   intro:
     "This calculator works out what a given percentage of a number comes to — (percent ÷ 100) × value — and at the same time shows that value increased and decreased by the same amount. Enter 15 and 200 and it returns 30, along with 230 and 170, so a weighting, a bonus and a deduction are all visible in one result. It is aimed at students and teachers converting mark weightings, grace marks and score adjustments without setting up a spreadsheet.",
   useCases: [

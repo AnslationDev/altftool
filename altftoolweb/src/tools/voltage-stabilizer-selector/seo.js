@@ -1,5 +1,5 @@
 const seo = {
-  title: "Voltage Stabilizer Selector: kVA and Working Range",
+  title: "Voltage Stabilizer Selector: kVA & Working Range",
   metaDescription:
     "Sizes a stabilizer from watts, power factor and surge margin, then finds the narrowest working range clearing your voltage swing by 5 V.",
   steps: [

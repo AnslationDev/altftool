@@ -1,5 +1,5 @@
 const seo = {
-  title: "Font CSS Generator: clamp() Sizing and Gradient Text",
+  title: "Font CSS Generator: clamp() Sizing, Gradient Text",
   metaDescription:
     "Build one CSS text rule with a live preview - clamp() responsive sizing, gradient text, shadow - then copy it or download style.css.",
   steps: [

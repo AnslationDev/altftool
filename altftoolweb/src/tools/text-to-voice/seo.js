@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text to Voice Reader — Free Browser Text-to-Speech",
+  title: "Text to Voice Reader — Browser Text-to-Speech",
   metaDescription:
     "Read any pasted text aloud with your system's own voices. Adjust speed from 0.1 to 3.0 plus pitch and volume, with real pause and resume controls.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "TDS Calculator FY 2025-26: 194J, 194C, 194-I, 194Q",
+  title: "TDS Calculator 2025-26: 194J, 194C, 194-I, 194Q",
   metaDescription:
     "Compute TDS on Indian payments under 194J, 194C, 194H, 194-I, 194Q and 194T with FY 2025-26 thresholds and the section 206AA no-PAN rate built in.",
   steps: [

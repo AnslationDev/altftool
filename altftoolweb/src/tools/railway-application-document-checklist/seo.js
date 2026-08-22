@@ -1,5 +1,5 @@
 const seo = {
-  title: "RRB Application Checklist: Photo Specs and Fee Refund",
+  title: "RRB Application Checklist: Photo Specs & Refund",
   metaDescription:
     "Post-group certificates, the 35x45 mm photo and signature JPEG limits, and what the ₹500 fee really costs after the ₹400 CBT-1 refund.",
   steps: [

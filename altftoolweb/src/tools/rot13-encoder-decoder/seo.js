@@ -1,4 +1,12 @@
 const seo = {
+  title: "ROT13 Encoder Decoder - Self-Inverse Letter Shift",
+  metaDescription:
+    "Shifts every letter 13 places to encode or decode text — the same operation both ways. Case kept; digits and punctuation untouched. Copy in one click.",
+  steps: [
+    "Type or paste text into the Input Text box (labelled Text to Decode in decode mode).",
+    "Click Encode Text or Decode Text — both apply the identical 13-letter shift, because ROT13 is self-inverse.",
+    "Read the Result panel, use the clipboard button on it to copy the output, or press Clear to start over.",
+  ],
   intro:
     "ROT13 replaces every letter with the one 13 places further along the alphabet, so A becomes N, N becomes A, and 'Hello World' becomes 'Uryyb Jbeyq'. This tool applies that substitution live as you type and copies the result in one click, keeping case and leaving digits, spaces and punctuation untouched. Because 13 is exactly half of 26, encoding and decoding are the same operation — run any text through twice and you get the original back.",
   useCases: [

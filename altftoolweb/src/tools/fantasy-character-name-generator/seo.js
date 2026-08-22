@@ -1,5 +1,5 @@
 const seo = {
-  title: "Fantasy Character Name Generator – 6 Two-Part Names",
+  title: "Fantasy Character Name Generator: Two-Part Names",
   metaDescription:
     "Roll six two-part fantasy names per click from a fixed pool of twelve invented roots like Aeloria and Kaelith — Copy or Download the set as .txt.",
   intro:

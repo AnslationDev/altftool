@@ -1,4 +1,12 @@
 const seo = {
+  title: "RBSE Percentage & Division Calculator (60/48/36)",
+  metaDescription:
+    "Plain RBSE aggregate from every subject's marks - division off the 60/48/36 bands, 33% per-subject minimum checks and the marks needed for the next band.",
+  steps: [
+    "Pick Class 10 (Secondary) or Class 12 (Senior Secondary) and enter each subject's Marks scored and Maximum marks, adding rows with Add subject if needed.",
+    "Read the Aggregate percentage with its division, plus the Subject by subject table marking each subject Pass or 'Short by' against the 33% minimum.",
+    "Check the Next division section for the extra marks the next band needs, then click Copy result for the summary.",
+  ],
   intro:
     "RBSE percentage is a plain aggregate: total marks obtained divided by the grand total, times 100, with no subject dropped. Class 10 is normally six subjects out of 600 and class 12 five subjects out of 500. This calculator applies that, places the aggregate on the Rajasthan Board division bands (First from 60%, Second from 48%, Third from 36%), checks the 33% minimum subject by subject, and tells you how many marks separate you from the next division.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Facebook & Instagram Data Download: Size and Risk Plan",
+  title: "Facebook & Instagram Data Download Size Planner",
   metaDescription:
     "Size a Meta 'Download your information' request first: pick categories, HTML or JSON and media quality, then see archive size and download time.",
   steps: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Uptime Monitoring Cost Calculator: Checks & Detection",
+  title: "Uptime Monitoring Cost & Detection Calculator",
   metaDescription:
     "Turn endpoints, check interval and probe locations into check runs per month, cost under metered or per-monitor pricing, and time to detect.",
   steps: [

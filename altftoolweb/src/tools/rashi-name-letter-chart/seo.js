@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rashi Name Letter Chart: 9 Naming Syllables per Sign",
+  title: "Rashi Name Letter Chart: 9 Syllables per Sign",
   metaDescription:
     "All 9 naming syllables for each of the 12 rashis, with the nakshatra and pada behind each. Enter a name to see which rashi its first syllable falls in.",
   steps: [

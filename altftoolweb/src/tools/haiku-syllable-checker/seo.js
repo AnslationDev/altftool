@@ -1,4 +1,7 @@
 const seo = {
+  title: "Haiku Syllable Checker: Organise 5-7-5 Drafts",
+  metaDescription:
+    "Organise a three-line haiku draft against the 5-7-5 pattern: paste your lines and theme notes, then copy a structured working note for rewrites.",
   intro:
     "Haiku Syllable Checker helps organise a three-line poem draft against the familiar 5-7-5 structure. Paste your lines, note the theme, and use the working note to spot lines that may need tightening.",
   useCases: [

@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Changelog Generator – Keep a Changelog + SemVer Bump",
+  title: "API Changelog Generator: Keep a Changelog, SemVer",
   metaDescription:
     "List API changes and get a Keep a Changelog 1.1.0 release section with the Semantic Versioning bump derived from them — removals force a major.",
   steps: [

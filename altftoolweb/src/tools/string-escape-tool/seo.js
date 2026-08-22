@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON Escape / Unescape - String Escape Tool",
+  metaDescription:
+    "Escape quotes, backslashes, newlines and tabs with JSON.stringify rules, or unescape back to plain text - outer quotes stripped, ready to paste.",
+  steps: [
+    "Paste text into the Input box, or click Load sample to try a two-line example with quotes.",
+    "Set Mode to Escape or Unescape - the Result pane updates live using JSON.stringify / JSON.parse rules, with the outer double quotes stripped from escaped output.",
+    "Click Copy to grab the Result; a malformed unescape shows 'Invalid escaped string' instead of half-decoded text.",
+  ],
   intro:
     "The String Escape Tool converts raw text into a JSON-safe string literal — escaping double quotes as \\\", backslashes as \\\\, newlines as \\n, tabs as \\t and other control characters as \\u sequences — and reverses the process on demand. It uses the same rules as JavaScript's JSON.stringify and JSON.parse, so the output is exactly what a JSON parser expects. Paste text in, pick Escape or Unescape, and copy the result straight into your code or config file.",
   useCases: [

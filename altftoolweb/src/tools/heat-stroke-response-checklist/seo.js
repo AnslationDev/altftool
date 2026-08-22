@@ -1,5 +1,5 @@
 const seo = {
-  title: "Heat Stroke Checklist: 40 °C Rule and Cooling Time",
+  title: "Heat Stroke Checklist: 40 °C Rule & Cooling Time",
   metaDescription:
     "Tell heat stroke from heat exhaustion by the 40 °C plus altered-mental-state rule, then get the cooling order, minutes to 38.9 °C and the NWS heat index.",
   steps: [

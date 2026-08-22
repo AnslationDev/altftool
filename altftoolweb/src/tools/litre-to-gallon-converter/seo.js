@@ -1,5 +1,5 @@
 const seo = {
-  title: "Litre to Gallon Converter: US, Imperial & Fuel Price",
+  title: "Litre to Gallon Converter: US & Imperial",
   metaDescription:
     "Converts litres to both gallons by their exact definitions — US 3.785411784 L, imperial 4.54609 L — and turns a price per litre into price per gallon.",
   steps: [

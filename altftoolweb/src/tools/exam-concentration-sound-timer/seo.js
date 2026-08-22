@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Concentration Sound Timer — Pace by Marks",
+  metaDescription:
+    "Split a paper into timed blocks in proportion to marks, get the clock time each section must end, and run it with sound beds and warning cue tones.",
+  steps: [
+    "Set Total paper time (minutes), 'Paper starts at', Reading time and Review minutes, then give each entry under Sections of the paper its Marks and a Sound bed — Add section for more.",
+    "Check the Block plan table: minutes are shared out in proportion to marks, with start–end clock times per section and your seconds-per-mark pace shown on top.",
+    "Press Start to run the blocks with a cue tone at each block start and at the warning lead you set; Copy plan copies the schedule with the pens-down time.",
+  ],
   intro:
     "This timer divides an exam paper into timed blocks in proportion to the marks each section carries, then runs those blocks with a quiet sound bed and audible cues. It works out writing time as total time minus reading time and review time, converts that into minutes per mark, and uses the largest-remainder method so the section minutes add back to the paper length exactly. It is built for students rehearsing pace at home before a board or university paper.",
   useCases: [

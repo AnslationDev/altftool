@@ -1,4 +1,12 @@
 const seo = {
+  title: "DIY Tool Kit Builder with Buy-or-Hire Break-Even",
+  metaDescription:
+    "Pick your DIY jobs and get the tools they need in phases, with a buy-or-hire test on big items and owned tools dropped from the budget.",
+  steps: [
+    "Tick the Jobs you plan to do, choose a Quality tier and enter Times you expect to use each big tool for the buy-or-hire break-even.",
+    "Set a Budget ceiling (0 for none) and tick anything under Tools you already have so it drops out of the budget.",
+    "Read the phased tool list with per-item hire verdicts and the Cheaper to hire table, then click Copy result to copy the list and budget.",
+  ],
   intro:
     "Turns a list of jobs you intend to do into the tools those jobs actually require, split into three phases: essential before you start, useful once you are going, and specialist tools that only pay off with repetition. Every hireable item is tested against the break-even rule — buy when the purchase price is below the expected number of uses multiplied by the daily hire rate, hire when it is above. Tick what you already own and it drops out of the budget.",
   useCases: [

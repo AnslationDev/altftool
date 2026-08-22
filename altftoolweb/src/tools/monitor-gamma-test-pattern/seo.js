@@ -1,5 +1,5 @@
 const seo = {
-  title: "Monitor Gamma Test Pattern — Measure Without a Colorimeter",
+  title: "Monitor Gamma Test Pattern (No Colorimeter)",
   metaDescription:
     "Match a solid grey to a one-pixel dither to measure your display's actual gamma, plus a step wedge, bit-depth banding ramp and clipping patches.",
   steps: [

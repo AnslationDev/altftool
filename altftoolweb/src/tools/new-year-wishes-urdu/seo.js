@@ -1,4 +1,12 @@
 const seo = {
+  title: "Urdu New Year Wishes — Naya Saal Mubarak Messages",
+  metaDescription:
+    "Naya saal mubarak messages for 1 January and 1 Muharram in Urdu script and Roman Urdu, with English meaning and exact SMS part counts.",
+  steps: [
+    "Pick the Occasion — '1 January (naya saal)' or 'Hijri new year (1 Muharram)' — plus a Tone, who it is for, and a Script: Urdu, Roman Urdu or both.",
+    "Add optional recipient and sender names; the salutation adjusts to the relationship, using honorifics like mohtaram for an elder or teacher.",
+    "Read the featured wish with its English meaning and exact SMS parts (70 characters per part in Urdu script), then 'Copy message' or pick another from 'All matching messages'.",
+  ],
   intro:
     "This generator builds Urdu new year messages by joining a customary salutation, a greeting from a curated bank of 1 January and Hijri new year wishes, and your sign-off. Each message is shown in Urdu script, in Roman Urdu and in English, with its billable SMS length worked out under the 3GPP 140-byte payload rule. It is for anyone who wants correct Urdu wording for elders, friends or business contacts rather than a forwarded image.",
   useCases: [

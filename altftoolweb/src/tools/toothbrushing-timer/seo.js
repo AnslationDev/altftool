@@ -1,4 +1,12 @@
 const seo = {
+  title: "2-Minute Toothbrushing Timer with Quadrant Zones",
+  metaDescription:
+    "120-second brushing timer split into 4, 6 or 8 mouth zones with modified Bass cues, age-based fluoride amounts and a 90-day brush-head reminder.",
+  steps: [
+    "Set Total brushing time (seconds), 'Split the mouth into' 4, 6 or 8 zones, the age of the person brushing and the brush-head start date.",
+    "Press Start — each zone counts down with its modified Bass cue, and you can Pause or Restart at any point.",
+    "Your plan lists seconds per zone, toothpaste amount, fluoride strength and 'Replace brush head by' (90 days); Copy plan saves the schedule.",
+  ],
   intro:
     "The standard recommendation is two minutes of brushing, twice a day, with fluoride toothpaste — and the reason a timer helps is that most people stop at around 45 seconds while believing they brushed for two minutes. This timer divides the 120 seconds evenly across the mouth (30 seconds per quadrant, or 20 per sextant), cues the modified Bass technique zone by zone, and shows the right amount and fluoride strength of toothpaste for the age of the person brushing.",
   useCases: [

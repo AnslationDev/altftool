@@ -1,5 +1,5 @@
 const seo = {
-  title: "Title Safe Area Calculator – EBU R 95 & SMPTE Margins",
+  title: "Title Safe Area Calculator: EBU R 95 & SMPTE",
   metaDescription:
     "Convert safe area percentages into pixel margins for any frame size — EBU R 95 93/90 or SMPTE RP 218 90/80 — plus box corners to type into guides.",
   steps: [

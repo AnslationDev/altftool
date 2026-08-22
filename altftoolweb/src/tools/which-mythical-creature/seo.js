@@ -1,4 +1,7 @@
 const seo = {
+  title: "Which Mythical Creature Are You? 10-Question Quiz",
+  metaDescription:
+    "10 questions score you across Dragon, Phoenix, Unicorn, Griffin, Mermaid and Centaur — your match comes with traits, three powers, lore and a quote.",
   intro:
     "Which Mythical Creature Are You? is a 10-question quiz that scores your answers across six creatures — Dragon, Phoenix, Unicorn, Griffin, Mermaid and Centaur — and names the highest scorer as your match. Questions ask what draws you into a story, how you recover from setbacks and what you protect, with each answer feeding points to two creatures at once. Every result carries a written profile, five traits, three signature powers, a paragraph of lore and a quote.",
   useCases: [

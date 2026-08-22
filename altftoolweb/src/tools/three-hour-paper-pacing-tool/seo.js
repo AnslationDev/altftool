@@ -1,5 +1,5 @@
 const seo = {
-  title: "3 Hour Exam Paper Pacing – Mark-Weighted Checkpoints",
+  title: "3 Hour Exam Pacing: Mark-Weighted Checkpoints",
   metaDescription:
     "Split a 3-hour paper by marks: enter sections, start time, reading time and a review buffer to get the exact clock time each section must end.",
   steps: [

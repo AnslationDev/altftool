@@ -1,5 +1,5 @@
 const seo = {
-  title: "Cycling Calorie Calculator Using a Physics Power Model",
+  title: "Cycling Calorie Calculator: Physics Power Model",
   metaDescription:
     "Calories from the power a ride actually demands — rolling resistance, drag and gravity at 24% efficiency — with the Compendium MET figure alongside.",
   steps: [

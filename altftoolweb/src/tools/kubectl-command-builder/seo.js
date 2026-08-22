@@ -1,5 +1,5 @@
 const seo = {
-  title: "kubectl Command Builder with Flag Conflict Validation",
+  title: "kubectl Command Builder: Flag Conflict Checks",
   metaDescription:
     "Build get, logs, exec, delete and scale commands with -n, -l, -o and --dry-run in the right places — invalid pairs like -A with -n are rejected.",
   steps: [

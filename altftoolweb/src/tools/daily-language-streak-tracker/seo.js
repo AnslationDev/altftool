@@ -1,4 +1,12 @@
 const seo = {
+  title: "Daily Language Streak Tracker with Rest Days",
+  metaDescription:
+    "Log minutes per language and track current streak, longest streak and goal adherence. A day counts once minutes hit your goal; 0-3 rest days allowed.",
+  steps: [
+    "Set your Daily goal (minutes) between 1 and 600, and choose how many rest days a streak may survive — none up to 3.",
+    "Log each session with its date, language and Minutes studied (1 to 1440), then press Add session.",
+    "Read your current streak, longest streak and goal adherence, and press Copy result to copy the text summary.",
+  ],
   intro:
     "This tracker logs the minutes you spend on each language per day and reports your current streak, longest streak and goal adherence. A calendar day counts towards the streak once the minutes logged for that date reach the daily goal you set, today is never scored as a miss until it is over, and an optional rest-day allowance lets a run survive one to three missed days. Aimed at self-taught learners who want an honest picture of consistency rather than a badge.",
   useCases: [

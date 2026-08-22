@@ -1,5 +1,5 @@
 const seo = {
-  title: "Enum Constraint Builder: One List to Prompt, Schema, SQL",
+  title: "Enum Constraint Builder: Prompt, Schema & SQL",
   metaDescription:
     "Turn one list of allowed values into an LLM prompt rule, JSON Schema enum, TypeScript union, Zod, Pydantic Literal and SQL CHECK — de-duplicated once.",
   steps: [

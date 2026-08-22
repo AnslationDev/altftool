@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stream Scene Layout Planner — OBS Transform Coordinates",
+  title: "Stream Scene Layout Planner for OBS Transforms",
   metaDescription:
     "Place gameplay, facecam and chat on a 1080p, 1440p or vertical canvas and get integer Position X/Y and Size W/H values for the OBS Edit Transform dialog.",
   steps: [

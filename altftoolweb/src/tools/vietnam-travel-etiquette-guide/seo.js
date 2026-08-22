@@ -1,5 +1,5 @@
 const seo = {
-  title: "Vietnam Etiquette: Pagodas, Street Food, Helmet Law",
+  title: "Vietnam Etiquette: Pagodas, Street Food, Helmets",
   metaDescription:
     "Builds a ranked etiquette briefing for pagodas, street food, markets and traffic. Helmet and licence rules show whatever you tick.",
   steps: [

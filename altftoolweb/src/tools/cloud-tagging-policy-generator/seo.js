@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloud Tag Policy Generator for AWS, Azure & GCP",
+  metaDescription:
+    "Build a mandatory cloud tag schema — environment, owner, cost-center, application, project — with provider-legal keys, exported as Markdown or JSON.",
+  steps: [
+    "Enter your Org prefix, Environments, Cost-centre codes and Owner email domain, then pick AWS, Azure or Google Cloud in the Cloud provider dropdown.",
+    "Tick the Optional tags to include (e.g. managed-by) and switch the output between the Markdown and JSON format buttons.",
+    "Review the Tags in the policy count and the schema with its enforcement recipe, then click Copy policy to copy it.",
+  ],
   intro:
     "This generator produces a ready-to-adopt cloud tagging policy: a mandatory tag schema (environment, owner, cost-center, application, project) with allowed values, provider-legal key names and an enforcement recipe, exported as Markdown or JSON. It encodes the documented tag limits of AWS (128-character keys), Azure (512) and Google Cloud (63, lowercase labels only), so platform and FinOps teams get a schema that will not be rejected at resource creation.",
   useCases: [

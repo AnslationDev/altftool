@@ -1,5 +1,5 @@
 const seo = {
-  title: "Stream Deck Icon Generator: 72, 144 and 288 px Keys",
+  title: "Stream Deck Icon Generator: 72, 144, 288 px Keys",
   metaDescription:
     "Design square key icons with glyph, label, HSL colour and corner radius. Check label contrast against WCAG 3:1 and export SVG or PNG in your browser.",
   steps: [

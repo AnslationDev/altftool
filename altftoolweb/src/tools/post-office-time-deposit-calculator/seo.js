@@ -1,5 +1,5 @@
 const seo = {
-  title: "Post Office Time Deposit Calculator: 1 to 5 Year TD",
+  title: "Post Office Time Deposit Calculator: 1-5 Years",
   metaDescription:
     "Interest compounds quarterly but pays out annually. See the yearly payout, effective yield, year-by-year schedule, 80C position and early-closure penalty.",
   steps: [

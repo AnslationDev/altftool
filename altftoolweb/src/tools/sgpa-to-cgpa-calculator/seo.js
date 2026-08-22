@@ -1,4 +1,12 @@
 const seo = {
+  title: "SGPA to CGPA Calculator (Credit-Weighted Average)",
+  metaDescription:
+    "Enter each semester SGPA with its credits for the true credit-weighted CGPA, the running cumulative, and the percentage under three published rules.",
+  steps: [
+    "Pick the grade point scale and a percentage conversion rule, then enter each 'Semester N SGPA' with its Credits, using 'Add semester' for more rows.",
+    "Read the cumulative CGPA with total grade points over total credits, beside the plain average of the SGPAs and the error a plain average would cause.",
+    "Check the 'Running cumulative after each semester' table and the percentage under each published rule, then press 'Copy result' for the summary.",
+  ],
   intro:
     "This calculator turns a list of semester SGPAs into a cumulative CGPA using the rule transcripts actually apply: CGPA = the sum of each SGPA multiplied by that semester's credits, divided by total credits. It also shows the plain average of the SGPAs beside it, so the error introduced by averaging semesters of unequal weight is visible rather than hidden, and prints the running cumulative after each semester the way a consolidated marks card does.",
   useCases: [

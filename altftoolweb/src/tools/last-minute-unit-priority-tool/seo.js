@@ -1,4 +1,12 @@
 const seo = {
+  title: "Last-Minute Study Priority: Units by Marks/Hour",
+  metaDescription:
+    "Ranks syllabus units by marks recoverable per study hour and allocates your remaining hours greedily, with full, partial and skip verdicts per unit.",
+  steps: [
+    "Enter your Study hours left before the paper, then give each unit a name, its Marks in the paper, Hours to master it and the Already prepared % slider.",
+    "Click Add unit for more rows or Remove to drop one — the ranking recalculates as you edit.",
+    "Read the table's Marks/h, Give it and ~Gain columns with Study fully, Partial pass or Skip for now verdicts, then click Copy plan.",
+  ],
   intro:
     "This tool ranks syllabus units by marks recoverable per study hour — recoverable = unit marks × (1 − readiness%), priority = recoverable ÷ hours needed — and then allocates your remaining hours greedily from the top. That is the value-density rule from the fractional knapsack problem, the provably efficient way to order work when time, not material, is the constraint. Built for the night-before and last-48-hours crunch before a university or board paper.",
   useCases: [

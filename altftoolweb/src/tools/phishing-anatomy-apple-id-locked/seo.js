@@ -1,5 +1,5 @@
 const seo = {
-  title: "Is the ‘Apple ID Locked’ Email Real? Phishing Check",
+  title: "‘Apple ID Locked’ Email: Real or Phishing?",
   metaDescription:
     "Check an Apple ID account-locked email, text or call: the link’s real domain against apple.com and icloud.com, plus what Apple never asks for.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Miles to Km Converter: Road Trips & Speed Limits",
+  metaDescription:
+    "Convert road distances and speed limits between miles and km with the exact 1.609344 factor, plus driving time at that speed and a posted-limit table.",
+  steps: [
+    "Enter the 'Trip distance' and 'Speed limit or cruising speed', choosing Miles or Kilometres and 'Miles per hour' or 'Kilometres per hour' in the two unit selects.",
+    "The conversion recalculates as you type using 1 mile = 1.609344 km exactly, listing the distance in miles, kilometres and metres, the speed in mph, km/h and m/s, and 'Driving time at that steady speed'.",
+    "Press 'Copy result' for the text summary or 'Reset' for the 250 mi at 70 mph example; the 'Speed limits you will meet' table shows typical posted limits in both units.",
+  ],
   intro:
     "This converter turns road distances and posted speed limits between miles and kilometres using the exact factor 1 mile = 1.609344 km, fixed by the 1959 international yard and pound agreement. It is aimed at drivers hiring a car in a country that signs the other unit, and it also returns the driving time for the distance at the speed you enter, so a 250 mile leg at 70 mph reads as 402.34 km at 112.7 km/h in about 3 h 34 min.",
   useCases: [

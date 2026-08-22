@@ -1,5 +1,5 @@
 const seo = {
-  title: "Career Switch Prompt Builder: Score Your Skill Overlap",
+  title: "Career Switch Prompt Builder: Score Skill Overlap",
   metaDescription:
     "Compare your skills against a target role's requirements, see the overlap percentage and gap list, and get an AI prompt with a study timeline.",
   steps: [

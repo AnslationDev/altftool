@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Mobile Number Validator: 10 Digits",
+  metaDescription:
+    "Check an Indian mobile number: 10 digits starting 6-9, with +91 or a leading 0 stripped automatically and the E.164 +91 form shown for storage.",
+  steps: [
+    "Type or paste the number into the 'Indian mobile number' field — spaces, dashes, a +91 country code or a leading trunk 0 are stripped before checking.",
+    "Keep 'Strict mobile prefix' ticked to require the first national digit 6-9, or untick it for a plain 10-digit length check.",
+    "Read the verdict with the Normalized E.164 form (+91 plus 10 digits), the national number, its length and the prefix check result.",
+  ],
   intro:
     "Indian Mobile Number Validator checks whether a phone number is a syntactically valid Indian mobile number: exactly 10 national digits starting with 6, 7, 8 or 9, normalised to E.164 as +91XXXXXXXXXX. It strips spaces, dashes and brackets, drops a leading 91 country code or a leading trunk 0, then reports the cleaned number, its length and whether the prefix passes. It is a format check only — it says nothing about who owns the number or whether the SIM is active.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grass Seed Calculator: kg, Bags & Sowing Rate",
+  metaDescription:
+    "Convert your lawn area and grass species into kilograms of seed and whole bags, corrected for the purity and germination printed on the label.",
+  steps: [
+    "Enter the Lawn area and its unit, then pick the Grass species and whether you are sowing a new lawn or overseeding.",
+    "Type the Purity and Germination percentages from the seed label, a Wastage allowance (%), the Bag size sold (kg) and the seed price per kg (INR).",
+    "Read the grass seed needed in kg with bags to buy, estimated cost and the g/m² rate actually applied, then click Copy result.",
+  ],
   intro:
     "Grass seed is sold by weight but sown by rate, and this calculator converts one into the other: it takes the published sowing rate for your species, adjusts it for whether you are starting a lawn or overseeding, corrects for the pure live seed figure on the bag (purity multiplied by germination), adds a wastage allowance and returns kilograms and bag count. Rates are the standard pounds-per-1000-square-feet ranges converted at 1 lb/1000 sq ft = 4.88 g/m².",
   useCases: [

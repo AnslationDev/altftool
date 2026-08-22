@@ -1,5 +1,5 @@
 const seo = {
-  title: "Facebook Privacy Settings Checklist: 30 Scored Steps",
+  title: "Facebook Privacy Settings Checklist: 30 Steps",
   metaDescription:
     "Audit 30 Facebook privacy settings — Limit Past Posts, friends-list audience, tag review, off-Facebook activity — weighted for your risk profile.",
   steps: [

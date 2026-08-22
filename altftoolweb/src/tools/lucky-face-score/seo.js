@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lucky Face Score Generator — For Fun, No Face Scan",
+  title: "Lucky Face Score: For Fun, No Face Scan",
   metaDescription:
     "Turns any photo into a made-up luck score out of 100 by hashing the file's bytes — no face detection, no upload; the same photo always scores the same.",
   intro:

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pranayama Timer: Ratio Pacing for 8 Breath Patterns",
+  title: "Pranayama Timer: Ratio Pacing for 8 Patterns",
   metaDescription:
     "Set the ratio and how long one count lasts — box breathing, nadi shodhana, 4-7-8, 1:4:2 — and get a live pacer, breaths per minute and rounds per session.",
   steps: [

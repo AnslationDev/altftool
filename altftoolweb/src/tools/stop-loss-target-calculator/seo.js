@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stop Loss & Target Calculator: Risk-Reward Ratio",
+  metaDescription:
+    "Entry price plus a 1:2 or custom risk-reward ratio gives exact stop and target prices for long or short trades, rupee risk and the break-even win rate.",
+  steps: [
+    "Pick 'Long (buy first)' or 'Short (sell first)', enter the Entry price (INR) and Quantity, and define the stop as a 'Percentage from entry' or an 'Exact stop price'.",
+    "Set the Risk-reward ratio by typing it or tapping the 1 : 1, 1 : 1.5, 1 : 2 or 1 : 3 preset chips.",
+    "Read the Target price and Stop loss with the rupee risk and reward on your quantity and the break-even win rate, check the Target ladder, then press Copy result.",
+  ],
   intro:
     "The Stop Loss and Target Calculator turns an entry price and a risk-reward ratio into the two prices that actually matter before you place an order: where you get out if you are wrong, and where you book profit if you are right. It works for both long and short trades, accepts the stop as a percentage or an exact price, and shows the rupee risk and reward for your quantity.",
   useCases: [

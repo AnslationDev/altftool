@@ -1,4 +1,10 @@
 const seo = {
+  title: "BUN to Urea Converter & Creatinine Ratio",
+  steps: [
+    "Enter the Result value and pick the Reported unit — BUN (mg/dL), Urea (mg/dL) or Urea (mmol/L).",
+    "Optionally fill 'Creatinine mg/dL' to switch on the BUN:creatinine ratio lines; the 'Converted result' panel recomputes as you edit.",
+    "Read all three unit forms with the reference band and ratio band in 'Converted result', then click 'Copy output'.",
+  ],
   intro:
     "The Urea and BUN Converter translates a kidney-function result between blood urea nitrogen in mg/dL, urea in mg/dL and urea in mmol/L. BUN counts only the nitrogen inside the urea molecule, so urea is 2.14 times the BUN figure — the ratio of urea's molar mass, 60.06 g/mol, to the 28.014 g/mol of its two nitrogen atoms. It also derives the BUN to creatinine ratio, which is read against the familiar 10:1 and 20:1 teaching bands.",
   useCases: [

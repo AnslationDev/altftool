@@ -1,4 +1,7 @@
 const seo = {
+  title: "Coin Flip Simulator: Fair Toss & Best-of Series",
+  metaDescription:
+    "Flip a fair coin using crypto.getRandomValues — 3D animation, 1–6 coins at once, best-of-3 to 9 series scoring, streak tracking and your last 30 results.",
   intro:
     "This coin flip tool tosses a fair virtual coin using the browser's cryptographic random number generator, crypto.getRandomValues, rather than Math.random, so each result is an unbiased 50/50 and cannot be predicted from the previous flips. Alongside the 3D flip animation it keeps a running tally of heads versus tails, your current and best same-side streak, the last 30 results, and best-of-3, 5, 7 or 9 series scoring. Stats are saved in your browser between visits.",
   useCases: [

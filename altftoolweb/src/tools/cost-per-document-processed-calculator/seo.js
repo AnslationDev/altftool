@@ -1,5 +1,5 @@
 const seo = {
-  title: "AI Cost Per Document Calculator: Tokens, OCR, Chunks",
+  title: "Cost Per Document Calculator: Tokens, OCR, Chunks",
   metaDescription:
     "Price a document AI pipeline: pages and words become tokens at 0.75 words per token, plus chunk overlap, per-chunk prompts, passes, OCR and embedding.",
   steps: [

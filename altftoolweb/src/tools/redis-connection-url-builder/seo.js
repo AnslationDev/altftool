@@ -1,4 +1,12 @@
 const seo = {
+  title: "Redis URL Builder (redis:// & rediss://)",
+  metaDescription:
+    "Build redis:// or rediss:// URLs with DB index, ACL username and percent-encoded password, plus a matching redis-cli -u test command.",
+  steps: [
+    "Tick 'Use TLS — rediss://' if needed, then fill Host, Port (blank = default 6379), Database index (0–15 by default), the optional ACL username (Redis 6+) and the password, which is percent-encoded for you.",
+    "There is no build button — the Connection URL panel rewrites as you type, and a database index of 16 or higher shows a warning that the server must raise the default 'databases' setting.",
+    "Press 'Copy URL' for the redis:// or rediss:// string, or 'Copy command' under 'Test with redis-cli' for the ready redis-cli -u command; 'Reset' returns every field to localhost:6379/0.",
+  ],
   intro:
     "This builder assembles a Redis connection URL in the standard redis:// / rediss:// scheme — redis://username:password@host:6379/db — with the logical database index as the path, Redis 6 ACL usernames or legacy password-only AUTH in the userinfo, and rediss:// for TLS. It also emits the matching redis-cli -u command for a quick connectivity test. Passwords are percent-encoded and everything is generated locally in the browser.",
   useCases: [

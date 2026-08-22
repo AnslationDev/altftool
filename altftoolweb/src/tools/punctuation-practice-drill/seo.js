@@ -1,4 +1,12 @@
 const seo = {
+  title: "Punctuation Practice Drill: Commas to Dashes",
+  metaDescription:
+    "Multiple-choice punctuation quiz across commas, semicolons, apostrophes, colons, quotation marks and dashes - every answer reveals the exact rule tested.",
+  steps: [
+    "Pick a Topic - All topics, Commas, Semicolons, Apostrophes, Colons, Quotation marks, End marks & run-ons or Hyphens & dashes - and set Questions per round to 5, 10, 15 or 25.",
+    "Select the correctly punctuated version of each sentence and press Check answer - the drill marks it and shows the exact rule being tested before you hit Next question.",
+    "Watch Score so far update with your percentage and band, press Copy score for a text summary of the round, or New round to reshuffle a fresh set of questions.",
+  ],
   intro:
     "Punctuation Practice Drill is a multiple-choice trainer that asks you to pick the correctly punctuated version of a sentence and then shows the exact rule being tested. It covers 25 items across seven areas: commas, semicolons, apostrophes, colons, quotation marks, end marks and run-ons, and hyphens and dashes. It suits students preparing for board or competitive English papers, and anyone whose writing keeps attracting the same red pen.",
   useCases: [

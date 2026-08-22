@@ -1,5 +1,5 @@
 const seo = {
-  title: "Capital Gains Tax Calculator: Gain, Tax, Net Profit",
+  title: "Capital Gains Tax Calculator: Gain/Tax/Net Profit",
   metaDescription:
     "Enter buy price, sell price, quantity and your own tax rate to get the gain, tax owed, net profit and percentage return. A loss returns zero tax.",
   intro:

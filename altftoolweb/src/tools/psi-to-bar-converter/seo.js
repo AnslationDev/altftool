@@ -1,4 +1,12 @@
 const seo = {
+  title: "PSI to Bar Converter + Hot Tyre Pressure Rise",
+  metaDescription:
+    "Converts pressure between psi, bar, kPa, kgf/cm2, atm and torr with exact factors, and projects a cold tyre reading to its hot value by gas law.",
+  steps: [
+    "Type a Pressure reading and pick its Unit — psi, bar, kPa, kgf/cm2, atm, Pa, MPa or torr — or tap a preset chip such as 32 psi or 2.2 bar.",
+    "Enter Temperature when measured (°C) and Temperature to project to (°C) to apply the cold-to-hot tyre correction.",
+    "Read the In bar headline and every unit's value below it, plus the projected hot reading and change in psi; Copy result copies the conversion.",
+  ],
   intro:
     "This converter restates a pressure reading in psi, bar, kPa, kgf/cm2 and atm by anchoring every unit to the pascal: 1 psi is exactly 6,894.757293 Pa, 1 bar is exactly 100,000 Pa and 1 kgf/cm2 is exactly 98,066.5 Pa. It also applies Gay-Lussac's law to absolute pressure and temperature, so you can see what a cold 32 psi tyre will read once it heats up on the road. Useful for anyone reading a European bar-marked placard at an Indian air pump calibrated in psi.",
   useCases: [

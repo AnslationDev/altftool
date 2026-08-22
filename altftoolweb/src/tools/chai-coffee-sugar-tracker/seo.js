@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chai & Coffee Sugar Tracker: WHO Limit Check",
+  metaDescription:
+    "Count the added sugar in a day of chai and coffee — cups times teaspoons at 4 g each — check it against WHO free-sugar limits and scale it to a year.",
+  steps: [
+    "Enter your daily calorie intake (kcal) between 800 and 6,000, then set Cups a day and Teaspoons of sugar per cup for each drink, from Masala chai with milk to Cold coffee / frappe.",
+    "Watch the Added sugar a day figure update as you type, with the WHO 10% ceiling and 5% further-benefit rows showing what share of each your drinks use.",
+    "Click Copy summary for a plain-text breakdown including the yearly kilograms of sugar, or Reset to return to the default 3 cups of masala chai at 2 teaspoons.",
+  ],
   intro:
     "The Chai and Coffee Sugar Tracker adds up the free sugar in a day of tea and coffee by multiplying cups by teaspoons and converting at 4 g of sugar per level teaspoon and 4 kcal per gram. It separates the sugar from the milk and coffee calories, measures the total against the WHO free-sugar guideline of under 10% of energy, and scales the habit to a week, a month and a year. Built for people whose intake is not in the food they eat but in five cups of chai.",
   useCases: [

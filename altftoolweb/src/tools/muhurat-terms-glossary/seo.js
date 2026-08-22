@@ -1,4 +1,12 @@
 const seo = {
+  title: "Muhurat & Panchang Terms Glossary with Rahu Kaal",
+  metaDescription:
+    "Plain meanings for tithi, nakshatra, yoga, karana, Choghadiya and Hora, plus Brahma Muhurta, Abhijit and Rahu Kaal windows from your sunrise and sunset.",
+  steps: [
+    "Search the 12-term glossary (tithi, nakshatra, yoga, karana, Rahu Kaal, Choghadiya, Hora and more) with the 'Search term' box, or filter by Group — Panchang, Avoid, Good or Timing.",
+    "In the 'Local timing helper', set your Sunrise, Sunset and Weekday to estimate the Brahma Muhurta, Abhijit Muhurta and Rahu Kaal windows for your location.",
+    "Click 'Copy summary' to export the matched terms and the three timing windows as plain text.",
+  ],
   intro:
     "The Muhurat Terms Glossary explains Panchang timing words such as tithi, nakshatra, yoga, karana, Rahu Kaal, Abhijit Muhurta, Brahma Muhurta, Choghadiya and Hora in plain language. It also estimates simple local windows from sunrise, sunset and weekday for quick learning and planning.",
   useCases: [

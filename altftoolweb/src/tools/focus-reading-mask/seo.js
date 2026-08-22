@@ -1,5 +1,5 @@
 const seo = {
-  title: "Focus Reading Mask: Highlight One Line, Dim the Rest",
+  title: "Focus Reading Mask: Highlight One Line at a Time",
   metaDescription:
     "Paste text and read one line at a time: the active line is highlighted, the rest fade to 40% opacity. Step through with Previous and Next line buttons.",
   steps: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "EditorConfig File Generator: Indent & EOL Rules",
+  metaDescription:
+    "Build a valid .editorconfig from indent, charset, line-ending and whitespace choices, with one-click sections for Makefiles, Markdown, YAML and more.",
+  steps: [
+    "Set the [*] Global rules: indent style and size, line endings, charset, max line length, the trailing-whitespace and final-newline checkboxes, and root = true.",
+    "Tick per-file-type sections — Makefile (hard tabs) and Markdown (keep trailing spaces) are pre-selected; YAML, Python, Go, JSON and Windows batch are one click.",
+    "Review the .editorconfig preview and its section count, click Copy file and save it in your repository root.",
+  ],
   intro:
     "This generator builds a valid .editorconfig file — the cross-editor configuration format defined by the EditorConfig specification — from your indentation, charset, line-ending and whitespace choices. It is aimed at teams who want identical formatting behaviour across VS Code, JetBrains IDEs, Vim and every other editor, and it adds convention-correct per-file-type sections such as hard tabs for Makefiles and preserved trailing spaces for Markdown.",
   useCases: [

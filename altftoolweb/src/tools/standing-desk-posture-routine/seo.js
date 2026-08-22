@@ -1,5 +1,5 @@
 const seo = {
-  title: "Standing Desk Routine: Sit-Stand Blocks and Heights",
+  title: "Standing Desk Routine: Sit-Stand Blocks & Heights",
   metaDescription:
     "Build a sit-stand rotation, see the real standing minutes against the BJSM 2-hour target, and get desk, seat and monitor heights from your body height.",
   steps: [

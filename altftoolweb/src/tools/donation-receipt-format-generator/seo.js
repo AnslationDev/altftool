@@ -1,5 +1,5 @@
 const seo = {
-  title: "80G Donation Receipt Format with Deduction Worked Out",
+  title: "80G Donation Receipt Format: Deduction Worked Out",
   metaDescription:
     "Build a donation receipt carrying 12A/12AB, 80G approval, both PANs and the amount in words, and see the deduction after the 10% qualifying limit.",
   steps: [

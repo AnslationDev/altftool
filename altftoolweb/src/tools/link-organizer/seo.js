@@ -1,4 +1,12 @@
 const seo = {
+  title: "Link Organizer: Save Link Groups, Open in Tabs",
+  metaDescription:
+    "File links into named groups, star favourites and open a whole group in new tabs with one Open All click. Stored in your browser - no account needed.",
+  steps: [
+    "Press Add Link, fill in the URL (required) and optional Title, then file it under one of the starter groups (Daily Reads, Dev Resources, Design Inspiration, Work) or Add New Group, and hit Save Link.",
+    "Find links by switching the All / Favorites / group tabs or typing in the 'Search by URL, title...' box, which also matches group names.",
+    "On a specific group's tab press Open All to launch every link in that group in its own browser tab; the list is kept in your browser's localStorage.",
+  ],
   intro:
     "Link Organizer is a browser-local link manager that files URLs into named groups and can open an entire group in new tabs with one click. It ships with four starter groups — Daily Reads, Dev Resources, Design Inspiration and Work — and you can add your own from the add-link form. Everything is kept in your browser's local storage, so the list is tied to that one browser and needs no account, but it also does not sync between devices.",
   useCases: [

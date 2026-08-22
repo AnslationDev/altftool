@@ -1,5 +1,5 @@
 const seo = {
-  title: "Merge Blocks: Column-Drop 2048 Puzzle on a 6x8 Board",
+  title: "Merge Blocks: Column-Drop 2048 on a 6x8 Board",
   steps: [
     "Tap a column on the 6-column by 8-row board to launch the next numbered block; two touching blocks of the same value merge into their double.",
     "Reach the target beside LV — 32 on level 1, 64 on level 2 — before the moves left counter runs out, spending Undo, Shuffle or Hammer boosters if you stall.",

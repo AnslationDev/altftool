@@ -1,5 +1,5 @@
 const seo = {
-  title: "Turbo Boost Converter: psi, bar, kPa to Pressure Ratio",
+  title: "Turbo Boost Converter: Units & Pressure Ratio",
   metaDescription:
     "Convert boost between psi, bar, kPa, inHg and kg/cm², gauge and absolute, with the compressor pressure ratio, altitude effect and charge-air density.",
   steps: [

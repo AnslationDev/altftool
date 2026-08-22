@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Beautifier - Format Minified CSS at 2/4/8 Spaces",
+  title: "CSS Beautifier: Format Minified CSS, 2/4/8 Spaces",
   metaDescription:
     "Re-indent minified CSS with 2, 4 or 8 spaces, comments kept and blank lines between rules optional. Copy it or download styles.beautified.css.",
   intro:

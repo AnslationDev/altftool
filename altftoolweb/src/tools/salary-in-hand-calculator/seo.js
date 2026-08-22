@@ -1,5 +1,5 @@
 const seo = {
-  title: "Salary In-Hand Calculator: CTC to Take-Home FY 2025-26",
+  title: "Salary In-Hand Calculator FY 2025-26: New Regime",
   metaDescription:
     "Turn CTC into monthly in-hand under the new regime: 12% EPF on basic, professional tax, the ₹75,000 standard deduction, 87A rebate and marginal relief.",
   steps: [

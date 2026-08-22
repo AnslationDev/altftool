@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reverse GST Calculator with CGST/SGST Split",
+  metaDescription:
+    "Split any GST-inclusive amount into taxable value and tax at 0.25% to 28% or a custom rate - CGST/SGST halved to the paise, or one IGST line.",
+  steps: [
+    "Type the GST-inclusive amount (₹) — the MRP or the round figure the customer actually paid.",
+    "Pick the GST rate — 0%, 0.25%, 3%, 5%, 12%, 18%, 28% or Custom rate — and choose Intra-state (CGST + SGST) or Inter-state (IGST).",
+    "Read the taxable value and GST split instantly, compare the same amount across every slab in the side-by-side table, and press Copy result.",
+  ],
   "intro": "GST Reverse Calculator works backwards from a GST-inclusive amount to show the taxable value and the GST hidden inside it. Pick any Indian slab — 0%, 0.25%, 3%, 5%, 12%, 18% or 28% — or type a custom rate, and it splits the tax into CGST plus SGST for intra-state supply or a single IGST line for inter-state supply. Useful for anyone who has an MRP or a paid amount but needs the pre-tax figure for books, invoices or input tax credit.",
   "useCases": [
     "Split a GST-inclusive MRP or restaurant bill into base price and tax before recording it in your books.",
