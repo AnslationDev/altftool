@@ -116,6 +116,10 @@ export function buildToolKeywords(slug, tool = {}) {
     nameLower,
     `free ${nameLower}`,
     `${nameLower} online`,
+    // "<term> online free" is the single most repeated real modifier in the
+    // autocomplete mining (71 of 900 head terms surface it as its own query),
+    // and unlike most modifiers it promises nothing the tools do not deliver.
+    `${nameLower} online free`,
     `free online ${typeNoun}`,
     ...(Array.isArray(tool.topics) ? tool.topics : []).map((topic) =>
       cleanText(topic).toLowerCase(),
